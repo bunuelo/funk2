@@ -17,377 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe funk2_post    [frame] [title date author entry]]
-[deframe funk2_example [frame] [name title date author entry]]
-
-[defunk funk2_calendar_2010_october []
-  [string-prog '<div id="calendar_wrap">'
-	       '  <table summary="Calendar">'
-	       '  <caption>'
-	       '  October 2010'
-	       '  </caption>'
-	       '  <thead>'
-	       '    <tr>'
-	       '      <th abbr="Sunday" scope="col" title="Sunday">S</th>'
-	       '      <th abbr="Monday" scope="col" title="Monday">M</th>'
-	       '      <th abbr="Tuesday" scope="col" title="Tuesday">T</th>'
-	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
-	       '      <th abbr="Thursday" scope="col" title="Thursday">T</th>'
-	       '      <th abbr="Friday" scope="col" title="Friday">F</th>'
-	       '      <th abbr="Saturday" scope="col" title="Saturday">S</th>'
-	       '    </tr>'
-	       '  </thead>'
-	       '  <tfoot>'
-	       '    <tr>'
-	       '      <td abbr="October" colspan="3" id="prev"><a href="#" title="View posts for September 2010">&laquo; Sep</a></td>'
-	       '      <td class="pad">&nbsp;</td>'
-	       '      <td colspan="3" id="next">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tfoot>'
-	       '  <tbody>'
-	       '    <tr>'
-	       '      <td class="pad" colspan="5">&nbsp;</td>'
-	       '      <td>1</td>'
-	       '      <td>2</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>3</td>'
-	       '      <td>4</td>'
-	       '      <td>5</td>'
-	       '      <td>6</td>'
-	       '      <td>7</td>'
-	       '      <td>8</td>'
-	       '      <td>9</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>10</td>'
-	       '      <td>11</td>'
-	       '      <td>12</td>'
-	       '      <td>13</td>'
-	       '      <td id="today">14</td>'
-	       '      <td>15</td>'
-	       '      <td>16</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>17</td>'
-	       '      <td>18</td>'
-	       '      <td>19</td>'
-	       '      <td>20</td>'
-	       '      <td>21</td>'
-	       '      <td>22</td>'
-	       '      <td>23</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>24</td>'
-	       '      <td>25</td>'
-	       '      <td>26</td>'
-	       '      <td>27</td>'
-	       '      <td>28</td>'
-	       '      <td>29</td>'
-	       '      <td>30</td>'
-	       '      <td class="pad" colspan="4">&nbsp;</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>31</td>'
-	       '      <td class="pad" colspan="6">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tbody>'
-	       '</table>'
-	       '</div>']]
-
-[defunk funk2_calendar_2010_december []
-  [string-prog '<div id="calendar_wrap">'
-	       '  <table summary="Calendar">'
-	       '  <caption>'
-	       '  December 2010'
-	       '  </caption>'
-	       '  <thead>'
-	       '    <tr>'
-	       '      <th abbr="Sunday" scope="col" title="Sunday">S</th>'
-	       '      <th abbr="Monday" scope="col" title="Monday">M</th>'
-	       '      <th abbr="Tuesday" scope="col" title="Tuesday">T</th>'
-	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
-	       '      <th abbr="Thursday" scope="col" title="Thursday">T</th>'
-	       '      <th abbr="Friday" scope="col" title="Friday">F</th>'
-	       '      <th abbr="Saturday" scope="col" title="Saturday">S</th>'
-	       '    </tr>'
-	       '  </thead>'
-	       '  <tfoot>'
-	       '    <tr>'
-	       '      <td abbr="December" colspan="3" id="prev"><a href="#" title="View posts for November 2010">&laquo; Nov</a></td>'
-	       '      <td class="pad">&nbsp;</td>'
-	       '      <td colspan="3" id="next">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tfoot>'
-	       '  <tbody>'
-	       '    <tr>'
-	       '      <td class="pad" colspan="3">&nbsp;</td>'
-	       '      <td>1</td>'
-	       '      <td>2</td>'
-	       '      <td>3</td>'
-	       '      <td>4</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>5</td>'
-	       '      <td>6</td>'
-	       '      <td>7</td>'
-	       '      <td>8</td>'
-	       '      <td>9</td>'
-	       '      <td id="today">10</td>'
-	       '      <td>11</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>12</td>'
-	       '      <td>13</td>'
-	       '      <td>14</td>'
-	       '      <td>15</td>'
-	       '      <td>16</td>'
-	       '      <td>17</td>'
-	       '      <td>18</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>19</td>'
-	       '      <td>20</td>'
-	       '      <td>21</td>'
-	       '      <td>22</td>'
-	       '      <td>23</td>'
-	       '      <td>24</td>'
-	       '      <td>25</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>26</td>'
-	       '      <td>27</td>'
-	       '      <td>28</td>'
-	       '      <td>29</td>'
-	       '      <td>30</td>'
-	       '      <td>31</td>'
-	       '      <td class="pad" colspan="3">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tbody>'
-	       '</table>'
-	       '</div>']]
-
-[defunk funk2_calendar_2010_february []
-  [string-prog '<div id="calendar_wrap">'
-	       '  <table summary="Calendar">'
-	       '  <caption>'
-	       '  February 2011'
-	       '  </caption>'
-	       '  <thead>'
-	       '    <tr>'
-	       '      <th abbr="Sunday"    scope="col" title="Sunday"   >S</th>'
-	       '      <th abbr="Monday"    scope="col" title="Monday"   >M</th>'
-	       '      <th abbr="Tuesday"   scope="col" title="Tuesday"  >T</th>'
-	       '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
-	       '      <th abbr="Thursday"  scope="col" title="Thursday" >T</th>'
-	       '      <th abbr="Friday"    scope="col" title="Friday"   >F</th>'
-	       '      <th abbr="Saturday"  scope="col" title="Saturday" >S</th>'
-	       '    </tr>'
-	       '  </thead>'
-	       '  <tfoot>'
-	       '    <tr>'
-	       '      <td abbr="February" colspan="3" id="prev"><a href="#" title="View posts for January 2011">&laquo; Jan</a></td>'
-	       '      <td class="pad">&nbsp;</td>'
-	       '      <td colspan="3" id="next">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tfoot>'
-	       '  <tbody>'
-	       '    <tr>'
-	       '      <td class="pad" colspan="2">&nbsp;</td>'
-	       '      <td>1</td>'
-	       '      <td>2</td>'
-	       '      <td>3</td>'
-	       '      <td>4</td>'
-	       '      <td>5</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>6</td>'
-	       '      <td>7</td>'
-	       '      <td>8</td>'
-	       '      <td>9</td>'
-	       '      <td>10</td>'
-	       '      <td>11</td>'
-	       '      <td>12</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>13</td>'
-	       '      <td>14</td>'
-	       '      <td>15</td>'
-	       '      <td>16</td>'
-	       '      <td>17</td>'
-	       '      <td>18</td>'
-	       '      <td id="today">19</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>20</td>'
-	       '      <td>21</td>'
-	       '      <td>22</td>'
-	       '      <td>23</td>'
-	       '      <td>24</td>'
-	       '      <td>25</td>'
-	       '      <td>26</td>'
-	       '    </tr>'
-	       '    <tr>'
-	       '      <td>27</td>'
-	       '      <td>28</td>'
-	       '      <td class="pad" colspan="5">&nbsp;</td>'
-	       '    </tr>'
-	       '  </tbody>'
-	       '</table>'
-	       '</div>']]
-
-[defunk funk2_calendar []
-  [funk2_calendar_2010_february]]
-
-[defunk funk2_page [posts examples content]
-  [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
-	       '<html xmlns="http://www.w3.org/1999/xhtml">'
-	       '<head>'
-	       '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
-	       '<title>Funk2 Programming Language -- Official Website</title>'
-	       '<meta name="keywords" content="" />'
-	       '<meta name="Funk2" content="" />'
-	       '<link href="/default.css" rel="stylesheet" type="text/css" media="screen" />'
-	       '</head>'	       '<body>'
-	       '<div id="header">'
-	       '  <table border=0 cellspacing=0 cellpadding=0><tr><td>'
-	       '    <div id="funk2_logo_header">'
-	       '    </div>'
-	       '  </td><td>'
-	       '    <div id="center_header">'
-	       '        <div id="logo">'
-	       '	  <h1><a href="#">Funk2</a></h1>'
-	       '	  <p>reflective programming language</p>'
-	       '	</div>'
-	       '	<div id="menu">'
-	       '		<ul id="main">'
-	       '			<li><a href="/about">About</a></li>'
-	       '			<li><a href="/news">News</a></li>'
-	       '			<li><a href="/documentation">Documentation</a></li>'
-	       '			<li><a href="/download">Download</a></li>'
-	       '			<li><a href="/community">Community</a></li>'
-	       '			<li><a href="/support">Support</a></li>'
-	       '			<li><a href="/development">Development</a></li>'
-	       '			<li><a href="/applications">Applications</a></li>'
-	       '		</ul>'
-	       '	</div>'
-	       '	'
-	       '    </div>'
-	       '  </td><td>'
-	       '    <div id="mmp_logo_header">'
-	       '    </div>'
-	       '  </td></tr></table>'
-	       '</div>'
-	       '<!-- end header -->'
-	       '<div id="wrapper">'
-	       '	<!-- start page -->'
-	       '	<div id="page">'
-	       '		<div id="sidebar1" class="sidebar">'
-	       '			<ul>'
-	       '				<li>'
-	       '					<h2>Recent Updates</h2>'
-	       '					<ul>'
-	       [stringlist-prog [let [[index 0]]
-				  [mapcar [funk [post]
-						[= index [+ index 1]]
-						[string-concat '<li><a href="/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
-					  posts]]]
-	       '					</ul>'
-	       '				</li>'
-	       '				<li>'
-	       '					<h2>Example Applications</h2>'
-	       '					<ul>'
-	       [stringlist-prog [mapcar [funk [example]
-					      [string-concat '<li><a href="/example/' [get example name] '">' [get example title] '</a></li>']]
-					examples]]
-	       '					</ul>'
-	       '				</li>'
-	       '				<li>'
-	       '					<h2>Categories</h2>'
-	       '					<ul>'
-	       '						<li><a href="http://www-formal.stanford.edu/jmc/whatisai/whatisai.html">Artificial Intelligence...</a></li>'
-	       '						<li><a href="#">Neuroscience</a></li>'
-	       '						<li><a href="#">Commonsense Reasoning</a></li>'
-	       '						<li><a href="#">Distributed Computation</a></li>'
-	       '						<li><a href="#">Collaborative Programming and Development</a></li>'
-	       '						<li><a href="#">Self-describing Systems</a></li>'
-	       '					</ul>'
-	       '				</li>'
-	       '				<li>'
-	       '					<h2>Archives</h2>'
-	       '					<ul>'
-	       '						<li><a href="#">May</a> (0)</li>'
-	       '						<li><a href="#">April</a> (0)</li>'
-	       '						<li><a href="#">March</a> (0)</li>'
-	       '						<li><a href="#">February</a> (0)</li>'
-	       '						<li><a href="#">January</a> (0)</li>'
-	       '					</ul>'
-	       '				</li>'
-	       '			</ul>'
-	       '		</div>'
-	       '<!-- start content -->'
-	       '<div id="content">'
-	       content
-	       '</div>'
-	       '<!-- end content -->'
-	       '		<!-- start sidebars -->'
-	       '		<div id="sidebar2" class="sidebar">'
-	       '			<ul>'
-	       '				<li>'
-	       '					<form id="searchform" method="get" action="#">'
-	       '						<div>'
-	       '							<h2>Site Search</h2>'
-	       '							<input type="text" name="s" id="s" size="15" value="" />'
-	       '							<br />'
-	       '							<input type="submit" value="Search" id="x" />'
-	       '						</div>'
-	       '					</form>'
-	       '				</li>'
-	       '				<li>'
-	       '					<h2>Tags</h2>'
-	       '					<p class="tag"><a href="#">reflection</a> <a href="#">mind</a> <a href="#">consciousness</a> <a href="#">debug</a> <a href="#">language</a> <a href="#">control</a> <a href="#">learn</a> <a href="#">cognitive model</a></p></li>'
-	       '				<li>'
-	       '					<h2>Calendar</h2>'
-	       [funk2_calendar]
-	       '				</li>'
-	       [prog '				<li>'
-		     '					<h2>Categories</h2>'
-		     '					<ul>'
-		     '						<li><a href="#">Aliquam libero</a></li>'
-		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
-		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
-		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
-		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
-		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
-		     '						<li><a href="#">Aliquam libero</a></li>'
-		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
-		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
-		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
-		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
-		     '						<li><a href="#">Aliquam libero</a></li>'
-		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
-		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
-		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
-		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
-		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
-		     '					</ul>'
-		     '				</li>'
-		     '']
-	       '			</ul>'
-	       '		</div>'
-	       '		<!-- end sidebars -->'
-	       '		<div style="clear: both;">&nbsp;</div>'
-	       '	</div>'
-	       '	<!-- end page -->'
-	       '</div>'
-	       '<div id="footer">'
-	       '	<p>&copy;2009 All Rights Reserved. &nbsp;&bull;&nbsp; Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>'
-	       '</div>'
-	       '</body>'
-	       '</html>']]
-  
-
-
 [defunk funk2_about-content []
   [string-prog '<h1>About</h1>'
 	       ''
@@ -433,9 +62,9 @@
 	       ''
 	       ]]
 
-[defunk funk2_about [posts examples]
-  [funk2_page posts examples
-	      [funk2_about-content]]]
+[defunk funk2_about [context]
+  [htmldoc_page context
+		[funk2_about-content]]]
 
 [defunk compile_funk2_about [root_dir posts examples]
   [let [[about [funk2_about posts examples]]]
@@ -444,11 +73,7 @@
     nil]]
 
 
-
-
-
-
-[defunk funk2_news-content [posts]
+[defunk funk2_news-content [context]
   [string-prog [stringlist-prog [let [[index 0]]
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
@@ -460,12 +85,12 @@
 							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
 							     '  </div>'
 							     '</div>']]
-					  posts]]]
+					  [get context posts]]]]
 	       ]]
 
-[defunk funk2_news [posts examples]
-  [funk2_page posts examples
-	      [funk2_news-content posts]]]
+[defunk funk2_news [context]
+  [htmldoc_page context
+		[funk2_news-content context]]]
 
 [defunk compile_funk2_news [root_dir posts examples]
   [let [[news [funk2_news posts examples]]]
@@ -488,87 +113,87 @@
 [defunk funk2_funk_documentation [funk]
   [funk2_documentation_format [get funk documentation]]]
 
-[defunk funk2_object_documentation [posts examples type_name]
+[defunk funk2_object_documentation [context type_name]
   [print [string-concat 'compiling ' [get type_name as-string] ' object documentation']]
-  [funk2_page posts examples
-	      [string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
-			   [let [[type [lookup_type type_name]]]
-			     [string-prog '<h2><tt>get</tt> interface</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [key_name]
-									 [print [string-concat '  key: ' [get key_name as-string]]]
-									 [let [[funk [get type type_var_value `get key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'<p>'
-											[funk2_funk_documentation funk]
-											'</p><br>'
-											'</li>']]]
-								   [get type type_var-keys `get]]]
-					  '</ul>'
-					  ''
-					  '<h2><tt>set</tt> interface</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [key_name]
-									 [print [string-concat '  key: ' [get key_name as-string]]]
-									 [let [[funk [get type type_var_value `set key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'<p>'
-											[funk2_funk_documentation funk]
-											'</p><br>'
-											'</li>']]]
-								   [get type type_var-keys `set]]]
-					  '</ul>'
-					  ''
-					  '<h2><tt>execute</tt> interface</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [key_name]
-									 [print [string-concat '  key: ' [get key_name as-string]]]
-									 [let [[funk [get type type_var_value `execute key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'<p>'
-											[funk2_funk_documentation funk]
-											'</p><br>'
-											'</li>']]]
-								   [get type type_var-keys `execute]]]
-					  '</ul>'
-					  ]]
-			   ''
-			   ]]]
+  [htmldoc_page context
+		[string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
+			     [let [[type [lookup_type type_name]]]
+			       [string-prog '<h2><tt>get</tt> interface</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [key_name]
+									   [print [string-concat '  key: ' [get key_name as-string]]]
+									   [let [[funk [get type type_var_value `get key_name nil]]]
+									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											  '<p>'
+											  [funk2_funk_documentation funk]
+											  '</p><br>'
+											  '</li>']]]
+								     [get type type_var-keys `get]]]
+					    '</ul>'
+					    ''
+					    '<h2><tt>set</tt> interface</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [key_name]
+									   [print [string-concat '  key: ' [get key_name as-string]]]
+									   [let [[funk [get type type_var_value `set key_name nil]]]
+									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											  '<p>'
+											  [funk2_funk_documentation funk]
+											  '</p><br>'
+											  '</li>']]]
+								     [get type type_var-keys `set]]]
+					    '</ul>'
+					    ''
+					    '<h2><tt>execute</tt> interface</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [key_name]
+									   [print [string-concat '  key: ' [get key_name as-string]]]
+									   [let [[funk [get type type_var_value `execute key_name nil]]]
+									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											  '<p>'
+											  [funk2_funk_documentation funk]
+											  '</p><br>'
+											  '</li>']]]
+								     [get type type_var-keys `execute]]]
+					    '</ul>'
+					    ]]
+			     ''
+			     ]]]
 
-[defunk funk2_documentation-all_objects-save [root_dir posts examples]
+[defunk funk2_documentation-all_objects-save [context]
   [mapc [funk [type_name]
 	      [let [[type_name_string     [get type_name as-string]]
-		    [object_documentation [funk2_object_documentation posts examples type_name]]]
-		[shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
-		[have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]]]
+		    [object_documentation [funk2_object_documentation context]]]
+		[shelter [mkdir [string-concat [get context root_dir] 'documentation/object/' type_name_string]]]
+		[have object_documentation save [string-concat [get context root_dir] 'documentation/object/' type_name_string '/index.html']]]]
 	[system-type_names]]]
 
-[defunk funk2_package_documentation [posts examples package_name]
+[defunk funk2_package_documentation [context package_name]
   [print [string-concat 'compiling ' [get package_name as-string] ' package documentation']]
-  [funk2_page posts examples
-	      [string-prog [string-concat '<h1><tt>' [get package_name as-string] '</tt> Package Documentation</h1>']
-			   [let [[package [lookup-package package_name]]]
-			     [string-prog '<h2>Package Dependencies</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [package_dependency]
-									 [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
-									 [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
-								   [get package package_dependencies]]]
-					  '</ul>'
-					  ''
-					  '<h2>Documentation</h2>'
-					  '<p>'
-					  [funk2_documentation_format [get package documentation]]
-					  '</p><br>'
-					  ''
-					  '<h2>Objects Defined</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [object_type_defined]
-									 [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
-									 [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
-								   [get [get package object_types_defined_set] elements]]]
-					  '</ul>'
-					  ]]]]]
+  [htmldoc_page context
+		[string-prog [string-concat '<h1><tt>' [get package_name as-string] '</tt> Package Documentation</h1>']
+			     [let [[package [lookup-package package_name]]]
+			       [string-prog '<h2>Package Dependencies</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [package_dependency]
+									   [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
+									   [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
+								     [get package package_dependencies]]]
+					    '</ul>'
+					    ''
+					    '<h2>Documentation</h2>'
+					    '<p>'
+					    [funk2_documentation_format [get package documentation]]
+					    '</p><br>'
+					    ''
+					    '<h2>Objects Defined</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [object_type_defined]
+									   [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
+									   [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
+								     [get [get package object_types_defined_set] elements]]]
+					    '</ul>'
+					    ]]]]]
 
 [defunk funk2_documentation-all_packages-require []
   [mapc [funk [package_name]
@@ -577,18 +202,18 @@
 			[require-package package_name]]]]
 	[package_names]]]
 
-[defunk funk2_documentation-all_packages-save [root_dir posts examples]
-  [shelter [mkdir [string-concat root_dir 'documentation/package']]]
+[defunk funk2_documentation-all_packages-save [context]
+  [shelter [mkdir [string-concat [get context root_dir] 'documentation/package']]]
   [mapc [funk [package_name]
 	      [let [[package_name_string   [get package_name as-string]]
-		    [package_documentation [funk2_package_documentation posts examples package_name]]]
-		[shelter [mkdir [string-concat root_dir 'documentation/package/' package_name_string]]]
-		[have package_documentation save [string-concat root_dir 'documentation/package/' package_name_string '/index.html']]]]
+		    [package_documentation [funk2_package_documentation context]]]
+		[shelter [mkdir [string-concat [get context root_dir] 'documentation/package/' package_name_string]]]
+		[have package_documentation save [string-concat [get context root_dir] 'documentation/package/' package_name_string '/index.html']]]]
 	[package_names]]]
 
-[defunk funk2_documentation-content [root_dir posts examples]
-  [shelter [mkdir [string-concat root_dir 'documentation']]]
-  [shelter [mkdir [string-concat root_dir 'documentation/object']]]
+[defunk funk2_documentation-content [context]
+  [shelter [mkdir [string-concat [get context root_dir] 'documentation']]]
+  [shelter [mkdir [string-concat [get context root_dir] 'documentation/object']]]
   [string-prog '<h1>Documentation</h1>'
 	       ''
 	       '<p>Funk2 is not yet completely documented.'
@@ -630,17 +255,17 @@
 	       '</ul>'
 	       '']]
 
-[defunk funk2_documentation [root_dir posts examples]
-  [funk2_page posts examples
-	      [funk2_documentation-content root_dir posts examples]]]
+[defunk funk2_documentation [context]
+  [htmldoc_page context
+		[funk2_documentation-content context]]]
 
-[defunk compile_funk2_documentation [root_dir posts examples]
+[defunk compile_funk2_documentation [context]
   [funk2_documentation-all_packages-require]
-  [let [[documentation [funk2_documentation root_dir posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'documentation']]]
-    [have documentation save [string-concat root_dir 'documentation/index.html']]
-    [funk2_documentation-all_packages-save root_dir posts examples]
-    [funk2_documentation-all_objects-save  root_dir posts examples]
+  [let [[documentation [funk2_documentation context]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'documentation']]]
+    [have documentation save [string-concat [get context root_dir] 'documentation/index.html']]
+    [funk2_documentation-all_packages-save context]
+    [funk2_documentation-all_objects-save  context]
     nil]]
 
 
@@ -687,14 +312,14 @@
 	       '  </ul>'
 	       '']]
 
-[defunk funk2_download [posts examples]
-  [funk2_page posts examples
-	      [funk2_download-content]]]
+[defunk funk2_download [context]
+  [htmldoc_page context
+		[funk2_download-content]]]
 
-[defunk compile_funk2_download [root_dir posts examples]
-  [let [[download [funk2_download posts examples]]]
-    [shelter [mkdir     [string-concat root_dir 'download']]]
-    [have download save [string-concat root_dir 'download/index.html']]
+[defunk compile_funk2_download [context]
+  [let [[download [funk2_download context]]]
+    [shelter [mkdir     [string-concat [get context root_dir] 'download']]]
+    [have download save [string-concat [get context root_dir] 'download/index.html']]
     nil]]
 
 
@@ -703,14 +328,14 @@
 	       ''
 	       'Coming soon!']]
 
-[defunk funk2_community [posts examples]
-  [funk2_page posts examples
-	      [funk2_community-content]]]
+[defunk funk2_community [context]
+  [htmldoc_page context
+		[funk2_community-content]]]
 
-[defunk compile_funk2_community [root_dir posts examples]
-  [let [[community [funk2_community posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'community']]]
-    [have community save [string-concat root_dir 'community/index.html']]
+[defunk compile_funk2_community [context]
+  [let [[community [funk2_community context]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'community']]]
+    [have community save [string-concat [get context root_dir] 'community/index.html']]
     nil]]
 
 
@@ -719,14 +344,14 @@
 	       ''
 	       'Coming soon!']]
 
-[defunk funk2_support [posts examples]
-  [funk2_page posts examples
-	      [funk2_support-content]]]
+[defunk funk2_support [context]
+  [htmldoc_page context
+		[funk2_support-content]]]
 
-[defunk compile_funk2_support [root_dir posts examples]
-  [let [[support [funk2_support posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'support']]]
-    [have support save [string-concat root_dir 'support/index.html']]
+[defunk compile_funk2_support [context]
+  [let [[support [funk2_support context]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'support']]]
+    [have support save [string-concat [get context root_dir] 'support/index.html']]
     nil]]
 
 
@@ -735,14 +360,14 @@
 	       ''
 	       'Coming soon!']]
 
-[defunk funk2_development [posts examples]
-  [funk2_page posts examples
-	      [funk2_development-content]]]
+[defunk funk2_development [context]
+  [htmldoc_page context
+		[funk2_development-content]]]
 
-[defunk compile_funk2_development [root_dir posts examples]
-  [let [[development [funk2_development posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'development']]]
-    [have development save [string-concat root_dir 'development/index.html']]
+[defunk compile_funk2_development [context]
+  [let [[development [funk2_development context]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'development']]]
+    [have development save [string-concat [get context root_dir] 'development/index.html']]
     nil]]
 
 
@@ -751,27 +376,18 @@
 	       ''
 	       'Coming soon!']]
 
-[defunk funk2_applications [posts examples]
-  [funk2_page posts examples
-	      [funk2_applications-content]]]
+[defunk funk2_applications [context]
+  [htmldoc_page context
+		[funk2_applications-content]]]
 
-[defunk compile_funk2_applications [root_dir posts examples]
-  [let [[applications [funk2_applications posts examples]]]
-    [shelter [mkdir [string-concat root_dir 'applications']]]
-    [have applications save [string-concat root_dir 'applications/index.html']]
+[defunk compile_funk2_applications [context]
+  [let [[applications [funk2_applications context]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'applications']]]
+    [have applications save [string-concat [get context root_dir] 'applications/index.html']]
     nil]]
 
 
-[defunk funk2_code_section [code]
-  [string-prog '<tt>'
-	       [have [have [have [have code replace_all '\n' '<br>\n']
-				 replace_all '-' '&#x2011;']
-			   replace_all '\t' '        ']
-		     replace_all ' ' '&nbsp;']
-	       '</tt>']]
-
-
-[defunk funk2_example [posts examples example]
+[defunk funk2_example [context example]
   [let [[content [string-prog '<!-- start content -->'
 			      '<div id="content">'
 			      '  <div class="post">'
@@ -779,49 +395,36 @@
 			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
 			      '    <div class="entry">'
 			      '      <p>'
-			      [funk2_code_section [get example entry]]
+			      [htmldoc_code_section [get example entry]]
 			      '      </p>'
 			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
 			      '    </div>'
 			      '  </div>'
 			      '</div>'
 			      '<!-- end content -->']]]
-    [funk2_page posts examples content]]]
+    [htmldoc_page context content]]]
 
-[defunk compile_funk2_example [root_dir posts examples example]
-  [let [[example_html_code [funk2_example posts examples example]]]
-    [shelter [mkdir [string-concat root_dir 'example']]]
-    [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
+[defunk compile_funk2_example [context example]
+  [let [[example_html_code [funk2_example context example]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'example']]]
+    [shelter [mkdir [string-concat [get context root_dir] 'example/' [get example name]]]]
     [have [string-prog [string-concat '\'' [get example title] '\'']
 		       [string-concat '\'This example Funk2 code was downloaded from http://www.funk2.org/example/' [get example name] '.fu2\'']
 		       ''
 		       [get example entry]]
 	  save [string-concat root_dir 'example/' [get example name] '.fu2']]
-    [have example_html_code   save [string-concat root_dir 'example/' [get example name] '/index.html']]
+    [have example_html_code save [string-concat [get context root_dir] 'example/' [get example name] '/index.html']]
     nil]]
 
-[defunk compile_funk2_examples [root_dir posts examples]
+[defunk compile_funk2_examples [context]
   [mapc [funk [example]
 	      [print [string-concat 'compiling example ' [get example name]]]
-	      [compile_funk2_example root_dir posts examples example]]
+	      [compile_funk2_example context example]]
 	examples]
   nil]
 
-'<h3>Bulleted List:</h3>'
-'<ul>'
-'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
-'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
-'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
-'</ul>'
-'<h3>Numbered List:</h3>'
-'<ol>'
-'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
-'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
-'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
-'</ol>'
-
 [defunk generate_all_posts []
-  [list [let [[this [new funk2_post]]]
+  [list [let [[this [new htmldoc_post]]]
 	  [set this title  'Welcome to the official Funk2 Website!']
 	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -830,7 +433,7 @@
 					'Funk2 is primary meant as a novel artificial intelligence research tool for developing massive heterogeneous AI systems.'
 					'We expect our novel ways of reflectively controlling massive parallel systems to be useful to many diverse fields of computational application and theoretical modelling.']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Fiber triggers added as efficient process control']
 	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -841,25 +444,25 @@
 					'The last line triggers our <tt>trigger</tt> object, which allows all of our waiting processes to start running and they each end up printing a number from zero to nine.'
 					'</p>'
 					'<p>'
-					[funk2_code_section [string-prog '[globalize my-trigger [new fiber_trigger]]'
-									 ''
-									 '[dotimes [i 10]'
-									 '  [let [[j i]]'
-									 '    [fiber [funk []'
-									 '             [while t'
-									 '               [wait-for-trigger my-trigger]'
-									 '               [print j]]]]'
-									 '           nil]]'
-									 ''
-									 '[have my-trigger trigger]'
-									 ]]
+					[htmldoc_code_section [string-prog '[globalize my-trigger [new fiber_trigger]]'
+									   ''
+									   '[dotimes [i 10]'
+									   '  [let [[j i]]'
+									   '    [fiber [funk []'
+									   '             [while t'
+									   '               [wait-for-trigger my-trigger]'
+									   '               [print j]]]]'
+									   '           nil]]'
+									   ''
+									   '[have my-trigger trigger]'
+									   ]]
 					'</p>'
 					'<p>'
 					'While a <tt>fiber</tt> process is waiting for a trigger, it is paused, which means that it takes no system CPU resources.'
 					'This allows us to easily allocate thousands of different parallel processes that are efficiently controlled in this way.'
 					'</p>']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Cairo support added for vector graphics rendering']
 	  [set this date   'February 19th, 2011']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -869,7 +472,7 @@
 					'See the <a href=../documentation/package/cairo/>Funk2 Cairo package documentation</a> for details about the Funk2 wrapper.'
 					'</p>']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Natural language processing']
 	  [set this date   'October 7th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -878,7 +481,7 @@
 					'A new built-in package can be required with the <tt>[require natural_language]</tt> command.'
 					'</p>']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Layered cognitive architecture']
 	  [set this date   'September 4th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -887,7 +490,7 @@
 					'Also, when building a mind, using these architectural primitives, it is useful to see an overview of your mental model by using the new <emph>mindmon</emph> utility, which provides a graphical user interface to the mind.'
 					'</p>']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'GTK support added for creating graphical user intefaces (GUIs)']
 	  [set this date   'June 23rd, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -895,7 +498,7 @@
 					'An example GTK application can be seen in the <tt>gtk-test</tt> directory included in the <tt>example</tt> directory in the source code.'
 					'</p>']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Package manager']
 	  [set this date   'June 23rd, 2010']
 			  [set this author '<a href="#">Bo Morgan</a>']
@@ -904,7 +507,7 @@
 							'You can now use the [require package-name] command in order to load a package and all of its dependencies.'
 							'</p>']]
 			  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Call for Collaboration to Build Artificial Intelligence']
 	  [set this date   'May 12st, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -918,7 +521,7 @@
 					'</p>'
 					]]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Causal tracing of Funk completion events']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -929,7 +532,7 @@
 					'Building pattern recognition that deals not only with the problem space but with the mental space of the solver itself is necessary for learning to solve more difficult control problems.  '
 					]]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Funk2 remote interface to IsisWorld']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -937,7 +540,7 @@
 					'Agents in IsisWorld are controlled through an XML-RPC interface.  '
 					'The most recent IsisWorld interface in now included in the default distribution of Funk2 in order that AI researchers around the world can contribute to this large open software development and research project.']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'XML-RPC client library built on fast xmlrpc-c library']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -948,7 +551,7 @@
 					'Also, for data-intensive algorithms, the XML-RPC protocol supports the efficient communication of large amounts of raw binary data between correctly implemented versions of the protocol.'
 					]]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Simple node and edge variable graph matching library completed']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -960,7 +563,7 @@
 					'See our <a href="/example/graph_matching">graph matching example</a> for a demonstration of a simple variable graph matching algorithm.  '
 					]]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Compiles on Windows XP under CygWin']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -968,14 +571,14 @@
 					'We have not completed a binary distribution package for the Windows operating system yet, but developers should have few problems compiling and installing Funk2 from source.'
 					'Please see the Funk2 <a href=/download/>download</a> page in order to download the latest source package.']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'MacOS X Binaries available for 10.5 and 10.6']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
 	  [set this entry  [string-prog 'Binary packages for the Apple Macintosh operating system X (MacOS X) are now available!  '
 					'Please see the Funk2 <a href=/download/>download</a> page in order to download the latest MacOS X binary package for Funk2.']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'GraphViz graph visualization completed']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -983,7 +586,7 @@
 					'We have included a very fast GraphViz compiler in Funk2 for generating and viewing our causal reflective traces.  '
 					'See our <a href="/example/graphviz">GraphViz example</a> for how this new facility of Funk2 can be used.  ']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Successfully stress tested 1000 parallel fibers for 1 day!']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -997,7 +600,7 @@
 					'See our <a href="/example/parallel_programming">parallel programming example</a> for more details about how to create and control parallel fibers in Funk2.'
 					]]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -1007,7 +610,7 @@
 					'We have built and demonstrated basic reactive and deliberative planning algorithms in Funk2 that demonstrate simple aspects of the lower layers of this theory.'
 					'Thirty-five students completed two computer laboratory assignments within the Funk2 language that related the continuity between the contemporary fields of planning and reinforcement learning in relational domains to Prof. Minsky\'s theory for how to build a cognitive architecture.']]
 	  this]
-	[let [[this [new funk2_post]]]
+	[let [[this [new htmldoc_post]]]
 	  [set this title  'Funk2 presented at Seed Magazine in New York']
 	  [set this date   'May 12th, 2010']
 	  [set this author '<a href="#">Bo Morgan</a>']
@@ -1017,28 +620,28 @@
 	]]
 
 [defunk generate_all_examples []
-  [list [let [[this [new funk2_example]]]
+  [list [let [[this [new htmldoc_example]]]
 	  [set this name   'cairo-test']
 	  [set this title  'Cairo Test']
 	  [set this date   'February 19th, 2011']
 	  [set this author 'Bo Morgan']
 	  [set this entry  [string-load 'example/cairo-test/cairo-test.fu2']]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'GTK_GUI']
 	  [set this title  'GTK graphical user interface']
 	  [set this date   'October 14th, 2010']
 	  [set this author 'Bo Morgan']
 	  [set this entry  [string-load 'example/gtk-test/gtk-test.fu2']]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'xmlrpc_client']
 	  [set this title  'XML-RPC client']
 	  [set this date   'October 26th, 2010']
 	  [set this author 'Bo Morgan']
 	  [set this entry  [string-load 'example/xmlrpc-test/xmlrpc-test.fu2']]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'graph_matching']
 	  [set this title  'Graph Matching']
 	  [set this date   'May 13th, 2010']
@@ -1046,7 +649,7 @@
 	  [set this entry  [string-prog 'coming soon!'
 					]]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'graphviz']
 	  [set this title  'GraphViz Graph Visualization']
 	  [set this date   'May 13th, 2010']
@@ -1054,7 +657,7 @@
 	  [set this entry  [string-prog 'coming soon!'
 					]]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'parallel_programming']
 	  [set this title  'Parallel Programming']
 	  [set this date   'May 14th, 2010']
@@ -1062,7 +665,7 @@
 	  [set this entry  [string-prog 'coming soon!'
 					]]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'causal_event_tracing']
 	  [set this title  'Causal event tracing']
 	  [set this date   'May 13th, 2010']
@@ -1070,7 +673,7 @@
 	  [set this entry  [string-prog 'coming soon!'
 					]]
 	  this]
-	[let [[this [new funk2_example]]]
+	[let [[this [new htmldoc_example]]]
 	  [set this name   'isisworld_client']
 	  [set this title  'IsisWorld client']
 	  [set this date   'May 13th, 2010']
@@ -1080,33 +683,34 @@
 	  this]
 	]]
 
-[defunk compile_funk2_webpage [root_dir posts examples]
-  [print 'compiling funk2 about']         [compile_funk2_about         root_dir posts examples]
-  [print 'compiling funk2 news']          [compile_funk2_news          root_dir posts examples]
-  [print 'compiling funk2 documentation'] [compile_funk2_documentation root_dir posts examples]
-  [print 'compiling funk2 download']      [compile_funk2_download      root_dir posts examples]
-  [print 'compiling funk2 community']     [compile_funk2_community     root_dir posts examples]
-  [print 'compiling funk2 support']       [compile_funk2_support       root_dir posts examples]
-  [print 'compiling funk2 development']   [compile_funk2_development   root_dir posts examples]
-  [print 'compiling funk2 applications']  [compile_funk2_applications  root_dir posts examples]
-  [print 'compiling funk2 examples']      [compile_funk2_examples      root_dir posts examples]
+[defunk compile_funk2_webpage [context]
+  [print 'compiling funk2 about']         [compile_funk2_about         context]
+  [print 'compiling funk2 news']          [compile_funk2_news          context]
+  [print 'compiling funk2 documentation'] [compile_funk2_documentation context]
+  [print 'compiling funk2 download']      [compile_funk2_download      context]
+  [print 'compiling funk2 community']     [compile_funk2_community     context]
+  [print 'compiling funk2 support']       [compile_funk2_support       context]
+  [print 'compiling funk2 development']   [compile_funk2_development   context]
+  [print 'compiling funk2 applications']  [compile_funk2_applications  context]
+  [print 'compiling funk2 examples']      [compile_funk2_examples      context]
   [print 'done compiling']
   nil]]
 
-[let [[root_dir '/home/neptune/Desktop/www/funk2/']
-      [posts    [generate_all_posts]]
-      [examples [generate_all_examples]]]
+[let [[context [new htmldoc_context '/home/neptune/Desktop/www/funk2/']]]
+  [set context title 'Funk2 Programming Language -- Official Website']
+  [set context posts    [generate_all_posts]]
+  [set context examples [generate_all_examples]]
   
-  [defunk webpage-save             [] [compile_funk2_webpage       root_dir posts examples]]
-  [defunk funk2_about-save         [] [compile_funk2_about         root_dir posts examples]]
-  [defunk funk2_news-save          [] [compile_funk2_news          root_dir posts examples]]
-  [defunk funk2_documentation-save [] [compile_funk2_documentation root_dir posts examples]]
-  [defunk funk2_download-save      [] [compile_funk2_download      root_dir posts examples]]
-  [defunk funk2_community-save     [] [compile_funk2_community     root_dir posts examples]]
-  [defunk funk2_support-save       [] [compile_funk2_support       root_dir posts examples]]
-  [defunk funk2_development-save   [] [compile_funk2_development   root_dir posts examples]]
-  [defunk funk2_applications-save  [] [compile_funk2_applications  root_dir posts examples]]
-  [defunk funk2_examples-save      [] [compile_funk2_examples      root_dir posts examples]]
+  [defunk webpage-save             [] [compile_funk2_webpage       context]]
+  [defunk funk2_about-save         [] [compile_funk2_about         context]]
+  [defunk funk2_news-save          [] [compile_funk2_news          context]]
+  [defunk funk2_documentation-save [] [compile_funk2_documentation context]]
+  [defunk funk2_download-save      [] [compile_funk2_download      context]]
+  [defunk funk2_community-save     [] [compile_funk2_community     context]]
+  [defunk funk2_support-save       [] [compile_funk2_support       context]]
+  [defunk funk2_development-save   [] [compile_funk2_development   context]]
+  [defunk funk2_applications-save  [] [compile_funk2_applications  context]]
+  [defunk funk2_examples-save      [] [compile_funk2_examples      context]]
   
   ]
 

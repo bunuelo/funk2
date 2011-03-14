@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage funk2_webpage
-  :packages [funk2-htmldoc]
-   :sources ['funk2_webpage.fu2']]
+[defpackage funk2-htmldoc
+  :packages [math]
+   :sources ['funk2-htmldoc.fu2']]
 

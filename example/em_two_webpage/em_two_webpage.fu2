@@ -738,7 +738,7 @@
 	       '				</li>'
 	       '				<li>'
 	       '					<h2>Tags</h2>'
-	       '					<p class="tag"><a href="#">reflection</a> <a href="#">mind</a> <a href="#">consciousness</a> <a href="#">debug</a> <a href="#">language</a> <a href="#">control</a> <a href="#">learn</a> <a href="#">cognitive model</a></p></li>'
+	       '					<p class="tag"><a href="#">reflection</a> <a href="#">mind</a> <a href="#">consciousness</a> <a href="#">debug</a> <a href="#">language</a> <a href="#">control</a> <a href="#">learn</a> <a href="#">cognitive archiecture</a></p></li>'
 	       '				<li>'
 	       '					<h2>Calendar</h2>'
 	       [em_two_calendar]

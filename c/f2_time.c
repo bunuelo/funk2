@@ -536,17 +536,18 @@ void f2__time__initialize() {
   // time
   
   initialize_primobject_1_slot(time, nanoseconds_since_1970);
-  initialize_primobject_funk__0_arg(time, equals,                        "The time represented by this and that time object are the same even if the objects themselves are different objects.");
-  initialize_primobject_funk__0_arg(time, years,                         "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.");
-  initialize_primobject_funk__0_arg(time, months,                        "The number of months since the beginning of the year.");
-  initialize_primobject_funk__0_arg(time, days,                          "The number of days since the beginning of the month.");
-  initialize_primobject_funk__0_arg(time, hours,                         "The number of hours since the beginning of the day.");
-  initialize_primobject_funk__0_arg(time, minutes,                       "The number of minutes since the beginning of the hour.");
-  initialize_primobject_funk__0_arg(time, seconds,                       "The number of seconds since the beginning of the minute.");
-  initialize_primobject_funk__0_arg(time, nanoseconds,                   "The number of nanoseconds since the beginning of the second.");
-  initialize_primobject_funk__1_arg(time, is_less_than,            that, "Returns t if this time is further in the past than that time.");
-  initialize_primobject_funk__1_arg(time, is_greater_than,         that, "Returns t if this time is further in the future than that time.");
-  initialize_primobject_funk__1_arg(time, is_numerically_equal_to, that, "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.");
+  initialize_primobject_funk__0_arg(time, equals,                         "The time represented by this and that time object are the same even if the objects themselves are different objects.");
+  initialize_primobject_funk__0_arg(time, years,                          "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.");
+  initialize_primobject_funk__0_arg(time, months,                         "The number of months since the beginning of the year.");
+  initialize_primobject_funk__0_arg(time, days,                           "The number of days since the beginning of the month.");
+  initialize_primobject_funk__0_arg(time, hours,                          "The number of hours since the beginning of the day.");
+  initialize_primobject_funk__0_arg(time, minutes,                        "The number of minutes since the beginning of the hour.");
+  initialize_primobject_funk__0_arg(time, seconds,                        "The number of seconds since the beginning of the minute.");
+  initialize_primobject_funk__0_arg(time, nanoseconds,                    "The number of nanoseconds since the beginning of the second.");
+  initialize_primobject_funk__1_arg(time, is_less_than,             that, "Returns t if this time is further in the past than that time.");
+  initialize_primobject_funk__1_arg(time, is_greater_than,          that, "Returns t if this time is further in the future than that time.");
+  initialize_primobject_funk__1_arg(time, is_numerically_equal_to,  that, "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.");
+  initialize_primobject_funk__0_arg(time, abbreviated_weekday_name,       "Returns the abbreviated weekday name according to the current locale.");
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk = never_gc(cfunk);}

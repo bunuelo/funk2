@@ -360,8 +360,6 @@ f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(time__is_numerically_equal_to, this, that, return f2__time__is_numerically_equal_to(this_cause, this, that));
 
 
-//       %a     The abbreviated weekday name according to the current locale.
-
 f2ptr raw__time__abbreviated_weekday_name(f2ptr cause, f2ptr this) {
   struct tm local_time_info;
   s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -380,87 +378,146 @@ f2ptr f2__time__abbreviated_weekday_name(f2ptr cause, f2ptr this) {
 def_pcfunk1(time__abbreviated_weekday_name, this, return f2__time__abbreviated_weekday_name(this_cause, this));
 
 
-//       %A     The full weekday name according to the current locale.
+f2ptr raw__time__weekday_name(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  strftime(time_string, 1023, "%A", &local_time_info);
+  time_string[1023] = 0;
+  return new__string(cause, time_string);
+}
 
-//       %b     The abbreviated month name according to the current locale.
+f2ptr f2__time__weekday_name(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__weekday_name(cause, this);
+}
+def_pcfunk1(time__weekday_name, this, return f2__time__weekday_name(this_cause, this));
 
-//       %B     The full month name according to the current locale.
 
-//       %c     The preferred date and time representation for the current locale.
+f2ptr raw__time__abbreviated_month_name(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  strftime(time_string, 1023, "%b", &local_time_info);
+  time_string[1023] = 0;
+  return new__string(cause, time_string);
+}
 
-//       %C     The century number (year/100) as a 2-digit integer. (SU)
+f2ptr f2__time__abbreviated_month_name(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__abbreviated_month_name(cause, this);
+}
+def_pcfunk1(time__abbreviated_month_name, this, return f2__time__abbreviated_month_name(this_cause, this));
 
-//       %d     The day of the month as a decimal number (range 01 to 31).
 
-//       %D     Equivalent to %m/%d/%y.  (Yecch — for Americans only.  Americans should note that in other countries %d/%m/%y is rather common.  This means that in international context this format is ambiguous and should not be used.) (SU)
+f2ptr raw__time__month_name(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  strftime(time_string, 1023, "%B", &local_time_info);
+  time_string[1023] = 0;
+  return new__string(cause, time_string);
+}
 
-//       %e     Like %d, the day of the month as a decimal number, but a leading zero is replaced by a space. (SU)
+f2ptr f2__time__month_name(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__month_name(cause, this);
+}
+def_pcfunk1(time__month_name, this, return f2__time__month_name(this_cause, this));
 
-//       %E     Modifier: use alternative format, see below. (SU)
 
-//       %F     Equivalent to %Y-%m-%d (the ISO 8601 date format). (C99)
+f2ptr raw__time__date_and_time_string(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  strftime(time_string, 1023, "%c", &local_time_info);
+  time_string[1023] = 0;
+  return new__string(cause, time_string);
+}
 
-//       %G     The ISO 8601 week-based year (see NOTES) with century as a decimal number.  The 4-digit year corresponding to the ISO week number (see %V).  This has the same format and value as %Y, except that if the ISO week number belongs to the previous or next year, that year is used instead. (TZ)
+f2ptr f2__time__date_and_time_string(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__date_and_time_string(cause, this);
+}
+def_pcfunk1(time__date_and_time_string, this, return f2__time__date_and_time_string(this_cause, this));
 
-//       %g     Like %G, but without century, that is, with a 2-digit year (00-99). (TZ)
 
-//       %h     Equivalent to %b.  (SU)
+f2ptr raw__time__day_of_week(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  return f2integer__new(cause, local_time_info.tm_wday);
+}
 
-//       %H     The hour as a decimal number using a 24-hour clock (range 00 to 23).
+f2ptr f2__time__day_of_week(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__day_of_week(cause, this);
+}
+def_pcfunk1(time__day_of_week, this, return f2__time__day_of_week(this_cause, this));
 
-//       %I     The hour as a decimal number using a 12-hour clock (range 01 to 12).
 
-//       %j     The day of the year as a decimal number (range 001 to 366).
+f2ptr raw__time__day_of_year(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  return f2integer__new(cause, local_time_info.tm_yday);
+}
 
-//       %k     The hour (24-hour clock) as a decimal number (range 0 to 23); single digits are preceded by a blank.  (See also %H.)  (TZ)
+f2ptr f2__time__day_of_year(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__day_of_year(cause, this);
+}
+def_pcfunk1(time__day_of_year, this, return f2__time__day_of_year(this_cause, this));
 
-//       %l     The hour (12-hour clock) as a decimal number (range 1 to 12); single digits are preceded by a blank.  (See also %I.)  (TZ)
 
-//       %m     The month as a decimal number (range 01 to 12).
+f2ptr raw__time__is_daylight_savings_time(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  return f2integer__new(cause, local_time_info.tm_yday);
+}
 
-//       %M     The minute as a decimal number (range 00 to 59).
+f2ptr f2__time__is_daylight_savings_time(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__is_daylight_savings_time(cause, this);
+}
+def_pcfunk1(time__is_daylight_savings_time, this, return f2__time__is_daylight_savings_time(this_cause, this));
 
-//       %n     A newline character. (SU)
 
-//       %O     Modifier: use alternative format, see below. (SU)
+f2ptr raw__time__timezone(f2ptr cause, f2ptr this) {
+  struct tm local_time_info;
+  s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
+  time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  char      time_string[1024];
+  localtime_r(&seconds_since_1970, &local_time_info);
+  strftime(time_string, 1023, "%Z", &local_time_info);
+  time_string[1023] = 0;
+  return new__string(cause, time_string);
+}
 
-//       %p     Either "AM" or "PM" according to the given time value, or the corresponding strings for the current locale.  Noon is treated as "PM" and midnight as "AM".
+f2ptr f2__time__timezone(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__timezone(cause, this);
+}
+def_pcfunk1(time__timezone, this, return f2__time__timezone(this_cause, this));
 
-//       %P     Like %p but in lowercase: "am" or "pm" or a corresponding string for the current locale. (GNU)
 
-//       %r     The time in a.m. or p.m. notation.  In the POSIX locale this is equivalent to %I:%M:%S %p.  (SU)
 
-//       %R     The time in 24-hour notation (%H:%M). (SU) For a version including the seconds, see %T below.
-
-//       %s     The number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC). (TZ)
-
-//       %S     The second as a decimal number (range 00 to 60).  (The range is up to 60 to allow for occasional leap seconds.)
-
-//       %t     A tab character. (SU)
-
-//       %T     The time in 24-hour notation (%H:%M:%S). (SU)
-
-//       %u     The day of the week as a decimal, range 1 to 7, Monday being 1.  See also %w.  (SU)
-
-//       %U     The week number of the current year as a decimal number, range 00 to 53, starting with the first Sunday as the first day of week 01.  See also %V and %W.
-
-//       %V     The ISO 8601 week number (see NOTES) of the current year as a decimal number, range 01 to 53, where week 1 is the first week that has at least 4 days in the new year.  See also %U and %W.  (SU)
-
-//       %w     The day of the week as a decimal, range 0 to 6, Sunday being 0.  See also %u.
-
-//       %W     The week number of the current year as a decimal number, range 00 to 53, starting with the first Monday as the first day of week 01.
-
-//       %x     The preferred date representation for the current locale without the time.
-
-//       %X     The preferred time representation for the current locale without the date.
-
-//       %y     The year as a decimal number without a century (range 00 to 99).
-
-//       %Y     The year as a decimal number including the century.
-
-//       %z     The +hhmm or -hhmm numeric timezone (that is, the hour and minute offset from UTC). (SU)
-
-//       %Z     The timezone or name or abbreviation.
+//       %Z     
 
 //       %+     The date and time in date(1) format. (TZ) (Not supported in glibc2.)
 
@@ -505,6 +562,14 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
   {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
   {char* slot_name = "abbreviated_weekday_name";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.abbreviated_weekday_name__funk);}
+  {char* slot_name = "weekday_name";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.weekday_name__funk);}
+  {char* slot_name = "abbreviated_month_name";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.abbreviated_month_name__funk);}
+  {char* slot_name = "month_name";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.month_name__funk);}
+  {char* slot_name = "date_and_time_string";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.date_and_time_string__funk);}
+  {char* slot_name = "day_of_week";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.day_of_week__funk);}
+  {char* slot_name = "day_of_year";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.day_of_year__funk);}
+  {char* slot_name = "is_daylight_savings_time";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_daylight_savings_time__funk);}
+  {char* slot_name = "timezone";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.timezone__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk);}
   return this;
 }
@@ -548,6 +613,14 @@ void f2__time__initialize() {
   initialize_primobject_funk__1_arg(time, is_greater_than,          that, "Returns t if this time is further in the future than that time.");
   initialize_primobject_funk__1_arg(time, is_numerically_equal_to,  that, "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.");
   initialize_primobject_funk__0_arg(time, abbreviated_weekday_name,       "Returns the abbreviated weekday name according to the current locale.");
+  initialize_primobject_funk__0_arg(time, weekday_name,                   "Returns the full weekday name according to the current locale.");
+  initialize_primobject_funk__0_arg(time, abbreviated_month_name,         "Returns the abbreviated month name according to the current locale.");
+  initialize_primobject_funk__0_arg(time, month_name,                     "Returns the full month name according to the current locale.");
+  initialize_primobject_funk__0_arg(time, date_and_time_string,           "Returns the preferred date and time representation for the current locale.");
+  initialize_primobject_funk__0_arg(time, day_of_week,                    "Returns the number of the days of the week since Sunday (0 - 6).");
+  initialize_primobject_funk__0_arg(time, day_of_year,                    "Returns the number of the days into the year (0 - 365).");
+  initialize_primobject_funk__0_arg(time, is_daylight_savings_time,       "Returns a boolean depicting whether or not the time is daylight savings or not.");
+  initialize_primobject_funk__0_arg(time, timezone,                       "Returns the timezone or name or abbreviation.");
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk = never_gc(cfunk);}

@@ -258,9 +258,7 @@
 
 
 [defunk compile_em_two_documentation [context]
-  [set  context documentation_packages [package_names]]
   [have context require_documentation_packages]
-  [set  context documentation_objects [system-type_names]]
   [have context compile_documentation]
   nil]
 

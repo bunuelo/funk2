@@ -80,23 +80,6 @@
 [defunk em_two_documentation-content [context]
   [string-prog '<h1>Documentation</h1>'
 	       ''
-	       '<p>Funk2 is not yet completely documented.'
-	       'Please see the examples on the lower left sidebar of this page to get an idea of how Funk2 is used.'
-	       'Here, we have used Funk2\'s introspective functionality in order to print all object types and how those objects can be used.'
-	       'There are three primary ways of interactive with objects once they have been created: <tt>get</tt>, <tt>set</tt>, and <tt>execute</tt>.</p>'
-	       ''
-	       '<tt>'
-	       '  <p>[globalize a `[44 20 51 165]]</p>'
-	       '  <p>[get a car]</p>'
-	       '  <p>[get a cdr]</p>'
-	       '  <p>[set a car \'a string\']</p>'
-	       '  <p>[have a sort &>]</p>'
-	       '</tt>'
-	       ''
-	       '<p>In the short example above, we have defined a global variable named <tt>a</tt> that stores a list of numbers.'
-	       'Then, we get the <tt>car</tt> and <tt>cdr</tt> slot values of this object, like in the Lisp programming language.'
-	       'Finally, we execute the <tt>sort</tt> funk and give it the <tt>></tt> comparison function.</p>'
-	       ''
 	       [get context documentation_overview_content]]]
 
 [defunk em_two_documentation [context]

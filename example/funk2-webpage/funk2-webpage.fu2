@@ -596,6 +596,8 @@
 	]]
 
 
+[defunk compile_funk2_css [context]
+  [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
 
 [defunk compile_funk2_root_page [context]
   [have [htmldoc_redirect_page 'news/'] save [string-concat [get context root_dir] 'index.html']]]
@@ -614,7 +616,9 @@
 	[get context examples]]
   nil]
 
+
 [defunk compile_funk2_webpage [context]
+  [print 'compiling funk2 css']           [compile_funk2_css           context]
   [print 'compiling funk2 root page']     [compile_funk2_root_page     context]
   [print 'compiling funk2 tabs']          [have context compile_tabs]
   [print 'compiling funk2 documentation'] [compile_funk2_documentation context]

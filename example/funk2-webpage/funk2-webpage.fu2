@@ -397,6 +397,9 @@
 
 
 [defunk compile_funk2_documentation [context]
+  [set  context documentation_packages [package_names]]
+  [have context require_documentation_packages]
+  [set  context documentation_objects [system-type_names]]
   [have context compile_documentation]
   nil]
 
@@ -430,8 +433,8 @@
   [set  context subtitle                               'Causally Reflective Parallel Programming Language']
   [set  context posts                                  [generate_all_posts]]
   [set  context examples                               [generate_all_examples]]
-  [set  context documentation_objects                  `[htmldoc_context]] [system-type_names]
-  [set  context documentation_packages                 `[funk2-webpage]] `[package_names]
+  [set  context documentation_packages                 [package_names]]
+  [set  context documentation_objects                  [system-type_names]]
   [set  context background_color                       '#000000']
   [set  context font_color                             '#FFFFFF']
   [set  context link_color                             '#7193AF']

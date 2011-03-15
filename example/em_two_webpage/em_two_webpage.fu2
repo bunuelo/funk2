@@ -273,7 +273,7 @@
   [set  context sidebar_background_color               '#FFFFFF']
   [set  context sidebar_font_color                     '#000000']
   [set  context sidebar_link_color                     '#0000FF']
-  [set  context footer_top_border_color                '#DDDDDD']
+  [set  context footer_top_border_color                '#FFFFFF']
   [set  context footer_font_color                      '#000000']
   [set  context footer_link_color                      '#0000FF']
   [set  context search_background_color                '#FFFFFF']

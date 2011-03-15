@@ -582,6 +582,11 @@
 	       '  border: 1px solid;'
 	       [string-concat '  border-color: ' [get context search_active_border_color] ';']
 	       '}'
+	       '/* Result link */'
+	       '.cse .gsc-webResult.gsc-result:link,'
+	       '.gsc-webResult.gsc-result:link {'
+	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
 	       '/*Promotion Settings*/'
 	       '/* The entire promo */'
 	       '.cse .gs-promotion.gs-result,'

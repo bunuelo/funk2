@@ -293,17 +293,6 @@
 
 
 
-[defunk funk2_applications-content []
-  [string-prog '<h1>Applications</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk funk2_applications [context]
-  [htmldoc_page context
-		[funk2_applications-content]]]
-
-
-
 [defunk funk2_example [context example]
   [let [[content [string-prog '<!-- start content -->'
 			      '<div id="content">'
@@ -624,7 +613,6 @@
   [have context add_tab          [new htmldoc_tab `News          &funk2_news]]
   [have context add_tab          [new htmldoc_tab `Documentation &funk2_documentation]]
   [have context add_tab          [new htmldoc_tab `Download      &funk2_download]]
-  [have context add_tab          [new htmldoc_tab `Applications  &funk2_applications]]
   
   [defunk webpage-save             []                                                         [compile_funk2_webpage       context]]
   [defunk funk2_css-save           []                                                         [compile_funk2_css           context]]
@@ -632,7 +620,6 @@
   [defunk funk2_news-save          [] [have [get context tab `News]          compile context]]
   [defunk funk2_documentation-save [] [have [get context tab `Documentation] compile context] [compile_funk2_documentation context]]
   [defunk funk2_download-save      [] [have [get context tab `Download]      compile context]]
-  [defunk funk2_applications-save  [] [have [get context tab `Applications]  compile context]]
   [defunk funk2_examples-save      []                                                         [compile_funk2_examples      context]]
   
   ]

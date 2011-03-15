@@ -507,7 +507,7 @@
 	       '/* Selector for entire element. */'
 	       '.cse .gsc-control-cse,'
 	       '.gsc-control-cse {'
-	       '  background-color: #ffffff;'
+	       '  background-color: #000000;'
 	       '  border: 1px solid;'
 	       '  border-color: #ffffff;'
 	       '}'

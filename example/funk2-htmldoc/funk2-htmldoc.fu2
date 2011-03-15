@@ -202,7 +202,7 @@
 			       [string-prog '<h2>Package Dependencies</h2>'
 					    '<ul>'
 					    [stringlist-prog [mapcar [funk [package_dependency]
-									   [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
+									   `[print [string-concat '  package dependency: ' [get package_dependency as-string]]]
 									   [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
 								     [get package package_dependencies]]]
 					    '</ul>'
@@ -215,7 +215,7 @@
 					    '<h2>Objects Defined</h2>'
 					    '<ul>'
 					    [stringlist-prog [mapcar [funk [object_type_defined]
-									   [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
+									   `[print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
 									   [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
 								     [get [get package object_types_defined_set] elements]]]
 					    '</ul>'

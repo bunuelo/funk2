@@ -115,7 +115,7 @@
 
 [defunk em_two-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
-       [set this title       'Welcome to the official Moral Compass Website!']
+       [set this title       'Welcome to the Moral Compass Website!']
        [set this date        'March 13th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']

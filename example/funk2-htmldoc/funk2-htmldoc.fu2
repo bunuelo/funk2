@@ -43,8 +43,6 @@
 				  posts
 				  examples
 				  tabs
-				  [background_color                       '#FFFFFF']
-				  [font_color                             '#000000']
 				  [background_color                       '#000044']
 				  [font_color                             '#FFFFFF']
 				  [link_color                             '#7193AF']

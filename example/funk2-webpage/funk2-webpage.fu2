@@ -659,6 +659,7 @@
   [set  context search_visited_link_color              '#FFFFFF']
   [set  context search_hover_link_color                '#FFFFFF']
   [set  context search_active_link_color               '#FFFFFF']
+  [set  context search_url_color                       '#AAAAAA']
   [have context add_tab          [new htmldoc_tab `About         &funk2_about]]
   [have context add_tab          [new htmldoc_tab `News          &funk2_news]]
   [have context add_tab          [new htmldoc_tab `Documentation &funk2_documentation]]

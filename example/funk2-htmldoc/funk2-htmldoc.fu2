@@ -71,7 +71,8 @@
 				  [search_link_color                      '#0000FF']
 				  [search_visited_link_color              '#0000FF']
 				  [search_hover_link_color                '#0000FF']
-				  [search_active_link_color               '#0000FF']]
+				  [search_active_link_color               '#0000FF']
+				  [search_url_color                       '#0000FF']]
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]
 
@@ -598,6 +599,10 @@
 	       '.cse .gsc-webResult.gsc-result b,'
 	       '.gsc-webResult.gsc-result b {'
 	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
+	       '.cse .gsc-webResult.gsc-result gsc-visibleUrl,'
+	       '.gsc-webResult.gsc-result gsc-visibleUrl {'
+	       [string-concat '  color: ' [get context search_url_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'
 	       '/* The entire promo */'

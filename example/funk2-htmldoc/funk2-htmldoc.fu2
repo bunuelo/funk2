@@ -65,7 +65,8 @@
 				  [footer_font_color                      '#000000']
 				  [footer_link_color                      '#0000FF']
 				  [search_background_color                '#000000']
-				  [search_border_color                    '#222222']]
+				  [search_active_border_color             '#222222']
+				  [search_active_border_color             '#888888']]
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]
 
@@ -568,14 +569,14 @@
 	       '.gsc-webResult.gsc-result {'
 	       '  padding: .25em;'
 	       '  border: 1px solid;'
-	       '  border-color: #ffffff;'
+	       [string-concat '  border-color: ' [get context search_border_color] ';']
 	       '  margin-bottom: 1em;'
 	       '}'
 	       '/* Result hover event styling */'
 	       '.cse .gsc-webResult.gsc-result:hover,'
 	       '.gsc-webResult.gsc-result:hover {'
 	       '  border: 1px solid;'
-	       [string-concat '  border-color: ' [get context search_border_color] ';']
+	       [string-concat '  border-color: ' [get context search_active_border_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'
 	       '/* The entire promo */'

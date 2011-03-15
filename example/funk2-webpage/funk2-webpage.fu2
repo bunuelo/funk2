@@ -480,7 +480,7 @@
 
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/funk2/']]]
   [set  context title                                  'Funk2']
-  [set  context title                                  'Causally Reflective Parallel Programming Language']
+  [set  context subtitle                               'Causally Reflective Parallel Programming Language']
   [set  context posts                                  [generate_all_posts]]
   [set  context examples                               [generate_all_examples]]
   [set  context documentation_objects                  [system-type_names]]

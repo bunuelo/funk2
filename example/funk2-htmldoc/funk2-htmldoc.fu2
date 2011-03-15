@@ -66,7 +66,11 @@
 				  [footer_link_color                      '#0000FF']
 				  [search_background_color                '#000000']
 				  [search_border_color                    '#222222']
-				  [search_active_border_color             '#888888']]
+				  [search_active_border_color             '#888888']
+				  [search_link_color                      '#0000FF']
+				  [search_visited_link_color              '#0000FF']
+				  [search_hover_link_color                '#0000FF']
+				  [search_active_link_color               '#0000FF']]
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]
 
@@ -592,19 +596,19 @@
 	       '/* Promotion title */'
 	       '.cse .gs-promotion.gs-result a.gs-title:link,'
 	       '.gs-promotion.gs-result a.gs-title:link {'
-	       '  color: #0000CC;'
+	       [string-concat '  color: ' [get context search_link_color] ';']
 	       '}'
 	       '.cse .gs-promotion.gs-result a.gs-title:visited,'
 	       '.gs-promotion.gs-result a.gs-title:visited {'
-	       '  color: #0000CC;'
+	       [string-concat '  color: ' [get context search_visited_link_color] ';']
 	       '}'
 	       '.cse .gs-promotion.gs-result a.gs-title:hover,'
 	       '.gs-promotion.gs-result a.gs-title:hover {'
-	       '  color: #0000CC;'
+	       [string-concat '  color: ' [get context search_hover_link_color] ';']
 	       '}'
 	       '.cse .gs-promotion.gs-result a.gs-title:active,'
 	       '.gs-promotion.gs-result a.gs-title:active {'
-	       '  color: #0000CC;'
+	       [string-concat '  color: ' [get context search_active_link_color] ';']
 	       '}'
 	       '/* Promotion snippet */'
 	       '.cse .gs-promotion.gs-result .gs-snippet,'

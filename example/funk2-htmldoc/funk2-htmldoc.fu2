@@ -856,7 +856,8 @@
 	       '    customSearchControl.draw(\'cse\');'
 	       '  }, true);'
 	       '</script>'
-	       '<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />'
+	       [prog '<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />'
+		     '']
 	       '				</li>'
 	       '				<li>'
 	       '					<h2>Tags</h2>'

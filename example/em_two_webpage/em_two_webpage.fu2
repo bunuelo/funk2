@@ -288,7 +288,7 @@
   [print 'done compiling']
   nil]]
 
-[let [[context [new htmldoc_context '/home/neptune/Desktop/www/em_two/']]]
+[let [[context [new htmldoc_context '/home/neptune/Desktop/www/em-two/']]]
   [set  context hostname                               'em-two.net']
   [set  context title                                  'Moral Compass']
   [set  context subtitle                               'Social Reasoning Cognitive Architecture']

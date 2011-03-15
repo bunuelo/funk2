@@ -80,6 +80,7 @@
 				  posts
 				  examples
 				  tabs
+				  tags
 				  documentation_packages
 				  documentation_objects
 				  [background_color                       '#FFFFFF']
@@ -1037,9 +1038,15 @@
 	       [prog '<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />'
 		     '']
 	       '				</li>'
-	       '				<li>'
-	       '					<h2>Tags</h2>'
-	       '					<p class="tag"><a href="#">reflection</a> <a href="#">mind</a> <a href="#">consciousness</a> <a href="#">debug</a> <a href="#">language</a> <a href="#">control</a> <a href="#">learn</a> <a href="#">cognitive model</a></p></li>'
+	       [if [get context tags]
+		   [string-prog '				<li>'
+				'					<h2>Tags</h2>'
+				'					<p class="tag">'
+				[stringlist-concat [mapcar [funk [tag]
+								 [string-concat '<a href="#">' [get tag as-string] '</a>']]
+							   [get context tags]]]
+				'				</li>']
+		 '']
 	       '				<li>'
 	       '					<h2>Calendar</h2>'
 	       [htmldoc_calendar]

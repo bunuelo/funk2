@@ -629,7 +629,7 @@
 	       '	width: 1000px;'
 	       '	height: 55px;'
 	       '	margin: 0 auto;'
-	       '	background: #344351;'
+	       [string-concat 'background: ' [get context background_color] ';']
 	       [string-concat 'border-top: 2px solid ' [get context footer_top_border_color] ';']
 	       '}'
 	       ''

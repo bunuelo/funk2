@@ -39,7 +39,7 @@
 	       '<!-- end content -->']]
 
 
-[deftypefunk htmldoc_example compile [context]
+[deftypefunk htmldoc_example execute compile [context]
   [let [[html_code [htmldoc_page context [get this page_content]]]]
     [shelter [mkdir [string-concat [get context root_dir] 'example']]]
     [shelter [mkdir [string-concat [get context root_dir] 'example/' [get this name]]]]

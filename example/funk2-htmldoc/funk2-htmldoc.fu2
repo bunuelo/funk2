@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe htmldoc_post    [frame] [title date author entry]]
+[deframe htmldoc_post    [frame] [title date author author_link entry]]
 [deframe htmldoc_example [frame] [name title date author entry]]
 
 [deframe htmldoc_tab [frame] [name generator_funk]

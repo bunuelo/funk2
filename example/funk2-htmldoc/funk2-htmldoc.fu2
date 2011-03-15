@@ -516,7 +516,7 @@
 	       '.cse .gsc-control-cse,'
 	       '.gsc-control-cse {'
 	       [string-concat '  background-color: ' [get context search_background_color] ';']
-	       '  border: 1px solid;'
+	       '  border: 0px solid;'
 	       '  border-color: #000000;'
 	       '}'
 	       '.cse .gsc-control-cse:after,'

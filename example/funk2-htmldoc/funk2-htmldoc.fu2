@@ -229,7 +229,7 @@
 		    [package_documentation [htmldoc_package_documentation this package_name]]]
 		[shelter [mkdir [string-concat [get this root_dir] 'documentation/package/' package_name_string]]]
 		[have package_documentation save [string-concat [get this root_dir] 'documentation/package/' package_name_string '/index.html']]]]
-	[package_names]]]
+	[get this documentation_packages]]]
 
 [deftypefunk htmldoc_context execute compile_documentation []
   [shelter [mkdir [string-concat [get this root_dir] 'documentation']]]

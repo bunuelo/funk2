@@ -17,129 +17,156 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk em_two_about-content [context]
+
+
+[defunk em_two_about-content []
   [string-prog '<h1>About</h1>'
 	       ''
-	       'Coming soon!']]
+	       '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
+	       'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+	       'The Funk2 project is currently supported as a core research effort of the <a href=http://mmp.mit.edu>Mind Machine Project</a>.</p>'	       ''
+	       ''
+	       '<p>The goal of the programming language Funk2 is to enable reflective algorithmic tracing for large heterogenous control systems. A few points emphasized in the Funk2 programming language are:</p>'
+	       ''
+	       '<ul>'
+	       '  <li>Layered Critical Causal Reflection</li>'
+	       '  <li>Efficient and Robust Control</li>'
+	       '  <li>Learning by Credit Assignment</li>'
+	       '  <li>Divergent Solution Paths</li>'
+	       '  <li>Intricate Thread Control</li>'
+	       '  <li>Goal-oriented Learning</li>'
+	       '</ul>'
+	       ''
+	       '<p>Funk2 is a novel programming language that introduced a programming technology that we call Causal Reflective Programming.'
+	       'The language is based on a peer-to-peer shared memory system, allowing individuals access to large numbers of processors and memory.'
+	       'Funk2 uses a virtual scheduler, processor, and thread model that is based on top of the shared memory system, while taking advantage of the specific number of processor cores on each machine.'
+	       'We use POSIX threads to implement virtual processors.'
+	       'Funk2 includes very simple and abstract data and syntax representation--inspired by lisp and scheme.'
+	       'Funk2 compiles to bytecodes that may be shared between architectures, inspired by these similar concepts in Python and Java virtual machines.'
+	       'What is novel to the Funk2 programming language is it\'s unique ability to keep track of everything that it does, which uses a lot of memory when used indiscreetly, but in general allows reflective tracing for causal reasons why bugs occur, when they inevitably do.'
+	       'Other reflective features of the language include an event-based inter-process communication system that works across the peer-to-peer network, inspired by the Erlang model.'
+	       'We see a language like this as necessary for the social, iterative, cooperative design environment for large distributed complex control systems.'
+	       'Our applications are inspired by Marvin Minsky\'s, Emotion Machine layered control algorithm for a Society of Mind.</p>'
+	       ''
+	       '<h2>Publications</h2>'
+	       ''
+	       '<ul>'
+	       '  <li><a href="http://neuromin.de/rct/morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf">Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</a></li>'
+	       '  <li><a href="http://neuromin.de/rct/morgan2009-funk2_memory-draft.pdf">Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities"; Technical Note; Massachusetts Institute of Technology; 2009 May</a></li>'
+	       '</ul>'
+	       ''
+	       '<h2>Presentations</h2>'
+	       ''
+	       '<ul>'
+	       '  <li><a href="http://neuromin.de/rct/funk2_trust_presentation.html">Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</a></li>'
+	       '  <li><a href="http://neuromin.de/rct/2008_01_13-resenv-causal_reflection_programming.pdf">Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
+	       '</ul>'
+	       ''
+	       ]]
 
 [defunk em_two_about [context]
-  [em_two_page context
-	       [em_two_about-content context]]]
+  [htmldoc_page context
+		[em_two_about-content]]]
 
 
 [defunk em_two_news-content [context]
-  [string-prog [stringlist-prog [let [[index 0]]
-				  [mapcar [funk [post]
-						[= index [+ index 1]]
-						[string-prog '<div class="post">'
-							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
-							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
-							     '  <div class="entry">'
-							     [get post entry]
-							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-							     '  </div>'
-							     '</div>']]
-					  [get context posts]]]]
-	       ]]
+  [get context all_posts_content]]
 
 [defunk em_two_news [context]
-  [em_two_page context
-	       [em_two_news-content context]]]
+  [htmldoc_page context
+		[em_two_news-content context]]]
 
 
-[defunk em_two_documentation_format [documentation]
-  [string-prog '<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'
-	       [if [is-type `string documentation]
-		   [stringlist-intersperse [have documentation split '\n'] '<br>']
-		 [exp-as-string documentation]]
-	       '</td></tr></table>']]
+[defunk em_two_documentation-content [context]
+  [string-prog '<h1>Documentation</h1>'
+	       ''
+	       '<p>Funk2 is not yet completely documented.'
+	       'Please see the examples on the lower left sidebar of this page to get an idea of how Funk2 is used.'
+	       'Here, we have used Funk2\'s introspective functionality in order to print all object types and how those objects can be used.'
+	       'There are three primary ways of interactive with objects once they have been created: <tt>get</tt>, <tt>set</tt>, and <tt>execute</tt>.</p>'
+	       ''
+	       '<tt>'
+	       '  <p>[globalize a `[44 20 51 165]]</p>'
+	       '  <p>[get a car]</p>'
+	       '  <p>[get a cdr]</p>'
+	       '  <p>[set a car \'a string\']</p>'
+	       '  <p>[have a sort &>]</p>'
+	       '</tt>'
+	       ''
+	       '<p>In the short example above, we have defined a global variable named <tt>a</tt> that stores a list of numbers.'
+	       'Then, we get the <tt>car</tt> and <tt>cdr</tt> slot values of this object, like in the Lisp programming language.'
+	       'Finally, we execute the <tt>sort</tt> funk and give it the <tt>></tt> comparison function.</p>'
+	       ''
+	       [get context documentation_overview_content]]]
 
-[defunk em_two_funk_documentation [funk]
-  [em_two_documentation_format [get funk documentation]]]
+[defunk em_two_documentation [context]
+  [htmldoc_page context
+		[em_two_documentation-content context]]]
 
-[defunk em_two_object_documentation [context type_name]
-  [print [string-concat 'compiling ' [get type_name as-string] ' object documentation']]
-  [em_two_page posts examples
-	      [string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
-			   [let [[type [lookup_type type_name]]]
-			     [string-prog '<h2><tt>get</tt> interface</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [key_name]
-									 [print [string-concat '  key: ' [get key_name as-string]]]
-									 [let [[funk [get type type_var_value `get key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'<p>'
-											[em_two_funk_documentation funk]
-											'</p><br>'
-											'</li>']]]
-								   [get type type_var-keys `get]]]
-					  '</ul>'
-					  ''
-					  '<h2><tt>set</tt> interface</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [key_name]
-									 [print [string-concat '  key: ' [get key_name as-string]]]
-									 [let [[funk [get type type_var_value `set key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'<p>'
-											[em_two_funk_documentation funk]
-											'</p><br>'
-											'</li>']]]
-								   [get type type_var-keys `set]]]
-					  '</ul>'
-					  ''
-					  '<h2><tt>execute</tt> interface</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [key_name]
-									 [print [string-concat '  key: ' [get key_name as-string]]]
-									 [let [[funk [get type type_var_value `execute key_name nil]]]
-									   [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											'<p>'
-											[em_two_funk_documentation funk]
-											'</p><br>'
-											'</li>']]]
-								   [get type type_var-keys `execute]]]
-					  '</ul>'
-					  ]]
-			   ''
-			   ]]]
 
-[defunk em_two_documentation-all_objects-save [root_dir posts examples]
-  [mapc [funk [type_name]
-	      [let [[type_name_string     [get type_name as-string]]
-		    [object_documentation [em_two_object_documentation posts examples type_name]]]
-		[shelter [mkdir [string-concat root_dir 'documentation/object/' type_name_string]]]
-		[have object_documentation save [string-concat root_dir 'documentation/object/' type_name_string '/index.html']]]]
-	[system-type_names]]]
+[defunk em_two_download-content []
+  [string-prog '<h1>Download</h1>'
+	       ''
+	       '<h2>Binary and Source Packages</h2>'
+	       ''
+	       '<p>The following is a direct link to the latest version of platform independent source code, which compiles and runs cleanly on Linux, MacOSX, and Windows (under CygWin):</p>'
+	       '  <ul>'
+	       '    <li><a href="/version/funk2-2.11.0.2010.05.04/funk2-2.11.0.2010.05.04.tar.gz">Latest Architecture and Platform Independent Source Code (version 2.11.0.2010.05.04)</a></li>'
+	       '  </ul>'
+	       ''
+	       '<p>The following table includes direct links to the latest architecture and platform specific binary packages. In most situations, you should be able to simply single-click on the appropriate link in order for your operating system to fully install the latest version of Funk2.</p>'
+	       '  <ul>'
+	       '    <li><a href="/arch/i386/funk2_2.11.0.2010.04.20_i386.deb">Debian Sid i386 binary package (version 2.11.0.2010.04.20)</a></li>'
+	       '    <li><a href="/arch/amd64/funk2_2.11.0.2010.04.20_amd64.deb">Debian Sid amd64 binary package (version 2.11.0.2010.04.20)</a></li>'
+	       '    <li><a href="/version/funk2-2.11.0.2010.05.02/funk2_2.11.0.2010.05.02_i386_macosx_10.6.3_darwin_10.3.0.pkg.tar.gz">MacOS X 10.6.3 Darwin Kernel 10.3.0 i386 binary package (version 2.11.0.2010.05.02)</a></li>'
+	       '    <li><a href="/version/funk2-2.11.0.2010.05.03/funk2_2.11.0.2010.05.03_i386_macosx_10.5.8_darwin_9.8.0.pkg.tar.gz">MacOS X 10.5.8 Darwin Kernel 9.8.0 i386 binary package (version 2.11.0.2010.05.03)</a></li>'
+	       '  </ul>'
+	       ''
+	       '<p>All Funk2 packages are signed with a public key, which is available here for your security:</p>'
+	       '  <ul>'
+	       '    <li><a href="/bo-2010_01_02.pub">Public Key for Bo Morgan <bo@mit.edu> (most recent)</a></li>'
+	       '    <li><a href="/bo-2009_01_01.pub">Public Key for Bo Morgan <bo@mit.edu> (for older packages released before 2010)</a></li>'
+	       '  </ul>'
+	       ''
+	       [prog '<p>All of the above Funk2 source tarballs and binary packages as well as all other previous versions are available here:</p>'
+		     '  <ul>'
+		     '    <li><a href="http://funk2.neuromin.de/">Funk2 HTTP File Server</a></li>'
+		     '  </ul>'
+		     '']
+	       '<p>Funk2 is developed with the Git subversioning system. Here are some public Git versioning resources:</p>'
+	       '  <ul>'
+	       '    <li><a href="http://git.neuromin.de/">Funk2 GitWeb Server</a></li>'
+	       '  </ul>'
+	       ''
+	       '<h2>Public Git Access</h2>'
+	       ''
+	       'This project is now a publicly developed project hosted via gitosis and gitweb at http://git.neuromin.de/, where you should have both access to stable packages and the trunk source repository. To clone the public git Funk2 repository on your machine, you should be able to just type the following command into a terminal:'
+	       ''
+	       '  <ul>'
+	       '    <li><tt>git clone git://neuromin.de/funk2.git</tt></li>'
+	       '  </ul>'
+	       '']]
 
-[defunk em_two_package_documentation [posts examples package_name]
-  [print [string-concat 'compiling ' [get package_name as-string] ' package documentation']]
-  [em_two_page posts examples
-	      [string-prog [string-concat '<h1><tt>' [get package_name as-string] '</tt> Package Documentation</h1>']
-			   [let [[package [lookup-package package_name]]]
-			     [string-prog '<h2>Package Dependencies</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [package_dependency]
-									 [print [string-concat '  package dependency: ' [get package_dependency as-string]]]
-									 [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
-								   [get package package_dependencies]]]
-					  '</ul>'
-					  ''
-					  '<h2>Documentation</h2>'
-					  '<p>'
-					  [em_two_documentation_format [get package documentation]]
-					  '</p><br>'
-					  ''
-					  '<h2>Objects Defined</h2>'
-					  '<ul>'
-					  [stringlist-prog [mapcar [funk [object_type_defined]
-									 [print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
-									 [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
-								   [get [get package object_types_defined_set] elements]]]
-					  '</ul>'
-					  ]]]]]
+[defunk em_two_download [context]
+  [htmldoc_page context
+		[em_two_download-content]]]
 
-[defunk em_two_documentation-all_packages []
+
+[defunk em_two-generate_all_posts []
+  `[,[let [[this [new em_two_post]]]
+       [set this title  'Welcome to the official Moral Compass Website!']
+       [set this date   'March 13th, 2011']
+       [set this author '<a href="#">Bo Morgan</a>']
+       [set this entry  [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning algorithms.  '
+				     'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+				     'Moral Compass is primarily meant as a cognitive science research tool for testing hypothesis for social reasoning, including cooperative and non-cooperative behavior.']]
+       this]
+    ]]
+
+[defunk em_two-generate_all_examples []
+  `[]]
+
+[defunk em_two-documentation-all_packages []
   `[movie
     isis_visual_object
     deliberative_execution_agency
@@ -221,135 +248,33 @@
     physical_world
     propogator]]
 
-[defunk em_two_documentation-all_packages-require []
-  [mapc [funk [package_name]
-	      [if [not [get [lookup-package package_name] loaded_all_dependencies_time]]
-		  [prog [print [format nil 'requiring ' package_name '.']]
-			[require-package package_name]]]]
-	[em_two_documentation-all_packages]]]
 
-[defunk em_two_documentation-all_packages-save [root_dir posts examples]
-  [shelter [mkdir [string-concat root_dir 'documentation/package']]]
-  [mapc [funk [package_name]
-	      [let [[package_name_string   [get package_name as-string]]
-		    [package_documentation [em_two_package_documentation posts examples package_name]]]
-		[shelter [mkdir [string-concat root_dir 'documentation/package/' package_name_string]]]
-		[have package_documentation save [string-concat root_dir 'documentation/package/' package_name_string '/index.html']]]]
-	[em_two_documentation-all_packages]]]
+[defunk compile_em_two_css [context]
+  [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
 
-[defunk em_two_documentation-content [root_dir posts examples]
-  [shelter [mkdir [string-concat root_dir 'documentation']]]
-  [shelter [mkdir [string-concat root_dir 'documentation/object']]]
-  [string-prog '<h1>Documentation</h1>'
-	       ''
-	       '<h2>Packages</h2>'
-	       ''
-	       '<ul>'
-	       [stringlist-prog [mapcar [funk [package_name_string]
-					      [string-concat '<li><a href="/documentation/package/' package_name_string '"><strong>' package_name_string '</strong></a></li>']]
-					[have [mapcar [funk [package_name]
-							    [get package_name as-string]]
-						      [em_two_documentation-all_packages]]
-					      sort &>]]]
-	       '</ul>'
-	       '<h2>All Object Types</h2>'
-	       ''
-	       '<ul>'
-	       [stringlist-prog [mapcar [funk [type_name_string]
-					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
-					[have [mapcar [funk [type_name]
-							    [get type_name as-string]]
-						      [system-type_names]]
-					      sort &>]]]
-	       '</ul>'
-	       '']]
-
-[defunk em_two_documentation [root_dir posts examples]
-  [em_two_page posts examples
-	      [em_two_documentation-content root_dir posts examples]]]
+[defunk compile_em_two_root_page [context]
+  [have [htmldoc_redirect_page 'news/'] save [string-concat [get context root_dir] 'index.html']]]
 
 
-[defunk em_two_download-content []
-  [string-prog '<h1>Download</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk em_two_download [posts examples]
-  [em_two_page posts examples
-	      [em_two_download-content]]]
-
-
-[defunk em_two_tutorial-content []
-  [string-prog '<h1>Tutorial</h1>'
-	       ''
-	       'Coming soon!']]
-
-[defunk em_two_tutorial [posts examples]
-  [em_two_page posts examples
-	      [em_two_tutorial-content]]]
-
-
-[defunk em_two_example [posts examples example]
-  [let [[content [string-prog '<!-- start content -->'
-			      '<div id="content">'
-			      '  <div class="post">'
-			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
-			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
-			      '    <div class="entry">'
-			      '      <p>'
-			      [em_two_code_section [get example entry]]
-			      '      </p>'
-			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
-			      '    </div>'
-			      '  </div>'
-			      '</div>'
-			      '<!-- end content -->']]]
-    [em_two_page posts examples content]]]
-
-[defunk compile_em_two_example [root_dir posts examples example]
-  [let [[example_html_code [em_two_example posts examples example]]]
-    [shelter [mkdir [string-concat root_dir 'example']]]
-    [shelter [mkdir [string-concat root_dir 'example/' [get example name]]]]
-    [have [string-prog [string-concat '\'' [get example title] '\'']
-		       [string-concat '\'This example Em_two code was downloaded from http://www.em-two.net/example/' [get example name] '.fu2\'']
-		       ''
-		       [get example entry]]
-	  save [string-concat root_dir 'example/' [get example name] '.fu2']]
-    [have example_html_code   save [string-concat root_dir 'example/' [get example name] '/index.html']]
-    nil]]
-
-[defunk compile_em_two_examples [root_dir posts examples]
-  [mapc [funk [example]
-	      [print [string-concat 'compiling example ' [get example name]]]
-	      [compile_em_two_example root_dir posts examples example]]
-	examples]
+[defunk compile_em_two_documentation [context]
+  [set  context documentation_packages [package_names]]
+  [have context require_documentation_packages]
+  [set  context documentation_objects [system-type_names]]
+  [have context compile_documentation]
   nil]
 
-[defunk em_two-generate_all_posts []
-  `[,[let [[this [new em_two_post]]]
-       [set this title  'Welcome to the official Moral Compass Website!']
-       [set this date   'March 13th, 2011']
-       [set this author '<a href="#">Bo Morgan</a>']
-       [set this entry  [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning algorithms.  '
-				     'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-				     'Moral Compass is primarily meant as a cognitive science research tool for testing hypothesis for social reasoning, including cooperative and non-cooperative behavior.']]
-       this]
-    ]]
-
-[defunk em_two-generate_all_examples []
-  `[]]
-
-[defunk compile_em_two_images [root_dir]
-  [shelter [mkdir [string-concat root_dir 'images/']]]
-  [system [string-concat 'cp -f example/em_two_webpage/images/favicon.ico ' root_dir]]
+[defunk compile_em_two_images [context]
+  [shelter [mkdir [string-concat [get context root_dir] 'images/']]]
+  [system [string-concat 'cp -f example/em_two_webpage/images/favicon.ico ' [get context root_dir]]]
   [let [[image_names `['img01.jpg'
 		       'img02.jpg'
-		       'em_two_logo_header.jpg'
-		       'media_lab_logo_header.jpg']]]
+		       'left_logo_header.jpg'
+		       'right_logo_header.jpg']]]
     [mapc [funk [image_name]
-		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' root_dir 'images/']]]
+		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]
 	  image_names]]
   nil]
+
 
 
 [defunk compile_em_two_webpage [context]
@@ -357,14 +282,19 @@
   [print 'compiling em_two root page']     [compile_em_two_root_page     context]
   [print 'compiling em_two tabs']          [have context compile_tabs]
   [print 'compiling em_two documentation'] [compile_em_two_documentation context]
-  [print 'compiling em_two examples']      [compile_em_two_examples      context]
+  [print 'compiling em_two examples']      [have context compile_examples]
+  [print 'compiling em_two images']        [compile_em_two_images        context]
   [print 'done compiling']
   nil]]
 
-[let [[context [new htmldoc_context '/home/neptune/Desktop/www/em-two/']]]
-  [set  context title                                  'Moral Compass -- Cognitive Architecture for Social Commonsense']
-  [set  context posts                                  [generate_all_posts]]
-  [set  context examples                               [generate_all_examples]]
+[let [[context [new htmldoc_context '/home/neptune/Desktop/www/em_two/']]]
+  [set  context hostname                               'em-two.net']
+  [set  context title                                  'Moral Compass']
+  [set  context subtitle                               'Social Reasoning Cognitive Architecture']
+  [set  context posts                                  [em_two-generate_all_posts]]
+  [set  context examples                               [em_two-generate_all_examples]]
+  [set  context documentation_packages                 [em_two-documentation-all_packages]]
+  [set  context documentation_objects                  [system-type_names]]
   [set  context background_color                       '#000000']
   [set  context font_color                             '#FFFFFF']
   [set  context link_color                             '#7193AF']
@@ -398,14 +328,16 @@
   [have context add_tab          [new htmldoc_tab `About         &em_two_about]]
   [have context add_tab          [new htmldoc_tab `News          &em_two_news]]
   [have context add_tab          [new htmldoc_tab `Documentation &em_two_documentation]]
-  [have context add_tab          [new htmldoc_tab `Tutorial      &em_two_tutorial]]
+  [have context add_tab          [new htmldoc_tab `Download      &em_two_download]]
   
-  [defunk webpage-save         []                                                    [compile_em_two_webpage  context]]
-  [defunk em_two_css-save      []                                                    [compile_em_two_css      context]]
-  [defunk em_two_about-save    [] [have [get context tab `About]    compile context]]
-  [defunk em_two_news-save     [] [have [get context tab `News]     compile context]]
-  [defunk em_two_tutorial-save [] [have [get context tab `Tutorial] compile context] [compile_em_two_tutorial context]]
-  [defunk em_two_examples-save []                                                    [compile_em_two_examples context]]
+  [defunk em_two_webpage-save       []                                                         [compile_em_two_webpage       context]]
+  [defunk em_two_css-save           []                                                         [compile_em_two_css           context]]
+  [defunk em_two_about-save         [] [have [get context tab `About]         compile context]]
+  [defunk em_two_news-save          [] [have [get context tab `News]          compile context]]
+  [defunk em_two_documentation-save [] [have [get context tab `Documentation] compile context] [compile_em_two_documentation context]]
+  [defunk em_two_download-save      [] [have [get context tab `Download]      compile context]]
+  [defunk em_two_examples-save      [] [have context compile_examples]]
+  [defunk em_two_images-save        []                                                         [compile_em_two_images        context]]
   
   ]
 

@@ -250,7 +250,7 @@
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/em-two/']]]
   [set  context hostname                               'em-two.net']
   [set  context title                                  'Moral Compass']
-  [set  context subtitle                               'Social Reasoning Cognitive Architecture']
+  [set  context subtitle                               'Commonsense Social Reasoning Cognitive Architecture']
   [set  context posts                                  [em_two-generate_all_posts]]
   [set  context examples                               [em_two-generate_all_examples]]
   [set  context documentation_packages                 [em_two-documentation-all_packages]]

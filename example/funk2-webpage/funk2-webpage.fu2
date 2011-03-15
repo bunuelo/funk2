@@ -68,22 +68,7 @@
 
 
 [defunk funk2_news-content [context]
-  [string-prog [stringlist-prog [let [[index 0]]
-				  [mapcar [funk [post]
-						[= index [+ index 1]]
-						[string-prog '<div class="post">'
-							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
-							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[if [get post author_link]
-																		     [string-concat '<a href="' [get post author_link] '">' [get post author] '</a>']
-																		   [get post author]] '</small></p>']]
-							     '  <div class="entry">'
-							     [get post entry]
-							     [prog '<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-								   '']
-							     '  </div>'
-							     '</div>']]
-					  [get context posts]]]]
-	       ]]
+  [get context all_posts_content]]
 
 [defunk funk2_news [context]
   [htmldoc_page context
@@ -110,27 +95,7 @@
 	       'Then, we get the <tt>car</tt> and <tt>cdr</tt> slot values of this object, like in the Lisp programming language.'
 	       'Finally, we execute the <tt>sort</tt> funk and give it the <tt>></tt> comparison function.</p>'
 	       ''
-	       '<h2>Packages</h2>'
-	       ''
-	       '<ul>'
-	       [stringlist-prog [mapcar [funk [package_name_string]
-					      [string-concat '<li><a href="/documentation/package/' package_name_string '"><strong>' package_name_string '</strong></a></li>']]
-					[have [mapcar [funk [package_name]
-							    [get package_name as-string]]
-						      [package_names]]
-					      sort &>]]]
-	       '</ul>'
-	       '<h2>All Object Types</h2>'
-	       ''
-	       '<ul>'
-	       [stringlist-prog [mapcar [funk [type_name_string]
-					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
-					[have [mapcar [funk [type_name]
-							    [get type_name as-string]]
-						      [system-type_names]]
-					      sort &>]]]
-	       '</ul>'
-	       '']]
+	       [get context documentation_overview_content]]]
 
 [defunk funk2_documentation [context]
   [htmldoc_page context
@@ -183,38 +148,6 @@
 [defunk funk2_download [context]
   [htmldoc_page context
 		[funk2_download-content]]]
-
-
-
-[defunk funk2_example [context example]
-  [let [[content [string-prog '<!-- start content -->'
-			      '<div id="content">'
-			      '  <div class="post">'
-			      [stringlist-concat `['<h1 class="title">' ,[get example title] '</h1>']]
-			      [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get example date] ' by ' ,[get example author] '</small></p>']]
-			      '    <div class="entry">'
-			      '      <p>'
-			      [htmldoc_code_section [get example entry]]
-			      '      </p>'
-			      [string-concat '<p class="links"><a href="/example/' [get example name] '.fu2" class="more">Download</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>']
-			      '    </div>'
-			      '  </div>'
-			      '</div>'
-			      '<!-- end content -->']]]
-    [htmldoc_page context content]]]
-
-[defunk compile_funk2_example [context example]
-  [let [[example_html_code [funk2_example context example]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'example']]]
-    [shelter [mkdir [string-concat [get context root_dir] 'example/' [get example name]]]]
-    [have [string-prog [string-concat '\'' [get example title] '\'']
-		       [string-concat '\'This example Funk2 code was downloaded from http://www.funk2.org/example/' [get example name] '.fu2\'']
-		       ''
-		       [get example entry]]
-	  save [string-concat [get context root_dir] 'example/' [get example name] '.fu2']]
-    [have example_html_code save [string-concat [get context root_dir] 'example/' [get example name] '/index.html']]
-    nil]]
-
 
 
 [defunk generate_all_posts []
@@ -467,13 +400,6 @@
   [have context compile_documentation]
   nil]
 
-[defunk compile_funk2_examples [context]
-  [mapc [funk [example]
-	      [print [string-concat 'compiling example ' [get example name]]]
-	      [compile_funk2_example context example]]
-	[get context examples]]
-  nil]
-
 [defunk compile_funk2_images [context]
   [shelter [mkdir [string-concat [get context root_dir] 'images/']]]
   [system [string-concat 'cp -f example/em_two_webpage/images/favicon.ico ' [get context root_dir]]]
@@ -499,11 +425,12 @@
   nil]]
 
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/funk2/']]]
+  [set  context hostname                               'funk2.org']
   [set  context title                                  'Funk2']
   [set  context subtitle                               'Causally Reflective Parallel Programming Language']
   [set  context posts                                  [generate_all_posts]]
   [set  context examples                               [generate_all_examples]]
-  [set  context documentation_objects                  [system-type_names]]
+  [set  context documentation_objects                  `[htmldoc_context]] [system-type_names]
   [set  context documentation_packages                 `[funk2-webpage]] `[package_names]
   [set  context background_color                       '#000000']
   [set  context font_color                             '#FFFFFF']
@@ -546,7 +473,7 @@
   [defunk funk2_news-save          [] [have [get context tab `News]          compile context]]
   [defunk funk2_documentation-save [] [have [get context tab `Documentation] compile context] [compile_funk2_documentation context]]
   [defunk funk2_download-save      [] [have [get context tab `Download]      compile context]]
-  [defunk funk2_examples-save      []                                                         [compile_funk2_examples      context]]
+  [defunk funk2_examples-save      [] [have context compile_examples]]
   [defunk funk2_images-save        []                                                         [compile_funk2_images        context]]
   
   ]

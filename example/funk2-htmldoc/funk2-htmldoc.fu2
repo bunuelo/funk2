@@ -18,7 +18,42 @@
  rights to redistribute these changes.'
 
 [deframe htmldoc_post    [frame] [title date author author_link entry]]
+
+
 [deframe htmldoc_example [frame] [name title date author entry]]
+
+[deftypefunk htmldoc_example get page_content []
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
+	       '  <div class="post">'
+	       [stringlist-concat `['<h1 class="title">' ,[get this title] '</h1>']]
+	       [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get this date] ' by ' ,[get this author] '</small></p>']]
+	       '    <div class="entry">'
+	       '      <p>'
+	       [htmldoc_code_section [get this entry]]
+	       '      </p>'
+	       [string-concat '<p class="links"><a href="/example/' [get this name] '.fu2" class="more">Download</a></p>']
+	       '    </div>'
+	       '  </div>'
+	       '</div>'
+	       '<!-- end content -->']]
+
+
+[deftypefunk htmldoc_example compile [context]
+  [let [[html_code [htmldoc_page context [get this page_content]]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'example']]]
+    [shelter [mkdir [string-concat [get context root_dir] 'example/' [get this name]]]]
+    [have [string-prog [string-concat '\'' [get this title] '\'']
+		       [string-concat '\'This example ' [get context title] ' code was downloaded from http://' [get context hostname] '/example/' [get this name] '.fu2\'']
+		       ''
+		       [get this entry]]
+	  save [string-concat [get context root_dir] 'example/' [get this name] '.fu2']]
+    [have html_code save [string-concat [get context root_dir] 'example/' [get this name] '/index.html']]
+    nil]]
+
+
+
+
 
 [deframe htmldoc_tab [frame] [name generator_funk]
   [new [initial-name initial-generator_funk]
@@ -39,6 +74,7 @@
 
 
 [deframe htmldoc_context [frame] [root_dir
+				  hostname
 				  title
 				  subtitle
 				  posts
@@ -117,8 +153,49 @@
 			[shelter [require-package package_name]]]]]
 	[get this documentation_packages]]]
 
+[deftypefunk htmldoc_context get all_posts_content []
+  [string-prog [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-prog '<div class="post">'
+							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
+							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[if [get post author_link]
+																		     [string-concat '<a href="' [get post author_link] '">' [get post author] '</a>']
+																		   [get post author]] '</small></p>']]
+							     '  <div class="entry">'
+							     [get post entry]
+							     [prog '<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+								   '']
+							     '  </div>'
+							     '</div>']]
+					  [get this posts]]]]
+	       ]]
+
+[deftypefunk htmldoc_context get documentation_overview_content []
+  [string-prog '<h2>Packages</h2>'
+	       ''
+	       '<ul>'
+	       [stringlist-prog [mapcar [funk [package_name_string]
+					      [string-concat '<li><a href="/documentation/package/' package_name_string '"><strong>' package_name_string '</strong></a></li>']]
+					[have [mapcar [funk [package_name]
+							    [get package_name as-string]]
+						      [get context documentation_packages]]
+					      sort &>]]]
+	       '</ul>'
+	       '<h2>All Object Types</h2>'
+	       ''
+	       '<ul>'
+	       [stringlist-prog [mapcar [funk [type_name_string]
+					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
+					[have [mapcar [funk [type_name]
+							    [get type_name as-string]]
+						      [get context documentation_types]]
+					      sort &>]]]
+	       '</ul>']]
+
+
 [defunk htmldoc_package_documentation [context package_name]
-  [print [string-concat 'compiling ' [get package_name as-string] ' package documentation']]
+  [terminal_format standard-terminal '\nhtmldoc: compiling ' package_name ' package documentation.']
   [htmldoc_page context
 		[string-prog [string-concat '<h1><tt>' [get package_name as-string] '</tt> Package Documentation</h1>']
 			     [let [[package [lookup-package package_name]]]
@@ -159,6 +236,13 @@
   [have this require_documentation_packages]
   [have this compile_documentation_packages]
   [have this compile_documentation_objects]
+  nil]
+
+[deftypefunk htmldoc_context compile_examples []
+  [mapc [funk [example]
+	      [terminal_format standard-terminal 'htmldoc: compiling example \'' [get example name] '\'.']
+	      [have example compile this]]
+	[get this examples]]
   nil]
 
 
@@ -1049,7 +1133,7 @@
   [htmldoc_documentation_format [get funk documentation]]]
 
 [defunk htmldoc_object_documentation [context type_name]
-  [terminal_format standard-terminal '\nhtmldoc: compiling ' type_name ' object documentation']
+  [terminal_format standard-terminal '\nhtmldoc: compiling ' type_name ' object documentation.']
   [htmldoc_page context
 		[string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
 			     [let [[type [lookup_type type_name]]]

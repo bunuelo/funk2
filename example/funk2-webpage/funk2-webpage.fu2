@@ -484,7 +484,7 @@
   [set  context posts                                  [generate_all_posts]]
   [set  context examples                               [generate_all_examples]]
   [set  context documentation_objects                  [system-type_names]]
-  [set  context documentation_packages                 `[funk2-webpage]] `[package_names]]
+  [set  context documentation_packages                 `[funk2-webpage]] `[package_names]
   [set  context background_color                       '#000000']
   [set  context font_color                             '#FFFFFF']
   [set  context link_color                             '#7193AF']

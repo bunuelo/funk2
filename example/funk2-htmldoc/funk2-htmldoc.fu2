@@ -164,7 +164,7 @@
 	       '}'
 	       ''
 	       '#center_header {'
-	       '	width: 551px;'
+	       '	width: 583px;'
 	       '	margin: 0 auto;'
 	       '	height: 193px;'
 	       '	background: url(images/img02.jpg) repeat-x left top;'

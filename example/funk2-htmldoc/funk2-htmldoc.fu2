@@ -600,8 +600,8 @@
 	       '.gsc-webResult.gsc-result b {'
 	       [string-concat '  color: ' [get context search_link_color] ';']
 	       '}'
-	       '.cse .gsc-webResult.gsc-result gs-visibleUrl,'
-	       '.gsc-webResult.gsc-result gs-visibleUrl {'
+	       '.cse .gsc-webResult.gsc-result gs-visibleUrl.*,'
+	       '.gsc-webResult.gsc-result gs-visibleUrl.* {'
 	       [string-concat '  color: ' [get context search_url_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'

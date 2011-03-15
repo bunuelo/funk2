@@ -67,6 +67,7 @@
 				  [search_background_color                '#000000']
 				  [search_border_color                    '#222222']
 				  [search_active_border_color             '#888888']
+				  [search_font_color                      '#FFFFFF']
 				  [search_link_color                      '#0000FF']
 				  [search_visited_link_color              '#0000FF']
 				  [search_hover_link_color                '#0000FF']
@@ -587,7 +588,7 @@
 	       '/* Result */'
 	       '.cse .gsc-webResult.gsc-result,'
 	       '.gsc-webResult.gsc-result {'
-	       [string-concat '  color: ' [get context search_link_color] ';']
+	       [string-concat '  color: ' [get context search_font_color] ';']
 	       '}'
 	       '/* Result link */'
 	       '.cse .gsc-webResult.gsc-result a,'

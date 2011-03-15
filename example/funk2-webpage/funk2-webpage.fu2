@@ -654,6 +654,7 @@
   [set  context search_background_color                '#000000']
   [set  context search_border_color                    '#111111']
   [set  context search_active_border_color             '#111111']
+  [set  context search_font_color                      '#CCCCCC']
   [set  context search_link_color                      '#FFFFFF']
   [set  context search_visited_link_color              '#FFFFFF']
   [set  context search_hover_link_color                '#FFFFFF']

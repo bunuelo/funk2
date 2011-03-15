@@ -1056,7 +1056,7 @@
 			       [string-prog '<h2><tt>get</tt> interface</h2>'
 					    '<ul>'
 					    [stringlist-prog [mapcar [funk [key_name]
-									   [print [string-concat '  key: ' [get key_name as-string]]]
+									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `get key_name nil]]]
 									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											  '<p>'
@@ -1069,7 +1069,7 @@
 					    '<h2><tt>set</tt> interface</h2>'
 					    '<ul>'
 					    [stringlist-prog [mapcar [funk [key_name]
-									   [print [string-concat '  key: ' [get key_name as-string]]]
+									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `set key_name nil]]]
 									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											  '<p>'
@@ -1082,7 +1082,7 @@
 					    '<h2><tt>execute</tt> interface</h2>'
 					    '<ul>'
 					    [stringlist-prog [mapcar [funk [key_name]
-									   [print [string-concat '  key: ' [get key_name as-string]]]
+									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `execute key_name nil]]]
 									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
 											  '<p>'

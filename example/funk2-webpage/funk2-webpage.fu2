@@ -76,7 +76,8 @@
 							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[get post author] '</small></p>']]
 							     '  <div class="entry">'
 							     [get post entry]
-							     '	<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+							     [prog '<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+								   '']
 							     '  </div>'
 							     '</div>']]
 					  [get context posts]]]]

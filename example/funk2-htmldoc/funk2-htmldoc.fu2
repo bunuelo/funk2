@@ -583,8 +583,8 @@
 	       [string-concat '  border-color: ' [get context search_active_border_color] ';']
 	       '}'
 	       '/* Result link */'
-	       '.cse .gsc-webResult.gsc-result:link,'
-	       '.gsc-webResult.gsc-result:link {'
+	       '.cse .gsc-webResult.gsc-result a,'
+	       '.gsc-webResult.gsc-result a {'
 	       [string-concat '  color: ' [get context search_link_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'

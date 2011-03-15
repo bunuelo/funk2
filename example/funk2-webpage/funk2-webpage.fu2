@@ -637,6 +637,7 @@
   [have context add_tab  [new htmldoc_tab `Applications  &funk2_applications]]
   
   [defunk webpage-save             []                                                         [compile_funk2_webpage       context]]
+  [defunk funk2_css-save           []                                                         [compile_funk2_css           context]]
   [defunk funk2_about-save         [] [have [get context tab `About]         compile context]]
   [defunk funk2_news-save          [] [have [get context tab `News]          compile context]]
   [defunk funk2_documentation-save [] [have [get context tab `Documentation] compile context] [compile_funk2_documentation context]]

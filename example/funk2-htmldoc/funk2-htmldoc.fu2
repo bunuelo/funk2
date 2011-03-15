@@ -588,8 +588,12 @@
 	       [string-concat '  color: ' [get context search_link_color] ';']
 	       '}'
 	       '/* Result link */'
-	       '.cse .gsc-webResult.gsc-result *,'
-	       '.gsc-webResult.gsc-result * {'
+	       '.cse .gsc-webResult.gsc-result a,'
+	       '.gsc-webResult.gsc-result a {'
+	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
+	       '.cse .gsc-webResult.gsc-result b,'
+	       '.gsc-webResult.gsc-result b {'
 	       [string-concat '  color: ' [get context search_link_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'

@@ -238,7 +238,7 @@
   [have this compile_documentation_objects]
   nil]
 
-[deftypefunk htmldoc_context compile_examples []
+[deftypefunk htmldoc_context execute compile_examples []
   [mapc [funk [example]
 	      [terminal_format standard-terminal 'htmldoc: compiling example \'' [get example name] '\'.']
 	      [have example compile this]]

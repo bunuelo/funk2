@@ -110,7 +110,7 @@
 		[have object_documentation save [string-concat [get this root_dir] 'documentation/object/' type_name_string '/index.html']]]]
 	[get this documentation_objects]]]
 
-[deftypefunk htmldoc_context require_documentation_packages []
+[deftypefunk htmldoc_context execute require_documentation_packages []
   [mapc [funk [package_name]
 	      [if [not [get [lookup-package package_name] loaded_all_dependencies_time]]
 		  [prog [print [format nil 'requiring ' package_name '.']]
@@ -144,7 +144,7 @@
 					    '</ul>'
 					    ]]]]]
 
-[deftypefunk htmldoc_context compile_documentation_packages []
+[deftypefunk htmldoc_context execute compile_documentation_packages []
   [shelter [mkdir [string-concat [get this root_dir] 'documentation']]]
   [shelter [mkdir [string-concat [get this root_dir] 'documentation/package']]]
   [mapc [funk [package_name]
@@ -154,7 +154,7 @@
 		[have package_documentation save [string-concat [get this root_dir] 'documentation/package/' package_name_string '/index.html']]]]
 	[package_names]]]
 
-[deftypefunk htmldoc_context compile_documentation []
+[deftypefunk htmldoc_context execute compile_documentation []
   [shelter [mkdir [string-concat [get this root_dir] 'documentation']]]
   [have this require_documentation_packages]
   [have this compile_documentation_packages]

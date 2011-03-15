@@ -65,7 +65,7 @@
 				  [footer_font_color                      '#000000']
 				  [footer_link_color                      '#0000FF']
 				  [search_background_color                '#000000']
-				  [search_active_border_color             '#222222']
+				  [search_border_color                    '#222222']
 				  [search_active_border_color             '#888888']]
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]

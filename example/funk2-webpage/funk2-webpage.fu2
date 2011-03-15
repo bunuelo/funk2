@@ -419,7 +419,7 @@
   [print 'compiling funk2 root page']     [compile_funk2_root_page     context]
   [print 'compiling funk2 tabs']          [have context compile_tabs]
   [print 'compiling funk2 documentation'] [compile_funk2_documentation context]
-  [print 'compiling funk2 examples']      [compile_funk2_examples      context]
+  [print 'compiling funk2 examples']      [have context compile_examples]
   [print 'compiling funk2 images']        [compile_funk2_images        context]
   [print 'done compiling']
   nil]]

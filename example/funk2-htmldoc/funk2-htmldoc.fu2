@@ -582,9 +582,14 @@
 	       '  border: 1px solid;'
 	       [string-concat '  border-color: ' [get context search_active_border_color] ';']
 	       '}'
+	       '/* Result */'
+	       '.cse .gsc-webResult.gsc-result,'
+	       '.gsc-webResult.gsc-result {'
+	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
 	       '/* Result link */'
-	       '.cse .gsc-webResult.gsc-result a,'
-	       '.gsc-webResult.gsc-result a {'
+	       '.cse .gsc-webResult.gsc-result *,'
+	       '.gsc-webResult.gsc-result * {'
 	       [string-concat '  color: ' [get context search_link_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'

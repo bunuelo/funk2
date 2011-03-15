@@ -1051,14 +1051,16 @@
 	       '					<h2>Calendar</h2>'
 	       [htmldoc_calendar]
 	       '				</li>'
-	       '				<li>'
-	       '					<h2>Example Applications</h2>'
-	       '					<ul>'
-	       [stringlist-prog [mapcar [funk [example]
-					      [string-concat '<li><a href="/example/' [get example name] '">' [get example title] '</a></li>']]
-					[get context examples]]]
-	       '					</ul>'
-	       '				</li>'
+	       [if [get context examples]
+		   [string-prog	'				<li>'
+				'					<h2>Example Applications</h2>'
+				'					<ul>'
+				[stringlist-prog [mapcar [funk [example]
+							       [string-concat '<li><a href="/example/' [get example name] '">' [get example title] '</a></li>']]
+							 [get context examples]]]
+				'					</ul>'
+				'				</li>']
+		 '']
 	       [prog '				<li>'
 		     '					<h2>Categories</h2>'
 		     '					<ul>'

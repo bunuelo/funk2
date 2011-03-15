@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage em_two_webpage
-  :packages [math]
+  :packages [funk2-htmldoc]
    :sources ['em_two_webpage.fu2']]
 

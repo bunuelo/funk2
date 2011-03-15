@@ -352,7 +352,7 @@
 	       ''
 	       '#sidebar2 {'
 	       '	float: right;'
-	       '	width: 244px;'
+	       '	width: 220px;'
 	       '}'
 	       ''
 	       '.sidebar {'

@@ -630,6 +630,7 @@
   [set  context title                                  'Funk2 Programming Language -- Official Website']
   [set  context posts                                  [generate_all_posts]]
   [set  context examples                               [generate_all_examples]]
+  `[
   [set  context background_color                       '#000044']
   [set  context font_color                             '#FFFFFF']
   [set  context link_color                             '#7193AF']
@@ -651,6 +652,7 @@
   [set  context footer_top_border_color                '#253542']
   [set  context footer_font_color                      '#FFFFFF']
   [set  context footer_link_color                      '#FFFFFF']
+]
   [have context add_tab          [new htmldoc_tab `About         &funk2_about]]
   [have context add_tab          [new htmldoc_tab `News          &funk2_news]]
   [have context add_tab          [new htmldoc_tab `Documentation &funk2_documentation]]

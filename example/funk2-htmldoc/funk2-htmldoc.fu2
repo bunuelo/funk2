@@ -189,7 +189,7 @@
 					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
 					[have [mapcar [funk [type_name]
 							    [get type_name as-string]]
-						      [get this documentation_types]]
+						      [get this documentation_objects]]
 					      sort &>]]]
 	       '</ul>']]
 

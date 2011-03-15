@@ -240,7 +240,7 @@
 
 [deftypefunk htmldoc_context execute compile_examples []
   [mapc [funk [example]
-	      [terminal_format standard-terminal 'htmldoc: compiling example \'' [get example name] '\'.']
+	      [terminal_format standard-terminal '\nhtmldoc: compiling example \'' [get example name] '\'.']
 	      [have example compile this]]
 	[get this examples]]
   nil]

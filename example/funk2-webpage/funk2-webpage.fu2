@@ -638,7 +638,7 @@
   [set  context logo_link_font_color                   '#FFFFFF']
   [set  context menu_link_right_border_color           '#000000']
   [set  context menu_link_color                        '#FFFFFF']
-  [set  context page_background_color                  '#0F0E11']
+  [set  context page_background_color                  '#000000']
   [set  context latest_post_border_color               '#E7E7E7']
   [set  context content_title_link_color               '#FFFFFF']
   [set  context content_title_link_bottom_border_color '#000000']

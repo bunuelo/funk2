@@ -63,7 +63,9 @@
 				  [sidebar_link_color                     '#0000FF']
 				  [footer_top_border_color                '#000000']
 				  [footer_font_color                      '#000000']
-				  [footer_link_color                      '#0000FF']]
+				  [footer_link_color                      '#0000FF']
+				  [search_background_color                '#000000']
+				  [search_border_color                    '#222222']]
   [new [initial-root_dir]
        [= root_dir initial-root_dir]]]
 
@@ -506,7 +508,7 @@
 	       '/* Selector for entire element. */'
 	       '.cse .gsc-control-cse,'
 	       '.gsc-control-cse {'
-	       '  background-color: #000000;'
+	       [string-concat '  background-color: ' [get context search_background_color] ';']
 	       '  border: 1px solid;'
 	       '  border-color: #000000;'
 	       '}'
@@ -548,7 +550,7 @@
 	       '/* Active tab */'
 	       '.cse .gsc-tabHeader.gsc-tabhActive,'
 	       '.gsc-tabHeader.gsc-tabhActive {'
-	       '  background-color: #000000;'
+	       [string-concat '  background-color: ' [get context search_background_color] ';']
 	       '  border: 1px solid;'
 	       '  border-top: 2px solid;'
 	       '  border-color: #e9e9e9;'
@@ -573,13 +575,13 @@
 	       '.cse .gsc-webResult.gsc-result:hover,'
 	       '.gsc-webResult.gsc-result:hover {'
 	       '  border: 1px solid;'
-	       '  border-color: #FFFFFF;'
+	       [string-concat '  border-color: ' [get context search_border_color] ';']
 	       '}'
 	       '/*Promotion Settings*/'
 	       '/* The entire promo */'
 	       '.cse .gs-promotion.gs-result,'
 	       '.gs-promotion.gs-result {'
-	       '  background-color: #000000;'
+	       [string-concat '  background-color: ' [get context search_background_color] ';']
 	       '  border: 1px solid;'
 	       '  border-color: #336699;'
 	       '}'
@@ -624,7 +626,7 @@
 	       '  font-family: Arial, sans-serif;'
 	       '  font-size: 13px;'
 	       '  position: absolute;'
-	       '  background: #000000;'
+	       [string-concat '  background: ' [get context search_background_color] ';']
 	       '  border: 1px solid #666666;'
 	       '  margin-left: 0;'
 	       '  margin-right: 0;'

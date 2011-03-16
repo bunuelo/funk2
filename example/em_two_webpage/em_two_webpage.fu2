@@ -119,7 +119,7 @@
        [set this date        'March 13th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-       [set this entry       [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning algorithms.  '
+       [set this entry       [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning models.  '
 					  'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
 					  'Moral Compass is primarily meant as a cognitive science research tool for computationally modelling theories of social and moral reasoning.</p>'
 					  ''
@@ -132,7 +132,11 @@
 					  '  <li>continuous theory development from physical problem solving that naturally bootstraps to social and moral reasoning domains,</li>'
 					  '  <li>a distributed heterogenous parallal model that exhibits a layered organisational control and lateral information translation structure,</li>'
 					  '  <li>evolutionary plausibility of the "glom" theory of additional hierarchical control to previously competent structures.</li>'
-					  '</ul>']]
+					  '</ul>'
+					  'Because the scientific process is always one of iteratively refining human knowledge, we do not see any research effort as a solution to our goals above.  '
+					  'In that sense, we strive to better understand, change, and refine our goals above to better approximate healthy ways to understand human social and moral cognition with a strong biological grounding in the physical sciences.  '
+					  ''
+					  ]]
        this]
     ]]
 

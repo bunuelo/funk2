@@ -39,6 +39,20 @@
 	       'Because the scientific process is always one of iteratively refining human knowledge, we do not see any research effort as a solution to our goals above.  '
 	       'In that sense, we strive to better understand, change, and refine our goals above to better approximate healthy ways to understand human social and moral cognition by discovering and learning from strong biological underpinnings in the physical sciences.  '
 	       ''
+	       '<h2>Publications</h2>'
+	       ''
+	       '<ul>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf">Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab; 2010 January</a></li>'
+	       '</ul>'
+	       ''
+	       '<h2>Presentations</h2>'
+	       ''
+	       '<ul>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2010_05_19-phdpropopsal-public_defense.pdf">Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab; 2010 May</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2009_10_13-moral_compass_poster.pdf">Morgan, B.; "Moral Compass (Poster)"; Media Lab Poster Presentation; October Sponsor Consortia Meeting; 2009 October</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2009_06_11-where_goals_come_from.pdf">Morgan, B.; "Where Goals Come From: A Model of Self-Conscious Learning"; Invited Speaker Presentation; Living Heritage of A.I. Workshop at MIT; 2009 June</a></li>'
+	       '</ul>'
+	       ''
 	       ]]
 
 [defunk em_two_about [context]

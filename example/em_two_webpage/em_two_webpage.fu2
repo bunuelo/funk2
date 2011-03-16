@@ -162,7 +162,7 @@
 					  ]]
        this]
     ,[let [[this [new htmldoc_post]]]
-       [set this title       'Tracing of Information Flow and Control Structure Causality in Large Heterogeneous Parallel Systems']
+       [set this title       'Tracing of Information Flow and Causality in Large Heterogeneous Parallel Systems']
        [set this date        'September 1st, 2010']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']

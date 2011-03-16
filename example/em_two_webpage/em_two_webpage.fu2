@@ -22,9 +22,11 @@
 [defunk em_two_about-content []
   [string-prog '<h1>About</h1>'
 	       ''
-	       '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for building and correlating social commonsense reasoning models.  '
-	       'Moral Compass is a computational modelling tool for the cognitive sciences.</p>'
+	       '<p>'
+	       '<strong>Moral Compass</strong> is a free, open, cognitive architecture designed for building and correlating social commonsense reasoning models.  '
+	       'Moral Compass is a computational modelling tool for the cognitive sciences.'
 	       'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+	       '</p>'
 	       ''
 	       '<p>Our modelling project is based on the following core goals:</p>'
 	       '<ul>'

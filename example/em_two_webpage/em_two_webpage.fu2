@@ -149,7 +149,7 @@
 					  ]]
        this]
     ,[let [[this [new htmldoc_post]]]
-       [set this title       'Physical Commonsense Simulation of Two Children and One Parent in Kitchen']
+       [set this title       'Physical Commonsense Simulation of Parents and Children in a Kitchen']
        [set this date        'January 11th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']

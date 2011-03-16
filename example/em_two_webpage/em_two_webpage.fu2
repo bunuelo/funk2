@@ -54,6 +54,17 @@
 		[em_two_news-content context]]]
 
 
+[defunk em_two_tutorial-content []
+  [string-prog '<h1>Tutorial</h1>'
+	       ''
+	       ''
+	       ]]
+
+[defunk em_two_tutorial [context]
+  [htmldoc_page context
+		[em_two_tutorial-content]]]
+
+
 [defunk em_two_documentation-content [context]
   [string-prog '<h1>Documentation</h1>'
 	       ''
@@ -285,6 +296,7 @@
   [set  context search_url_color                       '#000000']
   [have context add_tab          [new htmldoc_tab `About         &em_two_about]]
   [have context add_tab          [new htmldoc_tab `News          &em_two_news]]
+  [have context add_tab          [new htmldoc_tab `Tutorial      &em_two_tutorial]]
   [have context add_tab          [new htmldoc_tab `Documentation &em_two_documentation]]
   [have context add_tab          [new htmldoc_tab `Download      &em_two_download]]
   
@@ -292,6 +304,7 @@
   [defunk em_two_css-save           []                                                         [compile_em_two_css           context]]
   [defunk em_two_about-save         [] [have [get context tab `About]         compile context]]
   [defunk em_two_news-save          [] [have [get context tab `News]          compile context]]
+  [defunk em_two_tutorial-save      [] [have [get context tab `Tutorial]      compile context]]
   [defunk em_two_documentation-save [] [have [get context tab `Documentation] compile context] [compile_em_two_documentation context]]
   [defunk em_two_download-save      [] [have [get context tab `Download]      compile context]]
   [defunk em_two_examples-save      [] [have context compile_examples]]

@@ -153,7 +153,11 @@
        [set this date        'January 11th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-       [set this entry       [string-prog '<p>"In order to think about thinking '
+       [set this entry       [string-prog '<p>Seymour Papert said, "You cannot think about thinking without thinking about thinking about something", warning against building models of cognitive processes that are not attached to concrete behaviors of the intelligent system.'
+					  'Toward this end, we have chosen to first focus on a rigid-body physical simulation of parents and children in the context of basic cooking tasks in a kitchen environment.'
+					  'We chose parents and children because we feel that major parts of social and more learning develops during early stages involving these familiar social relationships.'
+					  'We chose the domain of basic kitchen cooking tasks because this is a non-trivial commonsense reasoning domain that exists in all human cultures.'
+					  'For more detailed information about our physical simulation, see the <a href="http://web.media.mit.edu/~dustin/simulator_setup/">IsisWorld</a> website.'
 					  '</p>'
 					  ]]
        this]

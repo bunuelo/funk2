@@ -22,23 +22,22 @@
 [defunk em_two_about-content []
   [string-prog '<h1>About</h1>'
 	       ''
-	       '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for the scientific study of social and moral cognition.  '
+	       '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning models.  '
 	       'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-	       'The Moral Compass architecture is grounded in a rigid-body physical simulation environment, where multiple simulated children interact in a kitchen environment under the supervision of a simulated parent.'
+	       'Moral Compass is primarily meant as a cognitive science research tool for computationally modelling theories of social and moral reasoning.</p>'
 	       ''
-	       '<h2>Publications</h2>'
-	       ''
+	       '<p>Our modelling project is based on the following core goals:</p>'
 	       '<ul>'
-	       '  <li><a href="http://neuromin.de/rct/morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf">Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</a></li>'
-	       '  <li><a href="http://neuromin.de/rct/morgan2009-funk2_memory-draft.pdf">Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities"; Technical Note; Massachusetts Institute of Technology; 2009 May</a></li>'
+	       '  <li>informed by the latest neuroscientific models of social and moral cognition,</li>'
+	       '  <li>quantitative measurements of all information and control flow for use in developing and subsequently testing scientific hypotheses,</li>'
+	       '  <li>physical grounding of problem domains within deterministic physical simulation for repeatability of theoretical testing and evaluation,</li>'
+	       '  <li>realistic perceptual and motor control primitives for human-like agents in commonsense situations,</li>'
+	       '  <li>continuous theory development from physical problem solving that naturally bootstraps to social and moral reasoning domains,</li>'
+	       '  <li>a distributed heterogenous parallal model that exhibits a layered organisational control and lateral information translation structure,</li>'
+	       '  <li>evolutionary plausibility of the "glom" theory of additional hierarchical control to previously competent structures.</li>'
 	       '</ul>'
-	       ''
-	       '<h2>Presentations</h2>'
-	       ''
-	       '<ul>'
-	       '  <li><a href="http://neuromin.de/rct/funk2_trust_presentation.html">Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</a></li>'
-	       '  <li><a href="http://neuromin.de/rct/2008_01_13-resenv-causal_reflection_programming.pdf">Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
-	       '</ul>'
+	       'Because the scientific process is always one of iteratively refining human knowledge, we do not see any research effort as a solution to our goals above.  '
+	       'In that sense, we strive to better understand, change, and refine our goals above to better approximate healthy ways to understand human social and moral cognition by discovering and learning from strong biological underpinnings in the physical sciences.  '
 	       ''
 	       ]]
 
@@ -116,26 +115,10 @@
 [defunk em_two-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
        [set this title       'Welcome to the Moral Compass Website!']
-       [set this date        'March 13th, 2011']
+       [set this date        'March 16th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-       [set this entry       [string-prog '<p><strong>Moral Compass</strong> is a free, open, cognitive architecture designed for social commonsense reasoning models.  '
-					  'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-					  'Moral Compass is primarily meant as a cognitive science research tool for computationally modelling theories of social and moral reasoning.</p>'
-					  ''
-					  '<p>Our modelling project is based on the following core goals:</p>'
-					  '<ul>'
-					  '  <li>informed by the latest neuroscientific models of social and moral cognition,</li>'
-					  '  <li>quantitative measurements of all information and control flow for use in developing and subsequently testing scientific hypotheses,</li>'
-					  '  <li>physical grounding of problem domains within deterministic physical simulation for repeatability of theoretical testing and evaluation,</li>'
-					  '  <li>realistic perceptual and motor control primitives for human-like agents in commonsense situations,</li>'
-					  '  <li>continuous theory development from physical problem solving that naturally bootstraps to social and moral reasoning domains,</li>'
-					  '  <li>a distributed heterogenous parallal model that exhibits a layered organisational control and lateral information translation structure,</li>'
-					  '  <li>evolutionary plausibility of the "glom" theory of additional hierarchical control to previously competent structures.</li>'
-					  '</ul>'
-					  'Because the scientific process is always one of iteratively refining human knowledge, we do not see any research effort as a solution to our goals above.  '
-					  'In that sense, we strive to better understand, change, and refine our goals above to better approximate healthy ways to understand human social and moral cognition by discovering and learning from strong biological underpinnings in the physical sciences.  '
-					  ''
+       [set this entry       [string-prog '<p>We\'ve finished major portions of our reflectively traced architecture at this point, and we have some simple demos that people can begin downloading and testing.  Please see the tutorial for a step-by-step guide for how to begin!</p>'
 					  ]]
        this]
     ]]

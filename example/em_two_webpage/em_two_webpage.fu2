@@ -41,6 +41,8 @@
 	       '<p>Because the scientific process is always one of iteratively refining human knowledge, we do not see any research effort as a solution to our goals above.  '
 	       'In that sense, we strive to better understand, change, and refine our goals above to better approximate healthy ways to understand human social and moral cognition by discovering and learning from strong biological underpinnings in the physical sciences.</p>  '
 	       ''
+	       '<img src="/images/em_two-layers.jpg">'
+	       ''
 	       '<h2>Publications</h2>'
 	       ''
 	       '<ul>'
@@ -143,10 +145,11 @@
 [defunk em_two-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
        [set this title       'Semantic Representations of Mental Reflection Events']
-       [set this date        'March 16th, 2011']
+       [set this date        'March 12th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
        [set this entry       [string-prog '<p>'
+					  ''
 					  '</p>'
 					  ]]
        this]
@@ -280,7 +283,8 @@
   [let [[image_names `['img01.jpg'
 		       'img02.jpg'
 		       'left_logo_header.jpg'
-		       'right_logo_header.jpg']]]
+		       'right_logo_header.jpg'
+		       'em_two-layers.jpg']]]
     [mapc [funk [image_name]
 		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]
 	  image_names]]

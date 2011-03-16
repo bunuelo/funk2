@@ -43,6 +43,7 @@
 	       ''
 	       '<ul>'
 	       '  <li><a href="http://rct.media.mit.edu/rct/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf" target="_blank">Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab; 2010 January</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf" target="_blank">Dustin, S. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; San Francisco; 2010 April</a></li>'
 	       '</ul>'
 	       ''
 	       '<h2>Presentations</h2>'
@@ -139,11 +140,21 @@
 
 [defunk em_two-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
-       [set this title       'Welcome to the Moral Compass Website!']
+       [set this title       'Semantic Representations of Reflective Events']
        [set this date        'March 16th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-       [set this entry       [string-prog '<p>We\'ve finished major portions of our reflectively traced architecture at this point, and we have some simple demos that people can begin downloading and testing.  Please see the tutorial for a step-by-step guide for how to begin!</p>'
+       [set this entry       [string-prog '<p>'
+					  '</p>'
+					  ]]
+       this]
+    ,[let [[this [new htmldoc_post]]]
+       [set this title       'Physical Commonsense Simulation of Two Children and One Parent in Kitchen']
+       [set this date        'January 11th, 2011']
+       [set this author      'Bo Morgan']
+       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+       [set this entry       [string-prog '<p>"In order to think about thinking '
+					  '</p>'
 					  ]]
        this]
     ,[let [[this [new htmldoc_post]]]

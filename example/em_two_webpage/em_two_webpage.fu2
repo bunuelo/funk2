@@ -126,10 +126,11 @@
 					  '<p>Our modelling project is based on the following core goals:</p>'
 					  '<ul>'
 					  '  <li>quantitative measurements of all information and control flow for use in developing and subsequently testing scientific hypotheses,</li>'
-					  '  <li>distributed heterogenous parallal processes,</li>'
+					  '  <li>distributed heterogenous parallal processes that implement layered and reflective control models,</li>'
 					  '  <li>physical grounding of problem domains within deterministic rigid-body physics simulations,</li>'
 					  '  <li>realistic perceptual and motor control primitives for human-like agents in commonsense situations,</li>'
-					  '  <li>continuous theory development from physical problem solving to social and moral reasoning.</li>'
+					  '  <li>continuous theory development from physical problem solving to social and moral reasoning,</li>'
+					  '  <li>evolutionary plausibility.</li>'
 					  '</ul>']]
        this]
     ]]

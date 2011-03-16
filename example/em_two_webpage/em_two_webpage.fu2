@@ -154,7 +154,7 @@
        [set this entry       [string-prog '<p>In order to find biological and behavioral correlations to the types of complex models that are necessary for describing social and moral cognition, we need new ways for computers to simulate and monitor information flow and causality throughout our cognitive models.'
 					  'The human brain is often believed to be many different types of complicated heterogenous processes, so the question becomes: how do we both simulate models at this level of complexity as well as determin whether these models are good or bad explanations of what is happening at a biological level?'
 					  'Toward this end, we\'ve recently completed a stable version of the Funk2 programming language that allows intricate quantitative monitoring of large heterogenous parallel systems.'
-					  'For more information about the low-level details about the computational engineering and science involved in creating and manipulating this system, please see the <a href="funk2.org">funk2.org</a> website.'
+					  'For more information about the low-level details about the computational engineering and science involved in creating and manipulating this system, please see the <a href="http://funk2.org/">funk2.org</a> website.'
 					  ]]
        this]
     ]]

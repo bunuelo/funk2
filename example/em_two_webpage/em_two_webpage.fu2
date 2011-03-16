@@ -66,7 +66,7 @@
 	       ''
 	       '<p>'
 	       'The field of machine learning has described models of goal-oriented behavior that use a numerical utility function in order to quantify whether or not a given goal has been accomplished.  '
-	       'First, these models are proving very useful for finding the beginning of an explanation for how models of the world are learned and what the function of specific neurotransmitters may be in the neocortex <a href="#reference_4">[4]</a>.  '
+	       'These models are proving useful for finding the beginning of an explanation for how models of the world are learned and what the function of specific neurotransmitters may be in the neocortex <a href="#reference_4">[4]</a>.  '
 	       'The problem with a simple goal-oriented model is that it does not necessarily involve thinking about social relationships or goals, so we need something slightly more complicated.  '
 	       'A very popular approach to thinking about the goals of multiple people involves relational representations, such as the modal logics of morality <a href="#reference_5">[5]</a>.'
 	       'Combining the scientific power of goal-oriented reinforcement learning with the expressivity of relational representations is a relatively young field that is proving to be maturing very quickly <a href="#reference_6">[6]</a>.  '

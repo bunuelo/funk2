@@ -483,7 +483,7 @@
        [have vbox pack_start center_head_on_resource__hbox nil nil 0]
        [have center_head_on_resource__button signal_connect 'clicked'
 	     [funk []
-		   [have this activate_resource `learned_reactive `physical `center_head_on [get [get  center_body_on_resource__target__entry text] as-symbol]]]
+		   [have this activate_resource `learned_reactive `physical `center_head_on [get [get  center_head_on_resource__target__entry text] as-symbol]]]
 	     nil]
        
        

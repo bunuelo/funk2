@@ -240,7 +240,7 @@
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
        [set this entry       [string-prog '<p>'
 					  'Models of mind that accomplish reasoning tasks have different functional information processes that causally interact often in unpredictably complicated ways.  '
-					  'Because our model is a reflective model, it traces its own executive functions creates representations of the causal interactions between different information processes.  '
+					  'Because our model is a reflective model, it traces its own executive functions and creates representations of the causal interactions between these different information processes.  '
 					  'We have also created a timeline visualization tool to help the model developer to inspect and debug her theories of mental causal interactions and learning.  '
 					  '</p>'
 					  ]]

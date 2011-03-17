@@ -1,0 +1,1191 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe htmldoc_post    [frame] [title date author author_link entry]]
+
+
+[deframe htmldoc_example [frame] [name title date author entry]]
+
+[deftypefunk htmldoc_example get page_content []
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
+	       '  <div class="post">'
+	       [stringlist-concat `['<h1 class="title">' ,[get this title] '</h1>']]
+	       [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get this date] ' by ' ,[get this author] '</small></p>']]
+	       '    <div class="entry">'
+	       '      <p>'
+	       [htmldoc_code_section [get this entry]]
+	       '      </p>'
+	       [string-concat '<p class="links"><a href="/example/' [get this name] '.fu2" class="more">Download</a></p>']
+	       '    </div>'
+	       '  </div>'
+	       '</div>'
+	       '<!-- end content -->']]
+
+
+[deftypefunk htmldoc_example execute compile [context]
+  [let [[html_code [htmldoc_page context [get this page_content]]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'example']]]
+    [shelter [mkdir [string-concat [get context root_dir] 'example/' [get this name]]]]
+    [have [string-prog [string-concat '\'' [get this title] '\'']
+		       [string-concat '\'This example ' [get context title] ' code was downloaded from http://' [get context hostname] '/example/' [get this name] '.fu2\'']
+		       ''
+		       [get this entry]]
+	  save [string-concat [get context root_dir] 'example/' [get this name] '.fu2']]
+    [have html_code save [string-concat [get context root_dir] 'example/' [get this name] '/index.html']]
+    nil]]
+
+
+
+
+
+[deframe htmldoc_tab [frame] [name generator_funk]
+  [new [initial-name initial-generator_funk]
+       [= name           initial-name]
+       [= generator_funk initial-generator_funk]]]
+
+[deftypefunk htmldoc_tab get name_as_string []
+  [get name as-string]]
+
+[deftypefunk htmldoc_tab get name_as_lowercase_string []
+  [get [get name as-string] lowercase]]
+
+[deftypefunk htmldoc_tab execute compile [context]
+  [let [[body_html [funkall [get this generator_funk] context]]]
+    [shelter [mkdir      [string-concat [get context root_dir] [get this name_as_lowercase_string]]]]
+    [have body_html save [string-concat [get context root_dir] [get this name_as_lowercase_string] '/index.html']]
+    nil]]
+
+
+[deframe htmldoc_context [frame] [root_dir
+				  hostname
+				  title
+				  subtitle
+				  posts
+				  examples
+				  tabs
+				  tags
+				  documentation_packages
+				  documentation_objects
+				  [background_color                       '#FFFFFF']
+				  [font_color                             '#000000']
+				  [link_color                             '#0000FF']
+				  [logo_primary_font_color                '#000000']
+				  [logo_secondary_font_color              '#000000']
+				  [logo_link_font_color                   '#0000FF']
+				  [menu_link_right_border_color           '#000000']
+				  [menu_link_color                        '#0000FF']
+				  [page_background_color                  '#FFFFFF']
+				  [latest_post_border_color               '#000000']
+				  [content_title_link_color               '#0000FF']
+				  [content_title_link_bottom_border_color '#000000']
+				  [content_byline_bottom_border_color     '#000000']
+				  [content_links_background_color         '#FFFFFF']
+				  [sidebar_list_divider_color             '#000000']
+				  [sidebar_background_color               '#FFFFFF']
+				  [sidebar_font_color                     '#000000']
+				  [sidebar_link_color                     '#0000FF']
+				  [footer_top_border_color                '#000000']
+				  [footer_font_color                      '#000000']
+				  [footer_link_color                      '#0000FF']
+				  [search_background_color                '#000000']
+				  [search_border_color                    '#222222']
+				  [search_active_border_color             '#888888']
+				  [search_font_color                      '#FFFFFF']
+				  [search_link_color                      '#0000FF']
+				  [search_visited_link_color              '#0000FF']
+				  [search_hover_link_color                '#0000FF']
+				  [search_active_link_color               '#0000FF']
+				  [search_url_color                       '#0000FF']]
+  [new [initial-root_dir]
+       [= root_dir initial-root_dir]]]
+
+[deftypefunk htmldoc_context execute add_tab [tab]
+  [= tabs [append tabs [conslist tab]]]]
+
+[deftypefunk htmldoc_context execute compile_tabs []
+  [mapc [funk [tab]
+	      [terminal_format standard-terminal '\nhtmldoc compiling ' [get tab name] ' tab.']
+	      [have tab compile this]]
+	tabs]]
+
+[deftypefunk htmldoc_context get tab [name]
+  [let [[requested_tab nil]]
+    [mapc [funk [tab]
+		[if [eq name [get tab name]]
+		    [= requested_tab tab]]]
+	  tabs]
+    [if [null requested_tab]
+	[error bug_type `htmldoc_context_could_not_find_tab
+	       tab_name name
+	       this     this]
+      requested_tab]]]
+
+[deftypefunk htmldoc_context execute compile_documentation_objects []
+  [shelter [mkdir [string-concat [get this root_dir] 'documentation']]]
+  [shelter [mkdir [string-concat [get this root_dir] 'documentation/object']]]
+  [mapc [funk [type_name]
+	      [let [[type_name_string     [get type_name as-string]]
+		    [object_documentation [htmldoc_object_documentation this type_name]]]
+		[shelter [mkdir [string-concat [get this root_dir] 'documentation/object/' type_name_string]]]
+		[have object_documentation save [string-concat [get this root_dir] 'documentation/object/' type_name_string '/index.html']]]]
+	[get this documentation_objects]]]
+
+[deftypefunk htmldoc_context execute require_documentation_packages []
+  [mapc [funk [package_name]
+	      [if [not [get [lookup-package package_name] loaded_all_dependencies_time]]
+		  [prog [print [format nil 'requiring ' package_name '.']]
+			[shelter [require-package package_name]]]]]
+	[get this documentation_packages]]]
+
+[deftypefunk htmldoc_context get all_posts_content []
+  [string-prog [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-prog '<div class="post">'
+							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
+							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[if [get post author_link]
+																		     [string-concat '<a href="' [get post author_link] '">' [get post author] '</a>']
+																		   [get post author]] '</small></p>']]
+							     '  <div class="entry">'
+							     [get post entry]
+							     [prog '<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
+								   '']
+							     '  </div>'
+							     '</div>']]
+					  [get this posts]]]]
+	       ]]
+
+[deftypefunk htmldoc_context get documentation_overview_content []
+  [string-prog '<h2>Packages</h2>'
+	       ''
+	       '<ul>'
+	       [stringlist-prog [mapcar [funk [package_name_string]
+					      [string-concat '<li><a href="/documentation/package/' package_name_string '"><strong>' package_name_string '</strong></a></li>']]
+					[have [mapcar [funk [package_name]
+							    [get package_name as-string]]
+						      [get this documentation_packages]]
+					      sort &>]]]
+	       '</ul>'
+	       '<h2>All Object Types</h2>'
+	       ''
+	       '<ul>'
+	       [stringlist-prog [mapcar [funk [type_name_string]
+					      [string-concat '<li><a href="/documentation/object/' type_name_string '"><strong>' type_name_string '</strong></a></li>']]
+					[have [mapcar [funk [type_name]
+							    [get type_name as-string]]
+						      [get this documentation_objects]]
+					      sort &>]]]
+	       '</ul>']]
+
+
+[defunk htmldoc_package_documentation [context package_name]
+  [terminal_format standard-terminal '\nhtmldoc: compiling ' package_name ' package documentation.']
+  [htmldoc_page context
+		[string-prog [string-concat '<h1><tt>' [get package_name as-string] '</tt> Package Documentation</h1>']
+			     [let [[package [lookup-package package_name]]]
+			       [string-prog '<h2>Package Dependencies</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [package_dependency]
+									   `[print [string-concat '  package dependency: ' [get package_dependency as-string]]]
+									   [string-prog [string-concat '<li><a href=../' [get package_dependency as-string] '><tt>' [get package_dependency as-string] '</tt></a></li>']]]
+								     [get package package_dependencies]]]
+					    '</ul>'
+					    ''
+					    '<h2>Documentation</h2>'
+					    '<p>'
+					    [htmldoc_documentation_format [get package documentation]]
+					    '</p><br>'
+					    ''
+					    '<h2>Objects Defined</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [object_type_defined]
+									   `[print [string-concat '  object type defined: ' [get object_type_defined as-string]]]
+									   [string-prog [string-concat '<li><a href=../../object/' [get object_type_defined as-string] '><tt>' [get object_type_defined as-string] '</tt></a></li>']]]
+								     [get [get package object_types_defined_set] elements]]]
+					    '</ul>'
+					    ]]]]]
+
+[deftypefunk htmldoc_context execute compile_documentation_packages []
+  [shelter [mkdir [string-concat [get this root_dir] 'documentation']]]
+  [shelter [mkdir [string-concat [get this root_dir] 'documentation/package']]]
+  [mapc [funk [package_name]
+	      [let [[package_name_string   [get package_name as-string]]
+		    [package_documentation [htmldoc_package_documentation this package_name]]]
+		[shelter [mkdir [string-concat [get this root_dir] 'documentation/package/' package_name_string]]]
+		[have package_documentation save [string-concat [get this root_dir] 'documentation/package/' package_name_string '/index.html']]]]
+	[get this documentation_packages]]]
+
+[deftypefunk htmldoc_context execute compile_documentation []
+  [shelter [mkdir [string-concat [get this root_dir] 'documentation']]]
+  [have this require_documentation_packages]
+  [have this compile_documentation_packages]
+  [have this compile_documentation_objects]
+  nil]
+
+[deftypefunk htmldoc_context execute compile_examples []
+  [mapc [funk [example]
+	      [terminal_format standard-terminal '\nhtmldoc: compiling example \'' [get example name] '\'.']
+	      [have example compile this]]
+	[get this examples]]
+  nil]
+
+
+[defunk htmldoc_css [context]
+  [string-prog 'body {'
+	       '	margin: 0;'
+	       '	padding: 0;'
+	       [string-concat 'background: ' [get context background_color] ' url(images/img01.jpg) repeat left top;']
+	       '	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;'
+	       '	font-size: 13px;'
+	       [string-concat 'color: ' [get context font_color] ';']
+	       '}'
+	       ''
+	       'h1, h2, h3 {'
+	       '	margin-top: 0;'
+	       '}'
+	       ''
+	       'h1 {'
+	       '	font-size: 1.6em;'
+	       '	font-weight: normal;'
+	       '}'
+	       ''
+	       'h2 {'
+	       '	font-size: 1.6em;'
+	       '}'
+	       ''
+	       'h3 {'
+	       '	font-size: 1em;'
+	       '}'
+	       ''
+	       'ul {'
+	       '}'
+	       ''
+	       'a {'
+	       '	text-decoration: none;'
+	       [string-concat 'color: ' [get context link_color] ';']
+	       '}'
+	       ''
+	       'a:hover {'
+	       '	border-bottom: none;'
+	       '}'
+	       ''
+	       'a img {'
+	       '	border: none;'
+	       '}'
+	       ''
+	       'img.left {'
+	       '	float: left;'
+	       '	margin: 0 20px 0 0;'
+	       '}'
+	       ''
+	       'img.right {'
+	       '	float: right;'
+	       '	margin: 0 0 0 20px;'
+	       '}'
+	       ''
+	       '#header {'
+	       '	width: 1000px;'
+	       '	margin: 0 auto;'
+	       '	height: 193px;'
+	       '	padding: 0;'
+	       '}'
+	       ''
+	       '#left_logo_header {'
+	       '	width: 193px;'
+	       '	margin: 0 auto;'
+	       '	height: 193px;'
+	       '	background: url(images/left_logo_header.jpg) left top;'
+	       '	padding: 0;'
+	       '}'
+	       ''
+	       '#center_header {'
+	       '	width: 551px;'
+	       '	margin: 0 auto;'
+	       '	height: 193px;'
+	       '	background: url(images/img02.jpg) repeat-x left top;'
+	       '	padding: 0;'
+	       '}'
+	       ''
+	       '#right_logo_header {'
+	       '	width: 256px;'
+	       '	margin: 0 auto;'
+	       '	height: 193px;'
+	       '	background: url(images/right_logo_header.jpg) right top;'
+	       '	padding: 0;'
+	       '}'
+	       ''
+	       '/* Header */'
+	       ''
+	       '#logo {'
+	       '	width: 970px;'
+	       '	height: 150px;'
+	       '	margin: 0 auto;'
+	       '	padding: 0 10px;'
+	       '}'
+	       ''
+	       '#logo h1, #logo p {'
+	       '	float: left;'
+	       '	margin: 0;'
+	       [string-concat 'color: ' [get context logo_primary_font_color] ';']
+	       '}'
+	       ''
+	       '#logo h1 {'
+	       '	padding: 50px 0 0 0;'
+	       '	text-transform: lowercase;'
+	       '	font-weight: normal;'
+	       '	font-size: 3em;'
+	       '}'
+	       ''
+	       '#logo p {'
+	       '	text-transform: uppercase;'
+	       '	padding: 72px 0 0 3px;'
+	       '	font-size: 10px;'
+	       [string-concat 'color: ' [get context logo_secondary_font_color] ';']
+	       '}'
+	       ''
+	       '#logo a {'
+	       '	border: none;'
+	       '	text-decoration: none;'
+	       [string-concat 'color: ' [get context logo_link_font_color] ';']
+	       '}'
+	       ''
+	       '/* Menu */'
+	       ''
+	       '#menu {'
+	       '	width: 1000px;'
+	       '	margin: 0 auto;'
+	       '	padding: 10px 0;'
+	       '	height: 30px;'
+	       '}'
+	       ''
+	       '#menu ul {'
+	       '	margin: 0;'
+	       '	padding: 0;'
+	       '	list-style: none;'
+	       '}'
+	       ''
+	       '#menu li {'
+	       '	display: inline;'
+	       '}'
+	       ''
+	       '#menu a {'
+	       '	display: block;'
+	       '	float: left;'
+	       '	margin: 0 3px 0 0;'
+	       '	padding: 6px 15px 10px 20px;'
+	       [string-concat 'border-right: 1px ' [get context menu_link_right_border_color] ' solid;']
+	       '	text-decoration: none;'
+	       '	text-transform: uppercase;'
+	       '	font-family: Arial, Helvetica, sans-serif;'
+	       '	font-size: 10px;'
+	       [string-concat 'color: ' [get context menu_link_color] ';']
+	       '}'
+	       ''
+	       '#menu a:hover {'
+	       '	margin: 0 3px 0 0;'
+	       [string-concat 'color: ' [get context menu_link_color] ';']
+	       '}'
+	       ''
+	       '#menu .current_page_item a {'
+	       '	margin: 0 3px 0 0;'
+	       [string-concat 'color: ' [get context menu_link_color] ';']
+	       '}'
+	       ''
+	       '/* Wrapper */'
+	       ''
+	       '#wrapper {'
+	       '}'
+	       ''
+	       '/* Page */'
+	       ''
+	       '#page {'
+	       '	width: 1000px;'
+	       '	margin: 0 auto;'
+	       '	padding: 20px 0 0 0;'
+	       [string-concat 'background: ' [get context page_background_color] ';']
+	       '}'
+	       ''
+	       '#page-bg {'
+	       '}'
+	       ''
+	       '/* Latest Post */'
+	       ''
+	       '#latest-post {'
+	       '	padding: 20px;'
+	       [string-concat 'border: 1px solid ' [get context latest_post_border_color] ';']
+	       '}'
+	       ''
+	       '/* Content */'
+	       ''
+	       '#content {'
+	       '	float: left;'
+	       '	width: 560px;'
+	       '	text-align: justify'
+	       '}'
+	       ''
+	       '.post {'
+	       '	padding-bottom: 15px;'
+	       '	line-height: 200%;'
+	       '}'
+	       ''
+	       '.post h1 {'
+	       '	font-weight: normal;'
+	       '}'
+	       ''
+	       '.post tt {'
+	       '	font-size: 12px;'
+	       '}'
+	       ''
+	       '.title {'
+	       '	margin: 0;'
+	       '	padding: 10px 0 0 20px;'
+	       '	font-weight: normal;'
+	       '}'
+	       ''
+	       '.title a {'
+	       '	border-bottom: none;'
+	       [string-concat 'color: ' [get context content_title_link_color] ';']
+	       '}'
+	       ''
+	       '.title a:hover {'
+	       [string-concat 'border-bottom: 1px dotted ' [get context content_title_link_bottom_border_color] ';']
+	       '}'
+	       ''
+	       '.byline {'
+	       [string-concat 'border-bottom: 2px solid ' [get context content_byline_bottom_border_color] ';']
+	       '	margin: -10px 20px 20px 20px;'
+	       '}'
+	       ''
+	       '.tag {'
+	       '	padding: 0 15px;'
+	       '}'
+	       ''
+	       '.entry {'
+	       '	padding: 0 20px;'
+	       '}'
+	       ''
+	       '.links {'
+	       '	padding: 4px 20px;'
+	       '	text-align: left;'
+	       '	font-weight: bold;'
+	       [string-concat 'background: ' [get context content_links_background_color] ';']
+	       '}'
+	       ''
+	       '.links a {'
+	       '	border: none;'
+	       '}'
+	       ''
+	       '.links a:hover {'
+	       '}'
+	       ''
+	       '/* Sidebars */'
+	       ''
+	       '#sidebar1 {'
+	       '	float: left;'
+	       '	width: 220px;'
+	       '}'
+	       ''
+	       '#sidebar2 {'
+	       '	float: right;'
+	       '	width: 220px;'
+	       '}'
+	       ''
+	       '.sidebar {'
+	       '	float: left;'
+	       '	padding: 0;'
+	       '	font-size: 12px;'
+	       '}'
+	       ''
+	       '.sidebar ul {'
+	       '	margin: 0;'
+	       '	padding: 0;'
+	       '	list-style: none;'
+	       '}'
+	       ''
+	       '.sidebar li {'
+	       '	padding: 0 0 20px 0;'
+	       '}'
+	       ''
+	       '.sidebar li ul {'
+	       '}'
+	       ''
+	       '.sidebar li li {'
+	       '	margin: 0 20px 0 15px;'
+	       '	padding: 8px 0px;'
+	       [string-concat 'border-bottom: 1px ' [get context sidebar_list_divider_color] ' dashed;']
+	       '}'
+	       ''
+	       ''
+	       '.sidebar li h2 {'
+	       '	margin: 0 0 0 0;'
+	       '	padding: 10px 15px;'
+	       [string-concat 'background: ' [get context sidebar_background_color] ';']
+	       '	font-size: 13px;'
+	       [string-concat 'color: ' [get context sidebar_font_color] ';']
+	       '}'
+	       ''
+	       '.sidebar a {'
+	       [string-concat 'color: ' [get context sidebar_link_color] ';']
+	       '}'
+	       ''
+	       '/* Search */'
+	       ''
+	       '#searchform {'
+	       '	margin: 0;'
+	       '	padding: 0 0 0 0;'
+	       '}'
+	       ''
+	       '#searchform br {'
+	       '	display: none;'
+	       '}'
+	       ''
+	       '#searchform h2 {'
+	       '}'
+	       ''
+	       '#s {'
+	       '	margin: 10px 0px 0 15px;'
+	       '	padding: 2px 2px;'
+	       '	width: 110px;'
+	       '	height: 18px;'
+	       '	border: 1px solid #253542;'
+	       '	background: #000000;'
+	       '	font-size: 10px;'
+	       '	color: #CCCCCC;'
+	       '}'
+	       ''
+	       '#x {'
+	       '	margin: 0;'
+	       '	padding: 2px 5px;'
+	       '	height: 25px;'
+	       '	background: #000000;'
+	       '	border: 1px solid #253542;'
+	       '	text-decoration: none;'
+	       '	text-transform: uppercase;'
+	       '	font-family: Arial, Helvetica, sans-serif;'
+	       '	font-size: 10px;'
+	       '	color: #CCCCCC;'
+	       '}'
+	       '/* Calendar */'
+	       ''
+	       '#calendar_wrap {'
+	       '	padding: 0 15px;'
+	       '	text-align: center;'
+	       '}'
+	       ''
+	       '#calendar_wrap table {'
+	       '	width: 100%;'
+	       '}'
+	       ''
+	       '#calendar_wrap th {'
+	       '}'
+	       ''
+	       '#calendar_wrap td {'
+	       '}'
+	       ''
+	       '#calendar_wrap tfoot td {'
+	       '	border: none;'
+	       '}'
+	       ''
+	       '#calendar_wrap tfoot td#prev {'
+	       '	text-align: left;'
+	       '	font-weight: bold;'
+	       '	border: none;'
+	       '}'
+	       ''
+	       '#calendar_wrap tfoot td#prev a {'
+	       '	border: none;'
+	       '}'
+	       ''
+	       '#calendar_wrap tfoot td#next {'
+	       '	text-align: right;'
+	       '	font-weight: bold;'
+	       '	border: none;'
+	       '}'
+	       ''
+	       '#calendar_wrap tfoot td#next a {'
+	       '	border: none;'
+	       '}'
+	       ''
+	       '/* Footer */'
+	       ''
+	       '#footer {'
+	       '	width: 1000px;'
+	       '	height: 55px;'
+	       '	margin: 0 auto;'
+	       [string-concat 'background: ' [get context background_color] ';']
+	       [string-concat 'border-top: 2px solid ' [get context footer_top_border_color] ';']
+	       '}'
+	       ''
+	       '#footer p {'
+	       '	margin: 0;'
+	       '	padding: 15px 0 0 0;'
+	       '	text-align: center;'
+	       '	font-size: smaller;'
+	       [string-concat 'color: ' [get context footer_font_color] ';']
+	       '}'
+	       ''
+	       '#footer a {'
+	       [string-concat 'color: ' [get context footer_link_color] ';']
+	       '}'
+	       
+	       '/**'
+	       ' * Google Search theme'
+	       ' *'
+	       ' */'
+	       '/* Slight reset to make the preview have ample padding. */'
+	       '.cse .gsc-control-cse,'
+	       [prog '.gsc-control-cse {'
+		     '  padding: 2%;'
+		     '  width: 96%;'
+		     '}'
+		     '']
+	       '.cse .gsc-branding,'
+	       '.gsc-branding {'
+	       '  display: none;'
+	       '}'
+	       '.cse .gsc-control-cse div,'
+	       '.gsc-control-cse div {'
+	       '  position: normal;'
+	       '}'
+	       '/* Selector for entire element. */'
+	       '.cse .gsc-control-cse,'
+	       '.gsc-control-cse {'
+	       [string-concat '  background-color: ' [get context search_background_color] ';']
+	       '  border: 0px solid;'
+	       '  border-color: #000000;'
+	       '}'
+	       '.cse .gsc-control-cse:after,'
+	       '.gsc-control-cse:after {'
+	       '  content:".";'
+	       '  display:block;'
+	       '  height:0;'
+	       '  clear:both;'
+	       '  visibility:hidden;'
+	       '}'
+	       '.cse .gsc-resultsHeader,'
+	       '.gsc-resultsHeader {'
+	       '  border: block;'
+	       '}'
+	       '/* Search button */'
+	       '.cse input.gsc-search-button,'
+	       'input.gsc-search-button {'
+	       '  font-family: inherit;'
+	       '  color: #000000;'
+	       '  text-shadow: 0 1px 2px #FFFFFF;'
+	       '  background-color: #CECECE;'
+	       '  border: 1px outset;'
+	       '  border-color: #666666;'
+	       '  border-radius: 2px;'
+	       '  -moz-border-radius: 2px;'
+	       '  -webkit-border-radius: 2px;'
+	       '}'
+	       '/* Inactive tab */'
+	       '.cse .gsc-tabHeader.gsc-tabhInactive,'
+	       '.gsc-tabHeader.gsc-tabhInactive {'
+	       '  border-bottom: none;'
+	       '  color: #666666;'
+	       '  background-color: #e9e9e9;'
+	       '  border: 1px solid;'
+	       '  border-color: #e9e9e9;'
+	       '  border-bottom: none;'
+	       '}'
+	       '/* Active tab */'
+	       '.cse .gsc-tabHeader.gsc-tabhActive,'
+	       '.gsc-tabHeader.gsc-tabhActive {'
+	       [string-concat '  background-color: ' [get context search_background_color] ';']
+	       '  border: 1px solid;'
+	       '  border-top: 2px solid;'
+	       '  border-color: #e9e9e9;'
+	       '  border-top-color: #FF9900;'
+	       '  border-bottom: none;'
+	       '}'
+	       '/* This is the tab bar bottom border. */'
+	       '.cse .gsc-tabsArea,'
+	       '.gsc-tabsArea {'
+	       '  margin-top: 1em;'
+	       '  border-bottom: 1px solid #e9e9e9;'
+	       '}'
+	       '/* Inner wrapper for a result */'
+	       '.cse .gsc-webResult.gsc-result,'
+	       '.gsc-webResult.gsc-result {'
+	       '  padding: .25em;'
+	       '  border: 1px solid;'
+	       [string-concat '  border-color: ' [get context search_border_color] ';']
+	       '  margin-bottom: 1em;'
+	       '}'
+	       '/* Result hover event styling */'
+	       '.cse .gsc-webResult.gsc-result:hover,'
+	       '.gsc-webResult.gsc-result:hover {'
+	       '  border: 1px solid;'
+	       [string-concat '  border-color: ' [get context search_active_border_color] ';']
+	       '}'
+	       '/* Result */'
+	       '.cse .gsc-webResult.gsc-result,'
+	       '.gsc-webResult.gsc-result {'
+	       [string-concat '  color: ' [get context search_font_color] ';']
+	       '}'
+	       '/* Result link */'
+	       '.cse .gsc-webResult.gsc-result a,'
+	       '.gsc-webResult.gsc-result a {'
+	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
+	       '.cse .gsc-webResult.gsc-result b,'
+	       '.gsc-webResult.gsc-result b {'
+	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
+	       '.cse .gsc-webResult.gsc-result gs-visibleUrl.*,'
+	       '.gsc-webResult.gsc-result gs-visibleUrl.* {'
+	       [string-concat '  color: ' [get context search_url_color] ';']
+	       '}'
+	       '/*Promotion Settings*/'
+	       '/* The entire promo */'
+	       '.cse .gs-promotion.gs-result,'
+	       '.gs-promotion.gs-result {'
+	       [string-concat '  background-color: ' [get context search_background_color] ';']
+	       '  border: 1px solid;'
+	       '  border-color: #336699;'
+	       '}'
+	       '/* Promotion image */'
+	       '.cse .gs-promotion.gs-result .gs-promotion-image,'
+	       '.gs-promotion.gs-result .gs-promotion-image {}'
+	       '/* Promotion title */'
+	       '.cse .gs-promotion.gs-result a.gs-title:link,'
+	       '.gs-promotion.gs-result a.gs-title:link {'
+	       [string-concat '  color: ' [get context search_link_color] ';']
+	       '}'
+	       '.cse .gs-promotion.gs-result a.gs-title:visited,'
+	       '.gs-promotion.gs-result a.gs-title:visited {'
+	       [string-concat '  color: ' [get context search_visited_link_color] ';']
+	       '}'
+	       '.cse .gs-promotion.gs-result a.gs-title:hover,'
+	       '.gs-promotion.gs-result a.gs-title:hover {'
+	       [string-concat '  color: ' [get context search_hover_link_color] ';']
+	       '}'
+	       '.cse .gs-promotion.gs-result a.gs-title:active,'
+	       '.gs-promotion.gs-result a.gs-title:active {'
+	       [string-concat '  color: ' [get context search_active_link_color] ';']
+	       '}'
+	       '/* Promotion snippet */'
+	       '.cse .gs-promotion.gs-result .gs-snippet,'
+	       '.gs-promotion.gs-result .gs-snippet {'
+	       '  color: #000000;'
+	       '}'
+	       '/* Promotion url */'
+	       '.cse .gs-promotion.gs-result .gs-visibleUrl,'
+	       '.gs-promotion.gs-result .gs-visibleUrl {'
+	       '  color: #008000;'
+	       '}'
+	       '/* Style for auto-completion table'
+	       ' * .gsc-completion-selected : styling for a suggested query which the user has moused-over'
+	       ' * .gsc-completion-container : styling for the table which contains the completions'
+	       ' */'
+	       '.gsc-completion-selected {'
+	       '  background: #D5E2FF;'
+	       '}'
+	       '.gsc-completion-container {'
+	       '  font-family: Arial, sans-serif;'
+	       '  font-size: 13px;'
+	       '  position: absolute;'
+	       [string-concat '  background: ' [get context search_background_color] ';']
+	       '  border: 1px solid #666666;'
+	       '  margin-left: 0;'
+	       '  margin-right: 0;'
+	       '  /* The top, left, and width are set in JavaScript. */'
+	       '}'
+	       ''
+	       '/* Full URL */'
+	       '.gs-webResult.gs-result .gs-visibleUrl-short {'
+	       '  display: none;'
+	       '}'
+	       '.gs-webResult.gs-result .gs-visibleUrl-long {'
+	       '  display: block;'
+	       '}'
+	       
+	       	       
+	       ]]
+
+[defunk htmldoc_current_calendar []
+  [let [[current_time [time]]]
+    [let [[month_string [get current_time month_name]]
+	  [year_string  [get [get current_time years] as-string]]
+	  [day_index    [- [get current_time days] 1]]
+	  [years        [get current_time years]]
+	  [months       [get current_time months]]]
+      [let [[days_in_month [cond [[== months  1] 31]
+				 [[== months  2] [+ 28 [if [== [% years 4] 0] 1 0]]]
+				 [[== months  3] 31]
+				 [[== months  4] 30]
+				 [[== months  5] 31]
+				 [[== months  6] 30]
+				 [[== months  7] 31]
+				 [[== months  8] 31]
+				 [[== months  9] 30]
+				 [[== months 10] 31]
+				 [[== months 11] 30]
+				 [[== months 12] 31]]]
+	    [starting_sunday [- [% [- [+ day_index 7] [get current_time day_of_week]] 7] 7]]]
+	[labels [[day_table_label [index]
+				  [if [and [>= index 0] [< index days_in_month]]
+				      [if [== index day_index]
+					  [string-concat '<td id="today">' [get [+ index 1] as-string] '</td>']
+					[string-concat '<td>' [get [+ index 1] as-string] '</td>']]
+				    '<td class="pad" colspan="1">&nbsp;</td>']]]
+		[string-prog '<div id="calendar_wrap">'
+			     '  <table summary="Calendar">'
+			     '  <caption>'
+			     [string-concat '  ' month_string ' ' year_string]
+			     '  </caption>'
+			     '  <thead>'
+			     '    <tr>'
+			     '      <th abbr="Sunday"    scope="col" title="Sunday"   >S</th>'
+			     '      <th abbr="Monday"    scope="col" title="Monday"   >M</th>'
+			     '      <th abbr="Tuesday"   scope="col" title="Tuesday"  >T</th>'
+			     '      <th abbr="Wednesday" scope="col" title="Wednesday">W</th>'
+			     '      <th abbr="Thursday"  scope="col" title="Thursday" >T</th>'
+			     '      <th abbr="Friday"    scope="col" title="Friday"   >F</th>'
+			     '      <th abbr="Saturday"  scope="col" title="Saturday" >S</th>'
+			     '    </tr>'
+			     '  </thead>'
+			     '  <tfoot>'
+			     '    <tr>'
+			     [string-concat '      <td abbr="' month_string '" colspan="3" id="prev"></td>']
+			     '      <td class="pad">&nbsp;</td>'
+			     '      <td colspan="3" id="next">&nbsp;</td>'
+			     '    </tr>'
+			     '  </tfoot>'
+			     '  <tbody>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 0]]
+			     [day_table_label [+ starting_sunday 1]]
+			     [day_table_label [+ starting_sunday 2]]
+			     [day_table_label [+ starting_sunday 3]]
+			     [day_table_label [+ starting_sunday 4]]
+			     [day_table_label [+ starting_sunday 5]]
+			     [day_table_label [+ starting_sunday 6]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 7]]
+			     [day_table_label [+ starting_sunday 8]]
+			     [day_table_label [+ starting_sunday 9]]
+			     [day_table_label [+ starting_sunday 10]]
+			     [day_table_label [+ starting_sunday 11]]
+			     [day_table_label [+ starting_sunday 12]]
+			     [day_table_label [+ starting_sunday 13]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 14]]
+			     [day_table_label [+ starting_sunday 15]]
+			     [day_table_label [+ starting_sunday 16]]
+			     [day_table_label [+ starting_sunday 17]]
+			     [day_table_label [+ starting_sunday 18]]
+			     [day_table_label [+ starting_sunday 19]]
+			     [day_table_label [+ starting_sunday 20]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 21]]
+			     [day_table_label [+ starting_sunday 22]]
+			     [day_table_label [+ starting_sunday 23]]
+			     [day_table_label [+ starting_sunday 24]]
+			     [day_table_label [+ starting_sunday 25]]
+			     [day_table_label [+ starting_sunday 26]]
+			     [day_table_label [+ starting_sunday 27]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 28]]
+			     [day_table_label [+ starting_sunday 29]]
+			     [day_table_label [+ starting_sunday 30]]
+			     [day_table_label [+ starting_sunday 31]]
+			     [day_table_label [+ starting_sunday 32]]
+			     [day_table_label [+ starting_sunday 33]]
+			     [day_table_label [+ starting_sunday 34]]
+			     '    </tr>'
+			     '    <tr>'
+			     [day_table_label [+ starting_sunday 35]]
+			     [day_table_label [+ starting_sunday 36]]
+			     [day_table_label [+ starting_sunday 37]]
+			     [day_table_label [+ starting_sunday 38]]
+			     [day_table_label [+ starting_sunday 39]]
+			     [day_table_label [+ starting_sunday 40]]
+			     [day_table_label [+ starting_sunday 41]]
+			     '    </tr>'
+			     '  </tbody>'
+			     '</table>'
+			     '</div>']]]]]]
+
+
+[defunk htmldoc_calendar []
+  [htmldoc_current_calendar]]
+
+[defunk htmldoc_page [context content]
+  [string-prog '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+	       '<html xmlns="http://www.w3.org/1999/xhtml">'
+	       '<head>'
+	       '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'
+	       [string-concat '<title>' [get context title] ' -- ' [get context subtitle] '</title>']
+	       '<meta name="keywords" content="" />'
+	       '<meta name="htmldoc" content="" />'
+	       '<link href="/default.css" rel="stylesheet" type="text/css" media="screen" />'
+	       '</head>'	       '<body>'
+	       '<div id="header">'
+	       '  <table border=0 cellspacing=0 cellpadding=0><tr><td>'
+	       '    <div id="left_logo_header">'
+	       '    </div>'
+	       '  </td><td>'
+	       '    <div id="center_header">'
+	       '        <div id="logo">'
+	       '	  <h1><a href="#">' [get context title] '</a></h1>'
+	       '	  <p>' [get context subtitle] '</p>'
+	       '	</div>'
+	       '	<div id="menu">'
+	       '		<ul id="main">'
+	       [stringlist-prog [mapcar [funk [tab]
+					      [string-concat '<li><a href="/' [get tab name_as_lowercase_string] '">' [get tab name_as_string] '</a></li>']]
+					[get context tabs]]]
+	       '		</ul>'
+	       '	</div>'
+	       '	'
+	       '    </div>'
+	       '  </td><td>'
+	       '    <div id="right_logo_header">'
+	       '    </div>'
+	       '  </td></tr></table>'
+	       '</div>'
+	       '<!-- end header -->'
+	       '<div id="wrapper">'
+	       '	<!-- start page -->'
+	       '	<div id="page">'
+	       '		<div id="sidebar1" class="sidebar">'
+	       '			<ul>'
+	       '				<li>'
+	       '					<h2>Recent Updates</h2>'
+	       '					<ul>'
+	       [stringlist-prog [let [[index 0]]
+				  [mapcar [funk [post]
+						[= index [+ index 1]]
+						[string-concat '<li><a href="/news/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
+					  [get context posts]]]]
+	       '					</ul>'
+	       '				</li>'
+	       [prog '				<li>'
+		     '					<h2>Categories</h2>'
+		     '					<ul>'
+		     '						<li><a href="http://www-formal.stanford.edu/jmc/whatisai/whatisai.html">Artificial Intelligence...</a></li>'
+		     '						<li><a href="#">Neuroscience</a></li>'
+		     '						<li><a href="#">Commonsense Reasoning</a></li>'
+		     '						<li><a href="#">Distributed Computation</a></li>'
+		     '						<li><a href="#">Collaborative Programming and Development</a></li>'
+		     '						<li><a href="#">Self-describing Systems</a></li>'
+		     '					</ul>'
+		     '				</li>'
+		     '				<li>'
+		     '					<h2>Archives</h2>'
+		     '					<ul>'
+		     '						<li><a href="#">May</a> (0)</li>'
+		     '						<li><a href="#">April</a> (0)</li>'
+		     '						<li><a href="#">March</a> (0)</li>'
+		     '						<li><a href="#">February</a> (0)</li>'
+		     '						<li><a href="#">January</a> (0)</li>'
+		     '					</ul>'
+		     '				</li>'
+		     '']
+	       '			</ul>'
+	       '		</div>'
+	       '<!-- start content -->'
+	       '<div id="content">'
+	       content
+	       '</div>'
+	       '<!-- end content -->'
+	       '		<!-- start sidebars -->'
+	       '		<div id="sidebar2" class="sidebar">'
+	       '			<ul>'
+	       '				<li>'
+	       [prog '					<form id="searchform" method="get" action="#">'
+		     '						<div>'
+		     '							<h2>Site Search</h2>'
+		     '							<input type="text" name="s" id="s" size="15" value="" />'
+		     '							<br />'
+		     '							<input type="submit" value="Search" id="x" />'
+		     '						</div>'
+		     '					</form>'
+		     '']
+	       '<div id="cse" style="width: 100%;">Loading</div>'
+	       '<script src="http://www.google.com/jsapi" type="text/javascript"></script>'
+	       '<script type="text/javascript">'
+	       '  google.load(\'search\', \'1\', {language : \'en\'});'
+	       '  google.setOnLoadCallback(function() {'
+	       '    var customSearchControl = new google.search.CustomSearchControl(\'009403554540380495507:atwcl8qocmy\');'
+	       '    customSearchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);'
+	       '    customSearchControl.draw(\'cse\');'
+	       '  }, true);'
+	       '</script>'
+	       [prog '<link rel="stylesheet" href="http://www.google.com/cse/style/look/default.css" type="text/css" />'
+		     '']
+	       '				</li>'
+	       [if [get context tags]
+		   [string-prog '				<li>'
+				'					<h2>Tags</h2>'
+				'					<p class="tag">'
+				[stringlist-concat [mapcar [funk [tag]
+								 [string-concat '<a href="#">' [get tag as-string] '</a>']]
+							   [get context tags]]]
+				'				</li>']
+		 '']
+	       '				<li>'
+	       '					<h2>Calendar</h2>'
+	       [htmldoc_calendar]
+	       '				</li>'
+	       [if [get context examples]
+		   [string-prog	'				<li>'
+				'					<h2>Example Applications</h2>'
+				'					<ul>'
+				[stringlist-prog [mapcar [funk [example]
+							       [string-concat '<li><a href="/example/' [get example name] '">' [get example title] '</a></li>']]
+							 [get context examples]]]
+				'					</ul>'
+				'				</li>']
+		 '']
+	       [prog '				<li>'
+		     '					<h2>Categories</h2>'
+		     '					<ul>'
+		     '						<li><a href="#">Aliquam libero</a></li>'
+		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
+		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
+		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+		     '						<li><a href="#">Aliquam libero</a></li>'
+		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
+		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+		     '						<li><a href="#">Aliquam libero</a></li>'
+		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
+		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
+		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
+		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
+		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
+		     '					</ul>'
+		     '				</li>'
+		     '']
+	       '			</ul>'
+	       '		</div>'
+	       '		<!-- end sidebars -->'
+	       '		<div style="clear: both;">&nbsp;</div>'
+	       '	</div>'
+	       '	<!-- end page -->'
+	       '</div>'
+	       '<div id="footer">'
+	       '	<p>&copy;2009 All Rights Reserved. &nbsp;&bull;&nbsp; Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>'
+	       '</div>'
+	       '</body>'
+	       '</html>']]
+  
+
+
+[defunk htmldoc_redirect_page [redirect_url]
+  [string-prog '<html>'
+	       '<head>'
+	       [string-concat '<meta http-equiv="refresh" content="0;url=' redirect_url '">']
+	       '</head>'
+	       '<body>'
+	       '</body>'
+	       '</html>']]
+
+
+[defunk htmldoc_code_section [code]
+  [string-prog '<tt>'
+	       [have [have [have [have code replace_all '\n' '<br>\n']
+				 replace_all '-' '&#x2011;']
+			   replace_all '\t' '        ']
+		     replace_all ' ' '&nbsp;']
+	       '</tt>']]
+
+'<h3>Bulleted List:</h3>'
+'<ul>'
+'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
+'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
+'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
+'</ul>'
+'<h3>Numbered List:</h3>'
+'<ol>'
+'  <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>'
+'  <li>Phasellus nec erat sit amet nibh pellentesque congue.</li>'
+'  <li>Cras vitae metus aliquam risus pellentesque pharetra.</li>'
+'</ol>'
+
+
+[defunk htmldoc_documentation_format [documentation]
+  [string-prog '<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'
+	       [if [is-type `string documentation]
+		   [stringlist-intersperse [have documentation split '\n'] '<br>']
+		 [exp-as-string documentation]]
+	       '</td></tr></table>']]
+
+[defunk htmldoc_funk_documentation [funk]
+  [htmldoc_documentation_format [get funk documentation]]]
+
+[defunk htmldoc_object_documentation [context type_name]
+  [terminal_format standard-terminal '\nhtmldoc: compiling ' type_name ' object documentation.']
+  [htmldoc_page context
+		[string-prog [string-concat '<h1><tt>' [get type_name as-string] '</tt> Object Documentation</h1>']
+			     [let [[type [lookup_type type_name]]]
+			       [string-prog '<h2><tt>get</tt> interface</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [key_name]
+									   `[print [string-concat '  key: ' [get key_name as-string]]]
+									   [let [[funk [get type type_var_value `get key_name nil]]]
+									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											  '<p>'
+											  [htmldoc_funk_documentation funk]
+											  '</p><br>'
+											  '</li>']]]
+								     [get type type_var-keys `get]]]
+					    '</ul>'
+					    ''
+					    '<h2><tt>set</tt> interface</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [key_name]
+									   `[print [string-concat '  key: ' [get key_name as-string]]]
+									   [let [[funk [get type type_var_value `set key_name nil]]]
+									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											  '<p>'
+											  [htmldoc_funk_documentation funk]
+											  '</p><br>'
+											  '</li>']]]
+								     [get type type_var-keys `set]]]
+					    '</ul>'
+					    ''
+					    '<h2><tt>execute</tt> interface</h2>'
+					    '<ul>'
+					    [stringlist-prog [mapcar [funk [key_name]
+									   `[print [string-concat '  key: ' [get key_name as-string]]]
+									   [let [[funk [get type type_var_value `execute key_name nil]]]
+									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
+											  '<p>'
+											  [htmldoc_funk_documentation funk]
+											  '</p><br>'
+											  '</li>']]]
+								     [get type type_var-keys `execute]]]
+					    '</ul>'
+					    ]]
+			     ''
+			     ]]]
+
+

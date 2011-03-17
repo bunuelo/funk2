@@ -1052,27 +1052,27 @@ f2ptr f2__pointer__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2
 export_cefunk3(pointer__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this pointer with notes.");
 
 
-// mutex lick funks
+// cmutex lick funks
 
-f2ptr raw__mutex__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+f2ptr raw__cmutex__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   return nil;
 }
 
-f2ptr f2__mutex__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
-  if ((! raw__mutex__is_type(cause, this)) ||
+f2ptr f2__cmutex__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
+  if ((! raw__cmutex__is_type(cause, this)) ||
       (! raw__lick__is_type(cause, lick)) ||
       (! raw__ptypehash__is_type(cause, note_object_hash)) ||
       (! raw__integer__is_type(cause, max_size))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mutex__gather_lick_notes(cause, this, lick, note_object_hash, max_size);
+  return raw__cmutex__gather_lick_notes(cause, this, lick, note_object_hash, max_size);
 }
-export_cefunk4(mutex__gather_lick_notes, this, lick, note_object_hash, max_size, 0, "Gathers the lick note from this mutex.");
+export_cefunk4(cmutex__gather_lick_notes, this, lick, note_object_hash, max_size, 0, "Gathers the lick note from this cmutex.");
 
 
-f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
+f2ptr raw__cmutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   f2ptr     chunk           = raw__chunk__new(cause, 1);
-  boolean_t this__is_locked = raw__mutex__is_locked(cause, this);
+  boolean_t this__is_locked = raw__cmutex__is_locked(cause, this);
   raw__chunk__bit8__elt__set(cause, chunk, 0, this__is_locked ? 0x01 : 0x00);
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
@@ -1080,52 +1080,52 @@ f2ptr raw__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash)
 															   new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
 															   new__symbol(cause, "this"),     this))));
   }
-  return raw__lick_chunk__new(cause, new__symbol(cause, "mutex"), lick_note, chunk);
+  return raw__lick_chunk__new(cause, new__symbol(cause, "cmutex"), lick_note, chunk);
 }
 
-f2ptr f2__mutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
-  if ((! raw__mutex__is_type(cause, this)) ||
+f2ptr f2__cmutex__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
+  if ((! raw__cmutex__is_type(cause, this)) ||
       (! raw__ptypehash__is_type(cause, note_object_hash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mutex__lick_to_chunk(cause, this, note_object_hash);
+  return raw__cmutex__lick_to_chunk(cause, this, note_object_hash);
 }
-export_cefunk2(mutex__lick_to_chunk, this, note_object_hash, 0, "Licks this mutex.");
+export_cefunk2(cmutex__lick_to_chunk, this, note_object_hash, 0, "Licks this cmutex.");
 
 
-f2ptr raw__mutex__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
+f2ptr raw__cmutex__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   f2ptr     chunk           = raw__lick_chunk__chunk(cause, lick_chunk);
   boolean_t this__is_locked = (raw__chunk__bit8__elt(cause, chunk, 0) & 0x01) ? boolean__true : boolean__false;
-  f2ptr     this            = f2mutex__new(cause);
+  f2ptr     this            = f2cmutex__new(cause);
   if (this__is_locked) {
-    raw__mutex__lock(cause, this);
+    raw__cmutex__lock(cause, this);
   }
   return this;
 }
 
-f2ptr f2__mutex__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
+f2ptr f2__cmutex__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   if ((! raw__lick_chunk__is_type(cause, lick_chunk)) ||
       (! raw__ptypehash__is_type(cause, object_note_hash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mutex__lick_chunk__unlick_with_notes(cause, lick_chunk, object_note_hash);
+  return raw__cmutex__lick_chunk__unlick_with_notes(cause, lick_chunk, object_note_hash);
 }
-export_cefunk2(mutex__lick_chunk__unlick_with_notes, lick_chunk, object_note_hash, 0, "Unlicks this mutex lick_chunk with notes.");
+export_cefunk2(cmutex__lick_chunk__unlick_with_notes, lick_chunk, object_note_hash, 0, "Unlicks this cmutex lick_chunk with notes.");
 
 
-f2ptr raw__mutex__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
+f2ptr raw__cmutex__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
   return nil;
 }
 
-f2ptr f2__mutex__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
-  if ((! raw__mutex__is_type(cause, this)) ||
+f2ptr f2__cmutex__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
+  if ((! raw__cmutex__is_type(cause, this)) ||
       (! raw__lick_chunk__is_type(cause, lick_chunk)) ||
       (! raw__ptypehash__is_type(cause, object_note_hash))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__mutex__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
+  return raw__cmutex__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
-export_cefunk3(mutex__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this mutex with notes.");
+export_cefunk3(cmutex__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this cmutex with notes.");
 
 
 // char lick funks
@@ -1691,7 +1691,7 @@ f2ptr raw__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chun
   f2ptr key_count__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0));
   f2ptr bin_num_power__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 8));
   f2ptr bin_array__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 16));
-  f2ptr ptypehash = f2ptypehash__new(cause, f2__mutex__new(cause), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note);
+  f2ptr ptypehash = f2ptypehash__new(cause, f2__cmutex__new(cause), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note);
   return ptypehash;
 }
 
@@ -1889,30 +1889,30 @@ f2ptr raw__add_all_lick_to_chunk_to_ptypes(f2ptr cause) {
     }
   }
   {
-    f2ptr mutex_type = f2__lookup_type(cause, new__symbol(cause, "mutex"));
-    if (raw__larva__is_type(cause, mutex_type)) {
-      return mutex_type;
+    f2ptr cmutex_type = f2__lookup_type(cause, new__symbol(cause, "cmutex"));
+    if (raw__larva__is_type(cause, cmutex_type)) {
+      return cmutex_type;
     }
     {
-      f2ptr result = f2__primobject_type__add_slot_type(cause, mutex_type, new__symbol(cause, "execute"), new__symbol(cause, "gather_lick_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "mutex__gather_lick_notes")));
+      f2ptr result = f2__primobject_type__add_slot_type(cause, cmutex_type, new__symbol(cause, "execute"), new__symbol(cause, "gather_lick_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "cmutex__gather_lick_notes")));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
     {
-      f2ptr result = f2__primobject_type__add_slot_type(cause, mutex_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "mutex__lick_to_chunk")));
+      f2ptr result = f2__primobject_type__add_slot_type(cause, cmutex_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_to_chunk"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "cmutex__lick_to_chunk")));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
     {
-      f2ptr result = f2__primobject_type__add_slot_type(cause, mutex_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_with_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "mutex__lick_chunk__unlick_with_notes")));
+      f2ptr result = f2__primobject_type__add_slot_type(cause, cmutex_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_with_notes"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "cmutex__lick_chunk__unlick_with_notes")));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     }
     {
-      f2ptr result = f2__primobject_type__add_slot_type(cause, mutex_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "mutex__lick_chunk__unlick_replace_notes_with_objects")));
+      f2ptr result = f2__primobject_type__add_slot_type(cause, cmutex_type, new__symbol(cause, "execute"), new__symbol(cause, "lick_chunk-unlick_replace_notes_with_objects"), f2__core_extension_funk__new(cause, new__symbol(cause, "lick"), new__symbol(cause, "cmutex__lick_chunk__unlick_replace_notes_with_objects")));
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

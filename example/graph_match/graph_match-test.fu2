@@ -316,7 +316,7 @@
     set_a]]
 
 [defunk set_subtract [set_a set_b]
-  [if [not [get set_b is_sempty]]]
+  [if [not [get set_b is_sempty]]
       [let* [[set_b_elements [get [get set_b elements] as-array]]
 	     [index 0]]
 	[while [< index [get set_b_elements length]]

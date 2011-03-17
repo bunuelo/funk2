@@ -28,7 +28,7 @@
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
 declare_object_type_15_slot(cause,
-			    fibers_mutex,
+			    fibers_cmutex,
 			    fibers,
 			    frame,
 			    allocate_traced_arrays,
@@ -78,7 +78,7 @@ declare_object_type_15_slot(cause,
 //#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
 declare_primobject_15_slot(cause,
-			   fibers_mutex,
+			   fibers_cmutex,
 			   fibers,
 			   frame,
 			   allocate_traced_arrays,

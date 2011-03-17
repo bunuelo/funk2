@@ -39,19 +39,19 @@ def_primobject_25_slot(fiber,
 		       return_reg,
 		       value,
 		       trace,
-		       cause_reg_mutex,
+		       cause_reg_cmutex,
 		       cause_reg,
 		       keep_undead,
 		       is_zombie,
 		       parent_fiber,
 		       parent_env,
-		       execute_mutex,
+		       execute_cmutex,
 		       paused,
 		       last_executed_time,
 		       sleep_until_time,
 		       execution_nanoseconds,
 		       bytecode_count,
-		       processor_assignment_scheduler_mutex,
+		       processor_assignment_scheduler_cmutex,
 		       processor_assignment_index,
 		       should_quit,
 		       bug_trigger,
@@ -66,17 +66,17 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr return_reg                           = nil;
   f2ptr value                                = nil;
   f2ptr trace                                = nil;
-  f2ptr cause_reg_mutex                      = f2__mutex__new(cause);
+  f2ptr cause_reg_cmutex                      = f2__cmutex__new(cause);
   f2ptr cause_reg                            = nil;
   f2ptr keep_undead                          = __funk2.globalenv.true__symbol;
   f2ptr is_zombie                            = nil;
-  f2ptr execute_mutex                        = f2mutex__new(cause);
+  f2ptr execute_cmutex                        = f2cmutex__new(cause);
   f2ptr paused                               = nil;
   f2ptr last_executed_time                   = nil;
   f2ptr sleep_until_time                     = nil;
   f2ptr execution_nanoseconds                = f2integer__new(cause, 0);
   f2ptr bytecode_count                       = f2integer__new(cause, 0);
-  f2ptr processor_assignment_scheduler_mutex = f2scheduler_mutex__new(cause);
+  f2ptr processor_assignment_scheduler_cmutex = f2scheduler_cmutex__new(cause);
   f2ptr processor_assignment_index           = nil;
   f2ptr should_quit                          = nil;
   f2ptr bug_trigger                          = f2__fiber_trigger__new(cause);
@@ -90,19 +90,19 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 return_reg,
 				 value,
 				 trace,
-				 cause_reg_mutex,
+				 cause_reg_cmutex,
 				 cause_reg,
 				 keep_undead,
 				 is_zombie,
 				 parent_fiber,
 				 parent_env,
-				 execute_mutex,
+				 execute_cmutex,
 				 paused,
 				 last_executed_time,
 				 sleep_until_time,
 				 execution_nanoseconds,
 				 bytecode_count,
-				 processor_assignment_scheduler_mutex,
+				 processor_assignment_scheduler_cmutex,
 				 processor_assignment_index,
 				 should_quit,
 				 bug_trigger,
@@ -145,12 +145,12 @@ def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__s
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber, this);
   boolean_t is_complete;
-  f2ptr     execute_mutex = f2fiber__execute_mutex(this, cause);
-  if (! raw__mutex__trylock(cause, execute_mutex)) { // successful lock
+  f2ptr     execute_cmutex = f2fiber__execute_cmutex(this, cause);
+  if (! raw__cmutex__trylock(cause, execute_cmutex)) { // successful lock
     is_complete = (f2fiber__is_complete(this, cause) ? boolean__true : boolean__false);
-    f2mutex__unlock(execute_mutex, cause);
+    f2cmutex__unlock(execute_cmutex, cause);
   } else {
-    // if we fail to lock the execute_mutex, we assume that it is executing.
+    // if we fail to lock the execute_cmutex, we assume that it is executing.
     is_complete = boolean__false;
   }
   return is_complete;
@@ -316,12 +316,12 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list28__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
-						new__symbol(cause, "cause_reg_mutex"),            f2__fiber__cause_reg_mutex(           cause, this),
+						new__symbol(cause, "cause_reg_cmutex"),            f2__fiber__cause_reg_cmutex(           cause, this),
 						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
 						new__symbol(cause, "keep_undead"),                f2__fiber__keep_undead(               cause, this),
 						new__symbol(cause, "is_zombie"),                  f2__fiber__is_zombie(                 cause, this),
 						new__symbol(cause, "is_complete"),                f2__fiber__is_complete(               cause, this),
-						new__symbol(cause, "execute_mutex"),              f2__fiber__execute_mutex(             cause, this),
+						new__symbol(cause, "execute_cmutex"),              f2__fiber__execute_cmutex(             cause, this),
 						new__symbol(cause, "paused"),                     f2__fiber__paused(                    cause, this),
 						new__symbol(cause, "last_executed_time"),         f2__fiber__last_executed_time(        cause, this),
 						new__symbol(cause, "sleep_until_time"),           f2__fiber__sleep_until_time(          cause, this),
@@ -755,19 +755,19 @@ void f2__fiber__initialize() {
 				return_reg,
 				value,
 				trace,
-				cause_reg_mutex,
+				cause_reg_cmutex,
 				cause_reg,
 				keep_undead,
 				is_zombie,
 				parent_fiber,
 				parent_env,
-				execute_mutex,
+				execute_cmutex,
 				paused,
 				last_executed_time,
 				sleep_until_time,
 				execution_nanoseconds,
 				bytecode_count,
-				processor_assignment_scheduler_mutex,
+				processor_assignment_scheduler_cmutex,
 				processor_assignment_index,
 				should_quit,
 				bug_trigger,

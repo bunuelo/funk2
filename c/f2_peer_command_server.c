@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2011 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -150,16 +150,16 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2gfunkptr__pool_index:
   case funk2_packet_type__pcs_request__f2gfunkptr__pool_address:
   case funk2_packet_type__pcs_respond__f2gfunkptr__pool_address:
-  case funk2_packet_type__pcs_request__f2mutex__new:
-  case funk2_packet_type__pcs_respond__f2mutex__new:
-  case funk2_packet_type__pcs_request__f2mutex__is_locked:
-  case funk2_packet_type__pcs_respond__f2mutex__is_locked:
-  case funk2_packet_type__pcs_request__f2mutex__lock:
-  case funk2_packet_type__pcs_respond__f2mutex__lock:
-  case funk2_packet_type__pcs_request__f2mutex__unlock:
-  case funk2_packet_type__pcs_respond__f2mutex__unlock:
-  case funk2_packet_type__pcs_request__f2mutex__trylock:
-  case funk2_packet_type__pcs_respond__f2mutex__trylock:
+  case funk2_packet_type__pcs_request__f2cmutex__new:
+  case funk2_packet_type__pcs_respond__f2cmutex__new:
+  case funk2_packet_type__pcs_request__f2cmutex__is_locked:
+  case funk2_packet_type__pcs_respond__f2cmutex__is_locked:
+  case funk2_packet_type__pcs_request__f2cmutex__lock:
+  case funk2_packet_type__pcs_respond__f2cmutex__lock:
+  case funk2_packet_type__pcs_request__f2cmutex__unlock:
+  case funk2_packet_type__pcs_respond__f2cmutex__unlock:
+  case funk2_packet_type__pcs_request__f2cmutex__trylock:
+  case funk2_packet_type__pcs_respond__f2cmutex__trylock:
   case funk2_packet_type__pcs_request__f2char__new:
   case funk2_packet_type__pcs_respond__f2char__new:
   case funk2_packet_type__pcs_request__f2char__ch:

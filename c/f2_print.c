@@ -39,8 +39,8 @@ ansi_color_t print__ansi__double__foreground          = ansi_color__light_blue;
 ansi_color_t print__ansi__float__foreground           = ansi_color__light_blue;
 ansi_color_t print__ansi__pointer__foreground         = ansi_color__light_blue;
 ansi_color_t print__ansi__gfunkptr__foreground        = ansi_color__dark_cyan;
-ansi_color_t print__ansi__scheduler_mutex__foreground = ansi_color__white;
-ansi_color_t print__ansi__mutex__foreground           = ansi_color__white;
+ansi_color_t print__ansi__scheduler_cmutex__foreground = ansi_color__white;
+ansi_color_t print__ansi__cmutex__foreground           = ansi_color__white;
 ansi_color_t print__ansi__char__foreground            = ansi_color__light_blue;
 ansi_color_t print__ansi__string__foreground          = ansi_color__light_red;
 ansi_color_t print__ansi__symbol__foreground          = ansi_color__light_blue;
@@ -309,33 +309,33 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_right_paren, cause));} width ++;
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
-      case ptype_scheduler_mutex: {
-	f2__write__ansi_color(cause, stream, print__ansi__scheduler_mutex__foreground, use_ansi_colors, use_html);
+      case ptype_scheduler_cmutex: {
+	f2__write__ansi_color(cause, stream, print__ansi__scheduler_cmutex__foreground, use_ansi_colors, use_html);
 	char temp_str[128];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
 	
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
-	sprintf(temp_str, "scheduler_mutex"); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+	sprintf(temp_str, "scheduler_cmutex"); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
-      case ptype_mutex: {
+      case ptype_cmutex: {
 	int subexp_size[2];
 	
-	f2__write__ansi_color(cause, stream, print__ansi__mutex__foreground, use_ansi_colors, use_html);
+	f2__write__ansi_color(cause, stream, print__ansi__cmutex__foreground, use_ansi_colors, use_html);
 	char temp_str[128];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
 	
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
-	sprintf(temp_str, "mutex"); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+	sprintf(temp_str, "cmutex"); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 	sprintf(temp_str, "is_locked "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	f2ptr is_locked = f2bool__new(f2mutex__is_locked(exp, cause));
+	f2ptr is_locked = f2bool__new(f2cmutex__is_locked(exp, cause));
 	f2__write_pretty(cause, fiber, stream, is_locked, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
@@ -822,7 +822,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("execute_mutex",              26, cause, fiber, stream, f2fiber__execute_mutex(exp, cause),      f2fiber__execute_mutex__tracing_on(exp, cause), f2fiber__execute_mutex__trace(exp, cause), f2fiber__execute_mutex__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("execute_cmutex",              26, cause, fiber, stream, f2fiber__execute_cmutex(exp, cause),      f2fiber__execute_cmutex__tracing_on(exp, cause), f2fiber__execute_cmutex__trace(exp, cause), f2fiber__execute_cmutex__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	    {f2__write_pretty__slot_key_and_value("paused",                     26, cause, fiber, stream, f2fiber__paused(exp, cause),      f2fiber__paused__tracing_on(exp, cause), f2fiber__paused__trace(exp, cause), f2fiber__paused__imagination_frame(exp, cause),
@@ -872,7 +872,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    int subexp_size[2];
 	    if (! brief_mode) {
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__slot_key_and_value("fibers_mutex",           22, cause, fiber, stream, f2cause__fibers_mutex(exp, cause), f2cause__fibers_mutex__tracing_on(exp, cause), f2cause__fibers_mutex__trace(exp, cause), f2cause__fibers_mutex__imagination_frame(exp, cause),
+	      {f2__write_pretty__slot_key_and_value("fibers_cmutex",           22, cause, fiber, stream, f2cause__fibers_cmutex(exp, cause), f2cause__fibers_cmutex__tracing_on(exp, cause), f2cause__fibers_cmutex__trace(exp, cause), f2cause__fibers_cmutex__imagination_frame(exp, cause),
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 	      {f2__write_pretty__slot_key_and_value("fibers",               22, cause, fiber, stream, f2cause__fibers(exp, cause), f2cause__fibers__tracing_on(exp, cause), f2cause__fibers__trace(exp, cause), f2cause__fibers__imagination_frame(exp, cause),
@@ -942,19 +942,19 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    {f2__write_pretty__slot_key_and_value("value_comparison_funk", 15, cause, fiber, stream, f2redblacktree__value_comparison_funk(exp, cause), f2redblacktree__value_comparison_funk__tracing_on(exp, cause), f2redblacktree__value_comparison_funk__trace(exp, cause), f2redblacktree__value_comparison_funk__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 #define debug_graph 0
-	  } else if (f2primobject__is__traced_mutex(exp, cause)) {
+	  } else if (f2primobject__is__traced_cmutex(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("mutex",                   23, cause, fiber, stream, f2traced_mutex__mutex(exp, cause), f2traced_mutex__mutex__tracing_on(exp, cause), f2traced_mutex__mutex__trace(exp, cause), f2traced_mutex__mutex__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("cmutex",                   23, cause, fiber, stream, f2traced_cmutex__cmutex(exp, cause), f2traced_cmutex__cmutex__tracing_on(exp, cause), f2traced_cmutex__cmutex__trace(exp, cause), f2traced_cmutex__cmutex__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("fiber_with_lock",         23, cause, fiber, stream, f2traced_mutex__fiber_with_lock(exp, cause), f2traced_mutex__fiber_with_lock__tracing_on(exp, cause), f2traced_mutex__fiber_with_lock__trace(exp, cause), f2traced_mutex__fiber_with_lock__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("fiber_with_lock",         23, cause, fiber, stream, f2traced_cmutex__fiber_with_lock(exp, cause), f2traced_cmutex__fiber_with_lock__tracing_on(exp, cause), f2traced_cmutex__fiber_with_lock__trace(exp, cause), f2traced_cmutex__fiber_with_lock__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("lock_stack_trace",        23, cause, fiber, stream, f2__traced_mutex__lock_stack_trace(cause, exp), nil, nil, nil,
+	    {f2__write_pretty__slot_key_and_value("lock_stack_trace",        23, cause, fiber, stream, f2__traced_cmutex__lock_stack_trace(cause, exp), nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("fibers_waiting_for_lock", 23, cause, fiber, stream, f2traced_mutex__fibers_waiting_for_lock(exp, cause), f2traced_mutex__fibers_waiting_for_lock__tracing_on(exp, cause), f2traced_mutex__fibers_waiting_for_lock__trace(exp, cause), f2traced_mutex__fibers_waiting_for_lock__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("fibers_waiting_for_lock", 23, cause, fiber, stream, f2traced_cmutex__fibers_waiting_for_lock(exp, cause), f2traced_cmutex__fibers_waiting_for_lock__tracing_on(exp, cause), f2traced_cmutex__fibers_waiting_for_lock__trace(exp, cause), f2traced_cmutex__fibers_waiting_for_lock__imagination_frame(exp, cause),
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	  } else if (f2primobject__is__fiber_stack_trace(exp, cause)) {
 	    int subexp_size[2];
@@ -1569,12 +1569,12 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
       f2__place__thing__set(cause, subexp_size_place, f2integer__new(cause, exp_size_i));
       return print_seq;
     }
-  } else if (raw__traced_mutex__is_type(cause, this)) {
+  } else if (raw__traced_cmutex__is_type(cause, this)) {
     f2__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
     {
       s64   exp_size_i = 0;
       f2ptr printable_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "printable_object_type"), new__symbol(cause, "traced_mutex"));
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "printable_object_type"), new__symbol(cause, "traced_cmutex"));
       {
 	exp_size_i ++;
 	{
@@ -1582,7 +1582,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
 	  size = f2integer__new(cause, size__i);
 	}
       }
-      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "mutex"), f2__traced_mutex__mutex(cause, this));
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "cmutex"), f2__traced_cmutex__cmutex(cause, this));
       {
 	exp_size_i ++;
 	{
@@ -1590,7 +1590,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
 	  size = f2integer__new(cause, size__i);
 	}
       }
-      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fiber_with_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__fiber_with_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fiber_with_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_cmutex__fiber_with_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
       {
 	f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
 	s64   subexp_size__i = f2integer__i(subexp_size, cause);
@@ -1602,7 +1602,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
 	  }
 	}
       }
-      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "lock_stack_trace"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__lock_stack_trace(cause, this), max_size, size, ptypehash, subexp_size_place));
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "lock_stack_trace"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_cmutex__lock_stack_trace(cause, this), max_size, size, ptypehash, subexp_size_place));
       {
 	f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
 	s64   subexp_size__i = f2integer__i(subexp_size, cause);
@@ -1614,7 +1614,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
 	  }
 	}
       }
-      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fibers_waiting_for_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_mutex__fibers_waiting_for_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
+      f2__frame__add_var_value(cause, printable_frame, new__symbol(cause, "fibers_waiting_for_lock"), raw__exp__printable_value__with_ptypehash(cause, f2__traced_cmutex__fibers_waiting_for_lock(cause, this), max_size, size, ptypehash, subexp_size_place));
       {
 	f2ptr subexp_size    = f2__place__thing(cause, subexp_size_place);
 	s64   subexp_size__i = f2integer__i(subexp_size, cause);

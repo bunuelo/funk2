@@ -354,7 +354,7 @@
   [new [initial-isismon]
        [= isismon initial-isismon]
        
-       [= execute_mutex [new traced_mutex]]
+       [= execute_mutex [new mutex]]
        [have execute_mutex lock]
        
        [= isis_world nil]

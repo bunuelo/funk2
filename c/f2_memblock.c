@@ -1,3 +1,24 @@
+// 
+// Copyright (c) 2007-2011 Bo Morgan.
+// All rights reserved.
+// 
+// Author: Bo Morgan
+// 
+// Permission to use, copy, modify and distribute this software and its
+// documentation is hereby granted, provided that both the copyright
+// notice and this permission notice appear in all copies of the
+// software, derivative works or modified versions, and any portions
+// thereof, and that both notices appear in supporting documentation.
+// 
+// BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+// BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+// WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+// 
+// Bo Morgan requests users of this software to return to bo@mit.edu any
+// improvements or extensions that they make and grant Bo Morgan the
+// rights to redistribute these changes.
+// 
+
 #include "funk2.h"
 
 // funk2_memblock
@@ -24,8 +45,8 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     case ptype_float:           return boolean__false;
     case ptype_pointer:         return boolean__false;
     case ptype_gfunkptr:        return boolean__false;
-    case ptype_scheduler_mutex: return boolean__false;
-    case ptype_mutex:           return boolean__false;
+    case ptype_scheduler_cmutex: return boolean__false;
+    case ptype_cmutex:           return boolean__false;
     case ptype_char:            return boolean__false;
     case ptype_string:          return boolean__false;
     case ptype_symbol:          return boolean__false;
@@ -81,8 +102,8 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_float:
     case ptype_pointer:
     case ptype_gfunkptr:
-    case ptype_scheduler_mutex:
-    case ptype_mutex:
+    case ptype_scheduler_cmutex:
+    case ptype_cmutex:
     case ptype_char:
     case ptype_string:
     case ptype_symbol:

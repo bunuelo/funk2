@@ -107,7 +107,7 @@
 #include "f2_primobject__tensor.h"
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__text_buffer.h"
-#include "f2_primobject__traced_mutex.h"
+#include "f2_primobject__traced_cmutex.h"
 #include "f2_primobject_type.h"
 #include "f2_primobject_type_handler.h"
 #include "f2_primobjects.h"
@@ -155,7 +155,7 @@ typedef struct funk2_s {
   boolean_t                           exit_now;
   node_id_t                           node_id;
   event_id_t                          event_id;
-  funk2_processor_mutex_t             event_id_mutex;
+  funk2_processor_mutex_t             event_id_cmutex;
   // global variables in other source files
   funk2_module_registration_t         module_registration;
   funk2_command_line_t                command_line;

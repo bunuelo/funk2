@@ -62,7 +62,7 @@ def_pcfunk1(primobject__dynamic_slots, this, return f2__primobject__dynamic_slot
 f2ptr f2__primobject__dynamic_slots__set(f2ptr cause, f2ptr this, f2ptr value) {return f2primobject__dynamic_slots__set(this, cause, value);}
 def_pcfunk2(primobject__dynamic_slots__set, this, value, return f2__primobject__dynamic_slots__set(this_cause, this, value));
 
-// not thread safe (use appropriately, it would create too much of a slowdown to create a new mutex for every primitive object)
+// not thread safe (use appropriately, it would create too much of a slowdown to create a new cmutex for every primitive object)
 f2ptr f2__primobject__create_new_dynamic_slots_frame(f2ptr cause, f2ptr this) {
   f2ptr dynamic_slots = f2__frame__new(cause, nil);
   f2primobject__dynamic_slots__set(this, cause, dynamic_slots);
@@ -822,195 +822,6 @@ f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbo
 def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news, return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
 
 
-// time
-
-def_primobject_1_slot(time, nanoseconds_since_1970);
-
-f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2time__new(cause, nanoseconds_since_1970);}
-def_pcfunk1(time__new, nanoseconds_since_1970, return f2__time__new(this_cause, nanoseconds_since_1970));
-
-boolean_t raw__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__time__is_type(cause, that)) {
-    return boolean__false;
-  }
-  return raw__eq(cause, f2__time__nanoseconds_since_1970(cause, this), f2__time__nanoseconds_since_1970(cause, that));
-}
-
-f2ptr f2__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  return f2bool__new(raw__time__equals(cause, this, that));
-}
-def_pcfunk2(time__equals, this, that, return f2__time__equals(this_cause, this, that));
-
-u64 raw__time__years(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.years;
-}
-
-f2ptr f2__time__years(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__years(cause, this));}
-def_pcfunk1(time__years, this, return f2__time__years(this_cause, this));
-
-u64 raw__time__months(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.months;
-}
-
-f2ptr f2__time__months(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__months(cause, this));}
-def_pcfunk1(time__months, this, return f2__time__months(this_cause, this));
-
-u64 raw__time__days(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.days;
-}
-
-f2ptr f2__time__days(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__days(cause, this));}
-def_pcfunk1(time__days, this, return f2__time__days(this_cause, this));
-
-u64 raw__time__hours(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.hours;
-}
-
-f2ptr f2__time__hours(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__hours(cause, this));}
-def_pcfunk1(time__hours, this, return f2__time__hours(this_cause, this));
-
-u64 raw__time__minutes(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.minutes;
-}
-
-f2ptr f2__time__minutes(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__minutes(cause, this));}
-def_pcfunk1(time__minutes, this, return f2__time__minutes(this_cause, this));
-
-u64 raw__time__seconds(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.seconds;
-}
-
-f2ptr f2__time__seconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__seconds(cause, this));}
-def_pcfunk1(time__seconds, this, return f2__time__seconds(this_cause, this));
-
-u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.nanoseconds;
-}
-
-f2ptr f2__time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__nanoseconds(cause, this));}
-def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, this));
-
-f2ptr raw__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  if (this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  assert_argument_type(time, that);
-  return f2bool__new(raw__time__is_less_than(cause, this, that));
-}
-def_pcfunk2(time__is_less_than, this, that, return f2__time__is_less_than(this_cause, this, that));
-
-f2ptr raw__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  if (this__nanoseconds_since_1970__i > that__nanoseconds_since_1970__i) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  assert_argument_type(time, that);
-  return f2bool__new(raw__time__is_greater_than(cause, this, that));
-}
-def_pcfunk2(time__is_greater_than, this, that, return f2__time__is_greater_than(this_cause, this, that));
-
-f2ptr raw__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  if (this__nanoseconds_since_1970__i == that__nanoseconds_since_1970__i) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  assert_argument_type(time, that);
-  return f2bool__new(raw__time__is_numerically_equal_to(cause, this, that));
-}
-def_pcfunk2(time__is_numerically_equal_to, this, that, return f2__time__is_numerically_equal_to(this_cause, this, that));
-
-
-f2ptr raw__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-  if (frame == nil) {
-    frame = f2__frame__new(cause, f2list16__new(cause,
-						new__symbol(cause, "print_object_type"), new__symbol(cause, "time"),
-						new__symbol(cause, "years"),       f2__time__years(      cause, this),
-						new__symbol(cause, "months"),      f2__time__months(     cause, this),
-						new__symbol(cause, "days"),        f2__time__days(       cause, this),
-						new__symbol(cause, "hours"),       f2__time__hours(      cause, this),
-						new__symbol(cause, "minutes"),     f2__time__minutes(    cause, this),
-						new__symbol(cause, "seconds"),     f2__time__seconds(    cause, this),
-						new__symbol(cause, "nanoseconds"), f2__time__nanoseconds(cause, this)));
-    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
-  }
-  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
-}
-
-f2ptr f2__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(time,                 this);
-  assert_argument_type(terminal_print_frame, terminal_print_frame);
-  return raw__time__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-def_pcfunk2(time__terminal_print_with_frame, this, terminal_print_frame, return f2__time__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
-f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2time__primobject_type__new(cause);
-  {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.equals__funk);}
-  {char* slot_name = "years";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.years__funk);}
-  {char* slot_name = "months";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.months__funk);}
-  {char* slot_name = "days";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.days__funk);}
-  {char* slot_name = "hours";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.hours__funk);}
-  {char* slot_name = "minutes";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.minutes__funk);}
-  {char* slot_name = "seconds";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.seconds__funk);}
-  {char* slot_name = "nanoseconds";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.nanoseconds__funk);}
-  {char* slot_name = "is_less_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_less_than__funk);}
-  {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
-  {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk);}
-  return this;
-}
-
-
 // size_2d
 
 def_primobject_2_slot(size_2d, x, y);
@@ -1059,7 +870,6 @@ void f2__primobjects__reinitialize_globalvars() {
   __bytecode__symbol         = new__symbol(cause, "bytecode");
   __transframe__symbol       = new__symbol(cause, "transframe");
   __bug__symbol              = new__symbol(cause, "bug");
-  __time__symbol             = new__symbol(cause, "time");
   __size_2d__symbol          = new__symbol(cause, "size_2d");
   __event__symbol            = new__symbol(cause, "event");
   __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");
@@ -1177,25 +987,6 @@ void f2__primobjects__initialize() {
   // transframe
   
   initialize_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
-  
-  // time
-  
-  initialize_primobject_1_slot(time, nanoseconds_since_1970);
-  initialize_primobject_funk__0_arg(time, equals,                        "The time represented by this and that time object are the same even if the objects themselves are different objects.");
-  initialize_primobject_funk__0_arg(time, years,                         "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.");
-  initialize_primobject_funk__0_arg(time, months,                        "The number of months since the beginning of the year.");
-  initialize_primobject_funk__0_arg(time, days,                          "The number of days since the beginning of the month.");
-  initialize_primobject_funk__0_arg(time, hours,                         "The number of hours since the beginning of the day.");
-  initialize_primobject_funk__0_arg(time, minutes,                       "The number of minutes since the beginning of the hour.");
-  initialize_primobject_funk__0_arg(time, seconds,                       "The number of seconds since the beginning of the minute.");
-  initialize_primobject_funk__0_arg(time, nanoseconds,                   "The number of nanoseconds since the beginning of the second.");
-  initialize_primobject_funk__1_arg(time, is_less_than,            that, "Returns t if this time is further in the past than that time.");
-  initialize_primobject_funk__1_arg(time, is_greater_than,         that, "Returns t if this time is further in the future than that time.");
-  initialize_primobject_funk__1_arg(time, is_numerically_equal_to, that, "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.");
-  
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk = never_gc(cfunk);}
-  
   
   // size_2d
   

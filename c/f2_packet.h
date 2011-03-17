@@ -78,26 +78,26 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2gfunkptr__pool_index                     ,
   funk2_packet_type__pcs_request__f2gfunkptr__pool_address                   , //pool_address_t   (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2gfunkptr__pool_address                   ,
-  funk2_packet_type__pcs_request__f2scheduler_mutex__new                     , //f2ptr            (f2ptr cause);
-  funk2_packet_type__pcs_respond__f2scheduler_mutex__new                     ,
-  funk2_packet_type__pcs_request__f2scheduler_mutex__is_locked               , //boolean_t        (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2scheduler_mutex__is_locked               ,
-  funk2_packet_type__pcs_request__f2scheduler_mutex__lock                    , //void             (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2scheduler_mutex__lock                    ,
-  funk2_packet_type__pcs_request__f2scheduler_mutex__unlock                  , //void             (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2scheduler_mutex__unlock                  ,
-  funk2_packet_type__pcs_request__f2scheduler_mutex__trylock                 , //int              (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2scheduler_mutex__trylock                 ,
-  funk2_packet_type__pcs_request__f2mutex__new                               , //f2ptr            (f2ptr cause);
-  funk2_packet_type__pcs_respond__f2mutex__new                               ,
-  funk2_packet_type__pcs_request__f2mutex__is_locked                         , //boolean_t        (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2mutex__is_locked                         ,
-  funk2_packet_type__pcs_request__f2mutex__lock                              , //void             (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2mutex__lock                              ,
-  funk2_packet_type__pcs_request__f2mutex__unlock                            , //void             (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2mutex__unlock                            ,
-  funk2_packet_type__pcs_request__f2mutex__trylock                           , //int              (f2ptr cause, f2ptr this);
-  funk2_packet_type__pcs_respond__f2mutex__trylock                           ,
+  funk2_packet_type__pcs_request__f2scheduler_cmutex__new                     , //f2ptr            (f2ptr cause);
+  funk2_packet_type__pcs_respond__f2scheduler_cmutex__new                     ,
+  funk2_packet_type__pcs_request__f2scheduler_cmutex__is_locked               , //boolean_t        (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2scheduler_cmutex__is_locked               ,
+  funk2_packet_type__pcs_request__f2scheduler_cmutex__lock                    , //void             (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2scheduler_cmutex__lock                    ,
+  funk2_packet_type__pcs_request__f2scheduler_cmutex__unlock                  , //void             (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2scheduler_cmutex__unlock                  ,
+  funk2_packet_type__pcs_request__f2scheduler_cmutex__trylock                 , //int              (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2scheduler_cmutex__trylock                 ,
+  funk2_packet_type__pcs_request__f2cmutex__new                               , //f2ptr            (f2ptr cause);
+  funk2_packet_type__pcs_respond__f2cmutex__new                               ,
+  funk2_packet_type__pcs_request__f2cmutex__is_locked                         , //boolean_t        (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2cmutex__is_locked                         ,
+  funk2_packet_type__pcs_request__f2cmutex__lock                              , //void             (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2cmutex__lock                              ,
+  funk2_packet_type__pcs_request__f2cmutex__unlock                            , //void             (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2cmutex__unlock                            ,
+  funk2_packet_type__pcs_request__f2cmutex__trylock                           , //int              (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2cmutex__trylock                           ,
   funk2_packet_type__pcs_request__f2char__new                                , //f2ptr            (f2ptr cause, char ch);
   funk2_packet_type__pcs_respond__f2char__new                                ,
   funk2_packet_type__pcs_request__f2char__ch                                 , //char             (f2ptr cause, f2ptr this);
@@ -1090,389 +1090,389 @@ pool_address_t f2gfunkptr__pool_address(f2ptr cause, f2ptr this);
 
 
 
-//  funk2_packet_type__pcs_request__f2scheduler_mutex__new                               = 0x17, //f2ptr            (f2ptr cause);
+//  funk2_packet_type__pcs_request__f2scheduler_cmutex__new                               = 0x17, //f2ptr            (f2ptr cause);
 
-// request f2scheduler_mutex__new
+// request f2scheduler_cmutex__new
 
-struct pcs_packet_payload_request__f2scheduler_mutex__new_s {
+struct pcs_packet_payload_request__f2scheduler_cmutex__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2scheduler_mutex__new_s pcs_packet_payload_request__f2scheduler_mutex__new_t;
+typedef struct pcs_packet_payload_request__f2scheduler_cmutex__new_s pcs_packet_payload_request__f2scheduler_cmutex__new_t;
 
-struct pcs_request__f2scheduler_mutex__new_s {
+struct pcs_request__f2scheduler_cmutex__new_s {
   funk2_packet_header_t                      header;
-  pcs_packet_payload_request__f2scheduler_mutex__new_t payload;
+  pcs_packet_payload_request__f2scheduler_cmutex__new_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2scheduler_mutex__new_s pcs_request__f2scheduler_mutex__new_t;
+typedef struct pcs_request__f2scheduler_cmutex__new_s pcs_request__f2scheduler_cmutex__new_t;
 
-// respond f2scheduler_mutex__new
+// respond f2scheduler_cmutex__new
 
-struct pcs_packet_payload_respond__f2scheduler_mutex__new_s {
+struct pcs_packet_payload_respond__f2scheduler_cmutex__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              new;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2scheduler_mutex__new_s pcs_packet_payload_respond__f2scheduler_mutex__new_t;
+typedef struct pcs_packet_payload_respond__f2scheduler_cmutex__new_s pcs_packet_payload_respond__f2scheduler_cmutex__new_t;
 
-struct pcs_respond__f2scheduler_mutex__new_s {
+struct pcs_respond__f2scheduler_cmutex__new_s {
   funk2_packet_header_t                      header;
-  pcs_packet_payload_respond__f2scheduler_mutex__new_t payload;
+  pcs_packet_payload_respond__f2scheduler_cmutex__new_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2scheduler_mutex__new_s pcs_respond__f2scheduler_mutex__new_t;
+typedef struct pcs_respond__f2scheduler_cmutex__new_s pcs_respond__f2scheduler_cmutex__new_t;
 
-void send_packet__request__f2scheduler_mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-void recv_packet__request__f2scheduler_mutex__new(funk2_node_t* funk2_node, pcs_request__f2scheduler_mutex__new_t* packet);
-void send_packet__respond__f2scheduler_mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
-void recv_packet__respond__f2scheduler_mutex__new(funk2_node_t* funk2_node, pcs_respond__f2scheduler_mutex__new_t* packet);
+void send_packet__request__f2scheduler_cmutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__request__f2scheduler_cmutex__new(funk2_node_t* funk2_node, pcs_request__f2scheduler_cmutex__new_t* packet);
+void send_packet__respond__f2scheduler_cmutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
+void recv_packet__respond__f2scheduler_cmutex__new(funk2_node_t* funk2_node, pcs_respond__f2scheduler_cmutex__new_t* packet);
 
-f2ptr funk2_node__f2scheduler_mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-f2ptr f2scheduler_mutex__new(f2ptr cause);
+f2ptr funk2_node__f2scheduler_cmutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+f2ptr f2scheduler_cmutex__new(f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2scheduler_mutex__is_locked                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2scheduler_cmutex__is_locked                           = 0x1A, //int              (f2ptr cause, f2ptr this);
 
-// request f2scheduler_mutex__is_locked
+// request f2scheduler_cmutex__is_locked
 
-struct pcs_packet_payload_request__f2scheduler_mutex__is_locked_s {
+struct pcs_packet_payload_request__f2scheduler_cmutex__is_locked_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2scheduler_mutex__is_locked_s pcs_packet_payload_request__f2scheduler_mutex__is_locked_t;
+typedef struct pcs_packet_payload_request__f2scheduler_cmutex__is_locked_s pcs_packet_payload_request__f2scheduler_cmutex__is_locked_t;
 
-struct pcs_request__f2scheduler_mutex__is_locked_s {
+struct pcs_request__f2scheduler_cmutex__is_locked_s {
   funk2_packet_header_t                            header;
-  pcs_packet_payload_request__f2scheduler_mutex__is_locked_t payload;
+  pcs_packet_payload_request__f2scheduler_cmutex__is_locked_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2scheduler_mutex__is_locked_s pcs_request__f2scheduler_mutex__is_locked_t;
+typedef struct pcs_request__f2scheduler_cmutex__is_locked_s pcs_request__f2scheduler_cmutex__is_locked_t;
 
-// respond f2scheduler_mutex__is_locked
+// respond f2scheduler_cmutex__is_locked
 
-struct pcs_packet_payload_respond__f2scheduler_mutex__is_locked_s {
+struct pcs_packet_payload_respond__f2scheduler_cmutex__is_locked_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   boolean_t                                          is_locked;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2scheduler_mutex__is_locked_s pcs_packet_payload_respond__f2scheduler_mutex__is_locked_t;
+typedef struct pcs_packet_payload_respond__f2scheduler_cmutex__is_locked_s pcs_packet_payload_respond__f2scheduler_cmutex__is_locked_t;
 
-struct pcs_respond__f2scheduler_mutex__is_locked_s {
+struct pcs_respond__f2scheduler_cmutex__is_locked_s {
   funk2_packet_header_t                            header;
-  pcs_packet_payload_respond__f2scheduler_mutex__is_locked_t payload;
+  pcs_packet_payload_respond__f2scheduler_cmutex__is_locked_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2scheduler_mutex__is_locked_s pcs_respond__f2scheduler_mutex__is_locked_t;
+typedef struct pcs_respond__f2scheduler_cmutex__is_locked_s pcs_respond__f2scheduler_cmutex__is_locked_t;
 
-void send_packet__request__f2scheduler_mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2scheduler_mutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2scheduler_mutex__is_locked_t* packet);
-void send_packet__respond__f2scheduler_mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked);
-void recv_packet__respond__f2scheduler_mutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2scheduler_mutex__is_locked_t* packet);
+void send_packet__request__f2scheduler_cmutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2scheduler_cmutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2scheduler_cmutex__is_locked_t* packet);
+void send_packet__respond__f2scheduler_cmutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked);
+void recv_packet__respond__f2scheduler_cmutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2scheduler_cmutex__is_locked_t* packet);
 
-boolean_t funk2_node__f2scheduler_mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-boolean_t f2scheduler_mutex__is_locked(f2ptr this, f2ptr cause);
+boolean_t funk2_node__f2scheduler_cmutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+boolean_t f2scheduler_cmutex__is_locked(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2scheduler_mutex__lock                              = 0x18, //void             (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2scheduler_cmutex__lock                              = 0x18, //void             (f2ptr cause, f2ptr this);
 
-// request f2scheduler_mutex__lock
+// request f2scheduler_cmutex__lock
 
-struct pcs_packet_payload_request__f2scheduler_mutex__lock_s {
+struct pcs_packet_payload_request__f2scheduler_cmutex__lock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2scheduler_mutex__lock_s pcs_packet_payload_request__f2scheduler_mutex__lock_t;
+typedef struct pcs_packet_payload_request__f2scheduler_cmutex__lock_s pcs_packet_payload_request__f2scheduler_cmutex__lock_t;
 
-struct pcs_request__f2scheduler_mutex__lock_s {
+struct pcs_request__f2scheduler_cmutex__lock_s {
   funk2_packet_header_t                       header;
-  pcs_packet_payload_request__f2scheduler_mutex__lock_t payload;
+  pcs_packet_payload_request__f2scheduler_cmutex__lock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2scheduler_mutex__lock_s pcs_request__f2scheduler_mutex__lock_t;
+typedef struct pcs_request__f2scheduler_cmutex__lock_s pcs_request__f2scheduler_cmutex__lock_t;
 
-// respond f2scheduler_mutex__lock
+// respond f2scheduler_cmutex__lock
 
-struct pcs_packet_payload_respond__f2scheduler_mutex__lock_s {
+struct pcs_packet_payload_respond__f2scheduler_cmutex__lock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2scheduler_mutex__lock_s pcs_packet_payload_respond__f2scheduler_mutex__lock_t;
+typedef struct pcs_packet_payload_respond__f2scheduler_cmutex__lock_s pcs_packet_payload_respond__f2scheduler_cmutex__lock_t;
 
-struct pcs_respond__f2scheduler_mutex__lock_s {
+struct pcs_respond__f2scheduler_cmutex__lock_s {
   funk2_packet_header_t                       header;
-  pcs_packet_payload_respond__f2scheduler_mutex__lock_t payload;
+  pcs_packet_payload_respond__f2scheduler_cmutex__lock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2scheduler_mutex__lock_s pcs_respond__f2scheduler_mutex__lock_t;
+typedef struct pcs_respond__f2scheduler_cmutex__lock_s pcs_respond__f2scheduler_cmutex__lock_t;
 
-void send_packet__request__f2scheduler_mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2scheduler_mutex__lock(funk2_node_t* funk2_node, pcs_request__f2scheduler_mutex__lock_t* packet);
-void send_packet__respond__f2scheduler_mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-void recv_packet__respond__f2scheduler_mutex__lock(funk2_node_t* funk2_node, pcs_respond__f2scheduler_mutex__lock_t* packet);
+void send_packet__request__f2scheduler_cmutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2scheduler_cmutex__lock(funk2_node_t* funk2_node, pcs_request__f2scheduler_cmutex__lock_t* packet);
+void send_packet__respond__f2scheduler_cmutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2scheduler_cmutex__lock(funk2_node_t* funk2_node, pcs_respond__f2scheduler_cmutex__lock_t* packet);
 
-void funk2_node__f2scheduler_mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void f2scheduler_mutex__lock(f2ptr this, f2ptr cause);
+void funk2_node__f2scheduler_cmutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void f2scheduler_cmutex__lock(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2scheduler_mutex__unlock                            = 0x19, //void             (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2scheduler_cmutex__unlock                            = 0x19, //void             (f2ptr cause, f2ptr this);
 
-// request f2scheduler_mutex__unlock
+// request f2scheduler_cmutex__unlock
 
-struct pcs_packet_payload_request__f2scheduler_mutex__unlock_s {
+struct pcs_packet_payload_request__f2scheduler_cmutex__unlock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2scheduler_mutex__unlock_s pcs_packet_payload_request__f2scheduler_mutex__unlock_t;
+typedef struct pcs_packet_payload_request__f2scheduler_cmutex__unlock_s pcs_packet_payload_request__f2scheduler_cmutex__unlock_t;
 
-struct pcs_request__f2scheduler_mutex__unlock_s {
+struct pcs_request__f2scheduler_cmutex__unlock_s {
   funk2_packet_header_t                         header;
-  pcs_packet_payload_request__f2scheduler_mutex__unlock_t payload;
+  pcs_packet_payload_request__f2scheduler_cmutex__unlock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2scheduler_mutex__unlock_s pcs_request__f2scheduler_mutex__unlock_t;
+typedef struct pcs_request__f2scheduler_cmutex__unlock_s pcs_request__f2scheduler_cmutex__unlock_t;
 
-// respond f2scheduler_mutex__unlock
+// respond f2scheduler_cmutex__unlock
 
-struct pcs_packet_payload_respond__f2scheduler_mutex__unlock_s {
+struct pcs_packet_payload_respond__f2scheduler_cmutex__unlock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2scheduler_mutex__unlock_s pcs_packet_payload_respond__f2scheduler_mutex__unlock_t;
+typedef struct pcs_packet_payload_respond__f2scheduler_cmutex__unlock_s pcs_packet_payload_respond__f2scheduler_cmutex__unlock_t;
 
-struct pcs_respond__f2scheduler_mutex__unlock_s {
+struct pcs_respond__f2scheduler_cmutex__unlock_s {
   funk2_packet_header_t                         header;
-  pcs_packet_payload_respond__f2scheduler_mutex__unlock_t payload;
+  pcs_packet_payload_respond__f2scheduler_cmutex__unlock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2scheduler_mutex__unlock_s pcs_respond__f2scheduler_mutex__unlock_t;
+typedef struct pcs_respond__f2scheduler_cmutex__unlock_s pcs_respond__f2scheduler_cmutex__unlock_t;
 
-void send_packet__request__f2scheduler_mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2scheduler_mutex__unlock(funk2_node_t* funk2_node, pcs_request__f2scheduler_mutex__unlock_t* packet);
-void send_packet__respond__f2scheduler_mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-void recv_packet__respond__f2scheduler_mutex__unlock(funk2_node_t* funk2_node, pcs_respond__f2scheduler_mutex__unlock_t* packet);
+void send_packet__request__f2scheduler_cmutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2scheduler_cmutex__unlock(funk2_node_t* funk2_node, pcs_request__f2scheduler_cmutex__unlock_t* packet);
+void send_packet__respond__f2scheduler_cmutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2scheduler_cmutex__unlock(funk2_node_t* funk2_node, pcs_respond__f2scheduler_cmutex__unlock_t* packet);
 
-void funk2_node__f2scheduler_mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void f2scheduler_mutex__unlock(f2ptr this, f2ptr cause);
+void funk2_node__f2scheduler_cmutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2scheduler_mutex__trylock                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2scheduler_cmutex__trylock                           = 0x1A, //int              (f2ptr cause, f2ptr this);
 
-// request f2scheduler_mutex__trylock
+// request f2scheduler_cmutex__trylock
 
-struct pcs_packet_payload_request__f2scheduler_mutex__trylock_s {
+struct pcs_packet_payload_request__f2scheduler_cmutex__trylock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2scheduler_mutex__trylock_s pcs_packet_payload_request__f2scheduler_mutex__trylock_t;
+typedef struct pcs_packet_payload_request__f2scheduler_cmutex__trylock_s pcs_packet_payload_request__f2scheduler_cmutex__trylock_t;
 
-struct pcs_request__f2scheduler_mutex__trylock_s {
+struct pcs_request__f2scheduler_cmutex__trylock_s {
   funk2_packet_header_t                          header;
-  pcs_packet_payload_request__f2scheduler_mutex__trylock_t payload;
+  pcs_packet_payload_request__f2scheduler_cmutex__trylock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2scheduler_mutex__trylock_s pcs_request__f2scheduler_mutex__trylock_t;
+typedef struct pcs_request__f2scheduler_cmutex__trylock_s pcs_request__f2scheduler_cmutex__trylock_t;
 
-// respond f2scheduler_mutex__trylock
+// respond f2scheduler_cmutex__trylock
 
-struct pcs_packet_payload_respond__f2scheduler_mutex__trylock_s {
+struct pcs_packet_payload_respond__f2scheduler_cmutex__trylock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   int                                                trylock;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2scheduler_mutex__trylock_s pcs_packet_payload_respond__f2scheduler_mutex__trylock_t;
+typedef struct pcs_packet_payload_respond__f2scheduler_cmutex__trylock_s pcs_packet_payload_respond__f2scheduler_cmutex__trylock_t;
 
-struct pcs_respond__f2scheduler_mutex__trylock_s {
+struct pcs_respond__f2scheduler_cmutex__trylock_s {
   funk2_packet_header_t                          header;
-  pcs_packet_payload_respond__f2scheduler_mutex__trylock_t payload;
+  pcs_packet_payload_respond__f2scheduler_cmutex__trylock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2scheduler_mutex__trylock_s pcs_respond__f2scheduler_mutex__trylock_t;
+typedef struct pcs_respond__f2scheduler_cmutex__trylock_s pcs_respond__f2scheduler_cmutex__trylock_t;
 
-void send_packet__request__f2scheduler_mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2scheduler_mutex__trylock(funk2_node_t* funk2_node, pcs_request__f2scheduler_mutex__trylock_t* packet);
-void send_packet__respond__f2scheduler_mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock);
-void recv_packet__respond__f2scheduler_mutex__trylock(funk2_node_t* funk2_node, pcs_respond__f2scheduler_mutex__trylock_t* packet);
+void send_packet__request__f2scheduler_cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2scheduler_cmutex__trylock(funk2_node_t* funk2_node, pcs_request__f2scheduler_cmutex__trylock_t* packet);
+void send_packet__respond__f2scheduler_cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock);
+void recv_packet__respond__f2scheduler_cmutex__trylock(funk2_node_t* funk2_node, pcs_respond__f2scheduler_cmutex__trylock_t* packet);
 
-int funk2_node__f2scheduler_mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-int f2scheduler_mutex__trylock(f2ptr this, f2ptr cause);
+int funk2_node__f2scheduler_cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+int f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause);
 
 
 
-//  funk2_packet_type__pcs_request__f2mutex__new                               = 0x17, //f2ptr            (f2ptr cause);
+//  funk2_packet_type__pcs_request__f2cmutex__new                               = 0x17, //f2ptr            (f2ptr cause);
 
-// request f2mutex__new
+// request f2cmutex__new
 
-struct pcs_packet_payload_request__f2mutex__new_s {
+struct pcs_packet_payload_request__f2cmutex__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2mutex__new_s pcs_packet_payload_request__f2mutex__new_t;
+typedef struct pcs_packet_payload_request__f2cmutex__new_s pcs_packet_payload_request__f2cmutex__new_t;
 
-struct pcs_request__f2mutex__new_s {
+struct pcs_request__f2cmutex__new_s {
   funk2_packet_header_t                      header;
-  pcs_packet_payload_request__f2mutex__new_t payload;
+  pcs_packet_payload_request__f2cmutex__new_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2mutex__new_s pcs_request__f2mutex__new_t;
+typedef struct pcs_request__f2cmutex__new_s pcs_request__f2cmutex__new_t;
 
-// respond f2mutex__new
+// respond f2cmutex__new
 
-struct pcs_packet_payload_respond__f2mutex__new_s {
+struct pcs_packet_payload_respond__f2cmutex__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              new;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2mutex__new_s pcs_packet_payload_respond__f2mutex__new_t;
+typedef struct pcs_packet_payload_respond__f2cmutex__new_s pcs_packet_payload_respond__f2cmutex__new_t;
 
-struct pcs_respond__f2mutex__new_s {
+struct pcs_respond__f2cmutex__new_s {
   funk2_packet_header_t                      header;
-  pcs_packet_payload_respond__f2mutex__new_t payload;
+  pcs_packet_payload_respond__f2cmutex__new_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2mutex__new_s pcs_respond__f2mutex__new_t;
+typedef struct pcs_respond__f2cmutex__new_s pcs_respond__f2cmutex__new_t;
 
-void send_packet__request__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-void recv_packet__request__f2mutex__new(funk2_node_t* funk2_node, pcs_request__f2mutex__new_t* packet);
-void send_packet__respond__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
-void recv_packet__respond__f2mutex__new(funk2_node_t* funk2_node, pcs_respond__f2mutex__new_t* packet);
+void send_packet__request__f2cmutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__request__f2cmutex__new(funk2_node_t* funk2_node, pcs_request__f2cmutex__new_t* packet);
+void send_packet__respond__f2cmutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
+void recv_packet__respond__f2cmutex__new(funk2_node_t* funk2_node, pcs_respond__f2cmutex__new_t* packet);
 
-f2ptr funk2_node__f2mutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-f2ptr f2mutex__new(f2ptr cause);
+f2ptr funk2_node__f2cmutex__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+f2ptr f2cmutex__new(f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2mutex__is_locked                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2cmutex__is_locked                           = 0x1A, //int              (f2ptr cause, f2ptr this);
 
-// request f2mutex__is_locked
+// request f2cmutex__is_locked
 
-struct pcs_packet_payload_request__f2mutex__is_locked_s {
+struct pcs_packet_payload_request__f2cmutex__is_locked_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2mutex__is_locked_s pcs_packet_payload_request__f2mutex__is_locked_t;
+typedef struct pcs_packet_payload_request__f2cmutex__is_locked_s pcs_packet_payload_request__f2cmutex__is_locked_t;
 
-struct pcs_request__f2mutex__is_locked_s {
+struct pcs_request__f2cmutex__is_locked_s {
   funk2_packet_header_t                            header;
-  pcs_packet_payload_request__f2mutex__is_locked_t payload;
+  pcs_packet_payload_request__f2cmutex__is_locked_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2mutex__is_locked_s pcs_request__f2mutex__is_locked_t;
+typedef struct pcs_request__f2cmutex__is_locked_s pcs_request__f2cmutex__is_locked_t;
 
-// respond f2mutex__is_locked
+// respond f2cmutex__is_locked
 
-struct pcs_packet_payload_respond__f2mutex__is_locked_s {
+struct pcs_packet_payload_respond__f2cmutex__is_locked_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   boolean_t                                          is_locked;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2mutex__is_locked_s pcs_packet_payload_respond__f2mutex__is_locked_t;
+typedef struct pcs_packet_payload_respond__f2cmutex__is_locked_s pcs_packet_payload_respond__f2cmutex__is_locked_t;
 
-struct pcs_respond__f2mutex__is_locked_s {
+struct pcs_respond__f2cmutex__is_locked_s {
   funk2_packet_header_t                            header;
-  pcs_packet_payload_respond__f2mutex__is_locked_t payload;
+  pcs_packet_payload_respond__f2cmutex__is_locked_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2mutex__is_locked_s pcs_respond__f2mutex__is_locked_t;
+typedef struct pcs_respond__f2cmutex__is_locked_s pcs_respond__f2cmutex__is_locked_t;
 
-void send_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2mutex__is_locked_t* packet);
-void send_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked);
-void recv_packet__respond__f2mutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2mutex__is_locked_t* packet);
+void send_packet__request__f2cmutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2cmutex__is_locked(funk2_node_t* funk2_node, pcs_request__f2cmutex__is_locked_t* packet);
+void send_packet__respond__f2cmutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked);
+void recv_packet__respond__f2cmutex__is_locked(funk2_node_t* funk2_node, pcs_respond__f2cmutex__is_locked_t* packet);
 
-boolean_t funk2_node__f2mutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-boolean_t f2mutex__is_locked(f2ptr this, f2ptr cause);
+boolean_t funk2_node__f2cmutex__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+boolean_t f2cmutex__is_locked(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2mutex__lock                              = 0x18, //void             (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2cmutex__lock                              = 0x18, //void             (f2ptr cause, f2ptr this);
 
-// request f2mutex__lock
+// request f2cmutex__lock
 
-struct pcs_packet_payload_request__f2mutex__lock_s {
+struct pcs_packet_payload_request__f2cmutex__lock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2mutex__lock_s pcs_packet_payload_request__f2mutex__lock_t;
+typedef struct pcs_packet_payload_request__f2cmutex__lock_s pcs_packet_payload_request__f2cmutex__lock_t;
 
-struct pcs_request__f2mutex__lock_s {
+struct pcs_request__f2cmutex__lock_s {
   funk2_packet_header_t                       header;
-  pcs_packet_payload_request__f2mutex__lock_t payload;
+  pcs_packet_payload_request__f2cmutex__lock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2mutex__lock_s pcs_request__f2mutex__lock_t;
+typedef struct pcs_request__f2cmutex__lock_s pcs_request__f2cmutex__lock_t;
 
-// respond f2mutex__lock
+// respond f2cmutex__lock
 
-struct pcs_packet_payload_respond__f2mutex__lock_s {
+struct pcs_packet_payload_respond__f2cmutex__lock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2mutex__lock_s pcs_packet_payload_respond__f2mutex__lock_t;
+typedef struct pcs_packet_payload_respond__f2cmutex__lock_s pcs_packet_payload_respond__f2cmutex__lock_t;
 
-struct pcs_respond__f2mutex__lock_s {
+struct pcs_respond__f2cmutex__lock_s {
   funk2_packet_header_t                       header;
-  pcs_packet_payload_respond__f2mutex__lock_t payload;
+  pcs_packet_payload_respond__f2cmutex__lock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2mutex__lock_s pcs_respond__f2mutex__lock_t;
+typedef struct pcs_respond__f2cmutex__lock_s pcs_respond__f2cmutex__lock_t;
 
-void send_packet__request__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2mutex__lock(funk2_node_t* funk2_node, pcs_request__f2mutex__lock_t* packet);
-void send_packet__respond__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-void recv_packet__respond__f2mutex__lock(funk2_node_t* funk2_node, pcs_respond__f2mutex__lock_t* packet);
+void send_packet__request__f2cmutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2cmutex__lock(funk2_node_t* funk2_node, pcs_request__f2cmutex__lock_t* packet);
+void send_packet__respond__f2cmutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2cmutex__lock(funk2_node_t* funk2_node, pcs_respond__f2cmutex__lock_t* packet);
 
-void funk2_node__f2mutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void f2mutex__lock(f2ptr this, f2ptr cause);
+void funk2_node__f2cmutex__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void f2cmutex__lock(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2mutex__unlock                            = 0x19, //void             (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2cmutex__unlock                            = 0x19, //void             (f2ptr cause, f2ptr this);
 
-// request f2mutex__unlock
+// request f2cmutex__unlock
 
-struct pcs_packet_payload_request__f2mutex__unlock_s {
+struct pcs_packet_payload_request__f2cmutex__unlock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2mutex__unlock_s pcs_packet_payload_request__f2mutex__unlock_t;
+typedef struct pcs_packet_payload_request__f2cmutex__unlock_s pcs_packet_payload_request__f2cmutex__unlock_t;
 
-struct pcs_request__f2mutex__unlock_s {
+struct pcs_request__f2cmutex__unlock_s {
   funk2_packet_header_t                         header;
-  pcs_packet_payload_request__f2mutex__unlock_t payload;
+  pcs_packet_payload_request__f2cmutex__unlock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2mutex__unlock_s pcs_request__f2mutex__unlock_t;
+typedef struct pcs_request__f2cmutex__unlock_s pcs_request__f2cmutex__unlock_t;
 
-// respond f2mutex__unlock
+// respond f2cmutex__unlock
 
-struct pcs_packet_payload_respond__f2mutex__unlock_s {
+struct pcs_packet_payload_respond__f2cmutex__unlock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2mutex__unlock_s pcs_packet_payload_respond__f2mutex__unlock_t;
+typedef struct pcs_packet_payload_respond__f2cmutex__unlock_s pcs_packet_payload_respond__f2cmutex__unlock_t;
 
-struct pcs_respond__f2mutex__unlock_s {
+struct pcs_respond__f2cmutex__unlock_s {
   funk2_packet_header_t                         header;
-  pcs_packet_payload_respond__f2mutex__unlock_t payload;
+  pcs_packet_payload_respond__f2cmutex__unlock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2mutex__unlock_s pcs_respond__f2mutex__unlock_t;
+typedef struct pcs_respond__f2cmutex__unlock_s pcs_respond__f2cmutex__unlock_t;
 
-void send_packet__request__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2mutex__unlock(funk2_node_t* funk2_node, pcs_request__f2mutex__unlock_t* packet);
-void send_packet__respond__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
-void recv_packet__respond__f2mutex__unlock(funk2_node_t* funk2_node, pcs_respond__f2mutex__unlock_t* packet);
+void send_packet__request__f2cmutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2cmutex__unlock(funk2_node_t* funk2_node, pcs_request__f2cmutex__unlock_t* packet);
+void send_packet__respond__f2cmutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2cmutex__unlock(funk2_node_t* funk2_node, pcs_respond__f2cmutex__unlock_t* packet);
 
-void funk2_node__f2mutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void f2mutex__unlock(f2ptr this, f2ptr cause);
+void funk2_node__f2cmutex__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void f2cmutex__unlock(f2ptr this, f2ptr cause);
 
 
-//  funk2_packet_type__pcs_request__f2mutex__trylock                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+//  funk2_packet_type__pcs_request__f2cmutex__trylock                           = 0x1A, //int              (f2ptr cause, f2ptr this);
 
-// request f2mutex__trylock
+// request f2cmutex__trylock
 
-struct pcs_packet_payload_request__f2mutex__trylock_s {
+struct pcs_packet_payload_request__f2cmutex__trylock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   f2ptr                                              this;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_request__f2mutex__trylock_s pcs_packet_payload_request__f2mutex__trylock_t;
+typedef struct pcs_packet_payload_request__f2cmutex__trylock_s pcs_packet_payload_request__f2cmutex__trylock_t;
 
-struct pcs_request__f2mutex__trylock_s {
+struct pcs_request__f2cmutex__trylock_s {
   funk2_packet_header_t                          header;
-  pcs_packet_payload_request__f2mutex__trylock_t payload;
+  pcs_packet_payload_request__f2cmutex__trylock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_request__f2mutex__trylock_s pcs_request__f2mutex__trylock_t;
+typedef struct pcs_request__f2cmutex__trylock_s pcs_request__f2cmutex__trylock_t;
 
-// respond f2mutex__trylock
+// respond f2cmutex__trylock
 
-struct pcs_packet_payload_respond__f2mutex__trylock_s {
+struct pcs_packet_payload_respond__f2cmutex__trylock_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   int                                                trylock;
 } __attribute__((__packed__));
-typedef struct pcs_packet_payload_respond__f2mutex__trylock_s pcs_packet_payload_respond__f2mutex__trylock_t;
+typedef struct pcs_packet_payload_respond__f2cmutex__trylock_s pcs_packet_payload_respond__f2cmutex__trylock_t;
 
-struct pcs_respond__f2mutex__trylock_s {
+struct pcs_respond__f2cmutex__trylock_s {
   funk2_packet_header_t                          header;
-  pcs_packet_payload_respond__f2mutex__trylock_t payload;
+  pcs_packet_payload_respond__f2cmutex__trylock_t payload;
 } __attribute__((__packed__));
-typedef struct pcs_respond__f2mutex__trylock_s pcs_respond__f2mutex__trylock_t;
+typedef struct pcs_respond__f2cmutex__trylock_s pcs_respond__f2cmutex__trylock_t;
 
-void send_packet__request__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-void recv_packet__request__f2mutex__trylock(funk2_node_t* funk2_node, pcs_request__f2mutex__trylock_t* packet);
-void send_packet__respond__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock);
-void recv_packet__respond__f2mutex__trylock(funk2_node_t* funk2_node, pcs_respond__f2mutex__trylock_t* packet);
+void send_packet__request__f2cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2cmutex__trylock(funk2_node_t* funk2_node, pcs_request__f2cmutex__trylock_t* packet);
+void send_packet__respond__f2cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock);
+void recv_packet__respond__f2cmutex__trylock(funk2_node_t* funk2_node, pcs_respond__f2cmutex__trylock_t* packet);
 
-int funk2_node__f2mutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
-int f2mutex__trylock(f2ptr this, f2ptr cause);
+int funk2_node__f2cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+int f2cmutex__trylock(f2ptr this, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2char__new                                = 0x1B, //f2ptr            (f2ptr cause, u64 ch);

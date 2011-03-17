@@ -42,8 +42,8 @@
 			   [activated_trigger [new fiber_trigger]]
 			   [finished_trigger  [new fiber_trigger]]]
   [new [initial-name initial-active_funk]
-       [= resource_initializing_mutex [new traced_mutex]] [have resource_initializing_mutex lock]
-       [= fiber_starting_mutex        [new traced_mutex]] [have fiber_starting_mutex        lock]
+       [= resource_initializing_mutex [new mutex]] [have resource_initializing_mutex lock]
+       [= fiber_starting_mutex        [new mutex]] [have fiber_starting_mutex        lock]
        [= fiber                       [fiber [funk []
 						   [cause-enable_reactive_critics [this-cause]]
 						   
@@ -56,7 +56,7 @@
 						   [= name         initial-name]
 						   [= agency       nil]  'We set this when the resource is added to an agency.'
 						   [= active_funk  initial-active_funk]
-						   [= active_mutex [new traced_mutex]]
+						   [= active_mutex [new mutex]]
 						   [= trace_story  [new story]]
 						   [= think_story  [new story]]
 						   [cause-define cause-name     `resource]
@@ -88,7 +88,7 @@
 						   [while [not done]
 						     [have active_mutex lock]
 						     [if [not active]
-							 [let [[locked_mutex [new traced_mutex]]]
+							 [let [[locked_mutex [new mutex]]]
 							   [have locked_mutex lock]
 							   [fiber [funk []
 									[global_scheduler-remove_fiber fiber]

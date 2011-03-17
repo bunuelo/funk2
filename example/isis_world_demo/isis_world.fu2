@@ -19,7 +19,7 @@
 
 
 [deframe isis_world [physical_world] [[initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
-				      [step_mutex [new traced_mutex]]
+				      [step_mutex [new mutex]]
 				      client
 				      sense_agent_frame
 				      [overview_image_sequence [new image_sequence nil]]]

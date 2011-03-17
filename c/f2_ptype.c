@@ -9,7 +9,7 @@ u8 __ptype__str[][128] = {
   "float",
   "pointer",
   "gfunkptr",
-  "mutex",
+  "cmutex",
   "char",
   "string",
   "symbol",

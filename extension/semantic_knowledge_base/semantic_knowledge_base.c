@@ -156,7 +156,7 @@ f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_r
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  f2ptr trace_event_stream          = nil;
+  f2ptr trace_event_stream          = f2__forgetful_event_stream__new(cause);
   f2ptr trace_add_semantic_frame    = nil;
   f2ptr trace_remove_semantic_frame = nil;
   if (cause != nil) {
@@ -190,14 +190,6 @@ f2ptr f2__semantic_knowledge_base__as__graph(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semantic_knowledge_base to a graph.");
 
 
-void raw__semantic_knowledge_base__initialize_tracing(f2ptr cause, f2ptr this) {
-  if (raw__semantic_knowledge_base__trace_event_stream(cause, this) == nil) {
-    f2ptr trace_event_stream = f2__forgetful_event_stream__new(cause);
-    raw__semantic_knowledge_base__trace_event_stream__set(cause, this, trace_event_stream);
-  }
-}
-
-
 f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
   // tell the semantic frame that it belongs to this semantic_knowledge_base (so we can receive change events)
   raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(cause, semantic_frame, this);
@@ -220,8 +212,7 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
   }
   // call trace callbacks
   if (raw__semantic_knowledge_base__trace_add_semantic_frame(cause, this) != nil) {
-    raw__semantic_knowledge_base__initialize_tracing(cause, this);
-    f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
+    f2ptr trace_event_stream            = raw__semantic_knowledge_base__trace_event_stream(cause, this);
     f2ptr semantic_knowledge_base_event = raw__semantic_knowledge_base_event__new(cause, f2__time(cause), new__symbol(cause, "add_semantic_frame"), semantic_frame);
     raw__forgetful_event_stream__add(cause, trace_event_stream, semantic_knowledge_base_event);
     {
@@ -283,8 +274,7 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
   raw__set__remove(cause, semantic_frame_set, semantic_frame);
   // call trace callbacks
   if (raw__semantic_knowledge_base__trace_remove_semantic_frame(cause, this) != nil) {
-    raw__semantic_knowledge_base__initialize_tracing(cause, this);
-    f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
+    f2ptr trace_event_stream            = raw__semantic_knowledge_base__trace_event_stream(cause, this);
     f2ptr semantic_knowledge_base_event = raw__semantic_knowledge_base_event__new(cause, f2__time(cause), new__symbol(cause, "remove_semantic_frame"), semantic_frame);
     raw__forgetful_event_stream__add(cause, trace_event_stream, semantic_knowledge_base_event);
     {
@@ -409,7 +399,6 @@ export_cefunk3(semantic_knowledge_base__add_trace_callback_funk, this, trace_cal
 
 
 f2ptr raw__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2ptr event) {
-  raw__semantic_knowledge_base__initialize_tracing(cause, this);
   f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
   raw__forgetful_event_stream__add(cause, trace_event_stream, event);
   return nil;
@@ -664,7 +653,6 @@ export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile 
 
 
 f2ptr raw__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr this) {
-  raw__semantic_knowledge_base__initialize_tracing(cause, this);
   f2ptr trace_event_stream = raw__semantic_knowledge_base__trace_event_stream(cause, this);
   f2ptr iterator = raw__event_stream__new__iterator(cause, trace_event_stream);
   raw__forgetful_event_stream__add_important_iterator(cause, trace_event_stream, iterator);

@@ -102,20 +102,20 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->read_event__symbol   = f2symbol__new(cause, strlen("read_event"),   (u8*)"read_event");
   this->write_event__symbol  = f2symbol__new(cause, strlen("write_event"),  (u8*)"write_event");
   
-  this->ptype_integer__symbol         = f2symbol__new(cause, strlen("ptype_integer"),         (u8*)"ptype_integer");
-  this->ptype_double__symbol          = f2symbol__new(cause, strlen("ptype_double"),          (u8*)"ptype_double");
-  this->ptype_float__symbol           = f2symbol__new(cause, strlen("ptype_float"),           (u8*)"ptype_float");
-  this->ptype_pointer__symbol         = f2symbol__new(cause, strlen("ptype_pointer"),         (u8*)"ptype_pointer");
-  this->ptype_gfunkptr__symbol        = f2symbol__new(cause, strlen("ptype_gfunkptr"),        (u8*)"ptype_gfunkptr");
-  this->ptype_scheduler_mutex__symbol = f2symbol__new(cause, strlen("ptype_scheduler_mutex"), (u8*)"ptype_scheduler_mutex");
-  this->ptype_mutex__symbol           = f2symbol__new(cause, strlen("ptype_mutex"),           (u8*)"ptype_mutex");
-  this->ptype_char__symbol            = f2symbol__new(cause, strlen("ptype_char"),            (u8*)"ptype_char");
-  this->ptype_string__symbol          = f2symbol__new(cause, strlen("ptype_string"),          (u8*)"ptype_string");
-  this->ptype_symbol__symbol          = f2symbol__new(cause, strlen("ptype_symbol"),          (u8*)"ptype_symbol");
-  this->ptype_chunk__symbol           = f2symbol__new(cause, strlen("ptype_chunk"),           (u8*)"ptype_chunk");
-  this->ptype_simple_array__symbol    = f2symbol__new(cause, strlen("ptype_simple_array"),    (u8*)"ptype_simple_array");
-  this->ptype_traced_array__symbol    = f2symbol__new(cause, strlen("ptype_traced_array"),    (u8*)"ptype_traced_array");
-  this->ptype_larva__symbol           = f2symbol__new(cause, strlen("ptype_larva"),           (u8*)"ptype_larva");
+  this->ptype_integer__symbol          = f2symbol__new(cause, strlen("ptype_integer"),          (u8*)"ptype_integer");
+  this->ptype_double__symbol           = f2symbol__new(cause, strlen("ptype_double"),           (u8*)"ptype_double");
+  this->ptype_float__symbol            = f2symbol__new(cause, strlen("ptype_float"),            (u8*)"ptype_float");
+  this->ptype_pointer__symbol          = f2symbol__new(cause, strlen("ptype_pointer"),          (u8*)"ptype_pointer");
+  this->ptype_gfunkptr__symbol         = f2symbol__new(cause, strlen("ptype_gfunkptr"),         (u8*)"ptype_gfunkptr");
+  this->ptype_scheduler_cmutex__symbol = f2symbol__new(cause, strlen("ptype_scheduler_cmutex"), (u8*)"ptype_scheduler_cmutex");
+  this->ptype_cmutex__symbol           = f2symbol__new(cause, strlen("ptype_cmutex"),           (u8*)"ptype_cmutex");
+  this->ptype_char__symbol             = f2symbol__new(cause, strlen("ptype_char"),             (u8*)"ptype_char");
+  this->ptype_string__symbol           = f2symbol__new(cause, strlen("ptype_string"),           (u8*)"ptype_string");
+  this->ptype_symbol__symbol           = f2symbol__new(cause, strlen("ptype_symbol"),           (u8*)"ptype_symbol");
+  this->ptype_chunk__symbol            = f2symbol__new(cause, strlen("ptype_chunk"),            (u8*)"ptype_chunk");
+  this->ptype_simple_array__symbol     = f2symbol__new(cause, strlen("ptype_simple_array"),     (u8*)"ptype_simple_array");
+  this->ptype_traced_array__symbol     = f2symbol__new(cause, strlen("ptype_traced_array"),     (u8*)"ptype_traced_array");
+  this->ptype_larva__symbol            = f2symbol__new(cause, strlen("ptype_larva"),            (u8*)"ptype_larva");
   
   this->get__symbol     = new__symbol(cause, "get");
   this->set__symbol     = new__symbol(cause, "set");

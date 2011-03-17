@@ -254,12 +254,12 @@ def_pcfunk1(global_scheduler__remove_fiber, fiber, return f2__global_scheduler__
 void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
-    if(f2mutex__trylock(f2fiber__execute_mutex(fiber, cause), cause) == 0) {
+    if(f2cmutex__trylock(f2fiber__execute_cmutex(fiber, cause), cause) == 0) {
       if(f2fiber__is_complete(fiber, cause) ||
 	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
 	complete = boolean__true;
       }
-      f2mutex__unlock(f2fiber__execute_mutex(fiber, cause), cause);
+      f2cmutex__unlock(f2fiber__execute_cmutex(fiber, cause), cause);
     }
     if (! complete) {
       f2__this__fiber__yield(cause);
@@ -399,7 +399,7 @@ void f2__scheduler__initialize() {
     f2ptr processor = f2processor__new(cause, 
 				       scheduler,
 				       nil,
-				       f2scheduler_mutex__new(cause),
+				       f2scheduler_cmutex__new(cause),
 				       nil, // active_fibers
 				       nil, // active_fibers_iter
 				       f2integer__new(cause, i),

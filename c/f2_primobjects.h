@@ -1470,14 +1470,6 @@ f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause);
 declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
 
 
-// time
-
-declare_primobject_1_slot(time, nanoseconds_since_1970);
-
-f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970);
-f2ptr f2time__primobject_type__new_aux(f2ptr cause);
-
-
 // size_2d
 
 declare_primobject_2_slot(size_2d, x, y);
@@ -1830,52 +1822,6 @@ declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2,
 // transframe
 
 declare_object_type_2_slot(transframe, nanoseconds_since_1970, symbol_old_news, );
-
-// time
-
-declare_object_type_1_slot(time, nanoseconds_since_1970,
-			   f2ptr equals__symbol;
-			   f2ptr equals__funk;
-			   f2ptr years__symbol;
-			   f2ptr years__funk;
-			   f2ptr months__symbol;
-			   f2ptr months__funk;
-			   f2ptr days__symbol;
-			   f2ptr days__funk;
-			   f2ptr hours__symbol;
-			   f2ptr hours__funk;
-			   f2ptr minutes__symbol;
-			   f2ptr minutes__funk;
-			   f2ptr seconds__symbol;
-			   f2ptr seconds__funk;
-			   f2ptr nanoseconds__symbol;
-			   f2ptr nanoseconds__funk;
-			   f2ptr is_less_than__symbol;
-			   f2ptr is_less_than__funk;
-			   f2ptr is_greater_than__symbol;
-			   f2ptr is_greater_than__funk;
-			   f2ptr is_numerically_equal_to__symbol;
-			   f2ptr is_numerically_equal_to__funk;
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
-
-boolean_t raw__time__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__time__equals(f2ptr cause, f2ptr this, f2ptr that);
-u64       raw__time__years(f2ptr cause, f2ptr this);
-f2ptr      f2__time__years(f2ptr cause, f2ptr this);
-u64       raw__time__months(f2ptr cause, f2ptr this);
-f2ptr      f2__time__months(f2ptr cause, f2ptr this);
-u64       raw__time__days(f2ptr cause, f2ptr this);
-f2ptr      f2__time__days(f2ptr cause, f2ptr this);
-u64       raw__time__hours(f2ptr cause, f2ptr this);
-f2ptr      f2__time__hours(f2ptr cause, f2ptr this);
-u64       raw__time__minutes(f2ptr cause, f2ptr this);
-f2ptr      f2__time__minutes(f2ptr cause, f2ptr this);
-u64       raw__time__seconds(f2ptr cause, f2ptr this);
-f2ptr      f2__time__seconds(f2ptr cause, f2ptr this);
-u64       raw__time__nanoseconds(f2ptr cause, f2ptr this);
-f2ptr      f2__time__nanoseconds(f2ptr cause, f2ptr this);
 
 // size_2d
 

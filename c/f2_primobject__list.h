@@ -27,7 +27,7 @@
 
 typedef struct funk2_object_type__list__slot_s funk2_object_type__list__slot_t;
 
-declare_object_type_3_slot(list, write_mutex, length, cons_cells,
+declare_object_type_3_slot(list, write_cmutex, length, cons_cells,
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
 			   f2ptr lookup__symbol;
@@ -55,7 +55,7 @@ declare_object_type_3_slot(list, write_mutex, length, cons_cells,
 
 // list
 
-declare_primobject_3_slot(list, write_mutex, length, cons_cells);
+declare_primobject_3_slot(list, write_cmutex, length, cons_cells);
 
 f2ptr f2__list__new   (f2ptr cause, f2ptr elements);
 f2ptr f2__list__cons_cells(f2ptr cause, f2ptr this);

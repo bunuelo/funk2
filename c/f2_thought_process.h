@@ -35,8 +35,8 @@ typedef struct funk2_thought_process_s {
   f2ptr ptype_float__symbol;
   f2ptr ptype_pointer__symbol;
   f2ptr ptype_gfunkptr__symbol;
-  f2ptr ptype_scheduler_mutex__symbol;
-  f2ptr ptype_mutex__symbol;
+  f2ptr ptype_scheduler_cmutex__symbol;
+  f2ptr ptype_cmutex__symbol;
   f2ptr ptype_char__symbol;
   f2ptr ptype_string__symbol;
   f2ptr ptype_symbol__symbol;

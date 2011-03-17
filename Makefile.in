@@ -575,7 +575,7 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_primobject__stream.lo \
 	c/lib_libfunk2_la-f2_primobject__tensor.lo \
 	c/lib_libfunk2_la-f2_primobject__text_buffer.lo \
-	c/lib_libfunk2_la-f2_primobject__traced_mutex.lo \
+	c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo \
 	c/lib_libfunk2_la-f2_primobject_type.lo \
 	c/lib_libfunk2_la-f2_primobject_type_handler.lo \
 	c/lib_libfunk2_la-f2_print.lo \
@@ -1125,7 +1125,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__stream.c \
   c/f2_primobject__tensor.c \
   c/f2_primobject__text_buffer.c \
-  c/f2_primobject__traced_mutex.c \
+  c/f2_primobject__traced_cmutex.c \
   c/f2_primobject_type.c \
   c/f2_primobject_type_handler.c \
   c/f2_print.c \
@@ -2066,7 +2066,7 @@ c/lib_libfunk2_la-f2_primobject__tensor.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_primobject__text_buffer.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
-c/lib_libfunk2_la-f2_primobject__traced_mutex.lo: c/$(am__dirstamp) \
+c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_primobject_type.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -2332,8 +2332,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_primobject__tensor.lo
 	-rm -f c/lib_libfunk2_la-f2_primobject__text_buffer.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_primobject__text_buffer.lo
-	-rm -f c/lib_libfunk2_la-f2_primobject__traced_mutex.$(OBJEXT)
-	-rm -f c/lib_libfunk2_la-f2_primobject__traced_mutex.lo
+	-rm -f c/lib_libfunk2_la-f2_primobject__traced_cmutex.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo
 	-rm -f c/lib_libfunk2_la-f2_primobject_type.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_primobject_type.lo
 	-rm -f c/lib_libfunk2_la-f2_primobject_type_handler.$(OBJEXT)
@@ -2584,7 +2584,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__stream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__tensor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__text_buffer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_mutex.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_cmutex.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject_type.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobject_type_handler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primobjects.Plo@am__quote@
@@ -3662,13 +3662,13 @@ c/lib_libfunk2_la-f2_primobject__text_buffer.lo: c/f2_primobject__text_buffer.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_primobject__text_buffer.lo `test -f 'c/f2_primobject__text_buffer.c' || echo '$(srcdir)/'`c/f2_primobject__text_buffer.c
 
-c/lib_libfunk2_la-f2_primobject__traced_mutex.lo: c/f2_primobject__traced_mutex.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_primobject__traced_mutex.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_mutex.Tpo -c -o c/lib_libfunk2_la-f2_primobject__traced_mutex.lo `test -f 'c/f2_primobject__traced_mutex.c' || echo '$(srcdir)/'`c/f2_primobject__traced_mutex.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_mutex.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_mutex.Plo
+c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo: c/f2_primobject__traced_cmutex.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_cmutex.Tpo -c -o c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo `test -f 'c/f2_primobject__traced_cmutex.c' || echo '$(srcdir)/'`c/f2_primobject__traced_cmutex.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_cmutex.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_primobject__traced_cmutex.Plo
 @am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__traced_mutex.c' object='c/lib_libfunk2_la-f2_primobject__traced_mutex.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_primobject__traced_cmutex.c' object='c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_primobject__traced_mutex.lo `test -f 'c/f2_primobject__traced_mutex.c' || echo '$(srcdir)/'`c/f2_primobject__traced_mutex.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_primobject__traced_cmutex.lo `test -f 'c/f2_primobject__traced_cmutex.c' || echo '$(srcdir)/'`c/f2_primobject__traced_cmutex.c
 
 c/lib_libfunk2_la-f2_primobject_type.lo: c/f2_primobject_type.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_primobject_type.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_primobject_type.Tpo -c -o c/lib_libfunk2_la-f2_primobject_type.lo `test -f 'c/f2_primobject_type.c' || echo '$(srcdir)/'`c/f2_primobject_type.c

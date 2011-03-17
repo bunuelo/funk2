@@ -474,11 +474,11 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   
   funk2_memory__debug_memory_test(this, 0);
   
-  // temporarily unlocks all memory mutexes
+  // temporarily unlocks all memory cmutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
-  // temporary period of all memory mutexes locked
+  // temporary period of all memory cmutexes locked
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
@@ -492,18 +492,18 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 	  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	} break;
-	case ptype_scheduler_mutex: {
-	  ptype_scheduler_mutex_block_t* scheduler_mutex_block = (ptype_scheduler_mutex_block_t*)block;
-	  funk2_processor_mutex__init(scheduler_mutex_block->m);
-	  if (scheduler_mutex_block->locked_state) {
-	    funk2_processor_mutex__lock(scheduler_mutex_block->m);
+	case ptype_scheduler_cmutex: {
+	  ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	  funk2_processor_mutex__init(scheduler_cmutex_block->m);
+	  if (scheduler_cmutex_block->locked_state) {
+	    funk2_processor_mutex__lock(scheduler_cmutex_block->m);
 	  }
 	} break;
-	case ptype_mutex: {
-	  ptype_mutex_block_t* mutex_block = (ptype_mutex_block_t*)block;
-	  funk2_processor_mutex__init(mutex_block->m);
-	  if (mutex_block->locked_state) {
-	    funk2_processor_mutex__lock(mutex_block->m);
+	case ptype_cmutex: {
+	  ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	  funk2_processor_mutex__init(cmutex_block->m);
+	  if (cmutex_block->locked_state) {
+	    funk2_processor_mutex__lock(cmutex_block->m);
 	  }
 	} break;
 	default:
@@ -515,7 +515,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
   }
-  // end temporary unlocking of all memory mutexes
+  // end temporary unlocking of all memory cmutexes
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }

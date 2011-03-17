@@ -23,7 +23,7 @@
 
 // ptypehash
 
-def_primobject_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array);
+def_primobject_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bin_array);
 
 boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
   if (! raw__ptypehash__is_type(cause, this)) {return boolean__false;}
@@ -39,7 +39,7 @@ boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
 
 f2ptr raw__ptypehash__new(f2ptr cause, s64 bin_num_power) {
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
-  f2ptr this = f2ptypehash__new(cause, f2mutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array);
+  f2ptr this = f2ptypehash__new(cause, f2cmutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array);
   debug__assert(raw__ptypehash__valid(cause, this), nil, "raw__ptypehash__new assert failed: f2__ptypehash__valid(this)");
   return this;
 }
@@ -74,7 +74,7 @@ void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 
 f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
-  f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2ptypehash__bin_array(this, cause);
@@ -107,7 +107,7 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
-  f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -121,7 +121,7 @@ def_pcfunk3(ptypehash__add, this, slot_name, value, return f2__ptypehash__add(th
 boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
   {
     f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -156,7 +156,7 @@ boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return key_was_removed;
 }
 
@@ -183,9 +183,9 @@ def_pcfunk2(ptypehash__copy_from, this, that, return f2__ptypehash__copy_from(th
 
 f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
-  //status("ptypehash (" u64__fstr ") attempting to lock write mutex.", this);
-  f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
-  //status("ptypehash (" u64__fstr ") successfully locked write mutex.", this);
+  //status("ptypehash (" u64__fstr ") attempting to lock write cmutex.", this);
+  f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
+  //status("ptypehash (" u64__fstr ") successfully locked write cmutex.", this);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2ptypehash__bin_array(this, cause);
@@ -198,12 +198,12 @@ f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
     if (raw__eq(cause, key, keyvalue_pair__key)) {
-      f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+      f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
       return keyvalue_pair;
     }
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
-  f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -244,7 +244,7 @@ def_pcfunk2(ptypehash__contains, this, key, return f2__ptypehash__contains(this_
 
 
 f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
-  f2mutex__lock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
   {
     f2ptr bin_array         = f2__ptypehash__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -253,12 +253,12 @@ f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
       if (keyvalue_pair_iter) {
 	f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
-	f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+	f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
 	return keyvalue_pair;
       }
     }
   }
-  f2mutex__unlock(f2ptypehash__write_mutex(this, cause), cause);
+  f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -422,7 +422,7 @@ void f2__primobject__ptypehash__initialize() {
   
   // ptypehash
   
-  initialize_primobject_4_slot(ptypehash, write_mutex, key_count, bin_num_power, bin_array);
+  initialize_primobject_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bin_array);
   
   {char* symbol_str = "contains"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.contains__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__contains, this, key, cfunk, 0, "Returns boolean true [t] if the ptypehash contains the key.");

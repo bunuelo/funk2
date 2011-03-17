@@ -27,7 +27,6 @@
 #include "f2_memory.h"
 #include "f2_processor_thread.h"
 #include "f2_bytecodes.h"
-#include "f2_packet_memaccess.h"
 
 #define SYMBOL_HASH__INITIAL_ARRAY_LENGTH 1024 // must be power of 2
 #define PRIME_NUMBER__16_BIT 65521
@@ -233,62 +232,62 @@ boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
-// scheduler_mutex
+// scheduler_cmutex
 
-f2ptr            pfunk2__f2scheduler_mutex__new(f2ptr cause);
-boolean_t        pfunk2__f2scheduler_mutex__is_locked(f2ptr this, f2ptr cause);
-void             pfunk2__f2scheduler_mutex__lock(f2ptr this, f2ptr cause);
-void             pfunk2__f2scheduler_mutex__unlock(f2ptr this, f2ptr cause);
-int              pfunk2__f2scheduler_mutex__trylock(f2ptr this, f2ptr cause);
+f2ptr            pfunk2__f2scheduler_cmutex__new(f2ptr cause);
+boolean_t        pfunk2__f2scheduler_cmutex__is_locked(f2ptr this, f2ptr cause);
+void             pfunk2__f2scheduler_cmutex__lock(f2ptr this, f2ptr cause);
+void             pfunk2__f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause);
+int              pfunk2__f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause);
 
-f2ptr f2scheduler_mutex__primobject_type__new(f2ptr cause);
+f2ptr f2scheduler_cmutex__primobject_type__new(f2ptr cause);
 
-f2ptr      f2__scheduler_mutex__new(f2ptr cause);
+f2ptr      f2__scheduler_cmutex__new(f2ptr cause);
 
-boolean_t raw__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
-f2ptr      f2__scheduler_mutex__is_type(f2ptr cause, f2ptr exp);
+boolean_t raw__scheduler_cmutex__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__scheduler_cmutex__is_type(f2ptr cause, f2ptr exp);
 
-boolean_t raw__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__scheduler_mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__scheduler_cmutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_cmutex__eq(f2ptr cause, f2ptr this, f2ptr that);
 
-u64   raw__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__scheduler_mutex__eq_hash_value(f2ptr cause, f2ptr this);
+u64   raw__scheduler_cmutex__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__scheduler_cmutex__eq_hash_value(f2ptr cause, f2ptr this);
 
-boolean_t raw__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__scheduler_mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__scheduler_cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
-// mutex
+// cmutex
 
-f2ptr            pfunk2__f2mutex__new(f2ptr cause);
-boolean_t        pfunk2__f2mutex__is_locked(f2ptr this, f2ptr cause);
-void             pfunk2__f2mutex__lock(f2ptr this, f2ptr cause);
-void             pfunk2__f2mutex__unlock(f2ptr this, f2ptr cause);
-int              pfunk2__f2mutex__trylock(f2ptr this, f2ptr cause);
+f2ptr            pfunk2__f2cmutex__new(f2ptr cause);
+boolean_t        pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause);
+void             pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause);
+void             pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause);
+int              pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause);
 
-f2ptr f2mutex__primobject_type__new(f2ptr cause);
+f2ptr f2cmutex__primobject_type__new(f2ptr cause);
 
-f2ptr      f2__mutex__new(f2ptr cause);
-boolean_t raw__mutex__is_locked(f2ptr cause, f2ptr this);
-f2ptr      f2__mutex__is_locked(f2ptr cause, f2ptr this);
-void      raw__mutex__lock(f2ptr cause, f2ptr this);
-f2ptr      f2__mutex__lock(f2ptr cause, f2ptr this);
-void      raw__mutex__unlock(f2ptr cause, f2ptr this);
-f2ptr      f2__mutex__unlock(f2ptr cause, f2ptr this);
-boolean_t raw__mutex__trylock(f2ptr cause, f2ptr this);
-f2ptr      f2__mutex__trylock(f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__new(f2ptr cause);
+boolean_t raw__cmutex__is_locked(f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__is_locked(f2ptr cause, f2ptr this);
+void      raw__cmutex__lock(f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__lock(f2ptr cause, f2ptr this);
+void      raw__cmutex__unlock(f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__unlock(f2ptr cause, f2ptr this);
+boolean_t raw__cmutex__trylock(f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__trylock(f2ptr cause, f2ptr this);
 
-boolean_t raw__mutex__is_type(f2ptr cause, f2ptr exp);
-f2ptr      f2__mutex__is_type(f2ptr cause, f2ptr exp);
+boolean_t raw__cmutex__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__cmutex__is_type(f2ptr cause, f2ptr exp);
 
-boolean_t raw__mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__mutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that);
 
-u64   raw__mutex__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__mutex__eq_hash_value(f2ptr cause, f2ptr this);
+u64   raw__cmutex__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__cmutex__eq_hash_value(f2ptr cause, f2ptr this);
 
-boolean_t raw__mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__mutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
 // char
@@ -547,8 +546,8 @@ f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__scheduler_mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__mutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__scheduler_cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+f2ptr f2__cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
@@ -789,9 +788,9 @@ typedef struct funk2_object_type__gfunkptr__slot_s {
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__gfunkptr__slot_t;
 
-// scheduler_mutex
+// scheduler_cmutex
 
-typedef struct funk2_object_type__scheduler_mutex__slot_s {
+typedef struct funk2_object_type__scheduler_cmutex__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
   f2ptr type__symbol;
@@ -810,11 +809,11 @@ typedef struct funk2_object_type__scheduler_mutex__slot_s {
   f2ptr equals_hash_value__funk;
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__scheduler_mutex__slot_t;
+} funk2_object_type__scheduler_cmutex__slot_t;
 
-// mutex
+// cmutex
 
-typedef struct funk2_object_type__mutex__slot_s {
+typedef struct funk2_object_type__cmutex__slot_s {
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
   f2ptr type__symbol;
@@ -841,7 +840,7 @@ typedef struct funk2_object_type__mutex__slot_s {
   f2ptr equals_hash_value__funk;
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__mutex__slot_t;
+} funk2_object_type__cmutex__slot_t;
 
 // char
 
@@ -908,6 +907,10 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr is_less_than__funk;
   f2ptr is_greater_than__symbol;
   f2ptr is_greater_than__funk;
+  f2ptr lowercase__symbol;
+  f2ptr lowercase__funk;
+  f2ptr uppercase__symbol;
+  f2ptr uppercase__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol
@@ -1117,8 +1120,8 @@ typedef struct funk2_ptype_object_types_s {
   funk2_object_type__float__slot_t           ptype_float;
   funk2_object_type__pointer__slot_t         ptype_pointer;
   funk2_object_type__gfunkptr__slot_t        ptype_gfunkptr;
-  funk2_object_type__scheduler_mutex__slot_t ptype_scheduler_mutex;
-  funk2_object_type__mutex__slot_t           ptype_mutex;
+  funk2_object_type__scheduler_cmutex__slot_t ptype_scheduler_cmutex;
+  funk2_object_type__cmutex__slot_t           ptype_cmutex;
   funk2_object_type__char__slot_t            ptype_char;
   funk2_object_type__string__slot_t          ptype_string;
   funk2_object_type__symbol__slot_t          ptype_symbol;
@@ -1143,7 +1146,7 @@ struct funk2_symbol_hash_node_s {
 // symbol_hash
 
 struct funk2_symbol_hash_s {
-  funk2_processor_mutex_t    mutex;
+  funk2_processor_mutex_t    cmutex;
   funk2_symbol_hash_node_t** array;
   u64                        eq_hash_value_bit_mask;
   int                        total_symbol_num;

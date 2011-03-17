@@ -41,7 +41,7 @@ struct funk2_object_type__terminal_print_frame__slot_s {
 // terminal_print_frame
 
 declare_frame_object_25_slot(terminal_print_frame,
-			     mutex,
+			     cmutex,
 			     testing,
 			     testing_max_x_constraint,
 			     testing_max_height_constraint,

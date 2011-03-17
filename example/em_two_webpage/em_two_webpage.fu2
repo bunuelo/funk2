@@ -82,7 +82,6 @@
 	       'One answer is that we could focus exclusively on spoken and understood language.  '
 	       'However, there is good reason to believe that the learning of social behavior is bootstrapped from learning causal physical models <a href="reference_9">[?]</a>.  '
 	       'Let our working definition of virtuous behavior be the complexities of accomplishing and maintaining social goals, which in our model are initially learned from interactions with the physical world in the context of parents.  '
-	       ''
 	       '</p>'
 	       ''
 	       '<h3>A Simple Social Reasoning Model</h3>'
@@ -360,7 +359,7 @@
   [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
 
 [defunk compile_em_two_root_page [context]
-  [have [htmldoc_redirect_page 'news/'] save [string-concat [get context root_dir] 'index.html']]]
+  [have [htmldoc_redirect_page 'about/'] save [string-concat [get context root_dir] 'index.html']]]
 
 
 [defunk compile_em_two_documentation [context]
@@ -440,6 +439,7 @@
   
   [defunk em_two_webpage-save       []                                                         [compile_em_two_webpage       context]]
   [defunk em_two_css-save           []                                                         [compile_em_two_css           context]]
+  [defunk em_two_root_page-save     []                                                         [compile_em_two_root_page     context]]
   [defunk em_two_about-save         [] [have [get context tab `About]         compile context]]
   [defunk em_two_news-save          [] [have [get context tab `News]          compile context]]
   [defunk em_two_tutorial-save      [] [have [get context tab `Tutorial]      compile context]]

@@ -275,6 +275,19 @@
 	       'Also, if you like what Ralph has accomplished, you can go to the File menu and export an MPEG movie to show your friends!  '
 	       '</p>'
 	       ''
+	       '<p>'
+	       'Okay, back to the promised goal of this tutorial.  '
+	       'Notice that there are a number of knowledge bases that are listed at the bottom of the main IsisMon window.  '
+	       'Some of these knowledge bases are not completely working, such as the "Other Agent\'s Knowledge" knowledge base.  '
+	       'We haven\'t finished self-reflective representations, but you can take a look at the "Meta Mental Knowledge" by clicking on the Time button to the right.  '
+	       'Clicking the Time button will interpret any events in the knowledge base as a human readable timeline.  '
+	       'If you <emph>really</emph> want to see all of the knowledge in a knowledge base, you can click the Graph button.  '
+	       'Try the Graph button with the Physical or Visual knowledge bases just to keep your computer from overheating with the amount of semantic information in the higher layers.  '
+	       'The reflective timeline should look something like this:  '
+	       '<br>'
+	       '<img src="/images/isismon_reflective_timeline.jpg">'
+	       '<br>'
+	       '</p>'
 	       ]]
 
 [defunk em_two_tutorial [context]

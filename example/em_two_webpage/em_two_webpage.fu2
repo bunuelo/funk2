@@ -141,6 +141,11 @@
 	       ''
 	       ]]
 
+[defunk em_two_tutorial [context]
+  [htmldoc_page context
+		[em_two_tutorial-content context]]]
+
+
 [defunk em_two_publications [context]
   [htmldoc_page context
 		[em_two_publications-content]]]

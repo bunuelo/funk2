@@ -214,7 +214,7 @@
 	       '<br>'
 	       'This should open the following window on your screen:  '
 	       '<br>'
-	       '<img src="/images/isismon_bootup.jpg">'
+	       '<img width=500 src="/images/isismon_bootup.jpg">'
 	       '<br>'
 	       'Now, click the File menu and click the New Project menu item.'
 	       'You should see the following on your screen:  '

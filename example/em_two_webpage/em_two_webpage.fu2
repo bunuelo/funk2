@@ -525,7 +525,17 @@
 		       'img02.jpg'
 		       'left_logo_header.jpg'
 		       'right_logo_header.jpg'
-		       'em_two-layers.jpg']]]
+		       'em_two-layers.jpg'
+		       
+		       'funk2_bootup.jpg'
+		       'isismon_bootup.jpg'
+		       'isismon_new_project.jpg'
+		       'isismon_new_ralph_agent.jpg'
+		       'isismon_ralph_learned_reactive_physical_activator.jpg'
+		       'isismon_reflective_timeline.jpg'
+		       'isismon_simulation_view_all_objects.jpg'
+		       'isisworld_initialized.jpg'
+		       ]]]
     [mapc [funk [image_name]
 		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]
 	  image_names]]

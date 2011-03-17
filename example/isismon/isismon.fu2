@@ -614,6 +614,9 @@
 	      [terminal_format standard-terminal '\n  ' event]]
 	[get [get isis_world initialize_events] leaves]]]
 
+[deftypefunk isismon_project execute view_all_objects []
+  [terminal_format standard-terminal '\nIsisMon objects: ' [get isis_world all_objects_summary]]]
+
 [deftypefunk isismon_project execute close []
   [have execute_mutex lock]
   [if initialized
@@ -652,6 +655,7 @@
 			  simulation_menu
 			  simulation_run_initialization_sequence_menu_item
 			  simulation_view_initialization_events_menu_item
+			  simulation_view_all_objects_menu_item
 			  
 			  project_vbox
 			  project_vbox__contained_widget
@@ -780,10 +784,12 @@
 			     [= simulation_menu                                  [gtk-menu-new]]
 			     [= simulation_run_initialization_sequence_menu_item [gtk-menu_item-new 'Run Initialization Sequence']]
 			     [= simulation_view_initialization_events_menu_item  [gtk-menu_item-new 'View Initialization Events']]
+			     [= simulation_view_all_objects_menu_item            [gtk-menu_item-new 'View All Objects']]
 			     [have menu_bar             append  simulation_menu_item]
 			     [set  simulation_menu_item submenu simulation_menu]
 			     [have simulation_menu      append  simulation_run_initialization_sequence_menu_item]
 			     [have simulation_menu      append  simulation_view_initialization_events_menu_item]
+			     [have simulation_menu      append  simulation_view_all_objects_menu_item]
 			     
 			     [have simulation_run_initialization_sequence_menu_item signal_connect 'activate'
 				   [funk []
@@ -794,6 +800,11 @@
 			     [have simulation_view_initialization_events_menu_item signal_connect 'activate'
 				   [funk []
 					 [have isismon_project view_initialization_events]]
+				   nil]
+			     
+			     [have simulation_view_all_objects_menu_item signal_connect 'activate'
+				   [funk []
+					 [have isismon_project view_all_objects]]
 				   nil]
 			     
 			     
@@ -892,6 +903,7 @@
   [set file_export_movie_menu_item                      sensitive t]
   [set simulation_run_initialization_sequence_menu_item sensitive t]
   [set simulation_view_initialization_events_menu_item  sensitive t]
+  [set simulation_view_all_objects_menu_item            sensitive t]
   [set project_new_ralph_agent_menu_item                sensitive t]
   [set project_new_lauren_agent_menu_item               sensitive t]
   [set project_new_macy_agent_menu_item                 sensitive t]
@@ -903,6 +915,7 @@
   [set file_export_movie_menu_item                      sensitive nil]
   [set simulation_run_initialization_sequence_menu_item sensitive nil]
   [set simulation_view_initialization_events_menu_item  sensitive nil]
+  [set simulation_view_all_objects_menu_item            sensitive nil]
   [set project_new_ralph_agent_menu_item                sensitive nil]
   [set project_new_lauren_agent_menu_item               sensitive nil]
   [set project_new_macy_agent_menu_item                 sensitive nil]

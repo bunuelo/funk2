@@ -421,6 +421,8 @@
 						       [init_turning_speed           nil]
 						       [turn_right                   nil]
 						       [current_distance             nil]
+						       [init_turning_angle           nil]
+						       [init_desired_orientation     nil]
 						      ]
   [new []
        [construct traced_resource `stand_in_front_of

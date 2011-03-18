@@ -2833,24 +2833,24 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__reg_array__elt__set__symbol        = new__symbol(cause, "reg_array-elt-set");
   
   // logic
-  this->bytecode__eq__symbol                                    = new__symbol(cause, "eq");
-  this->bytecode__not__symbol                                   = new__symbol(cause, "not");
-  this->bytecode__and__symbol                                   = new__symbol(cause, "and");
-  this->bytecode__or__symbol                                    = new__symbol(cause, "or");
+  __funk2.bytecode.bytecode__eq__symbol                         = new__symbol(cause, "eq");
+  __funk2.bytecode.bytecode__not__symbol                        = new__symbol(cause, "not");
+  __funk2.bytecode.bytecode__and__symbol                        = new__symbol(cause, "and");
+  __funk2.bytecode.bytecode__or__symbol                         = new__symbol(cause, "or");
   
   // math
-  this->bytecode__add__symbol                                   = new__symbol(cause, "add");
-  this->bytecode__negative__symbol                              = new__symbol(cause, "negative");
-  this->bytecode__subtract__symbol                              = new__symbol(cause, "subtract");
-  this->bytecode__multiply__symbol                              = new__symbol(cause, "multiply");
-  this->bytecode__inverse__symbol                               = new__symbol(cause, "inverse");
-  this->bytecode__divide__symbol                                = new__symbol(cause, "divide");
-  this->bytecode__modulo__symbol                                = new__symbol(cause, "modulo");
-  this->bytecode__increment__symbol                             = new__symbol(cause, "increment");
-  this->bytecode__decrement__symbol                             = new__symbol(cause, "decrement");
-  this->bytecode__numerically_equals__symbol                    = new__symbol(cause, "numerically_equals");
-  this->bytecode__less_than__symbol                             = new__symbol(cause, "less_than");
-  this->bytecode__greater_than__symbol                          = new__symbol(cause, "greater_than");
+  __funk2.bytecode.bytecode__add__symbol                        = new__symbol(cause, "add");
+  __funk2.bytecode.bytecode__negative__symbol                   = new__symbol(cause, "negative");
+  __funk2.bytecode.bytecode__subtract__symbol                   = new__symbol(cause, "subtract");
+  __funk2.bytecode.bytecode__multiply__symbol                   = new__symbol(cause, "multiply");
+  __funk2.bytecode.bytecode__inverse__symbol                    = new__symbol(cause, "inverse");
+  __funk2.bytecode.bytecode__divide__symbol                     = new__symbol(cause, "divide");
+  __funk2.bytecode.bytecode__modulo__symbol                     = new__symbol(cause, "modulo");
+  __funk2.bytecode.bytecode__increment__symbol                  = new__symbol(cause, "increment");
+  __funk2.bytecode.bytecode__decrement__symbol                  = new__symbol(cause, "decrement");
+  __funk2.bytecode.bytecode__numerically_equals__symbol         = new__symbol(cause, "numerically_equals");
+  __funk2.bytecode.bytecode__less_than__symbol                  = new__symbol(cause, "less_than");
+  __funk2.bytecode.bytecode__greater_than__symbol               = new__symbol(cause, "greater_than");
   
   // block
   __funk2.bytecode.bytecode__block_push__symbol                 = new__symbol(cause, "block_push");

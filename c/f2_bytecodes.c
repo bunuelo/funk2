@@ -2605,6 +2605,10 @@ int f2__fiber__bytecode__not(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x)
 
 //  bytecode and [result x0 x1]
 
+f2ptr f2__and(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return ((x0 != nil) && (x1 != nil));
+}
+
 int f2__fiber__bytecode__and__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
   if      (x0 == __fiber__return_reg__symbol)          {x0__value = f2fiber__return_reg(     fiber, cause);}
@@ -2651,6 +2655,10 @@ int f2__fiber__bytecode__and(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0
 
 
 //  bytecode or [result x0 x1]
+
+f2ptr f2__or(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return ((x0 != nil) || (x1 != nil));
+}
 
 int f2__fiber__bytecode__or__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
@@ -2699,6 +2707,10 @@ int f2__fiber__bytecode__or(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0,
 
 //  bytecode add [result x0 x1]
 
+f2ptr f2__add(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__plus(cause, x0, x1);
+}
+
 int f2__fiber__bytecode__add__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
   if      (x0 == __fiber__return_reg__symbol)          {x0__value = f2fiber__return_reg(     fiber, cause);}
@@ -2746,6 +2758,10 @@ int f2__fiber__bytecode__add(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0
 
 //  bytecode negative [result x]
 
+f2ptr f2__negative(f2ptr cause, f2ptr x) {
+  return f2__number__minus(cause, f2integer__new(cause, 0), x);
+}
+
 int f2__fiber__bytecode__negative__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x) {
   f2ptr x__value = nil;
   if      (x == __fiber__return_reg__symbol)          {x__value = f2fiber__return_reg(     fiber, cause);}
@@ -2782,6 +2798,10 @@ int f2__fiber__bytecode__negative(f2ptr fiber, f2ptr bytecode, f2ptr result, f2p
 
 
 //  bytecode subtract [result x0 x1]
+
+f2ptr f2__subtract(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__minus(cause, x0, x1);
+}
 
 int f2__fiber__bytecode__subtract__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
@@ -2830,6 +2850,10 @@ int f2__fiber__bytecode__subtract(f2ptr fiber, f2ptr bytecode, f2ptr result, f2p
 
 //  bytecode multiply [result x0 x1]
 
+f2ptr f2__multiply(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__multiplied_by(cause, x0, x1);
+}
+
 int f2__fiber__bytecode__multiply__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
   if      (x0 == __fiber__return_reg__symbol)          {x0__value = f2fiber__return_reg(     fiber, cause);}
@@ -2877,6 +2901,10 @@ int f2__fiber__bytecode__multiply(f2ptr fiber, f2ptr bytecode, f2ptr result, f2p
 
 //  bytecode inverse [result x]
 
+f2ptr f2__inverse(f2ptr cause, f2ptr x) {
+  return f2__number__divided_by(cause, f2integer__new(cause, 1), x);
+}
+
 int f2__fiber__bytecode__inverse__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x) {
   f2ptr x__value = nil;
   if      (x == __fiber__return_reg__symbol)          {x__value = f2fiber__return_reg(     fiber, cause);}
@@ -2913,6 +2941,10 @@ int f2__fiber__bytecode__inverse(f2ptr fiber, f2ptr bytecode, f2ptr result, f2pt
 
 
 //  bytecode divide [result x0 x1]
+
+f2ptr f2__divide(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__divided_by(cause, x0, x1);
+}
 
 int f2__fiber__bytecode__divide__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
@@ -2961,6 +2993,10 @@ int f2__fiber__bytecode__divide(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr
 
 //  bytecode modulo [result x0 x1]
 
+f2ptr f2__modulo(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__modulo(cause, x0, x1);
+}
+
 int f2__fiber__bytecode__modulo__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
   if      (x0 == __fiber__return_reg__symbol)          {x0__value = f2fiber__return_reg(     fiber, cause);}
@@ -3008,6 +3044,10 @@ int f2__fiber__bytecode__modulo(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr
 
 //  bytecode increment [result x]
 
+f2ptr f2__increment(f2ptr cause, f2ptr x) {
+  return f2__add(cause, x, f2integer__new(cause, 1));
+}
+
 int f2__fiber__bytecode__increment__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x) {
   f2ptr x__value = nil;
   if      (x == __fiber__return_reg__symbol)          {x__value = f2fiber__return_reg(     fiber, cause);}
@@ -3045,6 +3085,10 @@ int f2__fiber__bytecode__increment(f2ptr fiber, f2ptr bytecode, f2ptr result, f2
 
 //  bytecode decrement [result x]
 
+f2ptr f2__decrement(f2ptr cause, f2ptr x) {
+  return f2__subtract(cause, x, f2integer__new(cause, 1));
+}
+
 int f2__fiber__bytecode__decrement__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x) {
   f2ptr x__value = nil;
   if      (x == __fiber__return_reg__symbol)          {x__value = f2fiber__return_reg(     fiber, cause);}
@@ -3081,6 +3125,10 @@ int f2__fiber__bytecode__decrement(f2ptr fiber, f2ptr bytecode, f2ptr result, f2
 
 
 //  bytecode numerically_equals [result x0 x1]
+
+f2ptr f2__numerically_equals(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_numerically_equal_to(cause, x0, x1);
+}
 
 int f2__fiber__bytecode__numerically_equals__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
@@ -3129,6 +3177,10 @@ int f2__fiber__bytecode__numerically_equals(f2ptr fiber, f2ptr bytecode, f2ptr r
 
 //  bytecode less_than [result x0 x1]
 
+f2ptr f2__less_than(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_less_than(cause, x0, x1);
+}
+
 int f2__fiber__bytecode__less_than__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;
   if      (x0 == __fiber__return_reg__symbol)          {x0__value = f2fiber__return_reg(     fiber, cause);}
@@ -3175,6 +3227,10 @@ int f2__fiber__bytecode__less_than(f2ptr fiber, f2ptr bytecode, f2ptr result, f2
 
 
 //  bytecode greater_than [result x0 x1]
+
+f2ptr f2__greater_than(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_greater_than(cause, x0, x1);
+}
 
 int f2__fiber__bytecode__greater_than__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
   f2ptr x0__value = nil;

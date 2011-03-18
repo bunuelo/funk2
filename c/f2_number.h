@@ -34,6 +34,7 @@ typedef struct funk2_number_globalvars_s {
   f2ptr is_less_than__symbol;
   f2ptr is_numerically_equal_to__symbol;
   f2ptr square_root__symbol;
+  f2ptr modulo__symbol;
 } funk2_number_globalvars_t;
 
 f2ptr f2__is_greater_than(f2ptr cause, f2ptr this, f2ptr that);
@@ -50,6 +51,7 @@ f2ptr   f2__number__is_greater_than(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr   f2__number__is_less_than(f2ptr cause, f2ptr this, f2ptr number);
 f2ptr   f2__number__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr   f2__number__square_root(f2ptr cause, f2ptr this);
+f2ptr   f2__number__modulo(f2ptr cause, f2ptr this, f2ptr that);
 
 // **
 

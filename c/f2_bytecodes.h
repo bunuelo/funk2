@@ -95,6 +95,43 @@ typedef struct funk2_bytecode_s {
   f2ptr bytecode__reg_array__elt__set__symbol;
   u64   bytecode__reg_array__elt__set__execution_count;
   
+  // logic
+  f2ptr bytecode__eq__symbol;
+  u64   bytecode__eq__execution_count;
+  f2ptr bytecode__not__symbol;
+  u64   bytecode__not__execution_count;
+  f2ptr bytecode__and__symbol;
+  u64   bytecode__and__execution_count;
+  f2ptr bytecode__or__symbol;
+  u64   bytecode__or__execution_count;
+  
+  // math
+  f2ptr bytecode__add__symbol;
+  u64   bytecode__add__execution_count;
+  f2ptr bytecode__negative__symbol;
+  u64   bytecode__negative__execution_count;
+  f2ptr bytecode__subtract__symbol;
+  u64   bytecode__subtract__execution_count;
+  f2ptr bytecode__multiply__symbol;
+  u64   bytecode__multiply__execution_count;
+  f2ptr bytecode__inverse__symbol;
+  u64   bytecode__inverse__execution_count;
+  f2ptr bytecode__divide__symbol;
+  u64   bytecode__divide__execution_count;
+  f2ptr bytecode__modulo__symbol;
+  u64   bytecode__modulo__execution_count;
+  f2ptr bytecode__increment__symbol;
+  u64   bytecode__increment__execution_count;
+  f2ptr bytecode__decrement__symbol;
+  u64   bytecode__decrement__execution_count;
+  f2ptr bytecode__numerically_equals__symbol;
+  u64   bytecode__numerically_equals__execution_count;
+  f2ptr bytecode__less_than__symbol;
+  u64   bytecode__less_than__execution_count;
+  f2ptr bytecode__greater_than__symbol;
+  u64   bytecode__greater_than__execution_count;
+  
+  // block
   f2ptr bytecode__block_push__symbol;
   u64   bytecode__block_push__execution_count;
   f2ptr bytecode__block_enter__symbol;

@@ -114,17 +114,38 @@ f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2_
 f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
-f2ptr f2__compile__block_push(                f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_push__symbol,                 nil,      nil, nil), nil));}
-f2ptr f2__compile__block_enter(               f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_enter__symbol,                nil,      nil, nil), nil));}
+// logic
+f2ptr f2__compile__eq (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__eq__symbol,  result, x0, x1),  nil));}
+f2ptr f2__compile__not(f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__not__symbol, result, x,  nil), nil));}
+f2ptr f2__compile__and(f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__and__symbol, result, x0, x1),  nil));}
+f2ptr f2__compile__or (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__or__symbol,  result, x0, x1),  nil));}
+
+// math
+f2ptr f2__compile__add               (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__add__symbol,                result, x0, x1),  nil));}
+f2ptr f2__compile__negative          (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__negative__symbol,           result, x,  nil), nil));}
+f2ptr f2__compile__subtract          (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__subtract__symbol,           result, x0, x1),  nil));}
+f2ptr f2__compile__multiply          (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__multiply__symbol,           result, x0, x1),  nil));}
+f2ptr f2__compile__inverse           (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__inverse__symbol,            result, x,  nil), nil));}
+f2ptr f2__compile__divide            (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__divide__symbol,             result, x0, x1),  nil));}
+f2ptr f2__compile__modulo            (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__modulo__symbol,             result, x0, x1),  nil));}
+f2ptr f2__compile__increment         (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__increment__symbol,          result, x,  nil), nil));}
+f2ptr f2__compile__decrement         (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__decrement__symbol,          result, x,  nil), nil));}
+f2ptr f2__compile__numerically_equals(f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__numerically_equals__symbol, result, x0, x1),  nil));}
+f2ptr f2__compile__less_than         (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__less_than__symbol,          result, x0, x1),  nil));}
+f2ptr f2__compile__greater_than      (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__greater_than__symbol,       result, x0, x1),  nil));}
+
+// block
+f2ptr f2__compile__block_push                (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_push__symbol,                 nil,      nil, nil), nil));}
+f2ptr f2__compile__block_enter               (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_enter__symbol,                nil,      nil, nil), nil));}
 f2ptr f2__compile__block_define_rest_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_rest_argument__symbol, argument, nil, nil), nil));}
-f2ptr f2__compile__block_define_argument(     f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
+f2ptr f2__compile__block_define_argument     (f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
 f2ptr f2__compile__block_define_last_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_last_argument__symbol, argument, nil, nil), nil));}
-f2ptr f2__compile__block_pop(                 f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_pop__symbol,                  nil,      nil, nil), nil));}
-f2ptr f2__compile__block_exit_and_pop(        f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
-f2ptr f2__compile__block_exit_and_no_pop(     f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
-f2ptr f2__compile__block_eval_args_begin(     f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_begin__symbol,      nil,      nil, nil), nil));}
-f2ptr f2__compile__block_eval_args_next(      f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_next__symbol,       nil,      nil, nil), nil));}
-f2ptr f2__compile__block_eval_args_end(       f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_end__symbol,        nil,      nil, nil), nil));}
+f2ptr f2__compile__block_pop                 (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_pop__symbol,                  nil,      nil, nil), nil));}
+f2ptr f2__compile__block_exit_and_pop        (f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
+f2ptr f2__compile__block_exit_and_no_pop     (f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_begin     (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_begin__symbol,      nil,      nil, nil), nil));}
+										      f2ptr f2__compile__block_eval_args_next      (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_next__symbol,       nil,      nil, nil), nil));}
+										      f2ptr f2__compile__block_eval_args_end       (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_end__symbol,        nil,      nil, nil), nil));}
 
 
 f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {

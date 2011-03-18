@@ -81,6 +81,43 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__machine_code__symbol                        = -1;
   this->bytecode__machine_code__execution_count               = 0;
   
+  // logic
+  this->bytecode__eq__symbol                                  = -1;
+  this->bytecode__eq__execution_count                         = 0;
+  this->bytecode__not__symbol                                 = -1;
+  this->bytecode__not__execution_count                        = 0;
+  this->bytecode__and__symbol                                 = -1;
+  this->bytecode__and__execution_count                        = 0;
+  this->bytecode__or__symbol                                  = -1;
+  this->bytecode__or__execution_count                         = 0;
+  
+  // math
+  this->bytecode__add__symbol                                 = -1;
+  this->bytecode__add__execution_count                        = 0;
+  this->bytecode__negative__symbol                            = -1;
+  this->bytecode__negative__execution_count                   = 0;
+  this->bytecode__subtract__symbol                            = -1;
+  this->bytecode__subtract__execution_count                   = 0;
+  this->bytecode__multiply__symbol                            = -1;
+  this->bytecode__multiply__execution_count                   = 0;
+  this->bytecode__inverse__symbol                             = -1;
+  this->bytecode__inverse__execution_count                    = 0;
+  this->bytecode__divide__symbol                              = -1;
+  this->bytecode__divide__execution_count                     = 0;
+  this->bytecode__modulo__symbol                              = -1;
+  this->bytecode__modulo__execution_count                     = 0;
+  this->bytecode__increment__symbol                           = -1;
+  this->bytecode__increment__execution_count                  = 0;
+  this->bytecode__decrement__symbol                           = -1;
+  this->bytecode__decrement__execution_count                  = 0;
+  this->bytecode__numerically_equals__symbol                  = -1;
+  this->bytecode__numerically_equals__execution_count         = 0;
+  this->bytecode__less_than__symbol                           = -1;
+  this->bytecode__less_than__execution_count                  = 0;
+  this->bytecode__greater_than__symbol                        = -1;
+  this->bytecode__greater_than__execution_count               = 0;
+  
+  // block
   this->bytecode__block_push__symbol                          = -1;
   this->bytecode__block_push__execution_count                 = 0;
   this->bytecode__block_enter__symbol                         = -1;
@@ -162,6 +199,26 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__compile__execution_count                    = " u64__fstr, this->bytecode__compile__execution_count);
   status("  bytecode__newenv__execution_count                     = " u64__fstr, this->bytecode__newenv__execution_count);
   status("  bytecode__machine_code__execution_count               = " u64__fstr, this->bytecode__machine_code__execution_count);
+
+  // logic
+  status("  bytecode__eq__execution_count                         = " u64__fstr, this->bytecode__eq__execution_count);
+  status("  bytecode__not__execution_count                        = " u64__fstr, this->bytecode__not__execution_count);
+  status("  bytecode__and__execution_count                        = " u64__fstr, this->bytecode__and__execution_count);
+  status("  bytecode__or__execution_count                         = " u64__fstr, this->bytecode__or__execution_count);
+  
+  // math
+  status("  bytecode__add__execution_count                        = " u64__fstr, this->bytecode__add__execution_count);
+  status("  bytecode__negative__execution_count                   = " u64__fstr, this->bytecode__negative__execution_count);
+  status("  bytecode__subtract__execution_count                   = " u64__fstr, this->bytecode__subtract__execution_count);
+  status("  bytecode__multiply__execution_count                   = " u64__fstr, this->bytecode__multiply__execution_count);
+  status("  bytecode__inverse__execution_count                    = " u64__fstr, this->bytecode__inverse__execution_count);
+  status("  bytecode__divide__execution_count                     = " u64__fstr, this->bytecode__divide__execution_count);
+  status("  bytecode__modulo__execution_count                     = " u64__fstr, this->bytecode__modulo__execution_count);
+  status("  bytecode__increment__execution_count                  = " u64__fstr, this->bytecode__increment__execution_count);
+  status("  bytecode__decrement__execution_count                  = " u64__fstr, this->bytecode__decrement__execution_count);
+  status("  bytecode__numerically_equals__execution_count         = " u64__fstr, this->bytecode__numerically_equals__execution_count);
+  status("  bytecode__less_than__execution_count                  = " u64__fstr, this->bytecode__less_than__execution_count);
+  status("  bytecode__greater_than__execution_count               = " u64__fstr, this->bytecode__greater_than__execution_count);
 }
 
 void f2__fiber__stack__push_constant(f2ptr cause, f2ptr fiber, f2ptr constant) {
@@ -2459,6 +2516,283 @@ int f2__fiber__bytecode__block_eval_args_end(f2ptr fiber, f2ptr bytecode) {
 }
 
 
+//  bytecode eq [result x0 x1]
+
+int f2__fiber__bytecode__eq__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__eq(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode eq beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__eq__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__eq__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode not [result x]
+
+int f2__fiber__bytecode__not__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__not(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode not beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__not__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__not__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode and [result x0 x1]
+
+int f2__fiber__bytecode__and__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__and(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode and beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__and__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__and__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode or [result x0 x1]
+
+int f2__fiber__bytecode__or__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__or(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode or beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__or__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__or__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode add [result x0 x1]
+
+int f2__fiber__bytecode__add__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__add(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode add beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__add__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__add__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode negative [result x]
+
+int f2__fiber__bytecode__negative__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__negative(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode negative beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__negative__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__negative__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode subtract [result x0 x1]
+
+int f2__fiber__bytecode__subtract__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__subtract(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode subtract beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__subtract__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__subtract__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode multiply [result x0 x1]
+
+int f2__fiber__bytecode__multiply__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__multiply(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode multiply beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__multiply__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__multiply__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode inverse [result x]
+
+int f2__fiber__bytecode__inverse__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__inverse(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode inverse beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__inverse__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__inverse__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode divide [result x0 x1]
+
+int f2__fiber__bytecode__divide__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__divide(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode divide beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__divide__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__divide__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode modulo [result x0 x1]
+
+int f2__fiber__bytecode__modulo__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__modulo(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode modulo beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__modulo__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__modulo__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode increment [result x]
+
+int f2__fiber__bytecode__increment__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__increment(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode increment beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__increment__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__increment__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode decrement [result x]
+
+int f2__fiber__bytecode__decrement__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__decrement(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode decrement beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__decrement__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__decrement__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode numerically_equals [result x0 x1]
+
+int f2__fiber__bytecode__numerically_equals__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__numerically_equals(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode numerically_equals beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__numerically_equals__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__numerically_equals__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode less_than [result x0 x1]
+
+int f2__fiber__bytecode__less_than__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__less_than(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode less_than beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__less_than__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__less_than__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+//  bytecode greater_than [result x0 x1]
+
+int f2__fiber__bytecode__greater_than__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__greater_than(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode greater_than beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__greater_than__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__greater_than__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+
+
+
+
+
 // initialization of f2_bytecodes.c
 
 void f2__bytecodes__reinitialize_globalvars() {
@@ -2498,6 +2832,27 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__reg_array__elt__symbol             = new__symbol(cause, "reg_array-elt");
   __funk2.bytecode.bytecode__reg_array__elt__set__symbol        = new__symbol(cause, "reg_array-elt-set");
   
+  // logic
+  this->bytecode__eq__symbol                                    = new__symbol(cause, "eq");
+  this->bytecode__not__symbol                                   = new__symbol(cause, "not");
+  this->bytecode__and__symbol                                   = new__symbol(cause, "and");
+  this->bytecode__or__symbol                                    = new__symbol(cause, "or");
+  
+  // math
+  this->bytecode__add__symbol                                   = new__symbol(cause, "add");
+  this->bytecode__negative__symbol                              = new__symbol(cause, "negative");
+  this->bytecode__subtract__symbol                              = new__symbol(cause, "subtract");
+  this->bytecode__multiply__symbol                              = new__symbol(cause, "multiply");
+  this->bytecode__inverse__symbol                               = new__symbol(cause, "inverse");
+  this->bytecode__divide__symbol                                = new__symbol(cause, "divide");
+  this->bytecode__modulo__symbol                                = new__symbol(cause, "modulo");
+  this->bytecode__increment__symbol                             = new__symbol(cause, "increment");
+  this->bytecode__decrement__symbol                             = new__symbol(cause, "decrement");
+  this->bytecode__numerically_equals__symbol                    = new__symbol(cause, "numerically_equals");
+  this->bytecode__less_than__symbol                             = new__symbol(cause, "less_than");
+  this->bytecode__greater_than__symbol                          = new__symbol(cause, "greater_than");
+  
+  // block
   __funk2.bytecode.bytecode__block_push__symbol                 = new__symbol(cause, "block_push");
   __funk2.bytecode.bytecode__block_enter__symbol                = new__symbol(cause, "block_enter");
   __funk2.bytecode.bytecode__block_define_rest_argument__symbol = new__symbol(cause, "block_define_rest_argument");

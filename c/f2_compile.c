@@ -190,86 +190,12 @@ f2ptr f2__compile__push_debug_funk_call(f2ptr cause) {
 }
 
 f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
-  f2ptr full_bcs =                      f2__compile__pop_nil(cause); f2ptr iter = full_bcs;
+  f2ptr full_bcs =                       f2__compile__pop_nil(cause); f2ptr iter = full_bcs;
   iter = raw__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
   iter = raw__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
   return full_bcs;
 }
 
-//
-// This optimization almost works...  but this doesn't work if stream is globally defined, for example:
-//
-//  [defunk format [stream :rest exps]
-//    [mapc [funk [exp] [exp-format stream exp]] exps]]
-//
-f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr body_bytecodes) {
-  f2ptr next = nil;
-  f2ptr prev = nil;
-  f2ptr iter = body_bytecodes;
-  //printf("\nbefore optimization: ");
-  //f2__print(cause, body_bytecodes);
-  while (iter) {
-    f2ptr bytecode = f2cons__car(iter, cause);
-    next           = f2cons__cdr(iter, cause);
-    f2ptr bytecode__command = f2bytecode__command(bytecode, cause);
-    if (raw__symbol__eq(cause, bytecode__command, __funk2.bytecode.bytecode__lookup_type_var__symbol)) {
-      f2ptr type = f2bytecode__lookup_type_var__type(bytecode, cause);
-      f2ptr var  = f2bytecode__lookup_type_var__var(bytecode, cause);
-      if (raw__symbol__eq(cause, type, __funk2.primobject__frame.variable__symbol)) {
-	f2ptr funk__args = f2funk__args(funk, cause);
-	boolean_t var_is_funk_arg = 0;
-	f2ptr funk_arg_iter = funk__args;
-	while(funk_arg_iter) {
-	  f2ptr funk_arg = f2cons__car(funk_arg_iter, cause);
-	  if (raw__symbol__eq(cause, var, funk_arg)) {
-	    var_is_funk_arg = 1;
-	  }
-	  funk_arg_iter = f2cons__cdr(funk_arg_iter, cause);
-	}
-	if (! var_is_funk_arg) {
-	  f2ptr var_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.variable__symbol, var);
-	  if (raw__cons__is_type(cause, var_assignment_cons)) {
-	    f2ptr replacement_bcs = f2__compile__array_elt(cause, var_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
-	    //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize var lookup!");
-	    //f2__write(cause, f2cons__car(var_assignment_cons, cause));
-	    //f2__write(cause, replacement_bcs);
-	    //f2__write(cause, f2array__elt(var_assignment_cons, 4, cause));
-	    if (prev) {
-	      f2cons__cdr__set(prev, cause, replacement_bcs);
-	    } else {
-	      body_bytecodes = replacement_bcs;
-	    }
-	    raw__list_cdr__set(cause, replacement_bcs, next);
-	  } else {
-	    printf("\ncouldn't optimize variable!");
-	  }
-	}
-      } else if (raw__symbol__eq(cause, type, __funk2.primobject__frame.funk_variable__symbol)) {
-	f2ptr funkvar_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.funk_variable__symbol, var);
-	if (raw__cons__is_type(cause, funkvar_assignment_cons)) {
-	  f2ptr replacement_bcs = f2__compile__array_elt(cause, funkvar_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
-	  //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize funkvar lookup!");
-	  //f2__write(cause, f2cons__car(funkvar_assignment_cons, cause));
-	  //f2__write(cause, replacement_bcs);
-	  //f2__write(cause, f2array__elt(funkvar_assignment_cons, 4, cause));
-	  if (prev) {
-	    f2cons__cdr__set(prev, cause, replacement_bcs);
-	  } else {
-	    body_bytecodes = replacement_bcs;
-	  }
-	  raw__list_cdr__set(cause, replacement_bcs, next);
-	} else {
-	  printf("\ncouldn't optimize funk variable!");
-	}
-      }
-    }
-    prev = iter;
-    iter = next;
-  }
-  //printf("\nafter optimization: ");
-  //f2__print(cause, body_bytecodes);
-  return body_bytecodes;;
-}
 
 f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   release__assert(__funk2.compile.f2__compile__funk__symbol != -1, nil, "__funk2.compile.f2__compile__funk__symbol not yet defined.");
@@ -319,8 +245,6 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     return body_bcs;
   }
   if (body_bcs && (! raw__cons__is_type(cause, body_bcs))) {return body_bcs;}
-  
-  //body_bcs = f2__compile__funk__optimize_body_bytecodes(cause, bytecode_tracing_on, funk, body_bcs);
   
   iter = raw__list_cdr__set(cause, iter, body_bcs);
   

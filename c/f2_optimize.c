@@ -33,6 +33,34 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
 
+f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
+						new__symbol(cause, "node_fiber_register_hash"), f2__optimize_context__node_fiber_register_hash(cause, this),
+						new__symbol(cause, "graph"),                    f2__optimize_context__graph(                   cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(optimize_context,             this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__optimize_context__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(optimize_context__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_context__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2optimize_context__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // fiber_register_data_node
 
 f2ptr raw__fiber_register_data_node__new(f2ptr cause, f2ptr name) {
@@ -114,6 +142,10 @@ void f2__optimize__initialize() {
   // optimize_context
   
   initialize_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
   
 }
 

@@ -23,8 +23,8 @@
 
 f2ptr raw__argument_data_node__new(f2ptr cause, f2ptr name) {
   f2ptr argument_data = raw__array__new(cause, 2);
-  raw__array__elt__set(cause, this, 0, new__symbol(cause, "argument_data"));
-  raw__array__elt__set(cause, this, 1, name);
+  raw__array__elt__set(cause, argument_data, 0, new__symbol(cause, "argument_data"));
+  raw__array__elt__set(cause, argument_data, 1, name);
   return raw__graph_node__new(cause, argument_data);
 }
 

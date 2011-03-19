@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
+f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   f2ptr args           = f2__funk__args(          cause, this);
   f2ptr body_bytecodes = f2__funk__body_bytecodes(cause, this);
   {
@@ -36,6 +36,12 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
   }
   return body_bytecodes;
 }
+
+f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
+  assert_argument_type(funk, this);
+  return raw__funk__optimize(cause, this);
+}
+def_pcfunk1(funk__optimize, this, return f2__funk__optimize(this_cause, this));
 
 
 // **

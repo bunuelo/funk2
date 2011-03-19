@@ -135,10 +135,10 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list10__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-						new__symbol(cause, "graph"),                    f2__optimize_context__graph(                   cause, this),
-						new__symbol(cause, "stack"),                    f2__optimize_context__stack(                   cause, this),
-						new__symbol(cause, "node_fiber_register_hash"), f2__optimize_context__node_fiber_register_hash(cause, this),
-						new__symbol(cause, "node_variable_hash"),       f2__optimize_context__node_variable_hash(      cause, this)));
+						new__symbol(cause, "graph"),          f2__optimize_context__graph(         cause, this),
+						new__symbol(cause, "stack"),          f2__optimize_context__stack(         cause, this),
+						new__symbol(cause, "register_frame"), f2__optimize_context__register_frame(cause, this),
+						new__symbol(cause, "variable_frame"), f2__optimize_context__variable_frame(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

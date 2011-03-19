@@ -49,7 +49,7 @@
   (list
    '("\\('[a-zA-Z0-9\n\t\\ _-~!@#$%^&*/()_+-={}]+'\\)" . font-lock-string-face)
    '("\\(&\\)\\([a-zA-Z0-9]+\\)" . font-lock-function-name-face)
-   '("\\(:\\)\\([a-zA-Z0-9]+\\)" . font-lock-type-face)
+   ;;'("\\(:\\)\\([a-zA-Z0-9]+\\)" . font-lock-type-face)
    '("\\(`\\)\\([a-zA-Z0-9]+\\)" . font-lock-function-name-face)
    '("\\([a-zA-Z0-9]+\\)\\([?]\\)" . font-lock-type-face)
    '("\\(\\\\x\\)\\([a-fA-F0-9]+\\)" . font-lock-string-face)

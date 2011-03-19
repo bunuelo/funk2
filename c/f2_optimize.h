@@ -25,8 +25,9 @@
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_3_slot(optimize_context,
+declare_object_type_4_slot(optimize_context,
 			   graph,
+			   stack,
 			   node_fiber_register_hash,
 			   node_variable_hash,
 			   f2ptr terminal_print_with_frame__symbol;
@@ -41,8 +42,9 @@ declare_object_type_3_slot(optimize_context,
 
 // optimize_context
 
-declare_primobject_3_slot(optimize_context,
+declare_primobject_4_slot(optimize_context,
 			  graph,
+			  stack,
 			  node_fiber_register_hash,
 			  node_variable_hash);
 

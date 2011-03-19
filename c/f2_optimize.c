@@ -60,13 +60,15 @@ f2ptr raw__optimize_data_node__name(f2ptr cause, f2ptr this) {
 
 def_primobject_3_slot(optimize_context,
 		      graph,
-		      node_fiber_register_hash,
-		      node_variable_hash);
+		      stack,
+		      register_frame,
+		      variable_frame);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr graph                    = f2__graph__new(cause);
-  f2ptr node_fiber_register_hash = f2__ptypehash__new(cause);
-  f2ptr node_variable_hash       = f2__ptypehash__new(cause);
+  f2ptr graph          = f2__graph__new(cause);
+  f2ptr stack          = nil;
+  f2ptr register_frame = f2__frame__new(cause);
+  f2ptr variable_frame = f2__frame__new(cause);
   {
     f2ptr fiber_registers = f2list6__new(cause,
 					 new__symbol(cause, "return"),
@@ -80,7 +82,7 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
       f2ptr fiber_register = f2__cons__car(cause, iter);
       {
 	f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "register"), fiber_register);
-	raw__ptypehash__add(cause, node_fiber_register_hash, fiber_register, data_node);
+	raw__frame__add_var_value(cause, register_frame, fiber_register, data_node);
 	raw__graph__add_node(cause, graph, data_node);
       }
       iter = f2__cons__cdr(cause, iter);
@@ -88,16 +90,17 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
   }
   return f2optimize_context__new(cause,
 				 graph,
-				 node_fiber_register_hash,
-				 node_variable_hash);
+				 stack,
+				 register_frame,
+				 variable_frame);
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
 
 f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr graph                    = f2__optimize_context__graph(                   cause, this);
-  f2ptr node_fiber_register_hash = f2__optimize_context__node_fiber_register_hash(cause, this);
-  f2ptr node_variable_hash       = f2__optimize_context__node_variable_hash(      cause, this);
+  f2ptr graph      = f2__optimize_context__graph(cause, this);
+  f2ptr stack      = nil;
+  f2ptr stack_iter = nil;
   {
     f2ptr args = f2__funk__args(cause, funk);
     {
@@ -106,13 +109,21 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
 	f2ptr variable = f2__cons__car(cause, iter);
 	{
 	  f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "variable"), variable);
-	  raw__ptypehash__add(cause, node_variable_hash, variable, data_node);
+	  f2ptr new_cons = f2cons__new(cause, data_node, nil);
+	  if (stack == nil) {
+	    stack      = new_cons;
+	    stack_iter = new_cons;
+	  } else {
+	    f2__cons__cdr__set(cause, stack_iter, new_cons);
+	    stack_iter = new_cons;
+	  }
 	  raw__graph__add_node(cause, graph, data_node);
 	}
 	iter = f2__cons__cdr(cause, iter);
       }
     }
   }
+  f2__optimize_context__stack__set(cause, this, stack);
   return nil;
 }
 
@@ -125,6 +136,7 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
     frame = f2__frame__new(cause, f2list8__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
 					       new__symbol(cause, "graph"),                    f2__optimize_context__graph(                   cause, this),
+					       new__symbol(cause, "stack"),                    f2__optimize_context__stack(                   cause, this),
 					       new__symbol(cause, "node_fiber_register_hash"), f2__optimize_context__node_fiber_register_hash(cause, this),
 					       new__symbol(cause, "node_variable_hash"),       f2__optimize_context__node_variable_hash(      cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
@@ -198,8 +210,9 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_3_slot(optimize_context,
+  initialize_primobject_4_slot(optimize_context,
 			       graph,
+			       stack,
 			       node_fiber_register_hash,
 			       node_variable_hash);
   

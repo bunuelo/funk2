@@ -81,6 +81,7 @@ struct funk2_compile_s {
 #include "f2_fiber.h"
 #include "f2_bytecodes.h"
 #include "f2_globalenv.h"
+#include "f2_nil.h"
 
 f2ptr check_bcs_valid(f2ptr bytecodes);
 

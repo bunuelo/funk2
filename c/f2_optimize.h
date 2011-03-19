@@ -24,6 +24,7 @@
 
 // optimize_context
 
+typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
 declare_object_type_2_slot(optimize_context, x, y,
 			   );
 
@@ -33,12 +34,13 @@ declare_object_type_2_slot(optimize_context, x, y,
 #ifndef F2__OPTIMIZE__H
 #define F2__OPTIMIZE__H
 
-f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);
-f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);
-
 // optimize_context
 
 declare_primobject_2_slot(optimize_context, x, y);
+
+
+f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);
+f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);
 
 
 // **

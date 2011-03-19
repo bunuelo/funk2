@@ -58,7 +58,7 @@ f2ptr raw__optimize_data_node__name(f2ptr cause, f2ptr this) {
 
 // optimize_context
 
-def_primobject_3_slot(optimize_context,
+def_primobject_4_slot(optimize_context,
 		      graph,
 		      stack,
 		      register_frame,

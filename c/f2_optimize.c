@@ -103,9 +103,9 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
     {
       f2ptr iter = args;
       while (iter != nil) {
-	f2ptr argument = f2__cons__car(cause, iter);
+	f2ptr variable = f2__cons__car(cause, iter);
 	{
-	  f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "argument"), argument);
+	  f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "variable"), variable);
 	  raw__ptypehash__add(cause, node_variable_hash, variable, data_node);
 	  raw__graph__add_node(cause, graph, data_node);
 	}

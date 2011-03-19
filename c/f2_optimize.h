@@ -25,6 +25,13 @@
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);
 f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);
 
+// optimize_context
+
+declare_primobject_2_slot( optimize_context, x, y);
+declare_object_type_2_slot(optimize_context, x, y,
+			   );
+
+
 // **
 
 void f2__optimize__reinitialize_globalvars();

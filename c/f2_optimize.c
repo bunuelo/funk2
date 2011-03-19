@@ -21,14 +21,26 @@
 
 #include "funk2.h"
 
-f2ptr raw__argument_data_node__new(f2ptr cause, f2ptr name) {
-  f2ptr argument_data = raw__array__new(cause, 2);
-  raw__array__elt__set(cause, argument_data, 0, new__symbol(cause, "argument_data"));
-  raw__array__elt__set(cause, argument_data, 1, name);
-  return f2__graph_node__new(cause, argument_data);
+// optimize_context
+
+def_primobject_2_slot(optimize_context, x, y);
+
+f2ptr f2__optimize_context__new(f2ptr cause, f2ptr x, f2ptr y) {
+  return f2optimize_context__new(cause, x, y);
+}
+def_pcfunk2(optimize_context__new, x, y, return f2__optimize_context__new(this_cause, x, y));
+
+
+// fiber_register_data_node
+
+f2ptr raw__fiber_register_data_node__new(f2ptr cause, f2ptr name) {
+  f2ptr fiber_register_data = raw__array__new(cause, 2);
+  raw__array__elt__set(cause, fiber_register_data, 0, new__symbol(cause, "fiber_register_data"));
+  raw__array__elt__set(cause, fiber_register_data, 1, name);
+  return f2__graph_node__new(cause, fiber_register_data);
 }
 
-boolean_t raw__argument_data_node__is_type(f2ptr cause, f2ptr object) {
+boolean_t raw__fiber_register_data_node__is_type(f2ptr cause, f2ptr object) {
   if (! raw__graph_node__is_type(cause, object)) {
     return boolean__false;
   }
@@ -36,26 +48,32 @@ boolean_t raw__argument_data_node__is_type(f2ptr cause, f2ptr object) {
   return ((data != nil) &&
 	  raw__array__is_type(cause, data) &&
 	  (raw__array__length(cause, data) == 2) &&
-	  raw__eq(cause, raw__array__elt(cause, data, 0), new__symbol(cause, "argument_data")));
+	  raw__eq(cause, raw__array__elt(cause, data, 0), new__symbol(cause, "fiber_register_data")));
 }
 
-f2ptr raw__argument_data_node__name(f2ptr cause, f2ptr this) {
+f2ptr raw__fiber_register_data_node__name(f2ptr cause, f2ptr this) {
   return raw__array__elt(cause, f2__graph_node__label(cause, this), 1);
 }
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
-  f2ptr args               = f2__funk__args(          cause, this);
-  f2ptr body_bytecodes     = f2__funk__body_bytecodes(cause, this);
-  f2ptr graph              = f2__graph__new(cause);
-  f2ptr node_argument_hash = f2__ptypehash__new(cause);
+  f2ptr args                     = f2__funk__args(          cause, this);
+  f2ptr body_bytecodes           = f2__funk__body_bytecodes(cause, this);
+  f2ptr graph                    = f2__graph__new(cause);
+  f2ptr node_fiber_register_hash = f2__ptypehash__new(cause);
   {
-    f2ptr iter = args;
+    f2ptr iter = f2list6__new(cause,
+			      new__symbol(cause, "return"),
+			      new__symbol(cause, "value"),
+			      new__symbol(cause, "iter"),
+			      new__symbol(cause, "program_counter"),
+			      new__symbol(cause, "env"),
+			      new__symbol(cause, "args"));
     while (iter != nil) {
-      f2ptr argument = f2__cons__car(cause, iter);
+      f2ptr fiber_register = f2__cons__car(cause, iter);
       {
-	f2ptr argument_data_node = raw__argument_data_node__new(cause, argument);
-	raw__graph__add_node(cause, graph, argument_data_node);
-	raw__ptypehash__add(cause, node_argument_hash, argument, argument_data_node);
+	f2ptr fiber_register_data_node = raw__fiber_register_data_node__new(cause, fiber_register);
+	raw__graph__add_node(cause, graph, fiber_register_data_node);
+	raw__ptypehash__add(cause, node_fiber_register_hash, fiber_register, fiber_register_data_node);
       }
       iter = f2__cons__cdr(cause, iter);
     }
@@ -90,6 +108,10 @@ void f2__optimize__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "optimize", "", &f2__optimize__reinitialize_globalvars);
   
   f2__optimize__reinitialize_globalvars();
+  
+  // optimize_context
+  
+  initialize_primobject_2_slot(optimize_context, x, y);
   
 }
 

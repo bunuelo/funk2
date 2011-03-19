@@ -28,8 +28,8 @@ typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__op
 declare_object_type_4_slot(optimize_context,
 			   graph,
 			   stack,
-			   node_fiber_register_hash,
-			   node_variable_hash,
+			   register_frame,
+			   variable_frame,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -45,8 +45,8 @@ declare_object_type_4_slot(optimize_context,
 declare_primobject_4_slot(optimize_context,
 			  graph,
 			  stack,
-			  node_fiber_register_hash,
-			  node_variable_hash);
+			  register_frame,
+			  variable_frame);
 
 f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause);
 

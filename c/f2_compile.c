@@ -1846,23 +1846,39 @@ f2ptr f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2p
   assert_argument_type(fiber, fiber);
   
   f2ptr car = f2cons__car(exp, cause);
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                  {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))        {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                     {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                 {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                 {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))             {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                 {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))              {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))         {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                  {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                       {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))             {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol))      {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                          {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))                   {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                       {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_or__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_add__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_negative__symbol))           {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_subtract__symbol))           {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_multiply__symbol))           {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {return f2cons__new(cause, nil, exp);}
   status("tried to compile special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   status("f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");

@@ -98,6 +98,12 @@
     [error `runtime-error `type-check-failure]]]
 
 
+[defmetro < [x y]
+  `[bytecode:less_than ,x ,y]]
+
+[defmetro > [x y]
+  `[bytecode:greater_than ,x ,y]]
+
 [defunk <= [x y]
   [bytecode:or [bytecode:less_than          x y]
 	       [bytecode:numerically_equals x y]]]

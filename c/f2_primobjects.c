@@ -659,7 +659,7 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
       printf("\nf2__funk__new note is_funktional: %s", name__str);
       f2__free(to_ptr(name__str));
     } else {
-      printf("\nf2__funk__new note is_funktional: <unnamed>", name__str);
+      printf("\nf2__funk__new note is_funktional: <unnamed>");
     }
   }
   f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);

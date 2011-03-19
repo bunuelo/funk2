@@ -53,7 +53,7 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
     while (iter != nil) {
       f2ptr argument = f2__cons__car(cause, iter);
       {
-	f2ptr argument_data_node = f2__argument_data_node__new(cause, argument);
+	f2ptr argument_data_node = raw__argument_data_node__new(cause, argument);
 	raw__graph__add_node(cause, graph, argument_data_node);
 	raw__ptypehash__add(cause, node_argument_hash, argument, argument_data_node);
       }

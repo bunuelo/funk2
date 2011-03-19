@@ -19,6 +19,17 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__OPTIMIZE__TYPES__H
+#define F2__OPTIMIZE__TYPES__H
+
+// optimize_context
+
+declare_object_type_2_slot(optimize_context, x, y,
+			   );
+
+#endif // F2__OPTIMIZE__TYPES__H
+
+
 #ifndef F2__OPTIMIZE__H
 #define F2__OPTIMIZE__H
 
@@ -28,9 +39,6 @@ f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);
 // optimize_context
 
 declare_primobject_2_slot( optimize_context, x, y);
-declare_object_type_2_slot(optimize_context, x, y,
-			   );
-
 
 // **
 

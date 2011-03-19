@@ -130,6 +130,7 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
 // **
 
 void f2__optimize__reinitialize_globalvars() {
+  __optimize_context__symbol = new__symbol(cause, "optimize_context");
 }
 
 void f2__optimize__initialize() {

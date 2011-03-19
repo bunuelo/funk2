@@ -39,7 +39,14 @@ struct funk2_object_type__nil__slot_s {
 #ifndef F2__NIL__H
 #define F2__NIL__H
 
+f2ptr     raw__nil__as__string               (f2ptr cause, f2ptr this);
+boolean_t raw__nil__is_type                  (f2ptr cause, f2ptr this);
+f2ptr      f2__nil__as__string               (f2ptr cause, f2ptr this);
+f2ptr     raw__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__nil__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
 f2ptr f2nil__primobject_type__new(f2ptr cause);
+
 
 // **
 

@@ -1192,23 +1192,39 @@ f2ptr f2__compile__bytecode_eq_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
 
 
 boolean_t raw__is_compile_special_symbol(f2ptr cause, f2ptr exp) {
-  return ((raw__symbol__eq(cause, exp, __funk2.globalenv.quote__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))        ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol)) ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                     ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.return__symbol))                 ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))            ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define__symbol))                 ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutatefunk__symbol))             ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutate__symbol))                 ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize__symbol))              ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize_funk__symbol))         ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.yield__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode__symbol))               ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.rawcode__symbol)));
+  return ((raw__symbol__eq(cause, exp, __funk2.globalenv.quote__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))             ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol))      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.return__symbol))                      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                     ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))                 ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define__symbol))                      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutatefunk__symbol))                  ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutate__symbol))                      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize__symbol))                   ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize_funk__symbol))              ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.yield__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode__symbol))                    ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.rawcode__symbol))                     ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_eq__symbol))                 ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_not__symbol))                ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_and__symbol))                ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_or__symbol))                 ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_add__symbol))                ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_negative__symbol))           ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_subtract__symbol))           ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_multiply__symbol))           ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_inverse__symbol))            ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_divide__symbol))             ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_modulo__symbol))             ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_increment__symbol))          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_decrement__symbol))          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_numerically_equals__symbol)) ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_less_than__symbol))          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_greater_than__symbol)));
 }
 
 f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {

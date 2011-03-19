@@ -23,7 +23,6 @@
 [deftypefunk double get as-float   [] [double-to_float   this]]
 
 [deftypefunk float get as-integer [] [float-to_integer this]]
-[deftypefunk float get as-double  [] [float-to_double  this]]
 
 [deftypefunk largeinteger get as-integer [] [get [get this as-double] as-integer]]
 

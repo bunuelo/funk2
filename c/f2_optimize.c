@@ -88,8 +88,9 @@ f2ptr raw__fiber_register_data_node__name(f2ptr cause, f2ptr this) {
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   f2ptr args                     = f2__funk__args(          cause, this);
   f2ptr body_bytecodes           = f2__funk__body_bytecodes(cause, this);
-  f2ptr graph                    = f2__graph__new(cause);
-  f2ptr node_fiber_register_hash = f2__ptypehash__new(cause);
+  f2ptr optimize_context         = f2__optimize_context__new(cause);
+  f2ptr node_fiber_register_hash = f2__optimize_context__node_fiber_register_hash(cause, optimize_context);
+  f2ptr graph                    = f2__optimize_context__graph(                   cause, optimize_context);
   {
     f2ptr iter = f2list6__new(cause,
 			      new__symbol(cause, "return"),
@@ -118,7 +119,7 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
       iter = f2__cons__cdr(cause, iter);
     }
   }
-  return graph;
+  return optimize_context;
 }
 
 f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {

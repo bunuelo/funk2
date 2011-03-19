@@ -205,10 +205,11 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "graph_decomposition_lattice_node"; funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name), f2graph_decomposition_lattice_node__primobject_type__new_aux(cause));}
   {char* type_name = "graph_decomposition_lattice";      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),      f2graph_decomposition_lattice__primobject_type__new_aux(cause));}
   {char* type_name = "graph_edit_sequence";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2graph_edit_sequence__primobject_type__new_aux(cause));}
-  {char* type_name = "traced_cmutex";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2traced_cmutex__primobject_type__new_aux(cause));}
+  {char* type_name = "traced_cmutex";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2traced_cmutex__primobject_type__new_aux(cause));}
   {char* type_name = "fiber_stack_trace";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2fiber_stack_trace__primobject_type__new_aux(cause));}
   {char* type_name = "fiber_stack_trace_block";          funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),          f2fiber_stack_trace_block__primobject_type__new_aux(cause));}
   {char* type_name = "partial_order_node";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2partial_order_node__primobject_type__new_aux(cause));}
+  {char* type_name = "optimize_context";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2optimize_context__primobject_type__new_aux(cause));}
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {

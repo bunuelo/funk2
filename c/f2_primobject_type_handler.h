@@ -56,6 +56,7 @@
 #include "f2_dlfcn.h"
 #include "f2_core_extension_funk.h"
 #include "f2_core_extension.h"
+#include "f2_optimize.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_cmutex;
@@ -150,6 +151,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__fiber_stack_trace__slot_t                primobject_type_fiber_stack_trace;
   funk2_object_type__fiber_stack_trace_block__slot_t          primobject_type_fiber_stack_trace_block;
   funk2_object_type__partial_order_node__slot_t               primobject_type_partial_order_node;
+  funk2_object_type__optimize_context__slot_t                 primobject_type_optimize_context;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;

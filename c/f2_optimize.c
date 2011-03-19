@@ -32,7 +32,7 @@ boolean_t raw__argument_data_node__is_type(f2ptr cause, f2ptr object) {
   if (! raw__graph_node__is_type(cause, object)) {
     return boolean__false;
   }
-  f2ptr data = raw__graph_node__label(cause, object);
+  f2ptr data = f2__graph_node__label(cause, object);
   return ((data != nil) &&
 	  raw__array__is_type(cause, data) &&
 	  (raw__array__length(cause, data) == 2) &&

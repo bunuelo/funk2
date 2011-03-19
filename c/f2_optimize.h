@@ -25,7 +25,10 @@
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_2_slot(optimize_context, node_fiber_register_hash, graph,
+declare_object_type_3_slot(optimize_context,
+			   graph,
+			   node_fiber_register_hash,
+			   node_variable_hash,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -38,7 +41,10 @@ declare_object_type_2_slot(optimize_context, node_fiber_register_hash, graph,
 
 // optimize_context
 
-declare_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
+declare_primobject_3_slot(optimize_context,
+			  graph,
+			  node_fiber_register_hash,
+			  node_variable_hash);
 
 f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause);
 

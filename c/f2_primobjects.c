@@ -673,6 +673,9 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
 def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__funk__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
 
+// defined in f2_optimize.c
+def_pcfunk1(funk__optimize, this, return f2__funk__optimize(this_cause, this));
+
 f2ptr raw__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -695,9 +698,9 @@ f2ptr f2__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 }
 def_pcfunk2(funk__terminal_print_with_frame, this, terminal_print_frame, return f2__funk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
-
 f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2funk__primobject_type__new(cause);
+  {char* slot_name = "optimize";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk);}
   return this;
 }
@@ -947,6 +950,8 @@ void f2__primobjects__initialize() {
   
   f2__primcfunk__init__3(cfunk__apply, x, y, z, "");
   
+  {char* symbol_str = "optimize"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.optimize__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cfunk__optimize, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.optimize__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cfunk__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   

@@ -22,7 +22,8 @@
 #ifndef F2__OPTIMIZE__H
 #define F2__OPTIMIZE__H
 
-
+f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);
+f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);
 
 // **
 

@@ -41,7 +41,6 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
   assert_argument_type(funk, this);
   return raw__funk__optimize(cause, this);
 }
-def_pcfunk1(funk__optimize, this, return f2__funk__optimize(this_cause, this));
 
 
 // **

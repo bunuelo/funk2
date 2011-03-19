@@ -1149,11 +1149,11 @@ f2ptr f2__compile__bytecode_eq_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
   f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
   f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
   f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
-  x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, x0__bcs)) {
     return x0__bcs;
   }
-  x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
   if (raw__larva__is_type(cause, x1__bcs)) {
     return x1__bcs;
   }

@@ -40,7 +40,7 @@ boolean_t raw__argument_data_node__is_type(f2ptr cause, f2ptr object) {
 }
 
 f2ptr raw__argument_data_node__name(f2ptr cause, f2ptr this) {
-  return raw__array__elt(cause, raw__graph_node__label(cause, this), 1);
+  return raw__array__elt(cause, f2__graph_node__label(cause, this), 1);
 }
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {

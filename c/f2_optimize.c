@@ -99,7 +99,7 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
   f2ptr node_fiber_register_hash = f2__optimize_context__node_fiber_register_hash(cause, this);
   f2ptr node_variable_hash       = f2__optimize_context__node_variable_hash(      cause, this);
   {
-    f2ptr args = f2__funk__args(cause, this);
+    f2ptr args = f2__funk__args(cause, funk);
     {
       f2ptr iter = args;
       while (iter != nil) {

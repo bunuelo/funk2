@@ -28,9 +28,17 @@ def_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
 f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr node_fiber_register_hash = f2__ptypehash__new(cause);
   f2ptr graph                    = f2__graph__new(cause);
+  
   return f2optimize_context__new(cause, node_fiber_register_hash, graph);
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
+
+
+/*
+f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
+  
+}
+*/
 
 
 f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -59,7 +67,6 @@ f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk);}
   return this;
 }
-
 
 // fiber_register_data_node
 
@@ -91,24 +98,6 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   f2ptr optimize_context         = f2__optimize_context__new(cause);
   f2ptr node_fiber_register_hash = f2__optimize_context__node_fiber_register_hash(cause, optimize_context);
   f2ptr graph                    = f2__optimize_context__graph(                   cause, optimize_context);
-  {
-    f2ptr iter = f2list6__new(cause,
-			      new__symbol(cause, "return"),
-			      new__symbol(cause, "value"),
-			      new__symbol(cause, "iter"),
-			      new__symbol(cause, "program_counter"),
-			      new__symbol(cause, "env"),
-			      new__symbol(cause, "args"));
-    while (iter != nil) {
-      f2ptr fiber_register = f2__cons__car(cause, iter);
-      {
-	f2ptr fiber_register_data_node = raw__fiber_register_data_node__new(cause, fiber_register);
-	raw__graph__add_node(cause, graph, fiber_register_data_node);
-	raw__ptypehash__add(cause, node_fiber_register_hash, fiber_register, fiber_register_data_node);
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
   {
     f2ptr iter = body_bytecodes;
     while (iter != nil) {

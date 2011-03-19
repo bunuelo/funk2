@@ -23,12 +23,14 @@
 
 // optimize_context
 
-def_primobject_2_slot(optimize_context, x, y);
+def_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
 
-f2ptr f2__optimize_context__new(f2ptr cause, f2ptr x, f2ptr y) {
-  return f2optimize_context__new(cause, x, y);
+f2ptr f2__optimize_context__new(f2ptr cause, f2ptr y) {
+  f2ptr node_fiber_register_hash = f2__ptypehash__new(cause);
+  f2ptr graph                    = f2__graph__new(cause);
+  return f2optimize_context__new(cause, node_fiber_register_hash, graph);
 }
-def_pcfunk2(optimize_context__new, x, y, return f2__optimize_context__new(this_cause, x, y));
+def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
 
 // fiber_register_data_node
@@ -111,7 +113,7 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_2_slot(optimize_context, x, y);
+  initialize_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
   
 }
 

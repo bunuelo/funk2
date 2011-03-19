@@ -25,7 +25,7 @@
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_2_slot(optimize_context, x, y,
+declare_object_type_2_slot(optimize_context, node_fiber_register_hash, graph,
 			   );
 
 #endif // F2__OPTIMIZE__TYPES__H
@@ -36,7 +36,7 @@ declare_object_type_2_slot(optimize_context, x, y,
 
 // optimize_context
 
-declare_primobject_2_slot(optimize_context, x, y);
+declare_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
 
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);

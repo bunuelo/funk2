@@ -67,8 +67,8 @@ def_primobject_4_slot(optimize_context,
 f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr graph          = f2__graph__new(cause);
   f2ptr stack          = nil;
-  f2ptr register_frame = f2__frame__new(cause);
-  f2ptr variable_frame = f2__frame__new(cause);
+  f2ptr register_frame = f2__frame__new(cause, nil);
+  f2ptr variable_frame = f2__frame__new(cause, nil);
   {
     f2ptr fiber_registers = f2list6__new(cause,
 					 new__symbol(cause, "return"),

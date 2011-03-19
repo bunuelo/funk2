@@ -40,6 +40,8 @@ declare_object_type_2_slot(optimize_context, node_fiber_register_hash, graph,
 
 declare_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
 
+f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause);
+
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);
 f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);

@@ -55,6 +55,5 @@ void f2__optimize__initialize() {
   
   f2__optimize__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(funk__optimize, this, "Optimizes this funk for faster execution.");
 }
 

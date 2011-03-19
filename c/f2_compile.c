@@ -1238,7 +1238,7 @@ f2ptr f2__compile__bytecode_or_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
 
 // add
 
-f2ptr f2__compile__bytecode_and_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+f2ptr f2__compile__bytecode_add_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
   assert_argument_type(cons, exp);
   f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
   f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
@@ -1257,7 +1257,7 @@ f2ptr f2__compile__bytecode_and_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
   exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
   exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
   exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
-  exp_bcs       = f2__compile__and(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__add(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
   return full_bcs;
 }
 

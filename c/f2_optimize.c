@@ -169,21 +169,6 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   if (raw__larva__is_type(cause, result)) {
     return result;
   }
-  {
-    f2ptr graph                    = f2__optimize_context__graph(                   cause, optimize_context);
-    f2ptr node_fiber_register_hash = f2__optimize_context__node_fiber_register_hash(cause, optimize_context);
-    f2ptr node_variable_hash       = f2__optimize_context__node_variable_hash(      cause, optimize_context);
-    {
-      f2ptr iter = body_bytecodes;
-      while (iter != nil) {
-	f2ptr bytecode = f2__cons__car(cause, iter);
-	{
-	  
-	}
-	iter = f2__cons__cdr(cause, iter);
-      }
-    }
-  }
   return optimize_context;
 }
 

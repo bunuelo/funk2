@@ -26,6 +26,8 @@
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
 declare_object_type_2_slot(optimize_context, node_fiber_register_hash, graph,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__OPTIMIZE__TYPES__H

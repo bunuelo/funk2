@@ -23,6 +23,7 @@
 #define F2__PRIMOBJECT_TYPE_HANDLER__H
 
 #include "f2_primobjects.h"
+#include "f2_optimize.h"
 #include "f2_time.h"
 #include "f2_fiber.h"
 #include "f2_primobject__fiber_trigger.h"
@@ -56,7 +57,6 @@
 #include "f2_dlfcn.h"
 #include "f2_core_extension_funk.h"
 #include "f2_core_extension.h"
-#include "f2_optimize.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_cmutex;

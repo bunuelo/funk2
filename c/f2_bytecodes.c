@@ -2606,7 +2606,7 @@ int f2__fiber__bytecode__not(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x)
 //  bytecode and [result x0 x1]
 
 f2ptr f2__and(f2ptr cause, f2ptr x0, f2ptr x1) {
-  return ((x0 != nil) && (x1 != nil));
+  return f2bool__new((x0 != nil) && (x1 != nil));
 }
 
 int f2__fiber__bytecode__and__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {
@@ -2657,7 +2657,7 @@ int f2__fiber__bytecode__and(f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0
 //  bytecode or [result x0 x1]
 
 f2ptr f2__or(f2ptr cause, f2ptr x0, f2ptr x1) {
-  return ((x0 != nil) || (x1 != nil));
+  return f2bool__new((x0 != nil) || (x1 != nil));
 }
 
 int f2__fiber__bytecode__or__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1) {

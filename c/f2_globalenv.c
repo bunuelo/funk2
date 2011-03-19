@@ -80,6 +80,23 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->while__symbol                  = f2symbol__new(cause, strlen("while"),                 (u8*)"while");
   this->return__symbol                 = f2symbol__new(cause, strlen("return"),                (u8*)"return");
   
+  this->bytecode_eq__symbol                 = new__symbol(cause, "bytecode:eq");
+  this->bytecode_not__symbol                = new__symbol(cause, "bytecode:not");
+  this->bytecode_and__symbol                = new__symbol(cause, "bytecode:and");
+  this->bytecode_or__symbol                 = new__symbol(cause, "bytecode:or");
+  this->bytecode_add__symbol                = new__symbol(cause, "bytecode:add");
+  this->bytecode_negative__symbol           = new__symbol(cause, "bytecode:negative");
+  this->bytecode_subtract__symbol           = new__symbol(cause, "bytecode:subtract");
+  this->bytecode_multiply__symbol           = new__symbol(cause, "bytecode:multiply");
+  this->bytecode_inverse__symbol            = new__symbol(cause, "bytecode:inverse");
+  this->bytecode_divide__symbol             = new__symbol(cause, "bytecode:divide");
+  this->bytecode_modulo__symbol             = new__symbol(cause, "bytecode:modulo");
+  this->bytecode_increment__symbol          = new__symbol(cause, "bytecode:increment");
+  this->bytecode_decrement__symbol          = new__symbol(cause, "bytecode:decrement");
+  this->bytecode_numerically_equals__symbol = new__symbol(cause, "bytecode:numerically_equals");
+  this->bytecode_less_than__symbol          = new__symbol(cause, "bytecode:less_than");
+  this->bytecode_greater_than__symbol       = new__symbol(cause, "bytecode:greater_than");
+  
   f2__primobject__stream__reinitialize_globalvars();
   
   this->stdin_stream__symbol  = f2symbol__new(cause, strlen("stdin"), (u8*)"stdin");

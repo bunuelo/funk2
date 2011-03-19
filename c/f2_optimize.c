@@ -25,7 +25,7 @@
 
 def_primobject_2_slot(optimize_context, node_fiber_register_hash, graph);
 
-f2ptr f2__optimize_context__new(f2ptr cause, f2ptr y) {
+f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr node_fiber_register_hash = f2__ptypehash__new(cause);
   f2ptr graph                    = f2__graph__new(cause);
   return f2optimize_context__new(cause, node_fiber_register_hash, graph);

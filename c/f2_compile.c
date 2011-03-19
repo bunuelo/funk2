@@ -1508,15 +1508,6 @@ f2ptr f2__compile__bytecode_greater_than_exp(f2ptr cause, f2ptr fiber, f2ptr exp
 }
 
 
-
-
-
-
-
-
-
-
-
 boolean_t raw__is_compile_special_symbol(f2ptr cause, f2ptr exp) {
   return ((raw__symbol__eq(cause, exp, __funk2.globalenv.quote__symbol))                       ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))             ||
@@ -1589,21 +1580,21 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return bcs_valid(f2__compile__bytecode_exp(cause, exp, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__rawcode_exp(cause, exp, fiber, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_eq_exp(                cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_not__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_not_exp(               cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_and__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_and_exp(               cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_or__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_or_exp(                cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_add__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_add_exp(               cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_negative__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_negative_exp(          cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_subtract__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_subtract_exp(          cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_multiply__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_multiply_exp(          cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_inverse__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_inverse_exp(           cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_divide__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_divide_exp(            cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_modulo__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_modulo_exp(            cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_increment__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_increment_exp(         cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_decrement__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_decrement_exp(         cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_numerically_equals__symbol)) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_numerically_equals_exp(cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_less_than__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_less_than_exp(         cause, fiber, exp));}
-  if (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_greater_than__symbol))       {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_greater_than_exp(      cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_not_exp(               cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_and_exp(               cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_or__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_or_exp(                cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_add__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_add_exp(               cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_negative__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_negative_exp(          cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_subtract__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_subtract_exp(          cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_multiply__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_multiply_exp(          cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_inverse_exp(           cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_divide_exp(            cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_modulo_exp(            cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_increment_exp(         cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_decrement_exp(         cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_numerically_equals_exp(cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_less_than_exp(         cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_greater_than_exp(      cause, fiber, exp));}
   
   status("tried to compile special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...

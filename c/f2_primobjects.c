@@ -800,7 +800,7 @@ def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(t
 
 
 f2ptr raw__bytecode__as__graphviz_label(f2ptr cause, f2ptr this) {
-  return f2__bytecode__command(cause, this);
+  return f2__exp__as__string(cause, f2__bytecode__command(cause, this));
 }
 
 f2ptr f2__bytecode__as__graphviz_label(f2ptr cause, f2ptr this) {

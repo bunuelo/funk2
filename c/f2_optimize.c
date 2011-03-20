@@ -176,7 +176,7 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
 	  if (prev_bytecode_node != nil) {
 	    raw__graph__add_new_edge(cause, operation_graph, new__symbol(cause, "next"), prev_bytecode_node, bytecode_node);
 	  }
-	  prev_bytecode_node = operation_node;
+	  prev_bytecode_node = bytecode_node;
 	}
 	bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
       }

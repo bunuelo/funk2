@@ -96,8 +96,8 @@ def_primobject_5_slot(optimize_context,
 		      variable_frame);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr operation_graph = f2__operation_graph__new(cause);
-  f2ptr data_graph      = f2__data_graph__new(cause);
+  f2ptr operation_graph = f2__graph__new(cause);
+  f2ptr data_graph      = f2__graph__new(cause);
   f2ptr stack           = nil;
   f2ptr register_frame  = f2__frame__new(cause, nil);
   f2ptr variable_frame  = f2__frame__new(cause, nil);

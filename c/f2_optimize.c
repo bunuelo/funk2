@@ -131,7 +131,7 @@ def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause))
 
 
 f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr graph      = f2__optimize_context__graph(cause, this);
+  f2ptr data_graph = f2__optimize_context__data_graph(cause, this);
   f2ptr stack      = nil;
   f2ptr stack_iter = nil;
   {
@@ -150,7 +150,7 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
 	    f2__cons__cdr__set(cause, stack_iter, new_cons);
 	    stack_iter = new_cons;
 	  }
-	  raw__graph__add_node(cause, graph, data_node);
+	  raw__graph__add_node(cause, data_graph, data_node);
 	}
 	iter = f2__cons__cdr(cause, iter);
       }

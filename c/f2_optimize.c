@@ -115,7 +115,7 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
       {
 	f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "register"), fiber_register);
 	raw__frame__add_var_value(cause, register_frame, fiber_register, data_node);
-	raw__graph__add_node(cause, graph, data_node);
+	raw__graph__add_node(cause, data_graph, data_node);
       }
       iter = f2__cons__cdr(cause, iter);
     }

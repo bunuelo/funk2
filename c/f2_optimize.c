@@ -165,13 +165,18 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
     f2ptr node_bytecode_hash = f2__optimize_context__node_bytecode_hash(cause, this);
     f2ptr operation_graph    = f2__optimize_context__operation_graph(   cause, this);
     {
-      f2ptr bytecode_iter = body_bytecodes;
+      f2ptr prev_bytecode_node = nil;
+      f2ptr bytecode_iter      = body_bytecodes;
       while (bytecode_iter != nil) {
 	f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
 	{
-	  f2ptr operation_node = raw__optimize_operation_node__new(cause, new__symbol(cause, "bytecode"), bytecode);
-	  raw__ptypehash__add(cause, node_bytecode_hash, bytecode, operation_node);
-	  raw__graph__add_node(cause, operation_graph, operation_node);
+	  f2ptr bytecode_node = raw__optimize_operation_node__new(cause, new__symbol(cause, "bytecode"), bytecode);
+	  raw__ptypehash__add(cause, node_bytecode_hash, bytecode, bytecode_node);
+	  raw__graph__add_node(cause, operation_graph, bytecode_node);
+	  if (prev_bytecode_node != nil) {
+	    raw__graph__add_new_edge(cause, operation_graph, new__symbol(cause, "next"), prev_bytecode_node, bytecode_node);
+	  }
+	  prev_bytecode_node = operation_node;
 	}
 	bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
       }

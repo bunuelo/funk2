@@ -216,9 +216,7 @@ f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause) {
 
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
-  f2ptr args                     = f2__funk__args(          cause, this);
-  f2ptr body_bytecodes           = f2__funk__body_bytecodes(cause, this);
-  f2ptr optimize_context         = f2__optimize_context__new(cause);
+  f2ptr optimize_context = f2__optimize_context__new(cause);
   {
     f2ptr result = raw__optimize_context__prepare_to_call_funk(cause, optimize_context, this);
     if (raw__larva__is_type(cause, result)) {

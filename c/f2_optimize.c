@@ -54,21 +54,53 @@ f2ptr raw__optimize_data_node__name(f2ptr cause, f2ptr this) {
 }
 
 
+// optimize_operation_node
+
+f2ptr raw__optimize_operation_node__new(f2ptr cause, f2ptr type, f2ptr name) {
+  f2ptr optimize_operation = raw__array__new(cause, 3);
+  raw__array__elt__set(cause, optimize_operation, 0, new__symbol(cause, "optimize_operation"));
+  raw__array__elt__set(cause, optimize_operation, 1, type);
+  raw__array__elt__set(cause, optimize_operation, 2, name);
+  return f2__graph_node__new(cause, optimize_operation);
+}
+
+boolean_t raw__optimize_operation_node__is_type(f2ptr cause, f2ptr object) {
+  if (! raw__graph_node__is_type(cause, object)) {
+    return boolean__false;
+  }
+  f2ptr data = f2__graph_node__label(cause, object);
+  return ((data != nil) &&
+	  raw__array__is_type(cause, data) &&
+	  (raw__array__length(cause, data) == 2) &&
+	  raw__eq(cause, raw__array__elt(cause, data, 0), new__symbol(cause, "optimize_operation")));
+}
+
+f2ptr raw__optimize_operation_node__type(f2ptr cause, f2ptr this) {
+  return raw__array__elt(cause, f2__graph_node__label(cause, this), 1);
+}
+
+f2ptr raw__optimize_operation_node__name(f2ptr cause, f2ptr this) {
+  return raw__array__elt(cause, f2__graph_node__label(cause, this), 2);
+}
+
+
 
 
 // optimize_context
 
-def_primobject_4_slot(optimize_context,
-		      graph,
+def_primobject_5_slot(optimize_context,
+		      operation_graph,
+		      data_graph,
 		      stack,
 		      register_frame,
 		      variable_frame);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr graph          = f2__graph__new(cause);
-  f2ptr stack          = nil;
-  f2ptr register_frame = f2__frame__new(cause, nil);
-  f2ptr variable_frame = f2__frame__new(cause, nil);
+  f2ptr operation_graph = f2__operation_graph__new(cause);
+  f2ptr data_graph      = f2__data_graph__new(cause);
+  f2ptr stack           = nil;
+  f2ptr register_frame  = f2__frame__new(cause, nil);
+  f2ptr variable_frame  = f2__frame__new(cause, nil);
   {
     f2ptr fiber_registers = f2list6__new(cause,
 					 new__symbol(cause, "return"),
@@ -89,7 +121,8 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
     }
   }
   return f2optimize_context__new(cause,
-				 graph,
+				 operation_graph,
+				 data_graph,
 				 stack,
 				 register_frame,
 				 variable_frame);
@@ -136,245 +169,245 @@ f2ptr raw__optimize_context__call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
     {
       f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
       if        (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
-	printf("\nbytecode jump-funk: here.");
+	printf("\nbytecode jump-funk");
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk"))) {
-	printf("\nbytecode funk: here.");
+	printf("\nbytecode funk");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array"))) {
-	printf("\nbytecode array: here.");
+	printf("\nbytecode array");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cons"))) {
-	printf("\nbytecode cons: here.");
+	printf("\nbytecode cons");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "consp"))) {
-	printf("\nbytecode consp: here.");
+	printf("\nbytecode consp");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car"))) {
-	printf("\nbytecode car: here.");
+	printf("\nbytecode car");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr"))) {
-	printf("\nbytecode cdr: here.");
+	printf("\nbytecode cdr");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car-set"))) {
-	printf("\nbytecode car-set: here.");
+	printf("\nbytecode car-set");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr-set"))) {
-	printf("\nbytecode cdr-set: here.");
+	printf("\nbytecode cdr-set");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array_elt"))) {
-	printf("\nbytecode array_elt: here.");
+	printf("\nbytecode array_elt");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "set"))) {
-	printf("\nbytecode set: here.");
+	printf("\nbytecode set");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "swap"))) {
-	printf("\nbytecode swap: here.");
+	printf("\nbytecode swap");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push"))) {
-	printf("\nbytecode push: here.");
+	printf("\nbytecode push");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push_constant"))) {
-	printf("\nbytecode push_constant: here.");
+	printf("\nbytecode push_constant");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "pop"))) {
-	printf("\nbytecode pop: here.");
+	printf("\nbytecode pop");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "copy"))) {
-	printf("\nbytecode copy: here.");
+	printf("\nbytecode copy");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
-	printf("\nbytecode lookup: here.");
+	printf("\nbytecode lookup");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "define"))) {
-	printf("\nbytecode define: here.");
+	printf("\nbytecode define");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "mutate-type_var"))) {
-	printf("\nbytecode mutate-type_var: here.");
+	printf("\nbytecode mutate-type_var");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "globalize-type_var"))) {
-	printf("\nbytecode globalize-type_var: here.");
+	printf("\nbytecode globalize-type_var");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump"))) {
-	printf("\nbytecode jump: here.");
+	printf("\nbytecode jump");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump"))) {
-	printf("\nbytecode if-jump: here.");
+	printf("\nbytecode if-jump");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump"))) {
-	printf("\nbytecode else-jump: here.");
+	printf("\nbytecode else-jump");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "nop"))) {
-	printf("\nbytecode nop: here.");
+	printf("\nbytecode nop");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "debug"))) {
-	printf("\nbytecode debug: here.");
+	printf("\nbytecode debug");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "tracer"))) {
-	printf("\nbytecode tracer: here.");
+	printf("\nbytecode tracer");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "endfunk"))) {
-	printf("\nbytecode endfunk: here.");
+	printf("\nbytecode endfunk");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "compile"))) {
-	printf("\nbytecode compile: here.");
+	printf("\nbytecode compile");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "yield"))) {
-	printf("\nbytecode yield: here.");
+	printf("\nbytecode yield");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "newenv"))) {
-	printf("\nbytecode newenv: here.");
+	printf("\nbytecode newenv");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code"))) {
-	printf("\nbytecode machine_code: here.");
+	printf("\nbytecode machine_code");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt"))) {
-	printf("\nbytecode reg_array-elt: here.");
+	printf("\nbytecode reg_array-elt");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt-set"))) {
-	printf("\nbytecode reg_array-elt-set: here.");
+	printf("\nbytecode reg_array-elt-set");
 	
 	
 	// logic
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "eq"))) {
-	printf("\nbytecode eq: here.");
+	printf("\nbytecode eq");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "not"))) {
-	printf("\nbytecode not: here.");
+	printf("\nbytecode not");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "and"))) {
-	printf("\nbytecode and: here.");
+	printf("\nbytecode and");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "or"))) {
-	printf("\nbytecode or: here.");
+	printf("\nbytecode or");
 	
 	
 	// math
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "add"))) {
-	printf("\nbytecode add: here.");
+	printf("\nbytecode add");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "negative"))) {
-	printf("\nbytecode negative: here.");
+	printf("\nbytecode negative");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "subtract"))) {
-	printf("\nbytecode subtract: here.");
+	printf("\nbytecode subtract");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "multiply"))) {
-	printf("\nbytecode multiply: here.");
+	printf("\nbytecode multiply");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "inverse"))) {
-	printf("\nbytecode inverse: here.");
+	printf("\nbytecode inverse");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "divide"))) {
-	printf("\nbytecode divide: here.");
+	printf("\nbytecode divide");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "modulo"))) {
-	printf("\nbytecode modulo: here.");
+	printf("\nbytecode modulo");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "increment"))) {
-	printf("\nbytecode increment: here.");
+	printf("\nbytecode increment");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "decrement"))) {
-	printf("\nbytecode decrement: here.");
+	printf("\nbytecode decrement");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "numerically_equals"))) {
-	printf("\nbytecode numerically_equals: here.");
+	printf("\nbytecode numerically_equals");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "less_than"))) {
-	printf("\nbytecode less_than: here.");
+	printf("\nbytecode less_than");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "greater_than"))) {
-	printf("\nbytecode greater_than: here.");
+	printf("\nbytecode greater_than");
 	
 	
 	// block
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_push"))) {
-	printf("\nbytecode block_push: here.");
+	printf("\nbytecode block_push");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter"))) {
-	printf("\nbytecode block_enter: here.");
+	printf("\nbytecode block_enter");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_rest_argument"))) {
-	printf("\nbytecode block_define_rest_argument: here.");
+	printf("\nbytecode block_define_rest_argument");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_argument"))) {
-	printf("\nbytecode block_define_argument: here.");
+	printf("\nbytecode block_define_argument");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_last_argument"))) {
-	printf("\nbytecode block_define_last_argument: here.");
+	printf("\nbytecode block_define_last_argument");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_pop"))) {
-	printf("\nbytecode block_pop: here.");
+	printf("\nbytecode block_pop");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_pop"))) {
-	printf("\nbytecode block_exit_and_pop: here.");
+	printf("\nbytecode block_exit_and_pop");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_no_pop"))) {
-	printf("\nbytecode block_exit_and_no_pop: here.");
+	printf("\nbytecode block_exit_and_no_pop");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin"))) {
-	printf("\nbytecode block_eval_args_begin: here.");
+	printf("\nbytecode block_eval_args_begin");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next"))) {
-	printf("\nbytecode block_eval_args_next: here.");
+	printf("\nbytecode block_eval_args_next");
 	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end"))) {
-	printf("\nbytecode block_eval_args_end: here.");
+	printf("\nbytecode block_eval_args_end");
 	
 	
       } else {
@@ -395,19 +428,20 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list10__new(cause,
+    frame = f2__frame__new(cause, f2list12__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-						new__symbol(cause, "graph"),          f2__optimize_context__graph(         cause, this),
-						new__symbol(cause, "stack"),          f2__optimize_context__stack(         cause, this),
-						new__symbol(cause, "register_frame"), f2__optimize_context__register_frame(cause, this),
-						new__symbol(cause, "variable_frame"), f2__optimize_context__variable_frame(cause, this)));
+						new__symbol(cause, "operation_graph"), f2__optimize_context__operation_graph(cause, this),
+						new__symbol(cause, "data_graph"),      f2__optimize_context__data_graph(     cause, this),
+						new__symbol(cause, "stack"),           f2__optimize_context__stack(          cause, this),
+						new__symbol(cause, "register_frame"),  f2__optimize_context__register_frame( cause, this),
+						new__symbol(cause, "variable_frame"),  f2__optimize_context__variable_frame( cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(optimize_context,             this);
+  assert_argument_type(optimize_context,     this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_context__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
@@ -463,8 +497,9 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_4_slot(optimize_context,
-			       graph,
+  initialize_primobject_5_slot(optimize_context,
+			       operation_graph,
+			       data_graph,
 			       stack,
 			       register_frame,
 			       variable_frame);

@@ -128,6 +128,60 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
 }
 
 
+f2ptr raw__optimize_context__call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
+  f2ptr body_bytecodes = f2__funk__body_bytecodes(cause, funk);
+  f2ptr bytecode_iter  = body_bytecodes;
+  while (bytecode_iter != nil) {
+    f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
+    f2__print(cause, bytecode);
+    {
+      f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
+      if        (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter"))) {
+	printf("\nbytecode block_enter: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "copy"))) {
+	printf("\nbytecode copy: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_argument"))) {
+	printf("\nbytecode block_define_argument: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_last_argument"))) {
+	printf("\nbytecode block_define_last_argument: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin"))) {
+	printf("\nbytecode block_eval_args_begin: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next"))) {
+	printf("\nbytecode block_eval_args_next: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end"))) {
+	printf("\nbytecode block_eval_args_end: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
+	printf("\nbytecode lookup: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
+	printf("\nbytecode lookup: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_pop"))) {
+	printf("\nbytecode block_pop: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
+	printf("\nbytecode jump-funk: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_no_pop"))) {
+	printf("\nbytecode block_exit_and_no_pop: here.");
+	
+      } else {
+	printf("\nbytecode UNRECOGNIZED: cannot optimize funk.");
+	return f2larva__new(cause, 5123, nil);
+      }
+    }
+    bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
+  }
+  return nil;
+}
+
 
 f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
@@ -165,9 +219,17 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   f2ptr args                     = f2__funk__args(          cause, this);
   f2ptr body_bytecodes           = f2__funk__body_bytecodes(cause, this);
   f2ptr optimize_context         = f2__optimize_context__new(cause);
-  f2ptr result = raw__optimize_context__prepare_to_call_funk(cause, optimize_context, this);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
+  {
+    f2ptr result = raw__optimize_context__prepare_to_call_funk(cause, optimize_context, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_context__call_funk(cause, optimize_context, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
   }
   return optimize_context;
 }

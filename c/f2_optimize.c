@@ -160,6 +160,23 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
     }
   }
   f2__optimize_context__stack__set(cause, this, stack);
+  {
+    f2ptr body_bytecodes     = f2__funk__body_bytecodes(cause, funk);
+    f2ptr node_bytecode_hash = f2__optimize_context__node_bytecode_hash(cause, this);
+    f2ptr operation_graph    = f2__optimize_context__operation_graph(   cause, this);
+    {
+      f2ptr bytecode_iter = body_bytecodes;
+      while (bytecode_iter != nil) {
+	f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
+	{
+	  f2ptr operation_node = raw__optimize_operation_node__new(cause, new__symbol(cause, "bytecode"), bytecode);
+	  raw__ptypehash__add(cause, node_bytecode_hash, bytecode, operation_node);
+	  raw__graph__add_node(cause, operation_graph, operation_node);
+	}
+	bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
+      }
+    }
+  }
   return nil;
 }
 
@@ -707,21 +724,7 @@ f2ptr raw__optimize_context__call_bytecode__block_eval_args_end(f2ptr cause, f2p
 
 
 f2ptr raw__optimize_context__call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr body_bytecodes     = f2__funk__body_bytecodes(cause, funk);
-  f2ptr node_bytecode_hash = f2__optimize_context__node_bytecode_hash(cause, this);
-  f2ptr operation_graph    = f2__optimize_context__operation_graph(   cause, this);
-  {
-    f2ptr bytecode_iter  = body_bytecodes;
-    while (bytecode_iter != nil) {
-      f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
-      {
-	f2ptr operation_node = raw__optimize_operation_node__new(cause, new__symbol(cause, "bytecode"), bytecode);
-	raw__ptypehash__add(cause, node_bytecode_hash, bytecode, operation_node);
-	raw__graph__add_node(cause, operation_graph, operation_node);
-      }
-      bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
-    }
-  }
+  f2ptr body_bytecodes = f2__funk__body_bytecodes(cause, funk);
   {
     f2ptr bytecode_iter = body_bytecodes;
     while (bytecode_iter != nil) {

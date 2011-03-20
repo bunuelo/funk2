@@ -133,49 +133,257 @@ f2ptr raw__optimize_context__call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr bytecode_iter  = body_bytecodes;
   while (bytecode_iter != nil) {
     f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
-    f2__print(cause, bytecode);
     {
       f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
-      if        (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter"))) {
-	printf("\nbytecode block_enter: here.");
+      if        (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
+	printf("\nbytecode jump-funk: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk"))) {
+	printf("\nbytecode funk: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array"))) {
+	printf("\nbytecode array: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cons"))) {
+	printf("\nbytecode cons: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "consp"))) {
+	printf("\nbytecode consp: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car"))) {
+	printf("\nbytecode car: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr"))) {
+	printf("\nbytecode cdr: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car-set"))) {
+	printf("\nbytecode car-set: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr-set"))) {
+	printf("\nbytecode cdr-set: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array_elt"))) {
+	printf("\nbytecode array_elt: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "set"))) {
+	printf("\nbytecode set: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "swap"))) {
+	printf("\nbytecode swap: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push"))) {
+	printf("\nbytecode push: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push_constant"))) {
+	printf("\nbytecode push_constant: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "pop"))) {
+	printf("\nbytecode pop: here.");
+	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "copy"))) {
 	printf("\nbytecode copy: here.");
 	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
+	printf("\nbytecode lookup: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "define"))) {
+	printf("\nbytecode define: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "mutate-type_var"))) {
+	printf("\nbytecode mutate-type_var: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "globalize-type_var"))) {
+	printf("\nbytecode globalize-type_var: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump"))) {
+	printf("\nbytecode jump: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump"))) {
+	printf("\nbytecode if-jump: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump"))) {
+	printf("\nbytecode else-jump: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "nop"))) {
+	printf("\nbytecode nop: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "debug"))) {
+	printf("\nbytecode debug: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "tracer"))) {
+	printf("\nbytecode tracer: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "endfunk"))) {
+	printf("\nbytecode endfunk: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "compile"))) {
+	printf("\nbytecode compile: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "yield"))) {
+	printf("\nbytecode yield: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "newenv"))) {
+	printf("\nbytecode newenv: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code"))) {
+	printf("\nbytecode machine_code: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt"))) {
+	printf("\nbytecode reg_array-elt: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt-set"))) {
+	printf("\nbytecode reg_array-elt-set: here.");
+	
+	
+	// logic
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "eq"))) {
+	printf("\nbytecode eq: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "not"))) {
+	printf("\nbytecode not: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "and"))) {
+	printf("\nbytecode and: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "or"))) {
+	printf("\nbytecode or: here.");
+	
+	
+	// math
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "add"))) {
+	printf("\nbytecode add: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "negative"))) {
+	printf("\nbytecode negative: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "subtract"))) {
+	printf("\nbytecode subtract: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "multiply"))) {
+	printf("\nbytecode multiply: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "inverse"))) {
+	printf("\nbytecode inverse: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "divide"))) {
+	printf("\nbytecode divide: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "modulo"))) {
+	printf("\nbytecode modulo: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "increment"))) {
+	printf("\nbytecode increment: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "decrement"))) {
+	printf("\nbytecode decrement: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "numerically_equals"))) {
+	printf("\nbytecode numerically_equals: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "less_than"))) {
+	printf("\nbytecode less_than: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "greater_than"))) {
+	printf("\nbytecode greater_than: here.");
+	
+	
+	// block
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_push"))) {
+	printf("\nbytecode block_push: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter"))) {
+	printf("\nbytecode block_enter: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_rest_argument"))) {
+	printf("\nbytecode block_define_rest_argument: here.");
+	
+	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_argument"))) {
 	printf("\nbytecode block_define_argument: here.");
+	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_last_argument"))) {
 	printf("\nbytecode block_define_last_argument: here.");
 	
-      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin"))) {
-	printf("\nbytecode block_eval_args_begin: here.");
-	
-      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next"))) {
-	printf("\nbytecode block_eval_args_next: here.");
-	
-      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end"))) {
-	printf("\nbytecode block_eval_args_end: here.");
-	
-      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
-	printf("\nbytecode lookup: here.");
-	
-      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
-	printf("\nbytecode lookup: here.");
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_pop"))) {
 	printf("\nbytecode block_pop: here.");
 	
-      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
-	printf("\nbytecode jump-funk: here.");
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_pop"))) {
+	printf("\nbytecode block_exit_and_pop: here.");
+	
 	
       } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_no_pop"))) {
 	printf("\nbytecode block_exit_and_no_pop: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin"))) {
+	printf("\nbytecode block_eval_args_begin: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next"))) {
+	printf("\nbytecode block_eval_args_next: here.");
+	
+	
+      } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end"))) {
+	printf("\nbytecode block_eval_args_end: here.");
+	
 	
       } else {
 	printf("\nbytecode UNRECOGNIZED: cannot optimize funk.");
 	return f2larva__new(cause, 5123, nil);
       }
+      
+      
+      
     }
     bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
   }

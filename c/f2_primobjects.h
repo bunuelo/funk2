@@ -1817,6 +1817,8 @@ declare_object_type_2_slot(exception, tag, value,
 // bytecode
 
 declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2,
+			   f2ptr as__graphviz_label__symbol;
+			   f2ptr as__graphviz_label__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

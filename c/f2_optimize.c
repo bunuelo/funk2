@@ -121,7 +121,15 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
   {
     f2ptr register_hash = f2__optimize_context__register_hash(cause, this);
     raw__ptypehash__add(cause, register_hash, new__symbol(cause, "args"), args_reg);
+    f2ptr funk__body_bytecodes = f2__funk__body_bytecodes(cause, funk);
+    raw__ptypehash__add(cause, register_hash, new__symbol(cause, "program_counter"), funk__body_bytecodes);
   }
+  return nil;
+}
+
+
+f2ptr raw__optimize_context__increment_program_counter(f2ptr cause, f2ptr this) {
+  
   return nil;
 }
 

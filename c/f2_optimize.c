@@ -917,7 +917,7 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
     }
   }
   {
-    f2ptr result = raw__optimize_fiber__call_next_bytecode(cause, initial_fiber, this);
+    f2ptr result = raw__optimize_fiber__call_next_bytecode(cause, initial_fiber);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

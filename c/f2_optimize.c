@@ -1244,15 +1244,18 @@ def_primobject_4_slot(optimize_context,
 		      finished_fiber_set);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr initial_fiber      = f2__optimize_fiber__new(cause);
+  f2ptr initial_fiber      = nil;
   f2ptr active_fiber_set   = f2__set__new(cause);
   f2ptr branched_fiber_set = f2__set__new(cause);
   f2ptr finished_fiber_set = f2__set__new(cause);
-  return f2optimize_context__new(cause,
-				 initial_fiber,
-				 active_fiber_set,
-				 branched_fiber_set,
-				 finished_fiber_set);
+  f2ptr this = f2optimize_context__new(cause,
+				       initial_fiber,
+				       active_fiber_set,
+				       branched_fiber_set,
+				       finished_fiber_set);
+  initial_fiber = f2__optimize_fiber__new(cause, this);
+  f2__optimize_context__initial_fiber__set(cause, this, initial_fiber);
+  return this;
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 

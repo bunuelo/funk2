@@ -47,7 +47,8 @@ declare_object_type_3_slot(optimize_data,
 // optimize_fiber
 
 typedef struct funk2_object_type__optimize_fiber__slot_s funk2_object_type__optimize_fiber__slot_t;
-declare_object_type_7_slot(optimize_fiber,
+declare_object_type_8_slot(optimize_fiber,
+			   optimize_context,
 			   stack,
 			   value,
 			   iter,
@@ -101,7 +102,8 @@ f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
 
 // optimize_fiber
 
-declare_primobject_7_slot(optimize_fiber,
+declare_primobject_8_slot(optimize_fiber,
+			  optimize_context,
 			  stack,
 			  value,
 			  iter,

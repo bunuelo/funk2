@@ -1292,7 +1292,7 @@ f2ptr raw__optimize_context__execute_one_bytecode(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__optimize_context__complete_simulation(f2ptr cause, f2ptr this) {
-  f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, optimize_context);
+  f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
   while (! raw__set__is_empty(cause, active_fiber_set)) {
     {
       f2ptr result = raw__optimize_context__execute_one_bytecode(cause, this);

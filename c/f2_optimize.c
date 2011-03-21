@@ -221,35 +221,53 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 
 // jump-funk
 
+f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: jump-funk");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(cause, this, bytecode);
 }
 
 
 // funk
 
+f2ptr raw__optimize_fiber__call_bytecode__funk__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__funk(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: funk");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__funk__no_increment_pc(cause, this, bytecode);
 }
 
 
 // array
+
+f2ptr raw__optimize_fiber__call_bytecode__array__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  f2ptr length = f2__bytecode__arg0(cause, bytecode);
+  if (! raw__integer__is_type(cause, length)) {
+    return f2larva__new(cause, 5235, nil);
+  }
+  f2ptr new_array = f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));
+  f2__optimize_fiber__iter__set(cause, this, new_array);
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: array");
@@ -259,18 +277,17 @@ f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr b
       return result;
     }
   }
-  
-  f2ptr length    = f2__bytecode__arg0(cause, bytecode);
-  if (! raw__integer__is_type(cause, length)) {
-    return f2larva__new(cause, 5235, nil);
-  }
-  f2ptr new_array = f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));
-  f2__optimize_fiber__iter__set(cause, this, new_array);
-  return nil;
+  return raw__optimize_fiber__call_bytecode__array__no_increment_pc(cause, this, bytecode);
 }
 
 
 // cons
+
+f2ptr raw__optimize_fiber__call_bytecode__cons__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  f2ptr new_cons = f2cons__new(cause, nil, nil);
+  f2__optimize_fiber__iter__set(cause, this, new_cons);
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cons");
@@ -280,14 +297,17 @@ f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this, f2ptr by
       return result;
     }
   }
-  
-  f2ptr new_cons = f2cons__new(cause, nil, nil);
-  f2__optimize_fiber__iter__set(cause, this, new_cons);
-  return nil;
+  return raw__optimize_fiber__call_bytecode__cons__no_increment_pc(cause, this, bytecode);
 }
 
 
 // consp
+
+f2ptr raw__optimize_fiber__call_bytecode__consp__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  f2ptr result = f2bool__new(raw__cons__is_type(cause, f2__optimize_fiber__value(cause, this)));
+  f2__optimize_fiber__value__set(cause, this, result);
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: consp");
@@ -297,24 +317,13 @@ f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this, f2ptr b
       return result;
     }
   }
-  
-  f2ptr result = f2bool__new(raw__cons__is_type(cause, f2__optimize_fiber__value(cause, this)));
-  f2__optimize_fiber__value__set(cause, this, result);
-  return nil;
+  return raw__optimize_fiber__call_bytecode__consp__no_increment_pc(cause, this, bytecode);
 }
 
 
 // car
 
-f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: car");
-  {
-    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  
+f2ptr raw__optimize_fiber__call_bytecode__car__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr fiber__iter = f2__optimize_fiber__iter(cause, this);
   if (! raw__cons__is_type(cause, fiber__iter)) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
@@ -326,18 +335,21 @@ f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr byt
   return nil;
 }
 
-
-// cdr
-
-f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: cdr");
+f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: car");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  
+  return raw__optimize_fiber__call_bytecode__car__no_increment_pc(cause, this, bytecode);
+}
+
+
+// cdr
+
+f2ptr raw__optimize_fiber__call_bytecode__cdr__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr fiber__iter  = f2__optimize_fiber__iter(cause, this);
   if (! raw__cons__is_type(cause, fiber__iter)) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
@@ -349,8 +361,24 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr byt
   return nil;
 }
 
+f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: cdr");
+  {
+    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return raw__optimize_fiber__call_bytecode__cdr__no_increment_pc(cause, this, bytecode);
+}
+
 
 // car-set
+
+f2ptr raw__optimize_fiber__call_bytecode__car__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  f2__cons__car__set(cause, f2__optimize_fiber__iter(cause, this), f2__optimize_fiber__value(cause, this));
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: car-set");
@@ -360,13 +388,16 @@ f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this, f2pt
       return result;
     }
   }
-  
-  f2__cons__car__set(cause, f2__optimize_fiber__iter(cause, this), f2__optimize_fiber__value(cause, this));
-  return nil;
+  return raw__optimize_fiber__call_bytecode__car__set__no_increment_pc(cause, this, bytecode);
 }
 
 
 // cdr-set
+
+f2ptr raw__optimize_fiber__call_bytecode__cdr__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  f2__cons__cdr__set(cause, f2__optimize_fiber__iter(cause, this), f2__optimize_fiber__value(cause, this));
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cdr-set");
@@ -376,22 +407,13 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this, f2pt
       return result;
     }
   }
-  
-  f2__cons__cdr__set(cause, f2__optimize_fiber__iter(cause, this), f2__optimize_fiber__value(cause, this));
-  return nil;
+  return raw__optimize_fiber__call_bytecode__cdr__set__no_increment_pc(cause, this, bytecode);
 }
 
 
 // array_elt
 
-f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: array_elt");
-  {
-    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+f2ptr raw__optimize_fiber__call_bytecode__array_elt__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr array = f2__bytecode__arg0(cause, bytecode);
   f2ptr index = f2__bytecode__arg1(cause, bytecode);
   if (! raw__array__is_type(cause, array)) {
@@ -404,18 +426,21 @@ f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2p
   return nil;
 }
 
-
-// set
-
-f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: ");
+f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: array_elt");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  
+  return raw__optimize_fiber__call_bytecode__array_elt__no_increment_pc(cause, this, bytecode);
+}
+
+
+// set
+
+f2ptr raw__optimize_fiber__call_bytecode__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
   f2ptr exp           = f2__bytecode__arg1(cause, bytecode);
   if      (raw__eq(cause, register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, exp);}
@@ -430,18 +455,21 @@ f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr byt
   return nil;
 }
 
-
-// swap
-
-f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: swap");
+f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: ");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  
+  return raw__optimize_fiber__call_bytecode__set__no_increment_pc(cause, this, bytecode);
+}
+
+
+// swap
+
+f2ptr raw__optimize_fiber__call_bytecode__swap__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr register_name_0 = f2__bytecode__arg0(cause, bytecode);
   f2ptr register_name_1 = f2__bytecode__arg1(cause, bytecode);
   f2ptr value_0 = nil;
@@ -485,18 +513,21 @@ f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr by
   return nil;
 }
 
-
-// push
-
-f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: push");
+f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: swap");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  
+  return raw__optimize_fiber__call_bytecode__swap__no_increment_pc(cause, this, bytecode);
+}
+
+
+// push
+
+f2ptr raw__optimize_fiber__call_bytecode__push__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
   if      (raw__eq(cause, register_name, new__symbol(cause, "value")))           {raw__optimize_fiber__stack__push_value(          cause, this);}
   else if (raw__eq(cause, register_name, new__symbol(cause, "iter")))            {raw__optimize_fiber__stack__push_iter(           cause, this);}
@@ -510,8 +541,25 @@ f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr by
   return nil;
 }
 
+f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: push");
+  {
+    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return raw__optimize_fiber__call_bytecode__push__no_increment_pc(cause, this, bytecode);
+}
+
 
 // push_constant
+
+f2ptr raw__optimize_fiber__call_bytecode__push_constant__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  f2ptr constant = f2__bytecode__arg0(cause, bytecode);
+  raw__optimize_fiber__stack__push_constant(cause, this, constant);
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: push_constant");
@@ -521,24 +569,13 @@ f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this,
       return result;
     }
   }
-  
-  f2ptr constant = f2__bytecode__arg0(cause, bytecode);
-  raw__optimize_fiber__stack__push_constant(cause, this, constant);
-  return nil;
+  return raw__optimize_fiber__call_bytecode__push_constant__no_increment_pc(cause, this, bytecode);
 }
 
 
 // pop
 
-f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: pop");
-  {
-    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-
+f2ptr raw__optimize_fiber__call_bytecode__pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
   if      (register_name == nil)                                                 {raw__optimize_fiber__stack__pop_nil(            cause, this);}
   else if (raw__eq(cause, register_name, new__symbol(cause, "value")))           {raw__optimize_fiber__stack__pop_value(          cause, this);}
@@ -553,18 +590,21 @@ f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr byt
   return nil;
 }
 
-
-// copy
-
-f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: copy");
+f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: pop");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  
+  return raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, bytecode);
+}
+
+
+// copy
+
+f2ptr raw__optimize_fiber__call_bytecode__copy__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   f2ptr from_register_name = f2__bytecode__arg0(cause, bytecode);
   f2ptr to_register_name   = f2__bytecode__arg1(cause, bytecode);
   f2ptr from_value = nil;
@@ -589,8 +629,24 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr by
   return nil;
 }
 
+f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: copy");
+  {
+    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return raw__optimize_fiber__call_bytecode__copy__no_increment_pc(cause, this, bytecode);
+}
+
 
 // lookup
+
+f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__lookup(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: lookup");
@@ -600,58 +656,73 @@ f2ptr raw__optimize_fiber__call_bytecode__lookup(f2ptr cause, f2ptr this, f2ptr 
       return result;
     }
   }
-  
-  
-  return nil;
+  return raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(cause, this, bytecode);
 }
 
 
 // define
 
+f2ptr raw__optimize_fiber__call_bytecode__define__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__define(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: define");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, this, bytecode);
 }
 
 
 // mutate-type_var
 
+f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: mutate-type_var");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(cause, this, bytecode);
 }
 
 
 // globalize-type_var
 
+f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: globalize-type_var");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(cause, this, bytecode);
 }
 
 
 // jump
+
+f2ptr raw__optimize_fiber__call_bytecode__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: jump");
@@ -662,176 +733,225 @@ f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr by
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__jump__no_increment_pc(cause, this, bytecode);
 }
 
 
 // if-jump
 
+f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__if__jump(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: if-jump");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(cause, this, bytecode);
 }
 
 
 // else-jump
 
+f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__else__jump(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: else-jump");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(cause, this, bytecode);
 }
 
 
 // nop
 
+f2ptr raw__optimize_fiber__call_bytecode__nop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__nop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: nop");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__nop__no_increment_pc(cause, this, bytecode);
 }
 
 
 // debug
 
+f2ptr raw__optimize_fiber__call_bytecode__debug__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__debug(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: debug");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__debug__no_increment_pc(cause, this, bytecode);
 }
 
 
 // tracer
 
+f2ptr raw__optimize_fiber__call_bytecode__tracer__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__tracer(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: tracer");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__tracer__no_increment_pc(cause, this, bytecode);
 }
 
 
 // endfunk
 
+f2ptr raw__optimize_fiber__call_bytecode__endfunk__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__endfunk(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: endfunk");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__endfunk__no_increment_pc(cause, this, bytecode);
 }
 
 
 // compile
 
+f2ptr raw__optimize_fiber__call_bytecode__compile__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__compile(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: compile");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__compile__no_increment_pc(cause, this, bytecode);
 }
 
 
 // yield
 
+f2ptr raw__optimize_fiber__call_bytecode__yield__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__yield(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: yield");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__yield__no_increment_pc(cause, this, bytecode);
 }
 
 
 // newenv
 
+f2ptr raw__optimize_fiber__call_bytecode__newenv__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__newenv(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: newenv");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__newenv__no_increment_pc(cause, this, bytecode);
 }
 
 
 // machine_code
 
+f2ptr raw__optimize_fiber__call_bytecode__machine_code__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__machine_code(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: machine_code");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__machine_code__no_increment_pc(cause, this, bytecode);
 }
 
 
 // reg_array-elt
 
+f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: reg_array-elt");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(cause, this, bytecode);
 }
 
 
 // reg_array-elt-set
+
+f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
 
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: reg_array-elt-set");
@@ -842,412 +962,520 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(cause, this, bytecode);
 }
 
 
 // eq
 
+f2ptr raw__optimize_fiber__call_bytecode__eq__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__eq(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: eq");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__eq__no_increment_pc(cause, this, bytecode);
 }
 
 
 // not
 
+f2ptr raw__optimize_fiber__call_bytecode__not__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__not(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: not");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__not__no_increment_pc(cause, this, bytecode);
 }
 
 
 // and
 
+f2ptr raw__optimize_fiber__call_bytecode__and__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__and(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: and");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__and__no_increment_pc(cause, this, bytecode);
 }
 
 
 // or
 
+f2ptr raw__optimize_fiber__call_bytecode__or__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__or(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: ");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__or__no_increment_pc(cause, this, bytecode);
 }
 
 
 // add
 
+f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__add(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: add");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__add__no_increment_pc(cause, this, bytecode);
 }
 
 
 // negative
 
+f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: negative");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__negative__no_increment_pc(cause, this, bytecode);
 }
 
 
 // subtract
 
+f2ptr raw__optimize_fiber__call_bytecode__subtract__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__subtract(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: subtract");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__subtract__no_increment_pc(cause, this, bytecode);
 }
 
 
 // multiply
 
+f2ptr raw__optimize_fiber__call_bytecode__multiply__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__multiply(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: multiply");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__multiply__no_increment_pc(cause, this, bytecode);
 }
 
 
 // inverse
 
+f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: inverse");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(cause, this, bytecode);
 }
 
 
 // divide
 
+f2ptr raw__optimize_fiber__call_bytecode__divide__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__divide(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: divide");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__divide__no_increment_pc(cause, this, bytecode);
 }
 
 
 // modulo
 
+f2ptr raw__optimize_fiber__call_bytecode__modulo__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__modulo(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: modulo");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__modulo__no_increment_pc(cause, this, bytecode);
 }
 
 
 // increment
 
+f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: increment");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__increment__no_increment_pc(cause, this, bytecode);
 }
 
 
 // decrement
 
+f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: decrement");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(cause, this, bytecode);
 }
 
 
 // numerically_equals
 
+f2ptr raw__optimize_fiber__call_bytecode__numerically_equals__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__numerically_equals(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: numerically_equals");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__numerically_equals__no_increment_pc(cause, this, bytecode);
 }
 
 
 // less_than
 
+f2ptr raw__optimize_fiber__call_bytecode__less_than__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__less_than(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: less_than");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__less_than__no_increment_pc(cause, this, bytecode);
 }
 
 
 // greater_than
 
+f2ptr raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__greater_than(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: greater_than");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_push
 
+f2ptr raw__optimize_fiber__call_bytecode__block_push__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_push");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_push__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_enter
 
 f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this, f2ptr bytecode) {
-  printf("\noptimize: block_enter");
   
+  return nil;
+}
+
+f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  printf("\noptimize: block_enter");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_enter(cause, this, bytecode);
 }
 
 
 // block_define_rest_argument
 
+f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_define_rest_argument");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_define_rest_argument__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_define_argument
 
+f2ptr raw__optimize_fiber__call_bytecode__block_define_argument__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_define_argument(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_define_argument");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_define_argument__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_define_last_argument
 
+f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_define_last_argument");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_define_last_argument__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_pop
 
+f2ptr raw__optimize_fiber__call_bytecode__block_pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_pop");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_pop__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_exit_and_pop
 
+f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_exit_and_pop");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_exit_and_pop__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_exit_and_no_pop
 
+f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_exit_and_no_pop");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_exit_and_no_pop__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_eval_args_begin
 
+f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_eval_args_begin");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_eval_args_begin__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_eval_args_next
 
+f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_eval_args_next");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_eval_args_next__no_increment_pc(cause, this, bytecode);
 }
 
 
 // block_eval_args_end
 
+f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
+  
+  return nil;
+}
+
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_eval_args_end");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
-  return nil;
+  return raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc(cause, this, bytecode);
 }
 
 

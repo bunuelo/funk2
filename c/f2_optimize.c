@@ -27,7 +27,7 @@
 def_primobject_2_slot(optimize_data, data_type, name);
 
 f2ptr f2__optimize_data__new(f2ptr cause, f2ptr data_type, f2ptr name) {
-  return f2optimize_data__new(cause, data_type, name);optimize_
+  return f2optimize_data__new(cause, data_type, name);
 }
 def_pcfunk2(optimize_data__new, data_type, name, return f2__optimize_data__new(this_cause, data_type, name));
 

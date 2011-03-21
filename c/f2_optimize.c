@@ -913,7 +913,7 @@ def_primobject_1_slot(optimize_context,
 		      initial_fiber);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr initial_fiber = f2__optimize_fiber(cause);
+  f2ptr initial_fiber = f2__optimize_fiber__new(cause);
   return f2optimize_context__new(cause,
 				 initial_fiber);
 }

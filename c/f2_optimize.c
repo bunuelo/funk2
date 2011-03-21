@@ -253,13 +253,19 @@ f2ptr raw__optimize_fiber__call_bytecode__funk(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: array");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2ptr length    = f2__bytecode__arg0(cause, bytecode);
+  if (! raw__integer__is_type(cause, length)) {
+    return f2larva__new(cause, 5235, nil);
+  }
+  f2ptr new_array = f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));
+  f2__optimize_fiber__iter__set(cause, this, new_array);
   return nil;
 }
 
@@ -268,13 +274,15 @@ f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr b
 
 f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cons");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2ptr new_cons = f2cons__new(cause, nil, nil);
+  f2__optimize_fiber__iter__set(cause, this, new_cons);
   return nil;
 }
 
@@ -283,13 +291,15 @@ f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: consp");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2ptr result = f2bool__new(raw__cons__is_type(cause, f2__optimize_fiber__value(cause, this)));
+  f2__optimize_fiber__value__set(cause, this, result);
   return nil;
 }
 
@@ -298,13 +308,21 @@ f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this, f2ptr b
 
 f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: car");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2ptr fiber__iter = f2__optimize_fiber__iter(cause, this);
+  if (! raw__cons__is_type(cause, fiber__iter)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "fiber_iter_is_not_cons_in_bytecode_car"));
+    return f2larva__new(cause, 531, f2__bug__new(cause, f2integer__new(cause, 531), bug_frame));
+  }
+  f2ptr fiber__value = f2cons__car(fiber__iter, cause);
+  f2__optimize_fiber__value__set(cause, this, fiber__value);
   return nil;
 }
 
@@ -313,13 +331,21 @@ f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cdr");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2ptr fiber__iter  = f2__optimize_fiber__iter(cause, this);
+  if (! raw__cons__is_type(cause, fiber__iter)) {
+    f2ptr bug_frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "fiber_iter_is_not_cons_in_bytecode_cdr"));
+    return f2larva__new(cause, 5311, f2__bug__new(cause, f2integer__new(cause, 5311), bug_frame));
+  }
+  f2ptr fiber__value = f2cons__cdr(fiber__iter, cause);
+  f2__optimize_fiber__value__set(cause, this, fiber__value);
   return nil;
 }
 
@@ -328,13 +354,14 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: car-set");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2__cons__car__set(cause, f2__optimize_fiber__iter(cause, this), f2__optimize_fiber__value(cause, this));
   return nil;
 }
 
@@ -343,13 +370,14 @@ f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cdr-set");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2__cons__cdr__set(cause, f2__optimize_fiber__iter(cause, this), f2__optimize_fiber__value(cause, this));
   return nil;
 }
 
@@ -358,13 +386,21 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: array_elt");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  f2ptr array = f2__bytecode__arg0(cause, bytecode);
+  f2ptr index = f2__bytecode__arg1(cause, bytecode);
+  if (! raw__array__is_type(cause, array)) {
+    return f2larva__new(cause, 51555, nil);
+  }
+  if (! raw__integer__is_type(cause, array)) {
+    return f2larva__new(cause, 51556, nil);
+  }
+  f2__optimize_fiber__value__set(cause, this, f2__array__elt(cause, array, index));
   return nil;
 }
 
@@ -373,12 +409,23 @@ f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: ");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
+  }
+  
+  f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
+  f2ptr exp           = f2__bytecode__arg1(cause, bytecode);
+  if      (raw__eq(cause, register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, exp);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "iter")))            {f2__optimize_fiber__iter__set(           cause, this, exp);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "program_counter"))) {f2__optimize_fiber__program_counter__set(cause, this, exp);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "args")))            {f2__optimize_fiber__args__set(           cause, this, exp);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, exp);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "env")))             {f2__optimize_fiber__env__set(            cause, this, exp);}
+  else {
+    return f2larva__new(cause, 5432661, nil);
   }
   return nil;
 }
@@ -388,12 +435,52 @@ f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: swap");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
+  }
+  
+  f2ptr register_name_0 = f2__bytecode__arg0(cause, bytecode);
+  f2ptr register_name_1 = f2__bytecode__arg1(cause, bytecode);
+  f2ptr value_0 = nil;
+  f2ptr value_1 = nil;
+  if      (raw__eq(cause, register_name_0, new__symbol(cause, "value")))           {value_0 = f2__optimize_fiber__value(          cause, this);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "iter")))            {value_0 = f2__optimize_fiber__iter(           cause, this);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "program_counter"))) {value_0 = f2__optimize_fiber__program_counter(cause, this);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "args")))            {value_0 = f2__optimize_fiber__args(           cause, this);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "return_reg")))      {value_0 = f2__optimize_fiber__return_reg(     cause, this);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "env")))             {value_0 = f2__optimize_fiber__env(            cause, this);}
+  else {
+    return f2larva__new(cause, 5432662, nil);
+  }
+  if      (raw__eq(cause, register_name_1, new__symbol(cause, "value")))           {value_1 = f2__optimize_fiber__value(          cause, this);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "iter")))            {value_1 = f2__optimize_fiber__iter(           cause, this);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "program_counter"))) {value_1 = f2__optimize_fiber__program_counter(cause, this);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "args")))            {value_1 = f2__optimize_fiber__args(           cause, this);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "return_reg")))      {value_1 = f2__optimize_fiber__return_reg(     cause, this);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "env")))             {value_1 = f2__optimize_fiber__env(            cause, this);}
+  else {
+    return f2larva__new(cause, 5432663, nil);
+  }
+  if      (raw__eq(cause, register_name_0, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, value_1);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "iter")))            {f2__optimize_fiber__iter__set(           cause, this, value_1);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "program_counter"))) {f2__optimize_fiber__program_counter__set(cause, this, value_1);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "args")))            {f2__optimize_fiber__args__set(           cause, this, value_1);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, value_1);}
+  else if (raw__eq(cause, register_name_0, new__symbol(cause, "env")))             {f2__optimize_fiber__env__set(            cause, this, value_1);}
+  else {
+    return f2larva__new(cause, 5432664, nil);
+  }
+  if      (raw__eq(cause, register_name_1, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, value_0);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "iter")))            {f2__optimize_fiber__iter__set(           cause, this, value_0);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "program_counter"))) {f2__optimize_fiber__program_counter__set(cause, this, value_0);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "args")))            {f2__optimize_fiber__args__set(           cause, this, value_0);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, value_0);}
+  else if (raw__eq(cause, register_name_1, new__symbol(cause, "env")))             {f2__optimize_fiber__env__set(            cause, this, value_0);}
+  else {
+    return f2larva__new(cause, 5432665, nil);
   }
   return nil;
 }
@@ -403,12 +490,22 @@ f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: push");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
+  }
+  
+  f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
+  if      (raw__eq(cause, register_name, new__symbol(cause, "value")))           {raw__optimize_fiber__stack__push_value(          cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "iter")))            {raw__optimize_fiber__stack__push_iter(           cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "program_counter"))) {raw__optimize_fiber__stack__push_program_counter(cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "args")))            {raw__optimize_fiber__stack__push_args(           cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "return_reg")))      {raw__optimize_fiber__stack__push_return_reg(     cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "env")))             {raw__optimize_fiber__stack__push_env(            cause, this);}
+  else {
+    return f2larva__new(cause, 5432369, nil);
   }
   return nil;
 }
@@ -418,13 +515,15 @@ f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: push_constant");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  f2ptr constant = f2__bytecode__arg0(cause, bytecode);
+  raw__optimize_fiber__stack__push_constant(cause, this, constant);
   return nil;
 }
 
@@ -433,12 +532,23 @@ f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this,
 
 f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: pop");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
+  }
+
+  f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
+  if      (register_name == nil)                                                 {raw__optimize_fiber__stack__pop_nil(            cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "value")))           {raw__optimize_fiber__stack__pop_value(          cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "iter")))            {raw__optimize_fiber__stack__pop_iter(           cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "program_counter"))) {raw__optimize_fiber__stack__pop_program_counter(cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "args")))            {raw__optimize_fiber__stack__pop_args(           cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "return_reg")))      {raw__optimize_fiber__stack__pop_return_reg(     cause, this);}
+  else if (raw__eq(cause, register_name, new__symbol(cause, "env")))             {raw__optimize_fiber__stack__pop_env(            cause, this);}
+  else {
+    return f2larva__new(cause, 5432369, nil);
   }
   return nil;
 }
@@ -448,12 +558,33 @@ f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: copy");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
+  }
+  
+  f2ptr from_register_name = f2__bytecode__arg0(cause, bytecode);
+  f2ptr to_register_name   = f2__bytecode__arg1(cause, bytecode);
+  f2ptr from_value = nil;
+  if      (raw__eq(cause, from_register_name, new__symbol(cause, "value")))           {from_value = f2__optimize_fiber__value(          cause, this);}
+  else if (raw__eq(cause, from_register_name, new__symbol(cause, "iter")))            {from_value = f2__optimize_fiber__iter(           cause, this);}
+  else if (raw__eq(cause, from_register_name, new__symbol(cause, "program_counter"))) {from_value = f2__optimize_fiber__program_counter(cause, this);}
+  else if (raw__eq(cause, from_register_name, new__symbol(cause, "args")))            {from_value = f2__optimize_fiber__args(           cause, this);}
+  else if (raw__eq(cause, from_register_name, new__symbol(cause, "return_reg")))      {from_value = f2__optimize_fiber__return_reg(     cause, this);}
+  else if (raw__eq(cause, from_register_name, new__symbol(cause, "env")))             {from_value = f2__optimize_fiber__env(            cause, this);}
+  else {
+    return f2larva__new(cause, 5433462, nil);
+  }
+  if      (raw__eq(cause, to_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, from_value);}
+  else if (raw__eq(cause, to_register_name, new__symbol(cause, "iter")))            {f2__optimize_fiber__iter__set(           cause, this, from_value);}
+  else if (raw__eq(cause, to_register_name, new__symbol(cause, "program_counter"))) {f2__optimize_fiber__program_counter__set(cause, this, from_value);}
+  else if (raw__eq(cause, to_register_name, new__symbol(cause, "args")))            {f2__optimize_fiber__args__set(           cause, this, from_value);}
+  else if (raw__eq(cause, to_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, from_value);}
+  else if (raw__eq(cause, to_register_name, new__symbol(cause, "env")))             {f2__optimize_fiber__env__set(            cause, this, from_value);}
+  else {
+    return f2larva__new(cause, 5433564, nil);
   }
   return nil;
 }
@@ -463,13 +594,14 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__lookup(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: lookup");
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
+  
+  
   return nil;
 }
 

@@ -98,30 +98,33 @@ def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause))
 
 
 f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr stack      = nil;
-  f2ptr stack_iter = nil;
+  f2ptr args_reg      = nil;
+  f2ptr args_reg_iter = nil;
   {
-    f2ptr args = f2__funk__args(cause, funk);
+    f2ptr funk__args = f2__funk__args(cause, funk);
     {
-      f2ptr iter = args;
+      f2ptr iter = funk__args;
       while (iter != nil) {
 	f2ptr variable_name = f2__cons__car(cause, iter);
 	{
 	  f2ptr initial_variable_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-variable"), variable_name);
 	  f2ptr new_cons = f2cons__new(cause, initial_variable_data, nil);
-	  if (stack == nil) {
-	    stack      = new_cons;
-	    stack_iter = new_cons;
+	  if (args_reg == nil) {
+	    args_reg      = new_cons;
+	    args_reg_iter = new_cons;
 	  } else {
-	    f2__cons__cdr__set(cause, stack_iter, new_cons);
-	    stack_iter = new_cons;
+	    f2__cons__cdr__set(cause, args_reg_iter, new_cons);
+	    args_reg_iter = new_cons;
 	  }
 	}
 	iter = f2__cons__cdr(cause, iter);
       }
     }
   }
-  f2__optimize_context__stack__set(cause, this, stack);
+  {
+    f2ptr register_hash = f2__optimize_context__register_hash(cause, this);
+    raw__ptypehash__add(cause, register_hash, new__symbol(cause, "args"), args_reg);
+  }
   return nil;
 }
 

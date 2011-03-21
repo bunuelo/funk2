@@ -739,80 +739,80 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end(f2ptr cause, f2ptr
 
 
 
-f2ptr raw__optimize_fiber__call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr body_bytecodes = f2__funk__body_bytecodes(cause, funk);
+f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
+  f2ptr program_counter = f2__optimize_fiber__program_counter(cause, this);
+  if (program_counter == nil) {
+    return f2bool__new(boolean__true);
+  }
+  if (! raw__cons__is_type(cause, program_counter)) {
+    return f2larva__new(cause, 512431, nil);
+  }
+  f2ptr bytecode = f2__cons__car(cause, program_counter);
   {
-    f2ptr bytecode_iter = body_bytecodes;
-    while (bytecode_iter != nil) {
-      f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
-      {
-	f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
-	if      (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__jump__funk(                cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__funk(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__array(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cons")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__cons(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "consp")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__consp(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__car(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__cdr(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car-set")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__car__set(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr-set")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__cdr__set(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array_elt")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__array_elt(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "set")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__set(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "swap")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__swap(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__push(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push_constant")))              {f2ptr result = raw__optimize_fiber__call_bytecode__push_constant(             cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "pop")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__pop(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "copy")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__copy(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__lookup(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "define")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__define(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "mutate-type_var")))            {f2ptr result = raw__optimize_fiber__call_bytecode__mutate__type_var(          cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "globalize-type_var")))         {f2ptr result = raw__optimize_fiber__call_bytecode__globalize__type_var(       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__jump(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__if__jump(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__else__jump(                cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "nop")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__nop(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "debug")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__debug(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "tracer")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__tracer(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "endfunk")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__endfunk(                   cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "compile")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__compile(                   cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "yield")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__yield(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "newenv")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__newenv(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code")))               {f2ptr result = raw__optimize_fiber__call_bytecode__machine_code(              cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt")))              {f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt(            cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt-set")))          {f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt__set(       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "eq")))                         {f2ptr result = raw__optimize_fiber__call_bytecode__eq(                        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "not")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__not(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "and")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__and(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "or")))                         {f2ptr result = raw__optimize_fiber__call_bytecode__or(                        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "add")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__add(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "negative")))                   {f2ptr result = raw__optimize_fiber__call_bytecode__negative(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "subtract")))                   {f2ptr result = raw__optimize_fiber__call_bytecode__subtract(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "multiply")))                   {f2ptr result = raw__optimize_fiber__call_bytecode__multiply(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "inverse")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__inverse(                   cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "divide")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__divide(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "modulo")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__modulo(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "increment")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__increment(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "decrement")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__decrement(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "numerically_equals")))         {f2ptr result = raw__optimize_fiber__call_bytecode__numerically_equals(        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "less_than")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__less_than(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "greater_than")))               {f2ptr result = raw__optimize_fiber__call_bytecode__greater_than(              cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_push")))                 {f2ptr result = raw__optimize_fiber__call_bytecode__block_push(                cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter")))                {f2ptr result = raw__optimize_fiber__call_bytecode__block_enter(               cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_rest_argument"))) {f2ptr result = raw__optimize_fiber__call_bytecode__block_define_rest_argument(cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_argument")))      {f2ptr result = raw__optimize_fiber__call_bytecode__block_define_argument(     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_last_argument"))) {f2ptr result = raw__optimize_fiber__call_bytecode__block_define_last_argument(cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_pop")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__block_pop(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_pop")))         {f2ptr result = raw__optimize_fiber__call_bytecode__block_exit_and_pop(        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_no_pop")))      {f2ptr result = raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin")))      {f2ptr result = raw__optimize_fiber__call_bytecode__block_eval_args_begin(     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next")))       {f2ptr result = raw__optimize_fiber__call_bytecode__block_eval_args_next(      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end")))        {f2ptr result = raw__optimize_fiber__call_bytecode__block_eval_args_end(       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
-	else {
-	  printf("\nbytecode UNRECOGNIZED: cannot optimize funk.");
-	  return f2larva__new(cause, 5123, nil);
-	}
-      }
-      bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
+    f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
+    if      (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__jump__funk(                cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__funk(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__array(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cons")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__cons(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "consp")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__consp(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__car(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__cdr(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car-set")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__car__set(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr-set")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__cdr__set(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array_elt")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__array_elt(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "set")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__set(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "swap")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__swap(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__push(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push_constant")))              {f2ptr result = raw__optimize_fiber__call_bytecode__push_constant(             cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "pop")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__pop(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "copy")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__copy(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__lookup(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "define")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__define(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "mutate-type_var")))            {f2ptr result = raw__optimize_fiber__call_bytecode__mutate__type_var(          cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "globalize-type_var")))         {f2ptr result = raw__optimize_fiber__call_bytecode__globalize__type_var(       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump")))                       {f2ptr result = raw__optimize_fiber__call_bytecode__jump(                      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__if__jump(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__else__jump(                cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "nop")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__nop(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "debug")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__debug(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "tracer")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__tracer(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "endfunk")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__endfunk(                   cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "compile")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__compile(                   cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "yield")))                      {f2ptr result = raw__optimize_fiber__call_bytecode__yield(                     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "newenv")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__newenv(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code")))               {f2ptr result = raw__optimize_fiber__call_bytecode__machine_code(              cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt")))              {f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt(            cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt-set")))          {f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt__set(       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "eq")))                         {f2ptr result = raw__optimize_fiber__call_bytecode__eq(                        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "not")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__not(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "and")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__and(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "or")))                         {f2ptr result = raw__optimize_fiber__call_bytecode__or(                        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "add")))                        {f2ptr result = raw__optimize_fiber__call_bytecode__add(                       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "negative")))                   {f2ptr result = raw__optimize_fiber__call_bytecode__negative(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "subtract")))                   {f2ptr result = raw__optimize_fiber__call_bytecode__subtract(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "multiply")))                   {f2ptr result = raw__optimize_fiber__call_bytecode__multiply(                  cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "inverse")))                    {f2ptr result = raw__optimize_fiber__call_bytecode__inverse(                   cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "divide")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__divide(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "modulo")))                     {f2ptr result = raw__optimize_fiber__call_bytecode__modulo(                    cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "increment")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__increment(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "decrement")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__decrement(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "numerically_equals")))         {f2ptr result = raw__optimize_fiber__call_bytecode__numerically_equals(        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "less_than")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__less_than(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "greater_than")))               {f2ptr result = raw__optimize_fiber__call_bytecode__greater_than(              cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_push")))                 {f2ptr result = raw__optimize_fiber__call_bytecode__block_push(                cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter")))                {f2ptr result = raw__optimize_fiber__call_bytecode__block_enter(               cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_rest_argument"))) {f2ptr result = raw__optimize_fiber__call_bytecode__block_define_rest_argument(cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_argument")))      {f2ptr result = raw__optimize_fiber__call_bytecode__block_define_argument(     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_last_argument"))) {f2ptr result = raw__optimize_fiber__call_bytecode__block_define_last_argument(cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_pop")))                  {f2ptr result = raw__optimize_fiber__call_bytecode__block_pop(                 cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_pop")))         {f2ptr result = raw__optimize_fiber__call_bytecode__block_exit_and_pop(        cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_no_pop")))      {f2ptr result = raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin")))      {f2ptr result = raw__optimize_fiber__call_bytecode__block_eval_args_begin(     cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next")))       {f2ptr result = raw__optimize_fiber__call_bytecode__block_eval_args_next(      cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end")))        {f2ptr result = raw__optimize_fiber__call_bytecode__block_eval_args_end(       cause, this, bytecode); if (raw__larva__is_type(cause, result)) {return result;}}
+    else {
+      printf("\nbytecode UNRECOGNIZED: cannot optimize funk.");
+      return f2larva__new(cause, 5123, nil);
     }
   }
   return nil;
@@ -855,13 +855,22 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_1_slot(optimize_context,
-		      initial_fiber);
+def_primobject_4_slot(optimize_context,
+		      initial_fiber,
+		      active_fiber_set,
+		      branched_fiber_set,
+		      finished_fiber_set);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr initial_fiber = f2__optimize_fiber__new(cause);
+  f2ptr initial_fiber      = f2__optimize_fiber__new(cause);
+  f2ptr active_fiber_set   = f2__set__new(cause);
+  f2ptr branched_fiber_set = f2__set__new(cause);
+  f2ptr finished_fiber_set = f2__set__new(cause);
   return f2optimize_context__new(cause,
-				 initial_fiber);
+				 initial_fiber,
+				 active_fiber_set,
+				 branched_fiber_set,
+				 finished_fiber_set);
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
@@ -872,7 +881,10 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list4__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-					       new__symbol(cause, "initial_fiber"), f2__optimize_context__initial_fiber(cause, this)));
+					       new__symbol(cause, "initial_fiber"),      f2__optimize_context__initial_fiber(     cause, this),
+					       new__symbol(cause, "active_fiber_set"),   f2__optimize_context__active_fiber_set(  cause, this),
+					       new__symbol(cause, "branched_fiber_set"), f2__optimize_context__branched_fiber_set(cause, this),
+					       new__symbol(cause, "finished_fiber_set"), f2__optimize_context__finished_fiber_set(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -905,7 +917,7 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
     }
   }
   {
-    f2ptr result = raw__optimize_fiber__call_funk(cause, initial_fiber, this);
+    f2ptr result = raw__optimize_fiber__call_next_bytecode(cause, initial_fiber, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -976,8 +988,11 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_1_slot(optimize_context,
-			       initial_fiber);
+  initialize_primobject_4_slot(optimize_context,
+			       initial_fiber,
+			       active_fiber_set,
+			       branched_fiber_set,
+			       finished_fiber_set);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_context to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}

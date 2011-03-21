@@ -22,12 +22,19 @@
 #ifndef F2__OPTIMIZE__TYPES__H
 #define F2__OPTIMIZE__TYPES__H
 
+// optimize_operation
+
+typedef struct funk2_object_type__optimize_operation__slot_s funk2_object_type__optimize_operation__slot_t;
+struct funk2_object_type__optimize_operation__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+};
+
+
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_6_slot(optimize_context,
-			   operation_graph,
-			   data_graph,
+declare_object_type_4_slot(optimize_context,
 			   stack,
 			   register_frame,
 			   variable_frame,
@@ -42,11 +49,16 @@ declare_object_type_6_slot(optimize_context,
 #ifndef F2__OPTIMIZE__H
 #define F2__OPTIMIZE__H
 
+// optimize_operation
+
+declare_frame_object_2_slot(optimize_operation, operation_type, name);
+
+f2ptr f2optimize_operation__primobject_type__new_aux(f2ptr cause);
+
+
 // optimize_context
 
-declare_primobject_6_slot(optimize_context,
-			  operation_graph,
-			  data_graph,
+declare_primobject_4_slot(optimize_context,
 			  stack,
 			  register_frame,
 			  variable_frame,

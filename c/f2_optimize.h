@@ -49,6 +49,8 @@ declare_object_type_4_slot(optimize_context,
 #ifndef F2__OPTIMIZE__H
 #define F2__OPTIMIZE__H
 
+#include "f2_frame_objects.h"
+
 // optimize_operation
 
 declare_frame_object_2_slot(optimize_operation, operation_type, name);

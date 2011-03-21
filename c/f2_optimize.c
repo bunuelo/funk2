@@ -874,11 +874,11 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list12__new(cause,
-						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-						new__symbol(cause, "stack"),          f2__optimize_context__stack(         cause, this),
-						new__symbol(cause, "register_hash"),  f2__optimize_context__register_hash( cause, this),
-						new__symbol(cause, "variable_frame"), f2__optimize_context__variable_frame(cause, this)));
+    frame = f2__frame__new(cause, f2list8__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
+					       new__symbol(cause, "stack"),          f2__optimize_context__stack(         cause, this),
+					       new__symbol(cause, "register_hash"),  f2__optimize_context__register_hash( cause, this),
+					       new__symbol(cause, "variable_frame"), f2__optimize_context__variable_frame(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

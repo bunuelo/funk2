@@ -118,7 +118,7 @@ def_primobject_7_slot(optimize_fiber,
 		      env);
 
 f2ptr f2__optimize_fiber__new(f2ptr cause) {
-  f2ptr stack           = nil;
+  f2ptr stack           = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
   f2ptr value           = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
   f2ptr iter            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
   f2ptr program_counter = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
@@ -201,10 +201,6 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: jump-funk");
-  //f2ptr stack              = f2__optimize_fiber__stack(             cause, this);
-  //f2ptr register_frame     = f2__optimize_fiber__register_frame(    cause, this);
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -214,8 +210,6 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk(f2ptr cause, f2ptr this, f2
 
 f2ptr raw__optimize_fiber__call_bytecode__funk(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: funk");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -225,8 +219,6 @@ f2ptr raw__optimize_fiber__call_bytecode__funk(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: array");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -236,8 +228,6 @@ f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr b
 
 f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cons");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -247,8 +237,6 @@ f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: consp");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -258,8 +246,6 @@ f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this, f2ptr b
 
 f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: car");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -269,8 +255,6 @@ f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cdr");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -280,8 +264,6 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: car-set");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -291,8 +273,6 @@ f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: cdr-set");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -302,8 +282,6 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: array_elt");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -313,8 +291,6 @@ f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: ");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -324,8 +300,6 @@ f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: swap");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -335,8 +309,6 @@ f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: push");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -346,8 +318,6 @@ f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: push_constant");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -357,8 +327,6 @@ f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this,
 
 f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: pop");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -368,8 +336,6 @@ f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: copy");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -379,8 +345,6 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__lookup(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: lookup");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -390,8 +354,6 @@ f2ptr raw__optimize_fiber__call_bytecode__lookup(f2ptr cause, f2ptr this, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__define(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: define");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -401,8 +363,6 @@ f2ptr raw__optimize_fiber__call_bytecode__define(f2ptr cause, f2ptr this, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: mutate-type_var");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -412,8 +372,6 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr th
 
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: globalize-type_var");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -423,8 +381,6 @@ f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var(f2ptr cause, f2ptr
 
 f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: jump");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -434,8 +390,6 @@ f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr by
 
 f2ptr raw__optimize_fiber__call_bytecode__if__jump(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: if-jump");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -445,8 +399,6 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__else__jump(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: else-jump");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -456,8 +408,6 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump(f2ptr cause, f2ptr this, f2
 
 f2ptr raw__optimize_fiber__call_bytecode__nop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: nop");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -467,8 +417,6 @@ f2ptr raw__optimize_fiber__call_bytecode__nop(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__debug(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: debug");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -478,8 +426,6 @@ f2ptr raw__optimize_fiber__call_bytecode__debug(f2ptr cause, f2ptr this, f2ptr b
 
 f2ptr raw__optimize_fiber__call_bytecode__tracer(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: tracer");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -489,8 +435,6 @@ f2ptr raw__optimize_fiber__call_bytecode__tracer(f2ptr cause, f2ptr this, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__endfunk(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: endfunk");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -500,8 +444,6 @@ f2ptr raw__optimize_fiber__call_bytecode__endfunk(f2ptr cause, f2ptr this, f2ptr
 
 f2ptr raw__optimize_fiber__call_bytecode__compile(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: compile");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -511,8 +453,6 @@ f2ptr raw__optimize_fiber__call_bytecode__compile(f2ptr cause, f2ptr this, f2ptr
 
 f2ptr raw__optimize_fiber__call_bytecode__yield(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: yield");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -522,8 +462,6 @@ f2ptr raw__optimize_fiber__call_bytecode__yield(f2ptr cause, f2ptr this, f2ptr b
 
 f2ptr raw__optimize_fiber__call_bytecode__newenv(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: newenv");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -533,8 +471,6 @@ f2ptr raw__optimize_fiber__call_bytecode__newenv(f2ptr cause, f2ptr this, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__machine_code(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: machine_code");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -544,8 +480,6 @@ f2ptr raw__optimize_fiber__call_bytecode__machine_code(f2ptr cause, f2ptr this, 
 
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: reg_array-elt");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -555,8 +489,6 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this
 
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: reg_array-elt-set");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -566,8 +498,6 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr
 
 f2ptr raw__optimize_fiber__call_bytecode__eq(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: eq");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -577,8 +507,6 @@ f2ptr raw__optimize_fiber__call_bytecode__eq(f2ptr cause, f2ptr this, f2ptr byte
 
 f2ptr raw__optimize_fiber__call_bytecode__not(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: not");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -588,8 +516,6 @@ f2ptr raw__optimize_fiber__call_bytecode__not(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__and(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: and");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -599,8 +525,6 @@ f2ptr raw__optimize_fiber__call_bytecode__and(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__or(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: ");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -610,8 +534,6 @@ f2ptr raw__optimize_fiber__call_bytecode__or(f2ptr cause, f2ptr this, f2ptr byte
 
 f2ptr raw__optimize_fiber__call_bytecode__add(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: add");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -621,8 +543,6 @@ f2ptr raw__optimize_fiber__call_bytecode__add(f2ptr cause, f2ptr this, f2ptr byt
 
 f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: negative");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -632,8 +552,6 @@ f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__subtract(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: subtract");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -643,8 +561,6 @@ f2ptr raw__optimize_fiber__call_bytecode__subtract(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__multiply(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: multiply");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -654,8 +570,6 @@ f2ptr raw__optimize_fiber__call_bytecode__multiply(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: inverse");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -665,8 +579,6 @@ f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr
 
 f2ptr raw__optimize_fiber__call_bytecode__divide(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: divide");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -676,8 +588,6 @@ f2ptr raw__optimize_fiber__call_bytecode__divide(f2ptr cause, f2ptr this, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__modulo(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: modulo");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -687,8 +597,6 @@ f2ptr raw__optimize_fiber__call_bytecode__modulo(f2ptr cause, f2ptr this, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: increment");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -698,8 +606,6 @@ f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: decrement");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -709,8 +615,6 @@ f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__numerically_equals(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: numerically_equals");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -720,8 +624,6 @@ f2ptr raw__optimize_fiber__call_bytecode__numerically_equals(f2ptr cause, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__less_than(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: less_than");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -731,8 +633,6 @@ f2ptr raw__optimize_fiber__call_bytecode__less_than(f2ptr cause, f2ptr this, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__greater_than(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: greater_than");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -742,8 +642,6 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than(f2ptr cause, f2ptr this, 
 
 f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_push");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -753,8 +651,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this, f2
 
 f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_enter");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -764,8 +660,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this, f
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_define_rest_argument");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -775,8 +669,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument(f2ptr cause
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_argument(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_define_argument");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -786,8 +678,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_argument(f2ptr cause, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_define_last_argument");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -797,8 +687,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument(f2ptr cause
 
 f2ptr raw__optimize_fiber__call_bytecode__block_pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_pop");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -808,8 +696,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_pop(f2ptr cause, f2ptr this, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_exit_and_pop");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -819,8 +705,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop(f2ptr cause, f2ptr 
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_exit_and_no_pop");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -830,8 +714,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(f2ptr cause, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_eval_args_begin");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -841,8 +723,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin(f2ptr cause, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_eval_args_next");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -852,8 +732,6 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next(f2ptr cause, f2pt
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end(f2ptr cause, f2ptr this, f2ptr bytecode) {
   printf("\noptimize: block_eval_args_end");
-  //f2ptr node_bytecode_hash = f2__optimize_fiber__node_bytecode_hash(cause, this);
-  //f2ptr bytecode_node      = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
   return nil;
 }
@@ -945,17 +823,22 @@ f2ptr raw__optimize_fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list6__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_fiber"),
-					       new__symbol(cause, "stack"),         f2__optimize_fiber__stack(        cause, this),
-					       new__symbol(cause, "register_hash"), f2__optimize_fiber__register_hash(cause, this)));
+    frame = f2__frame__new(cause, f2list16__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_fiber"),
+						new__symbol(cause, "stack"),           f2__optimize_fiber__stack(          cause, this),
+						new__symbol(cause, "value"),           f2__optimize_fiber__value(          cause, this),
+						new__symbol(cause, "iter"),            f2__optimize_fiber__iter(           cause, this),
+						new__symbol(cause, "program_counter"), f2__optimize_fiber__program_counter(cause, this),
+						new__symbol(cause, "args"),            f2__optimize_fiber__args(           cause, this),
+						new__symbol(cause, "return_reg"),      f2__optimize_fiber__return_reg(     cause, this),
+						new__symbol(cause, "env"),             f2__optimize_fiber__env(            cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__optimize_fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(optimize_fiber,     this);
+  assert_argument_type(optimize_fiber,       this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_fiber__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
@@ -1078,9 +961,14 @@ void f2__optimize__initialize() {
 
   // optimize_fiber
   
-  initialize_primobject_2_slot(optimize_fiber,
+  initialize_primobject_7_slot(optimize_fiber,
 			       stack,
-			       register_hash);
+			       value,
+			       iter,
+			       program_counter,
+			       args,
+			       return_reg,
+			       env);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_fiber__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_fiber to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__funk = never_gc(cfunk);}

@@ -1255,10 +1255,16 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
 				       finished_fiber_set);
   initial_fiber = f2__optimize_fiber__new(cause, this);
   f2__optimize_context__initial_fiber__set(cause, this, initial_fiber);
+  raw__optimize_context__add_active_fiber(cause, this, initial_fiber);
   return this;
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
+
+void raw__optimize_context__add_active_fiber(f2ptr cause, f2ptr this, f2ptr active_fiber) {
+  f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
+  raw__set__add(cause, active_fiber_set, active_fiber);
+}
 
 f2ptr raw__optimize_context__active_fiber_finished(f2ptr cause, f2ptr this, f2ptr active_fiber) {
   {

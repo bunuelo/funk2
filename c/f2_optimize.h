@@ -125,6 +125,7 @@ declare_primobject_4_slot(optimize_context,
 
 
 f2ptr  f2__optimize_context__new                      (f2ptr cause);
+void  raw__optimize_context__add_active_fiber         (f2ptr cause, f2ptr this, f2ptr active_fiber);
 f2ptr raw__optimize_context__active_fiber_finished    (f2ptr cause, f2ptr this, f2ptr active_fiber);
 f2ptr raw__optimize_context__execute_one_bytecode     (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_context__complete_simulation      (f2ptr cause, f2ptr this);

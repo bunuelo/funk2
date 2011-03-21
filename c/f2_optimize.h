@@ -22,12 +22,24 @@
 #ifndef F2__OPTIMIZE__TYPES__H
 #define F2__OPTIMIZE__TYPES__H
 
+// optimize_cause
+
+typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
+declare_object_type_3_slot(optimize_cause,
+			   cause_type,
+			   name,
+			   args,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
-declare_object_type_2_slot(optimize_data,
+declare_object_type_3_slot(optimize_data,
 			   data_type,
 			   name,
+			   optimize_cause,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -59,11 +71,22 @@ declare_object_type_1_slot(optimize_context,
 
 #include "f2_frame_objects.h"
 
+// optimize_cause
+
+declare_primobject_3_slot(optimize_cause,
+			  cause_type,
+			  name,
+			  args);
+
+f2ptr f2optimize_cause__primobject_type__new_aux(f2ptr cause);
+
+
 // optimize_data
 
-declare_primobject_2_slot(optimize_data,
+declare_primobject_3_slot(optimize_data,
 			  data_type,
-			  name);
+			  name,
+			  optimize_cause);
 
 f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
 

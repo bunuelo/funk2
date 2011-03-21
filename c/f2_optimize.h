@@ -24,7 +24,7 @@
 
 // optimize_cause
 
-typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
+typedef struct funk2_object_type__optimize_cause__slot_s funk2_object_type__optimize_cause__slot_t;
 declare_object_type_3_slot(optimize_cause,
 			   cause_type,
 			   name,

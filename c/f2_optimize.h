@@ -22,14 +22,15 @@
 #ifndef F2__OPTIMIZE__TYPES__H
 #define F2__OPTIMIZE__TYPES__H
 
-// optimize_operation
+// optimize_data
 
-typedef struct funk2_object_type__optimize_operation__slot_s funk2_object_type__optimize_operation__slot_t;
-struct funk2_object_type__optimize_operation__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
-};
-
+typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
+declare_object_type_2_slot(optimize_data,
+			   data_type,
+			   name,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 // optimize_context
 
@@ -51,11 +52,13 @@ declare_object_type_4_slot(optimize_context,
 
 #include "f2_frame_objects.h"
 
-// optimize_operation
+// optimize_data
 
-declare_frame_object_2_slot(optimize_operation, operation_type, name);
+declare_primobject_2_slot(optimize_data,
+			  data_type,
+			  name);
 
-f2ptr f2optimize_operation__primobject_type__new_aux(f2ptr cause);
+f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
 
 
 // optimize_context

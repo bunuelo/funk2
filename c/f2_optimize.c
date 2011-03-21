@@ -22,100 +22,82 @@
 #include "funk2.h"
 
 
+// optimize_data
 
+def_primobject_2_slot(optimize_data, data_type, name);
 
-// optimize_data_node
-
-f2ptr raw__optimize_data_node__new(f2ptr cause, f2ptr type, f2ptr name) {
-  f2ptr optimize_data = raw__array__new(cause, 3);
-  raw__array__elt__set(cause, optimize_data, 0, new__symbol(cause, "optimize_data"));
-  raw__array__elt__set(cause, optimize_data, 1, type);
-  raw__array__elt__set(cause, optimize_data, 2, name);
-  return f2__graph_node__new(cause, optimize_data);
+f2ptr f2__optimize_data__new(f2ptr cause, f2ptr data_type, f2ptr name) {
+  return f2optimize_data__new(cause, data_type, name);
 }
+def_pcfunk0(optimize_data__new, return f2__optimize_data__new(this_cause));
 
-boolean_t raw__optimize_data_node__is_type(f2ptr cause, f2ptr object) {
-  if (! raw__graph_node__is_type(cause, object)) {
-    return boolean__false;
+
+f2ptr raw__optimize_data__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list6__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_data"),
+					       new__symbol(cause, "data_type"), f2__optimize_data__data_type(cause, this),
+					       new__symbol(cause, "name"),      f2__optimize_data__name(     cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
-  f2ptr data = f2__graph_node__label(cause, object);
-  return ((data != nil) &&
-	  raw__array__is_type(cause, data) &&
-	  (raw__array__length(cause, data) == 2) &&
-	  raw__eq(cause, raw__array__elt(cause, data, 0), new__symbol(cause, "optimize_data")));
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
-f2ptr raw__optimize_data_node__type(f2ptr cause, f2ptr this) {
-  return raw__array__elt(cause, f2__graph_node__label(cause, this), 1);
+f2ptr f2__optimize_data__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(optimize_data,     this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__optimize_data__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-
-f2ptr raw__optimize_data_node__name(f2ptr cause, f2ptr this) {
-  return raw__array__elt(cause, f2__graph_node__label(cause, this), 2);
-}
+def_pcfunk2(optimize_data__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_data__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
-// optimize_operation
-
-def_frame_object__global__2_slot(optimize_operation, operation_type, name);
-
-f2ptr f2__optimize_operation_node__new(f2ptr cause, f2ptr operation_type, f2ptr name) {
-  return f2optimize_operation_node__new(cause, operation_type, name);
-}
-def_pcfunk0(optimize_operation__new, return f2__optimize_operation__new(this_cause));
-
-
-f2ptr f2optimize_operation__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2optimize_operation__primobject_type__new(cause);
-  {char* slot_name = "new"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_operation.new__funk);}
+f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2optimize_data__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__funk);}
   return this;
 }
 
 
-
-
 // optimize_context
 
-def_primobject_4_slot(optimize_context,
+def_primobject_3_slot(optimize_context,
 		      stack,
-		      register_frame,
-		      variable_frame,
-		      node_bytecode_hash);
+		      register_hash,
+		      variable_frame);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr stack              = nil;
-  f2ptr register_frame     = f2__frame__new(cause, nil);
-  f2ptr variable_frame     = f2__frame__new(cause, nil);
-  f2ptr node_bytecode_hash = f2__ptypehash__new(cause);
+  f2ptr stack          = nil;
+  f2ptr register_hash  = f2__ptypehash__new(cause);
+  f2ptr variable_frame = f2__frame__new(cause, nil);
   {
-    f2ptr fiber_registers = f2list6__new(cause,
-					 new__symbol(cause, "return"),
-					 new__symbol(cause, "value"),
-					 new__symbol(cause, "iter"),
-					 new__symbol(cause, "program_counter"),
-					 new__symbol(cause, "env"),
-					 new__symbol(cause, "args"));
-    f2ptr iter = fiber_registers;
+    f2ptr register_names = f2list6__new(cause,
+					      new__symbol(cause, "return"),
+					      new__symbol(cause, "value"),
+					      new__symbol(cause, "iter"),
+					      new__symbol(cause, "program_counter"),
+					      new__symbol(cause, "env"),
+					      new__symbol(cause, "args"));
+    f2ptr iter = register_names;
     while (iter != nil) {
-      f2ptr fiber_register = f2__cons__car(cause, iter);
+      f2ptr register_name = f2__cons__car(cause, iter);
       {
-	f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "register"), fiber_register);
-	raw__frame__add_var_value(cause, register_frame, fiber_register, data_node);
-	raw__graph__add_node(cause, data_graph, data_node);
+	f2ptr initial_register_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), register_name);
+	raw__ptypehash__add(cause, register_hash, register_name, initial_register_data);
       }
       iter = f2__cons__cdr(cause, iter);
     }
   }
   return f2optimize_context__new(cause,
 				 stack,
-				 register_frame,
-				 variable_frame,
-				 node_bytecode_hash);
+				 register_hash,
+				 variable_frame);
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
 
 f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr data_graph = f2__optimize_context__data_graph(cause, this);
   f2ptr stack      = nil;
   f2ptr stack_iter = nil;
   {
@@ -123,10 +105,10 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
     {
       f2ptr iter = args;
       while (iter != nil) {
-	f2ptr variable = f2__cons__car(cause, iter);
+	f2ptr variable_name = f2__cons__car(cause, iter);
 	{
-	  f2ptr data_node = raw__optimize_data_node__new(cause, new__symbol(cause, "variable"), variable);
-	  f2ptr new_cons = f2cons__new(cause, data_node, nil);
+	  f2ptr initial_variable_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-variable"), variable_name);
+	  f2ptr new_cons = f2cons__new(cause, initial_variable_data, nil);
 	  if (stack == nil) {
 	    stack      = new_cons;
 	    stack_iter = new_cons;
@@ -134,33 +116,12 @@ f2ptr raw__optimize_context__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr
 	    f2__cons__cdr__set(cause, stack_iter, new_cons);
 	    stack_iter = new_cons;
 	  }
-	  raw__graph__add_node(cause, data_graph, data_node);
 	}
 	iter = f2__cons__cdr(cause, iter);
       }
     }
   }
   f2__optimize_context__stack__set(cause, this, stack);
-  {
-    f2ptr body_bytecodes     = f2__funk__body_bytecodes(cause, funk);
-    f2ptr node_bytecode_hash = f2__optimize_context__node_bytecode_hash(cause, this);
-    {
-      f2ptr prev_bytecode_operation = nil;
-      f2ptr bytecode_iter           = body_bytecodes;
-      while (bytecode_iter != nil) {
-	f2ptr bytecode = f2__cons__car(cause, bytecode_iter);
-	{
-	  f2ptr bytecode_operation = f2__optimize_operation__new(cause, new__symbol(cause, "bytecode"), bytecode);
-	  raw__ptypehash__add(cause, operation_bytecode_hash, bytecode, bytecode_operation);
-	  if (prev_bytecode_operation != nil) {
-	    f2__optimize_operation__next(cause, prev_bytecode_operation, bytecode_operation);
-	  }
-	  prev_bytecode_operation = bytecode_operation;
-	}
-	bytecode_iter = f2__cons__cdr(cause, bytecode_iter);
-      }
-    }
-  }
   return nil;
 }
 
@@ -916,9 +877,9 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list12__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-						new__symbol(cause, "stack"),           f2__optimize_context__stack(         cause, this),
-						new__symbol(cause, "register_frame"),  f2__optimize_context__register_frame(cause, this),
-						new__symbol(cause, "variable_frame"),  f2__optimize_context__variable_frame(cause, this)));
+						new__symbol(cause, "stack"),          f2__optimize_context__stack(         cause, this),
+						new__symbol(cause, "register_hash"),  f2__optimize_context__register_hash( cause, this),
+						new__symbol(cause, "variable_frame"), f2__optimize_context__variable_frame(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -969,6 +930,7 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
 void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
+  __optimize_data__symbol    = new__symbol(cause, "optimize_data");
   __optimize_context__symbol = new__symbol(cause, "optimize_context");
 }
 
@@ -979,13 +941,14 @@ void f2__optimize__initialize() {
   
   f2__optimize__reinitialize_globalvars();
   
-  // optimize_operation
+  // optimize_data
   
-  init_frame_object__2_slot(optimize_operation, operation_type, name);
+  initialize_primobject_2_slot(optimize_data,
+			       data_type,
+			       name);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_operation.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_operation__new, operation_type, name, cfunk, 0, "Returns a new optimize_operation."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_operation.new__funk = never_gc(cfunk);}
-  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_data__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // optimize_context
   

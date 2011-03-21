@@ -62,15 +62,13 @@ f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_3_slot(optimize_context,
+def_primobject_2_slot(optimize_context,
 		      stack,
-		      register_hash,
-		      variable_frame);
+		      register_hash);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
-  f2ptr stack          = nil;
-  f2ptr register_hash  = f2__ptypehash__new(cause);
-  f2ptr variable_frame = f2__frame__new(cause, nil);
+  f2ptr stack         = nil;
+  f2ptr register_hash = f2__ptypehash__new(cause);
   {
     f2ptr register_names = f2list6__new(cause,
 					      new__symbol(cause, "return"),
@@ -91,8 +89,7 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
   }
   return f2optimize_context__new(cause,
 				 stack,
-				 register_hash,
-				 variable_frame);
+				 register_hash);
 }
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
@@ -135,7 +132,6 @@ f2ptr raw__optimize_context__call_bytecode__jump__funk(f2ptr cause, f2ptr this, 
   printf("\noptimize: jump-funk");
   //f2ptr stack              = f2__optimize_context__stack(             cause, this);
   //f2ptr register_frame     = f2__optimize_context__register_frame(    cause, this);
-  //f2ptr variable_frame     = f2__optimize_context__variable_frame(    cause, this);
   //f2ptr node_bytecode_hash = f2__optimize_context__node_bytecode_hash(cause, this);
   //f2ptr bytecode_node = raw__ptypehash__lookup(cause, node_bytecode_hash, bytecode);
   
@@ -878,11 +874,10 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list8__new(cause,
+    frame = f2__frame__new(cause, f2list6__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-					       new__symbol(cause, "stack"),          f2__optimize_context__stack(         cause, this),
-					       new__symbol(cause, "register_hash"),  f2__optimize_context__register_hash( cause, this),
-					       new__symbol(cause, "variable_frame"), f2__optimize_context__variable_frame(cause, this)));
+					       new__symbol(cause, "stack"),         f2__optimize_context__stack(        cause, this),
+					       new__symbol(cause, "register_hash"), f2__optimize_context__register_hash(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -955,10 +950,9 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_3_slot(optimize_context,
+  initialize_primobject_2_slot(optimize_context,
 			       stack,
-			       register_hash,
-			       variable_frame);
+			       register_hash);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_context to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}

@@ -127,7 +127,7 @@ f2ptr f2__optimize_fiber__new(f2ptr cause) {
     while (iter != nil) {
       f2ptr register_name = f2__cons__car(cause, iter);
       {
-	f2ptr initial_register_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), register_name);
+	f2ptr initial_register_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), register_name, nil);
 	raw__ptypehash__add(cause, register_hash, register_name, initial_register_data);
       }
       iter = f2__cons__cdr(cause, iter);
@@ -150,7 +150,7 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
       while (iter != nil) {
 	f2ptr variable_name = f2__cons__car(cause, iter);
 	{
-	  f2ptr initial_variable_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-variable"), variable_name);
+	  f2ptr initial_variable_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-variable"), variable_name, nil);
 	  f2ptr new_cons = f2cons__new(cause, initial_variable_data, nil);
 	  if (args_reg == nil) {
 	    args_reg      = new_cons;

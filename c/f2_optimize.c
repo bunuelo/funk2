@@ -1291,7 +1291,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this, f2
 
 // block_enter
 
-f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this, f2ptr bytecode) {
+f2ptr raw__optimize_fiber__call_bytecode__block_enter__no_increment_pc(f2ptr cause, f2ptr this, f2ptr bytecode) {
   
   return nil;
 }
@@ -1304,7 +1304,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this, f
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__block_enter(cause, this, bytecode);
+  return raw__optimize_fiber__call_bytecode__block_enter__no_increment_pc(cause, this, bytecode);
 }
 
 

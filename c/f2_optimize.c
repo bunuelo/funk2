@@ -108,41 +108,39 @@ f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_fiber
 
-def_primobject_2_slot(optimize_fiber,
+def_primobject_7_slot(optimize_fiber,
 		      stack,
-		      register_hash);
+		      value,
+		      iter,
+		      program_counter,
+		      args,
+		      return_reg,
+		      env);
 
 f2ptr f2__optimize_fiber__new(f2ptr cause) {
-  f2ptr stack         = nil;
-  f2ptr register_hash = f2__ptypehash__new(cause);
-  {
-    f2ptr register_names = f2list6__new(cause,
-					      new__symbol(cause, "return"),
-					      new__symbol(cause, "value"),
-					      new__symbol(cause, "iter"),
-					      new__symbol(cause, "program_counter"),
-					      new__symbol(cause, "env"),
-					      new__symbol(cause, "args"));
-    f2ptr iter = register_names;
-    while (iter != nil) {
-      f2ptr register_name = f2__cons__car(cause, iter);
-      {
-	f2ptr initial_register_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), register_name, nil);
-	raw__ptypehash__add(cause, register_hash, register_name, initial_register_data);
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
+  f2ptr stack           = nil;
+  f2ptr value           = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
+  f2ptr iter            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
+  f2ptr program_counter = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
+  f2ptr args            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "args"),            nil);
+  f2ptr return_reg      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "return_reg"),      nil);
+  f2ptr env             = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
   return f2optimize_fiber__new(cause,
-				 stack,
-				 register_hash);
+			       stack,
+			       value,
+			       iter,
+			       program_counter,
+			       args,
+			       return_reg,
+			       env);
 }
 def_pcfunk0(optimize_fiber__new, return f2__optimize_fiber__new(this_cause));
 
 
 f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
-  f2ptr args_reg      = nil;
-  f2ptr args_reg_iter = nil;
+  f2ptr funk__body_bytecodes = f2__funk__body_bytecodes(cause, funk);
+  f2ptr args_reg             = nil;
+  f2ptr args_reg_iter        = nil;
   {
     f2ptr funk__args = f2__funk__args(cause, funk);
     {
@@ -164,14 +162,33 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
       }
     }
   }
-  {
-    f2ptr register_hash = f2__optimize_fiber__register_hash(cause, this);
-    raw__ptypehash__add(cause, register_hash, new__symbol(cause, "args"), args_reg);
-    f2ptr funk__body_bytecodes = f2__funk__body_bytecodes(cause, funk);
-    raw__ptypehash__add(cause, register_hash, new__symbol(cause, "program_counter"), funk__body_bytecodes);
-  }
+  f2__optimize_fiber__args__set(           cause, this, args_reg);
+  f2__optimize_fiber__program_counter__set(cause, this, funk__body_bytecodes);
   return nil;
 }
+
+
+
+// push registers
+
+void raw__optimize_fiber__stack__push_constant       (f2ptr cause, f2ptr this, f2ptr constant) {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, constant, f2optimize_fiber__stack(this, cause)));}
+void raw__optimize_fiber__stack__push_value          (f2ptr cause, f2ptr this)                 {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, f2optimize_fiber__value(          this, cause), f2optimize_fiber__stack(this, cause)));}
+void raw__optimize_fiber__stack__push_iter           (f2ptr cause, f2ptr this)                 {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, f2optimize_fiber__iter(           this, cause), f2optimize_fiber__stack(this, cause)));}
+void raw__optimize_fiber__stack__push_program_counter(f2ptr cause, f2ptr this)                 {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, f2optimize_fiber__program_counter(this, cause), f2optimize_fiber__stack(this, cause)));}
+void raw__optimize_fiber__stack__push_args           (f2ptr cause, f2ptr this)                 {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, f2optimize_fiber__args(           this, cause), f2optimize_fiber__stack(this, cause)));}
+void raw__optimize_fiber__stack__push_return_reg     (f2ptr cause, f2ptr this)                 {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, f2optimize_fiber__return_reg(     this, cause), f2optimize_fiber__stack(this, cause)));}
+void raw__optimize_fiber__stack__push_env            (f2ptr cause, f2ptr this)                 {f2optimize_fiber__stack__set(this, cause, f2cons__new(cause, f2optimize_fiber__env(            this, cause), f2optimize_fiber__stack(this, cause)));}
+
+// pop registers
+
+void raw__optimize_fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2optimize_fiber__value__set(          this, cause, f2cons__car(f2optimize_fiber__stack(this, cause), cause)); f2optimize_fiber__stack__set(this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+void raw__optimize_fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2optimize_fiber__iter__set(           this, cause, f2cons__car(f2optimize_fiber__stack(this, cause), cause)); f2optimize_fiber__stack__set(this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+void raw__optimize_fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2optimize_fiber__program_counter__set(this, cause, f2cons__car(f2optimize_fiber__stack(this, cause), cause)); f2optimize_fiber__stack__set(this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+void raw__optimize_fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2optimize_fiber__args__set(           this, cause, f2cons__car(f2optimize_fiber__stack(this, cause), cause)); f2optimize_fiber__stack__set(this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+void raw__optimize_fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2optimize_fiber__return_reg__set(     this, cause, f2cons__car(f2optimize_fiber__stack(this, cause), cause)); f2optimize_fiber__stack__set(this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+void raw__optimize_fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2optimize_fiber__env__set(            this, cause, f2cons__car(f2optimize_fiber__stack(this, cause), cause)); f2optimize_fiber__stack__set(this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+void raw__optimize_fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {f2optimize_fiber__stack__set(          this, cause, f2cons__cdr(f2optimize_fiber__stack(this, cause), cause));}
+
 
 
 f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {

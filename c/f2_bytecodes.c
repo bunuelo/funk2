@@ -221,48 +221,27 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__greater_than__execution_count               = " u64__fstr, this->bytecode__greater_than__execution_count);
 }
 
-void f2__fiber__stack__push_constant(f2ptr cause, f2ptr fiber, f2ptr constant) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, constant, f2fiber__stack(fiber, cause)));
-}
+// push registers
 
-void f2__fiber__stack__push_value(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__value(fiber, cause), f2fiber__stack(fiber, cause)));
-}
-
-void f2__fiber__stack__push_iter(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__iter(fiber, cause), f2fiber__stack(fiber, cause)));
-}
-
-void f2__fiber__stack__push_program_counter(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__program_counter(fiber, cause), f2fiber__stack(fiber, cause)));
-}
-
-void f2__fiber__stack__push_args(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__args(fiber, cause), f2fiber__stack(fiber, cause)));
-}
-
-void f2__fiber__stack__push_return_reg(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__return_reg(fiber, cause), f2fiber__stack(fiber, cause)));
-}
-
-void f2__fiber__stack__push_env(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__env(fiber, cause), f2fiber__stack(fiber, cause)));
-}
-
-void f2__fiber__stack__push_trace(f2ptr cause, f2ptr fiber) {
-  f2fiber__stack__set(fiber, cause, f2cons__new(cause, f2fiber__trace(fiber, cause), f2fiber__stack(fiber, cause)));
-}
+void raw__fiber__stack__push_constant       (f2ptr cause, f2ptr this, f2ptr constant) {f2fiber__stack__set(this, cause, f2cons__new(cause, constant, f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_value          (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__value(          this, cause), f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_iter           (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__iter(           this, cause), f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_program_counter(f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__program_counter(this, cause), f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_args           (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__args(           this, cause), f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_return_reg     (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__return_reg(     this, cause), f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_env            (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__env(            this, cause), f2fiber__stack(this, cause)));}
+void raw__fiber__stack__push_trace          (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__trace(          this, cause), f2fiber__stack(this, cause)));}
 
 // pop registers
 
-void f2__fiber__stack__pop_value(f2ptr fiber, f2ptr cause)           {f2fiber__value__set(          fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_iter(f2ptr fiber, f2ptr cause)            {f2fiber__iter__set(           fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_program_counter(f2ptr fiber, f2ptr cause) {f2fiber__program_counter__set(fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_args(f2ptr fiber, f2ptr cause)            {f2fiber__args__set(           fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_return_reg(f2ptr fiber, f2ptr cause)      {f2fiber__return_reg__set(     fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_env(f2ptr fiber, f2ptr cause)             {f2fiber__env__set(            fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_trace(f2ptr fiber, f2ptr cause)           {f2fiber__trace__set(          fiber, cause, f2cons__car(f2fiber__stack(fiber, cause), cause)); f2fiber__stack__set(fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
-void f2__fiber__stack__pop_nil(f2ptr fiber, f2ptr cause)             {f2fiber__stack__set(          fiber, cause, f2cons__cdr(f2fiber__stack(fiber, cause), cause));}
+void raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+void raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {f2fiber__stack__set(          this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
 
 f2ptr f2__expression_not_funkable__exception__new(f2ptr cause, f2ptr funktion) {return f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, funktion);}
 
@@ -995,7 +974,7 @@ int f2__fiber__bytecode__swap(f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg
 // bytecode push_constant [constant]
 
 int f2__fiber__bytecode__push_constant__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr constant) {
-  f2__fiber__stack__push_constant(cause, fiber, constant);
+  raw__fiber__stack__push_constant(cause, fiber, constant);
   return 0;
 }
 
@@ -1012,7 +991,7 @@ int f2__fiber__bytecode__push_constant(f2ptr fiber, f2ptr bytecode, f2ptr consta
 // bytecode push [reg]
 
 int f2__fiber__bytecode__push__return_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__push_return_reg(cause, fiber);  
+  raw__fiber__stack__push_return_reg(cause, fiber);  
   return 0;
 }
 
@@ -1026,7 +1005,7 @@ int f2__fiber__bytecode__push__return_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__env_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__push_env(cause, fiber);  
+  raw__fiber__stack__push_env(cause, fiber);  
   return 0;
 }
 
@@ -1040,7 +1019,7 @@ int f2__fiber__bytecode__push__env_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__value_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__push_value(cause, fiber);  
+  raw__fiber__stack__push_value(cause, fiber);  
   return 0;
 }
 
@@ -1054,7 +1033,7 @@ int f2__fiber__bytecode__push__value_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__iter_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__push_iter(cause, fiber);  
+  raw__fiber__stack__push_iter(cause, fiber);  
   return 0;
 }
 
@@ -1068,7 +1047,7 @@ int f2__fiber__bytecode__push__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__push__args_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__push_args(cause, fiber);  
+  raw__fiber__stack__push_args(cause, fiber);  
   return 0;
 }
 
@@ -1087,7 +1066,7 @@ int f2__fiber__bytecode__push__program_counter_reg(f2ptr fiber, f2ptr bytecode) 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__push_program_counter(cause, fiber);  
+  raw__fiber__stack__push_program_counter(cause, fiber);  
   return 0;
 }
 
@@ -1115,7 +1094,7 @@ int f2__fiber__bytecode__push(f2ptr fiber, f2ptr bytecode, f2ptr reg) {
 // bytecode pop [reg]
 
 int f2__fiber__bytecode__pop__return_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__pop_return_reg(fiber, cause);
+  raw__fiber__stack__pop_return_reg(cause, fiber);
   return 0;
 }
 
@@ -1129,7 +1108,7 @@ int f2__fiber__bytecode__pop__return_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__env_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__pop_env(fiber, cause);
+  raw__fiber__stack__pop_env(cause, fiber);
   release__assert(f2fiber__env(fiber, cause), fiber, "env popped to nil.");
   release__assert(raw__environment__is_type(cause, f2fiber__env(fiber, cause)), fiber, "assertion failed: popped to non-environment");
   //f2__print(nil, f2fiber__env(fiber));
@@ -1152,12 +1131,12 @@ int f2__fiber__bytecode__pop__value_reg(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__pop_value(fiber, cause);
+  raw__fiber__stack__pop_value(cause, fiber);
   return 0;
 }
 
 int f2__fiber__bytecode__pop__iter_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__pop_iter(fiber, cause);
+  raw__fiber__stack__pop_iter(cause, fiber);
   return 0;
 }
 
@@ -1171,7 +1150,7 @@ int f2__fiber__bytecode__pop__iter_reg(f2ptr fiber, f2ptr bytecode) {
 }
 
 int f2__fiber__bytecode__pop__args_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__pop_args(fiber, cause);
+  raw__fiber__stack__pop_args(cause, fiber);
   return 0;
 }
 
@@ -1190,12 +1169,12 @@ int f2__fiber__bytecode__pop__program_counter_reg(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2__fiber__stack__pop_program_counter(fiber, cause);
+  raw__fiber__stack__pop_program_counter(cause, fiber);
   return 1;
 }
 
 int f2__fiber__bytecode__pop__nil__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2__fiber__stack__pop_nil(fiber, cause);
+  raw__fiber__stack__pop_nil(cause, fiber);
   return 0;
 }
 

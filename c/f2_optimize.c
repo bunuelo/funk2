@@ -24,7 +24,7 @@
 
 // optimize_cause
 
-def_primobject_2_slot(optimize_cause,
+def_primobject_3_slot(optimize_cause,
 		      cause_type,
 		      name,
 		      args);

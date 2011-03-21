@@ -980,6 +980,7 @@ void f2__optimize__reinitialize_globalvars() {
   
   __optimize_data__symbol  = new__symbol(cause, "optimize_data");
   __optimize_fiber__symbol = new__symbol(cause, "optimize_fiber");
+  __optimize_data__symbol  = new__symbol(cause, "optimize_context");
 }
 
 void f2__optimize__initialize() {

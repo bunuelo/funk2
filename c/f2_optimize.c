@@ -1097,7 +1097,7 @@ f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2pt
   else {
     return f2larva__new(cause, 543617, nil);
   }
-  f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "add"), f2list2__args(cause, x0__data, x1__data));
+  f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "add"), f2list2__new(cause, x0__data, x1__data));
   f2ptr result__data        = f2__optimize_data__new(cause, new__symbol(cause, "number"), nil, result__data__cause);
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}

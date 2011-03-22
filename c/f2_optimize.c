@@ -1034,7 +1034,7 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(cause, this, x_register_name, f2ptr index);
+  return raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(cause, this, x_register_name, index);
 }
 
 

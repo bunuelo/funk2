@@ -58,19 +58,20 @@ declare_object_type_3_slot(optimize_side_effect,
 // optimize_fiber
 
 typedef struct funk2_object_type__optimize_fiber__slot_s funk2_object_type__optimize_fiber__slot_t;
-declare_object_type_9_slot(optimize_fiber,
-			   optimize_context,
-			   optimize_cause,
-			   stack,
-			   value,
-			   iter,
-			   program_counter,
-			   args,
-			   return_reg,
-			   env,
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
+declare_object_type_10_slot(optimize_fiber,
+			    optimize_context,
+			    optimize_cause,
+			    optimize_side_effects,
+			    stack,
+			    value,
+			    iter,
+			    program_counter,
+			    args,
+			    return_reg,
+			    env,
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
 
 // optimize_context
 
@@ -124,16 +125,17 @@ f2ptr f2optimize_side_effect__primobject_type__new_aux(f2ptr cause);
 
 // optimize_fiber
 
-declare_primobject_9_slot(optimize_fiber,
-			  optimize_context,
-			  optimize_cause,
-			  stack,
-			  value,
-			  iter,
-			  program_counter,
-			  args,
-			  return_reg,
-			  env);
+declare_primobject_10_slot(optimize_fiber,
+			   optimize_context,
+			   optimize_cause,
+			   optimize_side_effects,
+			   stack,
+			   value,
+			   iter,
+			   program_counter,
+			   args,
+			   return_reg,
+			   env);
 
 f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause);
 

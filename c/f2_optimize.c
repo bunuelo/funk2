@@ -629,11 +629,42 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr fr
 }
 
 
+f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
+  boolean_t found_value = boolean__false;
+  f2ptr     environment  = this;
+  f2ptr     frame_lookup = nil;
+  while (! found_value) {
+    f2ptr environment__frame = f2__environment__frame(cause, environment);
+    if (! raw__frame__is_type(cause, frame)) {
+      return f2larva__new(cause, 5423626, nil);
+    }
+    frame_lookup = raw__frame__lookup_type_var_value(cause, frame, type_name, var_name, new__symbol(cause, "<optimize-lookup-undefined>"));
+    if (raw__larva__is_type(cause, frame_lookup)) {
+      return frame_lookup;
+    }
+    if (! raw__eq(cause, frame_lookup, new__symbol(cause, "<optimize-lookup-undefined>"))) {
+      found_value = boolean__true;
+    } else {
+      environment = f2__environment__parent_env(cause, environment);
+      if (raw__optimize_data__is_type(cause, environment)) {
+	return f2larva__new(cause, 2301, nil);
+      }
+    }
+  }
+  if (raw__eq(cause, frame_lookup, new__symbol(cause, "<optimize-lookup-undefined>"))) {
+    return f2larva__new(cause, 2302, nil);
+  }
+  return frame_lookup;
+}
+
 // lookup
 
 f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  f2ptr env   = f2__optimize_fiber__env(cause, this);
-  f2ptr value = f2__environment__lookup_type_var_value(cause, env, type_name, var_name);
+  f2ptr env = f2__optimize_fiber__env(cause, this);
+  if (! raw__environment__is_type(cause, env)) {
+    return f2larva__new(cause, 523542, nil);
+  }
+  f2ptr value = raw__environment__optimize_lookup_type_var_value(cause, env, type_name, var_name);
   if (raw__larva__is_type(cause, value)) {
     f2ptr optimize_cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "lookup"), f2list2__new(cause, type_name, var_name));
     value = f2__optimize_data__new(cause, type_name, var_name, optimize_cause);

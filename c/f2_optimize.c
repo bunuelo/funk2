@@ -342,7 +342,7 @@ f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this) {
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__car__no_increment_pc(cause, this, bytecode);
+  return raw__optimize_fiber__call_bytecode__car__no_increment_pc(cause, this);
 }
 
 

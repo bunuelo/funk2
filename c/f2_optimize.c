@@ -108,8 +108,9 @@ f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_fiber
 
-def_primobject_8_slot(optimize_fiber,
+def_primobject_9_slot(optimize_fiber,
 		      optimize_context,
+		      optimize_cause,
 		      stack,
 		      value,
 		      iter,
@@ -118,7 +119,7 @@ def_primobject_8_slot(optimize_fiber,
 		      return_reg,
 		      env);
 
-f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
+f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context, f2ptr optimize_cause) {
   f2ptr stack            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
   f2ptr value            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
   f2ptr iter             = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
@@ -128,6 +129,7 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
   f2ptr env              = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
+			       optimize_cause,
 			       stack,
 			       value,
 			       iter,
@@ -139,7 +141,7 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
 def_pcfunk1(optimize_fiber__new, optimize_context, return f2__optimize_fiber__new(this_cause, optimize_context));
 
 
-f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this) {
+f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_cause) {
   f2ptr optimize_context = f2__optimize_fiber__optimize_context(cause, this);
   f2ptr stack            = f2__optimize_fiber__stack(           cause, this);
   f2ptr value            = f2__optimize_fiber__value(           cause, this);
@@ -150,6 +152,7 @@ f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this) {
   f2ptr env              = f2__optimize_fiber__env(             cause, this);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
+			       optimize_cause,
 			       stack,
 			       value,
 			       iter,
@@ -788,10 +791,12 @@ f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr ne
 // if-jump
 
 f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  f2ptr optimize_context   =  f2__optimize_fiber__optimize_context(cause, this);
-  f2ptr value              =  f2__optimize_fiber__value(           cause, this);
-  f2ptr true_branch_fiber  = raw__optimize_fiber__new_copy(        cause, this);
-  f2ptr false_branch_fiber = raw__optimize_fiber__new_copy(        cause, this);
+  f2ptr optimize_context          =  f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr value__data               =  f2__optimize_fiber__value(           cause, this);
+  f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(             cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
+  f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(        cause, this, true_branch_fiber__cause);
+  f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(             cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
+  f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(        cause, this, false_branch_fiber__cause);
   raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
   raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
   raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);

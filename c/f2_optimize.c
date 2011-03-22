@@ -633,7 +633,7 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr fr
 
 f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
   f2ptr env   = f2__optimize_fiber__env(cause, this);
-  f2ptr value = f2__environment__lookup_type_var_value(cause, env, type_name, var_name, value);
+  f2ptr value = f2__environment__lookup_type_var_value(cause, env, type_name, var_name);
   if (raw__larva__is_type(cause, value)) {
     f2ptr optimize_cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "lookup"), f2list2__new(cause, type_name, var_name));
     value = f2__optimize_data__new(cause, type_name, var_name, optimize_cause);

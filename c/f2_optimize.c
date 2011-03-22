@@ -121,28 +121,31 @@ def_pcfunk3(optimize_side_effect__new, side_effect_type, name, optimize_cause, r
 
 // optimize_fiber
 
-def_primobject_9_slot(optimize_fiber,
-		      optimize_context,
-		      optimize_cause,
-		      stack,
-		      value,
-		      iter,
-		      program_counter,
-		      args,
-		      return_reg,
-		      env);
+def_primobject_10_slot(optimize_fiber,
+		       optimize_context,
+		       optimize_cause,
+		       optimize_side_effects,
+		       stack,
+		       value,
+		       iter,
+		       program_counter,
+		       args,
+		       return_reg,
+		       env);
 
 f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context, f2ptr optimize_cause) {
-  f2ptr stack            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
-  f2ptr value            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
-  f2ptr iter             = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
-  f2ptr program_counter  = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
-  f2ptr args             = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "args"),            nil);
-  f2ptr return_reg       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "return_reg"),      nil);
-  f2ptr env              = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
+  f2ptr optimize_side_effects = nil;
+  f2ptr stack                 = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
+  f2ptr value                 = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
+  f2ptr iter                  = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
+  f2ptr program_counter       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
+  f2ptr args                  = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "args"),            nil);
+  f2ptr return_reg            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "return_reg"),      nil);
+  f2ptr env                   = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
 			       optimize_cause,
+			       optimize_side_effects,
 			       stack,
 			       value,
 			       iter,
@@ -155,17 +158,19 @@ def_pcfunk2(optimize_fiber__new, optimize_context, optimize_cause, return f2__op
 
 
 f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_cause) {
-  f2ptr optimize_context = f2__optimize_fiber__optimize_context(cause, this);
-  f2ptr stack            = f2__optimize_fiber__stack(           cause, this);
-  f2ptr value            = f2__optimize_fiber__value(           cause, this);
-  f2ptr iter             = f2__optimize_fiber__iter(            cause, this);
-  f2ptr program_counter  = f2__optimize_fiber__program_counter( cause, this);
-  f2ptr args             = f2__optimize_fiber__args(            cause, this);
-  f2ptr return_reg       = f2__optimize_fiber__return_reg(      cause, this);
-  f2ptr env              = f2__optimize_fiber__env(             cause, this);
+  f2ptr optimize_context      = f2__optimize_fiber__optimize_context(     cause, this);
+  f2ptr optimize_side_effects = f2__optimize_fiber__optimize_side_effects(cause, this);
+  f2ptr stack                 = f2__optimize_fiber__stack(                cause, this);
+  f2ptr value                 = f2__optimize_fiber__value(                cause, this);
+  f2ptr iter                  = f2__optimize_fiber__iter(                 cause, this);
+  f2ptr program_counter       = f2__optimize_fiber__program_counter(      cause, this);
+  f2ptr args                  = f2__optimize_fiber__args(                 cause, this);
+  f2ptr return_reg            = f2__optimize_fiber__return_reg(           cause, this);
+  f2ptr env                   = f2__optimize_fiber__env(                  cause, this);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
 			       optimize_cause,
+			       optimize_side_effects,
 			       stack,
 			       value,
 			       iter,
@@ -173,6 +178,12 @@ f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_caus
 			       args,
 			       return_reg,
 			       env);
+}
+
+
+void raw__optimize_fiber__add_side_effect(f2ptr cause, f2ptr this, f2ptr side_effect) {
+  f2ptr side_effects = f2__optimize_fiber__optimize_side_effects(cause, this);
+  f2__optimize_fiber__optimize_side_effects__set(cause, this, f2cons__new(cause, side_effect, side_effects));
 }
 
 
@@ -754,10 +765,52 @@ f2ptr raw__optimize_fiber__call_bytecode__define(f2ptr cause, f2ptr this, f2ptr 
 }
 
 
+f2ptr raw__environment__optimize_mutate_type_var_value(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name, f2ptr value) {
+  boolean_t found_value = boolean__false;
+  f2ptr     environment  = this;
+  f2ptr     frame_lookup = nil;
+  while (! found_value) {
+    f2ptr environment__frame = f2__environment__frame(cause, environment);
+    if (! raw__frame__is_type(cause, environment__frame)) {
+      return f2larva__new(cause, 5423626, nil);
+    }
+    frame_lookup = raw__frame__lookup_type_var_value(cause, environment__frame, type_name, var_name, new__symbol(cause, "<optimize-lookup-undefined>"));
+    if (raw__larva__is_type(cause, frame_lookup)) {
+      return frame_lookup;
+    }
+    if (! raw__eq(cause, frame_lookup, new__symbol(cause, "<optimize-lookup-undefined>"))) {
+      raw__frame__add_type_var_value(cause, environment__frame, type_name, var_name, value);
+      frame_lookup = value;
+    } else {
+      environment = f2__environment__parent_env(cause, environment);
+      if (raw__optimize_data__is_type(cause, environment)) {
+	return f2larva__new(cause, 2301, nil);
+      }
+    }
+  }
+  if (raw__eq(cause, frame_lookup, new__symbol(cause, "<optimize-lookup-undefined>"))) {
+    return f2larva__new(cause, 2302, nil);
+  }
+  return frame_lookup;
+}
+
 // mutate-type_var
 
 f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  printf("\noptimize warning: mutate-type_var not yet implemented."); fflush(stdout);
+  f2ptr env = f2__optimize_fiber__env(cause, this);
+  if (! raw__environment__is_type(cause, env)) {
+    return f2larva__new(cause, 523542, nil);
+  }
+  f2ptr value__data             = f2__optimize_fiber__value(cause, this);
+  f2ptr current_var_value__data = raw__environment__optimize_lookup_type_var_value(cause, env, type_name, var_name);
+  if (raw__larva__is_type(cause, current_var_value__data)) {
+    f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "mutate-type_var"), f2list3__new(cause, type_name, var_name, value__data));
+    f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "mutate-type_var"), nil, optimize_side_effect__cause);
+    raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
+  } else {
+    raw__environment__optimize_mutate_type_var_value(cause, env, type_name, var_name, value__data);
+  }
+  f2__optimize_fiber__value__set(cause, this, value__data);
   return nil;
 }
 
@@ -776,7 +829,10 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr th
 // globalize-type_var
 
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  printf("\noptimize warning: globalize-type_var not yet implemented."); fflush(stdout);
+  f2ptr value__data                 = f2__optimize_fiber__value(cause, this);
+  f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "globalize-type_var"), f2list3__new(cause, type_name, var_name, value__data));
+  f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "globalize-type_var"), nil, optimize_side_effect__cause);
+  raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
   return nil;
 }
 

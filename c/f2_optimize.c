@@ -1390,7 +1390,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_argument__no_increment_pc
     }
   }
   {
-    f2ptr result = raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, this, __funk2.primobject__frame.variable__symbol, argument);
+    f2ptr result = raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, this, __funk2.primobject__frame.variable__symbol, variable_name);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

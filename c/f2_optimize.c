@@ -1463,7 +1463,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument__no_increme
     }
   }
   {
-    f2ptr result = raw__optimize_fiber__call_bytecode__else_jump__no_increment_pc(cause, this, __funk2.compile.wrong_argument_number__bcs);
+    f2ptr result = raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(cause, this, __funk2.compile.wrong_argument_number__bcs);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

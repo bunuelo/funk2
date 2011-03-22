@@ -2741,13 +2741,13 @@ def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause))
 
 
 void raw__optimize_context__add_active_fiber(f2ptr cause, f2ptr this, f2ptr active_fiber) {
-  printf("optimize_context: adding active fiber.");
+  printf("\noptimize_context: adding active fiber."); fflush(stdout);
   f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
   raw__set__add(cause, active_fiber_set, active_fiber);
 }
 
 f2ptr raw__optimize_context__active_fiber_finished(f2ptr cause, f2ptr this, f2ptr active_fiber) {
-  printf("optimize_context: active fiber finished.");
+  printf("\noptimize_context: active fiber finished."); fflush(stdout);
   {
     f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
     if (! raw__set__remove(cause, active_fiber_set, active_fiber)) {
@@ -2763,7 +2763,7 @@ f2ptr raw__optimize_context__active_fiber_finished(f2ptr cause, f2ptr this, f2pt
 }
 
 f2ptr raw__optimize_context__active_fiber_branched(f2ptr cause, f2ptr this, f2ptr active_fiber) {
-  printf("optimize_context: active fiber branched.");
+  printf("\noptimize_context: active fiber branched."); fflush(stdout);
   {
     f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
     if (! raw__set__remove(cause, active_fiber_set, active_fiber)) {

@@ -880,7 +880,12 @@ f2ptr raw__optimize_fiber__call_bytecode__yield(f2ptr cause, f2ptr this) {
 // newenv
 
 f2ptr raw__optimize_fiber__call_bytecode__newenv__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  f2ptr parent_env = f2__optimize_fiber__env(cause, this);
+  f2ptr new_env    = f2environment__new(cause,
+					f2__frame__new(cause, nil),
+					parent_env,
+					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
+  f2__optimize_fiber__env__set(cause, this, new_env);
   return nil;
 }
 
@@ -1261,7 +1266,36 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than(f2ptr cause, f2ptr this, 
 // block_push
 
 f2ptr raw__optimize_fiber__call_bytecode__block_push__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__return_reg__no_increment_pc_reg(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__env_reg__no_increment_pc_reg(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__args_reg__no_increment_pc_reg(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__value_reg__no_increment_pc_reg(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push_constant__no_increment_pc_reg(cause, this, __funk2.compile.debug_funk_call__symbol);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 
@@ -1280,7 +1314,18 @@ f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this) {
 // block_enter
 
 f2ptr raw__optimize_fiber__call_bytecode__block_enter__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__block_push__no_increment_pc_reg(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__newenv__no_increment_pc_reg(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

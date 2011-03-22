@@ -140,13 +140,14 @@ def_pcfunk1(optimize_fiber__new, optimize_context, return f2__optimize_fiber__ne
 
 
 f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr stack            = f2__optimize_fiber__stack(          cause, this);
-  f2ptr value            = f2__optimize_fiber__value(          cause, this);
-  f2ptr iter             = f2__optimize_fiber__iter(           cause, this);
-  f2ptr program_counter  = f2__optimize_fiber__program_counter(cause, this);
-  f2ptr args             = f2__optimize_fiber__args(           cause, this);
-  f2ptr return_reg       = f2__optimize_fiber__return_reg(     cause, this);
-  f2ptr env              = f2__optimize_fiber__env(            cause, this);
+  f2ptr optimize_context = f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr stack            = f2__optimize_fiber__stack(           cause, this);
+  f2ptr value            = f2__optimize_fiber__value(           cause, this);
+  f2ptr iter             = f2__optimize_fiber__iter(            cause, this);
+  f2ptr program_counter  = f2__optimize_fiber__program_counter( cause, this);
+  f2ptr args             = f2__optimize_fiber__args(            cause, this);
+  f2ptr return_reg       = f2__optimize_fiber__return_reg(      cause, this);
+  f2ptr env              = f2__optimize_fiber__env(             cause, this);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
 			       stack,

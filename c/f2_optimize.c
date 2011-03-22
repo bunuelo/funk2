@@ -1456,7 +1456,24 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_argument(f2ptr cause, f2p
 // block_define_last_argument
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument__no_increment_pc(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(cause, this, new__symbol(cause, "iter"), new__symbol(cause, "value"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__else_jump__no_increment_pc(cause, this, __funk2.compile.wrong_argument_number__bcs);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__car__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

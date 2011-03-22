@@ -638,7 +638,7 @@ f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f
     f2ptr optimize_cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "lookup"), f2list2__new(cause, type_name, var_name));
     value = f2__optimize_data__new(cause, type_name, var_name, optimize_cause);
   }
-  f2fiber__value__set(fiber, cause, fiber_value);
+  f2__optimize_fiber__value__set(cause, this, value);
   return nil;
 }
 

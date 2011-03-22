@@ -1235,7 +1235,7 @@ f2ptr raw__optimize_fiber__call_bytecode__add(f2ptr cause, f2ptr this, f2ptr res
 
 // negative
 
-f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   f2ptr x__data = nil;
   if      (raw__eq(cause, x_register_name, new__symbol(cause, "return_reg")))      {x__data = f2__optimize_fiber__return_reg(     cause, this);}
   else if (raw__eq(cause, x_register_name, new__symbol(cause, "value")))           {x__data = f2__optimize_fiber__value(          cause, this);}
@@ -1260,7 +1260,7 @@ f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause,
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   printf("\noptimize: negative"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -1268,7 +1268,7 @@ f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2pt
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__negative__no_increment_pc(cause, this, result_register, x_register_name);
+  return raw__optimize_fiber__call_bytecode__negative__no_increment_pc(cause, this, result_register_name, x_register_name);
 }
 
 
@@ -1372,7 +1372,7 @@ f2ptr raw__optimize_fiber__call_bytecode__multiply(f2ptr cause, f2ptr this, f2pt
 
 // inverse
 
-f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   f2ptr x__data = nil;
   if      (raw__eq(cause, x_register_name, new__symbol(cause, "return_reg")))      {x__data = f2__optimize_fiber__return_reg(     cause, this);}
   else if (raw__eq(cause, x_register_name, new__symbol(cause, "value")))           {x__data = f2__optimize_fiber__value(          cause, this);}
@@ -1397,7 +1397,7 @@ f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, 
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   printf("\noptimize: inverse"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -1405,7 +1405,7 @@ f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(cause, this, result_register, x_register_name);
+  return raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(cause, this, result_register_name, x_register_name);
 }
 
 
@@ -1509,7 +1509,7 @@ f2ptr raw__optimize_fiber__call_bytecode__modulo(f2ptr cause, f2ptr this, f2ptr 
 
 // increment
 
-f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   f2ptr x__data = nil;
   if      (raw__eq(cause, x_register_name, new__symbol(cause, "return_reg")))      {x__data = f2__optimize_fiber__return_reg(     cause, this);}
   else if (raw__eq(cause, x_register_name, new__symbol(cause, "value")))           {x__data = f2__optimize_fiber__value(          cause, this);}
@@ -1534,7 +1534,7 @@ f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   printf("\noptimize: increment"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -1542,13 +1542,13 @@ f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2p
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__increment__no_increment_pc(cause, this, result_register, x_register_name);
+  return raw__optimize_fiber__call_bytecode__increment__no_increment_pc(cause, this, result_register_name, x_register_name);
 }
 
 
 // decrement
 
-f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   f2ptr x__data = nil;
   if      (raw__eq(cause, x_register_name, new__symbol(cause, "return_reg")))      {x__data = f2__optimize_fiber__return_reg(     cause, this);}
   else if (raw__eq(cause, x_register_name, new__symbol(cause, "value")))           {x__data = f2__optimize_fiber__value(          cause, this);}
@@ -1573,7 +1573,7 @@ f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x_register_name) {
   printf("\noptimize: decrement"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -1581,7 +1581,7 @@ f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2p
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(cause, this, result_register, x_register_name);
+  return raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(cause, this, result_register_name, x_register_name);
 }
 
 

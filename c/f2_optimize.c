@@ -242,7 +242,7 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 // jump-funk
 
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  printf("\noptimize warning: jump-funk not yet implemented."); fflush(stdout);
   return nil;
 }
 
@@ -261,7 +261,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk(f2ptr cause, f2ptr this) {
 // funk
 
 f2ptr raw__optimize_fiber__call_bytecode__funk__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  printf("\noptimize warning: funk not yet implemented."); fflush(stdout);
   return nil;
 }
 
@@ -729,7 +729,7 @@ f2ptr raw__optimize_fiber__call_bytecode__define(f2ptr cause, f2ptr this, f2ptr 
 // mutate-type_var
 
 f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  
+  printf("\noptimize warning: mutate-type_var not yet implemented."); fflush(stdout);
   return nil;
 }
 
@@ -748,7 +748,7 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr th
 // globalize-type_var
 
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  
+  printf("\noptimize warning: globalize-type_var not yet implemented."); fflush(stdout);
   return nil;
 }
 
@@ -767,7 +767,7 @@ f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var(f2ptr cause, f2ptr
 // jump
 
 f2ptr raw__optimize_fiber__call_bytecode__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  
+  f2__optimize_fiber__program_counter__set(cause, this, new_program_counter);
   return nil;
 }
 
@@ -2075,7 +2075,18 @@ f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop(f2ptr cause, f2ptr 
 // block_exit_and_no_pop
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr funk) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__endfunk__no_increment_pc(cause, this, funk);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(cause, this, new__symbol(cause, "return_reg"), new__symbol(cause, "program_counter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 
@@ -2094,7 +2105,30 @@ f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(f2ptr cause, f2p
 // block_eval_args_begin
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__cons__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(cause, this, new__symbol(cause, "iter"), new__symbol(cause, "args"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__no_increment_pc(cause, this, new__symbol(cause, "iter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__no_increment_pc(cause, this, new__symbol(cause, "args"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 
@@ -2113,7 +2147,66 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin(f2ptr cause, f2p
 // block_eval_args_next
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, new__symbol(cause, "args"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, new__symbol(cause, "iter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__car__set__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(cause, this, new__symbol(cause, "iter"), new__symbol(cause, "value"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__cons__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__swap__no_increment_pc(cause, this, new__symbol(cause, "value"), new__symbol(cause, "iter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__cdr__set__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__swap__no_increment_pc(cause, this, new__symbol(cause, "value"), new__symbol(cause, "iter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__no_increment_pc(cause, this, new__symbol(cause, "iter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__push__no_increment_pc(cause, this, new__symbol(cause, "args"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 
@@ -2132,7 +2225,24 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next(f2ptr cause, f2pt
 // block_eval_args_end
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, new__symbol(cause, "args"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, new__symbol(cause, "iter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__car__set__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

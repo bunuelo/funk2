@@ -153,6 +153,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__partial_order_node__slot_t               primobject_type_partial_order_node;
   funk2_object_type__optimize_cause__slot_t                   primobject_type_optimize_cause;
   funk2_object_type__optimize_data__slot_t                    primobject_type_optimize_data;
+  funk2_object_type__optimize_side_effect__slot_t             primobject_type_optimize_side_effect;
   funk2_object_type__optimize_fiber__slot_t                   primobject_type_optimize_fiber;
   funk2_object_type__optimize_context__slot_t                 primobject_type_optimize_context;
   // frame objects

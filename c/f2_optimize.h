@@ -44,6 +44,17 @@ declare_object_type_3_slot(optimize_data,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+// optimize_side_effect
+
+typedef struct funk2_object_type__optimize_side_effect__slot_s funk2_object_type__optimize_side_effect__slot_t;
+declare_object_type_3_slot(optimize_side_effect,
+			   side_effect_type,
+			   name,
+			   optimize_cause,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // optimize_fiber
 
 typedef struct funk2_object_type__optimize_fiber__slot_s funk2_object_type__optimize_fiber__slot_t;
@@ -99,6 +110,16 @@ declare_primobject_3_slot(optimize_data,
 			  optimize_cause);
 
 f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
+
+
+// optimize_side_effect
+
+declare_primobject_3_slot(optimize_side_effect,
+			  side_effect_type,
+			  name,
+			  optimize_cause);
+
+f2ptr f2optimize_side_effect__primobject_type__new_aux(f2ptr cause);
 
 
 // optimize_fiber

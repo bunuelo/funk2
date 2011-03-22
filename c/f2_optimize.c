@@ -106,6 +106,19 @@ f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// optimize_side_effect
+
+def_primobject_3_slot(optimize_side_effect,
+		      side_effect_type,
+		      name,
+		      optimize_cause);
+
+f2ptr f2__optimize_side_effect__new(f2ptr cause, f2ptr side_effect_type, f2ptr name, f2ptr optimize_cause) {
+  return f2optimize_side_effect__new(cause, side_effect_type, name, optimize_cause);
+}
+def_pcfunk3(optimize_side_effect__new, side_effect_type, name, optimize_cause, return f2__optimize_side_effect__new(this_cause, side_effect_type, name, optimize_cause));
+
+
 // optimize_fiber
 
 def_primobject_9_slot(optimize_fiber,
@@ -2868,10 +2881,11 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
 void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __optimize_cause__symbol   = new__symbol(cause, "optimize_cause");
-  __optimize_data__symbol    = new__symbol(cause, "optimize_data");
-  __optimize_fiber__symbol   = new__symbol(cause, "optimize_fiber");
-  __optimize_context__symbol = new__symbol(cause, "optimize_context");
+  __optimize_cause__symbol       = new__symbol(cause, "optimize_cause");
+  __optimize_data__symbol        = new__symbol(cause, "optimize_data");
+  __optimize_side_effect__symbol = new__symbol(cause, "optimize_side_effect");
+  __optimize_fiber__symbol       = new__symbol(cause, "optimize_fiber");
+  __optimize_context__symbol     = new__symbol(cause, "optimize_context");
 }
 
 void f2__optimize__initialize() {
@@ -2901,6 +2915,17 @@ void f2__optimize__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_data__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_data to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+
+  // optimize_side_effect
+  
+  initialize_primobject_3_slot(optimize_side_effect,
+			       side_effect_type,
+			       name,
+			       optimize_cause);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_side_effect.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_side_effect__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_side_effect to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_side_effect.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 
   // optimize_fiber

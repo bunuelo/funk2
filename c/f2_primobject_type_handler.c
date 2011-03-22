@@ -211,6 +211,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "partial_order_node";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2partial_order_node__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_cause";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2optimize_cause__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_data";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2optimize_data__primobject_type__new_aux(cause));}
+  {char* type_name = "optimize_side_effect";             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),             f2optimize_side_effect__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_fiber";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2optimize_fiber__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_context";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2optimize_context__primobject_type__new_aux(cause));}
 }

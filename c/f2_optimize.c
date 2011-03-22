@@ -903,19 +903,28 @@ f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr ne
 // if-jump
 
 f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  f2ptr optimize_context          =  f2__optimize_fiber__optimize_context(cause, this);
-  f2ptr value__data               =  f2__optimize_fiber__value(           cause, this);
-  f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(             cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
-  f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(        cause, this, true_branch_fiber__cause);
-  f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(             cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
-  f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(        cause, this, false_branch_fiber__cause);
-  raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
-  raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
-  raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
-  // assuming value is true:
-  f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
-  // assuming value is false:
-  //   do nothing.
+  f2ptr optimize_context =  f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr value__data      =  f2__optimize_fiber__value(           cause, this);
+  if (raw__optimize_data__is_type(cause, value__data)) {
+    f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
+    f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(cause, this, true_branch_fiber__cause);
+    f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
+    f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(cause, this, false_branch_fiber__cause);
+    raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
+    raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
+    raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
+    // assuming value is true:
+    f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
+    // assuming value is false:
+    //   do nothing.
+  } else {
+    // we know the value (it is not a hypothetical data value)
+    if (value__data != nil) {
+      f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
+    } else {
+      // do nothing
+    }
+  }
   return nil;
 }
 
@@ -936,17 +945,26 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump(f2ptr cause, f2ptr this, f2pt
 f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
   f2ptr optimize_context          =  f2__optimize_fiber__optimize_context(cause, this);
   f2ptr value__data               =  f2__optimize_fiber__value(           cause, this);
-  f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(             cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
-  f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(        cause, this, true_branch_fiber__cause);
-  f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(             cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
-  f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(        cause, this, false_branch_fiber__cause);
-  raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
-  raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
-  raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
-  // assuming value is true:
-  //   do nothing.
-  // assuming value is false:
-  f2__optimize_fiber__program_counter__set(cause, false_branch_fiber, new_program_counter);
+  if (raw__optimize_data__is_type(cause, value__data)) {
+    f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
+    f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(cause, this, true_branch_fiber__cause);
+    f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
+    f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(cause, this, false_branch_fiber__cause);
+    raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
+    raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
+    raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
+    // assuming value is true:
+    //   do nothing.
+    // assuming value is false:
+    f2__optimize_fiber__program_counter__set(cause, false_branch_fiber, new_program_counter);
+  } else {
+    // we know the value (it is not a hypothetical data value)
+    if (value__data != nil) {
+      // do nothing
+    } else {
+      f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
+    }
+  }
   return nil;
 }
 

@@ -139,6 +139,26 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
 def_pcfunk1(optimize_fiber__new, optimize_context, return f2__optimize_fiber__new(this_cause, optimize_context));
 
 
+f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this) {
+  f2ptr stack            = f2__optimize_fiber__stack(          cause, this);
+  f2ptr value            = f2__optimize_fiber__value(          cause, this);
+  f2ptr iter             = f2__optimize_fiber__iter(           cause, this);
+  f2ptr program_counter  = f2__optimize_fiber__program_counter(cause, this);
+  f2ptr args             = f2__optimize_fiber__args(           cause, this);
+  f2ptr return_reg       = f2__optimize_fiber__return_reg(     cause, this);
+  f2ptr env              = f2__optimize_fiber__env(            cause, this);
+  return f2optimize_fiber__new(cause,
+			       optimize_context,
+			       stack,
+			       value,
+			       iter,
+			       program_counter,
+			       args,
+			       return_reg,
+			       env);
+}
+
+
 f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr funk__body_bytecodes = f2__funk__body_bytecodes(cause, funk);
   f2ptr args_reg             = nil;
@@ -767,7 +787,17 @@ f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr ne
 // if-jump
 
 f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  
+  f2ptr optimize_context   = f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr value              = f2__optimize_fiber__value(           cause, this);
+  f2ptr true_branch_fiber  = f2__optimize_fiber__new_copy(        cause, this);
+  f2ptr false_branch_fiber = f2__optimize_fiber__new_copy(        cause, this);
+  raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
+  raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
+  raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
+  // assuming value is true:
+  f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
+  // assuming value is false:
+  //   do nothing.
   return nil;
 }
 
@@ -786,7 +816,17 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump(f2ptr cause, f2ptr this, f2pt
 // else-jump
 
 f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  
+  f2ptr optimize_context   = f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr value              = f2__optimize_fiber__value(           cause, this);
+  f2ptr true_branch_fiber  = f2__optimize_fiber__new_copy(        cause, this);
+  f2ptr false_branch_fiber = f2__optimize_fiber__new_copy(        cause, this);
+  raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
+  raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
+  raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
+  // assuming value is true:
+  //   do nothing.
+  // assuming value is false:
+  f2__optimize_fiber__program_counter__set(cause, false_branch_fiber, new_program_counter);
   return nil;
 }
 
@@ -805,7 +845,7 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump(f2ptr cause, f2ptr this, f2
 // nop
 
 f2ptr raw__optimize_fiber__call_bytecode__nop__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  // nothing to do.
   return nil;
 }
 
@@ -824,7 +864,7 @@ f2ptr raw__optimize_fiber__call_bytecode__nop(f2ptr cause, f2ptr this) {
 // debug
 
 f2ptr raw__optimize_fiber__call_bytecode__debug__no_increment_pc(f2ptr cause, f2ptr this, f2ptr debug_value) {
-  
+  // nothing to do.
   return nil;
 }
 
@@ -843,7 +883,7 @@ f2ptr raw__optimize_fiber__call_bytecode__debug(f2ptr cause, f2ptr this, f2ptr d
 // tracer
 
 f2ptr raw__optimize_fiber__call_bytecode__tracer__no_increment_pc(f2ptr cause, f2ptr this, f2ptr name, f2ptr args) {
-  
+  // nothing to do.
   return nil;
 }
 
@@ -862,7 +902,7 @@ f2ptr raw__optimize_fiber__call_bytecode__tracer(f2ptr cause, f2ptr this, f2ptr 
 // endfunk
 
 f2ptr raw__optimize_fiber__call_bytecode__endfunk__no_increment_pc(f2ptr cause, f2ptr this, f2ptr funk) {
-  
+  // nothing to do.
   return nil;
 }
 
@@ -881,7 +921,7 @@ f2ptr raw__optimize_fiber__call_bytecode__endfunk(f2ptr cause, f2ptr this, f2ptr
 // compile
 
 f2ptr raw__optimize_fiber__call_bytecode__compile__no_increment_pc(f2ptr cause, f2ptr this, f2ptr protect_environment) {
-  
+  printf("\noptimize warning: compile not yet implemented.");
   return nil;
 }
 
@@ -900,7 +940,7 @@ f2ptr raw__optimize_fiber__call_bytecode__compile(f2ptr cause, f2ptr this, f2ptr
 // yield
 
 f2ptr raw__optimize_fiber__call_bytecode__yield__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  // nothing to do.
   return nil;
 }
 
@@ -943,7 +983,7 @@ f2ptr raw__optimize_fiber__call_bytecode__newenv(f2ptr cause, f2ptr this) {
 // machine_code
 
 f2ptr raw__optimize_fiber__call_bytecode__machine_code__no_increment_pc(f2ptr cause, f2ptr this, f2ptr chunk) {
-  
+  printf("\noptimize warning: machine_code not yet implemented."); fflush(stdout);
   return nil;
 }
 
@@ -961,12 +1001,24 @@ f2ptr raw__optimize_fiber__call_bytecode__machine_code(f2ptr cause, f2ptr this, 
 
 // reg_array-elt
 
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr cause, f2ptr this, f2ptr register_name) {
-  
+f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
+  f2ptr x__data = nil;
+  if      (raw__eq(cause, x_register_name, new__symbol(cause, "return_reg")))      {x__data = f2__optimize_fiber__return_reg(     cause, this);}
+  else if (raw__eq(cause, x_register_name, new__symbol(cause, "value")))           {x__data = f2__optimize_fiber__value(          cause, this);}
+  else if (raw__eq(cause, x_register_name, new__symbol(cause, "iter")))            {x__data = f2__optimize_fiber__iter(           cause, this);}
+  else if (raw__eq(cause, x_register_name, new__symbol(cause, "program_counter"))) {x__data = f2__optimize_fiber__program_counter(cause, this);}
+  else if (raw__eq(cause, x_register_name, new__symbol(cause, "env")))             {x__data = f2__optimize_fiber__env(            cause, this);}
+  else if (raw__eq(cause, x_register_name, new__symbol(cause, "args")))            {x__data = f2__optimize_fiber__args(           cause, this);}
+  else {
+    return f2larva__new(cause, 543165, nil);
+  }
+  f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "reg_array-elt"), f2list2__new(cause, x__data, index));
+  f2ptr result__data        = f2__optimize_data_new(cause, nil, new__symbol(cause, "reg_array-elt-result"), result__data__cause);
+  f2__optimize_fiber__value__set(cause, this, result__data);
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this, f2ptr register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
   printf("\noptimize: reg_array-elt"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -974,18 +1026,18 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(cause, this, register_name);
+  return raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(cause, this, x_register_name, f2ptr index);
 }
 
 
 // reg_array-elt-set
 
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr register_name) {
-  
+f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
+  printf("\noptimize warning: reg_array-elt-set not yet implemented."); fflush(stdout);
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr register_name) {
+f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
   printf("\noptimize: reg_array-elt-set"); fflush(stdout);
   
   {
@@ -994,7 +1046,7 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr
       return result;
     }
   }
-  return raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(cause, this, register_name);
+  return raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(cause, this, x_register_name, index);
 }
 
 
@@ -1813,7 +1865,18 @@ f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this) {
 // block_define_rest_argument
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument__no_increment_pc(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(  cause, fiber, bytecode, new__symbol(cause, "iter"), new__symbol(cause, "value"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, fiber, bytecode, __funk2.primobject__frame.variable__symbol, argument);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 
@@ -2283,14 +2346,16 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
 	return result;
       }
     } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt"))) {
-      f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
-      f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt(cause, this, register_name);
+      f2ptr x_register_name = f2__bytecode__arg0(cause, bytecode);
+      f2ptr index           = f2__bytecode__arg1(cause, bytecode);
+      f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt(cause, this, x_register_name, index);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
     } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt-set"))) {
-      f2ptr register_name = f2__bytecode__arg0(cause, bytecode);
-      f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt__set(cause, this, register_name);
+      f2ptr x_register_name = f2__bytecode__arg0(cause, bytecode);
+      f2ptr index           = f2__bytecode__arg1(cause, bytecode);
+      f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt__set(cause, this, x_register_name, index);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }
@@ -2562,6 +2627,21 @@ f2ptr raw__optimize_context__active_fiber_finished(f2ptr cause, f2ptr this, f2pt
   {
     f2ptr finished_fiber_set = f2__optimize_context__finished_fiber_set(cause, this);
     raw__set__add(cause, finished_fiber_set, finished_fiber);
+  }
+  return nil;
+}
+
+f2ptr raw__optimize_context__active_fiber_branched(f2ptr cause, f2ptr this, f2ptr active_fiber) {
+  {
+    f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
+    if (! raw__set__remove(cause, active_fiber_set, active_fiber)) {
+      return f2larva__new(cause, 567264, nil);
+    }
+  }
+  f2ptr branched_fiber = active_fiber;
+  {
+    f2ptr branched_fiber_set = f2__optimize_context__branched_fiber_set(cause, this);
+    raw__set__add(cause, branched_fiber_set, branched_fiber);
   }
   return nil;
 }

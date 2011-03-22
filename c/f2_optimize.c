@@ -138,7 +138,7 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context, f2ptr optimiz
 			       return_reg,
 			       env);
 }
-def_pcfunk1(optimize_fiber__new, optimize_context, return f2__optimize_fiber__new(this_cause, optimize_context));
+def_pcfunk2(optimize_fiber__new, optimize_context, optimize_cause, return f2__optimize_fiber__new(this_cause, optimize_context, optimize_cause));
 
 
 f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_cause) {

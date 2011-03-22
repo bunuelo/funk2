@@ -119,6 +119,35 @@ f2ptr f2__optimize_side_effect__new(f2ptr cause, f2ptr side_effect_type, f2ptr n
 def_pcfunk3(optimize_side_effect__new, side_effect_type, name, optimize_cause, return f2__optimize_side_effect__new(this_cause, side_effect_type, name, optimize_cause));
 
 
+f2ptr raw__optimize_side_effect__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list8__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_side_effect"),
+					       new__symbol(cause, "side_effect_type"), f2__optimize_side_effect__side_effect_type(cause, this),
+					       new__symbol(cause, "name"),             f2__optimize_side_effect__name(            cause, this),
+					       new__symbol(cause, "optimize_cause"),   f2__optimize_side_effect__optimize_cause(  cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__optimize_side_effect__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(optimize_side_effect,        this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__optimize_side_effect__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(optimize_side_effect__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_side_effect__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2optimize_side_effect__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2optimize_side_effect__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_side_effect.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // optimize_fiber
 
 def_primobject_10_slot(optimize_fiber,

@@ -920,7 +920,7 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause,
   } else {
     // we know the value (it is not a hypothetical data value)
     if (value__data != nil) {
-      f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
+      f2__optimize_fiber__program_counter__set(cause, this, new_program_counter);
     } else {
       // do nothing
     }
@@ -962,7 +962,7 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr caus
     if (value__data != nil) {
       // do nothing
     } else {
-      f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
+      f2__optimize_fiber__program_counter__set(cause, this, new_program_counter);
     }
   }
   return nil;

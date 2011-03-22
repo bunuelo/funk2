@@ -1874,13 +1874,13 @@ f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this) {
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument__no_increment_pc(f2ptr cause, f2ptr this, f2ptr variable_name) {
   {
-    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(  cause, fiber, bytecode, new__symbol(cause, "iter"), new__symbol(cause, "value"));
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(cause, this, new__symbol(cause, "iter"), new__symbol(cause, "value"));
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, fiber, bytecode, __funk2.primobject__frame.variable__symbol, argument);
+    f2ptr result = raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, this, __funk2.primobject__frame.variable__symbol, argument);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

@@ -227,7 +227,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk(f2ptr cause, f2ptr this) {
-  printf("\noptimize: jump-funk");
+  printf("\noptimize: jump-funk"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -246,7 +246,7 @@ f2ptr raw__optimize_fiber__call_bytecode__funk__no_increment_pc(f2ptr cause, f2p
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__funk(f2ptr cause, f2ptr this) {
-  printf("\noptimize: funk");
+  printf("\noptimize: funk"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -269,7 +269,7 @@ f2ptr raw__optimize_fiber__call_bytecode__array__no_increment_pc(f2ptr cause, f2
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__array(f2ptr cause, f2ptr this, f2ptr length) {
-  printf("\noptimize: array");
+  printf("\noptimize: array"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -289,7 +289,7 @@ f2ptr raw__optimize_fiber__call_bytecode__cons__no_increment_pc(f2ptr cause, f2p
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__cons(f2ptr cause, f2ptr this) {
-  printf("\noptimize: cons");
+  printf("\noptimize: cons"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -309,7 +309,7 @@ f2ptr raw__optimize_fiber__call_bytecode__consp__no_increment_pc(f2ptr cause, f2
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__consp(f2ptr cause, f2ptr this) {
-  printf("\noptimize: consp");
+  printf("\noptimize: consp"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -335,7 +335,7 @@ f2ptr raw__optimize_fiber__call_bytecode__car__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__car(f2ptr cause, f2ptr this) {
-  printf("\noptimize: car");
+  printf("\noptimize: car"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -361,7 +361,7 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr(f2ptr cause, f2ptr this) {
-  printf("\noptimize: cdr");
+  printf("\noptimize: cdr"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -380,7 +380,7 @@ f2ptr raw__optimize_fiber__call_bytecode__car__set__no_increment_pc(f2ptr cause,
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__car__set(f2ptr cause, f2ptr this) {
-  printf("\noptimize: car-set");
+  printf("\noptimize: car-set"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -399,7 +399,7 @@ f2ptr raw__optimize_fiber__call_bytecode__cdr__set__no_increment_pc(f2ptr cause,
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__cdr__set(f2ptr cause, f2ptr this) {
-  printf("\noptimize: cdr-set");
+  printf("\noptimize: cdr-set"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -424,7 +424,7 @@ f2ptr raw__optimize_fiber__call_bytecode__array_elt__no_increment_pc(f2ptr cause
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__array_elt(f2ptr cause, f2ptr this, f2ptr array, f2ptr index) {
-  printf("\noptimize: array_elt");
+  printf("\noptimize: array_elt"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -451,7 +451,7 @@ f2ptr raw__optimize_fiber__call_bytecode__set__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__set(f2ptr cause, f2ptr this, f2ptr register_name, f2ptr exp) {
-  printf("\noptimize: ");
+  printf("\noptimize: "); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -507,7 +507,7 @@ f2ptr raw__optimize_fiber__call_bytecode__swap__no_increment_pc(f2ptr cause, f2p
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__swap(f2ptr cause, f2ptr this, f2ptr register_name_0, f2ptr register_name_1) {
-  printf("\noptimize: swap");
+  printf("\noptimize: swap"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -534,7 +534,7 @@ f2ptr raw__optimize_fiber__call_bytecode__push__no_increment_pc(f2ptr cause, f2p
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__push(f2ptr cause, f2ptr this, f2ptr register_name) {
-  printf("\noptimize: push");
+  printf("\noptimize: push"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -553,7 +553,7 @@ f2ptr raw__optimize_fiber__call_bytecode__push_constant__no_increment_pc(f2ptr c
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__push_constant(f2ptr cause, f2ptr this, f2ptr constant) {
-  printf("\noptimize: push_constant");
+  printf("\noptimize: push_constant"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -581,7 +581,7 @@ f2ptr raw__optimize_fiber__call_bytecode__pop__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__pop(f2ptr cause, f2ptr this, f2ptr register_name) {
-  printf("\noptimize: pop");
+  printf("\noptimize: pop"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -618,7 +618,7 @@ f2ptr raw__optimize_fiber__call_bytecode__copy__no_increment_pc(f2ptr cause, f2p
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr from_register_name, f2ptr to_register_name) {
-  printf("\noptimize: copy");
+  printf("\noptimize: copy"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -643,7 +643,7 @@ f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__lookup(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  printf("\noptimize: lookup");
+  printf("\noptimize: lookup"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -664,7 +664,7 @@ f2ptr raw__optimize_fiber__call_bytecode__define__no_increment_pc(f2ptr cause, f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__define(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  printf("\noptimize: define");
+  printf("\noptimize: define"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -683,7 +683,7 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  printf("\noptimize: mutate-type_var");
+  printf("\noptimize: mutate-type_var"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -702,7 +702,7 @@ f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  printf("\noptimize: globalize-type_var");
+  printf("\noptimize: globalize-type_var"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -721,7 +721,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__no_increment_pc(f2ptr cause, f2p
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  printf("\noptimize: jump");
+  printf("\noptimize: jump"); fflush(stdout);
   
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -741,7 +741,7 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause,
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__if__jump(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  printf("\noptimize: if-jump");
+  printf("\noptimize: if-jump"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -760,7 +760,7 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr caus
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__else__jump(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  printf("\noptimize: else-jump");
+  printf("\noptimize: else-jump"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -779,7 +779,7 @@ f2ptr raw__optimize_fiber__call_bytecode__nop__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__nop(f2ptr cause, f2ptr this) {
-  printf("\noptimize: nop");
+  printf("\noptimize: nop"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -798,7 +798,7 @@ f2ptr raw__optimize_fiber__call_bytecode__debug__no_increment_pc(f2ptr cause, f2
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__debug(f2ptr cause, f2ptr this, f2ptr debug_value) {
-  printf("\noptimize: debug");
+  printf("\noptimize: debug"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -817,7 +817,7 @@ f2ptr raw__optimize_fiber__call_bytecode__tracer__no_increment_pc(f2ptr cause, f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__tracer(f2ptr cause, f2ptr this, f2ptr name, f2ptr args) {
-  printf("\noptimize: tracer");
+  printf("\noptimize: tracer"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -836,7 +836,7 @@ f2ptr raw__optimize_fiber__call_bytecode__endfunk__no_increment_pc(f2ptr cause, 
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__endfunk(f2ptr cause, f2ptr this, f2ptr funk) {
-  printf("\noptimize: endfunk");
+  printf("\noptimize: endfunk"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -855,7 +855,7 @@ f2ptr raw__optimize_fiber__call_bytecode__compile__no_increment_pc(f2ptr cause, 
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__compile(f2ptr cause, f2ptr this, f2ptr protect_environment) {
-  printf("\noptimize: compile");
+  printf("\noptimize: compile"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -874,7 +874,7 @@ f2ptr raw__optimize_fiber__call_bytecode__yield__no_increment_pc(f2ptr cause, f2
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__yield(f2ptr cause, f2ptr this) {
-  printf("\noptimize: yield");
+  printf("\noptimize: yield"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -898,7 +898,7 @@ f2ptr raw__optimize_fiber__call_bytecode__newenv__no_increment_pc(f2ptr cause, f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__newenv(f2ptr cause, f2ptr this) {
-  printf("\noptimize: newenv");
+  printf("\noptimize: newenv"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -917,7 +917,7 @@ f2ptr raw__optimize_fiber__call_bytecode__machine_code__no_increment_pc(f2ptr ca
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__machine_code(f2ptr cause, f2ptr this, f2ptr chunk) {
-  printf("\noptimize: machine_code");
+  printf("\noptimize: machine_code"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -936,7 +936,7 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr 
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this, f2ptr register_name) {
-  printf("\noptimize: reg_array-elt");
+  printf("\noptimize: reg_array-elt"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -955,7 +955,7 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr register_name) {
-  printf("\noptimize: reg_array-elt-set");
+  printf("\noptimize: reg_array-elt-set"); fflush(stdout);
   
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
@@ -975,7 +975,7 @@ f2ptr raw__optimize_fiber__call_bytecode__eq__no_increment_pc(f2ptr cause, f2ptr
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__eq(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: eq");
+  printf("\noptimize: eq"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -994,7 +994,7 @@ f2ptr raw__optimize_fiber__call_bytecode__not__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__not(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
-  printf("\noptimize: not");
+  printf("\noptimize: not"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1013,7 +1013,7 @@ f2ptr raw__optimize_fiber__call_bytecode__and__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__and(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: and");
+  printf("\noptimize: and"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1032,7 +1032,7 @@ f2ptr raw__optimize_fiber__call_bytecode__or__no_increment_pc(f2ptr cause, f2ptr
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__or(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: ");
+  printf("\noptimize: "); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1051,7 +1051,7 @@ f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2pt
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__add(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: add");
+  printf("\noptimize: add"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1070,7 +1070,7 @@ f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause,
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__negative(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
-  printf("\noptimize: negative");
+  printf("\noptimize: negative"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1089,7 +1089,7 @@ f2ptr raw__optimize_fiber__call_bytecode__subtract__no_increment_pc(f2ptr cause,
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__subtract(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: subtract");
+  printf("\noptimize: subtract"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1108,7 +1108,7 @@ f2ptr raw__optimize_fiber__call_bytecode__multiply__no_increment_pc(f2ptr cause,
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__multiply(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: multiply");
+  printf("\noptimize: multiply"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1127,7 +1127,7 @@ f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, 
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__inverse(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
-  printf("\noptimize: inverse");
+  printf("\noptimize: inverse"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1146,7 +1146,7 @@ f2ptr raw__optimize_fiber__call_bytecode__divide__no_increment_pc(f2ptr cause, f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__divide(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: divide");
+  printf("\noptimize: divide"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1165,7 +1165,7 @@ f2ptr raw__optimize_fiber__call_bytecode__modulo__no_increment_pc(f2ptr cause, f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__modulo(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: modulo");
+  printf("\noptimize: modulo"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1184,7 +1184,7 @@ f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__increment(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
-  printf("\noptimize: increment");
+  printf("\noptimize: increment"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1203,7 +1203,7 @@ f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__decrement(f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name) {
-  printf("\noptimize: decrement");
+  printf("\noptimize: decrement"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1222,7 +1222,7 @@ f2ptr raw__optimize_fiber__call_bytecode__numerically_equals__no_increment_pc(f2
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__numerically_equals(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: numerically_equals");
+  printf("\noptimize: numerically_equals"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1241,7 +1241,7 @@ f2ptr raw__optimize_fiber__call_bytecode__less_than__no_increment_pc(f2ptr cause
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__less_than(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: less_than");
+  printf("\noptimize: less_than"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1260,7 +1260,7 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(f2ptr ca
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__greater_than(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  printf("\noptimize: greater_than");
+  printf("\noptimize: greater_than"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1308,7 +1308,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_push__no_increment_pc(f2ptr caus
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this) {
-  printf("\noptimize: block_push");
+  printf("\noptimize: block_push"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1338,7 +1338,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_enter__no_increment_pc(f2ptr cau
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_enter(f2ptr cause, f2ptr this) {
-  printf("\noptimize: block_enter");
+  printf("\noptimize: block_enter"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1357,7 +1357,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument__no_increme
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  printf("\noptimize: block_define_rest_argument");
+  printf("\noptimize: block_define_rest_argument"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1411,7 +1411,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_argument__no_increment_pc
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_argument(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  printf("\noptimize: block_define_argument");
+  printf("\noptimize: block_define_argument"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1430,7 +1430,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument__no_increme
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  printf("\noptimize: block_define_last_argument");
+  printf("\noptimize: block_define_last_argument"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1449,7 +1449,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_pop__no_increment_pc(f2ptr cause
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_pop(f2ptr cause, f2ptr this) {
-  printf("\noptimize: block_pop");
+  printf("\noptimize: block_pop"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1468,7 +1468,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop__no_increment_pc(f2
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop(f2ptr cause, f2ptr this, f2ptr funk) {
-  printf("\noptimize: block_exit_and_pop");
+  printf("\noptimize: block_exit_and_pop"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1487,7 +1487,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop__no_increment_pc
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_no_pop(f2ptr cause, f2ptr this, f2ptr funk) {
-  printf("\noptimize: block_exit_and_no_pop");
+  printf("\noptimize: block_exit_and_no_pop"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1506,7 +1506,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin__no_increment_pc
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_begin(f2ptr cause, f2ptr this) {
-  printf("\noptimize: block_eval_args_begin");
+  printf("\noptimize: block_eval_args_begin"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1525,7 +1525,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next__no_increment_pc(
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next(f2ptr cause, f2ptr this) {
-  printf("\noptimize: block_eval_args_next");
+  printf("\noptimize: block_eval_args_next"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1544,7 +1544,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc(f
 }
 
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end(f2ptr cause, f2ptr this) {
-  printf("\noptimize: block_eval_args_end");
+  printf("\noptimize: block_eval_args_end"); fflush(stdout);
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1948,7 +1948,7 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
 	return result;
       }
     } else {
-      printf("\nbytecode UNRECOGNIZED: cannot optimize funk.");
+      printf("\nbytecode UNRECOGNIZED: cannot optimize funk."); fflush(stdout);
       return f2larva__new(cause, 5123, nil);
     }
   }

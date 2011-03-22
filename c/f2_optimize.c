@@ -1528,7 +1528,36 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument(f2ptr cause
 // block_pop
 
 f2ptr raw__optimize_fiber__call_bytecode__block_pop__no_increment_pc(f2ptr cause, f2ptr this) {
-  
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, nil);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, new__symbol(cause, "env"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__pop__no_increment_pc(cause, this, new__symbol(cause, "return_reg"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 
@@ -1548,19 +1577,19 @@ f2ptr raw__optimize_fiber__call_bytecode__block_pop(f2ptr cause, f2ptr this) {
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr funk) {
   {
-    f2ptr result = raw__fiber__bytecode__endfunk__no_increment_pc(  cause, this, funk);
+    f2ptr result = raw__optimize_fiber__call_bytecode__endfunk__no_increment_pc(  cause, this, funk);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = raw__fiber__bytecode__block_pop__no_increment_pc(cause, this);
+    f2ptr result = raw__optimize_fiber__call_bytecode__block_pop__no_increment_pc(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = raw__fiber__bytecode__copy__no_increment_pc(     cause, this, new__symbol(cause, "return_reg"), new__symbol(cause, "program_counter"));
+    f2ptr result = raw__optimize_fiber__call_bytecode__copy__no_increment_pc(     cause, this, new__symbol(cause, "return_reg"), new__symbol(cause, "program_counter"));
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

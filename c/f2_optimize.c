@@ -2889,7 +2889,9 @@ void f2__optimize__initialize() {
 
   // optimize_fiber
   
-  initialize_primobject_7_slot(optimize_fiber,
+  initialize_primobject_9_slot(optimize_fiber,
+			       optimize_context,
+			       optimize_cause,
 			       stack,
 			       value,
 			       iter,

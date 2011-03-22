@@ -1315,13 +1315,13 @@ f2ptr raw__optimize_fiber__call_bytecode__block_push(f2ptr cause, f2ptr this) {
 
 f2ptr raw__optimize_fiber__call_bytecode__block_enter__no_increment_pc(f2ptr cause, f2ptr this) {
   {
-    f2ptr result = raw__optimize_fiber__call_bytecode__block_push__no_increment_pc_reg(cause, this);
+    f2ptr result = raw__optimize_fiber__call_bytecode__block_push__no_increment_pc(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
   }
   {
-    f2ptr result = raw__optimize_fiber__call_bytecode__newenv__no_increment_pc_reg(cause, this);
+    f2ptr result = raw__optimize_fiber__call_bytecode__newenv__no_increment_pc(cause, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

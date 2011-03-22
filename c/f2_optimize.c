@@ -246,7 +246,11 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 // jump-funk
 
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr cause, f2ptr this) {
-  printf("\noptimize warning: jump-funk not yet implemented."); fflush(stdout);
+  f2ptr funk__data          = f2__optimize_fiber__value(cause, this);
+  f2ptr args__data          = f2__optimize_fiber__args( cause, this);
+  f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "jump-funk"), f2list2__new(cause, funk__data, args__data));
+  f2ptr result__data        = f2__optimize_data__new(cause, nil, new__symbol(cause, "jump-funk-result"), result__data__cause);
+  f2__optimize_fiber__value__set(fiber, cause, result__data);
   return nil;
 }
 
@@ -265,7 +269,14 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk(f2ptr cause, f2ptr this) {
 // funk
 
 f2ptr raw__optimize_fiber__call_bytecode__funk__no_increment_pc(f2ptr cause, f2ptr this) {
-  printf("\noptimize warning: funk not yet implemented."); fflush(stdout);
+  f2ptr program_counter = f2__optimize_fiber__program_counter(cause, this);
+  f2__optimize_fiber__return_reg__set(cause, this, program_counter);
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

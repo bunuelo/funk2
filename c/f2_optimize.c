@@ -635,10 +635,10 @@ f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, 
   f2ptr     frame_lookup = nil;
   while (! found_value) {
     f2ptr environment__frame = f2__environment__frame(cause, environment);
-    if (! raw__frame__is_type(cause, frame)) {
+    if (! raw__frame__is_type(cause, environment__frame)) {
       return f2larva__new(cause, 5423626, nil);
     }
-    frame_lookup = raw__frame__lookup_type_var_value(cause, frame, type_name, var_name, new__symbol(cause, "<optimize-lookup-undefined>"));
+    frame_lookup = raw__frame__lookup_type_var_value(cause, environment__frame, type_name, var_name, new__symbol(cause, "<optimize-lookup-undefined>"));
     if (raw__larva__is_type(cause, frame_lookup)) {
       return frame_lookup;
     }

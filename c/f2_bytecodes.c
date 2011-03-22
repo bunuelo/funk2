@@ -52,10 +52,10 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__pop__execution_count                        = 0;
   this->bytecode__copy__symbol                                = -1;
   this->bytecode__copy__execution_count                       = 0;
-  this->bytecode__lookup__symbol                     = -1;
-  this->bytecode__lookup__execution_count            = 0;
-  this->bytecode__define__symbol                     = -1;
-  this->bytecode__define__execution_count            = 0;
+  this->bytecode__lookup__symbol                              = -1;
+  this->bytecode__lookup__execution_count                     = 0;
+  this->bytecode__define__symbol                              = -1;
+  this->bytecode__define__execution_count                     = 0;
   this->bytecode__type_var__mutate__symbol                    = -1;
   this->bytecode__type_var__mutate__execution_count           = 0;
   this->bytecode__globalize_type_var__symbol                  = -1;

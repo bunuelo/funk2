@@ -62,8 +62,8 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__copy__execution_count;
   f2ptr bytecode__lookup__symbol;
   u64   bytecode__lookup__execution_count;
-  f2ptr bytecode__define_type_var__symbol;
-  u64   bytecode__define_type_var__execution_count;
+  f2ptr bytecode__define__symbol;
+  u64   bytecode__define__execution_count;
   f2ptr bytecode__type_var__mutate__symbol;
   u64   bytecode__type_var__mutate__execution_count;
   f2ptr bytecode__globalize_type_var__symbol;

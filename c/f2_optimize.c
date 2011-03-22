@@ -2721,7 +2721,7 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
 				       active_fiber_set,
 				       branched_fiber_set,
 				       finished_fiber_set);
-  initial_fiber = f2__optimize_fiber__new(cause, this);
+  initial_fiber = f2__optimize_fiber__new(cause, this, nil);
   f2__optimize_context__initial_fiber__set(cause, this, initial_fiber);
   raw__optimize_context__add_active_fiber(cause, this, initial_fiber);
   return this;

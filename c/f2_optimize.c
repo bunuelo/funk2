@@ -1474,6 +1474,12 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_last_argument__no_increme
       return result;
     }
   }
+  {
+    f2ptr result = raw__optimize_fiber__call_bytecode__define__no_increment_pc(cause, this, __funk2.primobject__frame.variable__symbol, variable_name);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

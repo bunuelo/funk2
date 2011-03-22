@@ -1077,7 +1077,37 @@ f2ptr raw__optimize_fiber__call_bytecode__or(f2ptr cause, f2ptr this, f2ptr resu
 // add
 
 f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name) {
-  
+  f2ptr x0__data = nil;
+  if      (raw__eq(cause, x0_register_name, new__symbol(cause, "return_reg")))      {x0__data = f2__optimize_fiber__return_reg(     cause, this);}
+  else if (raw__eq(cause, x0_register_name, new__symbol(cause, "value")))           {x0__data = f2__optimize_fiber__value(          cause, this);}
+  else if (raw__eq(cause, x0_register_name, new__symbol(cause, "iter")))            {x0__data = f2__optimize_fiber__iter(           cause, this);}
+  else if (raw__eq(cause, x0_register_name, new__symbol(cause, "program_counter"))) {x0__data = f2__optimize_fiber__program_counter(cause, this);}
+  else if (raw__eq(cause, x0_register_name, new__symbol(cause, "env")))             {x0__data = f2__optimize_fiber__env(            cause, this);}
+  else if (raw__eq(cause, x0_register_name, new__symbol(cause, "args")))            {x0__data = f2__optimize_fiber__args(           cause, this);}
+  else {
+    return f2larva__new(cause, 543616, nil);
+  }
+  f2ptr x1__data = nil;
+  if      (raw__eq(cause, x1_register_name, new__symbol(cause, "return_reg")))      {x1__data = f2__optimize_fiber__return_reg(     cause, this);}
+  else if (raw__eq(cause, x1_register_name, new__symbol(cause, "value")))           {x1__data = f2__optimize_fiber__value(          cause, this);}
+  else if (raw__eq(cause, x1_register_name, new__symbol(cause, "iter")))            {x1__data = f2__optimize_fiber__iter(           cause, this);}
+  else if (raw__eq(cause, x1_register_name, new__symbol(cause, "program_counter"))) {x1__data = f2__optimize_fiber__program_counter(cause, this);}
+  else if (raw__eq(cause, x1_register_name, new__symbol(cause, "env")))             {x1__data = f2__optimize_fiber__env(            cause, this);}
+  else if (raw__eq(cause, x1_register_name, new__symbol(cause, "args")))            {x1__data = f2__optimize_fiber__args(           cause, this);}
+  else {
+    return f2larva__new(cause, 543617, nil);
+  }
+  f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "add"), f2list2__args(cause, x0__data, x1__data));
+  f2ptr result__data        = f2__optimize_data__new(cause, new__symbol(cause, "number"), nil, result__data__cause);
+  if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
+  else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
+  else if (raw__eq(cause, result_register_name, new__symbol(cause, "iter")))            {f2__optimize_fiber__iter__set(           cause, this, result__data);}
+  else if (raw__eq(cause, result_register_name, new__symbol(cause, "program_counter"))) {f2__optimize_fiber__program_counter__set(cause, this, result__data);}
+  else if (raw__eq(cause, result_register_name, new__symbol(cause, "env")))             {f2__optimize_fiber__env__set(            cause, this, result__data);}
+  else if (raw__eq(cause, result_register_name, new__symbol(cause, "args")))            {f2__optimize_fiber__args__set(           cause, this, result__data);}
+  else {
+    return f2larva__new(cause, 543617, nil);
+  }
   return nil;
 }
 
@@ -1517,7 +1547,24 @@ f2ptr raw__optimize_fiber__call_bytecode__block_pop(f2ptr cause, f2ptr this) {
 // block_exit_and_pop
 
 f2ptr raw__optimize_fiber__call_bytecode__block_exit_and_pop__no_increment_pc(f2ptr cause, f2ptr this, f2ptr funk) {
-  
+  {
+    f2ptr result = raw__fiber__bytecode__endfunk__no_increment_pc(  cause, this, funk);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__fiber__bytecode__block_pop__no_increment_pc(cause, this);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__fiber__bytecode__copy__no_increment_pc(     cause, this, new__symbol(cause, "return_reg"), new__symbol(cause, "program_counter"));
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

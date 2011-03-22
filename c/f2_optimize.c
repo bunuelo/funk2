@@ -1021,7 +1021,7 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr 
     return f2larva__new(cause, 543165, nil);
   }
   f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "reg_array-elt"), f2list2__new(cause, x__data, index));
-  f2ptr result__data        = f2__optimize_data_new(cause, nil, new__symbol(cause, "reg_array-elt-result"), result__data__cause);
+  f2ptr result__data        = f2__optimize_data__new(cause, nil, new__symbol(cause, "reg_array-elt-result"), result__data__cause);
   f2__optimize_fiber__value__set(cause, this, result__data);
   return nil;
 }

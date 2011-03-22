@@ -250,7 +250,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
   f2ptr args__data          = f2__optimize_fiber__args( cause, this);
   f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "jump-funk"), f2list2__new(cause, funk__data, args__data));
   f2ptr result__data        = f2__optimize_data__new(cause, nil, new__symbol(cause, "jump-funk-result"), result__data__cause);
-  f2__optimize_fiber__value__set(fiber, cause, result__data);
+  f2__optimize_fiber__value__set(cause, this, result__data);
   return nil;
 }
 

@@ -788,10 +788,10 @@ f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr ne
 // if-jump
 
 f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
-  f2ptr optimize_context   = f2__optimize_fiber__optimize_context(cause, this);
-  f2ptr value              = f2__optimize_fiber__value(           cause, this);
-  f2ptr true_branch_fiber  = f2__optimize_fiber__new_copy(        cause, this);
-  f2ptr false_branch_fiber = f2__optimize_fiber__new_copy(        cause, this);
+  f2ptr optimize_context   =  f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr value              =  f2__optimize_fiber__value(           cause, this);
+  f2ptr true_branch_fiber  = raw__optimize_fiber__new_copy(        cause, this);
+  f2ptr false_branch_fiber = raw__optimize_fiber__new_copy(        cause, this);
   raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
   raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
   raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);

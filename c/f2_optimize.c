@@ -1303,7 +1303,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument__no_increme
   return nil;
 }
 
-f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument(f2ptr cause, f2ptr this, f2ptr bytecode, f2ptr variable_name) {
+f2ptr raw__optimize_fiber__call_bytecode__block_define_rest_argument(f2ptr cause, f2ptr this, f2ptr variable_name) {
   printf("\noptimize: block_define_rest_argument");
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);

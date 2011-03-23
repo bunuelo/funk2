@@ -204,11 +204,12 @@ f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this)
 	  }
 	  args__data__iter = f2__cons__cdr(cause, args__data__iter);
 	}
-	return f2cons__new(cause, new__symbol(cause, "conslist"), args_conslist);
+	args__data__compile_expression = f2cons__new(cause, new__symbol(cause, "conslist"), args_conslist);
       } else {
 	args__data__compile_expression = args__data;
       }
     }
+    return f2list3__new(cause, new__symbol(cause, "apply"), funk__data__compile_expression, args__data__compile_expression);
   }
   printf("\noptimize_side_effect warning: not yet implemented."); fflush(stdout);
   return this;

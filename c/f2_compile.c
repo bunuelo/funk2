@@ -1628,7 +1628,6 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
       *is_locally_funktional = boolean__false;
     }
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__cons__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__conslist__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__car__set__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;

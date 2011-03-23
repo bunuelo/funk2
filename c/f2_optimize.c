@@ -286,7 +286,7 @@ f2ptr raw__optimize_fiber__as__compile_expression(f2ptr cause, f2ptr this) {
     while (iter != nil) {
       f2ptr side_effect = f2__cons__car(cause, iter);
       {
-	f2ptr side_effect_expression = raw__optimize_side_effect__as__compile_expression(cause, side_effect_expression);
+	f2ptr side_effect_expression = raw__optimize_side_effect__as__compile_expression(cause, side_effect);
 	side_effect_expressions = f2cons__new(cause, side_effect_expression, side_effect_expressions);
       }
       iter = f2__cons__cdr(cause, iter);

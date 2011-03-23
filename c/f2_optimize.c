@@ -126,6 +126,32 @@ def_pcfunk3(optimize_side_effect__new, side_effect_type, name, optimize_cause, r
 
 
 f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this) {
+  f2ptr side_effect_type = f2__optimize_side_effect__side_effect_type(cause, this);
+  if (raw__eq(cause, side_effect_type, new__symbol(cause, "globalize-type_var"))) {
+    f2ptr optimize_cause = f2__optimize_side_effect__optimize_cause(cause, this);
+    f2ptr args           = f2__optimize_cause__args(cause, optimize_cause);
+    f2ptr iter = args;                 f2ptr type_name   = f2__cons__car(cause, iter);
+    iter = f2__cons__cdr(cause, iter); f2ptr var_name    = f2__cons__car(cause, iter);
+    iter = f2__cons__cdr(cause, iter); f2ptr value__data = f2__cons__car(cause, iter);
+    f2ptr value__data__compile_expression = nil;
+    if (raw__optimize_data__is_type(cause, value__data)) {
+      value__data__compile_expression = raw__optimize_data__as__compile_expression(cause, value__data);
+      if (raw__larva__is_type(cause, value__data__compile_expression)) {
+	return value__data__compile_expression;
+      }
+    } else {
+      value__data__compile_expression = value__data;
+    }
+    f2ptr command_name = nil;
+    if (raw__eq(cause, type_name, new__symbol(cause, "variable"))) {
+      command_name = new__symbol(cause, "globalize");
+    } else {
+      command_name = new__symbol(cause, "globalize-funk");
+    } else {
+      return f2larva__new(cause, 5133541, nil);
+    }
+    return f2list3__new(cause, command_name, var_name, value__data__compile_expression);
+  }
   printf("\noptimize_side_effect warning: not yet implemented."); fflush(stdout);
   return this;
 }
@@ -287,6 +313,9 @@ f2ptr raw__optimize_fiber__as__compile_expression(f2ptr cause, f2ptr this) {
       f2ptr side_effect = f2__cons__car(cause, iter);
       {
 	f2ptr side_effect_expression = raw__optimize_side_effect__as__compile_expression(cause, side_effect);
+	if (raw__larva__is_type(cause, side_effect_expression)) {
+	  return side_effect_expression;
+	}
 	side_effect_expressions = f2cons__new(cause, side_effect_expression, side_effect_expressions);
       }
       iter = f2__cons__cdr(cause, iter);
@@ -297,6 +326,9 @@ f2ptr raw__optimize_fiber__as__compile_expression(f2ptr cause, f2ptr this) {
     f2ptr value__data__expression = nil;
     if (raw__optimize_data__is_type(cause, value__data)) {
       value__data__expression = raw__optimize_data__as__compile_expression(cause, value__data);
+      if (raw__larva__is_type(cause, value__data__expression)) {
+	return value__data__expression;
+      }
     } else {
       value__data__expression = value__data;
     }

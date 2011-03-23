@@ -89,6 +89,64 @@ boolean_t raw__not(f2ptr x) {return !x;}
 f2ptr f2__not(f2ptr cause, f2ptr x) {return f2bool__new(raw__not(x));}
 def_pcfunk1(not, x, return f2__not(this_cause, x));
 
+f2ptr f2__and(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2bool__new((x0 != nil) && (x1 != nil));
+}
+
+f2ptr f2__or(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2bool__new((x0 != nil) || (x1 != nil));
+}
+
+// math
+
+f2ptr f2__add(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__plus(cause, x1, x0);
+}
+
+f2ptr f2__negative(f2ptr cause, f2ptr x) {
+  return f2__number__minus(cause, f2integer__new(cause, 0), x);
+}
+
+f2ptr f2__subtract(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__minus(cause, x1, x0);
+}
+
+f2ptr f2__multiply(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__multiplied_by(cause, x1, x0);
+}
+
+f2ptr f2__inverse(f2ptr cause, f2ptr x) {
+  return f2__number__divided_by(cause, f2integer__new(cause, 1), x);
+}
+
+f2ptr f2__divide(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__divided_by(cause, x1, x0);
+}
+
+f2ptr f2__modulo(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__modulo(cause, x1, x0);
+}
+
+f2ptr f2__increment(f2ptr cause, f2ptr x) {
+  return f2__add(cause, x, f2integer__new(cause, 1));
+}
+
+f2ptr f2__decrement(f2ptr cause, f2ptr x) {
+  return f2__subtract(cause, x, f2integer__new(cause, 1));
+}
+
+f2ptr f2__numerically_equals(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_numerically_equal_to(cause, x1, x0);
+}
+
+f2ptr f2__less_than(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_less_than(cause, x1, x0);
+}
+
+f2ptr f2__greater_than(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_greater_than(cause, x1, x0);
+}
+
 // system
 
 f2ptr f2__system__node_id(f2ptr cause) {

@@ -292,7 +292,7 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr cause, f2ptr this) {
   f2ptr funk__data = f2__optimize_fiber__value(cause, this);
   f2ptr args__data = f2__optimize_fiber__args( cause, this);
-  if ((! raw__optimize_data__is_type(cause, funk__data)) ||
+  if ((! raw__optimize_data__is_type(cause, funk__data)) &&
       (! raw__optimize_data__is_type(cause, args__data))) {
     if (raw__funk__is_type(cause, funk__data)) {
       f2ptr funk_env = f2funk__env(           funk__data, cause);

@@ -182,6 +182,8 @@ f2ptr raw__optimize_fiber__call_bytecode__array__no_increment_pc                
 f2ptr raw__optimize_fiber__call_bytecode__array                                      (f2ptr cause, f2ptr this, f2ptr length);
 f2ptr raw__optimize_fiber__call_bytecode__cons__no_increment_pc                      (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__cons                                       (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_fiber__call_bytecode__conslist__no_increment_pc                  (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_fiber__call_bytecode__conslist                                   (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__consp__no_increment_pc                     (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__consp                                      (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__car__no_increment_pc                       (f2ptr cause, f2ptr this);

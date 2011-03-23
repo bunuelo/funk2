@@ -30,6 +30,8 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__array__execution_count                      = 0;
   this->bytecode__cons__symbol                                = -1;
   this->bytecode__cons__execution_count                       = 0;
+  this->bytecode__conslist__symbol                            = -1;
+  this->bytecode__conslist__execution_count                   = 0;
   this->bytecode__consp__symbol                               = -1;
   this->bytecode__consp__execution_count                      = 0;
   this->bytecode__car__symbol                                 = -1;
@@ -159,7 +161,7 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
 
 void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("bytecode execution counts follow:");
-  status("  bytecode__lookup__execution_count            = " u64__fstr, this->bytecode__lookup__execution_count);
+  status("  bytecode__lookup__execution_count                     = " u64__fstr, this->bytecode__lookup__execution_count);
   status("  bytecode__block_eval_args_next__execution_count       = " u64__fstr, this->bytecode__block_eval_args_next__execution_count);
   status("  bytecode__block_pop__execution_count                  = " u64__fstr, this->bytecode__block_pop__execution_count);
   status("  bytecode__block_eval_args_begin__execution_count      = " u64__fstr, this->bytecode__block_eval_args_begin__execution_count);
@@ -180,9 +182,10 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__block_exit_and_pop__execution_count         = " u64__fstr, this->bytecode__block_exit_and_pop__execution_count);
   status("  bytecode__yield__execution_count                      = " u64__fstr, this->bytecode__yield__execution_count);
   status("  bytecode__type_var__mutate__execution_count           = " u64__fstr, this->bytecode__type_var__mutate__execution_count);
-  status("  bytecode__define__execution_count            = " u64__fstr, this->bytecode__define__execution_count);
+  status("  bytecode__define__execution_count                     = " u64__fstr, this->bytecode__define__execution_count);
   status("  bytecode__swap__execution_count                       = " u64__fstr, this->bytecode__swap__execution_count);
   status("  bytecode__cons__execution_count                       = " u64__fstr, this->bytecode__cons__execution_count);
+  status("  bytecode__conslist__execution_count                   = " u64__fstr, this->bytecode__conslist__execution_count);
   status("  bytecode__car__set__execution_count                   = " u64__fstr, this->bytecode__car__set__execution_count);
   status("  bytecode__cdr__set__execution_count                   = " u64__fstr, this->bytecode__cdr__set__execution_count);
   status("  bytecode__globalize_type_var__execution_count         = " u64__fstr, this->bytecode__globalize_type_var__execution_count);
@@ -499,6 +502,27 @@ int f2__fiber__bytecode__cons(f2ptr fiber, f2ptr bytecode) {
   f2__fiber__increment_pc(fiber, cause);
   
   return f2__fiber__bytecode__cons__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+// bytecode conslist []
+
+int f2__fiber__bytecode__conslist__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2ptr args  = f2fiber__args(fiber, cause);
+  f2ptr value = f2__conslist(cause, args);
+  f2fiber__value__set(fiber, cause, value);
+  return 0;
+}
+
+
+int f2__fiber__bytecode__conslist(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode conslist beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__conslist__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__conslist__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 
@@ -3214,6 +3238,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__funk__symbol                       = new__symbol(cause, "funk");
   __funk2.bytecode.bytecode__array__symbol                      = new__symbol(cause, "array");
   __funk2.bytecode.bytecode__cons__symbol                       = new__symbol(cause, "cons");
+  __funk2.bytecode.bytecode__conslist__symbol                   = new__symbol(cause, "conslist");
   __funk2.bytecode.bytecode__consp__symbol                      = new__symbol(cause, "consp");
   __funk2.bytecode.bytecode__car__symbol                        = new__symbol(cause, "car");
   __funk2.bytecode.bytecode__cdr__symbol                        = new__symbol(cause, "cdr");

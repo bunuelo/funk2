@@ -77,6 +77,12 @@ f2ptr f2__optimize_data__new(f2ptr cause, f2ptr data_type, f2ptr name, f2ptr opt
 def_pcfunk3(optimize_data__new, data_type, name, optimize_cause, return f2__optimize_data__new(this_cause, data_type, name, optimize_cause));
 
 
+f2ptr raw__optimize_data__as__compile_expression(f2ptr cause, f2ptr this) {
+  printf("\noptimize_data warning: not yet implemented."); fflush(stdout);
+  return this;
+}
+
+
 f2ptr raw__optimize_data__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -117,6 +123,12 @@ f2ptr f2__optimize_side_effect__new(f2ptr cause, f2ptr side_effect_type, f2ptr n
   return f2optimize_side_effect__new(cause, side_effect_type, name, optimize_cause);
 }
 def_pcfunk3(optimize_side_effect__new, side_effect_type, name, optimize_cause, return f2__optimize_side_effect__new(this_cause, side_effect_type, name, optimize_cause));
+
+
+f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this) {
+  printf("\noptimize_side_effect warning: not yet implemented."); fflush(stdout);
+  return this;
+}
 
 
 f2ptr raw__optimize_side_effect__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -262,6 +274,41 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
   f2__optimize_fiber__args__set(           cause, this, args_reg);
   f2__optimize_fiber__program_counter__set(cause, this, funk__body_bytecodes);
   return nil;
+}
+
+
+f2ptr raw__optimize_fiber__as__compile_expression(f2ptr cause, f2ptr this) {
+  f2ptr children_branched_fibers = f2__optimize_fiber__children_branched_fibers(cause, this);
+  f2ptr side_effects             = f2__optimize_fiber__optimize_side_effects(   cause, this);
+  f2ptr side_effect_expressions  = nil;
+  {
+    f2ptr iter = side_effects;
+    while (iter != nil) {
+      f2ptr side_effect = f2__cons__car(cause, iter);
+      {
+	f2ptr side_effect_expression = raw__optimize_side_effect__as__compile_expression(cause, side_effect_expression);
+	side_effect_expressions = f2cons__new(cause, side_effect_expression, side_effect_expressions);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  if (children_branched_fibers == nil) {
+    f2ptr value__data             = f2__optimize_fiber__value(cause, this);
+    f2ptr value__data__expression = nil;
+    if (raw__optimize_data__is_type(cause, value__data)) {
+      value__data__expression = raw__optimize_data__as__compile_expression(cause, value__data);
+    } else {
+      value__data__expression = value__data;
+    }
+    return f2cons__new(cause,
+		       new__symbol(cause, "prog"),
+		       f2__conslistlist__append(cause, f2list2__new(cause,
+								    side_effect_expressions,
+								    f2cons__new(cause, value__data__expression, nil))));
+  } else {
+    printf("\noptimize_fiber-as-compile_expression warning: not yet implemented."); fflush(stdout);
+    return this;
+  }
 }
 
 
@@ -2979,11 +3026,12 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_4_slot(optimize_context,
+def_primobject_5_slot(optimize_context,
 		      initial_fiber,
 		      active_fiber_set,
 		      branched_fiber_set,
-		      finished_fiber_set);
+		      finished_fiber_set,
+		      compile_expression);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr initial_fiber      = nil;
@@ -3079,24 +3127,13 @@ f2ptr raw__optimize_context__complete_simulation(f2ptr cause, f2ptr this) {
   return nil;
 }
 
-
-f2ptr raw__optimize_context__improve_funk_bytecodes_with_simulation_results(f2ptr cause, f2ptr this, f2ptr funk) {
+f2ptr raw__optimize_context__as__compile_expression(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
   if (! raw__set__is_empty(cause, active_fiber_set)) {
     return f2larva__new(cause, 5643234, nil);
   }
-  f2ptr finished_fiber_set = f2__optimize_context__finished_fiber_set(cause, this);
-  f2ptr required_data_set  = f2__set__new(cause);
-  set__iteration(cause, finished_fiber_set, finished_fiber,
-		 f2ptr value__data = f2__optimize_fiber__value(cause, finished_fiber);
-		 if (raw__optimize_data__is_type(cause, value__data)) {
-		   if (! raw__set__contains(cause, required_data_set, value__data)) {
-		     raw__set__add(cause, required_data_set, value__data);
-		   }
-		 }
-		 
-		 );
-  return nil;
+  f2ptr initial_fiber = f2__optimize_context__initial_fiber(cause, this);
+  return raw__optimize_fiber__as__compile_expression(cause, initial_fiber);
 }
 
 
@@ -3104,11 +3141,12 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list10__new(cause,
+    frame = f2__frame__new(cause, f2list12__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
 						new__symbol(cause, "initial_fiber"),      f2__optimize_context__initial_fiber(     cause, this),
 						new__symbol(cause, "active_fiber_set"),   f2__optimize_context__active_fiber_set(  cause, this),
 						new__symbol(cause, "branched_fiber_set"), f2__optimize_context__branched_fiber_set(cause, this),
+						new__symbol(cause, "compile_expression"), f2__optimize_context__compile_expression(cause, this),
 						new__symbol(cause, "finished_fiber_set"), f2__optimize_context__finished_fiber_set(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
@@ -3147,12 +3185,11 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
       return result;
     }
   }
-  {
-    f2ptr result = raw__optimize_context__improve_funk_bytecodes_with_simulation_results(cause, optimize_context, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
+  f2ptr compile_expression = raw__optimize_context__as__compile_expression(cause, optimize_context);
+  if (raw__larva__is_type(cause, compile_expression)) {
+    return compile_expression;
   }
+  f2__optimize_context__compile_expression__set(cause, optimize_context, compile_expression);
   return optimize_context;
 }
 
@@ -3236,11 +3273,12 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_4_slot(optimize_context,
+  initialize_primobject_5_slot(optimize_context,
 			       initial_fiber,
 			       active_fiber_set,
 			       branched_fiber_set,
-			       finished_fiber_set);
+			       finished_fiber_set,
+			       compile_expression);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_context to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}

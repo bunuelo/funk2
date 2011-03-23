@@ -128,11 +128,11 @@ f2ptr f2__modulo(f2ptr cause, f2ptr x0, f2ptr x1) {
 }
 
 f2ptr f2__increment(f2ptr cause, f2ptr x) {
-  return f2__add(cause, x, f2integer__new(cause, 1));
+  return f2__number__plus(cause, x, f2integer__new(cause, 1));
 }
 
 f2ptr f2__decrement(f2ptr cause, f2ptr x) {
-  return f2__subtract(cause, x, f2integer__new(cause, 1));
+  return f2__number__minus(cause, x, f2integer__new(cause, 1));
 }
 
 f2ptr f2__numerically_equals(f2ptr cause, f2ptr x0, f2ptr x1) {

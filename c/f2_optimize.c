@@ -145,7 +145,7 @@ f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this)
     f2ptr command_name = nil;
     if (raw__eq(cause, type_name, new__symbol(cause, "variable"))) {
       command_name = new__symbol(cause, "globalize");
-    } else {
+    } else if (raw__eq(cause, type_name, new__symbol(cause, "funk_variable"))) {
       command_name = new__symbol(cause, "globalize-funk");
     } else {
       return f2larva__new(cause, 5133541, nil);

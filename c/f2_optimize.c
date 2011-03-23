@@ -3129,7 +3129,7 @@ f2ptr raw__optimize_context__complete_simulation(f2ptr cause, f2ptr this) {
   return nil;
 }
 
-f2ptr raw__optimize_context__as__compile_expression(f2ptr cause, f2ptr this, f2ptr funk) {
+f2ptr raw__optimize_context__as__compile_expression(f2ptr cause, f2ptr this) {
   f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
   if (! raw__set__is_empty(cause, active_fiber_set)) {
     return f2larva__new(cause, 5643234, nil);

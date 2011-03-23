@@ -505,27 +505,6 @@ int f2__fiber__bytecode__cons(f2ptr fiber, f2ptr bytecode) {
 }
 
 
-// bytecode conslist []
-
-int f2__fiber__bytecode__conslist__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2ptr args  = f2fiber__args(fiber, cause);
-  f2ptr value = f2__conslist(cause, args);
-  f2fiber__value__set(fiber, cause, value);
-  return 0;
-}
-
-
-int f2__fiber__bytecode__conslist(f2ptr fiber, f2ptr bytecode) {
-  bytecode_status("bytecode conslist beginning.");
-  f2ptr cause = f2fiber__cause_reg(fiber, nil);
-  __funk2.bytecode.bytecode__conslist__execution_count ++;
-  
-  f2__fiber__increment_pc(fiber, cause);
-  
-  return f2__fiber__bytecode__conslist__no_increment_pc_reg(cause, fiber, bytecode);
-}
-
-
 // bytecode consp []
 
 int f2__fiber__bytecode__consp(f2ptr fiber, f2ptr bytecode) {

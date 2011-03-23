@@ -58,9 +58,11 @@ declare_object_type_3_slot(optimize_side_effect,
 // optimize_fiber
 
 typedef struct funk2_object_type__optimize_fiber__slot_s funk2_object_type__optimize_fiber__slot_t;
-declare_object_type_10_slot(optimize_fiber,
+declare_object_type_12_slot(optimize_fiber,
 			    optimize_context,
+			    parent_branched_fiber,
 			    optimize_cause,
+			    children_branched_fibers,
 			    optimize_side_effects,
 			    stack,
 			    value,
@@ -125,9 +127,11 @@ f2ptr f2optimize_side_effect__primobject_type__new_aux(f2ptr cause);
 
 // optimize_fiber
 
-declare_primobject_10_slot(optimize_fiber,
+declare_primobject_12_slot(optimize_fiber,
 			   optimize_context,
+			   parent_branched_fiber,
 			   optimize_cause,
+			   children_branched_fibers,
 			   optimize_side_effects,
 			   stack,
 			   value,

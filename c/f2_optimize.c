@@ -78,6 +78,11 @@ def_pcfunk3(optimize_data__new, data_type, name, optimize_cause, return f2__opti
 
 
 f2ptr raw__optimize_data__as__compile_expression(f2ptr cause, f2ptr this) {
+  f2ptr data_type = f2__optimize_data__data_type(cause, this);
+  if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
+    f2ptr name = f2__optimize_data__name(cause, this);
+    return name;
+  }
   printf("\noptimize_data warning: not yet implemented."); fflush(stdout);
   return this;
 }

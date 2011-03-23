@@ -186,7 +186,7 @@ f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this)
 	  {
 	    f2ptr args__data__element__compile_expression = nil;
 	    if (raw__optimize_data__is_type(cause, args__data__element)) {
-	      args__data__element__compile_expression = f2__optimize_data__as__compile_expression(cause, args__data__element);
+	      args__data__element__compile_expression = raw__optimize_data__as__compile_expression(cause, args__data__element);
 	      if (raw__larva__is_type(cause, args__data__element__compile_expression)) {
 		return args__data__element__compile_expression;
 	      }

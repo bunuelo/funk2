@@ -283,15 +283,6 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
     next_program_counter = f2__cons__cdr(cause, program_counter);
   }
   f2__optimize_fiber__program_counter__set(cause, this, next_program_counter);
-  if (next_program_counter == nil) {
-    f2ptr optimize_context = f2__optimize_fiber__optimize_context(cause, this);
-    {
-      f2ptr result = raw__optimize_context__active_fiber_finished(cause, optimize_context, this);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
-    }
-  }
   return nil;
 }
 
@@ -311,8 +302,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
     } else if (raw__cfunk__is_type(              cause, funk__data) ||
 	       raw__core_extension_funk__is_type(cause, funk__data)) {
       f2ptr value = f2__force_funk_apply(cause, f2__this__fiber(cause), funk__data, args__data);
-      f2__optimize_fiber__value__set(          cause, this, value);
-      f2__optimize_fiber__program_counter__set(cause, f2__optimize_fiber__return_reg(cause, this));
+      f2__optimize_fiber__value__set(cause, this, value);
     } else if (raw__metro__is_type(cause, funk__data)) {
       f2ptr metro_env = f2metro__env(           funk__data, cause);
       f2ptr body_bcs  = f2metro__body_bytecodes(funk__data, cause);
@@ -3033,6 +3023,15 @@ f2ptr raw__optimize_context__execute_one_bytecode(f2ptr cause, f2ptr this) {
     f2ptr result = raw__optimize_fiber__call_next_bytecode(cause, active_fiber);
     if (raw__larva__is_type(cause, result)) {
       return result;
+    }
+  }
+  {
+    f2ptr program_counter = f2__optimize_fiber__program_counter(cause, active_fiber);
+    if (program_counter == nil) {
+      f2ptr result = raw__optimize_context__active_fiber_finished(cause, this, active_fiber);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
   }
   return nil;

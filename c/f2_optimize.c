@@ -197,7 +197,7 @@ f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_caus
   f2ptr optimize_context         = f2__optimize_fiber__optimize_context(     cause, this);
   f2ptr parent_branched_fiber    = this;
   f2ptr children_branched_fibers = nil;
-  f2ptr optimize_side_effects    = f2__optimize_fiber__optimize_side_effects(cause, this);
+  f2ptr optimize_side_effects    = nil;
   f2ptr stack                    = f2__optimize_fiber__stack(                cause, this);
   f2ptr value                    = f2__optimize_fiber__value(                cause, this);
   f2ptr iter                     = f2__optimize_fiber__iter(                 cause, this);

@@ -36,8 +36,6 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__array__execution_count;
   f2ptr bytecode__cons__symbol;
   u64   bytecode__cons__execution_count;
-  f2ptr bytecode__conslist__symbol;
-  u64   bytecode__conslist__execution_count;
   f2ptr bytecode__consp__symbol;
   u64   bytecode__consp__execution_count;
   f2ptr bytecode__car__symbol;

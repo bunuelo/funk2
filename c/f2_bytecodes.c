@@ -30,8 +30,6 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__array__execution_count                      = 0;
   this->bytecode__cons__symbol                                = -1;
   this->bytecode__cons__execution_count                       = 0;
-  this->bytecode__conslist__symbol                            = -1;
-  this->bytecode__conslist__execution_count                   = 0;
   this->bytecode__consp__symbol                               = -1;
   this->bytecode__consp__execution_count                      = 0;
   this->bytecode__car__symbol                                 = -1;
@@ -185,7 +183,6 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__define__execution_count                     = " u64__fstr, this->bytecode__define__execution_count);
   status("  bytecode__swap__execution_count                       = " u64__fstr, this->bytecode__swap__execution_count);
   status("  bytecode__cons__execution_count                       = " u64__fstr, this->bytecode__cons__execution_count);
-  status("  bytecode__conslist__execution_count                   = " u64__fstr, this->bytecode__conslist__execution_count);
   status("  bytecode__car__set__execution_count                   = " u64__fstr, this->bytecode__car__set__execution_count);
   status("  bytecode__cdr__set__execution_count                   = " u64__fstr, this->bytecode__cdr__set__execution_count);
   status("  bytecode__globalize_type_var__execution_count         = " u64__fstr, this->bytecode__globalize_type_var__execution_count);
@@ -3217,7 +3214,6 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__funk__symbol                       = new__symbol(cause, "funk");
   __funk2.bytecode.bytecode__array__symbol                      = new__symbol(cause, "array");
   __funk2.bytecode.bytecode__cons__symbol                       = new__symbol(cause, "cons");
-  __funk2.bytecode.bytecode__conslist__symbol                   = new__symbol(cause, "conslist");
   __funk2.bytecode.bytecode__consp__symbol                      = new__symbol(cause, "consp");
   __funk2.bytecode.bytecode__car__symbol                        = new__symbol(cause, "car");
   __funk2.bytecode.bytecode__cdr__symbol                        = new__symbol(cause, "cdr");

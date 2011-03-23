@@ -1997,7 +1997,7 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(f2ptr ca
     result__data = f2__greater_than(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "greater_than"), f2list2__new(cause, x0__data, x1__data));
-    f2ptr result__data        = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "greater_than-result"), result__data__cause);
+    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "greater_than-result"), result__data__cause);
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}

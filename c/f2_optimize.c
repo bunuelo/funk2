@@ -300,11 +300,15 @@ f2ptr raw__optimize_fiber__as__compile_expression(f2ptr cause, f2ptr this) {
     } else {
       value__data__expression = value__data;
     }
-    return f2cons__new(cause,
-		       new__symbol(cause, "prog"),
-		       f2__conslistlist__append(cause, f2list2__new(cause,
-								    side_effect_expressions,
-								    f2cons__new(cause, value__data__expression, nil))));
+    if (side_effect_expressions == nil) {
+      return value__data__expression;
+    } else {
+      return f2cons__new(cause,
+			 new__symbol(cause, "prog"),
+			 f2__conslistlist__append(cause, f2list2__new(cause,
+								      side_effect_expressions,
+								      f2cons__new(cause, value__data__expression, nil))));
+    }
   } else {
     printf("\noptimize_fiber-as-compile_expression warning: not yet implemented."); fflush(stdout);
     return this;

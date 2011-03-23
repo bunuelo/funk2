@@ -844,6 +844,7 @@ f2ptr raw__environment__optimize_mutate_type_var_value(f2ptr cause, f2ptr this, 
     if (! raw__eq(cause, frame_lookup, new__symbol(cause, "<optimize-lookup-undefined>"))) {
       raw__frame__add_type_var_value(cause, environment__frame, type_name, var_name, value);
       frame_lookup = value;
+      found_value = boolean__true;
     } else {
       environment = f2__environment__parent_env(cause, environment);
       if (raw__optimize_data__is_type(cause, environment)) {

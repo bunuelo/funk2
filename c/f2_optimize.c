@@ -1214,7 +1214,7 @@ f2ptr raw__optimize_fiber__call_bytecode__eq__no_increment_pc(f2ptr cause, f2ptr
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__eq(cause, x0__data, x1__data);
+    result__data = f2__eq(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "eq"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "eq-result"), result__data__cause);
@@ -1258,7 +1258,7 @@ f2ptr raw__optimize_fiber__call_bytecode__not__no_increment_pc(f2ptr cause, f2pt
   }
   f2ptr result__data = nil;
   if (! raw__optimize_data__is_type(cause, x__data)) {
-    result_data = f2__not(cause, x__data);
+    result__data = f2__not(cause, x__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "not"), f2list1__new(cause, x__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "not-result"), result__data__cause);
@@ -1313,7 +1313,7 @@ f2ptr raw__optimize_fiber__call_bytecode__and__no_increment_pc(f2ptr cause, f2pt
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__and(cause, x0__data, x1__data);
+    result__data = f2__and(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "and"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "and-result"), result__data__cause);
@@ -1368,7 +1368,7 @@ f2ptr raw__optimize_fiber__call_bytecode__or__no_increment_pc(f2ptr cause, f2ptr
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__or(cause, x0__data, x1__data);
+    result__data = f2__or(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "or"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "or-result"), result__data__cause);
@@ -1423,7 +1423,7 @@ f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2pt
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__add(cause, x0__data, x1__data);
+    result__data = f2__add(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "add"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "add-result"), result__data__cause);
@@ -1467,7 +1467,7 @@ f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause,
   }
   f2ptr result__data = nil;
   if (! raw__optimize_data__is_type(cause, x__data)) {
-    result_data = f2__negative(cause, x__data);
+    result__data = f2__negative(cause, x__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "negative"), f2list1__new(cause, x__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "negative-result"), result__data__cause);
@@ -1522,7 +1522,7 @@ f2ptr raw__optimize_fiber__call_bytecode__subtract__no_increment_pc(f2ptr cause,
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__subtract(cause, x0__data, x1__data);
+    result__data = f2__subtract(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "subtract"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "subtract-result"), result__data__cause);
@@ -1577,7 +1577,7 @@ f2ptr raw__optimize_fiber__call_bytecode__multiply__no_increment_pc(f2ptr cause,
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__multiply(cause, x0__data, x1__data);
+    result__data = f2__multiply(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "multiply"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "multiply-result"), result__data__cause);
@@ -1621,7 +1621,7 @@ f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, 
   }
   f2ptr result__data = nil;
   if (! raw__optimize_data__is_type(cause, x__data)) {
-    result_data = f2__inverse(cause, x__data);
+    result__data = f2__inverse(cause, x__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "inverse"), f2list1__new(cause, x__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "inverse-result"), result__data__cause);
@@ -1676,7 +1676,7 @@ f2ptr raw__optimize_fiber__call_bytecode__divide__no_increment_pc(f2ptr cause, f
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__divide(cause, x0__data, x1__data);
+    result__data = f2__divide(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "divide"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "divide-result"), result__data__cause);
@@ -1731,7 +1731,7 @@ f2ptr raw__optimize_fiber__call_bytecode__modulo__no_increment_pc(f2ptr cause, f
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__modulo(cause, x0__data, x1__data);
+    result__data = f2__modulo(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "modulo"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "modulo-result"), result__data__cause);
@@ -1775,7 +1775,7 @@ f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause
   }
   f2ptr result__data = nil;
   if (! raw__optimize_data__is_type(cause, x__data)) {
-    result_data = f2__increment(cause, x__data);
+    result__data = f2__increment(cause, x__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "increment"), f2list1__new(cause, x__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "increment-result"), result__data__cause);
@@ -1819,7 +1819,7 @@ f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause
   }
   f2ptr result__data = nil;
   if (! raw__optimize_data__is_type(cause, x__data)) {
-    result_data = f2__decrement(cause, x__data);
+    result__data = f2__decrement(cause, x__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "decrement"), f2list1__new(cause, x__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "decrement-result"), result__data__cause);
@@ -1874,7 +1874,7 @@ f2ptr raw__optimize_fiber__call_bytecode__numerically_equals__no_increment_pc(f2
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__numerically_equals(cause, x0__data, x1__data);
+    result__data = f2__numerically_equals(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "numerically_equals"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "numerically_equals-result"), result__data__cause);
@@ -1929,7 +1929,7 @@ f2ptr raw__optimize_fiber__call_bytecode__less_than__no_increment_pc(f2ptr cause
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__less_than(cause, x0__data, x1__data);
+    result__data = f2__less_than(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "less_than"), f2list2__new(cause, x0__data, x1__data));
     result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "less_than-result"), result__data__cause);
@@ -1984,7 +1984,7 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(f2ptr ca
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
       (! raw__optimize_data__is_type(cause, x0__data))) {
-    result_data = f2__greater_than(cause, x0__data, x1__data);
+    result__data = f2__greater_than(cause, x0__data, x1__data);
   } else {
     f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "greater_than"), f2list2__new(cause, x0__data, x1__data));
     f2ptr result__data        = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "greater_than-result"), result__data__cause);

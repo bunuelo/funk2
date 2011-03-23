@@ -2941,7 +2941,7 @@ f2ptr raw__optimize_fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list20__new(cause,
+    frame = f2__frame__new(cause, f2list24__new(cause,
 						new__symbol(cause, "print_object_type"),        new__symbol(cause, "optimize_fiber"),
 						new__symbol(cause, "parent_branched_fiber"),    f2__optimize_fiber__parent_branched_fiber(   cause, this),
 						new__symbol(cause, "optimize_cause"),           f2__optimize_fiber__optimize_cause(          cause, this),

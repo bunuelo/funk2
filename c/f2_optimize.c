@@ -3038,11 +3038,13 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr active_fiber_set   = f2__set__new(cause);
   f2ptr branched_fiber_set = f2__set__new(cause);
   f2ptr finished_fiber_set = f2__set__new(cause);
+  f2ptr compile_expression = nil;
   f2ptr this = f2optimize_context__new(cause,
 				       initial_fiber,
 				       active_fiber_set,
 				       branched_fiber_set,
-				       finished_fiber_set);
+				       finished_fiber_set,
+				       compile_expression);
   initial_fiber = f2__optimize_fiber__new(cause, this);
   f2__optimize_context__initial_fiber__set(cause, this, initial_fiber);
   raw__optimize_context__add_active_fiber(cause, this, initial_fiber);

@@ -163,13 +163,19 @@ f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this)
     iter = f2__cons__cdr(cause, iter); f2ptr args__data   = f2__cons__car(cause, iter);
     f2ptr funk__data__compile_expression = nil;
     if (raw__optimize_data__is_type(cause, funk__data)) {
-      funk__data__compile_expression = f2__optimize_data__as__compile_expression(cause, funk__data);
+      funk__data__compile_expression = raw__optimize_data__as__compile_expression(cause, funk__data);
+      if (raw__larva__is_type(cause, funk__data__compile_expression)) {
+	return funk__data__compile_expression;
+      }
     } else {
       funk__data__compile_expression = funk__data;
     }
     f2ptr args__data__compile_expression = nil;
     if (raw__optimize_data__is_type(cause, args__data)) {
-      args__data__compile_expression = f2__optimize_data__as__compile_expression(cause, args__data);
+      args__data__compile_expression = raw__optimize_data__as__compile_expression(cause, args__data);
+      if (raw__larva__is_type(cause, args__data__compile_expression)) {
+	return args__data__compile_expression;
+      }
     } else {
       if (raw__conslist__is_type(cause, args__data)) {
 	f2ptr args_conslist      = nil;
@@ -181,6 +187,9 @@ f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this)
 	    f2ptr args__data__element__compile_expression = nil;
 	    if (raw__optimize_data__is_type(cause, args__data__element)) {
 	      args__data__element__compile_expression = f2__optimize_data__as__compile_expression(cause, args__data__element);
+	      if (raw__larva__is_type(cause, args__data__element__compile_expression)) {
+		return args__data__element__compile_expression;
+	      }
 	    } else {
 	      args__data__element__compile_expression = args__data__element;
 	    }

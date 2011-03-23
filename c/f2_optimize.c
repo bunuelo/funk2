@@ -742,6 +742,10 @@ f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, 
 	return funk;
       }
     }
+  } else if (raw__eq(cause, type_name, new__symbol(cause, "variable"))) {
+    if (raw__eq(cause, var_name,  new__symbol(cause, "t"))) {
+      return new__symbol(cause, "t");
+    }
   }
   boolean_t found_value = boolean__false;
   f2ptr     environment  = this;

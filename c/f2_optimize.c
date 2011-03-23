@@ -993,6 +993,7 @@ f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f
   f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "globalize-type_var"), f2list3__new(cause, type_name, var_name, value__data));
   f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "globalize-type_var"), nil, optimize_side_effect__cause);
   raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
+  f2__optimize_fiber__value__set(cause, this, nil);
   return nil;
 }
 

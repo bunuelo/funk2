@@ -299,14 +299,35 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 // jump-funk
 
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr cause, f2ptr this) {
-  f2ptr funk__data                  = f2__optimize_fiber__value(cause, this);
-  f2ptr args__data                  = f2__optimize_fiber__args( cause, this);
-  f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "funk"), f2list2__new(cause, funk__data, args__data));
-  f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "funk"), nil, optimize_side_effect__cause);
-  raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
-  f2ptr result__data__cause         = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "jump-funk"), f2list2__new(cause, funk__data, args__data));
-  f2ptr result__data                = f2__optimize_data__new(cause, nil, new__symbol(cause, "jump-funk-result"), result__data__cause);
-  f2__optimize_fiber__value__set(cause, this, result__data);
+  f2ptr funk__data = f2__optimize_fiber__value(cause, this);
+  f2ptr args__data = f2__optimize_fiber__args( cause, this);
+  if ((! raw__optimize_data__is_type(cause, funk__data)) ||
+      (! raw__optimize_data__is_type(cause, args__data))) {
+    if (raw__funk__is_type(cause, funk__data)) {
+      f2ptr funk_env = f2funk__env(           funk__data, cause);
+      f2ptr body_bcs = f2funk__body_bytecodes(funk__data, cause);
+      f2__optimize_fiber__env__set(            cause, this, funk_env);
+      f2__optimize_fiber__program_counter__set(cause, this, body_bcs);
+    } else if (raw__cfunk__is_type(              cause, funk__data) ||
+	       raw__core_extension_funk__is_type(cause, funk__data)) {
+      f2ptr value = f2__force_funk_apply(cause, f2__this__fiber(cause), funk__data, args__data);
+      f2__optimize_fiber__value__set(cause, this, value);
+      return nil;
+    } else if (raw__metro__is_type(cause, funk__data)) {
+      f2ptr metro_env = f2metro__env(           funk__data, cause);
+      f2ptr body_bcs  = f2metro__body_bytecodes(funk__data, cause);
+      f2__optimize_fiber__env__set(            cause, this, metro_env);
+      f2__optimize_fiber__program_counter__set(cause, this, body_bcs);
+    }
+    return f2larva__new(cause, 523514, nil);
+  } else {
+    f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "funk"), f2list2__new(cause, funk__data, args__data));
+    f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "funk"), nil, optimize_side_effect__cause);
+    raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
+    f2ptr result__data__cause         = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "jump-funk"), f2list2__new(cause, funk__data, args__data));
+    f2ptr result__data                = f2__optimize_data__new(cause, nil, new__symbol(cause, "jump-funk-result"), result__data__cause);
+    f2__optimize_fiber__value__set(cause, this, result__data);
+  }
   return nil;
 }
 

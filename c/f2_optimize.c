@@ -3027,7 +3027,7 @@ f2ptr raw__optimize_context__execute_one_bytecode(f2ptr cause, f2ptr this) {
   }
   {
     f2ptr program_counter = f2__optimize_fiber__program_counter(cause, active_fiber);
-    if (program_counter == nil) {
+    if (! raw__cons__is_type(cause, program_counter)) {
       f2ptr result = raw__optimize_context__active_fiber_finished(cause, this, active_fiber);
       if (raw__larva__is_type(cause, result)) {
 	return result;

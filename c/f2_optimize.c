@@ -156,6 +156,50 @@ f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this)
       return f2larva__new(cause, 5133541, nil);
     }
     return f2list3__new(cause, command_name, var_name, value__data__compile_expression);
+  } else if (raw__eq(cause, side_effect_type, new__symbol(cause, "funk"))) {
+    f2ptr optimize_cause = f2__optimize_side_effect__optimize_cause(cause, this);
+    f2ptr args           = f2__optimize_cause__args(cause, optimize_cause);
+    f2ptr iter = args;                 f2ptr funk__data   = f2__cons__car(cause, iter);
+    iter = f2__cons__cdr(cause, iter); f2ptr args__data   = f2__cons__car(cause, iter);
+    f2ptr funk__data__compile_expression = nil;
+    if (raw__optimize_data__is_type(cause, funk__data)) {
+      funk__data__compile_expression = f2__optimize_data__as__compile_expression(cause, funk__data);
+    } else {
+      funk__data__compile_expression = funk__data;
+    }
+    f2ptr args__data__compile_expression = nil;
+    if (raw__optimize_data__is_type(cause, args__data)) {
+      args__data__compile_expression = f2__optimize_data__as__compile_expression(cause, args__data);
+    } else {
+      if (raw__conslist__is_type(cause, args__data)) {
+	f2ptr args_conslist      = nil;
+	f2ptr args_conslist_iter = nil;
+	f2ptr args__data__iter   = args__data;
+	while (args__data__iter != nil) {
+	  f2ptr args__data__element = f2__cons__car(cause, args__data__iter);
+	  {
+	    f2ptr args__data__element__compile_expression = nil;
+	    if (raw__optimize_data__is_type(cause, args__data__element)) {
+	      args__data__element__compile_expression = f2__optimize_data__as__compile_expression(cause, args__data__element);
+	    } else {
+	      args__data__element__compile_expression = args__data__element;
+	    }
+	    f2ptr new_cons = f2cons__new(cause, args__data__element__compile_expression, nil);
+	    if (args_conslist_iter == nil) {
+	      args_conslist      = new_cons;
+	      args_conslist_iter = new_cons;
+	    } else {
+	      f2__cons__cdr__set(cause, args_conslist_iter, new__cons);
+	      args_conslist_iter = new_cons;
+	    }
+	  }
+	  args__data__iter = f2__cons__cdr(cause, args__data__iter);
+	}
+	return f2cons__new(cause, new__symbol(cause, "conslist"), args_conslist);
+      } else {
+	args__data__compile_expression = args__data;
+      }
+    }
   }
   printf("\noptimize_side_effect warning: not yet implemented."); fflush(stdout);
   return this;

@@ -82,6 +82,13 @@ f2ptr raw__optimize_data__as__compile_expression(f2ptr cause, f2ptr this) {
   if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
     f2ptr name = f2__optimize_data__name(cause, this);
     return name;
+  } else if (raw__eq(cause, data_type, new__symbol(cause, "variable"))) {
+    f2ptr optimize_cause       = f2__optimize_data__optimize_cause(cause, this);
+    f2ptr name                 = f2__optimize_data__name(          cause, this);
+    f2ptr optimize_cause__name = f2__optimize_cause__name(cause, optimize_cause);
+    if (raw__eq(cause, optimize_cause__name, new__symbol(cause, "lookup"))) {
+      return name;
+    }
   } else if (raw__eq(cause, data_type, new__symbol(cause, "funk_variable"))) {
     f2ptr optimize_cause       = f2__optimize_data__optimize_cause(cause, this);
     f2ptr name                 = f2__optimize_data__name(          cause, this);

@@ -2834,18 +2834,18 @@ f2ptr raw__optimize_fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list26__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "optimize_fiber"),
-						new__symbol(cause, "parent_branched_fiber"),      f2__optimize_fiber__parent_branched_fiber(   cause, this),
-						new__symbol(cause, "branch_condition_data"),      f2__optimize_fiber__branch_condition_data(   cause, this),
-						new__symbol(cause, "true_child_branched_fiber"),  f2__optimize_fiber__children_branched_fibers(cause, this),
-						new__symbol(cause, "false_child_branched_fiber"), f2__optimize_fiber__children_branched_fibers(cause, this),
-						new__symbol(cause, "data_side_effects"),          f2__optimize_fiber__data_side_effects(       cause, this),
-						new__symbol(cause, "stack"),                      f2__optimize_fiber__stack(                   cause, this),
-						new__symbol(cause, "value"),                      f2__optimize_fiber__value(                   cause, this),
-						new__symbol(cause, "iter"),                       f2__optimize_fiber__iter(                    cause, this),
-						new__symbol(cause, "program_counter"),            f2__optimize_fiber__program_counter(         cause, this),
-						new__symbol(cause, "args"),                       f2__optimize_fiber__args(                    cause, this),
-						new__symbol(cause, "return_reg"),                 f2__optimize_fiber__return_reg(              cause, this),
-						new__symbol(cause, "env"),                        f2__optimize_fiber__env(                     cause, this)));
+						new__symbol(cause, "parent_branched_fiber"),      f2__optimize_fiber__parent_branched_fiber(     cause, this),
+						new__symbol(cause, "branch_condition_data"),      f2__optimize_fiber__branch_condition_data(     cause, this),
+						new__symbol(cause, "true_child_branched_fiber"),  f2__optimize_fiber__true_child_branched_fiber( cause, this),
+						new__symbol(cause, "false_child_branched_fiber"), f2__optimize_fiber__false_child_branched_fiber(cause, this),
+						new__symbol(cause, "data_side_effects"),          f2__optimize_fiber__data_side_effects(         cause, this),
+						new__symbol(cause, "stack"),                      f2__optimize_fiber__stack(                     cause, this),
+						new__symbol(cause, "value"),                      f2__optimize_fiber__value(                     cause, this),
+						new__symbol(cause, "iter"),                       f2__optimize_fiber__iter(                      cause, this),
+						new__symbol(cause, "program_counter"),            f2__optimize_fiber__program_counter(           cause, this),
+						new__symbol(cause, "args"),                       f2__optimize_fiber__args(                      cause, this),
+						new__symbol(cause, "return_reg"),                 f2__optimize_fiber__return_reg(                cause, this),
+						new__symbol(cause, "env"),                        f2__optimize_fiber__env(                       cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

@@ -3060,7 +3060,7 @@ void f2__optimize__initialize() {
 				branch_condition_data,
 				true_child_branched_fiber,
 				false_child_branched_fiber,
-				optimize_side_effects,
+				data_side_effects,
 				stack,
 				value,
 				iter,

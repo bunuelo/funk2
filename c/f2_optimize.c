@@ -3030,11 +3030,9 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
 void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __optimize_cause__symbol       = new__symbol(cause, "optimize_cause");
-  __optimize_data__symbol        = new__symbol(cause, "optimize_data");
-  __optimize_side_effect__symbol = new__symbol(cause, "optimize_side_effect");
-  __optimize_fiber__symbol       = new__symbol(cause, "optimize_fiber");
-  __optimize_context__symbol     = new__symbol(cause, "optimize_context");
+  __optimize_data__symbol    = new__symbol(cause, "optimize_data");
+  __optimize_fiber__symbol   = new__symbol(cause, "optimize_fiber");
+  __optimize_context__symbol = new__symbol(cause, "optimize_context");
 }
 
 void f2__optimize__initialize() {

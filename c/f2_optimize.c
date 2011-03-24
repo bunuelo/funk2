@@ -245,7 +245,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       return f2larva__new(cause, 523514, nil);
     }
   } else {
-    f2ptr result__data = f2__optimize_data__new(cause, new__symbol(cause, "jump-funk-result"), f2list2__new(cause, funk__data, args__data));
+    f2ptr result__data = f2__optimize_data__new(cause, new__symbol(cause, "jump-funk"), f2list2__new(cause, funk__data, args__data));
     raw__optimize_fiber__add_side_effect(cause, this, result__data);
     f2__optimize_fiber__value__set(cause, this, result__data);
   }

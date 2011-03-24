@@ -1167,7 +1167,7 @@ f2ptr raw__optimize_fiber__call_bytecode__eq__no_increment_pc(f2ptr cause, f2ptr
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__eq(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "eq"), f2list2__new(cause, x0__data, x1__data));
@@ -1264,7 +1264,7 @@ f2ptr raw__optimize_fiber__call_bytecode__and__no_increment_pc(f2ptr cause, f2pt
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__and(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "and"), f2list2__new(cause, x0__data, x1__data));
@@ -1318,7 +1318,7 @@ f2ptr raw__optimize_fiber__call_bytecode__or__no_increment_pc(f2ptr cause, f2ptr
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__or(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "or"), f2list2__new(cause, x0__data, x1__data));
@@ -1372,7 +1372,7 @@ f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2pt
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__add(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "add"), f2list2__new(cause, x0__data, x1__data));
@@ -1469,7 +1469,7 @@ f2ptr raw__optimize_fiber__call_bytecode__subtract__no_increment_pc(f2ptr cause,
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__subtract(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "subtract"), f2list2__new(cause, x0__data, x1__data));
@@ -1523,7 +1523,7 @@ f2ptr raw__optimize_fiber__call_bytecode__multiply__no_increment_pc(f2ptr cause,
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__multiply(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "multiply"), f2list2__new(cause, x0__data, x1__data));
@@ -1620,7 +1620,7 @@ f2ptr raw__optimize_fiber__call_bytecode__divide__no_increment_pc(f2ptr cause, f
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__divide(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "divide"), f2list2__new(cause, x0__data, x1__data));
@@ -1674,7 +1674,7 @@ f2ptr raw__optimize_fiber__call_bytecode__modulo__no_increment_pc(f2ptr cause, f
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__modulo(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "modulo"), f2list2__new(cause, x0__data, x1__data));
@@ -1814,7 +1814,7 @@ f2ptr raw__optimize_fiber__call_bytecode__numerically_equals__no_increment_pc(f2
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__numerically_equals(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "numerically_equals"), f2list2__new(cause, x0__data, x1__data));
@@ -1868,7 +1868,7 @@ f2ptr raw__optimize_fiber__call_bytecode__less_than__no_increment_pc(f2ptr cause
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__less_than(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "less_than"), f2list2__new(cause, x0__data, x1__data));
@@ -1922,7 +1922,7 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(f2ptr ca
   }
   f2ptr result__data = nil;
   if ((! raw__optimize_data__is_type(cause, x0__data)) &&
-      (! raw__optimize_data__is_type(cause, x0__data))) {
+      (! raw__optimize_data__is_type(cause, x1__data))) {
     result__data = f2__greater_than(cause, x0__data, x1__data);
   } else {
     result__data = f2__optimize_data__new(cause, new__symbol(cause, "greater_than"), f2list2__new(cause, x0__data, x1__data));

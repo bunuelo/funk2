@@ -22,95 +22,26 @@
 #include "funk2.h"
 
 
-// optimize_cause
-
-def_primobject_3_slot(optimize_cause,
-		      cause_type,
-		      name,
-		      args);
-
-f2ptr f2__optimize_cause__new(f2ptr cause, f2ptr cause_type, f2ptr name, f2ptr args) {
-  return f2optimize_cause__new(cause, cause_type, name, args);
-}
-def_pcfunk3(optimize_cause__new, cause_type, name, args, return f2__optimize_cause__new(this_cause, cause_type, name, args));
-
-
-f2ptr raw__optimize_cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-  if (frame == nil) {
-    frame = f2__frame__new(cause, f2list8__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_cause"),
-					       new__symbol(cause, "data_type"), f2__optimize_cause__cause_type(cause, this),
-					       new__symbol(cause, "name"),      f2__optimize_cause__name(      cause, this),
-					       new__symbol(cause, "args"),      f2__optimize_cause__args(      cause, this)));
-    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
-  }
-  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
-}
-
-f2ptr f2__optimize_cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(optimize_cause,     this);
-  assert_argument_type(terminal_print_frame, terminal_print_frame);
-  return raw__optimize_cause__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-def_pcfunk2(optimize_cause__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_cause__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
-f2ptr f2optimize_cause__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2optimize_cause__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_cause.terminal_print_with_frame__funk);}
-  return this;
-}
-
-
 // optimize_data
 
-def_primobject_3_slot(optimize_data,
+def_primobject_2_slot(optimize_data,
 		      data_type,
-		      name,
-		      optimize_cause);
+		      args);
 
-f2ptr f2__optimize_data__new(f2ptr cause, f2ptr data_type, f2ptr name, f2ptr optimize_cause) {
-  return f2optimize_data__new(cause, data_type, name, optimize_cause);
+f2ptr f2__optimize_data__new(f2ptr cause, f2ptr data_type, f2ptr args) {
+  return f2optimize_data__new(cause, data_type, args);
 }
-def_pcfunk3(optimize_data__new, data_type, name, optimize_cause, return f2__optimize_data__new(this_cause, data_type, name, optimize_cause));
-
-
-f2ptr raw__optimize_data__as__compile_expression(f2ptr cause, f2ptr this) {
-  f2ptr data_type = f2__optimize_data__data_type(cause, this);
-  if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
-    f2ptr name = f2__optimize_data__name(cause, this);
-    return name;
-  } else if (raw__eq(cause, data_type, new__symbol(cause, "variable"))) {
-    f2ptr optimize_cause       = f2__optimize_data__optimize_cause(cause, this);
-    f2ptr name                 = f2__optimize_data__name(          cause, this);
-    f2ptr optimize_cause__name = f2__optimize_cause__name(cause, optimize_cause);
-    if (raw__eq(cause, optimize_cause__name, new__symbol(cause, "lookup"))) {
-      return name;
-    }
-  } else if (raw__eq(cause, data_type, new__symbol(cause, "funk_variable"))) {
-    f2ptr optimize_cause       = f2__optimize_data__optimize_cause(cause, this);
-    f2ptr name                 = f2__optimize_data__name(          cause, this);
-    f2ptr optimize_cause__name = f2__optimize_cause__name(cause, optimize_cause);
-    if (raw__eq(cause, optimize_cause__name, new__symbol(cause, "lookup"))) {
-      return f2list2__new(cause, new__symbol(cause, "funkvar"), name);
-    }
-  }
-  printf("\noptimize_data warning: not yet implemented."); fflush(stdout);
-  return this;
-}
+def_pcfunk2(optimize_data__new, data_type, args, return f2__optimize_data__new(this_cause, data_type, args));
 
 
 f2ptr raw__optimize_data__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list8__new(cause,
+    frame = f2__frame__new(cause, f2list6__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_data"),
 					       new__symbol(cause, "data_type"),      f2__optimize_data__data_type(     cause, this),
-					       new__symbol(cause, "name"),           f2__optimize_data__name(          cause, this),
-					       new__symbol(cause, "optimize_cause"), f2__optimize_data__optimize_cause(cause, this)));
+					       new__symbol(cause, "args"),           f2__optimize_data__args(          cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -131,142 +62,15 @@ f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-// optimize_side_effect
-
-def_primobject_3_slot(optimize_side_effect,
-		      side_effect_type,
-		      name,
-		      optimize_cause);
-
-f2ptr f2__optimize_side_effect__new(f2ptr cause, f2ptr side_effect_type, f2ptr name, f2ptr optimize_cause) {
-  return f2optimize_side_effect__new(cause, side_effect_type, name, optimize_cause);
-}
-def_pcfunk3(optimize_side_effect__new, side_effect_type, name, optimize_cause, return f2__optimize_side_effect__new(this_cause, side_effect_type, name, optimize_cause));
-
-
-f2ptr raw__optimize_side_effect__as__compile_expression(f2ptr cause, f2ptr this) {
-  f2ptr side_effect_type = f2__optimize_side_effect__side_effect_type(cause, this);
-  if (raw__eq(cause, side_effect_type, new__symbol(cause, "globalize-type_var"))) {
-    f2ptr optimize_cause = f2__optimize_side_effect__optimize_cause(cause, this);
-    f2ptr args           = f2__optimize_cause__args(cause, optimize_cause);
-    f2ptr iter = args;                 f2ptr type_name   = f2__cons__car(cause, iter);
-    iter = f2__cons__cdr(cause, iter); f2ptr var_name    = f2__cons__car(cause, iter);
-    iter = f2__cons__cdr(cause, iter); f2ptr value__data = f2__cons__car(cause, iter);
-    f2ptr value__data__compile_expression = nil;
-    if (raw__optimize_data__is_type(cause, value__data)) {
-      value__data__compile_expression = raw__optimize_data__as__compile_expression(cause, value__data);
-      if (raw__larva__is_type(cause, value__data__compile_expression)) {
-	return value__data__compile_expression;
-      }
-    } else {
-      value__data__compile_expression = value__data;
-    }
-    f2ptr command_name = nil;
-    if (raw__eq(cause, type_name, new__symbol(cause, "variable"))) {
-      command_name = new__symbol(cause, "globalize");
-    } else if (raw__eq(cause, type_name, new__symbol(cause, "funk_variable"))) {
-      command_name = new__symbol(cause, "globalize-funk");
-    } else {
-      return f2larva__new(cause, 5133541, nil);
-    }
-    return f2list3__new(cause, command_name, var_name, value__data__compile_expression);
-  } else if (raw__eq(cause, side_effect_type, new__symbol(cause, "funk"))) {
-    f2ptr optimize_cause = f2__optimize_side_effect__optimize_cause(cause, this);
-    f2ptr args           = f2__optimize_cause__args(cause, optimize_cause);
-    f2ptr iter = args;                 f2ptr funk__data   = f2__cons__car(cause, iter);
-    iter = f2__cons__cdr(cause, iter); f2ptr args__data   = f2__cons__car(cause, iter);
-    f2ptr funk__data__compile_expression = nil;
-    if (raw__optimize_data__is_type(cause, funk__data)) {
-      funk__data__compile_expression = raw__optimize_data__as__compile_expression(cause, funk__data);
-      if (raw__larva__is_type(cause, funk__data__compile_expression)) {
-	return funk__data__compile_expression;
-      }
-    } else {
-      funk__data__compile_expression = funk__data;
-    }
-    f2ptr args__data__compile_expression = nil;
-    if (raw__optimize_data__is_type(cause, args__data)) {
-      args__data__compile_expression = raw__optimize_data__as__compile_expression(cause, args__data);
-      if (raw__larva__is_type(cause, args__data__compile_expression)) {
-	return args__data__compile_expression;
-      }
-    } else {
-      if (raw__conslist__is_type(cause, args__data)) {
-	f2ptr args_conslist      = nil;
-	f2ptr args_conslist_iter = nil;
-	f2ptr args__data__iter   = args__data;
-	while (args__data__iter != nil) {
-	  f2ptr args__data__element = f2__cons__car(cause, args__data__iter);
-	  {
-	    f2ptr args__data__element__compile_expression = nil;
-	    if (raw__optimize_data__is_type(cause, args__data__element)) {
-	      args__data__element__compile_expression = raw__optimize_data__as__compile_expression(cause, args__data__element);
-	      if (raw__larva__is_type(cause, args__data__element__compile_expression)) {
-		return args__data__element__compile_expression;
-	      }
-	    } else {
-	      args__data__element__compile_expression = args__data__element;
-	    }
-	    f2ptr new_cons = f2cons__new(cause, args__data__element__compile_expression, nil);
-	    if (args_conslist_iter == nil) {
-	      args_conslist      = new_cons;
-	      args_conslist_iter = new_cons;
-	    } else {
-	      f2__cons__cdr__set(cause, args_conslist_iter, new_cons);
-	      args_conslist_iter = new_cons;
-	    }
-	  }
-	  args__data__iter = f2__cons__cdr(cause, args__data__iter);
-	}
-	args__data__compile_expression = f2cons__new(cause, new__symbol(cause, "conslist"), args_conslist);
-      } else {
-	args__data__compile_expression = args__data;
-      }
-    }
-    return f2list3__new(cause, new__symbol(cause, "apply"), funk__data__compile_expression, args__data__compile_expression);
-  }
-  printf("\noptimize_side_effect warning: not yet implemented."); fflush(stdout);
-  return this;
-}
-
-
-f2ptr raw__optimize_side_effect__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-  if (frame == nil) {
-    frame = f2__frame__new(cause, f2list8__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_side_effect"),
-					       new__symbol(cause, "side_effect_type"), f2__optimize_side_effect__side_effect_type(cause, this),
-					       new__symbol(cause, "name"),             f2__optimize_side_effect__name(            cause, this),
-					       new__symbol(cause, "optimize_cause"),   f2__optimize_side_effect__optimize_cause(  cause, this)));
-    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
-  }
-  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
-}
-
-f2ptr f2__optimize_side_effect__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(optimize_side_effect,        this);
-  assert_argument_type(terminal_print_frame, terminal_print_frame);
-  return raw__optimize_side_effect__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-def_pcfunk2(optimize_side_effect__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_side_effect__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
-f2ptr f2optimize_side_effect__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2optimize_side_effect__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_side_effect.terminal_print_with_frame__funk);}
-  return this;
-}
-
-
 // optimize_fiber
 
-def_primobject_12_slot(optimize_fiber,
+def_primobject_13_slot(optimize_fiber,
 		       optimize_context,
 		       parent_branched_fiber,
-		       optimize_cause,
-		       children_branched_fibers,
-		       optimize_side_effects,
+		       branch_condition_data,
+		       true_child_branched_fiber,
+		       false_child_branched_fiber,
+		       data_side_effects,
 		       stack,
 		       value,
 		       iter,
@@ -276,23 +80,25 @@ def_primobject_12_slot(optimize_fiber,
 		       env);
 
 f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
-  f2ptr parent_branched_fiber    = nil;
-  f2ptr optimize_cause           = nil;
-  f2ptr children_branched_fibers = nil;
-  f2ptr optimize_side_effects    = nil;
-  f2ptr stack                    = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
-  f2ptr value                    = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
-  f2ptr iter                     = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
-  f2ptr program_counter          = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
-  f2ptr args                     = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "args"),            nil);
-  f2ptr return_reg               = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "return_reg"),      nil);
-  f2ptr env                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
+  f2ptr parent_branched_fiber      = nil;
+  f2ptr branch_condition_data      = nil;
+  f2ptr true_child_branched_fiber  = nil;
+  f2ptr false_child_branched_fiber = nil;
+  f2ptr data_side_effects          = nil;
+  f2ptr stack                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
+  f2ptr value                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
+  f2ptr iter                       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
+  f2ptr program_counter            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
+  f2ptr args                       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "args"),            nil);
+  f2ptr return_reg                 = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "return_reg"),      nil);
+  f2ptr env                        = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
 			       parent_branched_fiber,
-			       optimize_cause,
-			       children_branched_fibers,
-			       optimize_side_effects,
+			       branch_condition_data,
+			       true_child_branched_fiber,
+			       false_child_branched_fiber,
+			       data_side_effects,
 			       stack,
 			       value,
 			       iter,
@@ -304,24 +110,27 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
 def_pcfunk1(optimize_fiber__new, optimize_context, return f2__optimize_fiber__new(this_cause, optimize_context));
 
 
-f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_cause) {
-  f2ptr optimize_context         = f2__optimize_fiber__optimize_context(     cause, this);
-  f2ptr parent_branched_fiber    = this;
-  f2ptr children_branched_fibers = nil;
-  f2ptr optimize_side_effects    = nil;
-  f2ptr stack                    = f2__optimize_fiber__stack(                cause, this);
-  f2ptr value                    = f2__optimize_fiber__value(                cause, this);
-  f2ptr iter                     = f2__optimize_fiber__iter(                 cause, this);
-  f2ptr program_counter          = f2__optimize_fiber__program_counter(      cause, this);
-  f2ptr args                     = f2__optimize_fiber__args(                 cause, this);
-  f2ptr return_reg               = f2__optimize_fiber__return_reg(           cause, this);
-  f2ptr env                      = f2__optimize_fiber__env(                  cause, this);
+f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this) {
+  f2ptr optimize_context           = f2__optimize_fiber__optimize_context(cause, this);
+  f2ptr parent_branched_fiber      = this;
+  f2ptr branch_condition_data      = nil;
+  f2ptr true_child_branched_fiber  = nil;
+  f2ptr false_child_branched_fiber = nil;
+  f2ptr data_side_effects          = nil;
+  f2ptr stack                      = f2__optimize_fiber__stack(          cause, this);
+  f2ptr value                      = f2__optimize_fiber__value(          cause, this);
+  f2ptr iter                       = f2__optimize_fiber__iter(           cause, this);
+  f2ptr program_counter            = f2__optimize_fiber__program_counter(cause, this);
+  f2ptr args                       = f2__optimize_fiber__args(           cause, this);
+  f2ptr return_reg                 = f2__optimize_fiber__return_reg(     cause, this);
+  f2ptr env                        = f2__optimize_fiber__env(            cause, this);
   return f2optimize_fiber__new(cause,
 			       optimize_context,
 			       parent_branched_fiber,
-			       optimize_cause,
-			       children_branched_fibers,
-			       optimize_side_effects,
+			       branch_condition_data,
+			       true_child_branched_fiber,
+			       false_child_branched_fiber,
+			       data_side_effects,
 			       stack,
 			       value,
 			       iter,
@@ -332,15 +141,9 @@ f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this, f2ptr optimize_caus
 }
 
 
-void raw__optimize_fiber__add_child_branched_fiber(f2ptr cause, f2ptr this, f2ptr child_branched_fiber) {
-  f2ptr children_branched_fibers = f2__optimize_fiber__children_branched_fibers(cause, this);
-  f2__optimize_fiber__children_branched_fibers__set(cause, this, f2cons__new(cause, child_branched_fiber, children_branched_fibers));
-}
-
-
 void raw__optimize_fiber__add_side_effect(f2ptr cause, f2ptr this, f2ptr side_effect) {
-  f2ptr side_effects = f2__optimize_fiber__optimize_side_effects(cause, this);
-  f2__optimize_fiber__optimize_side_effects__set(cause, this, f2cons__new(cause, side_effect, side_effects));
+  f2ptr side_effects = f2__optimize_fiber__data_side_effects(cause, this);
+  f2__optimize_fiber__data_side_effects__set(cause, this, f2cons__new(cause, side_effect, side_effects));
 }
 
 
@@ -375,50 +178,6 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
   return nil;
 }
 
-
-f2ptr raw__optimize_fiber__as__compile_expression(f2ptr cause, f2ptr this) {
-  f2ptr children_branched_fibers = f2__optimize_fiber__children_branched_fibers(cause, this);
-  f2ptr side_effects             = f2__optimize_fiber__optimize_side_effects(   cause, this);
-  f2ptr side_effect_expressions  = nil;
-  {
-    f2ptr iter = side_effects;
-    while (iter != nil) {
-      f2ptr side_effect = f2__cons__car(cause, iter);
-      {
-	f2ptr side_effect_expression = raw__optimize_side_effect__as__compile_expression(cause, side_effect);
-	if (raw__larva__is_type(cause, side_effect_expression)) {
-	  return side_effect_expression;
-	}
-	side_effect_expressions = f2cons__new(cause, side_effect_expression, side_effect_expressions);
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
-  if (children_branched_fibers == nil) {
-    f2ptr value__data             = f2__optimize_fiber__value(cause, this);
-    f2ptr value__data__expression = nil;
-    if (raw__optimize_data__is_type(cause, value__data)) {
-      value__data__expression = raw__optimize_data__as__compile_expression(cause, value__data);
-      if (raw__larva__is_type(cause, value__data__expression)) {
-	return value__data__expression;
-      }
-    } else {
-      value__data__expression = value__data;
-    }
-    if (side_effect_expressions == nil) {
-      return value__data__expression;
-    } else {
-      return f2cons__new(cause,
-			 new__symbol(cause, "prog"),
-			 f2__conslistlist__append(cause, f2list2__new(cause,
-								      side_effect_expressions,
-								      f2cons__new(cause, value__data__expression, nil))));
-    }
-  } else {
-    printf("\noptimize_fiber-as-compile_expression warning: not yet implemented."); fflush(stdout);
-    return this;
-  }
-}
 
 
 
@@ -486,11 +245,8 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       return f2larva__new(cause, 523514, nil);
     }
   } else {
-    f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "funk"), f2list2__new(cause, funk__data, args__data));
-    f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "funk"), nil, optimize_side_effect__cause);
-    raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
-    f2ptr result__data__cause         = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "jump-funk"), f2list2__new(cause, funk__data, args__data));
-    f2ptr result__data                = f2__optimize_data__new(cause, nil, new__symbol(cause, "jump-funk-result"), result__data__cause);
+    f2ptr result__data = f2__optimize_data__new(cause, nil, new__symbol(cause, "jump-funk-result"), f2list2__new(cause, funk__data, args__data));
+    raw__optimize_fiber__add_side_effect(cause, this, result__data);
     f2__optimize_fiber__value__set(cause, this, result__data);
   }
   return nil;
@@ -957,8 +713,7 @@ f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f
   }
   f2ptr value = raw__environment__optimize_lookup_type_var_value(cause, env, type_name, var_name);
   if (raw__larva__is_type(cause, value)) {
-    f2ptr optimize_cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "lookup"), f2list2__new(cause, type_name, var_name));
-    value = f2__optimize_data__new(cause, type_name, var_name, optimize_cause);
+    value = f2__optimize_data__new(cause, new__symbol(cause, "lookup"), f2list2__new(cause, type_name, var_name));
   }
   f2__optimize_fiber__value__set(cause, this, value);
   return nil;
@@ -1037,9 +792,8 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(f2pt
   f2ptr value__data             = f2__optimize_fiber__value(cause, this);
   f2ptr current_var_value__data = raw__environment__optimize_lookup_type_var_value(cause, env, type_name, var_name);
   if (raw__larva__is_type(cause, current_var_value__data)) {
-    f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "mutate-type_var"), f2list3__new(cause, type_name, var_name, value__data));
-    f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "mutate-type_var"), nil, optimize_side_effect__cause);
-    raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
+    f2ptr data_side_effect = f2__optimize_data__new(cause, new__symbol(cause, "mutate-type_var"), f2list3__new(cause, type_name, var_name, value__data));
+    raw__optimize_fiber__add_side_effect(cause, this, data_side_effect);
   } else {
     raw__environment__optimize_mutate_type_var_value(cause, env, type_name, var_name, value__data);
   }
@@ -1062,9 +816,8 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr th
 // globalize-type_var
 
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
-  f2ptr value__data                 = f2__optimize_fiber__value(cause, this);
-  f2ptr optimize_side_effect__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "globalize-type_var"), f2list3__new(cause, type_name, var_name, value__data));
-  f2ptr optimize_side_effect        = f2__optimize_side_effect__new(cause, new__symbol(cause, "globalize-type_var"), nil, optimize_side_effect__cause);
+  f2ptr value__data      = f2__optimize_fiber__value(cause, this);
+  f2ptr data_side_effect = f2__optimize_side_effect__new(cause, new__symbol(cause, "globalize-type_var"), f2list3__new(cause, type_name, var_name, value__data));
   raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
   f2__optimize_fiber__value__set(cause, this, nil);
   return nil;
@@ -1091,7 +844,6 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__no_increment_pc(f2ptr cause, f2p
 
 f2ptr raw__optimize_fiber__call_bytecode__jump(f2ptr cause, f2ptr this, f2ptr new_program_counter) {
   printf("\noptimize: jump"); fflush(stdout);
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1108,15 +860,14 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause,
   f2ptr optimize_context =  f2__optimize_fiber__optimize_context(cause, this);
   f2ptr value__data      =  f2__optimize_fiber__value(           cause, this);
   if (raw__optimize_data__is_type(cause, value__data)) {
-    f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
-    f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(cause, this, true_branch_fiber__cause);
-    f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
-    f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(cause, this, false_branch_fiber__cause);
+    f2ptr true_branch_fiber  = raw__optimize_fiber__new_copy(cause, this);
+    f2ptr false_branch_fiber = raw__optimize_fiber__new_copy(cause, this);
     raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
     raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
     raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
-    raw__optimize_fiber__add_child_branched_fiber(cause, this, true_branch_fiber);
-    raw__optimize_fiber__add_child_branched_fiber(cause, this, false_branch_fiber);
+    raw__optimize_fiber__branch_condition_data__set(     cause, this, value__data);
+    raw__optimize_fiber__true_child_branched_fiber__set( cause, this, true_branch_fiber);
+    raw__optimize_fiber__false_child_branched_fiber__set(cause, this, false_branch_fiber);
     // assuming value is true:
     f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
     // assuming value is false:
@@ -1150,15 +901,14 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr caus
   f2ptr optimize_context          =  f2__optimize_fiber__optimize_context(cause, this);
   f2ptr value__data               =  f2__optimize_fiber__value(           cause, this);
   if (raw__optimize_data__is_type(cause, value__data)) {
-    f2ptr true_branch_fiber__cause  =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "true"),  f2list1__new(cause, value__data));
-    f2ptr true_branch_fiber         = raw__optimize_fiber__new_copy(cause, this, true_branch_fiber__cause);
-    f2ptr false_branch_fiber__cause =  f2__optimize_cause__new(     cause, new__symbol(cause, "branch"), new__symbol(cause, "false"), f2list1__new(cause, value__data));
-    f2ptr false_branch_fiber        = raw__optimize_fiber__new_copy(cause, this, false_branch_fiber__cause);
+    f2ptr true_branch_fiber  = raw__optimize_fiber__new_copy(cause, this);
+    f2ptr false_branch_fiber = raw__optimize_fiber__new_copy(cause, this);
     raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
     raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
     raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
-    raw__optimize_fiber__add_child_branched_fiber(cause, this, true_branch_fiber);
-    raw__optimize_fiber__add_child_branched_fiber(cause, this, false_branch_fiber);
+    raw__optimize_fiber__branch_condition_data__set(     cause, this, value__data);
+    raw__optimize_fiber__true_child_branched_fiber__set( cause, this, true_branch_fiber);
+    raw__optimize_fiber__false_child_branched_fiber__set(cause, this, false_branch_fiber);
     // assuming value is true:
     //   do nothing.
     // assuming value is false:
@@ -1383,7 +1133,6 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(f
 
 f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
   printf("\noptimize: reg_array-elt-set"); fflush(stdout);
-  
   {
     f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
     if (raw__larva__is_type(cause, result)) {
@@ -1422,8 +1171,7 @@ f2ptr raw__optimize_fiber__call_bytecode__eq__no_increment_pc(f2ptr cause, f2ptr
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__eq(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "eq"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "eq-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "eq"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1466,8 +1214,7 @@ f2ptr raw__optimize_fiber__call_bytecode__not__no_increment_pc(f2ptr cause, f2pt
   if (! raw__optimize_data__is_type(cause, x__data)) {
     result__data = f2__not(cause, x__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "not"), f2list1__new(cause, x__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "not-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "not"), f2list1__new(cause, x__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1521,8 +1268,7 @@ f2ptr raw__optimize_fiber__call_bytecode__and__no_increment_pc(f2ptr cause, f2pt
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__and(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "and"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "and-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "and"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1576,8 +1322,7 @@ f2ptr raw__optimize_fiber__call_bytecode__or__no_increment_pc(f2ptr cause, f2ptr
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__or(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "or"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "or-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "or"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1631,8 +1376,7 @@ f2ptr raw__optimize_fiber__call_bytecode__add__no_increment_pc(f2ptr cause, f2pt
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__add(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "add"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "add-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "add"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1675,8 +1419,7 @@ f2ptr raw__optimize_fiber__call_bytecode__negative__no_increment_pc(f2ptr cause,
   if (! raw__optimize_data__is_type(cause, x__data)) {
     result__data = f2__negative(cause, x__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "negative"), f2list1__new(cause, x__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "negative-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "negative"), f2list1__new(cause, x__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1730,8 +1473,7 @@ f2ptr raw__optimize_fiber__call_bytecode__subtract__no_increment_pc(f2ptr cause,
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__subtract(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "subtract"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "subtract-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "subtract"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1785,8 +1527,7 @@ f2ptr raw__optimize_fiber__call_bytecode__multiply__no_increment_pc(f2ptr cause,
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__multiply(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "multiply"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "multiply-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "multiply"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1829,8 +1570,7 @@ f2ptr raw__optimize_fiber__call_bytecode__inverse__no_increment_pc(f2ptr cause, 
   if (! raw__optimize_data__is_type(cause, x__data)) {
     result__data = f2__inverse(cause, x__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "inverse"), f2list1__new(cause, x__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "inverse-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "inverse"), f2list1__new(cause, x__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1884,8 +1624,7 @@ f2ptr raw__optimize_fiber__call_bytecode__divide__no_increment_pc(f2ptr cause, f
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__divide(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "divide"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "divide-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "divide"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1939,8 +1678,7 @@ f2ptr raw__optimize_fiber__call_bytecode__modulo__no_increment_pc(f2ptr cause, f
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__modulo(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "modulo"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "modulo-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "modulo"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -1983,8 +1721,7 @@ f2ptr raw__optimize_fiber__call_bytecode__increment__no_increment_pc(f2ptr cause
   if (! raw__optimize_data__is_type(cause, x__data)) {
     result__data = f2__increment(cause, x__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "increment"), f2list1__new(cause, x__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "increment-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "increment"), f2list1__new(cause, x__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -2027,8 +1764,7 @@ f2ptr raw__optimize_fiber__call_bytecode__decrement__no_increment_pc(f2ptr cause
   if (! raw__optimize_data__is_type(cause, x__data)) {
     result__data = f2__decrement(cause, x__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "decrement"), f2list1__new(cause, x__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "number"), new__symbol(cause, "decrement-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "decrement"), f2list1__new(cause, x__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -2082,8 +1818,7 @@ f2ptr raw__optimize_fiber__call_bytecode__numerically_equals__no_increment_pc(f2
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__numerically_equals(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "numerically_equals"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "numerically_equals-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "numerically_equals"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -2137,8 +1872,7 @@ f2ptr raw__optimize_fiber__call_bytecode__less_than__no_increment_pc(f2ptr cause
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__less_than(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "less_than"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "less_than-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "less_than"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -2192,8 +1926,7 @@ f2ptr raw__optimize_fiber__call_bytecode__greater_than__no_increment_pc(f2ptr ca
       (! raw__optimize_data__is_type(cause, x0__data))) {
     result__data = f2__greater_than(cause, x0__data, x1__data);
   } else {
-    f2ptr result__data__cause = f2__optimize_cause__new(cause, new__symbol(cause, "bytecode"), new__symbol(cause, "greater_than"), f2list2__new(cause, x0__data, x1__data));
-    result__data              = f2__optimize_data__new(cause, new__symbol(cause, "boolean"), new__symbol(cause, "greater_than-result"), result__data__cause);
+    result__data = f2__optimize_data__new(cause, new__symbol(cause, "greater_than"), f2list2__new(cause, x0__data, x1__data));
   }
   if      (raw__eq(cause, result_register_name, new__symbol(cause, "return_reg")))      {f2__optimize_fiber__return_reg__set(     cause, this, result__data);}
   else if (raw__eq(cause, result_register_name, new__symbol(cause, "value")))           {f2__optimize_fiber__value__set(          cause, this, result__data);}
@@ -3100,19 +2833,20 @@ f2ptr raw__optimize_fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list24__new(cause,
-						new__symbol(cause, "print_object_type"),        new__symbol(cause, "optimize_fiber"),
-						new__symbol(cause, "parent_branched_fiber"),    f2__optimize_fiber__parent_branched_fiber(   cause, this),
-						new__symbol(cause, "optimize_cause"),           f2__optimize_fiber__optimize_cause(          cause, this),
-						new__symbol(cause, "children_branched_fibers"), f2__optimize_fiber__children_branched_fibers(cause, this),
-						new__symbol(cause, "optimize_side_effects"),    f2__optimize_fiber__optimize_side_effects(   cause, this),
-						new__symbol(cause, "stack"),                    f2__optimize_fiber__stack(                   cause, this),
-						new__symbol(cause, "value"),                    f2__optimize_fiber__value(                   cause, this),
-						new__symbol(cause, "iter"),                     f2__optimize_fiber__iter(                    cause, this),
-						new__symbol(cause, "program_counter"),          f2__optimize_fiber__program_counter(         cause, this),
-						new__symbol(cause, "args"),                     f2__optimize_fiber__args(                    cause, this),
-						new__symbol(cause, "return_reg"),               f2__optimize_fiber__return_reg(              cause, this),
-						new__symbol(cause, "env"),                      f2__optimize_fiber__env(                     cause, this)));
+    frame = f2__frame__new(cause, f2list26__new(cause,
+						new__symbol(cause, "print_object_type"),          new__symbol(cause, "optimize_fiber"),
+						new__symbol(cause, "parent_branched_fiber"),      f2__optimize_fiber__parent_branched_fiber(   cause, this),
+						new__symbol(cause, "branch_condition_data"),      f2__optimize_fiber__branch_condition_data(   cause, this),
+						new__symbol(cause, "true_child_branched_fiber"),  f2__optimize_fiber__children_branched_fibers(cause, this),
+						new__symbol(cause, "false_child_branched_fiber"), f2__optimize_fiber__children_branched_fibers(cause, this),
+						new__symbol(cause, "data_side_effects"),          f2__optimize_fiber__data_side_effects(       cause, this),
+						new__symbol(cause, "stack"),                      f2__optimize_fiber__stack(                   cause, this),
+						new__symbol(cause, "value"),                      f2__optimize_fiber__value(                   cause, this),
+						new__symbol(cause, "iter"),                       f2__optimize_fiber__iter(                    cause, this),
+						new__symbol(cause, "program_counter"),            f2__optimize_fiber__program_counter(         cause, this),
+						new__symbol(cause, "args"),                       f2__optimize_fiber__args(                    cause, this),
+						new__symbol(cause, "return_reg"),                 f2__optimize_fiber__return_reg(              cause, this),
+						new__symbol(cause, "env"),                        f2__optimize_fiber__env(                     cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -3136,25 +2870,22 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_5_slot(optimize_context,
+def_primobject_4_slot(optimize_context,
 		      initial_fiber,
 		      active_fiber_set,
 		      branched_fiber_set,
-		      finished_fiber_set,
-		      compile_expression);
+		      finished_fiber_set);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr initial_fiber      = nil;
   f2ptr active_fiber_set   = f2__set__new(cause);
   f2ptr branched_fiber_set = f2__set__new(cause);
   f2ptr finished_fiber_set = f2__set__new(cause);
-  f2ptr compile_expression = nil;
   f2ptr this = f2optimize_context__new(cause,
 				       initial_fiber,
 				       active_fiber_set,
 				       branched_fiber_set,
-				       finished_fiber_set,
-				       compile_expression);
+				       finished_fiber_set);
   initial_fiber = f2__optimize_fiber__new(cause, this);
   f2__optimize_context__initial_fiber__set(cause, this, initial_fiber);
   raw__optimize_context__add_active_fiber(cause, this, initial_fiber);
@@ -3239,26 +2970,15 @@ f2ptr raw__optimize_context__complete_simulation(f2ptr cause, f2ptr this) {
   return nil;
 }
 
-f2ptr raw__optimize_context__as__compile_expression(f2ptr cause, f2ptr this) {
-  f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
-  if (! raw__set__is_empty(cause, active_fiber_set)) {
-    return f2larva__new(cause, 5643234, nil);
-  }
-  f2ptr initial_fiber = f2__optimize_context__initial_fiber(cause, this);
-  return raw__optimize_fiber__as__compile_expression(cause, initial_fiber);
-}
-
-
 f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list12__new(cause,
+    frame = f2__frame__new(cause, f2list10__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
 						new__symbol(cause, "initial_fiber"),      f2__optimize_context__initial_fiber(     cause, this),
 						new__symbol(cause, "active_fiber_set"),   f2__optimize_context__active_fiber_set(  cause, this),
 						new__symbol(cause, "branched_fiber_set"), f2__optimize_context__branched_fiber_set(cause, this),
-						new__symbol(cause, "compile_expression"), f2__optimize_context__compile_expression(cause, this),
 						new__symbol(cause, "finished_fiber_set"), f2__optimize_context__finished_fiber_set(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
@@ -3297,11 +3017,6 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
       return result;
     }
   }
-  f2ptr compile_expression = raw__optimize_context__as__compile_expression(cause, optimize_context);
-  if (raw__larva__is_type(cause, compile_expression)) {
-    return compile_expression;
-  }
-  f2__optimize_context__compile_expression__set(cause, optimize_context, compile_expression);
   return optimize_context;
 }
 
@@ -3385,12 +3100,11 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_5_slot(optimize_context,
+  initialize_primobject_4_slot(optimize_context,
 			       initial_fiber,
 			       active_fiber_set,
 			       branched_fiber_set,
-			       finished_fiber_set,
-			       compile_expression);
+			       finished_fiber_set);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_context to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}

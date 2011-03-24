@@ -88,7 +88,7 @@ typedef struct funk2_globalenv_s {
   f2ptr rawcode__symbol;
   f2ptr while__symbol;
   f2ptr return__symbol;
-
+  
   f2ptr bytecode_eq__symbol;
   f2ptr bytecode_not__symbol;
   f2ptr bytecode_and__symbol;

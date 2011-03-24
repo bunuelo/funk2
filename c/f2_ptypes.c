@@ -5164,14 +5164,18 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, i
   return new_symbol;
 }
 
+f2ptr raw__gensym(f2ptr cause, s64 initial_string_length, u8* initial_string) {
+  int pool_index = this_processor_thread__pool_index();
+  return funk2_symbol_hash__generate_new_random_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause, initial_string_length, initial_string);
+}
+
 f2ptr f2__gensym(f2ptr cause, f2ptr initial_string) {
   assert_argument_type(string, initial_string);
-  int pool_index = this_processor_thread__pool_index();
   s64 initial_string__length = raw__string__length(cause, initial_string);
   u8* initial_string__str    = (u8*)from_ptr(f2__malloc(initial_string__length + 1));
   raw__string__str_copy(cause, initial_string, initial_string__str);
   initial_string__str[initial_string__length] = 0;
-  f2ptr new_symbol = funk2_symbol_hash__generate_new_random_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause, initial_string__length, initial_string__str);
+  f2ptr new_symbol = raw__gensym(cause, initial_string__length, initial_string__str);
   f2__free(to_ptr(initial_string__str));
   return new_symbol;
 }

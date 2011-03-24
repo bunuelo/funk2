@@ -5133,36 +5133,49 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int 
   return result;
 }
 
-#define gensym__length 12
-f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause) {
-  u8 gensym__name[gensym__length + 1];
-  gensym__name[0] = (u8)'g';
-  gensym__name[1] = (u8)':';
+#define gensym__length 11
+f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, s64 initial_string_length, u8* initial_string) {
+  s64 total_gensym_length = initial_string_length + gensym__length;
+  u8* gensym__name = (u8*)from_ptr(f2__malloc(total_gensym_length + 1));
+  {
+    int index;
+    for (index = 0; index < initial_string_length; index ++) {
+      gensym__name[index] = initial_string[index];
+    }
+  }
+  gensym__name[initial_string_length + 0] = (u8)'-';
   f2ptr symbol_exists;
   do {
     int index;
-    for (index = 0; index < gensym__length - 2; index ++) {
+    for (index = 0; index < gensym__length - 1; index ++) {
       int random_num = random() % 26;
-      gensym__name[index + 2] = ((u8)'a') + random_num;
+      gensym__name[initial_string_length + index + 1] = ((u8)'a') + random_num;
     }
-    symbol_exists = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, gensym__length, gensym__name);
+    symbol_exists = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, total_gensym_length, gensym__name);
   } while (symbol_exists);
-  f2ptr new_symbol = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, pool_index, cause, gensym__length, gensym__name);
+  f2ptr new_symbol = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, pool_index, cause, total_gensym_length, gensym__name);
   return new_symbol;
 }
 
-f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause) {
+f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, s64 initial_string_length, u8* initial_string) {
   funk2_processor_mutex__user_lock(&this->cmutex);
-  f2ptr new_symbol = funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(this, pool_index, cause);
+  f2ptr new_symbol = funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(this, pool_index, cause, initial_string_length, initial_string);
   funk2_processor_mutex__unlock(&(this->cmutex));
   return new_symbol;
 }
 
-f2ptr f2__gensym(f2ptr cause) {
+f2ptr f2__gensym(f2ptr cause, f2ptr initial_string) {
+  assert_argument_type(string, initial_string);
   int pool_index = this_processor_thread__pool_index();
-  return funk2_symbol_hash__generate_new_random_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause);
+  s64 initial_string__length = raw__string__length(cause, initial_string);
+  u8* initial_string__str    = (u8*)from_ptr(f2__malloc(initial_string__length + 1));
+  raw__string__str_copy(cause, initial_string, initial_string__str);
+  initial_string__str[initial_string__length] = 0;
+  f2ptr new_symbol = funk2_symbol_hash__generate_new_random_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause, initial_string__length, initial_string__str);
+  f2__free(to_ptr(initial_string__str));
+  return new_symbol;
 }
-def_pcfunk0(gensym, return f2__gensym(this_cause));
+def_pcfunk1(gensym, initial_string, return f2__gensym(this_cause, initial_string));
 
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
   status("funk2_garbage_collector: touch_all_symbols.");

@@ -556,7 +556,7 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
 f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
-f2ptr f2__gensym(f2ptr cause);
+f2ptr f2__gensym(f2ptr cause, f2ptr initial_string);
 
 // **
 

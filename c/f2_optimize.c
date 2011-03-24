@@ -85,13 +85,13 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
   f2ptr true_child_branched_fiber  = nil;
   f2ptr false_child_branched_fiber = nil;
   f2ptr data_side_effects          = nil;
-  f2ptr stack                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "stack"),           nil);
-  f2ptr value                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "value"),           nil);
-  f2ptr iter                       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "iter"),            nil);
-  f2ptr program_counter            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "program_counter"), nil);
-  f2ptr args                       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "args"),            nil);
-  f2ptr return_reg                 = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "return_reg"),      nil);
-  f2ptr env                        = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), new__symbol(cause, "env"),             nil);
+  f2ptr stack                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "stack")));
+  f2ptr value                      = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "value")));
+  f2ptr iter                       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "iter")));
+  f2ptr program_counter            = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "program_counter")));
+  f2ptr args                       = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "args")));
+  f2ptr return_reg                 = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "return_reg")));
+  f2ptr env                        = f2__optimize_data__new(cause, new__symbol(cause, "initial-register"), f2list1__new(cause, new__symbol(cause, "env")));
   return f2optimize_fiber__new(cause,
 			       optimize_context,
 			       parent_branched_fiber,

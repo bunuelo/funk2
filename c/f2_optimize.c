@@ -906,9 +906,9 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr caus
     raw__optimize_context__active_fiber_branched(cause, optimize_context, this);
     raw__optimize_context__add_active_fiber(     cause, optimize_context, true_branch_fiber);
     raw__optimize_context__add_active_fiber(     cause, optimize_context, false_branch_fiber);
-    raw__optimize_fiber__branch_condition_data__set(     cause, this, value__data);
-    raw__optimize_fiber__true_child_branched_fiber__set( cause, this, true_branch_fiber);
-    raw__optimize_fiber__false_child_branched_fiber__set(cause, this, false_branch_fiber);
+    f2__optimize_fiber__branch_condition_data__set(     cause, this, value__data);
+    f2__optimize_fiber__true_child_branched_fiber__set( cause, this, true_branch_fiber);
+    f2__optimize_fiber__false_child_branched_fiber__set(cause, this, false_branch_fiber);
     // assuming value is true:
     //   do nothing.
     // assuming value is false:

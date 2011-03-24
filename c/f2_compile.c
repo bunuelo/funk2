@@ -1751,15 +1751,17 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
 
 f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr fiber, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   assert_argument_type(fiber, fiber);
-  
   if (! raw__cons__is_type(cause, exp)) {
     return f2larva__new(cause, 1, nil);
   }
   f2ptr exps = f2cons__cdr(exp, cause);
-  if (! raw__cons__is_type(cause, exps)) {
+  if ((exps != nil) &&
+      (! raw__cons__is_type(cause, exps))) {
     return f2larva__new(cause, 1, nil);
   }
-  //f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
+  if (exps == nil) {
+    return nil;
+  }
   boolean_t optimize_unused_beginning = boolean__false;
   return f2__compile__rawcode(cause, fiber, exps, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
 }

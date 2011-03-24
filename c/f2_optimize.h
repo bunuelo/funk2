@@ -22,35 +22,12 @@
 #ifndef F2__OPTIMIZE__TYPES__H
 #define F2__OPTIMIZE__TYPES__H
 
-// optimize_cause
-
-typedef struct funk2_object_type__optimize_cause__slot_s funk2_object_type__optimize_cause__slot_t;
-declare_object_type_3_slot(optimize_cause,
-			   cause_type,
-			   name,
-			   args,
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
-
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
-declare_object_type_3_slot(optimize_data,
+declare_object_type_2_slot(optimize_data,
 			   data_type,
-			   name,
-			   optimize_cause,
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
-
-// optimize_side_effect
-
-typedef struct funk2_object_type__optimize_side_effect__slot_s funk2_object_type__optimize_side_effect__slot_t;
-declare_object_type_3_slot(optimize_side_effect,
-			   side_effect_type,
-			   name,
-			   optimize_cause,
+			   args,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -58,12 +35,13 @@ declare_object_type_3_slot(optimize_side_effect,
 // optimize_fiber
 
 typedef struct funk2_object_type__optimize_fiber__slot_s funk2_object_type__optimize_fiber__slot_t;
-declare_object_type_12_slot(optimize_fiber,
+declare_object_type_13_slot(optimize_fiber,
 			    optimize_context,
 			    parent_branched_fiber,
-			    optimize_cause,
-			    children_branched_fibers,
-			    optimize_side_effects,
+			    branch_condition_data,
+			    true_child_branched_fiber,
+			    false_child_branched_fiber,
+			    data_side_effects,
 			    stack,
 			    value,
 			    iter,
@@ -95,44 +73,24 @@ declare_object_type_4_slot(optimize_context,
 
 #include "f2_frame_objects.h"
 
-// optimize_cause
-
-declare_primobject_3_slot(optimize_cause,
-			  cause_type,
-			  name,
-			  args);
-
-f2ptr f2optimize_cause__primobject_type__new_aux(f2ptr cause);
-
-
 // optimize_data
 
-declare_primobject_3_slot(optimize_data,
+declare_primobject_2_slot(optimize_data,
 			  data_type,
-			  name,
-			  optimize_cause);
+			  args);
 
 f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
 
 
-// optimize_side_effect
-
-declare_primobject_3_slot(optimize_side_effect,
-			  side_effect_type,
-			  name,
-			  optimize_cause);
-
-f2ptr f2optimize_side_effect__primobject_type__new_aux(f2ptr cause);
-
-
 // optimize_fiber
 
-declare_primobject_12_slot(optimize_fiber,
+declare_primobject_13_slot(optimize_fiber,
 			   optimize_context,
 			   parent_branched_fiber,
-			   optimize_cause,
-			   children_branched_fibers,
-			   optimize_side_effects,
+			   branch_condition_data,
+			   true_child_branched_fiber,
+			   false_child_branched_fiber,
+			   data_side_effects,
 			   stack,
 			   value,
 			   iter,

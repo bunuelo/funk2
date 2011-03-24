@@ -159,7 +159,7 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
       while (iter != nil) {
 	f2ptr variable_name = f2__cons__car(cause, iter);
 	{
-	  f2ptr initial_variable_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-variable"), variable_name, nil);
+	  f2ptr initial_variable_data = f2__optimize_data__new(cause, new__symbol(cause, "initial-variable"), f2list1__new(cause, variable_name));
 	  f2ptr new_cons = f2cons__new(cause, initial_variable_data, nil);
 	  if (args_reg == nil) {
 	    args_reg      = new_cons;

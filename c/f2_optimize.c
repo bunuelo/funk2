@@ -817,8 +817,8 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var(f2ptr cause, f2ptr th
 
 f2ptr raw__optimize_fiber__call_bytecode__globalize__type_var__no_increment_pc(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
   f2ptr value__data      = f2__optimize_fiber__value(cause, this);
-  f2ptr data_side_effect = f2__optimize_side_effect__new(cause, new__symbol(cause, "globalize-type_var"), f2list3__new(cause, type_name, var_name, value__data));
-  raw__optimize_fiber__add_side_effect(cause, this, optimize_side_effect);
+  f2ptr data_side_effect = f2__optimize_data__new(cause, new__symbol(cause, "globalize-type_var"), f2list3__new(cause, type_name, var_name, value__data));
+  raw__optimize_fiber__add_side_effect(cause, this, data_side_effect);
   f2__optimize_fiber__value__set(cause, this, nil);
   return nil;
 }

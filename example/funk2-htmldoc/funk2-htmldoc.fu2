@@ -248,8 +248,12 @@
 
 
 [deftypefunk htmldoc_context execute compile_css []
+  [shelter [mkdir [get this root_dir]]]
   [have [htmldoc_css this] save [string-concat [get this root_dir] 'default.css']]]
 
+[deftypefunk htmldoc_context execute compile_root_page []
+  [shelter [mkdir [get this root_dir]]]
+  [have [htmldoc_redirect_page 'about/'] save [string-concat [get context root_dir] 'index.html']]]
 
 
 [defunk htmldoc_css [context]

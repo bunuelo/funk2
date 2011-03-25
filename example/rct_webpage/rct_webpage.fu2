@@ -96,14 +96,6 @@
 
 
 
-[defunk compile_rct_webpage [context]
-  [print 'compiling rct css']       [have context compile_css]
-  [print 'compiling rct root page'] [have context compile_root_page]
-  [print 'compiling rct tabs']      [have context compile_tabs]
-  [print 'compiling rct images']    [compile_rct_images context]
-  [print 'done compiling']
-  nil]]
-
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
   [set  context hostname                               'neuromin.de']
   [set  context title                                  'Reflective Commonsense Thinking']
@@ -149,14 +141,13 @@
   [defunk rct_about-save        [] [have [get context tab `About]        compile context]]
   [defunk rct_news-save         [] [have [get context tab `News]         compile context]]
   [defunk rct_publications-save [] [have [get context tab `Publications] compile context]]
+  [defunk rct_tabs-save         [] [have context compile_tabs]]
   
   [defunk rct_webpage-save []
     [rct_images-save]
     [rct_css-save]
     [rct_root_page-save]
-    [rct_about_save]
-    [rct_news-save]
-    [rct_publications-save]]
+    [rct_tabs-save]]
   
   ]
 

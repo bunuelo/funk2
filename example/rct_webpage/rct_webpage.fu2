@@ -132,9 +132,9 @@
   [set  context search_hover_link_color                '#0000FF']
   [set  context search_active_link_color               '#0000FF']
   [set  context search_url_color                       '#000000']
-  [have context add_tab          [new htmldoc_tab `About         &rct_about]]
-  [have context add_tab          [new htmldoc_tab `News          &rct_news]]
-  [have context add_tab          [new htmldoc_tab `Publications  &rct_publications]]
+  [have context add_tab [new htmldoc_tab `About        &rct_about]]
+  [have context add_tab [new htmldoc_tab `News         &rct_news]]
+  [have context add_tab [new htmldoc_tab `Publications &rct_publications]]
   
   [defunk rct_images-save       [] [compile_rct_images  context]]
   [defunk rct_css-save          [] [have context compile_css]]

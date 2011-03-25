@@ -97,10 +97,10 @@
 
 
 [defunk compile_rct_webpage [context]
-  [print 'compiling rct css']       [compile_rct_css       context]
-  [print 'compiling rct root page'] [compile_rct_root_page context]
+  [print 'compiling rct css']       [have context compile_css]
+  [print 'compiling rct root page'] [have context compile_root_page]
   [print 'compiling rct tabs']      [have context compile_tabs]
-  [print 'compiling rct images']    [compile_rct_images    context]
+  [print 'compiling rct images']    [compile_rct_images context]
   [print 'done compiling']
   nil]]
 

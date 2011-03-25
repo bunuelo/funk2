@@ -19,297 +19,33 @@
 
 
 
-[defunk em_two_about-content []
+[defunk rct_about-content []
   [string-prog '<h1>About</h1>'
 	       ''
 	       '<p>'
-	       '<strong>Moral Compass</strong> is a free, open, cognitive architecture designed for building and correlating social commonsense reasoning models.  '
-	       'Moral Compass is a computational modelling tool for the cognitive sciences.'
-	       'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
 	       '</p>'
-	       ''
-	       '<h2>A Simple Overview</h2>'
-	       ''
-	       '<p>'
-	       'So, what is a simple way to begin to talk about what we mean by "theory of mind", "social thinking", and "moral thinking"?  '
-	       'In the past, these topics have spawned numerous approaches that are more or less representative of our biological understanding.  '
-	       'Some approaches have been logical, others are based on semantic graph theory, while still others are based on procedural programming language definitions.  '
-	       'Recently, all of these initial approaches have been extended and further researched so that we can calculate probability distributions over these representations.  '
-	       'We are now at a point where we can categorize and begin to think about the diversity of human thought that these approaches allow us to describe when they are combined.  '
-	       'So, what types of processes are most important to describe when we approach the extremely complicated issue of "moral reasoning"?  '
-	       '</p>'
-	       ''
-	       '<h3>The Social Utility of Moral Reasoning</h3>'
-	       ''
-	       '<p>'
-	       'When we think of immorality, there are many complicating factors, so how can we simplify the reality of the situation in order to create a model, which is necessarily not real, but which is still useful for predicting reality?  '
-	       'Well, we currently see many approaches to studying different aspects of moral reasoning, such as how moral judgements are dependent on the causal structure of how a person understands social coersion <a href="#reference_1">[1]</a>.'
-	       'We also see evidence that engaging emotions such as "pride", "embarrassment", and "regret" has been shown to be correlated to specific fMRI BOLD patterns <a href="#reference_2">[2]</a>.  '
-	       'Further, lines have been drawn between mere chauvinism for one\'s own social group and the more complicating aspects of virtuous behavior that maximizes social utility <a href="#reference_3">[3]</a>.  '
-	       'This gives us initial evidence and philosophical guidance to pursue better models for what we mean by virtuous behavior.  '
-	       '</p>'
-	       ''
-	       '<h3>Current Models</h3>'
-	       ''
-	       '<p>'
-	       'The field of machine learning has described models of goal-oriented behavior that use a numerical utility function in order to quantify whether or not a given goal has been accomplished.  '
-	       'These models are proving useful for finding the beginning of an explanation for how models of the world are learned and what the function of specific neurotransmitters may be in the neocortex <a href="#reference_4">[4]</a>.  '
-	       'The problem with a simple goal-oriented model is that it does not necessarily involve thinking about social relationships or goals, so we need something slightly more complicated.  '
-	       'A very popular approach to thinking about the goals of multiple people involves relational representations, such as the modal logics of morality <a href="#reference_5">[5]</a>.'
-	       'Combining the scientific power of goal-oriented reinforcement learning with the expressivity of relational representations is a relatively young field that is proving to be maturing very quickly <a href="#reference_6">[6]</a>.  '
-	       '</p>'
-	       ''
-	       '<h3>The Development of Social Goals</h3>'
-	       ''
-	       '<p>'
-	       'If we are going to develop a theory of virtuous behavior, or social goals, how do we begin to think about the cooperative and non-cooperative thought processes that would constitute working toward or against other people?  '
-	       'It has been shown that the neural circuits that are involved in "theory of mind" are largely distinct from the circuits involved in perceptual capabilities <a href="#reference_7">[7]</a>.  '
-	       'There have also been distinctions shown between the neural circuits involved in "theory of mind" and executive control of actions <a href="#reference_8">[8]</a>.  '
-	       'While "theory of mind" can be distinguished from these aspects of basic perception and motor control, what form of virtue could a person without these capabilities exhibit?  '
-	       'One answer is that we could focus exclusively on spoken and understood language.  '
-	       'However, there is good reason to believe that the learning of social behavior is bootstrapped from learning causal physical models <a href="reference_9">[9]</a>.  '
-	       'Let our working definition of virtuous behavior be the complexities of accomplishing and maintaining social goals, which in our model are initially learned from interactions with the physical world in the context of parents.  '
-	       '</p>'
-	       ''
-	       '<h3>A Simple Social Reasoning Model</h3>'
-	       ''
-	       '<table>'
-	       '  <tr>'
-	       '    <td>'
-	       '      <img src="/images/em_two-layers.jpg">'
-	       '    </td>'
-	       '    <td>'
-	       '      <p>'
-	       '        <ul>'
-	       '          <li><strong>Self-Conscious Thinking</strong>:    processes that manipulate doubly recursive mental representations.  </li>'
-	       '          <li><strong>Self-Reflective Thinking</strong>:   processes that manipulate singly recursive mental representations.  </li>'
-	       '          <li><strong>Reflective Thinking</strong>:        processes that manipulate representations about one\'s own mind.  </li>'
-	       '          <li><strong>Deliberative Thinking</strong>:      processes that manipulate representations of the physical world.  </li>'
-	       '          <li><strong>Learned Reactive Thinking</strong>:  processes that have been learned and chunked for efficient execution.  </li>'
-	       '          <li><strong>Built-In Reactive Thinking</strong>: processes that are given as the simplest and lowest-level aspects of the mental model.  </li>'
-	       '        </ul>'
-	       '      </p>'
-	       '    </td>'
-	       '  </tr>'
-	       '</table>'
-	       ''
-	       [prog '<p>Our modelling project is based on the following core goals:</p>'
-		     '<ul>'
-		     '  <li>informed by the latest neuroscientific models of social and moral cognition,</li>'
-		     '  <li>quantitative measurements of all information and control flow for use in developing and subsequently testing scientific hypotheses,</li>'
-		     '  <li>physical grounding of problem domains within deterministic physical simulation for repeatability of theoretical testing and evaluation,</li>'
-		     '  <li>realistic perceptual and motor control primitives for human-like agents in commonsense situations,</li>'
-		     '  <li>continuous theory development from physical problem solving that naturally bootstraps to social and moral reasoning domains,</li>'
-		     '  <li>a distributed heterogenous parallal model that exhibits a layered organisational control and lateral information translation structure,</li>'
-		     '  <li>evolutionary plausibility of the "glom" theory of additional hierarchical control above previously competent structures.</li>'
-		     '</ul>'
-		     '<p>Because the scientific process is always one of iteratively refining human knowledge, we do not see any research effort as a solution to our goals above.  '
-		     'In that sense, we strive to better understand, change, and refine our goals above to better approximate healthy ways to understand human social and moral cognition by discovering and learning from strong biological underpinnings in the physical sciences.</p>  '
-		     '']
-	       ''
-	       '<h3>References</h3>'
-	       '<ul>'
-	       '  <li><a name=reference_1>[1]</a> Young, L., Phillips, J.; "The Paradox of Moral Focus"; Cognition; March 2011</li>'
-	       '  <li><a name=reference_2>[2]</a> Moll J. and Zahn R. and de Oliveira-Souza, R. and Krueger, F. and Grafman J.; "The neural basis of human moral cognition"; Nature Reviews Neuroscience; October 2005</li>'
-	       '  <li><a name=reference_3>[3]</a> Casebeer, W. and Churchland, P.; "The Neural Mechanisms of Moral Cognition: A Multiple-Aspect Approach to Moral Judgment and Decision-Making"; Biology and Philosophy; Volume 18, Number 1, 169-194; January 2003</li>'
-	       '  <li><a name=reference_4>[4]</a> Yu, A. and Dayan, P.; "Expected and unexpected uncertainty: ACh and NE in the neocortex"; Advances in Neural Information Processing Systems 15: Proceedings of the 2002 Conference; The MIT Press; 2003</li>'
-	       '  <li><a name=reference_5>[5]</a> Horty, J.F.; "Moral dilemmas and nonmonotonic logic"; Journal of philosophical logic; 1994</li>'
-	       '  <li><a name=reference_6>[6]</a> Dzeroski, S. and De Raedt, L. and Driessens, K.; "Relational reinforcement learning"; Springer; 2001</li>'
-	       '  <li><a name=reference_7>[7]</a> Bedny, M. and Pascual-Leone, A. and Saxe, R.R.; "Growing up blind does not change the neural bases of Theory of Mind"; Proceedings of the National Academy of Sciences; 2009</li>'
-	       '  <li><a name=reference_8>[8]</a> Saxe, R. and Schulz, L.E. and Jiang, Y.V.; "Reading minds versus following rules: Dissociating theory of mind and executive control in the brain"; Social Neuroscience; 2006</li>'
-	       '  <li><a name=reference_9>[9]</a> Perner, J; "Understanding the Representational Mind"; 1993</li>'
-	       '</ul>'
-	       ''
 	       ''
 	       ]]
 
-[defunk em_two_about [context]
+[defunk rct_about [context]
   [htmldoc_page context
-		[em_two_about-content]]]
+		[rct_about-content]]]
 
 
-[defunk em_two_news-content [context]
+[defunk rct_news-content [context]
   [get context all_posts_content]]
 
-[defunk em_two_news [context]
+[defunk rct_news [context]
   [htmldoc_page context
-		[em_two_news-content context]]]
+		[rct_news-content context]]]
 
 
-[defunk em_two_tutorial-content []
-  [string-prog '<h1>Tutorial</h1>'
-	       ''
-	       '<p>'
-	       'This tutorial will cover how to install, compile, and view reflective representations within the Moral Compass cognitive architecture.  '
-	       'For brevity, we may refer to the Moral Compass Cognitive Architecture as MCCA.  '
-	       'The MCCA has been designed to be compatible with all major operating systems, including Mac, Linux, and Windows (under cygwin).  '
-	       'In this tutorial we will focus on installing on the Debian Linux operating system.  '
-	       'Because the MCCA is a very large simulation, a 64-bit computer with at least 8 gigabytes of RAM or swap space will be necessary.  '
-	       'Note that the MCCA\'s causally traced virtual operating system has been optimized for eight CPU cores, but will run on systems in other configurations.  '
-	       '</p>'
-	       ''
-	       '<h2>Install Dependencies</h2>'
-	       ''
-	       '<h3>Install IsisWorld</h3>'
-	       ''
-	       '<p>'
-	       'IsisWorld is the social commonsense physical simulation that the MCCA controls and perceives.  '
-	       'Currently, you must install and execute IsisWorld in order to run the MCCA.  '
-	       'Please see the <a href="http://web.media.mit.edu/~dustin/simulator_setup/" target="_blank">IsisWorld website</a> for instructions on how to download, install, and run the IsisWorld simulator.  '
-	       '</p>'
-	       ''
-	       ''
-	       ''
-	       '<h3>Download and Compile Funk2</h3>'
-	       ''
-	       '<p>'
-	       'Currently, the MCCA is distributed as part of the Funk2 programming language.  '
-	       'To install dependencies for the Funk2 programming language type the following into your terminal:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>sudo apt-get install zlib1g-dev libx11-dev libgl1-mesa-dev libglu1-mesa-dev libxxf86vm-dev libxmlrpc-c3-dev libcurl4-openssl-dev libgtk2.0-dev libavcodec-dev libswscale-dev</tt>'
-	       '<br><br>'
- 	       'The latest version of the Funk2 programming language can be downloaded by using the git software tool.  '
-	       'Install the git software tool by typing this into your terminal:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>sudo apt-get install git</tt>'
-	       '<br><br>'
-	       'Once you have installed git, you can get the Funk2 source code by typing the following into your terminal:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>git clone git://github.com/bunuelo/funk2.git</tt>'
-	       '<br><br>'
-	       'Now, type the following to enter the Funk2 directory and compile the Funk2 programming language:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>cd funk2; ./configure; make</tt>'
-	       '<br><br>'
-	       '</p>'
-	       ''
-	       '<h3>Compile the Moral Compass Cognitive Architecture</h3>'
-	       ''
-	       '<p>'
-	       'First, start the Funk2 programming language by typing the following:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>./funk2.sh</tt>'
-	       '<br><br>'
-	       'Funk2 should look like this once it has started:  '
-	       '<br><br>'
-	       '<img src="/images/funk2_bootup.jpg">'
-	       '<br><br>'
-	       'Once Funk2 has started, type the following into the Funk2 prompt:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>[require isismon]</tt>'
-	       '<br><br>'
-	       'Compiling the MCCA will normally take approximately 5 or 10 minutes, so be patient.  If a bug occurs at any point in this process, please make a bug report to the author, <a href="http://rct.media.mit.edu/rct/bo_morgan.html">Bo Morgan</a>.  '
-	       'Once the compile has finished, type the following into the Funk2 prompt:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>[save_memory_image \'img/bootstrap.img\']</tt>'
-	       '<br><br>'
-	       'Now, exit the Funk2 programming language by either hitting CTRL-C or by typing "[quit]" into the Funk2 prompt.  '
-	       '</p>'
-	       ''
-	       '<h3>Running the IsisMon IsisWorld client</h3>'
-	       ''
-	       '<p>'
-	       'Start Funk2 again as above, by typing "./funk2.sh" into your terminal.  '
-	       'In a different terminal, you should start the IsisWorld physical simulation that you downloaded and installed above.  '
-	       'Once the simulator has started, start the IsisMon client by typing the following into the Funk2 prompt:  '
-	       '<br><br>'
-	       '&nbsp;&nbsp;&nbsp;&nbsp;<tt>[isismon]</tt>'
-	       '<br><br>'
-	       'This should open the following window on your screen:  '
-	       '<br><br>'
-	       '<img width=560 src="/images/isismon_bootup.jpg">'
-	       '<br><br>'
-	       'Now, click the File menu and click the New Project menu item.'
-	       'You should see the following on your screen:  '
-	       '<br><br>'
-	       '<img width=560 src="/images/isismon_new_project.jpg">'
-	       '<br><br>'
-	       'Next, we need to initialize the simulation to enter the correct kitchen environment with two children and one parent.  '
-	       'To do this, click the Simulation menu and then click the Run Initialization Sequence menu item.  '
-	       'Once IsisMon is finished inititalizing the IsisWorld simulation, you should see "isis_world: simulation initialization complete." printed to your terminal.  '
-	       'Also, IsisWorld should now look like this:  '
-	       '<br><br>'
-	       '<img width=560 src="/images/isisworld_initialized.jpg">'
-	       '<br><br>'
-	       '</p>'
-	       ''
-	       '<p>'
-	       'At this point, to avoid limitations in support of some graphics card hardware, you should make sure that the IsisWorld simulation window is "always on top" and visible on one of your current monitor screens.  '
-	       'This is not always necessary, but it is recommended for this tutorial.  '
-	       '</p>'
-	       ''
-	       '<p>'
-	       'Next, we need to boot up an agent\'s mind.  '
-	       'To do this, go to the Project menu and click the New Ralph Agent menu item.  '
-	       'This will create an MCCA controller for one of the three physical agents.  '
-	       'This process takes approximately 30 to 45 seconds on our server.  '
-	       'Your IsisMon window should now look like this:  '
-	       '<br><br>'
-	       '<img width=560 src="/images/isismon_new_ralph_agent.jpg">'
-	       '<br><br>'
-	       '</p>'
-	       ''
-	       '<p>'
-	       'Now, notice that when we created our new Ralph agent, there is a new menubar that is specific to that agent.  '
-	       'Click the Tools menu in this new agent specific menubar and select the Learned Reactive Physical Activator.  '
-	       'You should see a control window for Ralph\'s learned reactive goals appear that looks like this:  '
-	       '<br><br>'
-	       '<img height=560 src="/images/isismon_ralph_learned_reactive_physical_activator.jpg">'
-	       '<br><br>'
-	       '</p>'
-	       ''
-	       '<p>'
-	       'Great!  Now you\'ve successfully loaded an MCCA agent and he is waiting for a learned reactive goal!  '
-	       'Now, let\'s tell Ralph to try to find and pick up something from the kitchen.  '
-	       'In order to do this, we will use the "Hold with Right Hand" mental resource in the Learned Reactive Physical Activator window.  '
-	       'This resource requires a very specific perceptual ID to pursue, so let\'s ask the simulator for a list of objects currently in the simulation.  '
-	       'To do this, click the Simulation menu and click the View All Objects menu item.  '
-	       'You should see something like the following printed to your terminal:  '
-	       '<br><br>'
-	       '<img src="/images/isismon_simulation_view_all_objects.jpg">'
-	       '<br><br>'
-	       'Notice that there are two columns of information in the image above.  '
-	       'Use your mouse to select and copy the <strong>knife+169032236</strong> text to your clipboard.  '
-	       'Note that specific numbers don\'t matter in this case.  '
-	       'This is simply the unique identifier for the visual percept of this specific knife within the simulation.  '
-	       'Now, paste the contents of your clipboard into the text entry box next to the "Hold in Right Hand" button in Ralph\'s Learned Reactive Physical Activator.  '
-	       'Click the "Hold in Right Hand" button just once.  '
-	       '</p>'
-	       ''
-	       '<p>'
-	       'Great!  You\'ve given Ralph a simple goal!  Congratulations!  '
-	       'To watch Ralph go through the process of pursuing his goal, click the Play button in the main IsisMon window.  '
-	       'Note that the mental simulation process is very slow because we are simulating even Ralph\'s simplest mental processes at a very abstract level.  '
-	       'That\'s okay though because you can leave the simulation running and come back later and see what Ralph has done by sliding the slider below the main image in the IsisMon window.  '
-	       'Also, if you like what Ralph has accomplished, you can go to the File menu and export an MPEG movie to show your friends!  '
-	       '</p>'
-	       ''
-	       '<p>'
-	       'Okay, back to the promised goal of this tutorial.  '
-	       'Notice that there are a number of knowledge bases that are listed at the bottom of the main IsisMon window.  '
-	       'Some of these knowledge bases are not completely working, such as the "Other Agent\'s Knowledge" knowledge base.  '
-	       'We haven\'t finished self-reflective representations, but you can take a look at the "Meta Mental Knowledge" by clicking on the Time button to the right.  '
-	       'Clicking the Time button will interpret any events in the knowledge base as a human readable timeline.  '
-	       'If you <emph>really</emph> want to see all of the knowledge in a knowledge base, you can click the Graph button.  '
-	       'Try the Graph button with the Physical or Visual knowledge bases just to keep your computer from overheating with the amount of semantic information in the higher layers.  '
-	       'The reflective timeline should look something like this:  '
-	       '<br><br>'
-	       '<img width=560 src="/images/isismon_reflective_timeline.jpg">'
-	       '<br><br>'
-	       '</p>'
-	       ]]
-
-[defunk em_two_tutorial [context]
+[defunk rct_publications [context]
   [htmldoc_page context
-		[em_two_tutorial-content context]]]
+		[rct_publications-content]]]
 
 
-[defunk em_two_publications [context]
-  [htmldoc_page context
-		[em_two_publications-content]]]
-
-
-[defunk em_two_publications-content []
+[defunk rct_publications-content []
   [string-prog '<h1>Publications</h1>'
 	       ''
 	       '<ul>'
@@ -327,249 +63,58 @@
 	       ''
 	       ]]
 
-[defunk em_two_publications [context]
+[defunk rct_publications [context]
   [htmldoc_page context
-		[em_two_publications-content]]]
+		[rct_publications-content]]]
 
 
-[defunk em_two_documentation-content [context]
-  [string-prog '<h1>Documentation</h1>'
-	       ''
-	       [get context documentation_overview_content]]]
-
-[defunk em_two_documentation [context]
-  [htmldoc_page context
-		[em_two_documentation-content context]]]
-
-
-[defunk em_two_download-content []
-  [string-prog '<h1>Download</h1>'
-	       ''
-	       '<h2>Binary and Source Packages</h2>'
-	       ''
-	       '<p>The following is a direct link to the latest version of platform independent source code, which compiles and runs cleanly on Linux, MacOSX, and Windows (under CygWin):</p>'
-	       '  <ul>'
-	       '    <li><a href="/version/funk2-2.11.0.2010.05.04/funk2-2.11.0.2010.05.04.tar.gz">Latest Architecture and Platform Independent Source Code (version 2.11.0.2010.05.04)</a></li>'
-	       '  </ul>'
-	       ''
-	       '<p>The following table includes direct links to the latest architecture and platform specific binary packages. In most situations, you should be able to simply single-click on the appropriate link in order for your operating system to fully install the latest version of Funk2.</p>'
-	       '  <ul>'
-	       '    <li><a href="/arch/i386/funk2_2.11.0.2010.04.20_i386.deb">Debian Sid i386 binary package (version 2.11.0.2010.04.20)</a></li>'
-	       '    <li><a href="/arch/amd64/funk2_2.11.0.2010.04.20_amd64.deb">Debian Sid amd64 binary package (version 2.11.0.2010.04.20)</a></li>'
-	       '    <li><a href="/version/funk2-2.11.0.2010.05.02/funk2_2.11.0.2010.05.02_i386_macosx_10.6.3_darwin_10.3.0.pkg.tar.gz">MacOS X 10.6.3 Darwin Kernel 10.3.0 i386 binary package (version 2.11.0.2010.05.02)</a></li>'
-	       '    <li><a href="/version/funk2-2.11.0.2010.05.03/funk2_2.11.0.2010.05.03_i386_macosx_10.5.8_darwin_9.8.0.pkg.tar.gz">MacOS X 10.5.8 Darwin Kernel 9.8.0 i386 binary package (version 2.11.0.2010.05.03)</a></li>'
-	       '  </ul>'
-	       ''
-	       '<p>All Funk2 packages are signed with a public key, which is available here for your security:</p>'
-	       '  <ul>'
-	       '    <li><a href="/bo-2010_01_02.pub">Public Key for Bo Morgan <bo@mit.edu> (most recent)</a></li>'
-	       '    <li><a href="/bo-2009_01_01.pub">Public Key for Bo Morgan <bo@mit.edu> (for older packages released before 2010)</a></li>'
-	       '  </ul>'
-	       ''
-	       [prog '<p>All of the above Funk2 source tarballs and binary packages as well as all other previous versions are available here:</p>'
-		     '  <ul>'
-		     '    <li><a href="http://funk2.neuromin.de/">Funk2 HTTP File Server</a></li>'
-		     '  </ul>'
-		     '']
-	       '<p>Funk2 is developed with the Git subversioning system. Here are some public Git versioning resources:</p>'
-	       '  <ul>'
-	       '    <li><a href="http://git.neuromin.de/">Funk2 GitWeb Server</a></li>'
-	       '  </ul>'
-	       ''
-	       '<h2>Public Git Access</h2>'
-	       ''
-	       'This project is now a publicly developed project hosted via gitosis and gitweb at http://git.neuromin.de/, where you should have both access to stable packages and the trunk source repository. To clone the public git Funk2 repository on your machine, you should be able to just type the following command into a terminal:'
-	       ''
-	       '  <ul>'
-	       '    <li><tt>git clone git://neuromin.de/funk2.git</tt></li>'
-	       '  </ul>'
-	       '']]
-
-[defunk em_two_download [context]
-  [htmldoc_page context
-		[em_two_download-content]]]
-
-
-[defunk em_two-generate_all_posts []
+[defunk rct-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
-       [set this title       'Semantic Representations of Mental Reflection Events']
-       [set this date        'March 12th, 2011']
+       [set this title       '']
+       [set this date        'March 25th, 2011']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+       [set this author_link 'http://rct.media.mit.edu/rct/people/bo_morgan.html']
        [set this entry       [string-prog '<p>'
-					  'Models of mind that accomplish reasoning tasks have different functional information processes that causally interact often in unpredictably complicated ways.  '
-					  'Because our model is a reflective model, it traces its own executive functions and creates representations of the causal interactions between these different information processes that it can then use to think about its own thinking.  '
-					  'We have also created a timeline visualization tool to help the model developer to inspect and debug her theories of mental causal interactions and learning.  '
 					  '</p>'
-					  ]]
-       this]
-    ,[let [[this [new htmldoc_post]]]
-       [set this title       'Physical Commonsense Simulation of Parents and Children in a Kitchen']
-       [set this date        'January 11th, 2011']
-       [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-       [set this entry       [string-prog '<p>Seymour Papert said, "You cannot think about thinking without thinking about thinking about something", warning against building models of cognitive processes that are not attached to concrete behaviors of the intelligent system.'
-					  'Toward this end, we have chosen to first focus on a rigid-body physical simulation of parents and children in the context of basic cooking tasks in a kitchen environment.'
-					  'We chose parents and children because we feel that major parts of social and moral learning develops during early stages involving these familiar social relationships.'
-					  'We chose the domain of basic kitchen cooking tasks because this is a non-trivial commonsense reasoning domain that exists in all human cultures.'
-					  'For more detailed information about our physical simulation, see the <a href="http://web.media.mit.edu/~dustin/simulator_setup/">IsisWorld</a> website.'
-					  '</p>'
-					  ]]
-       this]
-    ,[let [[this [new htmldoc_post]]]
-       [set this title       'Tracing of Information Flow and Causality in Large Heterogeneous Parallel Systems']
-       [set this date        'September 1st, 2010']
-       [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-       [set this entry       [string-prog '<p>In order to find biological and behavioral correlations to the types of complex models that are necessary for describing social and moral cognition, we need new ways for computers to simulate and monitor information flow and causality throughout our cognitive models.'
-					  'The human brain is often believed to be many different types of complicated heterogenous processes, so the question becomes: how do we both simulate models at this level of complexity as well as determine whether these models are good or bad explanations of what is happening at a biological level?'
-					  'Toward this end, we\'ve recently completed a stable version of the Funk2 programming language that allows intricate quantitative monitoring of large heterogenous parallel systems.'
-					  'For more information about the low-level details about the computational engineering and science involved in creating and manipulating this system, please see the <a href="http://funk2.org/">funk2.org</a> website.'
 					  ]]
        this]
     ]]
 
-[defunk em_two-generate_all_examples []
-  `[]]
-
-[defunk em_two-documentation-all_packages []
-  `[movie
-    isis_visual_object
-    deliberative_execution_agency
-    builtin_reactive_neural_plug_agency
-    forgetful_event_stream
-    semantic_resource_action_event
-    isis_world_demo
-    isismon_knowledge
-    semantic_object_type
-    semantic_temporal_object
-    isis_world_client
-    traced_resource
-    mental_layer
-    self_conscious_layer
-    moral_compass_perception
-    semantic_causal_object
-    semantic_knowledge_base
-    graph_isomorphism
-    semantic_action_event
-    image_sequence
-    meta_semantic_knowledge_base
-    deliberative_layer
-    conceptnet
-    mind
-    self_conscious_imprimer_agency
-    image
-    agent_body
-    graph_match_error_correcting
-    divisi2
-    isismon_learned_reactive_physical_activator
-    semantic_ordered_object
-    graph_cluster 
-    learned_reactive_physical_knowledge_agency
-    semantic_resource
-    semantic_resource_action_sequence
-    graph_match
-    learned_reactive_language_agency
-    learned_reactive_physical_agency
-    isismon
-    semantic_event_sequence
-    self_reflective_layer
-    moral_agent_body
-    moral_compass
-    timeline
-    moral_compass_visual_agent
-    moral_compass_visual_object
-    reflective_credit_assignment_agency
-    semantic_packable_object
-    self_reflective_meta_mental_knowledge_agency
-    isis_visual_agent
-    event_stream
-    isismon_agent
-    isismon_core
-    mindmon
-    semantic_physical_object
-    traced_mind
-    moral_compass_proprioceptual_object
-    agency
-    builtin_reactive_physical_agency
-    semantic_event
-    semantic_agent
-    semantic_frame
-    semantic_object
-    semantic_realm
-    reflective_layer
-    deliberative_meta_physical_knowledge_agency
-    semantic_containment_object 
-    semantic_relationship_key
-    builtin_reactive_sensory_agency
-    semantic_visual_object
-    resource
-    semantic_directed_action_event
-    semantic_causal_event
-    self_reflective_other_agents_knowledge_agency
-    learned_reactive_layer 
-    isismon_builtin_reactive_physical_activator
-    learned_reactive_sensory_agency
-    builtin_reactive_layer
-    physical_world
-    propogator]]
-
-
-[defunk compile_em_two_css [context]
+[defunk compile_rct_css [context]
   [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
 
-[defunk compile_em_two_root_page [context]
+[defunk compile_rct_root_page [context]
   [have [htmldoc_redirect_page 'about/'] save [string-concat [get context root_dir] 'index.html']]]
 
 
-[defunk compile_em_two_documentation [context]
-  [have context require_documentation_packages]
-  [have context compile_documentation]
-  nil]
-
-[defunk compile_em_two_images [context]
+[defunk compile_rct_images [context]
   [shelter [mkdir [string-concat [get context root_dir] 'images/']]]
-  [system [string-concat 'cp -f example/em_two_webpage/images/favicon.ico ' [get context root_dir]]]
+  [system [string-concat 'cp -f example/rct_webpage/images/favicon.ico ' [get context root_dir]]]
   [let [[image_names `['img01.jpg'
 		       'img02.jpg'
 		       'left_logo_header.jpg'
 		       'right_logo_header.jpg'
-		       'em_two-layers.jpg'
-		       
-		       'funk2_bootup.jpg'
-		       'isismon_bootup.jpg'
-		       'isismon_new_project.jpg'
-		       'isismon_new_ralph_agent.jpg'
-		       'isismon_ralph_learned_reactive_physical_activator.jpg'
-		       'isismon_reflective_timeline.jpg'
-		       'isismon_simulation_view_all_objects.jpg'
-		       'isisworld_initialized.jpg'
 		       ]]]
     [mapc [funk [image_name]
-		[system [string-concat 'cp -f example/em_two_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]
+		[system [string-concat 'cp -f example/rct_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]
 	  image_names]]
   nil]
 
 
 
-[defunk compile_em_two_webpage [context]
-  [print 'compiling em_two css']           [compile_em_two_css           context]
-  [print 'compiling em_two root page']     [compile_em_two_root_page     context]
-  [print 'compiling em_two tabs']          [have context compile_tabs]
-  [print 'compiling em_two documentation'] [compile_em_two_documentation context]
-  [print 'compiling em_two examples']      [have context compile_examples]
-  [print 'compiling em_two images']        [compile_em_two_images        context]
+[defunk compile_rct_webpage [context]
+  [print 'compiling rct css']       [compile_rct_css       context]
+  [print 'compiling rct root page'] [compile_rct_root_page context]
+  [print 'compiling rct tabs']      [have context compile_tabs]
+  [print 'compiling rct images']    [compile_rct_images    context]
   [print 'done compiling']
   nil]]
 
-[let [[context [new htmldoc_context '/home/neptune/Desktop/www/em-two/']]]
-  [set  context hostname                               'em-two.net']
-  [set  context title                                  'Moral Compass']
-  [set  context subtitle                               'Commonsense Social Reasoning Cognitive Architecture']
-  [set  context posts                                  [em_two-generate_all_posts]]
-  [set  context examples                               [em_two-generate_all_examples]]
-  [set  context documentation_packages                 [em_two-documentation-all_packages]]
-  [set  context documentation_objects                  [system-type_names]]
+[let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
+  [set  context hostname                               'neuromin.de']
+  [set  context title                                  'Reflective Commonsense Thinking']
+  [set  context subtitle                               '']
+  [set  context posts                                  [rct-generate_all_posts]]
   [set  context background_color                       '#FFFFFF']
   [set  context font_color                             '#000000']
   [set  context link_color                             '#0000FF']
@@ -600,24 +145,17 @@
   [set  context search_hover_link_color                '#0000FF']
   [set  context search_active_link_color               '#0000FF']
   [set  context search_url_color                       '#000000']
-  [have context add_tab          [new htmldoc_tab `About         &em_two_about]]
-  [have context add_tab          [new htmldoc_tab `News          &em_two_news]]
-  [have context add_tab          [new htmldoc_tab `Tutorial      &em_two_tutorial]]
-  [have context add_tab          [new htmldoc_tab `Publications  &em_two_publications]]
-  [have context add_tab          [new htmldoc_tab `Documentation &em_two_documentation]]
-  [have context add_tab          [new htmldoc_tab `Download      &em_two_download]]
+  [have context add_tab          [new htmldoc_tab `About         &rct_about]]
+  [have context add_tab          [new htmldoc_tab `News          &rct_news]]
+  [have context add_tab          [new htmldoc_tab `Publications  &rct_publications]]
   
-  [defunk em_two_webpage-save       []                                                         [compile_em_two_webpage       context]]
-  [defunk em_two_css-save           []                                                         [compile_em_two_css           context]]
-  [defunk em_two_root_page-save     []                                                         [compile_em_two_root_page     context]]
-  [defunk em_two_about-save         [] [have [get context tab `About]         compile context]]
-  [defunk em_two_news-save          [] [have [get context tab `News]          compile context]]
-  [defunk em_two_tutorial-save      [] [have [get context tab `Tutorial]      compile context]]
-  [defunk em_two_publications-save  [] [have [get context tab `Publications]  compile context]]
-  [defunk em_two_documentation-save [] [have [get context tab `Documentation] compile context] [compile_em_two_documentation context]]
-  [defunk em_two_download-save      [] [have [get context tab `Download]      compile context]]
-  [defunk em_two_examples-save      [] [have context compile_examples]]
-  [defunk em_two_images-save        []                                                         [compile_em_two_images        context]]
+  [defunk rct_webpage-save       []                                                         [compile_rct_webpage       context]]
+  [defunk rct_css-save           []                                                         [compile_rct_css           context]]
+  [defunk rct_root_page-save     []                                                         [compile_rct_root_page     context]]
+  [defunk rct_about-save         [] [have [get context tab `About]        compile context]]
+  [defunk rct_news-save          [] [have [get context tab `News]         compile context]]
+  [defunk rct_publications-save  [] [have [get context tab `Publications] compile context]]
+  [defunk rct_images-save        []                                                         [compile_rct_images        context]]
   
   ]
 

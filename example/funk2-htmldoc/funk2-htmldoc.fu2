@@ -247,6 +247,11 @@
   nil]
 
 
+[deftypefunk htmldoc_context execute compile_css []
+  [have [htmldoc_css this] save [string-concat [get this root_dir] 'default.css']]]
+
+
+
 [defunk htmldoc_css [context]
   [string-prog 'body {'
 	       '	margin: 0;'

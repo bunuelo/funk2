@@ -80,12 +80,6 @@
        this]
     ]]
 
-[defunk compile_rct_css [context]
-  [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
-
-[defunk compile_rct_root_page [context]
-  [have [htmldoc_redirect_page 'about/'] save [string-concat [get context root_dir] 'index.html']]]
-
 
 [defunk compile_rct_images [context]
   [shelter [mkdir [string-concat [get context root_dir] 'images/']]]
@@ -149,13 +143,13 @@
   [have context add_tab          [new htmldoc_tab `News          &rct_news]]
   [have context add_tab          [new htmldoc_tab `Publications  &rct_publications]]
   
-  [defunk rct_webpage-save       []                                                         [compile_rct_webpage       context]]
-  [defunk rct_css-save           []                                                         [compile_rct_css           context]]
-  [defunk rct_root_page-save     []                                                         [compile_rct_root_page     context]]
+  [defunk rct_webpage-save       [] [compile_rct_webpage context]]
+  [defunk rct_images-save        [] [compile_rct_images  context]]
+  [defunk rct_css-save           [] [have context compile_css]]
+  [defunk rct_root_page-save     [] [have context compile_root_page]]
   [defunk rct_about-save         [] [have [get context tab `About]        compile context]]
   [defunk rct_news-save          [] [have [get context tab `News]         compile context]]
   [defunk rct_publications-save  [] [have [get context tab `Publications] compile context]]
-  [defunk rct_images-save        []                                                         [compile_rct_images        context]]
   
   ]
 

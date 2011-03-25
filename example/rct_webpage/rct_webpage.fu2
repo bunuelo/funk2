@@ -143,13 +143,20 @@
   [have context add_tab          [new htmldoc_tab `News          &rct_news]]
   [have context add_tab          [new htmldoc_tab `Publications  &rct_publications]]
   
-  [defunk rct_webpage-save       [] [compile_rct_webpage context]]
-  [defunk rct_images-save        [] [compile_rct_images  context]]
-  [defunk rct_css-save           [] [have context compile_css]]
-  [defunk rct_root_page-save     [] [have context compile_root_page]]
-  [defunk rct_about-save         [] [have [get context tab `About]        compile context]]
-  [defunk rct_news-save          [] [have [get context tab `News]         compile context]]
-  [defunk rct_publications-save  [] [have [get context tab `Publications] compile context]]
+  [defunk rct_images-save       [] [compile_rct_images  context]]
+  [defunk rct_css-save          [] [have context compile_css]]
+  [defunk rct_root_page-save    [] [have context compile_root_page]]
+  [defunk rct_about-save        [] [have [get context tab `About]        compile context]]
+  [defunk rct_news-save         [] [have [get context tab `News]         compile context]]
+  [defunk rct_publications-save [] [have [get context tab `Publications] compile context]]
+  
+  [defunk rct_webpage-save []
+    [rct_images-save]
+    [rct_css-save]
+    [rct_root_page-save]
+    [rct_about_save]
+    [rct_news-save]
+    [rct_publications-save]]
   
   ]
 

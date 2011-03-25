@@ -82,6 +82,7 @@
 
 
 [defunk compile_rct_images [context]
+  [shelter [mkdir [get context root_dir]]]
   [shelter [mkdir [string-concat [get context root_dir] 'images/']]]
   [system [string-concat 'cp -f example/rct_webpage/images/favicon.ico ' [get context root_dir]]]
   [let [[image_names `['img01.jpg'

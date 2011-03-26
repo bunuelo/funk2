@@ -159,7 +159,7 @@
        [set this description [string-prog '<p>“Don\'t just do something, sit around instead”—Spiritualized</p>'
 					  '<p>“There must be a negative way to see this”—Bo Morgan</p>'
 					  ''
-					  '<h2>Research Interests<h2>'
+					  '<h2>Research Interests</h2>'
 					  ''
 					  '<p>'
 					  'I am a research assistant and Ph.D. candidate at the MIT Media Lab working on computational models of reflective commonsense reasoning.'

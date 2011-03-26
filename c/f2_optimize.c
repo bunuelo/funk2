@@ -2987,6 +2987,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
   f2ptr branch_condition_data = f2__optimize_fiber__branch_condition_data(cause, fiber);
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
+  /*
   {
     f2ptr iter = data_side_effects;
     while (iter != nil) {
@@ -3002,6 +3003,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
       iter = f2__cons__cdr(cause, iter);
     }
   }
+  */
   return full_bcs;
 }
 

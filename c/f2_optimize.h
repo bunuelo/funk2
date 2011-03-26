@@ -58,11 +58,12 @@ declare_object_type_13_slot(optimize_fiber,
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_4_slot(optimize_context,
+declare_object_type_5_slot(optimize_context,
 			   initial_fiber,
 			   active_fiber_set,
 			   branched_fiber_set,
 			   finished_fiber_set,
+			   defined_data_set,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -108,11 +109,12 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause);
 
 // optimize_context
 
-declare_primobject_4_slot(optimize_context,
+declare_primobject_5_slot(optimize_context,
 			  initial_fiber,
 			  active_fiber_set,
 			  branched_fiber_set,
-			  finished_fiber_set);
+			  finished_fiber_set,
+			  defined_data_set);
 
 f2ptr  f2__optimize_context__new                      (f2ptr cause);
 void  raw__optimize_context__add_active_fiber         (f2ptr cause, f2ptr this, f2ptr active_fiber);

@@ -2880,17 +2880,19 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_4_slot(optimize_context,
+def_primobject_5_slot(optimize_context,
 		      initial_fiber,
 		      active_fiber_set,
 		      branched_fiber_set,
-		      finished_fiber_set);
+		      finished_fiber_set,
+		      defined_data_set);
 
 f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr initial_fiber      = nil;
   f2ptr active_fiber_set   = f2__set__new(cause);
   f2ptr branched_fiber_set = f2__set__new(cause);
   f2ptr finished_fiber_set = f2__set__new(cause);
+  f2ptr defined_data_set   = f2__set__new(cause);
   f2ptr this = f2optimize_context__new(cause,
 				       initial_fiber,
 				       active_fiber_set,
@@ -3017,12 +3019,13 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list10__new(cause,
+    frame = f2__frame__new(cause, f2list12__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
 						new__symbol(cause, "initial_fiber"),      f2__optimize_context__initial_fiber(     cause, this),
 						new__symbol(cause, "active_fiber_set"),   f2__optimize_context__active_fiber_set(  cause, this),
 						new__symbol(cause, "branched_fiber_set"), f2__optimize_context__branched_fiber_set(cause, this),
-						new__symbol(cause, "finished_fiber_set"), f2__optimize_context__finished_fiber_set(cause, this)));
+						new__symbol(cause, "finished_fiber_set"), f2__optimize_context__finished_fiber_set(cause, this),
+						new__symbol(cause, "defined_data_set"),   f2__optimize_context__defined_data_set(  cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -3121,11 +3124,12 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_4_slot(optimize_context,
+  initialize_primobject_5_slot(optimize_context,
 			       initial_fiber,
 			       active_fiber_set,
 			       branched_fiber_set,
-			       finished_fiber_set);
+			       finished_fiber_set,
+			       defined_data_set);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "Prints this optimize_context to the given terminal."); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}

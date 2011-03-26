@@ -111,7 +111,7 @@
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
   [set  context hostname                               'neuromin.de']
   [set  context title                                  'R.C.T.']
-  [set  context subtitle                               'Reflective Commonsense Thinking Group']
+  [set  context subtitle                               'Reflective Commonsense Thinking']
   [set  context people                                 [rct-generate_all_people]]
   [set  context posts                                  [rct-generate_all_posts]]
   [set  context background_color                       '#FFFFFF']

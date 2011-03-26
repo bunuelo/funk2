@@ -162,7 +162,7 @@
 					  '<h2>Research Interests</h2>'
 					  ''
 					  '<p>'
-					  '<img src="/images/bo.jpg" style="float:left;" />'
+					  '<img src="/images/bo.jpg" style="float:left;" width="128" />'
 					  'I am a research assistant and Ph.D. candidate at the MIT Media Lab working on computational models of reflective commonsense reasoning.'
 					  'Once models of reflective commonsense reasoning are built, applications include understanding mental illnesses of reflection in terms of correlations with neurological regions and information patterns of the brain.'
 					  'We hope that teasing apart meaningful quantitative dimensions of "spectrum" mental disorders, such as Schizophrenia and Autism will involve more advanced commonsense models of learning and reasoning.'

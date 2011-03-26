@@ -150,6 +150,8 @@
 	       '    <li><a href="/presentations/morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
 	       '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
 	       '    <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
+	       '    <li><a href="/presentations/morgan2008-causal_reflection_programming.pdf">'
+	       '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
 	       '  </ul>'
 	       '</p>'
 	       ]]
@@ -306,6 +308,8 @@
 					  '    <li><a href="/presentations/morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
 					  '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
 					  '    <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
+					  '    <li><a href="/presentations/morgan2008-causal_reflection_programming.pdf">'
+					  '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
 					  '  </ul>'
 					  '</p>'
 					  ''
@@ -425,10 +429,11 @@
 [defunk compile_rct_presentations [context]
   [shelter [mkdir [get context root_dir]]]
   [shelter [mkdir [string-concat [get context root_dir] 'presentations/']]]
-  [let [[presentation_names `['morgan2008-funk2__causal_reflective_programming__presentation.pdf'
-			      'morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'
+  [let [[presentation_names `['morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'
 			      'morgan2009-where_goals_come_from__a_model_of_self_conscious_learning.pdf'
 			      'morgan2009-moral_compass-poster.pdf'
+			      'morgan2008-funk2__causal_reflective_programming__presentation.pdf'
+			      'morgan2008-causal_reflection_programming.pdf'
 			      ]]]
     [mapc [funk [presentation_name]
 		[system [string-concat 'cp -f example/rct_webpage/presentations/' presentation_name ' ' [get context root_dir] 'presentations/']]]

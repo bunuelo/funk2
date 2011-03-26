@@ -3054,7 +3054,8 @@ void f2__optimize__initialize() {
   
   // optimize_data
   
-  initialize_primobject_2_slot(optimize_data,
+  initialize_primobject_3_slot(optimize_data,
+			       name,
 			       data_type,
 			       args);
   

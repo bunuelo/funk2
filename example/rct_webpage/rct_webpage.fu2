@@ -154,12 +154,14 @@
   [defunk rct_about-save        [] [have [get context tab `About]        compile context]]
   [defunk rct_news-save         [] [have [get context tab `News]         compile context]]
   [defunk rct_publications-save [] [have [get context tab `Publications] compile context]]
+  [defunk rct_people-save       [] [have context compile_people]]
   [defunk rct_tabs-save         [] [have context compile_tabs]]
   
   [defunk rct_webpage-save []
     [rct_images-save]
     [rct_css-save]
     [rct_root_page-save]
+    [rct_people-save]
     [rct_tabs-save]]
   
   ]

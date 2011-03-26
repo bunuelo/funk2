@@ -471,6 +471,7 @@
   [have context add_tab          [new htmldoc_tab `Download      &funk2_download]]
   
   [defunk webpage-save             []                                                         [compile_funk2_webpage       context]]
+  [defunk funk2_root_page-save     []                                                         [compile_funk2_root_page     context]]
   [defunk funk2_css-save           []                                                         [compile_funk2_css           context]]
   [defunk funk2_about-save         [] [have [get context tab `About]         compile context]]
   [defunk funk2_news-save          [] [have [get context tab `News]          compile context]]

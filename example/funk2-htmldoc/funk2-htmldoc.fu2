@@ -306,8 +306,10 @@
 
 [deftypefunk htmldoc_context execute compile_projects []
   [mapc [funk [project]
-	      [terminal_format standard-terminal '\nhtmldoc: compiling project \'' [get project codename] '\'.']
-	      [have project compile this]]
+	      [if [get project external_url]
+		  [terminal_format standard-terminal '\nhtmldoc: skipping compiling project \'' [get project codename] '\' because has external_url.']
+		[prog [terminal_format standard-terminal '\nhtmldoc: compiling project \'' [get project codename] '\'.']
+		      [have project compile this]]]]
 	[get this projects]]
   nil]
 

@@ -156,9 +156,12 @@
   `[,[let [[this [new htmldoc_person]]]
        [set this username    'neptune']
        [set this name        'Bo Morgan']
-       [set this description [string-prog '<p>“Don\'t just do something, sit around instead”—Spiritualized</p>'
-					  '<p>“There must be a negative way to see this”—Bo Morgan</p>'
+       [set this description [string-prog '<ul>'
+					  '  <li>“Don\'t just do something, sit around instead”—Spiritualized</li>'
+					  '  <li>“There must be a negative way to see this”—Bo Morgan</li>'
+					  '</ul>'
 					  ''
+					  '<br>'
 					  '<h2>Research Interests</h2>'
 					  ''
 					  '<p>'
@@ -201,6 +204,7 @@
 					  '  </table>'
 					  '</p>'
 					  ''
+					  '<br>'
 					  '<h2>In the Media</h2>'
 					  ''
 					  '<p>'

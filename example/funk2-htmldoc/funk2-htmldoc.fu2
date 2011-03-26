@@ -60,12 +60,8 @@
 [deftypefunk htmldoc_person get page_content []
   [string-prog '<!-- start content -->'
 	       '<div id="content">'
-	       '  <div class="post">'
 	       [stringlist-concat `['<h1 class="title">' ,[get this name] '</h1>']]
-	       '    <p>'
 	       [get this description]
-	       '    </p>'
-	       '  </div>'
 	       '</div>'
 	       '<!-- end content -->']]
 

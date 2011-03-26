@@ -55,7 +55,7 @@
 
 
 
-[deframe htmldoc_person [frame] [username name description]]
+[deframe htmldoc_person [frame] [username name external_url description]]
 
 [deftypefunk htmldoc_person get page_content []
   [string-prog '<!-- start content -->'
@@ -299,15 +299,17 @@
 
 [deftypefunk htmldoc_context execute compile_people []
   [mapc [funk [person]
-	      [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get person username] '\'.']
-	      [have person compile this]]
+	      [if [get person external_url]
+		  [terminal_format standard-terminal '\nhtmldoc: not compiling person \'' [get person username] '\' because external_url defined.']
+		[prog [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get person username] '\'.']
+		      [have person compile this]]]]
 	[get this people]]
   nil]
 
 [deftypefunk htmldoc_context execute compile_projects []
   [mapc [funk [project]
 	      [if [get project external_url]
-		  [terminal_format standard-terminal '\nhtmldoc: skipping compiling project \'' [get project codename] '\' because has external_url.']
+		  [terminal_format standard-terminal '\nhtmldoc: not compiling project \'' [get project codename] '\' because external_url defined.']
 		[prog [terminal_format standard-terminal '\nhtmldoc: compiling project \'' [get project codename] '\'.']
 		      [have project compile this]]]]
 	[get this projects]]
@@ -1062,7 +1064,9 @@
 				'					<h2>People</h2>'
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [person]
-							       [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]
+							       [if [get person external_url]
+								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
+								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
 							 [get context people]]]
 				'					</ul>'
 				'				</li>']

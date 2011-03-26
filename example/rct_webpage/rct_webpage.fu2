@@ -68,12 +68,23 @@
 		[rct_publications-content]]]
 
 
+[defunk rct-generate_all_people []
+  `[,[let [[this [new htmldoc_person]]]
+       [set this username    'neptune']
+       [set this name        'Bo Morgan']
+       [set this description [string-prog '<p>'
+					  '</p>'
+					  ]]
+       this]
+    ]]
+
+
 [defunk rct-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
        [set this title       '']
        [set this date        'March 25th, 2011']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/people/bo_morgan.html']
+       [set this author_link 'http://neuromin.de/people/bo_morgan.html']
        [set this entry       [string-prog '<p>'
 					  '</p>'
 					  ]]
@@ -99,8 +110,9 @@
 
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
   [set  context hostname                               'neuromin.de']
-  [set  context title                                  'Reflective Commonsense Thinking']
-  [set  context subtitle                               '']
+  [set  context title                                  'R.C.T.']
+  [set  context subtitle                               'Reflective Commonsense Thinking Group']
+  [set  context people                                 [rct-generate_all_people]]
   [set  context posts                                  [rct-generate_all_posts]]
   [set  context background_color                       '#FFFFFF']
   [set  context font_color                             '#000000']
@@ -136,7 +148,7 @@
   [have context add_tab [new htmldoc_tab `News         &rct_news]]
   [have context add_tab [new htmldoc_tab `Publications &rct_publications]]
   
-  [defunk rct_images-save       [] [compile_rct_images  context]]
+  [defunk rct_images-save       [] [compile_rct_images context]]
   [defunk rct_css-save          [] [have context compile_css]]
   [defunk rct_root_page-save    [] [have context compile_root_page]]
   [defunk rct_about-save        [] [have [get context tab `About]        compile context]]

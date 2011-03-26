@@ -55,6 +55,33 @@
 
 
 
+[deframe htmldoc_person [frame] [username name description]]
+
+[deftypefunk htmldoc_person get page_content []
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
+	       '  <div class="post">'
+	       [stringlist-concat `['<h1 class="title">' ,[get this name] '</h1>']]
+	       '    <div class="entry">'
+	       '      <p>'
+	       [get this description]
+	       '      </p>'
+	       '    </div>'
+	       '  </div>'
+	       '</div>'
+	       '<!-- end content -->']]
+
+
+[deftypefunk htmldoc_person execute compile [context]
+  [let [[html_code [htmldoc_page context [get this page_content]]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'person']]]
+    [shelter [mkdir [string-concat [get context root_dir] 'person/' [get this username]]]]
+    [have html_code save [string-concat [get context root_dir] 'person/' [get this username] '/index.html']]
+    nil]]
+
+
+
+
 [deframe htmldoc_tab [frame] [name generator_funk]
   [new [initial-name initial-generator_funk]
        [= name           initial-name]
@@ -73,11 +100,14 @@
     nil]]
 
 
+
+
 [deframe htmldoc_context [frame] [root_dir
 				  hostname
 				  title
 				  subtitle
 				  posts
+				  people
 				  examples
 				  tabs
 				  tags
@@ -239,13 +269,19 @@
   [have this compile_documentation_objects]
   nil]
 
+[deftypefunk htmldoc_context execute compile_people []
+  [mapc [funk [person]
+	      [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get example username] '\'.']
+	      [have person compile this]]
+	[get this people]]
+  nil]
+
 [deftypefunk htmldoc_context execute compile_examples []
   [mapc [funk [example]
 	      [terminal_format standard-terminal '\nhtmldoc: compiling example \'' [get example name] '\'.']
 	      [have example compile this]]
 	[get this examples]]
   nil]
-
 
 [deftypefunk htmldoc_context execute compile_css []
   [terminal_format standard-terminal '\nhtmldoc: compiling css.']
@@ -984,16 +1020,28 @@
 	       '	<div id="page">'
 	       '		<div id="sidebar1" class="sidebar">'
 	       '			<ul>'
-	       '				<li>'
-	       '					<h2>Recent Updates</h2>'
-	       '					<ul>'
-	       [stringlist-prog [let [[index 0]]
-				  [mapcar [funk [post]
-						[= index [+ index 1]]
-						[string-concat '<li><a href="/news/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
-					  [get context posts]]]]
-	       '					</ul>'
-	       '				</li>'
+	       [if [get context people]
+		   [string-prog	'				<li>'
+				'					<h2>People</h2>'
+				'					<ul>'
+				[stringlist-prog [mapcar [funk [person]
+							       [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]
+							 [get context people]]]
+				'					</ul>'
+				'				</li>']
+		 '']
+	       [if [get context posts]
+		   [string-prog '				<li>'
+				'					<h2>Recent Updates</h2>'
+				'					<ul>'
+				[stringlist-prog [let [[index 0]]
+						   [mapcar [funk [post]
+								 [= index [+ index 1]]
+								 [string-concat '<li><a href="/news/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
+							   [get context posts]]]]
+				'					</ul>'
+				'				</li>']
+		 '']
 	       [prog '				<li>'
 		     '					<h2>Categories</h2>'
 		     '					<ul>'
@@ -1072,29 +1120,6 @@
 				'					</ul>'
 				'				</li>']
 		 '']
-	       [prog '				<li>'
-		     '					<h2>Categories</h2>'
-		     '					<ul>'
-		     '						<li><a href="#">Aliquam libero</a></li>'
-		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
-		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
-		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
-		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
-		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
-		     '						<li><a href="#">Aliquam libero</a></li>'
-		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
-		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
-		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
-		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
-		     '						<li><a href="#">Aliquam libero</a></li>'
-		     '						<li><a href="#">Consectetuer adipiscing elit</a></li>'
-		     '						<li><a href="#">Metus aliquam pellentesque</a></li>'
-		     '						<li><a href="#">Suspendisse iaculis mauris</a></li>'
-		     '						<li><a href="#">Urnanet non molestie semper</a></li>'
-		     '						<li><a href="#">Proin gravida orci porttitor</a></li>'
-		     '					</ul>'
-		     '				</li>'
-		     '']
 	       '			</ul>'
 	       '		</div>'
 	       '		<!-- end sidebars -->'

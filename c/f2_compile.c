@@ -83,11 +83,11 @@ f2ptr f2__compile__copy_args_to_iter(f2ptr cause)                               
 f2ptr f2__compile__copy_pc_to_return(f2ptr cause)                                     {return bcs_valid(f2__compile__copy( cause, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol));}
 f2ptr f2__compile__copy_return_to_pc(f2ptr cause)                                     {return bcs_valid(f2__compile__copy( cause, __fiber__return_reg__symbol, __fiber__program_counter_reg__symbol));}
 
-f2ptr f2__compile__lookup(f2ptr cause, f2ptr type, f2ptr var)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__lookup__symbol, type, var, nil), nil));}
-f2ptr f2bytecode__lookup__type(f2ptr this, f2ptr cause)                      {return f2bytecode__arg0(this, cause);}
-f2ptr f2bytecode__lookup__var(f2ptr this, f2ptr cause)                       {return f2bytecode__arg1(this, cause);}
+f2ptr f2__compile__lookup(f2ptr cause, f2ptr type, f2ptr var)                         {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__lookup__symbol, type, var, nil), nil));}
+f2ptr f2bytecode__lookup__type(f2ptr this, f2ptr cause)                               {return f2bytecode__arg0(this, cause);}
+f2ptr f2bytecode__lookup__var(f2ptr this, f2ptr cause)                                {return f2bytecode__arg1(this, cause);}
 
-f2ptr f2__compile__define(f2ptr cause, f2ptr type, f2ptr var)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__define__symbol, type, var, nil), nil));}
+f2ptr f2__compile__define(f2ptr cause, f2ptr type, f2ptr var)                         {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__define__symbol, type, var, nil), nil));}
 f2ptr f2__compile__type_var__mutate(f2ptr cause, f2ptr type, f2ptr var)               {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__type_var__mutate__symbol, type, var, nil), nil));}
 f2ptr f2__compile__globalize_type_var(f2ptr cause, f2ptr type, f2ptr var)             {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__globalize_type_var__symbol, type, var, nil), nil));}
 f2ptr f2__compile__jump(f2ptr cause, f2ptr new_pc)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__jump__symbol, new_pc, nil, nil), nil));}

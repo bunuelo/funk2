@@ -25,7 +25,8 @@
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
-declare_object_type_3_slot(optimize_data,
+declare_object_type_4_slot(optimize_data,
+			   optimize_context,
 			   name,
 			   data_type,
 			   args,
@@ -76,7 +77,8 @@ declare_object_type_4_slot(optimize_context,
 
 // optimize_data
 
-declare_primobject_3_slot(optimize_data,
+declare_primobject_4_slot(optimize_data,
+			  optimize_context,
 			  name,
 			  data_type,
 			  args);

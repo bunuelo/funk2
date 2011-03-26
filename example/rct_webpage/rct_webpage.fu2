@@ -162,6 +162,7 @@
 					  '<h2>Research Interests</h2>'
 					  ''
 					  '<p>'
+					  '<img src="/images/bo.jpg" style="float:left;" />'
 					  'I am a research assistant and Ph.D. candidate at the MIT Media Lab working on computational models of reflective commonsense reasoning.'
 					  'Once models of reflective commonsense reasoning are built, applications include understanding mental illnesses of reflection in terms of correlations with neurological regions and information patterns of the brain.'
 					  'We hope that teasing apart meaningful quantitative dimensions of "spectrum" mental disorders, such as Schizophrenia and Autism will involve more advanced commonsense models of learning and reasoning.'
@@ -339,6 +340,8 @@
 		       'img02.jpg'
 		       'left_logo_header.jpg'
 		       'right_logo_header.jpg'
+		       
+		       'bo.jpg'
 		       ]]]
     [mapc [funk [image_name]
 		[system [string-concat 'cp -f example/rct_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]

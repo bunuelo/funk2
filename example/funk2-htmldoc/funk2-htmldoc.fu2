@@ -62,11 +62,9 @@
 	       '<div id="content">'
 	       '  <div class="post">'
 	       [stringlist-concat `['<h1 class="title">' ,[get this name] '</h1>']]
-	       '    <div class="entry">'
-	       '      <p>'
+	       '    <p>'
 	       [get this description]
-	       '      </p>'
-	       '    </div>'
+	       '    </p>'
 	       '  </div>'
 	       '</div>'
 	       '<!-- end content -->']]

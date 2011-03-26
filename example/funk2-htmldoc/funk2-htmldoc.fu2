@@ -235,7 +235,7 @@
 					[have [mapcar [funk [package_name]
 							    [get package_name as-string]]
 						      [get this documentation_packages]]
-					      sort &>]]]
+					      sort [funk [x y] [> x y]]]]]
 	       '</ul>'
 	       '<h2>All Object Types</h2>'
 	       ''
@@ -245,7 +245,7 @@
 					[have [mapcar [funk [type_name]
 							    [get type_name as-string]]
 						      [get this documentation_objects]]
-					      sort &>]]]
+					      sort [funk [x y] [> x y]]]]]
 	       '</ul>']]
 
 

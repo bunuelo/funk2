@@ -115,16 +115,21 @@
   [string-prog '<h1>Publications</h1>'
 	       ''
 	       '<ul>'
-	       '  <li><a href="http://rct.media.mit.edu/rct/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf" target="_blank">Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab; 2010 January</a></li>'
-	       '  <li><a href="http://rct.media.mit.edu/rct/smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf" target="_blank">Dustin, S. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; San Francisco; 2010 April</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf" target="_blank">'
+	       '        Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab; 2010 January</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf" target="_blank">'
+	       '        Dustin, S. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; San Francisco; 2010 April</a></li>'
 	       '</ul>'
 	       ''
 	       '<h1>Presentations</h1>'
 	       ''
 	       '<ul>'
-	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2010_05_19-phdpropopsal-public_defense.pdf" target="_blank">Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab; 2010 May</a></li>'
-	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2009_10_13-moral_compass_poster.pdf" target="_blank">Morgan, B.; "Moral Compass (Poster)"; Media Lab Poster Presentation; October Sponsor Consortia Meeting; 2009 October</a></li>'
-	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2009_06_11-where_goals_come_from.pdf" target="_blank">Morgan, B.; "Where Goals Come From: A Model of Self-Conscious Learning"; Invited Speaker Presentation; Living Heritage of A.I. Workshop at MIT; 2009 June</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2010_05_19-phdpropopsal-public_defense.pdf" target="_blank">'
+	       '        Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab; 2010 May</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2009_10_13-moral_compass_poster.pdf" target="_blank">'
+	       '        Morgan, B.; "Moral Compass (Poster)"; Media Lab Poster Presentation; October Sponsor Consortia Meeting; 2009 October</a></li>'
+	       '  <li><a href="http://rct.media.mit.edu/rct/morgan-2009_06_11-where_goals_come_from.pdf" target="_blank">'
+	       '        Morgan, B.; "Where Goals Come From: A Model of Self-Conscious Learning"; Invited Speaker Presentation; Living Heritage of A.I. Workshop at MIT; 2009 June</a></li>'
 	       '</ul>'
 	       ''
 	       ]]
@@ -231,10 +236,12 @@
 					  ''
 					  '<p>'
 					  '  <ul>'
-					  '    <li>Moral Compass: A Model of Self-Conscious Learning</li>'
-					  '    <li>Muddy Carol: A Simple Physical Model of a Commonsense World</li>'
-					  '    <li>Funk2: Causal Reflective Programming</li>'
-					  '    <li>IsisWorld: Qualitative Commonsense Physics Simulator</li>'
+					  '    <li><a href="http://em-two.net/">'
+					  '          Moral Compass: A Model of Self-Conscious Learning</a></li>'
+					  '    <li><a href="http://funk2.org/">'
+					  '          Funk2: Causal Reflective Programming</a></li>'
+					  '    <li><a href="http://web.media.mit.edu/~dustin/simulator_setup/">'
+					  '          IsisWorld: Qualitative Commonsense Physics Simulator</a></li>'
 					  '    <li>Neural Models of Mind: Mapping Reflective Computation to Natural Features</li>'
 					  '    <li>LifeNet: First-person Spatial and Temporal Probabilistic Commonsense Reasoning</li>'
 					  '  </ul>'
@@ -244,15 +251,24 @@
 					  ''
 					  '<p>'
 					  '  <ul>'
-					  '    <li>Smith, D. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; 2010 April</li>'
-					  '    <li>Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children";	PhD Proposal; MIT Media Lab 2010 January</li>'
-					  '    <li>Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</li>'
-					  '    <li>Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities (draft in progress)"; Technical Note; Massachusetts Institute of Technology; 2009 May</li>'
-					  '    <li>Morgan, B.; "Learning Commonsense Human-language Descriptions from Temporal and Spatial Sensor-network Data"; Masters Thesis; Massachusetts Institute of Technology; 2006 August</li>'
-					  '    <li>Morgan, B.; "Learning perception lattices to compare generative explanations of human-language stories"; Published Online; Commonsense Tech Note; MIT Media Lab; 2006 July</li>'
-					  '    <li>Morgan, B. and Singh, P.;	"Elaborating Sensor Data using Temporal and Spatial Commonsense Reasoning"; International Workshop on Wearable and Implantable Body Sensor Networks (BSN-2006); 2005 November</li>'
-					  '    <li>Morgan, B.; "Experts think together to solve hard problems";	Published Online; Commonsense Tech Note; MIT Media Lab 2005 August</li>'
-					  '    <li>Morgan, B.; "LifeNet Belief Propagation";	Published Online; Commonsense Tech Note; MIT Media Lab; 2004 January</li>'
+					  '    <li><a href="/papers/smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf">'
+					  '          Smith, D. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; 2010 April</a></li>'
+					  '    <li><a href="/papers/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf">'
+					  '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab 2010 January</a></li>'
+					  '    <li><a href="/papers/morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf">'
+					  '          Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</a></li>'
+					  '    <li><a href="/papers/morgan2009-funk2_memory-draft.pdf">'
+					  '          Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities (draft in progress)"; Technical Note; Massachusetts Institute of Technology; 2009 May</a></li>'
+					  '    <li><a href="/papers/morgan-masters_thesis.pdf">'
+					  '          Morgan, B.; "Learning Commonsense Human-language Descriptions from Temporal and Spatial Sensor-network Data"; Masters Thesis; Massachusetts Institute of Technology; 2006 August</a></li>'
+					  '    <li><a href="/papers/morgan-kpac-2006_07_10.pdf">'
+					  '          Morgan, B.; "Learning perception lattices to compare generative explanations of human-language stories"; Published Online; Commonsense Tech Note; MIT Media Lab; 2006 July</a></li>'
+					  '    <li><a href="/papers/morgan-singh-sense_and_sensors-20051127.pdf">'
+					  '          Morgan, B. and Singh, P.;	"Elaborating Sensor Data using Temporal and Spatial Commonsense Reasoning"; International Workshop on Wearable and Implantable Body Sensor Networks (BSN-2006); 2005 November</a></li>'
+					  '    <li><a href="/papers/experts_think_together_to_solve_hard_problems-v1.1.pdf">'
+					  '          Morgan, B.; "Experts think together to solve hard problems";	Published Online; Commonsense Tech Note; MIT Media Lab 2005 August</a></li>'
+					  '    <li><a href="/papers/morgan-lifenet_bp-2004.pdf">'
+					  '          Morgan, B.; "LifeNet Belief Propagation";	Published Online; Commonsense Tech Note; MIT Media Lab; 2004 January</a></li>'
 					  '  </ul>'
 					  '</p>'
 					  ''
@@ -359,6 +375,17 @@
 
 
 
+[defunk compile_rct_papers [context]
+  [shelter [mkdir [get context root_dir]]]
+  [shelter [mkdir [string-concat [get context root_dir] 'papers/']]]
+  [let [[paper_names `[]]]
+    [mapc [funk [paper_name]
+		[system [string-concat 'cp -f example/rct_webpage/papers/' paper_name ' ' [get context root_dir] 'papers/']]]
+	  paper_names]]
+  nil]
+
+
+
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
   [set  context hostname                               'neuromin.de']
   [set  context title                                  'R.C.T.']
@@ -403,6 +430,7 @@
   [have context add_tab [new htmldoc_tab `Publications &rct_publications]]
   
   [defunk rct_images-save       [] [compile_rct_images context]]
+  [defunk rct_papers-save       [] [compile_rct_papers context]]
   [defunk rct_css-save          [] [have context compile_css]]
   [defunk rct_root_page-save    [] [have context compile_root_page]]
   [defunk rct_about-save        [] [have [get context tab `About]        compile context]]
@@ -414,6 +442,7 @@
   
   [defunk rct_webpage-save []
     [rct_images-save]
+    [rct_papers-save]
     [rct_css-save]
     [rct_root_page-save]
     [rct_people-save]

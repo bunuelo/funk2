@@ -128,6 +128,9 @@
        [set this name         'IsisWorld']
        [set this external_url 'http://web.media.mit.edu/~dustin/simulator_setup/']
        this]
+    ]]
+
+``[
     ,[let [[this [new htmldoc_project]]]
        [set this codename     'neuralmom']
        [set this name         'Neural Model of Mind']
@@ -148,8 +151,7 @@
        [set this description  [string-prog '<p>'
 					   '</p>'
 					   ]]
-       this]
-    ]]
+       this]]
 
 
 [defunk rct-generate_all_posts []

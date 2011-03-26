@@ -271,7 +271,7 @@
 
 [deftypefunk htmldoc_context execute compile_people []
   [mapc [funk [person]
-	      [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get example username] '\'.']
+	      [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get people username] '\'.']
 	      [have person compile this]]
 	[get this people]]
   nil]

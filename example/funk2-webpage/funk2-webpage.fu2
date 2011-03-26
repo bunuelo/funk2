@@ -393,7 +393,7 @@
   [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
 
 [defunk compile_funk2_root_page [context]
-  [have [htmldoc_redirect_page 'news/'] save [string-concat [get context root_dir] 'index.html']]]
+  [have [htmldoc_redirect_page 'about/'] save [string-concat [get context root_dir] 'index.html']]]
 
 
 [defunk compile_funk2_documentation [context]

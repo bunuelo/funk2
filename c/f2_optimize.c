@@ -39,7 +39,7 @@ f2ptr raw__optimize_data__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list6__new(cause,
+    frame = f2__frame__new(cause, f2list8__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_data"),
 					       new__symbol(cause, "name"),           f2__optimize_data__name(     cause, this),
 					       new__symbol(cause, "data_type"),      f2__optimize_data__data_type(cause, this),

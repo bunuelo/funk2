@@ -68,7 +68,7 @@
 		[rct_publications-content]]]
 
 
-[defunk rct-generate_all_people []
+[defunk rct-generate_all_advisors []
   `[,[let [[this [new htmldoc_person]]]
        [set this username     'minsky']
        [set this name         'Marvin Minsky']
@@ -84,7 +84,10 @@
        [set this name         'Gerald Jay Sussman']
        [set this external_url 'http://groups.csail.mit.edu/mac/users/gjs/']
        this]
-    ,[let [[this [new htmldoc_person]]]
+    ]]
+
+[defunk rct-generate_all_graduate_students []
+  `[,[let [[this [new htmldoc_person]]]
        [set this username    'neptune']
        [set this name        'Bo Morgan']
        [set this description [string-prog '<p>'
@@ -96,7 +99,10 @@
        [set this name         'Dustin Smith']
        [set this external_url 'http://web.media.mit.edu/~dustin/']
        this]
-    ,[let [[this [new htmldoc_person]]]
+    ]]
+
+[defunk rct-generate_all_undergraduate_students []
+  `[,[let [[this [new htmldoc_person]]]
        [set this username    'jj']
        [set this name        'Jing Jian']
        [set this description [string-prog '<p>'
@@ -151,7 +157,7 @@
        [set this title       'First Post']
        [set this date        'March 25th, 2011']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://neuromin.de/people/bo_morgan.html']
+       [set this author_link 'http://neuromin.de/people/neptune/']
        [set this entry       [string-prog '<p>'
 					  '</p>'
 					  ]]
@@ -179,7 +185,9 @@
   [set  context hostname                               'neuromin.de']
   [set  context title                                  'R.C.T.']
   [set  context subtitle                               'Reflective Commonsense Thinking']
-  [set  context people                                 [rct-generate_all_people]]
+  [set  context advisors                               [rct-generate_all_advisors]]
+  [set  context graduate_students                      [rct-generate_all_graduate_students]]
+  [set  context undergraduate_students                 [rct-generate_all_undergraduate_students]]
   [set  context projects                               [rct-generate_all_projects]]
   [set  context posts                                  [rct-generate_all_posts]]
   [set  context background_color                       '#FFFFFF']

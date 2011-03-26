@@ -134,7 +134,9 @@
 				  title
 				  subtitle
 				  posts
-				  people
+				  advisors
+				  graduate_students
+				  undergraduate_students
 				  projects
 				  examples
 				  tabs
@@ -303,7 +305,9 @@
 		  [terminal_format standard-terminal '\nhtmldoc: not compiling person \'' [get person username] '\' because external_url defined.']
 		[prog [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get person username] '\'.']
 		      [have person compile this]]]]
-	[get this people]]
+	[append [get this advisors]
+		[get this graduate_students]
+		[get this undergraduate_students]]]
   nil]
 
 [deftypefunk htmldoc_context execute compile_projects []
@@ -1059,15 +1063,39 @@
 	       '	<div id="page">'
 	       '		<div id="sidebar1" class="sidebar">'
 	       '			<ul>'
-	       [if [get context people]
+	       [if [get context advisors]
 		   [string-prog	'				<li>'
-				'					<h2>People</h2>'
+				'					<h2>Advisors</h2>'
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [person]
 							       [if [get person external_url]
 								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
 								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
-							 [get context people]]]
+							 [get context advisors]]]
+				'					</ul>'
+				'				</li>']
+		 '']
+	       [if [get context graduate_students]
+		   [string-prog	'				<li>'
+				'					<h2>Graduate Students</h2>'
+				'					<ul>'
+				[stringlist-prog [mapcar [funk [person]
+							       [if [get person external_url]
+								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
+								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
+							 [get context graduate_students]]]
+				'					</ul>'
+				'				</li>']
+		 '']
+	       [if [get context undergraduate_students]
+		   [string-prog	'				<li>'
+				'					<h2>Undergraduate Students</h2>'
+				'					<ul>'
+				[stringlist-prog [mapcar [funk [person]
+							       [if [get person external_url]
+								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
+								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
+							 [get context undergraduate_students]]]
 				'					</ul>'
 				'				</li>']
 		 '']

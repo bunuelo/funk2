@@ -378,7 +378,16 @@
 [defunk compile_rct_papers [context]
   [shelter [mkdir [get context root_dir]]]
   [shelter [mkdir [string-concat [get context root_dir] 'papers/']]]
-  [let [[paper_names `[]]]
+  [let [[paper_names `['experts_think_together_to_solve_hard_problems-v1.1.pdf'
+		       'morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf'
+		       'morgan2009-funk2_memory-draft.pdf'
+		       'morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'
+		       'morgan-kpac-2006_07_10.pdf'
+		       'morgan-lifenet_bp-2004.pdf'
+		       'morgan-masters_thesis.pdf'
+		       'morgan-singh-sense_and_sensors-20051127.pdf'
+		       'smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf'
+		       ]]]
     [mapc [funk [paper_name]
 		[system [string-concat 'cp -f example/rct_webpage/papers/' paper_name ' ' [get context root_dir] 'papers/']]]
 	  paper_names]]

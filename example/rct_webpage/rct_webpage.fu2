@@ -380,7 +380,7 @@
        [set this title       'First Post']
        [set this date        'March 25th, 2011']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://neuromin.de/people/neptune/']
+       [set this author_link 'http://rct.media.mit.edu/people/neptune/']
        [set this entry       [string-prog '<p>'
 					  '</p>'
 					  ]]
@@ -443,7 +443,7 @@
 
 
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
-  [set  context hostname                               'neuromin.de']
+  [set  context hostname                               'rct.media.mit.edu']
   [set  context title                                  'R.C.T.']
   [set  context subtitle                               'Reflective Commonsense Thinking']
   [set  context advisors                               [rct-generate_all_advisors]]

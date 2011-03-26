@@ -1114,7 +1114,7 @@ f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr 
     return f2larva__new(cause, 543165, nil);
   }
   f2ptr result__data = f2__optimize_data__new(cause, f2__gensym(cause, f2__stringlist__concat(cause, f2list2__new(cause,
-														  new__string(cause, "reg_array-elt-"),=
+														  new__string(cause, "reg_array-elt-"),
 														  f2__exp__as__string(cause, index)))),
 					      new__symbol(cause, "reg_array-elt"), f2list2__new(cause, x__data, index));
   f2__optimize_fiber__value__set(cause, this, result__data);

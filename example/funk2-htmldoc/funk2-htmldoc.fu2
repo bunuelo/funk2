@@ -82,6 +82,33 @@
 
 
 
+[deframe htmldoc_project [frame] [codename name external_url description]]
+
+[deftypefunk htmldoc_project get page_content []
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
+	       '  <div class="post">'
+	       [stringlist-concat `['<h1 class="title">' ,[get this name] '</h1>']]
+	       '    <div class="entry">'
+	       '      <p>'
+	       [get this description]
+	       '      </p>'
+	       '    </div>'
+	       '  </div>'
+	       '</div>'
+	       '<!-- end content -->']]
+
+
+[deftypefunk htmldoc_project execute compile [context]
+  [let [[html_code [htmldoc_page context [get this page_content]]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'project']]]
+    [shelter [mkdir [string-concat [get context root_dir] 'project/' [get this codename]]]]
+    [have html_code save [string-concat [get context root_dir] 'project/' [get this codename] '/index.html']]
+    nil]]
+
+
+
+
 [deframe htmldoc_tab [frame] [name generator_funk]
   [new [initial-name initial-generator_funk]
        [= name           initial-name]
@@ -108,6 +135,7 @@
 				  subtitle
 				  posts
 				  people
+				  projects
 				  examples
 				  tabs
 				  tags
@@ -274,6 +302,13 @@
 	      [terminal_format standard-terminal '\nhtmldoc: compiling person \'' [get person username] '\'.']
 	      [have person compile this]]
 	[get this people]]
+  nil]
+
+[deftypefunk htmldoc_context execute compile_projects []
+  [mapc [funk [project]
+	      [terminal_format standard-terminal '\nhtmldoc: compiling project \'' [get person codename] '\'.']
+	      [have project compile this]]
+	[get this projects]]
   nil]
 
 [deftypefunk htmldoc_context execute compile_examples []
@@ -1027,6 +1062,18 @@
 				[stringlist-prog [mapcar [funk [person]
 							       [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]
 							 [get context people]]]
+				'					</ul>'
+				'				</li>']
+		 '']
+	       [if [get context projects]
+		   [string-prog	'				<li>'
+				'					<h2>Projects</h2>'
+				'					<ul>'
+				[stringlist-prog [mapcar [funk [project]
+							       [if [get project external_url]
+								   [string-concat '<li><a href="' [get project external_url] '">' [get project name] '...</a></li>']
+								 [string-concat '<li><a href="/person/' [get project username] '">' [get project name] '</a></li>']]]
+							 [get context projects]]]
 				'					</ul>'
 				'				</li>']
 		 '']

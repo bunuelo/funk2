@@ -79,9 +79,49 @@
     ]]
 
 
+[defunk rct-generate_all_projects []
+  `[,[let [[this [new htmldoc_project]]]
+       [set this codename     'em-two']
+       [set this name         'Moral Compass']
+       [set this external_url 'http://em-two.net/']
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'funk2']
+       [set this name         'Funk2']
+       [set this external_url 'http://funk2.org/']
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'isisworld']
+       [set this name         'IsisWorld']
+       [set this external_url 'http://web.media.mit.edu/~dustin/simulator_setup/']
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'neuralmom']
+       [set this name         'Neural Model of Mind']
+       [set this description  [string-prog '<p>'
+					   '</p>'
+					   ]]
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'lifenet']
+       [set this name         'LifeNet']
+       [set this description  [string-prog '<p>'
+					   '</p>'
+					   ]]
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'roboverse']
+       [set this name         'Roboverse']
+       [set this description  [string-prog '<p>'
+					   '</p>'
+					   ]]
+       this]
+    ]]
+
+
 [defunk rct-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
-       [set this title       '']
+       [set this title       'First Post']
        [set this date        'March 25th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://neuromin.de/people/bo_morgan.html']
@@ -113,6 +153,7 @@
   [set  context title                                  'R.C.T.']
   [set  context subtitle                               'Reflective Commonsense Thinking']
   [set  context people                                 [rct-generate_all_people]]
+  [set  context projects                               [rct-generate_all_projects]]
   [set  context posts                                  [rct-generate_all_posts]]
   [set  context background_color                       '#FFFFFF']
   [set  context font_color                             '#000000']
@@ -155,6 +196,7 @@
   [defunk rct_news-save         [] [have [get context tab `News]         compile context]]
   [defunk rct_publications-save [] [have [get context tab `Publications] compile context]]
   [defunk rct_people-save       [] [have context compile_people]]
+  [defunk rct_projects-save     [] [have context compile_projects]]
   [defunk rct_tabs-save         [] [have context compile_tabs]]
   
   [defunk rct_webpage-save []
@@ -162,6 +204,7 @@
     [rct_css-save]
     [rct_root_page-save]
     [rct_people-save]
+    [rct_projects-save]
     [rct_tabs-save]]
   
   ]

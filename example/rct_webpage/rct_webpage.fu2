@@ -276,10 +276,10 @@
 					  ''
 					  '<p>'
 					  '  <ul>'
-					  '    <li><a href="morgan-2010_05_19-phdpropopsal-public_defense.pdf">'
+					  '    <li><a href="/presentations/morgan-2010_05_19-phdpropopsal-public_defense.pdf">'
 					  '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab 2010 May</a></li>'
 					  '    <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
-					  '    <li><a href="morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
+					  '    <li><a href="/presentations/morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
 					  '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
 					  '  </ul>'
 					  '</p>'
@@ -400,7 +400,9 @@
 [defunk compile_rct_presentations [context]
   [shelter [mkdir [get context root_dir]]]
   [shelter [mkdir [string-concat [get context root_dir] 'presentations/']]]
-  [let [[presentation_names `[]]]
+  [let [[presentation_names `['morgan2008-funk2__causal_reflective_programming__presentation.pdf'
+			      'morgan-2010_05_19-phdpropopsal-public_defense.pdf'
+			      ]]]
     [mapc [funk [presentation_name]
 		[system [string-concat 'cp -f example/rct_webpage/presentations/' presentation_name ' ' [get context root_dir] 'presentations/']]]
 	  presentation_names]]

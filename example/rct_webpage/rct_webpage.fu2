@@ -276,9 +276,11 @@
 					  ''
 					  '<p>'
 					  '  <ul>'
-					  '    <li>Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children";	PhD Proposal Defense; MIT Media Lab 2010 May</li>'
+					  '    <li><a href="morgan-2010_05_19-phdpropopsal-public_defense.pdf">'
+					  '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab 2010 May</a></li>'
 					  '    <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
-					  '    <li>Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</li>'
+					  '    <li><a href="morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
+					  '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
 					  '  </ul>'
 					  '</p>'
 					  ''
@@ -395,6 +397,17 @@
 
 
 
+[defunk compile_rct_presentations [context]
+  [shelter [mkdir [get context root_dir]]]
+  [shelter [mkdir [string-concat [get context root_dir] 'presentations/']]]
+  [let [[presentation_names `[]]]
+    [mapc [funk [presentation_name]
+		[system [string-concat 'cp -f example/rct_webpage/presentations/' presentation_name ' ' [get context root_dir] 'presentations/']]]
+	  presentation_names]]
+  nil]
+
+
+
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
   [set  context hostname                               'neuromin.de']
   [set  context title                                  'R.C.T.']
@@ -438,20 +451,22 @@
   [have context add_tab [new htmldoc_tab `News         &rct_news]]
   [have context add_tab [new htmldoc_tab `Publications &rct_publications]]
   
-  [defunk rct_images-save       [] [compile_rct_images context]]
-  [defunk rct_papers-save       [] [compile_rct_papers context]]
-  [defunk rct_css-save          [] [have context compile_css]]
-  [defunk rct_root_page-save    [] [have context compile_root_page]]
-  [defunk rct_about-save        [] [have [get context tab `About]        compile context]]
-  [defunk rct_news-save         [] [have [get context tab `News]         compile context]]
-  [defunk rct_publications-save [] [have [get context tab `Publications] compile context]]
-  [defunk rct_people-save       [] [have context compile_people]]
-  [defunk rct_projects-save     [] [have context compile_projects]]
-  [defunk rct_tabs-save         [] [have context compile_tabs]]
+  [defunk rct_images-save        [] [compile_rct_images context]]
+  [defunk rct_papers-save        [] [compile_rct_papers context]]
+  [defunk rct_presentations-save [] [compile_rct_presentations context]]
+  [defunk rct_css-save           [] [have context compile_css]]
+  [defunk rct_root_page-save     [] [have context compile_root_page]]
+  [defunk rct_about-save         [] [have [get context tab `About]        compile context]]
+  [defunk rct_news-save          [] [have [get context tab `News]         compile context]]
+  [defunk rct_publications-save  [] [have [get context tab `Publications] compile context]]
+  [defunk rct_people-save        [] [have context compile_people]]
+  [defunk rct_projects-save      [] [have context compile_projects]]
+  [defunk rct_tabs-save          [] [have context compile_tabs]]
   
   [defunk rct_webpage-save []
     [rct_images-save]
     [rct_papers-save]
+    [rct_presentations-save]
     [rct_css-save]
     [rct_root_page-save]
     [rct_people-save]

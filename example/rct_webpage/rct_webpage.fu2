@@ -266,7 +266,7 @@
 					  '          Morgan, B.; "Learning perception lattices to compare generative explanations of human-language stories"; Published Online; Commonsense Tech Note; MIT Media Lab; 2006 July</a></li>'
 					  '    <li><a href="/papers/morgan-singh-sense_and_sensors-20051127.pdf">'
 					  '          Morgan, B. and Singh, P.;	"Elaborating Sensor Data using Temporal and Spatial Commonsense Reasoning"; International Workshop on Wearable and Implantable Body Sensor Networks (BSN-2006); 2005 November</a></li>'
-					  '    <li><a href="/papers/experts_think_together_to_solve_hard_problems-v1.1.pdf">'
+					  '    <li><a href="/papers/morgan2005-experts_think_together_to_solve_hard_problems.pdf">'
 					  '          Morgan, B.; "Experts think together to solve hard problems";	Published Online; Commonsense Tech Note; MIT Media Lab 2005 August</a></li>'
 					  '    <li><a href="/papers/morgan-lifenet_bp-2004.pdf">'
 					  '          Morgan, B.; "LifeNet Belief Propagation";	Published Online; Commonsense Tech Note; MIT Media Lab; 2004 January</a></li>'
@@ -381,7 +381,7 @@
 [defunk compile_rct_papers [context]
   [shelter [mkdir [get context root_dir]]]
   [shelter [mkdir [string-concat [get context root_dir] 'papers/']]]
-  [let [[paper_names `['experts_think_together_to_solve_hard_problems-v1.1.pdf'
+  [let [[paper_names `['morgan2005-experts_think_together_to_solve_hard_problems.pdf'
 		       'morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf'
 		       'morgan2009-funk2_memory-draft.pdf'
 		       'morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'

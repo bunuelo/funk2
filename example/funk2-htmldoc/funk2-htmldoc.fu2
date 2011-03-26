@@ -1101,7 +1101,7 @@
 		 '']
 	       [if [get context projects]
 		   [string-prog	'				<li>'
-				'					<h2>Projects</h2>'
+				'					<h2>Current Projects</h2>'
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [project]
 							       [if [get project external_url]

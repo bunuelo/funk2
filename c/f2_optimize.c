@@ -715,7 +715,7 @@ f2ptr raw__optimize_fiber__call_bytecode__lookup__no_increment_pc(f2ptr cause, f
   }
   f2ptr value = raw__environment__optimize_lookup_type_var_value(cause, env, type_name, var_name);
   if (raw__larva__is_type(cause, value)) {
-    value = f2__optimize_data__new(cause, f2__gensym(cause, f2__stringlist__concat(cause, f2list5__new(cause,
+    value = f2__optimize_data__new(cause, f2__gensym(cause, f2__stringlist__concat(cause, f2list4__new(cause,
 												       new__string(cause, "lookup-"),
 												       f2__exp__as__string(cause, type_name),
 												       new__string(cause, "-"),

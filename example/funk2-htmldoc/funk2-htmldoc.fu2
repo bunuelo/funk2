@@ -306,7 +306,7 @@
 
 [deftypefunk htmldoc_context execute compile_projects []
   [mapc [funk [project]
-	      [terminal_format standard-terminal '\nhtmldoc: compiling project \'' [get person codename] '\'.']
+	      [terminal_format standard-terminal '\nhtmldoc: compiling project \'' [get project codename] '\'.']
 	      [have project compile this]]
 	[get this projects]]
   nil]
@@ -1072,7 +1072,7 @@
 				[stringlist-prog [mapcar [funk [project]
 							       [if [get project external_url]
 								   [string-concat '<li><a href="' [get project external_url] '">' [get project name] '...</a></li>']
-								 [string-concat '<li><a href="/person/' [get project codename] '">' [get project name] '</a></li>']]]
+								 [string-concat '<li><a href="/project/' [get project codename] '">' [get project name] '</a></li>']]]
 							 [get context projects]]]
 				'					</ul>'
 				'				</li>']

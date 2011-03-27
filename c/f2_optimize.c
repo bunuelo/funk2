@@ -3172,7 +3172,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2pt
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_rest_argument(cause, f2__cons__car(cause, next)));
 	  iter = nil;
 	} else {
-	  if (cdr) {
+	  if (next) {
 	    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_argument(cause, arg));
 	  } else {
 	    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_last_argument(cause, arg));

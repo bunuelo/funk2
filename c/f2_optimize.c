@@ -3192,7 +3192,6 @@ f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2pt
     }
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, fiber_bcs);
   }
-  iter_bcs = raw__list_cdr__set(cause, iter_bcs, fiber_bcs);
   
   // exit block
   boolean_t popped_env_and_return = boolean__false;

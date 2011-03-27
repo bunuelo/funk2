@@ -1580,7 +1580,7 @@ f2ptr raw__optimize_fiber__call_bytecode__mutate__type_var__no_increment_pc(f2pt
   } else {
     raw__environment__optimize_mutate_type_var_value(cause, env, type_name, var_name, value__data);
   }
-  f2__optimize_fiber__value__set(cause, this, value__data);
+  f2__optimize_fiber__value__set(cause, this, nil);
   return nil;
 }
 

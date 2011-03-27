@@ -356,9 +356,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
   boolean_t protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
   boolean_t optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
   
-  f2ptr full_bcs = nil;
-  boolean_t  exp__is_funktional = boolean__true;
-  f2ptr next = nil;
+  f2ptr     full_bcs           = nil;
+  boolean_t exp__is_funktional = boolean__true;
+  f2ptr     next               = nil;
   do {
     f2ptr exp = f2cons__car(exps, cause);
     next      = f2cons__cdr(exps, cause);
@@ -466,7 +466,7 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
   }
   
   boolean_t false__popped_env_and_return = boolean__false;
-  boolean_t optimize_unused_beginning = boolean__true;
+  boolean_t optimize_unused_beginning    = boolean__true;
   f2ptr false_bcs = f2__compile__rawcode(cause, fiber, false_exps, protect_environment, optimize_tail_recursion, &false__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
   if (false_bcs && (! raw__cons__is_type(cause, false_bcs))) {
     return f2larva__new(cause, 1, nil);

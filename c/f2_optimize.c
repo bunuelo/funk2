@@ -3177,7 +3177,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2pt
 	  } else {
 	    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_last_argument(cause, arg));
 	  }
-	  var_iter = next;
+	  iter = next;
 	}
       }
     }

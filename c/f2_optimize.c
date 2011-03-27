@@ -141,7 +141,7 @@ f2ptr raw__optimize_data__compile__mutate__type_var(f2ptr cause, f2ptr this) {
       f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, value__data));
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else {
-      f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), x0__data);
+      f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), value__data);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     // mutate

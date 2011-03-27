@@ -3097,8 +3097,8 @@ f2ptr raw__optimize_context__complete_simulation(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr full_bcs          = nil;
-  f2ptr iter_bcs          = nil;
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
   {
     f2ptr data_side_effects = f2__optimize_fiber__data_side_effects(cause, fiber);
     {
@@ -3156,13 +3156,53 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
   return full_bcs;
 }
 
-f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this) {
-  f2ptr initial_fiber = f2__optimize_context__initial_fiber(cause, this);
-  f2ptr optimized_bytecodes = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, initial_fiber);
-  if (raw__larva__is_type(cause, optimized_bytecodes)) {
-    return optimized_bytecodes;
+f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2ptr funk) {
+  f2ptr full_bcs = f2__compile__block_enter(cause);
+  f2ptr iter     = full_bcs;
+  // define arguments from stack
+  {
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__copy_args_to_iter(cause));
+    f2ptr args = f2__funk__args(cause, funk);
+    {
+      f2ptr iter = args;
+      while (iter != nil) {
+	f2ptr arg  = f2__cons__car(cause, iter);
+	f2ptr next = f2__cons__cdr(cause, iter);
+	if (raw__symbol__eq(cause, arg, __funk2.globalenv.and_rest__symbol)) {
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_rest_argument(cause, f2__cons__car(cause, next)));
+	  iter = nil;
+	} else {
+	  if (cdr) {
+	    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_argument(cause, arg));
+	  } else {
+	    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_define_last_argument(cause, arg));
+	  }
+	  var_iter = next;
+	}
+      }
+    }
   }
-  f2__optimize_context__optimized_bytecodes__set(cause, this, optimized_bytecodes);
+  
+  // convert fiber tree to bytecodes
+  {
+    f2ptr initial_fiber = f2__optimize_context__initial_fiber(cause, this);
+    f2ptr fiber_bcs     = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, initial_fiber);
+    if (raw__larva__is_type(cause, fiber_bcs)) {
+      return fiber_bcs;
+    }
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, fiber_bcs);
+  }
+  iter_bcs = raw__list_cdr__set(cause, iter_bcs, fiber_bcs);
+  
+  // exit block
+  boolean_t popped_env_and_return = boolean__false;
+  if (! popped_env_and_return) {
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_exit_and_pop(cause, funk));
+  } else {
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_exit_and_no_pop(cause, funk));
+  }
+  
+  f2__optimize_context__optimized_bytecodes__set(cause, this, full_bcs);
   return nil;
 }
 
@@ -3217,7 +3257,7 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
     }
   }
   {
-    f2ptr result = raw__optimize_context__compile_new_bytecodes(cause, optimize_context);
+    f2ptr result = raw__optimize_context__compile_new_bytecodes(cause, optimize_context, this);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

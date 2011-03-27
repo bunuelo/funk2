@@ -39,8 +39,47 @@ def_pcfunk4(optimize_data__new, optimize_context, name, data_type, args, return 
 
 
 f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
-  printf("\noptimize_data warning: jump-funk not yet implemented."); fflush(stdout);
-  return nil;
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
+  {
+    f2ptr iter     = f2__optimize_data__args(cause, this);
+    f2ptr funk__data = f2__cons__car(cause, iter); iter = f2__cons__cdr(cause, iter);
+    f2ptr args__data = f2__cons__car(cause, iter);
+    // make sure data variables are defined.
+    if (raw__optimize_data__is_type(cause, funk__data)) {
+      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, funk__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    if (raw__optimize_data__is_type(cause, args__data)) {
+      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, args__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    // put args data value in args register
+    if (raw__optimize_data__is_type(cause, args__data)) {
+      {
+	f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, args__data));
+	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      }
+      {
+	f2ptr new_bcs = f2__compile__copy(cause, new__symbol(cause, "value"), new__symbol(cause, "args"));
+	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      }
+    } else {
+      f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "args"), args__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    // put funk data value in value register
+    if (raw__optimize_data__is_type(cause, x0__data)) {
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__lookup_var(cause, f2__optimize_data__name(cause, funk__data)));
+    } else {
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), x0__data));
+    }
+    // funk (still needs to optimize tail recursion!)
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_push(cause));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__funk_bc(cause));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
+  }
+  return full_bcs;
 }
 
 f2ptr raw__optimize_data__compile__lookup(f2ptr cause, f2ptr this) {

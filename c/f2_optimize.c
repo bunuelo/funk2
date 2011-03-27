@@ -821,9 +821,9 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
   f2ptr defined_data_set = f2__optimize_context__defined_data_set(cause, optimize_context);
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
-  if (! raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
-    if (! raw__set__contains(cause, defined_data_set, this)) {
-      raw__set__add(cause, defined_data_set, this);
+  if (! raw__set__contains(cause, defined_data_set, this)) {
+    raw__set__add(cause, defined_data_set, this);
+    if (! raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
       {
 	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, this);
 	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}

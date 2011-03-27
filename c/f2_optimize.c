@@ -74,17 +74,29 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
     } else {
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), funk__data));
     }
-    // funk (still needs to optimize tail recursion!)
+    // funk (warning: doesn't handle tail recursion!)
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_push(cause));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__funk_bc(cause));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
 
 f2ptr raw__optimize_data__compile__lookup(f2ptr cause, f2ptr this) {
-  printf("\noptimize_data warning: lookup not yet implemented."); fflush(stdout);
-  return nil;
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
+  {
+    f2ptr iter      = f2__optimize_data__args(cause, this);
+    f2ptr type_name = f2__cons__car(cause, iter); iter = f2__cons__cdr(cause, iter);
+    f2ptr var_name  = f2__cons__car(cause, iter);
+    {
+      f2ptr new_bcs = f2__compile__lookup(cause, type_name, var_name);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
+  }
+  return full_bcs;
 }
 
 f2ptr raw__optimize_data__compile__mutate__type_var(f2ptr cause, f2ptr this) {

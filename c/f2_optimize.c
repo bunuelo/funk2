@@ -69,10 +69,10 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     // put funk data value in value register
-    if (raw__optimize_data__is_type(cause, x0__data)) {
+    if (raw__optimize_data__is_type(cause, funk__data)) {
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__lookup_var(cause, f2__optimize_data__name(cause, funk__data)));
     } else {
-      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), x0__data));
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), funk__data));
     }
     // funk (still needs to optimize tail recursion!)
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_push(cause));

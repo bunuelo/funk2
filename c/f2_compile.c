@@ -1963,6 +1963,9 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
   return bcs_valid(result_bcs);
 }
 
+
+// **
+
 void f2__compile__reinitialize_globalvars() {
   f2ptr cause = f2_compile_c__cause__new(initial_cause());
   

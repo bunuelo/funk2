@@ -3927,7 +3927,7 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
     }
   }
   {
-    f2ptr optimized_bytecodes = f2__optimize_context__optimized_bytecodes(cause, this);
+    f2ptr optimized_bytecodes = f2__optimize_context__optimized_bytecodes(cause, optimize_context);
     f2__funk__body_bytecodes__set(cause, this, optimized_bytecodes);
   }
   return optimize_context;

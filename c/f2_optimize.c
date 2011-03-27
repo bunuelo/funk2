@@ -3158,7 +3158,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
 
 f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr full_bcs = f2__compile__block_enter(cause);
-  f2ptr iter     = full_bcs;
+  f2ptr iter_bcs = full_bcs;
   // define arguments from stack
   {
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__copy_args_to_iter(cause));

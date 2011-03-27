@@ -122,7 +122,7 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
 	}
       }
       {
-	f2ptr new_bcs = f2__compile__less_than(cause, new__symbol(cause, "iter"), new__symbol(cause, "value"));
+	f2ptr new_bcs = f2__compile__less_than(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value"));
 	if (iter_bcs == nil) {
 	  iter_bcs = full_bcs = new_bcs;
 	} else {

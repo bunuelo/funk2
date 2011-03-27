@@ -154,8 +154,33 @@ f2ptr raw__optimize_data__compile__mutate__type_var(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__optimize_data__compile__globalize__type_var(f2ptr cause, f2ptr this) {
-  printf("\noptimize_data warning: globalize-type_var not yet implemented."); fflush(stdout);
-  return nil;
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
+  {
+    f2ptr iter        = f2__optimize_data__args(cause, this);
+    f2ptr type_name   = f2__cons__car(cause, iter); iter = f2__cons__cdr(cause, iter);
+    f2ptr var_name    = f2__cons__car(cause, iter); iter = f2__cons__cdr(cause, iter);
+    f2ptr value__data = f2__cons__car(cause, iter);
+    // make sure data variables are defined.
+    if (raw__optimize_data__is_type(cause, value__data)) {
+      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, value__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    // put value data in value register
+    if (raw__optimize_data__is_type(cause, value__data)) {
+      f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, value__data));
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else {
+      f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), value__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    // globalize
+    {
+      f2ptr new_bcs = f2__compile__globalize_type_var(cause, type_name, var_name);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+  }
+  return full_bcs;
 }
 
 f2ptr raw__optimize_data__compile__reg_array__elt(f2ptr cause, f2ptr this) {

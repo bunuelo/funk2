@@ -102,7 +102,6 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_push(cause));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__funk_bc(cause));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -118,7 +117,6 @@ f2ptr raw__optimize_data__compile__lookup(f2ptr cause, f2ptr this) {
       f2ptr new_bcs = f2__compile__lookup(cause, type_name, var_name);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -179,6 +177,17 @@ f2ptr raw__optimize_data__compile__globalize__type_var(f2ptr cause, f2ptr this) 
       f2ptr new_bcs = f2__compile__globalize_type_var(cause, type_name, var_name);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
+  }
+  return full_bcs;
+}
+
+f2ptr raw__optimize_data__compile__initial__variable(f2ptr cause, f2ptr this) {
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
+  f2ptr name     = f2__optimize_data__name(cause, this);
+  {
+    f2ptr new_bcs = f2__compile__lookup(cause, new__symbol(cause, "variable"), name);
+    if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
   }
   return full_bcs;
 }
@@ -759,7 +768,8 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr thi
       f2ptr new_bcs = raw__optimize_data__compile__reg_array__elt(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
-      // do nothing because all initial variables have already been defined.
+      f2ptr new_bcs = raw__optimize_data__compile__initial__variable(cause, this);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "eq"))) {
       f2ptr new_bcs = raw__optimize_data__compile__eq(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}

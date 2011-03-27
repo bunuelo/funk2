@@ -206,31 +206,17 @@ f2ptr raw__optimize_data__compile__add(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     // push x0 data value onto stack
-    {
-      f2ptr new_bcs = f2__compile__push(cause, new__symbol(cause, "value"));
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-    }
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__push(cause, new__symbol(cause, "value")));
     // put x1 data value in value register
     if (raw__optimize_data__is_type(cause, x1__data)) {
-      f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, x1__data));
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__lookup_var(cause, f2__optimize_data__name(cause, x1__data)));
     } else {
-      f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), x1__data);
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), x1__data));
     }
     // pop x0 data value into iter register
-    {
-      f2ptr new_bcs = f2__compile__pop(cause, new__symbol(cause, "iter"));
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-    }
-    {
-      f2ptr new_bcs = f2__compile__add(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value"));
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-    }
-    {
-      f2ptr new_bcs = f2__compile__define_var(cause, f2__optimize_data__name(cause, this));
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-    }
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__add(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -628,52 +614,52 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
     if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
       // do nothing because all initial variables have already been defined.
     } else if (raw__eq(cause, data_type, new__symbol(cause, "eq"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__eq(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__eq(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "not"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__not(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__not(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "and"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__and(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__and(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "or"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__or(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__or(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "add"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__add(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__add(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "negative"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__negative(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__negative(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "subtract"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__subtract(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__subtract(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "multiply"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__multiply(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__multiply(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "inverse"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__inverse(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__inverse(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "divide"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__divide(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__divide(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "modulo"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__modulo(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__modulo(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "increment"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__increment(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__increment(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "decrement"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__decrement(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__decrement(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "numerically_equals"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__numerically_equals(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__numerically_equals(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "less_than"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__less_than(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__less_than(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "greater_than"))) {
-      f2ptr new_bcs = raw__list_cdr__set(cause, iter_bcs, raw__optimize_data__compile__greater_than(cause, this));
+      f2ptr new_bcs = raw__optimize_data__compile__greater_than(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else {
       printf("\noptimize_data warning: data_type not yet implemented."); fflush(stdout);

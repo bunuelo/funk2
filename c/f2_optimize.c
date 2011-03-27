@@ -223,7 +223,6 @@ f2ptr raw__optimize_data__compile__eq(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__eq(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -248,7 +247,6 @@ f2ptr raw__optimize_data__compile__not(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__not(cause, new__symbol(cause, "value"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -288,7 +286,6 @@ f2ptr raw__optimize_data__compile__and(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__and(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -328,7 +325,6 @@ f2ptr raw__optimize_data__compile__or(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__or(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -368,7 +364,6 @@ f2ptr raw__optimize_data__compile__add(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__add(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -393,7 +388,6 @@ f2ptr raw__optimize_data__compile__negative(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__negative(cause, new__symbol(cause, "value"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -433,7 +427,6 @@ f2ptr raw__optimize_data__compile__subtract(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__subtract(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -473,7 +466,6 @@ f2ptr raw__optimize_data__compile__multiply(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__multiply(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -498,7 +490,6 @@ f2ptr raw__optimize_data__compile__inverse(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__inverse(cause, new__symbol(cause, "value"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -538,7 +529,6 @@ f2ptr raw__optimize_data__compile__divide(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__divide(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -578,7 +568,6 @@ f2ptr raw__optimize_data__compile__modulo(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__modulo(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -603,7 +592,6 @@ f2ptr raw__optimize_data__compile__increment(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__increment(cause, new__symbol(cause, "value"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -628,7 +616,6 @@ f2ptr raw__optimize_data__compile__decrement(f2ptr cause, f2ptr this) {
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__decrement(cause, new__symbol(cause, "value"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -668,7 +655,6 @@ f2ptr raw__optimize_data__compile__numerically_equals(f2ptr cause, f2ptr this) {
     // pop x0 data value into iter register
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__numerically_equals(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__define_var(cause, f2__optimize_data__name(cause, this)));
   }
   return full_bcs;
 }
@@ -705,6 +691,48 @@ f2ptr raw__optimize_data__compile__greater_than(f2ptr cause, f2ptr this) {
     } else {
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), x1__data));
     }
+    // pop x0 data value into iter register
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__greater_than(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
+  }
+  return full_bcs;
+}
+
+f2ptr raw__optimize_data__compile__less_than(f2ptr cause, f2ptr this) {
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
+  {
+    f2ptr iter     = f2__optimize_data__args(cause, this);
+    f2ptr x0__data = f2__cons__car(cause, iter); iter = f2__cons__cdr(cause, iter);
+    f2ptr x1__data = f2__cons__car(cause, iter);
+    // make sure data variables are defined.
+    if (raw__optimize_data__is_type(cause, x0__data)) {
+      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, x0__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    if (raw__optimize_data__is_type(cause, x1__data)) {
+      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, x1__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    // put x0 data value in value register
+    if (raw__optimize_data__is_type(cause, x0__data)) {
+      f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, x0__data));
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else {
+      f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), x0__data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    // push x0 data value onto stack
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__push(cause, new__symbol(cause, "value")));
+    // put x1 data value in value register
+    if (raw__optimize_data__is_type(cause, x1__data)) {
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__lookup_var(cause, f2__optimize_data__name(cause, x1__data)));
+    } else {
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), x1__data));
+    }
+    // pop x0 data value into iter register
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__pop(cause, new__symbol(cause, "iter")));
+    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__less_than(cause, new__symbol(cause, "value"), new__symbol(cause, "iter"), new__symbol(cause, "value")));
   }
   return full_bcs;
 }

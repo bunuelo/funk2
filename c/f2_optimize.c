@@ -40,7 +40,16 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
   f2ptr optimize_context = f2__optimize_data__optimize_context(cause, this);
   f2ptr defined_data_set = f2__optimize_context__defined_data_set(cause, optimize_context);
   if (! raw__set__contains(cause, defined_data_set, this)) {
-    return nil;
+    raw__set__add(cause, defined_data_set, this);
+    f2ptr data_type = f2__optimize_data__data_type(cause, this);
+    if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
+      f2ptr iter = f2__optimize_data__args(cause, this);
+      f2ptr type_name = f2__cons__car(cause, iter); iter = f2__cons__cdr(cause, iter);
+      f2ptr var_name  = f2__cons__car(cause, iter);
+      return f2__compile__lookup(cause, type_name, var_name);
+    } else {
+      printf("\noptimize_data warning: data_type not yet implemented."); fflush(stdout);
+    }
   }
   return nil;
 }

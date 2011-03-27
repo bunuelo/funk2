@@ -833,6 +833,7 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
   f2ptr iter_bcs = nil;
   if (! raw__set__contains(cause, defined_data_set, this)) {
     raw__set__add(cause, defined_data_set, this);
+    f2ptr data_type = f2__optimize_data__data_type(cause, this);
     if (! raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
       {
 	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, this);

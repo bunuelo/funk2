@@ -3148,7 +3148,12 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
 
 f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this) {
   f2ptr initial_fiber = f2__optimize_context__initial_fiber(cause, this);
-  return raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, initial_fiber);
+  f2ptr optimized_bytecodes = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, initial_fiber);
+  if (raw__larva__is_type(cause, optimized_bytecodes)) {
+    return optimized_bytecodes;
+  }
+  f2__optimize_context__optimized_bytecodes__set(cause, this, optimized_bytecodes);
+  return nil;
 }
 
 
@@ -3156,13 +3161,14 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list12__new(cause,
+    frame = f2__frame__new(cause, f2list14__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
-						new__symbol(cause, "initial_fiber"),      f2__optimize_context__initial_fiber(     cause, this),
-						new__symbol(cause, "active_fiber_set"),   f2__optimize_context__active_fiber_set(  cause, this),
-						new__symbol(cause, "branched_fiber_set"), f2__optimize_context__branched_fiber_set(cause, this),
-						new__symbol(cause, "finished_fiber_set"), f2__optimize_context__finished_fiber_set(cause, this),
-						new__symbol(cause, "defined_data_set"),   f2__optimize_context__defined_data_set(  cause, this)));
+						new__symbol(cause, "initial_fiber"),       f2__optimize_context__initial_fiber(      cause, this),
+						new__symbol(cause, "active_fiber_set"),    f2__optimize_context__active_fiber_set(   cause, this),
+						new__symbol(cause, "branched_fiber_set"),  f2__optimize_context__branched_fiber_set( cause, this),
+						new__symbol(cause, "finished_fiber_set"),  f2__optimize_context__finished_fiber_set( cause, this),
+						new__symbol(cause, "defined_data_set"),    f2__optimize_context__defined_data_set(   cause, this),
+						new__symbol(cause, "optimized_bytecodes"), f2__optimize_context__optimized_bytecodes(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -3196,6 +3202,12 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   }
   {
     f2ptr result = raw__optimize_context__complete_simulation(cause, optimize_context);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  {
+    f2ptr result = raw__optimize_context__compile_new_bytecodes(cause, optimize_context);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

@@ -3128,11 +3128,21 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
   } else {
     f2ptr value__data = f2__optimize_fiber__value(cause, fiber);
     if (raw__optimize_data__is_type(cause, value__data)) {
-      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, value__data);
-      if (iter_bcs == nil) {
-	iter_bcs = full_bcs = new_bcs;
-      } else {
-	iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);
+      {
+	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, value__data);
+	if (iter_bcs == nil) {
+	  iter_bcs = full_bcs = new_bcs;
+	} else {
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);
+	}
+      }
+      {
+	f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, value__data));
+	if (iter_bcs == nil) {
+	  iter_bcs = full_bcs = new_bcs;
+	} else {
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);
+	}
       }
     } else {
       f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), value__data);

@@ -36,6 +36,33 @@ f2ptr f2__optimize_data__new(f2ptr cause, f2ptr optimize_context, f2ptr name, f2
 def_pcfunk4(optimize_data__new, optimize_context, name, data_type, args, return f2__optimize_data__new(this_cause, optimize_context, name, data_type, args));
 
 
+
+
+f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
+  printf("\noptimize_data warning: jump-funk not yet implemented."); fflush(stdout);
+  return nil;
+}
+
+f2ptr raw__optimize_data__compile__lookup(f2ptr cause, f2ptr this) {
+  printf("\noptimize_data warning: lookup not yet implemented."); fflush(stdout);
+  return nil;
+}
+
+f2ptr raw__optimize_data__compile__mutate__type_var(f2ptr cause, f2ptr this) {
+  printf("\noptimize_data warning: mutate-type_var not yet implemented."); fflush(stdout);
+  return nil;
+}
+
+f2ptr raw__optimize_data__compile__globalize__type_var(f2ptr cause, f2ptr this) {
+  printf("\noptimize_data warning: globalize-type_var not yet implemented."); fflush(stdout);
+  return nil;
+}
+
+f2ptr raw__optimize_data__compile__reg_array__elt(f2ptr cause, f2ptr this) {
+  printf("\noptimize_data warning: reg_array-elt not yet implemented."); fflush(stdout);
+  return nil;
+}
+
 f2ptr raw__optimize_data__compile__eq(f2ptr cause, f2ptr this) {
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
@@ -611,7 +638,22 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
   if (! raw__set__contains(cause, defined_data_set, this)) {
     raw__set__add(cause, defined_data_set, this);
     f2ptr data_type = f2__optimize_data__data_type(cause, this);
-    if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
+    if (raw__eq(cause, data_type, new__symbol(cause, "jump-funk"))) {
+      f2ptr new_bcs = raw__optimize_data__compile__jump__funk(cause, this);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else if (raw__eq(cause, data_type, new__symbol(cause, "lookup"))) {
+      f2ptr new_bcs = raw__optimize_data__compile__lookup(cause, this);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else if (raw__eq(cause, data_type, new__symbol(cause, "mutate-type_var"))) {
+      f2ptr new_bcs = raw__optimize_data__compile__mutate__type_var(cause, this);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else if (raw__eq(cause, data_type, new__symbol(cause, "globalize-type_var"))) {
+      f2ptr new_bcs = raw__optimize_data__compile__globalize__type_var(cause, this);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else if (raw__eq(cause, data_type, new__symbol(cause, "reg_array-elt"))) {
+      f2ptr new_bcs = raw__optimize_data__compile__reg_array__elt(cause, this);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    } else if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
       // do nothing because all initial variables have already been defined.
     } else if (raw__eq(cause, data_type, new__symbol(cause, "eq"))) {
       f2ptr new_bcs = raw__optimize_data__compile__eq(cause, this);

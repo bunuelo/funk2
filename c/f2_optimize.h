@@ -27,7 +27,7 @@
 typedef struct funk2_object_type__optimize_bytecode__slot_s funk2_object_type__optimize_bytecode__slot_t;
 declare_object_type_3_slot(optimize_bytecode,
 			   optimize_context,
-			   sequence_pointer,
+			   sequence,
 			   execution_count,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
@@ -95,7 +95,7 @@ declare_object_type_9_slot(optimize_context,
 
 declare_primobject_3_slot(optimize_bytecode,
 			  optimize_context,
-			  sequence_pointer,
+			  sequence,
 			  execution_count);
 
 f2ptr f2optimize_bytecode__primobject_type__new_aux(f2ptr cause);

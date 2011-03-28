@@ -38,7 +38,7 @@ def_pcfunk4(optimize_data__new, optimize_context, name, data_type, args, return 
 
 
 
-f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
+f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t is_last_value_to_compute) {
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
   {
@@ -98,10 +98,14 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this) {
     } else {
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), funk__data));
     }
-    // funk (warning: doesn't handle tail recursion!)
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_push(cause));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__funk_bc(cause));
-    iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
+    if (is_last_value_to_compute) {
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__jump_funk(cause));
+    } else {
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_push(cause));
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__funk_bc(cause));
+      iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
+    }
   }
   return full_bcs;
 }
@@ -747,7 +751,7 @@ f2ptr raw__optimize_data__compile__less_than(f2ptr cause, f2ptr this) {
 }
 
 
-f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr this) {
+f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr this, boolean_t is_last_value_to_compute) {
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
   f2ptr optimize_context   = f2__optimize_data__optimize_context(cause, this);
@@ -760,7 +764,7 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr thi
   {
     f2ptr data_type = f2__optimize_data__data_type(cause, this);
     if (raw__eq(cause, data_type, new__symbol(cause, "jump-funk"))) {
-      f2ptr new_bcs = raw__optimize_data__compile__jump__funk(cause, this);
+      f2ptr new_bcs = raw__optimize_data__compile__jump__funk(cause, this, is_last_value_to_compute);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "lookup"))) {
       f2ptr new_bcs = raw__optimize_data__compile__lookup(cause, this);
@@ -842,8 +846,9 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr th
     raw__set__add(cause, defined_data_set, this);
     f2ptr data_type = f2__optimize_data__data_type(cause, this);
     if (! raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
+      boolean_t is_last_value_to_compute = boolean__false;
       {
-	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, this);
+	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, this, is_last_value_to_compute);
 	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
       }
       {
@@ -3820,8 +3825,11 @@ f2ptr raw__optimize_context__compile_fiber_branch_or_return_value(f2ptr cause, f
   } else {
     f2ptr value__data = f2__optimize_fiber__value(cause, fiber);
     if (raw__optimize_data__is_type(cause, value__data)) {
-      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, value__data);
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      boolean_t is_last_value_to_compute = boolean__true;
+      {
+	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, value__data, is_last_value_to_compute);
+	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      }
     } else {
       f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), value__data);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
@@ -3855,8 +3863,8 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
   // Note the need to compute branch_or_return_value before side
-  // effects because only need to do side effects if they are not
-  // already going to be computed.
+  // effects because we only need to explicitely compute side effects if they are not
+  // already going to be computed for values later.
   f2ptr fiber_branch_or_return_value_bcs = raw__optimize_context__compile_fiber_branch_or_return_value(cause, this, fiber);
   f2ptr fiber_side_effects_bcs           = raw__optimize_context__compile_fiber_side_effects(          cause, this, fiber);
   {

@@ -26,17 +26,17 @@
 
 def_primobject_3_slot(optimize_bytecode,
 		      optimize_context,
-		      sequence_pointer,
+		      sequence,
 		      execution_count);
 
-f2ptr f2__optimize_bytecode__new(f2ptr cause, f2ptr optimize_context, f2ptr sequence_pointer) {
+f2ptr f2__optimize_bytecode__new(f2ptr cause, f2ptr optimize_context, f2ptr sequence) {
   f2ptr execution_count = f2integer__new(cause, 0);
   return f2optimize_bytecode__new(cause,
 				  optimize_context,
-				  sequence_pointer,
+				  sequence,
 				  execution_count);
 }
-def_pcfunk2(optimize_bytecode__new, optimize_context, sequence_pointer, return f2__optimize_bytecode__new(this_cause, optimize_context, sequence_pointer));
+def_pcfunk2(optimize_bytecode__new, optimize_context, sequence, return f2__optimize_bytecode__new(this_cause, optimize_context, sequence));
 
 
 f2ptr raw__optimize_bytecode__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -45,7 +45,7 @@ f2ptr raw__optimize_bytecode__terminal_print_with_frame(f2ptr cause, f2ptr this,
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list6__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_bytecode"),
-					       new__symbol(cause, "sequence_pointer"), f2__optimize_bytecode__sequence_pointer(cause, this),
+					       new__symbol(cause, "sequence"), f2__optimize_bytecode__sequence(cause, this),
 					       new__symbol(cause, "execution_count"),  f2__optimize_bytecode__execution_count( cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
@@ -3323,8 +3323,8 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
     f2ptr optimize_context       = f2__optimize_fiber__optimize_context(cause, this);
     f2ptr maximum_loop_count     = f2__optimize_context__maximum_loop_count(cause, optimize_context);
     s64   maximum_loop_count__i  = f2integer__i(maximum_loop_count, cause);
-    f2ptr optimize_bytecode_hash = f2__optimize_context__optimize_bytecode_hash(cause, optimize_context);
-    f2ptr optimize_bytecode      = raw__ptypehash__lookup(cause, optimize_bytecode_hash, bytecode);
+    f2ptr optimize_bytecode_sequence_hash = f2__optimize_context__optimize_bytecode_sequence_hash(cause, optimize_context);
+    f2ptr optimize_bytecode      = raw__ptypehash__lookup(cause, optimize_bytecode_sequence_hash, bytecode);
     f2ptr execution_count        = f2__optimize_bytecode__execution_count(cause, optimize_bytecode);
     s64   execution_count__i     = f2integer__i(execution_count, cause);
     execution_count__i             ++;
@@ -3770,7 +3770,7 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 def_primobject_9_slot(optimize_context,
 		      maximum_loop_count,
-		      optimize_bytecode_hash,
+		      optimize_bytecode_sequence_hash,
 		      initial_fiber,
 		      active_fiber_set,
 		      branched_fiber_set,
@@ -3781,7 +3781,7 @@ def_primobject_9_slot(optimize_context,
 
 f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   assert_argument_type(integer, maximum_loop_count);
-  f2ptr optimize_bytecode_hash = f2__ptypehash__new(cause);
+  f2ptr optimize_bytecode_sequence_hash = f2__ptypehash__new(cause);
   f2ptr initial_fiber          = nil;
   f2ptr active_fiber_set       = f2__set__new(cause);
   f2ptr branched_fiber_set     = f2__set__new(cause);
@@ -3791,7 +3791,7 @@ f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   f2ptr optimized_bytecodes    = nil;
   f2ptr this = f2optimize_context__new(cause,
 				       maximum_loop_count,
-				       optimize_bytecode_hash,
+				       optimize_bytecode_sequence_hash,
 				       initial_fiber,
 				       active_fiber_set,
 				       branched_fiber_set,
@@ -3849,6 +3849,18 @@ f2ptr raw__optimize_context__active_fiber_branched(f2ptr cause, f2ptr this, f2pt
   }
   return nil;
 }
+
+
+f2ptr raw__optimize_context__get_optimize_bytecode_for_sequence(f2ptr cause, f2ptr this, f2ptr bytecode_sequence) {
+  f2ptr optimize_bytecode_sequence_hash = f2__optimize_context__optimize_bytecode_sequence_hash(cause, this);
+  f2ptr optimize_bytecode               = raw__ptypehash__lookup(cause, optimize_bytecode_hash, bytecode_sequence);
+  if (optimize_bytecode == nil) {
+    optimize_bytecode = f2__optimize_bytecode__new(cause, this, bytecode_sequence);
+    raw__ptypehash__add(cause, bytecode_sequence, optimize_bytecode);
+  }
+  return optimize_bytecode;
+}
+
 
 f2ptr raw__optimize_context__execute_one_bytecode(f2ptr cause, f2ptr this) {
   f2ptr active_fiber_set = f2__optimize_context__active_fiber_set(cause, this);
@@ -4187,7 +4199,7 @@ void f2__optimize__initialize() {
   
   initialize_primobject_3_slot(optimize_bytecode,
 			       optimize_context,
-			       sequence_pointer,
+			       sequence,
 			       execution_count);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_bytecode.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

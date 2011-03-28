@@ -257,7 +257,9 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   //f2funk__is_funktional__set(funk, cause, funk__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
   
-  raw__funk__optimize(cause, funk, 10);
+  if (! __funk2.memory.bootstrapping_mode) {
+    raw__funk__optimize(cause, funk, 10);
+  }
   
   return bcs_valid(funk_bcs);
 }

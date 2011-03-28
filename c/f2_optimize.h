@@ -97,7 +97,7 @@ declare_primobject_3_slot(optimize_bytecode,
 			  sequence_pointer,
 			  execution_count);
 
-f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
+f2ptr f2optimize_bytecode__primobject_type__new_aux(f2ptr cause);
 
 
 // optimize_data

@@ -3323,7 +3323,7 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
     f2ptr maximum_loop_count     = f2__optimize_context__maximum_loop_count(cause, optimize_context);
     s64   maximum_loop_count__i  = f2integer__i(maximum_loop_count, cause);
     f2ptr optimize_bytecode_hash = f2__optimize_context__optimize_bytecode_hash(cause, optimize_context);
-    f2ptr optimize_bytecode      = raw__ptypehash__lookup(cause, bytecode);
+    f2ptr optimize_bytecode      = raw__ptypehash__lookup(cause, optimize_bytecode_hash, bytecode);
     f2ptr execution_count        = f2__optimize_bytecode__execution_count(cause, optimize_bytecode);
     s64   execution_count__i     = f2integer__i(execution_count, cause);
     execution_count__i             ++;

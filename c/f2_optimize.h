@@ -58,11 +58,12 @@ declare_object_type_13_slot(optimize_fiber,
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_6_slot(optimize_context,
+declare_object_type_7_slot(optimize_context,
 			   initial_fiber,
 			   active_fiber_set,
 			   branched_fiber_set,
 			   finished_fiber_set,
+			   evaluated_data_set,
 			   defined_data_set,
 			   optimized_bytecodes,
 			   f2ptr terminal_print_with_frame__symbol;
@@ -112,11 +113,12 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause);
 
 // optimize_context
 
-declare_primobject_6_slot(optimize_context,
+declare_primobject_7_slot(optimize_context,
 			  initial_fiber,
 			  active_fiber_set,
 			  branched_fiber_set,
 			  finished_fiber_set,
+			  evaluated_data_set,
 			  defined_data_set,
 			  optimized_bytecodes);
 

@@ -3693,11 +3693,12 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_6_slot(optimize_context,
+def_primobject_7_slot(optimize_context,
 		      initial_fiber,
 		      active_fiber_set,
 		      branched_fiber_set,
 		      finished_fiber_set,
+		      evaluated_data_set,
 		      defined_data_set,
 		      optimized_bytecodes);
 
@@ -3706,6 +3707,7 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
   f2ptr active_fiber_set    = f2__set__new(cause);
   f2ptr branched_fiber_set  = f2__set__new(cause);
   f2ptr finished_fiber_set  = f2__set__new(cause);
+  f2ptr evaluated_data_set  = f2__set__new(cause);
   f2ptr defined_data_set    = f2__set__new(cause);
   f2ptr optimized_bytecodes = nil;
   f2ptr this = f2optimize_context__new(cause,
@@ -3713,6 +3715,7 @@ f2ptr f2__optimize_context__new(f2ptr cause) {
 				       active_fiber_set,
 				       branched_fiber_set,
 				       finished_fiber_set,
+				       evaluated_data_set,
 				       defined_data_set,
 				       optimized_bytecodes);
   initial_fiber = f2__optimize_fiber__new(cause, this);
@@ -3916,8 +3919,6 @@ f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-
-
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   f2ptr optimize_context = f2__optimize_context__new(cause);
   f2ptr initial_fiber    = f2__optimize_context__initial_fiber(cause, optimize_context);
@@ -4004,11 +4005,12 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_6_slot(optimize_context,
+  initialize_primobject_7_slot(optimize_context,
 			       initial_fiber,
 			       active_fiber_set,
 			       branched_fiber_set,
 			       finished_fiber_set,
+			       evaluated_data_set,
 			       defined_data_set,
 			       optimized_bytecodes);
   

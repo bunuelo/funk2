@@ -98,6 +98,7 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t
     } else {
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), funk__data));
     }
+    // tail recursion optimization
     if (is_last_value_to_compute) {
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_pop(cause));
       iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__jump_funk(cause));
@@ -3874,6 +3875,34 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
   {
     f2ptr new_bcs = fiber_branch_or_return_value_bcs;
     if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+  }
+  f2ptr branch_condition_data = f2__optimize_fiber__branch_condition_data(cause, fiber);
+  if (branch_condition_data != nil) {
+    f2ptr true_child_branched_fiber  = f2__optimize_fiber__true_child_branched_fiber( cause, fiber);
+    f2ptr false_child_branched_fiber = f2__optimize_fiber__false_child_branched_fiber(cause, fiber);
+    f2ptr true_bcs                   = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, true_child_branched_fiber);
+    f2ptr false_bcs                  = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, false_child_branched_fiber);
+    f2ptr nop_bcs                    = f2__compile__nop(cause);
+    {
+      f2ptr new_bcs = f2__compile__else_jump(cause, false_bcs);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    {
+      f2ptr new_bcs = true_bcs;
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    {
+      f2ptr new_bcs = f2__compile__jump(cause, nop_bcs);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    {
+      f2ptr new_bcs = false_bcs;
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    {
+      f2ptr new_bcs = nop_bcs;
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
   }
   return full_bcs;
 }

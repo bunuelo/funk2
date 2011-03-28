@@ -4130,7 +4130,13 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
     f2ptr false_child_branched_fiber = f2__optimize_fiber__false_child_branched_fiber(cause, fiber);
     f2ptr true_bcs                   = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, true_child_branched_fiber);
     f2ptr false_bcs                  = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, false_child_branched_fiber);
-    f2ptr nop_bcs                    = f2__compile__nop(cause);
+    f2ptr end_bcs                    = f2__compile__nop(cause);
+    if (true_bcs == nil) {
+      true_bcs = f2__compile__nop(cause);
+    }
+    if (false_bcs == nil) {
+      false_bcs = f2__compile__nop(cause);
+    }
     {
       f2ptr new_bcs = f2__compile__else_jump(cause, false_bcs);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
@@ -4140,7 +4146,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     {
-      f2ptr new_bcs = f2__compile__jump(cause, nop_bcs);
+      f2ptr new_bcs = f2__compile__jump(cause, end_bcs);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     {
@@ -4148,7 +4154,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
     {
-      f2ptr new_bcs = nop_bcs;
+      f2ptr new_bcs = end_bcs;
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
   }

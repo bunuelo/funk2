@@ -3810,23 +3810,9 @@ f2ptr raw__optimize_context__complete_simulation(f2ptr cause, f2ptr this) {
 }
 
 
-f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr cause, f2ptr this, f2ptr fiber) {
+f2ptr raw__optimize_context__compile_fiber_branch_or_return_value(f2ptr cause, f2ptr this) {
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
-  {
-    f2ptr data_side_effects = f2__optimize_fiber__data_side_effects(cause, fiber);
-    {
-      f2ptr iter = data_side_effects;
-      while (iter != nil) {
-	f2ptr data = f2__cons__car(cause, iter);
-	{
-	  f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, data);
-	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-	}
-	iter = f2__cons__cdr(cause, iter);
-      }
-    }
-  }
   f2ptr branch_condition_data = f2__optimize_fiber__branch_condition_data(cause, fiber);
   if (branch_condition_data != nil) {
     f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, branch_condition_data);
@@ -3840,6 +3826,46 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
       f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "value"), value__data);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     }
+  }
+  return full_bcs;
+}
+
+f2ptr raw__optimize_context__compile_fiber_side_effects(f2ptr cause, f2ptr this) {
+  f2ptr full_bcs           = nil;
+  f2ptr iter_bcs           = nil;
+  f2ptr evaluated_data_set = f2__optimize_context__evaluated_data_set(cause, this);
+  {
+    f2ptr data_side_effects = f2__optimize_fiber__data_side_effects(cause, fiber);
+    {
+      f2ptr iter = data_side_effects;
+      while (iter != nil) {
+	f2ptr data = f2__cons__car(cause, iter);
+	if (! raw__set__contains(cause, evaluated_data_set, data)) {
+	  f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, data);
+	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+	}
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  }
+  return full_bcs;
+}
+
+f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr full_bcs = nil;
+  f2ptr iter_bcs = nil;
+  // Note the need to compute branch_or_return_value before side
+  // effects because only need to do side effects if they are not
+  // already going to be computed.
+  f2ptr fiber_branch_or_return_value_bcs = raw__optimize_context__compile_fiber_branch_or_return_value(cause, this);
+  f2ptr fiber_side_effects_bcs           = raw__optimize_context__compile_fiber_side_effects(cause, this);
+  {
+    f2ptr new_bcs = fiber_side_effects_bcs;
+    if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+  }
+  {
+    f2ptr new_bcs = fiber_branch_or_return_value_bcs;
+    if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
   }
   return full_bcs;
 }

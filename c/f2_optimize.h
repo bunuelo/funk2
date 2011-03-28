@@ -109,6 +109,7 @@ declare_primobject_4_slot(optimize_data,
 			  data_type,
 			  args);
 
+f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr this, boolean_t is_last_value_to_compute);
 f2ptr raw__optimize_data__compile_new_bytecodes_for_define(f2ptr cause, f2ptr this);
 
 f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);

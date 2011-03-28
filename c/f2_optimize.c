@@ -24,7 +24,7 @@
 
 // optimize_bytecode
 
-def_primobject_3_slot(optimize_loop,
+def_primobject_3_slot(optimize_bytecode,
 		      optimize_context,
 		      sequence_pointer,
 		      execution_count);

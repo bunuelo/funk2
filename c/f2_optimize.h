@@ -147,15 +147,16 @@ declare_primobject_9_slot(optimize_context,
 			  defined_data_set,
 			  optimized_bytecodes);
 
-f2ptr raw__optimize_context__new                      (f2ptr cause, s64 maximum_loop_count);
-f2ptr  f2__optimize_context__new                      (f2ptr cause, f2ptr maximum_loop_count);
-void  raw__optimize_context__add_active_fiber         (f2ptr cause, f2ptr this, f2ptr active_fiber);
-f2ptr raw__optimize_context__active_fiber_finished    (f2ptr cause, f2ptr this, f2ptr active_fiber);
-f2ptr raw__optimize_context__active_fiber_branched    (f2ptr cause, f2ptr this, f2ptr active_fiber);
-f2ptr raw__optimize_context__execute_one_bytecode     (f2ptr cause, f2ptr this);
-f2ptr raw__optimize_context__complete_simulation      (f2ptr cause, f2ptr this);
-f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr  f2__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr raw__optimize_context__new                               (f2ptr cause, s64 maximum_loop_count);
+f2ptr  f2__optimize_context__new                               (f2ptr cause, f2ptr maximum_loop_count);
+void  raw__optimize_context__add_active_fiber                  (f2ptr cause, f2ptr this, f2ptr active_fiber);
+f2ptr raw__optimize_context__active_fiber_finished             (f2ptr cause, f2ptr this, f2ptr active_fiber);
+f2ptr raw__optimize_context__active_fiber_branched             (f2ptr cause, f2ptr this, f2ptr active_fiber);
+f2ptr raw__optimize_context__get_optimize_bytecode_for_sequence(f2ptr cause, f2ptr this, f2ptr bytecode_sequence);
+f2ptr raw__optimize_context__execute_one_bytecode              (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_context__complete_simulation               (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_context__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__optimize_context__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause);
 

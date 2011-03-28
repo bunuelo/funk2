@@ -3318,13 +3318,11 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
     }
     bytecode = f2__cons__car(cause, program_counter);
   }
-  /*
   {
     f2ptr optimize_context       = f2__optimize_fiber__optimize_context(cause, this);
     f2ptr maximum_loop_count     = f2__optimize_context__maximum_loop_count(cause, optimize_context);
     s64   maximum_loop_count__i  = f2integer__i(maximum_loop_count, cause);
-    f2ptr optimize_bytecode_sequence_hash = f2__optimize_context__optimize_bytecode_sequence_hash(cause, optimize_context);
-    f2ptr optimize_bytecode      = raw__ptypehash__lookup(cause, optimize_bytecode_sequence_hash, bytecode);
+    f2ptr optimize_bytecode      = raw__optimize_context__get_optimize_bytecode_from_sequence(cause, optimize_context, program_counter);
     f2ptr execution_count        = f2__optimize_bytecode__execution_count(cause, optimize_bytecode);
     s64   execution_count__i     = f2integer__i(execution_count, cause);
     execution_count__i             ++;
@@ -3334,7 +3332,6 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
       return f2larva__new(cause, 5123456, nil);
     }
   }
-  */
   {
     f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
     if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {

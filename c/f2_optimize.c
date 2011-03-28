@@ -112,46 +112,49 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t
 	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
       }
     } else {
-      f2ptr args_iter = args__data;
-      while (args_iter != nil) {
-	f2ptr arg__data = f2__cons__car(cause, args_iter);
-	{
-	  if (raw__optimize_data__is_type(cause, arg__data)) {
-	    f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, arg__data);
-	    if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-	  }
-	}
-	args_iter = f2__cons__cdr(cause, args_iter);
-      }
-      {
+      if (args__data == nil) {
 	{
 	  f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "args"), nil);
 	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
 	}
-	{
-	  f2ptr new_bcs = f2__compile__block_eval_args_begin(cause);
-	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      } else {
+	f2ptr args_iter = args__data;
+	while (args_iter != nil) {
+	  f2ptr arg__data = f2__cons__car(cause, args_iter);
+	  {
+	    if (raw__optimize_data__is_type(cause, arg__data)) {
+	      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, arg__data);
+	      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+	    }
+	  }
+	  args_iter = f2__cons__cdr(cause, args_iter);
 	}
 	{
-	  f2ptr args_iter = args__data;
-	  while (args_iter != nil) {
-	    f2ptr arg__data  = f2__cons__car(cause, args_iter);
-	    f2ptr args__next = f2__cons__cdr(cause, args_iter);
-	    {
-	      if (raw__optimize_data__is_type(cause, arg__data)) {
-		iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__lookup_var(cause, f2__optimize_data__name(cause, arg__data)));
-	      } else {
-		iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), arg__data));
+	  {
+	    f2ptr new_bcs = f2__compile__block_eval_args_begin(cause);
+	    if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+	  }
+	  {
+	    f2ptr args_iter = args__data;
+	    while (args_iter != nil) {
+	      f2ptr arg__data  = f2__cons__car(cause, args_iter);
+	      f2ptr args__next = f2__cons__cdr(cause, args_iter);
+	      {
+		if (raw__optimize_data__is_type(cause, arg__data)) {
+		  iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__lookup_var(cause, f2__optimize_data__name(cause, arg__data)));
+		} else {
+		  iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__set(cause, new__symbol(cause, "value"), arg__data));
+		}
+		if (args__next != nil) {
+		  f2ptr new_bcs = f2__compile__block_eval_args_next(cause);
+		  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+		} else {
+		  f2ptr new_bcs = f2__compile__block_eval_args_end(cause);
+		  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+		}
 	      }
-	      if (args__next != nil) {
-		f2ptr new_bcs = f2__compile__block_eval_args_next(cause);
-		if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-	      } else {
-		f2ptr new_bcs = f2__compile__block_eval_args_end(cause);
-		if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-	      }
+	      args_iter = args__next;
 	    }
-	    args_iter = args__next;
 	  }
 	}
       }

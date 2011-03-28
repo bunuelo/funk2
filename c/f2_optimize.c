@@ -3821,7 +3821,7 @@ f2ptr raw__optimize_context__compile_fiber_branch_or_return_value(f2ptr cause, f
   f2ptr iter_bcs = nil;
   f2ptr branch_condition_data = f2__optimize_fiber__branch_condition_data(cause, fiber);
   if (branch_condition_data != nil) {
-    f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, branch_condition_data);
+    f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, branch_condition_data, boolean__false);
     if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
   } else {
     f2ptr value__data = f2__optimize_fiber__value(cause, fiber);

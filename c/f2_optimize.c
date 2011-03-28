@@ -100,12 +100,12 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t
     // put args data value in args register
     if (raw__optimize_data__is_type(cause, args__data)) {
       {
-	// note local definition of is_last_value_to_compute masks previous value.
-	boolean_t is_last_value_to_compute = boolean__false;
-	{
-	  f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, funk__data, is_last_value_to_compute);
-	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-	}
+	f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, funk__data, is_last_value_to_compute);
+	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+      }
+      {
+	f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, args__data));
+	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
       }
       {
 	f2ptr new_bcs = f2__compile__copy(cause, new__symbol(cause, "value"), new__symbol(cause, "args"));
@@ -1624,6 +1624,7 @@ f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, 
   }
   return frame_lookup;
 }
+
 
 // lookup
 
@@ -4061,8 +4062,14 @@ f2ptr raw__optimize_context__compile_fiber_branch_or_return_value(f2ptr cause, f
   f2ptr iter_bcs = nil;
   f2ptr branch_condition_data = f2__optimize_fiber__branch_condition_data(cause, fiber);
   if (branch_condition_data != nil) {
-    f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_value(cause, branch_condition_data, boolean__false);
-    if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    {
+      f2ptr new_bcs = raw__optimize_data__compile_new_bytecodes_for_define(cause, branch_condition_data);
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
+    {
+      f2ptr new_bcs = f2__compile__lookup_var(cause, f2__optimize_data__name(cause, branch_condition_data));
+      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+    }
   } else {
     f2ptr value__data = f2__optimize_fiber__value(cause, fiber);
     if (raw__optimize_data__is_type(cause, value__data)) {

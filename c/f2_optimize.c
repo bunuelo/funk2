@@ -4163,11 +4163,14 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this, s64 maximum_loop_count) {
 	return result;
       }
     }
-    {
-      f2ptr result = raw__optimize_context__complete_simulation(cause, optimize_context);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
+    f2ptr possible_too_many_loops_larva = raw__optimize_context__complete_simulation(cause, optimize_context);
+    if (raw__larva__is_type(cause, possible_too_many_loops_larva)) {
+      if (! raw__optimize_too_many_loops_larva__is_type(cause, possible_too_many_loops_larva)) {
+	return possible_too_many_loops_larva;
       }
+      // need to extract loops.
+      printf("\noptimize warning: loop extraction not yet implemented.");
+      return optimize_context;
     }
     {
       f2ptr result = raw__optimize_context__compile_new_bytecodes(cause, optimize_context, this);

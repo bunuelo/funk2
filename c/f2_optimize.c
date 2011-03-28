@@ -821,6 +821,7 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr thi
     raw__set__add(cause, evaluated_data_set, this);
   } else {
     printf("\noptimize_data warning: evaluating data twice."); fflush(stdout);
+    printf("\ndata: "); f2__terminal_print(cause, this); fflush(stdout);
   }
   {
     f2ptr data_type = f2__optimize_data__data_type(cause, this);

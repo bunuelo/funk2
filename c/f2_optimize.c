@@ -3853,10 +3853,10 @@ f2ptr raw__optimize_context__active_fiber_branched(f2ptr cause, f2ptr this, f2pt
 
 f2ptr raw__optimize_context__get_optimize_bytecode_for_sequence(f2ptr cause, f2ptr this, f2ptr bytecode_sequence) {
   f2ptr optimize_bytecode_sequence_hash = f2__optimize_context__optimize_bytecode_sequence_hash(cause, this);
-  f2ptr optimize_bytecode               = raw__ptypehash__lookup(cause, optimize_bytecode_hash, bytecode_sequence);
+  f2ptr optimize_bytecode               = raw__ptypehash__lookup(cause, optimize_bytecode_sequence_hash, bytecode_sequence);
   if (optimize_bytecode == nil) {
     optimize_bytecode = f2__optimize_bytecode__new(cause, this, bytecode_sequence);
-    raw__ptypehash__add(cause, bytecode_sequence, optimize_bytecode);
+    raw__ptypehash__add(cause, optimize_bytecode_sequence_hash, optimize_bytecode);
   }
   return optimize_bytecode;
 }

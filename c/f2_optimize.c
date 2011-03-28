@@ -1048,7 +1048,20 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
       f2ptr iter = funk__args;
       while (iter != nil) {
 	f2ptr variable_name = f2__cons__car(cause, iter);
-	{
+	f2ptr next          = f2__cons__cdr(cause, iter);
+	if (raw__eq(cause, variable_name, __funk2.globalenv.and_rest__symbol)) {
+	  if (next == nil) {
+	    return f2larva__new(cause, 523531, nil);
+	  }
+	  f2ptr variable_name = f2__cons__car(cause, next);
+	  f2ptr initial_variable_data = f2__optimize_data__new(cause, f2__optimize_fiber__optimize_context(cause, this), variable_name, new__symbol(cause, "initial-variable"), nil);
+	  if (args_reg == nil) {
+	    args_reg = initial_variable_data;
+	  } else {
+	    f2__cons__cdr__set(cause, args_reg_iter, initial_variable_data);
+	  }
+	  iter = nil;
+	} else {
 	  f2ptr initial_variable_data = f2__optimize_data__new(cause, f2__optimize_fiber__optimize_context(cause, this), variable_name, new__symbol(cause, "initial-variable"), nil);
 	  f2ptr new_cons = f2cons__new(cause, initial_variable_data, nil);
 	  if (args_reg == nil) {
@@ -1058,8 +1071,8 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
 	    f2__cons__cdr__set(cause, args_reg_iter, new_cons);
 	    args_reg_iter = new_cons;
 	  }
+	  iter = next;
 	}
-	iter = f2__cons__cdr(cause, iter);
       }
     }
   }

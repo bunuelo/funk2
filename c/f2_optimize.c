@@ -108,7 +108,7 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t
 	if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
       }
     } else {
-      f2ptr args_iter = args;
+      f2ptr args_iter = args__data;
       while (args_iter != nil) {
 	f2ptr arg__data = f2__cons__car(cause, args_iter);
 	{
@@ -125,7 +125,7 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t
 	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
 	}
 	{
-	  f2ptr args_iter = args;
+	  f2ptr args_iter = args__data;
 	  while (args_iter != nil) {
 	    f2ptr arg__data  = f2__cons__car(cause, args_iter);
 	    f2ptr args__next = f2__cons__cdr(cause, args_iter);

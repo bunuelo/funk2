@@ -816,7 +816,6 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr thi
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
   f2ptr optimize_context   = f2__optimize_data__optimize_context(cause, this);
-  f2ptr defined_data_set   = f2__optimize_context__evaluated_data_set(cause, optimize_context);
   f2ptr evaluated_data_set = f2__optimize_context__evaluated_data_set(cause, optimize_context);
   if (! raw__set__contains(cause, evaluated_data_set, this)) {
     raw__set__add(cause, evaluated_data_set, this);

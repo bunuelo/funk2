@@ -151,6 +151,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__fiber_stack_trace__slot_t                primobject_type_fiber_stack_trace;
   funk2_object_type__fiber_stack_trace_block__slot_t          primobject_type_fiber_stack_trace_block;
   funk2_object_type__partial_order_node__slot_t               primobject_type_partial_order_node;
+  funk2_object_type__optimize_bytecode__slot_t                primobject_type_optimize_bytecode;
   funk2_object_type__optimize_data__slot_t                    primobject_type_optimize_data;
   funk2_object_type__optimize_fiber__slot_t                   primobject_type_optimize_fiber;
   funk2_object_type__optimize_context__slot_t                 primobject_type_optimize_context;

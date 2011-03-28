@@ -22,6 +22,17 @@
 #ifndef F2__OPTIMIZE__TYPES__H
 #define F2__OPTIMIZE__TYPES__H
 
+// optimize_bytecode
+
+typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
+declare_object_type_3_slot(optimize_bytecode,
+			   optimize_context,
+			   sequence_pointer,
+			   execution_count,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
@@ -58,7 +69,8 @@ declare_object_type_13_slot(optimize_fiber,
 // optimize_context
 
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
-declare_object_type_7_slot(optimize_context,
+declare_object_type_8_slot(optimize_context,
+			   optimize_bytecode_hash,
 			   initial_fiber,
 			   active_fiber_set,
 			   branched_fiber_set,
@@ -77,6 +89,16 @@ declare_object_type_7_slot(optimize_context,
 #define F2__OPTIMIZE__H
 
 #include "f2_frame_objects.h"
+
+// optimize_bytecode
+
+declare_primobject_3_slot(optimize_bytecode,
+			  optimize_context,
+			  sequence_pointer,
+			  execution_count);
+
+f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause);
+
 
 // optimize_data
 
@@ -113,7 +135,8 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause);
 
 // optimize_context
 
-declare_primobject_7_slot(optimize_context,
+declare_primobject_8_slot(optimize_context,
+			  optimize_bytecode_hash,
 			  initial_fiber,
 			  active_fiber_set,
 			  branched_fiber_set,

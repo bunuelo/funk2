@@ -3807,7 +3807,7 @@ f2ptr raw__optimize_context__new(f2ptr cause, s64 maximum_loop_count) {
   return f2__optimize_context__new(cause, f2integer__new(cause, maximum_loop_count));
 }
 
-def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
+def_pcfunk1(optimize_context__new, maximum_loop_count, return f2__optimize_context__new(this_cause, maximum_loop_count));
 
 
 void raw__optimize_context__add_active_fiber(f2ptr cause, f2ptr this, f2ptr active_fiber) {

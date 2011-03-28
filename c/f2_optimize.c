@@ -3306,7 +3306,27 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end(f2ptr cause, f2ptr
   return raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc(cause, this);
 }
 
+#define optimize_too_many_loops__larva_type 5123456
 
+f2ptr raw__optimize_too_many_loops_larva__new(f2ptr cause, f2ptr optimize_bytecode) {
+  return f2larva__new(cause, optimize_too_many_loops__larva_type, f2__bug__new(cause, f2integer__new(cause, optimize_too_many_loops__larva_type), f2__frame__new(cause, f2list2__new(cause, new__symbol(cause, "optimize_bytecode"), optimize_bytecode))));
+}
+
+boolean_t raw__optimize_too_many_loops_larva__is_type(f2ptr cause, f2ptr object) {
+  if (! raw__larva__is_type(cause, object)) {
+    return boolean__false;
+  }
+  if (raw__larva__larva_type(cause, object) != optimize_too_many_loops__larva_type) {
+    return boolean__false;
+  }
+  return boolean__true;
+}
+
+f2ptr raw__optimize_too_many_loops_larva__optimize_bytecode(f2ptr cause, f2ptr this) {
+  f2ptr bug   = raw__larva__bug(cause, this);
+  f2ptr frame = f2__bug__frame(cause, bug);
+  return f2__frame__lookup_var_value(cause, frame, new__symbol(cause, "optimize_bytecode"), nil);
+}
 
 
 f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
@@ -3316,17 +3336,17 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
   }
   f2ptr bytecode = f2__cons__car(cause, program_counter);
   {
-    f2ptr optimize_context       = f2__optimize_fiber__optimize_context(cause, this);
-    f2ptr maximum_loop_count     = f2__optimize_context__maximum_loop_count(cause, optimize_context);
-    s64   maximum_loop_count__i  = f2integer__i(maximum_loop_count, cause);
-    f2ptr optimize_bytecode      = raw__optimize_context__get_optimize_bytecode_for_sequence(cause, optimize_context, program_counter);
-    f2ptr execution_count        = f2__optimize_bytecode__execution_count(cause, optimize_bytecode);
-    s64   execution_count__i     = f2integer__i(execution_count, cause);
-    execution_count__i             ++;
-    execution_count              = f2integer__new(cause, execution_count__i);
+    f2ptr optimize_context      = f2__optimize_fiber__optimize_context(cause, this);
+    f2ptr maximum_loop_count    = f2__optimize_context__maximum_loop_count(cause, optimize_context);
+    s64   maximum_loop_count__i = f2integer__i(maximum_loop_count, cause);
+    f2ptr optimize_bytecode     = raw__optimize_context__get_optimize_bytecode_for_sequence(cause, optimize_context, program_counter);
+    f2ptr execution_count       = f2__optimize_bytecode__execution_count(cause, optimize_bytecode);
+    s64   execution_count__i    = f2integer__i(execution_count, cause);
+    execution_count__i            ++;
+    execution_count             = f2integer__new(cause, execution_count__i);
     f2__optimize_bytecode__execution_count__set(cause, optimize_bytecode, execution_count);
     if (execution_count__i > maximum_loop_count__i) {
-      return f2larva__new(cause, 5123456, nil);
+      return raw__optimize_too_many_loops_larva__new(cause, optimize_bytecode);
     }
   }
   {

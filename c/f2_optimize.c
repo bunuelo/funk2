@@ -4243,7 +4243,7 @@ void f2__optimize__initialize() {
   
   initialize_primobject_9_slot(optimize_context,
 			       maximum_loop_count,
-			       optimize_bytecode_hash,
+			       optimize_bytecode_sequence_hash,
 			       initial_fiber,
 			       active_fiber_set,
 			       branched_fiber_set,

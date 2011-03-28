@@ -3310,14 +3310,11 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end(f2ptr cause, f2ptr
 
 
 f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
-  f2ptr bytecode = nil;
-  {
-    f2ptr program_counter = f2__optimize_fiber__program_counter(cause, this);
-    if (! raw__cons__is_type(cause, program_counter)) {
-      return f2larva__new(cause, 512431, nil);
-    }
-    bytecode = f2__cons__car(cause, program_counter);
+  f2ptr program_counter = f2__optimize_fiber__program_counter(cause, this);
+  if (! raw__cons__is_type(cause, program_counter)) {
+    return f2larva__new(cause, 512431, nil);
   }
+  f2ptr bytecode = f2__cons__car(cause, program_counter);
   {
     f2ptr optimize_context       = f2__optimize_fiber__optimize_context(cause, this);
     f2ptr maximum_loop_count     = f2__optimize_context__maximum_loop_count(cause, optimize_context);

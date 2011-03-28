@@ -3939,19 +3939,19 @@ f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these) {
 	f2ptr command = f2__bytecode__command(cause, bytecode);
 	if (raw__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc);) {
+	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc)) {
 	    f2ptr nop_pc_replacement = raw__ptypehash__lookup(cause, nop_bcs_next_hash, new_pc);
 	    f2__bytecode__arg0__set(cause, bytecode, nop_pc_replacement);
 	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc);) {
+	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc)) {
 	    f2ptr nop_pc_replacement = raw__ptypehash__lookup(cause, nop_bcs_next_hash, new_pc);
 	    f2__bytecode__arg0__set(cause, bytecode, nop_pc_replacement);
 	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc);) {
+	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc)) {
 	    f2ptr nop_pc_replacement = raw__ptypehash__lookup(cause, nop_bcs_next_hash, new_pc);
 	    f2__bytecode__arg0__set(cause, bytecode, nop_pc_replacement);
 	  }

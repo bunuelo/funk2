@@ -3907,6 +3907,63 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
   return full_bcs;
 }
 
+f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these) {
+  f2ptr full_bcs = these;
+  f2ptr nop_bcs_next_hash = f2__ptypehash__new(cause);
+  {
+    f2ptr prev = nil;
+    f2ptr iter = full_bcs;
+    while (iter != nil) {
+      f2ptr bytecode = f2__cons__car(cause, iter);
+      f2ptr next     = f2__cons__cdr(cause, iter);
+      {
+	f2ptr command = f2__bytecode__command(cause, bytecode);
+	if (raw__eq(cause, command, __funk2.bytecode.bytecode__nop__symbol)) {
+	  raw__ptypehash__add(cause, nop_bcs_next_hash, iter, next);
+	  if (prev == nil) {
+	    full_bcs = next;
+	  } else {
+	    f2__cons__cdr__set(cause, prev, next);
+	  }
+	}
+      }
+      prev = iter;
+      iter = next;
+    }
+  }
+  {
+    f2ptr iter = full_bcs;
+    while (iter != nil) {
+      f2ptr bytecode = f2__cons__car(cause, iter);
+      {
+	f2ptr command = f2__bytecode__command(cause, bytecode);
+	if (raw__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
+	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
+	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc);) {
+	    f2ptr nop_pc_replacement = raw__ptypehash__lookup(cause, nop_bcs_next_hash, new_pc);
+	    f2__bytecode__arg0__set(cause, bytecode, nop_pc_replacement);
+	  }
+	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
+	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
+	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc);) {
+	    f2ptr nop_pc_replacement = raw__ptypehash__lookup(cause, nop_bcs_next_hash, new_pc);
+	    f2__bytecode__arg0__set(cause, bytecode, nop_pc_replacement);
+	  }
+	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
+	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
+	  if (raw__ptypehash__contains(cause, nop_bcs_next_hash, new_pc);) {
+	    f2ptr nop_pc_replacement = raw__ptypehash__lookup(cause, nop_bcs_next_hash, new_pc);
+	    f2__bytecode__arg0__set(cause, bytecode, nop_pc_replacement);
+	  }
+	}
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return full_bcs;
+}
+
+
 f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr full_bcs = f2__compile__block_enter(cause);
   f2ptr iter_bcs = full_bcs;
@@ -3951,6 +4008,9 @@ f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2pt
   } else {
     iter_bcs = raw__list_cdr__set(cause, iter_bcs, f2__compile__block_exit_and_no_pop(cause, funk));
   }
+  
+  // remove nops that were necessary for constructing branches.
+  full_bcs = raw__bytecodes__remove_nops(cause, full_bcs);
   
   f2__optimize_context__optimized_bytecodes__set(cause, this, full_bcs);
   return nil;

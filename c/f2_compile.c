@@ -256,6 +256,9 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   
   //f2funk__is_funktional__set(funk, cause, funk__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
+  
+  raw__funk__optimize(cause, funk, 10);
+  
   return bcs_valid(funk_bcs);
 }
 
@@ -311,6 +314,7 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
   
   f2metro__is_funktional__set(metro, cause, metro__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
   f2metro__body_bytecodes__set(metro, cause, full_bcs);
+  
   //f2metro__machine_code__set(metro, cause, f2chunk__new_compiled_from_metro(cause, metro));
   return bcs_valid(metro_bcs);
 }
@@ -396,9 +400,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
     protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
     optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
     
-    f2ptr     exp_bcs = nil;
+    f2ptr     exp_bcs            = nil;
     boolean_t exp__is_funktional = boolean__true;
-    f2ptr     next = nil;
+    f2ptr     next               = nil;
     do {
       f2ptr exp = f2cons__car(exps, cause);
       next      = f2cons__cdr(exps, cause);

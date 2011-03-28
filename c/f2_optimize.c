@@ -3319,6 +3319,21 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
     bytecode = f2__cons__car(cause, program_counter);
   }
   {
+    f2ptr optimize_context       = f2__optimize_fiber__optimize_context(cause, this);
+    f2ptr maximum_loop_count     = f2__optimize_context__maximum_loop_count(cause, optimize_context);
+    s64   maximum_loop_count__i  = f2integer__i(maximum_loop_count, cause);
+    f2ptr optimize_bytecode_hash = f2__optimize_context__optimize_bytecode_hash(cause, optimize_context);
+    f2ptr optimize_bytecode      = raw__ptypehash__lookup(cause, bytecode);
+    f2ptr execution_count        = f2__optimize_bytecode__execution_count(cause, optimize_bytecode);
+    s64   execution_count__i     = f2integer__i(execution_count, cause);
+    execution_count__i             ++;
+    execution_count              = f2integer__new(cause, execution_count__i);
+    f2__optimize_bytecode__execution_count__set(cause, optimize_bytecode, execution_count);
+    if (execution_count__i > maximum_loop_count__i) {
+      return f2larva__new(cause, 5123456, nil);
+    }
+  }
+  {
     f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
     if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
       f2ptr result = raw__optimize_fiber__call_bytecode__jump__funk(cause, this);
@@ -3751,7 +3766,8 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_context
 
-def_primobject_8_slot(optimize_context,
+def_primobject_9_slot(optimize_context,
+		      maximum_loop_count,
 		      optimize_bytecode_hash,
 		      initial_fiber,
 		      active_fiber_set,
@@ -3761,7 +3777,7 @@ def_primobject_8_slot(optimize_context,
 		      defined_data_set,
 		      optimized_bytecodes);
 
-f2ptr f2__optimize_context__new(f2ptr cause) {
+f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   f2ptr optimize_bytecode_hash = f2__ptypehash__new(cause);
   f2ptr initial_fiber          = nil;
   f2ptr active_fiber_set       = f2__set__new(cause);
@@ -4216,7 +4232,8 @@ void f2__optimize__initialize() {
   
   // optimize_context
   
-  initialize_primobject_8_slot(optimize_context,
+  initialize_primobject_9_slot(optimize_context,
+			       maximum_loop_count,
 			       optimize_bytecode_hash,
 			       initial_fiber,
 			       active_fiber_set,

@@ -3778,6 +3778,7 @@ def_primobject_9_slot(optimize_context,
 		      optimized_bytecodes);
 
 f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
+  assert_argument_type(integer, maximum_loop_count);
   f2ptr optimize_bytecode_hash = f2__ptypehash__new(cause);
   f2ptr initial_fiber          = nil;
   f2ptr active_fiber_set       = f2__set__new(cause);
@@ -3787,6 +3788,7 @@ f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   f2ptr defined_data_set       = f2__set__new(cause);
   f2ptr optimized_bytecodes    = nil;
   f2ptr this = f2optimize_context__new(cause,
+				       maximum_loop_count,
 				       optimize_bytecode_hash,
 				       initial_fiber,
 				       active_fiber_set,
@@ -3800,6 +3802,11 @@ f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   raw__optimize_context__add_active_fiber(cause, this, initial_fiber);
   return this;
 }
+
+f2ptr raw__optimize_context__new(f2ptr cause, s64 maximum_loop_count) {
+  return f2__optimize_context__new(cause, f2integer__new(cause, maximum_loop_count));
+}
+
 def_pcfunk0(optimize_context__new, return f2__optimize_context__new(this_cause));
 
 
@@ -4116,8 +4123,8 @@ f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
-  f2ptr optimize_context = f2__optimize_context__new(cause);
+f2ptr raw__funk__optimize(f2ptr cause, f2ptr this, s64 maximum_loop_count) {
+  f2ptr optimize_context = raw__optimize_context__new(cause, maximum_loop_count);
   // generate optimize_bytecodes for keeping track of runaway loops
   {
     f2ptr optimize_bytecode_hash = f2__optimize_context__optimize_bytecode_hash(cause, this);
@@ -4163,9 +4170,11 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this) {
   return optimize_context;
 }
 
-f2ptr f2__funk__optimize(f2ptr cause, f2ptr this) {
-  assert_argument_type(funk, this);
-  return raw__funk__optimize(cause, this);
+f2ptr f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count) {
+  assert_argument_type(funk,    this);
+  assert_argument_type(integer, maximum_loop_count);
+  s64 maximum_loop_count__i = f2integer__i(maximum_loop_count, cause);
+  return raw__funk__optimize(cause, this, maximum_loop_count__i);
 }
 
 

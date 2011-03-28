@@ -147,7 +147,8 @@ declare_primobject_9_slot(optimize_context,
 			  defined_data_set,
 			  optimized_bytecodes);
 
-f2ptr  f2__optimize_context__new                      (f2ptr cause);
+f2ptr raw__optimize_context__new                      (f2ptr cause, s64 maximum_loop_count);
+f2ptr  f2__optimize_context__new                      (f2ptr cause, f2ptr maximum_loop_count);
 void  raw__optimize_context__add_active_fiber         (f2ptr cause, f2ptr this, f2ptr active_fiber);
 f2ptr raw__optimize_context__active_fiber_finished    (f2ptr cause, f2ptr this, f2ptr active_fiber);
 f2ptr raw__optimize_context__active_fiber_branched    (f2ptr cause, f2ptr this, f2ptr active_fiber);
@@ -300,8 +301,8 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end                   
 
 // funk-optimize
 
-f2ptr raw__funk__optimize(f2ptr cause, f2ptr this);
-f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this);
+f2ptr raw__funk__optimize(f2ptr cause, f2ptr this, s64 maximum_loop_count);
+f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count);
 
 
 // **

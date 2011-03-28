@@ -674,7 +674,7 @@ def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytec
 
 
 // defined in f2_optimize.c
-def_pcfunk1(funk__optimize, this, return f2__funk__optimize(this_cause, this));
+def_pcfunk2(funk__optimize, this, maximum_loop_count, return f2__funk__optimize(this_cause, this, maximum_loop_count));
 
 f2ptr raw__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);

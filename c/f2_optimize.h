@@ -24,7 +24,7 @@
 
 // optimize_bytecode
 
-typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
+typedef struct funk2_object_type__optimize_bytecode__slot_s funk2_object_type__optimize_bytecode__slot_t;
 declare_object_type_3_slot(optimize_bytecode,
 			   optimize_context,
 			   sequence_pointer,

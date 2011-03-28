@@ -750,6 +750,13 @@ f2ptr raw__optimize_data__compile__less_than(f2ptr cause, f2ptr this) {
 f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr this) {
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
+  f2ptr optimize_context   = f2__optimize_data__optimize_context(cause, this);
+  f2ptr evaluated_data_set = f2__optimize_context__evaluated_data_set(cause, optimize_context);
+  if (! raw__set__contains(cause, evaluated_data_set, this)) {
+    raw__set__add(cause, evaluated_data_set, this);
+  } else {
+    printf("\noptimize_data warning: evaluating data twice."); fflush(stdout);
+  }
   {
     f2ptr data_type = f2__optimize_data__data_type(cause, this);
     if (raw__eq(cause, data_type, new__symbol(cause, "jump-funk"))) {
@@ -3897,6 +3904,7 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
 						new__symbol(cause, "active_fiber_set"),    f2__optimize_context__active_fiber_set(   cause, this),
 						new__symbol(cause, "branched_fiber_set"),  f2__optimize_context__branched_fiber_set( cause, this),
 						new__symbol(cause, "finished_fiber_set"),  f2__optimize_context__finished_fiber_set( cause, this),
+						new__symbol(cause, "evaluated_data_set"),  f2__optimize_context__evaluated_data_set( cause, this),
 						new__symbol(cause, "defined_data_set"),    f2__optimize_context__defined_data_set(   cause, this),
 						new__symbol(cause, "optimized_bytecodes"), f2__optimize_context__optimized_bytecodes(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);

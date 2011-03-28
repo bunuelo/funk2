@@ -4183,9 +4183,10 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count) {
 void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __optimize_data__symbol    = new__symbol(cause, "optimize_data");
-  __optimize_fiber__symbol   = new__symbol(cause, "optimize_fiber");
-  __optimize_context__symbol = new__symbol(cause, "optimize_context");
+  __optimize_bytecode__symbol = new__symbol(cause, "optimize_bytecode");
+  __optimize_data__symbol     = new__symbol(cause, "optimize_data");
+  __optimize_fiber__symbol    = new__symbol(cause, "optimize_fiber");
+  __optimize_context__symbol  = new__symbol(cause, "optimize_context");
 }
 
 void f2__optimize__initialize() {

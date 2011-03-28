@@ -1809,6 +1809,7 @@ f2ptr raw__optimize_fiber__call_bytecode__if__jump__no_increment_pc(f2ptr cause,
     // assuming value is true:
     f2__optimize_fiber__program_counter__set(cause, true_branch_fiber, new_program_counter);
     // assuming value is false:
+    f2__optimize_fiber__value__set(cause, false_branch_fiber, nil);
     //   do nothing.
   } else {
     // we know the value (it is not a hypothetical data value)
@@ -1852,6 +1853,7 @@ f2ptr raw__optimize_fiber__call_bytecode__else__jump__no_increment_pc(f2ptr caus
     // assuming value is true:
     //   do nothing.
     // assuming value is false:
+    f2__optimize_fiber__value__set(          cause, false_branch_fiber, nil);
     f2__optimize_fiber__program_counter__set(cause, false_branch_fiber, new_program_counter);
   } else {
     // we know the value (it is not a hypothetical data value)
@@ -4131,12 +4133,6 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
     f2ptr true_bcs                   = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, true_child_branched_fiber);
     f2ptr false_bcs                  = raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(cause, this, false_child_branched_fiber);
     f2ptr end_bcs                    = f2__compile__nop(cause);
-    if (true_bcs == nil) {
-      true_bcs = f2__compile__nop(cause);
-    }
-    if (false_bcs == nil) {
-      false_bcs = f2__compile__nop(cause);
-    }
     {
       f2ptr new_bcs = f2__compile__else_jump(cause, false_bcs);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}

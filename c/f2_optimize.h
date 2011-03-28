@@ -71,7 +71,7 @@ declare_object_type_13_slot(optimize_fiber,
 typedef struct funk2_object_type__optimize_context__slot_s funk2_object_type__optimize_context__slot_t;
 declare_object_type_9_slot(optimize_context,
 			   maximum_loop_count,
-			   optimize_bytecode_hash,
+			   optimize_bytecode_sequence_hash,
 			   initial_fiber,
 			   active_fiber_set,
 			   branched_fiber_set,
@@ -138,7 +138,7 @@ f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause);
 
 declare_primobject_9_slot(optimize_context,
 			  maximum_loop_count,
-			  optimize_bytecode_hash,
+			  optimize_bytecode_sequence_hash,
 			  initial_fiber,
 			  active_fiber_set,
 			  branched_fiber_set,

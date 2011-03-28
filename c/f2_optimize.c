@@ -125,6 +125,10 @@ f2ptr raw__optimize_data__compile__jump__funk(f2ptr cause, f2ptr this, boolean_t
       }
       {
 	{
+	  f2ptr new_bcs = f2__compile__set(cause, new__symbol(cause, "args"), nil);
+	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
+	}
+	{
 	  f2ptr new_bcs = f2__compile__block_eval_args_begin(cause);
 	  if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
 	}

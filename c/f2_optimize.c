@@ -3898,7 +3898,7 @@ f2ptr raw__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list14__new(cause,
+    frame = f2__frame__new(cause, f2list16__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_context"),
 						new__symbol(cause, "initial_fiber"),       f2__optimize_context__initial_fiber(      cause, this),
 						new__symbol(cause, "active_fiber_set"),    f2__optimize_context__active_fiber_set(   cause, this),

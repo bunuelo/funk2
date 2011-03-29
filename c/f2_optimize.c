@@ -1661,7 +1661,8 @@ f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, 
       found_value = boolean__true;
     } else {
       environment = f2__environment__parent_env(cause, environment);
-      if (raw__optimize_data__is_type(cause, environment)) {
+      if ((environment == nil) ||
+	  raw__optimize_data__is_type(cause, environment)) {
 	return f2larva__new(cause, 2301, nil);
       }
     }
@@ -1749,7 +1750,8 @@ f2ptr raw__environment__optimize_mutate_type_var_value(f2ptr cause, f2ptr this, 
       found_value = boolean__true;
     } else {
       environment = f2__environment__parent_env(cause, environment);
-      if (raw__optimize_data__is_type(cause, environment)) {
+      if ((environment == nil) ||
+	  raw__optimize_data__is_type(cause, environment)) {
 	return f2larva__new(cause, 2301, nil);
       }
     }

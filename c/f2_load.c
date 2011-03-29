@@ -155,8 +155,8 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
     read_exp = f2__stream__try_read(cause, stream);
     if (! raw__eq(cause, read_exp, __funk2.reader.end_of_file_exception)) {
       if (raw__exception__is_type(cause, read_exp)) {
-	printf("\nload exception..: "); f2__terminal_print(cause, fiber, read_exp); fflush(stdout);
-	printf("\ncurrent filename: "); f2__terminal_print(cause, fiber, filename); fflush(stdout);
+	printf("\nload exception..: "); f2__terminal_print(cause, read_exp); fflush(stdout);
+	printf("\ncurrent filename: "); f2__terminal_print(cause, filename); fflush(stdout);
       } else {
 	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);

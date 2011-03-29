@@ -1145,9 +1145,9 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
   if (raw__optimize_data__is_type(cause, funk__data)) {
     all_data_is_known = boolean__false;
   } else {
-    f2ptr name          = f2__funk__name(cause, funk__data);
-    if (raw__eq(cause, name, "primfunk:funk__new") ||
-	raw__eq(cause, name, "primfunk:conslist")) {
+    f2ptr name = f2__funk__name(cause, funk__data);
+    if (raw__eq(cause, name, new__symbol(cause, "primfunk:funk__new")) ||
+	raw__eq(cause, name, new__symbol(cause, "primfunk:conslist"))) {
       // do nothing for these special primitive funks
     } else {
       f2ptr is_funktional = f2__funk__is_funktional(cause, funk__data);

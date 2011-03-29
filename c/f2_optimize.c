@@ -900,6 +900,7 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr thi
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else {
       printf("\noptimize_data warning: data_type not yet implemented."); fflush(stdout);
+      return f2larva__new(cause, 51242, nil);
     }
   }
   return full_bcs;
@@ -1987,7 +1988,7 @@ f2ptr raw__optimize_fiber__call_bytecode__endfunk(f2ptr cause, f2ptr this, f2ptr
 // compile
 
 f2ptr raw__optimize_fiber__call_bytecode__compile__no_increment_pc(f2ptr cause, f2ptr this, f2ptr protect_environment) {
-  printf("\noptimize warning: compile not yet implemented.");
+  printf("\noptimize warning: compile not yet implemented."); fflush(stdout);
   return nil;
 }
 

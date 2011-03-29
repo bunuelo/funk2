@@ -1151,6 +1151,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
     f2ptr name = f2__funkable__name(cause, funk__data);
     if (raw__eq(cause, name, new__symbol(cause, "primfunk:funk__new")) ||
 	raw__eq(cause, name, new__symbol(cause, "primfunk:conslist"))) {
+      f2__terminal_print(cause, name);
       // do nothing for these special primitive funks
     } else {
       f2ptr is_funktional = f2__funkable__is_funktional(cause, funk__data);

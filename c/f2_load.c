@@ -173,7 +173,7 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
 	  //f2fiber__value__set(fiber, cause, load_funk_bcs);
 	}
 	//f2fiber__program_counter__set(load_fiber, cause, nil);
-	f2__force_funk_apply(cause, f2__this__fiber(cause), load_funk, nil);
+	//f2__force_funk_apply(cause, f2__this__fiber(cause), load_funk, nil);
 	f2ptr eval_exp = f2__force_funk_apply(cause, f2__this__fiber(cause), load_funk, nil);
 	if (raw__larva__is_type(cause, eval_exp)) {
 	  f2__stream__close(cause, stream);

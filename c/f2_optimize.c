@@ -1168,7 +1168,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       }
       {
 	f2ptr return_reg = f2__optimize_fiber__return_reg(cause, this);
-	f2__optimize_fiber__program_counter__set(cause, return_reg);
+	f2__optimize_fiber__program_counter__set(cause, this, return_reg);
       }
     } else if (raw__metro__is_type(cause, funk__data)) {
       f2ptr metro_env = f2metro__env(           funk__data, cause);

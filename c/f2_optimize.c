@@ -1139,9 +1139,22 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
   f2ptr funk__data = f2__optimize_fiber__value(cause, this);
   f2ptr args__data = f2__optimize_fiber__args( cause, this);
   boolean_t all_data_is_known = boolean__true;
-  if (raw__optimize_data__is_type(cause, funk__data) ||
-      raw__optimize_data__is_type(cause, args__data)) {
+  if (raw__optimize_data__is_type(cause, args__data)) {
     all_data_is_known = boolean__false;
+  }
+  if (raw__optimize_data__is_type(cause, funk__data)) {
+    all_data_is_known = boolean__false;
+  } else {
+    f2ptr name          = f2__funk__name(cause, funk__data);
+    if (raw__eq(cause, name, "primfunk:funk__new") ||
+	raw__eq(cause, name, "primfunk:conslist")) {
+      // do nothing for these special primitive funks
+    } else {
+      f2ptr is_funktional = f2__funk__is_funktional(cause, funk__data);
+      if (is_funktional != nil) {
+	all_data_is_known = boolean__false;
+      }
+    }
   }
   if (all_data_is_known) {
     f2ptr iter = args__data;

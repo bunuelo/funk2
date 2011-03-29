@@ -359,15 +359,14 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
 #endif // DEBUG_BYTECODES
     f2ptr args = f2fiber__args(fiber, cause);
-    //trace2(bytecode__jump_funk, funktion, args);
     release__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");
-    {
-      f2ptr return_reg = f2fiber__return_reg(fiber, cause);
-      f2fiber__program_counter__set(fiber, cause, return_reg);
-    }
     {
       f2ptr value = f2__cfunk__apply(cause, funktion, fiber, args);
       f2fiber__value__set(fiber, cause, value);
+    }
+    {
+      f2ptr return_reg = f2fiber__return_reg(fiber, cause);
+      f2fiber__program_counter__set(fiber, cause, return_reg);
     }
     return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
   } else if (raw__core_extension_funk__is_type(cause, funktion)) {
@@ -388,11 +387,6 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
 #endif // DEBUG_BYTECODES
     f2ptr args = f2fiber__args(fiber, cause);
-    //trace2(bytecode__jump_funk, funktion, args);
-    {
-      f2ptr return_reg = f2fiber__return_reg(fiber, cause);
-      f2fiber__program_counter__set(fiber, cause, return_reg);
-    }
     {
       f2ptr value;
       if ((args != nil) && (! raw__cons__is_type(cause, args))) {
@@ -401,6 +395,10 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 	value = f2__core_extension_funk__apply(cause, funktion, args);
       }
       f2fiber__value__set(fiber, cause, value);
+    }
+    {
+      f2ptr return_reg = f2fiber__return_reg(fiber, cause);
+      f2fiber__program_counter__set(fiber, cause, return_reg);
     }
     return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
   } else if (raw__metro__is_type(cause, funktion)) {
@@ -420,7 +418,6 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       bytecode_status("executing metro name=|%s|", str);
     }
 #endif // DEBUG_BYTECODES
-    //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
     f2fiber__env__set(fiber, cause, f2metro__env(funktion, cause));
     f2ptr body_bcs = f2metro__body_bytecodes(funktion, cause);
     if (raw__larva__is_type(cause, body_bcs)) {

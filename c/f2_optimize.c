@@ -1158,8 +1158,6 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       f2__optimize_fiber__program_counter__set(cause, this, body_bcs);
     } else if (raw__cfunk__is_type(              cause, funk__data) ||
 	       raw__core_extension_funk__is_type(cause, funk__data)) {
-      f2__terminal_print(cause, funk__data);
-      f2__terminal_print(cause, args__data);
       {
 	f2ptr value = f2__force_funk_apply(cause, f2__this__fiber(cause), funk__data, args__data);
 	f2__optimize_fiber__value__set(cause, this, value);

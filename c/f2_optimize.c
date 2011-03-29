@@ -1139,38 +1139,45 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
   f2ptr funk__data = f2__optimize_fiber__value(cause, this);
   f2ptr args__data = f2__optimize_fiber__args( cause, this);
   boolean_t all_data_is_known = boolean__true;
-  if (raw__optimize_data__is_type(cause, args__data)) {
-    all_data_is_known = boolean__false;
-  }
-  if (raw__optimize_data__is_type(cause, funk__data)) {
-    all_data_is_known = boolean__false;
-  } else {
-    if (! raw__funkable__is_type(cause, funk__data)) {
-      return f2larva__new(cause, 5315215, nil);
+  // determine if we can evaluate this funktion value at compile time.
+  {
+    if (raw__optimize_data__is_type(cause, args__data)) {
+      all_data_is_known = boolean__false;
     }
-    f2ptr name = f2__funkable__name(cause, funk__data);
-    if (raw__eq(cause, name, new__symbol(cause, "primfunk:funk__new")) ||
-	raw__eq(cause, name, new__symbol(cause, "primfunk:immutable_conslist"))) {
-      f2__terminal_print(cause, name);
-      // do nothing for these special primitive funks
+    if (raw__optimize_data__is_type(cause, funk__data)) {
+      all_data_is_known = boolean__false;
     } else {
-      f2ptr is_funktional = f2__funkable__is_funktional(cause, funk__data);
-      if (is_funktional == nil) {
-	all_data_is_known = boolean__false;
+      if (! raw__funkable__is_type(cause, funk__data)) {
+	printf("\noptimize warning: funk__data is not funkable."); fflush(stdout);
+	return f2larva__new(cause, 5315215, nil);
+      }
+      f2ptr name = f2__funkable__name(cause, funk__data);
+      if (raw__eq(cause, name, new__symbol(cause, "primfunk:funk__new")) ||
+	  raw__eq(cause, name, new__symbol(cause, "primfunk:immutable_conslist"))) {
+	f2__terminal_print(cause, name);
+	// assume these primitive funks are funktional
       } else {
-	printf("\noptimize note: funkable is funktional."); fflush(stdout);
+	// for debugging
+	all_data_is_known = boolean__false;
+	
+	f2ptr is_funktional = f2__funkable__is_funktional(cause, funk__data);
+	if (is_funktional == nil) {
+	  all_data_is_known = boolean__false;
+	} else {
+	  printf("\noptimize note: funkable is funktional."); fflush(stdout);
+	}
       }
     }
-  }
-  if (all_data_is_known) {
-    f2ptr iter = args__data;
-    while (iter != nil) {
-      f2ptr arg__data = f2__cons__car(cause, iter);
-      if (raw__optimize_data__is_type(cause, arg__data)) {
-	all_data_is_known = boolean__false;
-	break;
+    if (all_data_is_known) {
+      f2ptr iter = args__data;
+      while (iter != nil) {
+	f2ptr arg__data = f2__cons__car(cause, iter);
+	if (raw__optimize_data__is_type(cause, arg__data)) {
+	  all_data_is_known = boolean__false;
+	  break;
+	}
+	iter = f2__cons__cdr(cause, iter);
       }
-      iter = f2__cons__cdr(cause, iter);
     }
   }
   if (all_data_is_known) {

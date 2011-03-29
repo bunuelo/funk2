@@ -1048,6 +1048,7 @@ void raw__optimize_fiber__add_side_effect(f2ptr cause, f2ptr this, f2ptr side_ef
 
 f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr funk__body_bytecodes = f2__funk__body_bytecodes(cause, funk);
+  f2ptr funk__env            = f2__funk__env(           cause, funk);
   f2ptr args_reg             = nil;
   f2ptr args_reg_iter        = nil;
   {
@@ -1084,6 +1085,7 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
       }
     }
   }
+  f2__optimize_fiber__env__set(            cause, this, funk__env);
   f2__optimize_fiber__args__set(           cause, this, args_reg);
   f2__optimize_fiber__program_counter__set(cause, this, funk__body_bytecodes);
   return nil;

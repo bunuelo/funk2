@@ -84,6 +84,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	if(raw__exception__is_type(cause, load_funk_bcs)) {
 	  f2fiber__value__set(fiber, cause, load_funk_bcs);
 	} else {
+	  f2fiber__return_reg__set(     load_fiber, cause, nil);
 	  f2fiber__program_counter__set(load_fiber, cause, nil);
 	  f2fiber__force_funk(load_fiber, cause, load_funk, nil);
 	}

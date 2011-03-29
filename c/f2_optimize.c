@@ -1141,9 +1141,6 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
   boolean_t all_data_is_known = boolean__true;
   // determine if we can evaluate this funktion value at compile time.
   {
-    if (raw__optimize_data__is_type(cause, args__data)) {
-      all_data_is_known = boolean__false;
-    }
     if (raw__optimize_data__is_type(cause, funk__data)) {
       all_data_is_known = boolean__false;
     } else {
@@ -1159,7 +1156,7 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       } else {
 	// for debugging
 	all_data_is_known = boolean__false;
-	
+       
 	f2ptr is_funktional = f2__funkable__is_funktional(cause, funk__data);
 	if (is_funktional == nil) {
 	  all_data_is_known = boolean__false;
@@ -1168,7 +1165,9 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
 	}
       }
     }
-    if (all_data_is_known) {
+    if (raw__optimize_data__is_type(cause, args__data)) {
+      all_data_is_known = boolean__false;
+    } else {
       f2ptr iter = args__data;
       while (iter != nil) {
 	f2ptr arg__data = f2__cons__car(cause, iter);
@@ -1192,10 +1191,10 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
 	f2ptr value = f2__force_funk_apply(cause, f2__this__fiber(cause), funk__data, args__data);
 	f2__optimize_fiber__value__set(cause, this, value);
       }
-      {
-	f2ptr return_reg = f2__optimize_fiber__return_reg(cause, this);
-	f2__optimize_fiber__program_counter__set(cause, this, return_reg);
-      }
+      //{
+      //	f2ptr return_reg = f2__optimize_fiber__return_reg(cause, this);
+      //	f2__optimize_fiber__program_counter__set(cause, this, return_reg);
+      //}
     } else if (raw__metro__is_type(cause, funk__data)) {
       f2ptr metro_env = f2metro__env(           funk__data, cause);
       f2ptr body_bcs  = f2metro__body_bytecodes(funk__data, cause);

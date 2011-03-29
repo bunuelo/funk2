@@ -158,8 +158,8 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
 	printf("\nload exception..: "); f2__terminal_print(cause, read_exp); fflush(stdout);
 	printf("\ncurrent filename: "); f2__terminal_print(cause, filename); fflush(stdout);
       } else {
-	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
-	load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
+	f2ptr load_funk = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
+	load_funk_bcs   = f2__compile__funk(cause, fiber, load_funk);
 	if (raw__larva__is_type(cause, load_funk_bcs)) {
 	  f2__stream__close(cause, stream);
 	  return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list8__new(cause,

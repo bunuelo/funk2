@@ -1136,8 +1136,23 @@ f2ptr raw__optimize_fiber__increment_program_counter(f2ptr cause, f2ptr this) {
 f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr cause, f2ptr this) {
   f2ptr funk__data = f2__optimize_fiber__value(cause, this);
   f2ptr args__data = f2__optimize_fiber__args( cause, this);
-  if ((! raw__optimize_data__is_type(cause, funk__data)) &&
-      (! raw__optimize_data__is_type(cause, args__data))) {
+  boolean_t all_data_is_known = boolean__true;
+  if (raw__optimize_data__is_type(cause, funk__data) ||
+      raw__optimize_data__is_type(cause, args__data)) {
+    all_data_is_known = boolean__false;
+  }
+  if (all_data_is_known) {
+    f2ptr iter = args__data;
+    while (iter != nil) {
+      f2ptr arg__data = f2__cons__car(cause, iter);
+      if (raw__optimize_data__is_type(cause, arg__data)) {
+	all_data_is_known = boolean__false;
+	break;
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  if (all_data_is_known) {
     if (raw__funk__is_type(cause, funk__data)) {
       f2ptr funk_env = f2funk__env(           funk__data, cause);
       f2ptr body_bcs = f2funk__body_bytecodes(funk__data, cause);

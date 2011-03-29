@@ -1048,7 +1048,6 @@ void raw__optimize_fiber__add_side_effect(f2ptr cause, f2ptr this, f2ptr side_ef
 
 f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr funk__body_bytecodes = f2__funk__body_bytecodes(cause, funk);
-  //f2ptr funk__env            = f2__funk__env(           cause, funk);
   f2ptr args_reg             = nil;
   f2ptr args_reg_iter        = nil;
   {
@@ -1085,7 +1084,6 @@ f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr f
       }
     }
   }
-  //f2__optimize_fiber__env__set(            cause, this, funk__env);
   f2__optimize_fiber__args__set(           cause, this, args_reg);
   f2__optimize_fiber__program_counter__set(cause, this, funk__body_bytecodes);
   return nil;
@@ -1139,44 +1137,19 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
   f2ptr funk__data = f2__optimize_fiber__value(cause, this);
   f2ptr args__data = f2__optimize_fiber__args( cause, this);
   boolean_t all_data_is_known = boolean__true;
-  // determine if we can evaluate this funktion value at compile time.
-  {
-    if (raw__optimize_data__is_type(cause, funk__data)) {
-      all_data_is_known = boolean__false;
-    } else {
-      if (! raw__funkable__is_type(cause, funk__data)) {
-	printf("\noptimize warning: funk__data is not funkable."); fflush(stdout);
-	return f2larva__new(cause, 5315215, nil);
-      }
-      f2ptr name = f2__funkable__name(cause, funk__data);
-      if (raw__eq(cause, name, new__symbol(cause, "primfunk:funk__new")) ||
-	  raw__eq(cause, name, new__symbol(cause, "primfunk:immutable_conslist"))) {
-	f2__terminal_print(cause, name);
-	// assume these primitive funks are funktional
-      } else {
-	// for debugging
+  if (raw__optimize_data__is_type(cause, funk__data) ||
+      raw__optimize_data__is_type(cause, args__data)) {
+    all_data_is_known = boolean__false;
+  }
+  if (all_data_is_known) {
+    f2ptr iter = args__data;
+    while (iter != nil) {
+      f2ptr arg__data = f2__cons__car(cause, iter);
+      if (raw__optimize_data__is_type(cause, arg__data)) {
 	all_data_is_known = boolean__false;
-       
-	f2ptr is_funktional = f2__funkable__is_funktional(cause, funk__data);
-	if (is_funktional == nil) {
-	  all_data_is_known = boolean__false;
-	} else {
-	  printf("\noptimize note: funkable is funktional."); fflush(stdout);
-	}
+	break;
       }
-    }
-    if (raw__optimize_data__is_type(cause, args__data)) {
-      all_data_is_known = boolean__false;
-    } else {
-      f2ptr iter = args__data;
-      while (iter != nil) {
-	f2ptr arg__data = f2__cons__car(cause, iter);
-	if (raw__optimize_data__is_type(cause, arg__data)) {
-	  all_data_is_known = boolean__false;
-	  break;
-	}
-	iter = f2__cons__cdr(cause, iter);
-      }
+      iter = f2__cons__cdr(cause, iter);
     }
   }
   if (all_data_is_known) {
@@ -1187,13 +1160,15 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       f2__optimize_fiber__program_counter__set(cause, this, body_bcs);
     } else if (raw__cfunk__is_type(              cause, funk__data) ||
 	       raw__core_extension_funk__is_type(cause, funk__data)) {
+      f2__terminal_print(cause, funk__data);
+      f2__terminal_print(cause, args__data);
       {
 	f2ptr value = f2__force_funk_apply(cause, f2__this__fiber(cause), funk__data, args__data);
 	f2__optimize_fiber__value__set(cause, this, value);
       }
       {
-      	f2ptr return_reg = f2__optimize_fiber__return_reg(cause, this);
-      	f2__optimize_fiber__program_counter__set(cause, this, return_reg);
+	f2ptr return_reg = f2__optimize_fiber__return_reg(cause, this);
+	f2__optimize_fiber__program_counter__set(cause, this, return_reg);
       }
     } else if (raw__metro__is_type(cause, funk__data)) {
       f2ptr metro_env = f2metro__env(           funk__data, cause);
@@ -1656,7 +1631,7 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr fr
 f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
   // lookup special funks that we assume are not locally masked by the local environment.
   if (raw__eq(cause, type_name, new__symbol(cause, "funk_variable"))) {
-    if (raw__eq(cause, var_name,  new__symbol(cause, "immutable_conslist")) ||
+    if (raw__eq(cause, var_name,  new__symbol(cause, "conslist")) ||
 	raw__eq(cause, var_name,  new__symbol(cause, "funk-new"))) {
       f2ptr funk = f2__environment__lookup_type_var_value(cause, global_environment(), type_name, var_name);
       if (! raw__larva__is_type(cause, funk)) {

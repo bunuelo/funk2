@@ -390,12 +390,12 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     {
       f2ptr args = f2fiber__args(fiber, cause);
       {
-	f2ptr value;
 	if ((args != nil) && (! raw__cons__is_type(cause, args))) {
-	  value = f2larva__new(cause, 1, nil);
-	} else {
-	  value = f2__core_extension_funk__apply(cause, funktion, args);
+	  f2ptr value = f2larva__new(cause, 1, nil);
+	  f2fiber__value__set(fiber, cause, value);
+	  return 1;
 	}
+	f2ptr value = f2__core_extension_funk__apply(cause, funktion, args);
 	f2fiber__value__set(fiber, cause, value);
       }
     }

@@ -1154,8 +1154,10 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
       // do nothing for these special primitive funks
     } else {
       f2ptr is_funktional = f2__funkable__is_funktional(cause, funk__data);
-      if (is_funktional != nil) {
+      if (is_funktional == nil) {
 	all_data_is_known = boolean__false;
+      } else {
+	printf("\noptimize note: funkable is funktional."); fflush(stdout);
       }
     }
   }

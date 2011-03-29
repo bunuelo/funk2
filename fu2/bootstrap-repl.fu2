@@ -242,10 +242,10 @@
 [defmetro type-execute-apply [type_name this slot_name args] `[apply [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
 [defmetro type-have-apply    [type_name this slot_name args] `[apply [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
 
-[defmetro type-get     [type_name this slot_name :rest args] `[type-get-apply     ,type_name ,this ,slot_name [conslist @args]]]
-[defmetro type-set     [type_name this slot_name :rest args] `[type-set-apply     ,type_name ,this ,slot_name [conslist @args]]]
-[defmetro type-execute [type_name this slot_name :rest args] `[type-execute-apply ,type_name ,this ,slot_name [conslist @args]]]
-[defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-get     [type_name this slot_name :rest args] `[type-get-apply     ,type_name ,this ,slot_name [immutable_conslist @args]]]
+[defmetro type-set     [type_name this slot_name :rest args] `[type-set-apply     ,type_name ,this ,slot_name [immutable_conslist @args]]]
+[defmetro type-execute [type_name this slot_name :rest args] `[type-execute-apply ,type_name ,this ,slot_name [immutable_conslist @args]]]
+[defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [immutable_conslist @args]]]
 
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get slot_name]]
@@ -406,7 +406,7 @@
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
   `[apply [funk-new_with_name let ,let-vars
 			      @body]
-	  [conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
+	  [immutable_conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
@@ -482,9 +482,9 @@
 
 [defmetro parog [:rest codes]
   'run commands in parallel'
-  `[let [[parog-fibers [conslist @[mapcar [funk [code]
-						`[fiber [funk [] ,code] []]]
-					  codes]]]]
+  `[let [[parog-fibers [immutable_conslist @[mapcar [funk [code]
+							  `[fiber [funk [] ,code] []]]
+						    codes]]]]
      [apply &join parog-fibers]]]
 
 [defunk parc [proc seq]
@@ -637,7 +637,7 @@
 	  [while-loop]]]
 
 [defmetro funkall [funk :rest args]
-  `[apply ,funk [conslist @args]]]
+  `[apply ,funk [immutable_conslist @args]]]
 
 [defunk find [exp seq key test]
   [if [null seq]

@@ -430,6 +430,7 @@ f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
 }
 def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(this_cause, conslist));
 
+def_pcfunk0_and_rest(immutable_conslist, seq, return f2__conslist__new(this_cause, seq));
 
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   u64 length = 0;
@@ -1765,6 +1766,8 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__1(         conslist__as__array,  this,     "returns a conslist represented as a new array.");
   f2__primcfunk__init__2(         conslist__first_n,    this, n,  "returns a new representation of the first n elements of the list, this.");
   f2__primcfunk__init__1(         conslistlist__append, this,     "append a list of lists.");
+  
+  f2__primcfunk__init__0_and_rest(immutable_conslist, seq, "returns a new conslist that we will agree to not mutate.");
   
   // cause
   

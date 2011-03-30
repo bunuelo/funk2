@@ -117,6 +117,7 @@
 												nil
 												nil
 												nil]]
+								[funk-optimize compiled_funk 10]
 								[define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
 								[define is_funktional [primfunk:array__elt compiled_funk 10]]
 								`[funk-new ,environment [quote ,name] [quote ,args]

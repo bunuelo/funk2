@@ -101,14 +101,30 @@
 					       funk2_release_name  funk2_release_name
 					       funk2_release_names funk2_release_names]]]
 
-[print 'redefining funk-new_with_name.']
-[globalize-funk funk-new_with_name-original &funk-new_with_name]
-[defmetro funk-new_with_name [name args :rest body]
-  [print `[,name ,args ,body]]
-  `[let [[new_funk [funk-new_with_name-original ,name ,args
-						@body]]]
-     `[have new_funk optimize 10]
-     new_funk]]
+[print 'redefining funk-new_with_name_and_environment.']
+[globalize-funk funk-new_with_name_and_environment-original &funk-new_with_name_and_environment]
+[globalize-funk funk-new_with_name_and_environment [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
+							      `[[define demetroed     [exps-demetropolize_full body]]
+								[define compiled_funk [funk-new [bytecode copy env value nil] name args
+												demetroed
+												body
+												nil
+												nil
+												nil]]
+								[funk-optimize compiled_funk 10]
+								[define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
+								[define is_funktional [primfunk:array__elt compiled_funk 10]]
+								`[funk-new ,environment [quote ,name] [quote ,args]
+									   [quote ,demetroed]
+									   [quote ,body]
+									   [quote ,compiled_bcs]
+									   ,is_funktional
+									   nil]]
+							      nil
+							      nil
+							      nil
+							      nil]]
+
 
 
 [terminal_format standard-terminal '\nsaving img/bootstrap.img.']

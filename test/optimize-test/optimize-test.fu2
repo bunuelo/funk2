@@ -83,7 +83,7 @@
 			[if [not optimized_success_result]
 			    [prog [terminal_format standard-terminal '\noptimize_test: optimized funk failed success test for ' [get this name] ' test.']
 				  nil]
-			  [prog [terminal_format standard-terminal '\noptimize_test: optimized funk succeeded ' [get this name] ' test.']
+			  [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' succeeded.']
 				t]]]]]]]]]]]]]]
 
 

@@ -23,7 +23,7 @@
        [= name              initial-name]
        [= funk              initial-funk]
        [= test_args         initial-test_args]
-       [= success_condition initial-test_condition]
+       [= success_condition initial-success_condition]
        [= success_funk      [eval `[funk [] ,success_condition]]]
        [= test_result       nil]
        [= success_result    nil]]]

@@ -102,8 +102,9 @@
 		[if [have test run]
 		    [++ successful_test_count]]]
 	  tests]
-    [terminal_format standard-terminal '\noptimize_test: ' test_count            ' tests run.']
-    [terminal_format standard-terminal '\n               ' successful_test_count ' tests succeeded.']
+    [terminal_format standard-terminal '\noptimize_test: ' test_count                           ' tests run.']
+    [terminal_format standard-terminal '\n               ' successful_test_count                ' tests succeeded.']
+    [terminal_format standard-terminal '\n               ' [- test_count successful_test_count] ' tests failed.']
     nil]]
 
 

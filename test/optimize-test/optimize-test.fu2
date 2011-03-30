@@ -116,7 +116,7 @@
 					   b]]
 				   `[1 2]
 				   `[== result 1]]]
-    [have test run]]]
+    [have test_suite run]]]
 
 
 

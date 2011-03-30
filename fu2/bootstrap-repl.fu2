@@ -955,8 +955,6 @@
       [sleep 1]]
     [get result_place thing]]]
 
-[print 'hi']
-
 [primfunk:load 'fu2/repl.fu2']
 
 [memory-debug_assert_valid]

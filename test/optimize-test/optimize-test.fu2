@@ -40,8 +40,8 @@
 
 [deftypefunk optimize_test execute run []
   [let [[funk_execution_completed nil]]
-    [shelter [= result [with this
-			     [= unoptimized_result [apply funk test_args]]]]
+    [shelter [= unoptimized_result [with this
+					 [apply funk test_args]]]
 	     [= funk_execution_completed t]]
     [if [not funk_execution_completed]
 	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test.']

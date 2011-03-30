@@ -1283,6 +1283,7 @@ export_cefunk1(cairo_surface__destroy, this, 0, "Destroys the cairo_surface.");
 
 
 f2ptr raw__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) {
+#if defined(F2__CAIRO_SUPPORTED)
   s64 filename__length = raw__string__length(cause, filename);
   u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
   raw__string__str_copy(cause, filename, filename__str);
@@ -1306,6 +1307,9 @@ f2ptr raw__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) 
 															  new__symbol(cause, "filename"),     filename))));
   }
   return nil;
+#else
+  return f2__cairo_not_supported_larva__new(cause);
+#endif // F2__CAIRO_SUPPORTED
 }
 
 f2ptr f2__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) {

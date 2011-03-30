@@ -24,7 +24,8 @@
 				test_args
 				success_condition
 				success_funk
-				result
+				unoptimized_result
+				optimized_result
 				success_result
 				optimized_result
 				optimized_success_result]
@@ -32,25 +33,26 @@
 	initial-funk
 	initial-test_args
 	initial-success_condition]
-       [= name              initial-name]
-       [= funk              initial-funk]
-       [= test_args         initial-test_args]
-       [= success_condition initial-success_condition]
-       [= success_funk      [eval `[funk [] ,success_condition]]]
-       [= test_result       nil]
-       [= success_result    nil]]]
+       [= name               initial-name]
+       [= funk               initial-funk]
+       [= test_args          initial-test_args]
+       [= success_condition  initial-success_condition]
+       [= success_funk       [eval `[funk [result] ,success_condition]]]
+       [= unoptimized_result nil]
+       [= optimized_result   nil]
+       [= success_result     nil]]]
 
 [deftypefunk optimize_test execute run []
   [let [[funk_execution_completed nil]]
     [shelter [= result [with this
-			     [apply funk test_args]]]
+			     [= unoptimized_result [apply funk test_args]]]]
 	     [= funk_execution_completed t]]
     [if [not funk_execution_completed]
 	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test.']
 	      nil]
       [let [[success_funk_execution_completed nil]]
 	[shelter [= success_result [with this
-					 [apply success_funk nil]]]
+					 [apply success_funk `[,unoptimized_result]]]]
 		 [= success_funk_execution_completed t]]
 	[if [not success_funk_execution_completed]
 	    [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
@@ -73,7 +75,7 @@
 			    nil]
 		    [let [[success_funk_execution_completed nil]]
 		      [shelter [= success_result [with this
-						       [apply success_funk nil]]]
+						       [apply success_funk `[,optimized_result]]]]
 			       [= success_funk_execution_completed t]]
 		      [if [not success_funk_execution_completed]
 			  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
@@ -92,7 +94,7 @@
 			     a
 			   b]]
 		   `[1 2]
-		   `[== test_result 1]]]]
+		   `[== result 1]]]]
     [have test run]]]
 
 

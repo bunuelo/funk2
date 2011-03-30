@@ -18,14 +18,15 @@
  rights to redistribute these changes.'
 
 
-[deframe optimize_test [frame] [name funk test_args success_condition]
+[deframe optimize_test [frame] [name funk test_args success_condition success_funk]
   [new [initial-name initial-funk initial-test_args initial-success_condition]
-       [= name           initial-name]
-       [= funk           initial-funk]
-       [= test_args      initial-test_args]
-       [= success_funk   [eval `[funk [] ,success_condition]]]
-       [= test_result    nil]
-       [= success_result nil]]]
+       [= name              initial-name]
+       [= funk              initial-funk]
+       [= test_args         initial-test_args]
+       [= success_condition initial-test_condition]
+       [= success_funk      [eval `[funk [] ,success_condition]]]
+       [= test_result       nil]
+       [= success_result    nil]]]
 
 [deftypefunk optimize_test execute run []
   [let [[test_funk_execution_completed nil]]

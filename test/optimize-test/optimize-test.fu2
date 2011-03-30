@@ -66,9 +66,9 @@
 		  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete optimization of funk for ' [get this name] ' test.']
 			nil]
 		[let [[optimized_funk_execution_completed nil]]
-		  [prog [= optimized_result [with this
-						  [apply optimized_funk test_args]]]
-			[= optimized_funk_execution_completed t]]
+		  [shelter [= optimized_result [with this
+						     [apply optimized_funk test_args]]]
+			   [= optimized_funk_execution_completed t]]
 		  [if [not optimized_funk_execution_completed]
 		      [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of optimized funk for ' [get this name] ' test.']
 			    nil]

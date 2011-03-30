@@ -28,9 +28,11 @@
 
 
 [defunk optimize-test []
-  [optimize_test-begin_test_mode]
+  [optimize_test-test_mode-enter]
   [shelter [terminal_format standard-terminal '\noptimize_test: successfully entered test mode.']
-	   [terminal_format standard-terminal '\noptimize_test: exiting test mode.']
-	   ]
-  [optimize_test-end_test_mode]]
+	   
+	   
+	   
+	   [terminal_format standard-terminal '\noptimize_test: exiting test mode.']]
+  [optimize_test-test_mode-exit]]
 

@@ -108,6 +108,7 @@
     [if [!= [- test_count successful_test_count] 0]
 	[terminal_format standard-terminal '\nOPTIMIZE TESTS DID FAIL.']
       [terminal_format standard-terminal '\nSUCCESS.']]
+    [terminal_format standard-terminal '\n']
     nil]]
 
 

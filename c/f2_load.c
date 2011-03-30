@@ -33,8 +33,7 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
 
 f2ptr raw__load(f2ptr cause, f2ptr filename) {
   if (!raw__string__is_type(cause, filename)) {
-    status("load error: filename must be a string.");
-    return nil;
+    error(nil, "load error: filename must be a string.");
   }
   f2ptr fiber  = f2__this__fiber(cause);
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);

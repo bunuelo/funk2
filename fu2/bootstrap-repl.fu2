@@ -904,13 +904,13 @@
 					       @body]]]
 
 
-`[defmetro defunk [name args :rest body]
+[defmetro defunk [name args :rest body]
   [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
   `[globalize-funk ,name
 		   [funk-new_with_name ,name ,args
 				       @body]]]
 
-[defmetro defunk [name args :rest body]
+`[defmetro defunk [name args :rest body]
   [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
   `[globalize-funk ,name
 		   [let [[new_funk [funk-new_with_name ,name ,args
@@ -947,7 +947,7 @@
       [sleep 1]]
     [get result_place thing]]]
 
-`[defunk load_memory_image [filename]
+[defunk load_memory_image [filename]
   [let [[uid          [management_thread-add_load_memory_image_command filename]]
 	[done         nil]
 	[result_place [new place nil]]]

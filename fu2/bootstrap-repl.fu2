@@ -910,14 +910,6 @@
 		   [funk-new_with_name ,name ,args
 				       @body]]]
 
-`[defmetro defunk [name args :rest body]
-  [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
-  `[globalize-funk ,name
-		   [let [[new_funk [funk-new_with_name ,name ,args
-						       @body]]]
-		     [have new_funk optimize 10]
-		     new_funk]]]
-
 [globalize memory:debug nil]
 
 [defunk memory-debug_assert_valid []

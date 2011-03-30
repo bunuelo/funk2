@@ -24,8 +24,10 @@
 				test_args
 				success_condition
 				success_funk
-				test_result
-				success_result]
+				result
+				success_result
+				optimized_result
+				optimized_success_result]
   [new [initial-name
 	initial-funk
 	initial-test_args
@@ -39,27 +41,49 @@
        [= success_result    nil]]]
 
 [deftypefunk optimize_test execute run []
-  [let [[optimize_funk_completed nil]]
-    [shelter [= optimized_funk [have funk optimize 10]]
-	     [= optimize_funk_completed t]]
-    [if [not optimize_funk_completed]
-	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete optimization of test funk for ' [get this name] ' test.']
-	      t]
-      [let [[test_funk_execution_completed nil]]
-	[shelter [= test_result [with this
-				      [apply funk test_args]]]
-		 [= test_funk_execution_completed t]]]
-      [if [not test_funk_execution_completed]
-	  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of test funk for ' [get this name] ' test.']
-		t]
-	[let [[success_funk_execution_completed nil]]
-	  [shelter [= success_result [with this
-					   [apply success_funk nil]]]
-		   [= success_funk_execution_completed t]]
-	  [if [not success_funk_execution_completed]
-	      [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
-		    t]
-	    success_result]]]]]]
+  [let [[funk_execution_completed nil]]
+    [shelter [= result [with this
+			     [apply funk test_args]]]
+	     [= funk_execution_completed t]]
+    [if [not funk_execution_completed]
+	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test.']
+	      nil]
+      [let [[success_funk_execution_completed nil]]
+	[shelter [= success_result [with this
+					 [apply success_funk nil]]]
+		 [= success_funk_execution_completed t]]
+	[if [not success_funk_execution_completed]
+	    [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
+		  nil]
+	  [if [not success_result]
+	      [prog [terminal_format standard-terminal '\noptimize_test: success funk for ' [get this name] ' test is not true.']
+		    nil]
+	    [let [[optimize_funk_completed nil]]
+	      [shelter [= optimized_funk [have funk optimize 10]]
+		       [= optimize_funk_completed t]]
+	      [if [not optimize_funk_completed]
+		  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete optimization of funk for ' [get this name] ' test.']
+			nil]
+		[let [[optimized_funk_execution_completed nil]]
+		  [shelter [= optimized_result [with this
+						     [apply optimized_funk test_args]]]
+			   [= optimized_funk_execution_completed t]]
+		  [if [not optimized_funk_execution_completed]
+		      [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of optimized funk for ' [get this name] ' test.']
+			    nil]
+		    [let [[success_funk_execution_completed nil]]
+		      [shelter [= success_result [with this
+						       [apply success_funk nil]]]
+			       [= success_funk_execution_completed t]]
+		      [if [not success_funk_execution_completed]
+			  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
+				nil]
+			[if [not success_result]
+			    [prog [terminal_format standard-terminal '\noptimize_test: optimized funk failed success test for ' [get this name] ' test.']
+				  nil]
+			  [prog [terminal_format standard-terminal '\noptimize_test: optimized funk succeeded ' [get this name] ' test.']
+				t]]]]]]]]]]]]]]
+
 
 [defunk optimize-test []
   [let [[test [new optimize_test `first-test

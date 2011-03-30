@@ -104,9 +104,10 @@
 [print 'redefining funk-new_with_name.']
 [globalize-funk funk-new_with_name-original &funk-new_with_name]
 [defmetro funk-new_with_name [name args :rest body]
+  [print `[,name ,args ,body]]
   `[let [[new_funk [funk-new_with_name-original ,name ,args
 						@body]]]
-     [have new_funk optimize 10]
+     `[have new_funk optimize 10]
      new_funk]]
 
 

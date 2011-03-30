@@ -20,6 +20,7 @@
 
 [deframe optimize_test [frame] [name
 				funk
+				optimized_funk
 				test_args
 				success_condition
 				success_funk
@@ -38,22 +39,27 @@
        [= success_result    nil]]]
 
 [deftypefunk optimize_test execute run []
-  [let [[test_funk_execution_completed nil]]
-    [let [[test_funk [eval `[funk [] @[get this body]]]]]
-      [shelter [= test_result [with this
-				    [apply test_funk nil]]]
-	       [= test_funk_execution_completed t]]]
-    [if [not test_funk_execution_completed]
-	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of test funk ' [get this name] ' test.']
+  [let [[optimize_funk_completed nil]]
+    [shelter [= optimized_funk [have funk optimize 10]]
+	     [= optimize_funk_completed t]]
+    [if [not optimize_funk_completed]
+	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete optimization of test funk for ' [get this name] ' test.']
 	      t]
-      [let [[success_funk_execution_completed nil]]
-	[shelter [= success_result [with this
-					 [apply success_funk nil]]]
-		 [= success_funk_execution_completed t]]
-	[if [not success_funk_execution_completed]
-	    [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
-		  t]
-	  success_result]]]]]
+      [let [[test_funk_execution_completed nil]]
+	[shelter [= test_result [with this
+				      [apply funk test_args]]]
+		 [= test_funk_execution_completed t]]]
+      [if [not test_funk_execution_completed]
+	  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of test funk for ' [get this name] ' test.']
+		t]
+	[let [[success_funk_execution_completed nil]]
+	  [shelter [= success_result [with this
+					   [apply success_funk nil]]]
+		   [= success_funk_execution_completed t]]
+	  [if [not success_funk_execution_completed]
+	      [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
+		    t]
+	    success_result]]]]]]
 
 [defunk optimize-test []
   [let [[test [new optimize_test `first-test

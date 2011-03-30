@@ -87,7 +87,7 @@
 				t]]]]]]]]]]]]]]
 
 
-[deframe optimize_test_suite [tests]
+[deframe optimize_test_suite [frame] [tests]
   [new []
        [= tests nil]]]
 

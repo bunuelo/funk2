@@ -101,14 +101,14 @@
 					       funk2_release_name  funk2_release_name
 					       funk2_release_names funk2_release_names]]]
 
-[print 'redefining defunk.']
-[defmetro defunk [name args :rest body]
-  [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
-  `[globalize-funk ,name
-		   [let [[new_funk [funk-new_with_name ,name ,args
-						       @body]]]
-		     [have new_funk optimize 10]
-		     new_funk]]]
+[print 'redefining funk-new_with_name.']
+[globalize-funk funk-new_with_name-original &funk-new_with_name]
+[defmetro funk-new_with_name [name args :rest body]
+  `[let [[new_funk [funk-new_with_name-original funk ,args
+						@body]]]
+     [have new_funk optimize 10]
+     new_funk]]
+
 
 [terminal_format standard-terminal '\nsaving img/bootstrap.img.']
 [save_memory_image 'img/bootstrap.img']

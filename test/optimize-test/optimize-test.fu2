@@ -87,14 +87,35 @@
 				t]]]]]]]]]]]]]]
 
 
+[deframe optimize_test_suite [tests]
+  [new []
+       [= tests nil]]]
+
+[deftypefunk optimize_test_suite execute add_test [test]
+  [= tests [append tests [conslist test]]]]
+
+[deftypefunk optimize_test_suite execute run []
+  [let [[test_count            0]
+	[successful_test_count 0]]
+    [mapc [funk [test]
+		[++ test_count]
+		[if [have test run]
+		    [++ successful_test_count]]]
+	  tests]
+    [terminal_format standard-terminal '\noptimize_test: ' test_count            ' tests run.']
+    [terminal_format standard-terminal '\n               ' successful_test_count ' tests succeeded.']
+    nil]]
+
+
 [defunk optimize-test []
-  [let [[test [new optimize_test `first-test
-		   [funk [a b]
-			 [if [< a b]
-			     a
-			   b]]
-		   `[1 2]
-		   `[== result 1]]]]
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_test [new optimize_test `first-test
+				   [funk [a b]
+					 [if [< a b]
+					     a
+					   b]]
+				   `[1 2]
+				   `[== result 1]]]
     [have test run]]]
 
 

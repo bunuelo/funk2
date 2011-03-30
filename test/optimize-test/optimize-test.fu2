@@ -18,21 +18,42 @@
  rights to redistribute these changes.'
 
 
-[defunk optimize_test-test_mode-enter []
-  [terminal_format standard-terminal '\noptimize_test: entering test mode.']
-  [globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-optimize]]
+[deframe optimize_test [frame] [name funk test_args success_condition]
+  [new [initial-name initial-funk initial-test_args initial-success_condition]
+       [= name           initial-name]
+       [= funk           initial-funk]
+       [= test_args      initial-test_args]
+       [= success_funk   [eval `[funk [] ,success_condition]]]
+       [= test_result    nil]
+       [= success_result nil]]]
 
-[defunk optimize_test-test_mode-exit []
-  [globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
-  [terminal_format standard-terminal '\noptimize_test: successfully exited test mode.']]
-
+[deftypefunk optimize_test execute run []
+  [let [[test_funk_execution_completed nil]]
+    [let [[test_funk [eval `[funk [] @[get this body]]]]]
+      [shelter [= test_result [with this
+				    [apply test_funk nil]]]
+	       [= test_funk_execution_completed t]]]
+    [if [not test_funk_execution_completed]
+	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of test funk ' [get this name] ' test.']
+	      t]
+      [let [[success_funk_execution_completed nil]]
+	[shelter [= success_result [with this
+					 [apply success_funk nil]]]
+		 [= success_funk_execution_completed t]]
+	[if [not success_funk_execution_completed]
+	    [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test.']
+		  t]
+	  success_result]]]]]
 
 [defunk optimize-test []
-  [optimize_test-test_mode-enter]
-  [shelter [terminal_format standard-terminal '\noptimize_test: successfully entered test mode.']
-	   
-	   
-	   
-	   [terminal_format standard-terminal '\noptimize_test: exiting test mode.']]
-  [optimize_test-test_mode-exit]]
+  [let [[test [new optimize_test `first-test
+		   [funk [a b]
+			 [if [< a b]
+			     a
+			   b]]
+		   `[1 2]
+		   `[== test_result 1]]]]
+    [have test run]]]
+
+
 

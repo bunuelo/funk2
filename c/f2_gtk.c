@@ -2237,6 +2237,7 @@ def_pcfunk3(gtk__pixbuf__new_from_rgb_data, width, height, rgb_data, return f2__
 
 
 f2ptr raw__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
+#if defined(F2__GTK__SUPPORTED)
   s64 width__i  = f2integer__i(width,  cause);
   s64 height__i = f2integer__i(height, cause);
   if (width__i <= 0 || height__i <= 0) {
@@ -2267,6 +2268,9 @@ f2ptr raw__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr heigh
   }
   GdkPixbuf* pixbuf = funk2_gtk__pixbuf__new(&(__funk2.gtk), width__i, height__i, pixbuf_rgb_data);
   return f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
 }
 
 f2ptr f2__gtk__pixbuf__new_from_rgba_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {

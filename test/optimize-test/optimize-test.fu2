@@ -91,6 +91,8 @@
 		[let [[test_args         [first test_args_success_condition_pair]]
 		      [success_condition [second test_args_success_condition_pair]]]
 		  [++ test_count]
+		  [terminal_format standard-terminal '\ntest_args........: ' test_args]
+		  [terminal_format standard-terminal '\nsuccess_condition: ' success_condition]
 		  [if [have this run_for_test_args test_args success_condition]
 		      [++ successful_test_count]]]]
 	  test_args_success_condition_pairs]

@@ -878,6 +878,7 @@
 	     [have fiber          quit]
 	     [have bug_fiber      quit]
 	     [have complete_fiber quit]
+	     [print fiber_encountered_bug]
 	     [cond [fiber_encountered_bug [prog [print 'main fiber: child encountered bug']
 						[bug [get fiber value]]]]
 		   [fiber_completed       [prog [print 'main fiber: child completed']

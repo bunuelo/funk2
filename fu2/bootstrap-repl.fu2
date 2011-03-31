@@ -847,8 +847,8 @@
        [let [[fiber_encountered_bug nil]
 	     [fiber_completed       nil]]
 	 [let [[continue_trigger [new fiber_trigger]]
-	       [bug_trigger      [new fiber_trigger]]
-	       [complete_trigger [new fiber_trigger]]]
+	       [bug_trigger      [get fiber bug_trigger]]
+	       [complete_trigger [get fiber complete_trigger]]]
 	   [let [[bug_fiber [fiber [funk []
 					 [print 'bug fiber: waiting for bug_trigger']
 					 [wait-for-trigger bug_trigger]
@@ -878,8 +878,10 @@
 	     [have fiber          quit]
 	     [have bug_fiber      quit]
 	     [have complete_fiber quit]
-	     [cond [fiber_encountered_bug [bug [get fiber value]]]
-		   [fiber_completed       result]]]]]]]]
+	     [cond [fiber_encountered_bug [prog [print 'main fiber: child encountered bug']
+						[bug [get fiber value]]]]
+		   [fiber_completed       [prog [print 'main fiber: child completed']
+						result]]]]]]]]]
 
 
 [defmetro with-new-cause [:rest codes]

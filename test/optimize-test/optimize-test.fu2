@@ -36,52 +36,62 @@
 
 [deftypefunk optimize_test execute run_for_test_args [test_args success_condition]
   [let [[funk_execution_completed nil]]
-    [shelter [= unoptimized_result [with this
-					 [apply funk test_args]]]
-	     [= funk_execution_completed t]]
-    [if [not funk_execution_completed]
-	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test on ' test_args '.']
-	      nil]
-      [let [[success_funk_execution_completed nil]
-	    [unoptimized_success_result       nil]
-	    [success_funk                     [eval `[funk [result] ,success_condition]]]]
-	[shelter [= unoptimized_success_result [with this
-						     [apply success_funk `[,unoptimized_result]]]]
-		 [= success_funk_execution_completed t]]
-	[if [not success_funk_execution_completed]
-	    [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test on ' test_args '.']
-		  nil]
-	  [if [not unoptimized_success_result]
-	      [prog [terminal_format standard-terminal '\noptimize_test: success funk for ' [get this name] ' test is not true on ' test_args '.  Result was ' unoptimized_result '.']
-		    nil]
-	    [let [[optimize_funk_completed nil]]
-	      [shelter [have funk optimize 10]
-		       [= optimized_funk          funk]
-		       [= funk                    nil]
-		       [= optimize_funk_completed t]]
-	      [if [not optimize_funk_completed]
-		  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete optimization of funk for ' [get this name] ' test on ' test_args '.']
+    [let [[bug [shelter [= unoptimized_result [with this
+						    [apply funk test_args]]]
+			[= funk_execution_completed t]]]]
+      [if [not funk_execution_completed]
+	  [prog [terminal_format standard-terminal
+				 '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test on ' test_args '.'
+				 '\n               Bug was ' bug '.']
+		nil]
+	[let [[success_funk_execution_completed nil]
+	      [unoptimized_success_result       nil]
+	      [success_funk                     [eval `[funk [result] ,success_condition]]]]
+	  [let [[bug [shelter [= unoptimized_success_result [with this
+								  [apply success_funk `[,unoptimized_result]]]]
+			      [= success_funk_execution_completed t]]]]
+	    [if [not success_funk_execution_completed]
+		[prog [terminal_format standard-terminal
+				       '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test on ' test_args '.'
+				       '\n               Bug was ' bug '.']
+		      nil]
+	      [if [not unoptimized_success_result]
+		  [prog [terminal_format standard-terminal '\noptimize_test: success funk for ' [get this name] ' test is not true on ' test_args '.  Result was ' unoptimized_result '.']
 			nil]
-		[let [[optimized_funk_execution_completed nil]]
-		  [shelter [= optimized_result [with this
-						     [apply optimized_funk test_args]]]
-			   [= optimized_funk_execution_completed t]]
-		  [if [not optimized_funk_execution_completed]
-		      [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of optimized funk for ' [get this name] ' test on ' test_args '.']
-			    nil]
-		    [let [[success_funk_execution_completed nil]
-			  [optimized_success_result         nil]]
-		      [shelter [= optimized_success_result [with this
-								 [apply success_funk `[,optimized_result]]]]
-			       [= success_funk_execution_completed t]]
-		      [if [not success_funk_execution_completed]
-			  [prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test ' test_args '.']
-				nil]
-			[if [not optimized_success_result]
-			    [prog [terminal_format standard-terminal '\noptimize_test: optimized funk failed success test for ' [get this name] ' test ' test_args '.  Result was ' optimized_result '.']
-				  nil]
-			  [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' succeeded on ' test_args '.']
-				t]]]]]]]]]]]]]]
+		[let [[optimize_funk_completed nil]]
+		  [let [[bug [shelter [have funk optimize 10]
+				      [= optimized_funk          funk]
+				      [= funk                    nil]
+				      [= optimize_funk_completed t]]]]
+		    [if [not optimize_funk_completed]
+			[prog [terminal_format standard-terminal
+					       '\noptimize_test: failed to complete optimization of funk for ' [get this name] ' test on ' test_args '.'
+					       '\n               Bug was ' bug '.']
+			      nil]
+		      [let [[optimized_funk_execution_completed nil]]
+			[let [[bug [shelter [= optimized_result [with this
+								      [apply optimized_funk test_args]]]
+					    [= optimized_funk_execution_completed t]]]]
+			  [if [not optimized_funk_execution_completed]
+			      [prog [terminal_format standard-terminal
+						     '\noptimize_test: failed to complete execution of optimized funk for ' [get this name] ' test on ' test_args '.'
+						     '\n               Bug was ' bug '.']
+				    nil]
+			    [let [[success_funk_execution_completed nil]
+				  [optimized_success_result         nil]]
+			      [let [[bug [shelter [= optimized_success_result [with this
+										    [apply success_funk `[,optimized_result]]]]
+						  [= success_funk_execution_completed t]]]]
+				[if [not success_funk_execution_completed]
+				    [prog [terminal_format standard-terminal
+							   '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test ' test_args '.'
+							   '\n               Bug was ' bug '.']
+					  nil]
+				  [if [not optimized_success_result]
+				      [prog [terminal_format standard-terminal '\noptimize_test: optimized funk failed success test for ' [get this name] ' test ' test_args '.  Result was ' optimized_result '.']
+					    nil]
+				    [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' succeeded on ' test_args '.']
+					  t]]]]]]]]]]]]]]]]]]]
 
 [deftypefunk optimize_test execute run []
   [let [[test_count            0]

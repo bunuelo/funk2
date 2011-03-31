@@ -883,7 +883,7 @@
 	       [error bug_type    `shelter-fiber_paused_without_bug
 		      fiber_value bug
 		      stack_trace [get fiber stack_trace]]
-	     `bug]]]
+	     bug]]]
      result]]
 
 [defmetro shelter-debug [:rest codes]

@@ -689,7 +689,7 @@ f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
 			       args,
 			       demetropolized_body,
 			       body,
-			       end,
+			       env,
 			       machine_code,
 			       is_funktional,
 			       documentation);

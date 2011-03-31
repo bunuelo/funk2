@@ -485,40 +485,38 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		
 		if(exit_reason == exit_reason__found_larva) {
 		  need_to_launch_larva_handling_critic_fiber = 1;
-		} else if (exit_reason == exit_reason__is_complete) {
-		  
-		  if (f2fiber__is_complete(fiber, cause)) {
-		    //printf("\n  fiber completed.");
-		    if (! f2fiber__is_zombie(fiber, cause)) {
-		      f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
-		    }
-		    if (! f2fiber__keep_undead(fiber, cause)) {
-		      f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
-		      if (last_executed_time) {
-			f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(last_executed_time, cause);
-			u64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
-			// This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
-			if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
-			  
-			  // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
-			  //f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-			  //if (fiber_cause != nil) {
-			  //	raw__cause__remove_fiber(cause, fiber_cause, fiber);
-			  //}
-			  if (f2fiber__is_zombie(fiber, cause)) {
-			    f2fiber__is_zombie__set(fiber, cause, nil);
-			  }
-			  
-			  f2ptr found_and_removed_fiber = raw__processor__remove_active_fiber(cause, processor, fiber);
-			  if ((found_and_removed_fiber == nil) ||
-			      raw__larva__is_type(cause, found_and_removed_fiber)) {
-			    printf("\nerror removing active fiber at completion."); fflush(stdout);
-			    status(  "error removing active fiber at completion.");
-			  }
-			  
-			  f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
-			}
+		}
+	      }
+	      if (f2fiber__is_complete(fiber, cause)) {
+		//printf("\n  fiber completed.");
+		if (! f2fiber__is_zombie(fiber, cause)) {
+		  f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
+		}
+		if (! f2fiber__keep_undead(fiber, cause)) {
+		  f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
+		  if (last_executed_time) {
+		    f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(last_executed_time, cause);
+		    u64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+		    // This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
+		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
+		      
+		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
+		      //f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+		      //if (fiber_cause != nil) {
+		      //	raw__cause__remove_fiber(cause, fiber_cause, fiber);
+		      //}
+		      if (f2fiber__is_zombie(fiber, cause)) {
+			f2fiber__is_zombie__set(fiber, cause, nil);
 		      }
+		      
+		      f2ptr found_and_removed_fiber = raw__processor__remove_active_fiber(cause, processor, fiber);
+		      if ((found_and_removed_fiber == nil) ||
+			  raw__larva__is_type(cause, found_and_removed_fiber)) {
+			printf("\nerror removing active fiber at completion."); fflush(stdout);
+			status(  "error removing active fiber at completion.");
+		      }
+		      
+		      f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 		    }
 		  }
 		}

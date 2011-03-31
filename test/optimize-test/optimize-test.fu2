@@ -23,7 +23,6 @@
 				optimized_funk
 				test_args_success_condition_pairs
 				success_condition
-				success_funk
 				unoptimized_result
 				optimized_result]
   [new [initial-name
@@ -32,7 +31,6 @@
        [= name                              initial-name]
        [= funk                              initial-funk]
        [= test_args_success_condition_pairs initial-test_args_success_condition_pairs]
-       [= success_funk                      [eval `[funk [result] ,success_condition]]]
        [= unoptimized_result                nil]
        [= optimized_result                  nil]]]
 
@@ -45,7 +43,8 @@
 	[prog [terminal_format standard-terminal '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test on ' test_args '.']
 	      nil]
       [let [[success_funk_execution_completed nil]
-	    [unoptimized_success_result       nil]]
+	    [unoptimized_success_result       nil]
+	    [success_funk                     [eval `[funk [result] ,success_condition]]]]
 	[shelter [= unoptimized_success_result [with this
 						     [apply success_funk `[,unoptimized_result]]]]
 		 [= success_funk_execution_completed t]]

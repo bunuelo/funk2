@@ -59,9 +59,8 @@
 		  [prog [terminal_format standard-terminal '\noptimize_test: success funk for ' [get this name] ' test is not true on ' test_args '.  Result was ' unoptimized_result '.']
 			nil]
 		[let [[optimize_funk_completed nil]]
-		  [let [[bug [shelter [have funk optimize 10]
-				      [= optimized_funk          funk]
-				      [= funk                    nil]
+		  [let [[bug [shelter [= optimized_funk          [get funk new_copy]]
+				      [have optimized_funk optimize 10]
 				      [= optimize_funk_completed t]]]]
 		    [if [not optimize_funk_completed]
 			[prog [terminal_format standard-terminal

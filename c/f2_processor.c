@@ -513,7 +513,12 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			status(  "error removing active fiber at completion.");
 		      }
 		      
-		      f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
+		      {
+			s64 before_nanoseconds = raw__nanoseconds_since_1970();
+			f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
+			s64 after_nanoseconds = raw__nanoseconds_since_1970();
+			status("complete trigger took " s64__fstr, after_nanoseconds - before_nanoseconds);
+		      }
 		    }
 		  }
 		}

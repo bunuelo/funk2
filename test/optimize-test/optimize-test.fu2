@@ -228,6 +228,58 @@
 			      [not result]]
 			     [[t t]
 			      result]]]]
+
+  'or'
+  [have this add_test [new optimize_test `or-constant-false
+			   [funk [] [or nil nil]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `or-t-t-true
+			   [funk [] [or t t]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `or-nil-t-true
+			   [funk [] [or nil t]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `or-t-nil-true
+			   [funk [] [or t nil]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `or-variable-t
+			   [funk [a] [or a t]]
+			   `[[[nil]
+			      result]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-variable-nil
+			   [funk [a] [or a nil]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-t-variable
+			   [funk [a] [or t a]]
+			   `[[[nil]
+			      result]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-nil-variable
+			   [funk [a] [or nil a]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-variable-variable
+			   [funk [a b] [or a b]]
+			   `[[[nil nil]
+			      [not result]]
+			     [[nil t]
+			      result]
+			     [[t nil]
+			      result]
+			     [[t t]
+			      result]]]]
   ]
 
 [deftypefunk optimize_test_suite execute add_math_tests []
@@ -251,19 +303,19 @@
 			   [funk [] [== 1 1]]
 			   `[[[]
 			      result]]]]
-  [have this add_test [new optimize_test `numerically_equals-var_constant
+  [have this add_test [new optimize_test `numerically_equals-variable_constant
 			   [funk [a] [== a 1]]
 			   `[[[1]
 			      result]
 			     [[2]
 			      [not result]]]]]
-  [have this add_test [new optimize_test `numerically_equals-constant_var
+  [have this add_test [new optimize_test `numerically_equals-constant_variable
 			   [funk [a] [== 1 a]]
 			   `[[[1]
 			      result]
 			     [[2]
 			      [not result]]]]]
-  [have this add_test [new optimize_test `numerically_equals-constant_var
+  [have this add_test [new optimize_test `numerically_equals-variable_variable
 			   [funk [a b] [== a b]]
 			   `[[[1 1]
 			      result]

@@ -178,6 +178,27 @@
   
   ]
 
+[deftypefunk optimize_test_suite execute add_globalize_tests []
+  
+  'globalize'
+  [have this add_test [new optimize_test `globalize-constant
+			   [funk []
+				 [globalize optimize-global_test_variable 13]]
+			   `[[[]
+			      [== optimize-global_test_variable 13]]]]]
+  [have this add_test [new optimize_test `globalize-another_constant
+			   [funk []
+				 [globalize optimize-global_test_variable 7]]
+			   `[[[]
+			      [== optimize-global_test_variable 7]]]]]
+  [have this add_test [new optimize_test `globalize-variable
+			   [funk [a]
+				 [globalize optimize-global_test_variable a]]
+			   `[[[31]
+			      [== result 31]]]]]
+  
+  ]
+
 [deftypefunk optimize_test_suite execute add_logic_tests []
   
   'eq'
@@ -547,8 +568,9 @@
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []
-  [have this add_mutate_tests]
   [have this add_lookup_tests]
+  [have this add_mutate_tests]
+  [have this add_globalize_tests]
   [have this add_logic_tests]
   [have this add_math_tests]]
 
@@ -562,6 +584,11 @@
 [defunk optimize-test_mutate []
   [let [[test_suite [new optimize_test_suite]]]
     [have test_suite add_mutate_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_globalize []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_globalize_tests]
     [have test_suite run]]]
 
 

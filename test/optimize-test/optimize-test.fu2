@@ -154,7 +154,7 @@
 			      result]
 			     [[2]
 			      [not result]]]]]
-  [have this add_test [new optimize_test `eq-constant_variable
+  [have this add_test [new optimize_test `eq-variable_variable
 			   [funk [a b] [eq a b]]
 			   `[[[1 1]
 			      result]
@@ -179,19 +179,19 @@
 
   'and'
   [have this add_test [new optimize_test `and-constant-true
-			   [funk [a] [and t t]]
+			   [funk [] [and t t]]
 			   `[[[]
 			      result]]]]
   [have this add_test [new optimize_test `and-nil-nil-false
-			   [funk [a] [and nil nil]]
+			   [funk [] [and nil nil]]
 			   `[[[]
 			      [not result]]]]]
   [have this add_test [new optimize_test `and-nil-t-false
-			   [funk [a] [and nil t]]
+			   [funk [] [and nil t]]
 			   `[[[]
 			      [not result]]]]]
   [have this add_test [new optimize_test `and-t-nil-false
-			   [funk [a] [and t nil]]
+			   [funk [] [and t nil]]
 			   `[[[]
 			      [not result]]]]]
   [have this add_test [new optimize_test `and-variable-t

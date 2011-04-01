@@ -521,6 +521,7 @@
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []
+  [have this add_lookup_tests]
   [have this add_logic_tests]
   [have this add_math_tests]]
 

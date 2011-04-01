@@ -472,27 +472,27 @@
   
   'greater_than'
   [have this add_test [new optimize_test `greater_than-constant-false
-			   [funk [] [< 7 13]]
+			   [funk [] [> 7 13]]
 			   `[[[]
 			      [not result]]]]]
   [have this add_test [new optimize_test `greater_than-constant-true
-			   [funk [] [< 13 7]]
+			   [funk [] [> 13 7]]
 			   `[[[]
 			      result]]]]
   [have this add_test [new optimize_test `greater_than-variable_constant
-			   [funk [a] [< a 10]]
+			   [funk [a] [> a 10]]
 			   `[[[13]
 			      result]
 			     [[7]
 			      [not result]]]]]
   [have this add_test [new optimize_test `greater_than-constant_variable
-			   [funk [a] [< 10 a]]
+			   [funk [a] [> 10 a]]
 			   `[[[7]
 			      result]
 			     [[13]
 			      [not result]]]]]
   [have this add_test [new optimize_test `greater_than-variable_variable
-			   [funk [a b] [< a b]]
+			   [funk [a b] [> a b]]
 			   `[[[13 7]
 			      result]
 			     [[7 13]

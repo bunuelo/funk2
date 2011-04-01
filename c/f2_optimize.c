@@ -260,11 +260,6 @@ f2ptr raw__optimize_data__compile__initial__variable(f2ptr cause, f2ptr this) {
   return full_bcs;
 }
 
-f2ptr raw__optimize_data__compile__reg_array__elt(f2ptr cause, f2ptr this) {
-  printf("\noptimize_data warning: reg_array-elt not yet implemented."); fflush(stdout);
-  return nil;
-}
-
 f2ptr raw__optimize_data__compile__eq(f2ptr cause, f2ptr this) {
   f2ptr full_bcs = nil;
   f2ptr iter_bcs = nil;
@@ -839,9 +834,6 @@ f2ptr raw__optimize_data__compile_new_bytecodes_for_value(f2ptr cause, f2ptr thi
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "globalize-type_var"))) {
       f2ptr new_bcs = raw__optimize_data__compile__globalize__type_var(cause, this);
-      if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
-    } else if (raw__eq(cause, data_type, new__symbol(cause, "reg_array-elt"))) {
-      f2ptr new_bcs = raw__optimize_data__compile__reg_array__elt(cause, this);
       if (iter_bcs == nil) {iter_bcs = full_bcs = new_bcs;} else {iter_bcs = raw__list_cdr__set(cause, iter_bcs, new_bcs);}
     } else if (raw__eq(cause, data_type, new__symbol(cause, "initial-variable"))) {
       f2ptr new_bcs = raw__optimize_data__compile__initial__variable(cause, this);
@@ -2092,62 +2084,6 @@ f2ptr raw__optimize_fiber__call_bytecode__machine_code(f2ptr cause, f2ptr this, 
     }
   }
   return raw__optimize_fiber__call_bytecode__machine_code__no_increment_pc(cause, this, chunk);
-}
-
-
-// reg_array-elt
-
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
-  f2ptr x__data = nil;
-  if      (raw__eq(cause, x_register_name, new__symbol(cause, "return_reg")))      {x__data = f2__optimize_fiber__return_reg(     cause, this);}
-  else if (raw__eq(cause, x_register_name, new__symbol(cause, "value")))           {x__data = f2__optimize_fiber__value(          cause, this);}
-  else if (raw__eq(cause, x_register_name, new__symbol(cause, "iter")))            {x__data = f2__optimize_fiber__iter(           cause, this);}
-  else if (raw__eq(cause, x_register_name, new__symbol(cause, "program_counter"))) {x__data = f2__optimize_fiber__program_counter(cause, this);}
-  else if (raw__eq(cause, x_register_name, new__symbol(cause, "env")))             {x__data = f2__optimize_fiber__env(            cause, this);}
-  else if (raw__eq(cause, x_register_name, new__symbol(cause, "args")))            {x__data = f2__optimize_fiber__args(           cause, this);}
-  else {
-    return f2larva__new(cause, 543165, nil);
-  }
-  f2ptr result__data = f2__optimize_data__new(cause, f2__optimize_fiber__optimize_context(cause, this), f2__gensym(cause, f2__stringlist__concat(cause, f2list2__new(cause,
-																				     new__string(cause, "reg_array-elt-"),
-																				     f2__exp__as__string(cause, index)))),
-					      new__symbol(cause, "reg_array-elt"), f2list2__new(cause, x__data, index));
-  f2__optimize_fiber__value__set(cause, this, result__data);
-  return nil;
-}
-
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
-#ifdef F2__OPTIMIZE__DEBUG_PRINTF
-  printf("\noptimize: reg_array-elt"); fflush(stdout);
-#endif
-  {
-    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  return raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc(cause, this, x_register_name, index);
-}
-
-
-// reg_array-elt-set
-
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
-  printf("\noptimize warning: reg_array-elt-set not yet implemented."); fflush(stdout);
-  return nil;
-}
-
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set(f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index) {
-#ifdef F2__OPTIMIZE__DEBUG_PRINTF
-  printf("\noptimize: reg_array-elt-set"); fflush(stdout);
-#endif
-  {
-    f2ptr result = raw__optimize_fiber__increment_program_counter(cause, this);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  return raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc(cause, this, x_register_name, index);
 }
 
 
@@ -3713,20 +3649,6 @@ f2ptr raw__optimize_fiber__call_next_bytecode(f2ptr cause, f2ptr this) {
     } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code"))) {
       f2ptr chunk = f2__bytecode__arg0(cause, bytecode);
       f2ptr result = raw__optimize_fiber__call_bytecode__machine_code(cause, this, chunk);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
-    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt"))) {
-      f2ptr x_register_name = f2__bytecode__arg0(cause, bytecode);
-      f2ptr index           = f2__bytecode__arg1(cause, bytecode);
-      f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt(cause, this, x_register_name, index);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
-    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "reg_array-elt-set"))) {
-      f2ptr x_register_name = f2__bytecode__arg0(cause, bytecode);
-      f2ptr index           = f2__bytecode__arg1(cause, bytecode);
-      f2ptr result = raw__optimize_fiber__call_bytecode__reg_array__elt__set(cause, this, x_register_name, index);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

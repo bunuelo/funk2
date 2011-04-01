@@ -240,10 +240,6 @@ f2ptr raw__optimize_fiber__call_bytecode__newenv__no_increment_pc               
 f2ptr raw__optimize_fiber__call_bytecode__newenv                                     (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__machine_code__no_increment_pc              (f2ptr cause, f2ptr this, f2ptr chunk);
 f2ptr raw__optimize_fiber__call_bytecode__machine_code                               (f2ptr cause, f2ptr this, f2ptr chunk);
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__no_increment_pc            (f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index);
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt                             (f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index);
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set__no_increment_pc       (f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index);
-f2ptr raw__optimize_fiber__call_bytecode__reg_array__elt__set                        (f2ptr cause, f2ptr this, f2ptr x_register_name, f2ptr index);
 f2ptr raw__optimize_fiber__call_bytecode__eq__no_increment_pc                        (f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name);
 f2ptr raw__optimize_fiber__call_bytecode__eq                                         (f2ptr cause, f2ptr this, f2ptr result_register_name, f2ptr x0_register_name, f2ptr x1_register_name);
 f2ptr raw__optimize_fiber__call_bytecode__not__no_increment_pc                       (f2ptr cause, f2ptr this, f2ptr result_register, f2ptr x_register_name);

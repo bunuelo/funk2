@@ -90,10 +90,6 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__newenv__execution_count;
   f2ptr bytecode__machine_code__symbol;
   u64   bytecode__machine_code__execution_count;
-  f2ptr bytecode__reg_array__elt__symbol;
-  u64   bytecode__reg_array__elt__execution_count;
-  f2ptr bytecode__reg_array__elt__set__symbol;
-  u64   bytecode__reg_array__elt__set__execution_count;
   
   // logic
   f2ptr bytecode__eq__symbol;
@@ -235,8 +231,6 @@ int                    f2__fiber__bytecode__compile                             
 int                    f2__fiber__bytecode__yield                                  (f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__newenv                                 (f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__machine_code                           (f2ptr fiber, f2ptr bytecode, f2ptr chunk);
-int                    f2__fiber__bytecode__reg_array__elt                         (f2ptr fiber, f2ptr bytecode, f2ptr reg);
-int                    f2__fiber__bytecode__reg_array__elt__set                    (f2ptr fiber, f2ptr bytecode, f2ptr reg);
 
 // logic
 int                    f2__fiber__bytecode__eq__no_increment_pc_reg                (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);

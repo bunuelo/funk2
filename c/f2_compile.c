@@ -42,8 +42,6 @@ f2ptr check_bcs_valid(f2ptr bytecodes) {
 f2ptr f2__compile__funk_bc(f2ptr cause)                                               {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__funk__symbol,                nil,    nil,   nil), nil));}
 f2ptr f2__compile__jump_funk(f2ptr cause)                                             {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__jump_funk__symbol,           nil,    nil,   nil), nil));}
 f2ptr f2__compile__array(f2ptr cause, f2ptr length)                                   {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__array__symbol,               length, nil,   nil), nil));}
-f2ptr f2__compile__reg_array__elt(f2ptr cause, f2ptr reg, f2ptr index)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__reg_array__elt__symbol,      reg,    index, nil), nil));}
-f2ptr f2__compile__reg_array__elt__set(f2ptr cause, f2ptr reg, f2ptr index)           {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__reg_array__elt__set__symbol, reg,    index, nil), nil));}
 f2ptr f2__compile__cons(f2ptr cause)                                                  {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__cons__symbol,                nil,    nil,   nil), nil));}
 f2ptr f2__compile__consp(f2ptr cause)                                                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__consp__symbol,               nil,    nil,   nil), nil));}
 f2ptr f2__compile__car(f2ptr cause)                                                   {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__car__symbol,                 nil,    nil,   nil), nil));}
@@ -1621,14 +1619,6 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__copy__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__swap__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__array__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__reg_array__elt__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__reg_array__elt__set__symbol)) {
-    if (is_funktional) {
-      *is_funktional = boolean__false;
-    }
-    if (is_locally_funktional) {
-      *is_locally_funktional = boolean__false;
-    }
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__cons__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__car__set__symbol)) {
     if (is_funktional) {

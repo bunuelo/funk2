@@ -132,32 +132,102 @@
 
 
 [deftypefunk optimize_test_suite execute add_logic_tests []
-  [have this add_test [new optimize_test `eq-constant-false
-			   [funk [] [eq 1 2]]
-			   `[[[]
-			      [not result]]]]]
+  
+  'eq'
   [have this add_test [new optimize_test `eq-constant-true
 			   [funk [] [eq 1 1]]
 			   `[[[]
 			      result]]]]
-  [have this add_test [new optimize_test `eq-var_constant
+  [have this add_test [new optimize_test `eq-constant-false
+			   [funk [] [eq 1 2]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-variable_constant
 			   [funk [a] [eq a 1]]
 			   `[[[1]
 			      result]
 			     [[2]
 			      [not result]]]]]
-  [have this add_test [new optimize_test `eq-constant_var
+  [have this add_test [new optimize_test `eq-constant_variable
 			   [funk [a] [eq 1 a]]
 			   `[[[1]
 			      result]
 			     [[2]
 			      [not result]]]]]
-  [have this add_test [new optimize_test `eq-constant_var
+  [have this add_test [new optimize_test `eq-constant_variable
 			   [funk [a b] [eq a b]]
 			   `[[[1 1]
 			      result]
 			     [[1 2]
 			      [not result]]]]]
+  
+  'not'
+  [have this add_test [new optimize_test `not-constant-true
+			   [funk [] [not nil]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `not-constant-false
+			   [funk [] [not t]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `not-variable
+			   [funk [a] [not a]]
+			   `[[[nil]
+			      result]
+			     [[t]
+			      [not result]]]]]
+
+  'and'
+  [have this add_test [new optimize_test `and-constant-true
+			   [funk [a] [and t t]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `and-nil-nil-false
+			   [funk [a] [and nil nil]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-nil-t-false
+			   [funk [a] [and nil t]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-t-nil-false
+			   [funk [a] [and t nil]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-variable-t
+			   [funk [a] [and a t]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `and-variable-nil
+			   [funk [a] [and a nil]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-t-variable
+			   [funk [a] [and t a]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `and-nil-variable
+			   [funk [a] [and nil a]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-variable-variable
+			   [funk [a b] [and a b]]
+			   `[[[nil nil]
+			      [not result]]
+			     [[nil t]
+			      [not result]]
+			     [[t nil]
+			      [not result]]
+			     [[t t]
+			      result]]]]
   ]
 
 [deftypefunk optimize_test_suite execute add_math_tests []
@@ -173,6 +243,32 @@
 			      [== result 2]]
 			     [[2 1]
 			      [== result 2]]]]]
+  [have this add_test [new optimize_test `numerically_equals-constant-false
+			   [funk [] [== 1 2]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `numerically_equals-constant-true
+			   [funk [] [== 1 1]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `numerically_equals-var_constant
+			   [funk [a] [== a 1]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `numerically_equals-constant_var
+			   [funk [a] [== 1 a]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `numerically_equals-constant_var
+			   [funk [a b] [== a b]]
+			   `[[[1 1]
+			      result]
+			     [[1 2]
+			      [not result]]]]]
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []

@@ -283,18 +283,138 @@
   ]
 
 [deftypefunk optimize_test_suite execute add_math_tests []
-  [have this add_test [new optimize_test `if-less-than
-			   [funk [a b] [if [< a b] a b]]
-			   `[[[1 2]
-			      [== result 1]]
-			     [[2 1]
-			      [== result 1]]]]]
-  [have this add_test [new optimize_test `if-greater-than
-			   [funk [a b] [if [> a b] a b]]
-			   `[[[1 2]
-			      [== result 2]]
-			     [[2 1]
-			      [== result 2]]]]]
+  
+  'add'
+  [have this add_test [new optimize_test `add-constant
+			   [funk [] [+ 7 13]]
+			   `[[[]
+			      [== result 20]]]]]
+  [have this add_test [new optimize_test `add-variable_constant
+			   [funk [a] [+ a 13]]
+			   `[[[7]
+			      [== result 20]]]]]
+  [have this add_test [new optimize_test `add-constant_variable
+			   [funk [a] [+ 7 a]]
+			   `[[[13]
+			      [== result 20]]]]]
+  [have this add_test [new optimize_test `add-variable_variable
+			   [funk [a b] [+ a b]]
+			   `[[[7 13]
+			      [== result 20]]]]]
+  
+  'negative'
+  [have this add_test [new optimize_test `negative-constant
+			   [funk [] [bytecode:negative 7]]
+			   `[[[]
+			      [== result -7]]]]]
+  [have this add_test [new optimize_test `negative-variable
+			   [funk [a] [bytecode:negative a]]
+			   `[[[7]
+			      [== result -7]]]]]
+  
+  'subtract'
+  [have this add_test [new optimize_test `subtract-constant
+			   [funk [] [- 7 13]]
+			   `[[[]
+			      [== result -6]]]]]
+  [have this add_test [new optimize_test `subtract-variable_constant
+			   [funk [a] [- a 13]]
+			   `[[[7]
+			      [== result -6]]]]]
+  [have this add_test [new optimize_test `subtract-constant_variable
+			   [funk [a] [- 7 a]]
+			   `[[[13]
+			      [== result -6]]]]]
+  [have this add_test [new optimize_test `subtract-variable_variable
+			   [funk [a b] [- a b]]
+			   `[[[7 13]
+			      [== result -6]]]]]
+  
+  'multiply'
+  [have this add_test [new optimize_test `multiply-constant
+			   [funk [] [* 7 13]]
+			   `[[[]
+			      [== result 91]]]]]
+  [have this add_test [new optimize_test `multiply-variable_constant
+			   [funk [a] [* a 13]]
+			   `[[[7]
+			      [== result 91]]]]]
+  [have this add_test [new optimize_test `multiply-constant_variable
+			   [funk [a] [* 7 a]]
+			   `[[[13]
+			      [== result 91]]]]]
+  [have this add_test [new optimize_test `multiply-variable_variable
+			   [funk [a b] [* a b]]
+			   `[[[7 13]
+			      [== result 91]]]]]
+  
+  'inverse'
+  [have this add_test [new optimize_test `inverse-constant
+			   [funk [] [bytecode:inverse 2.0]]
+			   `[[[]
+			      [== result 0.5]]]]]
+  [have this add_test [new optimize_test `inverse-variable
+			   [funk [a] [bytecode:inverse a]]
+			   `[[[2.0]
+			      [== result 0.5]]]]]
+  
+  'divide'
+  [have this add_test [new optimize_test `divide-constant
+			   [funk [] [/ 91 13]]
+			   `[[[]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `divide-variable_constant
+			   [funk [a] [/ a 13]]
+			   `[[[91]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `divide-constant_variable
+			   [funk [a] [/ 91 a]]
+			   `[[[13]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `divide-variable_variable
+			   [funk [a b] [/ a b]]
+			   `[[[91 13]
+			      [== result 7]]]]]
+  
+  'modulo'
+  [have this add_test [new optimize_test `modulo-constant
+			   [funk [] [% 98 13]]
+			   `[[[]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `modulo-variable_constant
+			   [funk [a] [% a 13]]
+			   `[[[98]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `modulo-constant_variable
+			   [funk [a] [% 98 a]]
+			   `[[[13]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `modulo-variable_variable
+			   [funk [a b] [% a b]]
+			   `[[[98 13]
+			      [== result 7]]]]]
+  
+  'increment'
+  [have this add_test [new optimize_test `increment-constant
+			   [funk [] [bytecode:increment 7]]
+			   `[[[]
+			      [== result 8]]]]]
+  [have this add_test [new optimize_test `increment-variable
+			   [funk [a] [bytecode:increment a]]
+			   `[[[7]
+			      [== result 8]]]]]
+  
+  'decrement'
+  [have this add_test [new optimize_test `decrement-constant
+			   [funk [] [bytecode:decrement 7]]
+			   `[[[]
+			      [== result 6]]]]]
+  [have this add_test [new optimize_test `decrement-variable
+			   [funk [a] [bytecode:decrement a]]
+			   `[[[7]
+			      [== result 6]]]]]
+  
+  'numerically_equals'
   [have this add_test [new optimize_test `numerically_equals-constant-false
 			   [funk [] [== 1 2]]
 			   `[[[]
@@ -320,6 +440,62 @@
 			   `[[[1 1]
 			      result]
 			     [[1 2]
+			      [not result]]]]]
+
+  'less_than'
+  [have this add_test [new optimize_test `less_than-constant-false
+			   [funk [] [< 13 7]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `less_than-constant-true
+			   [funk [] [< 7 13]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `less_than-variable_constant
+			   [funk [a] [< a 10]]
+			   `[[[7]
+			      result]
+			     [[13]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `less_than-constant_variable
+			   [funk [a] [< 10 a]]
+			   `[[[13]
+			      result]
+			     [[7]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `less_than-variable_variable
+			   [funk [a b] [< a b]]
+			   `[[[7 13]
+			      result]
+			     [[13 7]
+			      [not result]]]]]
+  
+  'greater_than'
+  [have this add_test [new optimize_test `greater_than-constant-false
+			   [funk [] [< 7 13]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `greater_than-constant-true
+			   [funk [] [< 13 7]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `greater_than-variable_constant
+			   [funk [a] [< a 10]]
+			   `[[[13]
+			      result]
+			     [[7]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `greater_than-constant_variable
+			   [funk [a] [< 10 a]]
+			   `[[[7]
+			      result]
+			     [[13]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `greater_than-variable_variable
+			   [funk [a b] [< a b]]
+			   `[[[13 7]
+			      result]
+			     [[7 13]
 			      [not result]]]]]
   ]
 

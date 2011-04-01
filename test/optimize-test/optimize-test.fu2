@@ -132,47 +132,47 @@
 
 
 [deftypefunk optimize_test_suite execute add_logic_tests []
-  [have test_suite add_test [new optimize_test `eq-constant-false
-				 [funk [] [eq 1 2]]
-				 `[[[]
-				    [not result]]]]]
-  [have test_suite add_test [new optimize_test `eq-constant-true
-				 [funk [] [eq 1 1]]
-				 `[[[]
-				    result]]]]
-  [have test_suite add_test [new optimize_test `eq-var_constant
-				 [funk [a] [eq a 1]]
-				 `[[[1]
-				    result]
-				   [[2]
-				    [not result]]]]]
-  [have test_suite add_test [new optimize_test `eq-constant_var
-				 [funk [a] [eq 1 a]]
-				 `[[[1]
-				    result]
-				   [[2]
-				    [not result]]]]]
-  [have test_suite add_test [new optimize_test `eq-constant_var
-				 [funk [a b] [eq a b]]
-				 `[[[1 1]
-				    result]
-				   [[1 2]
-				    [not result]]]]]
+  [have this add_test [new optimize_test `eq-constant-false
+			   [funk [] [eq 1 2]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-constant-true
+			   [funk [] [eq 1 1]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `eq-var_constant
+			   [funk [a] [eq a 1]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-constant_var
+			   [funk [a] [eq 1 a]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-constant_var
+			   [funk [a b] [eq a b]]
+			   `[[[1 1]
+			      result]
+			     [[1 2]
+			      [not result]]]]]
   ]
 
 [deftypefunk optimize_test_suite execute add_math_tests []
-  [have test_suite add_test [new optimize_test `if-less-than
-				 [funk [a b] [if [< a b] a b]]
-				 `[[[1 2]
-				    [== result 1]]
-				   [[2 1]
-				    [== result 1]]]]]
-  [have test_suite add_test [new optimize_test `if-greater-than
-				 [funk [a b] [if [> a b] a b]]
-				 `[[[1 2]
-				    [== result 2]]
-				   [[2 1]
-				    [== result 2]]]]]
+  [have this add_test [new optimize_test `if-less-than
+			   [funk [a b] [if [< a b] a b]]
+			   `[[[1 2]
+			      [== result 1]]
+			     [[2 1]
+			      [== result 1]]]]]
+  [have this add_test [new optimize_test `if-greater-than
+			   [funk [a b] [if [> a b] a b]]
+			   `[[[1 2]
+			      [== result 2]]
+			     [[2 1]
+			      [== result 2]]]]]
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []

@@ -87,7 +87,7 @@
 							   '\n               Bug was ' bug '.']
 					  nil]
 				  [if [not optimized_success_result]
-				      [prog [terminal_format standard-terminal '\noptimize_test: optimized funk failed success test for ' [get this name] ' test ' test_args '.  Result was ' optimized_result '.']
+				      [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' FAILED on ' test_args '.  Result was ' optimized_result '.']
 					    nil]
 				    [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' succeeded on ' test_args '.']
 					  t]]]]]]]]]]]]]]]]]]]
@@ -130,6 +130,27 @@
     [terminal_format standard-terminal '\n']
     nil]]
 
+
+[deftypefunk optimize_test_suite execute add_lookup_tests []
+  
+  'lookup'
+  [have this add_test [new optimize_test `lookup-initial-variable
+			   [funk [a] a]
+			   `[[[13]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `lookup-external_environment_variable
+			   [let [[a 13]]
+			     [funk [] a]]
+			   `[[[]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `lookup-internal_environment_variable
+			   [funk []
+				 [define a 13]
+				 a]
+			   `[[[]
+			      [== result 13]]]]]
+  
+  ]
 
 [deftypefunk optimize_test_suite execute add_logic_tests []
   
@@ -503,7 +524,24 @@
   [have this add_logic_tests]
   [have this add_math_tests]]
 
-[defunk optimize-test []
+
+
+[defunk optimize-test_lookup []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_lookup_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_logic []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_logic_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_math []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_math_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_all []
   [let [[test_suite [new optimize_test_suite]]]
     [have test_suite add_all_tests]
     [have test_suite run]]]

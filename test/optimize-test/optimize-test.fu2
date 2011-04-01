@@ -152,6 +152,32 @@
   
   ]
 
+[deftypefunk optimize_test_suite execute add_mutate_tests []
+  
+  'mutate'
+  [have this add_test [new optimize_test `mutate-initial-variable
+			   [funk [a]
+				 [= a 13]
+				 a]
+			   `[[[]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `mutate-external_environment_variable
+			   [let [[a 13]]
+			     [funk []
+				   [= a 13]
+				   a]]
+			   `[[[]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `mutate-internal_environment_variable
+			   [funk []
+				 [define a nil]
+				 [= a 13]
+				 a]
+			   `[[[]
+			      [== result 13]]]]]
+  
+  ]
+
 [deftypefunk optimize_test_suite execute add_logic_tests []
   
   'eq'
@@ -521,6 +547,7 @@
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []
+  [have this add_mutate_tests]
   [have this add_lookup_tests]
   [have this add_logic_tests]
   [have this add_math_tests]]
@@ -531,6 +558,12 @@
   [let [[test_suite [new optimize_test_suite]]]
     [have test_suite add_lookup_tests]
     [have test_suite run]]]
+
+[defunk optimize-test_mutate []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_mutate_tests]
+    [have test_suite run]]]
+
 
 [defunk optimize-test_logic []
   [let [[test_suite [new optimize_test_suite]]]

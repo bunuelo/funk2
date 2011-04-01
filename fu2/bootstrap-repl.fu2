@@ -834,7 +834,7 @@
 	    nil]
      nil]]
 
-[defmetro with-new-cause-test [:rest codes]
+[defmetro with-new-cause [:rest codes]
   `[let [[original_cause [get [this-fiber] cause_reg]]]
      [cause]
      [let [[result [prog @codes]]]
@@ -876,7 +876,7 @@
 		 [t                          [error bug_type with-new-cause-fiber-did-not-encounter-bug-nor-complete]]]]]]]]
 
 
-[defmetro with-new-cause [:rest codes]
+[defmetro with-new-cause-backup [:rest codes]
   `[let* [[result `bug]
 	  [fiber  [fiber [funk-new_with_name with-new-cause []
 					     [set [this-cause] critics nil]

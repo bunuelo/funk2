@@ -360,6 +360,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     }
     resume_gc();
   }
+  f2__fiber__exit_status__set(cause, fiber, new__symbol(cause, "bug"));
   f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
 }
 
@@ -516,6 +517,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			    status(  "error removing active fiber at completion.");
 			  }
 			  
+			  f2__fiber__exit_status__set(cause, fiber, new__symbol(cause, "complete"));
 			  f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 			}
 		      }

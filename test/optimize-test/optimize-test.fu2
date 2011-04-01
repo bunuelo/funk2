@@ -195,7 +195,7 @@
 			   [funk [a]
 				 [globalize optimize-global_test_variable a]]
 			   `[[[31]
-			      [== result 31]]]]]
+			      [== optimize-global_test_variable 31]]]]]
   
   ]
 

@@ -888,29 +888,6 @@
 	      [error bug_type    shelter-unknown-fiber-exit-status
 		     exit_status exit_status]]]]]]
 
-[defmetro shelter-debug-old [:rest codes]
-  `[let [[result             `bug]
-	 [found_bug_in_fiber nil]]
-     [let [[fiber [silent-fiber [funk-new_with_name shelter []
-						    [set [this-cause] critics
-							 [funk [fiber]
-							       [= found_bug_in_fiber fiber]]]
-						    [= result [prog @codes]]]
-				nil]]]
-       [millisleep 100]
-       [while [and [not [get fiber is_complete]]
-		   [not found_bug_in_fiber]
-		   [global_scheduler-contains_active_fiber fiber]]
-	 [millisleep 100]]
-       [if found_bug_in_fiber
-	   [let [[bug [get found_bug_in_fiber value]]]
-	     [if [not [is-type `bug bug]]
-		 [error bug_type    `shelter-fiber_paused_without_bug
-			fiber_value bug
-			stack_trace [get found_bug_in_fiber stack_trace]]
-	       `bug]]]
-       result]]]
-
 [defmetro error [:rest slot_value_pairs]
   `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
 	      `source_expression [quote ,[cause-lookup source_expression]]

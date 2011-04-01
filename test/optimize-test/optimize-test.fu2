@@ -159,10 +159,10 @@
 			   [funk [a]
 				 [= a 13]
 				 a]
-			   `[[[]
+			   `[[[nil]
 			      [== result 13]]]]]
   [have this add_test [new optimize_test `mutate-external_environment_variable
-			   [let [[a 13]]
+			   [let [[a nil]]
 			     [funk []
 				   [= a 13]
 				   a]]

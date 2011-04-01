@@ -452,6 +452,173 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
 	      //printf("\nfiber paused due to larva in value register.");
 	    } else {
+	      //if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing fiber 0x%X", (int)fiber); fflush(stdout);
+	      
+	      if (f2fiber__should_quit(fiber, cause) != nil) {
+		
+		// quit here, while we have lock.
+		f2fiber__program_counter__set(fiber, cause, nil);
+		
+	      } else {
+		
+		did_something = __funk2.globalenv.true__symbol;
+		
+		u64 begin_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+		
+		scheduler_fast_loop_exit_reason_t exit_reason;
+		if (f2fiber__program_counter(fiber, cause) != nil) {
+		  // fast inner loop
+		  exit_reason = execute_next_bytecodes__helper__fast_loop(cause, fiber);
+		  
+		  u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+		  
+		  f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
+		  u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
+		  
+		  pause_gc();
+		  f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
+		  f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
+		  resume_gc();
+		} else {
+		  exit_reason = exit_reason__is_complete;
+		}
+		
+		if(exit_reason == exit_reason__found_larva) {
+		  need_to_launch_larva_handling_critic_fiber = 1;
+		} else if (exit_reason == exit_reason__is_complete) {
+		  
+		  if (f2fiber__is_complete(fiber, cause)) {
+		    //printf("\n  fiber completed.");
+		    if (! f2fiber__is_zombie(fiber, cause)) {
+		      f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
+		    }
+		    if (! f2fiber__keep_undead(fiber, cause)) {
+		      f2ptr last_executed_time = f2fiber__last_executed_time(fiber, cause);
+		      if (last_executed_time) {
+			f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(last_executed_time, cause);
+			u64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+			// This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
+			if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
+			  
+			  // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
+			  //f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+			  //if (fiber_cause != nil) {
+			  //	raw__cause__remove_fiber(cause, fiber_cause, fiber);
+			  //}
+			  if (f2fiber__is_zombie(fiber, cause)) {
+			    f2fiber__is_zombie__set(fiber, cause, nil);
+			  }
+			  
+			  f2ptr found_and_removed_fiber = raw__processor__remove_active_fiber(cause, processor, fiber);
+			  if ((found_and_removed_fiber == nil) ||
+			      raw__larva__is_type(cause, found_and_removed_fiber)) {
+			    printf("\nerror removing active fiber at completion."); fflush(stdout);
+			    status(  "error removing active fiber at completion.");
+			  }
+			  
+			  f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
+			}
+		      }
+		    }
+		  }
+		}
+	      }
+	    }		
+	    
+	    funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
+	  }
+	} else { // (fiber__paused)
+	}
+	f2cmutex__unlock(f2fiber__execute_cmutex(fiber, cause), cause);
+      } else {
+	//printf("\nfiber locked couldn't execute...");
+      }
+      
+      if (need_to_launch_larva_handling_critic_fiber) {
+	f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
+	f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
+	if (critics) {
+	  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
+	    f2ptr larva      = f2fiber__value(fiber, cause);
+	    u64   larva_type = raw__larva__larva_type(cause, larva);
+	    status("larva type (" u64__fstr ") found in fiber and fiber has a critic, so launching critic fiber in serial.", larva_type);
+	  }
+	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
+	  pause_gc();
+	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
+	  resume_gc();
+	  {
+	    f2ptr processor__active_fibers_scheduler_cmutex;
+	    int lock_failed;
+	    do {
+	      processor__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(processor, cause);
+	      lock_failed = f2scheduler_cmutex__trylock(processor__active_fibers_scheduler_cmutex, cause);
+	      if (lock_failed) {
+		raw__fast_spin_sleep_yield();
+	      }
+	    } while (lock_failed);
+	    pause_gc();
+	    f2processor__active_fibers__set(processor, cause, f2cons__new(cause, new_fiber, f2processor__active_fibers(processor, cause)));
+	    resume_gc();
+	    f2scheduler_cmutex__unlock(processor__active_fibers_scheduler_cmutex, cause);
+	  }	
+	  //printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
+	} else {
+	  char status_msg[1024];
+	  snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
+	  status(status_msg);
+	}
+      }
+    
+      raw__processor__increment_current_active_fiber(cause, processor);
+    } // end of fiber while
+  }
+  
+  return did_something;
+}
+
+f2ptr f2processor__execute_next_bytecodes__backup(f2ptr processor, f2ptr cause) {
+  //pool__pause_gc(this_processor_thread__pool_index());
+  f2ptr did_something = nil;
+  
+  raw__processor__reset_current_active_fiber(cause, processor);
+  
+  int fiber_num = 0;
+  {
+    f2ptr fiber;
+    while ((fiber = raw__processor__current_active_fiber(cause, processor)) != nil) {
+      fiber_num ++;
+      boolean_t need_to_launch_larva_handling_critic_fiber = 0;
+      if (f2cmutex__trylock(f2fiber__execute_cmutex(fiber, cause), cause) == 0) { // successful lock
+	if (! f2fiber__paused(fiber, cause)) {
+	  f2ptr sleep_until_time = f2fiber__sleep_until_time(fiber, cause);
+	  boolean_t fiber_needs_sleep = boolean__false;
+	  if (sleep_until_time) {
+	    f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(sleep_until_time, cause);
+	    s64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
+	    if (raw__nanoseconds_since_1970() >= nanoseconds_since_1970__i) {
+	      f2fiber__sleep_until_time__set(fiber, cause, nil);
+	    } else {
+	      fiber_needs_sleep = boolean__true;
+	    }
+	  }
+	  if (! fiber_needs_sleep) {
+	    int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+	    { // assert that we are sane.
+	      int this_processor_thread__pool_index__value = this_processor_thread__pool_index();
+	      if (pool_index != this_processor_thread__pool_index__value) {
+		status("f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().  pool_index=%d  this_processor_thread__pool_index()=%d", pool_index, this_processor_thread__pool_index__value);
+		error(nil, "f2processor__execute_next_bytecodes: pool_index != this_processor_thread__pool_index().");
+	      }
+	    }
+	    
+	    funk2_operating_system__push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
+	    
+	    //printf("\n  got fiber lock.");
+	    if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
+	      //printf("\nfiber paused due to larva in value register.");
+	    } else {
 	      if (! f2fiber__is_complete(fiber, cause)) {
 		//if (processor) {printf("\nprocessor "); f2__write(nil, f2processor__desc(processor));} else {printf("\nunknown processor");} printf(" executing fiber 0x%X", (int)fiber); fflush(stdout);
 		

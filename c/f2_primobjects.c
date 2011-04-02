@@ -974,7 +974,7 @@ f2ptr f2__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) 
   assert_argument_type(metro, this);
   return raw__metro__has_no_side_effects__set(cause, this, value);
 }
-def_pcfunk2(metro__has_no_side_effects__set, this, value, return f2__metro__has_side_effects__set(this_cause, this, value));
+def_pcfunk2(metro__has_no_side_effects__set, this, value, return f2__metro__has_no_side_effects__set(this_cause, this, value));
 
 
 f2ptr raw__metro__documentation(f2ptr cause, f2ptr this) {

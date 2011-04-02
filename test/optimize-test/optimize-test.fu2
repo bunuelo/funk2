@@ -142,6 +142,16 @@
 			   `[[[13]
 			      [== result 13]]]]]
   
+  [have this add_test [new optimize_test `misc-add_numbers_in_list
+			   [funk [a]
+				 [let [[x 0]]
+				   [mapc [funk [y]
+					       [+= x y]]
+					 a]
+				   x]]
+			   `[[[[1 2 3]]
+			      [== result 6]]]]]
+  
   [have this add_test [new optimize_test `misc-mapcar
 			   [funk [proc seq]
 				 [if [null seq]

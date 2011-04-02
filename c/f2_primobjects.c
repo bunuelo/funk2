@@ -647,7 +647,17 @@ f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause) {
 
 // funk
 
-def_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+def_primobject_10_slot(funk,
+		       name,
+		       body_bytecodes,
+		       args,
+		       demetropolized_body,
+		       body,
+		       env,
+		       machine_code,
+		       is_funktional,
+		       has_no_side_effects,
+		       documentation);
 
 f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
   if (is_funktional != nil) {
@@ -662,7 +672,8 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
       printf("\nf2__funk__new note is_funktional: <unnamed>");
     }
   }
-  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
+  f2ptr has_no_side_effects = nil;
+  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, has_no_side_effects, documentation);
   f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
     return result;

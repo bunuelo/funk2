@@ -867,7 +867,7 @@
 		[error bug_type    with-new-cause-unknown-fiber-exit-status
 		       exit_status exit_status]]]]]]]
 
-[defmetro with-new-cause [:rest codes]
+[defmetro with-new-cause-backup [:rest codes]
   `[let* [[result `bug]
 	  [fiber  [fiber [funk-new_with_name with-new-cause []
 					     [set [this-cause] critics nil]

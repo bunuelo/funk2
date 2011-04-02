@@ -770,7 +770,7 @@ f2ptr f2__metro__name(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__name(cause, this);
 }
-def_pcfunk1(metro__name, this));
+def_pcfunk1(metro__name, this, return f2__metro__name(this_cause, this));
 
 
 f2ptr raw__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -782,7 +782,7 @@ f2ptr f2__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__name__set(cause, this, value);
 }
-def_pcfunk2(metro__name__set, this, value));
+def_pcfunk2(metro__name__set, this, value, return f2__metro__name__set(this_cause, this, value));
 
 
 f2ptr raw__metro__body_bytecodes(f2ptr cause, f2ptr this) {
@@ -794,7 +794,7 @@ f2ptr f2__metro__body_bytecodes(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__body_bytecodes(cause, this);
 }
-def_pcfunk1(metro__body_bytecodes, this));
+def_pcfunk1(metro__body_bytecodes, this, return f2__metro__body_bytecodes(this_cause, this));
 
 
 f2ptr raw__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -806,7 +806,7 @@ f2ptr f2__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__body_bytecodes__set(cause, this, value);
 }
-def_pcfunk2(metro__body_bytecodes__set, this, value));
+def_pcfunk2(metro__body_bytecodes__set, this, value, return f2__metro__body_bytecodes__set(this_cause, this, value));
 
 
 f2ptr raw__metro__args(f2ptr cause, f2ptr this) {
@@ -818,7 +818,7 @@ f2ptr f2__metro__args(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__args(cause, this);
 }
-def_pcfunk1(metro__args, this));
+def_pcfunk1(metro__args, this, return f2__metro__args(this_cause, this));
 
 
 f2ptr raw__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -830,7 +830,7 @@ f2ptr f2__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__args__set(cause, this, value);
 }
-def_pcfunk2(metro__args__set, this, value));
+def_pcfunk2(metro__args__set, this, value, return f2__metro__args__set(this_cause, this, value));
 
 
 f2ptr raw__metro__demetropolized_body(f2ptr cause, f2ptr this) {
@@ -842,7 +842,7 @@ f2ptr f2__metro__demetropolized_body(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__demetropolized_body(cause, this);
 }
-def_pcfunk1(metro__demetropolized_body, this));
+def_pcfunk1(metro__demetropolized_body, this, return f2__metro__demetropolized_body(this_cause, this));
 
 
 f2ptr raw__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -854,7 +854,7 @@ f2ptr f2__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) 
   assert_argument_type(metro, this);
   return raw__metro__demetropolized_body__set(cause, this, value);
 }
-def_pcfunk2(metro__demetropolized_body, this, value));
+def_pcfunk2(metro__demetropolized_body, this, value, return f2__metro__demetropolized_body__set(this_cause, this, value));
 
 
 f2ptr raw__metro__body(f2ptr cause, f2ptr this) {
@@ -866,7 +866,7 @@ f2ptr f2__metro__body(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__body(cause, this);
 }
-def_pcfunk1(metro__body, this));
+def_pcfunk1(metro__body, this, return f2__metro__body(this_cause, this));
 
 
 f2ptr raw__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -878,7 +878,7 @@ f2ptr f2__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__body__set(cause, this, value);
 }
-def_pcfunk2(metro__body, this, value));
+def_pcfunk2(metro__body__set, this, value, return f2__metro__body__set(this_cause, this, value));
 
 
 f2ptr raw__metro__env(f2ptr cause, f2ptr this) {
@@ -890,7 +890,7 @@ f2ptr f2__metro__env(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__env(cause, this);
 }
-def_pcfunk1(metro__env, this));
+def_pcfunk1(metro__env, this, return f2__metro__env(this_cause, this));
 
 
 f2ptr raw__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -902,7 +902,7 @@ f2ptr f2__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__env__set(cause, this, value);
 }
-def_pcfunk2(metro__env__set, this, value));
+def_pcfunk2(metro__env__set, this, value, return f2__metro__env__set(this_cause, this, value));
 
 
 f2ptr raw__metro__machine_code(f2ptr cause, f2ptr this) {
@@ -914,7 +914,7 @@ f2ptr f2__metro__machine_code(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__machine_code(cause, this);
 }
-def_pcfunk1(metro__machine_code, this));
+def_pcfunk1(metro__machine_code, this, return f2__metro__machine_code(this_cause, this));
 
 
 f2ptr raw__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -926,7 +926,7 @@ f2ptr f2__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__machine_code__set(cause, this, value);
 }
-def_pcfunk2(metro__machine_code, this, value));
+def_pcfunk2(metro__machine_code__set, this, value, return f2__metro__machine_code__set(this_cause, this, value));
 
 
 f2ptr raw__metro__is_funktional(f2ptr cause, f2ptr this) {
@@ -938,7 +938,7 @@ f2ptr f2__metro__is_funktional(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__is_funktional(cause, this);
 }
-def_pcfunk1(metro__is_funktional, this));
+def_pcfunk1(metro__is_funktional, this, return f2__metro__is_funktional(this_cause, this));
 
 
 f2ptr raw__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -950,7 +950,7 @@ f2ptr f2__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__is_funktional__set(cause, this, value);
 }
-def_pcfunk2(metro__is_funktional, this, value));
+def_pcfunk2(metro__is_funktional__set, this, value, return f2__metro__is_funktional__set(this_cause, this, value));
 
 
 f2ptr raw__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
@@ -962,7 +962,7 @@ f2ptr f2__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__has_no_side_effects(cause, this);
 }
-def_pcfunk1(metro__has_no_side_effects, this));
+def_pcfunk1(metro__has_no_side_effects, this, return f2__metro__has_no_side_effects(this_cause, this, value));
 
 
 f2ptr raw__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -974,7 +974,7 @@ f2ptr f2__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) 
   assert_argument_type(metro, this);
   return raw__metro__has_no_side_effects__set(cause, this, value);
 }
-def_pcfunk2(metro__has_no_side_effects__set, this, value));
+def_pcfunk2(metro__has_no_side_effects__set, this, value, return f2__metro__has_side_effects__set(this_cause, this, value));
 
 
 f2ptr raw__metro__documentation(f2ptr cause, f2ptr this) {
@@ -986,7 +986,7 @@ f2ptr f2__metro__documentation(f2ptr cause, f2ptr this) {
   assert_argument_type(metro, this);
   return raw__metro__documentation(cause, this);
 }
-def_pcfunk1(metro__documentation, this));
+def_pcfunk1(metro__documentation, this, return f2__metro__documentation(this_cause, this));
 
 
 f2ptr raw__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -998,7 +998,7 @@ f2ptr f2__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metro, this);
   return raw__metro__documentation__set(cause, this, value);
 }
-def_pcfunk2(metro__documentation, this, value));
+def_pcfunk2(metro__documentation__set, this, value, return f2__metro__documentation__set(this_cause, this, value));
 
 
 

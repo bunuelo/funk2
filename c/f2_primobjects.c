@@ -751,10 +751,11 @@ f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
 
 // metro
 
-def_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+def_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
 
 f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr metro  = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
+  f2ptr has_no_side_effects = nil;
+  f2ptr metro  = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, has_no_side_effects, documentation);
   f2ptr result = f2__compile__metro(cause, fiber, metro);
   if (raw__larva__is_type(cause, result)) {
     return result;
@@ -1044,7 +1045,7 @@ void f2__primobjects__initialize() {
   
   // metro
   
-  initialize_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+  initialize_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
   
   f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
   

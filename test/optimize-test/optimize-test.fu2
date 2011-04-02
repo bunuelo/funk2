@@ -131,6 +131,27 @@
     nil]]
 
 
+[deftypefunk optimize_test_suite execute add_jump_funk_tests []
+  
+  'jump-funk'
+  [have this add_test [new optimize_test `jump_funk-initial-variable
+			   [funk [g] [apply g nil]]
+			   `[[[,[funk [] 13]]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `jump_funk-external_environment_variable
+			   [let [[g [funk [] 13]]]
+			     [funk [] [apply g nil]]]
+			   `[[[]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `jump_funk-internal_environment_variable
+			   [funk []
+				 [define g [funk [] 13]]
+				 [apply g nil]]
+			   `[[[]
+			      [== result 13]]]]]
+  
+  ]
+
 [deftypefunk optimize_test_suite execute add_lookup_tests []
   
   'lookup'
@@ -568,6 +589,7 @@
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []
+  [have this add_jump_funk_tests]
   [have this add_lookup_tests]
   [have this add_mutate_tests]
   [have this add_globalize_tests]
@@ -575,6 +597,11 @@
   [have this add_math_tests]]
 
 
+
+[defunk optimize-test_jump_funk []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_jump_funk_tests]
+    [have test_suite run]]]
 
 [defunk optimize-test_lookup []
   [let [[test_suite [new optimize_test_suite]]]

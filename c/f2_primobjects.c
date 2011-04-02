@@ -773,6 +773,18 @@ f2ptr f2__metro__name(f2ptr cause, f2ptr this) {
 def_pcfunk1(metro__name, this));
 
 
+f2ptr raw__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__name__set(funk, cause, value);
+}
+
+f2ptr f2__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__name__set(cause, this, value);
+}
+def_pcfunk2(metro__name__set, this, value));
+
+
 f2ptr raw__metro__body_bytecodes(f2ptr cause, f2ptr this) {
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__body_bytecodes(funk, cause);
@@ -783,6 +795,18 @@ f2ptr f2__metro__body_bytecodes(f2ptr cause, f2ptr this) {
   return raw__metro__body_bytecodes(cause, this);
 }
 def_pcfunk1(metro__body_bytecodes, this));
+
+
+f2ptr raw__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__body_bytecodes__set(funk, cause, value);
+}
+ 
+f2ptr f2__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__body_bytecodes__set(cause, this, value);
+}
+def_pcfunk2(metro__body_bytecodes__set, this, value));
 
 
 f2ptr raw__metro__args(f2ptr cause, f2ptr this) {
@@ -797,6 +821,18 @@ f2ptr f2__metro__args(f2ptr cause, f2ptr this) {
 def_pcfunk1(metro__args, this));
 
 
+f2ptr raw__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__args__set(funk, cause, value);
+}
+
+f2ptr f2__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__args__set(cause, this, value);
+}
+def_pcfunk2(metro__args__set, this, value));
+
+
 f2ptr raw__metro__demetropolized_body(f2ptr cause, f2ptr this) {
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__demetropolized_body(funk, cause);
@@ -807,6 +843,18 @@ f2ptr f2__metro__demetropolized_body(f2ptr cause, f2ptr this) {
   return raw__metro__demetropolized_body(cause, this);
 }
 def_pcfunk1(metro__demetropolized_body, this));
+
+
+f2ptr raw__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__demetropolized_body__set(funk, cause, value);
+}
+
+f2ptr f2__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__demetropolized_body__set(cause, this, value);
+}
+def_pcfunk2(metro__demetropolized_body, this, value));
 
 
 f2ptr raw__metro__body(f2ptr cause, f2ptr this) {
@@ -821,6 +869,18 @@ f2ptr f2__metro__body(f2ptr cause, f2ptr this) {
 def_pcfunk1(metro__body, this));
 
 
+f2ptr raw__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__body__set(funk, cause, value);
+}
+
+f2ptr f2__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__body__set(cause, this, value);
+}
+def_pcfunk2(metro__body, this, value));
+
+
 f2ptr raw__metro__env(f2ptr cause, f2ptr this) {
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__env(funk, cause);
@@ -831,6 +891,18 @@ f2ptr f2__metro__env(f2ptr cause, f2ptr this) {
   return raw__metro__env(cause, this);
 }
 def_pcfunk1(metro__env, this));
+
+
+f2ptr raw__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__env__set(funk, cause, value);
+}
+
+f2ptr f2__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__env__set(cause, this, value);
+}
+def_pcfunk2(metro__env__set, this, value));
 
 
 f2ptr raw__metro__machine_code(f2ptr cause, f2ptr this) {
@@ -845,6 +917,18 @@ f2ptr f2__metro__machine_code(f2ptr cause, f2ptr this) {
 def_pcfunk1(metro__machine_code, this));
 
 
+f2ptr raw__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__machine_code__set(funk, cause, value);
+}
+
+f2ptr f2__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__machine_code__set(cause, this, value);
+}
+def_pcfunk2(metro__machine_code, this, value));
+
+
 f2ptr raw__metro__is_funktional(f2ptr cause, f2ptr this) {
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__is_funktional(funk, cause);
@@ -855,6 +939,18 @@ f2ptr f2__metro__is_funktional(f2ptr cause, f2ptr this) {
   return raw__metro__is_funktional(cause, this);
 }
 def_pcfunk1(metro__is_funktional, this));
+
+
+f2ptr raw__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__is_funktional__set(funk, cause, value);
+}
+
+f2ptr f2__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__is_funktional__set(cause, this, value);
+}
+def_pcfunk2(metro__is_funktional, this, value));
 
 
 f2ptr raw__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
@@ -869,6 +965,18 @@ f2ptr f2__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
 def_pcfunk1(metro__has_no_side_effects, this));
 
 
+f2ptr raw__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__has_no_side_effects__set(funk, cause, value);
+}
+
+f2ptr f2__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__has_no_side_effects__set(cause, this, value);
+}
+def_pcfunk2(metro__has_no_side_effects__set, this, value));
+
+
 f2ptr raw__metro__documentation(f2ptr cause, f2ptr this) {
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__documentation(funk, cause);
@@ -879,6 +987,18 @@ f2ptr f2__metro__documentation(f2ptr cause, f2ptr this) {
   return raw__metro__documentation(cause, this);
 }
 def_pcfunk1(metro__documentation, this));
+
+
+f2ptr raw__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__documentation__set(funk, cause, value);
+}
+
+f2ptr f2__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__documentation__set(cause, this, value);
+}
+def_pcfunk2(metro__documentation, this, value));
 
 
 

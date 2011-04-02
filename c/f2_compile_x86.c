@@ -1182,7 +1182,7 @@ void f2__chunk__compile_x86__metro(f2ptr this, uint index, f2ptr cause, uint* ne
     iter ++;
   }
   
-  f2__chunk__compile_x86__bytecodes(this, index, cause, next_index, f2metro__body_bytecodes(metro, cause)); index = *next_index;
+  f2__chunk__compile_x86__bytecodes(this, index, cause, next_index, raw__metro__body_bytecodes(cause, metro)); index = *next_index;
   
   iter = compile_x86__funk__footer;
   for (i = compile_x86__funk__footer__length; i > 0; i --) {

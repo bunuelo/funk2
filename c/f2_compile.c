@@ -266,19 +266,19 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
   
   
   f2ptr metro_bcs = f2__compile__value__set(cause, metro);
-  if (f2metro__body_bytecodes(metro, cause)) {
+  if (raw__metro__body_bytecodes(cause, metro)) {
     return bcs_valid(metro_bcs);
   }
   
   boolean_t  metro__is_funktional         = boolean__true;
-  f2ptr local_variables              = f2metro__args(metro, cause);
+  f2ptr      local_variables              = raw__metro__args(cause, metro);
   boolean_t  metro__is_locally_funktional = boolean__true;
   
   f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
   
   // define args in metro environment
   iter = raw__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause));
-  f2ptr var_iter = f2metro__args(metro, cause);
+  f2ptr var_iter = raw__metro__args(cause, metro);
   while (var_iter) {
     
     f2ptr var = f2cons__car(var_iter, cause);
@@ -298,7 +298,7 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
   
   boolean_t popped_env_and_return     = boolean__false;
   boolean_t optimize_unused_beginning = boolean__true;
-  f2ptr body_bcs = f2__compile__rawcode(cause, fiber, f2metro__demetropolized_body(metro, cause), boolean__false, boolean__true, &popped_env_and_return, &metro__is_funktional, local_variables, &metro__is_locally_funktional, optimize_unused_beginning);
+  f2ptr body_bcs = f2__compile__rawcode(cause, fiber, raw__metro__demetropolized_body(cause, metro), boolean__false, boolean__true, &popped_env_and_return, &metro__is_funktional, local_variables, &metro__is_locally_funktional, optimize_unused_beginning);
   if (body_bcs && (! raw__cons__is_type(cause, body_bcs))) {return body_bcs;}
   iter = raw__list_cdr__set(cause, iter, body_bcs);
   
@@ -308,10 +308,10 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
     iter = raw__list_cdr__set(cause, iter, f2__compile__block_exit_and_no_pop(cause, metro));
   }
   
-  f2metro__is_funktional__set(metro, cause, metro__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
-  f2metro__body_bytecodes__set(metro, cause, full_bcs);
+  raw__metro__is_funktional__set(cause, metro, metro__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
+  raw__metro__body_bytecodes__set(cause, metro, full_bcs);
   
-  //f2metro__machine_code__set(metro, cause, f2chunk__new_compiled_from_metro(cause, metro));
+  //raw__metro__machine_code__set(cause, metro, f2chunk__new_compiled_from_metro(cause, metro));
   return bcs_valid(metro_bcs);
 }
 

@@ -404,7 +404,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
   } else if (raw__metro__is_type(cause, funktion)) {
 #ifdef DEBUG_BYTECODES
     {
-      f2ptr name = f2metro__name(funktion, cause);
+      f2ptr name = raw__metro__name(cause, funktion);
       u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
@@ -418,13 +418,13 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       bytecode_status("executing metro name=|%s|", str);
     }
 #endif // DEBUG_BYTECODES
-    f2fiber__env__set(fiber, cause, f2metro__env(funktion, cause));
-    f2ptr body_bcs = f2metro__body_bytecodes(funktion, cause);
+    f2fiber__env__set(fiber, cause, raw__metro__env(cause, funktion));
+    f2ptr body_bcs = raw__metro__body_bytecodes(cause, funktion);
     if (raw__larva__is_type(cause, body_bcs)) {
       f2fiber__value__set(fiber, cause, body_bcs);
       return 1;
     }
-    f2ptr machine_code = f2metro__machine_code(funktion, cause);
+    f2ptr machine_code = raw__metro__machine_code(cause, funktion);
     f2fiber__program_counter__set(fiber, cause, body_bcs);
     if (machine_code) {
       //fflush(stdout); f2__print_prompt("jumping to metro machine code: ", funktion); fflush(stdout);

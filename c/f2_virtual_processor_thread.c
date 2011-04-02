@@ -44,8 +44,8 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	raw__spin_sleep_yield();
       }
     }
-    funk2_virtual_processor_t* virtual_processor                      = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
-    boolean_t                  we_are_next_in_line_to_execute         = boolean__false;
+    funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
+    boolean_t                  we_are_next_in_line_to_execute = boolean__false;
     s64                        assigned_virtual_processor_thread_count;
     s64                        spinning_virtual_processor_thread_count;
     s64                        working_virtual_processor_thread_count;

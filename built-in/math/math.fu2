@@ -22,18 +22,18 @@
 [defmetro + [x :rest rest]
   [if [null rest]
       x
-    `[get ,x plus ,[apply &+ rest]]]]
+    `[bytecode:add ,x ,[apply &+ rest]]]]
 
 
 'subtraction'
 
 [defmetro negative [x]
-  `[get 0 minus ,x]]
+  `[bytecode:negative ,x]]
 
 [defmetro - [x :rest rest]
   [if [null rest]
-      `[negative ,x]
-    `[get ,x minus ,[apply &+ rest]]]]
+      `[bytecode:negative ,x]
+    `[bytecode:subtract ,x ,[apply &+ rest]]]]
 
 
 'multiplication'
@@ -41,33 +41,33 @@
 [defmetro * [x :rest rest]
   [if [null rest]
       x
-    `[get ,x multiplied_by ,[apply &* rest]]]]
+    `[bytecode:multiply ,x ,[apply &* rest]]]]
 
 
 'division'
 
 [defmetro inverse [x]
-  `[get 1 divided_by ,x]]
+  `[bytecode:inverse ,x]]
 
 [defmetro / [x :rest rest]
   [if [null rest]
-      `[inverse ,x]
-    `[get ,x divided_by ,[apply &* rest]]]]
+      `[bytecode:inverse ,x]
+    `[bytecode:divide ,x ,[apply &* rest]]]]
 
 
 'modulo'
 
 [defmetro % [x y]
-  `[get ,x modulo ,y]]
+  `[bytecode:modulo ,x ,y]]
 
 
 'equals'
 
-[defunk == [x y]
-  [get x is_numerically_equal_to y]]
+[defmetro == [x y]
+  `[bytecode:numerically_equals ,x ,y]]
 
-[defunk != [x y]
-  [not [== x y]]]
+[defmetro != [x y]
+  `[bytecode:not [bytecode:numerically_equals ,x ,y]]]
 
 'bitshift-left'
 
@@ -98,13 +98,19 @@
     [error `runtime-error `type-check-failure]]]
 
 
+[defmetro < [x y]
+  `[bytecode:less_than ,x ,y]]
+
+[defmetro > [x y]
+  `[bytecode:greater_than ,x ,y]]
+
 [defunk <= [x y]
-  [or [< x y]
-      [== x y]]]
+  [bytecode:or [bytecode:less_than          x y]
+	       [bytecode:numerically_equals x y]]]
 
 [defunk >= [x y]
-  [or [> x y]
-      [== x y]]]
+  [bytecode:or [bytecode:greater_than       x y]
+               [bytecode:numerically_equals x y]]]
 
 [defunk sqrt [x]
   [get x square_root]]
@@ -114,16 +120,16 @@
 
 
 [defmetro += [variable value]
-  `[= ,variable [+ ,variable ,value]]]
+  `[= ,variable [bytecode:add ,variable ,value]]]
 
 [defmetro -= [variable value]
-  `[= ,variable [- ,variable ,value]]]
+  `[= ,variable [bytecode:subtract ,variable ,value]]]
 
 [defmetro *= [variable value]
-  `[= ,variable [* ,variable ,value]]]
+  `[= ,variable [bytecode:multiply ,variable ,value]]]
 
 [defmetro /= [variable value]
-  `[= ,variable [/ ,variable ,value]]]
+  `[= ,variable [bytecode:divide ,variable ,value]]]
 
 [defmetro >>= [variable value]
   `[= ,variable [>> ,variable ,value]]]
@@ -132,8 +138,8 @@
   `[= ,variable [<< ,variable ,value]]]
 
 [defmetro ++ [variable]
-  `[= ,variable [+ ,variable 1]]]
+  `[= ,variable [bytecode:increment ,variable]]]
 
 [defmetro -- [variable]
-  `[= ,variable [- ,variable 1]]]
+  `[= ,variable [bytecode:decrement ,variable]]]
 

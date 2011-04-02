@@ -55,6 +55,7 @@
   [eval `[prog [require number]
 	       [require ansi]
 	       [require mutex]
+	       [require math]
 	       
 	       [defunk load_all_core_packages []
 		 [require utilities]

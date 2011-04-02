@@ -81,6 +81,10 @@ f2ptr f2__number__square_root(f2ptr cause, f2ptr this) {
   return f2__object__get_0(cause, this, __funk2.number_globalvars.square_root__symbol);
 }
 
+f2ptr f2__number__modulo(f2ptr cause, f2ptr this, f2ptr that) {
+  return f2__object__get_1(cause, this, __funk2.number_globalvars.modulo__symbol, that);
+}
+
 void funk2_number_globalvars__init(funk2_number_globalvars_t* this) {
   f2ptr cause = initial_cause();
   this->as__double__symbol              = new__symbol(cause, "as-double");
@@ -92,6 +96,7 @@ void funk2_number_globalvars__init(funk2_number_globalvars_t* this) {
   this->is_less_than__symbol            = new__symbol(cause, "is_less_than");
   this->is_numerically_equal_to__symbol = new__symbol(cause, "is_numerically_equal_to");
   this->square_root__symbol             = new__symbol(cause, "square_root");
+  this->modulo__symbol                  = new__symbol(cause, "modulo");
 }
 
 // **

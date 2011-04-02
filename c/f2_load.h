@@ -26,9 +26,10 @@
 #include "f2_compile.h"
 #include "f2_fiber.h"
 
-extern f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename);
-extern def_pcfunk__prototype__declare(pcfunk__load);
+f2ptr raw__load(f2ptr cause, f2ptr filename);
+f2ptr  f2__load(f2ptr cause, f2ptr filename);
+def_pcfunk__prototype__declare(pcfunk__load);
 
-extern void f2__load__initialize();
+void f2__load__initialize();
 
 #endif // F2__LOAD__H

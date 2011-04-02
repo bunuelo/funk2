@@ -31,11 +31,11 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
   return retval;
 }
 
-f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
+f2ptr raw__load(f2ptr cause, f2ptr filename) {
   if (!raw__string__is_type(cause, filename)) {
-    status("load error: filename must be a string.");
-    return nil;
+    error(nil, "load error: filename must be a string.");
   }
+  f2ptr fiber  = f2__this__fiber(cause);
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {
     {
@@ -130,7 +130,13 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   f2__stream__close(cause, stream);
   return nil;
 }
-def_pcfunk1(load, filename, return raw__load(this_cause, simple_fiber, filename));
+
+
+f2ptr f2__load(f2ptr cause, f2ptr filename) {
+  assert_argument_type(string, filename);
+  return raw__load(cause, filename);
+}
+def_pcfunk1(load, filename, return f2__load(this_cause, filename));
 
 void f2__load__reinitialize_globalvars() {
 }

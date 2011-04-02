@@ -42,8 +42,6 @@ f2ptr check_bcs_valid(f2ptr bytecodes) {
 f2ptr f2__compile__funk_bc(f2ptr cause)                                               {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__funk__symbol,                nil,    nil,   nil), nil));}
 f2ptr f2__compile__jump_funk(f2ptr cause)                                             {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__jump_funk__symbol,           nil,    nil,   nil), nil));}
 f2ptr f2__compile__array(f2ptr cause, f2ptr length)                                   {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__array__symbol,               length, nil,   nil), nil));}
-f2ptr f2__compile__reg_array__elt(f2ptr cause, f2ptr reg, f2ptr index)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__reg_array__elt__symbol,      reg,    index, nil), nil));}
-f2ptr f2__compile__reg_array__elt__set(f2ptr cause, f2ptr reg, f2ptr index)           {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__reg_array__elt__set__symbol, reg,    index, nil), nil));}
 f2ptr f2__compile__cons(f2ptr cause)                                                  {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__cons__symbol,                nil,    nil,   nil), nil));}
 f2ptr f2__compile__consp(f2ptr cause)                                                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__consp__symbol,               nil,    nil,   nil), nil));}
 f2ptr f2__compile__car(f2ptr cause)                                                   {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__car__symbol,                 nil,    nil,   nil), nil));}
@@ -83,11 +81,11 @@ f2ptr f2__compile__copy_args_to_iter(f2ptr cause)                               
 f2ptr f2__compile__copy_pc_to_return(f2ptr cause)                                     {return bcs_valid(f2__compile__copy( cause, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol));}
 f2ptr f2__compile__copy_return_to_pc(f2ptr cause)                                     {return bcs_valid(f2__compile__copy( cause, __fiber__return_reg__symbol, __fiber__program_counter_reg__symbol));}
 
-f2ptr f2__compile__lookup_type_var(f2ptr cause, f2ptr type, f2ptr var)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__lookup_type_var__symbol, type, var, nil), nil));}
-f2ptr f2bytecode__lookup_type_var__type(f2ptr this, f2ptr cause) {return f2bytecode__arg0(this, cause);}
-f2ptr f2bytecode__lookup_type_var__var(f2ptr this, f2ptr cause)  {return f2bytecode__arg1(this, cause);}
+f2ptr f2__compile__lookup(f2ptr cause, f2ptr type, f2ptr var)                         {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__lookup__symbol, type, var, nil), nil));}
+f2ptr f2bytecode__lookup__type(f2ptr this, f2ptr cause)                               {return f2bytecode__arg0(this, cause);}
+f2ptr f2bytecode__lookup__var(f2ptr this, f2ptr cause)                                {return f2bytecode__arg1(this, cause);}
 
-f2ptr f2__compile__define_type_var(f2ptr cause, f2ptr type, f2ptr var)                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__define_type_var__symbol, type, var, nil), nil));}
+f2ptr f2__compile__define(f2ptr cause, f2ptr type, f2ptr var)                         {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__define__symbol, type, var, nil), nil));}
 f2ptr f2__compile__type_var__mutate(f2ptr cause, f2ptr type, f2ptr var)               {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__type_var__mutate__symbol, type, var, nil), nil));}
 f2ptr f2__compile__globalize_type_var(f2ptr cause, f2ptr type, f2ptr var)             {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__globalize_type_var__symbol, type, var, nil), nil));}
 f2ptr f2__compile__jump(f2ptr cause, f2ptr new_pc)                                    {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__jump__symbol, new_pc, nil, nil), nil));}
@@ -102,11 +100,11 @@ f2ptr f2__compile__compile(f2ptr cause, f2ptr protect_environment)              
 f2ptr f2__compile__yield(f2ptr cause)                                                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__yield__symbol, nil, nil, nil), nil));}
 f2ptr f2__compile__newenv(f2ptr cause)                                                {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__newenv__symbol, nil, nil, nil), nil));}
 
-f2ptr f2__compile__lookup_var(f2ptr cause, f2ptr var)         {return bcs_valid(f2__compile__lookup_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
-f2ptr f2__compile__lookup_funkvar(f2ptr cause, f2ptr funkvar) {return bcs_valid(f2__compile__lookup_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, funkvar));}
+f2ptr f2__compile__lookup_var(f2ptr cause, f2ptr var)         {return bcs_valid(f2__compile__lookup(cause, __funk2.primobject__frame.variable__symbol,      var));}
+f2ptr f2__compile__lookup_funkvar(f2ptr cause, f2ptr funkvar) {return bcs_valid(f2__compile__lookup(cause, __funk2.primobject__frame.funk_variable__symbol, funkvar));}
 
-f2ptr f2__compile__define_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__define_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
-f2ptr f2__compile__define_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__define_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
+f2ptr f2__compile__define_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__define(cause, __funk2.primobject__frame.variable__symbol,      var));}
+f2ptr f2__compile__define_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__define(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
 f2ptr f2__compile__var__mutate(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__type_var__mutate(cause, __funk2.primobject__frame.variable__symbol,      var));}
 f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__type_var__mutate(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
@@ -114,17 +112,38 @@ f2ptr f2__compile__funkvar__mutate(f2ptr cause, f2ptr var) {return bcs_valid(f2_
 f2ptr f2__compile__globalize_var(f2ptr cause, f2ptr var)     {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.variable__symbol,      var));}
 f2ptr f2__compile__globalize_funkvar(f2ptr cause, f2ptr var) {return bcs_valid(f2__compile__globalize_type_var(cause, __funk2.primobject__frame.funk_variable__symbol, var));}
 
-f2ptr f2__compile__block_push(                f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_push__symbol,                 nil,      nil, nil), nil));}
-f2ptr f2__compile__block_enter(               f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_enter__symbol,                nil,      nil, nil), nil));}
+// logic
+f2ptr f2__compile__eq (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__eq__symbol,  result, x0, x1),  nil));}
+f2ptr f2__compile__not(f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__not__symbol, result, x,  nil), nil));}
+f2ptr f2__compile__and(f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__and__symbol, result, x0, x1),  nil));}
+f2ptr f2__compile__or (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__or__symbol,  result, x0, x1),  nil));}
+
+// math
+f2ptr f2__compile__add               (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__add__symbol,                result, x0, x1),  nil));}
+f2ptr f2__compile__negative          (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__negative__symbol,           result, x,  nil), nil));}
+f2ptr f2__compile__subtract          (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__subtract__symbol,           result, x0, x1),  nil));}
+f2ptr f2__compile__multiply          (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__multiply__symbol,           result, x0, x1),  nil));}
+f2ptr f2__compile__inverse           (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__inverse__symbol,            result, x,  nil), nil));}
+f2ptr f2__compile__divide            (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__divide__symbol,             result, x0, x1),  nil));}
+f2ptr f2__compile__modulo            (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__modulo__symbol,             result, x0, x1),  nil));}
+f2ptr f2__compile__increment         (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__increment__symbol,          result, x,  nil), nil));}
+f2ptr f2__compile__decrement         (f2ptr cause, f2ptr result, f2ptr x)            {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__decrement__symbol,          result, x,  nil), nil));}
+f2ptr f2__compile__numerically_equals(f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__numerically_equals__symbol, result, x0, x1),  nil));}
+f2ptr f2__compile__less_than         (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__less_than__symbol,          result, x0, x1),  nil));}
+f2ptr f2__compile__greater_than      (f2ptr cause, f2ptr result, f2ptr x0, f2ptr x1) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__greater_than__symbol,       result, x0, x1),  nil));}
+
+// block
+f2ptr f2__compile__block_push                (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_push__symbol,                 nil,      nil, nil), nil));}
+f2ptr f2__compile__block_enter               (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_enter__symbol,                nil,      nil, nil), nil));}
 f2ptr f2__compile__block_define_rest_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_rest_argument__symbol, argument, nil, nil), nil));}
-f2ptr f2__compile__block_define_argument(     f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
+f2ptr f2__compile__block_define_argument     (f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_argument__symbol,      argument, nil, nil), nil));}
 f2ptr f2__compile__block_define_last_argument(f2ptr cause, f2ptr argument) {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_define_last_argument__symbol, argument, nil, nil), nil));}
-f2ptr f2__compile__block_pop(                 f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_pop__symbol,                  nil,      nil, nil), nil));}
-f2ptr f2__compile__block_exit_and_pop(        f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
-f2ptr f2__compile__block_exit_and_no_pop(     f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
-f2ptr f2__compile__block_eval_args_begin(     f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_begin__symbol,      nil,      nil, nil), nil));}
-f2ptr f2__compile__block_eval_args_next(      f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_next__symbol,       nil,      nil, nil), nil));}
-f2ptr f2__compile__block_eval_args_end(       f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_end__symbol,        nil,      nil, nil), nil));}
+f2ptr f2__compile__block_pop                 (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_pop__symbol,                  nil,      nil, nil), nil));}
+f2ptr f2__compile__block_exit_and_pop        (f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_pop__symbol,         funk,     nil, nil), nil));}
+f2ptr f2__compile__block_exit_and_no_pop     (f2ptr cause, f2ptr funk)     {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_exit_and_no_pop__symbol,      funk,     nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_begin     (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_begin__symbol,      nil,      nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_next      (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_next__symbol,       nil,      nil, nil), nil));}
+f2ptr f2__compile__block_eval_args_end       (f2ptr cause)                 {return bcs_valid(f2cons__new(cause, f2bytecode__new(cause, __funk2.bytecode.bytecode__block_eval_args_end__symbol,        nil,      nil, nil), nil));}
 
 
 f2ptr f2__compile__symbol(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
@@ -169,86 +188,12 @@ f2ptr f2__compile__push_debug_funk_call(f2ptr cause) {
 }
 
 f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
-  f2ptr full_bcs =                      f2__compile__pop_nil(cause); f2ptr iter = full_bcs;
+  f2ptr full_bcs =                       f2__compile__pop_nil(cause); f2ptr iter = full_bcs;
   iter = raw__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
   iter = raw__list_cdr__set(cause, iter, f2__compile__pop_nil(cause));
   return full_bcs;
 }
 
-//
-// This optimization almost works...  but this doesn't work if stream is globally defined, for example:
-//
-//  [defunk format [stream :rest exps]
-//    [mapc [funk [exp] [exp-format stream exp]] exps]]
-//
-f2ptr f2__compile__funk__optimize_body_bytecodes(f2ptr cause, f2ptr funk, f2ptr body_bytecodes) {
-  f2ptr next = nil;
-  f2ptr prev = nil;
-  f2ptr iter = body_bytecodes;
-  //printf("\nbefore optimization: ");
-  //f2__print(cause, body_bytecodes);
-  while (iter) {
-    f2ptr bytecode = f2cons__car(iter, cause);
-    next           = f2cons__cdr(iter, cause);
-    f2ptr bytecode__command = f2bytecode__command(bytecode, cause);
-    if (raw__symbol__eq(cause, bytecode__command, __funk2.bytecode.bytecode__lookup_type_var__symbol)) {
-      f2ptr type = f2bytecode__lookup_type_var__type(bytecode, cause);
-      f2ptr var  = f2bytecode__lookup_type_var__var(bytecode, cause);
-      if (raw__symbol__eq(cause, type, __funk2.primobject__frame.variable__symbol)) {
-	f2ptr funk__args = f2funk__args(funk, cause);
-	boolean_t var_is_funk_arg = 0;
-	f2ptr funk_arg_iter = funk__args;
-	while(funk_arg_iter) {
-	  f2ptr funk_arg = f2cons__car(funk_arg_iter, cause);
-	  if (raw__symbol__eq(cause, var, funk_arg)) {
-	    var_is_funk_arg = 1;
-	  }
-	  funk_arg_iter = f2cons__cdr(funk_arg_iter, cause);
-	}
-	if (! var_is_funk_arg) {
-	  f2ptr var_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.variable__symbol, var);
-	  if (raw__cons__is_type(cause, var_assignment_cons)) {
-	    f2ptr replacement_bcs = f2__compile__array_elt(cause, var_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
-	    //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize var lookup!");
-	    //f2__write(cause, f2cons__car(var_assignment_cons, cause));
-	    //f2__write(cause, replacement_bcs);
-	    //f2__write(cause, f2array__elt(var_assignment_cons, 4, cause));
-	    if (prev) {
-	      f2cons__cdr__set(prev, cause, replacement_bcs);
-	    } else {
-	      body_bytecodes = replacement_bcs;
-	    }
-	    raw__list_cdr__set(cause, replacement_bcs, next);
-	  } else {
-	    printf("\ncouldn't optimize variable!");
-	  }
-	}
-      } else if (raw__symbol__eq(cause, type, __funk2.primobject__frame.funk_variable__symbol)) {
-	f2ptr funkvar_assignment_cons = f2__environment__lookup_type_var_assignment_cons(cause, f2funk__env(funk, cause), __funk2.primobject__frame.funk_variable__symbol, var);
-	if (raw__cons__is_type(cause, funkvar_assignment_cons)) {
-	  f2ptr replacement_bcs = f2__compile__array_elt(cause, funkvar_assignment_cons, f2integer__new(cause, defarray_slot__index_var(cons__cdr)));
-	  //printf("\nf2__compile__funk__optimize_body_bytecodes: could optimize funkvar lookup!");
-	  //f2__write(cause, f2cons__car(funkvar_assignment_cons, cause));
-	  //f2__write(cause, replacement_bcs);
-	  //f2__write(cause, f2array__elt(funkvar_assignment_cons, 4, cause));
-	  if (prev) {
-	    f2cons__cdr__set(prev, cause, replacement_bcs);
-	  } else {
-	    body_bytecodes = replacement_bcs;
-	  }
-	  raw__list_cdr__set(cause, replacement_bcs, next);
-	} else {
-	  printf("\ncouldn't optimize funk variable!");
-	}
-      }
-    }
-    prev = iter;
-    iter = next;
-  }
-  //printf("\nafter optimization: ");
-  //f2__print(cause, body_bytecodes);
-  return body_bytecodes;;
-}
 
 f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   release__assert(__funk2.compile.f2__compile__funk__symbol != -1, nil, "__funk2.compile.f2__compile__funk__symbol not yet defined.");
@@ -299,8 +244,6 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   }
   if (body_bcs && (! raw__cons__is_type(cause, body_bcs))) {return body_bcs;}
   
-  //body_bcs = f2__compile__funk__optimize_body_bytecodes(cause, bytecode_tracing_on, funk, body_bcs);
-  
   iter = raw__list_cdr__set(cause, iter, body_bcs);
   
   if (! popped_env_and_return) {
@@ -311,6 +254,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   
   //f2funk__is_funktional__set(funk, cause, funk__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
+  
   return bcs_valid(funk_bcs);
 }
 
@@ -366,6 +310,7 @@ f2ptr f2__compile__metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro) {
   
   f2metro__is_funktional__set(metro, cause, metro__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
   f2metro__body_bytecodes__set(metro, cause, full_bcs);
+  
   //f2metro__machine_code__set(metro, cause, f2chunk__new_compiled_from_metro(cause, metro));
   return bcs_valid(metro_bcs);
 }
@@ -411,9 +356,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
   boolean_t protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
   boolean_t optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
   
-  f2ptr full_bcs = nil;
-  boolean_t  exp__is_funktional = boolean__true;
-  f2ptr next = nil;
+  f2ptr     full_bcs           = nil;
+  boolean_t exp__is_funktional = boolean__true;
+  f2ptr     next               = nil;
   do {
     f2ptr exp = f2cons__car(exps, cause);
     next      = f2cons__cdr(exps, cause);
@@ -451,9 +396,9 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
     protect_subexp_environment     = (f2cons__cdr(exps, cause) != nil) || protect_environment;
     optimize_subexp_tail_recursion = (f2cons__cdr(exps, cause) == nil) && optimize_tail_recursion;
     
-    f2ptr     exp_bcs = nil;
+    f2ptr     exp_bcs            = nil;
     boolean_t exp__is_funktional = boolean__true;
-    f2ptr     next = nil;
+    f2ptr     next               = nil;
     do {
       f2ptr exp = f2cons__car(exps, cause);
       next      = f2cons__cdr(exps, cause);
@@ -521,7 +466,7 @@ f2ptr f2__compile__if_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t
   }
   
   boolean_t false__popped_env_and_return = boolean__false;
-  boolean_t optimize_unused_beginning = boolean__true;
+  boolean_t optimize_unused_beginning    = boolean__true;
   f2ptr false_bcs = f2__compile__rawcode(cause, fiber, false_exps, protect_environment, optimize_tail_recursion, &false__popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
   if (false_bcs && (! raw__cons__is_type(cause, false_bcs))) {
     return f2larva__new(cause, 1, nil);
@@ -1118,24 +1063,409 @@ f2ptr f2__compile__backquote_append_exp(f2ptr simple_cause, f2ptr fiber, f2ptr e
   return bcs_valid(full_bcs);
 }
 
+
+
+
+// eq
+
+f2ptr f2__compile__bytecode_eq_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__eq(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// not
+
+f2ptr f2__compile__bytecode_not_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x        = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x__bcs = raw__compile(cause, fiber, x, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x__bcs)) {
+    return x__bcs;
+  }
+  f2ptr exp_bcs = x__bcs;                                                                          f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__not(cause, __fiber__value_reg__symbol, __fiber__value_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// and
+
+f2ptr f2__compile__bytecode_and_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__and(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// or
+
+f2ptr f2__compile__bytecode_or_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__or(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// add
+
+f2ptr f2__compile__bytecode_add_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__add(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// negative
+
+f2ptr f2__compile__bytecode_negative_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x        = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x__bcs = raw__compile(cause, fiber, x, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x__bcs)) {
+    return x__bcs;
+  }
+  f2ptr exp_bcs = x__bcs;                                                                          f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__negative(cause, __fiber__value_reg__symbol, __fiber__value_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// subtract
+
+f2ptr f2__compile__bytecode_subtract_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__subtract(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// multiply
+
+f2ptr f2__compile__bytecode_multiply_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__multiply(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// inverse
+
+f2ptr f2__compile__bytecode_inverse_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x        = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x__bcs = raw__compile(cause, fiber, x, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x__bcs)) {
+    return x__bcs;
+  }
+  f2ptr exp_bcs = x__bcs;                                                                          f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__inverse(cause, __fiber__value_reg__symbol, __fiber__value_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// divide
+
+f2ptr f2__compile__bytecode_divide_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__divide(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// modulo
+
+f2ptr f2__compile__bytecode_modulo_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__modulo(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// increment
+
+f2ptr f2__compile__bytecode_increment_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x        = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x__bcs = raw__compile(cause, fiber, x, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x__bcs)) {
+    return x__bcs;
+  }
+  f2ptr exp_bcs = x__bcs;                                                                          f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__increment(cause, __fiber__value_reg__symbol, __fiber__value_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// decrement
+
+f2ptr f2__compile__bytecode_decrement_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x        = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x__bcs = raw__compile(cause, fiber, x, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x__bcs)) {
+    return x__bcs;
+  }
+  f2ptr exp_bcs = x__bcs;                                                                          f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__decrement(cause, __fiber__value_reg__symbol, __fiber__value_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// numerically_equals
+
+f2ptr f2__compile__bytecode_numerically_equals_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__numerically_equals(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// less_than
+
+f2ptr f2__compile__bytecode_less_than_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__less_than(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
+// greater_than
+
+f2ptr f2__compile__bytecode_greater_than_exp(f2ptr cause, f2ptr fiber, f2ptr exp) {
+  assert_argument_type(cons, exp);
+  f2ptr arg_iter = exp;                          arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x0       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(cons, arg_iter);
+  f2ptr x1       = f2cons__car(arg_iter, cause); arg_iter = f2cons__cdr(arg_iter, cause); assert_argument_type(nil, arg_iter);
+  f2ptr x0__bcs = raw__compile(cause, fiber, x0, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x0__bcs)) {
+    return x0__bcs;
+  }
+  f2ptr x1__bcs = raw__compile(cause, fiber, x1, boolean__true, boolean__false, NULL, NULL, nil, NULL);
+  if (raw__larva__is_type(cause, x1__bcs)) {
+    return x1__bcs;
+  }
+  f2ptr exp_bcs = x0__bcs;                                                                                                  f2ptr full_bcs = exp_bcs; f2ptr iter = exp_bcs;
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = x1__bcs;                                                                                                  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__push_value(cause);                                                                           iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_iter(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__pop_args(cause);                                                                             iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  exp_bcs       = f2__compile__greater_than(cause, __fiber__value_reg__symbol, __fiber__iter_reg__symbol, __fiber__args_reg__symbol); iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  return full_bcs;
+}
+
+
 boolean_t raw__is_compile_special_symbol(f2ptr cause, f2ptr exp) {
-  return ((raw__symbol__eq(cause, exp, __funk2.globalenv.quote__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))        ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol)) ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                     ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.return__symbol))                 ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))            ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define__symbol))                 ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutatefunk__symbol))             ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutate__symbol))                 ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize__symbol))              ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize_funk__symbol))         ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.yield__symbol))                  ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode__symbol))               ||
-	  (raw__symbol__eq(cause, exp, __funk2.globalenv.rawcode__symbol)));
+  return ((raw__symbol__eq(cause, exp, __funk2.globalenv.quote__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list__symbol))             ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.backquote__list_append__symbol))      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.if__symbol))                          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.return__symbol))                      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                     ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))                 ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define__symbol))                      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutatefunk__symbol))                  ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.mutate__symbol))                      ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize__symbol))                   ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.globalize_funk__symbol))              ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.yield__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode__symbol))                    ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.rawcode__symbol))                     ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_eq__symbol))                 ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_not__symbol))                ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_and__symbol))                ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_or__symbol))                 ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_add__symbol))                ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_negative__symbol))           ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_subtract__symbol))           ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_multiply__symbol))           ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_inverse__symbol))            ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_divide__symbol))             ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_modulo__symbol))             ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_increment__symbol))          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_decrement__symbol))          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_numerically_equals__symbol)) ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_less_than__symbol))          ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.bytecode_greater_than__symbol)));
 }
 
 f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
@@ -1173,6 +1503,23 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp
   if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__yield(cause));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return bcs_valid(f2__compile__bytecode_exp(cause, exp, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__rawcode_exp(cause, exp, fiber, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_eq_exp(                cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_not_exp(               cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_and_exp(               cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_or__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_or_exp(                cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_add__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_add_exp(               cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_negative__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_negative_exp(          cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_subtract__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_subtract_exp(          cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_multiply__symbol))           {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_multiply_exp(          cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_inverse_exp(           cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_divide_exp(            cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_modulo_exp(            cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_increment_exp(         cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_decrement_exp(         cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_numerically_equals_exp(cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_less_than_exp(         cause, fiber, exp));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__bytecode_greater_than_exp(      cause, fiber, exp));}
+  
   status("tried to compile special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   //error(nil, "f2__compile__special_symbol_exp error: expression is not special symbol expression.");
@@ -1272,14 +1619,6 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__copy__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__swap__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__array__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__reg_array__elt__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__reg_array__elt__set__symbol)) {
-    if (is_funktional) {
-      *is_funktional = boolean__false;
-    }
-    if (is_locally_funktional) {
-      *is_locally_funktional = boolean__false;
-    }
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__cons__symbol)) {
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__car__set__symbol)) {
     if (is_funktional) {
@@ -1317,14 +1656,14 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
       *is_locally_funktional = boolean__false;
     }
   } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__array_elt__symbol)) {
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__lookup_type_var__symbol)) {
+  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__lookup__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
     if (is_locally_funktional) {
       *is_locally_funktional = boolean__false;
     }
-  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__define_type_var__symbol)) {
+  } else if (raw__symbol__eq(cause, command, __funk2.bytecode.bytecode__define__symbol)) {
     if (is_funktional) {
       *is_funktional = boolean__false;
     }
@@ -1404,15 +1743,14 @@ f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional
 
 f2ptr f2__compile__rawcode_exp(f2ptr cause, f2ptr exp, f2ptr fiber, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   assert_argument_type(fiber, fiber);
-  
   if (! raw__cons__is_type(cause, exp)) {
     return f2larva__new(cause, 1, nil);
   }
   f2ptr exps = f2cons__cdr(exp, cause);
-  if (! raw__cons__is_type(cause, exps)) {
+  if ((exps != nil) &&
+      (! raw__cons__is_type(cause, exps))) {
     return f2larva__new(cause, 1, nil);
   }
-  //f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
   boolean_t optimize_unused_beginning = boolean__false;
   return f2__compile__rawcode(cause, fiber, exps, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional, optimize_unused_beginning);
 }
@@ -1423,23 +1761,39 @@ f2ptr f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2p
   assert_argument_type(fiber, fiber);
   
   f2ptr car = f2cons__car(exp, cause);
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                  {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))        {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol)) {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                     {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                 {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                 {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))             {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                 {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))              {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))         {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                  {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))               {return f2cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                       {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))             {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol))      {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                          {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))                   {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                       {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_or__symbol))                 {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_add__symbol))                {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_negative__symbol))           {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_subtract__symbol))           {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_multiply__symbol))           {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {return f2cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {return f2cons__new(cause, nil, exp);}
   status("tried to compile special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   status("f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");
@@ -1600,6 +1954,9 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
   }
   return bcs_valid(result_bcs);
 }
+
+
+// **
 
 void f2__compile__reinitialize_globalvars() {
   f2ptr cause = f2_compile_c__cause__new(initial_cause());

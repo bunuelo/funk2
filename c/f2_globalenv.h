@@ -89,6 +89,23 @@ typedef struct funk2_globalenv_s {
   f2ptr while__symbol;
   f2ptr return__symbol;
   
+  f2ptr bytecode_eq__symbol;
+  f2ptr bytecode_not__symbol;
+  f2ptr bytecode_and__symbol;
+  f2ptr bytecode_or__symbol;
+  f2ptr bytecode_add__symbol;
+  f2ptr bytecode_negative__symbol;
+  f2ptr bytecode_subtract__symbol;
+  f2ptr bytecode_multiply__symbol;
+  f2ptr bytecode_inverse__symbol;
+  f2ptr bytecode_divide__symbol;
+  f2ptr bytecode_modulo__symbol;
+  f2ptr bytecode_increment__symbol;
+  f2ptr bytecode_decrement__symbol;
+  f2ptr bytecode_numerically_equals__symbol;
+  f2ptr bytecode_less_than__symbol;
+  f2ptr bytecode_greater_than__symbol;
+  
   f2ptr trace_all_compiles__symbol;
   
   f2ptr create_event__symbol;

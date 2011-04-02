@@ -1,0 +1,611 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe optimize_test [frame] [name
+				funk
+				optimized_funk
+				test_args_success_condition_pairs
+				success_condition
+				unoptimized_result
+				optimized_result]
+  [new [initial-name
+	initial-funk
+	initial-test_args_success_condition_pairs]
+       [= name                              initial-name]
+       [= funk                              initial-funk]
+       [= test_args_success_condition_pairs initial-test_args_success_condition_pairs]
+       [= unoptimized_result                nil]
+       [= optimized_result                  nil]]]
+
+[deftypefunk optimize_test execute run_for_test_args [test_args success_condition]
+  [let [[funk_execution_completed nil]]
+    [let [[bug [shelter [= unoptimized_result [with this
+						    [apply funk test_args]]]
+			[= funk_execution_completed t]]]]
+      [if [not funk_execution_completed]
+	  [prog [terminal_format standard-terminal
+				 '\noptimize_test: failed to complete execution of unoptimized funk for ' [get this name] ' test on ' test_args '.'
+				 '\n               Bug was ' bug '.']
+		nil]
+	[let [[success_funk_execution_completed nil]
+	      [unoptimized_success_result       nil]
+	      [success_funk                     [eval `[funk [result] ,success_condition]]]]
+	  [let [[bug [shelter [= unoptimized_success_result [with this
+								  [apply success_funk `[,unoptimized_result]]]]
+			      [= success_funk_execution_completed t]]]]
+	    [if [not success_funk_execution_completed]
+		[prog [terminal_format standard-terminal
+				       '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test on ' test_args '.'
+				       '\n               Bug was ' bug '.']
+		      nil]
+	      [if [not unoptimized_success_result]
+		  [prog [terminal_format standard-terminal '\noptimize_test: success funk for ' [get this name] ' test is not true on ' test_args '.  Result was ' unoptimized_result '.']
+			nil]
+		[let [[optimize_funk_completed nil]]
+		  [let [[bug [shelter [= optimized_funk          [get funk new_copy]]
+				      [have optimized_funk optimize 10]
+				      [= optimize_funk_completed t]]]]
+		    [if [not optimize_funk_completed]
+			[prog [terminal_format standard-terminal
+					       '\noptimize_test: failed to complete optimization of funk for ' [get this name] ' test on ' test_args '.'
+					       '\n               Bug was ' bug '.']
+			      nil]
+		      [let [[optimized_funk_execution_completed nil]]
+			[let [[bug [shelter [= optimized_result [with this
+								      [apply optimized_funk test_args]]]
+					    [= optimized_funk_execution_completed t]]]]
+			  [if [not optimized_funk_execution_completed]
+			      [prog [terminal_format standard-terminal
+						     '\noptimize_test: failed to complete execution of optimized funk for ' [get this name] ' test on ' test_args '.'
+						     '\n               Bug was ' bug '.']
+				    nil]
+			    [let [[success_funk_execution_completed nil]
+				  [optimized_success_result         nil]]
+			      [let [[bug [shelter [= optimized_success_result [with this
+										    [apply success_funk `[,optimized_result]]]]
+						  [= success_funk_execution_completed t]]]]
+				[if [not success_funk_execution_completed]
+				    [prog [terminal_format standard-terminal
+							   '\noptimize_test: failed to complete execution of success funk for ' [get this name] ' test ' test_args '.'
+							   '\n               Bug was ' bug '.']
+					  nil]
+				  [if [not optimized_success_result]
+				      [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' FAILED on ' test_args '.  Result was ' optimized_result '.']
+					    nil]
+				    [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' succeeded on ' test_args '.']
+					  t]]]]]]]]]]]]]]]]]]]
+
+[deftypefunk optimize_test execute run []
+  [let [[test_count            0]
+	[successful_test_count 0]]
+    [mapc [funk [test_args_success_condition_pair]
+		[let [[test_args         [first test_args_success_condition_pair]]
+		      [success_condition [second test_args_success_condition_pair]]]
+		  [++ test_count]
+		  [if [have this run_for_test_args test_args success_condition]
+		      [++ successful_test_count]]]]
+	  test_args_success_condition_pairs]
+    [frame test_count            test_count
+	   successful_test_count successful_test_count]]]
+
+
+[deframe optimize_test_suite [frame] [tests]
+  [new []
+       [= tests nil]]]
+
+[deftypefunk optimize_test_suite execute add_test [test]
+  [= tests [append tests [conslist test]]]]
+
+[deftypefunk optimize_test_suite execute run []
+  [let [[test_count            0]
+	[successful_test_count 0]]
+    [mapc [funk [test]
+		[let [[result_frame [have test run]]]
+		  [+= test_count            [have result_frame lookup `test_count]]
+		  [+= successful_test_count [have result_frame lookup `successful_test_count]]]]
+	  tests]
+    [terminal_format standard-terminal '\noptimize_test: ' test_count                           ' tests run.']
+    [terminal_format standard-terminal '\n               ' successful_test_count                ' tests succeeded.']
+    [terminal_format standard-terminal '\n               ' [- test_count successful_test_count] ' tests failed.']
+    [if [!= [- test_count successful_test_count] 0]
+	[terminal_format standard-terminal '\nOPTIMIZE TESTS DID FAIL.']
+      [terminal_format standard-terminal '\nSUCCESS.']]
+    [terminal_format standard-terminal '\n']
+    nil]]
+
+
+[deftypefunk optimize_test_suite execute add_lookup_tests []
+  
+  'lookup'
+  [have this add_test [new optimize_test `lookup-initial-variable
+			   [funk [a] a]
+			   `[[[13]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `lookup-external_environment_variable
+			   [let [[a 13]]
+			     [funk [] a]]
+			   `[[[]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `lookup-internal_environment_variable
+			   [funk []
+				 [define a 13]
+				 a]
+			   `[[[]
+			      [== result 13]]]]]
+  
+  ]
+
+[deftypefunk optimize_test_suite execute add_mutate_tests []
+  
+  'mutate'
+  [have this add_test [new optimize_test `mutate-initial-variable
+			   [funk [a]
+				 [= a 13]
+				 a]
+			   `[[[nil]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `mutate-external_environment_variable
+			   [let [[a nil]]
+			     [funk []
+				   [= a 13]
+				   a]]
+			   `[[[]
+			      [== result 13]]]]]
+  [have this add_test [new optimize_test `mutate-internal_environment_variable
+			   [funk []
+				 [define a nil]
+				 [= a 13]
+				 a]
+			   `[[[]
+			      [== result 13]]]]]
+  
+  ]
+
+[deftypefunk optimize_test_suite execute add_globalize_tests []
+  
+  'globalize'
+  [have this add_test [new optimize_test `globalize-constant
+			   [funk []
+				 [globalize optimize-global_test_variable 13]]
+			   `[[[]
+			      [== optimize-global_test_variable 13]]]]]
+  [have this add_test [new optimize_test `globalize-another_constant
+			   [funk []
+				 [globalize optimize-global_test_variable 7]]
+			   `[[[]
+			      [== optimize-global_test_variable 7]]]]]
+  [have this add_test [new optimize_test `globalize-variable
+			   [funk [a]
+				 [globalize optimize-global_test_variable a]]
+			   `[[[31]
+			      [== optimize-global_test_variable 31]]]]]
+  
+  ]
+
+[deftypefunk optimize_test_suite execute add_logic_tests []
+  
+  'eq'
+  [have this add_test [new optimize_test `eq-constant-true
+			   [funk [] [eq 1 1]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `eq-constant-false
+			   [funk [] [eq 1 2]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-variable_constant
+			   [funk [a] [eq a 1]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-constant_variable
+			   [funk [a] [eq 1 a]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `eq-variable_variable
+			   [funk [a b] [eq a b]]
+			   `[[[1 1]
+			      result]
+			     [[1 2]
+			      [not result]]]]]
+  
+  'not'
+  [have this add_test [new optimize_test `not-constant-true
+			   [funk [] [not nil]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `not-constant-false
+			   [funk [] [not t]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `not-variable
+			   [funk [a] [not a]]
+			   `[[[nil]
+			      result]
+			     [[t]
+			      [not result]]]]]
+
+  'and'
+  [have this add_test [new optimize_test `and-constant-true
+			   [funk [] [and t t]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `and-nil-nil-false
+			   [funk [] [and nil nil]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-nil-t-false
+			   [funk [] [and nil t]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-t-nil-false
+			   [funk [] [and t nil]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-variable-t
+			   [funk [a] [and a t]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `and-variable-nil
+			   [funk [a] [and a nil]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-t-variable
+			   [funk [a] [and t a]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `and-nil-variable
+			   [funk [a] [and nil a]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `and-variable-variable
+			   [funk [a b] [and a b]]
+			   `[[[nil nil]
+			      [not result]]
+			     [[nil t]
+			      [not result]]
+			     [[t nil]
+			      [not result]]
+			     [[t t]
+			      result]]]]
+
+  'or'
+  [have this add_test [new optimize_test `or-constant-false
+			   [funk [] [or nil nil]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `or-t-t-true
+			   [funk [] [or t t]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `or-nil-t-true
+			   [funk [] [or nil t]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `or-t-nil-true
+			   [funk [] [or t nil]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `or-variable-t
+			   [funk [a] [or a t]]
+			   `[[[nil]
+			      result]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-variable-nil
+			   [funk [a] [or a nil]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-t-variable
+			   [funk [a] [or t a]]
+			   `[[[nil]
+			      result]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-nil-variable
+			   [funk [a] [or nil a]]
+			   `[[[nil]
+			      [not result]]
+			     [[t]
+			      result]]]]
+  [have this add_test [new optimize_test `or-variable-variable
+			   [funk [a b] [or a b]]
+			   `[[[nil nil]
+			      [not result]]
+			     [[nil t]
+			      result]
+			     [[t nil]
+			      result]
+			     [[t t]
+			      result]]]]
+  ]
+
+[deftypefunk optimize_test_suite execute add_math_tests []
+  
+  'add'
+  [have this add_test [new optimize_test `add-constant
+			   [funk [] [+ 7 13]]
+			   `[[[]
+			      [== result 20]]]]]
+  [have this add_test [new optimize_test `add-variable_constant
+			   [funk [a] [+ a 13]]
+			   `[[[7]
+			      [== result 20]]]]]
+  [have this add_test [new optimize_test `add-constant_variable
+			   [funk [a] [+ 7 a]]
+			   `[[[13]
+			      [== result 20]]]]]
+  [have this add_test [new optimize_test `add-variable_variable
+			   [funk [a b] [+ a b]]
+			   `[[[7 13]
+			      [== result 20]]]]]
+  
+  'negative'
+  [have this add_test [new optimize_test `negative-constant
+			   [funk [] [bytecode:negative 7]]
+			   `[[[]
+			      [== result -7]]]]]
+  [have this add_test [new optimize_test `negative-variable
+			   [funk [a] [bytecode:negative a]]
+			   `[[[7]
+			      [== result -7]]]]]
+  
+  'subtract'
+  [have this add_test [new optimize_test `subtract-constant
+			   [funk [] [- 7 13]]
+			   `[[[]
+			      [== result -6]]]]]
+  [have this add_test [new optimize_test `subtract-variable_constant
+			   [funk [a] [- a 13]]
+			   `[[[7]
+			      [== result -6]]]]]
+  [have this add_test [new optimize_test `subtract-constant_variable
+			   [funk [a] [- 7 a]]
+			   `[[[13]
+			      [== result -6]]]]]
+  [have this add_test [new optimize_test `subtract-variable_variable
+			   [funk [a b] [- a b]]
+			   `[[[7 13]
+			      [== result -6]]]]]
+  
+  'multiply'
+  [have this add_test [new optimize_test `multiply-constant
+			   [funk [] [* 7 13]]
+			   `[[[]
+			      [== result 91]]]]]
+  [have this add_test [new optimize_test `multiply-variable_constant
+			   [funk [a] [* a 13]]
+			   `[[[7]
+			      [== result 91]]]]]
+  [have this add_test [new optimize_test `multiply-constant_variable
+			   [funk [a] [* 7 a]]
+			   `[[[13]
+			      [== result 91]]]]]
+  [have this add_test [new optimize_test `multiply-variable_variable
+			   [funk [a b] [* a b]]
+			   `[[[7 13]
+			      [== result 91]]]]]
+  
+  'inverse'
+  [have this add_test [new optimize_test `inverse-constant
+			   [funk [] [bytecode:inverse 2.0]]
+			   `[[[]
+			      [== result 0.5]]]]]
+  [have this add_test [new optimize_test `inverse-variable
+			   [funk [a] [bytecode:inverse a]]
+			   `[[[2.0]
+			      [== result 0.5]]]]]
+  
+  'divide'
+  [have this add_test [new optimize_test `divide-constant
+			   [funk [] [/ 91 13]]
+			   `[[[]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `divide-variable_constant
+			   [funk [a] [/ a 13]]
+			   `[[[91]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `divide-constant_variable
+			   [funk [a] [/ 91 a]]
+			   `[[[13]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `divide-variable_variable
+			   [funk [a b] [/ a b]]
+			   `[[[91 13]
+			      [== result 7]]]]]
+  
+  'modulo'
+  [have this add_test [new optimize_test `modulo-constant
+			   [funk [] [% 98 13]]
+			   `[[[]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `modulo-variable_constant
+			   [funk [a] [% a 13]]
+			   `[[[98]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `modulo-constant_variable
+			   [funk [a] [% 98 a]]
+			   `[[[13]
+			      [== result 7]]]]]
+  [have this add_test [new optimize_test `modulo-variable_variable
+			   [funk [a b] [% a b]]
+			   `[[[98 13]
+			      [== result 7]]]]]
+  
+  'increment'
+  [have this add_test [new optimize_test `increment-constant
+			   [funk [] [bytecode:increment 7]]
+			   `[[[]
+			      [== result 8]]]]]
+  [have this add_test [new optimize_test `increment-variable
+			   [funk [a] [bytecode:increment a]]
+			   `[[[7]
+			      [== result 8]]]]]
+  
+  'decrement'
+  [have this add_test [new optimize_test `decrement-constant
+			   [funk [] [bytecode:decrement 7]]
+			   `[[[]
+			      [== result 6]]]]]
+  [have this add_test [new optimize_test `decrement-variable
+			   [funk [a] [bytecode:decrement a]]
+			   `[[[7]
+			      [== result 6]]]]]
+  
+  'numerically_equals'
+  [have this add_test [new optimize_test `numerically_equals-constant-false
+			   [funk [] [== 1 2]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `numerically_equals-constant-true
+			   [funk [] [== 1 1]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `numerically_equals-variable_constant
+			   [funk [a] [== a 1]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `numerically_equals-constant_variable
+			   [funk [a] [== 1 a]]
+			   `[[[1]
+			      result]
+			     [[2]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `numerically_equals-variable_variable
+			   [funk [a b] [== a b]]
+			   `[[[1 1]
+			      result]
+			     [[1 2]
+			      [not result]]]]]
+
+  'less_than'
+  [have this add_test [new optimize_test `less_than-constant-false
+			   [funk [] [< 13 7]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `less_than-constant-true
+			   [funk [] [< 7 13]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `less_than-variable_constant
+			   [funk [a] [< a 10]]
+			   `[[[7]
+			      result]
+			     [[13]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `less_than-constant_variable
+			   [funk [a] [< 10 a]]
+			   `[[[13]
+			      result]
+			     [[7]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `less_than-variable_variable
+			   [funk [a b] [< a b]]
+			   `[[[7 13]
+			      result]
+			     [[13 7]
+			      [not result]]]]]
+  
+  'greater_than'
+  [have this add_test [new optimize_test `greater_than-constant-false
+			   [funk [] [> 7 13]]
+			   `[[[]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `greater_than-constant-true
+			   [funk [] [> 13 7]]
+			   `[[[]
+			      result]]]]
+  [have this add_test [new optimize_test `greater_than-variable_constant
+			   [funk [a] [> a 10]]
+			   `[[[13]
+			      result]
+			     [[7]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `greater_than-constant_variable
+			   [funk [a] [> 10 a]]
+			   `[[[7]
+			      result]
+			     [[13]
+			      [not result]]]]]
+  [have this add_test [new optimize_test `greater_than-variable_variable
+			   [funk [a b] [> a b]]
+			   `[[[13 7]
+			      result]
+			     [[7 13]
+			      [not result]]]]]
+  ]
+
+[deftypefunk optimize_test_suite execute add_all_tests []
+  [have this add_lookup_tests]
+  [have this add_mutate_tests]
+  [have this add_globalize_tests]
+  [have this add_logic_tests]
+  [have this add_math_tests]]
+
+
+
+[defunk optimize-test_lookup []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_lookup_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_mutate []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_mutate_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_globalize []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_globalize_tests]
+    [have test_suite run]]]
+
+
+[defunk optimize-test_logic []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_logic_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_math []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_math_tests]
+    [have test_suite run]]]
+
+[defunk optimize-test_all []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_all_tests]
+    [have test_suite run]]]
+
+
+

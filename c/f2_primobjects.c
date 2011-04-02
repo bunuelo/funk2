@@ -650,6 +650,18 @@ f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause) {
 def_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
 
 f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+  if (is_funktional != nil) {
+    if (raw__symbol__is_type(cause, name)) {
+      u64 name__length = raw__symbol__length(cause, name);
+      u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+      raw__symbol__str_copy(cause, name, name__str);
+      name__str[name__length] = 0;
+      printf("\nf2__funk__new note is_funktional: %s", name__str);
+      f2__free(to_ptr(name__str));
+    } else {
+      printf("\nf2__funk__new note is_funktional: <unnamed>");
+    }
+  }
   f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
   f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
@@ -660,6 +672,38 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
 }
 def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__funk__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
 
+
+f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
+  f2ptr name                = f2funk__name(               this, cause);
+  f2ptr body_bytecodes      = f2funk__body_bytecodes(     this, cause);
+  f2ptr args                = f2funk__args(               this, cause);
+  f2ptr demetropolized_body = f2funk__demetropolized_body(this, cause);
+  f2ptr body                = f2funk__body(               this, cause);
+  f2ptr env                 = f2funk__env(                this, cause);
+  f2ptr machine_code        = f2funk__machine_code(       this, cause);
+  f2ptr is_funktional       = f2funk__is_funktional(      this, cause);
+  f2ptr documentation       = f2funk__documentation(      this, cause);
+  f2ptr new_funk = f2funk__new(cause,
+			       name,
+			       body_bytecodes,
+			       args,
+			       demetropolized_body,
+			       body,
+			       env,
+			       machine_code,
+			       is_funktional,
+			       documentation);
+  return new_funk;
+}
+
+f2ptr f2__funk__new_copy(f2ptr cause, f2ptr this) {
+  assert_argument_type(funk, this);
+  return raw__funk__new_copy(cause, this);
+}
+def_pcfunk1(funk__new_copy, this, return f2__funk__new_copy(this_cause, this));
+
+// defined in f2_optimize.c
+def_pcfunk2(funk__optimize, this, maximum_loop_count, return f2__funk__optimize(this_cause, this, maximum_loop_count));
 
 f2ptr raw__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
@@ -683,10 +727,11 @@ f2ptr f2__funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
 }
 def_pcfunk2(funk__terminal_print_with_frame, this, terminal_print_frame, return f2__funk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
-
 f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2funk__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk);}
+  {char* slot_name = "new_copy";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk);}
+  {char* slot_name = "optimize";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -784,6 +829,17 @@ f2ptr f2__bytecode__new(f2ptr cause, f2ptr command, f2ptr arg0, f2ptr arg1, f2pt
 def_pcfunk4(bytecode__new, command, arg0, arg1, arg2, return f2__bytecode__new(this_cause, command, arg0, arg1, arg2));
 
 
+f2ptr raw__bytecode__as__graphviz_label(f2ptr cause, f2ptr this) {
+  return f2__exp__as__string(cause, f2__bytecode__command(cause, this));
+}
+
+f2ptr f2__bytecode__as__graphviz_label(f2ptr cause, f2ptr this) {
+  assert_argument_type(bytecode, this);
+  return raw__bytecode__as__graphviz_label(cause, this);
+}
+def_pcfunk1(bytecode__as__graphviz_label, this, return f2__bytecode__as__graphviz_label(this_cause, this));
+
+
 f2ptr raw__bytecode__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -809,7 +865,8 @@ def_pcfunk2(bytecode__terminal_print_with_frame, this, terminal_print_frame, ret
 
 f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2bytecode__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__funk);}
+  {char* slot_name = "as-graphviz_label";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -954,6 +1011,10 @@ void f2__primobjects__initialize() {
   
   f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
   
+  {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__new_copy, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk = never_gc(cfunk);}
+  {char* symbol_str = "optimize"; __funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__optimize, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(funk__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
@@ -980,6 +1041,8 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
   
+  {char* symbol_str = "as-graphviz_label"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__as__graphviz_label, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__funk = never_gc(cfunk);}
   

@@ -20,9 +20,5 @@
 [globalize math:pi 3.141592653589793] `[23846264338327950288]
 [globalize pi      math:pi]
 
-[globalize-funk is_greater_than &primfunk:is_greater_than]
-[globalize-funk is_less_than    &primfunk:is_less_than]
-[globalize-funk >               &primfunk:is_greater_than]
-[globalize-funk <               &primfunk:is_less_than]
 
 

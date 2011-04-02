@@ -360,6 +360,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     }
     resume_gc();
   }
+  f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "bug"));
   f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
 }
 
@@ -495,7 +496,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    f2ptr nanoseconds_since_1970    = f2time__nanoseconds_since_1970(last_executed_time, cause);
 		    u64   nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
 		    // This is a hack to avoid accidental fiber removal.  As one would expect, it doesn't really work.
-		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > nanoseconds_per_second) {
+		    if (raw__nanoseconds_since_1970() - nanoseconds_since_1970__i > 0 * nanoseconds_per_second) {
 		      
 		      // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
 		      //f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
@@ -513,6 +514,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 			status(  "error removing active fiber at completion.");
 		      }
 		      
+		      f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "complete"));
 		      f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 		    }
 		  }

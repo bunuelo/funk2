@@ -1419,8 +1419,29 @@ f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y);
 
 boolean_t raw__null(f2ptr x);
 f2ptr      f2__null(f2ptr cause, f2ptr x);
+
+// logic
+
 boolean_t raw__not(f2ptr x);
-f2ptr     f2__not(f2ptr cause, f2ptr x);
+f2ptr      f2__not(f2ptr cause, f2ptr x);
+f2ptr      f2__and(f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr      f2__or (f2ptr cause, f2ptr x0, f2ptr x1);
+
+// math
+
+f2ptr f2__add               (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__negative          (f2ptr cause, f2ptr x);
+f2ptr f2__subtract          (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__multiply          (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__inverse           (f2ptr cause, f2ptr x);
+f2ptr f2__divide            (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__modulo            (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__increment         (f2ptr cause, f2ptr x);
+f2ptr f2__decrement         (f2ptr cause, f2ptr x);
+f2ptr f2__numerically_equals(f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__less_than         (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__greater_than      (f2ptr cause, f2ptr x0, f2ptr x1);
+
 
 // s64
 

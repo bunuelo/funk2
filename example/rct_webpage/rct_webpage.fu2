@@ -1,0 +1,511 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+
+[defunk rct_about-content []
+  [string-prog '<h1>About</h1>'
+	       ''
+	       '<h2>Reflective commonsense thinking is a small field involving many cognitive sciences</h2>'
+	       ''
+	       '<p>'
+	       'The field of reflective commonsense reasoning is a research focus that necessarily exists as a small intersection of the cognitive sciences.'
+	       'For example, in the fields of artificial intelligence, we focus on layered cognitive architectures developed for distributed sets of perceptual, motor control, and knowledge-base resource commonsense reasoning tasks.'
+	       'There are not many cognitive architectures that currently exist and fewer of these are layered theories of mental control.'
+	       '</p>'
+	       ''
+	       '<h2>Goals of the field</h2>'
+	       ''
+	       '<p>The goals of the field of reflective commonsense thinking are:'
+	       '  <ul>'
+	       '    <li>to build models of reflective commonsense thinking,</li>'
+	       '    <li>to validate these models against human medical data,</li>'
+	       '    <li>to use these models to medically recognize human patterns of reflective commonsense thinking.</li>'
+	       '  </ul>'
+	       '</p>'
+	       ''
+	       '<h2>Comparable cognitive architectures</h2>'
+	       ''
+	       '<p>'
+	       '  <strong>EM-ONE</strong> is an example of a cognitive architecture that focused specifically on reflective commonsense thinking as the first sample implemention of Marvin Minsky\'s Emotion Machine (EM) theory.'
+	       '  <strong>EM-ONE</strong> established an example of critical reflection in the commonsense domain of building a table in a very specific social and physical context.'
+	       '  <strong>SOAR</strong> is inspiring as a cognitive architecture because of it\'s ability to handle some sorts of impasses in simple planning problems, although SOAR fails in it\'s ability to reflectively inspect and control its own planning algorithms.'
+	       '  <strong>ACT-r</strong> is another interesting architecture because it is optimized as a mapping from neurological and psychological (behavioral) human data to a human artificial intelligence algorithm.'
+	       '</p>'
+	       ''
+	       '<h2>Relevance to theoretical psychology</h2>'
+	       ''
+	       '<p>'
+	       'In the field of psychology, we focus on experimental models of reflective control, such as task switching, perceptual rivalry, and declarative to procedural knowledge transfer.'
+	       '</p>'
+	       ''
+	       '<h2>Relevance to theoretical neuroscience</h2>'
+	       ''
+	       '<p>'
+	       'In the field of neuroscience, we are inspired by current efforts to understand neurological data in terms of complex computational architectures attempting to explain complex human thought processes, such as commonsense reasoning; ACT-r is an example of a step in this direction.'
+	       '</p>'
+	       ''
+	       '<h2>Relevance to computer science</h2>'
+	       ''
+	       '<p>'
+	       'In the field of computer science, we focus on the development of formal languages to describe reflective processes, such as human thought but also including many other potential types of computational reflection.'
+	       '</p>'
+	       ''
+	       '<h2>Relevance to machine learning</h2>'
+	       ''
+	       '<p>'
+	       'In the field of statistical machine learning, we focus on the development of inference mapping tools that could be used to understand specific human beings commonsense reasoning processes in terms of active functional components of a reflective cognitive architecture.'
+	       '</p>'
+	       ''
+	       '<h2>Medical and scientific applications</h2>'
+	       ''
+	       '<p>'
+	       'The field of reflective commonsense reasoning has great application to many of the cognitive sciences, which brings better technologies to current mental health treatment methods.'
+	       '</p>'
+	       ''
+	       '<h2>Applications to the field of neuroscience</h2>'
+	       ''
+	       '<p>'
+	       'In the field of neuroscience, understanding neurological data in terms of a functional process description provides invaluable semantics for the ultimate goal of understanding a mechanical description bridging human behavior and human neuroscience.'
+	       '</p>'
+	       ''
+	       '<h2>Applications to the medical field of cognitive therapy</h2>'
+	       ''
+	       '<p>'
+	       'In the field of cognitive therapy, inference tools are developed to infer a patient\'s mental strengths in terms of a mental architecture, and subsequently, for example, computer games can be used to strengthen critical components of the overall architecture.'
+	       '</p>'
+	       ''
+	       ]]
+
+[defunk rct_about [context]
+  [htmldoc_page context
+		[rct_about-content]]]
+
+
+[defunk rct_news-content [context]
+  [get context all_posts_content]]
+
+[defunk rct_news [context]
+  [htmldoc_page context
+		[rct_news-content context]]]
+
+
+[defunk rct_publications [context]
+  [htmldoc_page context
+		[rct_publications-content]]]
+
+
+[defunk rct_publications-content []
+  [string-prog '<h2>Publications</h2>'
+	       ''
+	       '<p>'
+	       '  <ul>'
+	       '    <li><a href="/papers/smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf">'
+	       '          Smith, D. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; 2010 April</a></li>'
+	       '    <li><a href="/papers/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf">'
+	       '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab 2010 January</a></li>'
+	       '    <li><a href="/papers/morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf">'
+	       '          Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</a></li>'
+	       '    <li><a href="/papers/morgan2009-funk2__a_frame_based_programming_language_with_causally_reflective_capabilities.pdf">'
+	       '          Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities (draft in progress)"; Technical Note; Massachusetts Institute of Technology; 2009 May</a></li>'
+	       '    <li><a href="/papers/morgan2006-learning_commonsense_human_language_descriptions_from_temporal_and_spatial_sensor_network_data.pdf">'
+	       '          Morgan, B.; "Learning Commonsense Human-language Descriptions from Temporal and Spatial Sensor-network Data"; Masters Thesis; Massachusetts Institute of Technology; 2006 August</a></li>'
+	       '    <li><a href="/papers/morgan2006-learning_perception_lattices_to_compare_generative_explanations_of_human_language_stories.pdf">'
+	       '          Morgan, B.; "Learning perception lattices to compare generative explanations of human-language stories"; Published Online; Commonsense Tech Note; MIT Media Lab; 2006 July</a></li>'
+	       '    <li><a href="/papers/morgan_singh2005-elaborating_sensor_data_using_temporal_and_spatial_commonsense_reasoning.pdf">'
+	       '          Morgan, B. and Singh, P.;	"Elaborating Sensor Data using Temporal and Spatial Commonsense Reasoning"; International Workshop on Wearable and Implantable Body Sensor Networks (BSN-2006); 2005 November</a></li>'
+	       '    <li><a href="/papers/morgan2005-experts_think_together_to_solve_hard_problems.pdf">'
+	       '          Morgan, B.; "Experts think together to solve hard problems";	Published Online; Commonsense Tech Note; MIT Media Lab 2005 August</a></li>'
+	       '    <li><a href="/papers/morgan2004-lifenet_belief_propagation.pdf">'
+	       '          Morgan, B.; "LifeNet Belief Propagation";	Published Online; Commonsense Tech Note; MIT Media Lab; 2004 January</a></li>'
+	       '  </ul>'
+	       '</p>'
+	       ''
+	       '<h2>Presentations</h2>'
+	       ''
+	       '<p>'
+	       '  <ul>'
+	       '    <li><a href="/presentations/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf">'
+	       '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab 2010 May</a></li>'
+	       '    <li><a href="/presentations/morgan2009-moral_compass-poster.pdf">'
+	       '          Morgan, B.; "Moral Compass (Poster)"; Media Lab Poster Presentation; October Sponsor Consortia Meeting; 2009 October</a></li>'
+	       '    <li><a href="/presentations/morgan2009-where_goals_come_from__a_model_of_self_conscious_learning.pdf">'
+	       '          Morgan, B.; "Where Goals Come From: A Model of Self-Conscious Learning"; Invited Speaker Presentation; Living Heritage of A.I. Workshop at MIT; 2009 June</a></li>'
+	       '    <li><a href="/presentations/morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
+	       '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
+	       '    <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
+	       '    <li><a href="/presentations/morgan2008-causal_reflection_programming.pdf">'
+	       '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
+	       '  </ul>'
+	       '</p>'
+	       ]]
+
+[defunk rct_publications [context]
+  [htmldoc_page context
+		[rct_publications-content]]]
+
+
+[defunk rct-generate_all_advisors []
+  `[,[let [[this [new htmldoc_person]]]
+       [set this username     'minsky']
+       [set this name         'Marvin Minsky']
+       [set this external_url 'http://web.media.mit.edu/~minsky/']
+       this]
+    ,[let [[this [new htmldoc_person]]]
+       [set this username     'joep']
+       [set this name         'Joe Paradiso']
+       [set this external_url 'http://web.media.mit.edu/~joep/']
+       this]
+    ,[let [[this [new htmldoc_person]]]
+       [set this username     'lieber']
+       [set this name         'Henry Lieberman']
+       [set this external_url 'http://web.media.mit.edu/~lieber/']
+       this]
+    ,[let [[this [new htmldoc_person]]]
+       [set this username     'gjs']
+       [set this name         'Gerald Jay Sussman']
+       [set this external_url 'http://groups.csail.mit.edu/mac/users/gjs/']
+       this]
+    ]]
+
+[defunk rct-generate_all_graduate_students []
+  `[,[let [[this [new htmldoc_person]]]
+       [set this username    'neptune']
+       [set this name        'Bo Morgan']
+       [set this description [string-prog '<ul>'
+					  '  <li>“Don\'t just do something, sit around instead”—Spiritualized</li>'
+					  '  <li>“There must be a negative way to see this”—Bo Morgan</li>'
+					  '</ul>'
+					  ''
+					  '<br>'
+					  '<h2>Research Interests</h2>'
+					  ''
+					  '<p>'
+					  '<img src="/images/bo.jpg" style="float:left;margin:0 5px 0 0;" width="128"/>'
+					  'I am a research assistant and Ph.D. candidate at the <a href="http://www.media.mit.edu">MIT Media Lab</a> working on computational models of <a href="/about/">reflective commonsense reasoning</a>.'
+					  'Once models of reflective commonsense reasoning are built, applications include understanding mental illnesses of reflection in terms of correlations with neurological regions and information patterns of the brain.'
+					  'We believe that teasing apart meaningful quantitative dimensions of "spectrum" mental disorders, such as schizophrenia, autism, and anti-social disorders will involve more advanced commonsense models of learning and reasoning.'
+					  'This work combines the expertise of many fields, including artificial intelligence, cognitive science, and neuroscience.'
+					  'Our current work is in understanding the brain as a computer program.'
+					  'We are interested in answering questions such as:'
+					  '  <ul>'
+					  '    <li>"What types of computer programs are good explanations of the human brain?",</li>'
+					  '    <li>"How are computational systems that reflect on episodic memories implemented in the brain?", and</li>'
+					  '    <li>"What new types of computer languages can help us to explore neural analogues to computation?".</li>'
+					  '  </ul>'
+					  '</p>'
+					  ''
+					  '<p>'
+					  'I have previously worked under the late <a href="http://web.media.mit.edu/~push/">Push Singh</a>, who had developed the first working demonstration of <a href="http://web.media.mit.edu/~minsky/">Marvin Minsky</a>\'s Emotion Machine cognitive architecture (<a href="http://www.amazon.com/Emotion-Machine-Commonsense-Artificial-Intelligence/dp/0743276647/ref=ed_oe_p/">the book</a>, <a href="http://web.media.mit.edu/~minsky/Introduction.html">Introduction</a>, Falling in Love [<a href="http://web.media.mit.edu/~minsky/eb1.html">Ch. 1</a>], Attachments and Goals [<a href="http://web.media.mit.edu/~minsky/eb2.html">Ch. 2</a>], From Pain to Suffering [<a href="http://web.media.mit.edu/~minsky/eb3.html">Ch. 3</a>], Consciousness [<a href="http://web.media.mit.edu/~minsky/eb4.html">Ch. 4</a>], Levels of Mental Activities [<a href="http://web.media.mit.edu/~minsky/eb5.html">Ch. 5</a>], Common Sense [<a href="http://web.media.mit.edu/~minsky/eb6.html">Ch. 6</a>], Thinking [<a href="http://web.media.mit.edu/~minsky/eb7.html">Ch. 7</a>], Resourcefulness [<a href="http://web.media.mit.edu/~minsky/eb8.html">Ch. 8</a>], The Self [<a href="http://web.media.mit.edu/~minsky/eb9.html">Ch. 9</a>], <a href="http://web.media.mit.edu/~minsky/Ebib.html">Bibliography</a>).'
+					  '<a href="http://web.media.mit.edu/~push/push-thesis.pdf">Push\'s implementation</a> is interesting for many reasons.'
+					  'First, it was based on memories in the form of commonsense narratives, a humanly natural but complex form of memory.'
+					  'Also, the model is able to reflectively debug its own problem solving by using narratives of the mental processes themselves.'
+					  'Previous experiences are transfered from one mental problem solver to another through a structure mapping process called Parallel Analogy, or <a href="http://web.media.mit.edu/~push/WaysToThink.pdf">Panalogy</a>.'
+					  'The process of panalogy is enabled by layers of reflective control structured in a critic-selector cognitive architecture.'
+					  'We design new programming languages that allow Causal Reflection over processes that exist in layers of control.'
+					  'Layers of reflective control allow near-miss one-shot learning algorithms to quickly adapt within very high-dimensional physical and social environments.'
+					  '</p>'
+					  ''
+					  '<p>'
+					  'We are applying these powerful new forms for control systems to model how humans learn and adapt to their physical and social world in order to advance our cognitive science understanding of mental health.'
+					  'We strongly believe that a firm foundation in understanding mental health is an important prerequisite for understanding mental illness.'
+					  '</p>'
+					  ''
+					  '<h2>Contact Information</h2>'
+					  ''
+					  '<p>'
+					  '  <table>'
+					  '    <tr><td>Office Location:</td> <td>MIT Media Lab (the new building), Fifth Floor, Room #548R (E14-548R)</td></tr>'
+					  '    <tr><td>E-Mail Address:</td>  <td>bo@mit.edu</td></tr>'
+					  '    <tr><td>Office Phone:</td>    <td>(617) 715-4428</td></tr>'
+					  '  </table>'
+					  '</p>'
+					  ''
+					  '<br>'
+					  '<h2>In the Media</h2>'
+					  ''
+					  '<p>'
+					  'We recently had a discussion of our work on modelling commonsense reflective thinking at <a href="http://seedmediagroup.com/index.php/blog/some-reflective-common-sense-thoughts1/">Seed Magazine</a> in New York.'
+					  '</p>'
+					  ''
+					  '<h2>Teaching</h2>'
+					  ''
+					  '<p>'
+					  'I am a teaching assistant with <a href="http://web.media.mit.edu/~dustin/">Dustin Smith</a> for <a href="http://web.media.mit.edu/~minsky/">Marvin Minsky</a>\'s <a href="http://web.media.mit.edu/~dustin/6.868/">Society of Mind class</a>, which is driven by student questions and curiosity.'
+					  'We discuss ideas for how to structure a mental architecture for an artificial intelligence that includes the ability to robustly perform commonsense learning and reasoning—a longstanding goal of the field of artificial intelligence research.'
+					  '</p>'
+					  ''
+					  '<p>'
+					  'In 2006, I was a teaching assistant to <a href="http://web.media.mit.edu/~picard/index.php">Rosalind Picard</a>\'s <a href="http://courses.media.mit.edu/2006fall/mas622j/">Pattern Recognition class</a>.'
+					  '</p>'
+					  ''
+					  '<h2>Research Projects</h2>'
+					  ''
+					  '<p>'
+					  '  <ul>'
+					  '    <li><a href="http://em-two.net/">'
+					  '          Moral Compass: A Model of Self-Conscious Learning</a></li>'
+					  '    <li><a href="http://funk2.org/">'
+					  '          Funk2: Causal Reflective Programming</a></li>'
+					  '    <li><a href="http://web.media.mit.edu/~dustin/simulator_setup/">'
+					  '          IsisWorld: Qualitative Commonsense Physics Simulator</a></li>'
+					  '    <li>Neural Models of Mind: Mapping Reflective Computation to Natural Features</li>'
+					  '    <li>LifeNet: First-person Spatial and Temporal Probabilistic Commonsense Reasoning</li>'
+					  '  </ul>'
+					  '</p>'
+					  ''
+					  '<h2>Publications</h2>'
+					  ''
+					  '<p>'
+					  '  <ul>'
+					  '    <li><a href="/papers/smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf">'
+					  '          Smith, D. and Morgan, B.; "IsisWorld: An open source commonsense simulator for AI researchers"; AAAI 2010 Workshop on Metacognition; 2010 April</a></li>'
+					  '    <li><a href="/papers/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf">'
+					  '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal; MIT Media Lab 2010 January</a></li>'
+					  '    <li><a href="/papers/morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf">'
+					  '          Morgan, B.; "Funk2: A Distributed Processing Language for Reflective Tracing of a Large Critic-Selector Cognitive Architecture"; Proceedings of the Metacognition Workshop at the Third IEEE International Conference on Self-Adaptive and Self-Organizing Systems; San Francisco, California, USA; 2009 September</a></li>'
+					  '    <li><a href="/papers/morgan2009-funk2__a_frame_based_programming_language_with_causally_reflective_capabilities.pdf">'
+					  '          Morgan, B.; "Funk2: A Frame-based Programming Language with Causally Reflective Capabilities (draft in progress)"; Technical Note; Massachusetts Institute of Technology; 2009 May</a></li>'
+					  '    <li><a href="/papers/morgan2006-learning_commonsense_human_language_descriptions_from_temporal_and_spatial_sensor_network_data.pdf">'
+					  '          Morgan, B.; "Learning Commonsense Human-language Descriptions from Temporal and Spatial Sensor-network Data"; Masters Thesis; Massachusetts Institute of Technology; 2006 August</a></li>'
+					  '    <li><a href="/papers/morgan2006-learning_perception_lattices_to_compare_generative_explanations_of_human_language_stories.pdf">'
+					  '          Morgan, B.; "Learning perception lattices to compare generative explanations of human-language stories"; Published Online; Commonsense Tech Note; MIT Media Lab; 2006 July</a></li>'
+					  '    <li><a href="/papers/morgan_singh2005-elaborating_sensor_data_using_temporal_and_spatial_commonsense_reasoning.pdf">'
+					  '          Morgan, B. and Singh, P.;	"Elaborating Sensor Data using Temporal and Spatial Commonsense Reasoning"; International Workshop on Wearable and Implantable Body Sensor Networks (BSN-2006); 2005 November</a></li>'
+					  '    <li><a href="/papers/morgan2005-experts_think_together_to_solve_hard_problems.pdf">'
+					  '          Morgan, B.; "Experts think together to solve hard problems";	Published Online; Commonsense Tech Note; MIT Media Lab 2005 August</a></li>'
+					  '    <li><a href="/papers/morgan2004-lifenet_belief_propagation.pdf">'
+					  '          Morgan, B.; "LifeNet Belief Propagation";	Published Online; Commonsense Tech Note; MIT Media Lab; 2004 January</a></li>'
+					  '  </ul>'
+					  '</p>'
+					  ''
+					  '<h2>Presentations</h2>'
+					  ''
+					  '<p>'
+					  '  <ul>'
+					  '    <li><a href="/presentations/morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf">'
+					  '          Morgan, B.; "A Computational Theory of the Communication of Problem Solving Knowledge between Parents and Children"; PhD Proposal Defense; MIT Media Lab 2010 May</a></li>'
+					  '    <li><a href="/presentations/morgan2009-moral_compass-poster.pdf">'
+					  '          Morgan, B.; "Moral Compass (Poster)"; Media Lab Poster Presentation; October Sponsor Consortia Meeting; 2009 October</a></li>'
+					  '    <li><a href="/presentations/morgan2009-where_goals_come_from__a_model_of_self_conscious_learning.pdf">'
+					  '          Morgan, B.; "Where Goals Come From: A Model of Self-Conscious Learning"; Invited Speaker Presentation; Living Heritage of A.I. Workshop at MIT; 2009 June</a></li>'
+					  '    <li><a href="/presentations/morgan2008-funk2__causal_reflective_programming__presentation.pdf">'
+					  '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
+					  '    <li>Morgan, B.; "Funk2 Trust Presentation online Movie, PDF, and Transcript."; Research Presentation; Massachusetts Institute of Technology; 2008 April</li>'
+					  '    <li><a href="/presentations/morgan2008-causal_reflective_programming.pdf">'
+					  '          Morgan, B.; "Funk2: Causal Reflective Programming"; Research Presentation; Massachusetts Institute of Technology; 2008 January</a></li>'
+					  '  </ul>'
+					  '</p>'
+					  ''
+					  ]]
+       this]
+    ,[let [[this [new htmldoc_person]]]
+       [set this username     'dustin']
+       [set this name         'Dustin Smith']
+       [set this external_url 'http://web.media.mit.edu/~dustin/']
+       this]
+    ]]
+
+[defunk rct-generate_all_undergraduate_students []
+  `[,[let [[this [new htmldoc_person]]]
+       [set this username    'jj']
+       [set this name        'Jing Jian']
+       [set this description [string-prog '<p>'
+					  '</p>'
+					  ]]
+       this]
+    ]]
+
+
+[defunk rct-generate_all_projects []
+  `[,[let [[this [new htmldoc_project]]]
+       [set this codename     'em-two']
+       [set this name         'Moral Compass']
+       [set this external_url 'http://em-two.net/']
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'funk2']
+       [set this name         'Funk2']
+       [set this external_url 'http://funk2.org/']
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'isisworld']
+       [set this name         'IsisWorld']
+       [set this external_url 'http://web.media.mit.edu/~dustin/simulator_setup/']
+       this]
+    ]]
+
+``[
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'neuralmom']
+       [set this name         'Neural Model of Mind']
+       [set this description  [string-prog '<p>'
+					   '</p>'
+					   ]]
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'lifenet']
+       [set this name         'LifeNet']
+       [set this description  [string-prog '<p>'
+					   '</p>'
+					   ]]
+       this]
+    ,[let [[this [new htmldoc_project]]]
+       [set this codename     'roboverse']
+       [set this name         'Roboverse']
+       [set this description  [string-prog '<p>'
+					   '</p>'
+					   ]]
+       this]]
+
+
+[defunk rct-generate_all_posts []
+  `[,[let [[this [new htmldoc_post]]]
+       [set this title       'First Post']
+       [set this date        'March 25th, 2011']
+       [set this author      'Bo Morgan']
+       [set this author_link 'http://rct.media.mit.edu/people/neptune/']
+       [set this entry       [string-prog '<p>'
+					  '</p>'
+					  ]]
+       this]
+    ]]
+
+
+[defunk compile_rct_images [context]
+  [shelter [mkdir [get context root_dir]]]
+  [shelter [mkdir [string-concat [get context root_dir] 'images/']]]
+  [system [string-concat 'cp -f example/rct_webpage/images/favicon.ico ' [get context root_dir]]]
+  [let [[image_names `['img01.jpg'
+		       'img02.jpg'
+		       'left_logo_header.jpg'
+		       'right_logo_header.jpg'
+		       
+		       'bo.jpg'
+		       ]]]
+    [mapc [funk [image_name]
+		[system [string-concat 'cp -f example/rct_webpage/images/' image_name ' ' [get context root_dir] 'images/']]]
+	  image_names]]
+  nil]
+
+
+
+[defunk compile_rct_papers [context]
+  [shelter [mkdir [get context root_dir]]]
+  [shelter [mkdir [string-concat [get context root_dir] 'papers/']]]
+  [let [[paper_names `['morgan2005-experts_think_together_to_solve_hard_problems.pdf'
+		       'morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf'
+		       'morgan2009-funk2__a_frame_based_programming_language_with_causally_reflective_capabilities.pdf'
+		       'morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'
+		       'morgan2006-learning_perception_lattices_to_compare_generative_explanations_of_human_language_stories.pdf'
+		       'morgan2004-lifenet_belief_propagation.pdf'
+		       'morgan2006-learning_commonsense_human_language_descriptions_from_temporal_and_spatial_sensor_network_data.pdf'
+		       'morgan_singh2005-elaborating_sensor_data_using_temporal_and_spatial_commonsense_reasoning.pdf'
+		       'smith_morgan2010-isisworld__an_open_source_simulator_for_ai_researchers.pdf'
+		       ]]]
+    [mapc [funk [paper_name]
+		[system [string-concat 'cp -f example/rct_webpage/papers/' paper_name ' ' [get context root_dir] 'papers/']]]
+	  paper_names]]
+  nil]
+
+
+
+[defunk compile_rct_presentations [context]
+  [shelter [mkdir [get context root_dir]]]
+  [shelter [mkdir [string-concat [get context root_dir] 'presentations/']]]
+  [let [[presentation_names `['morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'
+			      'morgan2009-where_goals_come_from__a_model_of_self_conscious_learning.pdf'
+			      'morgan2009-moral_compass-poster.pdf'
+			      'morgan2008-funk2__causal_reflective_programming__presentation.pdf'
+			      'morgan2008-causal_reflective_programming.pdf'
+			      ]]]
+    [mapc [funk [presentation_name]
+		[system [string-concat 'cp -f example/rct_webpage/presentations/' presentation_name ' ' [get context root_dir] 'presentations/']]]
+	  presentation_names]]
+  nil]
+
+
+
+[let [[context [new htmldoc_context '/home/neptune/Desktop/www/rct/']]]
+  [set  context hostname                               'rct.media.mit.edu']
+  [set  context title                                  'R.C.T.']
+  [set  context subtitle                               'Reflective Commonsense Thinking']
+  [set  context advisors                               [rct-generate_all_advisors]]
+  [set  context graduate_students                      [rct-generate_all_graduate_students]]
+  [set  context undergraduate_students                 [rct-generate_all_undergraduate_students]]
+  [set  context projects                               [rct-generate_all_projects]]
+  [set  context posts                                  [rct-generate_all_posts]]
+  [set  context background_color                       '#FFFFFF']
+  [set  context font_color                             '#000000']
+  [set  context link_color                             '#0000FF']
+  [set  context logo_primary_font_color                '#000000']
+  [set  context logo_secondary_font_color              '#000000']
+  [set  context logo_link_font_color                   '#000000']
+  [set  context menu_link_right_border_color           '#DDDDDD']
+  [set  context menu_link_color                        '#000000']
+  [set  context page_background_color                  '#FFFFFF']
+  [set  context latest_post_border_color               '#DDDDDD']
+  [set  context content_title_link_color               '#000000']
+  [set  context content_title_link_bottom_border_color '#DDDDDD']
+  [set  context content_byline_bottom_border_color     '#DDDDDD']
+  [set  context content_links_background_color         '#FFFFFF']
+  [set  context sidebar_list_divider_color             '#DDDDDD']
+  [set  context sidebar_background_color               '#FFFFFF']
+  [set  context sidebar_font_color                     '#000000']
+  [set  context sidebar_link_color                     '#0000FF']
+  [set  context footer_top_border_color                '#FFFFFF']
+  [set  context footer_font_color                      '#000000']
+  [set  context footer_link_color                      '#0000FF']
+  [set  context search_background_color                '#FFFFFF']
+  [set  context search_border_color                    '#DDDDDD']
+  [set  context search_active_border_color             '#DDDDDD']
+  [set  context search_font_color                      '#000000']
+  [set  context search_link_color                      '#0000FF']
+  [set  context search_visited_link_color              '#0000FF']
+  [set  context search_hover_link_color                '#0000FF']
+  [set  context search_active_link_color               '#0000FF']
+  [set  context search_url_color                       '#000000']
+  [have context add_tab [new htmldoc_tab `About        &rct_about]]
+  [have context add_tab [new htmldoc_tab `News         &rct_news]]
+  [have context add_tab [new htmldoc_tab `Publications &rct_publications]]
+  
+  [defunk rct_images-save        [] [compile_rct_images context]]
+  [defunk rct_papers-save        [] [compile_rct_papers context]]
+  [defunk rct_presentations-save [] [compile_rct_presentations context]]
+  [defunk rct_css-save           [] [have context compile_css]]
+  [defunk rct_root_page-save     [] [have context compile_root_page]]
+  [defunk rct_about-save         [] [have [get context tab `About]        compile context]]
+  [defunk rct_news-save          [] [have [get context tab `News]         compile context]]
+  [defunk rct_publications-save  [] [have [get context tab `Publications] compile context]]
+  [defunk rct_people-save        [] [have context compile_people]]
+  [defunk rct_projects-save      [] [have context compile_projects]]
+  [defunk rct_tabs-save          [] [have context compile_tabs]]
+  
+  [defunk rct_webpage-save []
+    [rct_images-save]
+    [rct_papers-save]
+    [rct_presentations-save]
+    [rct_css-save]
+    [rct_root_page-save]
+    [rct_people-save]
+    [rct_projects-save]
+    [rct_tabs-save]]
+  
+  ]
+

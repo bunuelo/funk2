@@ -1497,7 +1497,30 @@ f2ptr f2funk__primobject_type__new_aux(f2ptr cause);
 
 // metro
 
-declare_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
+declare_primobject_1_slot(metro, funk);
+
+f2ptr raw__metro__name                     (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__name                     (f2ptr cause, f2ptr this);
+f2ptr raw__metro__body_bytecodes           (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__body_bytecodes           (f2ptr cause, f2ptr this);
+f2ptr raw__metro__args                     (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__args                     (f2ptr cause, f2ptr this);
+f2ptr raw__metro__demetropolized_body      (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__demetropolized_body      (f2ptr cause, f2ptr this);
+f2ptr raw__metro__body                     (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__body                     (f2ptr cause, f2ptr this);
+f2ptr raw__metro__env                      (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__env                      (f2ptr cause, f2ptr this);
+f2ptr raw__metro__machine_code             (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__machine_code             (f2ptr cause, f2ptr this);
+f2ptr raw__metro__is_funktional            (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__is_funktional            (f2ptr cause, f2ptr this);
+f2ptr raw__metro__has_no_side_effects      (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__has_no_side_effects      (f2ptr cause, f2ptr this);
+f2ptr raw__metro__documentation            (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__documentation            (f2ptr cause, f2ptr this);
+f2ptr raw__metro__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__metro__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
 f2ptr f2metro__primobject_type__new_aux(f2ptr cause);
 
@@ -1874,7 +1897,27 @@ declare_object_type_10_slot(funk,
 
 // metro
 
-declare_object_type_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation,
+declare_object_type_1_slot(metro, funk,
+			   f2ptr name__symbol;
+			   f2ptr name__funk;
+			   f2ptr body_bytecodes__symbol;
+			   f2ptr body_bytecodes__funk;
+			   f2ptr args__symbol;
+			   f2ptr args__funk;
+			   f2ptr demetropolized_body__symbol;
+			   f2ptr demetropolized_body__funk;
+			   f2ptr body__symbol;
+			   f2ptr body__funk;
+			   f2ptr env__symbol;
+			   f2ptr env__funk;
+			   f2ptr machine_code__symbol;
+			   f2ptr machine_code__funk;
+			   f2ptr is_funktional__symbol;
+			   f2ptr is_funktional__funk;
+			   f2ptr has_no_side_effects__symbol;
+			   f2ptr has_no_side_effects__funk;
+			   f2ptr documentation__symbol;
+			   f2ptr documentation__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

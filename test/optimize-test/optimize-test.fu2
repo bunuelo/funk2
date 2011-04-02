@@ -131,6 +131,28 @@
     nil]]
 
 
+
+[deftypefunk optimize_test_suite execute add_misc_tests []
+  
+  [have this add_test [new optimize_test `misc-mapcar
+			   [funk [proc seq]
+				 [if [null seq]
+				     nil
+				   [prog [define result      [apply proc [cons [car seq] nil]]]
+					 [define cons_result [cons result nil]]
+					 [define iter        cons_result]
+					 [mapc [funk [elt]
+						     [define new_cons [cons [apply proc [cons elt nil]] nil]]
+						     [cdr-set iter new_cons]
+						     [mutate iter [cdr iter]]]
+					       [cdr seq]]
+					 cons_result]]]
+			   `[[[,[funk [x] x] [1 2 3]]
+			      [equals result `[1 2 3]]]]]]
+  
+  ]
+
+
 [deftypefunk optimize_test_suite execute add_jump_funk_tests []
   
   'jump-funk'
@@ -589,6 +611,7 @@
   ]
 
 [deftypefunk optimize_test_suite execute add_all_tests []
+  [have this add_misc_tests]
   [have this add_jump_funk_tests]
   [have this add_lookup_tests]
   [have this add_mutate_tests]
@@ -597,6 +620,11 @@
   [have this add_math_tests]]
 
 
+
+[defunk optimize-test_misc []
+  [let [[test_suite [new optimize_test_suite]]]
+    [have test_suite add_misc_tests]
+    [have test_suite run]]]
 
 [defunk optimize-test_jump_funk []
   [let [[test_suite [new optimize_test_suite]]]

@@ -762,6 +762,9 @@ def_pcfunk8(metro__new, environment, name, args, demetropolized_body, body, byte
 
 
 f2ptr raw__metro__name(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__name(funk, cause);
 }
@@ -774,6 +777,9 @@ def_pcfunk1(metro__name, this, return f2__metro__name(this_cause, this));
 
 
 f2ptr raw__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__name__set(funk, cause, value);
 }
@@ -786,6 +792,9 @@ def_pcfunk2(metro__name__set, this, value, return f2__metro__name__set(this_caus
 
 
 f2ptr raw__metro__body_bytecodes(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__body_bytecodes(funk, cause);
 }
@@ -798,6 +807,9 @@ def_pcfunk1(metro__body_bytecodes, this, return f2__metro__body_bytecodes(this_c
 
 
 f2ptr raw__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__body_bytecodes__set(funk, cause, value);
 }
@@ -810,6 +822,9 @@ def_pcfunk2(metro__body_bytecodes__set, this, value, return f2__metro__body_byte
 
 
 f2ptr raw__metro__args(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__args(funk, cause);
 }
@@ -822,6 +837,9 @@ def_pcfunk1(metro__args, this, return f2__metro__args(this_cause, this));
 
 
 f2ptr raw__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__args__set(funk, cause, value);
 }
@@ -834,6 +852,9 @@ def_pcfunk2(metro__args__set, this, value, return f2__metro__args__set(this_caus
 
 
 f2ptr raw__metro__demetropolized_body(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__demetropolized_body(funk, cause);
 }
@@ -846,6 +867,9 @@ def_pcfunk1(metro__demetropolized_body, this, return f2__metro__demetropolized_b
 
 
 f2ptr raw__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__demetropolized_body__set(funk, cause, value);
 }
@@ -858,6 +882,9 @@ def_pcfunk2(metro__demetropolized_body__set, this, value, return f2__metro__deme
 
 
 f2ptr raw__metro__body(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__body(funk, cause);
 }
@@ -870,6 +897,9 @@ def_pcfunk1(metro__body, this, return f2__metro__body(this_cause, this));
 
 
 f2ptr raw__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__body__set(funk, cause, value);
 }
@@ -882,6 +912,9 @@ def_pcfunk2(metro__body__set, this, value, return f2__metro__body__set(this_caus
 
 
 f2ptr raw__metro__env(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__env(funk, cause);
 }
@@ -894,6 +927,9 @@ def_pcfunk1(metro__env, this, return f2__metro__env(this_cause, this));
 
 
 f2ptr raw__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__env__set(funk, cause, value);
 }
@@ -906,6 +942,9 @@ def_pcfunk2(metro__env__set, this, value, return f2__metro__env__set(this_cause,
 
 
 f2ptr raw__metro__machine_code(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__machine_code(funk, cause);
 }
@@ -918,6 +957,9 @@ def_pcfunk1(metro__machine_code, this, return f2__metro__machine_code(this_cause
 
 
 f2ptr raw__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__machine_code__set(funk, cause, value);
 }
@@ -930,6 +972,9 @@ def_pcfunk2(metro__machine_code__set, this, value, return f2__metro__machine_cod
 
 
 f2ptr raw__metro__is_funktional(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__is_funktional(funk, cause);
 }
@@ -942,6 +987,9 @@ def_pcfunk1(metro__is_funktional, this, return f2__metro__is_funktional(this_cau
 
 
 f2ptr raw__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__is_funktional__set(funk, cause, value);
 }
@@ -954,6 +1002,9 @@ def_pcfunk2(metro__is_funktional__set, this, value, return f2__metro__is_funktio
 
 
 f2ptr raw__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__has_no_side_effects(funk, cause);
 }
@@ -966,6 +1017,9 @@ def_pcfunk1(metro__has_no_side_effects, this, return f2__metro__has_no_side_effe
 
 
 f2ptr raw__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__has_no_side_effects__set(funk, cause, value);
 }
@@ -978,6 +1032,9 @@ def_pcfunk2(metro__has_no_side_effects__set, this, value, return f2__metro__has_
 
 
 f2ptr raw__metro__documentation(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__documentation(funk, cause);
 }
@@ -990,6 +1047,9 @@ def_pcfunk1(metro__documentation, this, return f2__metro__documentation(this_cau
 
 
 f2ptr raw__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
   f2ptr funk = f2metro__funk(this, cause);
   return f2funk__documentation__set(funk, cause, value);
 }

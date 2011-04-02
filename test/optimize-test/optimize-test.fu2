@@ -87,7 +87,7 @@
 							   '\n               Bug was ' bug '.']
 					  nil]
 				  [if [not optimized_success_result]
-				      [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' FAILED on ' test_args '.  Result was ' optimized_result '.']
+				      [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' FAILED on ' test_args '.  Optimized result was ' optimized_result '.']
 					    nil]
 				    [prog [terminal_format standard-terminal '\noptimize_test: ' [get this name] ' succeeded on ' test_args '.']
 					  t]]]]]]]]]]]]]]]]]]]

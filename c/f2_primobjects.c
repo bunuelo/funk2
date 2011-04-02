@@ -1018,7 +1018,17 @@ void f2__primobjects__initialize() {
   
   // funk
   
-  initialize_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+  initialize_primobject_10_slot(funk,
+				name,
+				body_bytecodes,
+				args,
+				demetropolized_body,
+				body,
+				env,
+				machine_code,
+				is_funktional,
+				has_no_side_effects,
+				documentation);
   
   f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
   

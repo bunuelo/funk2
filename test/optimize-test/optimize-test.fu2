@@ -134,6 +134,14 @@
 
 [deftypefunk optimize_test_suite execute add_misc_tests []
   
+  'misc'
+  [have this add_test [new optimize_test `misc-funk_in_funk
+			   [funk [a]
+				 [apply [funk [x] x]
+					`[,a]]]
+			   `[[[13]
+			      [== result 13]]]]]
+  
   [have this add_test [new optimize_test `misc-mapcar
 			   [funk [proc seq]
 				 [if [null seq]

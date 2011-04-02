@@ -693,6 +693,7 @@ f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
   f2ptr env                 = f2funk__env(                this, cause);
   f2ptr machine_code        = f2funk__machine_code(       this, cause);
   f2ptr is_funktional       = f2funk__is_funktional(      this, cause);
+  f2ptr has_no_side_effects = f2funk__has_no_side_effects(this, cause);
   f2ptr documentation       = f2funk__documentation(      this, cause);
   f2ptr new_funk = f2funk__new(cause,
 			       name,
@@ -703,6 +704,7 @@ f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
 			       env,
 			       machine_code,
 			       is_funktional,
+			       has_no_side_effects,
 			       documentation);
   return new_funk;
 }

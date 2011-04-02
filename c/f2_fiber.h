@@ -177,7 +177,7 @@ declare_primobject_26_slot(fiber,
 
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
-#define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
+#define __pure__f2fiber__is_complete(this, cause)  (f2fiber__program_counter(this, cause) == nil)
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this);

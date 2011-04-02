@@ -25,7 +25,9 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
   kill(getpid(), SIGSTOP);
-  while (boolean__true);
+  while (boolean__true) {
+    printf("\nsomebody stop me!"); fflush(stdout);
+  }
   //exit(-1);
 }
 

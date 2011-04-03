@@ -446,7 +446,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // note: all memory being locked allows us to assume that we are the
   //       only processor thread executing.
   
-  status("rebuilding memory pools' info from image.", pool_index);
+  status("rebuilding memory pools' info from image.");
   {
     pthread_t rebuild_trees_thread[memory_pool_num];
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

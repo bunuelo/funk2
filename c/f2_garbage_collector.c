@@ -301,14 +301,13 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   status("saving garbage collector to stream %d done.", fd);
 }
 
-
-void* funk2_garbage_collector__load_from_buffer__start_thread_load_memorypool_buffer(void* memorypool_arg) {
-  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
+void* funk2_garbage_collector__load_from_buffer__start_thread_load_garbage_collector_pool_buffer(void* garbage_collector_pool_arg) {
+  funk2_garbage_collector_pool_t* garbage_collector_pool = (funk2_garbage_collector_pool_t*)garbage_collector_pool_arg;
   {
-    status("garbage collector buffer_pool_offset=" s64__fstr, (s64)(memorypool->temporary_load_buffer_offset));
-    s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(memorypool, (memorypool->temporary_load_buffer) + (memorypool->temporary_load_buffer_offset));
-    if (pool_load_size != (memorypool->temporary_load_buffer_size)) {
-      status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size=" s64__fstr, (s64)pool_load_size, (s64)(memorypool->temporary_load_buffer_size));
+    status("garbage collector buffer_pool_offset=" s64__fstr, (s64)(garbage_collector_pool->temporary_load_buffer_offset));
+    s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(garbage_collector_pool, (garbage_collector_pool->temporary_load_buffer) + (garbage_collector_pool->temporary_load_buffer_offset));
+    if (pool_load_size != (garbage_collector_pool->temporary_load_buffer_size)) {
+      status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size=" s64__fstr, (s64)pool_load_size, (s64)(garbage_collector_pool->temporary_load_buffer_size));
       error(nil, "garbage collector pool_load_size mismatch.");
     }
   }
@@ -341,7 +340,7 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
       {
 	s64 pool_index;
 	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	  pthread_create(&(load_gc_thread[pool_index]), NULL, &funk2_garbage_collector__load_from_buffer__start_thread_load_memorypool_buffer, (void*)(&(this->gc_pool[pool_index])));
+	  pthread_create(&(load_gc_thread[pool_index]), NULL, &funk2_garbage_collector__load_from_buffer__start_thread_load_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
 	}
       }
       {

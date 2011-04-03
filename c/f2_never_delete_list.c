@@ -46,7 +46,8 @@ void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr e
 s64 funk2_never_delete_list__calculate_save_size(funk2_never_delete_list_t* this) {
   s64 save_size = 0;
   {
-    save_size += sizeof(u64);
+    u64 used_num = this->used_num;
+    save_size += sizeof(used_num);
     save_size += (used_num * sizeof(f2ptr));
   }
   return save_size;

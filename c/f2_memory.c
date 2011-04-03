@@ -525,6 +525,12 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   status("done rebuilding memory info from image."); fflush(stdout);
 }
 
+void* funk2_memory__load_image_from_file__decompress_thread_start(void* memory_pool_arg) {
+  funk2_memorypool_t* this = (funk2_memorypool_t*)memory_pool_arg;
+  funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);
+  return NULL;
+}
+
 boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
   int retval = boolean__false; // success
   status("loading memory image.");
@@ -565,6 +571,15 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 	funk2_memorypool__load_from_stream(&(this->pool[pool_index]), fd);
       }
       
+      {
+	pthread_t decompress_thread[memory_pool_num];
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  decompress_thread[pool_index] = pthread_create(&(decompress_thread[pool_index]), NULL, &funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
+	}
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_join(decompress_thread[pool_index], NULL);
+	}
+      }
       safe_read(fd, to_ptr(&f2_i), sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
       

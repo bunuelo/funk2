@@ -590,7 +590,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     safe_read(fd, to_ptr(this->temporary_compressed_data_for_loading), this->temporary_compressed_data_for_loading__length);
     status("funk2_memorypool__load_from_stream: done loading compressed memorypool image from disk.");
     
-    funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);
+    //funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);
   }
   rbt_tree__load_from_stream(&(this->used_memory_tree), fd);
   rbt_tree__load_from_stream(&(this->free_memory_tree), fd);

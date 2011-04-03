@@ -449,11 +449,17 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   status("rebuilding memory pools' info from image.");
   {
     pthread_t rebuild_trees_thread[memory_pool_num];
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees, (void*)(&(this->pool[pool_index])));
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees, (void*)(&(this->pool[pool_index])));
+      }
     }
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      pthread_join(rebuild_trees_thread[pool_index], NULL);
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(rebuild_trees_thread[pool_index], NULL);
+      }
     }
   }
   

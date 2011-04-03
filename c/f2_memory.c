@@ -463,7 +463,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     }
   }
   
-  funk2_memory__debug_memory_test(this, 0);
+  funk2_memory__debug_memory_test(this, 1);
   
   // temporarily unlocks all memory cmutexes
   {
@@ -519,7 +519,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     }
   }
   
-  funk2_memory__debug_memory_test(this, 0);
+  funk2_memory__debug_memory_test(this, 1);
   
   status("done rebuilding memory info from image."); fflush(stdout);
 }
@@ -613,7 +613,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
-  funk2_memory__debug_memory_test(this, 0);
+  funk2_memory__debug_memory_test(this, 1);
   funk2_memory__print_gc_stats(this);
   return retval;
 }

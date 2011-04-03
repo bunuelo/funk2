@@ -64,6 +64,7 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
 s64       funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this);
 void      funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd);
 void      funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t* this, int fd);
+s64       funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t* this, u8* buffer);
 
 #endif // F2__PROTECTED_ALLOC_ARRAY__H
 

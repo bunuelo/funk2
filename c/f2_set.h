@@ -57,6 +57,7 @@ void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t e
 s64   funk2_set__calculate_save_size(funk2_set_t* this);
 void  funk2_set__save_to_stream(funk2_set_t* this, int fd);
 void  funk2_set__load_from_stream(funk2_set_t* this, int fd);
+s64   funk2_set__load_from_buffer(funk2_set_t* this, u8* buffer);
 void  funk2_set__print(funk2_set_t* this);
 void  funk2_set__test();
 

@@ -56,6 +56,7 @@ void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* map
 s64   funk2_tricolor_set__calculate_save_size(funk2_tricolor_set_t* this);
 void  funk2_tricolor_set__save_to_stream(funk2_tricolor_set_t* this, int fd);
 void  funk2_tricolor_set__load_from_stream(funk2_tricolor_set_t* this, int fd);
+s64   funk2_tricolor_set__load_from_buffer(funk2_tricolor_set_t* this, u8* buffer);
 
 #endif // F2__TRICOLOR_SET__H
 

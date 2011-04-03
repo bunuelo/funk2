@@ -98,3 +98,13 @@ void funk2_tricolor_set__load_from_stream(funk2_tricolor_set_t* this, int fd) {
   funk2_set__load_from_stream(&(this->white_set), fd);
 }
 
+s64 funk2_tricolor_set__load_from_buffer(funk2_tricolor_set_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    buffer_iter += funk2_set__load_from_buffer(&(this->black_set), buffer_iter);
+    buffer_iter += funk2_set__load_from_buffer(&(this->grey_set),  buffer_iter);
+    buffer_iter += funk2_set__load_from_buffer(&(this->white_set), buffer_iter);
+  }
+  return (s64)(buffer_iter - buffer);
+}
+

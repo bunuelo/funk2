@@ -294,26 +294,35 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   status("saving garbage collector to stream %d done.", fd);
 }
 
+s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    {
+      int pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
+      }
+    }
+    {
+      int pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	buffer_iter += funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), buffer_iter);
+      }
+    }
+  }
+  buffer_iter += funk2_never_delete_list__load_from_buffer(&(this->never_delete_list), buffer_iter);
+  return (s64)(buffer_iter - buffer);
+}
+
 void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd) {
   {
     s64 garbage_collector_save_size;
     safe_read(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
     status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
-  }      
-  {
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      s64 pool_save_size;
-      safe_read(fd, to_ptr(&pool_save_size), sizeof(s64));
-    }
+    this->temporary_load_buffer__length = garbage_collector_save_size;
+    this->temporary_load_buffer = (u8*)from_ptr(f2__malloc(this->temporary_load_buffer__length));
+    safe_read(fd, to_ptr(this->temporary_load_buffer), this->temporary_load_buffer__length);
   }
-  {
-    int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_pool__load_from_stream(&(this->gc_pool[pool_index]), fd);
-    }
-  }
-  funk2_never_delete_list__load_from_stream(&(this->never_delete_list), fd);
 }
 
 // **

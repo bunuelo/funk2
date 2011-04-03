@@ -74,3 +74,18 @@ void funk2_never_delete_list__load_from_stream(funk2_never_delete_list_t* this, 
   }
 }
 
+s64 funk2_never_delete_list__load_from_buffer(funk2_never_delete_list_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    u64 used_num;
+    memcpy(&used_num, buffer_iter, sizeof(used_num)); buffer_iter += sizeof(used_num);
+    u64 index;
+    for (index = 0; index < used_num; index ++) {
+      f2ptr exp;
+      memcpy(&exp, buffer_iter, sizeof(exp)); buffer_iter += sizeof(exp);
+      funk2_never_delete_list__add_f2ptr(this, exp);
+    }
+  }
+  return (s64)(buffer_iter - buffer);
+}
+

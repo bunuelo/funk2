@@ -184,6 +184,21 @@ void funk2_set__load_from_stream(funk2_set_t* this, int fd) {
   }
 }
 
+s64 funk2_set__load_from_buffer(funk2_set_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    u64 element_count;
+    memcpy(&element_count, buffer_iter, sizeof(element_count)); buffer_iter += sizeof(element_count);
+    u64 index;
+    for (index = 0; index < element_count; index ++) {
+      funk2_set_element_t element;
+      memcpy(&element, buffer_iter, sizeof(element)); buffer_iter += sizeof(element);
+      funk2_set__add(this, element);
+    }
+  }
+  return (s64)(buffer_iter - buffer);
+}
+
 void funk2_set__print(funk2_set_t* this) {
   printf("\n[set");
   u64 bin_num = 1ull << (this->bin_power);

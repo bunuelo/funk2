@@ -42,6 +42,8 @@ struct funk2_garbage_collector_s {
   boolean_t                      user_signal_garbage_collect_now;
   funk2_processor_mutex_t        total_garbage_collection_count__mutex;
   u64                            total_garbage_collection_count;
+  s64                            temporary_load_buffer__length;
+  u8*                            temporary_load_buffer;
 };
 
 void      funk2_garbage_collector__init(funk2_garbage_collector_t* this);

@@ -157,6 +157,7 @@ void      funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_
 s64       funk2_garbage_collector_pool__calculate_save_size(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd);
 void      funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool_t* this, int fd);
+s64       funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_t* this, u8* buffer);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

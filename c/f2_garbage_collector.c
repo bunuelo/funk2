@@ -332,7 +332,7 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	buffer_iter += buffer_pool_offset[pool_index];
+	buffer_iter += buffer_pool_size[pool_index];
       }
     }
   }

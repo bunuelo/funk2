@@ -304,18 +304,27 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
 s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u8* buffer) {
   u8* buffer_iter = buffer;
   {
+    s64 offset = 0;
+    s64 buffer_pool_offset[memory_pool_num];
     {
       int pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	s64 pool_save_size;
 	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
-	// going to need this to load in parallel.
+	buffer_pool_offset[pool_index] = offset;
+	offset += pool_save_size;
       }
     }
     {
       int pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	buffer_iter += funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), buffer_iter);
+	funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), buffer_iter + buffer_pool_offset[pool_index]);
+      }
+    }
+    {
+      int pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	buffer_iter += buffer_pool_offset[pool_index];
       }
     }
   }

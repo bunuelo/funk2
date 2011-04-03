@@ -524,6 +524,7 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
     f2size_t size_i;
     size_i = compressed_length;          safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
     size_i = this->total_global_memory;  safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    size_i = this->total_free_memory;    safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
     size_i = this->next_unique_block_id; safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
     
     status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr " compressed_length=" u64__fstr "  (writing compressed image to disk now)",
@@ -577,6 +578,10 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     this->total_global_memory = size_i;
     status("funk2_memorypool__load_from_stream: total_global_memory=" u64__fstr ".", (u64)(this->total_global_memory));
+    
+    safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
+    this->total_free_memory = size_i;
+    status("funk2_memorypool__load_from_stream: total_free_memory=" u64__fstr ".", (u64)(this->total_free_memory));
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     this->next_unique_block_id = size_i;

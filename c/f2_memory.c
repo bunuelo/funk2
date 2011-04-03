@@ -432,12 +432,13 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 
+
 // precondition: each and every memory pool's global_memory_mutex is locked!
 void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // each and every pool's global_memory_mutex is locked (we need to return that way).
   //
   // note: all memory being locked allows us to assume that we are the
-  //       only pthread executing.
+  //       only processor thread executing.
   
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -448,7 +449,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
     
     {
-      this->pool[pool_index].total_free_memory = 0;
+      s64 check_total_free_memory = 0;
       funk2_memblock_t* prev_iter     = NULL;
       funk2_memblock_t* iter          = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
       funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->pool[pool_index].dynamic_memory.ptr)) + this->pool[pool_index].total_global_memory);
@@ -458,7 +459,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	  //funk2_memorypool__used_memory_tree__insert(&(this->pool[pool_index]), (rbt_node_t*)iter);
 	} else {
 	  //funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
-	  this->pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
+	  check_total_free_memory += funk2_memblock__byte_num(iter);
 	}
 	if (funk2_memblock__byte_num(iter) == 0) {
 	  printf("\nfunk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr "\n", (u64)(to_ptr(prev_iter)));
@@ -469,6 +470,13 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	iter      = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
       }
       release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+      if (check_total_free_memory != this->pool[pool_index].total_free_memory) {
+	error(nil, "total_free_memory check failed.");
+      } else {
+	status("*****************************************************************************************");
+	status("*************************** total_free_memory check SUCCEEDED! **************************");
+	status("*****************************************************************************************");
+      }
     }
   }
   

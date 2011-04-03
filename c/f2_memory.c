@@ -404,12 +404,6 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, to_ptr(&f2_i), sizeof(f2ptr));
   {
-    printf("\nfunk2_memory__save_image_to_file: calculating save size for garbage collector."); fflush(stdout);
-    status(  "funk2_memory__save_image_to_file: calculating save size for garbage collector.");
-    s64 garbage_collector_save_size = funk2_garbage_collector__calculate_save_size(&(__funk2.garbage_collector));
-    safe_write(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
-  }
-  {
     printf("\nfunk2_memory__save_image_to_file: saving garbage collector."); fflush(stdout);
     status(  "funk2_memory__save_image_to_file: saving garbage collector.");
     funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
@@ -587,10 +581,6 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       }
       safe_read(fd, to_ptr(&f2_i), sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
-      
-      s64 garbage_collector_save_size;
-      safe_read(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
-      status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
       
       funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
       funk2_garbage_collector__init(&(__funk2.garbage_collector));

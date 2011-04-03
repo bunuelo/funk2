@@ -702,11 +702,11 @@ void funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool
 s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_t* this, u8* buffer) {
   u8* buffer_iter = buffer;
   {
-    buffer_iter += funk2_tricolor_set__load_from_buffer(&(this->tricolor_set), buffer_iter);
-    buffer_iter += funk2_garbage_collector_mutation_buffer__load_from_buffer(&(this->other_mutations), buffer_iter);
+    buffer_iter += funk2_tricolor_set__load_from_buffer(                               &(this->tricolor_set),             buffer_iter);
+    buffer_iter += funk2_garbage_collector_mutation_buffer__load_from_buffer(          &(this->other_mutations),          buffer_iter);
     buffer_iter += funk2_garbage_collector_no_more_references_buffer__load_from_buffer(&(this->other_no_more_references), buffer_iter);
-    buffer_iter += funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(&(this->other_protected_f2ptr), buffer_iter);
-    buffer_iter += funk2_protected_alloc_array__load_from_buffer(&(this->protected_alloc_array), buffer_iter);
+    buffer_iter += funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(   &(this->other_protected_f2ptr),    buffer_iter);
+    buffer_iter += funk2_protected_alloc_array__load_from_buffer(                      &(this->protected_alloc_array),    buffer_iter);
     {
       int pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

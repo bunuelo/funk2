@@ -317,14 +317,14 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
 }
 
 void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd) {
-  {
-    s64 garbage_collector_save_size;
-    safe_read(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
-    status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
-    this->temporary_load_buffer__length = garbage_collector_save_size;
-    this->temporary_load_buffer = (u8*)from_ptr(f2__malloc(this->temporary_load_buffer__length));
-    safe_read(fd, to_ptr(this->temporary_load_buffer), this->temporary_load_buffer__length);
-  }
+  s64 garbage_collector_save_size;
+  safe_read(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
+  status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
+  this->temporary_load_buffer__length = garbage_collector_save_size;
+  this->temporary_load_buffer = (u8*)from_ptr(f2__malloc(this->temporary_load_buffer__length));
+  safe_read(fd, to_ptr(this->temporary_load_buffer), this->temporary_load_buffer__length);
+  funk2_garbage_collector__load_from_buffer(this, this->temporary_load_buffer);
+  f2__free(to_ptr(this->temporary_load_buffer));
 }
 
 // **

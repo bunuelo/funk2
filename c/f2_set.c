@@ -139,6 +139,25 @@ void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t e
   return return_value;
 }
 
+s64 funk2_set__calculate_save_size(funk2_set_t* this) {
+  s64 save_size = 0;
+  {
+    u64 bin_num = 1ull << this->bin_power;
+    u64 element_count = this->element_count;
+    save_size += sizeof(element_count);
+    u64 i;
+    for (i = 0; i < bin_num; i ++) {
+      funk2_set_node_t* iter = this->bin[i];
+      while (iter) {
+	funk2_set_element_t element = iter->element;
+	save_size += sizeof(element);
+	iter = iter->next;
+      }
+    }
+  }
+  return save_size;
+}
+
 void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
   u64 bin_num = 1ull << this->bin_power;
   u64 element_count = this->element_count;

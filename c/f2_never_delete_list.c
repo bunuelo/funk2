@@ -43,6 +43,15 @@ void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr e
   this->used_num ++;
 }
 
+s64 funk2_never_delete_list__calculate_save_size(funk2_never_delete_list_t* this) {
+  s64 save_size = 0;
+  {
+    save_size += sizeof(used_num);
+    save_size += (used_num * sizeof(f2ptr));
+  }
+  return save_size;
+}
+
 void funk2_never_delete_list__save_to_stream(funk2_never_delete_list_t* this, int fd) {
   u64 used_num = this->used_num;
   safe_write(fd, to_ptr(&used_num), sizeof(used_num));

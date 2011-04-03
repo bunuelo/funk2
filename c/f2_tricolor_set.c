@@ -76,6 +76,16 @@ void* funk2_tricolor_set__black_set__mapc(funk2_tricolor_set_t* this, void(* map
 void* funk2_tricolor_set__white_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->white_set), mapc_funk, user_data);}
 void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {return funk2_set__mapc(&(this->grey_set),  mapc_funk, user_data);}
 
+s64 funk2_tricolor_set__calculate_save_size(funk2_tricolor_set_t* this) {
+  s64 save_size = 0;
+  {
+    save_size += funk2_set__calculate_save_size(&(this->black_set));
+    save_size += funk2_set__calculate_save_size(&(this->grey_set));
+    save_size += funk2_set__calculate_save_size(&(this->white_set));
+  }
+  return save_size;
+}
+
 void funk2_tricolor_set__save_to_stream(funk2_tricolor_set_t* this, int fd) {
   funk2_set__save_to_stream(&(this->black_set), fd);
   funk2_set__save_to_stream(&(this->grey_set),  fd);

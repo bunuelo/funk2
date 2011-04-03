@@ -71,6 +71,16 @@ void funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_poo
   funk2_processor_mutex__unlock(&(this->mutex));
 }
 
+s64 funk2_garbage_collector_mutation_buffer__calculate_save_size(funk2_garbage_collector_mutation_buffer_t* this) {
+  s64 save_size = 0;
+  {
+    u64 count = this->count;
+    save_size += sizeof(count);
+    save_size += (sizeof(f2ptr) * count);
+  }
+  return save_size;
+}
+
 void funk2_garbage_collector_mutation_buffer__save_to_stream(funk2_garbage_collector_mutation_buffer_t* this, int fd) {
   u64 count = this->count;
   safe_write(fd, to_ptr(&count), sizeof(count));
@@ -130,6 +140,16 @@ void funk2_garbage_collector_no_more_references_buffer__flush_no_more_references
   }
   this->count = 0;
   funk2_processor_mutex__unlock(&(this->mutex));
+}
+
+s64 funk2_garbage_collector_no_more_references_buffer__calculate_save_size(funk2_garbage_collector_no_more_references_buffer_t* this) {
+  s64 save_size = 0;
+  {
+    u64 count = this->count;
+    save_size += sizeof(count);
+    save_size += (sizeof(f2ptr) * count);
+  }
+  return save_size;
 }
 
 void funk2_garbage_collector_no_more_references_buffer__save_to_stream(funk2_garbage_collector_no_more_references_buffer_t* this, int fd) {
@@ -193,6 +213,16 @@ void funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowl
   funk2_processor_mutex__unlock(&(this->mutex));
 }
 
+s64 funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd) {
+  s64 save_size = 0;
+  {
+    u64 count = this->count;
+    save_size += sizeof(count);
+    save_size += (sizeof(f2ptr) * count);
+  }
+  return save_size;
+}
+
 void funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd) {
   u64 count = this->count;
   safe_write(fd, to_ptr(&count), sizeof(count));
@@ -247,6 +277,16 @@ void funk2_garbage_collector_other_grey_buffer__flush_other_greys(funk2_garbage_
     funk2_garbage_collector_pool__grey_element(pool, pool_index, this->data[i]);
   }
   this->count = 0;
+}
+
+s64 funk2_garbage_collector_other_grey_buffer__calculate_save_size(funk2_garbage_collector_other_grey_buffer_t* this) {
+  s64 save_size = 0;
+  {
+    u64 count = this->count;
+    save_size += sizeof(count);
+    save_size += (sizeof(f2ptr) * count);
+  }
+  return save_size;
 }
 
 void funk2_garbage_collector_other_grey_buffer__save_to_stream(funk2_garbage_collector_other_grey_buffer_t* this, int fd) {
@@ -556,6 +596,22 @@ void funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_pool_
     funk2_tricolor_set__white_set__mapc(&(this->tricolor_set), &funk2_garbage_collector_pool__free_white_exps__helper, user_data);
   }
   status("funk2_garbage_collector_pool: free_whiteness pool_index=" u64__fstr " freed_byte_count=" u64__fstr ".", (u64)this_processor_thread__pool_index(), freed_byte_count);
+}
+
+s64 funk2_garbage_collector_pool__calculate_save_size(funk2_garbage_collector_pool_t* this) {
+  s64 save_size = 0;
+  {
+    save_size += funk2_tricolor_set__calculate_save_size(&(this->tricolor_set));
+    save_size += funk2_garbage_collector_mutation_buffer__calculate_save_size(&(this->other_mutations));
+    save_size += funk2_garbage_collector_no_more_references_buffer__calculate_save_size(&(this->other_no_more_references));
+    save_size += funk2_garbage_collector_protected_f2ptr_buffer__calculate_save_size(&(this->other_protected_f2ptr));
+    save_size += funk2_protected_alloc_array__calculate_save_size(&(this->protected_alloc_array));
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      save_size += funk2_garbage_collector_other_grey_buffer__calculate_save_size(&(this->other_grey_buffer[pool_index]));
+    }
+  }
+  return save_size;
 }
 
 void funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd) {

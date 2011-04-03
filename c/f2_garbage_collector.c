@@ -256,6 +256,18 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
   }
 }
 
+s64 funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t* this) {
+  s64 save_size = 0;
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      save_size += funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
+    }
+  }
+  save_size += funk2_never_delete_list__calculate_save_size(&(this->never_delete_list));
+  return save_size;
+}
+
 void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd) {
   status("saving garbage collector to stream %d.", fd);
   {

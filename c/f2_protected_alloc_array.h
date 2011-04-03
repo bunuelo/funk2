@@ -61,6 +61,7 @@ void      funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected
 void      funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num);
 void      funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num);
 boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this);
+s64       funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this);
 void      funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd);
 void      funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t* this, int fd);
 

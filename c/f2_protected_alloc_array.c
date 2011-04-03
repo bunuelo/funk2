@@ -126,6 +126,16 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
   return (this->reentrance_count > 0);
 }
 
+s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this) {
+  s64 save_size = 0;
+  {
+    u64 used_num = this->used_num;
+    save_size += sizeof(used_num);
+    save_size += (sizeof(f2ptr) * used_num);
+  }
+  return save_size;
+}
+
 void funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num = this->used_num;
   safe_write(fd, to_ptr(&used_num), sizeof(used_num));

@@ -31,6 +31,7 @@ typedef struct funk2_never_delete_list_s {
 void funk2_never_delete_list__init(funk2_never_delete_list_t* this);
 void funk2_never_delete_list__destroy(funk2_never_delete_list_t* this);
 void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr exp);
+s64  funk2_never_delete_list__calculate_save_size(funk2_never_delete_list_t* this);
 void funk2_never_delete_list__save_to_stream(funk2_never_delete_list_t* this, int fd);
 void funk2_never_delete_list__load_from_stream(funk2_never_delete_list_t* this, int fd);
 

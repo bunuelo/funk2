@@ -433,6 +433,12 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
 }
 
 
+void* funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees(void* memorypool_arg) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
+  funk2_memorypool__rebuild_memory_trees_from_image(memorypool);
+  return NULL;
+}
+
 // precondition: each and every memory pool's global_memory_mutex is locked!
 void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // each and every pool's global_memory_mutex is locked (we need to return that way).
@@ -440,11 +446,15 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // note: all memory being locked allows us to assume that we are the
   //       only processor thread executing.
   
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("rebuilding memory pool[%d] info from image.", pool_index);
-    rbt_tree__reinit(&(this->pool[pool_index].free_memory_tree), this->pool[pool_index].global_f2ptr_offset);
-    rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
+  status("rebuilding memory pools' info from image.", pool_index);
+  {
+    pthread_t rebuild_trees_thread[memory_pool_num];
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees, (void*)(&(this->pool[pool_index])));
+    }
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      pthread_join(rebuild_trees_thread[pool_index], NULL);
+    }
   }
   
   funk2_memory__debug_memory_test(this, 0);
@@ -549,7 +559,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       {
 	pthread_t decompress_thread[memory_pool_num];
 	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	  decompress_thread[pool_index] = pthread_create(&(decompress_thread[pool_index]), NULL, &funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
+	  pthread_create(&(decompress_thread[pool_index]), NULL, &funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
 	}
 	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	  pthread_join(decompress_thread[pool_index], NULL);

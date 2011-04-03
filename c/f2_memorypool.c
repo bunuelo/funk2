@@ -567,6 +567,11 @@ void funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_mem
   this->temporary_compressed_data_for_loading = NULL;
 }
 
+void funk2_memorypool__rebuild_memory_trees_from_image(funk2_memorypool_t* this) {
+  rbt_tree__reinit(&(this->free_memory_tree), this->global_f2ptr_offset);
+  rbt_tree__reinit(&(this->used_memory_tree), this->global_f2ptr_offset);
+}
+
 void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   // load compressed memory image
   {

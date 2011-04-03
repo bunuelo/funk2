@@ -443,41 +443,8 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     status("rebuilding memory pool[%d] info from image.", pool_index);
-    //rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL, this->pool[pool_index].global_f2ptr_offset);
-    //rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL, this->pool[pool_index].global_f2ptr_offset);
     rbt_tree__reinit(&(this->pool[pool_index].free_memory_tree), this->pool[pool_index].global_f2ptr_offset);
     rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
-    
-    {
-      s64 check_total_free_memory = 0;
-      funk2_memblock_t* prev_iter     = NULL;
-      funk2_memblock_t* iter          = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
-      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->pool[pool_index].dynamic_memory.ptr)) + this->pool[pool_index].total_global_memory);
-      while(iter < end_of_blocks) {
-	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
-	if (iter->used) {
-	  //funk2_memorypool__used_memory_tree__insert(&(this->pool[pool_index]), (rbt_node_t*)iter);
-	} else {
-	  //funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
-	  check_total_free_memory += funk2_memblock__byte_num(iter);
-	}
-	if (funk2_memblock__byte_num(iter) == 0) {
-	  printf("\nfunk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr "\n", (u64)(to_ptr(prev_iter)));
-	  status("funk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr, (u64)(to_ptr(prev_iter)));
-	  error(nil, "funk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.");
-	}
-	prev_iter = iter;
-	iter      = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-      }
-      release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
-      if (check_total_free_memory != this->pool[pool_index].total_free_memory) {
-	error(nil, "total_free_memory check failed.");
-      } else {
-	status("*****************************************************************************************");
-	status("*************************** total_free_memory check SUCCEEDED! **************************");
-	status("*****************************************************************************************");
-      }
-    }
   }
   
   funk2_memory__debug_memory_test(this, 0);

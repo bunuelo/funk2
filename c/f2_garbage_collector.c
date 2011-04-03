@@ -338,11 +338,17 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     }
     {
       pthread_t load_gc_thread[memory_pool_num];
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	pthread_create(&(load_gc_thread[pool_index]), NULL, &funk2_garbage_collector__load_from_buffer__start_thread_load_memorypool_buffer, (void*)(&(this->gc_pool[pool_index])));
+      {
+	s64 pool_index;
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_create(&(load_gc_thread[pool_index]), NULL, &funk2_garbage_collector__load_from_buffer__start_thread_load_memorypool_buffer, (void*)(&(this->gc_pool[pool_index])));
+	}
       }
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	pthread_join(load_gc_thread[pool_index], NULL);
+      {
+	s64 pool_index;
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_join(load_gc_thread[pool_index], NULL);
+	}
       }
     }
     {

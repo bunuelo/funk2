@@ -323,7 +323,11 @@ void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, 
   this->temporary_load_buffer__length = garbage_collector_save_size;
   this->temporary_load_buffer = (u8*)from_ptr(f2__malloc(this->temporary_load_buffer__length));
   safe_read(fd, to_ptr(this->temporary_load_buffer), this->temporary_load_buffer__length);
-  funk2_garbage_collector__load_from_buffer(this, this->temporary_load_buffer);
+  s64 load_length = funk2_garbage_collector__load_from_buffer(this, this->temporary_load_buffer);
+  if (load_length != this->temporary_load_buffer__length) {
+    status(    "garbage collector load size mismatch: load_length = " s64__fstr ", save_length = " s64__fstr, (s64)load_length, (s64)(this->temporary_load_buffer__length));
+    error(nil, "garbage collector load size mismatch.");
+  }
   f2__free(to_ptr(this->temporary_load_buffer));
 }
 

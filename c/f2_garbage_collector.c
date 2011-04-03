@@ -259,6 +259,13 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 s64 funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t* this) {
   s64 save_size = 0;
   {
+    //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    //  s64 pool_save_size = funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
+    //  safe_write(fd, to_ptr(&pool_save_size), sizeof(s64));
+    //}
+    save_size += (sizeof(s64) * memory_pool_num);
+  }
+  {
     int pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       save_size += funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));

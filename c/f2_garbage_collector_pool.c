@@ -213,7 +213,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowl
   funk2_processor_mutex__unlock(&(this->mutex));
 }
 
-s64 funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd) {
+s64 funk2_garbage_collector_protected_f2ptr_buffer__calculate_save_size(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd) {
   s64 save_size = 0;
   {
     u64 count = this->count;

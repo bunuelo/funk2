@@ -355,6 +355,22 @@ void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_c
   }
 }
 
+s64 funk2_garbage_collector_other_grey_buffer__load_from_buffer(funk2_garbage_collector_other_grey_buffer_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    u64 count;
+    memcpy(&count, buffer_iter, sizeof(count)); buffer_iter += sizeof(count);
+    u64 index;
+    for (index = 0; index < count; index ++) {
+      f2ptr exp;
+      memcpy(&exp, buffer_iter, sizeof(exp)); buffer_iter += sizeof(exp);
+      funk2_garbage_collector_other_grey_buffer__know_of_other_grey(this, exp);
+    }
+  }
+  return (s64)(buffer_iter - buffer);
+}
+
+
 // garbage_collector_pool
 
 void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this) {

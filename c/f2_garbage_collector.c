@@ -273,6 +273,13 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   {
     int pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      s64 pool_save_size = funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
+      safe_write(fd, to_ptr(&pool_save_size), sizeof(s64));
+    }
+  }
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       status("saving garbage collector pool %d to stream %d.", pool_index, fd);
       funk2_garbage_collector_pool__save_to_stream(&(this->gc_pool[pool_index]), fd);
     }
@@ -283,9 +290,18 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
 }
 
 void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_garbage_collector_pool__load_from_stream(&(this->gc_pool[pool_index]), fd);
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      s64 pool_save_size;
+      safe_read(fd, to_ptr(&pool_save_size), sizeof(s64));
+    }
+  }
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_garbage_collector_pool__load_from_stream(&(this->gc_pool[pool_index]), fd);
+    }
   }
   funk2_never_delete_list__load_from_stream(&(this->never_delete_list), fd);
 }

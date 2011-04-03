@@ -300,7 +300,9 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     {
       int pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	s64 pool_save_size;
 	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
+	// going to need this to load in parallel.
       }
     }
     {

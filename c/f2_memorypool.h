@@ -49,7 +49,7 @@ struct funk2_memorypool_s {
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   u64                            next_unique_block_id;
-  //funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
+  u8*                            temporary_compressed_data_for_loading;
 };
 
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))

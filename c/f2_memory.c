@@ -319,7 +319,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, in
     if (funk2_memblock_f2ptr) {
       return funk2_memblock_f2ptr;
     }
-    raw__spin_sleep_yield();
+    raw__fast_spin_sleep_yield();
   }
 }
 

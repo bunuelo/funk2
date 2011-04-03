@@ -551,7 +551,7 @@ void funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_mem
   status("funk2_memorypool__load_from_stream: decompressing memorypool image.");
   {
     u64 dest_length = 0;
-    boolean_t failure = zlib__inflate(from_ptr(this->dynamic_memory.ptr), &dest_length, this->temporary_compressed_data_for_loading, compressed_length);
+    boolean_t failure = zlib__inflate(from_ptr(this->dynamic_memory.ptr), &dest_length, this->temporary_compressed_data_for_loading, this->temporary_compressed_data_for_loading__length);
     if (failure) {
       error(nil, "funk2_memorypool__load_from_stream error: failed to inflate image using zlib.");
     }
@@ -572,7 +572,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     f2size_t size_i;
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
-    s64 compressed_length = size_i;
+    this->temporary_compressed_data_for_loading__length = size_i;
     
     safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     this->total_global_memory = size_i;
@@ -584,10 +584,10 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
     f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, this->total_global_memory);
     
-    this->temporary_compressed_data_for_loading = (u8*)from_ptr(f2__malloc(compressed_length));
+    this->temporary_compressed_data_for_loading = (u8*)from_ptr(f2__malloc(this->temporary_compressed_data_for_loading__length));
     
     status("funk2_memorypool__load_from_stream: loading compressed memorypool image from disk.");
-    safe_read(fd, to_ptr(this->temporary_compressed_data_for_loading), compressed_length);
+    safe_read(fd, to_ptr(this->temporary_compressed_data_for_loading), this->temporary_compressed_data_for_loading__length);
     status("funk2_memorypool__load_from_stream: done loading compressed memorypool image from disk.");
     
     funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);

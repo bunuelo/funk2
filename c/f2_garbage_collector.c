@@ -305,10 +305,10 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
 void* funk2_garbage_collector__load_from_buffer__start_thread_load_memorypool_buffer(void* memorypool_arg) {
   funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
   {
-    status("garbage collector buffer_pool_offset[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)(memorypool->temporary_load_buffer_offset));
+    status("garbage collector buffer_pool_offset=" s64__fstr, (s64)(memorypool->temporary_load_buffer_offset));
     s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(memorypool, (memorypool->temporary_load_buffer) + (memorypool->temporary_load_buffer_offset));
     if (pool_load_size != (memorypool->temporary_load_buffer_size)) {
-      status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_load_size, (s64)pool_index, (s64)(memorypool->temporary_load_buffer_size));
+      status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size=" s64__fstr, (s64)pool_load_size, (s64)(memorypool->temporary_load_buffer_size));
       error(nil, "garbage collector pool_load_size mismatch.");
     }
   }

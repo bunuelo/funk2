@@ -102,7 +102,7 @@ void funk2_garbage_collector_mutation_buffer__load_from_stream(funk2_garbage_col
   }
 }
 
-u8* funk2_garbage_collector_mutation_buffer__load_from_buffer(funk2_garbage_collector_mutation_buffer_t* this, u8* buffer) {
+s64 funk2_garbage_collector_mutation_buffer__load_from_buffer(funk2_garbage_collector_mutation_buffer_t* this, u8* buffer) {
   u8* buffer_iter = buffer;
   {
     u64 count;

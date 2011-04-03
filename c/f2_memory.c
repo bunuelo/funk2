@@ -590,7 +590,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       
       s64 garbage_collector_save_size;
       safe_read(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
-      status("garbage collector save size = " s64__fstr "."); fflush(stdout);
+      status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
       
       funk2_garbage_collector__destroy(&(__funk2.garbage_collector));
       funk2_garbage_collector__init(&(__funk2.garbage_collector));

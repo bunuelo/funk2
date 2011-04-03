@@ -34,6 +34,7 @@ void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr e
 s64  funk2_never_delete_list__calculate_save_size(funk2_never_delete_list_t* this);
 void funk2_never_delete_list__save_to_stream(funk2_never_delete_list_t* this, int fd);
 void funk2_never_delete_list__load_from_stream(funk2_never_delete_list_t* this, int fd);
+s64  funk2_never_delete_list__load_from_buffer(funk2_never_delete_list_t* this, u8* buffer);
 
 #endif // F2__NEVER_DELETE_LIST__H
 

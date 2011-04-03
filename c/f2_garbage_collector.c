@@ -301,30 +301,43 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   status("saving garbage collector to stream %d done.", fd);
 }
 
+
+/*
+void* funk2_garbage_collector__load_from_buffer__start_thread_load_memorypool_buffer(void* memorypool_arg) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
+  funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), buffer_iter + buffer_pool_offset[pool_index]);
+  return NULL;
+}
+*/
+
 s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u8* buffer) {
   u8* buffer_iter = buffer;
   {
     s64 offset = 0;
-    s64 buffer_pool_offset[memory_pool_num];
-    s64 buffer_pool_size[memory_pool_num];
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	s64 pool_save_size;
 	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
-	buffer_pool_size[pool_index] = pool_save_size;
+	this->gc_pool[pool_index].temporary_load_buffer_size = pool_save_size;
 	status("garbage collector buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)buffer_pool_size[pool_index]);
-	buffer_pool_offset[pool_index] = offset;
+	this->gc_pool[pool_index].temporary_load_buffer_offset = offset;
 	offset += pool_save_size;
       }
     }
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	this->gc_pool[pool_index].temporary_load_buffer = buffer_iter;
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	status("garbage collector buffer_pool_offset[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)buffer_pool_offset[pool_index]);
-	s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), buffer_iter + buffer_pool_offset[pool_index]);
-	if (pool_load_size != buffer_pool_size[pool_index]) {
-	  status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_load_size, (s64)pool_index, (s64)buffer_pool_size[pool_index]);
+	s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), (this->gc_pool[pool_index].temporary_load_buffer) + (this->gc_pool[pool_index].temporary_load_buffer_offset));
+	if (pool_load_size != (this->gc_pool[pool_index].temporary_load_buffer_size)) {
+	  status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_load_size, (s64)pool_index, (s64)(this->gc_pool[pool_index].temporary_load_buffer_size));
 	  error(nil, "garbage collector pool_load_size mismatch.");
 	}
       }
@@ -332,7 +345,7 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	buffer_iter += buffer_pool_size[pool_index];
+	buffer_iter += (this->gc_pool[pool_index].temporary_load_buffer_size);
       }
     }
   }

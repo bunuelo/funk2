@@ -334,7 +334,7 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	status("garbage collector buffer_pool_offset[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)buffer_pool_offset[pool_index]);
+	status("garbage collector buffer_pool_offset[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)(this->gc_pool[pool_index].temporary_load_buffer_offset));
 	s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(&(this->gc_pool[pool_index]), (this->gc_pool[pool_index].temporary_load_buffer) + (this->gc_pool[pool_index].temporary_load_buffer_offset));
 	if (pool_load_size != (this->gc_pool[pool_index].temporary_load_buffer_size)) {
 	  status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_load_size, (s64)pool_index, (s64)(this->gc_pool[pool_index].temporary_load_buffer_size));

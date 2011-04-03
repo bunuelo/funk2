@@ -313,6 +313,7 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
 	s64 pool_save_size;
 	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
 	buffer_pool_size[pool_index] = pool_save_size;
+	status("garbage collector buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)buffer_pool_size[pool_index]);
 	buffer_pool_offset[pool_index] = offset;
 	offset += pool_save_size;
       }

@@ -54,8 +54,10 @@ void  funk2_set__add(funk2_set_t* this, funk2_set_element_t element);
 void  funk2_set__remove(funk2_set_t* this, funk2_set_element_t element);
 void  funk2_set__remove_and_add_to(funk2_set_t* this, funk2_set_element_t element, funk2_set_t* to_set);
 void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+s64   funk2_set__calculate_save_size(funk2_set_t* this);
 void  funk2_set__save_to_stream(funk2_set_t* this, int fd);
 void  funk2_set__load_from_stream(funk2_set_t* this, int fd);
+s64   funk2_set__load_from_buffer(funk2_set_t* this, u8* buffer);
 void  funk2_set__print(funk2_set_t* this);
 void  funk2_set__test();
 

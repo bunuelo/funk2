@@ -647,7 +647,17 @@ f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause) {
 
 // funk
 
-def_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+def_primobject_10_slot(funk,
+		       name,
+		       body_bytecodes,
+		       args,
+		       demetropolized_body,
+		       body,
+		       env,
+		       machine_code,
+		       is_funktional,
+		       has_no_side_effects,
+		       documentation);
 
 f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
   if (is_funktional != nil) {
@@ -662,7 +672,8 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
       printf("\nf2__funk__new note is_funktional: <unnamed>");
     }
   }
-  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
+  f2ptr has_no_side_effects = nil;
+  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, has_no_side_effects, documentation);
   f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
     return result;
@@ -682,6 +693,7 @@ f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
   f2ptr env                 = f2funk__env(                this, cause);
   f2ptr machine_code        = f2funk__machine_code(       this, cause);
   f2ptr is_funktional       = f2funk__is_funktional(      this, cause);
+  f2ptr has_no_side_effects = f2funk__has_no_side_effects(this, cause);
   f2ptr documentation       = f2funk__documentation(      this, cause);
   f2ptr new_funk = f2funk__new(cause,
 			       name,
@@ -692,6 +704,7 @@ f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
 			       env,
 			       machine_code,
 			       is_funktional,
+			       has_no_side_effects,
 			       documentation);
   return new_funk;
 }
@@ -738,21 +751,321 @@ f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
 
 // metro
 
-def_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+def_primobject_1_slot(metro, funk);
 
 f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr metro  = f2metro__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, documentation);
-  f2ptr result = f2__compile__metro(cause, fiber, metro);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
+  f2ptr funk = f2__funk__new(cause, fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
+  if (raw__larva__is_type(cause, funk)) {
+    printf("\nmetro funk error!!"); fflush(stdout);
+    f2__terminal_print(cause, funk);
+    return funk;
   }
-  
-  // metro machine code compiling bug...  temporarily disabled.
-  //f2metro__machine_code__set(metro, this_cause, f2chunk__new_compiled_from_metro(this_cause, metro));
-  
+  f2ptr metro = f2metro__new(cause, funk);
   return metro;
 }
 def_pcfunk8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, return f2__metro__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+
+
+f2ptr raw__metro__name(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__name(funk, cause);
+}
+
+f2ptr f2__metro__name(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__name(cause, this);
+}
+def_pcfunk1(metro__name, this, return f2__metro__name(this_cause, this));
+
+
+f2ptr raw__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__name__set(funk, cause, value);
+}
+
+f2ptr f2__metro__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__name__set(cause, this, value);
+}
+def_pcfunk2(metro__name__set, this, value, return f2__metro__name__set(this_cause, this, value));
+
+
+f2ptr raw__metro__body_bytecodes(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__body_bytecodes(funk, cause);
+}
+ 
+f2ptr f2__metro__body_bytecodes(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__body_bytecodes(cause, this);
+}
+def_pcfunk1(metro__body_bytecodes, this, return f2__metro__body_bytecodes(this_cause, this));
+
+
+f2ptr raw__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__body_bytecodes__set(funk, cause, value);
+}
+ 
+f2ptr f2__metro__body_bytecodes__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__body_bytecodes__set(cause, this, value);
+}
+def_pcfunk2(metro__body_bytecodes__set, this, value, return f2__metro__body_bytecodes__set(this_cause, this, value));
+
+
+f2ptr raw__metro__args(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__args(funk, cause);
+}
+
+f2ptr f2__metro__args(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__args(cause, this);
+}
+def_pcfunk1(metro__args, this, return f2__metro__args(this_cause, this));
+
+
+f2ptr raw__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__args__set(funk, cause, value);
+}
+
+f2ptr f2__metro__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__args__set(cause, this, value);
+}
+def_pcfunk2(metro__args__set, this, value, return f2__metro__args__set(this_cause, this, value));
+
+
+f2ptr raw__metro__demetropolized_body(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__demetropolized_body(funk, cause);
+}
+
+f2ptr f2__metro__demetropolized_body(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__demetropolized_body(cause, this);
+}
+def_pcfunk1(metro__demetropolized_body, this, return f2__metro__demetropolized_body(this_cause, this));
+
+
+f2ptr raw__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__demetropolized_body__set(funk, cause, value);
+}
+
+f2ptr f2__metro__demetropolized_body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__demetropolized_body__set(cause, this, value);
+}
+def_pcfunk2(metro__demetropolized_body__set, this, value, return f2__metro__demetropolized_body__set(this_cause, this, value));
+
+
+f2ptr raw__metro__body(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__body(funk, cause);
+}
+
+f2ptr f2__metro__body(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__body(cause, this);
+}
+def_pcfunk1(metro__body, this, return f2__metro__body(this_cause, this));
+
+
+f2ptr raw__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__body__set(funk, cause, value);
+}
+
+f2ptr f2__metro__body__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__body__set(cause, this, value);
+}
+def_pcfunk2(metro__body__set, this, value, return f2__metro__body__set(this_cause, this, value));
+
+
+f2ptr raw__metro__env(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__env(funk, cause);
+}
+
+f2ptr f2__metro__env(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__env(cause, this);
+}
+def_pcfunk1(metro__env, this, return f2__metro__env(this_cause, this));
+
+
+f2ptr raw__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__env__set(funk, cause, value);
+}
+
+f2ptr f2__metro__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__env__set(cause, this, value);
+}
+def_pcfunk2(metro__env__set, this, value, return f2__metro__env__set(this_cause, this, value));
+
+
+f2ptr raw__metro__machine_code(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__machine_code(funk, cause);
+}
+
+f2ptr f2__metro__machine_code(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__machine_code(cause, this);
+}
+def_pcfunk1(metro__machine_code, this, return f2__metro__machine_code(this_cause, this));
+
+
+f2ptr raw__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__machine_code__set(funk, cause, value);
+}
+
+f2ptr f2__metro__machine_code__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__machine_code__set(cause, this, value);
+}
+def_pcfunk2(metro__machine_code__set, this, value, return f2__metro__machine_code__set(this_cause, this, value));
+
+
+f2ptr raw__metro__is_funktional(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__is_funktional(funk, cause);
+}
+
+f2ptr f2__metro__is_funktional(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__is_funktional(cause, this);
+}
+def_pcfunk1(metro__is_funktional, this, return f2__metro__is_funktional(this_cause, this));
+
+
+f2ptr raw__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__is_funktional__set(funk, cause, value);
+}
+
+f2ptr f2__metro__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__is_funktional__set(cause, this, value);
+}
+def_pcfunk2(metro__is_funktional__set, this, value, return f2__metro__is_funktional__set(this_cause, this, value));
+
+
+f2ptr raw__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__has_no_side_effects(funk, cause);
+}
+
+f2ptr f2__metro__has_no_side_effects(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__has_no_side_effects(cause, this);
+}
+def_pcfunk1(metro__has_no_side_effects, this, return f2__metro__has_no_side_effects(this_cause, this));
+
+
+f2ptr raw__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__has_no_side_effects__set(funk, cause, value);
+}
+
+f2ptr f2__metro__has_no_side_effects__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__has_no_side_effects__set(cause, this, value);
+}
+def_pcfunk2(metro__has_no_side_effects__set, this, value, return f2__metro__has_no_side_effects__set(this_cause, this, value));
+
+
+f2ptr raw__metro__documentation(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__documentation(funk, cause);
+}
+
+f2ptr f2__metro__documentation(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__documentation(cause, this);
+}
+def_pcfunk1(metro__documentation, this, return f2__metro__documentation(this_cause, this));
+
+
+f2ptr raw__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__documentation__set(funk, cause, value);
+}
+
+f2ptr f2__metro__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__documentation__set(cause, this, value);
+}
+def_pcfunk2(metro__documentation__set, this, value, return f2__metro__documentation__set(this_cause, this, value));
+
+
 
 
 f2ptr raw__metro__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -1007,7 +1320,17 @@ void f2__primobjects__initialize() {
   
   // funk
   
-  initialize_primobject_9_slot(funk, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+  initialize_primobject_10_slot(funk,
+				name,
+				body_bytecodes,
+				args,
+				demetropolized_body,
+				body,
+				env,
+				machine_code,
+				is_funktional,
+				has_no_side_effects,
+				documentation);
   
   f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
   
@@ -1021,10 +1344,50 @@ void f2__primobjects__initialize() {
   
   // metro
   
-  initialize_primobject_9_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, documentation);
+  initialize_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
   
   f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
   
+  {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__name, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk = never_gc(cfunk);}
+  {char* symbol_str = "name-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__name__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "body_bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__body_bytecodes, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk = never_gc(cfunk);}
+  {char* symbol_str = "body_bytecodes-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__body_bytecodes__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_metro.args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__args, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk = never_gc(cfunk);}
+  {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__args__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "demetropolized_body"; __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__demetropolized_body, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__funk = never_gc(cfunk);}
+  {char* symbol_str = "demetropolized_body-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__demetropolized_body__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "body"; __funk2.globalenv.object_type.primobject.primobject_type_metro.body__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__body, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.body__funk = never_gc(cfunk);}
+  {char* symbol_str = "body-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__body__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_metro.env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__env, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.env__funk = never_gc(cfunk);}
+  {char* symbol_str = "env-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__env__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "machine_code"; __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__machine_code, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__funk = never_gc(cfunk);}
+  {char* symbol_str = "machine_code-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__machine_code__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "is_funktional"; __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__is_funktional, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__funk = never_gc(cfunk);}
+  {char* symbol_str = "is_funktional-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__is_funktional__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "has_no_side_effects"; __funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__has_no_side_effects, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__funk = never_gc(cfunk);}
+  {char* symbol_str = "has_no_side_effects-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__has_no_side_effects__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "documentation"; __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__documentation, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__funk = never_gc(cfunk);}
+  {char* symbol_str = "documentation-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__documentation__set, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_metro.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(metro__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_metro.terminal_print_with_frame__funk = never_gc(cfunk);}
   

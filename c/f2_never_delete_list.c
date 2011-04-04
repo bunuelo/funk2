@@ -43,6 +43,16 @@ void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr e
   this->used_num ++;
 }
 
+s64 funk2_never_delete_list__calculate_save_size(funk2_never_delete_list_t* this) {
+  s64 save_size = 0;
+  {
+    u64 used_num = this->used_num;
+    save_size += sizeof(used_num);
+    save_size += (used_num * sizeof(f2ptr));
+  }
+  return save_size;
+}
+
 void funk2_never_delete_list__save_to_stream(funk2_never_delete_list_t* this, int fd) {
   u64 used_num = this->used_num;
   safe_write(fd, to_ptr(&used_num), sizeof(used_num));
@@ -62,5 +72,20 @@ void funk2_never_delete_list__load_from_stream(funk2_never_delete_list_t* this, 
     safe_read(fd, to_ptr(&exp), sizeof(exp));
     funk2_never_delete_list__add_f2ptr(this, exp);
   }
+}
+
+s64 funk2_never_delete_list__load_from_buffer(funk2_never_delete_list_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    u64 used_num;
+    memcpy(&used_num, buffer_iter, sizeof(used_num)); buffer_iter += sizeof(used_num);
+    u64 index;
+    for (index = 0; index < used_num; index ++) {
+      f2ptr exp;
+      memcpy(&exp, buffer_iter, sizeof(exp)); buffer_iter += sizeof(exp);
+      funk2_never_delete_list__add_f2ptr(this, exp);
+    }
+  }
+  return (s64)(buffer_iter - buffer);
 }
 

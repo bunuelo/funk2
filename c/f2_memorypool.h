@@ -49,7 +49,8 @@ struct funk2_memorypool_s {
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   u64                            next_unique_block_id;
-  //funk2_gc_touch_circle_buffer_t gc_touch_circle_buffer;
+  s64                            temporary_compressed_data_for_loading__length;
+  u8*                            temporary_compressed_data_for_loading;
 };
 
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
@@ -85,6 +86,8 @@ void              funk2_memorypool__free_used_block(funk2_memorypool_t* this, fu
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
 boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory);
 void              funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd);
+void              funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_memorypool_t* this);
+void              funk2_memorypool__rebuild_memory_trees_from_image(funk2_memorypool_t* this);
 void              funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd);
 
 #endif // F2__MEMORYPOOL__H

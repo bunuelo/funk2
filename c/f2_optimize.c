@@ -1159,8 +1159,8 @@ f2ptr raw__optimize_fiber__call_bytecode__jump__funk__no_increment_pc(f2ptr caus
 	f2__optimize_fiber__program_counter__set(cause, this, return_reg);
       }
     } else if (raw__metro__is_type(cause, funk__data)) {
-      f2ptr metro_env = f2metro__env(           funk__data, cause);
-      f2ptr body_bcs  = f2metro__body_bytecodes(funk__data, cause);
+      f2ptr metro_env = raw__metro__env(           cause, funk__data);
+      f2ptr body_bcs  = raw__metro__body_bytecodes(cause, funk__data);
       f2__optimize_fiber__env__set(            cause, this, metro_env);
       f2__optimize_fiber__program_counter__set(cause, this, body_bcs);
     } else {
@@ -1619,6 +1619,7 @@ f2ptr raw__optimize_fiber__call_bytecode__copy(f2ptr cause, f2ptr this, f2ptr fr
 f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr var_name) {
   // lookup special funks that we assume are not locally masked by the local environment.
   if (raw__eq(cause, type_name, new__symbol(cause, "funk_variable"))) {
+    /*
     if (raw__eq(cause, var_name,  new__symbol(cause, "conslist")) ||
 	raw__eq(cause, var_name,  new__symbol(cause, "funk-new"))) {
       f2ptr funk = f2__environment__lookup_type_var_value(cause, global_environment(), type_name, var_name);
@@ -1626,6 +1627,7 @@ f2ptr raw__environment__optimize_lookup_type_var_value(f2ptr cause, f2ptr this, 
 	return funk;
       }
     }
+    */
   } else if (raw__eq(cause, type_name, new__symbol(cause, "variable"))) {
     if (raw__eq(cause, var_name,  new__symbol(cause, "t"))) {
       return new__symbol(cause, "t");

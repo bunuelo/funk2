@@ -36,6 +36,8 @@
 [globalize-funk conslist-first_n                            &primfunk:conslist__first_n]
 [globalize-funk conslistlist-append                         &primfunk:conslistlist__append]
 
+[globalize-funk immutable_conslist                          &primfunk:immutable_conslist]
+
 [globalize-funk time                                        &primfunk:time]
 [globalize-funk sleep_for_nanoseconds_without_yield         &primfunk:sleep_for_nanoseconds_without_yield]
 

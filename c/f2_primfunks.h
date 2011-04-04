@@ -36,11 +36,11 @@
    f2ptr this_symbol = def_pcfunk__symbolvar(name); \
    this_symbol = this_symbol;
 
-#define def_pcfunk__documentationvar(name)                   __documentation__##name
-#define def_pcfunk__documentationvar__define(name)           f2ptr def_pcfunk__documentationvar(name) = nil
-#define def_pcfunk__documentationvar__init(name, doc_string) if(!def_pcfunk__documentationvar(name)) {def_pcfunk__documentationvar(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
+#define def_pcfunk__documentation_variable(name)                   __documentation__##name
+#define def_pcfunk__documentation_variable__define(name)           f2ptr def_pcfunk__documentation_variable(name) = nil
+#define def_pcfunk__documentation_variable__init(name, doc_string) if(!def_pcfunk__documentation_variable(name)) {def_pcfunk__documentation_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
 #define def_pcfunk__this_documentation__define(name) \
-   f2ptr this_documentation = def_pcfunk__documentationvar(name); \
+   f2ptr this_documentation = def_pcfunk__documentation_variable(name); \
    this_documentation = this_documentation;
 
 
@@ -65,7 +65,7 @@
 
 #define def_pcfunk__defargs(def_name, correct_arg_num, defargs, def_body) \
   def_pcfunk__symbolvar__define(def_name);				\
-  def_pcfunk__documentationvar__define(def_name);			\
+  def_pcfunk__documentation_variable__define(def_name);			\
   def_pcfunk__prototype__declare(def_name) {				\
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
@@ -475,7 +475,7 @@
 
 #define def_pmetro0(def_name, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -486,7 +486,7 @@
 
 #define def_pmetro0_and_rest(def_name, def_var0, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -497,7 +497,7 @@
 
 #define def_pmetro1(def_name, def_var0, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -509,7 +509,7 @@
 
 #define def_pmetro1_and_rest(def_name, def_var0, def_var1, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -522,7 +522,7 @@
 
 #define def_pmetro2(def_name, def_var0, def_var1, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -535,7 +535,7 @@
 
 #define def_pmetro2_and_rest(def_name, def_var0, def_var1, def_var2, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -549,7 +549,7 @@
 
 #define def_pmetro3(def_name, def_var0, def_var1, def_var2, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -563,7 +563,7 @@
 
 #define def_pmetro3_and_rest(def_name, def_var0, def_var1, def_var2, def_var3, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -578,7 +578,7 @@
 
 #define def_pmetro4(def_name, def_var0, def_var1, def_var2, def_var3, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -593,7 +593,7 @@
 
 #define def_pmetro4_and_rest(def_name, def_var0, def_var1, def_var2, def_var3, def_var4, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -609,7 +609,7 @@
 
 #define def_pmetro5(def_name, def_var0, def_var1, def_var2, def_var3, def_var4, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -625,7 +625,7 @@
 
 #define def_pmetro5_and_rest(def_name, def_var0, def_var1, def_var2, def_var3, def_var4, def_var5, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -642,7 +642,7 @@
 
 #define def_pmetro6(def_name, def_var0, def_var1, def_var2, def_var3, def_var4, def_var5, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -659,7 +659,7 @@
 
 #define def_pmetro6_and_rest(def_name, def_var0, def_var1, def_var2, def_var3, def_var4, def_var5, def_var6, def_body) \
   def_pcfunk__symbolvar__define(def_name); \
-  def_pcfunk__documentationvar__define(def_name); \
+  def_pcfunk__documentation_variable__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \
@@ -679,8 +679,8 @@
   f2ptr c_cfunk_var = nil; \
   { \
     f2ptr c_cfunk_args = cfunk_args_code; \
-    def_pcfunk__documentationvar__init(name, doc_string); \
-    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil, def_pcfunk__documentationvar(name)); \
+    def_pcfunk__documentation_variable__init(name, doc_string); \
+    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), (is_funktional) ? __funk2.globalenv.true__symbol : nil, def_pcfunk__documentation_variable(name)); \
     never_gc(c_cfunk_var); \
     def_pcfunk__symbolvar__init(name); \
     never_gc(def_pcfunk__symbolvar(name)); \
@@ -1419,8 +1419,29 @@ f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y);
 
 boolean_t raw__null(f2ptr x);
 f2ptr      f2__null(f2ptr cause, f2ptr x);
+
+// logic
+
 boolean_t raw__not(f2ptr x);
-f2ptr     f2__not(f2ptr cause, f2ptr x);
+f2ptr      f2__not(f2ptr cause, f2ptr x);
+f2ptr      f2__and(f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr      f2__or (f2ptr cause, f2ptr x0, f2ptr x1);
+
+// math
+
+f2ptr f2__add               (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__negative          (f2ptr cause, f2ptr x);
+f2ptr f2__subtract          (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__multiply          (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__inverse           (f2ptr cause, f2ptr x);
+f2ptr f2__divide            (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__modulo            (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__increment         (f2ptr cause, f2ptr x);
+f2ptr f2__decrement         (f2ptr cause, f2ptr x);
+f2ptr f2__numerically_equals(f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__less_than         (f2ptr cause, f2ptr x0, f2ptr x1);
+f2ptr f2__greater_than      (f2ptr cause, f2ptr x0, f2ptr x1);
+
 
 // s64
 

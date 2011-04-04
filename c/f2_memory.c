@@ -319,7 +319,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, in
     if (funk2_memblock_f2ptr) {
       return funk2_memblock_f2ptr;
     }
-    raw__spin_sleep_yield();
+    raw__fast_spin_sleep_yield();
   }
 }
 
@@ -432,97 +432,102 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 
+
+void* funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees(void* memorypool_arg) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
+  funk2_memorypool__rebuild_memory_trees_from_image(memorypool);
+  return NULL;
+}
+
 // precondition: each and every memory pool's global_memory_mutex is locked!
 void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // each and every pool's global_memory_mutex is locked (we need to return that way).
   //
   // note: all memory being locked allows us to assume that we are the
-  //       only pthread executing.
+  //       only processor thread executing.
   
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("rebuilding memory pool[%d] info from image.", pool_index);
-    //rbt_tree__init(&(this->pool[pool_index].free_memory_tree), NULL, this->pool[pool_index].global_f2ptr_offset);
-    //rbt_tree__init(&(this->pool[pool_index].used_memory_tree), NULL, this->pool[pool_index].global_f2ptr_offset);
-    rbt_tree__reinit(&(this->pool[pool_index].free_memory_tree), this->pool[pool_index].global_f2ptr_offset);
-    rbt_tree__reinit(&(this->pool[pool_index].used_memory_tree), this->pool[pool_index].global_f2ptr_offset);
-    
+  status("rebuilding memory pools' info from image.");
+  {
+    pthread_t rebuild_trees_thread[memory_pool_num];
     {
-      this->pool[pool_index].total_free_memory = 0;
-      funk2_memblock_t* prev_iter     = NULL;
-      funk2_memblock_t* iter          = (funk2_memblock_t*)from_ptr(this->pool[pool_index].dynamic_memory.ptr);
-      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->pool[pool_index].dynamic_memory.ptr)) + this->pool[pool_index].total_global_memory);
-      while(iter < end_of_blocks) {
-	debug__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
-	if (iter->used) {
-	  //funk2_memorypool__used_memory_tree__insert(&(this->pool[pool_index]), (rbt_node_t*)iter);
-	} else {
-	  //funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), iter);
-	  this->pool[pool_index].total_free_memory += funk2_memblock__byte_num(iter);
-	}
-	if (funk2_memblock__byte_num(iter) == 0) {
-	  printf("\nfunk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr "\n", (u64)(to_ptr(prev_iter)));
-	  status("funk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.  prev_iter=" u64__fstr, (u64)(to_ptr(prev_iter)));
-	  error(nil, "funk2_memory__rebuild_memory_info_from_image ERROR: found funk2_memblock_t with zero size.");
-	}
-	prev_iter = iter;
-	iter      = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees, (void*)(&(this->pool[pool_index])));
       }
-      release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(rebuild_trees_thread[pool_index], NULL);
+      }
     }
   }
   
-  funk2_memory__debug_memory_test(this, 0);
+  funk2_memory__debug_memory_test(this, 1);
   
   // temporarily unlocks all memory cmutexes
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
+    }
   }
   // temporary period of all memory cmutexes locked
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      // add all symbols to symbol_hash in ptypes.c
-      rbt_node_t* iter = rbt_tree__minimum(&(this->pool[pool_index].used_memory_tree));
-      while(iter) {
-	ptype_block_t* block = (ptype_block_t*)iter;
-	switch(block->ptype) {
-	case ptype_symbol: {
-	  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
-	  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-	} break;
-	case ptype_scheduler_cmutex: {
-	  ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-	  funk2_processor_mutex__init(scheduler_cmutex_block->m);
-	  if (scheduler_cmutex_block->locked_state) {
-	    funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	// add all symbols to symbol_hash in ptypes.c
+	rbt_node_t* iter = rbt_tree__minimum(&(this->pool[pool_index].used_memory_tree));
+	while(iter) {
+	  ptype_block_t* block = (ptype_block_t*)iter;
+	  switch(block->ptype) {
+	  case ptype_symbol: {
+	    f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
+	    funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
+	  } break;
+	  case ptype_scheduler_cmutex: {
+	    ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	    funk2_processor_mutex__init(scheduler_cmutex_block->m);
+	    if (scheduler_cmutex_block->locked_state) {
+	      funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+	    }
+	  } break;
+	  case ptype_cmutex: {
+	    ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	    funk2_processor_mutex__init(cmutex_block->m);
+	    if (cmutex_block->locked_state) {
+	      funk2_processor_mutex__lock(cmutex_block->m);
+	    }
+	  } break;
+	  default:
+	    break;
 	  }
-	} break;
-	case ptype_cmutex: {
-	  ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
-	  funk2_processor_mutex__init(cmutex_block->m);
-	  if (cmutex_block->locked_state) {
-	    funk2_processor_mutex__lock(cmutex_block->m);
-	  }
-	} break;
-	default:
-	  break;
+	  iter = rbt_node__next(iter);
 	}
-	iter = rbt_node__next(iter);
       }
     }
-    
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
   }
   // end temporary unlocking of all memory cmutexes
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
+    }
   }
   
-  funk2_memory__debug_memory_test(this, 0);
+  funk2_memory__debug_memory_test(this, 1);
   
   status("done rebuilding memory info from image."); fflush(stdout);
+}
+
+void* funk2_memory__load_image_from_file__decompress_thread_start(void* memory_pool_arg) {
+  funk2_memorypool_t* this = (funk2_memorypool_t*)memory_pool_arg;
+  funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);
+  return NULL;
 }
 
 boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename) {
@@ -565,6 +570,15 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 	funk2_memorypool__load_from_stream(&(this->pool[pool_index]), fd);
       }
       
+      {
+	pthread_t decompress_thread[memory_pool_num];
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_create(&(decompress_thread[pool_index]), NULL, &funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
+	}
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_join(decompress_thread[pool_index], NULL);
+	}
+      }
       safe_read(fd, to_ptr(&f2_i), sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
       
@@ -599,7 +613,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
-  funk2_memory__debug_memory_test(this, 0);
+  funk2_memory__debug_memory_test(this, 1);
   funk2_memory__print_gc_stats(this);
   return retval;
 }

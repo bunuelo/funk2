@@ -1058,8 +1058,8 @@ void f2__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint*
   else if (command == __funk2.bytecode.bytecode__jump_funk__symbol)          {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__jump_funk);}
   else if (command == __funk2.bytecode.bytecode__set__symbol)                {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index,  f2__compile__bytecode__set(cause, f2bytecode__arg0(bytecode, cause)), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__cdr__set__symbol)           {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__cdr__set);}
-  else if (command == __funk2.bytecode.bytecode__lookup_type_var__symbol)    {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__lookup_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
-  else if (command == __funk2.bytecode.bytecode__define_type_var__symbol)    {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__define_type_var, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__lookup__symbol)             {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__lookup, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
+  else if (command == __funk2.bytecode.bytecode__define__symbol)             {f2__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(this, index, cause, next_index, &f2__fiber__bytecode__define, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__else_jump__symbol)          {f2__chunk__compile_x86__jump_bytecode__f2ptr(      this, index, cause, next_index, &f2__fiber__bytecode__else_jump, f2bytecode__arg0(bytecode, cause));}
   else if (command == __funk2.bytecode.bytecode__car__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__car);}
   else if (command == __funk2.bytecode.bytecode__cdr__symbol)                {f2__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index, &f2__fiber__bytecode__cdr);}
@@ -1182,7 +1182,7 @@ void f2__chunk__compile_x86__metro(f2ptr this, uint index, f2ptr cause, uint* ne
     iter ++;
   }
   
-  f2__chunk__compile_x86__bytecodes(this, index, cause, next_index, f2metro__body_bytecodes(metro, cause)); index = *next_index;
+  f2__chunk__compile_x86__bytecodes(this, index, cause, next_index, raw__metro__body_bytecodes(cause, metro)); index = *next_index;
   
   iter = compile_x86__funk__footer;
   for (i = compile_x86__funk__footer__length; i > 0; i --) {

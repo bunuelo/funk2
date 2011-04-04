@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
 
-declare_object_type_25_slot(fiber,
+declare_object_type_26_slot(fiber,
 			    program_counter,
 			    stack,
 			    iter,
@@ -50,6 +50,7 @@ declare_object_type_25_slot(fiber,
 			    processor_assignment_scheduler_cmutex,
 			    processor_assignment_index,
 			    should_quit,
+			    exit_status,
 			    bug_trigger,
 			    complete_trigger,
 			    
@@ -146,7 +147,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_25_slot(fiber,
+declare_primobject_26_slot(fiber,
 			   program_counter,
 			   stack,
 			   iter,
@@ -170,12 +171,13 @@ declare_primobject_25_slot(fiber,
 			   processor_assignment_scheduler_cmutex,
 			   processor_assignment_index,
 			   should_quit,
+			   exit_status,
 			   bug_trigger,
 			   complete_trigger);
 
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
-#define __pure__f2fiber__is_complete(this, cause)  (!f2fiber__program_counter(this, cause))
+#define __pure__f2fiber__is_complete(this, cause)  (f2fiber__program_counter(this, cause) == nil)
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this);

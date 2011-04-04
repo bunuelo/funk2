@@ -139,6 +139,25 @@ void* funk2_set__mapc(funk2_set_t* this, void(* mapc_funk)(funk2_set_element_t e
   return return_value;
 }
 
+s64 funk2_set__calculate_save_size(funk2_set_t* this) {
+  s64 save_size = 0;
+  {
+    u64 bin_num = 1ull << this->bin_power;
+    u64 element_count = this->element_count;
+    save_size += sizeof(element_count);
+    u64 i;
+    for (i = 0; i < bin_num; i ++) {
+      funk2_set_node_t* iter = this->bin[i];
+      while (iter) {
+	funk2_set_element_t element = iter->element;
+	save_size += sizeof(element);
+	iter = iter->next;
+      }
+    }
+  }
+  return save_size;
+}
+
 void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
   u64 bin_num = 1ull << this->bin_power;
   u64 element_count = this->element_count;
@@ -163,6 +182,21 @@ void funk2_set__load_from_stream(funk2_set_t* this, int fd) {
     safe_read(fd, to_ptr(&element), sizeof(element));
     funk2_set__add(this, element);
   }
+}
+
+s64 funk2_set__load_from_buffer(funk2_set_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    u64 element_count;
+    memcpy(&element_count, buffer_iter, sizeof(element_count)); buffer_iter += sizeof(element_count);
+    u64 index;
+    for (index = 0; index < element_count; index ++) {
+      funk2_set_element_t element;
+      memcpy(&element, buffer_iter, sizeof(element)); buffer_iter += sizeof(element);
+      funk2_set__add(this, element);
+    }
+  }
+  return (s64)(buffer_iter - buffer);
 }
 
 void funk2_set__print(funk2_set_t* this) {

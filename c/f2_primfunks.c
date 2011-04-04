@@ -89,6 +89,64 @@ boolean_t raw__not(f2ptr x) {return !x;}
 f2ptr f2__not(f2ptr cause, f2ptr x) {return f2bool__new(raw__not(x));}
 def_pcfunk1(not, x, return f2__not(this_cause, x));
 
+f2ptr f2__and(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2bool__new((x0 != nil) && (x1 != nil));
+}
+
+f2ptr f2__or(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2bool__new((x0 != nil) || (x1 != nil));
+}
+
+// math
+
+f2ptr f2__add(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__plus(cause, x1, x0);
+}
+
+f2ptr f2__negative(f2ptr cause, f2ptr x) {
+  return f2__number__minus(cause, f2integer__new(cause, 0), x);
+}
+
+f2ptr f2__subtract(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__minus(cause, x1, x0);
+}
+
+f2ptr f2__multiply(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__multiplied_by(cause, x1, x0);
+}
+
+f2ptr f2__inverse(f2ptr cause, f2ptr x) {
+  return f2__number__divided_by(cause, f2integer__new(cause, 1), x);
+}
+
+f2ptr f2__divide(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__divided_by(cause, x1, x0);
+}
+
+f2ptr f2__modulo(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__modulo(cause, x1, x0);
+}
+
+f2ptr f2__increment(f2ptr cause, f2ptr x) {
+  return f2__number__plus(cause, x, f2integer__new(cause, 1));
+}
+
+f2ptr f2__decrement(f2ptr cause, f2ptr x) {
+  return f2__number__minus(cause, x, f2integer__new(cause, 1));
+}
+
+f2ptr f2__numerically_equals(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_numerically_equal_to(cause, x1, x0);
+}
+
+f2ptr f2__less_than(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_less_than(cause, x1, x0);
+}
+
+f2ptr f2__greater_than(f2ptr cause, f2ptr x0, f2ptr x1) {
+  return f2__number__is_greater_than(cause, x1, x0);
+}
+
 // system
 
 f2ptr f2__system__node_id(f2ptr cause) {
@@ -372,6 +430,7 @@ f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
 }
 def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(this_cause, conslist));
 
+def_pcfunk0_and_rest(immutable_conslist, seq, return f2__conslist__new(this_cause, seq));
 
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   u64 length = 0;
@@ -542,11 +601,11 @@ f2ptr f2__parallel_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr ar
 
 void f2fiber__force_funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2ptr env;
-  if      (raw__funk__is_type(               cause, cfunkable)) {env = f2funk__env(cfunkable, cause);}
-  else if (raw__metro__is_type(              cause, cfunkable)) {env = f2metro__env(cfunkable, cause);}
-  else if (raw__cfunk__is_type(              cause, cfunkable)) {env = f2fiber__env(fiber, cause);}
-  else if (raw__metrocfunk__is_type(         cause, cfunkable)) {env = f2fiber__env(fiber, cause);}
-  else if (raw__core_extension_funk__is_type(cause, cfunkable)) {env = f2fiber__env(fiber, cause);}
+  if      (raw__funk__is_type(               cause, cfunkable)) {env = f2funk__env(    cfunkable, cause);}
+  else if (raw__metro__is_type(              cause, cfunkable)) {env = raw__metro__env(cause, cfunkable);}
+  else if (raw__cfunk__is_type(              cause, cfunkable)) {env = f2fiber__env(   fiber, cause);}
+  else if (raw__metrocfunk__is_type(         cause, cfunkable)) {env = f2fiber__env(   fiber, cause);}
+  else if (raw__core_extension_funk__is_type(cause, cfunkable)) {env = f2fiber__env(   fiber, cause);}
   else                                                          {error(nil, "f2fiber__force_funk error: cfunkable must be funk or metro.");}
   
   f2fiber__env__set(fiber, cause, env);
@@ -1364,8 +1423,8 @@ f2ptr f2__larva(f2ptr cause, f2ptr type, f2ptr bug) {
 def_pcfunk2(larva, type, bug, return f2__larva(this_cause, type, bug));
 
 f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
-  if      (raw__funk__is_type(               cause, funkable)) {return f2funk__env( funkable, cause);}
-  else if (raw__metro__is_type(              cause, funkable)) {return f2metro__env(funkable, cause);}
+  if      (raw__funk__is_type(               cause, funkable)) {return f2funk__env(    funkable, cause);}
+  else if (raw__metro__is_type(              cause, funkable)) {return raw__metro__env(cause, funkable);}
   else if (raw__cfunk__is_type(              cause, funkable)) {return nil;}
   else if (raw__metrocfunk__is_type(         cause, funkable)) {return nil;}
   else if (raw__core_extension_funk__is_type(cause, funkable)) {return nil;}
@@ -1386,7 +1445,7 @@ f2ptr raw__funkable__name(f2ptr cause, f2ptr this) {
   } else if (raw__funk__is_type(cause, this)) {
     return f2funk__name(this, cause);
   } else if (raw__metro__is_type(cause, this)) {
-    return f2metro__name(this, cause);
+    return raw__metro__name(cause, this);
   } else if (raw__core_extension_funk__is_type(cause, this)) {
     return raw__core_extension_funk__name(cause, this);
   }
@@ -1405,7 +1464,7 @@ f2ptr raw__funkable__args(f2ptr cause, f2ptr this) {
   } else if (raw__funk__is_type(cause, this)) {
     return f2funk__args(this, cause);
   } else if (raw__metro__is_type(cause, this)) {
-    return f2metro__args(this, cause);
+    return raw__metro__args(cause, this);
   } else if (raw__core_extension_funk__is_type(cause, this)) {
     return raw__core_extension_funk__args(cause, this);
   }
@@ -1707,6 +1766,8 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__1(         conslist__as__array,  this,     "returns a conslist represented as a new array.");
   f2__primcfunk__init__2(         conslist__first_n,    this, n,  "returns a new representation of the first n elements of the list, this.");
   f2__primcfunk__init__1(         conslistlist__append, this,     "append a list of lists.");
+  
+  f2__primcfunk__init__0_and_rest(immutable_conslist, seq, "returns a new conslist that we will agree to not mutate.");
   
   // cause
   

@@ -42,6 +42,8 @@ struct funk2_garbage_collector_s {
   boolean_t                      user_signal_garbage_collect_now;
   funk2_processor_mutex_t        total_garbage_collection_count__mutex;
   u64                            total_garbage_collection_count;
+  s64                            temporary_load_buffer__length;
+  u8*                            temporary_load_buffer;
 };
 
 void      funk2_garbage_collector__init(funk2_garbage_collector_t* this);
@@ -62,6 +64,7 @@ void      funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_co
 void      funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this);
 f2ptr     funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_collector_t* this, f2ptr exp, char* source_filename, int source_line_num);
 void      funk2_garbage_collector__handle(funk2_garbage_collector_t* this);
+s64       funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd);
 void      funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd);
 

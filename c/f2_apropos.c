@@ -29,7 +29,7 @@ f2ptr f2__exp__documentation(f2ptr cause, f2ptr exp) {
   } else if (raw__funk__is_type(cause, exp)) {
     return f2funk__documentation(exp, cause);
   } else if (raw__metro__is_type(cause, exp)) {
-    return f2metro__documentation(exp, cause);
+    return raw__metro__documentation(cause, exp);
   } else {
     return nil;
   }

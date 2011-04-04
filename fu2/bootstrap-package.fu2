@@ -149,14 +149,12 @@
 				  'extension/semantic_temporal_object/'
 				  'extension/semantic_visual_object/'
 				  'extension/timeline/'
-				  'example/cairo-test/'
 				  'example/divisi2/'
 				  'example/em_two_webpage/'
 				  'example/english_language/'
 				  'example/funk2-htmldoc/'
 				  'example/funk2-webpage/'
 				  'example/graph_match/'
-				  'example/gtk-test/'
 				  'example/isis_world_client/'
 				  'example/isis_world_demo/'
 				  'example/isismon/'
@@ -166,13 +164,17 @@
 				  'example/moral_compass/'
 				  'example/mind/'
 				  'example/muddy_carol/'
-				  'example/propogator-test/'
+				  'example/rct_webpage/'
 				  'example/roboverse/'
 				  'example/socket-client/'
 				  'example/socket-server/'
-				  'example/timeline-test/'
 				  'example/traced_mind/'
-				  'example/xmlrpc-test/'
+				  'test/cairo-test/'
+				  'test/gtk-test/'
+				  'test/optimize-test/'
+				  'test/propogator-test/'
+				  'test/timeline-test/'
+				  'test/xmlrpc-test/'
 				  ]]
 
 [defmetro defpackage [name :rest dependencies]
@@ -262,7 +264,7 @@
 			 package_name name]]
 	      [let [[loaded_all_dependencies_time [get package loaded_all_dependencies_time]]]
 		[if [or [null loaded_all_dependencies_time]
-			[< loaded_all_dependencies_time before_time]]
+			[bytecode:less_than loaded_all_dependencies_time before_time]]
 		    [prog [terminal_format standard-terminal '\nchecking ' name ' for updated dependencies.']
 			  [mapc [funk [package_dependency]
 				      [let [[dependency_was_loaded [package-load_if_modified_before package_dependency before_time checked_package_hash]]]

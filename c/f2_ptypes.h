@@ -556,7 +556,10 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
 f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
-f2ptr f2__gensym(f2ptr cause);
+f2ptr raw__gensym(f2ptr cause, s64 initial_string_length, u8* initial_string);
+f2ptr  f2__gensym(f2ptr cause, f2ptr initial_string);
+
+#define gensym(cause, str) raw__gensym(cause, strlen(str), (u8*)(str))
 
 // **
 

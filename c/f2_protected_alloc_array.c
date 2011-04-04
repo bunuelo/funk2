@@ -126,6 +126,16 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
   return (this->reentrance_count > 0);
 }
 
+s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this) {
+  s64 save_size = 0;
+  {
+    u64 used_num = this->used_num;
+    save_size += sizeof(used_num);
+    save_size += (sizeof(f2ptr) * used_num);
+  }
+  return save_size;
+}
+
 void funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num = this->used_num;
   safe_write(fd, to_ptr(&used_num), sizeof(used_num));
@@ -154,5 +164,24 @@ void funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t
     }
   }
   f2__free(to_ptr(read_buffer));
+}
+
+s64 funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    u64 used_num;
+    memcpy(&used_num, buffer_iter, sizeof(used_num)); buffer_iter += sizeof(used_num);
+    f2ptr* read_buffer = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * used_num));
+    memcpy(read_buffer, buffer_iter, sizeof(f2ptr) * used_num); buffer_iter += (sizeof(f2ptr) * used_num);
+    {
+      u64 index;
+      for (index = 0; index < used_num; index ++) {
+	f2ptr exp = read_buffer[index];
+	funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+      }
+    }
+    f2__free(to_ptr(read_buffer));
+  }
+  return (s64)(buffer_iter - buffer);
 }
 

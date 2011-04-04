@@ -135,6 +135,7 @@ void f2__initialize() {
   f2__core_extension_funk__initialize();
   f2__core_extension__initialize_module();
   f2__larva__initialize();
+  f2__optimize__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

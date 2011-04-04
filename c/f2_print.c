@@ -724,32 +724,32 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  } else if (f2primobject__is__metro(exp, cause)) {
 	    int subexp_size[2];
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("name",                19, cause, fiber, stream, f2metro__name(exp, cause),      f2metro__name__tracing_on(exp, cause), f2metro__name__trace(exp, cause), f2metro__name__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("name",                19, cause, fiber, stream, raw__metro__name(cause, exp),      nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (! brief_mode) {
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__slot_key_and_value("body_bytecodes",      19, cause, fiber, stream, f2metro__body_bytecodes(exp, cause),      f2metro__body_bytecodes__tracing_on(exp, cause), f2metro__body_bytecodes__trace(exp, cause), f2metro__body_bytecodes__imagination_frame(exp, cause),
+	      {f2__write_pretty__slot_key_and_value("body_bytecodes",      19, cause, fiber, stream, raw__metro__body_bytecodes(cause, exp),      nil, nil, nil,
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("args",                19, cause, fiber, stream, f2metro__args(exp, cause),                f2metro__args__tracing_on(exp, cause), f2metro__args__trace(exp, cause), f2metro__args__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("args",                19, cause, fiber, stream, raw__metro__args(cause, exp),                nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (! brief_mode) {
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__slot_key_and_value("demetropolized_body", 19, cause, fiber, stream, f2metro__demetropolized_body(exp, cause), f2metro__demetropolized_body__tracing_on(exp, cause), f2metro__demetropolized_body__trace(exp, cause), f2metro__demetropolized_body__imagination_frame(exp, cause),
+	      {f2__write_pretty__slot_key_and_value("demetropolized_body", 19, cause, fiber, stream, raw__metro__demetropolized_body(cause, exp), nil, nil, nil,
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__slot_key_and_value("env",                 19, cause, fiber, stream, f2metro__env(exp, cause),                 f2metro__env__tracing_on(exp, cause), f2metro__env__trace(exp, cause), f2metro__env__imagination_frame(exp, cause),
+	      {f2__write_pretty__slot_key_and_value("env",                 19, cause, fiber, stream, raw__metro__env(cause, exp),                 nil, nil, nil,
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__slot_key_and_value("machine_code",        19, cause, fiber, stream, f2metro__machine_code(exp, cause),        f2metro__machine_code__tracing_on(exp, cause), f2metro__machine_code__trace(exp, cause), f2metro__machine_code__imagination_frame(exp, cause),
+	      {f2__write_pretty__slot_key_and_value("machine_code",        19, cause, fiber, stream, raw__metro__machine_code(cause, exp),        nil, nil, nil,
 						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    }
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("is_funktional",       19, cause, fiber, stream, f2metro__is_funktional(exp, cause),       f2metro__is_funktional__tracing_on(exp, cause), f2metro__is_funktional__trace(exp, cause), f2metro__is_funktional__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("is_funktional",       19, cause, fiber, stream, raw__metro__is_funktional(cause, exp),       nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	    {f2__write_pretty__slot_key_and_value("documentation",       19, cause, fiber, stream, f2metro__documentation(exp, cause),       f2metro__documentation__tracing_on(exp, cause), f2metro__documentation__trace(exp, cause), f2metro__documentation__imagination_frame(exp, cause),
+	    {f2__write_pretty__slot_key_and_value("documentation",       19, cause, fiber, stream, raw__metro__documentation(cause, exp),       nil, nil, nil,
 						  ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	  } else if (f2primobject__is__exception(exp, cause)) {
 	    int subexp_size[2];

@@ -60,10 +60,10 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__pop__execution_count;
   f2ptr bytecode__copy__symbol;
   u64   bytecode__copy__execution_count;
-  f2ptr bytecode__lookup_type_var__symbol;
-  u64   bytecode__lookup_type_var__execution_count;
-  f2ptr bytecode__define_type_var__symbol;
-  u64   bytecode__define_type_var__execution_count;
+  f2ptr bytecode__lookup__symbol;
+  u64   bytecode__lookup__execution_count;
+  f2ptr bytecode__define__symbol;
+  u64   bytecode__define__execution_count;
   f2ptr bytecode__type_var__mutate__symbol;
   u64   bytecode__type_var__mutate__execution_count;
   f2ptr bytecode__globalize_type_var__symbol;
@@ -90,11 +90,44 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__newenv__execution_count;
   f2ptr bytecode__machine_code__symbol;
   u64   bytecode__machine_code__execution_count;
-  f2ptr bytecode__reg_array__elt__symbol;
-  u64   bytecode__reg_array__elt__execution_count;
-  f2ptr bytecode__reg_array__elt__set__symbol;
-  u64   bytecode__reg_array__elt__set__execution_count;
   
+  // logic
+  f2ptr bytecode__eq__symbol;
+  u64   bytecode__eq__execution_count;
+  f2ptr bytecode__not__symbol;
+  u64   bytecode__not__execution_count;
+  f2ptr bytecode__and__symbol;
+  u64   bytecode__and__execution_count;
+  f2ptr bytecode__or__symbol;
+  u64   bytecode__or__execution_count;
+  
+  // math
+  f2ptr bytecode__add__symbol;
+  u64   bytecode__add__execution_count;
+  f2ptr bytecode__negative__symbol;
+  u64   bytecode__negative__execution_count;
+  f2ptr bytecode__subtract__symbol;
+  u64   bytecode__subtract__execution_count;
+  f2ptr bytecode__multiply__symbol;
+  u64   bytecode__multiply__execution_count;
+  f2ptr bytecode__inverse__symbol;
+  u64   bytecode__inverse__execution_count;
+  f2ptr bytecode__divide__symbol;
+  u64   bytecode__divide__execution_count;
+  f2ptr bytecode__modulo__symbol;
+  u64   bytecode__modulo__execution_count;
+  f2ptr bytecode__increment__symbol;
+  u64   bytecode__increment__execution_count;
+  f2ptr bytecode__decrement__symbol;
+  u64   bytecode__decrement__execution_count;
+  f2ptr bytecode__numerically_equals__symbol;
+  u64   bytecode__numerically_equals__execution_count;
+  f2ptr bytecode__less_than__symbol;
+  u64   bytecode__less_than__execution_count;
+  f2ptr bytecode__greater_than__symbol;
+  u64   bytecode__greater_than__execution_count;
+  
+  // block
   f2ptr bytecode__block_push__symbol;
   u64   bytecode__block_push__execution_count;
   f2ptr bytecode__block_enter__symbol;
@@ -164,53 +197,89 @@ typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr fiber, f2ptr bytecode, f2ptr a
 
 // bytecode definitions (and bytecode_jump compiling functions)
 
-int                    f2__fiber__bytecode__funk(                            f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode);
-int                    f2__fiber__bytecode__jump_funk(                       f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__array(                           f2ptr fiber, f2ptr bytecode, f2ptr length);
-int                    f2__fiber__bytecode__cons(                            f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__consp(                           f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__car(                             f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__cdr(                             f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__car__set(                        f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__cdr__set(                        f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__array_elt(                       f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index);
-int                    f2__fiber__bytecode__array_elt__set(                  f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index);
-int                    f2__fiber__bytecode__set(                             f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp);
-int                    f2__fiber__bytecode__nop(                             f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__swap(                            f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
-int                    f2__fiber__bytecode__push_constant(                   f2ptr fiber, f2ptr bytecode, f2ptr constant);
-int                    f2__fiber__bytecode__push(                            f2ptr fiber, f2ptr bytecode, f2ptr reg);
-int                    f2__fiber__bytecode__pop(                             f2ptr fiber, f2ptr bytecode, f2ptr reg);
-int                    f2__fiber__bytecode__copy(                            f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);
-int                    f2__fiber__bytecode__lookup_type_var(                 f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__fiber__bytecode__define_type_var(                 f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__fiber__bytecode__type_var__mutate(                f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__fiber__bytecode__globalize_type_var(              f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
-int                    f2__fiber__bytecode__jump(                            f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
-int                    f2__fiber__bytecode__if_jump(                         f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
-int                    f2__fiber__bytecode__else_jump(                       f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
-int                    f2__fiber__bytecode__debug(                           f2ptr fiber, f2ptr bytecode, f2ptr value);
-int                    f2__fiber__bytecode__tracer(                          f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args);
-int                    f2__fiber__bytecode__endfunk(                         f2ptr fiber, f2ptr bytecode, f2ptr funk);
-int                    f2__fiber__bytecode__compile(                         f2ptr fiber, f2ptr bytecode, f2ptr protect_environment);
-int                    f2__fiber__bytecode__yield(                           f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__newenv(                          f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__machine_code(                    f2ptr fiber, f2ptr bytecode, f2ptr chunk);
-int                    f2__fiber__bytecode__reg_array__elt(                  f2ptr fiber, f2ptr bytecode, f2ptr reg);
-int                    f2__fiber__bytecode__reg_array__elt__set(             f2ptr fiber, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__funk                                   (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode_helper__funk__no_increment_pc_reg       (f2ptr fiber, f2ptr cause, f2ptr bytecode);
+int                    f2__fiber__bytecode__jump_funk                              (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__array                                  (f2ptr fiber, f2ptr bytecode, f2ptr length);
+int                    f2__fiber__bytecode__cons                                   (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__conslist                               (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__consp                                  (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__car                                    (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__cdr                                    (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__car__set                               (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__cdr__set                               (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__array_elt                              (f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index);
+int                    f2__fiber__bytecode__array_elt__set                         (f2ptr fiber, f2ptr bytecode, f2ptr array, f2ptr index);
+int                    f2__fiber__bytecode__set                                    (f2ptr fiber, f2ptr bytecode, f2ptr reg, f2ptr exp);
+int                    f2__fiber__bytecode__nop                                    (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__swap                                   (f2ptr fiber, f2ptr bytecode, f2ptr reg0, f2ptr reg1);
+int                    f2__fiber__bytecode__push_constant                          (f2ptr fiber, f2ptr bytecode, f2ptr constant);
+int                    f2__fiber__bytecode__push                                   (f2ptr fiber, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__pop                                    (f2ptr fiber, f2ptr bytecode, f2ptr reg);
+int                    f2__fiber__bytecode__copy                                   (f2ptr fiber, f2ptr bytecode, f2ptr src_reg, f2ptr dest_reg);
+int                    f2__fiber__bytecode__lookup                                 (f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__define                                 (f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__type_var__mutate                       (f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__globalize_type_var                     (f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var);
+int                    f2__fiber__bytecode__jump                                   (f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__fiber__bytecode__if_jump                                (f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__fiber__bytecode__else_jump                              (f2ptr fiber, f2ptr bytecode, f2ptr new_program_counter);
+int                    f2__fiber__bytecode__debug                                  (f2ptr fiber, f2ptr bytecode, f2ptr value);
+int                    f2__fiber__bytecode__tracer                                 (f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr args);
+int                    f2__fiber__bytecode__endfunk                                (f2ptr fiber, f2ptr bytecode, f2ptr funk);
+int                    f2__fiber__bytecode__compile                                (f2ptr fiber, f2ptr bytecode, f2ptr protect_environment);
+int                    f2__fiber__bytecode__yield                                  (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__newenv                                 (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__machine_code                           (f2ptr fiber, f2ptr bytecode, f2ptr chunk);
 
-int                    f2__fiber__bytecode__block_push(                      f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__block_enter(                     f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__block_define_rest_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
-int                    f2__fiber__bytecode__block_define_argument(           f2ptr fiber, f2ptr bytecode, f2ptr argument);
-int                    f2__fiber__bytecode__block_define_last_argument(      f2ptr fiber, f2ptr bytecode, f2ptr argument);
-int                    f2__fiber__bytecode__block_pop(                       f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__block_exit_and_pop(              f2ptr fiber, f2ptr bytecode, f2ptr funk);
-int                    f2__fiber__bytecode__block_exit_and_no_pop(           f2ptr fiber, f2ptr bytecode, f2ptr funk);
-int                    f2__fiber__bytecode__block_eval_args_begin(           f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__block_eval_args_next(            f2ptr fiber, f2ptr bytecode);
-int                    f2__fiber__bytecode__block_eval_args_end(             f2ptr fiber, f2ptr bytecode);
+// logic
+int                    f2__fiber__bytecode__eq__no_increment_pc_reg                (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__eq                                     (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__not__no_increment_pc_reg               (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__not                                    (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__and__no_increment_pc_reg               (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__and                                    (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__or__no_increment_pc_reg                (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__or                                     (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+
+// math
+int                    f2__fiber__bytecode__add__no_increment_pc_reg               (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__add                                    (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__negative__no_increment_pc_reg          (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__negative                               (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__subtract__no_increment_pc_reg          (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__subtract                               (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__multiply__no_increment_pc_reg          (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__multiply                               (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__inverse__no_increment_pc_reg           (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__inverse                                (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__divide__no_increment_pc_reg            (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__divide                                 (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__modulo__no_increment_pc_reg            (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__modulo                                 (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__increment__no_increment_pc_reg         (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__increment                              (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__decrement__no_increment_pc_reg         (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__decrement                              (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x);
+int                    f2__fiber__bytecode__numerically_equals__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__numerically_equals                     (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__less_than__no_increment_pc_reg         (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__less_than                              (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__greater_than__no_increment_pc_reg      (f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+int                    f2__fiber__bytecode__greater_than                           (f2ptr fiber, f2ptr bytecode, f2ptr result, f2ptr x0, f2ptr x1);
+
+// block
+int                    f2__fiber__bytecode__block_push                             (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_enter                            (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_define_rest_argument             (f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_define_argument                  (f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_define_last_argument             (f2ptr fiber, f2ptr bytecode, f2ptr argument);
+int                    f2__fiber__bytecode__block_pop                              (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_exit_and_pop                     (f2ptr fiber, f2ptr bytecode, f2ptr funk);
+int                    f2__fiber__bytecode__block_exit_and_no_pop                  (f2ptr fiber, f2ptr bytecode, f2ptr funk);
+int                    f2__fiber__bytecode__block_eval_args_begin                  (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_eval_args_next                   (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__block_eval_args_end                    (f2ptr fiber, f2ptr bytecode);
 
 
 

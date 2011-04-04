@@ -31,11 +31,11 @@ FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
   return retval;
 }
 
-f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
+f2ptr raw__load(f2ptr cause, f2ptr filename) {
   if (!raw__string__is_type(cause, filename)) {
-    status("load error: filename must be a string.");
-    return nil;
+    error(nil, "load error: filename must be a string.");
   }
+  f2ptr fiber  = f2__this__fiber(cause);
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {
     {
@@ -55,7 +55,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   f2__fiber__print(cause, fiber, filename); status("load note: opening file for reading.");
 #endif // DEBUG_LOAD
   
-  f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil);
+  f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil, nil);
   f2ptr load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
   f2ptr load_fiber    = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
   f2ptr read_exp      = nil;
@@ -71,7 +71,7 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
 	printf("\nload exception..: "); f2__write(cause, fiber, read_exp); fflush(stdout);
 	printf("\ncurrent filename: "); f2__write(cause, fiber, filename); fflush(stdout);
       } else {
-	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil);
+	load_funk     = f2funk__new(cause, nil, nil, nil, f2cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
 	if (raw__larva__is_type(cause, load_funk_bcs)) {
 	  f2__stream__close(cause, stream);
@@ -130,7 +130,13 @@ f2ptr raw__load(f2ptr cause, f2ptr fiber, f2ptr filename) {
   f2__stream__close(cause, stream);
   return nil;
 }
-def_pcfunk1(load, filename, return raw__load(this_cause, simple_fiber, filename));
+
+
+f2ptr f2__load(f2ptr cause, f2ptr filename) {
+  assert_argument_type(string, filename);
+  return raw__load(cause, filename);
+}
+def_pcfunk1(load, filename, return f2__load(this_cause, filename));
 
 void f2__load__reinitialize_globalvars() {
 }

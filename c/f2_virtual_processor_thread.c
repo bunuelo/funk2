@@ -44,8 +44,8 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	raw__spin_sleep_yield();
       }
     }
-    funk2_virtual_processor_t* virtual_processor                      = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
-    boolean_t                  we_are_next_in_line_to_execute         = boolean__false;
+    funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
+    boolean_t                  we_are_next_in_line_to_execute = boolean__false;
     s64                        assigned_virtual_processor_thread_count;
     s64                        spinning_virtual_processor_thread_count;
     s64                        working_virtual_processor_thread_count;
@@ -128,7 +128,7 @@ void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this
 
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {
   funk2_processor_mutex__lock(&(this->assignment_mutex));
-  status("funk2_virtual_processor_thread__assign_to_virtual_processor: virtual_processor_thread assigned to virtual_processor " u64__fstr ".", virtual_processor_assignment_index);
+  //status("funk2_virtual_processor_thread__assign_to_virtual_processor: virtual_processor_thread assigned to virtual_processor " u64__fstr ".", virtual_processor_assignment_index);
   if (this->virtual_processor_assignment_index != -1) {
     error(nil, "funk2_virtual_processor_thread__assign_to_virtual_processor error: attempted to assign virtual_processor_thread when already assigned.");
   }

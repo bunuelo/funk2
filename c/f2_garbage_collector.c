@@ -256,8 +256,39 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
   }
 }
 
+s64 funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t* this) {
+  s64 save_size = 0;
+  {
+    //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    //  s64 pool_save_size = funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
+    //  safe_write(fd, to_ptr(&pool_save_size), sizeof(s64));
+    //}
+    save_size += (sizeof(s64) * memory_pool_num);
+  }
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      save_size += funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
+    }
+  }
+  save_size += funk2_never_delete_list__calculate_save_size(&(this->never_delete_list));
+  return save_size;
+}
+
 void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd) {
   status("saving garbage collector to stream %d.", fd);
+  {
+    s64 garbage_collector_save_size = funk2_garbage_collector__calculate_save_size(this);
+    safe_write(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
+    status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
+  }
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      s64 pool_save_size = funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
+      safe_write(fd, to_ptr(&pool_save_size), sizeof(s64));
+    }
+  }
   {
     int pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -270,12 +301,79 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   status("saving garbage collector to stream %d done.", fd);
 }
 
-void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd) {
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_garbage_collector_pool__load_from_stream(&(this->gc_pool[pool_index]), fd);
+void* funk2_garbage_collector__load_from_buffer__start_thread_load_garbage_collector_pool_buffer(void* garbage_collector_pool_arg) {
+  funk2_garbage_collector_pool_t* garbage_collector_pool = (funk2_garbage_collector_pool_t*)garbage_collector_pool_arg;
+  {
+    status("garbage collector buffer_pool_offset=" s64__fstr, (s64)(garbage_collector_pool->temporary_load_buffer_offset));
+    s64 pool_load_size = funk2_garbage_collector_pool__load_from_buffer(garbage_collector_pool, (garbage_collector_pool->temporary_load_buffer) + (garbage_collector_pool->temporary_load_buffer_offset));
+    if (pool_load_size != (garbage_collector_pool->temporary_load_buffer_size)) {
+      status("garbage collector buffer_pool_size mismatch.  pool_load_size=" s64__fstr ", buffer_pool_size=" s64__fstr, (s64)pool_load_size, (s64)(garbage_collector_pool->temporary_load_buffer_size));
+      error(nil, "garbage collector pool_load_size mismatch.");
+    }
   }
-  funk2_never_delete_list__load_from_stream(&(this->never_delete_list), fd);
+  return NULL;
+}
+
+s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u8* buffer) {
+  u8* buffer_iter = buffer;
+  {
+    s64 offset = 0;
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	s64 pool_save_size;
+	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
+	this->gc_pool[pool_index].temporary_load_buffer_size = pool_save_size;
+	status("garbage collector buffer_pool_size[" s64__fstr "]=" s64__fstr, (s64)pool_index, (s64)(this->gc_pool[pool_index].temporary_load_buffer_size));
+	this->gc_pool[pool_index].temporary_load_buffer_offset = offset;
+	offset += pool_save_size;
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	this->gc_pool[pool_index].temporary_load_buffer = buffer_iter;
+      }
+    }
+    {
+      pthread_t load_gc_thread[memory_pool_num];
+      {
+	s64 pool_index;
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_create(&(load_gc_thread[pool_index]), NULL, &funk2_garbage_collector__load_from_buffer__start_thread_load_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
+	}
+      }
+      {
+	s64 pool_index;
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  pthread_join(load_gc_thread[pool_index], NULL);
+	}
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	buffer_iter += (this->gc_pool[pool_index].temporary_load_buffer_size);
+      }
+    }
+  }
+  buffer_iter += funk2_never_delete_list__load_from_buffer(&(this->never_delete_list), buffer_iter);
+  return (s64)(buffer_iter - buffer);
+}
+
+void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd) {
+  s64 garbage_collector_save_size;
+  safe_read(fd, to_ptr(&garbage_collector_save_size), sizeof(s64));
+  status("garbage collector save size = " s64__fstr ".", garbage_collector_save_size); fflush(stdout);
+  this->temporary_load_buffer__length = garbage_collector_save_size;
+  this->temporary_load_buffer = (u8*)from_ptr(f2__malloc(this->temporary_load_buffer__length));
+  safe_read(fd, to_ptr(this->temporary_load_buffer), this->temporary_load_buffer__length);
+  s64 load_length = funk2_garbage_collector__load_from_buffer(this, this->temporary_load_buffer);
+  if (load_length != this->temporary_load_buffer__length) {
+    status(    "garbage collector load size mismatch: load_length = " s64__fstr ", save_length = " s64__fstr, (s64)load_length, (s64)(this->temporary_load_buffer__length));
+    error(nil, "garbage collector load size mismatch.");
+  }
+  f2__free(to_ptr(this->temporary_load_buffer));
 }
 
 // **

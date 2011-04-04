@@ -523,18 +523,20 @@ test moving forward speed
 			[have this-resource walk_forward_or_back object]]]
 	      [print 'at 5 meters away']]]]]]
 
-[deftypefunk stand_in_front_of_resource execute  turn_for_fixed_angle [object desired_orientation]
+[deftypefunk stand_in_front_of_resource execute  turn_for_fixed_angle [turn_right init_turning_angle]
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
-	 [name  [get body name]]]
+	 [name  [get body name]]
+	 [desired_neck_pos init_turning_angle]]
+    [if [null  turn_right] [= desired_neck_pos [- 0 init_turning_angle]]]
     [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     [labels [[turn_left_and_right []
 				  
 				  
 				  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-				  [if [get_visual_objects mind]
+				 
 				      [if [lookup_visual_object [get_visual_objects mind] object] 
-					  [let [[orientation                   [have [lookup_visual_object [get_visual_objects mind] object] lookup `orientation]]]
+					  [let [[neck_pos                   [have  lookup `neck_pos]]]
 					    [cond [[> [-  orientation desired_orientation] 4 ]
 						   [prog [have this-resource think_to_self   'orientation too positive' orientation]
 							 
@@ -611,10 +613,10 @@ test moving forward speed
 	     [should_i_turn_right       [init_orientation init_angle]
 					  [print 'should i turn right?']
 					  [if [< init_orientation 0]
-					      [if [< init_angle 90]
+					      [if [< [+ init_orientation_difference init_angle] 120]
 						  t
 						nil]
-					    [if [< init_angle 90]
+					    [if [< [+ init_orientation_difference init_angle] 120]
 						nil
 					      t]]]
 	     [should_i_move_forward     [current_neck_angle final_angle]
@@ -622,6 +624,18 @@ test moving forward speed
 					[if [< [abs current_neck_angle][abs final_angle]]
 					    t
 					  nil]]
+	     [find_desired_init_orientation        [turn_right init_turning_angle init_orientation]
+						   [let [[raw 0]]
+						     [if turn_right 
+							 [= raw [+ init_turning_angle init_orientation]] 
+						       [ = raw [- init_orientation init_turning_angle]]]
+						     [if [< raw -180]
+							 [+ 360 raw]
+						       [if [> raw 180]
+							   [- raw 360]
+							 raw]
+						       raw]]]
+				
 	     [find_walking_speed        [alpha heading]
 					[let* [[dist  [* [/ [get alpha degree_sine] [get heading degree_sine]] 5]]
 					       [speed [min [* dist 4] 10]]]
@@ -638,13 +652,16 @@ test moving forward speed
 	    'distance needed to travel, law of cosine'
 	    [= init_angle                  [find_init_angle init_orientation_difference final_distance]]
 	    'angle one would have turned if one does not choose to move backwards'
-	    [= init_turning_angle          [- 90 [abs [- 90 init_angle]]]]
-	    'turn init_angle if init_angle < 90, otherwise turn 90 - init'
+	    [= init_turning_angle          [if [< [+ init_orientation_difference init_angle] 120]
+					       init_angle
+					     [- 180 init_angle]]]
+	    
 	    [= turn_right                  [should_i_turn_right init_orientation init_angle]]
 	    'turn right only if object on the right and moving forward'
-	    [= desired_init_orientation    [if turn_right [+ init_turning_angle init_orientation] [- init_orientation init_turning_angle]]]
+	    [= desired_init_orientation    [find_desired_init_orientation turn_right init_turning_angle init_orientation]]
 	    'as indicator for how far one turns initially. distinction between moving forward and moving back'
-	    [= final_neck_angle            [if [> init_angle 90] [- [- 180 init_angle] init_orientation_difference]
+	    [= final_neck_angle            [if [> [+ init_orientation_difference init_angle] 120]
+					       [- [- 180 init_angle] init_orientation_difference]
 					     [+ init_orientation_difference init_angle]]]
 	    'different final neck angle for moving backwards and moving forward'
 	    [= init_turning_speed          [find_turning_speed init_turning_angle]]
@@ -657,7 +674,7 @@ test moving forward speed
 		
 		[have this-resource walk_forward_or_back object]
 	      
-	      [prog [have this-resource turn_for_fixed_angle object desired_init_orientation]]
+	      [prog [have this-resource turn_for_fixed_angle object turn_right init_turning_angle]]
 	      [let [[walking_speed 20]]
 		'stops when angle is very good, or when distance and angle are good at the same time'
 		[while [null [or [< [abs [- [get_neck_heading mind] final_neck_angle]] 5]

@@ -273,16 +273,26 @@
 [defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [immutable_conslist @args]]]
 
 [defmetro object-get-funk [this slot_name]
-  `[object-slot-type_funk ,this `get slot_name]]
+  `[object-slot-type_funk ,this `get ,slot_name]]
 
 [defmetro object-set-funk [this slot_name]
-  `[object-slot-type_funk ,this `set slot_name]]
+  `[object-slot-type_funk ,this `set ,slot_name]]
 
 [defmetro object-execute-funk [this slot_name]
   `[object-slot-type_funk ,this `execute ,slot_name]]
 
 [defmetro object_type-new-funk [name]
   `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
+
+
+[defmetro object-get           [this slot_name :rest args] [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
+[defmetro object-get-apply     [this slot_name args]       [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [cons               ,this_gensym ,args]]]]
+[defmetro object-set           [this slot_name :rest args] [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
+[defmetro object-set-apply     [this slot_name args]       [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [cons               ,this_gensym ,args]]]]
+[defmetro object-execute       [this slot_name :rest args] [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
+[defmetro object-execute-apply [this slot_name args]       [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [cons               ,this_gensym ,args]]]]
+
+
 
 [defunk object_type-new [name :rest args]
   [apply [object_type-new-funk name] args]]

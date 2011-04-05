@@ -371,7 +371,7 @@
 [defunk fiber [funk args]
   [silent-fiber [funk-new_with_name fiber []
 				    [cause-enable_reactive_critics [this-cause]]
-				    [apply fiber args]]
+				    [apply funk args]]
 		nil]]
 
 [defunk parseq [proc seq]

@@ -548,8 +548,9 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_nil.lo c/lib_libfunk2_la-f2_number.lo \
 	c/lib_libfunk2_la-f2_object.lo \
 	c/lib_libfunk2_la-f2_object_lattice.lo \
-	c/lib_libfunk2_la-f2_opengl.lo c/lib_libfunk2_la-f2_package.lo \
-	c/lib_libfunk2_la-f2_packet.lo \
+	c/lib_libfunk2_la-f2_opengl.lo \
+	c/lib_libfunk2_la-f2_optimize.lo \
+	c/lib_libfunk2_la-f2_package.lo c/lib_libfunk2_la-f2_packet.lo \
 	c/lib_libfunk2_la-f2_partial_order.lo \
 	c/lib_libfunk2_la-f2_peer_command_server.lo \
 	c/lib_libfunk2_la-f2_perception_lattice.lo \
@@ -1098,6 +1099,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_object.c \
   c/f2_object_lattice.c \
   c/f2_opengl.c \
+  c/f2_optimize.c \
   c/f2_package.c \
   c/f2_packet.c \
   c/f2_partial_order.c \
@@ -2012,6 +2014,8 @@ c/lib_libfunk2_la-f2_object_lattice.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_opengl.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_optimize.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_package.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_packet.lo: c/$(am__dirstamp) \
@@ -2270,6 +2274,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_object_lattice.lo
 	-rm -f c/lib_libfunk2_la-f2_opengl.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_opengl.lo
+	-rm -f c/lib_libfunk2_la-f2_optimize.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_optimize.lo
 	-rm -f c/lib_libfunk2_la-f2_package.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_package.lo
 	-rm -f c/lib_libfunk2_la-f2_packet.$(OBJEXT)
@@ -2553,6 +2559,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_object_lattice.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_opengl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_optimize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_package.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_packet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_partial_order.Plo@am__quote@
@@ -3445,6 +3452,14 @@ c/lib_libfunk2_la-f2_opengl.lo: c/f2_opengl.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_opengl.c' object='c/lib_libfunk2_la-f2_opengl.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_opengl.lo `test -f 'c/f2_opengl.c' || echo '$(srcdir)/'`c/f2_opengl.c
+
+c/lib_libfunk2_la-f2_optimize.lo: c/f2_optimize.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_optimize.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_optimize.Tpo -c -o c/lib_libfunk2_la-f2_optimize.lo `test -f 'c/f2_optimize.c' || echo '$(srcdir)/'`c/f2_optimize.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_optimize.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_optimize.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_optimize.c' object='c/lib_libfunk2_la-f2_optimize.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_optimize.lo `test -f 'c/f2_optimize.c' || echo '$(srcdir)/'`c/f2_optimize.c
 
 c/lib_libfunk2_la-f2_package.lo: c/f2_package.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_package.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_package.Tpo -c -o c/lib_libfunk2_la-f2_package.lo `test -f 'c/f2_package.c' || echo '$(srcdir)/'`c/f2_package.c

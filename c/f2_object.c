@@ -458,7 +458,7 @@ def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_
 #define object__set__no_such_slot     790
 #define object__execute__no_such_slot 791
 
-f2ptr f2__object__cfunk_get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.get__symbol, slot);
   if (! raw__funkable__is_type(cause, funk)) {

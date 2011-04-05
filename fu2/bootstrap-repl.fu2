@@ -315,7 +315,7 @@
 	 [apply [object-get-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 [defmetro object-set [this slot_name :rest args]
-  [define [this_gensym [gensym 'set-this']]]
+  [define this_gensym [gensym 'set-this']]
   `[prog [define ,this_gensym ,this]
 	 [apply [object-set-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 

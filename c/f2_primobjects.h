@@ -1466,7 +1466,13 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 
 // cfunk
 
-declare_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
+declare_primobject_6_slot(cfunk,
+			  name,
+			  args,
+			  cfunkptr,
+			  env,
+			  is_funktional,
+			  documentation);
 
 f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause);
 

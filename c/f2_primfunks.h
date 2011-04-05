@@ -43,6 +43,10 @@
    f2ptr this_documentation = def_pcfunk__documentation_variable(name); \
    this_documentation = this_documentation;
 
+#define def_pcfunk__is_funktional_variable(name)                   __is_funktional__##name
+#define def_pcfunk__is_funktional_variable__define(name)           f2ptr def_pcfunk__is_funktional_variable(name) = nil
+#define def_pcfunk__is_funktional_variable__init(name, doc_string) if(!def_pcfunk__is_funktional_variable(name)) {def_pcfunk__is_funktional_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
+
 
 //#  define def_pcfunk__this_cause__define(name) 
 //     f2ptr this_cause = f2cause__new(simple_cause, simple_fiber, simple_env, def_pcfunk__symbolvar(name), simple_args, nil); 
@@ -66,6 +70,7 @@
 #define def_pcfunk__defargs(def_name, correct_arg_num, defargs, def_body) \
   def_pcfunk__symbolvar__define(def_name);				\
   def_pcfunk__documentation_variable__define(def_name);			\
+  def_pcfunk__is_funktional_variable__define(def_name);			\
   def_pcfunk__prototype__declare(def_name) {				\
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
@@ -473,9 +478,13 @@
 #define def_pcfunk__metrovar(name)  pcmetro__##name
 #define def_pmetro_simple(name) f2ptr def_pcfunk__metrovar(name) (f2ptr simple_cause, f2ptr simple_fiber, f2ptr simple_env, f2ptr simple_args)
 
-#define def_pmetro0(def_name, def_body) \
+#define def_pcfunk__all_variables__define(def_name) \
   def_pcfunk__symbolvar__define(def_name); \
   def_pcfunk__documentation_variable__define(def_name); \
+  def_pcfunk__is_funktional_variable__define(def_name);
+
+#define def_pmetro0(def_name, def_body) \
+  def_pcfunk__all_variables__define(def_name); \
   def_pcfunk__prototype__declare(def_name) { \
     def_pcfunk__this_cause__define(def_name); \
     def_pcfunk__this_symbol__define(def_name); \

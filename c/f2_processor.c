@@ -355,7 +355,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
 	}
       }
       //printf("\nbug: ");
-      //f2__print(cause, bug);
+      f2__print(cause, bug);
       f2fiber__value__set(fiber, cause, bug);
     }
     resume_gc();

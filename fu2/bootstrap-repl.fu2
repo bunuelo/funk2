@@ -284,6 +284,28 @@
 [defmetro object_type-new-funk [name]
   `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
 
+
+
+[defmetro object-get [this slot_name :rest args]
+  `[object-primfunk_get ,this ,slot_name @args]]
+
+[defmetro object-get-apply [this slot_name args]
+  `[object-primfunk_get-apply ,this ,slot_name ,args]]
+
+[defmetro object-set [this slot_name :rest args]
+  `[object-primfunk_set ,this ,slot_name @args]]
+
+[defmetro object-set-apply [this slot_name args]
+  `[object-primfunk_set-apply ,this ,slot_name ,args]]
+
+[defmetro object-execute [this slot_name :rest args]
+  `[object-primfunk_execute ,this ,slot_name @args]]
+
+[defmetro object-execute-apply [this slot_name args]
+  `[object-primfunk_execute-apply ,this ,slot_name ,args]]
+
+
+
 [defunk object_type-new [name :rest args]
   [apply [object_type-new-funk name] args]]
 

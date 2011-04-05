@@ -273,10 +273,10 @@
 [defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [immutable_conslist @args]]]
 
 [defmetro object-get-funk [this slot_name]
-  `[object-slot-type_funk ,this `get slot_name]]
+  `[object-slot-type_funk ,this `get ,slot_name]]
 
 [defmetro object-set-funk [this slot_name]
-  `[object-slot-type_funk ,this `set slot_name]]
+  `[object-slot-type_funk ,this `set ,slot_name]]
 
 [defmetro object-execute-funk [this slot_name]
   `[object-slot-type_funk ,this `execute ,slot_name]]
@@ -284,7 +284,7 @@
 [defmetro object_type-new-funk [name]
   `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
 
-
+`[
 [defmetro object-get [this slot_name :rest args]
   `[object-primfunk_get ,this ,slot_name @args]]
 
@@ -302,25 +302,31 @@
 
 [defmetro object-execute-apply [this slot_name args]
   `[object-primfunk_execute-apply ,this ,slot_name ,args]]
+]
 
+[defmetro object-get [this slot_name :rest args]
+  `[let [[this ,this]]
+     [funkall [object-get-funk this ,slot_name] this @args]]]
 
-[defmetro dobject-get [this slot_name :rest args]
-  `[funkall [object-get-funk ,this ,slot_name] @args]]
+[defmetro object-get-apply [this slot_name args]
+  `[let [[this ,this]]
+     [funkall [object-get-funk this ,slot_name] this @args]]]
 
-[defmetro dobject-get-apply [this slot_name args]
-  `[funkall [object-get-funk ,this ,slot_name] @args]]
+[defmetro object-set [this slot_name :rest args]
+  `[let [[this ,this]]
+     [funkall [object-set-funk this ,slot_name] this @args]]]
 
-[defmetro dobject-set [this slot_name :rest args]
-  `[funkall [object-set-funk ,this ,slot_name] @args]]
+[defmetro object-set-apply [this slot_name args]
+  `[let [[this ,this]]
+     [funkall [object-set-funk this ,slot_name] this @args]]]
 
-[defmetro dobject-set-apply [this slot_name args]
-  `[funkall [object-set-funk ,this ,slot_name] @args]]
+[defmetro object-execute [this slot_name :rest args]
+  `[let [[this ,this]]
+     [funkall [object-execute-funk this ,slot_name] this @args]]]
 
-[defmetro dobject-execute [this slot_name :rest args]
-  `[funkall [object-execute-funk ,this ,slot_name] @args]]
-
-[defmetro dobject-execute-apply [this slot_name args]
-  `[funkall [object-execute-funk ,this ,slot_name] @args]]
+[defmetro object-execute-apply [this slot_name args]
+  `[let [[this ,this]]
+     [funkall [object-execute-funk this ,slot_name] this @args]]]
 
 
 

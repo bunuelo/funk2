@@ -306,27 +306,27 @@
 
 [defmetro object-get [this slot_name :rest args]
   `[prog [define this ,this]
-	 [funkall [object-get-funk this ,slot_name] this @args]]]
+	 [apply [object-get-funk this ,slot_name] [immutable_conslist this @args]]]]
 
 [defmetro object-get-apply [this slot_name args]
   `[prog [define this ,this]
-	 [funkall [object-get-funk this ,slot_name] this @args]]]
+	 [apply [object-get-funk this ,slot_name] [immutable_conslist this @args]]]]
 
 [defmetro object-set [this slot_name :rest args]
   `[prog [define this ,this]
-	 [funkall [object-set-funk this ,slot_name] this @args]]]
+	 [apply [object-set-funk this ,slot_name] [immutable_conslist this @args]]]]
 
 [defmetro object-set-apply [this slot_name args]
   `[prog [define this ,this]
-	 [funkall [object-set-funk this ,slot_name] this @args]]]
+	 [apply [object-set-funk this ,slot_name] [immutable_conslist this @args]]]]
 
 [defmetro object-execute [this slot_name :rest args]
   `[prog [define this ,this]
-	 [funkall [object-execute-funk this ,slot_name] this @args]]]
+	 [apply [object-execute-funk this ,slot_name] [immutable_conslist this @args]]]]
 
 [defmetro object-execute-apply [this slot_name args]
   `[prog [define this ,this]
-	 [funkall [object-execute-funk this ,slot_name] this @args]]]
+	 [apply [object-execute-funk this ,slot_name] [immutable_conslist this @args]]]]
 
 
 

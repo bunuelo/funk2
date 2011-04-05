@@ -344,19 +344,19 @@ void f2__core_extension__initialize_module() {
   f2__primcfunk__init__2(core_extension__new, name, filename, "");
   
   {char* symbol_str = "initialize"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__initialize, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__initialize, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk = never_gc(cfunk);}
   
   {char* symbol_str = "destroy"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__destroy, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__destroy, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__funk = never_gc(cfunk);}
   
   {char* symbol_str = "assure_initialized"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__assure_initialized, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__assure_initialized, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__funk = never_gc(cfunk);}
   
   {char* symbol_str = "assure_destroyed"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__assure_destroyed, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__assure_destroyed, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__funk = never_gc(cfunk);}
   
   {char* symbol_str = "changed_on_disk"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__changed_on_disk, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension__changed_on_disk, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__funk = never_gc(cfunk);}
   
   
   // core_extension_handler
@@ -366,16 +366,16 @@ void f2__core_extension__initialize_module() {
   f2__primcfunk__init__0(core_extension_handler__new, "");
   
   {char* symbol_str = "add_new_core_extension"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_handler__add_new_core_extension, name, filename, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_handler__add_new_core_extension, name, filename, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__funk = never_gc(cfunk);}
   
   {char* symbol_str = "lookup_core_extension"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_handler__lookup_core_extension, name, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_handler__lookup_core_extension, name, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__funk = never_gc(cfunk);}
   
   {char* symbol_str = "unload_changed"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__0_arg(core_extension_handler__unload_changed, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(core_extension_handler__unload_changed, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk = never_gc(cfunk);}
   
   {char* symbol_str = "reset_to_boot_state"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__0_arg(core_extension_handler__reset_to_boot_state, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(core_extension_handler__reset_to_boot_state, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk = never_gc(cfunk);}
   
   
   // global_core_extension_handler

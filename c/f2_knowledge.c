@@ -57,7 +57,7 @@ void f2__knowledge__initialize() {
   init_frame_object__1_slot(knowledge, object);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_knowledge.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(knowledge__new, object, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_knowledge.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(knowledge__new, object, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_knowledge.new__funk = never_gc(cfunk);}
   
 }
 

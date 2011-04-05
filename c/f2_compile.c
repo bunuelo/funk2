@@ -1532,31 +1532,59 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   assert_argument_type(fiber, fiber);
   
   f2ptr did_something = nil;
-  f2ptr args = f2cons__cdr(exp, cause);
-  if (!args) {
+  f2ptr args = f2__cons__cdr(cause, exp);
+  if (raw__larva__is_type(cause, args)) {
+    return args;
+  }
+  if (! raw__cons__is_type(cause, args)) {
+    return f2larva__new(cause, 125321, f2__bug__new(cause, f2integer__new(cause, 125321), f2__frame__new(cause, f2list6__new(cause,
+															     new__symbol(cause, "bug_type"), new__symbol(cause, "args to demetropolize-funkvar_call is not of type conslist."),
+															     new__symbol(cause, "funktion"), new__symbol(cause, "demetropolize-funkvar_call"),
+															     new__symbol(cause, "args"),     args))));
+  }
+  if (args == nil) {
     return f2cons__new(cause, nil, exp);
   }
-  f2ptr demetro_exp  = f2cons__new(cause, f2cons__car(exp, cause), nil);
+  f2ptr exp__car = f2__cons__car(cause, exp);
+  if (raw__larva__is_type(cause, exp__car)) {
+    return exp__car;
+  }
+  f2ptr demetro_exp  = f2cons__new(cause, exp__car, nil);
   f2ptr iter         = args;
   f2ptr demetro_iter = demetro_exp;
   while (iter) {
-    f2ptr arg                 = f2cons__car(iter, cause);
+    f2ptr arg = f2__cons__car(cause, iter);
+    if (raw__larva__is_type(cause, arg)) {
+      return arg;
+    }
     
     f2ptr demetro_arg__values = f2__demetropolize_once(cause, fiber, env, arg);
     if (raw__larva__is_type(cause, demetro_arg__values)) {
       return demetro_arg__values;
     }
-    if(f2cons__car(demetro_arg__values, cause)) {
+    f2ptr demetro_arg__values__car = f2__cons__car(cause, demetro_arg__values);
+    if(demetro_arg__values__car != nil) {
       did_something = __funk2.globalenv.true__symbol;
     }
-    f2ptr demetro_arg         = f2cons__cdr(demetro_arg__values, cause);
+    f2ptr demetro_arg = f2__cons__cdr(cause, demetro_arg__values);
+    if (raw__larva__is_type(cause, demetro_arg)) {
+      return demetro_arg;
+    }
     
-    f2ptr demetro_iter_next   = f2cons__new(cause, demetro_arg, nil);
+    f2ptr demetro_iter_next = f2cons__new(cause, demetro_arg, nil);
     
-    f2cons__cdr__set(demetro_iter, cause, demetro_iter_next);
+    {    
+      f2ptr result = f2__cons__cdr__set(cause, demetro_iter, demetro_iter_next);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
     
     demetro_iter = demetro_iter_next;
-    iter         = f2cons__cdr(iter, cause);
+    iter = f2__cons__cdr(cause, iter);
+    if (raw__larva__is_type(cause, iter)) {
+      return iter;
+    }
   }
   return f2cons__new(cause, did_something, demetro_exp);
 }

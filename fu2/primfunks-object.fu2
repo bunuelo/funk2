@@ -17,12 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk object-get                         &primfunk:object__get]
-[globalize-funk object-get-apply                   &primfunk:object__get__apply]
-[globalize-funk object-set                         &primfunk:object__set]
-[globalize-funk object-set-apply                   &primfunk:object__set__apply]
-[globalize-funk object-execute                     &primfunk:object__execute]
-[globalize-funk object-execute-apply               &primfunk:object__execute__apply]
+[globalize-funk object-primfunk_get                &primfunk:object__get]
+[globalize-funk object-primfunk_get-apply          &primfunk:object__get__apply]
+[globalize-funk object-primfunk_set                &primfunk:object__set]
+[globalize-funk object-primfunk_set-apply          &primfunk:object__set__apply]
+[globalize-funk object-primfunk_execute            &primfunk:object__execute]
+[globalize-funk object-primfunk_execute-apply      &primfunk:object__execute__apply]
 [globalize-funk object-type                        &primfunk:object__type]
 [globalize-funk object-slot-type_funk              &primfunk:object__slot__type_funk]
 [globalize-funk object-inherits_from               &primfunk:object__inherits_from]

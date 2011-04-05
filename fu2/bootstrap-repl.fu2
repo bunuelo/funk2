@@ -257,6 +257,11 @@
 [defmetro chunk-write_16bit [x y z] `[chunk-write_16bit_integer ,x ,y [coerce-to-int ,z]]]
 [defmetro chunk-write_32bit [x y z] `[chunk-write_32bit_integer ,x ,y [coerce-to-int ,z]]]
 
+[defmetro funkall [funk :rest args]
+  `[apply ,funk [immutable_conslist @args]]]
+
+
+
 [defmetro object_type-type-funk    [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name ,slot_name]]
 [defmetro object_type-get-funk     [name slot_name]                `[object_type-type-funk                              ,name  `get            ,slot_name]]
 [defmetro object_type-set-funk     [name slot_name]                `[object_type-type-funk                              ,name  `set            ,slot_name]]
@@ -682,9 +687,6 @@
 				    [prog [prog @body]
 					  [while-loop]]]]]
 	  [while-loop]]]
-
-[defmetro funkall [funk :rest args]
-  `[apply ,funk [immutable_conslist @args]]]
 
 [defunk find [exp seq key test]
   [if [null seq]

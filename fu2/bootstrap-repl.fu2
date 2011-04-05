@@ -287,22 +287,22 @@
 
 
 [defmetro object-get [this slot_name :rest args]
-  `[object-primfunk_get ,this ,slot_name @args]]
+  `[apply [object-get-funk this slot_name] args]]
 
 [defmetro object-get-apply [this slot_name args]
-  `[object-primfunk_get-apply ,this ,slot_name ,args]]
+  `[apply [object-get-funk this slot_name] args]]
 
 [defmetro object-set [this slot_name :rest args]
-  `[object-primfunk_set ,this ,slot_name @args]]
+  `[apply [object-set-funk this slot_name] args]]
 
 [defmetro object-set-apply [this slot_name args]
-  `[object-primfunk_set-apply ,this ,slot_name ,args]]
+  `[apply [object-set-funk this slot_name] args]]
 
 [defmetro object-execute [this slot_name :rest args]
-  `[object-primfunk_execute ,this ,slot_name @args]]
+  `[apply [object-execute-funk this slot_name] args]]
 
 [defmetro object-execute-apply [this slot_name args]
-  `[object-primfunk_execute-apply ,this ,slot_name ,args]]
+  `[apply [object-execute-funk this slot_name] args]]
 
 
 

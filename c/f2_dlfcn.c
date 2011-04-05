@@ -521,17 +521,17 @@ void f2__dlfcn__initialize() {
   
   f2__dlfcn__reinitialize_globalvars();
   
-  f2__funktional_primcfunk__init__0(dlfcn__supported, "");
-  f2__primcfunk__init__2(           dlfcn__dlopen, filename, flag, "");
-  f2__primcfunk__init__0(           dlfcn__dlerror, "");
-  f2__primcfunk__init__2(           dlfcn__dlsym, handle, symbol, "");
-  f2__primcfunk__init__1(           dlfcn__dlclose, handle, "");
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_lazy, "");
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_now, "");
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_global, "");
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_local, "");
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_nodelete, "");
-  f2__funktional_primcfunk__init__0(dlfcn__rtld_noload, "");
+  f2__primcfunk__init__0(dlfcn__supported, "");
+  f2__primcfunk__init__2(dlfcn__dlopen, filename, flag, "");
+  f2__primcfunk__init__0(dlfcn__dlerror, "");
+  f2__primcfunk__init__2(dlfcn__dlsym, handle, symbol, "");
+  f2__primcfunk__init__1(dlfcn__dlclose, handle, "");
+  f2__primcfunk__init__0(dlfcn__rtld_lazy, "");
+  f2__primcfunk__init__0(dlfcn__rtld_now, "");
+  f2__primcfunk__init__0(dlfcn__rtld_global, "");
+  f2__primcfunk__init__0(dlfcn__rtld_local, "");
+  f2__primcfunk__init__0(dlfcn__rtld_nodelete, "");
+  f2__primcfunk__init__0(dlfcn__rtld_noload, "");
   
   
   // dlfcn_dynamic_library

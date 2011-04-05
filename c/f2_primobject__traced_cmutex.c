@@ -162,17 +162,17 @@ void f2__primobject__traced_cmutex__initialize() {
   initialize_primobject_4_slot(traced_cmutex, cmutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
   
   {char* symbol_str = "lock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__lock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__lock, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock__funk = never_gc(cfunk);}
   {char* symbol_str = "unlock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__unlock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__unlock, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__funk = never_gc(cfunk);}
   {char* symbol_str = "trylock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__trylock, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__trylock, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__funk = never_gc(cfunk);}
   {char* symbol_str = "is_locked"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__is_locked, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__is_locked, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__funk = never_gc(cfunk);}
   {char* symbol_str = "lock_stack_trace"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__lock_stack_trace, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__lock_stack_trace, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_cmutex__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_cmutex__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

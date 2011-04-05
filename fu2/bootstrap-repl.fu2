@@ -305,34 +305,34 @@
 ]
 
 [defmetro object-get [this slot_name :rest args]
-  [let [[this_gensym [gensym 'get-this']]]
-    `[prog [define ,this_gensym ,this]
-	   [apply [object-get-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]]
+  [define this_gensym [gensym 'get-this']]
+  `[prog [define ,this_gensym ,this]
+	 [apply [object-get-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 [defmetro object-get-apply [this slot_name args]
-  [let [[this_gensym [gensym 'get-this']]]
-    `[prog [define ,this_gensym ,this]
-	   [apply [object-get-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]]
+  [define this_gensym [gensym 'get-this']]
+  `[prog [define ,this_gensym ,this]
+	 [apply [object-get-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 [defmetro object-set [this slot_name :rest args]
-  [let [[this_gensym [gensym 'set-this']]]
-    `[prog [define ,this_gensym ,this]
-	   [apply [object-set-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]]
+  [define [this_gensym [gensym 'set-this']]]
+  `[prog [define ,this_gensym ,this]
+	 [apply [object-set-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 [defmetro object-set-apply [this slot_name args]
-  [let [[this_gensym [gensym 'set-this']]]
-    `[prog [define ,this_gensym ,this]
-	   [apply [object-set-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]]
+  [define this_gensym [gensym 'set-this']]
+  `[prog [define ,this_gensym ,this]
+	 [apply [object-set-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 [defmetro object-execute [this slot_name :rest args]
-  [let [[this_gensym [gensym 'set-this']]]
-    `[prog [define ,this_gensym ,this]
-	   [apply [object-execute-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]]
+  [define this_gensym [gensym 'set-this']]
+  `[prog [define ,this_gensym ,this]
+	 [apply [object-execute-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 [defmetro object-execute-apply [this slot_name args]
-  [let [[this_gensym [gensym 'set-this']]]
-    `[prog [define ,this_gensym ,this]
-	   [apply [object-execute-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]]
+  [define this_gensym [gensym 'set-this']]
+  `[prog [define ,this_gensym ,this]
+	 [apply [object-execute-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
 
 
 

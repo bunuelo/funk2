@@ -105,13 +105,13 @@ void f2__primobject_doublelinklist__initialize() {
   initialize_primobject_3_slot(doublelinklist, write_cmutex, length, cons_cells);
   
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(doublelinklist__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.add__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(doublelinklist__add, this, slot_name, value, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.add__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelinklist__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.lookup__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelinklist__lookup, this, slot_name, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "car"; __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.car__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelinklist__car, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.car__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelinklist__car, this, slot_name, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.car__funk = never_gc(cfunk);}
   {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.cdr__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelinklist__cdr, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.cdr__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelinklist__cdr, this, slot_name, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_doublelinklist.cdr__funk = never_gc(cfunk);}
   
 }
 

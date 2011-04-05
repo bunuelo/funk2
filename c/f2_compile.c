@@ -1536,6 +1536,12 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   if (raw__larva__is_type(cause, args)) {
     return args;
   }
+  if (! raw__conslist__is_type(cause, args)) {
+    return f2larva__new(cause, 125321, f2__bug__new(cause, f2integer__new(cause, 125321), f2__frame__new(cause, f2list6__new(cause,
+															     new__symbol(cause, "bug_type"), new__symbol(cause, "args to demetropolize-funkvar_call is not of type conslist."),
+															     new__symbol(cause, "funktion"), new__symbol(cause, "demetropolize-funkvar_call"),
+															     new__symbol(cause, "args"),     args))));
+  }
   if (args == nil) {
     return f2cons__new(cause, nil, exp);
   }

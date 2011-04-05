@@ -295,10 +295,10 @@
   `[funkall [object-get-funk ,this ,slot_name] @args]]
 
 [defmetro object-get-apply [this slot_name args]
-  `[funkall [object-get-funk ,this slot_name] @args]]
+  `[funkall [object-get-funk ,this ,slot_name] @args]]
 
 [defmetro object-set [this slot_name :rest args]
-  `[funkall [object-set-funk ,this slot_name] @args]]
+  `[funkall [object-set-funk ,this ,slot_name] @args]]
 
 [defmetro object-set-apply [this slot_name args]
   `[funkall [object-set-funk ,this ,slot_name] @args]]

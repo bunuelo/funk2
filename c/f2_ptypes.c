@@ -5705,7 +5705,7 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primitive peer-to-peer memory layer access funktion"); __funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // gensym
-  f2__funktional_primcfunk__init__0(gensym, "generates a symbol that did not exist previously.");
+  f2__primcfunk__init__0(gensym, "generates a symbol that did not exist previously.");
   
 }
 

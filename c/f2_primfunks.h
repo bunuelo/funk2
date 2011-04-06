@@ -38,7 +38,7 @@
 
 #define def_pcfunk__documentation_variable(name)                   __documentation__##name
 #define def_pcfunk__documentation_variable__define(name)           u8* def_pcfunk__documentation_variable(name) = (u8*)""
-#define def_pcfunk__documentation_variable__init(name, doc_string) {def_pcfunk__documentation_variable(name) = (u8*)(doc_string));}
+#define def_pcfunk__documentation_variable__init(name, doc_string) {def_pcfunk__documentation_variable(name) = (u8*)(doc_string);}
 
 #define def_pcfunk__is_funktional_variable(name)                   __is_funktional__##name
 #define def_pcfunk__is_funktional_variable__define(name)           f2ptr def_pcfunk__is_funktional_variable(name) = nil

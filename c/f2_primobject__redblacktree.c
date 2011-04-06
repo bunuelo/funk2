@@ -32,7 +32,9 @@ f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr va
 f2ptr f2__redblacktree__new(f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk) {
   return raw__redblacktree__new(cause, nil, value_funk, value_comparison_funk);
 }
-def_pcfunk2(redblacktree__new, value_funk, value_comparison_funk, return f2__redblacktree__new(this_cause, value_funk, value_comparison_funk));
+def_pcfunk2(redblacktree__new, value_funk, value_comparison_funk,
+	    "",
+	    return f2__redblacktree__new(this_cause, value_funk, value_comparison_funk));
 
 // redblacktree_node
 
@@ -45,7 +47,9 @@ f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr r
 f2ptr f2__redblacktree_node__new(f2ptr cause, f2ptr key) {
   return raw__redblacktree_node__new(cause, nil, nil, nil, nil, key);
 }
-def_pcfunk1(redblacktree_node__new, key, return f2__redblacktree_node__new(this_cause, key));
+def_pcfunk1(redblacktree_node__new, key,
+	    "",
+	    return f2__redblacktree_node__new(this_cause, key));
 
 
 // ******************************************************************
@@ -559,7 +563,9 @@ f2ptr f2__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__insert(cause, this, key);
 }
-def_pcfunk2(redblacktree__insert, this, key, return f2__redblacktree__insert(this_cause, this, key));
+def_pcfunk2(redblacktree__insert, this, key,
+	    "",
+	    return f2__redblacktree__insert(this_cause, this, key));
 
 void raw__redblacktree_node__delete_case6(f2ptr cause, f2ptr this) {
   f2ptr this__sibling = raw__redblacktree_node__sibling(cause, this);
@@ -858,7 +864,9 @@ f2ptr f2__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr node = raw__redblacktree__remove(cause, this, key);
   return f2bool__new(node != nil);
 }
-def_pcfunk2(redblacktree__remove, this, key, return f2__redblacktree__remove(this_cause, this, key));
+def_pcfunk2(redblacktree__remove, this, key,
+	    "",
+	    return f2__redblacktree__remove(this_cause, this, key));
 
 f2ptr raw__redblacktree__minimum_node(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__minimum_node(cause, f2__redblacktree__head(cause, this));
@@ -876,7 +884,9 @@ f2ptr f2__redblacktree__minimum(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__minimum(cause, this);
 }
-def_pcfunk1(redblacktree__minimum, this, return f2__redblacktree__minimum(this_cause, this));
+def_pcfunk1(redblacktree__minimum, this,
+	    "",
+	    return f2__redblacktree__minimum(this_cause, this));
 
 f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__maximum_node(cause, f2__redblacktree__head(cause, this));
@@ -894,7 +904,9 @@ f2ptr f2__redblacktree__maximum(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__maximum(cause, this);
 }
-def_pcfunk1(redblacktree__maximum, this, return f2__redblacktree__maximum(this_cause, this));
+def_pcfunk1(redblacktree__maximum, this,
+	    "",
+	    return f2__redblacktree__maximum(this_cause, this));
 
 
 f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this) {
@@ -949,7 +961,9 @@ f2ptr f2__redblacktree__minimum_not_less_than__node(f2ptr cause, f2ptr this, f2p
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__minimum_not_less_than__node(cause, this, value);
 }
-def_pcfunk2(redblacktree__minimum_not_less_than__node, this, value, return f2__redblacktree__minimum_not_less_than__node(this_cause, this, value));
+def_pcfunk2(redblacktree__minimum_not_less_than__node, this, value,
+	    "",
+	    return f2__redblacktree__minimum_not_less_than__node(this_cause, this, value));
 
 
 f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr value) {
@@ -968,7 +982,9 @@ f2ptr f2__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr val
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__minimum_not_less_than(cause, this, value);
 }
-def_pcfunk2(redblacktree__minimum_not_less_than, this, value, return f2__redblacktree__minimum_not_less_than(this_cause, this, value));
+def_pcfunk2(redblacktree__minimum_not_less_than, this, value,
+	    "",
+	    return f2__redblacktree__minimum_not_less_than(this_cause, this, value));
 
 
 f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to__node(f2ptr cause, f2ptr this, f2ptr value) {
@@ -985,7 +1001,9 @@ f2ptr f2__redblacktree__maximum_not_greater_than_or_equal_to__node(f2ptr cause, 
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, value);
 }
-def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to__node, this, value, return f2__redblacktree__maximum_not_greater_than_or_equal_to__node(this_cause, this, value));
+def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to__node, this, value,
+	    "",
+	    return f2__redblacktree__maximum_not_greater_than_or_equal_to__node(this_cause, this, value));
 
 
 f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr this, f2ptr value) {
@@ -1004,7 +1022,9 @@ f2ptr f2__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr 
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__maximum_not_greater_than_or_equal_to(cause, this, value);
 }
-def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to, this, value, return f2__redblacktree__maximum_not_greater_than_or_equal_to(this_cause, this, value));
+def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to, this, value,
+	    "",
+	    return f2__redblacktree__maximum_not_greater_than_or_equal_to(this_cause, this, value));
 
 
 f2ptr raw__redblacktree__leaves(f2ptr cause, f2ptr this) {
@@ -1019,7 +1039,9 @@ f2ptr f2__redblacktree__leaves(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__leaves(cause, this);
 }
-def_pcfunk1(redblacktree__leaves, this, return f2__redblacktree__leaves(this_cause, this));
+def_pcfunk1(redblacktree__leaves, this,
+	    "",
+	    return f2__redblacktree__leaves(this_cause, this));
 
 
 boolean_t raw__redblacktree__empty(f2ptr cause, f2ptr this) {
@@ -1030,7 +1052,9 @@ f2ptr f2__redblacktree__empty(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__empty(cause, this);
 }
-def_pcfunk1(redblacktree__empty, this, return f2__redblacktree__empty(this_cause, this));
+def_pcfunk1(redblacktree__empty, this,
+	    "",
+	    return f2__redblacktree__empty(this_cause, this));
 
 
 u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
@@ -1047,7 +1071,9 @@ f2ptr f2__redblacktree__size(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
   return f2integer__new(cause, raw__redblacktree__size(cause, this));
 }
-def_pcfunk1(redblacktree__size, this, return f2__redblacktree__size(this_cause, this));
+def_pcfunk1(redblacktree__size, this,
+	    "",
+	    return f2__redblacktree__size(this_cause, this));
 
 
 f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
@@ -1079,7 +1105,9 @@ f2ptr f2__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minim
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__leaves_within_range(cause, this, minimum, maximum);
 }
-def_pcfunk3(redblacktree__leaves_within_range, this, minimum, maximum, return f2__redblacktree__leaves_within_range(this_cause, this, minimum, maximum));
+def_pcfunk3(redblacktree__leaves_within_range, this, minimum, maximum,
+	    "",
+	    return f2__redblacktree__leaves_within_range(this_cause, this, minimum, maximum));
 
 
 f2ptr raw__redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -1099,7 +1127,9 @@ f2ptr f2__redblacktree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__redblacktree__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(redblacktree__terminal_print_with_frame, this, terminal_print_frame, return f2__redblacktree__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(redblacktree__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__redblacktree__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {

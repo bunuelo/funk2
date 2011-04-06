@@ -27,7 +27,9 @@ def_primobject_6_slot(source_expression,
 		      body, first_line, last_line, first_column, last_column, subexpressions);
 
 f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column, f2ptr subexpressions) {return f2source_expression__new(cause, body, first_line, last_line, first_column, last_column, subexpressions);}
-def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, last_column, subexpressions, return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column, subexpressions));
+def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, last_column, subexpressions,
+	    "",
+	    return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column, subexpressions));
 
 f2ptr raw__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);

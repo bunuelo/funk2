@@ -578,7 +578,9 @@ f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
   u64 port_num__i = f2integer__i(port_num, cause);
   return f2bool__new(raw__xmlrpc__create_new_server(port_num__i));
 }
-def_pcfunk1(xmlrpc__create_new_server, port_num, return f2__xmlrpc__create_new_server(this_cause, port_num));
+def_pcfunk1(xmlrpc__create_new_server, port_num,
+	    "",
+	    return f2__xmlrpc__create_new_server(this_cause, port_num));
 
 
 f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
@@ -599,7 +601,9 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   return f2larva__new(cause, 435, f2__bug__new(cause, f2integer__new(cause, 435), bug_frame));
 #endif // F2__XMLRPC_SUPPORTED
 }
-def_pcfunk3(xmlrpc__apply, url, funkname, arguments, return f2__xmlrpc__apply(this_cause, url, funkname, arguments));
+def_pcfunk3(xmlrpc__apply, url, funkname, arguments,
+	    "",
+	    return f2__xmlrpc__apply(this_cause, url, funkname, arguments));
 
 
 

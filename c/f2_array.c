@@ -46,15 +46,21 @@ boolean_t raw__array__is_type(f2ptr cause, f2ptr x) {
 	  raw__traced_array__is_type(cause, x));
 }
 f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__is_type(cause, x));}
-def_pcfunk1(array__is_type, x, return f2__array__is_type(this_cause, x));
+def_pcfunk1(array__is_type, x,
+	    "Returns true if object is of type array, otherwise nil.",
+	    return f2__array__is_type(this_cause, x));
 
 f2ptr f2__array__type(f2ptr cause, f2ptr this) {return new__symbol(cause, "array");}
-def_pcfunk1(array__type, this, return f2__array__type(this_cause, this));
+def_pcfunk1(array__type, this,
+	    "Returns the symbol `array.",
+	    return f2__array__type(this_cause, this));
 
 f2ptr f2__array__new(f2ptr cause, f2ptr lengths) {
   return f2__array__new_multidimensional(cause, lengths);
 }
-def_pcfunk0_and_rest(array__new, lengths, return f2__array__new(this_cause, lengths));
+def_pcfunk0_and_rest(array__new, lengths,
+		     "",
+		     return f2__array__new(this_cause, lengths));
 
 
 boolean_t raw__integerlist__is_type(f2ptr cause, f2ptr object) {
@@ -110,7 +116,9 @@ f2ptr f2__array(f2ptr cause, f2ptr and_rest) {
   }
   return this;
 }
-def_pcfunk0_and_rest(array, and_rest, return f2__array(this_cause, and_rest));
+def_pcfunk0_and_rest(array, and_rest,
+		     "",
+		     return f2__array(this_cause, and_rest));
 
 
 u64 raw__array__length(f2ptr cause, f2ptr x) {
@@ -123,7 +131,9 @@ f2ptr f2__array__length(f2ptr cause, f2ptr x) {
   assert_argument_type(array, x);
   return f2integer__new(cause, raw__array__length(cause, x));
 }
-def_pcfunk1(array__length, x, return f2__array__length(this_cause, x));
+def_pcfunk1(array__length, x,
+	    "",
+	    return f2__array__length(this_cause, x));
 
 
 boolean_t raw__array__eq(f2ptr cause, f2ptr this, f2ptr that) {
@@ -133,7 +143,9 @@ boolean_t raw__array__eq(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__array__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__array__eq(cause, this, that));
 }
-def_pcfunk2(array__eq, this, that, return f2__array__eq(this_cause, this, that));
+def_pcfunk2(array__eq, this, that,
+	    "",
+	    return f2__array__eq(this_cause, this, that));
 
 
 u64 raw__array__eq_hash_value(f2ptr cause, f2ptr this) {
@@ -145,7 +157,9 @@ f2ptr f2__array__eq_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(array, this);
   return f2integer__new(cause, raw__array__eq_hash_value(cause, this));
 }
-def_pcfunk1(array__eq_hash_value, this, return f2__array__eq_hash_value(this_cause, this));
+def_pcfunk1(array__eq_hash_value, this,
+	    "",
+	    return f2__array__eq_hash_value(this_cause, this));
 
 
 boolean_t raw__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -172,7 +186,9 @@ f2ptr f2__array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(array, this);
   return f2bool__new(raw__array__equals(cause, this, that));
 }
-def_pcfunk2(array__equals, this, that, return f2__array__equals(this_cause, this, that));
+def_pcfunk2(array__equals, this, that,
+	    "",
+	    return f2__array__equals(this_cause, this, that));
 
 
 f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
@@ -214,7 +230,9 @@ f2ptr f2__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
   assert_argument_type(ptypehash, node_hash);
   return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
 }
-def_pcfunk2(array__equals_hash_value__loop_free, this, node_hash, return f2__array__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(array__equals_hash_value__loop_free, this, node_hash,
+	    "",
+	    return f2__array__equals_hash_value__loop_free(this_cause, this, node_hash));
 
 
 f2ptr raw__array__equals_hash_value(f2ptr cause, f2ptr this) {
@@ -226,7 +244,9 @@ f2ptr f2__array__equals_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(array, this);
   return raw__array__equals_hash_value(cause, this);
 }
-def_pcfunk1(array__equals_hash_value, this, return f2__array__equals_hash_value(this_cause, this));
+def_pcfunk1(array__equals_hash_value, this,
+	    "",
+	    return f2__array__equals_hash_value(this_cause, this));
 
 
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
@@ -251,7 +271,9 @@ f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   return raw__array__elt(cause, this, f2integer__i(index, cause));
 }
-def_pcfunk2(array__elt, x, y, return f2__array__elt(this_cause, x, y));
+def_pcfunk2(array__elt, x, y,
+	    "",
+	    return f2__array__elt(this_cause, x, y));
 
 f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth) {
   if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt(             this, index, cause             ); return nil;}
@@ -275,7 +297,9 @@ f2ptr f2__array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   assert_argument_type(integer, index);
   return raw__array__elt__set(cause, this, f2integer__i(index, cause), value);
 }
-def_pcfunk3(array__elt__set, x, y, z, return f2__array__elt__set(this_cause, x, y, z));
+def_pcfunk3(array__elt__set, x, y, z,
+	    "",
+	    return f2__array__elt__set(this_cause, x, y, z));
 
 f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth) {
   if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt__set(             this, index, cause, value             ); return nil;}
@@ -299,7 +323,9 @@ f2ptr f2__array__elt__tracing_on(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   return raw__array__elt__tracing_on(cause, this, f2integer__i(index, cause));
 }
-def_pcfunk2(array__elt__tracing_on, x, y, return f2__array__elt__tracing_on(this_cause, x, y));
+def_pcfunk2(array__elt__tracing_on, x, y,
+	    "",
+	    return f2__array__elt__tracing_on(this_cause, x, y));
 
 f2ptr raw__array__elt__tracing_on__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
   if (raw__simple_array__is_type(cause, this)) {return nil;}
@@ -314,7 +340,9 @@ f2ptr f2__array__elt__tracing_on__set(f2ptr cause, f2ptr this, f2ptr index, f2pt
   assert_argument_type(integer, index);
   return raw__array__elt__tracing_on__set(cause, this, f2integer__i(index, cause), value);
 }
-def_pcfunk3(array__elt__tracing_on__set, x, y, z, return f2__array__elt__tracing_on__set(this_cause, x, y, z));
+def_pcfunk3(array__elt__tracing_on__set, x, y, z,
+	    "",
+	    return f2__array__elt__tracing_on__set(this_cause, x, y, z));
 
 
 f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index) {
@@ -330,7 +358,9 @@ f2ptr f2__array__elt__trace(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   return raw__array__elt__trace(cause, this, f2integer__i(index, cause));
 }
-def_pcfunk2(array__elt__trace, x, y, return f2__array__elt__trace(this_cause, x, y));
+def_pcfunk2(array__elt__trace, x, y,
+	    "",
+	    return f2__array__elt__trace(this_cause, x, y));
 
 f2ptr raw__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
@@ -345,7 +375,9 @@ f2ptr f2__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr val
   assert_argument_type(integer, index);
   return raw__array__elt__trace__set(cause, this, f2integer__i(index, cause), value);
 }
-def_pcfunk3(array__elt__trace__set, x, y, z, return f2__array__elt__trace__set(this_cause, x, y, z));
+def_pcfunk3(array__elt__trace__set, x, y, z,
+	    "",
+	    return f2__array__elt__trace__set(this_cause, x, y, z));
 
 
 f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index) {
@@ -361,7 +393,9 @@ f2ptr f2__array__elt__imagination_frame(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   return raw__array__elt__imagination_frame(cause, this, f2integer__i(index, cause));
 }
-def_pcfunk2(array__elt__imagination_frame, x, y, return f2__array__elt__imagination_frame(this_cause, x, y));
+def_pcfunk2(array__elt__imagination_frame, x, y,
+	    "",
+	    return f2__array__elt__imagination_frame(this_cause, x, y));
 
 f2ptr raw__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
@@ -376,7 +410,9 @@ f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr inde
   assert_argument_type(integer, index);
   return raw__array__elt__imagination_frame__set(cause, this, f2integer__i(index, cause), value);
 }
-def_pcfunk3(array__elt__imagination_frame__set, x, y, z, return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
+def_pcfunk3(array__elt__imagination_frame__set, x, y, z,
+	    "",
+	    return f2__array__elt__imagination_frame__set(this_cause, x, y, z));
 
 
 f2ptr raw__array__elt__mutate_funks(f2ptr cause, f2ptr this, u64 index) {
@@ -392,7 +428,9 @@ f2ptr f2__array__elt__mutate_funks(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   return raw__array__elt__mutate_funks(cause, this, f2integer__i(index, cause));
 }
-def_pcfunk2(array__elt__mutate_funks, x, y, return f2__array__elt__mutate_funks(this_cause, x, y));
+def_pcfunk2(array__elt__mutate_funks, x, y,
+	    "",
+	    return f2__array__elt__mutate_funks(this_cause, x, y));
 
 f2ptr raw__array__elt__mutate_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
@@ -406,7 +444,9 @@ f2ptr f2__array__elt__mutate_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2
   assert_argument_type(integer, index);
   return raw__array__elt__mutate_funks__set(cause, this, f2integer__i(index, cause), value);
 }
-def_pcfunk3(array__elt__mutate_funks__set, x, y, z, return f2__array__elt__mutate_funks__set(this_cause, x, y, z));
+def_pcfunk3(array__elt__mutate_funks__set, x, y, z,
+	    "",
+	    return f2__array__elt__mutate_funks__set(this_cause, x, y, z));
 
 
 f2ptr raw__array__elt__read_funks(f2ptr cause, f2ptr this, u64 index) {
@@ -421,7 +461,9 @@ f2ptr f2__array__elt__read_funks(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   return raw__array__elt__read_funks(cause, this, f2integer__i(index, cause));
 }
-def_pcfunk2(array__elt__read_funks, x, y, return f2__array__elt__read_funks(this_cause, x, y));
+def_pcfunk2(array__elt__read_funks, x, y,
+	    "",
+	    return f2__array__elt__read_funks(this_cause, x, y));
 
 f2ptr raw__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   if      (raw__simple_array__is_type(cause, this)) {return nil;}
@@ -435,7 +477,9 @@ f2ptr f2__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2pt
   assert_argument_type(integer, index);
   return raw__array__elt__read_funks__set(cause, this, f2integer__i(index, cause), value);
 }
-def_pcfunk3(array__elt__read_funks__set, x, y, z, return f2__array__elt__read_funks__set(this_cause, x, y, z));
+def_pcfunk3(array__elt__read_funks__set, x, y, z,
+	    "",
+	    return f2__array__elt__read_funks__set(this_cause, x, y, z));
 
 
 f2ptr raw__array__as__conslist(f2ptr cause, f2ptr this) {
@@ -452,7 +496,9 @@ f2ptr f2__array__as__conslist(f2ptr cause, f2ptr this) {
   assert_argument_type(array, this);
   return raw__array__as__conslist(cause, this);
 }
-def_pcfunk1(array__as__conslist, this, return f2__array__as__conslist(this_cause, this));
+def_pcfunk1(array__as__conslist, this,
+	    "",
+	    return f2__array__as__conslist(this_cause, this));
 
 
 f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -575,7 +621,9 @@ f2ptr f2__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__array__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(array__terminal_print_with_frame, this, terminal_print_frame, return f2__array__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(array__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__array__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2array__primobject_type__new(f2ptr cause) {

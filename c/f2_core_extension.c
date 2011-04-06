@@ -35,7 +35,9 @@ f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
   assert_argument_type(string, filename);
   return raw__core_extension__new(cause, name, filename);
 }
-def_pcfunk2(core_extension__new, name, filename, return f2__core_extension__new(this_cause, name, filename));
+def_pcfunk2(core_extension__new, name, filename,
+	    "",
+	    return f2__core_extension__new(this_cause, name, filename));
 
 
 f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
@@ -61,7 +63,9 @@ f2ptr f2__core_extension__initialize(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension, this);
   return raw__core_extension__initialize(cause, this);
 }
-def_pcfunk1(core_extension__initialize, this, return f2__core_extension__initialize(this_cause, this));
+def_pcfunk1(core_extension__initialize, this,
+	    "",
+	    return f2__core_extension__initialize(this_cause, this));
 
 
 f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
@@ -87,7 +91,9 @@ f2ptr f2__core_extension__destroy(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension, this);
   return raw__core_extension__destroy(cause, this);
 }
-def_pcfunk1(core_extension__destroy, this, return f2__core_extension__destroy(this_cause, this));
+def_pcfunk1(core_extension__destroy, this,
+	    "",
+	    return f2__core_extension__destroy(this_cause, this));
 
 
 f2ptr raw__core_extension__assure_initialized(f2ptr cause, f2ptr this) {
@@ -105,7 +111,9 @@ f2ptr f2__core_extension__assure_initialized(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension, this);
   return raw__core_extension__assure_initialized(cause, this);
 }
-def_pcfunk1(core_extension__assure_initialized, this, return f2__core_extension__assure_initialized(this_cause, this));
+def_pcfunk1(core_extension__assure_initialized, this,
+	    "",
+	    return f2__core_extension__assure_initialized(this_cause, this));
 
 
 f2ptr raw__core_extension__assure_destroyed(f2ptr cause, f2ptr this) {
@@ -123,7 +131,9 @@ f2ptr f2__core_extension__assure_destroyed(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension, this);
   return raw__core_extension__assure_destroyed(cause, this);
 }
-def_pcfunk1(core_extension__assure_destroyed, this, return f2__core_extension__assure_destroyed(this_cause, this));
+def_pcfunk1(core_extension__assure_destroyed, this,
+	    "",
+	    return f2__core_extension__assure_destroyed(this_cause, this));
 
 
 f2ptr raw__core_extension__changed_on_disk(f2ptr cause, f2ptr this) {
@@ -140,7 +150,9 @@ f2ptr f2__core_extension__changed_on_disk(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension, this);
   return raw__core_extension__changed_on_disk(cause, this);
 }
-def_pcfunk1(core_extension__changed_on_disk, this, return f2__core_extension__changed_on_disk(this_cause, this));
+def_pcfunk1(core_extension__changed_on_disk, this,
+	    "",
+	    return f2__core_extension__changed_on_disk(this_cause, this));
 
 
 f2ptr f2core_extension__primobject_type__new_aux(f2ptr cause) {
@@ -166,7 +178,9 @@ f2ptr raw__core_extension_handler__new(f2ptr cause) {
 f2ptr f2__core_extension_handler__new(f2ptr cause) {
   return raw__core_extension_handler__new(cause);
 }
-def_pcfunk0(core_extension_handler__new, return f2__core_extension_handler__new(this_cause));
+def_pcfunk0(core_extension_handler__new,
+	    "",
+	    return f2__core_extension_handler__new(this_cause));
 
 
 f2ptr raw__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr this, f2ptr name, f2ptr filename) {
@@ -181,7 +195,9 @@ f2ptr f2__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr this
   assert_argument_type(string,                 filename);
   return raw__core_extension_handler__add_new_core_extension(cause, this, name, filename);
 }
-def_pcfunk3(core_extension_handler__add_new_core_extension, this, name, filename, return f2__core_extension_handler__add_new_core_extension(this_cause, this, name, filename));
+def_pcfunk3(core_extension_handler__add_new_core_extension, this, name, filename,
+	    "",
+	    return f2__core_extension_handler__add_new_core_extension(this_cause, this, name, filename));
 
 
 f2ptr raw__core_extension_handler__lookup_core_extension(f2ptr cause, f2ptr this, f2ptr name) {
@@ -193,7 +209,9 @@ f2ptr f2__core_extension_handler__lookup_core_extension(f2ptr cause, f2ptr this,
   assert_argument_type(core_extension_handler, this);
   return raw__core_extension_handler__lookup_core_extension(cause, this, name);
 }
-def_pcfunk2(core_extension_handler__lookup_core_extension, this, name, return f2__core_extension_handler__lookup_core_extension(this_cause, this, name));
+def_pcfunk2(core_extension_handler__lookup_core_extension, this, name,
+	    "",
+	    return f2__core_extension_handler__lookup_core_extension(this_cause, this, name));
 
 
 f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
@@ -239,7 +257,9 @@ f2ptr f2__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_handler, this);
   return raw__core_extension_handler__unload_changed(cause, this);
 }
-def_pcfunk1(core_extension_handler__unload_changed, this, return f2__core_extension_handler__unload_changed(this_cause, this));
+def_pcfunk1(core_extension_handler__unload_changed, this,
+	    "",
+	    return f2__core_extension_handler__unload_changed(this_cause, this));
 
 
 f2ptr raw__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
@@ -254,7 +274,9 @@ f2ptr f2__core_extension_handler__reset_to_boot_state(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_handler, this);
   return raw__core_extension_handler__reset_to_boot_state(cause, this);
 }
-def_pcfunk1(core_extension_handler__reset_to_boot_state, this, return f2__core_extension_handler__reset_to_boot_state(this_cause, this));
+def_pcfunk1(core_extension_handler__reset_to_boot_state, this,
+	    "",
+	    return f2__core_extension_handler__reset_to_boot_state(this_cause, this));
 
 
 
@@ -279,7 +301,9 @@ f2ptr f2__global_core_extension_handler__add_new_core_extension(f2ptr cause, f2p
   }
   return f2__core_extension_handler__add_new_core_extension(cause, core_extension_handler, name, filename);
 }
-def_pcfunk2(global_core_extension_handler__add_new_core_extension, name, filename, return f2__global_core_extension_handler__add_new_core_extension(this_cause, name, filename));
+def_pcfunk2(global_core_extension_handler__add_new_core_extension, name, filename,
+	    "",
+	    return f2__global_core_extension_handler__add_new_core_extension(this_cause, name, filename));
 
 
 f2ptr f2__global_core_extension_handler__lookup_core_extension(f2ptr cause, f2ptr name) {
@@ -292,7 +316,9 @@ f2ptr f2__global_core_extension_handler__lookup_core_extension(f2ptr cause, f2pt
   }
   return f2__core_extension_handler__lookup_core_extension(cause, core_extension_handler, name);
 }
-def_pcfunk1(global_core_extension_handler__lookup_core_extension, name, return f2__global_core_extension_handler__lookup_core_extension(this_cause, name));
+def_pcfunk1(global_core_extension_handler__lookup_core_extension, name,
+	    "",
+	    return f2__global_core_extension_handler__lookup_core_extension(this_cause, name));
 
 
 f2ptr f2__global_core_extension_handler__unload_changed(f2ptr cause) {
@@ -305,7 +331,9 @@ f2ptr f2__global_core_extension_handler__unload_changed(f2ptr cause) {
   }
   return f2__core_extension_handler__unload_changed(cause, core_extension_handler);
 }
-def_pcfunk0(global_core_extension_handler__unload_changed, return f2__global_core_extension_handler__unload_changed(this_cause));
+def_pcfunk0(global_core_extension_handler__unload_changed,
+	    "",
+	    return f2__global_core_extension_handler__unload_changed(this_cause));
 
 
 f2ptr f2__global_core_extension_handler__reset_to_boot_state(f2ptr cause) {
@@ -318,7 +346,9 @@ f2ptr f2__global_core_extension_handler__reset_to_boot_state(f2ptr cause) {
   }
   return f2__core_extension_handler__reset_to_boot_state(cause, core_extension_handler);
 }
-def_pcfunk0(global_core_extension_handler__reset_to_boot_state, return f2__global_core_extension_handler__reset_to_boot_state(this_cause));
+def_pcfunk0(global_core_extension_handler__reset_to_boot_state,
+	    "",
+	    return f2__global_core_extension_handler__reset_to_boot_state(this_cause));
 
 
 // **

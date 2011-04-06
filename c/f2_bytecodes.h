@@ -25,7 +25,6 @@
 #include "f2_ptypes.h"
 #include "f2_compile.h"
 #include "f2_primobject__frame.h"
-#include "f2_thought_process.h"
 
 typedef struct funk2_bytecode_s {
   f2ptr bytecode__funk__symbol;

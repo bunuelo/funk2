@@ -527,43 +527,35 @@ test moving forward speed
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]
-	 [desired_neck_pos init_turning_angle]]
-    [if [null  turn_right] [= desired_neck_pos [- 0 init_turning_angle]]]
+	 [desired_heading init_turning_angle]]
+    [format stdout 'init_turning_angle' init_turning_angle 'd_heading' desired_heading]
+    [if [null  turn_right] [= desired_heading [- 0 init_turning_angle]]]
     [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     [labels [[turn_left_and_right []
-				  
-				  
 				  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-				 
-				      [if [lookup_visual_object [get_visual_objects mind] object] 
-					  [let [[neck_pos                   [have  lookup `neck_pos]]]
-					    [cond [[> [-  orientation desired_orientation] 4 ]
-						   [prog [have this-resource think_to_self   'orientation too positive' orientation]
-							 
-							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [min 360 [* 9 [abs [- orientation desired_orientation]]]]]
-							 [have this-resource think_to_self   'I turned_left']
-							 [mind-wait_to_call mind learned_reactive physical look_right 1 [min 360 [* 9 [abs [- orientation desired_orientation]]]]]
-							 
-							 [turn_left_and_right]]]
-						  [[<  [-  orientation desired_orientation] [- 0 4]]
-						   [prog [have this-resource think_to_self   'orientation too negative'  orientation]
-							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [min 360 [* 9 [abs [- orientation desired_orientation]]]]]
+				  [let [[heading [get_neck_heading mind]]]
+				    [format stdout 'init_turning_angle' init_turning_angle 'd_heading' desired_heading]
+				    [cond 
+					  [[< [-  heading  desired_heading]  [- 0 4]]
+					   [prog [have this-resource think_to_self   'orientation too negative'  heading]
+						 [mind-wait_to_call mind learned_reactive physical turn_right 1 [min 360 [* 9 [abs[-  heading  desired_heading] ]]]]
 							 [have this-resource think_to_self   'I turned_right']
-							 [mind-wait_to_call mind learned_reactive physical look_left 1 [min 360 [* 9 [abs [- orientation desired_orientation]]]]]
+							 [mind-wait_to_call mind learned_reactive physical look_left 1 [min 360 [* 9 [abs [-  heading  desired_heading] ]]]]
 							 
 							 [turn_left_and_right]]]
-						  [t
-						   [have this-resource think_to_self 'facing the right direction']]]
-					    ]
-					
-					[prog [have this-resource think_to_self   'no objects in view']
-					      [mind-wait_to_call mind learned_reactive physical search_for object]
-					      [look_left_and_right]]]
-				    [prog [have this-resource think_to_self   'my_object not in view']
-					  [mind-wait_to_call mind learned_reactive physical search_for object]
-					  [turn_left_and_right]]]]]
-	    [turn_left_and_right]]
-    ]]
+					  [[> [-  heading  desired_heading] 4 ]
+					   [prog [have this-resource think_to_self   'heading too positive' heading]
+						 [mind-wait_to_call mind learned_reactive physical turn_left 1 [min 360 [* 9 [abs [-  heading  desired_heading]]]]]
+						 [have this-resource think_to_self   'I turned_left']
+						 [mind-wait_to_call mind learned_reactive physical look_right 1 [min 360 [* 9 [abs[-  heading  desired_heading] ]]]]
+						 
+						 [turn_left_and_right]]]
+					  [t
+					   [have this-resource think_to_self 'facing the right direction']]]
+				    
+				    ]]]
+	    [turn_left_and_right]]]
+  ]
 
 `[defunk find_init_angle           [orientation_diff final_distance]
 					[print 'find_init_angle']
@@ -674,7 +666,7 @@ test moving forward speed
 		
 		[have this-resource walk_forward_or_back object]
 	      
-	      [prog [have this-resource turn_for_fixed_angle object turn_right init_turning_angle]]
+	      [prog [have this-resource turn_for_fixed_angle turn_right init_turning_angle]]
 	      [let [[walking_speed 20]]
 		'stops when angle is very good, or when distance and angle are good at the same time'
 		[while [null [or [< [abs [- [get_neck_heading mind] final_neck_angle]] 5]

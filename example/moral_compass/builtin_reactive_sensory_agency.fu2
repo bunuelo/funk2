@@ -42,7 +42,7 @@
        [construct traced_resource `propogate_visual_objects_to_visual_knowledge
 		  [funk []
 			[have this update_visual_knowledge_from_visual_objects]]]
-       [= vital t]
+       [= vital f]
        nil]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []

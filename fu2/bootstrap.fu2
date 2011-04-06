@@ -57,6 +57,20 @@
 	       [require mutex]
 	       [require math]
 	       
+	       [defunk backup_repl []
+		 [let* [[trigger [new fiber_trigger]]
+			[fiber   [fiber [funk [] 
+					      [cause-define cause-name `backup_repl]
+					      [wait-for-trigger trigger]
+					      [repl]]
+					nil]]]
+		   [set fiber paused t]
+		   [while [global_scheduler-contains_active_fiber fiber]
+		     [millisleep 100]]
+		   [have trigger trigger]
+		   nil]]
+	       
+					
 	       [defunk load_all_core_packages []
 		 [require utilities]
 		 [require number]

@@ -137,7 +137,9 @@ f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
   assert_argument_type(string, this);
   return raw__string__deflate(cause, this);
 }
-def_pcfunk1(string__deflate, this, return f2__string__deflate(this_cause, this));
+def_pcfunk1(string__deflate, this,
+	    "",
+	    return f2__string__deflate(this_cause, this));
 
 
 f2ptr raw__chunk__deflate(f2ptr cause, f2ptr this) {
@@ -168,7 +170,9 @@ f2ptr f2__chunk__deflate(f2ptr cause, f2ptr this) {
   assert_argument_type(chunk, this);
   return raw__chunk__deflate(cause, this);
 }
-def_pcfunk1(chunk__deflate, this, return f2__chunk__deflate(this_cause, this));
+def_pcfunk1(chunk__deflate, this,
+	    "",
+	    return f2__chunk__deflate(this_cause, this));
 
 
 boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length) {
@@ -284,7 +288,9 @@ f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
   assert_argument_type(string, this);
   return raw__string__inflate(cause, this);
 }
-def_pcfunk1(string__inflate, this, return f2__string__inflate(this_cause, this));
+def_pcfunk1(string__inflate, this,
+	    "",
+	    return f2__string__inflate(this_cause, this));
 
 
 f2ptr raw__chunk__inflate(f2ptr cause, f2ptr this) {
@@ -315,7 +321,9 @@ f2ptr f2__chunk__inflate(f2ptr cause, f2ptr this) {
   assert_argument_type(chunk, this);
   return raw__chunk__inflate(cause, this);
 }
-def_pcfunk1(chunk__inflate, this, return f2__chunk__inflate(this_cause, this));
+def_pcfunk1(chunk__inflate, this,
+	    "",
+	    return f2__chunk__inflate(this_cause, this));
 
 
 // **

@@ -51,7 +51,9 @@ f2ptr f2__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__source_expression__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(source_expression__terminal_print_with_frame, this, terminal_print_frame, return f2__source_expression__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(source_expression__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__source_expression__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause) {
@@ -67,13 +69,17 @@ def_primobject_1_slot(source,
 		      code);
 
 f2ptr f2__source__new(f2ptr cause, f2ptr code) {return f2source__new(cause, code);}
-def_pcfunk1(source__new, code, return f2__source__new(this_cause, code));
+def_pcfunk1(source__new, code,
+	    "",
+	    return f2__source__new(this_cause, code));
 
 f2ptr f2__source__load(f2ptr cause, f2ptr filename) {
   f2ptr code = f2__string__load(cause, filename);
   return f2__source__new(cause, code);
 }
-def_pcfunk1(source__load, filename, return f2__source__load(this_cause, filename));
+def_pcfunk1(source__load, filename,
+	    "",
+	    return f2__source__load(this_cause, filename));
 
 f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source__primobject_type__new(cause);
@@ -89,7 +95,9 @@ f2ptr f2__source__eval(f2ptr cause, f2ptr this) {
   assert_argument_type(source_expression, this);
   return raw__source__eval(cause, this);
 }
-def_pcfunk1(source__eval, this, return f2__source__eval(this_cause, this));
+def_pcfunk1(source__eval, this,
+	    "",
+	    return f2__source__eval(this_cause, this));
 
 
 // package
@@ -109,7 +117,9 @@ f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_de
   f2ptr loaded_all_dependencies_time = nil;
   return f2package__new(cause, pathname, name, package_dependencies, source_dependencies, object_types_defined_set, loaded_all_dependencies_time, documentation, binary_dependencies);
 }
-def_pcfunk6(package__new, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies, return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies));
+def_pcfunk6(package__new, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies,
+	    "",
+	    return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies));
 
 
 
@@ -126,7 +136,9 @@ f2ptr f2__current_working_directory(f2ptr cause) {
   free(current_working_directory__str);
   return current_working_directory;
 }
-def_pcfunk0(current_working_directory, return f2__current_working_directory(this_cause));
+def_pcfunk0(current_working_directory,
+	    "",
+	    return f2__current_working_directory(this_cause));
 
 f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__string__length(cause, this);
@@ -162,7 +174,9 @@ f2ptr f2__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(string, that);
   return raw__pathname__concat(cause, this, that);
 }
-def_pcfunk2(pathname__concat, this, that, return f2__pathname__concat(this_cause, this, that));
+def_pcfunk2(pathname__concat, this, that,
+	    "",
+	    return f2__pathname__concat(this_cause, this, that));
 
 
 boolean_t raw__pathnamelist__is_type(f2ptr cause, f2ptr object) {
@@ -203,7 +217,9 @@ f2ptr f2__pathnamelist__concat(f2ptr cause, f2ptr this) {
   assert_argument_type(pathnamelist, this);
   return raw__pathnamelist__concat(cause, this);
 }
-def_pcfunk1(pathnamelist__concat, this, return f2__pathnamelist__concat(this_cause, this));
+def_pcfunk1(pathnamelist__concat, this,
+	    "",
+	    return f2__pathnamelist__concat(this_cause, this));
 
 boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
@@ -218,7 +234,9 @@ f2ptr f2__pathname__is_absolute(f2ptr cause, f2ptr this) {
   assert_argument_type(string, this);
   return f2bool__new(raw__pathname__is_absolute(cause, this));
 }
-def_pcfunk1(pathname__is_absolute, this, return f2__pathname__is_absolute(this_cause, this));
+def_pcfunk1(pathname__is_absolute, this,
+	    "",
+	    return f2__pathname__is_absolute(this_cause, this));
 
 f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
   if (raw__pathname__is_absolute(cause, this)) {
@@ -231,7 +249,9 @@ f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
   assert_argument_type(string, this);
   return raw__pathname__as__absolute_pathname(cause, this);
 }
-def_pcfunk1(pathname__as__absolute_pathname, this, return f2__pathname__as__absolute_pathname(this_cause, this));
+def_pcfunk1(pathname__as__absolute_pathname, this,
+	    "",
+	    return f2__pathname__as__absolute_pathname(this_cause, this));
 
 f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
@@ -252,7 +272,9 @@ f2ptr f2__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   assert_argument_type(string, this);
   return raw__pathname__directory_pathname(cause, this);
 }
-def_pcfunk1(pathname__directory_pathname, this, return f2__pathname__directory_pathname(this_cause, this));
+def_pcfunk1(pathname__directory_pathname, this,
+	    "",
+	    return f2__pathname__directory_pathname(this_cause, this));
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   assert_argument_type(string, pathname);
@@ -295,7 +317,9 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   }
   return absolute_filenames;
 }
-def_pcfunk1(pathname__scan_for_filenames, pathname, return f2__pathname__scan_for_filenames(this_cause, pathname));
+def_pcfunk1(pathname__scan_for_filenames, pathname,
+	    "",
+	    return f2__pathname__scan_for_filenames(this_cause, pathname));
 
 f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
   assert_argument_type(string, pathname);
@@ -331,7 +355,9 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
   }
   return matching_filenames;
 }
-def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension, return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
+def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension,
+	    "",
+	    return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
 
 f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
@@ -383,7 +409,9 @@ f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
   assert_argument_type(string, this);
   return raw__pathname__stat(cause, this);
 }
-def_pcfunk1(pathname__stat, this, return f2__pathname__stat(this_cause, this));
+def_pcfunk1(pathname__stat, this,
+	    "",
+	    return f2__pathname__stat(this_cause, this));
 
 
 f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
@@ -426,7 +454,9 @@ f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
   f2__free(to_ptr(filename__string));
   return result;
 }
-def_pcfunk1(pathname__exists, filename, return f2__pathname__exists(this_cause, filename));
+def_pcfunk1(pathname__exists, filename,
+	    "",
+	    return f2__pathname__exists(this_cause, filename));
 
 
 f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
@@ -481,7 +511,9 @@ f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) 
   f2__free(to_ptr(new_filename__string));
   return result;
 }
-def_pcfunk2(pathname__rename, old_filename, new_filename, return f2__pathname__rename(this_cause, old_filename, new_filename));
+def_pcfunk2(pathname__rename, old_filename, new_filename,
+	    "",
+	    return f2__pathname__rename(this_cause, old_filename, new_filename));
 
 
 f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
@@ -501,7 +533,9 @@ f2ptr f2__getenv(f2ptr cause, f2ptr environment_variable) {
   assert_argument_type(string, environment_variable);
   return raw__getenv(cause, environment_variable);
 }
-def_pcfunk1(getenv, environment_variable, return f2__getenv(this_cause, environment_variable));
+def_pcfunk1(getenv, environment_variable,
+	    "",
+	    return f2__getenv(this_cause, environment_variable));
 
 
 

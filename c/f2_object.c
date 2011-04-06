@@ -430,7 +430,9 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
   }
   return f2larva__new(cause, 1, nil);
 }
-def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name, return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
+def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name,
+	    "",
+	    return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
 
 #define inherits_from(cause, this, type_name) raw__object__inherits_from(cause, this, new__symbol(cause, #type_name))
@@ -451,7 +453,9 @@ f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
   assert_argument_type(symbol, type_name);
   return f2bool__new(raw__object__inherits_from(cause, this, type_name));
 }
-def_pcfunk2(object__inherits_from, this, type_name, return f2__object__inherits_from(this_cause, this, type_name));
+def_pcfunk2(object__inherits_from, this, type_name,
+	    "",
+	    return f2__object__inherits_from(this_cause, this, type_name));
 
 
 #define object__get__no_such_slot     789
@@ -478,8 +482,12 @@ f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__get,        this, slot, args, return f2__object__get(this_cause, this, slot, args));
-def_pcfunk3(         object__get__apply, this, slot, args, return f2__object__get(this_cause, this, slot, args));
+def_pcfunk2_and_rest(object__get,        this, slot, args,
+		     "",
+		     return f2__object__get(this_cause, this, slot, args));
+def_pcfunk3(         object__get__apply, this, slot, args,
+		     "",
+		     return f2__object__get(this_cause, this, slot, args));
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -501,8 +509,12 @@ f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__set,        this, slot, args, return f2__object__set(this_cause, this, slot, args));
-def_pcfunk3(         object__set__apply, this, slot, args, return f2__object__set(this_cause, this, slot, args));
+def_pcfunk2_and_rest(object__set,        this, slot, args,
+		     "",
+		     return f2__object__set(this_cause, this, slot, args));
+def_pcfunk3(         object__set__apply, this, slot, args,
+		     "",
+		     return f2__object__set(this_cause, this, slot, args));
 
 f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -524,8 +536,12 @@ f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__execute,        this, slot, args, return f2__object__execute(this_cause, this, slot, args));
-def_pcfunk3(         object__execute__apply, this, slot, args, return f2__object__execute(this_cause, this, slot, args));
+def_pcfunk2_and_rest(object__execute,        this, slot, args,
+		     "",
+		     return f2__object__execute(this_cause, this, slot, args));
+def_pcfunk3(         object__execute__apply, this, slot, args,
+		     "",
+		     return f2__object__execute(this_cause, this, slot, args));
 
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -598,7 +614,9 @@ f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, that, nil)));
 }
-def_pcfunk2(object__eq, this, that, return f2__object__eq(this_cause, this, that));
+def_pcfunk2(object__eq, this, that,
+	    "",
+	    return f2__object__eq(this_cause, this, that));
 
 f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr this) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -608,12 +626,16 @@ f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr this) {
   }
   return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
 }
-def_pcfunk1(object__eq_hash_value, this, return f2__object__eq_hash_value(this_cause, this));
+def_pcfunk1(object__eq_hash_value, this,
+	    "",
+	    return f2__object__eq_hash_value(this_cause, this));
 
 f2ptr f2__object__equals(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.globalenv.equals__symbol, that);
 }
-def_pcfunk2(object__equals, this, that, return f2__object__equals(this_cause, this, that));
+def_pcfunk2(object__equals, this, that,
+	    "",
+	    return f2__object__equals(this_cause, this, that));
 
 f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   if (this == __funk2.memory.global_environment_f2ptr) {
@@ -625,12 +647,16 @@ f2ptr f2__object__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
   }
   return result;
 }
-def_pcfunk2(object__equals_hash_value__loop_free, this, node_hash, return f2__object__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(object__equals_hash_value__loop_free, this, node_hash,
+	    "",
+	    return f2__object__equals_hash_value__loop_free(this_cause, this, node_hash));
 
 f2ptr f2__object__equals_hash_value(f2ptr cause, f2ptr this) {
   return f2__object__get_0(cause, this, __funk2.globalenv.equals_hash_value__symbol);
 }
-def_pcfunk1(object__equals_hash_value, this, return f2__object__equals_hash_value(this_cause, this));
+def_pcfunk1(object__equals_hash_value, this,
+	    "",
+	    return f2__object__equals_hash_value(this_cause, this));
 
 
 // property_scan
@@ -712,7 +738,9 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
   return object__property_scan__property_scan__by_type(cause, fiber, object, type_name, property_funk);
 }
 
-def_pcfunk2(object__property_scan, object, property_funk, return f2__object__property_scan(this_cause, simple_fiber, object, property_funk));
+def_pcfunk2(object__property_scan, object, property_funk,
+	    "",
+	    return f2__object__property_scan(this_cause, simple_fiber, object, property_funk));
 
 // **
 

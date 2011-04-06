@@ -56,7 +56,9 @@ f2ptr f2__core_extension_funk__new(f2ptr cause, f2ptr core_extension_name, f2ptr
   assert_argument_type(symbol, name);
   return raw__core_extension_funk__new(cause, core_extension_name, name);
 }
-def_pcfunk2(core_extension_funk__new, core_extension_name, name, return f2__core_extension_funk__new(this_cause, core_extension_name, name));
+def_pcfunk2(core_extension_funk__new, core_extension_name, name,
+	    "",
+	    return f2__core_extension_funk__new(this_cause, core_extension_name, name));
 
 
 f2ptr raw__core_extension_funk__filename(f2ptr cause, f2ptr this) {
@@ -85,7 +87,9 @@ f2ptr f2__core_extension_funk__filename(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__filename(cause, this);
 }
-def_pcfunk1(core_extension_funk__filename, this, return f2__core_extension_funk__filename(this_cause, this));
+def_pcfunk1(core_extension_funk__filename, this,
+	    "",
+	    return f2__core_extension_funk__filename(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
@@ -105,7 +109,9 @@ f2ptr f2__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__pointer(cause, this);
 }
-def_pcfunk1(core_extension_funk__pointer, this, return f2__core_extension_funk__pointer(this_cause, this));
+def_pcfunk1(core_extension_funk__pointer, this,
+	    "",
+	    return f2__core_extension_funk__pointer(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__env(f2ptr cause, f2ptr this) {
@@ -116,7 +122,9 @@ f2ptr f2__core_extension_funk__env(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__env(cause, this);
 }
-def_pcfunk1(core_extension_funk__env, this, return f2__core_extension_funk__env(this_cause, this));
+def_pcfunk1(core_extension_funk__env, this,
+	    "",
+	    return f2__core_extension_funk__env(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
@@ -165,7 +173,9 @@ f2ptr f2__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__cfunk(cause, this);
 }
-def_pcfunk1(core_extension_funk__cfunk, this, return f2__core_extension_funk__cfunk(this_cause, this));
+def_pcfunk1(core_extension_funk__cfunk, this,
+	    "",
+	    return f2__core_extension_funk__cfunk(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr this, f2ptr args) {
@@ -191,7 +201,9 @@ f2ptr f2__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr thi
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__apply_without_initializing(cause, this, args);
 }
-def_pcfunk2(core_extension_funk__apply_without_initializing, this, args, return f2__core_extension_funk__apply_without_initializing(this_cause, this, args));
+def_pcfunk2(core_extension_funk__apply_without_initializing, this, args,
+	    "",
+	    return f2__core_extension_funk__apply_without_initializing(this_cause, this, args));
 
 
 f2ptr raw__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
@@ -222,7 +234,9 @@ f2ptr f2__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__apply(cause, this, args);
 }
-def_pcfunk2(core_extension_funk__apply, this, args, return f2__core_extension_funk__apply(this_cause, this, args));
+def_pcfunk2(core_extension_funk__apply, this, args,
+	    "",
+	    return f2__core_extension_funk__apply(this_cause, this, args));
 
 
 f2ptr raw__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
@@ -242,7 +256,9 @@ f2ptr f2__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__args_pointer(cause, this);
 }
-def_pcfunk1(core_extension_funk__args_pointer, this, return f2__core_extension_funk__args_pointer(this_cause, this));
+def_pcfunk1(core_extension_funk__args_pointer, this,
+	    "",
+	    return f2__core_extension_funk__args_pointer(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
@@ -274,7 +290,9 @@ f2ptr f2__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__args_cfunk(cause, this);
 }
-def_pcfunk1(core_extension_funk__args_cfunk, this, return f2__core_extension_funk__args_cfunk(this_cause, this));
+def_pcfunk1(core_extension_funk__args_cfunk, this,
+	    "",
+	    return f2__core_extension_funk__args_cfunk(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__args(f2ptr cause, f2ptr this) {
@@ -300,7 +318,9 @@ f2ptr f2__core_extension_funk__args(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__args(cause, this);
 }
-def_pcfunk1(core_extension_funk__args, this, return f2__core_extension_funk__args(this_cause, this));
+def_pcfunk1(core_extension_funk__args, this,
+	    "",
+	    return f2__core_extension_funk__args(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__is_funktional_pointer(f2ptr cause, f2ptr this) {
@@ -320,7 +340,9 @@ f2ptr f2__core_extension_funk__is_funktional_pointer(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__is_funktional_pointer(cause, this);
 }
-def_pcfunk1(core_extension_funk__is_funktional_pointer, this, return f2__core_extension_funk__is_funktional_pointer(this_cause, this));
+def_pcfunk1(core_extension_funk__is_funktional_pointer, this,
+	    "",
+	    return f2__core_extension_funk__is_funktional_pointer(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
@@ -352,7 +374,9 @@ f2ptr f2__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__is_funktional_cfunk(cause, this);
 }
-def_pcfunk1(core_extension_funk__is_funktional_cfunk, this, return f2__core_extension_funk__is_funktional_cfunk(this_cause, this));
+def_pcfunk1(core_extension_funk__is_funktional_cfunk, this,
+	    "",
+	    return f2__core_extension_funk__is_funktional_cfunk(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
@@ -378,7 +402,9 @@ f2ptr f2__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__is_funktional(cause, this);
 }
-def_pcfunk1(core_extension_funk__is_funktional, this, return f2__core_extension_funk__is_funktional(this_cause, this));
+def_pcfunk1(core_extension_funk__is_funktional, this,
+	    "",
+	    return f2__core_extension_funk__is_funktional(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__documentation_pointer(f2ptr cause, f2ptr this) {
@@ -398,7 +424,9 @@ f2ptr f2__core_extension_funk__documentation_pointer(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__documentation_pointer(cause, this);
 }
-def_pcfunk1(core_extension_funk__documentation_pointer, this, return f2__core_extension_funk__documentation_pointer(this_cause, this));
+def_pcfunk1(core_extension_funk__documentation_pointer, this,
+	    "",
+	    return f2__core_extension_funk__documentation_pointer(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__documentation_cfunk(f2ptr cause, f2ptr this) {
@@ -430,7 +458,9 @@ f2ptr f2__core_extension_funk__documentation_cfunk(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__documentation_cfunk(cause, this);
 }
-def_pcfunk1(core_extension_funk__documentation_cfunk, this, return f2__core_extension_funk__documentation_cfunk(this_cause, this));
+def_pcfunk1(core_extension_funk__documentation_cfunk, this,
+	    "",
+	    return f2__core_extension_funk__documentation_cfunk(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
@@ -456,7 +486,9 @@ f2ptr f2__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
   assert_argument_type(core_extension_funk, this);
   return raw__core_extension_funk__documentation(cause, this);
 }
-def_pcfunk1(core_extension_funk__documentation, this, return f2__core_extension_funk__documentation(this_cause, this));
+def_pcfunk1(core_extension_funk__documentation, this,
+	    "",
+	    return f2__core_extension_funk__documentation(this_cause, this));
 
 
 f2ptr raw__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -480,7 +512,9 @@ f2ptr f2__core_extension_funk__terminal_print_with_frame(f2ptr cause, f2ptr this
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__core_extension_funk__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(core_extension_funk__terminal_print_with_frame, this, terminal_print_frame, return f2__core_extension_funk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(core_extension_funk__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__core_extension_funk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {

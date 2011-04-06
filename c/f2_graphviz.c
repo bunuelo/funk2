@@ -27,17 +27,23 @@ f2ptr f2__graphviz__digraph(f2ptr cause, f2ptr codes) {
 										     codes,
 										     f2cons__new(cause, new__string(cause, "}"), nil))));
 }
-def_pcfunk0_and_rest(graphviz__digraph, codes, return f2__graphviz__digraph(this_cause, codes));
+def_pcfunk0_and_rest(graphviz__digraph, codes,
+		     "",
+		     return f2__graphviz__digraph(this_cause, codes));
 
 f2ptr f2__graphviz__node_color(f2ptr cause, f2ptr color) {
   return f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "node [fillcolor = white, color = \""), color, new__string(cause, "\", style = filled];")));
 }
-def_pcfunk1(graphviz__node_color, color, return f2__graphviz__node_color(this_cause, color));
+def_pcfunk1(graphviz__node_color, color,
+	    "",
+	    return f2__graphviz__node_color(this_cause, color));
 
 f2ptr f2__graphviz__edge_color(f2ptr cause, f2ptr color) {
   return f2__stringlist__concat(cause, f2list3__new(cause, new__string(cause, "edge [color = \""), color, new__string(cause, "\"];")));
 }
-def_pcfunk1(graphviz__edge_color, color, return f2__graphviz__edge_color(this_cause, color));
+def_pcfunk1(graphviz__edge_color, color,
+	    "",
+	    return f2__graphviz__edge_color(this_cause, color));
 
 f2ptr f2__graphviz__node(f2ptr cause, f2ptr name, f2ptr label, f2ptr color) {
   if (! color) {
@@ -46,7 +52,9 @@ f2ptr f2__graphviz__node(f2ptr cause, f2ptr name, f2ptr label, f2ptr color) {
     return f2__stringlist__concat(cause, f2list6__new(cause, name, new__string(cause, " [label = <"), label, new__string(cause, ">, color=\""), color, new__string(cause, "\"];")));
   }
 }
-def_pcfunk3(graphviz__node, name, label, color, return f2__graphviz__node(this_cause, name, label, color));
+def_pcfunk3(graphviz__node, name, label, color,
+	    "",
+	    return f2__graphviz__node(this_cause, name, label, color));
 
 f2ptr f2__graphviz__box_node(f2ptr cause, f2ptr name, f2ptr label, f2ptr color) {
   if (! color) {
@@ -55,12 +63,16 @@ f2ptr f2__graphviz__box_node(f2ptr cause, f2ptr name, f2ptr label, f2ptr color) 
     return f2__stringlist__concat(cause, f2list6__new(cause, name, new__string(cause, " [shape=box,fillcolor=white,style=filled,label=<"), label, new__string(cause, ">,height=.1,width=.1,color=\""), color, new__string(cause, "\"];")));
   }
 }
-def_pcfunk3(graphviz__box_node, name, label, color, return f2__graphviz__box_node(this_cause, name, label, color));
+def_pcfunk3(graphviz__box_node, name, label, color,
+	    "",
+	    return f2__graphviz__box_node(this_cause, name, label, color));
 
 f2ptr f2__graphviz__edge_tail_head(f2ptr cause, f2ptr tail, f2ptr head) {
   return f2__stringlist__concat(cause, f2list5__new(cause, new__string(cause, "edge [arrowtail = "), tail, new__string(cause, ", arrowhead = "), head, new__string(cause, "];")));
 }
-def_pcfunk2(graphviz__edge_tail_head, tail, head, return f2__graphviz__edge_tail_head(this_cause, tail, head));
+def_pcfunk2(graphviz__edge_tail_head, tail, head,
+	    "",
+	    return f2__graphviz__edge_tail_head(this_cause, tail, head));
 
 f2ptr f2__graphviz__edge(f2ptr cause, f2ptr from_node, f2ptr to_node, f2ptr color) {
   if (! color) {
@@ -69,7 +81,9 @@ f2ptr f2__graphviz__edge(f2ptr cause, f2ptr from_node, f2ptr to_node, f2ptr colo
     return f2__stringlist__concat(cause, f2list6__new(cause, from_node, new__string(cause, " -> "), to_node, new__string(cause, " [color=\""), color, new__string(cause, "\"];")));
   }
 }
-def_pcfunk3(graphviz__edge, from_node, to_node, color, return f2__graphviz__edge(this_cause, from_node, to_node, color));
+def_pcfunk3(graphviz__edge, from_node, to_node, color,
+	    "",
+	    return f2__graphviz__edge(this_cause, from_node, to_node, color));
 
 f2ptr f2__graphviz__exp__as__color(f2ptr cause, f2ptr exp) {
   f2ptr as_graphviz_color_funk = f2__object__slot__type_funk(cause, exp, new__symbol(cause, "get"), new__symbol(cause, "as-graphviz_color"));
@@ -147,7 +161,9 @@ f2ptr f2__graphviz__exp__as__label(f2ptr cause, f2ptr exp) {
   }
   return string;
 }
-def_pcfunk1(graphviz__exp__as__label, exp, return f2__graphviz__exp__as__label(this_cause, exp));
+def_pcfunk1(graphviz__exp__as__label, exp,
+	    "",
+	    return f2__graphviz__exp__as__label(this_cause, exp));
 
 f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   f2ptr string = nil;
@@ -237,12 +253,16 @@ f2ptr f2__graphviz__exp__as__name(f2ptr cause, f2ptr exp) {
   return string;
   */
 }
-def_pcfunk1(graphviz__exp__as__name, exp, return f2__graphviz__exp__as__name(this_cause, exp));
+def_pcfunk1(graphviz__exp__as__name, exp,
+	    "",
+	    return f2__graphviz__exp__as__name(this_cause, exp));
 
 f2ptr f2__graphviz__edge_name(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
   return f2__stringlist__concat(cause, f2list6__new(cause, new__string(cause, "LABEL__"), f2__graphviz__exp__as__name(cause, label), new__string(cause, "__LEFT_NODE__"), f2__graphviz__exp__as__name(cause, left_node), new__string(cause, "__RIGHT_NODE__"), f2__graphviz__exp__as__name(cause, right_node)));
 }
-def_pcfunk3(graphviz__edge_name, label, left_node, right_node, return f2__graphviz__edge_name(this_cause, label, left_node, right_node));
+def_pcfunk3(graphviz__edge_name, label, left_node, right_node,
+	    "",
+	    return f2__graphviz__edge_name(this_cause, label, left_node, right_node));
 
 f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node, f2ptr color) {
   f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
@@ -253,7 +273,9 @@ f2ptr f2__graphviz__raw_labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node,
 						     f2__graphviz__edge_tail_head(cause, new__string(cause, "none"), new__string(cause, "normal")),
 						     f2__graphviz__edge(          cause, edge__name, right_node, color)));
 }
-def_pcfunk4(graphviz__raw_labelled_edge, label, left_node, right_node, color, return f2__graphviz__raw_labelled_edge(this_cause, label, left_node, right_node, color));
+def_pcfunk4(graphviz__raw_labelled_edge, label, left_node, right_node, color,
+	    "",
+	    return f2__graphviz__raw_labelled_edge(this_cause, label, left_node, right_node, color));
 
 f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edge__name = f2__graphviz__edge_name(cause, label, left_node, right_node);
@@ -269,7 +291,9 @@ f2ptr f2__graphviz__labelled_edge(f2ptr cause, f2ptr label, f2ptr left_node, f2p
 						     f2__graphviz__edge_tail_head(cause, new__string(cause, "none"), new__string(cause, "normal")),
 						     f2__graphviz__edge(          cause, edge__name, f2__graphviz__exp__as__name(cause, right_node), color)));
 }
-def_pcfunk3(graphviz__labelled_edge, label, left_node, right_node, return f2__graphviz__labelled_edge(this_cause, label, left_node, right_node));
+def_pcfunk3(graphviz__labelled_edge, label, left_node, right_node,
+	    "",
+	    return f2__graphviz__labelled_edge(this_cause, label, left_node, right_node));
 
 // **
 

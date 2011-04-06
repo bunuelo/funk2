@@ -28,7 +28,9 @@ def_primobject_3_slot(doublelinklist, write_cmutex, length, cons_cells);
 f2ptr f2__doublelinklist__new(f2ptr cause, f2ptr elements) {
   return f2doublelinklist__new(cause, f2cmutex__new(cause), f2__simple_length(cause, elements), elements);
 }
-def_pcfunk0_and_rest(doublelinklist__new, elements, return f2__doublelinklist__new(this_cause, elements));
+def_pcfunk0_and_rest(doublelinklist__new, elements,
+		     "",
+		     return f2__doublelinklist__new(this_cause, elements));
 
 f2ptr f2__doublelinklist__car(f2ptr cause, f2ptr this) {
   f2ptr cons_cells = f2doublelinklist__cons_cells(this, cause);
@@ -37,7 +39,9 @@ f2ptr f2__doublelinklist__car(f2ptr cause, f2ptr this) {
   }
   return f2cons__car(cons_cells, cause);
 }
-def_pcfunk1(doublelinklist__car, this, return f2__doublelinklist__car(this_cause, this));
+def_pcfunk1(doublelinklist__car, this,
+	    "",
+	    return f2__doublelinklist__car(this_cause, this));
 
 f2ptr f2__doublelinklist__cdr(f2ptr cause, f2ptr this) {
   f2ptr length     = f2doublelinklist__length(this, cause);
@@ -48,7 +52,9 @@ f2ptr f2__doublelinklist__cdr(f2ptr cause, f2ptr this) {
   }
   return f2doublelinklist__new(cause, f2cmutex__new(cause), f2integer__new(cause, length__i - 1), f2cons__cdr(cons_cells, cause));
 }
-def_pcfunk1(doublelinklist__cdr, this, return f2__doublelinklist__cdr(this_cause, this));
+def_pcfunk1(doublelinklist__cdr, this,
+	    "",
+	    return f2__doublelinklist__cdr(this_cause, this));
 
 f2ptr f2__doublelinklist__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2doublelinklist__write_cmutex(this, cause), cause);
@@ -59,7 +65,9 @@ f2ptr f2__doublelinklist__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__unlock(f2doublelinklist__write_cmutex(this, cause), cause);
   return nil;
 }
-def_pcfunk2(doublelinklist__add, this, element, return f2__doublelinklist__add(this_cause, this, element));
+def_pcfunk2(doublelinklist__add, this, element,
+	    "",
+	    return f2__doublelinklist__add(this_cause, this, element));
 
 f2ptr f2__doublelinklist__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2doublelinklist__write_cmutex(this, cause), cause);
@@ -75,7 +83,9 @@ f2ptr f2__doublelinklist__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__unlock(f2doublelinklist__write_cmutex(this, cause), cause);
   return nil;
 }
-def_pcfunk2(doublelinklist__lookup, this, element, return f2__doublelinklist__lookup(this_cause, this, element));
+def_pcfunk2(doublelinklist__lookup, this, element,
+	    "",
+	    return f2__doublelinklist__lookup(this_cause, this, element));
 
 f2ptr f2doublelinklist__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2doublelinklist__primobject_type__new(cause);

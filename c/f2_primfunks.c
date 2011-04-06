@@ -39,7 +39,9 @@ f2ptr f2__argument_number_check_failure__larva__new(f2ptr cause, f2ptr funk_symb
 boolean_t raw__null(f2ptr x) {return !x;}
 
 f2ptr f2__null(f2ptr cause, f2ptr x) {return f2bool__new(raw__null(x));}
-def_pcfunk1(null, x, return f2__null(this_cause, x));
+def_pcfunk1(null, x,
+	    "",
+	    return f2__null(this_cause, x));
 
 // s64
 
@@ -87,7 +89,9 @@ u64 u64__sqrt(u64 this) {
 boolean_t raw__not(f2ptr x) {return !x;}
 
 f2ptr f2__not(f2ptr cause, f2ptr x) {return f2bool__new(raw__not(x));}
-def_pcfunk1(not, x, return f2__not(this_cause, x));
+def_pcfunk1(not, x,
+	    "",
+	    return f2__not(this_cause, x));
 
 f2ptr f2__and(f2ptr cause, f2ptr x0, f2ptr x1) {
   return f2bool__new((x0 != nil) && (x1 != nil));
@@ -152,7 +156,9 @@ f2ptr f2__greater_than(f2ptr cause, f2ptr x0, f2ptr x1) {
 f2ptr f2__system__node_id(f2ptr cause) {
   return f2pointer__new(cause, __funk2.node_id);
 }
-def_pcfunk0(system__node_id, return f2__system__node_id(this_cause));
+def_pcfunk0(system__node_id,
+	    "",
+	    return f2__system__node_id(this_cause));
 
 f2ptr f2__system__environment(f2ptr cause, f2ptr node_id) {
   node_id_t raw_node_id;
@@ -166,7 +172,9 @@ f2ptr f2__system__environment(f2ptr cause, f2ptr node_id) {
   }
   return f2system__environment(cause, raw_node_id);
 }
-def_pcfunk1(system__environment, node_id, return f2__system__environment(this_cause, node_id));
+def_pcfunk1(system__environment, node_id,
+	    "",
+	    return f2__system__environment(this_cause, node_id));
 
 f2ptr raw__system__memorypool__total_global_memory(f2ptr cause, s64 index) {
   if (index < 0 || index > 7) {
@@ -180,7 +188,9 @@ f2ptr f2__system__memorypool__total_global_memory(f2ptr cause, f2ptr index) {
   s64 index__i = f2integer__i(index, cause);
   return raw__system__memorypool__total_global_memory(cause, index__i);
 }
-def_pcfunk1(system__memorypool__total_global_memory, index, return f2__system__memorypool__total_global_memory(this_cause, index));
+def_pcfunk1(system__memorypool__total_global_memory, index,
+	    "",
+	    return f2__system__memorypool__total_global_memory(this_cause, index));
 
 
 f2ptr raw__system__memorypool__total_free_memory(f2ptr cause, s64 index) {
@@ -195,16 +205,22 @@ f2ptr f2__system__memorypool__total_free_memory(f2ptr cause, f2ptr index) {
   s64 index__i = f2integer__i(index, cause);
   return raw__system__memorypool__total_free_memory(cause, index__i);
 }
-def_pcfunk1(system__memorypool__total_free_memory, index, return f2__system__memorypool__total_free_memory(this_cause, index));
+def_pcfunk1(system__memorypool__total_free_memory, index,
+	    "",
+	    return f2__system__memorypool__total_free_memory(this_cause, index));
 
 
 // funk2 pointer (f2ptr)
 
 f2ptr f2__pointer(f2ptr cause, f2ptr x) {return f2pointer__new(cause, (ptr)(long)x);}
-def_pcfunk1(pointer, x, return f2__pointer(this_cause, x));
+def_pcfunk1(pointer, x,
+	    "",
+	    return f2__pointer(this_cause, x));
 
 f2ptr f2__deref_pointer(f2ptr cause, f2ptr x) {return (f2ptr)(long)f2pointer__p(x, cause);}
-def_pcfunk1(deref_pointer, x, return f2__deref_pointer(this_cause, x));
+def_pcfunk1(deref_pointer, x,
+	    "",
+	    return f2__deref_pointer(this_cause, x));
 
 // memblock
 
@@ -214,123 +230,197 @@ def_pcfunk1(deref_pointer, x, return f2__deref_pointer(this_cause, x));
 // integer
 
 f2ptr f2__integer__to_double(f2ptr cause, f2ptr x) {return f2double__new(cause, f2integer__i(x, cause));}
-def_pcfunk1(integer__to_double, x, return f2__integer__to_double(this_cause, x));
+def_pcfunk1(integer__to_double, x,
+	    "",
+	    return f2__integer__to_double(this_cause, x));
 
 f2ptr f2__integer__to_float(f2ptr cause, f2ptr x) {return f2float__new(cause, f2integer__i(x, cause));}
-def_pcfunk1(integer__to_float,  x, return f2__integer__to_float(this_cause, x));
+def_pcfunk1(integer__to_float,  x,
+	    "",
+	    return f2__integer__to_float(this_cause, x));
 
 f2ptr f2__integer__greater_than(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2integer__i(x, cause) >  f2integer__i(y, cause));}
-def_pcfunk2(integer__greater_than, x, y, return f2__integer__greater_than(this_cause, x, y));
+def_pcfunk2(integer__greater_than, x, y,
+	    "",
+	    return f2__integer__greater_than(this_cause, x, y));
 
 f2ptr f2__integer__less_than(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2integer__i(x, cause) <  f2integer__i(y, cause));}
-def_pcfunk2(integer__less_than, x, y, return f2__integer__less_than(this_cause, x, y));
+def_pcfunk2(integer__less_than, x, y,
+	    "",
+	    return f2__integer__less_than(this_cause, x, y));
 
 f2ptr f2__integer__equal_sign(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2integer__i(x, cause) == f2integer__i(y, cause));}
-def_pcfunk2(integer__equal_sign, x, y, return f2__integer__equal_sign(this_cause, x, y));
+def_pcfunk2(integer__equal_sign, x, y,
+	    "",
+	    return f2__integer__equal_sign(this_cause, x, y));
 
 f2ptr f2__integer__not_equal_sign(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2integer__i(x, cause) != f2integer__i(y, cause));}
-def_pcfunk2(integer__not_equal_sign, x, y, return f2__integer__not_equal_sign(this_cause, x, y));
+def_pcfunk2(integer__not_equal_sign, x, y,
+	    "",
+	    return f2__integer__not_equal_sign(this_cause, x, y));
 
 f2ptr f2__integer__bitshift_left(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) << f2integer__i(y, cause));}
-def_pcfunk2(integer__bitshift_left, x, y, return f2__integer__bitshift_left(this_cause, x, y));
+def_pcfunk2(integer__bitshift_left, x, y,
+	    "",
+	    return f2__integer__bitshift_left(this_cause, x, y));
 
 f2ptr f2__integer__bitshift_right(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) >> f2integer__i(y, cause));}
-def_pcfunk2(integer__bitshift_right, x, y, return f2__integer__bitshift_right(this_cause, x, y));
+def_pcfunk2(integer__bitshift_right, x, y,
+	    "",
+	    return f2__integer__bitshift_right(this_cause, x, y));
 
 f2ptr f2__integer__bit_and(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) &  f2integer__i(y, cause));}
-def_pcfunk2(integer__bit_and, x, y, return f2__integer__bit_and(this_cause, x, y));
+def_pcfunk2(integer__bit_and, x, y,
+	    "",
+	    return f2__integer__bit_and(this_cause, x, y));
 
 f2ptr f2__integer__bit_or(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) |  f2integer__i(y, cause));}
-def_pcfunk2(integer__bit_or, x, y, return f2__integer__bit_or(this_cause, x, y));
+def_pcfunk2(integer__bit_or, x, y,
+	    "",
+	    return f2__integer__bit_or(this_cause, x, y));
 
 f2ptr f2__integer__bit_xor(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) ^  f2integer__i(y, cause));}
-def_pcfunk2(integer__bit_xor, x, y, return f2__integer__bit_xor(this_cause, x, y));
+def_pcfunk2(integer__bit_xor, x, y,
+	    "",
+	    return f2__integer__bit_xor(this_cause, x, y));
 
 f2ptr f2__integer__bit_not(f2ptr cause, f2ptr x) {return f2integer__new(cause, ~f2integer__i(x, cause));}
-def_pcfunk1(integer__bit_not, x, return f2__integer__bit_not(this_cause, x));
+def_pcfunk1(integer__bit_not, x,
+	    "",
+	    return f2__integer__bit_not(this_cause, x));
 
 f2ptr f2__integer__add(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) +  f2integer__i(y, cause));}
-def_pcfunk2(integer__add, x, y, return f2__integer__add(this_cause, x, y));
+def_pcfunk2(integer__add, x, y,
+	    "",
+	    return f2__integer__add(this_cause, x, y));
 
 f2ptr f2__integer__subtract(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) -  f2integer__i(y, cause));}
-def_pcfunk2(integer__subtract, x, y, return f2__integer__subtract(this_cause, x, y));
+def_pcfunk2(integer__subtract, x, y,
+	    "",
+	    return f2__integer__subtract(this_cause, x, y));
 
 f2ptr f2__integer__multiply(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) *  f2integer__i(y, cause));}
-def_pcfunk2(integer__multiply, x, y, return f2__integer__multiply(this_cause, x, y));
+def_pcfunk2(integer__multiply, x, y,
+	    "",
+	    return f2__integer__multiply(this_cause, x, y));
 
 f2ptr f2__integer__add_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause,  f2integer__i(x, cause) +   f2double__d(y, cause));}
-def_pcfunk2(integer__add_double, x, y, return f2__integer__add_double(this_cause, x, y));
+def_pcfunk2(integer__add_double, x, y,
+	    "",
+	    return f2__integer__add_double(this_cause, x, y));
 
 f2ptr f2__integer__subtract_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause,  f2integer__i(x, cause) -   f2double__d(y, cause));}
-def_pcfunk2(integer__subtract_double, x, y, return f2__integer__subtract_double(this_cause, x, y));
+def_pcfunk2(integer__subtract_double, x, y,
+	    "",
+	    return f2__integer__subtract_double(this_cause, x, y));
 
 f2ptr f2__integer__divide_by_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause,  f2integer__i(x, cause) /  f2integer__i(y, cause));}
-def_pcfunk2(integer__divide_by_integer, x, y, return f2__integer__divide_by_integer(this_cause, x, y));
+def_pcfunk2(integer__divide_by_integer, x, y,
+	    "",
+	    return f2__integer__divide_by_integer(this_cause, x, y));
 
 f2ptr f2__integer__divide_by_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause,  (double)f2integer__i(x, cause) / f2double__d(y, cause));}
-def_pcfunk2(integer__divide_by_double, x, y, return f2__integer__divide_by_double(this_cause, x, y));
+def_pcfunk2(integer__divide_by_double, x, y,
+	    "",
+	    return f2__integer__divide_by_double(this_cause, x, y));
 
 // double
 
 f2ptr f2__double__to_integer(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2double__d(x, cause));}
-def_pcfunk1(double__to_integer, x, return f2__double__to_integer(this_cause, x));
+def_pcfunk1(double__to_integer, x,
+	    "",
+	    return f2__double__to_integer(this_cause, x));
 
 f2ptr f2__double__to_float(f2ptr cause, f2ptr x) {return f2float__new(cause, f2double__d(x, cause));}
-def_pcfunk1(double__to_float, x, return f2__double__to_float(this_cause, x));
+def_pcfunk1(double__to_float, x,
+	    "",
+	    return f2__double__to_float(this_cause, x));
 
 f2ptr f2__double__add_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) + f2double__d(y, cause));}
-def_pcfunk2(double__add_double, x, y, return f2__double__add_double(this_cause, x, y));
+def_pcfunk2(double__add_double, x, y,
+	    "",
+	    return f2__double__add_double(this_cause, x, y));
 
 f2ptr f2__double__subtract_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) - f2double__d(y, cause));}
-def_pcfunk2(double__subtract_double, x, y, return f2__double__subtract_double(this_cause, x, y));
+def_pcfunk2(double__subtract_double, x, y,
+	    "",
+	    return f2__double__subtract_double(this_cause, x, y));
 
 f2ptr f2__double__multiply_by_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) * f2double__d(y, cause));}
-def_pcfunk2(double__multiply_by_double, x, y, return f2__double__multiply_by_double(this_cause, x, y));
+def_pcfunk2(double__multiply_by_double, x, y,
+	    "",
+	    return f2__double__multiply_by_double(this_cause, x, y));
 
 f2ptr f2__double__divide_by_double(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) / f2double__d(y, cause));}
-def_pcfunk2(double__divide_by_double, x, y, return f2__double__divide_by_double(this_cause, x, y));
+def_pcfunk2(double__divide_by_double, x, y,
+	    "",
+	    return f2__double__divide_by_double(this_cause, x, y));
 
 f2ptr f2__double__add_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) + f2integer__i(y, cause));}
-def_pcfunk2(double__add_integer, x, y, return f2__double__add_integer(this_cause, x, y));
+def_pcfunk2(double__add_integer, x, y,
+	    "",
+	    return f2__double__add_integer(this_cause, x, y));
 
 f2ptr f2__double__subtract_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) - f2integer__i(y, cause));}
-def_pcfunk2(double__subtract_integer, x, y, return f2__double__subtract_integer(this_cause, x, y));
+def_pcfunk2(double__subtract_integer, x, y,
+	    "",
+	    return f2__double__subtract_integer(this_cause, x, y));
 
 f2ptr f2__double__multiply_by_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) * f2integer__i(y, cause));}
-def_pcfunk2(double__multiply_by_integer, x, y, return f2__double__multiply_by_integer(this_cause, x, y));
+def_pcfunk2(double__multiply_by_integer, x, y,
+	    "",
+	    return f2__double__multiply_by_integer(this_cause, x, y));
 
 f2ptr f2__double__divide_by_integer(f2ptr cause, f2ptr x, f2ptr y) {return f2double__new(cause, f2double__d(x, cause) / f2integer__i(y, cause));}
-def_pcfunk2(double__divide_by_integer, x, y, return f2__double__divide_by_integer(this_cause, x, y));
+def_pcfunk2(double__divide_by_integer, x, y,
+	    "",
+	    return f2__double__divide_by_integer(this_cause, x, y));
 
 // float
 
 f2ptr f2__float__to_integer(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2float__f(x, cause));}
-def_pcfunk1(float__to_integer, x, return f2__float__to_integer(this_cause, x));
+def_pcfunk1(float__to_integer, x,
+	    "",
+	    return f2__float__to_integer(this_cause, x));
 
 f2ptr f2__float__to_double(f2ptr cause, f2ptr x) {return f2double__new(cause, f2float__f(x, cause));}
-def_pcfunk1(float__to_double, x, return f2__float__to_double(this_cause, x));
+def_pcfunk1(float__to_double, x,
+	    "",
+	    return f2__float__to_double(this_cause, x));
 
 // pointer
 
 f2ptr f2__pointer__greater_than(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2pointer__p(x, cause) >  f2pointer__p(y, cause));}
-def_pcfunk2(pointer__greater_than, x, y, return f2__pointer__greater_than(this_cause, x, y));
+def_pcfunk2(pointer__greater_than, x, y,
+	    "",
+	    return f2__pointer__greater_than(this_cause, x, y));
 
 f2ptr f2__pointer__less_than(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2pointer__p(x, cause) <  f2pointer__p(y, cause));}
-def_pcfunk2(pointer__less_than, x, y, return f2__pointer__less_than(this_cause, x, y));
+def_pcfunk2(pointer__less_than, x, y,
+	    "",
+	    return f2__pointer__less_than(this_cause, x, y));
 
 f2ptr f2__pointer__equal_sign(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2pointer__p(x, cause) == f2pointer__p(y, cause));}
-def_pcfunk2(pointer__equal_sign, x, y, return f2__pointer__equal_sign(this_cause, x, y));
+def_pcfunk2(pointer__equal_sign, x, y,
+	    "",
+	    return f2__pointer__equal_sign(this_cause, x, y));
 
 f2ptr f2__pointer__not_equal_sign(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(f2pointer__p(x, cause) != f2pointer__p(y, cause));}
-def_pcfunk2(pointer__not_equal_sign, x, y, return f2__pointer__not_equal_sign(this_cause, x, y));
+def_pcfunk2(pointer__not_equal_sign, x, y,
+	    "",
+	    return f2__pointer__not_equal_sign(this_cause, x, y));
 
 f2ptr f2__pointer__subtract(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2pointer__p(x, cause) -  f2pointer__p(y, cause));}
-def_pcfunk2(pointer__subtract, x, y, return f2__pointer__subtract(this_cause, x, y));
+def_pcfunk2(pointer__subtract, x, y,
+	    "",
+	    return f2__pointer__subtract(this_cause, x, y));
 
 // gfunkptr
 
 f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x) {f2ptr f2p = (f2ptr)((unsigned long)f2pointer__p(x, cause)); return f2gfunkptr__new(cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));}
-def_pcfunk1(gfunkptr__new_from_pointer, x, return f2__gfunkptr__new_from_pointer(this_cause, x));
+def_pcfunk1(gfunkptr__new_from_pointer, x,
+	    "",
+	    return f2__gfunkptr__new_from_pointer(this_cause, x));
 
 // cmutex
 
@@ -377,14 +467,18 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
   str[length] = 0;
   return f2pointer__new(cause, to_ptr(str));
 }
-def_pcfunk1(string__new_raw_c_string, x, return f2__string__new_raw_c_string(this_cause, x));
+def_pcfunk1(string__new_raw_c_string, x,
+	    "",
+	    return f2__string__new_raw_c_string(this_cause, x));
 
 f2ptr f2__string__new_from_raw_c_string(f2ptr cause, f2ptr x) {
   assert_argument_type(pointer, x);
   char* str = (char*)from_ptr(f2pointer__p(x, cause));
   return f2string__new(cause, strlen(str), (u8*)str);
 }
-def_pcfunk1(string__new_from_raw_c_string, x, return f2__string__new_from_raw_c_string(this_cause, x));
+def_pcfunk1(string__new_from_raw_c_string, x,
+	    "",
+	    return f2__string__new_from_raw_c_string(this_cause, x));
 
 // symbol
 
@@ -428,9 +522,13 @@ f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
   assert_argument_type(conslist, conslist);
   return raw__conslist__new(cause, conslist);
 }
-def_pcfunk0_and_rest(conslist, conslist, return f2__conslist__new(this_cause, conslist));
+def_pcfunk0_and_rest(conslist, conslist,
+		     "",
+		     return f2__conslist__new(this_cause, conslist));
 
-def_pcfunk0_and_rest(immutable_conslist, seq, return f2__conslist__new(this_cause, seq));
+def_pcfunk0_and_rest(immutable_conslist, seq,
+		     "",
+		     return f2__conslist__new(this_cause, seq));
 
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   u64 length = 0;
@@ -459,7 +557,9 @@ f2ptr f2__conslist__as__array(f2ptr cause, f2ptr this) {
   assert_argument_type(conslist, this);
   return raw__conslist__as__array(cause, this);
 }
-def_pcfunk1(conslist__as__array, this, return f2__conslist__as__array(this_cause, this));
+def_pcfunk1(conslist__as__array, this,
+	    "",
+	    return f2__conslist__as__array(this_cause, this));
 
 f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   assert_argument_type(conslist, this);
@@ -484,7 +584,9 @@ f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   }
   return new_seq;
 }
-def_pcfunk2(conslist__first_n, this, n, return f2__conslist__first_n(this_cause, this, n));
+def_pcfunk2(conslist__first_n, this, n,
+	    "",
+	    return f2__conslist__first_n(this_cause, this, n));
 
 f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
   f2ptr new_list      = nil;
@@ -510,21 +612,27 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
   }
   return new_list;
 }
-def_pcfunk1(conslistlist__append, this, return f2__conslistlist__append(this_cause, this));
+def_pcfunk1(conslistlist__append, this,
+	    "",
+	    return f2__conslistlist__append(this_cause, this));
 
 // time
 
 f2ptr f2__time(f2ptr cause) {
   return f2time__new(cause, f2__nanoseconds_since_1970(cause));
 }
-def_pcfunk0(time, return f2__time(this_cause));
+def_pcfunk0(time,
+	    "",
+	    return f2__time(this_cause));
 
 // fiber
 
 f2ptr f2__sleep_for_nanoseconds_without_yield(f2ptr fiber, f2ptr cause, f2ptr nanoseconds) {
   return f2__fiber__sleep_for_nanoseconds(cause, fiber, nanoseconds);
 }
-def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds, return f2__sleep_for_nanoseconds_without_yield(simple_fiber, this_cause, nanoseconds));
+def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds,
+	    "",
+	    return f2__sleep_for_nanoseconds_without_yield(simple_fiber, this_cause, nanoseconds));
 
 // larva
 
@@ -537,7 +645,9 @@ f2ptr f2__chunk(f2ptr cause, f2ptr length) {
   int raw_length = f2integer__i(length, cause);
   return f2chunk__new(cause, raw_length, NULL);
 }
-def_pcfunk1(chunk, length, return f2__chunk(this_cause, length));
+def_pcfunk1(chunk, length,
+	    "",
+	    return f2__chunk(this_cause, length));
 
 //boolean_t raw__chunkp(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_chunk);}
 
@@ -548,7 +658,9 @@ def_pcfunk1(chunk, length, return f2__chunk(this_cause, length));
 //def_pcfunk1(chunk__bytes, x, return f2__chunk__bytes(this_cause, x));
 
 f2ptr f2__chunk__new_compiled_from_funk(f2ptr cause, f2ptr x) {return f2chunk__new_compiled_from_funk(cause, x);}
-def_pcfunk1(chunk__new_compiled_from_funk, x, return f2__chunk__new_compiled_from_funk(this_cause, x));
+def_pcfunk1(chunk__new_compiled_from_funk, x,
+	    "",
+	    return f2__chunk__new_compiled_from_funk(this_cause, x));
 
 
 
@@ -652,7 +764,9 @@ void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
 f2ptr f2__simple_paused_fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   return raw__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
 }
-def_pcfunk2(simple_paused_fiber, funk, args, return f2__simple_paused_fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
+def_pcfunk2(simple_paused_fiber, funk, args,
+	    "",
+	    return f2__simple_paused_fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
@@ -660,7 +774,9 @@ f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber,
   f2fiber__keep_undead__set(new_fiber, cause, nil);
   return new_fiber;
 }
-def_pcfunk2(fiber_parallel, funk, args, return f2__fiber_parallel(this_cause, this_cause, simple_fiber, simple_env, funk, args));
+def_pcfunk2(fiber_parallel, funk, args,
+	    "",
+	    return f2__fiber_parallel(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
@@ -673,7 +789,9 @@ f2ptr f2__fiber__imagine(f2ptr cause, f2ptr imagination_name, f2ptr parent_fiber
   f2ptr new_fiber = f2__fiber_parallel(cause, imaginary_cause, parent_fiber, parent_env, cfunkable, args);
   return new_fiber;
 }
-def_pcfunk3(fiber__imagine, imagination_name, funk, args, return f2__fiber__imagine(this_cause, imagination_name, simple_fiber, simple_env, funk, args));
+def_pcfunk3(fiber__imagine, imagination_name, funk, args,
+	    "",
+	    return f2__fiber__imagine(this_cause, imagination_name, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
   f2ptr i_cause = f2__cause__new_imaginary(cause, imagination_name);
@@ -688,7 +806,9 @@ f2ptr f2__test_imagine(f2ptr cause, f2ptr imagination_name) {
   f2__print(cause,   raw__array__elt(i_cause, test_array, 1));
   return test_array;
 }
-def_pcfunk1(test_imagine, imagination_name, return f2__test_imagine(this_cause, imagination_name));
+def_pcfunk1(test_imagine, imagination_name,
+	    "",
+	    return f2__test_imagine(this_cause, imagination_name));
 
 // sequence (array, list, doublelist, etc.)
 
@@ -761,7 +881,9 @@ f2ptr f2__simple_length(f2ptr cause, f2ptr seq) {
     return f2integer__new(cause, 1);
   }
 }
-def_pcfunk1(simple_length, seq, return f2__simple_length(this_cause, seq));
+def_pcfunk1(simple_length, seq,
+	    "",
+	    return f2__simple_length(this_cause, seq));
 
 
 // this funktion is deprecated; use object-get accessors at this point.
@@ -853,7 +975,9 @@ f2ptr f2__conslist__reverse(f2ptr cause, f2ptr this) {
 f2ptr f2__reverse(f2ptr cause, f2ptr this) {
   return f2__conslist__reverse(cause, this);
 }
-def_pcfunk1(reverse, this, return f2__reverse(this_cause, this));
+def_pcfunk1(reverse, this,
+	    "",
+	    return f2__reverse(this_cause, this));
 
 // deprecated and should be removed
 f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
@@ -866,9 +990,15 @@ f2ptr raw__seq_elt(f2ptr this, f2ptr index, f2ptr cause) {
 
 //boolean_t raw__fiberp(f2ptr x, f2ptr cause) {return (raw__primobjectp(x, cause) && f2primobject__is_fiber(x, cause));}
 
-def_pcfunk1(exp__print, x, return f2__exp__print(this_cause, simple_fiber, x));
-def_pcfunk1(write, x, return f2__write(this_cause, simple_fiber, x));
-def_pcfunk2(fwrite, fptr, x, return f2__fwrite(this_cause, simple_fiber, fptr, x));
+def_pcfunk1(exp__print, x,
+	    "",
+	    return f2__exp__print(this_cause, simple_fiber, x));
+def_pcfunk1(write, x,
+	    "",
+	    return f2__write(this_cause, simple_fiber, x));
+def_pcfunk2(fwrite, fptr, x,
+	    "",
+	    return f2__fwrite(this_cause, simple_fiber, fptr, x));
 
 f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   assert_argument_type(stream, stream);
@@ -883,7 +1013,9 @@ f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   }
   return exp;
 }
-def_pcfunk2(exp__format, fptr, x, return f2__format(this_cause, simple_fiber, fptr, x));
+def_pcfunk2(exp__format, fptr, x,
+	    "",
+	    return f2__format(this_cause, simple_fiber, fptr, x));
 
 f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   assert_argument_type(stream, stream);
@@ -898,9 +1030,13 @@ f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   }
   return exp;
 }
-def_pcfunk2(exp__format__html, stream, x, return f2__format__html(this_cause, simple_fiber, stream, x));
+def_pcfunk2(exp__format__html, stream, x,
+	    "",
+	    return f2__format__html(this_cause, simple_fiber, stream, x));
 
-def_pcfunk2(exp__fwrite_html, stream, exp, return f2__fwrite_html(this_cause, simple_fiber, stream, exp));
+def_pcfunk2(exp__fwrite_html, stream, exp,
+	    "",
+	    return f2__fwrite_html(this_cause, simple_fiber, stream, exp));
 
 
 f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
@@ -938,7 +1074,9 @@ f2ptr f2__mkdir(f2ptr cause, f2ptr directory_name) {
   assert_argument_type(string, directory_name);
   return raw__mkdir(cause, directory_name);
 }
-def_pcfunk1(mkdir, directory_name, return f2__mkdir(this_cause, directory_name));
+def_pcfunk1(mkdir, directory_name,
+	    "",
+	    return f2__mkdir(this_cause, directory_name));
 
 // this funktion is deprecated; use object-set mutators instead.
 f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
@@ -1002,12 +1140,14 @@ f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
 //	    return f2bytecode__new(this_cause, command, arg0, arg1, arg2));
 
 def_pcfunk1(debug, value,
-	   printf("\ndebug: "); f2__write(this_cause, simple_fiber, value); fflush(stdout);
-	   return value);
+	    "",
+	    printf("\ndebug: "); f2__write(this_cause, simple_fiber, value); fflush(stdout);
+	    return value);
 
 def_pcfunk1(trace, value,
-	   f2fiber__trace__set(simple_fiber, this_cause, f2cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
-	   return value);
+	    "",
+	    f2fiber__trace__set(simple_fiber, this_cause, f2cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
+	    return value);
 
 boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {return boolean__true;}
@@ -1057,7 +1197,9 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
 }
 
 f2ptr f2__eq(f2ptr cause, f2ptr x, f2ptr y) {return f2bool__new(raw__eq(cause, x, y));}
-def_pcfunk2(eq, x, y, return f2__eq(this_cause, x, y));
+def_pcfunk2(eq, x, y,
+	    "",
+	    return f2__eq(this_cause, x, y));
 
 boolean_t raw__contains(f2ptr cause, f2ptr this, f2ptr element) {
   f2ptr iter = this;
@@ -1074,7 +1216,9 @@ boolean_t raw__contains(f2ptr cause, f2ptr this, f2ptr element) {
 f2ptr f2__contains(f2ptr cause, f2ptr this, f2ptr element) {
   return f2bool__new(raw__contains(cause, this, element));
 }
-def_pcfunk2(contains, this, element, return f2__contains(this_cause, this, element));
+def_pcfunk2(contains, this, element,
+	    "",
+	    return f2__contains(this_cause, this, element));
 
 f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
   assert_argument_type(string, filename);
@@ -1092,22 +1236,30 @@ f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
   f2__free(to_ptr(mode_str));
   return fptr;
 }
-def_pcfunk2(fopen, filename, mode, return f2__fopen(this_cause, filename, mode));
+def_pcfunk2(fopen, filename, mode,
+	    "",
+	    return f2__fopen(this_cause, filename, mode));
 
 f2ptr f2__fclose(f2ptr cause, f2ptr fptr) {
   assert_argument_type(pointer, fptr);
   return f2integer__new(cause, fclose((FILE*)from_ptr(f2pointer__p(fptr, cause))));
 }
-def_pcfunk1(fclose, fptr, return f2__fclose(this_cause, fptr));
+def_pcfunk1(fclose, fptr,
+	    "",
+	    return f2__fclose(this_cause, fptr));
 
 f2ptr f2__compile(f2ptr cause, f2ptr fiber, f2ptr exp, f2ptr protect_environment) {
   boolean_t is_funktional = boolean__true;
   return raw__compile(cause, fiber, exp, (protect_environment != nil), (protect_environment == nil), NULL, &is_funktional, nil, NULL);
 }
-def_pcfunk2(compile, exp, protect_environment, return f2__compile(this_cause, simple_fiber, exp, protect_environment));
+def_pcfunk2(compile, exp, protect_environment,
+	    "",
+	    return f2__compile(this_cause, simple_fiber, exp, protect_environment));
 
 f2ptr f2__identity(f2ptr cause, f2ptr exp) {return exp;}
-def_pcfunk1(identity, exp, return f2__identity(this_cause, exp));
+def_pcfunk1(identity, exp,
+	    "",
+	    return f2__identity(this_cause, exp));
 
 #define PRIME_NUMBER__16_BIT 65521
 
@@ -1122,42 +1274,66 @@ f2ptr f2__random(f2ptr cause, f2ptr max_value) {
   int raw_max_value = f2integer__i(max_value, cause);
   return f2integer__new(cause, raw__random(raw_max_value));
 }
-def_pcfunk1(random, max_value, return f2__random(this_cause, max_value));
+def_pcfunk1(random, max_value,
+	    "",
+	    return f2__random(this_cause, max_value));
 
 f2ptr f2__chunk_copy(f2ptr cause, f2ptr init) {
   assert_argument_type(chunk, init);
   return f2chunk__new_copy(cause, init);
 }
-def_pcfunk1(chunk__copy, init, return f2__chunk_copy(this_cause, init));
+def_pcfunk1(chunk__copy, init,
+	    "",
+	    return f2__chunk_copy(this_cause, init));
 
 f2ptr f2__chunk__read_bit8(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((u8)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));}
-def_pcfunk2(chunk__read_bit8, chunk, offset, return f2__chunk__read_bit8(this_cause, chunk, offset));
+def_pcfunk2(chunk__read_bit8, chunk, offset,
+	    "",
+	    return f2__chunk__read_bit8(this_cause, chunk, offset));
 
 f2ptr f2__chunk__write_bit8_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {f2chunk__bit8__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause)); return nil;}
-def_pcfunk3(chunk__write_bit8_integer, chunk, offset, value, return f2__chunk__write_bit8_integer(this_cause, chunk, offset, value));
+def_pcfunk3(chunk__write_bit8_integer, chunk, offset, value,
+	    "",
+	    return f2__chunk__write_bit8_integer(this_cause, chunk, offset, value));
 
 f2ptr f2__chunk__read_bit8_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((char)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));}
-def_pcfunk2(chunk__read_bit8_signed, chunk, offset, return f2__chunk__read_bit8_signed(this_cause, chunk, offset));
+def_pcfunk2(chunk__read_bit8_signed, chunk, offset,
+	    "",
+	    return f2__chunk__read_bit8_signed(this_cause, chunk, offset));
 
 f2ptr f2__chunk__read_bit16(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, f2chunk__bit16__elt(chunk, f2integer__i(offset, cause), cause));}
-def_pcfunk2(chunk__read_bit16, chunk, offset, return f2__chunk__read_bit16(this_cause, chunk, offset));
+def_pcfunk2(chunk__read_bit16, chunk, offset,
+	    "",
+	    return f2__chunk__read_bit16(this_cause, chunk, offset));
 
 f2ptr f2__chunk__write_bit16_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {f2chunk__bit16__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause)); return nil;}
-def_pcfunk3(chunk__write_bit16_integer, chunk, offset, value, return f2__chunk__write_bit16_integer(this_cause, chunk, offset, value));
+def_pcfunk3(chunk__write_bit16_integer, chunk, offset, value,
+	    "",
+	    return f2__chunk__write_bit16_integer(this_cause, chunk, offset, value));
 
 f2ptr f2__chunk__read_bit16_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((s16)f2chunk__bit16__elt(chunk, f2integer__i(offset, cause), cause)));}
-def_pcfunk2(chunk__read_bit16_signed, chunk, offset, return f2__chunk__read_bit16_signed(this_cause, chunk, offset));
+def_pcfunk2(chunk__read_bit16_signed, chunk, offset,
+	    "",
+	    return f2__chunk__read_bit16_signed(this_cause, chunk, offset));
 
 f2ptr f2__chunk__read_bit32(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((u32)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));}
-def_pcfunk2(chunk__read_bit32, chunk, offset, return f2__chunk__read_bit32(this_cause, chunk, offset));
+def_pcfunk2(chunk__read_bit32, chunk, offset,
+	    "",
+	    return f2__chunk__read_bit32(this_cause, chunk, offset));
 
 f2ptr f2__chunk__write_bit32_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {f2chunk__bit32__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause)); return nil;}
-def_pcfunk3(chunk__write_bit32_integer, chunk, offset, value, return f2__chunk__write_bit32_integer(this_cause, chunk, offset, value));
+def_pcfunk3(chunk__write_bit32_integer, chunk, offset, value,
+	    "",
+	    return f2__chunk__write_bit32_integer(this_cause, chunk, offset, value));
 
 f2ptr f2__chunk__read_bit32_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((short)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));}
-def_pcfunk2(chunk__read_bit32_signed, chunk, offset, return f2__chunk__read_bit32_signed(this_cause, chunk, offset));
+def_pcfunk2(chunk__read_bit32_signed, chunk, offset,
+	    "",
+	    return f2__chunk__read_bit32_signed(this_cause, chunk, offset));
 
-def_pcfunk1(demetropolize_once, exp, return f2__demetropolize_once(this_cause, simple_fiber, simple_env, exp));
+def_pcfunk1(demetropolize_once, exp,
+	    "",
+	    return f2__demetropolize_once(this_cause, simple_fiber, simple_env, exp));
 
 f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   f2ptr demetropolize_result = f2__demetropolize_full__with_status(cause, fiber, env, exp);
@@ -1166,11 +1342,19 @@ f2ptr f2__demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   }
   return f2cons__cdr(demetropolize_result, cause);
 }
-def_pcfunk1(demetropolize_full, exp, return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
+def_pcfunk1(demetropolize_full, exp,
+	    "",
+	    return f2__demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
-def_pcfunk0(this__cause,  return this_cause);
-def_pcfunk0(this__env,    return f2fiber__env(simple_fiber, this_cause));
-def_pcfunk0(this__args,   return simple_args);
+def_pcfunk0(this__cause,
+	    "",
+	    return this_cause);
+def_pcfunk0(this__env,
+	    "",
+	    return f2fiber__env(simple_fiber, this_cause));
+def_pcfunk0(this__args,
+	    "",
+	    return simple_args);
 
 f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   assert_argument_type_or_nil(cons, exp);
@@ -1191,9 +1375,11 @@ f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp
 }
 
 def_pcfunk1(exps_demetropolize_full, exp,
+	    "",
 	    return f2__exps_demetropolize_full(this_cause, simple_fiber, simple_env, exp));
 
 def_pcfunk2(compile__special_symbol_exp, exp, protect_environment,
+	    "",
 	    return f2__compile__special_symbol_exp(this_cause, simple_fiber, exp, (protect_environment != nil), (protect_environment == nil), NULL, NULL, nil, NULL));
 
 f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_value) {
@@ -1201,7 +1387,9 @@ f2ptr f2__lookup_funkvar(f2ptr cause, f2ptr env, f2ptr funkvar, f2ptr undefined_
   if (raw__larva__is_type(cause, value)) {return undefined_value;}
   return value;
 }
-def_pcfunk2(lookup_funkvar, funkvar, undefined_value, return f2__lookup_funkvar(this_cause, simple_env, funkvar, undefined_value));
+def_pcfunk2(lookup_funkvar, funkvar, undefined_value,
+	    "",
+	    return f2__lookup_funkvar(this_cause, simple_env, funkvar, undefined_value));
 
 f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr args) {
   if(exp == nil) {
@@ -1222,7 +1410,9 @@ f2ptr f2__jump_to_chunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr ar
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
 }
-def_pcfunk2(jump_to_chunk, p, args, return f2__jump_to_chunk(this_cause, simple_fiber, simple_env, p, args));
+def_pcfunk2(jump_to_chunk, p, args,
+	    "",
+	    return f2__jump_to_chunk(this_cause, simple_fiber, simple_env, p, args));
 
 f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp) {
   if(! exp) {
@@ -1239,116 +1429,120 @@ f2ptr f2__coerce_to_int(f2ptr cause, f2ptr exp) {
     //return f2__argument_type_check_failure__exception__new(cause, exp);
   }
 }
-def_pcfunk1(coerce_to_int, exp, return f2__coerce_to_int(this_cause, exp));
+def_pcfunk1(coerce_to_int, exp,
+	    "",
+	    return f2__coerce_to_int(this_cause, exp));
 
-def_pcfunk1(funkall__raw_c_funk__v__v,      cfunk_ptr,                                                                  (* (void   (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(); return nil);
-def_pcfunk2(funkall__raw_c_funk__v__i,      cfunk_ptr, a0,                                                              (* (void   (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause)); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__ii,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause)); return nil);
-def_pcfunk4(funkall__raw_c_funk__v__iid,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(int,    int,    double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2double__d(a2, this_cause));  return nil);
-def_pcfunk4(funkall__raw_c_funk__v__iii,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause)); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__iiii,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause)); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__iiip,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(int,    int,    int,    ptr))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2pointer__p(a3, this_cause)); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause)); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__iiiip,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(int,    int,    int,    int,    ptr))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2pointer__p(a4, this_cause)); return nil);
-def_pcfunk7(funkall__raw_c_funk__v__iiiiip, cfunk_ptr, a0, a1, a2, a3, a4, a5,                                          (* (void   (*)(int,    int,    int,    int,    int,    ptr))  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause), f2pointer__p(a5, this_cause)); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__id,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(int,    double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause)); return nil);
-def_pcfunk4(funkall__raw_c_funk__v__idd,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(int,    double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause),  f2double__d(a2, this_cause)); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__iddd,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(int,    double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause)); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__idddd,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(int,    double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause)); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__ip,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(int,    void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause))); return nil);
-def_pcfunk4(funkall__raw_c_funk__v__ipp,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(int,    void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__ippp,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(int,    void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__ipppp,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(int,    void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause))); return nil);
-def_pcfunk2(funkall__raw_c_funk__v__p,      cfunk_ptr, a0,                                                              (* (void   (*)(void*))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause))); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__pi,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(void*,  int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), f2integer__i(a1, this_cause)); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__pp,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(void*,  void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause))); return nil);
-def_pcfunk4(funkall__raw_c_funk__v__ppp,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__pppp,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__ppppp,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(void*,  void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause))); return nil);
-def_pcfunk2(funkall__raw_c_funk__v__d,      cfunk_ptr, a0,                                                              (* (void   (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause)); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__dd,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause)); return nil);
-def_pcfunk4(funkall__raw_c_funk__v__ddd,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause)); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__dddd,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause)); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause)); return nil);
-def_pcfunk2(funkall__raw_c_funk__v__f,      cfunk_ptr, a0,                                                              (* (void   (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause)); return nil);
-def_pcfunk3(funkall__raw_c_funk__v__ff,     cfunk_ptr, a0, a1,                                                          (* (void   (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause)); return nil);
-def_pcfunk4(funkall__raw_c_funk__v__fff,    cfunk_ptr, a0, a1, a2,                                                      (* (void   (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause)); return nil);
-def_pcfunk5(funkall__raw_c_funk__v__ffff,   cfunk_ptr, a0, a1, a2, a3,                                                  (* (void   (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause)); return nil);
-def_pcfunk6(funkall__raw_c_funk__v__fffff,  cfunk_ptr, a0, a1, a2, a3, a4,                                              (* (void   (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause)); return nil);
-def_pcfunk1(funkall__raw_c_funk__i__v,      cfunk_ptr,                         return f2integer__new(this_cause,        (* (int    (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )()));
-def_pcfunk2(funkall__raw_c_funk__i__i,      cfunk_ptr, a0,                     return f2integer__new(this_cause,        (* (int    (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__i__ii,     cfunk_ptr, a0, a1,                 return f2integer__new(this_cause,        (* (int    (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__i__iii,    cfunk_ptr, a0, a1, a2,             return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__i__iiii,   cfunk_ptr, a0, a1, a2, a3,         return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__i__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause))));
-def_pcfunk7(funkall__raw_c_funk__i__iiiiip, cfunk_ptr, a0, a1, a2, a3, a4, a5, return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int,    int,    int,    void*))from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause), from_ptr(f2pointer__p(a5, this_cause)))));
-def_pcfunk3(funkall__raw_c_funk__i__ip,     cfunk_ptr, a0, a1,                 return f2integer__new(this_cause,        (* (int    (*)(int,    void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)))));
-def_pcfunk4(funkall__raw_c_funk__i__ipp,    cfunk_ptr, a0, a1, a2,             return f2integer__new(this_cause,        (* (int    (*)(int,    void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)))));
-def_pcfunk5(funkall__raw_c_funk__i__ippp,   cfunk_ptr, a0, a1, a2, a3,         return f2integer__new(this_cause,        (* (int    (*)(int,    void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)))));
-def_pcfunk6(funkall__raw_c_funk__i__ipppp,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2integer__new(this_cause,        (* (int    (*)(int,    void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause)))));
-def_pcfunk2(funkall__raw_c_funk__i__p,      cfunk_ptr, a0,                     return f2integer__new(this_cause,        (* (int    (*)(void*))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)))));
-def_pcfunk3(funkall__raw_c_funk__i__pp,     cfunk_ptr, a0, a1,                 return f2integer__new(this_cause,        (* (int    (*)(void*,  void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)))));
-def_pcfunk4(funkall__raw_c_funk__i__ppp,    cfunk_ptr, a0, a1, a2,             return f2integer__new(this_cause,        (* (int    (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)))));
-def_pcfunk5(funkall__raw_c_funk__i__pppp,   cfunk_ptr, a0, a1, a2, a3,         return f2integer__new(this_cause,        (* (int    (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)))));
-def_pcfunk6(funkall__raw_c_funk__i__ppppp,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2integer__new(this_cause,        (* (int    (*)(void*,  void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause)))));
-def_pcfunk2(funkall__raw_c_funk__i__d,      cfunk_ptr, a0,                     return f2integer__new(this_cause,        (* (int    (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__i__dd,     cfunk_ptr, a0, a1,                 return f2integer__new(this_cause,        (* (int    (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__i__ddd,    cfunk_ptr, a0, a1, a2,             return f2integer__new(this_cause,        (* (int    (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__i__dddd,   cfunk_ptr, a0, a1, a2, a3,         return f2integer__new(this_cause,        (* (int    (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__i__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2integer__new(this_cause,        (* (int    (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause))));
-def_pcfunk2(funkall__raw_c_funk__i__f,      cfunk_ptr, a0,                     return f2integer__new(this_cause,        (* (int    (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__i__ff,     cfunk_ptr, a0, a1,                 return f2integer__new(this_cause,        (* (int    (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__i__fff,    cfunk_ptr, a0, a1, a2,             return f2integer__new(this_cause,        (* (int    (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__i__ffff,   cfunk_ptr, a0, a1, a2, a3,         return f2integer__new(this_cause,        (* (int    (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__i__fffff,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2integer__new(this_cause,        (* (int    (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause))));
-def_pcfunk1(funkall__raw_c_funk__d__v,      cfunk_ptr,                         return f2double__new(this_cause,         (* (double (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )()));
-def_pcfunk2(funkall__raw_c_funk__d__i,      cfunk_ptr, a0,                     return f2double__new(this_cause,         (* (double (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__d__ii,     cfunk_ptr, a0, a1,                 return f2double__new(this_cause,         (* (double (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__d__iii,    cfunk_ptr, a0, a1, a2,             return f2double__new(this_cause,         (* (double (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__d__iiii,   cfunk_ptr, a0, a1, a2, a3,         return f2double__new(this_cause,         (* (double (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__d__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2double__new(this_cause,         (* (double (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause))));
-def_pcfunk2(funkall__raw_c_funk__d__d,      cfunk_ptr, a0,                     return f2double__new(this_cause,         (* (double (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__d__dd,     cfunk_ptr, a0, a1,                 return f2double__new(this_cause,         (* (double (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__d__ddd,    cfunk_ptr, a0, a1, a2,             return f2double__new(this_cause,         (* (double (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__d__dddd,   cfunk_ptr, a0, a1, a2, a3,         return f2double__new(this_cause,         (* (double (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__d__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2double__new(this_cause,         (* (double (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause))));
-def_pcfunk2(funkall__raw_c_funk__d__f,      cfunk_ptr, a0,                     return f2double__new(this_cause,         (* (double (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__d__ff,     cfunk_ptr, a0, a1,                 return f2double__new(this_cause,         (* (double (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__d__fff,    cfunk_ptr, a0, a1, a2,             return f2double__new(this_cause,         (* (double (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__d__ffff,   cfunk_ptr, a0, a1, a2, a3,         return f2double__new(this_cause,         (* (double (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__d__fffff,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2double__new(this_cause,         (* (double (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause))));
-def_pcfunk1(funkall__raw_c_funk__f__v,      cfunk_ptr,                         return f2float__new(this_cause,          (* (float  (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )()));
-def_pcfunk2(funkall__raw_c_funk__f__i,      cfunk_ptr, a0,                     return f2float__new(this_cause,          (* (float  (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__f__ii,     cfunk_ptr, a0, a1,                 return f2float__new(this_cause,          (* (float  (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__f__iii,    cfunk_ptr, a0, a1, a2,             return f2float__new(this_cause,          (* (float  (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__f__iiii,   cfunk_ptr, a0, a1, a2, a3,         return f2float__new(this_cause,          (* (float  (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__f__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2float__new(this_cause,          (* (float  (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause))));
-def_pcfunk2(funkall__raw_c_funk__f__d,      cfunk_ptr, a0,                     return f2float__new(this_cause,          (* (float  (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__f__dd,     cfunk_ptr, a0, a1,                 return f2float__new(this_cause,          (* (float  (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__f__ddd,    cfunk_ptr, a0, a1, a2,             return f2float__new(this_cause,          (* (float  (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__f__dddd,   cfunk_ptr, a0, a1, a2, a3,         return f2float__new(this_cause,          (* (float  (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__f__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2float__new(this_cause,          (* (float  (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause))));
-def_pcfunk2(funkall__raw_c_funk__f__f,      cfunk_ptr, a0,                     return f2float__new(this_cause,          (* (float  (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause))));
-def_pcfunk3(funkall__raw_c_funk__f__ff,     cfunk_ptr, a0, a1,                 return f2float__new(this_cause,          (* (float  (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause))));
-def_pcfunk4(funkall__raw_c_funk__f__fff,    cfunk_ptr, a0, a1, a2,             return f2float__new(this_cause,          (* (float  (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause))));
-def_pcfunk5(funkall__raw_c_funk__f__ffff,   cfunk_ptr, a0, a1, a2, a3,         return f2float__new(this_cause,          (* (float  (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause))));
-def_pcfunk6(funkall__raw_c_funk__f__fffff,  cfunk_ptr, a0, a1, a2, a3, a4,     return f2float__new(this_cause,          (* (float  (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause))));
-def_pcfunk1(funkall__raw_c_funk__p__v,      cfunk_ptr,                         return f2pointer__new(this_cause, to_ptr((* (void*  (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )())));
-def_pcfunk2(funkall__raw_c_funk__p__i,      cfunk_ptr, a0,                     return f2pointer__new(this_cause, to_ptr((* (void*  (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause)))));
-def_pcfunk3(funkall__raw_c_funk__p__ip,     cfunk_ptr, a0, a1,                 return f2pointer__new(this_cause, to_ptr((* (void*  (*)(int,    void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause))))));
-def_pcfunk4(funkall__raw_c_funk__p__ipp,    cfunk_ptr, a0, a1, a2,             return f2pointer__new(this_cause, to_ptr((* (void*  (*)(int,    void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))))));
-def_pcfunk2(funkall__raw_c_funk__p__p,      cfunk_ptr, a0,                     return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause))))));
-def_pcfunk3(funkall__raw_c_funk__p__pp,     cfunk_ptr, a0, a1,                 return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause))))));
-def_pcfunk4(funkall__raw_c_funk__p__ppp,    cfunk_ptr, a0, a1, a2,             return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))))));
-def_pcfunk5(funkall__raw_c_funk__p__pppp,   cfunk_ptr, a0, a1, a2, a3,         return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))))));
+def_pcfunk1(funkall__raw_c_funk__v__v,      cfunk_ptr, "",                                                                  (* (void   (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(); return nil);
+def_pcfunk2(funkall__raw_c_funk__v__i,      cfunk_ptr, a0, "",                                                              (* (void   (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause)); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__ii,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause)); return nil);
+def_pcfunk4(funkall__raw_c_funk__v__iid,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(int,    int,    double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2double__d(a2, this_cause));  return nil);
+def_pcfunk4(funkall__raw_c_funk__v__iii,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause)); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__iiii,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause)); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__iiip,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(int,    int,    int,    ptr))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2pointer__p(a3, this_cause)); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause)); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__iiiip,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(int,    int,    int,    int,    ptr))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2pointer__p(a4, this_cause)); return nil);
+def_pcfunk7(funkall__raw_c_funk__v__iiiiip, cfunk_ptr, a0, a1, a2, a3, a4, a5, "",                                          (* (void   (*)(int,    int,    int,    int,    int,    ptr))  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause), f2pointer__p(a5, this_cause)); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__id,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(int,    double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause)); return nil);
+def_pcfunk4(funkall__raw_c_funk__v__idd,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(int,    double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause),  f2double__d(a2, this_cause)); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__iddd,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(int,    double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause)); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__idddd,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(int,    double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause)); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__ip,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(int,    void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause))); return nil);
+def_pcfunk4(funkall__raw_c_funk__v__ipp,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(int,    void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__ippp,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(int,    void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__ipppp,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(int,    void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause))); return nil);
+def_pcfunk2(funkall__raw_c_funk__v__p,      cfunk_ptr, a0, "",                                                              (* (void   (*)(void*))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause))); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__pi,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(void*,  int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), f2integer__i(a1, this_cause)); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__pp,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(void*,  void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause))); return nil);
+def_pcfunk4(funkall__raw_c_funk__v__ppp,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__pppp,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__ppppp,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(void*,  void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause))); return nil);
+def_pcfunk2(funkall__raw_c_funk__v__d,      cfunk_ptr, a0, "",                                                              (* (void   (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause)); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__dd,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause)); return nil);
+def_pcfunk4(funkall__raw_c_funk__v__ddd,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause)); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__dddd,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause)); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause)); return nil);
+def_pcfunk2(funkall__raw_c_funk__v__f,      cfunk_ptr, a0, "",                                                              (* (void   (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause)); return nil);
+def_pcfunk3(funkall__raw_c_funk__v__ff,     cfunk_ptr, a0, a1, "",                                                          (* (void   (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause)); return nil);
+def_pcfunk4(funkall__raw_c_funk__v__fff,    cfunk_ptr, a0, a1, a2, "",                                                      (* (void   (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause)); return nil);
+def_pcfunk5(funkall__raw_c_funk__v__ffff,   cfunk_ptr, a0, a1, a2, a3, "",                                                  (* (void   (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause)); return nil);
+def_pcfunk6(funkall__raw_c_funk__v__fffff,  cfunk_ptr, a0, a1, a2, a3, a4, "",                                              (* (void   (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause)); return nil);
+def_pcfunk1(funkall__raw_c_funk__i__v,      cfunk_ptr, "",                         return f2integer__new(this_cause,        (* (int    (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )()));
+def_pcfunk2(funkall__raw_c_funk__i__i,      cfunk_ptr, a0, "",                     return f2integer__new(this_cause,        (* (int    (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__i__ii,     cfunk_ptr, a0, a1, "",                 return f2integer__new(this_cause,        (* (int    (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__i__iii,    cfunk_ptr, a0, a1, a2, "",             return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__i__iiii,   cfunk_ptr, a0, a1, a2, a3, "",         return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__i__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause))));
+def_pcfunk7(funkall__raw_c_funk__i__iiiiip, cfunk_ptr, a0, a1, a2, a3, a4, a5, "", return f2integer__new(this_cause,        (* (int    (*)(int,    int,    int,    int,    int,    void*))from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause), from_ptr(f2pointer__p(a5, this_cause)))));
+def_pcfunk3(funkall__raw_c_funk__i__ip,     cfunk_ptr, a0, a1, "",                 return f2integer__new(this_cause,        (* (int    (*)(int,    void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)))));
+def_pcfunk4(funkall__raw_c_funk__i__ipp,    cfunk_ptr, a0, a1, a2, "",             return f2integer__new(this_cause,        (* (int    (*)(int,    void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)))));
+def_pcfunk5(funkall__raw_c_funk__i__ippp,   cfunk_ptr, a0, a1, a2, a3, "",         return f2integer__new(this_cause,        (* (int    (*)(int,    void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)))));
+def_pcfunk6(funkall__raw_c_funk__i__ipppp,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2integer__new(this_cause,        (* (int    (*)(int,    void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause)))));
+def_pcfunk2(funkall__raw_c_funk__i__p,      cfunk_ptr, a0, "",                     return f2integer__new(this_cause,        (* (int    (*)(void*))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)))));
+def_pcfunk3(funkall__raw_c_funk__i__pp,     cfunk_ptr, a0, a1, "",                 return f2integer__new(this_cause,        (* (int    (*)(void*,  void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)))));
+def_pcfunk4(funkall__raw_c_funk__i__ppp,    cfunk_ptr, a0, a1, a2, "",             return f2integer__new(this_cause,        (* (int    (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)))));
+def_pcfunk5(funkall__raw_c_funk__i__pppp,   cfunk_ptr, a0, a1, a2, a3, "",         return f2integer__new(this_cause,        (* (int    (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)))));
+def_pcfunk6(funkall__raw_c_funk__i__ppppp,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2integer__new(this_cause,        (* (int    (*)(void*,  void*,  void*,  void*,  void*))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause)), from_ptr(f2pointer__p(a4, this_cause)))));
+def_pcfunk2(funkall__raw_c_funk__i__d,      cfunk_ptr, a0, "",                     return f2integer__new(this_cause,        (* (int    (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__i__dd,     cfunk_ptr, a0, a1, "",                 return f2integer__new(this_cause,        (* (int    (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__i__ddd,    cfunk_ptr, a0, a1, a2, "",             return f2integer__new(this_cause,        (* (int    (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__i__dddd,   cfunk_ptr, a0, a1, a2, a3, "",         return f2integer__new(this_cause,        (* (int    (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__i__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2integer__new(this_cause,        (* (int    (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause))));
+def_pcfunk2(funkall__raw_c_funk__i__f,      cfunk_ptr, a0, "",                     return f2integer__new(this_cause,        (* (int    (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__i__ff,     cfunk_ptr, a0, a1, "",                 return f2integer__new(this_cause,        (* (int    (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__i__fff,    cfunk_ptr, a0, a1, a2, "",             return f2integer__new(this_cause,        (* (int    (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__i__ffff,   cfunk_ptr, a0, a1, a2, a3, "",         return f2integer__new(this_cause,        (* (int    (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__i__fffff,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2integer__new(this_cause,        (* (int    (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause))));
+def_pcfunk1(funkall__raw_c_funk__d__v,      cfunk_ptr, "",                         return f2double__new(this_cause,         (* (double (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )()));
+def_pcfunk2(funkall__raw_c_funk__d__i,      cfunk_ptr, a0, "",                     return f2double__new(this_cause,         (* (double (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__d__ii,     cfunk_ptr, a0, a1, "",                 return f2double__new(this_cause,         (* (double (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__d__iii,    cfunk_ptr, a0, a1, a2, "",             return f2double__new(this_cause,         (* (double (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__d__iiii,   cfunk_ptr, a0, a1, a2, a3, "",         return f2double__new(this_cause,         (* (double (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__d__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2double__new(this_cause,         (* (double (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause))));
+def_pcfunk2(funkall__raw_c_funk__d__d,      cfunk_ptr, a0, "",                     return f2double__new(this_cause,         (* (double (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__d__dd,     cfunk_ptr, a0, a1, "",                 return f2double__new(this_cause,         (* (double (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__d__ddd,    cfunk_ptr, a0, a1, a2, "",             return f2double__new(this_cause,         (* (double (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__d__dddd,   cfunk_ptr, a0, a1, a2, a3, "",         return f2double__new(this_cause,         (* (double (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__d__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2double__new(this_cause,         (* (double (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause))));
+def_pcfunk2(funkall__raw_c_funk__d__f,      cfunk_ptr, a0, "",                     return f2double__new(this_cause,         (* (double (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__d__ff,     cfunk_ptr, a0, a1, "",                 return f2double__new(this_cause,         (* (double (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__d__fff,    cfunk_ptr, a0, a1, a2, "",             return f2double__new(this_cause,         (* (double (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__d__ffff,   cfunk_ptr, a0, a1, a2, a3, "",         return f2double__new(this_cause,         (* (double (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__d__fffff,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2double__new(this_cause,         (* (double (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause))));
+def_pcfunk1(funkall__raw_c_funk__f__v,      cfunk_ptr, "",                         return f2float__new(this_cause,          (* (float  (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )()));
+def_pcfunk2(funkall__raw_c_funk__f__i,      cfunk_ptr, a0, "",                     return f2float__new(this_cause,          (* (float  (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__f__ii,     cfunk_ptr, a0, a1, "",                 return f2float__new(this_cause,          (* (float  (*)(int,    int))                                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__f__iii,    cfunk_ptr, a0, a1, a2, "",             return f2float__new(this_cause,          (* (float  (*)(int,    int,    int))                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__f__iiii,   cfunk_ptr, a0, a1, a2, a3, "",         return f2float__new(this_cause,          (* (float  (*)(int,    int,    int,    int))                  from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__f__iiiii,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2float__new(this_cause,          (* (float  (*)(int,    int,    int,    int,    int))          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), f2integer__i(a1, this_cause), f2integer__i(a2, this_cause), f2integer__i(a3, this_cause), f2integer__i(a4, this_cause))));
+def_pcfunk2(funkall__raw_c_funk__f__d,      cfunk_ptr, a0, "",                     return f2float__new(this_cause,          (* (float  (*)(double))                                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__f__dd,     cfunk_ptr, a0, a1, "",                 return f2float__new(this_cause,          (* (float  (*)(double, double))                               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__f__ddd,    cfunk_ptr, a0, a1, a2, "",             return f2float__new(this_cause,          (* (float  (*)(double, double, double))                       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__f__dddd,   cfunk_ptr, a0, a1, a2, a3, "",         return f2float__new(this_cause,          (* (float  (*)(double, double, double, double))               from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__f__ddddd,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2float__new(this_cause,          (* (float  (*)(double, double, double, double, double))       from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2double__d(a0, this_cause),  f2double__d(a1, this_cause),  f2double__d(a2, this_cause),  f2double__d(a3, this_cause),  f2double__d(a4, this_cause))));
+def_pcfunk2(funkall__raw_c_funk__f__f,      cfunk_ptr, a0, "",                     return f2float__new(this_cause,          (* (float  (*)(float))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause))));
+def_pcfunk3(funkall__raw_c_funk__f__ff,     cfunk_ptr, a0, a1, "",                 return f2float__new(this_cause,          (* (float  (*)(float,  float))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause))));
+def_pcfunk4(funkall__raw_c_funk__f__fff,    cfunk_ptr, a0, a1, a2, "",             return f2float__new(this_cause,          (* (float  (*)(float,  float,  float))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause))));
+def_pcfunk5(funkall__raw_c_funk__f__ffff,   cfunk_ptr, a0, a1, a2, a3, "",         return f2float__new(this_cause,          (* (float  (*)(float,  float,  float,  float))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause))));
+def_pcfunk6(funkall__raw_c_funk__f__fffff,  cfunk_ptr, a0, a1, a2, a3, a4, "",     return f2float__new(this_cause,          (* (float  (*)(float,  float,  float,  float,  float))        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2float__f(a0, this_cause),   f2float__f(a1, this_cause),   f2float__f(a2, this_cause),   f2float__f(a3, this_cause),   f2float__f(a4, this_cause))));
+def_pcfunk1(funkall__raw_c_funk__p__v,      cfunk_ptr, "",                         return f2pointer__new(this_cause, to_ptr((* (void*  (*)())                                             from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )())));
+def_pcfunk2(funkall__raw_c_funk__p__i,      cfunk_ptr, a0, "",                     return f2pointer__new(this_cause, to_ptr((* (void*  (*)(int))                                          from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause)))));
+def_pcfunk3(funkall__raw_c_funk__p__ip,     cfunk_ptr, a0, a1, "",                 return f2pointer__new(this_cause, to_ptr((* (void*  (*)(int,    void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause))))));
+def_pcfunk4(funkall__raw_c_funk__p__ipp,    cfunk_ptr, a0, a1, a2, "",             return f2pointer__new(this_cause, to_ptr((* (void*  (*)(int,    void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(f2integer__i(a0, this_cause), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))))));
+def_pcfunk2(funkall__raw_c_funk__p__p,      cfunk_ptr, a0, "",                     return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*))                                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause))))));
+def_pcfunk3(funkall__raw_c_funk__p__pp,     cfunk_ptr, a0, a1, "",                 return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*))                                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause))))));
+def_pcfunk4(funkall__raw_c_funk__p__ppp,    cfunk_ptr, a0, a1, a2, "",             return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*))                        from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause))))));
+def_pcfunk5(funkall__raw_c_funk__p__pppp,   cfunk_ptr, a0, a1, a2, a3, "",         return f2pointer__new(this_cause, to_ptr((* (void*  (*)(void*,  void*,  void*,  void*))                from_ptr(f2pointer__p(cfunk_ptr, this_cause)) )(from_ptr(f2pointer__p(a0, this_cause)), from_ptr(f2pointer__p(a1, this_cause)), from_ptr(f2pointer__p(a2, this_cause)), from_ptr(f2pointer__p(a3, this_cause))))));
 
-def_pcfunk2(tensor__new_from_array_of_integer_dimensions, dimensions, fill_element, return f2__tensor__new_from_array_of_integer_dimensions(this_cause, dimensions, fill_element));
-def_pcfunk2(tensor__elt_from_array_of_integer_indices,    this, indices,            return f2tensor__elt_from_array_of_integer_indices(this, indices, this_cause));
+def_pcfunk2(tensor__new_from_array_of_integer_dimensions, dimensions, fill_element, "", return f2__tensor__new_from_array_of_integer_dimensions(this_cause, dimensions, fill_element));
+def_pcfunk2(tensor__elt_from_array_of_integer_indices,    this, indices, "",            return f2tensor__elt_from_array_of_integer_indices(this, indices, this_cause));
 
 def_pcfunk0(system__peer_command_server__port_num,
+	    "",
 	    return f2integer__new(this_cause, __funk2.command_line.peer_command_server__port_num));
 
 def_pcfunk0(system__gethostname,
+	    "",
 	    char hostname[1024];
 	    if (gethostname(hostname, 1023) != 0) {
 	      return nil;
@@ -1391,7 +1585,9 @@ f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr po
   return f2integer__new(cause, computer_id);
 }
 
-def_pcfunk2(funk2_node_handler__know_of_node, hostname, port_num, return f2__funk2_node_handler__know_of_node(this_cause, hostname, port_num));
+def_pcfunk2(funk2_node_handler__know_of_node, hostname, port_num,
+	    "",
+	    return f2__funk2_node_handler__know_of_node(this_cause, hostname, port_num));
 
 void raw__send_request_register_peer(f2ptr cause, computer_id_t computer_id, node_id_t node_id, u8* ip_addr, u16 port_num) {
   funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
@@ -1412,7 +1608,9 @@ f2ptr f2__send_request_register_peer(f2ptr cause, f2ptr computer_id, f2ptr node_
   raw__send_request_register_peer(cause, f2integer__i(computer_id, cause), f2pointer__p(node_id, cause), u8_ip_addr, f2integer__i(port_num, cause));
   return nil;
 }
-def_pcfunk4(send_request_register_peer, computer_id, node_id, ip_addr, port_num, return f2__send_request_register_peer(this_cause, computer_id, node_id, ip_addr, port_num););
+def_pcfunk4(send_request_register_peer, computer_id, node_id, ip_addr, port_num,
+	    "",
+	    return f2__send_request_register_peer(this_cause, computer_id, node_id, ip_addr, port_num););
 
 f2ptr f2__larva(f2ptr cause, f2ptr type, f2ptr bug) {
   assert_argument_type(       integer, type);
@@ -1420,7 +1618,9 @@ f2ptr f2__larva(f2ptr cause, f2ptr type, f2ptr bug) {
   u32 raw_type = f2integer__i(type, cause);
   return f2larva__new(cause, raw_type, bug);
 }
-def_pcfunk2(larva, type, bug, return f2__larva(this_cause, type, bug));
+def_pcfunk2(larva, type, bug,
+	    "",
+	    return f2__larva(this_cause, type, bug));
 
 f2ptr raw__funkable__env(f2ptr cause, f2ptr funkable) {
   if      (raw__funk__is_type(               cause, funkable)) {return f2funk__env(    funkable, cause);}
@@ -1491,7 +1691,9 @@ f2ptr f2__first(f2ptr cause, f2ptr exp) {
     return f2larva__new(cause, 1, nil);
   }
 }
-def_pcfunk1(first, exp, return f2__first(this_cause, exp));
+def_pcfunk1(first, exp,
+	    "",
+	    return f2__first(this_cause, exp));
 
 f2ptr f2__first__set(f2ptr cause, f2ptr exp, f2ptr value) {
   if (raw__cons__is_type(cause, exp)) {
@@ -1502,7 +1704,9 @@ f2ptr f2__first__set(f2ptr cause, f2ptr exp, f2ptr value) {
     return f2larva__new(cause, 1, nil);
   }
 }
-def_pcfunk2(first__set, exp, value, return f2__first__set(this_cause, exp, value));
+def_pcfunk2(first__set, exp, value,
+	    "",
+	    return f2__first__set(this_cause, exp, value));
 
 f2ptr f2__next(f2ptr cause, f2ptr exp) {
   if (raw__cons__is_type(cause, exp)) {
@@ -1515,7 +1719,9 @@ f2ptr f2__next(f2ptr cause, f2ptr exp) {
     return f2larva__new(cause, 1, nil);
   }
 }
-def_pcfunk1(next, exp, return f2__next(this_cause, exp));
+def_pcfunk1(next, exp,
+	    "",
+	    return f2__next(this_cause, exp));
 
 f2ptr f2__next__set(f2ptr cause, f2ptr exp, f2ptr value) {
   if (raw__cons__is_type(cause, exp)) {
@@ -1526,7 +1732,9 @@ f2ptr f2__next__set(f2ptr cause, f2ptr exp, f2ptr value) {
     return f2larva__new(cause, 1, nil);
   }
 }
-def_pcfunk2(next__set, exp, value, return f2__next__set(this_cause, exp, value));
+def_pcfunk2(next__set, exp, value,
+	    "",
+	    return f2__next__set(this_cause, exp, value));
 
 f2ptr f2__prev(f2ptr cause, f2ptr exp) {
   if (raw__doublelink__is_type(cause, exp)) {
@@ -1535,7 +1743,9 @@ f2ptr f2__prev(f2ptr cause, f2ptr exp) {
     return f2larva__new(cause, 1, nil);
   }
 }
-def_pcfunk1(prev, exp, return f2__prev(this_cause, exp));
+def_pcfunk1(prev, exp,
+	    "",
+	    return f2__prev(this_cause, exp));
 
 f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value) {
   if (raw__doublelink__is_type(cause, exp)) {
@@ -1544,7 +1754,9 @@ f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value) {
     return f2larva__new(cause, 1, nil);
   }
 }
-def_pcfunk2(prev__set, exp, value, return f2__prev__set(this_cause, exp, value));
+def_pcfunk2(prev__set, exp, value,
+	    "",
+	    return f2__prev__set(this_cause, exp, value));
 
 f2ptr raw__str_copy(f2ptr cause, f2ptr object, u8* str) {
   if (raw__string__is_type(cause, object)) {
@@ -1571,7 +1783,9 @@ f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
   f2ptr colonized = f2symbol__new(cause, length + 1, str);
   return colonized;
 }
-def_pcfunk1(colonize, exp, return f2__colonize(this_cause, exp));
+def_pcfunk1(colonize, exp,
+	    "",
+	    return f2__colonize(this_cause, exp));
 
 
 u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
@@ -1617,7 +1831,9 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
 f2ptr f2__eq_hash_value(f2ptr cause, f2ptr exp) {
   return f2integer__new(cause, raw__eq_hash_value(cause, exp));
 }
-def_pcfunk1(eq_hash_value, exp, return f2__eq_hash_value(this_cause, exp));
+def_pcfunk1(eq_hash_value, exp,
+	    "",
+	    return f2__eq_hash_value(this_cause, exp));
 
 boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {
@@ -1653,7 +1869,9 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
 f2ptr f2__equals(f2ptr cause, f2ptr x, f2ptr y) {
   return f2bool__new(raw__equals(cause, x, y));
 }
-def_pcfunk2(equals, x, y, return f2__equals(this_cause, x, y));
+def_pcfunk2(equals, x, y,
+	    "",
+	    return f2__equals(this_cause, x, y));
 
 f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
   boolean_t exp__is_funktional = boolean__true;
@@ -1663,7 +1881,9 @@ f2ptr f2__is_funktional(f2ptr cause, f2ptr fiber, f2ptr exp) {
   }
   return f2bool__new(exp__is_funktional);
 }
-def_pcfunk1(is_funktional, exp, return f2__is_funktional(this_cause, simple_fiber, exp));
+def_pcfunk1(is_funktional, exp,
+	    "",
+	    return f2__is_funktional(this_cause, simple_fiber, exp));
 
 
 f2ptr raw__string__read(f2ptr cause, f2ptr this) {
@@ -1684,10 +1904,14 @@ f2ptr f2__memory__test(f2ptr cause) {
   funk2_memory__memory_test(&(__funk2.memory));
   return nil;
 }
-def_pcfunk0(memory__test, return f2__memory__test(this_cause));
+def_pcfunk0(memory__test,
+	    "",
+	    return f2__memory__test(this_cause));
 
 
-def_pcfunk0(memory__assert_valid, return f2__memory__assert_valid(this_cause));
+def_pcfunk0(memory__assert_valid,
+	    "",
+	    return f2__memory__assert_valid(this_cause));
 
 
 // **

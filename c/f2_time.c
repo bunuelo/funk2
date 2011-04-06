@@ -159,7 +159,9 @@ u64 raw__nanoseconds_since_1970() {
 f2ptr f2__nanoseconds_since_1970(f2ptr cause) {
   return f2integer__new(cause, raw__nanoseconds_since_1970());
 }
-def_pcfunk0(nanoseconds_since_1970, return f2__nanoseconds_since_1970(this_cause));
+def_pcfunk0(nanoseconds_since_1970,
+	    "",
+	    return f2__nanoseconds_since_1970(this_cause));
 
 #ifndef F2__CYGWIN
 u64 raw__processor_thread__execution_nanoseconds(f2ptr cause) {
@@ -171,7 +173,9 @@ u64 raw__processor_thread__execution_nanoseconds(f2ptr cause) {
 f2ptr f2__processor_thread__execution_nanoseconds(f2ptr cause) {
   return f2integer__new(cause, raw__processor_thread__execution_nanoseconds(cause));
 }
-def_pcfunk0(processor_thread__execution_nanoseconds, return f2__processor_thread__execution_nanoseconds(this_cause));
+def_pcfunk0(processor_thread__execution_nanoseconds,
+	    "",
+	    return f2__processor_thread__execution_nanoseconds(this_cause));
 
 u64 raw__funk2__execution_nanoseconds(f2ptr cause) {
   struct timespec ts;
@@ -182,7 +186,9 @@ u64 raw__funk2__execution_nanoseconds(f2ptr cause) {
 f2ptr f2__funk2__execution_nanoseconds(f2ptr cause) {
   return f2integer__new(cause, raw__funk2__execution_nanoseconds(cause));
 }
-def_pcfunk0(funk2__execution_nanoseconds, return f2__funk2__execution_nanoseconds(this_cause));
+def_pcfunk0(funk2__execution_nanoseconds,
+	    "",
+	    return f2__funk2__execution_nanoseconds(this_cause));
 #endif // F2__CYGWIN
 
 time_t nanoseconds_since_1970__to_unix_time(u64 nanoseconds_since_1970) {
@@ -220,7 +226,9 @@ f2ptr raw__time__new_from_unix_time(f2ptr cause, time_t unix_time) {
 def_primobject_1_slot(time, nanoseconds_since_1970);
 
 f2ptr f2__time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2time__new(cause, nanoseconds_since_1970);}
-def_pcfunk1(time__new, nanoseconds_since_1970, return f2__time__new(this_cause, nanoseconds_since_1970));
+def_pcfunk1(time__new, nanoseconds_since_1970,
+	    "",
+	    return f2__time__new(this_cause, nanoseconds_since_1970));
 
 boolean_t raw__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__time__is_type(cause, that)) {
@@ -233,7 +241,9 @@ f2ptr f2__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(time, this);
   return f2bool__new(raw__time__equals(cause, this, that));
 }
-def_pcfunk2(time__equals, this, that, return f2__time__equals(this_cause, this, that));
+def_pcfunk2(time__equals, this, that,
+	    "",
+	    return f2__time__equals(this_cause, this, that));
 
 u64 raw__time__years(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -243,7 +253,9 @@ u64 raw__time__years(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__years(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__years(cause, this));}
-def_pcfunk1(time__years, this, return f2__time__years(this_cause, this));
+def_pcfunk1(time__years, this,
+	    "",
+	    return f2__time__years(this_cause, this));
 
 u64 raw__time__months(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -253,7 +265,9 @@ u64 raw__time__months(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__months(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__months(cause, this));}
-def_pcfunk1(time__months, this, return f2__time__months(this_cause, this));
+def_pcfunk1(time__months, this,
+	    "",
+	    return f2__time__months(this_cause, this));
 
 u64 raw__time__days(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -263,7 +277,9 @@ u64 raw__time__days(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__days(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__days(cause, this));}
-def_pcfunk1(time__days, this, return f2__time__days(this_cause, this));
+def_pcfunk1(time__days, this,
+	    "",
+	    return f2__time__days(this_cause, this));
 
 u64 raw__time__hours(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -273,7 +289,9 @@ u64 raw__time__hours(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__hours(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__hours(cause, this));}
-def_pcfunk1(time__hours, this, return f2__time__hours(this_cause, this));
+def_pcfunk1(time__hours, this,
+	    "",
+	    return f2__time__hours(this_cause, this));
 
 u64 raw__time__minutes(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -283,7 +301,9 @@ u64 raw__time__minutes(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__minutes(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__minutes(cause, this));}
-def_pcfunk1(time__minutes, this, return f2__time__minutes(this_cause, this));
+def_pcfunk1(time__minutes, this,
+	    "",
+	    return f2__time__minutes(this_cause, this));
 
 u64 raw__time__seconds(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -293,7 +313,9 @@ u64 raw__time__seconds(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__seconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__seconds(cause, this));}
-def_pcfunk1(time__seconds, this, return f2__time__seconds(this_cause, this));
+def_pcfunk1(time__seconds, this,
+	    "",
+	    return f2__time__seconds(this_cause, this));
 
 u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
@@ -303,7 +325,9 @@ u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__nanoseconds(cause, this));}
-def_pcfunk1(time__nanoseconds, this, return f2__time__nanoseconds(this_cause, this));
+def_pcfunk1(time__nanoseconds, this,
+	    "",
+	    return f2__time__nanoseconds(this_cause, this));
 
 f2ptr raw__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
@@ -321,7 +345,9 @@ f2ptr f2__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(time, that);
   return f2bool__new(raw__time__is_less_than(cause, this, that));
 }
-def_pcfunk2(time__is_less_than, this, that, return f2__time__is_less_than(this_cause, this, that));
+def_pcfunk2(time__is_less_than, this, that,
+	    "",
+	    return f2__time__is_less_than(this_cause, this, that));
 
 f2ptr raw__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
@@ -339,7 +365,9 @@ f2ptr f2__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(time, that);
   return f2bool__new(raw__time__is_greater_than(cause, this, that));
 }
-def_pcfunk2(time__is_greater_than, this, that, return f2__time__is_greater_than(this_cause, this, that));
+def_pcfunk2(time__is_greater_than, this, that,
+	    "",
+	    return f2__time__is_greater_than(this_cause, this, that));
 
 f2ptr raw__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
@@ -357,7 +385,9 @@ f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(time, that);
   return f2bool__new(raw__time__is_numerically_equal_to(cause, this, that));
 }
-def_pcfunk2(time__is_numerically_equal_to, this, that, return f2__time__is_numerically_equal_to(this_cause, this, that));
+def_pcfunk2(time__is_numerically_equal_to, this, that,
+	    "",
+	    return f2__time__is_numerically_equal_to(this_cause, this, that));
 
 
 f2ptr raw__time__abbreviated_weekday_name(f2ptr cause, f2ptr this) {
@@ -375,7 +405,9 @@ f2ptr f2__time__abbreviated_weekday_name(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__abbreviated_weekday_name(cause, this);
 }
-def_pcfunk1(time__abbreviated_weekday_name, this, return f2__time__abbreviated_weekday_name(this_cause, this));
+def_pcfunk1(time__abbreviated_weekday_name, this,
+	    "",
+	    return f2__time__abbreviated_weekday_name(this_cause, this));
 
 
 f2ptr raw__time__weekday_name(f2ptr cause, f2ptr this) {
@@ -393,7 +425,9 @@ f2ptr f2__time__weekday_name(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__weekday_name(cause, this);
 }
-def_pcfunk1(time__weekday_name, this, return f2__time__weekday_name(this_cause, this));
+def_pcfunk1(time__weekday_name, this,
+	    "",
+	    return f2__time__weekday_name(this_cause, this));
 
 
 f2ptr raw__time__abbreviated_month_name(f2ptr cause, f2ptr this) {
@@ -411,7 +445,9 @@ f2ptr f2__time__abbreviated_month_name(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__abbreviated_month_name(cause, this);
 }
-def_pcfunk1(time__abbreviated_month_name, this, return f2__time__abbreviated_month_name(this_cause, this));
+def_pcfunk1(time__abbreviated_month_name, this,
+	    "",
+	    return f2__time__abbreviated_month_name(this_cause, this));
 
 
 f2ptr raw__time__month_name(f2ptr cause, f2ptr this) {
@@ -429,7 +465,9 @@ f2ptr f2__time__month_name(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__month_name(cause, this);
 }
-def_pcfunk1(time__month_name, this, return f2__time__month_name(this_cause, this));
+def_pcfunk1(time__month_name, this,
+	    "",
+	    return f2__time__month_name(this_cause, this));
 
 
 f2ptr raw__time__date_and_time_string(f2ptr cause, f2ptr this) {
@@ -447,7 +485,9 @@ f2ptr f2__time__date_and_time_string(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__date_and_time_string(cause, this);
 }
-def_pcfunk1(time__date_and_time_string, this, return f2__time__date_and_time_string(this_cause, this));
+def_pcfunk1(time__date_and_time_string, this,
+	    "",
+	    return f2__time__date_and_time_string(this_cause, this));
 
 
 f2ptr raw__time__day_of_week(f2ptr cause, f2ptr this) {
@@ -462,7 +502,9 @@ f2ptr f2__time__day_of_week(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__day_of_week(cause, this);
 }
-def_pcfunk1(time__day_of_week, this, return f2__time__day_of_week(this_cause, this));
+def_pcfunk1(time__day_of_week, this,
+	    "",
+	    return f2__time__day_of_week(this_cause, this));
 
 
 f2ptr raw__time__day_of_year(f2ptr cause, f2ptr this) {
@@ -477,7 +519,9 @@ f2ptr f2__time__day_of_year(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__day_of_year(cause, this);
 }
-def_pcfunk1(time__day_of_year, this, return f2__time__day_of_year(this_cause, this));
+def_pcfunk1(time__day_of_year, this,
+	    "",
+	    return f2__time__day_of_year(this_cause, this));
 
 
 f2ptr raw__time__is_daylight_savings_time(f2ptr cause, f2ptr this) {
@@ -492,7 +536,9 @@ f2ptr f2__time__is_daylight_savings_time(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__is_daylight_savings_time(cause, this);
 }
-def_pcfunk1(time__is_daylight_savings_time, this, return f2__time__is_daylight_savings_time(this_cause, this));
+def_pcfunk1(time__is_daylight_savings_time, this,
+	    "",
+	    return f2__time__is_daylight_savings_time(this_cause, this));
 
 
 f2ptr raw__time__timezone(f2ptr cause, f2ptr this) {
@@ -510,7 +556,9 @@ f2ptr f2__time__timezone(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__timezone(cause, this);
 }
-def_pcfunk1(time__timezone, this, return f2__time__timezone(this_cause, this));
+def_pcfunk1(time__timezone, this,
+	    "",
+	    return f2__time__timezone(this_cause, this));
 
 
 
@@ -542,7 +590,9 @@ f2ptr f2__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__time__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(time__terminal_print_with_frame, this, terminal_print_frame, return f2__time__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(time__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__time__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2time__primobject_type__new_aux(f2ptr cause) {

@@ -230,6 +230,7 @@ def_pcfunk1(global_scheduler__add_fiber, fiber, return f2__global_scheduler__add
 f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
   f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   if (processor_assignment_index == nil) {
+    f2__print(cause, f2__fiber__stack_trace(cause, f2__this__fiber(cause)));
     return f2larva__new(cause, 1355472, f2__bug__new(cause, f2integer__new(cause, 1355472),
 						     f2__frame__new(cause, f2list6__new(cause,
 											new__symbol(cause, "bug_type"),   new__symbol(cause, "global_scheduler-remove_fiber-fiber_is_not_currently_assigned_to_a_processor"),

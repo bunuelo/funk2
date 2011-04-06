@@ -45,6 +45,10 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
   }
   pause_gc();
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
+  f2ptr old_processor_assignment_index = f2fiber__processor_assignment_index(this, cause);
+  if (old_processor_assignment_index != nil) {
+    printf("\nprocessor-add_active_fiber warning: adding fiber to processor when already assigned to processor."); fflush(stdout);
+  }
   f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
   resume_gc();
   return boolean__true;
@@ -56,9 +60,9 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   }
   f2ptr active_fibers_scheduler_cmutex        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
   f2ptr processor_assignment_scheduler_cmutex = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
-  boolean_t both_locked                      = boolean__false;
+  boolean_t both_locked                       = boolean__false;
   while (! both_locked) {
-    both_locked                                                    = boolean__true;
+    both_locked                                                     = boolean__true;
     boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
     boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
     if (active_fibers_scheduler_cmutex__failed_to_lock) {
@@ -124,7 +128,7 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
   {
     boolean_t both_locked = boolean__false;
     while (! both_locked) {
-      both_locked                                                    = boolean__true;
+      both_locked                                                     = boolean__true;
       boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
       boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
       if (active_fibers_scheduler_cmutex__failed_to_lock) {

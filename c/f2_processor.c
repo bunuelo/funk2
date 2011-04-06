@@ -46,9 +46,6 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
   pause_gc();
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
   f2ptr old_processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
-  if (old_processor_assignment_index != nil) {
-    printf("\nprocessor-add_active_fiber warning: adding fiber to processor when already assigned to processor."); fflush(stdout);
-  }
   f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
   resume_gc();
   return boolean__true;
@@ -542,6 +539,14 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	  resume_gc();
 	  {
+	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
+	    if (raw__larva__is_type(cause, result)) {
+	      status(    "processor-execute_next_bytecodes: error adding critic fiber.");
+	      error(nil, "processor-execute_next_bytecodes: error adding critic fiber.");
+	    }
+	  }
+	  /*
+	  {
 	    f2ptr processor__active_fibers_scheduler_cmutex;
 	    int lock_failed;
 	    do {
@@ -555,7 +560,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    f2processor__active_fibers__set(processor, cause, f2cons__new(cause, new_fiber, f2processor__active_fibers(processor, cause)));
 	    resume_gc();
 	    f2scheduler_cmutex__unlock(processor__active_fibers_scheduler_cmutex, cause);
-	  }	
+	  }
+	  */	
 	  //printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
 	} else {
 	  char status_msg[1024];

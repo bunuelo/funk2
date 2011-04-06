@@ -28,7 +28,9 @@ def_primobject_3_slot(list, write_cmutex, length, cons_cells);
 f2ptr f2__list__new(f2ptr cause, f2ptr elements) {
   return f2list__new(cause, f2cmutex__new(cause), f2__simple_length(cause, elements), elements);
 }
-def_pcfunk0_and_rest(list__new, elements, return f2__list__new(this_cause, elements));
+def_pcfunk0_and_rest(list__new, elements,
+		     "",
+		     return f2__list__new(this_cause, elements));
 
 f2ptr f2__list__car(f2ptr cause, f2ptr this) {
   f2ptr cons_cells = f2list__cons_cells(this, cause);
@@ -37,7 +39,9 @@ f2ptr f2__list__car(f2ptr cause, f2ptr this) {
   }
   return f2cons__car(cons_cells, cause);
 }
-def_pcfunk1(list__car, this, return f2__list__car(this_cause, this));
+def_pcfunk1(list__car, this,
+	    "",
+	    return f2__list__car(this_cause, this));
 
 f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
   f2ptr length     = f2list__length(this, cause);
@@ -53,7 +57,9 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
     return nil;
   }
 }
-def_pcfunk1(list__cdr, this, return f2__list__cdr(this_cause, this));
+def_pcfunk1(list__cdr, this,
+	    "",
+	    return f2__list__cdr(this_cause, this));
 
 f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
@@ -64,7 +70,9 @@ f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
   return nil;
 }
-def_pcfunk2(list__add, this, element, return f2__list__add(this_cause, this, element));
+def_pcfunk2(list__add, this, element,
+	    "",
+	    return f2__list__add(this_cause, this, element));
 
 f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
@@ -80,7 +88,9 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
   return nil;
 }
-def_pcfunk2(list__lookup, this, element, return f2__list__lookup(this_cause, this, element));
+def_pcfunk2(list__lookup, this, element,
+	    "",
+	    return f2__list__lookup(this_cause, this, element));
 
 f2ptr raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);
@@ -95,7 +105,9 @@ f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(list, this);
   return raw__list__equals(cause, this, that);
 }
-def_pcfunk2(list__equals, this, that, return f2__list__equals(this_cause, this, that));
+def_pcfunk2(list__equals, this, that,
+	    "",
+	    return f2__list__equals(this_cause, this, that));
 
 f2ptr raw__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);
@@ -107,7 +119,9 @@ f2ptr f2__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node
   assert_argument_type(ptypehash, node_hash);
   return raw__list__equals_hash_value__loop_free(cause, this, node_hash);
 }
-def_pcfunk2(list__equals_hash_value__loop_free, this, node_hash, return f2__list__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(list__equals_hash_value__loop_free, this, node_hash,
+	    "",
+	    return f2__list__equals_hash_value__loop_free(this_cause, this, node_hash));
 
 f2ptr raw__list__equals_hash_value(f2ptr cause, f2ptr this) {
   f2ptr node_hash = f2__ptypehash__new(cause);
@@ -118,7 +132,9 @@ f2ptr f2__list__equals_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(list, this);
   return raw__list__equals_hash_value(cause, this);
 }
-def_pcfunk1(list__equals_hash_value, this, return f2__list__equals_hash_value(this_cause, this));
+def_pcfunk1(list__equals_hash_value, this,
+	    "",
+	    return f2__list__equals_hash_value(this_cause, this));
 
 
 f2ptr raw__list__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -130,7 +146,9 @@ f2ptr f2__list__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termina
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__list__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(list__terminal_print_with_frame, this, terminal_print_frame, return f2__list__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(list__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__list__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2list__primobject_type__new_aux(f2ptr cause) {

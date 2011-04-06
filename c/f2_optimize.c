@@ -38,7 +38,9 @@ f2ptr f2__optimize_bytecode__new(f2ptr cause, f2ptr optimize_context, f2ptr sequ
 				  sequence,
 				  execution_count);
 }
-def_pcfunk2(optimize_bytecode__new, optimize_context, sequence, return f2__optimize_bytecode__new(this_cause, optimize_context, sequence));
+def_pcfunk2(optimize_bytecode__new, optimize_context, sequence,
+	    "",
+	    return f2__optimize_bytecode__new(this_cause, optimize_context, sequence));
 
 
 f2ptr raw__optimize_bytecode__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -59,7 +61,9 @@ f2ptr f2__optimize_bytecode__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_bytecode__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(optimize_bytecode__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_bytecode__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(optimize_bytecode__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__optimize_bytecode__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2optimize_bytecode__primobject_type__new_aux(f2ptr cause) {
@@ -80,7 +84,9 @@ def_primobject_4_slot(optimize_data,
 f2ptr f2__optimize_data__new(f2ptr cause, f2ptr optimize_context, f2ptr name, f2ptr data_type, f2ptr args) {
   return f2optimize_data__new(cause, optimize_context, name, data_type, args);
 }
-def_pcfunk4(optimize_data__new, optimize_context, name, data_type, args, return f2__optimize_data__new(this_cause, optimize_context, name, data_type, args));
+def_pcfunk4(optimize_data__new, optimize_context, name, data_type, args,
+	    "",
+	    return f2__optimize_data__new(this_cause, optimize_context, name, data_type, args));
 
 
 
@@ -938,7 +944,9 @@ f2ptr f2__optimize_data__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_data__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(optimize_data__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_data__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(optimize_data__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__optimize_data__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2optimize_data__primobject_type__new_aux(f2ptr cause) {
@@ -993,7 +1001,9 @@ f2ptr f2__optimize_fiber__new(f2ptr cause, f2ptr optimize_context) {
 			       return_reg,
 			       env);
 }
-def_pcfunk1(optimize_fiber__new, optimize_context, return f2__optimize_fiber__new(this_cause, optimize_context));
+def_pcfunk1(optimize_fiber__new, optimize_context,
+	    "",
+	    return f2__optimize_fiber__new(this_cause, optimize_context));
 
 
 f2ptr raw__optimize_fiber__new_copy(f2ptr cause, f2ptr this) {
@@ -3874,7 +3884,9 @@ f2ptr f2__optimize_fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_fiber__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(optimize_fiber__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_fiber__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(optimize_fiber__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__optimize_fiber__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2optimize_fiber__primobject_type__new_aux(f2ptr cause) {
@@ -3928,7 +3940,9 @@ f2ptr raw__optimize_context__new(f2ptr cause, s64 maximum_loop_count) {
   return f2__optimize_context__new(cause, f2integer__new(cause, maximum_loop_count));
 }
 
-def_pcfunk1(optimize_context__new, maximum_loop_count, return f2__optimize_context__new(this_cause, maximum_loop_count));
+def_pcfunk1(optimize_context__new, maximum_loop_count,
+	    "",
+	    return f2__optimize_context__new(this_cause, maximum_loop_count));
 
 
 void raw__optimize_context__add_active_fiber(f2ptr cause, f2ptr this, f2ptr active_fiber) {
@@ -4259,7 +4273,9 @@ f2ptr f2__optimize_context__terminal_print_with_frame(f2ptr cause, f2ptr this, f
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_context__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(optimize_context__terminal_print_with_frame, this, terminal_print_frame, return f2__optimize_context__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(optimize_context__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__optimize_context__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2optimize_context__primobject_type__new_aux(f2ptr cause) {

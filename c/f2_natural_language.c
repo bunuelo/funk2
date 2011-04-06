@@ -45,7 +45,9 @@ f2ptr f2__clause__new(f2ptr cause) {
   f2ptr unmatched_relative_reference = nil;
   return f2clause__new(cause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
 }
-def_pcfunk0(clause__new, return f2__clause__new(this_cause));
+def_pcfunk0(clause__new,
+	    "",
+	    return f2__clause__new(this_cause));
 
 
 f2ptr f2clause__primobject_type__new_aux(f2ptr cause) {
@@ -63,7 +65,9 @@ f2ptr f2__wh_rank_shift_clause__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2wh_rank_shift_clause__new(cause, symbols);
 }
-def_pcfunk0(wh_rank_shift_clause__new, return f2__wh_rank_shift_clause__new(this_cause));
+def_pcfunk0(wh_rank_shift_clause__new,
+	    "",
+	    return f2__wh_rank_shift_clause__new(this_cause));
 
 
 f2ptr f2wh_rank_shift_clause__primobject_type__new_aux(f2ptr cause) {
@@ -98,7 +102,9 @@ f2ptr f2__noun_group__new(f2ptr cause) {
   f2ptr question    = nil;
   return f2noun_group__new(cause, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two, question);
 }
-def_pcfunk0(noun_group__new, return f2__noun_group__new(this_cause));
+def_pcfunk0(noun_group__new,
+	    "",
+	    return f2__noun_group__new(this_cause));
 
 
 f2ptr f2noun_group__primobject_type__new_aux(f2ptr cause) {
@@ -124,7 +130,9 @@ f2ptr f2__preposition_group__new(f2ptr cause) {
   f2ptr relative_preposition_group = nil;
   return f2preposition_group__new(cause, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
 }
-def_pcfunk0(preposition_group__new, return f2__preposition_group__new(this_cause));
+def_pcfunk0(preposition_group__new,
+	    "",
+	    return f2__preposition_group__new(this_cause));
 
 
 f2ptr f2preposition_group__primobject_type__new_aux(f2ptr cause) {
@@ -149,7 +157,9 @@ f2ptr f2__adjective_group__new(f2ptr cause) {
   f2ptr question    = nil;
   return f2adjective_group__new(cause, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
 }
-def_pcfunk0(adjective_group__new, return f2__adjective_group__new(this_cause));
+def_pcfunk0(adjective_group__new,
+	    "",
+	    return f2__adjective_group__new(this_cause));
 
 
 f2ptr f2adjective_group__primobject_type__new_aux(f2ptr cause) {
@@ -181,7 +191,9 @@ f2ptr f2__verb_group__new(f2ptr cause) {
   f2ptr takes_particle     = nil;
   return f2verb_group__new(cause, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
 }
-def_pcfunk0(verb_group__new, return f2__verb_group__new(this_cause));
+def_pcfunk0(verb_group__new,
+	    "",
+	    return f2__verb_group__new(this_cause));
 
 
 f2ptr f2verb_group__primobject_type__new_aux(f2ptr cause) {
@@ -201,7 +213,9 @@ f2ptr f2__combination_group__new(f2ptr cause) {
   f2ptr preposition = nil;
   return f2combination_group__new(cause, symbols, transitive, preposition);
 }
-def_pcfunk0(combination_group__new, return f2__combination_group__new(this_cause));
+def_pcfunk0(combination_group__new,
+	    "",
+	    return f2__combination_group__new(this_cause));
 
 
 f2ptr f2combination_group__primobject_type__new_aux(f2ptr cause) {
@@ -221,7 +235,9 @@ f2ptr f2__adjective_word__new(f2ptr cause) {
   f2ptr comparative = nil;
   return f2adjective_word__new(cause, symbols, superlative, comparative);
 }
-def_pcfunk0(adjective_word__new, return f2__adjective_word__new(this_cause));
+def_pcfunk0(adjective_word__new,
+	    "",
+	    return f2__adjective_word__new(this_cause));
 
 
 f2ptr f2adjective_word__primobject_type__new_aux(f2ptr cause) {
@@ -243,7 +259,9 @@ f2ptr f2__adverb_word__new(f2ptr cause) {
   f2ptr clause_modifier      = nil;
   return f2adverb_word__new(cause, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
 }
-def_pcfunk0(adverb_word__new, return f2__adverb_word__new(this_cause));
+def_pcfunk0(adverb_word__new,
+	    "",
+	    return f2__adverb_word__new(this_cause));
 
 
 f2ptr f2adverb_word__primobject_type__new_aux(f2ptr cause) {
@@ -261,7 +279,9 @@ f2ptr f2__binder_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2binder_word__new(cause, symbols);
 }
-def_pcfunk0(binder_word__new, return f2__binder_word__new(this_cause));
+def_pcfunk0(binder_word__new,
+	    "",
+	    return f2__binder_word__new(this_cause));
 
 
 f2ptr f2binder_word__primobject_type__new_aux(f2ptr cause) {
@@ -279,7 +299,9 @@ f2ptr f2__classifier_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2classifier_word__new(cause, symbols);
 }
-def_pcfunk0(classifier_word__new, return f2__classifier_word__new(this_cause));
+def_pcfunk0(classifier_word__new,
+	    "",
+	    return f2__classifier_word__new(this_cause));
 
 
 f2ptr f2classifier_word__primobject_type__new_aux(f2ptr cause) {
@@ -308,7 +330,9 @@ f2ptr f2__determiner_word__new(f2ptr cause) {
   f2ptr mass          = nil;
   return f2determiner_word__new(cause, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
 }
-def_pcfunk0(determiner_word__new, return f2__determiner_word__new(this_cause));
+def_pcfunk0(determiner_word__new,
+	    "",
+	    return f2__determiner_word__new(this_cause));
 
 
 f2ptr f2determiner_word__primobject_type__new_aux(f2ptr cause) {
@@ -332,7 +356,9 @@ f2ptr f2__noun_word__new(f2ptr cause) {
   f2ptr time_specific = nil;
   return f2noun_word__new(cause, symbols, singular, plural, mass, possessive, time_unit, time_specific);
 }
-def_pcfunk0(noun_word__new, return f2__noun_word__new(this_cause));
+def_pcfunk0(noun_word__new,
+	    "",
+	    return f2__noun_word__new(this_cause));
 
 
 f2ptr f2noun_word__primobject_type__new_aux(f2ptr cause) {
@@ -352,7 +378,9 @@ f2ptr f2__number_word__new(f2ptr cause) {
   f2ptr plural   = nil;
   return f2number_word__new(cause, symbols, singular, plural);
 }
-def_pcfunk0(number_word__new, return f2__number_word__new(this_cause));
+def_pcfunk0(number_word__new,
+	    "",
+	    return f2__number_word__new(this_cause));
 
 
 f2ptr f2number_word__primobject_type__new_aux(f2ptr cause) {
@@ -374,7 +402,9 @@ f2ptr f2__number_determiner_word__new(f2ptr cause) {
   f2ptr alone          = nil;
   return f2number_determiner_word__new(cause, symbols, than_modifier, as_as_modifier, at_modifier, alone);
 }
-def_pcfunk0(number_determiner_word__new, return f2__number_determiner_word__new(this_cause));
+def_pcfunk0(number_determiner_word__new,
+	    "",
+	    return f2__number_determiner_word__new(this_cause));
 
 
 f2ptr f2number_determiner_word__primobject_type__new_aux(f2ptr cause) {
@@ -392,7 +422,9 @@ f2ptr f2__ordinal_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2ordinal_word__new(cause, symbols);
 }
-def_pcfunk0(ordinal_word__new, return f2__ordinal_word__new(this_cause));
+def_pcfunk0(ordinal_word__new,
+	    "",
+	    return f2__ordinal_word__new(this_cause));
 
 
 f2ptr f2ordinal_word__primobject_type__new_aux(f2ptr cause) {
@@ -412,7 +444,9 @@ f2ptr f2__preposition_word__new(f2ptr cause) {
   f2ptr combination_second = nil;
   return f2preposition_word__new(cause, symbols, combination_first, combination_second);
 }
-def_pcfunk0(preposition_word__new, return f2__preposition_word__new(this_cause));
+def_pcfunk0(preposition_word__new,
+	    "",
+	    return f2__preposition_word__new(this_cause));
 
 
 f2ptr f2preposition_word__primobject_type__new_aux(f2ptr cause) {
@@ -439,7 +473,9 @@ f2ptr f2__pronoun_word__new(f2ptr cause) {
   f2ptr question              = nil;
   return f2pronoun_word__new(cause, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
 }
-def_pcfunk0(pronoun_word__new, return f2__pronoun_word__new(this_cause));
+def_pcfunk0(pronoun_word__new,
+	    "",
+	    return f2__pronoun_word__new(this_cause));
 
 
 f2ptr f2pronoun_word__primobject_type__new_aux(f2ptr cause) {
@@ -459,7 +495,9 @@ f2ptr f2__proper_noun_word__new(f2ptr cause) {
   f2ptr plural   = nil;
   return f2proper_noun_word__new(cause, symbols, singular, plural);
 }
-def_pcfunk0(proper_noun_word__new, return f2__proper_noun_word__new(this_cause));
+def_pcfunk0(proper_noun_word__new,
+	    "",
+	    return f2__proper_noun_word__new(this_cause));
 
 
 f2ptr f2proper_noun_word__primobject_type__new_aux(f2ptr cause) {
@@ -477,7 +515,9 @@ f2ptr f2__particle_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2particle_word__new(cause, symbols);
 }
-def_pcfunk0(particle_word__new, return f2__particle_word__new(this_cause));
+def_pcfunk0(particle_word__new,
+	    "",
+	    return f2__particle_word__new(this_cause));
 
 
 f2ptr f2particle_word__primobject_type__new_aux(f2ptr cause) {
@@ -495,7 +535,9 @@ f2ptr f2__question_adjunct_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2question_adjunct_word__new(cause, symbols);
 }
-def_pcfunk0(question_adjunct_word__new, return f2__question_adjunct_word__new(this_cause));
+def_pcfunk0(question_adjunct_word__new,
+	    "",
+	    return f2__question_adjunct_word__new(this_cause));
 
 
 f2ptr f2question_adjunct_word__primobject_type__new_aux(f2ptr cause) {
@@ -513,7 +555,9 @@ f2ptr f2__thing_pronoun_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2thing_pronoun_word__new(cause, symbols);
 }
-def_pcfunk0(thing_pronoun_word__new, return f2__thing_pronoun_word__new(this_cause));
+def_pcfunk0(thing_pronoun_word__new,
+	    "",
+	    return f2__thing_pronoun_word__new(this_cause));
 
 
 f2ptr f2thing_pronoun_word__primobject_type__new_aux(f2ptr cause) {
@@ -531,7 +575,9 @@ f2ptr f2__infinitive_helper_word__new(f2ptr cause) {
   f2ptr symbols = nil;
   return f2infinitive_helper_word__new(cause, symbols);
 }
-def_pcfunk0(infinitive_helper_word__new, return f2__infinitive_helper_word__new(this_cause));
+def_pcfunk0(infinitive_helper_word__new,
+	    "",
+	    return f2__infinitive_helper_word__new(this_cause));
 
 
 f2ptr f2infinitive_helper_word__primobject_type__new_aux(f2ptr cause) {
@@ -571,7 +617,9 @@ f2ptr f2__verb_word__new(f2ptr cause) {
   f2ptr takes_subject_to_object = nil;
   return f2verb_word__new(cause, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, ing, en, infinitive, past, present, Main, takes_particle, transitive, transitive_two, takes_to_object, takes_subject_to_object);
 }
-def_pcfunk0(verb_word__new, return f2__verb_word__new(this_cause));
+def_pcfunk0(verb_word__new,
+	    "",
+	    return f2__verb_word__new(this_cause));
 
 
 f2ptr f2verb_word__primobject_type__new_aux(f2ptr cause) {
@@ -594,7 +642,9 @@ f2ptr f2__parse_tree_node__new(f2ptr cause) {
   f2ptr last_child_node  = nil;
   return f2parse_tree_node__new(cause, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
 }
-def_pcfunk0(parse_tree_node__new, return f2__parse_tree_node__new(this_cause));
+def_pcfunk0(parse_tree_node__new,
+	    "",
+	    return f2__parse_tree_node__new(this_cause));
 
 
 void raw__parse_tree_node__add_all_nodes_as_new_to_ptypehash(f2ptr cause, f2ptr this, f2ptr ptypehash) {
@@ -657,7 +707,9 @@ f2ptr f2__parse_tree_node__insert_after(f2ptr cause, f2ptr this, f2ptr node) {
   raw__parse_tree_node__insert_after(cause, this, node);
   return nil;
 }
-def_pcfunk2(parse_tree_node__insert_after, this, node, return f2__parse_tree_node__insert_after(this_cause, this, node));
+def_pcfunk2(parse_tree_node__insert_after, this, node,
+	    "",
+	    return f2__parse_tree_node__insert_after(this_cause, this, node));
 
 
 void raw__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2ptr node) {
@@ -675,7 +727,9 @@ f2ptr f2__parse_tree_node__insert_below_no_children(f2ptr cause, f2ptr this, f2p
   raw__parse_tree_node__insert_below_no_children(cause, this, node);
   return nil;
 }
-def_pcfunk2(parse_tree_node__insert_below_no_children, this, node, return f2__parse_tree_node__insert_below_no_children(this_cause, this, node));
+def_pcfunk2(parse_tree_node__insert_below_no_children, this, node,
+	    "",
+	    return f2__parse_tree_node__insert_below_no_children(this_cause, this, node));
 
 
 void raw__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
@@ -693,7 +747,9 @@ f2ptr f2__parse_tree_node__add_child(f2ptr cause, f2ptr this, f2ptr node) {
   raw__parse_tree_node__add_child(cause, this, node);
   return nil;
 }
-def_pcfunk2(parse_tree_node__add_child, this, node, return f2__parse_tree_node__add_child(this_cause, this, node));
+def_pcfunk2(parse_tree_node__add_child, this, node,
+	    "",
+	    return f2__parse_tree_node__add_child(this_cause, this, node));
 
 
 f2ptr raw__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr type) {
@@ -742,7 +798,9 @@ f2ptr f2__parse_tree_node__containing_type_node(f2ptr cause, f2ptr this, f2ptr t
   assert_argument_type(symbol,          type);
   return raw__parse_tree_node__containing_type_node(cause, this, type);
 }
-def_pcfunk2(parse_tree_node__containing_type_node, this, type, return f2__parse_tree_node__containing_type_node(this_cause, this, type));
+def_pcfunk2(parse_tree_node__containing_type_node, this, type,
+	    "",
+	    return f2__parse_tree_node__containing_type_node(this_cause, this, type));
 
 
 //[deftypefunk parse_tree_node get containing_type_with_true_property_node [type property]
@@ -780,7 +838,9 @@ f2ptr f2__parse_tree_node__containing_type_with_true_property_node(f2ptr cause, 
   assert_argument_type(symbol,          type);
   return raw__parse_tree_node__containing_type_with_true_property_node(cause, this, type, property);
 }
-def_pcfunk3(parse_tree_node__containing_type_with_true_property_node, this, type, property, return f2__parse_tree_node__containing_type_with_true_property_node(this_cause, this, type, property));
+def_pcfunk3(parse_tree_node__containing_type_with_true_property_node, this, type, property,
+	    "",
+	    return f2__parse_tree_node__containing_type_with_true_property_node(this_cause, this, type, property));
 
 
 //[deftypefunk parse_tree_node set containing_type_with_true_property_node [type property value]
@@ -826,7 +886,9 @@ f2ptr f2__parse_tree_node__containing_type_with_true_property__set(f2ptr cause, 
   assert_argument_type(symbol,          property);
   return raw__parse_tree_node__containing_type_with_true_property__set(cause, this, type, property, value);
 }
-def_pcfunk4(parse_tree_node__containing_type_with_true_property__set, this, type, property, value, return f2__parse_tree_node__containing_type_with_true_property__set(this_cause, this, type, property, value));
+def_pcfunk4(parse_tree_node__containing_type_with_true_property__set, this, type, property, value,
+	    "",
+	    return f2__parse_tree_node__containing_type_with_true_property__set(this_cause, this, type, property, value));
 
 
 f2ptr f2parse_tree_node__primobject_type__new_aux(f2ptr cause) {
@@ -852,7 +914,9 @@ f2ptr f2__parse_tree__new(f2ptr cause) {
   f2ptr current_node = nil;
   return f2parse_tree__new(cause, root_node, current_node);
 }
-def_pcfunk0(parse_tree__new, return f2__parse_tree__new(this_cause));
+def_pcfunk0(parse_tree__new,
+	    "",
+	    return f2__parse_tree__new(this_cause));
 
 
 f2ptr raw__parse_tree__new_copy(f2ptr cause, f2ptr this) {
@@ -873,7 +937,9 @@ f2ptr f2__parse_tree__new_copy(f2ptr cause, f2ptr this) {
   assert_argument_type(parse_tree, this);
   return raw__parse_tree__new_copy(cause, this);
 }
-def_pcfunk1(parse_tree__new_copy, this, return f2__parse_tree__new_copy(this_cause, this));
+def_pcfunk1(parse_tree__new_copy, this,
+	    "",
+	    return f2__parse_tree__new_copy(this_cause, this));
 
 
 f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {

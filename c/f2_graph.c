@@ -40,7 +40,9 @@ def_primobject_1_slot(graph_node, label);
 f2ptr f2__graph_node__new(f2ptr cause, f2ptr label) {
   return f2graph_node__new(cause, label);
 }
-def_pcfunk1(graph_node__new, label, return f2__graph_node__new(this_cause, label));
+def_pcfunk1(graph_node__new, label,
+	    "",
+	    return f2__graph_node__new(this_cause, label));
 
 
 f2ptr raw__graph_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -60,7 +62,9 @@ f2ptr f2__graph_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__graph_node__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph_node__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph_node__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr raw__graph_node__as__dot_code(f2ptr cause, f2ptr this) {
@@ -88,7 +92,9 @@ def_primobject_3_slot(graph_edge, label, left_node, right_node);
 f2ptr f2__graph_edge__new(f2ptr cause, f2ptr label, f2ptr left_node, f2ptr right_node) {
   return f2graph_edge__new(cause, label, left_node, right_node);
 }
-def_pcfunk3(graph_edge__new, label, left_node, right_node, return f2__graph_edge__new(this_cause, label, left_node, right_node));
+def_pcfunk3(graph_edge__new, label, left_node, right_node,
+	    "",
+	    return f2__graph_edge__new(this_cause, label, left_node, right_node));
 
 
 f2ptr raw__graph_edge__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -110,7 +116,9 @@ f2ptr f2__graph_edge__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__graph_edge__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph_edge__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_edge__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph_edge__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph_edge__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr raw__graph_edge__as__dot_code(f2ptr cause, f2ptr this) {
@@ -142,7 +150,9 @@ f2ptr f2__graph__new(f2ptr cause) {
   f2ptr edges_label_hash_left_node_hash_right_node_hash = f2__ptypehash__new(cause);
   return f2graph__new(cause, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 }
-def_pcfunk0(graph__new, return f2__graph__new(this_cause));
+def_pcfunk0(graph__new,
+	    "",
+	    return f2__graph__new(this_cause));
 
 
 f2ptr raw__graph__nodes(f2ptr cause, f2ptr this) {
@@ -155,7 +165,9 @@ f2ptr f2__graph__nodes(f2ptr cause, f2ptr this) {
   assert_argument_type(graph, this);
   return raw__graph__nodes(cause, this);
 }
-def_pcfunk1(graph__nodes, this, return f2__graph__nodes(this_cause, this));
+def_pcfunk1(graph__nodes, this,
+	    "",
+	    return f2__graph__nodes(this_cause, this));
 
 
 f2ptr raw__graph__edges(f2ptr cause, f2ptr this) {
@@ -168,7 +180,9 @@ f2ptr f2__graph__edges(f2ptr cause, f2ptr this) {
   assert_argument_type(graph, this);
   return raw__graph__edges(cause, this);
 }
-def_pcfunk1(graph__edges, this, return f2__graph__edges(this_cause, this));
+def_pcfunk1(graph__edges, this,
+	    "",
+	    return f2__graph__edges(this_cause, this));
 
 
 f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
@@ -187,7 +201,9 @@ f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   assert_argument_type(graph_node, node);
   return raw__graph__add_node(cause, this, node);
 }
-def_pcfunk2(graph__add_node, this, node, return f2__graph__add_node(this_cause, this, node));
+def_pcfunk2(graph__add_node, this, node,
+	    "",
+	    return f2__graph__add_node(this_cause, this, node));
 
 f2ptr raw__graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
   f2ptr node = f2__graph_node__new(cause, label);
@@ -198,7 +214,9 @@ f2ptr f2__graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
   assert_argument_type(graph, this);
   return raw__graph__add_new_node(cause, this, label);
 }
-def_pcfunk2(graph__add_new_node, this, label, return f2__graph__add_new_node(this_cause, this, label));
+def_pcfunk2(graph__add_new_node, this, label,
+	    "",
+	    return f2__graph__add_new_node(this_cause, this, label));
 
 
 f2ptr raw__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
@@ -210,7 +228,9 @@ f2ptr f2__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
   assert_argument_type(graph, this);
   return raw__graph__nodes_with_label(cause, this, label);
 }
-def_pcfunk2(graph__nodes_with_label, this, label, return f2__graph__nodes_with_label(this_cause, this, label));
+def_pcfunk2(graph__nodes_with_label, this, label,
+	    "",
+	    return f2__graph__nodes_with_label(this_cause, this, label));
 
 
 f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
@@ -261,7 +281,9 @@ f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   assert_argument_type(graph_edge, edge);
   return raw__graph__add_edge(cause, this, edge);
 }
-def_pcfunk2(graph__add_edge, this, edge, return f2__graph__add_edge(this_cause, this, edge));
+def_pcfunk2(graph__add_edge, this, edge,
+	    "",
+	    return f2__graph__add_edge(this_cause, this, edge));
 
 f2ptr raw__graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
   f2ptr edge = f2__graph_edge__new(cause, label, left_node, right_node);
@@ -274,7 +296,9 @@ f2ptr f2__graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_n
   assert_argument_type(graph_node, right_node);
   return raw__graph__add_new_edge(cause, this, label, left_node, right_node);
 }
-def_pcfunk4(graph__add_new_edge, this, label, left_node, right_node, return f2__graph__add_new_edge(this_cause, this, label, left_node, right_node));
+def_pcfunk4(graph__add_new_edge, this, label, left_node, right_node,
+	    "",
+	    return f2__graph__add_new_edge(this_cause, this, label, left_node, right_node));
 
 u64 raw__graph__node_count(f2ptr cause, f2ptr this) {
   f2ptr node_set            = f2__graph__node_set(cause, this);
@@ -287,7 +311,9 @@ f2ptr f2__graph__node_count(f2ptr cause, f2ptr this) {
   f2ptr node_set = f2__graph__node_set(cause, this);
   return f2__set__key_count(cause, node_set);
 }
-def_pcfunk1(graph__node_count, this, return f2__graph__node_count(this_cause, this));
+def_pcfunk1(graph__node_count, this,
+	    "",
+	    return f2__graph__node_count(this_cause, this));
 
 boolean_t raw__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node_set = f2__graph__node_set(cause, this);
@@ -299,7 +325,9 @@ f2ptr f2__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   assert_argument_type(graph_node, node);
   return f2bool__new(raw__graph__contains_node(cause, this, node));
 }
-def_pcfunk2(graph__contains_node, this, node, return f2__graph__contains_node(this_cause, this, node));
+def_pcfunk2(graph__contains_node, this, node,
+	    "",
+	    return f2__graph__contains_node(this_cause, this, node));
 
 boolean_t raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   f2ptr edge_set = f2__graph__edge_set(cause, this);
@@ -311,7 +339,9 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   assert_argument_type(graph_edge, edge);
   return f2bool__new(raw__graph__contains_edge(cause, this, edge));
 }
-def_pcfunk2(graph__contains_edge, this, edge, return f2__graph__contains_edge(this_cause, this, edge));
+def_pcfunk2(graph__contains_edge, this, edge,
+	    "",
+	    return f2__graph__contains_edge(this_cause, this, edge));
 
 boolean_t raw__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
   {
@@ -338,7 +368,9 @@ f2ptr f2__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
   assert_argument_type(graph, graph);
   return f2bool__new(raw__graph__contains(cause, this, graph));
 }
-def_pcfunk2(graph__contains, this, graph, return f2__graph__contains(this_cause, this, graph));
+def_pcfunk2(graph__contains, this, graph,
+	    "",
+	    return f2__graph__contains(this_cause, this, graph));
 
 
 f2ptr raw__graph__lookup_nodes_with_label(f2ptr cause, f2ptr this, f2ptr node_label) {
@@ -350,7 +382,9 @@ f2ptr f2__graph__lookup_nodes_with_label(f2ptr cause, f2ptr this, f2ptr node_lab
   assert_argument_type(graph, this);
   return raw__graph__lookup_nodes_with_label(cause, this, node_label);
 }
-def_pcfunk2(graph__lookup_nodes_with_label, this, node_label, return f2__graph__lookup_nodes_with_label(this_cause, this, node_label));
+def_pcfunk2(graph__lookup_nodes_with_label, this, node_label,
+	    "",
+	    return f2__graph__lookup_nodes_with_label(this_cause, this, node_label));
 
 
 
@@ -410,7 +444,9 @@ f2ptr f2__graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this) {
   }
   return raw__graph__random_nonempty_strict_subgraph(cause, this);
 }
-def_pcfunk1(graph__random_nonempty_strict_subgraph, this, return f2__graph__random_nonempty_strict_subgraph(this_cause, this));
+def_pcfunk1(graph__random_nonempty_strict_subgraph, this,
+	    "",
+	    return f2__graph__random_nonempty_strict_subgraph(this_cause, this));
 
 f2ptr raw__graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr graph = f2__graph__new(cause);
@@ -441,7 +477,9 @@ f2ptr f2__graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(graph, that);
   return raw__graph__minus(cause, this, that);
 }
-def_pcfunk2(graph__minus, this, that, return f2__graph__minus(this_cause, this, that));
+def_pcfunk2(graph__minus, this, that,
+	    "",
+	    return f2__graph__minus(this_cause, this, that));
 
 
 f2ptr raw__graph__copy(f2ptr cause, f2ptr this) {
@@ -477,7 +515,9 @@ f2ptr f2__graph__copy(f2ptr cause, f2ptr this) {
   assert_argument_type(graph, this);
   return raw__graph__copy(cause, this);
 }
-def_pcfunk1(graph__copy, this, return f2__graph__copy(this_cause, this));
+def_pcfunk1(graph__copy, this,
+	    "",
+	    return f2__graph__copy(this_cause, this));
 
 
 f2ptr raw__graph__copy_with_node_label(f2ptr cause, f2ptr this, f2ptr node_label) {
@@ -512,7 +552,9 @@ f2ptr f2__graph__copy_with_node_label(f2ptr cause, f2ptr this, f2ptr node_label)
   assert_argument_type(graph, this);
   return raw__graph__copy_with_node_label(cause, this, node_label);
 }
-def_pcfunk2(graph__copy_with_node_label, this, node_label, return f2__graph__copy_with_node_label(this_cause, this, node_label));
+def_pcfunk2(graph__copy_with_node_label, this, node_label,
+	    "",
+	    return f2__graph__copy_with_node_label(this_cause, this, node_label));
 
 
 f2ptr raw__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
@@ -537,7 +579,9 @@ f2ptr f2__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
   assert_argument_type(graph_node, node);
   return raw__graph__node_isomorphisms(cause, this, node);
 }
-def_pcfunk2(graph__node_isomorphisms, this, node, return f2__graph__node_isomorphisms(this_cause, this, node));
+def_pcfunk2(graph__node_isomorphisms, this, node,
+	    "",
+	    return f2__graph__node_isomorphisms(this_cause, this, node));
 
 
 f2ptr raw__graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
@@ -560,7 +604,9 @@ f2ptr f2__graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr l
   assert_argument_type(graph_node, right_node);
   return raw__graph__edges_with_label_between_nodes(cause, this, label, left_node, right_node);
 }
-def_pcfunk4(graph__edges_with_label_between_nodes, this, label, left_node, right_node, return f2__graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
+def_pcfunk4(graph__edges_with_label_between_nodes, this, label, left_node, right_node,
+	    "",
+	    return f2__graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
 
 
 
@@ -592,7 +638,9 @@ f2ptr f2__graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f
   assert_argument_type(graph_node, right_node);
   return raw__graph__edges_between_nodes(cause, this, left_node, right_node);
 }
-def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node, return f2__graph__edges_between_nodes(this_cause, this, left_node, right_node));
+def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node,
+	    "",
+	    return f2__graph__edges_between_nodes(this_cause, this, left_node, right_node));
 
 
 
@@ -625,7 +673,9 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
   assert_argument_type(graph, this);
   return raw__graph__as__dot_code(cause, this);
 }
-def_pcfunk1(graph__as__dot_code, this, return f2__graph__as__dot_code(this_cause, this));
+def_pcfunk1(graph__as__dot_code, this,
+	    "",
+	    return f2__graph__as__dot_code(this_cause, this));
 
 
 f2ptr raw__graph__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -646,7 +696,9 @@ f2ptr f2__graph__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__graph__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph__terminal_print_with_frame, this, terminal_print_frame, return f2__graph__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
@@ -707,7 +759,9 @@ f2ptr f2__graph_list__union(f2ptr cause, f2ptr this) {
   assert_argument_type(graph_list, this);
   return raw__graph_list__union(cause, this);
 }
-def_pcfunk1(graph_list__union, this, return f2__graph_list__union(this_cause, this));
+def_pcfunk1(graph_list__union, this,
+	    "",
+	    return f2__graph_list__union(this_cause, this));
 
 
 
@@ -720,7 +774,9 @@ f2ptr f2__graph_isomorphism__new(f2ptr cause) {
   f2ptr left_node_right_node_hash = f2__ptypehash__new(cause);
   return f2graph_isomorphism__new(cause, right_node_left_node_hash, left_node_right_node_hash);
 }
-def_pcfunk0(graph_isomorphism__new, return f2__graph_isomorphism__new(this_cause));
+def_pcfunk0(graph_isomorphism__new,
+	    "",
+	    return f2__graph_isomorphism__new(this_cause));
 
 void raw__graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
   f2ptr right_node_left_node_hash = f2__graph_isomorphism__right_node_left_node_hash(cause, this);
@@ -736,7 +792,9 @@ f2ptr f2__graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr left_nod
   raw__graph_isomorphism__add_mapping(cause, this, left_node, right_node);
   return nil;
 }
-def_pcfunk3(graph_isomorphism__add_mapping, this, left_node, right_node, return f2__graph_isomorphism__add_mapping(this_cause, this, left_node, right_node));
+def_pcfunk3(graph_isomorphism__add_mapping, this, left_node, right_node,
+	    "",
+	    return f2__graph_isomorphism__add_mapping(this_cause, this, left_node, right_node));
 
 u64 raw__graph_isomorphism__mapping_count(f2ptr cause, f2ptr this) {
   f2ptr right_node_left_node_hash = f2__graph_isomorphism__right_node_left_node_hash(cause, this);
@@ -750,7 +808,9 @@ f2ptr f2__graph_isomorphism__mapping_count(f2ptr cause, f2ptr this) {
   f2ptr key_count                 = f2__ptypehash__key_count(cause, right_node_left_node_hash);
   return key_count;
 }
-def_pcfunk1(graph_isomorphism__mapping_count, this, return f2__graph_isomorphism__mapping_count(this_cause, this));
+def_pcfunk1(graph_isomorphism__mapping_count, this,
+	    "",
+	    return f2__graph_isomorphism__mapping_count(this_cause, this));
 
 boolean_t raw__graph_isomorphism__is_disjoint_with(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__mapping_count = raw__graph_isomorphism__mapping_count(cause, this);
@@ -784,7 +844,9 @@ f2ptr f2__graph_isomorphism__is_disjoint_with(f2ptr cause, f2ptr this, f2ptr tha
   assert_argument_type(graph_isomorphism, that);
   return raw__graph_isomorphism__is_disjoint_with(cause, this, that);
 }
-def_pcfunk2(graph_isomorphism__is_disjoint_with, this, that, return f2__graph_isomorphism__is_disjoint_with(this_cause, this, that));
+def_pcfunk2(graph_isomorphism__is_disjoint_with, this, that,
+	    "",
+	    return f2__graph_isomorphism__is_disjoint_with(this_cause, this, that));
 
 f2ptr raw__graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr left_node) {
   f2ptr right_node_left_node_hash = f2__graph_isomorphism__right_node_left_node_hash(cause, this);
@@ -796,7 +858,9 @@ f2ptr f2__graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr le
   assert_argument_type(graph_node,        left_node);
   return raw__graph_isomorphism__map_left_to_right(cause, this, left_node);
 }
-def_pcfunk2(graph_isomorphism__map_left_to_right, this, left_node, return f2__graph_isomorphism__map_left_to_right(this_cause, this, left_node));
+def_pcfunk2(graph_isomorphism__map_left_to_right, this, left_node,
+	    "",
+	    return f2__graph_isomorphism__map_left_to_right(this_cause, this, left_node));
 
 f2ptr raw__graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr right_node) {
   f2ptr left_node_right_node_hash = f2__graph_isomorphism__left_node_right_node_hash(cause, this);
@@ -808,7 +872,9 @@ f2ptr f2__graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr ri
   assert_argument_type(graph_node,        right_node);
   return raw__graph_isomorphism__map_right_to_left(cause, this, right_node);
 }
-def_pcfunk2(graph_isomorphism__map_right_to_left, this, right_node, return f2__graph_isomorphism__map_right_to_left(this_cause, this, right_node));
+def_pcfunk2(graph_isomorphism__map_right_to_left, this, right_node,
+	    "",
+	    return f2__graph_isomorphism__map_right_to_left(this_cause, this, right_node));
 
 f2ptr raw__graph_isomorphism__union(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr isomorphism                     = f2__graph_isomorphism__new(cause);
@@ -832,7 +898,9 @@ f2ptr f2__graph_isomorphism__union(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(graph_isomorphism, that);
   return raw__graph_isomorphism__union(cause, this, that);
 }
-def_pcfunk2(graph_isomorphism__union, this, that, return f2__graph_isomorphism__union(this_cause, this, that));
+def_pcfunk2(graph_isomorphism__union, this, that,
+	    "",
+	    return f2__graph_isomorphism__union(this_cause, this, that));
 
 f2ptr raw__graph_isomorphism__as__frame(f2ptr cause, f2ptr this) {
   return f2__ptypehash__as__frame(cause, f2__graph_isomorphism__right_node_left_node_hash(cause, this));
@@ -842,7 +910,9 @@ f2ptr f2__graph_isomorphism__as__frame(f2ptr cause, f2ptr this) {
   assert_argument_type(graph_isomorphism, this);
   return raw__graph_isomorphism__as__frame(cause, this);
 }
-def_pcfunk1(graph_isomorphism__as__frame, this, return f2__graph_isomorphism__as__frame(this_cause, this));
+def_pcfunk1(graph_isomorphism__as__frame, this,
+	    "",
+	    return f2__graph_isomorphism__as__frame(this_cause, this));
 
 
 f2ptr raw__graph_isomorphism__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -861,7 +931,9 @@ f2ptr f2__graph_isomorphism__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__graph_isomorphism__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph_isomorphism__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_isomorphism__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph_isomorphism__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph_isomorphism__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2graph_isomorphism__primobject_type__new_aux(f2ptr cause) {
@@ -900,7 +972,9 @@ f2ptr f2__graph_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph,
   assert_argument_type(graph, right_child_graph);
   return raw__graph_decomposition_lattice_node__new(cause, parent_graph, left_child_graph, right_child_graph);
 }
-def_pcfunk3(graph_decomposition_lattice_node__new, parent_graph, left_child_graph, right_child_graph, return f2__graph_decomposition_lattice_node__new(this_cause, parent_graph, left_child_graph, right_child_graph));
+def_pcfunk3(graph_decomposition_lattice_node__new, parent_graph, left_child_graph, right_child_graph,
+	    "",
+	    return f2__graph_decomposition_lattice_node__new(this_cause, parent_graph, left_child_graph, right_child_graph));
 
 
 f2ptr raw__graph_decomposition_lattice_node__combine_children_isomorphisms(f2ptr cause, f2ptr this, f2ptr left_child_isomorphisms, f2ptr right_child_isomorphisms, f2ptr graph) {
@@ -971,7 +1045,9 @@ f2ptr f2__graph_decomposition_lattice_node__combine_children_isomorphisms(f2ptr 
   assert_argument_type(graph,                       graph);
   return raw__graph_decomposition_lattice_node__combine_children_isomorphisms(cause, this, left_child_isomorphisms, right_child_isomorphisms, graph);
 }
-def_pcfunk4(graph_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph, return f2__graph_decomposition_lattice_node__combine_children_isomorphisms(this_cause, this, left_child_isomorphisms, right_child_isomorphisms, graph));
+def_pcfunk4(graph_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph,
+	    "",
+	    return f2__graph_decomposition_lattice_node__combine_children_isomorphisms(this_cause, this, left_child_isomorphisms, right_child_isomorphisms, graph));
 
 
 f2ptr raw__graph_decomposition_lattice_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -993,7 +1069,9 @@ f2ptr f2__graph_decomposition_lattice_node__terminal_print_with_frame(f2ptr caus
   assert_argument_type(terminal_print_frame,             terminal_print_frame);
   return raw__graph_decomposition_lattice_node__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph_decomposition_lattice_node__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_decomposition_lattice_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph_decomposition_lattice_node__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph_decomposition_lattice_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2graph_decomposition_lattice_node__primobject_type__new_aux(f2ptr cause) {
@@ -1017,7 +1095,9 @@ f2ptr f2__graph_decomposition_lattice__new(f2ptr cause) {
   f2ptr root_graph_set        = f2__set__new(cause);
   return f2graph_decomposition_lattice__new(cause, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
 }
-def_pcfunk0(graph_decomposition_lattice__new, return f2__graph_decomposition_lattice__new(this_cause));
+def_pcfunk0(graph_decomposition_lattice__new,
+	    "",
+	    return f2__graph_decomposition_lattice__new(this_cause));
 
 f2ptr raw__graph_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr node_set              = f2__graph_decomposition_lattice__node_set(cause, this);
@@ -1068,7 +1148,9 @@ f2ptr f2__graph_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr n
   assert_argument_type(graph_decomposition_lattice_node, node);
   return raw__graph_decomposition_lattice__add_node(cause, this, node);
 }
-def_pcfunk2(graph_decomposition_lattice__add_node, this, node, return f2__graph_decomposition_lattice__add_node(this_cause, this, node));
+def_pcfunk2(graph_decomposition_lattice__add_node, this, node,
+	    "",
+	    return f2__graph_decomposition_lattice__add_node(this_cause, this, node));
 
 void raw__graph_decomposition_lattice__decompose_graph_with_root_graph(f2ptr cause, f2ptr this, f2ptr graph, f2ptr root_graph) {
   f2ptr maximum_isomorphic_graph = nil;
@@ -1123,7 +1205,9 @@ f2ptr f2__graph_decomposition_lattice__decompose_graph_with_root_graph(f2ptr cau
   raw__graph_decomposition_lattice__decompose_graph_with_root_graph(cause, this, graph, root_graph);
   return nil;
 }
-def_pcfunk3(graph_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph, return f2__graph_decomposition_lattice__decompose_graph_with_root_graph(this_cause, this, graph, root_graph));
+def_pcfunk3(graph_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph,
+	    "",
+	    return f2__graph_decomposition_lattice__decompose_graph_with_root_graph(this_cause, this, graph, root_graph));
 
 f2ptr f2__graph_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
   f2__graph_decomposition_lattice__decompose_graph_with_root_graph(cause, this, graph, graph);
@@ -1131,7 +1215,9 @@ f2ptr f2__graph_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, 
   f2__set__add(cause, root_graph_set, graph);
   return nil;
 }
-def_pcfunk2(graph_decomposition_lattice__decompose_graph, this, graph, return f2__graph_decomposition_lattice__decompose_graph(this_cause, this, graph));
+def_pcfunk2(graph_decomposition_lattice__decompose_graph, this, graph,
+	    "",
+	    return f2__graph_decomposition_lattice__decompose_graph(this_cause, this, graph));
 
 f2ptr raw__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
   f2ptr unsolved_graph_set = f2__set__new(cause);
@@ -1226,7 +1312,9 @@ f2ptr f2__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr 
   assert_argument_type(graph,                       graph);
   return raw__graph_decomposition_lattice__subgraph_isomorphisms(cause, this, graph);
 }
-def_pcfunk2(graph_decomposition_lattice__subgraph_isomorphisms, this, graph, return f2__graph_decomposition_lattice__subgraph_isomorphisms(this_cause, this, graph));
+def_pcfunk2(graph_decomposition_lattice__subgraph_isomorphisms, this, graph,
+	    "",
+	    return f2__graph_decomposition_lattice__subgraph_isomorphisms(this_cause, this, graph));
 
 f2ptr raw__graph_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
   f2ptr root_graph_isomorphisms_pairs    = raw__graph_decomposition_lattice__subgraph_isomorphisms(cause, this, graph);
@@ -1267,7 +1355,9 @@ f2ptr f2__graph_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2
   assert_argument_type(graph,                       graph);
   return raw__graph_decomposition_lattice__subgraph_max_isomorphisms(cause, this, graph);
 }
-def_pcfunk2(graph_decomposition_lattice__subgraph_max_isomorphisms, this, graph, return f2__graph_decomposition_lattice__subgraph_max_isomorphisms(this_cause, this, graph));
+def_pcfunk2(graph_decomposition_lattice__subgraph_max_isomorphisms, this, graph,
+	    "",
+	    return f2__graph_decomposition_lattice__subgraph_max_isomorphisms(this_cause, this, graph));
 
 
 f2ptr raw__graph_decomposition_lattice__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -1287,7 +1377,9 @@ f2ptr f2__graph_decomposition_lattice__terminal_print_with_frame(f2ptr cause, f2
   assert_argument_type(terminal_print_frame,        terminal_print_frame);
   return raw__graph_decomposition_lattice__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_decomposition_lattice__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph_decomposition_lattice__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2graph_decomposition_lattice__primobject_type__new_aux(f2ptr cause) {

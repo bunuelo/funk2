@@ -46,7 +46,9 @@ f2ptr raw__ptypehash__new(f2ptr cause, s64 bin_num_power) {
 
 #define ptypehash__default_start_bin_num_power 5
 f2ptr f2__ptypehash__new(f2ptr cause) {return raw__ptypehash__new(cause, ptypehash__default_start_bin_num_power);}
-def_pcfunk0(ptypehash__new, return f2__ptypehash__new(this_cause));
+def_pcfunk0(ptypehash__new,
+	    "",
+	    return f2__ptypehash__new(this_cause));
 
 void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
@@ -115,7 +117,9 @@ f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__add(cause, this, key, value);
 }
-def_pcfunk3(ptypehash__add, this, slot_name, value, return f2__ptypehash__add(this_cause, this, slot_name, value));
+def_pcfunk3(ptypehash__add, this, slot_name, value,
+	    "",
+	    return f2__ptypehash__add(this_cause, this, slot_name, value));
 
 
 boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
@@ -164,7 +168,9 @@ f2ptr f2__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(ptypehash, this);
   return f2bool__new(raw__ptypehash__remove(cause, this, key));
 }
-def_pcfunk2(ptypehash__remove, this, key, return f2__ptypehash__remove(this_cause, this, key));
+def_pcfunk2(ptypehash__remove, this, key,
+	    "",
+	    return f2__ptypehash__remove(this_cause, this, key));
 
 
 void raw__ptypehash__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
@@ -178,7 +184,9 @@ f2ptr f2__ptypehash__copy_from(f2ptr cause, f2ptr this, f2ptr that) {
   raw__ptypehash__copy_from(cause, this, that);
   return nil;
 }
-def_pcfunk2(ptypehash__copy_from, this, that, return f2__ptypehash__copy_from(this_cause, this, that));
+def_pcfunk2(ptypehash__copy_from, this, that,
+	    "",
+	    return f2__ptypehash__copy_from(this_cause, this, that));
 
 
 f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
@@ -226,7 +234,9 @@ f2ptr f2__ptypehash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__lookup(cause, this, key);
 }
-def_pcfunk2(ptypehash__lookup, this, slot_name, return f2__ptypehash__lookup(this_cause, this, slot_name));
+def_pcfunk2(ptypehash__lookup, this, slot_name,
+	    "",
+	    return f2__ptypehash__lookup(this_cause, this, slot_name));
 
 boolean_t raw__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, this, key);
@@ -240,7 +250,9 @@ f2ptr f2__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__contains(cause, this, key);
 }
-def_pcfunk2(ptypehash__contains, this, key, return f2__ptypehash__contains(this_cause, this, key));
+def_pcfunk2(ptypehash__contains, this, key,
+	    "",
+	    return f2__ptypehash__contains(this_cause, this, key));
 
 
 f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
@@ -266,7 +278,9 @@ f2ptr f2__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__an_arbitrary_keyvalue_pair(cause, this);
 }
-def_pcfunk1(ptypehash__an_arbitrary_keyvalue_pair, this, return f2__ptypehash__an_arbitrary_keyvalue_pair(this_cause, this));
+def_pcfunk1(ptypehash__an_arbitrary_keyvalue_pair, this,
+	    "",
+	    return f2__ptypehash__an_arbitrary_keyvalue_pair(this_cause, this));
 
 
 f2ptr raw__ptypehash__an_arbitrary_key(f2ptr cause, f2ptr this) {
@@ -282,7 +296,9 @@ f2ptr f2__ptypehash__an_arbitrary_key(f2ptr cause, f2ptr this) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__an_arbitrary_key(cause, this);
 }
-def_pcfunk1(ptypehash__an_arbitrary_key, this, return f2__ptypehash__an_arbitrary_key(this_cause, this));
+def_pcfunk1(ptypehash__an_arbitrary_key, this,
+	    "",
+	    return f2__ptypehash__an_arbitrary_key(this_cause, this));
 
 
 f2ptr raw__ptypehash__an_arbitrary_value(f2ptr cause, f2ptr this) {
@@ -298,7 +314,9 @@ f2ptr f2__ptypehash__an_arbitrary_value(f2ptr cause, f2ptr this) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__an_arbitrary_value(cause, this);
 }
-def_pcfunk1(ptypehash__an_arbitrary_value, this, return f2__ptypehash__an_arbitrary_value(this_cause, this));
+def_pcfunk1(ptypehash__an_arbitrary_value, this,
+	    "",
+	    return f2__ptypehash__an_arbitrary_value(this_cause, this));
 
 
 f2ptr raw__ptypehash__copy(f2ptr cause, f2ptr this) {
@@ -311,7 +329,9 @@ f2ptr f2__ptypehash__copy(f2ptr cause, f2ptr this) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__copy(cause, this);
 }
-def_pcfunk1(ptypehash__copy, this, return f2__ptypehash__copy(this_cause, this));
+def_pcfunk1(ptypehash__copy, this,
+	    "",
+	    return f2__ptypehash__copy(this_cause, this));
 
 
 f2ptr raw__ptypehash__mapc_keys(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
@@ -329,7 +349,9 @@ f2ptr f2__ptypehash__keys(f2ptr cause, f2ptr this) {
                             new_list = f2cons__new(cause, key, new_list));
   return new_list;
 }
-def_pcfunk1(ptypehash__keys, this, return f2__ptypehash__keys(this_cause, this));
+def_pcfunk1(ptypehash__keys, this,
+	    "",
+	    return f2__ptypehash__keys(this_cause, this));
 
 f2ptr f2__ptypehash__values(f2ptr cause, f2ptr this) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__values assert failed: f2__ptypehash__valid(this)");
@@ -338,7 +360,9 @@ f2ptr f2__ptypehash__values(f2ptr cause, f2ptr this) {
 			      new_list = f2cons__new(cause, value, new_list));
   return new_list;
 }
-def_pcfunk1(ptypehash__values, this, return f2__ptypehash__values(this_cause, this));
+def_pcfunk1(ptypehash__values, this,
+	    "",
+	    return f2__ptypehash__values(this_cause, this));
 
 boolean_t raw__ptypehash__is_empty(f2ptr cause, f2ptr this) {
   f2ptr key_count    = f2__ptypehash__key_count(cause, this);
@@ -350,7 +374,9 @@ f2ptr f2__ptypehash__is_empty(f2ptr cause, f2ptr this) {
   assert_argument_type(ptypehash, this);
   return f2bool__new(raw__ptypehash__is_empty(cause, this));
 }
-def_pcfunk1(ptypehash__is_empty, this, return f2__ptypehash__is_empty(this_cause, this));
+def_pcfunk1(ptypehash__is_empty, this,
+	    "",
+	    return f2__ptypehash__is_empty(this_cause, this));
 
 f2ptr raw__ptypehash__as__frame(f2ptr cause, f2ptr this) {
   f2ptr new_frame = f2__frame__new(cause, nil);
@@ -364,7 +390,9 @@ f2ptr f2__ptypehash__as__frame(f2ptr cause, f2ptr this) {
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__as__frame(cause, this);
 }
-def_pcfunk1(ptypehash__as__frame, this, return f2__ptypehash__as__frame(this_cause, this));
+def_pcfunk1(ptypehash__as__frame, this,
+	    "",
+	    return f2__ptypehash__as__frame(this_cause, this));
 
 
 f2ptr raw__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -383,7 +411,9 @@ f2ptr f2__ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__ptypehash__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(ptypehash__terminal_print_with_frame, this, terminal_print_frame, return f2__ptypehash__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(ptypehash__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__ptypehash__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {

@@ -657,7 +657,7 @@
   { \
     f2ptr c_cfunk_args = cfunk_args_code; \
     def_pcfunk__documentation_variable__init(name, doc_string); \
-    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), def_pcfunk__is_funktional_variable(name), new__string(cause, (char*)def_pcfunk__documentation_variable(name))); \
+    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), def_pcfunk__is_funktional_variable(name), new__string(initial_cause(), (char*)def_pcfunk__documentation_variable(name))); \
     never_gc(c_cfunk_var); \
     def_pcfunk__symbolvar__init(name); \
     never_gc(def_pcfunk__symbolvar(name)); \

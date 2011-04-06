@@ -48,7 +48,9 @@ f2ptr f2__graph_edit_sequence__new(f2ptr cause) {
   f2ptr isomorphism = f2__graph_isomorphism__new(cause);
   return f2graph_edit_sequence__new(cause, operations, cost, isomorphism);
 }
-def_pcfunk0(graph_edit_sequence__new, return f2__graph_edit_sequence__new(this_cause));
+def_pcfunk0(graph_edit_sequence__new,
+	    "",
+	    return f2__graph_edit_sequence__new(this_cause));
 
 f2ptr raw__graph_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
   f2ptr operations     = f2__graph_edit_sequence__operations(cause, this);
@@ -79,12 +81,16 @@ f2ptr raw__graph_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr f
 f2ptr f2__graph_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr from, f2ptr to, f2ptr cost_function) {
   return raw__graph_edit_sequence__add(cause, this, type, from, to, cost_function);
 }
-def_pcfunk5(graph_edit_sequence__add, this, type, from, to, cost_function, return f2__graph_edit_sequence__add(this_cause, this, type, from, to, cost_function));
+def_pcfunk5(graph_edit_sequence__add, this, type, from, to, cost_function,
+	    "",
+	    return f2__graph_edit_sequence__add(this_cause, this, type, from, to, cost_function));
 
 f2ptr f2__graph_edit_sequence__add_mapping(f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node) {
   return f2__graph_isomorphism__add_mapping(cause, f2__graph_edit_sequence__isomorphism(cause, this), left_node, right_node);
 }
-def_pcfunk3(graph_edit_sequence__add_mapping, this, left_node, right_node, return f2__graph_edit_sequence__add_mapping(this_cause, this, left_node, right_node));
+def_pcfunk3(graph_edit_sequence__add_mapping, this, left_node, right_node,
+	    "",
+	    return f2__graph_edit_sequence__add_mapping(this_cause, this, left_node, right_node));
 
 f2ptr raw__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function) {
   //printf("Let's combine..."); f2__print(cause, this); printf(" and "); f2__print(cause, that); printf("!!\n");
@@ -203,7 +209,9 @@ f2ptr raw__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2p
 f2ptr f2__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2ptr lattice_node, f2ptr graph, f2ptr cost_function) {
   return raw__graph_edit_sequence__combine(cause, this, that, lattice_node, graph, cost_function);
 }
-def_pcfunk5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function, return f2__graph_edit_sequence__combine(this_cause, this, that, lattice_node, graph, cost_function));
+def_pcfunk5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function,
+	    "",
+	    return f2__graph_edit_sequence__combine(this_cause, this, that, lattice_node, graph, cost_function));
 
 f2ptr raw__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
@@ -224,7 +232,9 @@ f2ptr f2__graph_edit_sequence__terminal_print_with_frame(f2ptr cause, f2ptr this
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__graph_edit_sequence__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame, return f2__graph_edit_sequence__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__graph_edit_sequence__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2graph_edit_sequence__primobject_type__new_aux(f2ptr cause) {
@@ -509,7 +519,9 @@ f2ptr f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f2
   assert_argument_type_or_nil(funkable,                    cost_function);
   return raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(cause, this, graph, cost_function);
 }
-def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, return f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(this_cause, this, graph, cost_function));
+def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function,
+	    "",
+	    return f2__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(this_cause, this, graph, cost_function));
 
 
 // **

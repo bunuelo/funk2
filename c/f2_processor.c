@@ -45,7 +45,6 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
   }
   pause_gc();
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
-  f2ptr old_processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
   resume_gc();
   return boolean__true;

@@ -76,7 +76,6 @@ void f2__initialize() {
   f2__socket__initialize();
   f2__trace__initialize();
   f2__serialize__initialize();
-  f2__thought_process__initialize();
   f2__primfunks__errno__initialize();
   f2__primfunks__fcntl__initialize();
   f2__primfunks__ioctl__initialize();
@@ -178,7 +177,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_memory__init(&(this->memory));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
-  funk2_thought_process__init(&(this->thought_process));
   funk2_bytecode__init(&(this->bytecode));
   funk2_operating_system__init(&(this->operating_system));
   funk2_locale__init(&(this->locale));
@@ -369,7 +367,6 @@ void funk2__destroy(funk2_t* this) {
   funk2_locale__destroy(&(this->locale));
   funk2_operating_system__destroy(&(this->operating_system));
   funk2_bytecode__destroy(&(this->bytecode));
-  funk2_thought_process__destroy(&(this->thought_process));
   funk2_garbage_collector__destroy(&(this->garbage_collector));
   funk2_memory__destroy(&(this->memory));  
   funk2_command_line__destroy(&(this->command_line));

@@ -22,59 +22,93 @@
 #include "funk2.h"
 
 f2ptr f2__socket__pf_unix(f2ptr cause) {return f2integer__new(cause, PF_UNIX);}
-def_pcfunk0(f2__socket__pf_unix,      return f2__socket__pf_unix(this_cause));
+def_pcfunk0(f2__socket__pf_unix,     
+	    "",
+	    return f2__socket__pf_unix(this_cause));
 
 f2ptr f2__socket__pf_local(f2ptr cause) {return f2integer__new(cause, PF_LOCAL);}
-def_pcfunk0(f2__socket__pf_local,     return f2__socket__pf_local(this_cause));
+def_pcfunk0(f2__socket__pf_local,    
+	    "",
+	    return f2__socket__pf_local(this_cause));
 
 f2ptr f2__socket__pf_inet(f2ptr cause) {return f2integer__new(cause, PF_INET);}
-def_pcfunk0(f2__socket__pf_inet,      return f2__socket__pf_inet(this_cause));
+def_pcfunk0(f2__socket__pf_inet,     
+	    "",
+	    return f2__socket__pf_inet(this_cause));
 
 f2ptr f2__socket__pf_inet6(f2ptr cause) {return f2integer__new(cause, PF_INET6);}
-def_pcfunk0(f2__socket__pf_inet6,     return f2__socket__pf_inet6(this_cause));
+def_pcfunk0(f2__socket__pf_inet6,    
+	    "",
+	    return f2__socket__pf_inet6(this_cause));
 
 #ifndef F2__CYGWIN
 f2ptr f2__socket__pf_ipx(f2ptr cause) {	return f2integer__new(cause, PF_IPX);}
-def_pcfunk0(f2__socket__pf_ipx,       return f2__socket__pf_ipx(this_cause));
+def_pcfunk0(f2__socket__pf_ipx,      
+	    "",
+	    return f2__socket__pf_ipx(this_cause));
 #endif
 
 #if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
 f2ptr f2__socket__pf_netlink(f2ptr cause) {return f2integer__new(cause, PF_NETLINK);}
-def_pcfunk0(f2__socket__pf_netlink,   return f2__socket__pf_netlink(this_cause));
+def_pcfunk0(f2__socket__pf_netlink,  
+	    "",
+	    return f2__socket__pf_netlink(this_cause));
 
 f2ptr f2__socket__pf_x25(f2ptr cause) {return f2integer__new(cause, PF_X25);}
-def_pcfunk0(f2__socket__pf_x25,       return f2__socket__pf_x25(this_cause));
+def_pcfunk0(f2__socket__pf_x25,      
+	    "",
+	    return f2__socket__pf_x25(this_cause));
 
 f2ptr f2__socket__pf_ax25(f2ptr cause) {return f2integer__new(cause, PF_AX25);}
-def_pcfunk0(f2__socket__pf_ax25,      return f2__socket__pf_ax25(this_cause));
+def_pcfunk0(f2__socket__pf_ax25,     
+	    "",
+	    return f2__socket__pf_ax25(this_cause));
 
 f2ptr f2__socket__pf_atmpvc(f2ptr cause) {return f2integer__new(cause, PF_ATMPVC);}
-def_pcfunk0(f2__socket__pf_atmpvc,    return f2__socket__pf_atmpvc(this_cause));
+def_pcfunk0(f2__socket__pf_atmpvc,   
+	    "",
+	    return f2__socket__pf_atmpvc(this_cause));
 
 f2ptr f2__socket__pf_packet(f2ptr cause) {return f2integer__new(cause, PF_PACKET);}
-def_pcfunk0(f2__socket__pf_packet,    return f2__socket__pf_packet(this_cause));
+def_pcfunk0(f2__socket__pf_packet,   
+	    "",
+	    return f2__socket__pf_packet(this_cause));
 
 f2ptr f2__socket__sock_packet(f2ptr cause) {return f2integer__new(cause, SOCK_PACKET);}
-def_pcfunk0(f2__socket__sock_packet,    return f2__socket__sock_packet(this_cause));
+def_pcfunk0(f2__socket__sock_packet,   
+	    "",
+	    return f2__socket__sock_packet(this_cause));
 #endif
 
 f2ptr f2__socket__pf_appletalk(f2ptr cause) {return f2integer__new(cause, PF_APPLETALK);}
-def_pcfunk0(f2__socket__pf_appletalk, return f2__socket__pf_appletalk(this_cause));
+def_pcfunk0(f2__socket__pf_appletalk,
+	    "",
+	    return f2__socket__pf_appletalk(this_cause));
 
 f2ptr f2__socket__sock_stream(f2ptr cause) {return f2integer__new(cause, SOCK_STREAM);}
-def_pcfunk0(f2__socket__sock_stream,    return f2__socket__sock_stream(this_cause));
+def_pcfunk0(f2__socket__sock_stream,   
+	    "",
+	    return f2__socket__sock_stream(this_cause));
 
 f2ptr f2__socket__sock_dgram(f2ptr cause) {return f2integer__new(cause, SOCK_DGRAM);}
-def_pcfunk0(f2__socket__sock_dgram,     return f2__socket__sock_dgram(this_cause));
+def_pcfunk0(f2__socket__sock_dgram,    
+	    "",
+	    return f2__socket__sock_dgram(this_cause));
 
 f2ptr f2__socket__sock_seqpacket(f2ptr cause) {return f2integer__new(cause, SOCK_SEQPACKET);}
-def_pcfunk0(f2__socket__sock_seqpacket, return f2__socket__sock_seqpacket(this_cause));
+def_pcfunk0(f2__socket__sock_seqpacket,
+	    "",
+	    return f2__socket__sock_seqpacket(this_cause));
 
 f2ptr f2__socket__sock_raw(f2ptr cause) {return f2integer__new(cause, SOCK_RAW);}
-def_pcfunk0(f2__socket__sock_raw,       return f2__socket__sock_raw(this_cause));
+def_pcfunk0(f2__socket__sock_raw,      
+	    "",
+	    return f2__socket__sock_raw(this_cause));
 
 f2ptr f2__socket__sock_rdm(f2ptr cause) {return f2integer__new(cause, SOCK_RDM);}
-def_pcfunk0(f2__socket__sock_rdm,       return f2__socket__sock_rdm(this_cause));
+def_pcfunk0(f2__socket__sock_rdm,      
+	    "",
+	    return f2__socket__sock_rdm(this_cause));
 
 
 f2ptr f2__inaddr_any(f2ptr cause) {
@@ -89,7 +123,9 @@ f2ptr f2__inaddr_any(f2ptr cause) {
   }
   return this;
 }
-def_pcfunk0(f2__inaddr_any, return f2__inaddr_any(this_cause));
+def_pcfunk0(f2__inaddr_any,
+	    "",
+	    return f2__inaddr_any(this_cause));
 
 // int socket(int domain, int type, int protocol);
 f2ptr raw__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
@@ -113,7 +149,9 @@ f2ptr f2__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
   assert_argument_type(integer, protocol);
   return raw__socket(cause, domain, type, protocol);
 }
-def_pcfunk3(f2__socket, domain, type, protocol, return f2__socket(this_cause, domain, type, protocol));
+def_pcfunk3(f2__socket, domain, type, protocol,
+	    "",
+	    return f2__socket(this_cause, domain, type, protocol));
 
 
 // int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
@@ -159,7 +197,9 @@ f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
   assert_argument_type(array,   addr_array);
   return raw__accept(cause, sockfd, addr_array);
 }
-def_pcfunk2(f2__accept, sockfd, addr_array, return f2__accept(this_cause, sockfd, addr_array));
+def_pcfunk2(f2__accept, sockfd, addr_array,
+	    "",
+	    return f2__accept(this_cause, sockfd, addr_array));
 
 
 // int connect(int sockfd, const struct sockaddr *serv_addr, socklen_t addrlen);
@@ -198,7 +238,9 @@ f2ptr f2__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f
   assert_argument_type(array,   sin_addr);
   return raw__connect(cause, sockfd, sin_family, sin_port, sin_addr);
 }
-def_pcfunk4(f2__connect, sockfd, sin_family, sin_port, sin_addr, return f2__connect(this_cause, sockfd, sin_family, sin_port, sin_addr));
+def_pcfunk4(f2__connect, sockfd, sin_family, sin_port, sin_addr,
+	    "",
+	    return f2__connect(this_cause, sockfd, sin_family, sin_port, sin_addr));
 
 // int bind(int sockfd, const struct sockaddr *my_addr, socklen_t addrlen);
 f2ptr raw__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
@@ -235,7 +277,9 @@ f2ptr f2__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2pt
   assert_argument_type(array,   sin_addr);
   return raw__bind(cause, sockfd, sin_family, sin_port, sin_addr);
 }
-def_pcfunk4(f2__bind, sockfd, sin_family, sin_port, sin_addr, return f2__bind(this_cause, sockfd, sin_family, sin_port, sin_addr));
+def_pcfunk4(f2__bind, sockfd, sin_family, sin_port, sin_addr,
+	    "",
+	    return f2__bind(this_cause, sockfd, sin_family, sin_port, sin_addr));
 
 // int getsockname(int s, struct sockaddr *name, socklen_t *namelen);
 f2ptr raw__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
@@ -248,7 +292,9 @@ f2ptr f2__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
   assert_argument_type(pointer, namelen);
   return raw__getsockname(cause, s, name, namelen);
 }
-def_pcfunk3(f2__getsockname, s, name, namelen, return f2__getsockname(this_cause, s, name, namelen));
+def_pcfunk3(f2__getsockname, s, name, namelen,
+	    "",
+	    return f2__getsockname(this_cause, s, name, namelen));
 
 // int listen(int sockfd, int backlog);
 f2ptr raw__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
@@ -270,7 +316,9 @@ f2ptr f2__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
   assert_argument_type(integer, backlog);
   return raw__listen(cause, sockfd, backlog);
 }
-def_pcfunk2(f2__listen, sockfd, backlog, return f2__listen(this_cause, sockfd, backlog));
+def_pcfunk2(f2__listen, sockfd, backlog,
+	    "",
+	    return f2__listen(this_cause, sockfd, backlog));
 
 // struct hostent *gethostbyname(const char *name);
 f2ptr raw__gethostbyname(f2ptr cause, f2ptr name) {
@@ -289,22 +337,34 @@ f2ptr f2__gethostbyname(f2ptr cause, f2ptr name) {
   assert_argument_type(string, name);
   return raw__gethostbyname(cause, name);
 }
-def_pcfunk1(f2__gethostbyname, name, return f2__gethostbyname(this_cause, name));
+def_pcfunk1(f2__gethostbyname, name,
+	    "",
+	    return f2__gethostbyname(this_cause, name));
 
 f2ptr f2__h_errno(f2ptr cause) {return f2integer__new(cause, h_errno);}
-def_pcfunk0(f2__h_errno, return f2__h_errno(this_cause));
+def_pcfunk0(f2__h_errno,
+	    "",
+	    return f2__h_errno(this_cause));
 
 f2ptr f2__h_errno__host_not_found(f2ptr cause) {return f2integer__new(cause, HOST_NOT_FOUND);}
-def_pcfunk0(f2__h_errno__host_not_found, return f2__h_errno__host_not_found(this_cause));
+def_pcfunk0(f2__h_errno__host_not_found,
+	    "",
+	    return f2__h_errno__host_not_found(this_cause));
 
 f2ptr f2__h_errno__no_address(f2ptr cause) {return f2integer__new(cause, NO_ADDRESS);}
-def_pcfunk0(f2__h_errno__no_address, return f2__h_errno__no_address(this_cause));
+def_pcfunk0(f2__h_errno__no_address,
+	    "",
+	    return f2__h_errno__no_address(this_cause));
 
 f2ptr f2__h_errno__no_recovery(f2ptr cause) {return f2integer__new(cause, NO_RECOVERY);}
-def_pcfunk0(f2__h_errno__no_recovery, return f2__h_errno__no_recovery(this_cause));
+def_pcfunk0(f2__h_errno__no_recovery,
+	    "",
+	    return f2__h_errno__no_recovery(this_cause));
 
 f2ptr f2__h_errno__try_again(f2ptr cause) {return f2integer__new(cause, TRY_AGAIN);}
-def_pcfunk0(f2__h_errno__try_again, return f2__h_errno__try_again(this_cause));
+def_pcfunk0(f2__h_errno__try_again,
+	    "",
+	    return f2__h_errno__try_again(this_cause));
 
 f2ptr raw__hostenv__h_name(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
@@ -315,7 +375,9 @@ f2ptr f2__hostenv__h_name(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__hostenv__h_name(cause, this);
 }
-def_pcfunk1(f2__hostent__h_name, this, return f2__hostenv__h_name(this_cause, this));
+def_pcfunk1(f2__hostent__h_name, this,
+	    "",
+	    return f2__hostenv__h_name(this_cause, this));
 
 f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
@@ -342,7 +404,9 @@ f2ptr f2__hostent__h_aliases(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__hostent__h_aliases(cause, this);
 }
-def_pcfunk1(f2__hostent__h_aliases, this, return f2__hostent__h_aliases(this_cause, this));
+def_pcfunk1(f2__hostent__h_aliases, this,
+	    "",
+	    return f2__hostent__h_aliases(this_cause, this));
 
 
 f2ptr raw__hostent__h_addrtype(f2ptr cause, f2ptr this) {
@@ -354,7 +418,9 @@ f2ptr f2__hostent__h_addrtype(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__hostent__h_addrtype(cause, this);
 }
-def_pcfunk1(f2__hostent__h_addrtype, this, return f2__hostent__h_addrtype(this_cause, this));
+def_pcfunk1(f2__hostent__h_addrtype, this,
+	    "",
+	    return f2__hostent__h_addrtype(this_cause, this));
 
 
 f2ptr raw__hostent__h_length(f2ptr cause, f2ptr this) {
@@ -366,7 +432,9 @@ f2ptr f2__hostent__h_length(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__hostent__h_length(cause, this);
 }
-def_pcfunk1(f2__hostent__h_length, this, return f2__hostent__h_length(this_cause, this));
+def_pcfunk1(f2__hostent__h_length, this,
+	    "",
+	    return f2__hostent__h_length(this_cause, this));
 
 f2ptr raw__hostent__h_addr_list(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
@@ -398,7 +466,9 @@ f2ptr f2__hostent__h_addr_list(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__hostent__h_addr_list(cause, this);
 }
-def_pcfunk1(f2__hostent__h_addr_list, this, return f2__hostent__h_addr_list(this_cause, this));
+def_pcfunk1(f2__hostent__h_addr_list, this,
+	    "",
+	    return f2__hostent__h_addr_list(this_cause, this));
 
 f2ptr raw__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
@@ -409,7 +479,9 @@ f2ptr f2__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__sockaddr_in__sin_family(cause, this);
 }
-def_pcfunk1(f2__sockaddr_in__sin_family, this, return f2__sockaddr_in__sin_family(this_cause, this));
+def_pcfunk1(f2__sockaddr_in__sin_family, this,
+	    "",
+	    return f2__sockaddr_in__sin_family(this_cause, this));
 
 f2ptr raw__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
@@ -420,7 +492,9 @@ f2ptr f2__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__sockaddr_in__sin_port(cause, this);
 }
-def_pcfunk1(f2__sockaddr_in__sin_port, this, return f2__sockaddr_in__sin_port(this_cause, this));
+def_pcfunk1(f2__sockaddr_in__sin_port, this,
+	    "",
+	    return f2__sockaddr_in__sin_port(this_cause, this));
 
 f2ptr raw__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
@@ -432,7 +506,9 @@ f2ptr f2__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
   return raw__sockaddr_in__sin_addr(cause, this);
 }
-def_pcfunk1(f2__sockaddr_in__sin_addr, this, return f2__sockaddr_in__sin_addr(this_cause, this));
+def_pcfunk1(f2__sockaddr_in__sin_addr, this,
+	    "",
+	    return f2__sockaddr_in__sin_addr(this_cause, this));
 
 f2ptr raw__chunk__send(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
   return f2chunk__send(chunk, cause, f2integer__i(start, cause), f2integer__i(length, cause), f2integer__i(fd, cause), f2integer__i(flags, cause));
@@ -446,7 +522,9 @@ f2ptr f2__chunk__send(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr
   assert_argument_type(integer, flags);
   return raw__chunk__send(cause, chunk, start, length, fd, flags);
 }
-def_pcfunk5(f2__chunk__send, chunk, start, length, fd, flags, return f2__chunk__send(this_cause, chunk, start, length, fd, flags));
+def_pcfunk5(f2__chunk__send, chunk, start, length, fd, flags,
+	    "",
+	    return f2__chunk__send(this_cause, chunk, start, length, fd, flags));
 
 f2ptr raw__chunk__recv(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr fd, f2ptr flags) {
   return f2chunk__recv(chunk, cause, f2integer__i(start, cause), f2integer__i(length, cause), f2integer__i(fd, cause), f2integer__i(flags, cause));
@@ -460,7 +538,9 @@ f2ptr f2__chunk__recv(f2ptr cause, f2ptr chunk, f2ptr start, f2ptr length, f2ptr
   assert_argument_type(integer, flags);
   return raw__chunk__recv(cause, chunk, start, length, fd, flags);
 }
-def_pcfunk5(f2__chunk__recv, chunk, start, length, fd, flags, return f2__chunk__recv(this_cause, chunk, start, length, fd, flags));
+def_pcfunk5(f2__chunk__recv, chunk, start, length, fd, flags,
+	    "",
+	    return f2__chunk__recv(this_cause, chunk, start, length, fd, flags));
 
 f2ptr raw__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
   return f2integer__new(cause, send(f2integer__i(fd, cause), (void*)from_ptr(f2pointer__p(pointer, cause)), f2integer__i(byte_num, cause), f2integer__i(flags, cause)));
@@ -473,7 +553,9 @@ f2ptr f2__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags
   assert_argument_type(integer, flags);
   return raw__send(cause, fd, pointer, byte_num, flags);
 }
-def_pcfunk4(f2__send, fd, pointer, byte_num, flags, return f2__send(this_cause, fd, pointer, byte_num, flags));
+def_pcfunk4(f2__send, fd, pointer, byte_num, flags,
+	    "",
+	    return f2__send(this_cause, fd, pointer, byte_num, flags));
 
 f2ptr raw__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
   return f2integer__new(cause, recv(f2integer__i(fd, cause), (void*)from_ptr(f2pointer__p(pointer, cause)), f2integer__i(byte_num, cause), f2integer__i(flags, cause)));
@@ -486,7 +568,9 @@ f2ptr f2__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags
   assert_argument_type(integer, flags);
   return raw__recv(cause, fd, pointer, byte_num, flags);
 }
-def_pcfunk4(f2__recv, fd, pointer, byte_num, flags, return f2__recv(this_cause, fd, pointer, byte_num, flags));
+def_pcfunk4(f2__recv, fd, pointer, byte_num, flags,
+	    "",
+	    return f2__recv(this_cause, fd, pointer, byte_num, flags));
 
 
 void f2__socket__reinitialize_globalvars() {

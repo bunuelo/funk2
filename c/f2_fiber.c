@@ -118,7 +118,9 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   return new_fiber;
 }
 
-def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args, return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
+def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args,
+	    "",
+	    return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
 
 
 f2ptr raw__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
@@ -132,7 +134,9 @@ f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) 
   raw__fiber__do_sleep_until_time(cause, this, until_time);
   return nil;
 }
-def_pcfunk2(fiber__do_sleep_until_time, this, until_time, return f2__fiber__do_sleep_until_time(this_cause, this, until_time));
+def_pcfunk2(fiber__do_sleep_until_time, this, until_time,
+	    "",
+	    return f2__fiber__do_sleep_until_time(this_cause, this, until_time));
 
 f2ptr raw__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, s64 nanoseconds) {
   return f2__fiber__do_sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds)));
@@ -143,7 +147,9 @@ f2ptr f2__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, f2ptr nanosecond
   assert_argument_type(integer, nanoseconds);
   return raw__fiber__sleep_for_nanoseconds(cause, this, f2integer__i(nanoseconds, cause));
 }
-def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds, return f2__fiber__sleep_for_nanoseconds(this_cause, this, nanoseconds));
+def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds,
+	    "",
+	    return f2__fiber__sleep_for_nanoseconds(this_cause, this, nanoseconds));
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber, this);
@@ -162,7 +168,9 @@ boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
 f2ptr f2__fiber__is_complete(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__fiber__is_complete(cause, this));
 }
-def_pcfunk1(fiber__is_complete, this, return f2__fiber__is_complete(this_cause, this));
+def_pcfunk1(fiber__is_complete, this,
+	    "",
+	    return f2__fiber__is_complete(this_cause, this));
 
 void raw__fiber__quit(f2ptr cause, f2ptr this) {
   f2__fiber__should_quit__set(cause, this, f2bool__new(boolean__true));
@@ -174,7 +182,9 @@ f2ptr f2__fiber__quit(f2ptr cause, f2ptr this) {
   raw__fiber__quit(cause, this);
   return nil;
 }
-def_pcfunk1(fiber__quit, this, return f2__fiber__quit(this_cause, this));
+def_pcfunk1(fiber__quit, this,
+	    "",
+	    return f2__fiber__quit(this_cause, this));
 
 
 f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable) {
@@ -309,7 +319,9 @@ f2ptr f2__fiber__stack_trace(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber, this);
   return raw__fiber__stack_trace(cause, this);
 }
-def_pcfunk1(fiber__stack_trace, this, return f2__fiber__stack_trace(this_cause, this));
+def_pcfunk1(fiber__stack_trace, this,
+	    "",
+	    return f2__fiber__stack_trace(this_cause, this));
 
 
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
@@ -324,7 +336,9 @@ f2ptr f2__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber, this);
   return raw__fiber__print_stack_trace(cause, this);
 }
-def_pcfunk1(fiber__print_stack_trace, this, return f2__fiber__print_stack_trace(this_cause, this));
+def_pcfunk1(fiber__print_stack_trace, this,
+	    "",
+	    return f2__fiber__print_stack_trace(this_cause, this));
 
 
 f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -356,7 +370,9 @@ f2ptr f2__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__fiber__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__fiber__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
@@ -381,7 +397,9 @@ def_primobject_1_slot(fiber_stack_trace,
 f2ptr f2__fiber_stack_trace__new(f2ptr cause, f2ptr stack) {
   return f2fiber_stack_trace__new(cause, stack);
 }
-def_pcfunk1(fiber_stack_trace__new, stack, return f2__fiber_stack_trace__new(this_cause, stack));
+def_pcfunk1(fiber_stack_trace__new, stack,
+	    "",
+	    return f2__fiber_stack_trace__new(this_cause, stack));
 
 f2ptr raw__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
   return new__string(cause, "<fiber_stack_trace>");
@@ -391,7 +409,9 @@ f2ptr f2__fiber_stack_trace__as__string(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__as__string(cause, this);
 }
-def_pcfunk1(fiber_stack_trace__as__string, this, return f2__fiber_stack_trace__as__string(this_cause, this));
+def_pcfunk1(fiber_stack_trace__as__string, this,
+	    "",
+	    return f2__fiber_stack_trace__as__string(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace__next(f2ptr cause, f2ptr this) {
@@ -426,7 +446,9 @@ f2ptr f2__fiber_stack_trace__next(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__next(cause, this);
 }
-def_pcfunk1(fiber_stack_trace__next, this, return f2__fiber_stack_trace__next(this_cause, this));
+def_pcfunk1(fiber_stack_trace__next, this,
+	    "",
+	    return f2__fiber_stack_trace__next(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace__first(f2ptr cause, f2ptr this) {
@@ -484,7 +506,9 @@ f2ptr f2__fiber_stack_trace__first(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__first(cause, this);
 }
-def_pcfunk1(fiber_stack_trace__first, this, return f2__fiber_stack_trace__first(this_cause, this));
+def_pcfunk1(fiber_stack_trace__first, this,
+	    "",
+	    return f2__fiber_stack_trace__first(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace__print(f2ptr cause, f2ptr this) {
@@ -509,7 +533,9 @@ f2ptr f2__fiber_stack_trace__print(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__print(cause, this);
 }
-def_pcfunk1(fiber_stack_trace__print, this, return f2__fiber_stack_trace__print(this_cause, this));
+def_pcfunk1(fiber_stack_trace__print, this,
+	    "",
+	    return f2__fiber_stack_trace__print(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
@@ -538,7 +564,9 @@ f2ptr f2__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__as__printable(cause, this);
 }
-def_pcfunk1(fiber_stack_trace__as__printable, this, return f2__fiber_stack_trace__as__printable(this_cause, this));
+def_pcfunk1(fiber_stack_trace__as__printable, this,
+	    "",
+	    return f2__fiber_stack_trace__as__printable(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
@@ -564,7 +592,9 @@ f2ptr f2__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace, this);
   return raw__fiber_stack_trace__blocks(cause, this);
 }
-def_pcfunk1(fiber_stack_trace__blocks, this, return f2__fiber_stack_trace__blocks(this_cause, this));
+def_pcfunk1(fiber_stack_trace__blocks, this,
+	    "",
+	    return f2__fiber_stack_trace__blocks(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -584,7 +614,9 @@ f2ptr f2__fiber_stack_trace__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__fiber_stack_trace__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(fiber_stack_trace__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber_stack_trace__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(fiber_stack_trace__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__fiber_stack_trace__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2fiber_stack_trace__primobject_type__new_aux(f2ptr cause) {
@@ -609,7 +641,9 @@ def_primobject_2_slot(fiber_stack_trace_block,
 f2ptr f2__fiber_stack_trace_block__new(f2ptr cause, f2ptr funk, f2ptr argument_frame) {
   return f2fiber_stack_trace_block__new(cause, funk, argument_frame);
 }
-def_pcfunk2(fiber_stack_trace_block__new, funk, argument_frame, return f2__fiber_stack_trace_block__new(this_cause, funk, argument_frame));
+def_pcfunk2(fiber_stack_trace_block__new, funk, argument_frame,
+	    "",
+	    return f2__fiber_stack_trace_block__new(this_cause, funk, argument_frame));
 
 
 f2ptr raw__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
@@ -627,7 +661,9 @@ f2ptr f2__fiber_stack_trace_block__funk_name(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__funk_name(cause, this);
 }
-def_pcfunk1(fiber_stack_trace_block__funk_name, this, return f2__fiber_stack_trace_block__funk_name(this_cause, this));
+def_pcfunk1(fiber_stack_trace_block__funk_name, this,
+	    "",
+	    return f2__fiber_stack_trace_block__funk_name(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this) {
@@ -650,7 +686,9 @@ f2ptr f2__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr t
   assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__printable_argument_frame(cause, this);
 }
-def_pcfunk1(fiber_stack_trace_block__printable_argument_frame, this, return f2__fiber_stack_trace_block__printable_argument_frame(this_cause, this));
+def_pcfunk1(fiber_stack_trace_block__printable_argument_frame, this,
+	    "",
+	    return f2__fiber_stack_trace_block__printable_argument_frame(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace_block__print(f2ptr cause, f2ptr this) {
@@ -662,7 +700,9 @@ f2ptr f2__fiber_stack_trace_block__print(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__print(cause, this);
 }
-def_pcfunk1(fiber_stack_trace_block__print, this, return f2__fiber_stack_trace_block__print(this_cause, this));
+def_pcfunk1(fiber_stack_trace_block__print, this,
+	    "",
+	    return f2__fiber_stack_trace_block__print(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace_block__as__printable(f2ptr cause, f2ptr this) {
@@ -675,7 +715,9 @@ f2ptr f2__fiber_stack_trace_block__as__printable(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__as__printable(cause, this);
 }
-def_pcfunk1(fiber_stack_trace_block__as__printable, this, return f2__fiber_stack_trace_block__as__printable(this_cause, this));
+def_pcfunk1(fiber_stack_trace_block__as__printable, this,
+	    "",
+	    return f2__fiber_stack_trace_block__as__printable(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -696,7 +738,9 @@ f2ptr f2__fiber_stack_trace_block__terminal_print_with_frame(f2ptr cause, f2ptr 
   assert_argument_type(terminal_print_frame,    terminal_print_frame);
   return raw__fiber_stack_trace_block__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame, return f2__fiber_stack_trace_block__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__fiber_stack_trace_block__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause) {

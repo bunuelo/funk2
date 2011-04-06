@@ -30,7 +30,9 @@ int raw__termios__height() {
 f2ptr f2__termios__height(f2ptr cause) {
   return f2integer__new(cause, raw__termios__height());
 }
-def_pcfunk0(termios__height, return f2__termios__height(this_cause));
+def_pcfunk0(termios__height,
+	    "",
+	    return f2__termios__height(this_cause));
 
 int raw__termios__width() {
   struct winsize winsize_arg;
@@ -41,7 +43,9 @@ int raw__termios__width() {
 f2ptr f2__termios__width(f2ptr cause) {
   return f2integer__new(cause, raw__termios__width());
 }
-def_pcfunk0(termios__width, return f2__termios__width(this_cause));
+def_pcfunk0(termios__width,
+	    "",
+	    return f2__termios__width(this_cause));
 
 int raw__termios__noecho() {
   struct termios t;
@@ -53,7 +57,9 @@ int raw__termios__noecho() {
 f2ptr f2__termios__noecho(f2ptr cause) {
   return f2integer__new(cause, raw__termios__noecho());
 }
-def_pcfunk0(termios__noecho, return f2__termios__noecho(this_cause));
+def_pcfunk0(termios__noecho,
+	    "",
+	    return f2__termios__noecho(this_cause));
 
 int raw__termios__echo() {
   struct termios t;
@@ -65,7 +71,9 @@ int raw__termios__echo() {
 f2ptr f2__termios__echo(f2ptr cause) {
   return f2integer__new(cause, raw__termios__echo());
 }
-def_pcfunk0(termios__echo, return f2__termios__echo(this_cause));
+def_pcfunk0(termios__echo,
+	    "",
+	    return f2__termios__echo(this_cause));
 
 
 int raw__termios__nocanon() {
@@ -78,7 +86,9 @@ int raw__termios__nocanon() {
 f2ptr f2__termios__nocanon(f2ptr cause) {
   return f2integer__new(cause, raw__termios__nocanon());
 }
-def_pcfunk0(termios__nocanon, return f2__termios__nocanon(this_cause));
+def_pcfunk0(termios__nocanon,
+	    "",
+	    return f2__termios__nocanon(this_cause));
 
 
 int raw__termios__canon() {
@@ -91,7 +101,9 @@ int raw__termios__canon() {
 f2ptr f2__termios__canon(f2ptr cause) {
   return f2integer__new(cause, raw__termios__canon());
 }
-def_pcfunk0(termios__canon, return f2__termios__canon(this_cause));
+def_pcfunk0(termios__canon,
+	    "",
+	    return f2__termios__canon(this_cause));
 
 // **
 

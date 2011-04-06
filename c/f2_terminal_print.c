@@ -102,6 +102,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     print_as_frame_hash);
 }
 def_pcfunk9(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, max_nanoseconds_for_resize,
+	    "",
 	    return f2__terminal_print_frame__new(this_cause, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, max_nanoseconds_for_resize));
 
 
@@ -141,7 +142,9 @@ f2ptr f2__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
   assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__new_copy(cause, this);
 }
-def_pcfunk1(terminal_print_frame__new_copy, this, return f2__terminal_print_frame__new_copy(this_cause, this));
+def_pcfunk1(terminal_print_frame__new_copy, this,
+	    "",
+	    return f2__terminal_print_frame__new_copy(this_cause, this));
 
 
 boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return(f2ptr cause, f2ptr this) {
@@ -218,7 +221,9 @@ f2ptr f2__terminal_print_frame__write_color__thread_unsafe(f2ptr cause, f2ptr th
   raw__terminal_print_frame__write_color__thread_unsafe(cause, this, ansi_color);
   return nil;
 }
-def_pcfunk2(terminal_print_frame__write_color__thread_unsafe, this, color, return f2__terminal_print_frame__write_color__thread_unsafe(this_cause, this, color));
+def_pcfunk2(terminal_print_frame__write_color__thread_unsafe, this, color,
+	    "",
+	    return f2__terminal_print_frame__write_color__thread_unsafe(this_cause, this, color));
 
 
 void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, u64 length, u8* string) {
@@ -371,7 +376,9 @@ f2ptr f2__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
   raw__terminal_print_frame__write_string__thread_unsafe(cause, this, string__length, string__str);
   return nil;
 }
-def_pcfunk2(terminal_print_frame__write_string__thread_unsafe, this, string, return f2__terminal_print_frame__write_string__thread_unsafe(this_cause, this, string));
+def_pcfunk2(terminal_print_frame__write_string__thread_unsafe, this, string,
+	    "",
+	    return f2__terminal_print_frame__write_string__thread_unsafe(this_cause, this, string));
 
 
 f2ptr raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
@@ -445,7 +452,9 @@ f2ptr f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(
   assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(cause, this, expression);
 }
-def_pcfunk2(terminal_print_frame__can_print_expression_on_one_line__thread_unsafe, this, expression, return f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(this_cause, this, expression));
+def_pcfunk2(terminal_print_frame__can_print_expression_on_one_line__thread_unsafe, this, expression,
+	    "",
+	    return f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(this_cause, this, expression));
 
 
 f2ptr raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
@@ -526,7 +535,9 @@ f2ptr f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_
   assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(cause, this, expression);
 }
-def_pcfunk2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe, this, expression, return f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(this_cause, this, expression));
+def_pcfunk2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe, this, expression,
+	    "",
+	    return f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(this_cause, this, expression));
 
 
 f2ptr raw__terminal_print_frame__expression_x_offset__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
@@ -605,7 +616,9 @@ f2ptr f2__terminal_print_frame__expression_x_offset__thread_unsafe(f2ptr cause, 
   assert_argument_type(terminal_print_frame, this);
   return raw__terminal_print_frame__expression_x_offset__thread_unsafe(cause, this, expression);
 }
-def_pcfunk2(terminal_print_frame__expression_x_offset__thread_unsafe, this, expression, return f2__terminal_print_frame__expression_x_offset__thread_unsafe(this_cause, this, expression));
+def_pcfunk2(terminal_print_frame__expression_x_offset__thread_unsafe, this, expression,
+	    "",
+	    return f2__terminal_print_frame__expression_x_offset__thread_unsafe(this_cause, this, expression));
 
 
 void raw__terminal_print_frame__prepare_for_printing__thread_unsafe(f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height) {
@@ -631,7 +644,9 @@ f2ptr f2__terminal_print_frame__prepare_for_printing__thread_unsafe(f2ptr cause,
   raw__terminal_print_frame__prepare_for_printing__thread_unsafe(cause, this, max_x, additional_height);
   return nil;
 }
-def_pcfunk3(terminal_print_frame__prepare_for_printing__thread_unsafe, this, max_x, additional_height, return f2__terminal_print_frame__prepare_for_printing__thread_unsafe(this_cause, this, max_x, additional_height));
+def_pcfunk3(terminal_print_frame__prepare_for_printing__thread_unsafe, this, max_x, additional_height,
+	    "",
+	    return f2__terminal_print_frame__prepare_for_printing__thread_unsafe(this_cause, this, max_x, additional_height));
 
 
 f2ptr f2terminal_print_frame__primobject_type__new_aux(f2ptr cause) {
@@ -807,7 +822,9 @@ f2ptr f2__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this,
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__exp__terminal_print_with_frame__thread_unsafe(cause, this, terminal_print_frame);
 }
-def_pcfunk2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame, return f2__exp__terminal_print_with_frame__thread_unsafe(this_cause, this, terminal_print_frame));
+def_pcfunk2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame,
+	    "",
+	    return f2__exp__terminal_print_with_frame__thread_unsafe(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
@@ -862,7 +879,9 @@ f2ptr f2__exp__terminal_stream_print__thread_unsafe(f2ptr cause, f2ptr this, f2p
   }
   return f2__exp__terminal_print_with_frame__thread_unsafe(cause, this, terminal_print_frame);
 }
-def_pcfunk2(exp__terminal_stream_print__thread_unsafe, this, stream, return f2__exp__terminal_stream_print__thread_unsafe(this_cause, this, stream));
+def_pcfunk2(exp__terminal_stream_print__thread_unsafe, this, stream,
+	    "",
+	    return f2__exp__terminal_stream_print__thread_unsafe(this_cause, this, stream));
 
 
 // **

@@ -76,7 +76,9 @@ f2ptr f2__cause__new(f2ptr cause,
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
-def_pcfunk0(cause__new, return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
+def_pcfunk0(cause__new,
+	    "",
+	    return f2__cause__new(this_cause, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil));
 
 f2ptr f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source) {
   if (source && (! raw__cause__is_type(cause, source))) {
@@ -271,7 +273,9 @@ f2ptr f2__cause__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2ptr var
   assert_argument_type(cause, this);
   return f2bool__new(raw__cause__type_var_defined(cause, this, type, var));
 }
-def_pcfunk3(cause__type_var_defined, this, type, var, return f2__cause__type_var_defined(this_cause, this, type, var));
+def_pcfunk3(cause__type_var_defined, this, type, var,
+	    "",
+	    return f2__cause__type_var_defined(this_cause, this, type, var));
 
 
 boolean_t raw__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
@@ -282,7 +286,9 @@ f2ptr f2__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
   assert_argument_type(cause, this);
   return f2bool__new(raw__cause__var_defined(cause, this, var));
 }
-def_pcfunk2(cause__var_defined, this, var, return f2__cause__var_defined(this_cause, this, var));
+def_pcfunk2(cause__var_defined, this, var,
+	    "",
+	    return f2__cause__var_defined(this_cause, this, var));
 
 
 f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
@@ -306,7 +312,9 @@ f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
   assert_argument_type(cause, this);
   return raw__cause__type_var_value__set(cause, this, type, var, value);
 }
-def_pcfunk4(cause__type_var_value__set, this, type, var, value, return f2__cause__type_var_value__set(this_cause, this, type, var, value));
+def_pcfunk4(cause__type_var_value__set, this, type, var, value,
+	    "",
+	    return f2__cause__type_var_value__set(this_cause, this, type, var, value));
 
 
 f2ptr raw__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
@@ -317,7 +325,9 @@ f2ptr f2__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value)
   assert_argument_type(cause, this);
   return raw__cause__var_value__set(cause, this, var, value);
 }
-def_pcfunk3(cause__var_value__set, this, var, value, return f2__cause__var_value__set(this_cause, this, var, value));
+def_pcfunk3(cause__var_value__set, this, var, value,
+	    "",
+	    return f2__cause__var_value__set(this_cause, this, var, value));
 
 
 boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
@@ -352,7 +362,9 @@ f2ptr f2__cause__define(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
   raw__cause__define_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var, value);
   return nil;
 }
-def_pcfunk3(cause__define, this, var, value, return f2__cause__define(this_cause, this, var, value));
+def_pcfunk3(cause__define, this, var, value,
+	    "",
+	    return f2__cause__define(this_cause, this, var, value));
 
 
 void raw__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr value) {
@@ -364,7 +376,9 @@ f2ptr f2__cause__define__funk(f2ptr cause, f2ptr this, f2ptr funkvar, f2ptr valu
   raw__cause__define__funk(cause, this, funkvar, value);
   return nil;
 }
-def_pcfunk3(cause__define__funk, this, funkvar, value, return f2__cause__define__funk(this_cause, this, funkvar, value));
+def_pcfunk3(cause__define__funk, this, funkvar, value,
+	    "",
+	    return f2__cause__define__funk(this_cause, this, funkvar, value));
 
 
 f2ptr raw__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
@@ -379,7 +393,9 @@ f2ptr f2__cause__lookup(f2ptr cause, f2ptr this, f2ptr var) {
   assert_argument_type(cause, this);
   return raw__cause__lookup(cause, this, var);
 }
-def_pcfunk2(cause__lookup, this, var, return f2__cause__lookup(this_cause, this, var));
+def_pcfunk2(cause__lookup, this, var,
+	    "",
+	    return f2__cause__lookup(this_cause, this, var));
 
 f2ptr f2__cause__lookup__funk(f2ptr cause, f2ptr this, f2ptr funkvar) {
   f2ptr result = f2__cause__lookup_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, funkvar);
@@ -388,7 +404,9 @@ f2ptr f2__cause__lookup__funk(f2ptr cause, f2ptr this, f2ptr funkvar) {
   }
   return result;
 }
-def_pcfunk2(cause__lookup__funk, this, funkvar, return f2__cause__lookup__funk(this_cause, this, funkvar));
+def_pcfunk2(cause__lookup__funk, this, funkvar,
+	    "",
+	    return f2__cause__lookup__funk(this_cause, this, funkvar));
 
 f2ptr f2__cause(f2ptr cause) {
   f2ptr fiber     = f2__this__fiber(cause);
@@ -414,7 +432,9 @@ f2ptr f2__cause(f2ptr cause) {
   }
   return new_cause;
 }
-def_pcfunk0(cause, return f2__cause(this_cause));
+def_pcfunk0(cause,
+	    "",
+	    return f2__cause(this_cause));
 
 
 
@@ -437,7 +457,9 @@ f2ptr f2__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__cause__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(cause__terminal_print_with_frame, this, terminal_print_frame, return f2__cause__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(cause__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__cause__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {

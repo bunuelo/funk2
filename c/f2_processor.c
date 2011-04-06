@@ -45,7 +45,7 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
   }
   pause_gc();
   f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
-  f2ptr old_processor_assignment_index = f2fiber__processor_assignment_index(this, cause);
+  f2ptr old_processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   if (old_processor_assignment_index != nil) {
     printf("\nprocessor-add_active_fiber warning: adding fiber to processor when already assigned to processor."); fflush(stdout);
   }

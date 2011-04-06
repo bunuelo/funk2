@@ -536,7 +536,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	  pause_gc();
 	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
-	  resume_gc();
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
 	    if (raw__larva__is_type(cause, result)) {
@@ -544,24 +543,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      error(nil, "processor-execute_next_bytecodes: error adding critic fiber.");
 	    }
 	  }
-	  /*
-	  {
-	    f2ptr processor__active_fibers_scheduler_cmutex;
-	    int lock_failed;
-	    do {
-	      processor__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(processor, cause);
-	      lock_failed = f2scheduler_cmutex__trylock(processor__active_fibers_scheduler_cmutex, cause);
-	      if (lock_failed) {
-		raw__fast_spin_sleep_yield();
-	      }
-	    } while (lock_failed);
-	    pause_gc();
-	    f2processor__active_fibers__set(processor, cause, f2cons__new(cause, new_fiber, f2processor__active_fibers(processor, cause)));
-	    resume_gc();
-	    f2scheduler_cmutex__unlock(processor__active_fibers_scheduler_cmutex, cause);
-	  }
-	  */	
-	  //printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
+	  resume_gc();
 	} else {
 	  char status_msg[1024];
 	  snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");

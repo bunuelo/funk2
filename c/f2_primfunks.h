@@ -37,11 +37,8 @@
    this_symbol = this_symbol;
 
 #define def_pcfunk__documentation_variable(name)                   __documentation__##name
-#define def_pcfunk__documentation_variable__define(name)           f2ptr def_pcfunk__documentation_variable(name) = nil
-#define def_pcfunk__documentation_variable__init(name, doc_string) if(!def_pcfunk__documentation_variable(name)) {def_pcfunk__documentation_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
-#define def_pcfunk__this_documentation__define(name) \
-   f2ptr this_documentation = def_pcfunk__documentation_variable(name); \
-   this_documentation = this_documentation;
+#define def_pcfunk__documentation_variable__define(name)           u8* def_pcfunk__documentation_variable(name) = (u8*)""
+#define def_pcfunk__documentation_variable__init(name, doc_string) {def_pcfunk__documentation_variable(name) = (u8*)(doc_string));}
 
 #define def_pcfunk__is_funktional_variable(name)                   __is_funktional__##name
 #define def_pcfunk__is_funktional_variable__define(name)           f2ptr def_pcfunk__is_funktional_variable(name) = nil
@@ -51,13 +48,6 @@
 #define def_pcfunk__has_side_effects_variable__define(name)           f2ptr def_pcfunk__has_side_effects_variable(name) = nil
 #define def_pcfunk__has_side_effects_variable__init(name, doc_string) if(!def_pcfunk__has_side_effects_variable(name)) {def_pcfunk__has_side_effects_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
 
-
-//#  define def_pcfunk__this_cause__define(name) 
-//     f2ptr this_cause = f2cause__new(simple_cause, simple_fiber, simple_env, def_pcfunk__symbolvar(name), simple_args, nil); 
-//     this_cause = this_cause;
-//#  define def_pcfunk__this_cause__define(name) 
-//     f2ptr this_cause = f2__cause__new(simple_cause, nil); 
-//     this_cause = this_cause;
 
 #define PCFUNK__PROPOGATE_THIS_CAUSE
 #ifdef  PCFUNK__PROPOGATE_THIS_CAUSE
@@ -75,7 +65,7 @@
   def_pcfunk__symbolvar__define(def_name);				\
   def_pcfunk__documentation_variable__define(def_name);			\
   def_pcfunk__is_funktional_variable__define(def_name);			\
-  def_pcfunk__has_side_effects_variable__define(def_name);			\
+  def_pcfunk__has_side_effects_variable__define(def_name);		\
   def_pcfunk__prototype__declare(def_name) {				\
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
@@ -682,7 +672,7 @@
   { \
     f2ptr c_cfunk_args = cfunk_args_code; \
     def_pcfunk__documentation_variable__init(name, doc_string); \
-    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), def_pcfunk__is_funktional_variable(name), def_pcfunk__documentation_variable(name)); \
+    c_cfunk_var        = f2cfunk__new(initial_cause(), f2symbol__new(initial_cause(), strlen(def_pcfunk__symbolvar_string(name)), (u8*)def_pcfunk__symbolvar_string(name)), c_cfunk_args, f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), global_environment(), def_pcfunk__is_funktional_variable(name), new__string(cause, strlen((char*)def_pcfunk__documentation_variable(name)), (char*)def_pcfunk__documentation_variable(name))); \
     never_gc(c_cfunk_var); \
     def_pcfunk__symbolvar__init(name); \
     never_gc(def_pcfunk__symbolvar(name)); \

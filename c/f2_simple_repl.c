@@ -53,7 +53,9 @@ int f2__simple_repl(f2ptr cause, f2ptr fiber) {
   f2fiber__keep_undead__set(repl_fiber, cause, nil);
   return 0;
 }
-def_pcfunk0(simple_repl, return f2integer__new(this_cause, f2__simple_repl(this_cause, simple_fiber)));
+def_pcfunk0(simple_repl, 
+	    "",
+	   return f2integer__new(this_cause, f2__simple_repl(this_cause, simple_fiber)));
 
 // **
 

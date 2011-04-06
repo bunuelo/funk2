@@ -136,7 +136,9 @@ f2ptr f2__load(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
   return raw__load(cause, filename);
 }
-def_pcfunk1(load, filename, return f2__load(this_cause, filename));
+def_pcfunk1(load, filename,
+	    "",
+	    return f2__load(this_cause, filename));
 
 void f2__load__reinitialize_globalvars() {
 }

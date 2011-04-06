@@ -674,7 +674,9 @@ f2ptr f2__fiber_stack_trace_block__as__string(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_stack_trace_block, this);
   return raw__fiber_stack_trace_block__as__string(cause, this);
 }
-def_pcfunk1(fiber_stack_trace_block__as__string, this, return f2__fiber_stack_trace_block__as__string(this_cause, this));
+def_pcfunk1(fiber_stack_trace_block__as__string, this,
+	    "",
+	    return f2__fiber_stack_trace_block__as__string(this_cause, this));
 
 
 f2ptr raw__fiber_stack_trace_block__printable_argument_frame(f2ptr cause, f2ptr this) {

@@ -395,11 +395,13 @@ f2ptr f2__cause(f2ptr cause) {
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
   { // should be atomic
     f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
-    if (! raw__eq(cause, cause, cause_reg)) {
+    if (! raw__eq(cause, cause, old_cause)) {
       printf("\nf2__cause warning: cause is not the same as cause_reg."); fflush(stdout);
     }
-    if (cause_reg != nil) {
-      f2ptr result = raw__cause__remove_fiber(cause, cause_reg, fiber);
+    f2ptr old_cause = cause_reg;
+    f2fiber__cause_reg__set(fiber, cause, new_cause);
+    if (old_cause != nil) {
+      f2ptr result = raw__cause__remove_fiber(cause, old_cause, fiber);
       if (raw__larva__is_type(cause, result)) {
 	return result;
       }

@@ -486,6 +486,7 @@ f2ptr f2__funk2_node_handler__known_node_info(f2ptr cause) {
 }
 
 def_pcfunk0(funk2_node_handler__known_node_info,
+	    "",
 	    return f2__funk2_node_handler__known_node_info(this_cause));
 
 

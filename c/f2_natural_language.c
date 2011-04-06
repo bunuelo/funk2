@@ -772,7 +772,9 @@ f2ptr f2__parse_tree_node__child_of_type_node(f2ptr cause, f2ptr this, f2ptr typ
   assert_argument_type(symbol,          type);
   return raw__parse_tree_node__child_of_type_node(cause, this, type);
 }
-def_pcfunk2(parse_tree_node__child_of_type_node, this, type, return f2__parse_tree_node__child_of_type_node(this_cause, this, type));
+def_pcfunk2(parse_tree_node__child_of_type_node, this, type,
+	    "",
+	    return f2__parse_tree_node__child_of_type_node(this_cause, this, type));
 
 
 f2ptr raw__parse_tree_node__containing_type_node(f2ptr cause, f2ptr this, f2ptr type) {

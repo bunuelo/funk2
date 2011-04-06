@@ -150,12 +150,12 @@ void f2__primobject_circular_buffer__initialize() {
   initialize_primobject_4_slot(circular_buffer, access_cmutex, start, end, bin_array);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var(circular_buffer__new, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var(circular_buffer__new, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk = never_gc(cfunk);}
   {char* symbol_str = "pop"; __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__pop, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__pop, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__add, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__add, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__funk = never_gc(cfunk);}
   {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__is_empty, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__is_empty, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__funk = never_gc(cfunk);}
 }
 

@@ -137,7 +137,7 @@ void f2__chunk__initialize() {
   f2__chunk__reinitialize_globalvars();
   
   {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_chunk.save__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__save, this, filename, cfunk, 1, "save this chunk to a file of filename."); __funk2.globalenv.object_type.ptype.ptype_chunk.save__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__save, this, filename, cfunk, "save this chunk to a file of filename."); __funk2.globalenv.object_type.ptype.ptype_chunk.save__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__1(chunk__load, filename, "load a chunk from a filename");
   

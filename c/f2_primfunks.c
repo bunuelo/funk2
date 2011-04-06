@@ -1704,13 +1704,13 @@ void f2__primcfunks__initialize() {
   
   // system
   
-  f2__funktional_primcfunk__init__0(system__node_id, "");
-  f2__funktional_primcfunk__init__1(system__environment, node_id, "");
+  f2__primcfunk__init__0(system__node_id, "");
+  f2__primcfunk__init__1(system__environment, node_id, "");
   
   // funk2 pointer (f2ptr)
   
-  f2__funktional_primcfunk__init__1(pointer, exp, "");
-  f2__funktional_primcfunk__init__1(deref_pointer, pointer, "");
+  f2__primcfunk__init__1(pointer, exp, "");
+  f2__primcfunk__init__1(deref_pointer, pointer, "");
   
   // ptype
   
@@ -1724,15 +1724,15 @@ void f2__primcfunks__initialize() {
   
   // gfunkptr
   
-  f2__primcfunk__init__1(           gfunkptr__new_from_pointer, pointer, "");
+  f2__primcfunk__init__1(gfunkptr__new_from_pointer, pointer, "");
   
   // cmutex
   
   // string
   
   //f2__funktional_primcfunk__init__2(string__equals,                this, that, "");
-  f2__primcfunk__init__1(           string__new_raw_c_string,      this, "");
-  f2__primcfunk__init__1(           string__new_from_raw_c_string, c_string, "");
+  f2__primcfunk__init__1(string__new_raw_c_string,      this, "");
+  f2__primcfunk__init__1(string__new_from_raw_c_string, c_string, "");
   
   // symbol
   
@@ -1789,32 +1789,32 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(test_imagine, "");
   
   f2__primcfunk__init__1(           simple_length,               seq, "");
-  f2__funktional_primcfunk__init__2(integer__greater_than,      x, y, "");
-  f2__funktional_primcfunk__init__2(integer__less_than,         x, y, "");
-  f2__funktional_primcfunk__init__2(integer__add,               x, y, "");
-  f2__funktional_primcfunk__init__2(integer__subtract,          x, y, "");
-  f2__funktional_primcfunk__init__2(integer__multiply,          x, y, "");
-  f2__funktional_primcfunk__init__2(integer__add_double,        x, y, "");
-  f2__funktional_primcfunk__init__2(integer__subtract_double,   x, y, "");
-  f2__funktional_primcfunk__init__2(integer__divide_by_integer, x, y, "");
-  f2__funktional_primcfunk__init__2(integer__divide_by_double,  x, y, "");
-  f2__funktional_primcfunk__init__2(integer__equal_sign,        x, y, "");
-  f2__funktional_primcfunk__init__2(integer__not_equal_sign,    x, y, "");
-  f2__funktional_primcfunk__init__2(integer__bitshift_left,     x, y, "");
-  f2__funktional_primcfunk__init__2(integer__bitshift_right,    x, y, "");
-  f2__funktional_primcfunk__init__2(integer__bit_and,           x, y, "");
-  f2__funktional_primcfunk__init__2(integer__bit_or,            x, y, "");
-  f2__funktional_primcfunk__init__2(integer__bit_xor,           x, y, "");
-  f2__funktional_primcfunk__init__1(integer__bit_not,           x, "");
-  f2__funktional_primcfunk__init__2(pointer__greater_than,      x, y, "");
-  f2__funktional_primcfunk__init__2(pointer__less_than,         x, y, "");
-  f2__funktional_primcfunk__init__2(pointer__subtract,          x, y, "");
-  f2__funktional_primcfunk__init__2(pointer__equal_sign,        x, y, "");
-  f2__funktional_primcfunk__init__2(pointer__not_equal_sign,    x, y, "");
-  f2__funktional_primcfunk__init__1(null,                       x, "");
-  f2__funktional_primcfunk__init__1(not,                        x, "");
+  f2__primcfunk__init__2(integer__greater_than,      x, y, "");
+  f2__primcfunk__init__2(integer__less_than,         x, y, "");
+  f2__primcfunk__init__2(integer__add,               x, y, "");
+  f2__primcfunk__init__2(integer__subtract,          x, y, "");
+  f2__primcfunk__init__2(integer__multiply,          x, y, "");
+  f2__primcfunk__init__2(integer__add_double,        x, y, "");
+  f2__primcfunk__init__2(integer__subtract_double,   x, y, "");
+  f2__primcfunk__init__2(integer__divide_by_integer, x, y, "");
+  f2__primcfunk__init__2(integer__divide_by_double,  x, y, "");
+  f2__primcfunk__init__2(integer__equal_sign,        x, y, "");
+  f2__primcfunk__init__2(integer__not_equal_sign,    x, y, "");
+  f2__primcfunk__init__2(integer__bitshift_left,     x, y, "");
+  f2__primcfunk__init__2(integer__bitshift_right,    x, y, "");
+  f2__primcfunk__init__2(integer__bit_and,           x, y, "");
+  f2__primcfunk__init__2(integer__bit_or,            x, y, "");
+  f2__primcfunk__init__2(integer__bit_xor,           x, y, "");
+  f2__primcfunk__init__1(integer__bit_not,           x, "");
+  f2__primcfunk__init__2(pointer__greater_than,      x, y, "");
+  f2__primcfunk__init__2(pointer__less_than,         x, y, "");
+  f2__primcfunk__init__2(pointer__subtract,          x, y, "");
+  f2__primcfunk__init__2(pointer__equal_sign,        x, y, "");
+  f2__primcfunk__init__2(pointer__not_equal_sign,    x, y, "");
+  f2__primcfunk__init__1(null,                       x, "");
+  f2__primcfunk__init__1(not,                        x, "");
   
-  f2__funktional_primcfunk__init__2(eq,                         x, y, "");
+  f2__primcfunk__init__2(eq,                         x, y, "");
   f2__primcfunk__init__2(contains, this, element, "");
   
   f2__primcfunk__init__1(reverse, this, "reverses elements in a list.");
@@ -1839,7 +1839,7 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init__1(random, sup_integer, "generate a random integer between 0 and sup_integer - 1.");
   
-  f2__funktional_primcfunk__init(identity, "");
+  f2__primcfunk__init(identity, "");
   
   f2__primcfunk__init(demetropolize_once, "");
   f2__primcfunk__init(demetropolize_full, "");
@@ -1847,7 +1847,7 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(compile__special_symbol_exp, "");
   f2__primcfunk__init(lookup_funkvar, "");
   f2__primcfunk__init(jump_to_chunk, "");
-  f2__funktional_primcfunk__init(coerce_to_int, "");
+  f2__primcfunk__init(coerce_to_int, "");
   
   //f2__primcfunk__init(memory_image__save, "");
   //f2__primcfunk__init(memory_image__load, "");
@@ -1956,20 +1956,20 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init__1(system__memorypool__total_global_memory, index, "Returns the total_global_memory of the memorypool index (0-7).");
   f2__primcfunk__init__1(system__memorypool__total_free_memory,   index, "Returns the total_free_memory of the memorypool index (0-7).");
   
-  f2__funktional_primcfunk__init(integer__to_float, "");
-  f2__funktional_primcfunk__init(integer__to_double, "");
-  f2__funktional_primcfunk__init(double__to_integer, "");
-  f2__funktional_primcfunk__init(double__to_float, "");
-  f2__funktional_primcfunk__init(double__add_double, "");
-  f2__funktional_primcfunk__init(double__subtract_double, "");
-  f2__funktional_primcfunk__init(double__multiply_by_double, "");
-  f2__funktional_primcfunk__init(double__divide_by_double, "");
-  f2__funktional_primcfunk__init(double__add_integer, "");
-  f2__funktional_primcfunk__init(double__subtract_integer, "");
-  f2__funktional_primcfunk__init(double__multiply_by_integer, "");
-  f2__funktional_primcfunk__init(double__divide_by_integer, "");
-  f2__funktional_primcfunk__init(float__to_integer, "");
-  f2__funktional_primcfunk__init(float__to_double, "");
+  f2__primcfunk__init(integer__to_float, "");
+  f2__primcfunk__init(integer__to_double, "");
+  f2__primcfunk__init(double__to_integer, "");
+  f2__primcfunk__init(double__to_float, "");
+  f2__primcfunk__init(double__add_double, "");
+  f2__primcfunk__init(double__subtract_double, "");
+  f2__primcfunk__init(double__multiply_by_double, "");
+  f2__primcfunk__init(double__divide_by_double, "");
+  f2__primcfunk__init(double__add_integer, "");
+  f2__primcfunk__init(double__subtract_integer, "");
+  f2__primcfunk__init(double__multiply_by_integer, "");
+  f2__primcfunk__init(double__divide_by_integer, "");
+  f2__primcfunk__init(float__to_integer, "");
+  f2__primcfunk__init(float__to_double, "");
   
   f2__primcfunk__init(tensor__new_from_array_of_integer_dimensions, "");
   f2__primcfunk__init(tensor__elt_from_array_of_integer_indices, "");
@@ -1980,19 +1980,19 @@ void f2__primcfunks__initialize() {
   f2__primcfunk__init(system__peer_command_server__port_num, "");
   f2__primcfunk__init(system__gethostname, "");
   
-  f2__funktional_primcfunk__init__2(larva, larva_type, bug, "");
+  f2__primcfunk__init__2(larva, larva_type, bug, "");
   
-  f2__funktional_primcfunk__init(first, "");
-  f2__funktional_primcfunk__init(first__set, "");
-  f2__funktional_primcfunk__init(next, "");
-  f2__funktional_primcfunk__init(next__set, "");
-  f2__funktional_primcfunk__init(prev, "");
-  f2__funktional_primcfunk__init(prev__set, "");
+  f2__primcfunk__init(first, "");
+  f2__primcfunk__init(first__set, "");
+  f2__primcfunk__init(next, "");
+  f2__primcfunk__init(next__set, "");
+  f2__primcfunk__init(prev, "");
+  f2__primcfunk__init(prev__set, "");
   
-  f2__funktional_primcfunk__init__1(colonize, exp, "");
-  f2__funktional_primcfunk__init__1(eq_hash_value, exp, "");
-  f2__funktional_primcfunk__init__2(equals, x, y, "");
-  //f2__funktional_primcfunk__init__1(is_funktional, exp, "");
+  f2__primcfunk__init__1(colonize, exp, "");
+  f2__primcfunk__init__1(eq_hash_value, exp, "");
+  f2__primcfunk__init__2(equals, x, y, "");
+  //f2__primcfunk__init__1(is_funktional, exp, "");
   
   f2__primcfunk__init__0(memory__test,         "Asserts that memory tests pass, otherwise logs debugging information regarding the bug and stops Funk2 with fatal error.");
   f2__primcfunk__init__0(memory__assert_valid, "Asserts that memory tests pass, otherwise returns a larva with low-level memory system debugging information.");

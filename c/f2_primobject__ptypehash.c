@@ -425,39 +425,39 @@ void f2__primobject__ptypehash__initialize() {
   initialize_primobject_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bin_array);
   
   {char* symbol_str = "contains"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.contains__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__contains, this, key, cfunk, 0, "Returns boolean true [t] if the ptypehash contains the key.");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__contains, this, key, cfunk, "Returns boolean true [t] if the ptypehash contains the key.");
     __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.contains__funk = never_gc(cfunk);}
   {char* symbol_str = "an_arbitrary_keyvalue_pair"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_keyvalue_pair__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__an_arbitrary_keyvalue_pair, this, cfunk, 0, "Returns an arbitrary keyvalue pair from a ptypehash.");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__an_arbitrary_keyvalue_pair, this, cfunk, "Returns an arbitrary keyvalue pair from a ptypehash.");
     __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_keyvalue_pair__funk = never_gc(cfunk);}
   {char* symbol_str = "an_arbitrary_key"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_key__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__an_arbitrary_key, this, cfunk, 0, "Returns an arbitrary key from a ptypehash.");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__an_arbitrary_key, this, cfunk, "Returns an arbitrary key from a ptypehash.");
     __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_key__funk = never_gc(cfunk);}
   {char* symbol_str = "an_arbitrary_value"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__an_arbitrary_value, this, cfunk, 0, "Returns an arbitrary value from a ptypehash.");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__an_arbitrary_value, this, cfunk, "Returns an arbitrary value from a ptypehash.");
     __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_value__funk = never_gc(cfunk);}
   {char* symbol_str = "copy"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__copy, this, cfunk, 0, "Returns a new copy of this ptypehash.");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__copy, this, cfunk, "Returns a new copy of this ptypehash.");
     __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy__funk = never_gc(cfunk);}
   
   {char* symbol_str = "keys"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.keys__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__keys, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.keys__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__keys, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.keys__funk = never_gc(cfunk);}
   {char* symbol_str = "values"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.values__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__values, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.values__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__values, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.values__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__add, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__add, this, slot_name, value, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk = never_gc(cfunk);}
   {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__remove, this, slot_name, value, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(ptypehash__remove, this, slot_name, value, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk = never_gc(cfunk);}
   {char* symbol_str = "copy_from"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__copy_from, this, that, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__copy_from, this, that, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__lookup, this, slot_name, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__lookup, this, slot_name, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__is_empty, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__is_empty, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk = never_gc(cfunk);}
   {char* symbol_str = "as-frame"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__as__frame, this, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__as__frame, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

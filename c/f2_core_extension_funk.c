@@ -527,49 +527,49 @@ void f2__core_extension_funk__initialize() {
   f2__primcfunk__init__2(core_extension_funk__new, filename, name, "");
   
   {char* symbol_str = "pointer"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__pointer, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__pointer, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.pointer__funk = never_gc(cfunk);}
   
   {char* symbol_str = "env"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.env__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__env, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.env__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__env, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.env__funk = never_gc(cfunk);}
   
   {char* symbol_str = "cfunk"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__cfunk, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__cfunk, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.cfunk__funk = never_gc(cfunk);}
   
   {char* symbol_str = "apply"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_funk__apply, this, args, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_funk__apply, this, args, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply__funk = never_gc(cfunk);}
   
   {char* symbol_str = "apply_without_initializing"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply_without_initializing__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_funk__apply_without_initializing, this, args, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply_without_initializing__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_funk__apply_without_initializing, this, args, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.apply_without_initializing__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_funk__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(core_extension_funk__terminal_print_with_frame, this, terminal_print_frame, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   {char* symbol_str = "args_pointer"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args_pointer__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args_pointer, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args_pointer__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args_pointer, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args_pointer__funk = never_gc(cfunk);}
   
   {char* symbol_str = "args_cfunk"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args_cfunk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args_cfunk, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args_cfunk__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args_cfunk, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args_cfunk__funk = never_gc(cfunk);}
   
   {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__args, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.args__funk = never_gc(cfunk);}
   
   {char* symbol_str = "is_funktional_pointer"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional_pointer__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional_pointer, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional_pointer__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional_pointer, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional_pointer__funk = never_gc(cfunk);}
   
   {char* symbol_str = "is_funktional_cfunk"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional_cfunk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional_cfunk, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional_cfunk__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional_cfunk, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional_cfunk__funk = never_gc(cfunk);}
   
   {char* symbol_str = "is_funktional"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__is_funktional, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.is_funktional__funk = never_gc(cfunk);}
   
   {char* symbol_str = "documentation_pointer"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation_pointer__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation_pointer, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation_pointer__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation_pointer, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation_pointer__funk = never_gc(cfunk);}
   
   {char* symbol_str = "documentation_cfunk"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation_cfunk__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation_cfunk, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation_cfunk__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation_cfunk, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation_cfunk__funk = never_gc(cfunk);}
   
   {char* symbol_str = "documentation"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation, this, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__funk = never_gc(cfunk);}
   
 }
 

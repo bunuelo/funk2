@@ -78,7 +78,7 @@ void f2__partial_order__initialize() {
   initialize_primobject_1_slot(partial_order_node, label);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_partial_order_node.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(partial_order_node__terminal_print_with_frame, this, terminal_print_frame, cfunk, 0, ""); __funk2.globalenv.object_type.primobject.primobject_type_partial_order_node.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(partial_order_node__terminal_print_with_frame, this, terminal_print_frame, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_partial_order_node.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

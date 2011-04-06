@@ -26,7 +26,9 @@
 def_primobject_1_slot(agent, fiber);
 
 f2ptr f2__agent__new(f2ptr cause, f2ptr fiber) {return f2agent__new(cause, fiber);}
-def_pcfunk1(agent__new, fiber, return f2__agent__new(this_cause, fiber));
+def_pcfunk1(agent__new, fiber,
+	    "",
+	    return f2__agent__new(this_cause, fiber));
 
 
 

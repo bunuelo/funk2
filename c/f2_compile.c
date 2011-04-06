@@ -177,7 +177,9 @@ f2ptr f2__wrong_argument_number__bcs__set(f2ptr cause, f2ptr bytecodes) {
   __funk2.compile.wrong_argument_number__bcs = bytecodes;
   return nil;
 }
-def_pcfunk1(wrong_argument_number__bcs__set, bytecodes, return f2__wrong_argument_number__bcs__set(this_cause, bytecodes));
+def_pcfunk1(wrong_argument_number__bcs__set, bytecodes,
+	    "",
+	    return f2__wrong_argument_number__bcs__set(this_cause, bytecodes));
 
 
 f2ptr f2__compile__push_debug_funk_call(f2ptr cause) {

@@ -33,7 +33,9 @@ f2ptr __text_window_stream__symbol = -1;
 f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_descriptor, f2ptr string, f2ptr index) {
   return f2stream__new(cause, f2__cmutex__new(cause), stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
 }
-def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
+def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index,
+	    "",
+	    return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
 
 
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
@@ -42,7 +44,9 @@ f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
   f2ptr rewind_length = f2integer__new(cause, 0);
   return f2__stream__new(cause, __file_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_descriptor, nil, nil);
 }
-def_pcfunk1(file_stream__new, file_descriptor, return f2__file_stream__new(this_cause, file_descriptor));
+def_pcfunk1(file_stream__new, file_descriptor,
+	    "",
+	    return f2__file_stream__new(this_cause, file_descriptor));
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
@@ -57,7 +61,9 @@ f2ptr f2__socket_stream__new(f2ptr cause, f2ptr file_descriptor) {
   f2ptr rewind_length = f2integer__new(cause, 0);
   return f2__stream__new(cause, __socket_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_descriptor, nil, nil);
 }
-def_pcfunk1(socket_stream__new, file_descriptor, return f2__socket_stream__new(this_cause, file_descriptor));
+def_pcfunk1(socket_stream__new, file_descriptor,
+	    "",
+	    return f2__socket_stream__new(this_cause, file_descriptor));
 
 boolean_t raw__socket_stream__is_type(f2ptr cause, f2ptr this) {
   if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
@@ -72,7 +78,9 @@ f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   f2ptr rewind_length = f2integer__new(cause, 0);
   return f2__stream__new(cause, __string_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, nil, string, index);
 }
-def_pcfunk2(string_stream__new, string, index, return f2__string_stream__new(this_cause, string, index));
+def_pcfunk2(string_stream__new, string, index,
+	    "",
+	    return f2__string_stream__new(this_cause, string, index));
 
 boolean_t raw__string_stream__is_type(f2ptr cause, f2ptr this) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
@@ -83,7 +91,9 @@ f2ptr f2__string_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(ra
 f2ptr f2__string_stream(f2ptr cause, f2ptr string) {
   return f2__string_stream__new(cause, string, f2integer__new(cause, 0));
 }
-def_pcfunk1(string_stream, string, return f2__string_stream(this_cause, string));
+def_pcfunk1(string_stream, string,
+	    "",
+	    return f2__string_stream(this_cause, string));
 
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
   int fd = open(filename, mode);
@@ -103,7 +113,9 @@ f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
   u64 raw_mode = f2integer__i(mode, cause);
   return raw__stream__new_open_file(cause, raw_filename, raw_mode);
 }
-def_pcfunk2(stream__new_open_file, filename, mode, return f2__stream__new_open_file(this_cause, filename, mode));
+def_pcfunk2(stream__new_open_file, filename, mode,
+	    "",
+	    return f2__stream__new_open_file(this_cause, filename, mode));
 
 f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
   assert_argument_type(file_stream, this);
@@ -152,16 +164,24 @@ f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
   assert_argument_type(closable_stream, this);
   return raw__stream__close(cause, this);
 }
-def_pcfunk1(stream__close, this, return f2__stream__close(this_cause, this));
+def_pcfunk1(stream__close, this,
+	    "",
+	    return f2__stream__close(this_cause, this));
 
 f2ptr f2__stream__file_mode__rdonly(f2ptr cause) {return f2integer__new(cause, O_RDONLY);}
-def_pcfunk0(stream__file_mode__rdonly, return f2__stream__file_mode__rdonly(this_cause));
+def_pcfunk0(stream__file_mode__rdonly,
+	    "",
+	    return f2__stream__file_mode__rdonly(this_cause));
 
 f2ptr f2__stream__file_mode__creat(f2ptr cause)  {return f2integer__new(cause, O_CREAT);}
-def_pcfunk0(stream__file_mode__creat, return f2__stream__file_mode__creat(this_cause));
+def_pcfunk0(stream__file_mode__creat,
+	    "",
+	    return f2__stream__file_mode__creat(this_cause));
 
 f2ptr f2__stream__file_mode__rdwr(f2ptr cause)   {return f2integer__new(cause, O_RDWR);}
-def_pcfunk0(stream__file_mode__rdwr, return f2__stream__file_mode__rdwr(this_cause));
+def_pcfunk0(stream__file_mode__rdwr,
+	    "",
+	    return f2__stream__file_mode__rdwr(this_cause));
 
 f2ptr f2__stream__new_open_file__rdonly(f2ptr cause, f2ptr filename) {
   f2ptr mode = f2__stream__file_mode__rdonly(cause);
@@ -203,7 +223,9 @@ f2ptr f2__stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
   }
   return f2larva__new(cause, 17531, nil);
 }
-def_pcfunk2(stream__nonblocking__set, this, value, return f2__stream__nonblocking__set(this_cause, this, value));
+def_pcfunk2(stream__nonblocking__set, this, value,
+	    "",
+	    return f2__stream__nonblocking__set(this_cause, this, value));
 
 f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   assert_argument_type(stream, this);
@@ -221,7 +243,9 @@ f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   //f2stream__ungetc_stack__set(this, cause, new_cons);
   return nil;
 }
-def_pcfunk2(stream__ungetc, this, character, return f2__stream__ungetc(this_cause, this, character));
+def_pcfunk2(stream__ungetc, this, character,
+	    "",
+	    return f2__stream__ungetc(this_cause, this, character));
 
 void raw__stream__ungetc(f2ptr cause, f2ptr this, char ch) {
   f2ptr character = f2char__new(cause, ch);
@@ -329,7 +353,9 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
   }
   return character;
 }
-def_pcfunk1(stream__try_read_character, stream, return f2__stream__try_read_character(this_cause, stream));
+def_pcfunk1(stream__try_read_character, stream,
+	    "",
+	    return f2__stream__try_read_character(this_cause, stream));
 
 f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
@@ -346,7 +372,9 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   }
   return read_ch;
 }
-def_pcfunk1(stream__getc, stream, return f2__stream__getc(this_cause, stream));
+def_pcfunk1(stream__getc, stream,
+	    "",
+	    return f2__stream__getc(this_cause, stream));
 
 f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   assert_argument_type(stream, this);
@@ -394,7 +422,9 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   }
   return character;
 }
-def_pcfunk1(stream__rewind, stream, return f2__stream__getc(this_cause, stream));
+def_pcfunk1(stream__rewind, stream,
+	    "",
+	    return f2__stream__getc(this_cause, stream));
 
 f2ptr raw__stream__rewind_to_length(f2ptr cause, f2ptr this, s64 length) {
   assert_argument_type(stream, this);
@@ -420,7 +450,9 @@ f2ptr f2__stream__rewind_to_length(f2ptr cause, f2ptr this, f2ptr length) {
   assert_argument_type(integer, length);
   return raw__stream__rewind_to_length(cause, this, f2integer__i(length, cause));
 }
-def_pcfunk2(stream__rewind_to_length, this, length, return f2__stream__rewind_to_length(this_cause, this, length));
+def_pcfunk2(stream__rewind_to_length, this, length,
+	    "",
+	    return f2__stream__rewind_to_length(this_cause, this, length));
 
 
 f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -450,7 +482,9 @@ f2ptr f2__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__stream__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(stream__terminal_print_with_frame, this, terminal_print_frame, return f2__stream__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(stream__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__stream__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2stream__primobject_type__new_aux(f2ptr cause) {

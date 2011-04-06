@@ -399,7 +399,6 @@ f2ptr f2__cause(f2ptr cause) {
       printf("\nf2__cause warning: cause is not the same as cause_reg."); fflush(stdout);
     }
     f2ptr old_cause = cause_reg;
-    f2fiber__cause_reg__set(fiber, cause, new_cause);
     if (old_cause != nil) {
       f2ptr result = raw__cause__remove_fiber(cause, old_cause, fiber);
       if (raw__larva__is_type(cause, result)) {
@@ -459,7 +458,7 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
 
 void f2__cause__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __cause__symbol      = new__symbol(cause, "cause");
+  __cause__symbol = new__symbol(cause, "cause");
 }
 
 void f2__cause__initialize() {

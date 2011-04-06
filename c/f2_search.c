@@ -65,7 +65,9 @@ f2ptr f2__search(f2ptr fiber, f2ptr cause, f2ptr start_states, f2ptr expand_funk
   return nil;
 }
 
-def_pcfunk4(search, start_states, expand_funk, beam_width, heuristic_funk, return f2__search(simple_fiber, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
+def_pcfunk4(search, start_states, expand_funk, beam_width, heuristic_funk,
+	    "",
+	    return f2__search(simple_fiber, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
 
 // **
 

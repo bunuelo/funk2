@@ -265,7 +265,9 @@ f2ptr f2__surrogate_parent__start_system_command(f2ptr cause, f2ptr command) {
   raw__surrogate_parent__start_system_command(cause, command__str);
   return nil;
 }
-def_pcfunk1(surrogate_parent__start_system_command, command, return f2__surrogate_parent__start_system_command(this_cause, command));
+def_pcfunk1(surrogate_parent__start_system_command, command,
+	    "",
+	    return f2__surrogate_parent__start_system_command(this_cause, command));
 
 f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -276,7 +278,9 @@ f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
   }
   return nil;
 }
-def_pcfunk0(surrogate_parent__check_return_value, return f2__surrogate_parent__check_return_value(this_cause));
+def_pcfunk0(surrogate_parent__check_return_value,
+	    "",
+	    return f2__surrogate_parent__check_return_value(this_cause));
 
 // **
 

@@ -129,7 +129,7 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
   {
     int pool_index = this_processor_thread__pool_index();
     if (pool_index == 0) {
-      status("protected_alloc_array-signal_exit_protected_region : pool_index=%d, source_filename=\"%s\", source_line_num=%d, reentrance_count=" u64_fstr, pool_index, source_filename, source_line_num, this->reentrance_count);
+      status("protected_alloc_array-signal_exit_protected_region : pool_index=%d, source_filename=\"%s\", source_line_num=%d, reentrance_count=" u64__fstr, pool_index, source_filename, source_line_num, this->reentrance_count);
     }
   }
 }

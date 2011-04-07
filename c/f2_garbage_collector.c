@@ -206,6 +206,17 @@ f2ptr funk2_garbage_collector__add_f2ptr_to_never_delete_list(funk2_garbage_coll
   return exp;
 }
 
+void funk2_garbage_collector__print_protected_entrance_points(this) {
+  status("  -- Protected Entrance Points --");
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index) {
+      this->gc_pool[pool_index];
+    }
+  }
+  status("  -------------------------------");
+}
+
 void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
   if (funk2_processor_mutex__trylock(&(this->do_collection_mutex)) == 0) {
     boolean_t doing_garbage_collect_now = boolean__false;
@@ -240,6 +251,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 	}
       }
       funk2_garbage_collector__collect_garbage(this);
+      funk2_garbage_collector__print_protected_entrance_points(this);
       status("");
       status("**************************************");
       status("**** DONE WITH GARBAGE COLLECTION ****");

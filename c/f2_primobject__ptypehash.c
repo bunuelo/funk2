@@ -446,8 +446,6 @@ void f2__primobject__ptypehash__initialize() {
   
   f2__primobject__ptypehash__reinitialize_globalvars();
   
-  environment__add_var_value(initial_cause(), global_environment(), __ptypehash__symbol, nil);
-  
   f2ptr cause = initial_cause();
   
   // ptypehash

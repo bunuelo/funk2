@@ -55,7 +55,9 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   symbol_str = "globalenv:f2_trace.c";                  this->f2_trace_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:f2_serialize.c";              this->f2_serialize_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "globalenv:funk2.c";                     this->funk2_c__cause__symbol                     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-
+  
+  environment__add_var_value(initial_cause(), global_environment(), __ptypehash__symbol, nil);
+  
   symbol_str = "t";                                     this->true__symbol                               = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   symbol_str = "quote";                                 this->quote__symbol                              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
   

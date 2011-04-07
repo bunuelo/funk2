@@ -35,9 +35,6 @@ void funk2_protected_alloc_array_event_array__destroy(funk2_protected_alloc_arra
 }
 
 void funk2_protected_alloc_array_event_array__add_event(funk2_protected_alloc_array_event_array_t* this, funk2_protected_alloc_array_event_type_t type, char* source_filename, int source_line_num) {
-  if (this->reentrance_count == 0) {
-    error(nil, "protected_alloc_array_event_array__add_event: tried to add when reentrance_count is zero.");
-  }
   this->data[this->used_num].type            = type;
   this->data[this->used_num].source_filename = source_filename;
   this->data[this->used_num].source_line_num = source_line_num;
@@ -76,6 +73,9 @@ void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this) {
 }
 
 void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp) {
+  if (this->reentrance_count == 0) {
+    error(nil, "protected_alloc_array_event_array__add_event: tried to add when reentrance_count is zero.");
+  }
   this->data[this->used_num] = exp;
   this->used_num ++;
   if (this->used_num >= this->length) {

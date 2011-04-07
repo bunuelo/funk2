@@ -205,6 +205,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   char* compile__bootstrap_repl_img__filename = F2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME;
   char* other__bootstrap_img__filename        = "/mit/6.868/funk2/img/bootstrap.img";
   
+  f2__nanosleep(1000000);
   f2__initialize();
   
   funk2_primobject_type_handler__add_nil_primobject(           &(this->primobject_type_handler), cause);

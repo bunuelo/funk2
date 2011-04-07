@@ -169,9 +169,10 @@ void f2__primobject_environment__reinitialize_globalvars() {
 void f2__primobject_environment__initialize() {
   f2__primobject_environment__reinitialize_globalvars();
   
-  global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause(), nil),
+  f2ptr frame = raw__frame__new(initial_cause());
+  global_environment__set(f2environment__new(initial_cause(), frame,
 					     nil,
-					     f2symbol__new(initial_cause(), strlen("global_environment"), (u8*)"global_environment")));
+					     new__symbol(initial_cause(), "global_environment")));
   
   funk2_primobject__environment__init(&(__funk2.primobject__environment));
   

@@ -4316,6 +4316,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
     int i;
     f2ptr* f2ptr_iter = (f2ptr*)(simple_array_block->f2ptr_data);
     for (i = length; i > 0; i --) {
+      printf("\nsimple_array-new: i=%d\n", i); fflush(stdout);
       *f2ptr_iter = nil;
       f2ptr_iter  ++;
     }

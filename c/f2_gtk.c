@@ -485,10 +485,15 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
     this->callback_events            = NULL;
     this->callback_events__last_cons = NULL;
     
+    // keeps gtk_main from starting until we unlock this mutex.
+    funk2_processor_mutex__lock(&(this->main_thread__mutex));
     this->main_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_gtk__thread__start_function__helper, (void*)this);
   }
 }
 
+void funk2_gtk__start_gtk_main(funk2_gtk_t* this) {
+  funk2_processor_mutex__unlock(&(this->main_thread__mutex));
+}
 
 void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));

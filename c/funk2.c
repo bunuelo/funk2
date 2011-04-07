@@ -234,6 +234,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
   }
   
+  funk2_gtk__start_gtk_main(&(this->gtk));
+  
   cause = f2__cause__new_with_inherited_properties(cause, nil);
   never_gc(cause);
   

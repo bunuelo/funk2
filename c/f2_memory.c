@@ -245,10 +245,10 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     status("shouldn't ever get a NULL pointer here.");
     error(nil, "shouldn't ever get a NULL pointer here.");
   }
-#endif
   if (byte_num < sizeof(funk2_memblock_t)) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new: block of size less than sizeof(funk2_memblock_t) was requested.");
   }
+#endif
   if (funk2_memblock__byte_num(block) > byte_num + sizeof(funk2_memblock_t)) {
     funk2_memblock_t* new_block           = (funk2_memblock_t*)(((u8*)(block)) + byte_num);
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
@@ -306,7 +306,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     }
   }
 #endif
-  if (block_f2ptr != nil) {
+  if (block_f2ptr) {
     if (funk2_protected_alloc_array__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index].protected_alloc_array))) {
       funk2_garbage_collector_pool__add_protected_alloc_f2ptr(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
     }

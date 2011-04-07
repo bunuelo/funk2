@@ -136,7 +136,7 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
 }
 
 boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this) {
-  return (this->reentrance_count > 0);
+  return (this->reentrance_count != 0);
 }
 
 s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this) {

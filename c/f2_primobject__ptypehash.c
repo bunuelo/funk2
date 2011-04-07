@@ -38,7 +38,6 @@ boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__ptypehash__new(f2ptr cause, s64 bin_num_power) {
-  printf("\nptypehash-new: bin_num_power=" s64__fstr "\n", bin_num_power); fflush(stdout);
   f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
   f2ptr this = f2ptypehash__new(cause, f2cmutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array);
   debug__assert(raw__ptypehash__valid(cause, this), nil, "raw__ptypehash__new assert failed: f2__ptypehash__valid(this)");

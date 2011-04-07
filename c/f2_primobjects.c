@@ -35,7 +35,7 @@ f2ptr f2primobject__new(f2ptr cause, f2ptr object_type, f2ptr static_slot_num, f
 f2ptr __primobject__symbol = -1;
 
 f2ptr f2__primobject__new__trace_depth(f2ptr cause, f2ptr object_type, int static_slot_num, f2ptr dynamic_slots, int trace_depth) {
-  release__assert(__primobject__symbol != -1, nil, "f2__primobject__new error: used before primobjects initialized.");
+  release__assert(__primobject__symbol != ((f2ptr)-1), nil, "f2__primobject__new error: used before primobjects initialized.");
   f2ptr this = raw__array__new(cause, primobject__header_size + static_slot_num);
   f2primobject__primobject_label__set__trace_depth(this, cause, __primobject__symbol, trace_depth);
   f2primobject__object_type__set__trace_depth(     this, cause, object_type,          trace_depth);

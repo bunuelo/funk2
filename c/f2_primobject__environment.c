@@ -169,6 +169,7 @@ void f2__primobject_environment__reinitialize_globalvars() {
 void f2__primobject_environment__initialize() {
   f2__primobject_environment__reinitialize_globalvars();
   
+  printf("\ninitial_cause()=" f2ptr__fstr "\n", initial_cause()); fflush(stdout);
   f2ptr frame = raw__frame__new(initial_cause());
   global_environment__set(f2environment__new(initial_cause(), frame,
 					     nil,

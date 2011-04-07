@@ -163,7 +163,7 @@ void funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t
     u64 index;
     for (index = 0; index < used_num; index ++) {
       f2ptr exp = read_buffer[index];
-      funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+      //funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
     }
   }
   f2__free(to_ptr(read_buffer));
@@ -180,7 +180,7 @@ s64 funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t*
       u64 index;
       for (index = 0; index < used_num; index ++) {
 	f2ptr exp = read_buffer[index];
-	funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+	//funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
       }
     }
     f2__free(to_ptr(read_buffer));

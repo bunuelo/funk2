@@ -54,15 +54,31 @@ f2ptr f2__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
   }
   return raw__setlocale(cause, f2integer__i(category, cause), locale_str);
 } 
-def_pcfunk2(locale__setlocale, category, locale, return f2__setlocale(this_cause, category, locale));
+def_pcfunk2(locale__setlocale, category, locale,
+	    "",
+	    return f2__setlocale(this_cause, category, locale));
 
-def_pcfunk0(locale__lc_all,      return f2integer__new(this_cause, LC_ALL));
-def_pcfunk0(locale__lc_collate,  return f2integer__new(this_cause, LC_COLLATE));
-def_pcfunk0(locale__lc_ctype,    return f2integer__new(this_cause, LC_CTYPE));
-def_pcfunk0(locale__lc_messages, return f2integer__new(this_cause, LC_MESSAGES));
-def_pcfunk0(locale__lc_monetary, return f2integer__new(this_cause, LC_MONETARY));
-def_pcfunk0(locale__lc_numeric,  return f2integer__new(this_cause, LC_NUMERIC));
-def_pcfunk0(locale__lc_time,     return f2integer__new(this_cause, LC_TIME));
+def_pcfunk0(locale__lc_all,
+	    "",
+	    return f2integer__new(this_cause, LC_ALL));
+def_pcfunk0(locale__lc_collate,
+	    "",
+	    return f2integer__new(this_cause, LC_COLLATE));
+def_pcfunk0(locale__lc_ctype,
+	    "",
+	    return f2integer__new(this_cause, LC_CTYPE));
+def_pcfunk0(locale__lc_messages,
+	    "",
+	    return f2integer__new(this_cause, LC_MESSAGES));
+def_pcfunk0(locale__lc_monetary,
+	    "",
+	    return f2integer__new(this_cause, LC_MONETARY));
+def_pcfunk0(locale__lc_numeric,
+	    "",
+	    return f2integer__new(this_cause, LC_NUMERIC));
+def_pcfunk0(locale__lc_time,
+	    "",
+	    return f2integer__new(this_cause, LC_TIME));
 
 
 // **

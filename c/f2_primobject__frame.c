@@ -77,7 +77,9 @@ f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
   }
   return this;
 }
-def_pcfunk0_and_rest(frame__new, slot_value_pairs, return f2__frame__new(this_cause, slot_value_pairs));
+def_pcfunk0_and_rest(frame__new, slot_value_pairs,
+		     "",
+		     return f2__frame__new(this_cause, slot_value_pairs));
 
 f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_ptypehash = f2frame__type_ptypehash(this, cause);
@@ -101,7 +103,9 @@ f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
   assert_argument_type(frame, this);
   return raw__frame__add_type_var_value(cause, this, type, var, value);
 }
-def_pcfunk4(frame__add_type_var_value, this, type, var, value, return f2__frame__add_type_var_value(this_cause, this, type, var, value));
+def_pcfunk4(frame__add_type_var_value, this, type, var, value,
+	    "",
+	    return f2__frame__add_type_var_value(this_cause, this, type, var, value));
 
 f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
@@ -114,7 +118,9 @@ f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr 
   }
   return not_defined_value;
 }
-def_pcfunk4(frame__lookup_type_var_assignment_cons, this, type, var, not_defined_value, return f2__frame__lookup_type_var_assignment_cons(this_cause, this, type, var, not_defined_value));
+def_pcfunk4(frame__lookup_type_var_assignment_cons, this, type, var, not_defined_value,
+	    "",
+	    return f2__frame__lookup_type_var_assignment_cons(this_cause, this, type, var, not_defined_value));
 
 f2ptr raw__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
@@ -133,7 +139,9 @@ f2ptr f2__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2pt
   assert_argument_type(frame, this);
   return raw__frame__lookup_type_var_value(cause, this, type, var, not_defined_value);
 }
-def_pcfunk4(frame__lookup_type_var_value, this, type, var, not_defined_value, return f2__frame__lookup_type_var_value(this_cause, this, type, var, not_defined_value));
+def_pcfunk4(frame__lookup_type_var_value, this, type, var, not_defined_value,
+	    "",
+	    return f2__frame__lookup_type_var_value(this_cause, this, type, var, not_defined_value));
 
 f2ptr raw__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
@@ -152,7 +160,9 @@ f2ptr f2__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
   assert_argument_type(frame, this);
   return raw__frame__type_var_value__set(cause, this, type, var, value, not_defined_value);
 }
-def_pcfunk5(frame__type_var_value__set, this, type, var, value, not_defined_value, return f2__frame__type_var_value__set(this_cause, this, type, var, value, not_defined_value));
+def_pcfunk5(frame__type_var_value__set, this, type, var, value, not_defined_value,
+	    "",
+	    return f2__frame__type_var_value__set(this_cause, this, type, var, value, not_defined_value));
 
 
 boolean_t raw__frame__contains_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
@@ -165,13 +175,17 @@ f2ptr f2__frame__contains_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr va
   assert_argument_type(frame, this);
   return f2bool__new(raw__frame__contains_type_var(cause, this, type, var));
 }
-def_pcfunk3(frame__contains_type_var, this, type, var, return f2__frame__contains_type_var(this_cause, this, type, var));
+def_pcfunk3(frame__contains_type_var, this, type, var,
+	    "",
+	    return f2__frame__contains_type_var(this_cause, this, type, var));
 
 
 f2ptr f2__frame__contains(f2ptr cause, f2ptr this, f2ptr var) {
   return f2__frame__contains_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var);
 }
-def_pcfunk2(frame__contains, this, var, return f2__frame__contains(this_cause, this, var));
+def_pcfunk2(frame__contains, this, var,
+	    "",
+	    return f2__frame__contains(this_cause, this, var));
 
 
 f2ptr raw__frame__type_var__mapc_keys(f2ptr cause, f2ptr this, f2ptr type, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
@@ -193,7 +207,9 @@ f2ptr f2__frame__key_types(f2ptr cause, f2ptr this) {
   assert_argument_type(frame, this);
   return raw__frame__key_types(cause, this);
 }
-def_pcfunk1(frame__key_types, this, return f2__frame__key_types(this_cause, this));
+def_pcfunk1(frame__key_types, this,
+	    "",
+	    return f2__frame__key_types(this_cause, this));
 
 
 f2ptr f2__frame__type_var__keys(f2ptr cause, f2ptr this, f2ptr type) {
@@ -205,7 +221,9 @@ f2ptr f2__frame__type_var__keys(f2ptr cause, f2ptr this, f2ptr type) {
   }
   return retval;
 }
-def_pcfunk2(frame__type_var__keys, this, type, return f2__frame__type_var__keys(this_cause, this, type));
+def_pcfunk2(frame__type_var__keys, this, type,
+	    "",
+	    return f2__frame__type_var__keys(this_cause, this, type));
 
 f2ptr f2__frame__type_var__values(f2ptr cause, f2ptr this, f2ptr type) {
   f2ptr retval = nil;
@@ -216,7 +234,9 @@ f2ptr f2__frame__type_var__values(f2ptr cause, f2ptr this, f2ptr type) {
   }
   return retval;
 }
-def_pcfunk2(frame__type_var__values, this, type, return f2__frame__type_var__values(this_cause, this, type));
+def_pcfunk2(frame__type_var__values, this, type,
+	    "",
+	    return f2__frame__type_var__values(this_cause, this, type));
 
 f2ptr f2__frame__var_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.variable__symbol);}
 
@@ -228,15 +248,21 @@ f2ptr f2__frame__add_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) 
   assert_argument_type(frame, this);
   return raw__frame__add_var_value(cause, this, var, value);
 }
-def_pcfunk3(frame__add_var_value, this, var, value, return f2__frame__add_var_value(this_cause, this, var, value));
+def_pcfunk3(frame__add_var_value, this, var, value,
+	    "",
+	    return f2__frame__add_var_value(this_cause, this, var, value));
 
 f2ptr f2__frame__lookup_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value) {return f2__frame__lookup_type_var_assignment_cons(cause, this, __funk2.primobject__frame.variable__symbol, var, not_defined_value);}
 
 f2ptr f2__frame__lookup_var_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value) {return f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.variable__symbol, var, not_defined_value);}
-def_pcfunk3(frame__lookup_var_value, this, var, not_defined_value, return f2__frame__lookup_var_value(this_cause, this, var, not_defined_value));
+def_pcfunk3(frame__lookup_var_value, this, var, not_defined_value,
+	    "",
+	    return f2__frame__lookup_var_value(this_cause, this, var, not_defined_value));
 
 f2ptr f2__frame__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value) {return f2__frame__type_var_value__set(cause, this, __funk2.primobject__frame.variable__symbol, var, value, not_defined_value);}
-def_pcfunk4(frame__var_value__set, this, var, value, not_defined_value, return f2__frame__var_value__set(this_cause, this, var, value, not_defined_value));
+def_pcfunk4(frame__var_value__set, this, var, value, not_defined_value,
+	    "",
+	    return f2__frame__var_value__set(this_cause, this, var, value, not_defined_value));
 
 boolean_t raw__frame__contains_var(f2ptr cause, f2ptr this, f2ptr var) {
   return raw__frame__contains_type_var(cause, this, __funk2.primobject__frame.variable__symbol, var);
@@ -246,31 +272,43 @@ f2ptr f2__frame__contains_var(f2ptr cause, f2ptr this, f2ptr var) {
   assert_argument_type(frame, this);
   return f2bool__new(raw__frame__contains_var(cause, this, var));
 }
-def_pcfunk2(frame__contains_var, this, var, return f2__frame__contains_var(this_cause, this, var));
+def_pcfunk2(frame__contains_var, this, var,
+	    "",
+	    return f2__frame__contains_var(this_cause, this, var));
 
 
 f2ptr f2__frame__funkvar_ptypehash(f2ptr cause, f2ptr this) {return f2__ptypehash__lookup(cause, f2frame__type_ptypehash(this, cause), __funk2.primobject__frame.funk_variable__symbol);}
 
 f2ptr f2__frame__add_funkvar_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value);}
-def_pcfunk3(frame__add_funkvar_value, this, funkvar, value, return f2__frame__add_var_value(this_cause, this, funkvar, value));
+def_pcfunk3(frame__add_funkvar_value, this, funkvar, value,
+	    "",
+	    return f2__frame__add_var_value(this_cause, this, funkvar, value));
 
 f2ptr f2__frame__lookup_funkvar_assignment_cons(f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value) {return f2__frame__lookup_type_var_assignment_cons(cause, this, __funk2.primobject__frame.funk_variable__symbol, var, not_defined_value);}
 
 f2ptr f2__frame__lookup_funkvar_value(f2ptr cause, f2ptr this, f2ptr var, f2ptr not_defined_value) {return f2__frame__lookup_type_var_value(cause, this, __funk2.primobject__frame.funk_variable__symbol, var, not_defined_value);}
-def_pcfunk3(frame__lookup_funkvar_value, this, funkvar, not_defined_value, return f2__frame__lookup_funkvar_value(this_cause, this, funkvar, not_defined_value));
+def_pcfunk3(frame__lookup_funkvar_value, this, funkvar, not_defined_value,
+	    "",
+	    return f2__frame__lookup_funkvar_value(this_cause, this, funkvar, not_defined_value));
 
 f2ptr f2__frame__funkvar_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value, f2ptr not_defined_value) {return f2__frame__type_var_value__set(cause, this, __funk2.primobject__frame.funk_variable__symbol, var, value, not_defined_value);}
-def_pcfunk4(frame__funkvar_value__set, this, funkvar, value, not_defined_value, return f2__frame__var_value__set(this_cause, this, funkvar, value, not_defined_value));
+def_pcfunk4(frame__funkvar_value__set, this, funkvar, value, not_defined_value,
+	    "",
+	    return f2__frame__var_value__set(this_cause, this, funkvar, value, not_defined_value));
 
 f2ptr f2__frame__var__keys(f2ptr cause, f2ptr this) {
   return f2__ptypehash__keys(cause, f2__frame__var_ptypehash(cause, this));
 }
-def_pcfunk1(frame__var__keys, this, return f2__frame__var__keys(this_cause, this));
+def_pcfunk1(frame__var__keys, this,
+	    "",
+	    return f2__frame__var__keys(this_cause, this));
 
 f2ptr f2__frame__funkvar__keys(f2ptr cause, f2ptr this) {
   return f2__ptypehash__keys(cause, f2__frame__funkvar_ptypehash(cause, this));
 }
-def_pcfunk1(frame__funkvar__keys, this, return f2__frame__funkvar__keys(this_cause, this));
+def_pcfunk1(frame__funkvar__keys, this,
+	    "",
+	    return f2__frame__funkvar__keys(this_cause, this));
 
 
 void raw__frame__copy(f2ptr cause, f2ptr this, f2ptr source) {
@@ -284,7 +322,9 @@ f2ptr f2__frame__copy(f2ptr cause, f2ptr this, f2ptr source) {
   raw__frame__copy(cause, this, source);
   return nil;
 }
-def_pcfunk2(frame__copy, this, source, return f2__frame__copy(this_cause, this, source));
+def_pcfunk2(frame__copy, this, source,
+	    "",
+	    return f2__frame__copy(this_cause, this, source));
 
 
 f2ptr raw__frame__new_copy(f2ptr cause, f2ptr this) {
@@ -297,7 +337,9 @@ f2ptr f2__frame__new_copy(f2ptr cause, f2ptr this) {
   assert_argument_type(frame, this);
   return raw__frame__new_copy(cause, this);
 }
-def_pcfunk1(frame__new_copy, this, return f2__frame__new_copy(this_cause, this));
+def_pcfunk1(frame__new_copy, this, 
+	    "",
+	    return f2__frame__new_copy(this_cause, this));
 
 
 f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_keys) {
@@ -316,7 +358,9 @@ f2ptr f2__frame__copy_slots(f2ptr cause, f2ptr this, f2ptr source, f2ptr map_key
 		   );
   return nil;
 }
-def_pcfunk3(frame__copy_slots, this, source, map_keys, return f2__frame__copy_slots(this_cause, this, source, map_keys));
+def_pcfunk3(frame__copy_slots, this, source, map_keys,
+	    "",
+	    return f2__frame__copy_slots(this_cause, this, source, map_keys));
 
 boolean_t raw__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name) {
   f2ptr not_defined_value = __funk2.primobject__frame.type_variable_not_defined__symbol;
@@ -327,7 +371,9 @@ boolean_t raw__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_na
 f2ptr f2__frame__check_has_type_slot(f2ptr cause, f2ptr this, f2ptr type_name, f2ptr slot_name) {
   return f2bool__new(raw__frame__check_has_type_slot(cause, this, type_name, slot_name));
 }
-def_pcfunk3(frame__check_has_type_slot, this, type_name, slot_name, return f2__frame__check_has_type_slot(this_cause, this, type_name, slot_name));
+def_pcfunk3(frame__check_has_type_slot, this, type_name, slot_name,
+	    "",
+	    return f2__frame__check_has_type_slot(this_cause, this, type_name, slot_name));
 
 void raw__frame__equals_hash_value__loop_free__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr hash_value     = raw__array__elt(cause, aux_data, 2);
@@ -384,7 +430,9 @@ f2ptr f2__frame__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
   assert_argument_type(ptypehash, node_hash);
   return raw__frame__equals_hash_value__loop_free(cause, this, node_hash);
 }
-def_pcfunk2(frame__equals_hash_value__loop_free, this, node_hash, return f2__frame__equals_hash_value__loop_free(this_cause, this, node_hash));
+def_pcfunk2(frame__equals_hash_value__loop_free, this, node_hash, 
+	    "",
+	    return f2__frame__equals_hash_value__loop_free(this_cause, this, node_hash));
 
 f2ptr raw__frame__equals_hash_value(f2ptr cause, f2ptr this) {
   f2ptr node_hash = f2__ptypehash__new(cause);
@@ -395,7 +443,9 @@ f2ptr f2__frame__equals_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(frame, this);
   return raw__frame__equals_hash_value(cause, this);
 }
-def_pcfunk1(frame__equals_hash_value, this, return f2__frame__equals_hash_value(this_cause, this));
+def_pcfunk1(frame__equals_hash_value, this,
+	    "",
+	    return f2__frame__equals_hash_value(this_cause, this));
 
 void raw__frame__part_not_contained_by__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr this              = raw__array__elt(cause, aux_data, 0);
@@ -421,7 +471,9 @@ f2ptr f2__frame__part_not_contained_by(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return frame;
 }
-def_pcfunk2(frame__part_not_contained_by, this, that, return f2__frame__part_not_contained_by(this_cause, this, that));
+def_pcfunk2(frame__part_not_contained_by, this, that,
+	    "",
+	    return f2__frame__part_not_contained_by(this_cause, this, that));
 
 f2ptr raw__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
   f2ptr this_node = f2__ptypehash__lookup(cause, node_ptypehash, this);
@@ -454,7 +506,9 @@ f2ptr f2__frame__add_to_graph_with_ptypehash(f2ptr cause, f2ptr this, f2ptr grap
   assert_argument_type(ptypehash, node_ptypehash);
   return raw__frame__add_to_graph_with_ptypehash(cause, this, graph, node_ptypehash);
 }
-def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash, return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, node_ptypehash));
+def_pcfunk3(frame__add_to_graph_with_ptypehash, this, graph, node_ptypehash,
+	    "",
+	    return f2__frame__add_to_graph_with_ptypehash(this_cause, this, graph, node_ptypehash));
 
 
 // this function is dangerous.  make sure that you are sure of the size of the recursive structure you are asking it to iterate over.
@@ -804,7 +858,9 @@ f2ptr f2__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__frame__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(frame__terminal_print_with_frame, this, terminal_print_frame, return f2__frame__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(frame__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__frame__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2frame__primobject_type__new_aux(f2ptr cause) {

@@ -28,7 +28,9 @@ def_primobject_2_slot(object_lattice_node, object_image_frame, object_reference_
 f2ptr f2__object_lattice_node__new(f2ptr cause, f2ptr object_image_frame, f2ptr object_reference_leaf) {
   return f2object_lattice_node__new(cause, object_image_frame, object_reference_leaf);
 }
-def_pcfunk2(object_lattice_node__new, object_image_frame, object_reference_leaf, return f2__object_lattice_node__new(this_cause, object_image_frame, object_reference_leaf));
+def_pcfunk2(object_lattice_node__new, object_image_frame, object_reference_leaf,
+	    "",
+	    return f2__object_lattice_node__new(this_cause, object_image_frame, object_reference_leaf));
 
 
 // object_lattice
@@ -38,7 +40,9 @@ def_primobject_1_slot(object_lattice, lattice_node_hash);
 f2ptr f2__object_lattice__new(f2ptr cause) {
   return f2object_lattice__new(cause, f2__hash__new(cause, nil, nil));
 }
-def_pcfunk0(object_lattice__new, return f2__object_lattice__new(this_cause));
+def_pcfunk0(object_lattice__new,
+	    "",
+	    return f2__object_lattice__new(this_cause));
 
 void object_lattice__scan_and_incorporate_leafs__object_slot_helper(f2ptr cause, f2ptr slot_name, f2ptr aux_data) {
   f2ptr object                       = raw__array__elt(cause, aux_data, 0);
@@ -126,7 +130,9 @@ f2ptr f2__object_lattice__scan_and_incorporate_leafs(f2ptr cause, f2ptr this, f2
   }
   return nil;
 }
-def_pcfunk2(object_lattice__scan_and_incorporate_leafs, this, object, return f2__object_lattice__scan_and_incorporate_leafs(this_cause, this, object, nil));
+def_pcfunk2(object_lattice__scan_and_incorporate_leafs, this, object,
+	    "",
+	    return f2__object_lattice__scan_and_incorporate_leafs(this_cause, this, object, nil));
 
 
 // scan_leafs
@@ -285,7 +291,9 @@ f2ptr f2__object_lattice__scan_leafs(f2ptr cause, f2ptr this, f2ptr object, f2pt
   }
   return nil;
 }
-def_pcfunk4(object_lattice__scan_leafs, this, object, node_funk, relation_funk, return f2__object_lattice__scan_leafs(this_cause, this, object, node_funk, relation_funk, nil));
+def_pcfunk4(object_lattice__scan_leafs, this, object, node_funk, relation_funk,
+	    "",
+	    return f2__object_lattice__scan_leafs(this_cause, this, object, node_funk, relation_funk, nil));
 
 
 // **

@@ -29,7 +29,9 @@ f2ptr f2__primobject_type__new(f2ptr cause, f2ptr parents) {
   f2ptr documentation = nil;
   return f2primobject_type__new(cause, parents, documentation);
 }
-def_pcfunk1(primobject_type__new, parents, return f2__primobject_type__new(this_cause, parents));
+def_pcfunk1(primobject_type__new, parents,
+	    "",
+	    return f2__primobject_type__new(this_cause, parents));
 
 f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable) {
   assert_argument_type(frame,    this);
@@ -39,7 +41,9 @@ f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_typ
   f2__frame__add_type_var_value(cause, this, slot_type, slot_name, funkable);
   return nil;
 }
-def_pcfunk4(primobject_type__add_slot_type, this, slot_type, slot_name, funkable, return f2__primobject_type__add_slot_type(this_cause, this, slot_type, slot_name, funkable));
+def_pcfunk4(primobject_type__add_slot_type, this, slot_type, slot_name, funkable,
+	    "",
+	    return f2__primobject_type__add_slot_type(this_cause, this, slot_type, slot_name, funkable));
 
 // lookup slot type
 
@@ -62,7 +66,9 @@ f2ptr f2__primobject_type__lookup_slot_type_funk(f2ptr cause, f2ptr this, f2ptr 
   }
   return this_binding;
 }
-def_pcfunk3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name, return f2__primobject_type__lookup_slot_type_funk(this_cause, this, slot_type, slot_name));
+def_pcfunk3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name,
+	    "",
+	    return f2__primobject_type__lookup_slot_type_funk(this_cause, this, slot_type, slot_name));
 
 // scan slot names
 
@@ -83,7 +89,9 @@ f2ptr f2__primobject_type__type_funk__keys(f2ptr cause, f2ptr this, f2ptr type_n
   }
   return f2__frame__type_var__keys(cause, this, type_name);
 }
-def_pcfunk2(primobject_type__type_funk__keys, this, type_name, return f2__primobject_type__type_funk__keys(this_cause, this, type_name));
+def_pcfunk2(primobject_type__type_funk__keys, this, type_name,
+	    "",
+	    return f2__primobject_type__type_funk__keys(this_cause, this, type_name));
 
 boolean_t raw__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name) {
   f2ptr parents = f2__primobject_type__parents(cause, this);
@@ -107,7 +115,9 @@ boolean_t raw__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr t
 f2ptr f2__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name) {
   return f2bool__new(raw__primobject_type__has_parent_type(cause, this, type_name));
 }
-def_pcfunk2(primobject_type__has_parent_type, this, type_name, return f2__primobject_type__has_parent_type(this_cause, this, type_name));
+def_pcfunk2(primobject_type__has_parent_type, this, type_name,
+	    "",
+	    return f2__primobject_type__has_parent_type(this_cause, this, type_name));
 
 void f2__primobject_type__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());

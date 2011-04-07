@@ -46,12 +46,16 @@ f2ptr raw__hash__new(f2ptr cause, s64 bin_num_power, f2ptr hash_value_funk, f2pt
 
 #define hash__default_start_bin_num_power 3
 f2ptr f2__hash__new(f2ptr cause, f2ptr hash_value_funk, f2ptr equals_funk) {return raw__hash__new(cause, hash__default_start_bin_num_power, hash_value_funk, equals_funk);}
-def_pcfunk2(hash__new, hash_value_funk, equals_funk, return f2__hash__new(this_cause, hash_value_funk, equals_funk));
+def_pcfunk2(hash__new, hash_value_funk, equals_funk,
+	    "",
+	    return f2__hash__new(this_cause, hash_value_funk, equals_funk));
 
 f2ptr f2__hash(f2ptr cause) {
   return f2__hash__new(cause, __funk2.object.object__equals_hash_value__funk, __funk2.object.object__equals__funk);
 }
-def_pcfunk0(hash, return f2__hash(this_cause));
+def_pcfunk0(hash,
+	    "",
+	    return f2__hash(this_cause));
 
 void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) {
   f2ptr hash_value_funk  = f2hash__hash_value_funk(this, cause);
@@ -146,7 +150,9 @@ f2ptr f2__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   assert_argument_type(hash, this);
   return raw__hash__add(cause, this, key, value);
 }
-def_pcfunk3(hash__add, this, slot_name, value, return f2__hash__add(this_cause, this, slot_name, value));
+def_pcfunk3(hash__add, this, slot_name, value,
+	    "",
+	    return f2__hash__add(this_cause, this, slot_name, value));
 
 
 boolean_t raw__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
@@ -196,7 +202,9 @@ f2ptr f2__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(hash, this);
   return f2bool__new(raw__hash__remove(cause, this, key));
 }
-def_pcfunk2(hash__remove, this, key, return f2__hash__remove(this_cause, this, key));
+def_pcfunk2(hash__remove, this, key,
+	    "",
+	    return f2__hash__remove(this_cause, this, key));
 
 
 f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
@@ -236,7 +244,9 @@ f2ptr f2__hash__contains(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(hash, this);
   return raw__hash__contains(cause, this, key);
 }
-def_pcfunk2(hash__contains, this, key, return f2__hash__contains(this_cause, this, key));
+def_pcfunk2(hash__contains, this, key,
+	    "",
+	    return f2__hash__contains(this_cause, this, key));
 
 
 f2ptr raw__hash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
@@ -253,7 +263,9 @@ f2ptr f2__hash__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(hash, this);
   return raw__hash__lookup(cause, this, key);
 }
-def_pcfunk2(hash__lookup, this, slot_name, return f2__hash__lookup(this_cause, this, slot_name));
+def_pcfunk2(hash__lookup, this, slot_name,
+	    "",
+	    return f2__hash__lookup(this_cause, this, slot_name));
 
 
 f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data) {
@@ -271,7 +283,9 @@ f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this) {
                             new_list = f2cons__new(cause, key, new_list));
   return new_list;
 }
-def_pcfunk1(hash__slot_names, this, return f2__hash__slot_names(this_cause, this));
+def_pcfunk1(hash__slot_names, this,
+	    "",
+	    return f2__hash__slot_names(this_cause, this));
 
 boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__hash__is_type(cause, that)) {
@@ -297,7 +311,9 @@ f2ptr f2__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(hash, this);
   return f2bool__new(raw__hash__equals(cause, this, that));
 }
-def_pcfunk2(hash__equals, this, that, return f2__hash__equals(this_cause, this, that));
+def_pcfunk2(hash__equals, this, that,
+	    "",
+	    return f2__hash__equals(this_cause, this, that));
 
 f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(hash, this);
@@ -316,7 +332,9 @@ f2ptr f2__hash__equals_hash_value(f2ptr cause, f2ptr this) {
 		  );
   return f2integer__new(cause, hash_value);
 }
-def_pcfunk1(hash__equals_hash_value, this, return f2__hash__equals_hash_value(this_cause, this));
+def_pcfunk1(hash__equals_hash_value, this,
+	    "",
+	    return f2__hash__equals_hash_value(this_cause, this));
 
 f2ptr raw__hash__as__frame(f2ptr cause, f2ptr this) {
   f2ptr frame = f2__frame__new(cause, nil);
@@ -330,7 +348,9 @@ f2ptr f2__hash__as__frame(f2ptr cause, f2ptr this) {
   assert_argument_type(hash, this);
   return raw__hash__as__frame(cause, this);
 }
-def_pcfunk1(hash__as__frame, this, return f2__hash__as__frame(this_cause, this));
+def_pcfunk1(hash__as__frame, this,
+	    "",
+	    return f2__hash__as__frame(this_cause, this));
 
 
 f2ptr f2hash__primobject_type__new_aux(f2ptr cause) {

@@ -29,7 +29,9 @@ def_frame_object__global__1_slot(knowledge, object);
 f2ptr f2__knowledge__new(f2ptr cause, f2ptr object) {
   return f2knowledge__new(cause, object);
 }
-def_pcfunk1(knowledge__new, object, return f2__knowledge__new(this_cause, object));
+def_pcfunk1(knowledge__new, object,
+	    "",
+	    return f2__knowledge__new(this_cause, object));
 
 
 f2ptr f2knowledge__primobject_type__new_aux(f2ptr cause) {

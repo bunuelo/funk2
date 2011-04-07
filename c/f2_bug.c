@@ -26,7 +26,9 @@
 def_primobject_2_slot(bug, bug_type, frame);
 
 f2ptr f2__bug__new(f2ptr cause, f2ptr type, f2ptr frame) {return f2bug__new(cause, type, frame);}
-def_pcfunk2(bug__new, type, frame, return f2__bug__new(this_cause, type, frame));
+def_pcfunk2(bug__new, type, frame,
+	    "",
+	    return f2__bug__new(this_cause, type, frame));
 
 f2ptr raw__bug__new_from_larva(f2ptr cause, f2ptr larva) {
   u64 larva_type = f2larva__larva_type(larva, cause);
@@ -76,7 +78,9 @@ f2ptr f2__bug__pretty_print(f2ptr cause, f2ptr this) {
   assert_argument_type(bug, this);
   return raw__bug__pretty_print(cause, this);
 }
-def_pcfunk1(bug__pretty_print, this, return f2__bug__pretty_print(this_cause, this));
+def_pcfunk1(bug__pretty_print, this,
+	    "",
+	    return f2__bug__pretty_print(this_cause, this));
 
 
 f2ptr raw__bug__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -97,7 +101,9 @@ f2ptr f2__bug__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__bug__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(bug__terminal_print_with_frame, this, terminal_print_frame, return f2__bug__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(bug__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__bug__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2bug__primobject_type__new_aux(f2ptr cause) {

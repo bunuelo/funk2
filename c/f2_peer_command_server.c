@@ -585,6 +585,7 @@ f2ptr f2__peer_command_server__active_client_info(f2ptr cause) {
 }
 
 def_pcfunk0(peer_command_server__active_client_info,
+	    "",
 	    return f2__peer_command_server__active_client_info(this_cause));
 
 

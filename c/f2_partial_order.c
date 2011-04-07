@@ -28,7 +28,9 @@ def_primobject_1_slot(partial_order_node, label);
 f2ptr f2__partial_order_node__new(f2ptr cause, f2ptr label) {
   return f2partial_order_node__new(cause, label);
 }
-def_pcfunk1(partial_order_node__new, label, return f2__partial_order_node__new(this_cause, label));
+def_pcfunk1(partial_order_node__new, label,
+	    "",
+	    return f2__partial_order_node__new(this_cause, label));
 
 
 f2ptr raw__partial_order_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -48,7 +50,9 @@ f2ptr f2__partial_order_node__terminal_print_with_frame(f2ptr cause, f2ptr this,
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__partial_order_node__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(partial_order_node__terminal_print_with_frame, this, terminal_print_frame, return f2__partial_order_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(partial_order_node__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__partial_order_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2partial_order_node__primobject_type__new_aux(f2ptr cause) {

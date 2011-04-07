@@ -84,7 +84,9 @@ f2ptr f2__text_buffer__create(f2ptr cause, f2ptr width, f2ptr height) {
   s64 raw_height = f2integer__i(height, cause);
   return raw__text_buffer__create(cause, raw_width, raw_height);
 }
-def_pcfunk2(text_buffer__create, width, height, return f2__text_buffer__create(this_cause, width, height));
+def_pcfunk2(text_buffer__create, width, height,
+	    "",
+	    return f2__text_buffer__create(this_cause, width, height));
 
 f2ptr raw__text_buffer__character(f2ptr cause, f2ptr this, s64 x, s64 y) {
   assert_argument_type(text_buffer, this);
@@ -188,7 +190,9 @@ f2ptr f2__text_window__create(f2ptr cause, f2ptr width, f2ptr height) {
   s64 raw_height = f2integer__i(height, cause);
   return raw__text_window__create(cause, raw_width, raw_height);
 }
-def_pcfunk2(text_window__create, width, height, return f2__text_window__create(this_cause, width, height));
+def_pcfunk2(text_window__create, width, height,
+	    "",
+	    return f2__text_window__create(this_cause, width, height));
 
 f2ptr raw__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, s64 screen_x0, s64 screen_y0, s64 x0, s64 y0, s64 x1, s64 y1) {
   assert_argument_type(text_window, this);
@@ -248,7 +252,9 @@ f2ptr f2__text_window__stream__render(f2ptr cause, f2ptr this, f2ptr stream, f2p
   s64 raw_y1 = f2integer__i(y1, cause);
   return raw__text_window__stream__render(cause, this, stream, raw_screen_x0, raw_screen_y0, raw_x0, raw_y0, raw_x1, raw_y1);
 }
-def_pcfunk8(text_window__stream__render, this, stream, screen_x0, screen_y0, x0, y0, x1, y1, return f2__text_window__stream__render(this_cause, this, stream, screen_x0, screen_y0, x0, y0, x1, y1));
+def_pcfunk8(text_window__stream__render, this, stream, screen_x0, screen_y0, x0, y0, x1, y1,
+	    "",
+	    return f2__text_window__stream__render(this_cause, this, stream, screen_x0, screen_y0, x0, y0, x1, y1));
 
 // **
 

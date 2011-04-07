@@ -41,7 +41,9 @@ f2ptr object__new(f2ptr cause) {
   return f2__object__new(cause, nil, f2__frame__new(cause, nil));
 }
 
-def_pcfunk0(object__new, return object__new(this_cause));
+def_pcfunk0(object__new,
+	    "",
+	    return object__new(this_cause));
 
 // this lookup fails if binding is not strictly in local frame of object
 f2ptr object__lookup_local_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {

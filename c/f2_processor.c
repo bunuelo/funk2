@@ -35,7 +35,9 @@ def_primobject_7_slot(processor,
 f2ptr f2__processor__new(f2ptr cause) {
   return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil);
 }
-def_pcfunk0(processor__new, return f2__processor__new(this_cause));
+def_pcfunk0(processor__new,
+	    "",
+	    return f2__processor__new(this_cause));
 
 
 boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -88,7 +90,9 @@ f2ptr f2__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   assert_argument_type(fiber,     fiber);
   return raw__processor__add_active_fiber(cause, this, fiber);
 }
-def_pcfunk2(processor__add_active_fiber, this, fiber, return f2__processor__add_active_fiber(this_cause, this, fiber));
+def_pcfunk2(processor__add_active_fiber, this, fiber,
+	    "",
+	    return f2__processor__add_active_fiber(this_cause, this, fiber));
 
 
 f2ptr raw__processor__remove_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -155,7 +159,9 @@ f2ptr f2__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   assert_argument_type(fiber,     fiber);
   return raw__processor__remove_active_fiber(cause, this, fiber);
 }
-def_pcfunk2(processor__remove_active_fiber, this, fiber, return f2__processor__remove_active_fiber(this_cause, this, fiber));
+def_pcfunk2(processor__remove_active_fiber, this, fiber,
+	    "",
+	    return f2__processor__remove_active_fiber(this_cause, this, fiber));
 
 
 
@@ -179,7 +185,9 @@ f2ptr f2__processor__current_active_fiber(f2ptr cause, f2ptr this) {
   assert_argument_type(processor, this);
   return raw__processor__current_active_fiber(cause, this);
 }
-def_pcfunk1(processor__current_active_fiber, this, return f2__processor__current_active_fiber(this_cause, this));
+def_pcfunk1(processor__current_active_fiber, this,
+	    "",
+	    return f2__processor__current_active_fiber(this_cause, this));
 
 
 
@@ -206,7 +214,9 @@ f2ptr f2__processor__increment_current_active_fiber(f2ptr cause, f2ptr this) {
   assert_argument_type(processor, this);
   return raw__processor__increment_current_active_fiber(cause, this);
 }
-def_pcfunk1(processor__increment_current_active_fiber, this, return f2__processor__increment_current_active_fiber(this_cause, this));
+def_pcfunk1(processor__increment_current_active_fiber, this,
+	    "",
+	    return f2__processor__increment_current_active_fiber(this_cause, this));
 
 
 
@@ -229,7 +239,9 @@ f2ptr f2__processor__reset_current_active_fiber(f2ptr cause, f2ptr this) {
   assert_argument_type(processor, this);
   return raw__processor__reset_current_active_fiber(cause, this);
 }
-def_pcfunk1(processor__reset_current_active_fiber, this, return f2__processor__reset_current_active_fiber(this_cause, this));
+def_pcfunk1(processor__reset_current_active_fiber, this,
+	    "",
+	    return f2__processor__reset_current_active_fiber(this_cause, this));
 
 
 
@@ -247,7 +259,9 @@ f2ptr f2__processor__active_fibers__length(f2ptr cause, f2ptr this) {
   assert_argument_type(processor, this);
   return f2integer__new(cause, raw__processor__active_fibers__length(cause, this));
 }
-def_pcfunk1(processor__active_fibers__length, this, return f2__processor__active_fibers__length(this_cause, this));
+def_pcfunk1(processor__active_fibers__length, this,
+	    "",
+	    return f2__processor__active_fibers__length(this_cause, this));
 
 
 boolean_t raw__processor__active_fibers__contains__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -285,7 +299,9 @@ f2ptr f2__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr fibe
   assert_argument_type(fiber,     fiber);
   return f2bool__new(raw__processor__active_fibers__contains(cause, this, fiber));
 }
-def_pcfunk2(processor__active_fibers__contains, this, fiber, return f2__processor__active_fibers__contains(this_cause, this, fiber));
+def_pcfunk2(processor__active_fibers__contains, this, fiber,
+	    "",
+	    return f2__processor__active_fibers__contains(this_cause, this, fiber));
 
 
 f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -309,7 +325,9 @@ f2ptr f2__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__processor__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(processor__terminal_print_with_frame, this, terminal_print_frame, return f2__processor__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(processor__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__processor__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2processor__primobject_type__new_aux(f2ptr cause) {
@@ -536,7 +554,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	  pause_gc();
 	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
-	  resume_gc();
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
 	    if (raw__larva__is_type(cause, result)) {
@@ -544,24 +561,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      error(nil, "processor-execute_next_bytecodes: error adding critic fiber.");
 	    }
 	  }
-	  /*
-	  {
-	    f2ptr processor__active_fibers_scheduler_cmutex;
-	    int lock_failed;
-	    do {
-	      processor__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(processor, cause);
-	      lock_failed = f2scheduler_cmutex__trylock(processor__active_fibers_scheduler_cmutex, cause);
-	      if (lock_failed) {
-		raw__fast_spin_sleep_yield();
-	      }
-	    } while (lock_failed);
-	    pause_gc();
-	    f2processor__active_fibers__set(processor, cause, f2cons__new(cause, new_fiber, f2processor__active_fibers(processor, cause)));
-	    resume_gc();
-	    f2scheduler_cmutex__unlock(processor__active_fibers_scheduler_cmutex, cause);
-	  }
-	  */	
-	  //printf("\n  processor="); f2__print(cause, processor); fflush(stdout);
+	  resume_gc();
 	} else {
 	  char status_msg[1024];
 	  snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");

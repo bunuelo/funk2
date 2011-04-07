@@ -729,7 +729,9 @@ f2ptr f2__largeinteger__new(f2ptr cause, f2ptr value) {
   s64 value__i = f2integer__i(value, cause);
   return raw__largeinteger__new_from_s64(cause, value__i);
 }
-def_pcfunk1(largeinteger__new, value, return f2__largeinteger__new(this_cause, value));
+def_pcfunk1(largeinteger__new, value,
+	    "",
+	    return f2__largeinteger__new(this_cause, value));
 
 boolean_t raw__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
@@ -756,7 +758,9 @@ boolean_t raw__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__largeinteger__less_than(cause, this, that));
 }
-def_pcfunk2(largeinteger__less_than, this, that, return f2__largeinteger__less_than(this_cause, this, that));
+def_pcfunk2(largeinteger__less_than, this, that,
+	    "",
+	    return f2__largeinteger__less_than(this_cause, this, that));
 
 boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative = f2__largeinteger__is_negative(cause, this);
@@ -783,7 +787,9 @@ boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__largeinteger__greater_than(cause, this, that));
 }
-def_pcfunk2(largeinteger__greater_than, this, that, return f2__largeinteger__greater_than(this_cause, this, that));
+def_pcfunk2(largeinteger__greater_than, this, that,
+	    "",
+	    return f2__largeinteger__greater_than(this_cause, this, that));
 
 f2ptr raw__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative = f2__largeinteger__is_negative(     cause, this);
@@ -837,7 +843,9 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(largeinteger, that);
   return raw__largeinteger__add(cause, this, that);
 }
-def_pcfunk2(largeinteger__add, this, that, return f2__largeinteger__add(this_cause, this, that));
+def_pcfunk2(largeinteger__add, this, that,
+	    "",
+	    return f2__largeinteger__add(this_cause, this, that));
 
 f2ptr raw__largeinteger__negative(f2ptr cause, f2ptr this) {
   return f2largeinteger__new(cause, f2bool__new(f2largeinteger__is_negative(this, cause) == nil), f2largeinteger__integer_array(this, cause));
@@ -847,7 +855,9 @@ f2ptr f2__largeinteger__negative(f2ptr cause, f2ptr this) {
   assert_argument_type(largeinteger, this);
   return raw__largeinteger__negative(cause, this);
 }
-def_pcfunk1(largeinteger__negative, this, return f2__largeinteger__negative(this_cause, this));
+def_pcfunk1(largeinteger__negative, this,
+	    "",
+	    return f2__largeinteger__negative(this_cause, this));
 
 f2ptr raw__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__add(cause, this, raw__largeinteger__negative(cause, that));
@@ -858,7 +868,9 @@ f2ptr f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(largeinteger, that);
   return raw__largeinteger__subtract(cause, this, that);
 }
-def_pcfunk2(largeinteger__subtract, this, that, return f2__largeinteger__subtract(this_cause, this, that));
+def_pcfunk2(largeinteger__subtract, this, that,
+	    "",
+	    return f2__largeinteger__subtract(this_cause, this, that));
 
 f2ptr raw__largeinteger__bitshift_left(f2ptr cause, f2ptr this, s64 bit_distance) {
   assert_argument_type(largeinteger, this);
@@ -873,7 +885,9 @@ f2ptr f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distanc
   s64 bit_distance__i = f2integer__i(bit_distance, cause);
   return raw__largeinteger__bitshift_left(cause, this, bit_distance__i);
 }
-def_pcfunk2(largeinteger__bitshift_left, this, bit_distance, return f2__largeinteger__bitshift_left(this_cause, this, bit_distance));
+def_pcfunk2(largeinteger__bitshift_left, this, bit_distance,
+	    "",
+	    return f2__largeinteger__bitshift_left(this_cause, this, bit_distance));
 
 f2ptr raw__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance) {
   assert_argument_type(largeinteger, this);
@@ -888,7 +902,9 @@ f2ptr f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distan
   s64 bit_distance__i = f2integer__i(bit_distance, cause);
   return raw__largeinteger__bitshift_right(cause, this, bit_distance__i);
 }
-def_pcfunk2(largeinteger__bitshift_right, this, bit_distance, return f2__largeinteger__bitshift_right(this_cause, this, bit_distance));
+def_pcfunk2(largeinteger__bitshift_right, this, bit_distance,
+	    "",
+	    return f2__largeinteger__bitshift_right(this_cause, this, bit_distance));
 
 f2ptr raw__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative   = f2__largeinteger__is_negative(  cause, this);
@@ -905,7 +921,9 @@ f2ptr f2__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr tha
   assert_argument_type(largeinteger, that);
   return raw__largeinteger__multiply_largeinteger(cause, this, that);
 }
-def_pcfunk2(largeinteger__multiply_largeinteger, this, that, return f2__largeinteger__multiply_largeinteger(this_cause, this, that));
+def_pcfunk2(largeinteger__multiply_largeinteger, this, that,
+	    "",
+	    return f2__largeinteger__multiply_largeinteger(this_cause, this, that));
 
 f2ptr raw__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__is_negative       = f2__largeinteger__is_negative(  cause, this);
@@ -927,7 +945,9 @@ f2ptr f2__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr th
   assert_argument_type(largeinteger, that);
   return raw__largeinteger__quotient_and_remainder(cause, this, that);
 }
-def_pcfunk2(largeinteger__quotient_and_remainder, this, that, return f2__largeinteger__quotient_and_remainder(this_cause, this, that));
+def_pcfunk2(largeinteger__quotient_and_remainder, this, that,
+	    "",
+	    return f2__largeinteger__quotient_and_remainder(this_cause, this, that));
 
 f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr quotient_and_remainder = raw__largeinteger__quotient_and_remainder(cause, this, that);
@@ -940,7 +960,9 @@ f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(largeinteger, that);
   return raw__largeinteger__divide(cause, this, that);
 }
-def_pcfunk2(largeinteger__divide, this, that, return f2__largeinteger__divide(this_cause, this, that));
+def_pcfunk2(largeinteger__divide, this, that,
+	    "",
+	    return f2__largeinteger__divide(this_cause, this, that));
 
 f2ptr raw__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr quotient_and_remainder = raw__largeinteger__quotient_and_remainder(cause, this, that);
@@ -953,7 +975,9 @@ f2ptr f2__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(largeinteger, that);
   return raw__largeinteger__modulo(cause, this, that);
 }
-def_pcfunk2(largeinteger__modulo, this, that, return f2__largeinteger__modulo(this_cause, this, that));
+def_pcfunk2(largeinteger__modulo, this, that,
+	    "",
+	    return f2__largeinteger__modulo(this_cause, this, that));
 
 f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
   assert_argument_type(largeinteger, this);
@@ -966,7 +990,9 @@ f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
   raw__largeinteger__unsigned_array__print(cause, integer_array, boolean__false);
   return nil;
 }
-def_pcfunk1(largeinteger__print, this, return f2__largeinteger__print(this_cause, this));
+def_pcfunk1(largeinteger__print, this,
+	    "",
+	    return f2__largeinteger__print(this_cause, this));
 
 boolean_t raw__largeinteger__unsigned_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__array__length(cause, this);
@@ -1065,7 +1091,9 @@ f2ptr f2__largeinteger__as__double(f2ptr cause, f2ptr this) {
   assert_argument_type(largeinteger, this);
   return f2double__new(cause, raw__largeinteger__as__double(cause, this));
 }
-def_pcfunk1(largeinteger__as__double, this, return f2__largeinteger__as__double(this_cause, this));
+def_pcfunk1(largeinteger__as__double, this,
+	    "",
+	    return f2__largeinteger__as__double(this_cause, this));
 
 boolean_t raw__largeinteger__is_zero(f2ptr cause, f2ptr this) {
   f2ptr integer_array         = f2__largeinteger__integer_array(cause, this);
@@ -1122,7 +1150,9 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   //printf("\nsubtraction: "); f2__print(cause, subtraction);
   return f2__largeinteger__greatest_common_factor(  cause, small, subtraction);
 }
-def_pcfunk2(largeinteger__greatest_common_factor, this, that, return f2__largeinteger__greatest_common_factor(this_cause, this, that));
+def_pcfunk2(largeinteger__greatest_common_factor, this, that,
+	    "",
+	    return f2__largeinteger__greatest_common_factor(this_cause, this, that));
 
 /*
 u64 u64__sqrt(u64 this) {
@@ -1197,7 +1227,9 @@ f2ptr f2__largeinteger__square_root(f2ptr cause, f2ptr this) {
   assert_argument_type(largeinteger, this);
   return raw__largeinteger__square_root(cause, this);
 }
-def_pcfunk1(largeinteger__square_root, this, return f2__largeinteger__square_root(this_cause, this));
+def_pcfunk1(largeinteger__square_root, this,
+	    "",
+	    return f2__largeinteger__square_root(this_cause, this));
 
 f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
   assert_argument_type(largeinteger, this);
@@ -1222,7 +1254,9 @@ f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
   }
   return factor_indices;
 }
-def_pcfunk1(largeinteger__prime_factor_indices, this, return f2__largeinteger__prime_factor_indices(this_cause, this));
+def_pcfunk1(largeinteger__prime_factor_indices, this,
+	    "",
+	    return f2__largeinteger__prime_factor_indices(this_cause, this));
 
 f2ptr raw__largeinteger__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   if (raw__integer__is_type(cause, number)) {
@@ -1242,7 +1276,9 @@ f2ptr f2__largeinteger__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   assert_argument_type(largeinteger, this);
   return raw__largeinteger__multiplied_by(cause, this, number);
 }
-def_pcfunk2(largeinteger__multiplied_by, this, that, return f2__largeinteger__multiplied_by(this_cause, this, that));
+def_pcfunk2(largeinteger__multiplied_by, this, that,
+	    "",
+	    return f2__largeinteger__multiplied_by(this_cause, this, that));
 
 
 f2ptr f2__largeinteger__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1258,7 +1294,9 @@ f2ptr f2__largeinteger__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   }
   return f2larva__new(cause, 126111, nil);
 }
-def_pcfunk2(largeinteger__divided_by, this, that, return f2__largeinteger__divided_by(this_cause, this, that));
+def_pcfunk2(largeinteger__divided_by, this, that,
+	    "",
+	    return f2__largeinteger__divided_by(this_cause, this, that));
 
 
 f2ptr f2__largeinteger__plus(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1274,7 +1312,9 @@ f2ptr f2__largeinteger__plus(f2ptr cause, f2ptr this, f2ptr number) {
   }
   return f2larva__new(cause, 2642641, nil);
 }
-def_pcfunk2(largeinteger__plus, this, that, return f2__largeinteger__plus(this_cause, this, that));
+def_pcfunk2(largeinteger__plus, this, that,
+	    "",
+	    return f2__largeinteger__plus(this_cause, this, that));
 
 
 f2ptr f2__largeinteger__minus(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1290,7 +1330,9 @@ f2ptr f2__largeinteger__minus(f2ptr cause, f2ptr this, f2ptr number) {
   }
   return f2larva__new(cause, 164426, nil);
 }
-def_pcfunk2(largeinteger__minus, this, that, return f2__largeinteger__minus(this_cause, this, that));
+def_pcfunk2(largeinteger__minus, this, that,
+	    "",
+	    return f2__largeinteger__minus(this_cause, this, that));
 
 
 f2ptr f2__largeinteger__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1306,7 +1348,9 @@ f2ptr f2__largeinteger__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   }
   return f2larva__new(cause, 426241, nil);
 }
-def_pcfunk2(largeinteger__is_greater_than, this, that, return f2__largeinteger__is_greater_than(this_cause, this, that));
+def_pcfunk2(largeinteger__is_greater_than, this, that,
+	    "",
+	    return f2__largeinteger__is_greater_than(this_cause, this, that));
 
 
 f2ptr f2__largeinteger__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1322,7 +1366,9 @@ f2ptr f2__largeinteger__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   }
   return f2larva__new(cause, 11351, nil);
 }
-def_pcfunk2(largeinteger__is_less_than, this, that, return f2__largeinteger__is_less_than(this_cause, this, that));
+def_pcfunk2(largeinteger__is_less_than, this, that,
+	    "",
+	    return f2__largeinteger__is_less_than(this_cause, this, that));
 
 
 f2ptr f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1338,7 +1384,9 @@ f2ptr f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr n
   }
   return f2larva__new(cause, 11353, nil);
 }
-def_pcfunk2(largeinteger__is_numerically_equal_to, this, that, return f2__largeinteger__is_numerically_equal_to(this_cause, this, that));
+def_pcfunk2(largeinteger__is_numerically_equal_to, this, that,
+	    "",
+	    return f2__largeinteger__is_numerically_equal_to(this_cause, this, that));
 
 
 f2ptr raw__largeinteger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -1359,7 +1407,9 @@ f2ptr f2__largeinteger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__largeinteger__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(largeinteger__terminal_print_with_frame, this, terminal_print_frame, return f2__largeinteger__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(largeinteger__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__largeinteger__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2largeinteger__primobject_type__new_aux(f2ptr cause) {

@@ -420,10 +420,10 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   defprimobject__static_slot(name##__##slot_name, slot_number); \
    \
   f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {return f2##name##__##slot_name(x, cause);} \
-  def_pcfunk1(name##__##slot_name, x, return f2__##name##__##slot_name(this_cause, x)); \
+  def_pcfunk1(name##__##slot_name, x, "Returns this " #name "'s " #slot_name " slot value.", return f2__##name##__##slot_name(this_cause, x)); \
    \
   f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y) {f2##name##__##slot_name##__set(x, cause, y); return nil;} \
-  def_pcfunk2(name##__##slot_name##__set, x, y, return f2__##name##__##slot_name##__set(this_cause, x, y));
+  def_pcfunk2(name##__##slot_name##__set, x, y, "Sets this " #name "'s " #slot_name " slot value.", return f2__##name##__##slot_name##__set(this_cause, x, y));
 
 
 #define def_primobject_common(name, new_trace_depth_code, new_f2type_code, add_slots_code) \
@@ -437,21 +437,21 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
     return (raw__primobject__is_type(cause, x) && f2primobject__is__##name(x, cause)); \
   } \
   f2ptr f2__##name##__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__##name##__is_type(cause, x));} \
-  def_pcfunk1(name##__is_type, x, return f2__##name##__is_type(this_cause, x)); \
+  def_pcfunk1(name##__is_type, x, "Returns true if object is of type " #name ".", return f2__##name##__is_type(this_cause, x)); \
    \
   f2ptr f2__##name##__type(f2ptr cause, f2ptr x) {return __##name##__symbol;} \
-  def_pcfunk1(name##__type, x, return f2__##name##__type(this_cause, x)); \
-   \
+  def_pcfunk1(name##__type, x, "Returns the symbol `" #name ".", return f2__##name##__type(this_cause, x)); \
+  									\
   f2ptr f2##name##__primobject_type__new(f2ptr cause) {			\
     f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil)); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), __funk2.globalenv.object_type.primobject.primobject_type_##name.is_type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    __funk2.globalenv.object_type.primobject.primobject_type_##name.type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     __funk2.globalenv.object_type.primobject.primobject_type_##name.new__funk); \
-    add_slots_code; \
-    return this; \
+    add_slots_code;							\
+    return this;							\
   }
 
-#define def_primobject_add_slot(name, slot_name) \
+#define def_primobject_add_slot(name, slot_name)			\
   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, #slot_name),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_name##__funk); \
   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, #slot_name),   __funk2.globalenv.object_type.primobject.primobject_type_##name.slot_name##__set__funk); \
 

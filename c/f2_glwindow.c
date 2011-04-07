@@ -1189,7 +1189,9 @@ boolean_t raw__glwindow__supported(f2ptr cause) {
 f2ptr f2__glwindow__supported(f2ptr cause) {
   return f2bool__new(raw__glwindow__supported(cause));
 }
-def_pcfunk0(glwindow__supported, return f2__glwindow__supported(this_cause));
+def_pcfunk0(glwindow__supported,
+	    "",
+	    return f2__glwindow__supported(this_cause));
 
 void raw__glwindow__create(f2ptr cause, u8* title, s64 width, s64 height, s64 depth, boolean_t fullscreen) {
 #if defined(F2__GLWINDOW__SUPPORTED)
@@ -1216,7 +1218,9 @@ f2ptr f2__glwindow__create(f2ptr cause, f2ptr title, f2ptr width, f2ptr height, 
   f2__free(to_ptr(title__str));
   return nil;
 }
-def_pcfunk5(glwindow__create, title, width, height, depth, fullscreen, return f2__glwindow__create(this_cause, title, width, height, depth, fullscreen));
+def_pcfunk5(glwindow__create, title, width, height, depth, fullscreen,
+	    "",
+	    return f2__glwindow__create(this_cause, title, width, height, depth, fullscreen));
 
 
 boolean_t raw__glwindow__handle_events(f2ptr cause) {
@@ -1231,7 +1235,9 @@ boolean_t raw__glwindow__handle_events(f2ptr cause) {
 f2ptr f2__glwindow__handle_events(f2ptr cause) {
   return f2bool__new(raw__glwindow__handle_events(cause));
 }
-def_pcfunk0(glwindow__handle_events, return f2__glwindow__handle_events(this_cause));
+def_pcfunk0(glwindow__handle_events,
+	    "",
+	    return f2__glwindow__handle_events(this_cause));
 
 
 void raw__glwindow__destroy(f2ptr cause) {
@@ -1246,7 +1252,9 @@ f2ptr f2__glwindow__destroy(f2ptr cause) {
   raw__glwindow__destroy(cause);
   return nil;
 }
-def_pcfunk0(glwindow__destroy, return f2__glwindow__destroy(this_cause));
+def_pcfunk0(glwindow__destroy,
+	    "",
+	    return f2__glwindow__destroy(this_cause));
 
 boolean_t raw__glwindow__load_texture(f2ptr cause, u8* name, u8* filename) {
 #if defined(F2__GLWINDOW__SUPPORTED)
@@ -1272,7 +1280,9 @@ f2ptr f2__glwindow__load_texture(f2ptr cause, f2ptr name, f2ptr filename) {
   
   return f2bool__new(raw__glwindow__load_texture(cause, name__str, filename__str));
 }
-def_pcfunk2(glwindow__load_texture, name, filename, return f2__glwindow__load_texture(this_cause, name, filename));
+def_pcfunk2(glwindow__load_texture, name, filename,
+	    "",
+	    return f2__glwindow__load_texture(this_cause, name, filename));
 
 boolean_t raw__glwindow__texture_loaded_raw(f2ptr cause, u8* texture_name) {
 #if defined(F2__GLWINDOW__SUPPORTED)
@@ -1292,7 +1302,9 @@ f2ptr f2__glwindow__texture_loaded(f2ptr cause, f2ptr name) {
   
   return f2bool__new(raw__glwindow__texture_loaded_raw(cause, name__str));
 }
-def_pcfunk1(glwindow__texture_loaded, name, return f2__glwindow__texture_loaded(this_cause, name));
+def_pcfunk1(glwindow__texture_loaded, name,
+	    "",
+	    return f2__glwindow__texture_loaded(this_cause, name));
 
 // **
 

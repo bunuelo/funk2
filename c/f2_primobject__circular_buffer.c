@@ -33,7 +33,9 @@ f2ptr raw__circular_buffer__new_empty(f2ptr cause, u64 length) {
 f2ptr f2__circular_buffer__new(f2ptr cause) {
   return raw__circular_buffer__new_empty(cause, 8);
 }
-def_pcfunk0(circular_buffer__new, return f2__circular_buffer__new(this_cause));
+def_pcfunk0(circular_buffer__new,
+	    "",
+	    return f2__circular_buffer__new(this_cause));
 
 f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this) {
   f2cmutex__lock(f2circular_buffer__access_cmutex(this, cause), cause);
@@ -54,7 +56,9 @@ f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this) {
   f2cmutex__unlock(f2circular_buffer__access_cmutex(this, cause), cause);
   return elt;
 }
-def_pcfunk1(circular_buffer__pop, this, return f2__circular_buffer__pop(this_cause, this));
+def_pcfunk1(circular_buffer__pop, this,
+	    "",
+	    return f2__circular_buffer__pop(this_cause, this));
 
 void raw__circular_buffer__double_size(f2ptr cause, f2ptr this) {
   u64   raw_start             = f2integer__i(f2circular_buffer__start(this, cause), cause);
@@ -106,7 +110,9 @@ f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value) {
   f2cmutex__unlock(f2circular_buffer__access_cmutex(this, cause), cause);
   return nil;
 }
-def_pcfunk2(circular_buffer__add, this, value, return f2__circular_buffer__add(this_cause, this, value));
+def_pcfunk2(circular_buffer__add, this, value,
+	    "",
+	    return f2__circular_buffer__add(this_cause, this, value));
 
 boolean_t raw__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
   f2cmutex__lock(f2circular_buffer__access_cmutex(this, cause), cause);
@@ -121,7 +127,9 @@ boolean_t raw__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
 f2ptr f2__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__circular_buffer__is_empty(cause, this));
 }
-def_pcfunk1(circular_buffer__is_empty, this, return f2__circular_buffer__is_empty(this_cause, this));
+def_pcfunk1(circular_buffer__is_empty, this,
+	    "",
+	    return f2__circular_buffer__is_empty(this_cause, this));
 
 f2ptr f2circular_buffer__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2circular_buffer__primobject_type__new(cause);

@@ -34,7 +34,9 @@ boolean_t raw__dlfcn__supported() {
 f2ptr f2__dlfcn__supported(f2ptr cause) {
   return f2bool__new(raw__dlfcn__supported());
 }
-def_pcfunk0(dlfcn__supported, return f2__dlfcn__supported(this_cause));
+def_pcfunk0(dlfcn__supported,
+	    "",
+	    return f2__dlfcn__supported(this_cause));
 
 ptr raw__dlfcn__dlopen_ex(u8* filename, int flag) {
 #ifdef F2__DLFCN__SUPPORTED
@@ -71,7 +73,9 @@ f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   assert_argument_type_or_nil(integer, flag);
   return raw__dlfcn__dlopen(cause, filename, flag);
 }
-def_pcfunk2(dlfcn__dlopen, filename, flag, return f2__dlfcn__dlopen(this_cause, filename, flag));
+def_pcfunk2(dlfcn__dlopen, filename, flag,
+	    "",
+	    return f2__dlfcn__dlopen(this_cause, filename, flag));
 
 
 u8* raw__dlfcn__dlerror() {
@@ -89,7 +93,9 @@ f2ptr f2__dlfcn__dlerror(f2ptr cause) {
   }
   return f2string__new(cause, strlen((char*)str), str);
 }
-def_pcfunk0(dlfcn__dlerror, return f2__dlfcn__dlerror(this_cause));
+def_pcfunk0(dlfcn__dlerror,
+	    "",
+	    return f2__dlfcn__dlerror(this_cause));
 
 ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 #ifdef F2__DLFCN__SUPPORTED
@@ -113,7 +119,9 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
   }
   return f2pointer__new(cause, result);
 }
-def_pcfunk2(dlfcn__dlsym, handle, symbol, return f2__dlfcn__dlsym(this_cause, handle, symbol));
+def_pcfunk2(dlfcn__dlsym, handle, symbol,
+	    "",
+	    return f2__dlfcn__dlsym(this_cause, handle, symbol));
 
 
 int raw__dlfcn__dlclose(ptr handle) {
@@ -129,7 +137,9 @@ f2ptr f2__dlfcn__dlclose(f2ptr cause, f2ptr handle) {
   ptr raw_handle = f2pointer__p(handle, cause);
   return f2integer__new(cause, raw__dlfcn__dlclose(raw_handle));
 }
-def_pcfunk1(dlfcn__dlclose, handle, return f2__dlfcn__dlclose(this_cause, handle));
+def_pcfunk1(dlfcn__dlclose, handle,
+	    "",
+	    return f2__dlfcn__dlclose(this_cause, handle));
 
 u64 raw__dlfcn__rtld_lazy() {
 #ifdef F2__DLFCN__SUPPORTED
@@ -142,7 +152,9 @@ u64 raw__dlfcn__rtld_lazy() {
 f2ptr f2__dlfcn__rtld_lazy(f2ptr cause) {
   return f2integer__new(cause, raw__dlfcn__rtld_lazy());
 }
-def_pcfunk0(dlfcn__rtld_lazy, return f2__dlfcn__rtld_lazy(this_cause));
+def_pcfunk0(dlfcn__rtld_lazy,
+	    "",
+	    return f2__dlfcn__rtld_lazy(this_cause));
 
 u64 raw__dlfcn__rtld_now() {
 #ifdef F2__DLFCN__SUPPORTED
@@ -155,7 +167,9 @@ u64 raw__dlfcn__rtld_now() {
 f2ptr f2__dlfcn__rtld_now(f2ptr cause) {
   return f2integer__new(cause, raw__dlfcn__rtld_now());
 }
-def_pcfunk0(dlfcn__rtld_now, return f2__dlfcn__rtld_now(this_cause));
+def_pcfunk0(dlfcn__rtld_now,
+	    "",
+	    return f2__dlfcn__rtld_now(this_cause));
 
 u64 raw__dlfcn__rtld_global() {
 #ifdef F2__DLFCN__SUPPORTED
@@ -168,7 +182,9 @@ u64 raw__dlfcn__rtld_global() {
 f2ptr f2__dlfcn__rtld_global(f2ptr cause) {
   return f2integer__new(cause, raw__dlfcn__rtld_global());
 }
-def_pcfunk0(dlfcn__rtld_global, return f2__dlfcn__rtld_global(this_cause));
+def_pcfunk0(dlfcn__rtld_global,
+	    "",
+	    return f2__dlfcn__rtld_global(this_cause));
 
 u64 raw__dlfcn__rtld_local() {
 #if defined(F2__DLFCN__SUPPORTED) && (! defined(F2__CYGWIN))
@@ -181,7 +197,9 @@ u64 raw__dlfcn__rtld_local() {
 f2ptr f2__dlfcn__rtld_local(f2ptr cause) {
   return f2integer__new(cause, raw__dlfcn__rtld_local());
 }
-def_pcfunk0(dlfcn__rtld_local, return f2__dlfcn__rtld_local(this_cause));
+def_pcfunk0(dlfcn__rtld_local,
+	    "",
+	    return f2__dlfcn__rtld_local(this_cause));
 
 u64 raw__dlfcn__rtld_nodelete() {
 #if defined(F2__DLFCN__SUPPORTED) && (! defined(F2__CYGWIN))
@@ -194,7 +212,9 @@ u64 raw__dlfcn__rtld_nodelete() {
 f2ptr f2__dlfcn__rtld_nodelete(f2ptr cause) {
   return f2integer__new(cause, raw__dlfcn__rtld_nodelete());
 }
-def_pcfunk0(dlfcn__rtld_nodelete, return f2__dlfcn__rtld_nodelete(this_cause));
+def_pcfunk0(dlfcn__rtld_nodelete,
+	    "",
+	    return f2__dlfcn__rtld_nodelete(this_cause));
 
 u64 raw__dlfcn__rtld_noload() {
 #if defined(F2__DLFCN__SUPPORTED) && (! defined(F2__CYGWIN))
@@ -207,7 +227,9 @@ u64 raw__dlfcn__rtld_noload() {
 f2ptr f2__dlfcn__rtld_noload(f2ptr cause) {
   return f2integer__new(cause, raw__dlfcn__rtld_noload());
 }
-def_pcfunk0(dlfcn__rtld_noload, return f2__dlfcn__rtld_noload(this_cause));
+def_pcfunk0(dlfcn__rtld_noload,
+	    "",
+	    return f2__dlfcn__rtld_noload(this_cause));
 
 
 
@@ -238,7 +260,9 @@ f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fla
   assert_argument_type_or_nil(integer, flag);
   return raw__dlfcn_dynamic_library__new_open(cause, filename, flag);
 }
-def_pcfunk2(dlfcn_dynamic_library__new_open, filename, flag, return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag));
+def_pcfunk2(dlfcn_dynamic_library__new_open, filename, flag,
+	    "",
+	    return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag));
 
 
 f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol) {
@@ -257,7 +281,9 @@ f2ptr f2__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr sy
   assert_argument_type(symbol,                symbol);
   return raw__dlfcn_dynamic_library__lookup_symbol(cause, this, symbol);
 }
-def_pcfunk2(dlfcn_dynamic_library__lookup_symbol, this, symbol, return f2__dlfcn_dynamic_library__lookup_symbol(this_cause, this, symbol));
+def_pcfunk2(dlfcn_dynamic_library__lookup_symbol, this, symbol,
+	    "",
+	    return f2__dlfcn_dynamic_library__lookup_symbol(this_cause, this, symbol));
 
 
 f2ptr raw__dlfcn_dynamic_library__close(f2ptr cause, f2ptr this) {
@@ -269,7 +295,9 @@ f2ptr f2__dlfcn_dynamic_library__close(f2ptr cause, f2ptr this) {
   assert_argument_type(dlfcn_dynamic_library, this);
   return raw__dlfcn_dynamic_library__close(cause, this);
 }
-def_pcfunk1(dlfcn_dynamic_library__close, this, return f2__dlfcn_dynamic_library__close(this_cause, this));
+def_pcfunk1(dlfcn_dynamic_library__close, this,
+	    "",
+	    return f2__dlfcn_dynamic_library__close(this_cause, this));
 
 
 f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
@@ -295,7 +323,9 @@ f2ptr f2__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
   assert_argument_type(dlfcn_dynamic_library, this);
   return raw__dlfcn_dynamic_library__changed_on_disk(cause, this);
 }
-def_pcfunk1(dlfcn_dynamic_library__changed_on_disk, this, return f2__dlfcn_dynamic_library__changed_on_disk(this_cause, this));
+def_pcfunk1(dlfcn_dynamic_library__changed_on_disk, this,
+	    "",
+	    return f2__dlfcn_dynamic_library__changed_on_disk(this_cause, this));
 
 
 f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause) {
@@ -345,7 +375,9 @@ f2ptr f2__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this
   assert_argument_type(string,                        filename);
   return raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename);
 }
-def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename, return f2__dlfcn_dynamic_library_handler__dynamic_library(this_cause, this, filename));
+def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename,
+	    "",
+	    return f2__dlfcn_dynamic_library_handler__dynamic_library(this_cause, this, filename));
 
 f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
   f2ptr dynamic_library = raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename);
@@ -401,7 +433,9 @@ f2ptr f2__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2p
   assert_argument_type(string,                        filename);
   return raw__dlfcn_dynamic_library_handler__unload_dynamic_library(cause, this, filename);
 }
-def_pcfunk2(dlfcn_dynamic_library_handler__unload_dynamic_library, this, filename, return f2__dlfcn_dynamic_library_handler__unload_dynamic_library(this_cause, this, filename));
+def_pcfunk2(dlfcn_dynamic_library_handler__unload_dynamic_library, this, filename,
+	    "",
+	    return f2__dlfcn_dynamic_library_handler__unload_dynamic_library(this_cause, this, filename));
 
 
 f2ptr raw__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this) {
@@ -439,7 +473,9 @@ f2ptr f2__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this)
   assert_argument_type(dlfcn_dynamic_library_handler, this);
   return raw__dlfcn_dynamic_library_handler__unload_changed(cause, this);
 }
-def_pcfunk1(dlfcn_dynamic_library_handler__unload_changed, this, return f2__dlfcn_dynamic_library_handler__unload_changed(this_cause, this));
+def_pcfunk1(dlfcn_dynamic_library_handler__unload_changed, this,
+	    "",
+	    return f2__dlfcn_dynamic_library_handler__unload_changed(this_cause, this));
 
 
 f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {
@@ -464,7 +500,9 @@ f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
   }
   return f2__dlfcn_dynamic_library_handler__dynamic_library(cause, dlfcn_dynamic_library_handler, filename);
 }
-def_pcfunk1(global_dlfcn_dynamic_library, filename, return f2__global_dlfcn_dynamic_library(this_cause, filename));
+def_pcfunk1(global_dlfcn_dynamic_library, filename,
+	    "",
+	    return f2__global_dlfcn_dynamic_library(this_cause, filename));
 
 
 f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filename, f2ptr symbol) {
@@ -474,7 +512,9 @@ f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr filenam
   }
   return f2__dlfcn_dynamic_library__lookup_symbol(cause, dlfcn_dynamic_library, symbol);
 }
-def_pcfunk2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol, return f2__global_dlfcn_dynamic_library__lookup_symbol(this_cause, filename, symbol));
+def_pcfunk2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol,
+	    "",
+	    return f2__global_dlfcn_dynamic_library__lookup_symbol(this_cause, filename, symbol));
 
 
 f2ptr f2__global_dlfcn_dynamic_library__unload_dynamic_library(f2ptr cause, f2ptr filename) {
@@ -488,7 +528,9 @@ f2ptr f2__global_dlfcn_dynamic_library__unload_dynamic_library(f2ptr cause, f2pt
   }
   return f2__dlfcn_dynamic_library_handler__unload_dynamic_library(cause, dlfcn_dynamic_library_handler, filename);
 }
-def_pcfunk1(global_dlfcn_dynamic_library__unload_dynamic_library, filename, return f2__global_dlfcn_dynamic_library__unload_dynamic_library(this_cause, filename));
+def_pcfunk1(global_dlfcn_dynamic_library__unload_dynamic_library, filename,
+	    "",
+	    return f2__global_dlfcn_dynamic_library__unload_dynamic_library(this_cause, filename));
 
 
 f2ptr f2__global_dlfcn_dynamic_library__unload_changed(f2ptr cause) {
@@ -501,7 +543,9 @@ f2ptr f2__global_dlfcn_dynamic_library__unload_changed(f2ptr cause) {
   }
   return f2__dlfcn_dynamic_library_handler__unload_changed(cause, dlfcn_dynamic_library_handler);
 }
-def_pcfunk0(global_dlfcn_dynamic_library__unload_changed, return f2__global_dlfcn_dynamic_library__unload_changed(this_cause));
+def_pcfunk0(global_dlfcn_dynamic_library__unload_changed,
+	    "",
+	    return f2__global_dlfcn_dynamic_library__unload_changed(this_cause));
 
 
 

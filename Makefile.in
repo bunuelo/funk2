@@ -606,7 +606,6 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_surrogate_parent.lo \
 	c/lib_libfunk2_la-f2_terminal_print.lo \
 	c/lib_libfunk2_la-f2_termios.lo \
-	c/lib_libfunk2_la-f2_thought_process.lo \
 	c/lib_libfunk2_la-f2_tricolor_set.lo \
 	c/lib_libfunk2_la-f2_time.lo c/lib_libfunk2_la-f2_trace.lo \
 	c/lib_libfunk2_la-f2_user_thread_controller.lo \
@@ -1161,7 +1160,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_surrogate_parent.c \
   c/f2_terminal_print.c \
   c/f2_termios.c \
-  c/f2_thought_process.c \
   c/f2_tricolor_set.c \
   c/f2_time.c \
   c/f2_trace.c \
@@ -2138,8 +2136,6 @@ c/lib_libfunk2_la-f2_terminal_print.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_termios.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
-c/lib_libfunk2_la-f2_thought_process.lo: c/$(am__dirstamp) \
-	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_tricolor_set.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_time.lo: c/$(am__dirstamp) \
@@ -2398,8 +2394,6 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_terminal_print.lo
 	-rm -f c/lib_libfunk2_la-f2_termios.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_termios.lo
-	-rm -f c/lib_libfunk2_la-f2_thought_process.$(OBJEXT)
-	-rm -f c/lib_libfunk2_la-f2_thought_process.lo
 	-rm -f c/lib_libfunk2_la-f2_time.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_time.lo
 	-rm -f c/lib_libfunk2_la-f2_trace.$(OBJEXT)
@@ -2621,7 +2615,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_surrogate_parent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_terminal_print.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_termios.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_thought_process.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_time.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_trace.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_tricolor_set.Plo@am__quote@
@@ -3948,14 +3941,6 @@ c/lib_libfunk2_la-f2_termios.lo: c/f2_termios.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_termios.c' object='c/lib_libfunk2_la-f2_termios.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_termios.lo `test -f 'c/f2_termios.c' || echo '$(srcdir)/'`c/f2_termios.c
-
-c/lib_libfunk2_la-f2_thought_process.lo: c/f2_thought_process.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_thought_process.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_thought_process.Tpo -c -o c/lib_libfunk2_la-f2_thought_process.lo `test -f 'c/f2_thought_process.c' || echo '$(srcdir)/'`c/f2_thought_process.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_thought_process.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_thought_process.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_thought_process.c' object='c/lib_libfunk2_la-f2_thought_process.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_thought_process.lo `test -f 'c/f2_thought_process.c' || echo '$(srcdir)/'`c/f2_thought_process.c
 
 c/lib_libfunk2_la-f2_tricolor_set.lo: c/f2_tricolor_set.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_tricolor_set.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_tricolor_set.Tpo -c -o c/lib_libfunk2_la-f2_tricolor_set.lo `test -f 'c/f2_tricolor_set.c' || echo '$(srcdir)/'`c/f2_tricolor_set.c

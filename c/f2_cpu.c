@@ -65,7 +65,9 @@ double raw__cpu__user_cpu_usage(f2ptr cause) {
 f2ptr f2__cpu__user_cpu_usage(f2ptr cause) {
   return f2double__new(cause, raw__cpu__user_cpu_usage(cause));
 }
-def_pcfunk0(cpu__user_cpu_usage, return f2__cpu__user_cpu_usage(this_cause));
+def_pcfunk0(cpu__user_cpu_usage,
+	    "",
+	    return f2__cpu__user_cpu_usage(this_cause));
 
 double raw__cpu__system_cpu_usage(f2ptr cause) {
   return __funk2.cpu.system_cpu_usage;
@@ -74,7 +76,9 @@ double raw__cpu__system_cpu_usage(f2ptr cause) {
 f2ptr f2__cpu__system_cpu_usage(f2ptr cause) {
   return f2double__new(cause, raw__cpu__system_cpu_usage(cause));
 }
-def_pcfunk0(cpu__system_cpu_usage, return f2__cpu__system_cpu_usage(this_cause));
+def_pcfunk0(cpu__system_cpu_usage,
+	    "",
+	    return f2__cpu__system_cpu_usage(this_cause));
 
 double raw__cpu__total_cpu_usage(f2ptr cause) {
   return __funk2.cpu.total_cpu_usage;
@@ -83,7 +87,9 @@ double raw__cpu__total_cpu_usage(f2ptr cause) {
 f2ptr f2__cpu__total_cpu_usage(f2ptr cause) {
   return f2double__new(cause, raw__cpu__total_cpu_usage(cause));
 }
-def_pcfunk0(cpu__total_cpu_usage, return f2__cpu__total_cpu_usage(this_cause));
+def_pcfunk0(cpu__total_cpu_usage,
+	    "",
+	    return f2__cpu__total_cpu_usage(this_cause));
 
 // **
 

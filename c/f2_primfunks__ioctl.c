@@ -29,15 +29,21 @@ f2ptr f2__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place) {
   f2place__thing__set(value_place, cause, f2integer__new(cause, i));
   return rv;
 }
-def_pcfunk3(f2__ioctl__int, d, request, value_place, return f2__ioctl__int(this_cause, d, request, value_place));
+def_pcfunk3(f2__ioctl__int, d, request, value_place,
+	    "",
+	    return f2__ioctl__int(this_cause, d, request, value_place));
 
 
 #ifndef F2__CYGWIN
 f2ptr f2__ioctl__siocinq(f2ptr cause) {return f2integer__new(cause, SIOCINQ);}
-def_pcfunk0(f2__ioctl__siocinq, return f2__ioctl__siocinq(this_cause));
+def_pcfunk0(f2__ioctl__siocinq,
+	    "",
+	    return f2__ioctl__siocinq(this_cause));
 
 f2ptr f2__ioctl__siocoutq(f2ptr cause) {return f2integer__new(cause, SIOCOUTQ);}
-def_pcfunk0(f2__ioctl__siocoutq, return f2__ioctl__siocoutq(this_cause));
+def_pcfunk0(f2__ioctl__siocoutq,
+	    "",
+	    return f2__ioctl__siocoutq(this_cause));
 #endif
 
 

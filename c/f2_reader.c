@@ -35,7 +35,9 @@ boolean_t raw__exp__contains_comma(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__exp__contains_comma(f2ptr cause, f2ptr this) {return f2bool__new(raw__exp__contains_comma(cause, this));}
-def_pcfunk1(exp__contains_comma, this, return f2__exp__contains_comma(this_cause, this));
+def_pcfunk1(exp__contains_comma, this,
+	    "",
+	    return f2__exp__contains_comma(this_cause, this));
 
 boolean_t raw__exp__contains_cdr_comma(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
@@ -50,7 +52,9 @@ boolean_t raw__exp__contains_cdr_comma(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__exp__contains_cdr_comma(f2ptr cause, f2ptr this) {return f2bool__new(raw__exp__contains_cdr_comma(cause, this));}
-def_pcfunk1(exp__contains_cdr_comma, this, return f2__exp__contains_cdr_comma(this_cause, this));
+def_pcfunk1(exp__contains_cdr_comma, this,
+	    "",
+	    return f2__exp__contains_cdr_comma(this_cause, this));
 
 boolean_t raw__exp__contains_cdr_comma_at_this_level(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
@@ -65,7 +69,9 @@ boolean_t raw__exp__contains_cdr_comma_at_this_level(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__exp__contains_cdr_comma_at_this_level(f2ptr cause, f2ptr this) {return f2bool__new(raw__exp__contains_cdr_comma_at_this_level(cause, this));}
-def_pcfunk1(exp__contains_cdr_comma_at_this_level, this, return f2__exp__contains_cdr_comma_at_this_level(this_cause, this));
+def_pcfunk1(exp__contains_cdr_comma_at_this_level, this,
+	    "",
+	    return f2__exp__contains_cdr_comma_at_this_level(this_cause, this));
 
 f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
@@ -83,7 +89,9 @@ f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
   }
   return this;
 }
-def_pcfunk1(exp__comma_filter_backquoted, this, return f2__exp__comma_filter_backquoted(this_cause, this));
+def_pcfunk1(exp__comma_filter_backquoted, this,
+	    "",
+	    return f2__exp__comma_filter_backquoted(this_cause, this));
 
 boolean_t raw__char__is_whitespace(f2ptr cause, f2ptr this) {
   u8 ch = f2char__ch(this, cause);
@@ -132,7 +140,9 @@ f2ptr f2__stream__skip_whitespace(f2ptr cause, f2ptr stream) {
   f2__stream__ungetc(cause, stream, first_char);
   return nil;
 }
-def_pcfunk1(stream__skip_whitespace, stream, return f2__stream__skip_whitespace(this_cause, stream));
+def_pcfunk1(stream__skip_whitespace, stream,
+	    "",
+	    return f2__stream__skip_whitespace(this_cause, stream));
 
 f2ptr f2__stream__try_read_impossibility(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__try_getc(cause, stream);
@@ -1221,7 +1231,9 @@ f2ptr f2__stream__try_read__thread_safe(f2ptr cause, f2ptr stream) {
   raw__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return result;
 }
-def_pcfunk1(stream__try_read, stream, return f2__stream__try_read__thread_safe(this_cause, stream));
+def_pcfunk1(stream__try_read, stream,
+	    "",
+	    return f2__stream__try_read__thread_safe(this_cause, stream));
 
 
 void funk2_reader__init(funk2_reader_t* this) {

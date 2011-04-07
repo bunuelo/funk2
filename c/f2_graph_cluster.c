@@ -106,7 +106,9 @@ f2ptr f2__graph__cluster(f2ptr cause, f2ptr this) {
   }
   return raw__graph__cluster(cause, this);
 }
-def_pcfunk1(graph__cluster, this, return f2__graph__cluster(this_cause, this));
+def_pcfunk1(graph__cluster, this,
+	    "",
+	    return f2__graph__cluster(this_cause, this));
 
 // **
 

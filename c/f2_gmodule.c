@@ -33,7 +33,9 @@ boolean_t raw__gmodule__supported() {
 f2ptr f2__gmodule__supported(f2ptr cause) {
   return f2bool__new(raw__gmodule__supported());
 }
-def_pcfunk0(gmodule__supported, return f2__gmodule__supported(this_cause));
+def_pcfunk0(gmodule__supported,
+	    "",
+	    return f2__gmodule__supported(this_cause));
 
 //gchar* g_module_build_path(const gchar *directory, const gchar *module_name);
 u8* raw__gmodule__build_path(u8* directory, u8* module_name) {
@@ -63,7 +65,9 @@ f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
   free(new_path_str);
   return new_path;
 }
-def_pcfunk2(gmodule__build_path, directory, module_name, return f2__gmodule__build_path(this_cause, directory, module_name));
+def_pcfunk2(gmodule__build_path, directory, module_name,
+	    "",
+	    return f2__gmodule__build_path(this_cause, directory, module_name));
 
 //GModule* g_module_open(const gchar *file_name, GModuleFlags flags);
 ptr raw__gmodule__open(u8* filename, u64 flags) {
@@ -87,7 +91,9 @@ f2ptr f2__gmodule__open(f2ptr cause, f2ptr filename, f2ptr flags) {
   }
   return f2pointer__new(cause, module_ptr);
 }
-def_pcfunk2(gmodule__open, filename, flags, return f2__gmodule__open(this_cause, filename, flags));
+def_pcfunk2(gmodule__open, filename, flags,
+	    "",
+	    return f2__gmodule__open(this_cause, filename, flags));
 
 //gboolean g_module_symbol(GModule *module, const gchar *symbol_name, gpointer *symbol);
 ptr raw__gmodule__symbol(ptr module, u8* symbol_name) {
@@ -117,7 +123,9 @@ f2ptr f2__gmodule__symbol(f2ptr cause, f2ptr module, f2ptr symbol_name) {
   }
   return f2pointer__new(cause, symbol_pointer);
 }
-def_pcfunk2(gmodule__symbol, module, symbol_name, return f2__gmodule__symbol(this_cause, module, symbol_name));
+def_pcfunk2(gmodule__symbol, module, symbol_name,
+	    "",
+	    return f2__gmodule__symbol(this_cause, module, symbol_name));
 
 //const gchar* g_module_name(GModule *module);
 u8* raw__gmodule__name(ptr module) {
@@ -137,7 +145,9 @@ f2ptr f2__gmodule__name(f2ptr cause, f2ptr module) {
   }
   return f2string__new(cause, strlen((char*)module_name_str), module_name_str);
 }
-def_pcfunk1(gmodule__name, module, return f2__gmodule__name(this_cause, module));
+def_pcfunk1(gmodule__name, module,
+	    "",
+	    return f2__gmodule__name(this_cause, module));
 
 //void g_module_make_resident(GModule *module);
 void raw__gmodule__make_resident(ptr module) {
@@ -153,7 +163,9 @@ f2ptr f2__gmodule__make_resident(f2ptr cause, f2ptr module) {
   raw__gmodule__make_resident(raw_module);
   return nil;
 }
-def_pcfunk1(gmodule__make_resident, module, return f2__gmodule__make_resident(this_cause, module));
+def_pcfunk1(gmodule__make_resident, module,
+	    "",
+	    return f2__gmodule__make_resident(this_cause, module));
 
 //gboolean g_module_close(GModule *module);
 boolean_t raw__gmodule__close(ptr module) {
@@ -169,7 +181,9 @@ f2ptr f2__gmodule__close(f2ptr cause, f2ptr module) {
   ptr raw_module = f2pointer__p(module, cause);
   return f2bool__new(raw__gmodule__close(raw_module));
 }
-def_pcfunk1(gmodule__close, module, return f2__gmodule__close(this_cause, module));
+def_pcfunk1(gmodule__close, module,
+	    "",
+	    return f2__gmodule__close(this_cause, module));
 
 //const gchar* g_module_error();
 u8* raw__gmodule__error() {
@@ -187,7 +201,9 @@ f2ptr f2__gmodule__error(f2ptr cause) {
   }
   return f2string__new(cause, strlen((char*)error_str), error_str);
 }
-def_pcfunk0(gmodule__error, return f2__gmodule__error(this_cause));
+def_pcfunk0(gmodule__error,
+	    "",
+	    return f2__gmodule__error(this_cause));
 
 
 // **

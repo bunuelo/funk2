@@ -48,11 +48,15 @@ f2ptr f2__environment__new(f2ptr cause, f2ptr frame, f2ptr parent_env, f2ptr des
   assert_argument_type_or_nil(environment, parent_env);
   return raw__environment__new(cause, frame, parent_env, desc);
 }
-def_pcfunk3(environment__new, frame, parent_env, desc, return f2__environment__new(this_cause, frame, parent_env, desc));
+def_pcfunk3(environment__new, frame, parent_env, desc,
+	    "",
+	    return f2__environment__new(this_cause, frame, parent_env, desc));
 
 
 f2ptr f2__environment__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {return f2__frame__add_type_var_value(cause, f2environment__frame(this, cause), type, var, value);}
-def_pcfunk4(environment__add_type_var_value, this, type, var, value, return f2__environment__add_type_var_value(this_cause, this, type, var, value));
+def_pcfunk4(environment__add_type_var_value, this, type, var, value,
+	    "",
+	    return f2__environment__add_type_var_value(this_cause, this, type, var, value));
 
 f2ptr f2__environment__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   release__assert(raw__environment__is_type(cause, this), nil, "this is not environment.");
@@ -83,7 +87,9 @@ f2ptr f2__environment__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type
   __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }
-def_pcfunk3(environment__lookup_type_var_value, this, type, var, return f2__environment__lookup_type_var_value(this_cause, this, type, var));
+def_pcfunk3(environment__lookup_type_var_value, this, type, var,
+	    "",
+	    return f2__environment__lookup_type_var_value(this_cause, this, type, var));
 
 f2ptr f2__environment__safe_lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
   f2ptr result = f2__environment__lookup_type_var_value(cause, this, type, var);
@@ -114,7 +120,9 @@ f2ptr f2__environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, 
   __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return __funk2.primobject__frame.type_variable_not_defined__larva;
 }
-def_pcfunk4(environment__type_var_value__set, this, type, var, value, return f2__environment__type_var_value__set(this_cause, this, type, var, value));
+def_pcfunk4(environment__type_var_value__set, this, type, var, value,
+	    "",
+	    return f2__environment__type_var_value__set(this_cause, this, type, var, value));
 
 
 f2ptr raw__environment__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -136,7 +144,9 @@ f2ptr f2__environment__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__environment__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(environment__terminal_print_with_frame, this, terminal_print_frame, return f2__environment__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+def_pcfunk2(environment__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__environment__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
 f2ptr f2environment__primobject_type__new_aux(f2ptr cause) {

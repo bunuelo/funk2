@@ -69,7 +69,9 @@ f2ptr f2__chunk__save(f2ptr cause, f2ptr this, f2ptr filename) {
   assert_argument_type(string, filename);
   return raw__chunk__save(cause, this, filename);
 }
-def_pcfunk2(chunk__save, this, filename, return f2__chunk__save(this_cause, this, filename));
+def_pcfunk2(chunk__save, this, filename,
+	    "",
+	    return f2__chunk__save(this_cause, this, filename));
 
 
 f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
@@ -114,7 +116,9 @@ f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
   close(fd);
   return new_chunk;
 }
-def_pcfunk1(chunk__load, filename, return f2__chunk__load(this_cause, filename));
+def_pcfunk1(chunk__load, filename,
+	    "",
+	    return f2__chunk__load(this_cause, filename));
 
 
 

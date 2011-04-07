@@ -136,7 +136,6 @@
 #include "f2_surrogate_parent.h"
 #include "f2_terminal_print.h"
 #include "f2_termios.h"
-#include "f2_thought_process.h"
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"
@@ -164,7 +163,6 @@ typedef struct funk2_s {
   funk2_globalenv_t                   globalenv;
   funk2_compile_t                     compile;
   funk2_operating_system_t            operating_system;
-  funk2_thought_process_t             thought_process;
   funk2_bytecode_t                    bytecode;
   funk2_peer_command_server_t         peer_command_server;
   funk2_node_handler_t                node_handler;

@@ -254,7 +254,9 @@ f2ptr f2__management_thread__add_save_memory_image_command(f2ptr cause, f2ptr fi
   f2ptr uid = f2integer__new(cause, raw__management_thread__add_save_memory_image_command(raw_filename));
   return uid;
 }
-def_pcfunk1(management_thread__add_save_memory_image_command, filename, return f2__management_thread__add_save_memory_image_command(this_cause, filename));
+def_pcfunk1(management_thread__add_save_memory_image_command, filename,
+	    "",
+	    return f2__management_thread__add_save_memory_image_command(this_cause, filename));
 
 u64  raw__management_thread__add_load_memory_image_command(u8* filename) {return funk2_management_thread__add_load_memory_image_command(&(__funk2.management_thread), filename);}
 f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr filename) {
@@ -266,7 +268,9 @@ f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr fi
   f2ptr uid = f2integer__new(cause, raw__management_thread__add_load_memory_image_command(raw_filename));
   return uid;
 }
-def_pcfunk1(management_thread__add_load_memory_image_command, filename, return f2__management_thread__add_load_memory_image_command(this_cause, filename));
+def_pcfunk1(management_thread__add_load_memory_image_command, filename,
+	    "",
+	    return f2__management_thread__add_load_memory_image_command(this_cause, filename));
 
 u64  raw__management_thread__add_exit_command(s64 value) {return funk2_management_thread__add_exit_command(&(__funk2.management_thread), value);}
 f2ptr f2__management_thread__add_exit_command(f2ptr cause, f2ptr value) {
@@ -274,7 +278,9 @@ f2ptr f2__management_thread__add_exit_command(f2ptr cause, f2ptr value) {
   f2ptr uid = f2integer__new(cause, raw__management_thread__add_exit_command(f2integer__i(value, cause)));
   return uid;
 }
-def_pcfunk1(management_thread__add_exit_command, value, return f2__management_thread__add_exit_command(this_cause, value));
+def_pcfunk1(management_thread__add_exit_command, value,
+	    "",
+	    return f2__management_thread__add_exit_command(this_cause, value));
 
 boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user_result) {return funk2_management_thread__check_command_uid_finished(&(__funk2.management_thread), uid, user_result);}
 f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr uid, f2ptr user_result_place) {
@@ -288,7 +294,9 @@ f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr 
   }
   return f2bool__new(is_finished);
 }
-def_pcfunk2(management_thread__check_command_uid_finished, uid, user_result_place, return f2__management_thread__check_command_uid_finished(this_cause, uid, user_result_place));
+def_pcfunk2(management_thread__check_command_uid_finished, uid, user_result_place,
+	    "",
+	    return f2__management_thread__check_command_uid_finished(this_cause, uid, user_result_place));
 
 // **
 

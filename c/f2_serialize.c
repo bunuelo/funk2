@@ -165,7 +165,9 @@ f2ptr f2__serialize(f2ptr cause, f2ptr exp) {
   raw__serialize_to_chunk_index(cause, chunk, 0, &chunk__length, exp);
   return chunk;
 }
-def_pcfunk1(f2__serialize, exp, return f2__serialize(this_cause, exp));
+def_pcfunk1(f2__serialize, exp,
+	    "",
+	    return f2__serialize(this_cause, exp));
 
 
 f2ptr raw__deserialize_from_chunk_index(f2ptr cause, f2ptr chunk, int index, int* new_index) {
@@ -280,7 +282,9 @@ f2ptr f2__deserialize(f2ptr cause, f2ptr chunk, f2ptr index, f2ptr new_index_pla
   }
   return exp;
 }
-def_pcfunk3(f2__deserialize, chunk, index, new_index_place, return f2__deserialize(this_cause, chunk, index, new_index_place));
+def_pcfunk3(f2__deserialize, chunk, index, new_index_place,
+	    "",
+	    return f2__deserialize(this_cause, chunk, index, new_index_place));
 
 void f2__serialize__reinitialize_globalvars() {
   //f2ptr cause = f2_serialize_c__cause__new(initial_cause(), nil, nil);

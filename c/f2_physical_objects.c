@@ -26,7 +26,9 @@
 def_primobject_1_slot(physical_rotation, array);
 
 f2ptr f2__physical_rotation__new(f2ptr cause, f2ptr array) {return f2physical_rotation__new(cause, array);}
-def_pcfunk1(physical_rotation__new, array, return f2__physical_rotation__new(this_cause, array));
+def_pcfunk1(physical_rotation__new, array,
+	    "",
+	    return f2__physical_rotation__new(this_cause, array));
 
 f2ptr raw__physical_rotation__new_from_c_double_array(f2ptr cause, double* array) {
   f2ptr this__array = raw__array__new(cause, 9);
@@ -52,7 +54,9 @@ f2ptr f2__physical_rotation__new_identity(f2ptr cause) {
 		     0,0,1};
   return raw__physical_rotation__new_from_c_double_array(cause, array);
 }
-def_pcfunk0(physical_rotation__new_identity, return f2__physical_rotation__new_identity(this_cause));
+def_pcfunk0(physical_rotation__new_identity,
+	    "",
+	    return f2__physical_rotation__new_identity(this_cause));
 
 f2ptr raw__physical_rotation__new_rotation_around_z_axis(f2ptr cause, double radians) {
   double c_array[9];
@@ -72,7 +76,9 @@ f2ptr f2__physical_rotation__new_rotation_around_z_axis(f2ptr cause, f2ptr radia
   double c_radians = raw__number__as__raw_double(cause, radians);
   return raw__physical_rotation__new_rotation_around_z_axis(cause, c_radians);
 }
-def_pcfunk1(physical_rotation__new_rotation_around_z_axis, radians, return f2__physical_rotation__new_rotation_around_z_axis(this_cause, radians));
+def_pcfunk1(physical_rotation__new_rotation_around_z_axis, radians,
+	    "",
+	    return f2__physical_rotation__new_rotation_around_z_axis(this_cause, radians));
 
 f2ptr raw__physical_rotation__new_rotation_around_y_axis(f2ptr cause, double radians) {
   double c_array[9];
@@ -92,7 +98,9 @@ f2ptr f2__physical_rotation__new_rotation_around_y_axis(f2ptr cause, f2ptr radia
   double c_radians = raw__number__as__raw_double(cause, radians);
   return raw__physical_rotation__new_rotation_around_y_axis(cause, c_radians);
 }
-def_pcfunk1(physical_rotation__new_rotation_around_y_axis, radians, return f2__physical_rotation__new_rotation_around_y_axis(this_cause, radians));
+def_pcfunk1(physical_rotation__new_rotation_around_y_axis, radians,
+	    "",
+	    return f2__physical_rotation__new_rotation_around_y_axis(this_cause, radians));
 
 f2ptr raw__physical_rotation__new_rotation_around_x_axis(f2ptr cause, double radians) {
   double c_array[9];
@@ -112,7 +120,9 @@ f2ptr f2__physical_rotation__new_rotation_around_x_axis(f2ptr cause, f2ptr radia
   double c_radians = raw__number__as__raw_double(cause, radians);
   return raw__physical_rotation__new_rotation_around_x_axis(cause, c_radians);
 }
-def_pcfunk1(physical_rotation__new_rotation_around_x_axis, radians, return f2__physical_rotation__new_rotation_around_x_axis(this_cause, radians));
+def_pcfunk1(physical_rotation__new_rotation_around_x_axis, radians,
+	    "",
+	    return f2__physical_rotation__new_rotation_around_x_axis(this_cause, radians));
 
 f2ptr f2__physical_rotation__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   double this__c_array[9];
@@ -137,7 +147,9 @@ f2ptr f2__physical_rotation__multiply(f2ptr cause, f2ptr this, f2ptr that) {
   }
   return raw__physical_rotation__new_from_c_double_array(cause, new__c_array);
 }
-def_pcfunk2(physical_rotation__multiply, this, that, return f2__physical_rotation__multiply(this_cause, this, that));
+def_pcfunk2(physical_rotation__multiply, this, that,
+	    "",
+	    return f2__physical_rotation__multiply(this_cause, this, that));
 
 // physical_position
 
@@ -149,7 +161,9 @@ f2ptr f2__physical_position__new(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {
   double z__d = raw__number__as__raw_double(cause, z);
   return f2physical_position__new(cause, f2double__new(cause, x__d), f2double__new(cause, y__d), f2double__new(cause, z__d));
 }
-def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(this_cause, x, y, z));
+def_pcfunk3(physical_position__new, x, y, z,
+	    "",
+	    return f2__physical_position__new(this_cause, x, y, z));
 
 
 // physical_transform
@@ -157,7 +171,9 @@ def_pcfunk3(physical_position__new, x, y, z, return f2__physical_position__new(t
 def_primobject_3_slot(physical_transform, position, rotation, scale);
 
 f2ptr f2__physical_transform__new(f2ptr cause, f2ptr position, f2ptr rotation, f2ptr scale) {return f2physical_transform__new(cause, position, rotation, scale);}
-def_pcfunk3(physical_transform__new, position, rotation, scale, return f2__physical_transform__new(this_cause, position, rotation, scale));
+def_pcfunk3(physical_transform__new, position, rotation, scale,
+	    "",
+	    return f2__physical_transform__new(this_cause, position, rotation, scale));
 
 f2ptr f2__physical_transform__new_identity(f2ptr cause) {
   f2ptr position = f2__physical_position__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.0), f2double__new(cause, 0.0));
@@ -165,7 +181,9 @@ f2ptr f2__physical_transform__new_identity(f2ptr cause) {
   f2ptr scale    = f2double__new(cause, 1.0);
   return f2__physical_transform__new(cause, position, rotation, scale);
 }
-def_pcfunk0(physical_transform__new_identity, return f2__physical_transform__new_identity(this_cause));
+def_pcfunk0(physical_transform__new_identity,
+	    "",
+	    return f2__physical_transform__new_identity(this_cause));
 
 
 // physical_texture
@@ -173,7 +191,9 @@ def_pcfunk0(physical_transform__new_identity, return f2__physical_transform__new
 def_primobject_2_slot(physical_texture, transform, texture_name);
 
 f2ptr f2__physical_texture__new(f2ptr cause, f2ptr transform, f2ptr texture_name) {return f2physical_texture__new(cause, transform, texture_name);}
-def_pcfunk2(physical_texture__new, transform, texture_name, return f2__physical_texture__new(this_cause, transform, texture_name));
+def_pcfunk2(physical_texture__new, transform, texture_name,
+	    "",
+	    return f2__physical_texture__new(this_cause, transform, texture_name));
 
 
 // physical_object
@@ -195,14 +215,18 @@ boolean_t raw__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
 f2ptr f2__physical_object__interface_supported(f2ptr cause, f2ptr thing) {
   return f2bool__new(raw__physical_object__interface_supported(cause, thing));
 }
-def_pcfunk1(physical_object__interface_supported, thing, return f2__physical_object__interface_supported(this_cause, thing));
+def_pcfunk1(physical_object__interface_supported, thing,
+	    "",
+	    return f2__physical_object__interface_supported(this_cause, thing));
 
 // physical_place
 
 def_primobject_2_slot(physical_place, transform, thing);
 
 f2ptr f2__physical_place__new(f2ptr cause, f2ptr transform, f2ptr thing) {return f2physical_place__new(cause, transform, thing);}
-def_pcfunk2(physical_place__new, transform, thing, return f2__physical_place__new(this_cause, transform, thing));
+def_pcfunk2(physical_place__new, transform, thing,
+	    "",
+	    return f2__physical_place__new(this_cause, transform, thing));
 
 
 // physical_scene
@@ -210,7 +234,9 @@ def_pcfunk2(physical_place__new, transform, thing, return f2__physical_place__ne
 def_primobject_2_slot(physical_scene, background_texture, physical_things);
 
 f2ptr f2__physical_scene__new(f2ptr cause, f2ptr background_texture, f2ptr physical_things) {return f2physical_scene__new(cause, background_texture, physical_things);}
-def_pcfunk2(physical_scene__new, background_texture, physical_things, return f2__physical_scene__new(this_cause, background_texture, physical_things));
+def_pcfunk2(physical_scene__new, background_texture, physical_things,
+	    "",
+	    return f2__physical_scene__new(this_cause, background_texture, physical_things));
 
 
 // **

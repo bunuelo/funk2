@@ -32,7 +32,9 @@ f2ptr raw__fiber_trigger__new(f2ptr cause) {
 f2ptr f2__fiber_trigger__new(f2ptr cause) {
   return raw__fiber_trigger__new(cause);
 }
-def_pcfunk0(fiber_trigger__new, return f2__fiber_trigger__new(this_cause));
+def_pcfunk0(fiber_trigger__new,
+	    "",
+	    return f2__fiber_trigger__new(this_cause));
 
 
 f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
@@ -43,7 +45,9 @@ f2ptr f2__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber_trigger, this);
   return raw__fiber_trigger__trigger(cause, this);
 }
-def_pcfunk1(fiber_trigger__trigger, this, return f2__fiber_trigger__trigger(this_cause, this));
+def_pcfunk1(fiber_trigger__trigger, this,
+	    "",
+	    return f2__fiber_trigger__trigger(this_cause, this));
 
 
 f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause) {
@@ -92,7 +96,9 @@ f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
   assert_argument_type(fiber,         fiber);
   return raw__fiber_trigger_hash__add(cause, trigger, fiber);
 }
-def_pcfunk2(fiber_trigger_hash__add, trigger, fiber, return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
+def_pcfunk2(fiber_trigger_hash__add, trigger, fiber,
+	    "",
+	    return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
 
 
 f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger) {

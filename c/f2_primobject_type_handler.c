@@ -69,7 +69,9 @@ f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {
   funk2_primobject_type_handler__add_type(&(__funk2.primobject_type_handler), cause, type_name, type);
   return nil;
 }
-def_pcfunk2(add_type, type_name, type, return f2__add_type(this_cause, type_name, type));
+def_pcfunk2(add_type, type_name, type,
+	    "",
+	    return f2__add_type(this_cause, type_name, type));
 
 f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this, f2ptr cause) {
   f2ptr types = nil;
@@ -85,7 +87,9 @@ f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this
 f2ptr f2__system__types(f2ptr cause) {
   return funk2_primobject_type_handler__types(&(__funk2.primobject_type_handler), cause);
 }
-def_pcfunk0(system__types, return f2__system__types(this_cause));
+def_pcfunk0(system__types,
+	    "",
+	    return f2__system__types(this_cause));
 
 
 f2ptr funk2_primobject_type_handler__type_names(funk2_primobject_type_handler_t* this, f2ptr cause) {
@@ -102,7 +106,9 @@ f2ptr funk2_primobject_type_handler__type_names(funk2_primobject_type_handler_t*
 f2ptr f2__system__type_names(f2ptr cause) {
   return funk2_primobject_type_handler__type_names(&(__funk2.primobject_type_handler), cause);
 }
-def_pcfunk0(system__type_names, return f2__system__type_names(this_cause));
+def_pcfunk0(system__type_names,
+	    "",
+	    return f2__system__type_names(this_cause));
 
 
 f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name) {
@@ -123,7 +129,9 @@ f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {
   }
   return type;
 }
-def_pcfunk1(lookup_type, type_name, return f2__lookup_type(this_cause, type_name));
+def_pcfunk1(lookup_type, type_name,
+	    "",
+	    return f2__lookup_type(this_cause, type_name));
 
 void funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause) {
   funk2_primobject_type_handler__add_type(this, cause, nil, f2nil__primobject_type__new(cause));

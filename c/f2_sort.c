@@ -117,7 +117,9 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr this) {
   return raw__integer_array__quicksort(cause, this);
 }
 
-def_pcfunk1(sort_integer_array, integers, return f2__integer_array__quicksort(this_cause, integers));
+def_pcfunk1(sort_integer_array, integers,
+	    "",
+	    return f2__integer_array__quicksort(this_cause, integers));
 
 
 f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
@@ -191,12 +193,16 @@ f2ptr f2__array__quicksort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   assert_argument_type(funkable, comparison_funk);
   return raw__array__quicksort(cause, this, comparison_funk);
 }
-def_pcfunk2(array__quicksort, this, comparison_funk, return f2__array__quicksort(this_cause, this, comparison_funk));
+def_pcfunk2(array__quicksort, this, comparison_funk,
+	    "",
+	    return f2__array__quicksort(this_cause, this, comparison_funk));
 
 f2ptr f2__array__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   return f2__array__quicksort(cause, this, comparison_funk);
 }
-def_pcfunk2(array__sort, this, comparison_funk, return f2__array__sort(this_cause, this, comparison_funk));
+def_pcfunk2(array__sort, this, comparison_funk,
+	    "",
+	    return f2__array__sort(this_cause, this, comparison_funk));
 
 
 f2ptr raw__conslist__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
@@ -217,7 +223,9 @@ f2ptr f2__conslist__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   assert_argument_type(funkable, comparison_funk);
   return raw__conslist__sort(cause, this, comparison_funk);
 }
-def_pcfunk2(conslist__sort, this, comparison_funk, return f2__conslist__sort(this_cause, this, comparison_funk));
+def_pcfunk2(conslist__sort, this, comparison_funk,
+	    "",
+	    return f2__conslist__sort(this_cause, this, comparison_funk));
 
 
 // **

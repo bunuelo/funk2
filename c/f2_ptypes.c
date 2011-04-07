@@ -4300,6 +4300,7 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause) {
 // simple_array
 
 f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {
+  printf("simple_array-new: pool_index=%d, cause=" f2ptr__fstr ", length=" u64__fstr ", ptr=" ptr__fstr "\n", pool_index, cause, length, f2ptr_ptr); fflush(stdout);
   u64 data_byte_num = (sizeof(f2ptr) * length);
   f2ptr simple_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_simple_array_block_t) + data_byte_num);
   ptype_simple_array_block_t* simple_array_block = (ptype_simple_array_block_t*)from_ptr(raw__f2ptr_to_ptr(simple_array_f2ptr));

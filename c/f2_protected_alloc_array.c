@@ -74,7 +74,7 @@ void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this) {
 
 void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp) {
   if (this->reentrance_count == 0) {
-    error(nil, "protected_alloc_array_event_array__add_event: tried to add when reentrance_count is zero.");
+    error(nil, "protected_alloc_array__add_protected_alloc_f2ptr: tried to add when reentrance_count is zero.");
   }
   this->data[this->used_num] = exp;
   this->used_num ++;

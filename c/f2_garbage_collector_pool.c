@@ -443,7 +443,7 @@ boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_coll
 }
 
 void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
-  if (exp) {
+  if (exp != nil) {
     funk2_protected_alloc_array__add_protected_alloc_f2ptr(&(this->protected_alloc_array), exp);
   }
 }
@@ -468,7 +468,7 @@ void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* t
 }
 
 void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
-  status("funk2_garbage_collector_pool: touch_all_protected_alloc_arrays.  pool_index=" u64__fstr " used_num=" u64__fstr " reentrance_count=" u64__fstr, this_processor_thread__pool_index(), this->protected_alloc_array.used_num, this->protected_alloc_array.reentrance_count);
+  status("funk2_garbage_collector_pool: touch_all_protected_alloc_arrays.  pool_index=" u64__fstr " used_num=" u64__fstr " reentrance_count=" s64__fstr, this_processor_thread__pool_index(), this->protected_alloc_array.used_num, this->protected_alloc_array.reentrance_count);
   u64 i;
   for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
     funk2_garbage_collector_pool__touch_f2ptr(this, this->protected_alloc_array.data[i]);

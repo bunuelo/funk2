@@ -50,8 +50,8 @@ typedef struct funk2_protected_alloc_array_s {
   u64                                       used_num;
   u64                                       length;
   f2ptr*                                    data;
-  u64                                       reentrance_count;
-  u64                                       max_reentrance_count;
+  s64                                       reentrance_count;
+  s64                                       max_reentrance_count;
   funk2_protected_alloc_array_event_array_t event_array;
 } funk2_protected_alloc_array_t;
 

@@ -73,13 +73,15 @@ void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this) {
 }
 
 void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp) {
-  this->data[this->used_num] = exp;
-  this->used_num ++;
-  if (this->used_num >= this->length) {
-    u64 old_length = this->length;
-    this->length <<= 1;
-    status("funk2_protected_alloc_array__add_protected_alloc_f2ptr: doubling size of protected_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->length);
-    this->data = from_ptr(f2__new_alloc(to_ptr(this->data), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->length));
+  if (this->reentrance_count > 0) {
+    this->data[this->used_num] = exp;
+    this->used_num ++;
+    if (this->used_num >= this->length) {
+      u64 old_length = this->length;
+      this->length <<= 1;
+      status("funk2_protected_alloc_array__add_protected_alloc_f2ptr: doubling size of protected_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->length);
+      this->data = from_ptr(f2__new_alloc(to_ptr(this->data), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->length));
+    }
   }
 }
 

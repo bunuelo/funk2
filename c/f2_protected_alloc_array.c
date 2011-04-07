@@ -113,7 +113,7 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
     funk2_protected_alloc_array_event_array__reset(&(this->event_array));
 #endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
   }
-
+  
 #ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   if (this->reentrance_count < 0) {
     error(nil, "funk2_protected_alloc_array__signal_exit_protected_region error: this->reentrace_count < 0.");

@@ -4313,7 +4313,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   if (f2ptr_ptr) {memcpy(simple_array_block->f2ptr_data, from_ptr(f2ptr_ptr), data_byte_num);}
   else {
     int i;
-    f2ptr* f2ptr_iter = (f2ptr*)(simple_array_block->f2ptr_data);
+    f2ptr* f2ptr_iter = (f2ptr*)(((u8*)simple_array_block) + sizeof(simple_array_block));
     for (i = length; i > 0; i --) {
       *f2ptr_iter = nil;
       f2ptr_iter  ++;

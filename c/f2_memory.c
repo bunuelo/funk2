@@ -307,9 +307,9 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   }
 #endif
   if (block_f2ptr) {
-    if (funk2_protected_alloc_array__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index].protected_alloc_array))) {
-      funk2_garbage_collector_pool__add_protected_alloc_f2ptr(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
-    }
+    //if (funk2_protected_alloc_array__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index].protected_alloc_array))) {
+    funk2_garbage_collector_pool__add_protected_alloc_f2ptr(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
+    //}
     funk2_garbage_collector_pool__add_used_exp(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
   }
   return block_f2ptr;

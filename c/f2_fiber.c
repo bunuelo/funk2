@@ -275,7 +275,7 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
 }
 
 void f2__print_environment_stack(f2ptr cause, f2ptr fiber, f2ptr env) {
-  f2ptr current_env_name__symbol = f2symbol__new(initial_cause(), strlen("-current_env_name-"), (u8*)"-current_env_name-");
+  f2ptr current_env_name__symbol = new__symbol(initial_cause(), "-current_env_name-");
   f2ptr env_name = environment__lookup_var_value(initial_cause(), env, current_env_name__symbol);
   if (raw__larva__is_type(cause, env_name)) {
     error(nil, "f2__print_environment_stack found larva.");

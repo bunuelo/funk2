@@ -91,16 +91,16 @@ void funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_
 #ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array__add_event(&(this->event_array), funk2_protected_alloc_array_event_type__enter, source_filename, source_line_num);
 #endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
-  {
-    int pool_index = this_processor_thread__pool_index();
-    if (pool_index == 0) {
-      status("protected_alloc_array-signal_enter_protected_region: pool_index=%d, source_filename=\"%s\", source_line_num=%d", pool_index, source_filename, source_line_num);
-    }
-  }
   this->reentrance_count ++;
   if (this->reentrance_count > this->max_reentrance_count) {
     this->max_reentrance_count = this->reentrance_count;
     found_max_reentrance(this->max_reentrance_count);
+  }
+  {
+    int pool_index = this_processor_thread__pool_index();
+    if (pool_index == 0) {
+      status("protected_alloc_array-signal_enter_protected_region: pool_index=%d, source_filename=\"%s\", source_line_num=%d, reentrance_count=" u64__fstr, pool_index, source_filename, source_line_num, this->reentrance_count);
+    }
   }
 }
 
@@ -110,12 +110,6 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
 #endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
   if (this->reentrance_count == 0) {
     error(nil, "funk2_protected_alloc_array__signal_exit_protected_region error: bytecode reentrance underflow.");
-  }
-  {
-    int pool_index = this_processor_thread__pool_index();
-    if (pool_index == 0) {
-      status("protected_alloc_array-signal_exit_protected_region : pool_index=%d, source_filename=\"%s\", source_line_num=%d", pool_index, source_filename, source_line_num);
-    }
   }
   this->reentrance_count --;
   if (this->reentrance_count == 0) {
@@ -131,7 +125,13 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
     error(nil, "funk2_protected_alloc_array__signal_exit_protected_region error: this->reentrace_count < 0.");
   }
 #endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
-
+  
+  {
+    int pool_index = this_processor_thread__pool_index();
+    if (pool_index == 0) {
+      status("protected_alloc_array-signal_exit_protected_region : pool_index=%d, source_filename=\"%s\", source_line_num=%d, reentrance_count=" u64_fstr, pool_index, source_filename, source_line_num, this->reentrance_count);
+    }
+  }
 }
 
 boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this) {

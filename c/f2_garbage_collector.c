@@ -166,7 +166,7 @@ f2ptr f2__garbage_collector__total_garbage_collection_count(f2ptr cause) {
   return f2integer__new(cause, funk2_garbage_collector__total_garbage_collection_count(&(__funk2.garbage_collector)));
 }
 def_pcfunk0(garbage_collector__total_garbage_collection_count,
-	    "",
+	    "Returns to total number of times that the garbage collector has collected garbage.",
 	    return f2__garbage_collector__total_garbage_collection_count(this_cause));
 
 void funk2_garbage_collector__user_signal_garbage_collect_now(funk2_garbage_collector_t* this) {
@@ -178,7 +178,7 @@ f2ptr f2__garbage_collector__user_signal_garbage_collect_now(f2ptr cause) {
   return nil;
 }
 def_pcfunk0(garbage_collector__user_signal_garbage_collect_now,
-	    "",
+	    "Tells the garbage collector to collect garbage as soon as possible.",
 	    return f2__garbage_collector__user_signal_garbage_collect_now(this_cause));
 
 // memory handling thread should never call this function
@@ -390,7 +390,7 @@ void f2__garbage_collector__initialize() {
   
   f2__garbage_collector__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now, "Tells the garbage collector to collect garbage as soon as possible.");
-  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count,  "Returns to total number of times that the garbage collector has collected garbage.");
+  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now);
+  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count);
 }
 

@@ -101,9 +101,9 @@ void f2__cpu__initialize() {
   
   f2__cpu__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(cpu__user_cpu_usage,   "cfunk defined in f2_cpu.c.");
-  f2__primcfunk__init__0(cpu__system_cpu_usage, "cfunk defined in f2_cpu.c.");
-  f2__primcfunk__init__0(cpu__total_cpu_usage,  "cfunk defined in f2_cpu.c.");
+  f2__primcfunk__init__0(cpu__user_cpu_usage);
+  f2__primcfunk__init__0(cpu__system_cpu_usage);
+  f2__primcfunk__init__0(cpu__total_cpu_usage);
   
 }
 

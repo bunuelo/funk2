@@ -1699,7 +1699,7 @@ void f2__print__initialize() {
   
   f2__print__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(exp__printable_value, this, "");
+  f2__primcfunk__init__1(exp__printable_value, this);
   
 }
 

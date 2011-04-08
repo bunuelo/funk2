@@ -328,7 +328,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__set.c \
   c/f2_primobject__stream.c \
   c/f2_primobject__tensor.c \
-  c/f2_primobject__text_buffer.c \
   c/f2_primobject__traced_cmutex.c \
   c/f2_primobject_type.c \
   c/f2_primobject_type_handler.c \

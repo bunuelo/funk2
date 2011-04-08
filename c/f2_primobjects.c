@@ -1417,7 +1417,7 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
   
-  f2__primcfunk__init__3(cfunk__apply, x, y, z, "");
+  f2__primcfunk__init__3(cfunk__apply, x, y, z);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cfunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__funk = never_gc(cfunk);}
@@ -1426,7 +1426,7 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
   
-  f2__primcfunk__init__3(metrocfunk__apply, x, y, z, "");
+  f2__primcfunk__init__3(metrocfunk__apply, x, y, z);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(metrocfunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__funk = never_gc(cfunk);}
@@ -1446,7 +1446,7 @@ void f2__primobjects__initialize() {
 				has_no_side_effects,
 				documentation);
   
-  f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
+  f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk = never_gc(cfunk);}
@@ -1460,7 +1460,7 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
   
-  f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation, "");
+  f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
   
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__name, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk = never_gc(cfunk);}

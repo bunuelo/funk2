@@ -279,7 +279,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
-  c/f2_glwindow.c \
   c/f2_gmodule.c \
   c/f2_graph.c \
   c/f2_graph_cluster.c \

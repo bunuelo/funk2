@@ -603,7 +603,7 @@ void f2__peer_command_server__initialize() {
   f2__peer_command_server__reinitialize_globalvars();
   //f2ptr cause = f2_peer_command_server_c__cause__new(initial_cause(), nil, nil);
   
-  f2__primcfunk__init(peer_command_server__active_client_info, "");
+  f2__primcfunk__init(peer_command_server__active_client_info);
   
 }
 

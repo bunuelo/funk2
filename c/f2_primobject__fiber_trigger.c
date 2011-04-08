@@ -97,7 +97,7 @@ f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
   return raw__fiber_trigger_hash__add(cause, trigger, fiber);
 }
 def_pcfunk2(fiber_trigger_hash__add, trigger, fiber,
-	    "",
+	    "Adds a fiber to a fiber_trigger's global activation set.",
 	    return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
 
 
@@ -155,7 +155,7 @@ void f2__primobject__fiber_trigger__initialize() {
     }
   }
   
-  f2__primcfunk__init__2(fiber_trigger_hash__add, trigger, fiber, "Adds a fiber to a fiber_trigger's global activation set.");
+  f2__primcfunk__init__2(fiber_trigger_hash__add, trigger, fiber);
   
 }
 

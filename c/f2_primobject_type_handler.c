@@ -70,7 +70,7 @@ f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {
   return nil;
 }
 def_pcfunk2(add_type, type_name, type,
-	    "",
+	    "Adds the symbolic type_name associated with type to the primobject_type_handler.",
 	    return f2__add_type(this_cause, type_name, type));
 
 f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this, f2ptr cause) {
@@ -88,7 +88,7 @@ f2ptr f2__system__types(f2ptr cause) {
   return funk2_primobject_type_handler__types(&(__funk2.primobject_type_handler), cause);
 }
 def_pcfunk0(system__types,
-	    "",
+	    "Returns a new list of all of the types currently defined in the system.",
 	    return f2__system__types(this_cause));
 
 
@@ -107,7 +107,7 @@ f2ptr f2__system__type_names(f2ptr cause) {
   return funk2_primobject_type_handler__type_names(&(__funk2.primobject_type_handler), cause);
 }
 def_pcfunk0(system__type_names,
-	    "",
+	    "Returns a new list of all of the type names currently defined in the system.",
 	    return f2__system__type_names(this_cause));
 
 
@@ -130,7 +130,7 @@ f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {
   return type;
 }
 def_pcfunk1(lookup_type, type_name,
-	    "",
+	    "Returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.",
 	    return f2__lookup_type(this_cause, type_name));
 
 void funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause) {
@@ -278,10 +278,10 @@ void f2__primobject_type_handler__initialize() {
   
   f2__primobject_type_handler__reinitialize_globalvars();
   
-  f2__primcfunk__init__2(add_type,    type_name, type, "Adds the symbolic type_name associated with type to the primobject_type_handler.");
-  f2__primcfunk__init__1(lookup_type, type_name,       "Returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
-  f2__primcfunk__init__0(system__types,                "Returns a new list of all of the types currently defined in the system.");
-  f2__primcfunk__init__0(system__type_names,           "Returns a new list of all of the type names currently defined in the system.");
+  f2__primcfunk__init__2(add_type,    type_name, type);
+  f2__primcfunk__init__1(lookup_type, type_name);
+  f2__primcfunk__init__0(system__types);
+  f2__primcfunk__init__0(system__type_names);
   
 }
 

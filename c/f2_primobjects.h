@@ -1185,13 +1185,13 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 #define stringify(x) #x
 #define tostring(x) stringify(x)
 
-#define initialize_primobject_funk__0_arg(name, funk_name, documentation) \
+#define initialize_primobject_funk__0_arg(name, funk_name) \
   {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk, documentation "  (cfunk " __FILE__ ":" tostring(__LINE__) ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
 
-#define initialize_primobject_funk__1_arg(name, funk_name, arg_1, documentation) \
+#define initialize_primobject_funk__1_arg(name, funk_name, arg_1) \
   {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(name##__##funk_name, this, arg_1, cfunk, documentation "  (cfunk " __FILE__ ":" tostring(__LINE__) ")"); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(name##__##funk_name, this, arg_1, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
 
 
 #define initialize_primobject_funk(name, funk_name) \

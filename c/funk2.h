@@ -73,7 +73,6 @@
 #include "f2_nil.h"
 #include "f2_number.h"
 #include "f2_object.h"
-#include "f2_object_lattice.h"
 #include "f2_opengl.h"
 #include "f2_optimize.h"
 #include "f2_packet.h"

@@ -23,7 +23,6 @@
 
 // protected_alloc_array_event_array
 
-
 void funk2_protected_alloc_array_event_array__init(funk2_protected_alloc_array_event_array_t* this) {
   this->used_num = 0;
   this->length   = 1024 * 1024;
@@ -73,6 +72,9 @@ void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this) {
 }
 
 void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp) {
+  if (this->reentrance_count == 0) {
+    return;
+  }
   this->data[this->used_num] = exp;
   this->used_num ++;
   if (this->used_num >= this->length) {
@@ -113,7 +115,7 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
     funk2_protected_alloc_array_event_array__reset(&(this->event_array));
 #endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
   }
-
+  
 #ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   if (this->reentrance_count < 0) {
     error(nil, "funk2_protected_alloc_array__signal_exit_protected_region error: this->reentrace_count < 0.");
@@ -123,7 +125,7 @@ void funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_a
 }
 
 boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this) {
-  return (this->reentrance_count > 0);
+  return (this->reentrance_count != 0);
 }
 
 s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this) {
@@ -160,7 +162,7 @@ void funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t
     u64 index;
     for (index = 0; index < used_num; index ++) {
       f2ptr exp = read_buffer[index];
-      funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+      //funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
     }
   }
   f2__free(to_ptr(read_buffer));
@@ -177,7 +179,7 @@ s64 funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t*
       u64 index;
       for (index = 0; index < used_num; index ++) {
 	f2ptr exp = read_buffer[index];
-	funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
+	//funk2_protected_alloc_array__add_protected_alloc_f2ptr(this, exp);
       }
     }
     f2__free(to_ptr(read_buffer));

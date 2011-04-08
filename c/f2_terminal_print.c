@@ -823,7 +823,7 @@ f2ptr f2__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this,
   return raw__exp__terminal_print_with_frame__thread_unsafe(cause, this, terminal_print_frame);
 }
 def_pcfunk2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame,
-	    "",
+	    "Prints a value given a terminal_print_frame.",
 	    return f2__exp__terminal_print_with_frame__thread_unsafe(this_cause, this, terminal_print_frame));
 
 
@@ -880,7 +880,7 @@ f2ptr f2__exp__terminal_stream_print__thread_unsafe(f2ptr cause, f2ptr this, f2p
   return f2__exp__terminal_print_with_frame__thread_unsafe(cause, this, terminal_print_frame);
 }
 def_pcfunk2(exp__terminal_stream_print__thread_unsafe, this, stream,
-	    "",
+	    "Prints a value to the given terminal stream, using a new default terminal_print_frame.",
 	    return f2__exp__terminal_stream_print__thread_unsafe(this_cause, this, stream));
 
 
@@ -927,19 +927,19 @@ void f2__terminal_print__initialize() {
 			     print_as_frame_hash);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(terminal_print_frame__new_copy, this, cfunk, ""); __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(terminal_print_frame__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__9(terminal_print_frame__new,                                                                       stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, max_nanoseconds_for_resize, "");
-  f2__primcfunk__init__2(terminal_print_frame__write_color__thread_unsafe,                                                this, color,                                                                                                                     "");
-  f2__primcfunk__init__2(terminal_print_frame__write_string__thread_unsafe,                                               this, string,                                                                                                                    "");
-  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line__thread_unsafe,                           this, expression,                                                                                                                "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe, this, expression,                                                                                                                "");
-  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset__thread_unsafe,                                        this, expression,                                                                                                                "");
-  f2__primcfunk__init__3(terminal_print_frame__prepare_for_printing__thread_unsafe,                                       this, max_x, additional_height,                                                                                                  "");
+  f2__primcfunk__init__9(terminal_print_frame__new,                                                                       stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, max_nanoseconds_for_resize);
+  f2__primcfunk__init__2(terminal_print_frame__write_color__thread_unsafe,                                                this, color);
+  f2__primcfunk__init__2(terminal_print_frame__write_string__thread_unsafe,                                               this, string);
+  f2__primcfunk__init__2(terminal_print_frame__can_print_expression_on_one_line__thread_unsafe,                           this, expression);
+  f2__primcfunk__init__2(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe, this, expression);
+  f2__primcfunk__init__2(terminal_print_frame__expression_x_offset__thread_unsafe,                                        this, expression);
+  f2__primcfunk__init__3(terminal_print_frame__prepare_for_printing__thread_unsafe,                                       this, max_x, additional_height);
   
   
-  f2__primcfunk__init__2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame, "Prints a value given a terminal_print_frame.");
-  f2__primcfunk__init__2(exp__terminal_stream_print__thread_unsafe,     this, stream,               "Prints a value to the given terminal stream, using a new default terminal_print_frame.");
+  f2__primcfunk__init__2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame);
+  f2__primcfunk__init__2(exp__terminal_stream_print__thread_unsafe,     this, stream);
   
 }
 

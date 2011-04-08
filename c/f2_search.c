@@ -66,7 +66,7 @@ f2ptr f2__search(f2ptr fiber, f2ptr cause, f2ptr start_states, f2ptr expand_funk
 }
 
 def_pcfunk4(search, start_states, expand_funk, beam_width, heuristic_funk,
-	    "",
+	    "A-star beam search.",
 	    return f2__search(simple_fiber, this_cause, start_states, expand_funk, beam_width, heuristic_funk));
 
 // **
@@ -80,6 +80,6 @@ void f2__search__initialize() {
   
   f2__sort__reinitialize_globalvars();
   
-  f2__primcfunk__init__4(search, start_states, expand_funk, beam_width, heuristic_funk, "A-star beam search.");
+  f2__primcfunk__init__4(search, start_states, expand_funk, beam_width, heuristic_funk);
 }
 

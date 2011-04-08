@@ -23,7 +23,6 @@
 
 // protected_alloc_array_event_array
 
-
 void funk2_protected_alloc_array_event_array__init(funk2_protected_alloc_array_event_array_t* this) {
   this->used_num = 0;
   this->length   = 1024 * 1024;

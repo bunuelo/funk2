@@ -266,7 +266,7 @@ f2ptr f2__surrogate_parent__start_system_command(f2ptr cause, f2ptr command) {
   return nil;
 }
 def_pcfunk1(surrogate_parent__start_system_command, command,
-	    "",
+	    "executes a system command as a new process.returns a new conslist that is this conslist sorted by user-provided comparison_funk.",
 	    return f2__surrogate_parent__start_system_command(this_cause, command));
 
 f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
@@ -279,7 +279,7 @@ f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
   return nil;
 }
 def_pcfunk0(surrogate_parent__check_return_value,
-	    "",
+	    "checks for the return value for a finished system command started by this fiber.",
 	    return f2__surrogate_parent__check_return_value(this_cause));
 
 // **
@@ -292,8 +292,8 @@ void f2__surrogate_parent__initialize() {
   
   f2__surrogate_parent__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(surrogate_parent__start_system_command, command, "executes a system command as a new process.");
-  f2__primcfunk__init__0(surrogate_parent__check_return_value, "checks for the return value for a finished system command started by this fiber.");
+  f2__primcfunk__init__1(surrogate_parent__start_system_command, command);
+  f2__primcfunk__init__0(surrogate_parent__check_return_value);
   
 }
 

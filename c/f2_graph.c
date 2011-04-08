@@ -166,7 +166,7 @@ f2ptr f2__graph__nodes(f2ptr cause, f2ptr this) {
   return raw__graph__nodes(cause, this);
 }
 def_pcfunk1(graph__nodes, this,
-	    "",
+	    "Returns the nodes in this graph.",
 	    return f2__graph__nodes(this_cause, this));
 
 
@@ -181,7 +181,7 @@ f2ptr f2__graph__edges(f2ptr cause, f2ptr this) {
   return raw__graph__edges(cause, this);
 }
 def_pcfunk1(graph__edges, this,
-	    "",
+	    "Returns the edges in this graph.",
 	    return f2__graph__edges(this_cause, this));
 
 
@@ -202,7 +202,7 @@ f2ptr f2__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   return raw__graph__add_node(cause, this, node);
 }
 def_pcfunk2(graph__add_node, this, node,
-	    "",
+	    "Add a graph_node to this graph.",
 	    return f2__graph__add_node(this_cause, this, node));
 
 f2ptr raw__graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
@@ -215,7 +215,7 @@ f2ptr f2__graph__add_new_node(f2ptr cause, f2ptr this, f2ptr label) {
   return raw__graph__add_new_node(cause, this, label);
 }
 def_pcfunk2(graph__add_new_node, this, label,
-	    "",
+	    "Add a new graph_node to this graph.",
 	    return f2__graph__add_new_node(this_cause, this, label));
 
 
@@ -229,7 +229,7 @@ f2ptr f2__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
   return raw__graph__nodes_with_label(cause, this, label);
 }
 def_pcfunk2(graph__nodes_with_label, this, label,
-	    "",
+	    "Returns a list of nodes with label in this graph.",
 	    return f2__graph__nodes_with_label(this_cause, this, label));
 
 
@@ -282,7 +282,7 @@ f2ptr f2__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   return raw__graph__add_edge(cause, this, edge);
 }
 def_pcfunk2(graph__add_edge, this, edge,
-	    "",
+	    "Add a graph_edge to this graph.",
 	    return f2__graph__add_edge(this_cause, this, edge));
 
 f2ptr raw__graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node) {
@@ -297,7 +297,7 @@ f2ptr f2__graph__add_new_edge(f2ptr cause, f2ptr this, f2ptr label, f2ptr left_n
   return raw__graph__add_new_edge(cause, this, label, left_node, right_node);
 }
 def_pcfunk4(graph__add_new_edge, this, label, left_node, right_node,
-	    "",
+	    "Add a new graph_edge between two graph_nodes to this graph.",
 	    return f2__graph__add_new_edge(this_cause, this, label, left_node, right_node));
 
 u64 raw__graph__node_count(f2ptr cause, f2ptr this) {
@@ -312,7 +312,7 @@ f2ptr f2__graph__node_count(f2ptr cause, f2ptr this) {
   return f2__set__key_count(cause, node_set);
 }
 def_pcfunk1(graph__node_count, this,
-	    "",
+	    "Returns the number of nodes in this graph.",
 	    return f2__graph__node_count(this_cause, this));
 
 boolean_t raw__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
@@ -326,7 +326,7 @@ f2ptr f2__graph__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   return f2bool__new(raw__graph__contains_node(cause, this, node));
 }
 def_pcfunk2(graph__contains_node, this, node,
-	    "",
+	    "Returns true if this graph contains a graph_node.",
 	    return f2__graph__contains_node(this_cause, this, node));
 
 boolean_t raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
@@ -340,7 +340,7 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   return f2bool__new(raw__graph__contains_edge(cause, this, edge));
 }
 def_pcfunk2(graph__contains_edge, this, edge,
-	    "",
+	    "Returns true if this graph contains a graph_edge.",
 	    return f2__graph__contains_edge(this_cause, this, edge));
 
 boolean_t raw__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
@@ -369,7 +369,7 @@ f2ptr f2__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
   return f2bool__new(raw__graph__contains(cause, this, graph));
 }
 def_pcfunk2(graph__contains, this, graph,
-	    "",
+	    "Returns true if this graph contains a graph as a subgraph.",
 	    return f2__graph__contains(this_cause, this, graph));
 
 
@@ -383,7 +383,7 @@ f2ptr f2__graph__lookup_nodes_with_label(f2ptr cause, f2ptr this, f2ptr node_lab
   return raw__graph__lookup_nodes_with_label(cause, this, node_label);
 }
 def_pcfunk2(graph__lookup_nodes_with_label, this, node_label,
-	    "",
+	    "Returns the list of all nodes with the given label in this graph.",
 	    return f2__graph__lookup_nodes_with_label(this_cause, this, node_label));
 
 
@@ -445,7 +445,7 @@ f2ptr f2__graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this) {
   return raw__graph__random_nonempty_strict_subgraph(cause, this);
 }
 def_pcfunk1(graph__random_nonempty_strict_subgraph, this,
-	    "",
+	    "When this graph contains N nodes, returns a random subgraph with N/2 nodes.  This graph must have at least 2 nodes.",
 	    return f2__graph__random_nonempty_strict_subgraph(this_cause, this));
 
 f2ptr raw__graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
@@ -478,7 +478,7 @@ f2ptr f2__graph__minus(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__graph__minus(cause, this, that);
 }
 def_pcfunk2(graph__minus, this, that,
-	    "",
+	    "Returns a subgraph of this graph without the nodes in that graph.",
 	    return f2__graph__minus(this_cause, this, that));
 
 
@@ -516,7 +516,7 @@ f2ptr f2__graph__copy(f2ptr cause, f2ptr this) {
   return raw__graph__copy(cause, this);
 }
 def_pcfunk1(graph__copy, this,
-	    "",
+	    "Returns a new graph that is a copy of this graph.",
 	    return f2__graph__copy(this_cause, this));
 
 
@@ -580,7 +580,7 @@ f2ptr f2__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
   return raw__graph__node_isomorphisms(cause, this, node);
 }
 def_pcfunk2(graph__node_isomorphisms, this, node,
-	    "",
+	    "Returns all single node isomorphisms between this graph and a graph_node.",
 	    return f2__graph__node_isomorphisms(this_cause, this, node));
 
 
@@ -605,7 +605,7 @@ f2ptr f2__graph__edges_with_label_between_nodes(f2ptr cause, f2ptr this, f2ptr l
   return raw__graph__edges_with_label_between_nodes(cause, this, label, left_node, right_node);
 }
 def_pcfunk4(graph__edges_with_label_between_nodes, this, label, left_node, right_node,
-	    "",
+	    "Returns edges directed from the left_node to the right_node that have the label in this graph.",
 	    return f2__graph__edges_with_label_between_nodes(this_cause, this, label, left_node, right_node));
 
 
@@ -639,7 +639,7 @@ f2ptr f2__graph__edges_between_nodes(f2ptr cause, f2ptr this, f2ptr left_node, f
   return raw__graph__edges_between_nodes(cause, this, left_node, right_node);
 }
 def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node,
-	    "",
+	    "Returns edges directed from the left_node to the right_node.",
 	    return f2__graph__edges_between_nodes(this_cause, this, left_node, right_node));
 
 
@@ -674,7 +674,7 @@ f2ptr f2__graph__as__dot_code(f2ptr cause, f2ptr this) {
   return raw__graph__as__dot_code(cause, this);
 }
 def_pcfunk1(graph__as__dot_code, this,
-	    "",
+	    "Returns graph as dot_code for rendering with the graphviz dot application.",
 	    return f2__graph__as__dot_code(this_cause, this));
 
 
@@ -760,7 +760,7 @@ f2ptr f2__graph_list__union(f2ptr cause, f2ptr this) {
   return raw__graph_list__union(cause, this);
 }
 def_pcfunk1(graph_list__union, this,
-	    "",
+	    "Returns a new graph that is the union of all graphs in this list.",
 	    return f2__graph_list__union(this_cause, this));
 
 
@@ -793,7 +793,7 @@ f2ptr f2__graph_isomorphism__add_mapping(f2ptr cause, f2ptr this, f2ptr left_nod
   return nil;
 }
 def_pcfunk3(graph_isomorphism__add_mapping, this, left_node, right_node,
-	    "",
+	    "Add a graph_node mapping to a graph_isomorphism.",
 	    return f2__graph_isomorphism__add_mapping(this_cause, this, left_node, right_node));
 
 u64 raw__graph_isomorphism__mapping_count(f2ptr cause, f2ptr this) {
@@ -809,7 +809,7 @@ f2ptr f2__graph_isomorphism__mapping_count(f2ptr cause, f2ptr this) {
   return key_count;
 }
 def_pcfunk1(graph_isomorphism__mapping_count, this,
-	    "",
+	    "Returns the number of node mappings in this graph_isomorphism.",
 	    return f2__graph_isomorphism__mapping_count(this_cause, this));
 
 boolean_t raw__graph_isomorphism__is_disjoint_with(f2ptr cause, f2ptr this, f2ptr that) {
@@ -845,7 +845,7 @@ f2ptr f2__graph_isomorphism__is_disjoint_with(f2ptr cause, f2ptr this, f2ptr tha
   return raw__graph_isomorphism__is_disjoint_with(cause, this, that);
 }
 def_pcfunk2(graph_isomorphism__is_disjoint_with, this, that,
-	    "",
+	    "Returns true if this graph_isomorphism is disjoint with that graph_isomorphism.",
 	    return f2__graph_isomorphism__is_disjoint_with(this_cause, this, that));
 
 f2ptr raw__graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr left_node) {
@@ -859,7 +859,7 @@ f2ptr f2__graph_isomorphism__map_left_to_right(f2ptr cause, f2ptr this, f2ptr le
   return raw__graph_isomorphism__map_left_to_right(cause, this, left_node);
 }
 def_pcfunk2(graph_isomorphism__map_left_to_right, this, left_node,
-	    "",
+	    "Maps a node on the left of this graph_isomorphism to the right.",
 	    return f2__graph_isomorphism__map_left_to_right(this_cause, this, left_node));
 
 f2ptr raw__graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr right_node) {
@@ -873,7 +873,7 @@ f2ptr f2__graph_isomorphism__map_right_to_left(f2ptr cause, f2ptr this, f2ptr ri
   return raw__graph_isomorphism__map_right_to_left(cause, this, right_node);
 }
 def_pcfunk2(graph_isomorphism__map_right_to_left, this, right_node,
-	    "",
+	    "Maps a node on the right of this graph_isomorphism to the left.",
 	    return f2__graph_isomorphism__map_right_to_left(this_cause, this, right_node));
 
 f2ptr raw__graph_isomorphism__union(f2ptr cause, f2ptr this, f2ptr that) {
@@ -899,7 +899,7 @@ f2ptr f2__graph_isomorphism__union(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__graph_isomorphism__union(cause, this, that);
 }
 def_pcfunk2(graph_isomorphism__union, this, that,
-	    "",
+	    "Returns a new graph_isomorphism representing the union between this graph_isomorphism and that graph_isomorphism.",
 	    return f2__graph_isomorphism__union(this_cause, this, that));
 
 f2ptr raw__graph_isomorphism__as__frame(f2ptr cause, f2ptr this) {
@@ -911,7 +911,7 @@ f2ptr f2__graph_isomorphism__as__frame(f2ptr cause, f2ptr this) {
   return raw__graph_isomorphism__as__frame(cause, this);
 }
 def_pcfunk1(graph_isomorphism__as__frame, this,
-	    "",
+	    "Returns a frame representing the left to right mapping ptypehash.",
 	    return f2__graph_isomorphism__as__frame(this_cause, this));
 
 
@@ -1046,7 +1046,7 @@ f2ptr f2__graph_decomposition_lattice_node__combine_children_isomorphisms(f2ptr 
   return raw__graph_decomposition_lattice_node__combine_children_isomorphisms(cause, this, left_child_isomorphisms, right_child_isomorphisms, graph);
 }
 def_pcfunk4(graph_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph,
-	    "",
+	    "Combine children isomorphisms when they are non-overlapping.",
 	    return f2__graph_decomposition_lattice_node__combine_children_isomorphisms(this_cause, this, left_child_isomorphisms, right_child_isomorphisms, graph));
 
 
@@ -1149,7 +1149,7 @@ f2ptr f2__graph_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr n
   return raw__graph_decomposition_lattice__add_node(cause, this, node);
 }
 def_pcfunk2(graph_decomposition_lattice__add_node, this, node,
-	    "",
+	    "Add a graph_decomposition_lattice_node to this graph_decomposition_lattice.",
 	    return f2__graph_decomposition_lattice__add_node(this_cause, this, node));
 
 void raw__graph_decomposition_lattice__decompose_graph_with_root_graph(f2ptr cause, f2ptr this, f2ptr graph, f2ptr root_graph) {
@@ -1206,7 +1206,7 @@ f2ptr f2__graph_decomposition_lattice__decompose_graph_with_root_graph(f2ptr cau
   return nil;
 }
 def_pcfunk3(graph_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph,
-	    "",
+	    "Decompose a graph into this graph_decomposition_lattice with given root_graph.",
 	    return f2__graph_decomposition_lattice__decompose_graph_with_root_graph(this_cause, this, graph, root_graph));
 
 f2ptr f2__graph_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, f2ptr graph) {
@@ -1216,7 +1216,7 @@ f2ptr f2__graph_decomposition_lattice__decompose_graph(f2ptr cause, f2ptr this, 
   return nil;
 }
 def_pcfunk2(graph_decomposition_lattice__decompose_graph, this, graph,
-	    "",
+	    "Decompose a graph into this graph_decomposition_lattice, assuming graph is also a root graph.",
 	    return f2__graph_decomposition_lattice__decompose_graph(this_cause, this, graph));
 
 f2ptr raw__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
@@ -1313,7 +1313,7 @@ f2ptr f2__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr 
   return raw__graph_decomposition_lattice__subgraph_isomorphisms(cause, this, graph);
 }
 def_pcfunk2(graph_decomposition_lattice__subgraph_isomorphisms, this, graph,
-	    "",
+	    "Returns all subgraph isomorphisms to model graphs decomposed into this graph_decomposition_lattice.",
 	    return f2__graph_decomposition_lattice__subgraph_isomorphisms(this_cause, this, graph));
 
 f2ptr raw__graph_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
@@ -1356,7 +1356,7 @@ f2ptr f2__graph_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f2
   return raw__graph_decomposition_lattice__subgraph_max_isomorphisms(cause, this, graph);
 }
 def_pcfunk2(graph_decomposition_lattice__subgraph_max_isomorphisms, this, graph,
-	    "",
+	    "Returns maximum subgraph isomorphisms to model graphs decomposed into this graph_decomposition_lattice.",
 	    return f2__graph_decomposition_lattice__subgraph_max_isomorphisms(this_cause, this, graph));
 
 
@@ -1412,77 +1412,77 @@ void f2__graph__initialize() {
   initialize_primobject_1_slot(graph_node, label);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_node__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_edge__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_edge__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph
   initialize_primobject_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
   
-  f2__primcfunk__init__1(graph__nodes,                           this,                               "Returns the nodes in this graph.");
-  f2__primcfunk__init__1(graph__edges,                           this,                               "Returns the edges in this graph.");
-  f2__primcfunk__init__2(graph__add_node,                        this, node,                         "Add a graph_node to this graph.");
-  f2__primcfunk__init__2(graph__add_new_node,                    this, label,                        "Add a new graph_node to this graph.");
-  f2__primcfunk__init__2(graph__nodes_with_label,                this, label,                        "Returns a list of nodes with label in this graph.");
-  f2__primcfunk__init__2(graph__add_edge,                        this, edge,                         "Add a graph_edge to this graph.");
-  f2__primcfunk__init__4(graph__add_new_edge,                    this, label, left_node, right_node, "Add a new graph_edge between two graph_nodes to this graph.");
-  f2__primcfunk__init__1(graph__node_count,                      this,                               "Returns the number of nodes in this graph.");
-  f2__primcfunk__init__2(graph__contains_node,                   this, node,                         "Returns true if this graph contains a graph_node.");
-  f2__primcfunk__init__2(graph__contains_edge,                   this, edge,                         "Returns true if this graph contains a graph_edge.");
-  f2__primcfunk__init__2(graph__contains,                        this, graph,                        "Returns true if this graph contains a graph as a subgraph.");
-  f2__primcfunk__init__2(graph__lookup_nodes_with_label,         this, node_label,                   "Returns the list of all nodes with the given label in this graph.");
-  f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this,                               "When this graph contains N nodes, returns a random subgraph with N/2 nodes.  This graph must have at least 2 nodes.");
-  f2__primcfunk__init__2(graph__minus,                           this, that,                         "Returns a subgraph of this graph without the nodes in that graph.");
-  f2__primcfunk__init__1(graph__copy,                            this,                               "Returns a new graph that is a copy of this graph.");
-  f2__primcfunk__init__2(graph__copy_with_node_label,            this, node_label,                   "Returns a new graph that is a copy of this graph replacing node labels with given node_label.");
-  f2__primcfunk__init__2(graph__node_isomorphisms,               this, node,                         "Returns all single node isomorphisms between this graph and a graph_node.");
-  f2__primcfunk__init__4(graph__edges_with_label_between_nodes,  this, label, left_node, right_node, "Returns edges directed from the left_node to the right_node that have the label in this graph.");
-  f2__primcfunk__init__3(graph__edges_between_nodes,             this, left_node, right_node,        "Returns edges directed from the left_node to the right_node.");
-  f2__primcfunk__init__1(graph__as__dot_code,                    this,                               "Returns graph as dot_code for rendering with the graphviz dot application.");
+  f2__primcfunk__init__1(graph__nodes,                           this);
+  f2__primcfunk__init__1(graph__edges,                           this);
+  f2__primcfunk__init__2(graph__add_node,                        this, node);
+  f2__primcfunk__init__2(graph__add_new_node,                    this, label);
+  f2__primcfunk__init__2(graph__nodes_with_label,                this, label);
+  f2__primcfunk__init__2(graph__add_edge,                        this, edge);
+  f2__primcfunk__init__4(graph__add_new_edge,                    this, label, left_node, right_node);
+  f2__primcfunk__init__1(graph__node_count,                      this);
+  f2__primcfunk__init__2(graph__contains_node,                   this, node);
+  f2__primcfunk__init__2(graph__contains_edge,                   this, edge);
+  f2__primcfunk__init__2(graph__contains,                        this, graph);
+  f2__primcfunk__init__2(graph__lookup_nodes_with_label,         this, node_label);
+  f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this);
+  f2__primcfunk__init__2(graph__minus,                           this, that);
+  f2__primcfunk__init__1(graph__copy,                            this);
+  f2__primcfunk__init__2(graph__copy_with_node_label,            this, node_label);
+  f2__primcfunk__init__2(graph__node_isomorphisms,               this, node);
+  f2__primcfunk__init__4(graph__edges_with_label_between_nodes,  this, label, left_node, right_node);
+  f2__primcfunk__init__3(graph__edges_between_nodes,             this, left_node, right_node);
+  f2__primcfunk__init__1(graph__as__dot_code,                    this);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_list
-  f2__primcfunk__init__1(graph_list__union, this, "Returns a new graph that is the union of all graphs in this list.");
+  f2__primcfunk__init__1(graph_list__union, this);
   
   // graph_isomorphism
   initialize_primobject_2_slot(graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
   
-  f2__primcfunk__init__3(graph_isomorphism__add_mapping,               this, left_node, right_node, "Add a graph_node mapping to a graph_isomorphism.");
-  f2__primcfunk__init__1(graph_isomorphism__mapping_count,             this,                        "Returns the number of node mappings in this graph_isomorphism.");
-  f2__primcfunk__init__2(graph_isomorphism__is_disjoint_with,          this, that,                  "Returns true if this graph_isomorphism is disjoint with that graph_isomorphism.");
-  f2__primcfunk__init__2(graph_isomorphism__map_left_to_right,         this, left_node,             "Maps a node on the left of this graph_isomorphism to the right.");
-  f2__primcfunk__init__2(graph_isomorphism__map_right_to_left,         this, right_node,            "Maps a node on the right of this graph_isomorphism to the left.");
-  f2__primcfunk__init__2(graph_isomorphism__union,                     this, that,                  "Returns a new graph_isomorphism representing the union between this graph_isomorphism and that graph_isomorphism.");
-  f2__primcfunk__init__1(graph_isomorphism__as__frame,                 this,                        "Returns a frame representing the left to right mapping ptypehash.");
+  f2__primcfunk__init__3(graph_isomorphism__add_mapping,               this, left_node, right_node);
+  f2__primcfunk__init__1(graph_isomorphism__mapping_count,             this);
+  f2__primcfunk__init__2(graph_isomorphism__is_disjoint_with,          this, that);
+  f2__primcfunk__init__2(graph_isomorphism__map_left_to_right,         this, left_node);
+  f2__primcfunk__init__2(graph_isomorphism__map_right_to_left,         this, right_node);
+  f2__primcfunk__init__2(graph_isomorphism__union,                     this, that);
+  f2__primcfunk__init__1(graph_isomorphism__as__frame,                 this);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_isomorphism__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_isomorphism__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_decomposition_lattice_node
   initialize_primobject_5_slot(graph_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set);
   
-  f2__primcfunk__init__4(graph_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph, "Combine children isomorphisms when they are non-overlapping.");
+  f2__primcfunk__init__4(graph_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice_node__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_decomposition_lattice
   initialize_primobject_7_slot(graph_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
   
-  f2__primcfunk__init__2(graph_decomposition_lattice__add_node,                        this, node,              "Add a graph_decomposition_lattice_node to this graph_decomposition_lattice.");
-  f2__primcfunk__init__3(graph_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph, "Decompose a graph into this graph_decomposition_lattice with given root_graph.");
-  f2__primcfunk__init__2(graph_decomposition_lattice__decompose_graph,                 this, graph,             "Decompose a graph into this graph_decomposition_lattice, assuming graph is also a root graph.");
-  f2__primcfunk__init__2(graph_decomposition_lattice__subgraph_isomorphisms,           this, graph,             "Returns all subgraph isomorphisms to model graphs decomposed into this graph_decomposition_lattice.");
-  f2__primcfunk__init__2(graph_decomposition_lattice__subgraph_max_isomorphisms,       this, graph,             "Returns maximum subgraph isomorphisms to model graphs decomposed into this graph_decomposition_lattice.");
+  f2__primcfunk__init__2(graph_decomposition_lattice__add_node,                        this, node);
+  f2__primcfunk__init__3(graph_decomposition_lattice__decompose_graph_with_root_graph, this, graph, root_graph);
+  f2__primcfunk__init__2(graph_decomposition_lattice__decompose_graph,                 this, graph);
+  f2__primcfunk__init__2(graph_decomposition_lattice__subgraph_isomorphisms,           this, graph);
+  f2__primcfunk__init__2(graph_decomposition_lattice__subgraph_max_isomorphisms,       this, graph);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

@@ -302,7 +302,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_nil.c \
   c/f2_number.c \
   c/f2_object.c \
-  c/f2_object_lattice.c \
   c/f2_opengl.c \
   c/f2_optimize.c \
   c/f2_package.c \

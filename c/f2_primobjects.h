@@ -1195,7 +1195,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
 
 #define initialize_primobject_funk(name, funk_name) \
-  initialize_primobject_funk__0_arg(name, funk_name, "");
+  initialize_primobject_funk__0_arg(name, funk_name);
 
 #define initialize_primobject_common(name)   \
   initialize_primobject_funk(name, is_type); \

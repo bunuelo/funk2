@@ -637,11 +637,11 @@ void f2__time__initialize() {
   
   f2ptr cause = nil;
   
-  f2__primcfunk__init__0(nanoseconds_since_1970, "");
+  f2__primcfunk__init__0(nanoseconds_since_1970);
 
 #ifndef F2__CYGWIN
-  f2__primcfunk__init__0(processor_thread__execution_nanoseconds, "");
-  f2__primcfunk__init__0(funk2__execution_nanoseconds, "");
+  f2__primcfunk__init__0(processor_thread__execution_nanoseconds);
+  f2__primcfunk__init__0(funk2__execution_nanoseconds);
 #endif // F2__CYGWIN
 
 

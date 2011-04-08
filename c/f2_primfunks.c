@@ -189,7 +189,7 @@ f2ptr f2__system__memorypool__total_global_memory(f2ptr cause, f2ptr index) {
   return raw__system__memorypool__total_global_memory(cause, index__i);
 }
 def_pcfunk1(system__memorypool__total_global_memory, index,
-	    "",
+	    "Returns the total_global_memory of the memorypool index (0-7).",
 	    return f2__system__memorypool__total_global_memory(this_cause, index));
 
 
@@ -206,7 +206,7 @@ f2ptr f2__system__memorypool__total_free_memory(f2ptr cause, f2ptr index) {
   return raw__system__memorypool__total_free_memory(cause, index__i);
 }
 def_pcfunk1(system__memorypool__total_free_memory, index,
-	    "",
+	    "Returns the total_free_memory of the memorypool index (0-7).",
 	    return f2__system__memorypool__total_free_memory(this_cause, index));
 
 
@@ -523,11 +523,11 @@ f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
   return raw__conslist__new(cause, conslist);
 }
 def_pcfunk0_and_rest(conslist, conslist,
-		     "",
+		     "returns a new conslist.",
 		     return f2__conslist__new(this_cause, conslist));
 
 def_pcfunk0_and_rest(immutable_conslist, seq,
-		     "",
+		     "returns a new conslist that we will agree to not mutate.",
 		     return f2__conslist__new(this_cause, seq));
 
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
@@ -558,7 +558,7 @@ f2ptr f2__conslist__as__array(f2ptr cause, f2ptr this) {
   return raw__conslist__as__array(cause, this);
 }
 def_pcfunk1(conslist__as__array, this,
-	    "",
+	    "returns a conslist represented as a new array.",
 	    return f2__conslist__as__array(this_cause, this));
 
 f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
@@ -585,7 +585,7 @@ f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   return new_seq;
 }
 def_pcfunk2(conslist__first_n, this, n,
-	    "",
+	    "returns a new representation of the first n elements of the list, this.",
 	    return f2__conslist__first_n(this_cause, this, n));
 
 f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
@@ -613,7 +613,7 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
   return new_list;
 }
 def_pcfunk1(conslistlist__append, this,
-	    "",
+	    "append a list of lists.",
 	    return f2__conslistlist__append(this_cause, this));
 
 // time
@@ -622,7 +622,7 @@ f2ptr f2__time(f2ptr cause) {
   return f2time__new(cause, f2__nanoseconds_since_1970(cause));
 }
 def_pcfunk0(time,
-	    "",
+	    "returns the current time.",
 	    return f2__time(this_cause));
 
 // fiber
@@ -631,7 +631,7 @@ f2ptr f2__sleep_for_nanoseconds_without_yield(f2ptr fiber, f2ptr cause, f2ptr na
   return f2__fiber__sleep_for_nanoseconds(cause, fiber, nanoseconds);
 }
 def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds,
-	    "",
+	    "tells current executing fiber to sleep for given number of nanoseconds.  [yield] should immediately follow.",
 	    return f2__sleep_for_nanoseconds_without_yield(simple_fiber, this_cause, nanoseconds));
 
 // larva
@@ -765,7 +765,7 @@ f2ptr f2__simple_paused_fiber(f2ptr cause, f2ptr execution_cause, f2ptr parent_f
   return raw__fiber__new(cause, parent_fiber, parent_env, cfunkable, args);
 }
 def_pcfunk2(simple_paused_fiber, funk, args,
-	    "",
+	    "Creates a fiber.  Does not branch cause.",
 	    return f2__simple_paused_fiber(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
@@ -775,7 +775,7 @@ f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber,
   return new_fiber;
 }
 def_pcfunk2(fiber_parallel, funk, args,
-	    "",
+	    "Starts a fiber that executes in parallel with the current fiber.  Does not branch cause.",
 	    return f2__fiber_parallel(this_cause, this_cause, simple_fiber, simple_env, funk, args));
 
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
@@ -976,7 +976,7 @@ f2ptr f2__reverse(f2ptr cause, f2ptr this) {
   return f2__conslist__reverse(cause, this);
 }
 def_pcfunk1(reverse, this,
-	    "",
+	    "reverses elements in a list.",
 	    return f2__reverse(this_cause, this));
 
 // deprecated and should be removed
@@ -1075,7 +1075,7 @@ f2ptr f2__mkdir(f2ptr cause, f2ptr directory_name) {
   return raw__mkdir(cause, directory_name);
 }
 def_pcfunk1(mkdir, directory_name,
-	    "",
+	    "makes a directory.",
 	    return f2__mkdir(this_cause, directory_name));
 
 // this funktion is deprecated; use object-set mutators instead.
@@ -1275,7 +1275,7 @@ f2ptr f2__random(f2ptr cause, f2ptr max_value) {
   return f2integer__new(cause, raw__random(raw_max_value));
 }
 def_pcfunk1(random, max_value,
-	    "",
+	    "generate a random integer between 0 and sup_integer - 1.",
 	    return f2__random(this_cause, max_value));
 
 f2ptr f2__chunk_copy(f2ptr cause, f2ptr init) {
@@ -1905,12 +1905,12 @@ f2ptr f2__memory__test(f2ptr cause) {
   return nil;
 }
 def_pcfunk0(memory__test,
-	    "",
+	    "Asserts that memory tests pass, otherwise logs debugging information regarding the bug and stops Funk2 with fatal error.",
 	    return f2__memory__test(this_cause));
 
 
 def_pcfunk0(memory__assert_valid,
-	    "",
+	    "Asserts that memory tests pass, otherwise returns a larva with low-level memory system debugging information.",
 	    return f2__memory__assert_valid(this_cause));
 
 
@@ -1928,13 +1928,13 @@ void f2__primcfunks__initialize() {
   
   // system
   
-  f2__primcfunk__init__0(system__node_id, "");
-  f2__primcfunk__init__1(system__environment, node_id, "");
+  f2__primcfunk__init__0(system__node_id);
+  f2__primcfunk__init__1(system__environment, node_id);
   
   // funk2 pointer (f2ptr)
   
-  f2__primcfunk__init__1(pointer, exp, "");
-  f2__primcfunk__init__1(deref_pointer, pointer, "");
+  f2__primcfunk__init__1(pointer, exp);
+  f2__primcfunk__init__1(deref_pointer, pointer);
   
   // ptype
   
@@ -1948,33 +1948,33 @@ void f2__primcfunks__initialize() {
   
   // gfunkptr
   
-  f2__primcfunk__init__1(gfunkptr__new_from_pointer, pointer, "");
+  f2__primcfunk__init__1(gfunkptr__new_from_pointer, pointer);
   
   // cmutex
   
   // string
   
-  //f2__funktional_primcfunk__init__2(string__equals,                this, that, "");
-  f2__primcfunk__init__1(string__new_raw_c_string,      this, "");
-  f2__primcfunk__init__1(string__new_from_raw_c_string, c_string, "");
+  //f2__funktional_primcfunk__init__2(string__equals,                this, that);
+  f2__primcfunk__init__1(string__new_raw_c_string,      this);
+  f2__primcfunk__init__1(string__new_from_raw_c_string, c_string);
   
   // symbol
   
-  //f2__funktional_primcfunk__init__2(symbol__eq,     this, that, "");
+  //f2__funktional_primcfunk__init__2(symbol__eq,     this, that);
   
   // chunk
   
-  f2__primcfunk__init(chunk__copy, "");
-  f2__primcfunk__init(chunk__read_bit8, "");
-  f2__primcfunk__init(chunk__write_bit8_integer, "");
-  f2__primcfunk__init(chunk__read_bit8_signed, "");
-  f2__primcfunk__init(chunk__read_bit16, "");
-  f2__primcfunk__init(chunk__write_bit16_integer, "");
-  f2__primcfunk__init(chunk__read_bit16_signed, "");
-  f2__primcfunk__init(chunk__read_bit32, "");
-  f2__primcfunk__init(chunk__write_bit32_integer, "");
-  f2__primcfunk__init(chunk__read_bit32_signed, "");
-  f2__primcfunk__init(chunk__new_compiled_from_funk, "");
+  f2__primcfunk__init(chunk__copy);
+  f2__primcfunk__init(chunk__read_bit8);
+  f2__primcfunk__init(chunk__write_bit8_integer);
+  f2__primcfunk__init(chunk__read_bit8_signed);
+  f2__primcfunk__init(chunk__read_bit16);
+  f2__primcfunk__init(chunk__write_bit16_integer);
+  f2__primcfunk__init(chunk__read_bit16_signed);
+  f2__primcfunk__init(chunk__read_bit32);
+  f2__primcfunk__init(chunk__write_bit32_integer);
+  f2__primcfunk__init(chunk__read_bit32_signed);
+  f2__primcfunk__init(chunk__new_compiled_from_funk);
   
   // simple_array
   
@@ -1982,244 +1982,245 @@ void f2__primcfunks__initialize() {
   // traced_array
   
   
-  f2__primcfunk__init__1(mkdir, directory_name, "makes a directory.");
+  f2__primcfunk__init__1(mkdir, directory_name);
   
   // cons
   
-  f2__primcfunk__init__0_and_rest(conslist,             conslist, "returns a new conslist.");
-  f2__primcfunk__init__1(         conslist__as__array,  this,     "returns a conslist represented as a new array.");
-  f2__primcfunk__init__2(         conslist__first_n,    this, n,  "returns a new representation of the first n elements of the list, this.");
-  f2__primcfunk__init__1(         conslistlist__append, this,     "append a list of lists.");
+  f2__primcfunk__init__0_and_rest(conslist,             conslist);
+  f2__primcfunk__init__1(         conslist__as__array,  this);
+  f2__primcfunk__init__2(         conslist__first_n,    this, n);
+  f2__primcfunk__init__1(         conslistlist__append, this);
   
-  f2__primcfunk__init__0_and_rest(immutable_conslist, seq, "returns a new conslist that we will agree to not mutate.");
+  f2__primcfunk__init__0_and_rest(immutable_conslist, seq);
   
   // cause
   
   // fiber
   
-  f2__primcfunk__init__1(sleep_for_nanoseconds_without_yield, nanoseconds, "tells current executing fiber to sleep for given number of nanoseconds.  [yield] should immediately follow.");
+  f2__primcfunk__init__1(sleep_for_nanoseconds_without_yield, nanoseconds);
   
   // time
   
-  f2__primcfunk__init__0(time, "returns the current time.");
+  f2__primcfunk__init__0(time);
 
   
   
   // other complex functions
   
-  f2__primcfunk__init(simple_paused_fiber, "Creates a fiber.  Does not branch cause.");
-  f2__primcfunk__init(fiber_parallel, "Starts a fiber that executes in parallel with the current fiber.  Does not branch cause.");
-  f2__primcfunk__init(fiber__imagine, "");
-  f2__primcfunk__init(test_imagine, "");
+  f2__primcfunk__init(simple_paused_fiber);
+  f2__primcfunk__init(fiber_parallel);
+  f2__primcfunk__init(fiber__imagine);
+  f2__primcfunk__init(test_imagine);
   
-  f2__primcfunk__init__1(           simple_length,               seq, "");
-  f2__primcfunk__init__2(integer__greater_than,      x, y, "");
-  f2__primcfunk__init__2(integer__less_than,         x, y, "");
-  f2__primcfunk__init__2(integer__add,               x, y, "");
-  f2__primcfunk__init__2(integer__subtract,          x, y, "");
-  f2__primcfunk__init__2(integer__multiply,          x, y, "");
-  f2__primcfunk__init__2(integer__add_double,        x, y, "");
-  f2__primcfunk__init__2(integer__subtract_double,   x, y, "");
-  f2__primcfunk__init__2(integer__divide_by_integer, x, y, "");
-  f2__primcfunk__init__2(integer__divide_by_double,  x, y, "");
-  f2__primcfunk__init__2(integer__equal_sign,        x, y, "");
-  f2__primcfunk__init__2(integer__not_equal_sign,    x, y, "");
-  f2__primcfunk__init__2(integer__bitshift_left,     x, y, "");
-  f2__primcfunk__init__2(integer__bitshift_right,    x, y, "");
-  f2__primcfunk__init__2(integer__bit_and,           x, y, "");
-  f2__primcfunk__init__2(integer__bit_or,            x, y, "");
-  f2__primcfunk__init__2(integer__bit_xor,           x, y, "");
-  f2__primcfunk__init__1(integer__bit_not,           x, "");
-  f2__primcfunk__init__2(pointer__greater_than,      x, y, "");
-  f2__primcfunk__init__2(pointer__less_than,         x, y, "");
-  f2__primcfunk__init__2(pointer__subtract,          x, y, "");
-  f2__primcfunk__init__2(pointer__equal_sign,        x, y, "");
-  f2__primcfunk__init__2(pointer__not_equal_sign,    x, y, "");
-  f2__primcfunk__init__1(null,                       x, "");
-  f2__primcfunk__init__1(not,                        x, "");
+  f2__primcfunk__init__1(simple_length, seq);
   
-  f2__primcfunk__init__2(eq,                         x, y, "");
-  f2__primcfunk__init__2(contains, this, element, "");
+  f2__primcfunk__init__2(integer__greater_than,      x, y);
+  f2__primcfunk__init__2(integer__less_than,         x, y);
+  f2__primcfunk__init__2(integer__add,               x, y);
+  f2__primcfunk__init__2(integer__subtract,          x, y);
+  f2__primcfunk__init__2(integer__multiply,          x, y);
+  f2__primcfunk__init__2(integer__add_double,        x, y);
+  f2__primcfunk__init__2(integer__subtract_double,   x, y);
+  f2__primcfunk__init__2(integer__divide_by_integer, x, y);
+  f2__primcfunk__init__2(integer__divide_by_double,  x, y);
+  f2__primcfunk__init__2(integer__equal_sign,        x, y);
+  f2__primcfunk__init__2(integer__not_equal_sign,    x, y);
+  f2__primcfunk__init__2(integer__bitshift_left,     x, y);
+  f2__primcfunk__init__2(integer__bitshift_right,    x, y);
+  f2__primcfunk__init__2(integer__bit_and,           x, y);
+  f2__primcfunk__init__2(integer__bit_or,            x, y);
+  f2__primcfunk__init__2(integer__bit_xor,           x, y);
+  f2__primcfunk__init__1(integer__bit_not,           x);
+  f2__primcfunk__init__2(pointer__greater_than,      x, y);
+  f2__primcfunk__init__2(pointer__less_than,         x, y);
+  f2__primcfunk__init__2(pointer__subtract,          x, y);
+  f2__primcfunk__init__2(pointer__equal_sign,        x, y);
+  f2__primcfunk__init__2(pointer__not_equal_sign,    x, y);
+  f2__primcfunk__init__1(null,                       x);
+  f2__primcfunk__init__1(not,                        x);
   
-  f2__primcfunk__init__1(reverse, this, "reverses elements in a list.");
+  f2__primcfunk__init__2(eq,                         x, y);
+  f2__primcfunk__init__2(contains, this, element);
   
-  f2__primcfunk__init__1(exp__print, exp, "");
-  f2__primcfunk__init(write, "");
-  f2__primcfunk__init(fwrite, "");
-  f2__primcfunk__init(exp__format, "");
-  f2__primcfunk__init(exp__format__html, "");
-  f2__primcfunk__init(exp__fwrite_html, "");
+  f2__primcfunk__init__1(reverse, this);
   
-  f2__primcfunk__init(debug, "");
-  f2__primcfunk__init(trace, "");
-  f2__primcfunk__init(compile, "");
+  f2__primcfunk__init__1(exp__print, exp);
+  f2__primcfunk__init(write);
+  f2__primcfunk__init(fwrite);
+  f2__primcfunk__init(exp__format);
+  f2__primcfunk__init(exp__format__html);
+  f2__primcfunk__init(exp__fwrite_html);
   
-  f2__primcfunk__init(fopen, "");
-  f2__primcfunk__init(fclose, "");
+  f2__primcfunk__init(debug);
+  f2__primcfunk__init(trace);
+  f2__primcfunk__init(compile);
   
-  f2__primcfunk__init__0(this__cause, "");
-  f2__primcfunk__init__0(this__env, "");
-  f2__primcfunk__init__0(this__args, "");
+  f2__primcfunk__init(fopen);
+  f2__primcfunk__init(fclose);
   
-  f2__primcfunk__init__1(random, sup_integer, "generate a random integer between 0 and sup_integer - 1.");
+  f2__primcfunk__init__0(this__cause);
+  f2__primcfunk__init__0(this__env);
+  f2__primcfunk__init__0(this__args);
   
-  f2__primcfunk__init(identity, "");
+  f2__primcfunk__init__1(random, sup_integer);
   
-  f2__primcfunk__init(demetropolize_once, "");
-  f2__primcfunk__init(demetropolize_full, "");
-  f2__primcfunk__init(exps_demetropolize_full, "");
-  f2__primcfunk__init(compile__special_symbol_exp, "");
-  f2__primcfunk__init(lookup_funkvar, "");
-  f2__primcfunk__init(jump_to_chunk, "");
-  f2__primcfunk__init(coerce_to_int, "");
+  f2__primcfunk__init(identity);
   
-  //f2__primcfunk__init(memory_image__save, "");
-  //f2__primcfunk__init(memory_image__load, "");
+  f2__primcfunk__init(demetropolize_once);
+  f2__primcfunk__init(demetropolize_full);
+  f2__primcfunk__init(exps_demetropolize_full);
+  f2__primcfunk__init(compile__special_symbol_exp);
+  f2__primcfunk__init(lookup_funkvar);
+  f2__primcfunk__init(jump_to_chunk);
+  f2__primcfunk__init(coerce_to_int);
   
-  f2__primcfunk__init(funkall__raw_c_funk__v__v, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__i, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__id, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__idd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__idddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ipp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ippp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ipppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iid, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iiip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iiiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iiiip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__iiiiip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__p, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__pi, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__pp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__pppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ppppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__d, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__dd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__dddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ddddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__f, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__fff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__ffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__v__fffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__v, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__i, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__iii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__iiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__iiiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__iiiiip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ipp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ippp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ipppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__p, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__pp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__pppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ppppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__d, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__dd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__dddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ddddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__f, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__fff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__ffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__i__fffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__v, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__i, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__ii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__iii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__iiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__iiiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__d, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__dd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__ddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__dddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__ddddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__f, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__ff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__fff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__ffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__d__fffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__v, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__i, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__ii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__iii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__iiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__iiiii, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__d, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__dd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__ddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__dddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__ddddd, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__f, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__ff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__fff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__ffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__f__fffff, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__v, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__i, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__ip, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__ipp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__p, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__pp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__ppp, "");
-  f2__primcfunk__init(funkall__raw_c_funk__p__pppp, "");
+  //f2__primcfunk__init(memory_image__save);
+  //f2__primcfunk__init(memory_image__load);
   
-  f2__primcfunk__init__1(system__memorypool__total_global_memory, index, "Returns the total_global_memory of the memorypool index (0-7).");
-  f2__primcfunk__init__1(system__memorypool__total_free_memory,   index, "Returns the total_free_memory of the memorypool index (0-7).");
+  f2__primcfunk__init(funkall__raw_c_funk__v__v);
+  f2__primcfunk__init(funkall__raw_c_funk__v__i);
+  f2__primcfunk__init(funkall__raw_c_funk__v__id);
+  f2__primcfunk__init(funkall__raw_c_funk__v__idd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iddd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__idddd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ip);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ipp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ippp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ipppp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ii);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iid);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iii);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iiii);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iiip);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iiiii);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iiiip);
+  f2__primcfunk__init(funkall__raw_c_funk__v__iiiiip);
+  f2__primcfunk__init(funkall__raw_c_funk__v__p);
+  f2__primcfunk__init(funkall__raw_c_funk__v__pi);
+  f2__primcfunk__init(funkall__raw_c_funk__v__pp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ppp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__pppp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ppppp);
+  f2__primcfunk__init(funkall__raw_c_funk__v__d);
+  f2__primcfunk__init(funkall__raw_c_funk__v__dd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ddd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__dddd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ddddd);
+  f2__primcfunk__init(funkall__raw_c_funk__v__f);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ff);
+  f2__primcfunk__init(funkall__raw_c_funk__v__fff);
+  f2__primcfunk__init(funkall__raw_c_funk__v__ffff);
+  f2__primcfunk__init(funkall__raw_c_funk__v__fffff);
+  f2__primcfunk__init(funkall__raw_c_funk__i__v);
+  f2__primcfunk__init(funkall__raw_c_funk__i__i);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ii);
+  f2__primcfunk__init(funkall__raw_c_funk__i__iii);
+  f2__primcfunk__init(funkall__raw_c_funk__i__iiii);
+  f2__primcfunk__init(funkall__raw_c_funk__i__iiiii);
+  f2__primcfunk__init(funkall__raw_c_funk__i__iiiiip);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ip);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ipp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ippp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ipppp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__p);
+  f2__primcfunk__init(funkall__raw_c_funk__i__pp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ppp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__pppp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ppppp);
+  f2__primcfunk__init(funkall__raw_c_funk__i__d);
+  f2__primcfunk__init(funkall__raw_c_funk__i__dd);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ddd);
+  f2__primcfunk__init(funkall__raw_c_funk__i__dddd);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ddddd);
+  f2__primcfunk__init(funkall__raw_c_funk__i__f);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ff);
+  f2__primcfunk__init(funkall__raw_c_funk__i__fff);
+  f2__primcfunk__init(funkall__raw_c_funk__i__ffff);
+  f2__primcfunk__init(funkall__raw_c_funk__i__fffff);
+  f2__primcfunk__init(funkall__raw_c_funk__d__v);
+  f2__primcfunk__init(funkall__raw_c_funk__d__i);
+  f2__primcfunk__init(funkall__raw_c_funk__d__ii);
+  f2__primcfunk__init(funkall__raw_c_funk__d__iii);
+  f2__primcfunk__init(funkall__raw_c_funk__d__iiii);
+  f2__primcfunk__init(funkall__raw_c_funk__d__iiiii);
+  f2__primcfunk__init(funkall__raw_c_funk__d__d);
+  f2__primcfunk__init(funkall__raw_c_funk__d__dd);
+  f2__primcfunk__init(funkall__raw_c_funk__d__ddd);
+  f2__primcfunk__init(funkall__raw_c_funk__d__dddd);
+  f2__primcfunk__init(funkall__raw_c_funk__d__ddddd);
+  f2__primcfunk__init(funkall__raw_c_funk__d__f);
+  f2__primcfunk__init(funkall__raw_c_funk__d__ff);
+  f2__primcfunk__init(funkall__raw_c_funk__d__fff);
+  f2__primcfunk__init(funkall__raw_c_funk__d__ffff);
+  f2__primcfunk__init(funkall__raw_c_funk__d__fffff);
+  f2__primcfunk__init(funkall__raw_c_funk__f__v);
+  f2__primcfunk__init(funkall__raw_c_funk__f__i);
+  f2__primcfunk__init(funkall__raw_c_funk__f__ii);
+  f2__primcfunk__init(funkall__raw_c_funk__f__iii);
+  f2__primcfunk__init(funkall__raw_c_funk__f__iiii);
+  f2__primcfunk__init(funkall__raw_c_funk__f__iiiii);
+  f2__primcfunk__init(funkall__raw_c_funk__f__d);
+  f2__primcfunk__init(funkall__raw_c_funk__f__dd);
+  f2__primcfunk__init(funkall__raw_c_funk__f__ddd);
+  f2__primcfunk__init(funkall__raw_c_funk__f__dddd);
+  f2__primcfunk__init(funkall__raw_c_funk__f__ddddd);
+  f2__primcfunk__init(funkall__raw_c_funk__f__f);
+  f2__primcfunk__init(funkall__raw_c_funk__f__ff);
+  f2__primcfunk__init(funkall__raw_c_funk__f__fff);
+  f2__primcfunk__init(funkall__raw_c_funk__f__ffff);
+  f2__primcfunk__init(funkall__raw_c_funk__f__fffff);
+  f2__primcfunk__init(funkall__raw_c_funk__p__v);
+  f2__primcfunk__init(funkall__raw_c_funk__p__i);
+  f2__primcfunk__init(funkall__raw_c_funk__p__ip);
+  f2__primcfunk__init(funkall__raw_c_funk__p__ipp);
+  f2__primcfunk__init(funkall__raw_c_funk__p__p);
+  f2__primcfunk__init(funkall__raw_c_funk__p__pp);
+  f2__primcfunk__init(funkall__raw_c_funk__p__ppp);
+  f2__primcfunk__init(funkall__raw_c_funk__p__pppp);
   
-  f2__primcfunk__init(integer__to_float, "");
-  f2__primcfunk__init(integer__to_double, "");
-  f2__primcfunk__init(double__to_integer, "");
-  f2__primcfunk__init(double__to_float, "");
-  f2__primcfunk__init(double__add_double, "");
-  f2__primcfunk__init(double__subtract_double, "");
-  f2__primcfunk__init(double__multiply_by_double, "");
-  f2__primcfunk__init(double__divide_by_double, "");
-  f2__primcfunk__init(double__add_integer, "");
-  f2__primcfunk__init(double__subtract_integer, "");
-  f2__primcfunk__init(double__multiply_by_integer, "");
-  f2__primcfunk__init(double__divide_by_integer, "");
-  f2__primcfunk__init(float__to_integer, "");
-  f2__primcfunk__init(float__to_double, "");
+  f2__primcfunk__init__1(system__memorypool__total_global_memory, index);
+  f2__primcfunk__init__1(system__memorypool__total_free_memory,   index);
   
-  f2__primcfunk__init(tensor__new_from_array_of_integer_dimensions, "");
-  f2__primcfunk__init(tensor__elt_from_array_of_integer_indices, "");
+  f2__primcfunk__init(integer__to_float);
+  f2__primcfunk__init(integer__to_double);
+  f2__primcfunk__init(double__to_integer);
+  f2__primcfunk__init(double__to_float);
+  f2__primcfunk__init(double__add_double);
+  f2__primcfunk__init(double__subtract_double);
+  f2__primcfunk__init(double__multiply_by_double);
+  f2__primcfunk__init(double__divide_by_double);
+  f2__primcfunk__init(double__add_integer);
+  f2__primcfunk__init(double__subtract_integer);
+  f2__primcfunk__init(double__multiply_by_integer);
+  f2__primcfunk__init(double__divide_by_integer);
+  f2__primcfunk__init(float__to_integer);
+  f2__primcfunk__init(float__to_double);
   
-  f2__primcfunk__init(funk2_node_handler__know_of_node, "");
-  f2__primcfunk__init__4(send_request_register_peer, computer_id, node_id, ip_addr, port_num, "");
+  f2__primcfunk__init(tensor__new_from_array_of_integer_dimensions);
+  f2__primcfunk__init(tensor__elt_from_array_of_integer_indices);
   
-  f2__primcfunk__init(system__peer_command_server__port_num, "");
-  f2__primcfunk__init(system__gethostname, "");
+  f2__primcfunk__init(funk2_node_handler__know_of_node);
+  f2__primcfunk__init__4(send_request_register_peer, computer_id, node_id, ip_addr, port_num);
   
-  f2__primcfunk__init__2(larva, larva_type, bug, "");
+  f2__primcfunk__init(system__peer_command_server__port_num);
+  f2__primcfunk__init(system__gethostname);
   
-  f2__primcfunk__init(first, "");
-  f2__primcfunk__init(first__set, "");
-  f2__primcfunk__init(next, "");
-  f2__primcfunk__init(next__set, "");
-  f2__primcfunk__init(prev, "");
-  f2__primcfunk__init(prev__set, "");
+  f2__primcfunk__init__2(larva, larva_type, bug);
   
-  f2__primcfunk__init__1(colonize, exp, "");
-  f2__primcfunk__init__1(eq_hash_value, exp, "");
-  f2__primcfunk__init__2(equals, x, y, "");
-  //f2__primcfunk__init__1(is_funktional, exp, "");
+  f2__primcfunk__init(first);
+  f2__primcfunk__init(first__set);
+  f2__primcfunk__init(next);
+  f2__primcfunk__init(next__set);
+  f2__primcfunk__init(prev);
+  f2__primcfunk__init(prev__set);
   
-  f2__primcfunk__init__0(memory__test,         "Asserts that memory tests pass, otherwise logs debugging information regarding the bug and stops Funk2 with fatal error.");
-  f2__primcfunk__init__0(memory__assert_valid, "Asserts that memory tests pass, otherwise returns a larva with low-level memory system debugging information.");
+  f2__primcfunk__init__1(colonize, exp);
+  f2__primcfunk__init__1(eq_hash_value, exp);
+  f2__primcfunk__init__2(equals, x, y);
+  //f2__primcfunk__init__1(is_funktional, exp);
+  
+  f2__primcfunk__init__0(memory__test);
+  f2__primcfunk__init__0(memory__assert_valid);
   
 }
 

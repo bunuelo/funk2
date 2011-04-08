@@ -35,7 +35,6 @@
 #include "f2_primobject__circular_buffer.h"
 #include "f2_primobject__traced_cmutex.h"
 #include "f2_bug.h"
-#include "f2_physical_objects.h"
 #include "f2_agent.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
@@ -122,12 +121,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__list__slot_t                             primobject_type_list;
   funk2_object_type__doublelinklist__slot_t                   primobject_type_doublelinklist;
   funk2_object_type__circular_buffer__slot_t                  primobject_type_circular_buffer;
-  funk2_object_type__physical_rotation__slot_t                primobject_type_physical_rotation;
-  funk2_object_type__physical_position__slot_t                primobject_type_physical_position;
-  funk2_object_type__physical_transform__slot_t               primobject_type_physical_transform;
-  funk2_object_type__physical_texture__slot_t                 primobject_type_physical_texture;
-  funk2_object_type__physical_place__slot_t                   primobject_type_physical_place;
-  funk2_object_type__physical_scene__slot_t                   primobject_type_physical_scene;
   funk2_object_type__agent__slot_t                            primobject_type_agent;
   funk2_object_type__hash__slot_t                             primobject_type_hash;
   funk2_object_type__cause__slot_t                            primobject_type_cause;

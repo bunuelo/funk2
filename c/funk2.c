@@ -104,7 +104,6 @@ void f2__initialize() {
   f2__garbage_collector__initialize();
   f2__frame_objects__initialize();
   f2__glwindow__initialize();
-  f2__physical_objects__initialize();
   f2__agent__initialize();
   f2__primobject_hash__initialize();
   f2__dlfcn__initialize();

@@ -242,7 +242,7 @@ f2ptr f2__time__equals(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__time__equals(cause, this, that));
 }
 def_pcfunk2(time__equals, this, that,
-	    "",
+	    "The time represented by this and that time object are the same even if the objects themselves are different objects., """,
 	    return f2__time__equals(this_cause, this, that));
 
 u64 raw__time__years(f2ptr cause, f2ptr this) {
@@ -254,7 +254,7 @@ u64 raw__time__years(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__years(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__years(cause, this));}
 def_pcfunk1(time__years, this,
-	    "",
+	    "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.",
 	    return f2__time__years(this_cause, this));
 
 u64 raw__time__months(f2ptr cause, f2ptr this) {
@@ -266,7 +266,7 @@ u64 raw__time__months(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__months(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__months(cause, this));}
 def_pcfunk1(time__months, this,
-	    "",
+	    "The number of months since the beginning of the year.",
 	    return f2__time__months(this_cause, this));
 
 u64 raw__time__days(f2ptr cause, f2ptr this) {
@@ -278,7 +278,7 @@ u64 raw__time__days(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__days(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__days(cause, this));}
 def_pcfunk1(time__days, this,
-	    "",
+	    "The number of days since the beginning of the month.",
 	    return f2__time__days(this_cause, this));
 
 u64 raw__time__hours(f2ptr cause, f2ptr this) {
@@ -290,7 +290,7 @@ u64 raw__time__hours(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__hours(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__hours(cause, this));}
 def_pcfunk1(time__hours, this,
-	    "",
+	    "The number of hours since the beginning of the day.",
 	    return f2__time__hours(this_cause, this));
 
 u64 raw__time__minutes(f2ptr cause, f2ptr this) {
@@ -302,7 +302,7 @@ u64 raw__time__minutes(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__minutes(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__minutes(cause, this));}
 def_pcfunk1(time__minutes, this,
-	    "",
+	    "The number of minutes since the beginning of the hour.",
 	    return f2__time__minutes(this_cause, this));
 
 u64 raw__time__seconds(f2ptr cause, f2ptr this) {
@@ -314,7 +314,7 @@ u64 raw__time__seconds(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__seconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__seconds(cause, this));}
 def_pcfunk1(time__seconds, this,
-	    "",
+	    "The number of seconds since the beginning of the minute.",
 	    return f2__time__seconds(this_cause, this));
 
 u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
@@ -326,7 +326,7 @@ u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
 
 f2ptr f2__time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__time__nanoseconds(cause, this));}
 def_pcfunk1(time__nanoseconds, this,
-	    "",
+	    "The number of nanoseconds since the beginning of the second.",
 	    return f2__time__nanoseconds(this_cause, this));
 
 f2ptr raw__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -346,7 +346,7 @@ f2ptr f2__time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__time__is_less_than(cause, this, that));
 }
 def_pcfunk2(time__is_less_than, this, that,
-	    "",
+	    "Returns t if this time is further in the past than that time.",
 	    return f2__time__is_less_than(this_cause, this, that));
 
 f2ptr raw__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -366,7 +366,7 @@ f2ptr f2__time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__time__is_greater_than(cause, this, that));
 }
 def_pcfunk2(time__is_greater_than, this, that,
-	    "",
+	    "Returns t if this time is further in the future than that time.",
 	    return f2__time__is_greater_than(this_cause, this, that));
 
 f2ptr raw__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
@@ -386,7 +386,7 @@ f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__time__is_numerically_equal_to(cause, this, that));
 }
 def_pcfunk2(time__is_numerically_equal_to, this, that,
-	    "",
+	    "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.",
 	    return f2__time__is_numerically_equal_to(this_cause, this, that));
 
 
@@ -406,7 +406,7 @@ f2ptr f2__time__abbreviated_weekday_name(f2ptr cause, f2ptr this) {
   return raw__time__abbreviated_weekday_name(cause, this);
 }
 def_pcfunk1(time__abbreviated_weekday_name, this,
-	    "",
+	    "Returns the abbreviated weekday name according to the current locale.",
 	    return f2__time__abbreviated_weekday_name(this_cause, this));
 
 
@@ -426,7 +426,7 @@ f2ptr f2__time__weekday_name(f2ptr cause, f2ptr this) {
   return raw__time__weekday_name(cause, this);
 }
 def_pcfunk1(time__weekday_name, this,
-	    "",
+	    "Returns the full weekday name according to the current locale.",
 	    return f2__time__weekday_name(this_cause, this));
 
 
@@ -446,7 +446,7 @@ f2ptr f2__time__abbreviated_month_name(f2ptr cause, f2ptr this) {
   return raw__time__abbreviated_month_name(cause, this);
 }
 def_pcfunk1(time__abbreviated_month_name, this,
-	    "",
+	    "Returns the abbreviated month name according to the current locale.",
 	    return f2__time__abbreviated_month_name(this_cause, this));
 
 
@@ -466,7 +466,7 @@ f2ptr f2__time__month_name(f2ptr cause, f2ptr this) {
   return raw__time__month_name(cause, this);
 }
 def_pcfunk1(time__month_name, this,
-	    "",
+	    "Returns the full month name according to the current locale.",
 	    return f2__time__month_name(this_cause, this));
 
 
@@ -486,7 +486,7 @@ f2ptr f2__time__date_and_time_string(f2ptr cause, f2ptr this) {
   return raw__time__date_and_time_string(cause, this);
 }
 def_pcfunk1(time__date_and_time_string, this,
-	    "",
+	    "Returns the preferred date and time representation for the current locale.",
 	    return f2__time__date_and_time_string(this_cause, this));
 
 
@@ -503,7 +503,7 @@ f2ptr f2__time__day_of_week(f2ptr cause, f2ptr this) {
   return raw__time__day_of_week(cause, this);
 }
 def_pcfunk1(time__day_of_week, this,
-	    "",
+	    "Returns the number of the days of the week since Sunday (0 - 6).",
 	    return f2__time__day_of_week(this_cause, this));
 
 
@@ -520,7 +520,7 @@ f2ptr f2__time__day_of_year(f2ptr cause, f2ptr this) {
   return raw__time__day_of_year(cause, this);
 }
 def_pcfunk1(time__day_of_year, this,
-	    "",
+	    "Returns the number of the days into the year (0 - 365).",
 	    return f2__time__day_of_year(this_cause, this));
 
 
@@ -537,7 +537,7 @@ f2ptr f2__time__is_daylight_savings_time(f2ptr cause, f2ptr this) {
   return raw__time__is_daylight_savings_time(cause, this);
 }
 def_pcfunk1(time__is_daylight_savings_time, this,
-	    "",
+	    "Returns a boolean depicting whether or not the time is daylight savings or not.",
 	    return f2__time__is_daylight_savings_time(this_cause, this));
 
 
@@ -557,7 +557,7 @@ f2ptr f2__time__timezone(f2ptr cause, f2ptr this) {
   return raw__time__timezone(cause, this);
 }
 def_pcfunk1(time__timezone, this,
-	    "",
+	    "Returns the timezone or name or abbreviation.",
 	    return f2__time__timezone(this_cause, this));
 
 
@@ -648,29 +648,29 @@ void f2__time__initialize() {
   // time
   
   initialize_primobject_1_slot(time, nanoseconds_since_1970);
-  initialize_primobject_funk__0_arg(time, equals,                         "The time represented by this and that time object are the same even if the objects themselves are different objects.");
-  initialize_primobject_funk__0_arg(time, years,                          "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.");
-  initialize_primobject_funk__0_arg(time, months,                         "The number of months since the beginning of the year.");
-  initialize_primobject_funk__0_arg(time, days,                           "The number of days since the beginning of the month.");
-  initialize_primobject_funk__0_arg(time, hours,                          "The number of hours since the beginning of the day.");
-  initialize_primobject_funk__0_arg(time, minutes,                        "The number of minutes since the beginning of the hour.");
-  initialize_primobject_funk__0_arg(time, seconds,                        "The number of seconds since the beginning of the minute.");
-  initialize_primobject_funk__0_arg(time, nanoseconds,                    "The number of nanoseconds since the beginning of the second.");
-  initialize_primobject_funk__1_arg(time, is_less_than,             that, "Returns t if this time is further in the past than that time.");
-  initialize_primobject_funk__1_arg(time, is_greater_than,          that, "Returns t if this time is further in the future than that time.");
-  initialize_primobject_funk__1_arg(time, is_numerically_equal_to,  that, "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.");
-  initialize_primobject_funk__0_arg(time, abbreviated_weekday_name,       "Returns the abbreviated weekday name according to the current locale.");
-  initialize_primobject_funk__0_arg(time, weekday_name,                   "Returns the full weekday name according to the current locale.");
-  initialize_primobject_funk__0_arg(time, abbreviated_month_name,         "Returns the abbreviated month name according to the current locale.");
-  initialize_primobject_funk__0_arg(time, month_name,                     "Returns the full month name according to the current locale.");
-  initialize_primobject_funk__0_arg(time, date_and_time_string,           "Returns the preferred date and time representation for the current locale.");
-  initialize_primobject_funk__0_arg(time, day_of_week,                    "Returns the number of the days of the week since Sunday (0 - 6).");
-  initialize_primobject_funk__0_arg(time, day_of_year,                    "Returns the number of the days into the year (0 - 365).");
-  initialize_primobject_funk__0_arg(time, is_daylight_savings_time,       "Returns a boolean depicting whether or not the time is daylight savings or not.");
-  initialize_primobject_funk__0_arg(time, timezone,                       "Returns the timezone or name or abbreviation.");
+  initialize_primobject_funk__0_arg(time, equals);
+  initialize_primobject_funk__0_arg(time, years);
+  initialize_primobject_funk__0_arg(time, months);
+  initialize_primobject_funk__0_arg(time, days);
+  initialize_primobject_funk__0_arg(time, hours);
+  initialize_primobject_funk__0_arg(time, minutes);
+  initialize_primobject_funk__0_arg(time, seconds);
+  initialize_primobject_funk__0_arg(time, nanoseconds);
+  initialize_primobject_funk__1_arg(time, is_less_than,             that);
+  initialize_primobject_funk__1_arg(time, is_greater_than,          that);
+  initialize_primobject_funk__1_arg(time, is_numerically_equal_to,  that);
+  initialize_primobject_funk__0_arg(time, abbreviated_weekday_name);
+  initialize_primobject_funk__0_arg(time, weekday_name);
+  initialize_primobject_funk__0_arg(time, abbreviated_month_name);
+  initialize_primobject_funk__0_arg(time, month_name);
+  initialize_primobject_funk__0_arg(time, date_and_time_string);
+  initialize_primobject_funk__0_arg(time, day_of_week);
+  initialize_primobject_funk__0_arg(time, day_of_year);
+  initialize_primobject_funk__0_arg(time, is_daylight_savings_time);
+  initialize_primobject_funk__0_arg(time, timezone);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(time__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
 }

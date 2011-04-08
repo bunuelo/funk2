@@ -350,7 +350,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_scheduler.c \
   c/f2_scheduler_thread_controller.c \
   c/f2_search.c \
-  c/f2_serialize.c \
   c/f2_set.c \
   c/f2_signal.c \
   c/f2_socket.c \

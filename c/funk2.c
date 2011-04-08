@@ -74,7 +74,6 @@ void f2__initialize() {
   f2__load__initialize();
   f2__socket__initialize();
   f2__trace__initialize();
-  f2__serialize__initialize();
   f2__primfunks__errno__initialize();
   f2__primfunks__fcntl__initialize();
   f2__primfunks__ioctl__initialize();

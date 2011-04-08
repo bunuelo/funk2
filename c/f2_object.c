@@ -79,7 +79,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
   return f2larva__new(cause, 1, nil);
 }
 def_pcfunk1(object__type, this,
-	    "",
+	    "Returns the symbolic type name of the object.",
 	    return f2__object__type(this_cause, this));
 
 
@@ -433,7 +433,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
   return f2larva__new(cause, 1, nil);
 }
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name,
-	    "",
+	    "Returns the slot type funk for the object (e.g. types: get, set, execute).",
 	    return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
 
@@ -456,7 +456,7 @@ f2ptr f2__object__inherits_from(f2ptr cause, f2ptr this, f2ptr type_name) {
   return f2bool__new(raw__object__inherits_from(cause, this, type_name));
 }
 def_pcfunk2(object__inherits_from, this, type_name,
-	    "",
+	    "Returns whether this object inherits from a type interface.",
 	    return f2__object__inherits_from(this_cause, this, type_name));
 
 
@@ -741,7 +741,7 @@ f2ptr f2__object__property_scan(f2ptr cause, f2ptr fiber, f2ptr object, f2ptr pr
 }
 
 def_pcfunk2(object__property_scan, object, property_funk,
-	    "",
+	    "Property scan funk of type, [funk [name value] ...].",
 	    return f2__object__property_scan(this_cause, simple_fiber, object, property_funk));
 
 // **
@@ -766,12 +766,12 @@ void f2__object__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,            cfunk); __funk2.object.object__eq_hash_value__funk                = never_gc(cfunk);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,                       this, that,      cfunk); __funk2.object.object__equals__funk                       = never_gc(cfunk);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value,            this,            cfunk); __funk2.object.object__equals_hash_value__funk            = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this, node_hash, cfunk, "");             __funk2.object.object__equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this, node_hash, cfunk); __funk2.object.object__equals_hash_value__loop_free__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__1(object__type,            this,                       "Returns the symbolic type name of the object.");
-  f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name, "Returns the slot type funk for the object (e.g. types: get, set, execute).");
-  f2__primcfunk__init__2(object__inherits_from,   this, type_name,            "Returns whether this object inherits from a type interface.");
-  f2__primcfunk__init__2(object__property_scan,   this, property_funk,        "Property scan funk of type, [funk [name value] ...].");
+  f2__primcfunk__init__1(object__type,            this);
+  f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name);
+  f2__primcfunk__init__2(object__inherits_from,   this, type_name);
+  f2__primcfunk__init__2(object__property_scan,   this, property_funk);
 }
 
 

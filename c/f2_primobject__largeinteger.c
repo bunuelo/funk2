@@ -759,7 +759,7 @@ f2ptr f2__largeinteger__less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__largeinteger__less_than(cause, this, that));
 }
 def_pcfunk2(largeinteger__less_than, this, that,
-	    "",
+	    "compare two largeintegers for which is less and return a boolean value as the result.Returns True [t] if this frame contains variable, otherwise False [nil].",
 	    return f2__largeinteger__less_than(this_cause, this, that));
 
 boolean_t raw__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -788,7 +788,7 @@ f2ptr f2__largeinteger__greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__largeinteger__greater_than(cause, this, that));
 }
 def_pcfunk2(largeinteger__greater_than, this, that,
-	    "",
+	    "compare two largeintegers for which is greater and return a boolean value as the result.",
 	    return f2__largeinteger__greater_than(this_cause, this, that));
 
 f2ptr raw__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -844,7 +844,7 @@ f2ptr f2__largeinteger__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__add(cause, this, that);
 }
 def_pcfunk2(largeinteger__add, this, that,
-	    "",
+	    "add two largeintegers and return a new largeinteger as the result.",
 	    return f2__largeinteger__add(this_cause, this, that));
 
 f2ptr raw__largeinteger__negative(f2ptr cause, f2ptr this) {
@@ -856,7 +856,7 @@ f2ptr f2__largeinteger__negative(f2ptr cause, f2ptr this) {
   return raw__largeinteger__negative(cause, this);
 }
 def_pcfunk1(largeinteger__negative, this,
-	    "",
+	    "returns the negative of a largeinteger.",
 	    return f2__largeinteger__negative(this_cause, this));
 
 f2ptr raw__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
@@ -869,7 +869,7 @@ f2ptr f2__largeinteger__subtract(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__subtract(cause, this, that);
 }
 def_pcfunk2(largeinteger__subtract, this, that,
-	    "",
+	    "returns the result of subtracting two largeintegers.",
 	    return f2__largeinteger__subtract(this_cause, this, that));
 
 f2ptr raw__largeinteger__bitshift_left(f2ptr cause, f2ptr this, s64 bit_distance) {
@@ -886,7 +886,7 @@ f2ptr f2__largeinteger__bitshift_left(f2ptr cause, f2ptr this, f2ptr bit_distanc
   return raw__largeinteger__bitshift_left(cause, this, bit_distance__i);
 }
 def_pcfunk2(largeinteger__bitshift_left, this, bit_distance,
-	    "",
+	    "returns the result of bitshifting one largeinteger to the left by an integer bit distance.",
 	    return f2__largeinteger__bitshift_left(this_cause, this, bit_distance));
 
 f2ptr raw__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distance) {
@@ -903,7 +903,7 @@ f2ptr f2__largeinteger__bitshift_right(f2ptr cause, f2ptr this, f2ptr bit_distan
   return raw__largeinteger__bitshift_right(cause, this, bit_distance__i);
 }
 def_pcfunk2(largeinteger__bitshift_right, this, bit_distance,
-	    "",
+	    "returns the result of bitshifting one largeinteger to the right by an integer bit distance.",
 	    return f2__largeinteger__bitshift_right(this_cause, this, bit_distance));
 
 f2ptr raw__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr that) {
@@ -922,7 +922,7 @@ f2ptr f2__largeinteger__multiply_largeinteger(f2ptr cause, f2ptr this, f2ptr tha
   return raw__largeinteger__multiply_largeinteger(cause, this, that);
 }
 def_pcfunk2(largeinteger__multiply_largeinteger, this, that,
-	    "",
+	    "returns the result of multiplying two largeintegers.",
 	    return f2__largeinteger__multiply_largeinteger(this_cause, this, that));
 
 f2ptr raw__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr that) {
@@ -946,7 +946,7 @@ f2ptr f2__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr th
   return raw__largeinteger__quotient_and_remainder(cause, this, that);
 }
 def_pcfunk2(largeinteger__quotient_and_remainder, this, that,
-	    "",
+	    "returns the quotient and remainder of a largeinteger division in a cons cell.",
 	    return f2__largeinteger__quotient_and_remainder(this_cause, this, that));
 
 f2ptr raw__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
@@ -961,7 +961,7 @@ f2ptr f2__largeinteger__divide(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__divide(cause, this, that);
 }
 def_pcfunk2(largeinteger__divide, this, that,
-	    "",
+	    "returns the result of dividing two largeintegers.",
 	    return f2__largeinteger__divide(this_cause, this, that));
 
 f2ptr raw__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
@@ -976,7 +976,7 @@ f2ptr f2__largeinteger__modulo(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__largeinteger__modulo(cause, this, that);
 }
 def_pcfunk2(largeinteger__modulo, this, that,
-	    "",
+	    "returns the result of the modulo of two largeintegers.",
 	    return f2__largeinteger__modulo(this_cause, this, that));
 
 f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
@@ -991,7 +991,7 @@ f2ptr f2__largeinteger__print(f2ptr cause, f2ptr this) {
   return nil;
 }
 def_pcfunk1(largeinteger__print, this,
-	    "",
+	    "prints a large integer in decimal format to the standard output.",
 	    return f2__largeinteger__print(this_cause, this));
 
 boolean_t raw__largeinteger__unsigned_array__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -1092,7 +1092,7 @@ f2ptr f2__largeinteger__as__double(f2ptr cause, f2ptr this) {
   return f2double__new(cause, raw__largeinteger__as__double(cause, this));
 }
 def_pcfunk1(largeinteger__as__double, this,
-	    "",
+	    "returns this as a double.",
 	    return f2__largeinteger__as__double(this_cause, this));
 
 boolean_t raw__largeinteger__is_zero(f2ptr cause, f2ptr this) {
@@ -1151,7 +1151,7 @@ f2ptr f2__largeinteger__greatest_common_factor(f2ptr cause, f2ptr this, f2ptr th
   return f2__largeinteger__greatest_common_factor(  cause, small, subtraction);
 }
 def_pcfunk2(largeinteger__greatest_common_factor, this, that,
-	    "",
+	    "returns the greatest common factor of this and that.",
 	    return f2__largeinteger__greatest_common_factor(this_cause, this, that));
 
 /*
@@ -1228,7 +1228,7 @@ f2ptr f2__largeinteger__square_root(f2ptr cause, f2ptr this) {
   return raw__largeinteger__square_root(cause, this);
 }
 def_pcfunk1(largeinteger__square_root, this,
-	    "",
+	    "returns the square root of this.",
 	    return f2__largeinteger__square_root(this_cause, this));
 
 f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
@@ -1255,7 +1255,7 @@ f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
   return factor_indices;
 }
 def_pcfunk1(largeinteger__prime_factor_indices, this,
-	    "",
+	    "returns the indices (i.e. [prime index]) of the prime factors of this.",
 	    return f2__largeinteger__prime_factor_indices(this_cause, this));
 
 f2ptr raw__largeinteger__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
@@ -1277,7 +1277,7 @@ f2ptr f2__largeinteger__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   return raw__largeinteger__multiplied_by(cause, this, number);
 }
 def_pcfunk2(largeinteger__multiplied_by, this, that,
-	    "",
+	    "returns the result of multiplying a largeinteger by any other type of number.",
 	    return f2__largeinteger__multiplied_by(this_cause, this, that));
 
 
@@ -1295,7 +1295,7 @@ f2ptr f2__largeinteger__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 126111, nil);
 }
 def_pcfunk2(largeinteger__divided_by, this, that,
-	    "",
+	    "returns the result of dividing a largeinteger by any other type of number.",
 	    return f2__largeinteger__divided_by(this_cause, this, that));
 
 
@@ -1313,7 +1313,7 @@ f2ptr f2__largeinteger__plus(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 2642641, nil);
 }
 def_pcfunk2(largeinteger__plus, this, that,
-	    "",
+	    "returns the result of adding a largeinteger and any other type of number.",
 	    return f2__largeinteger__plus(this_cause, this, that));
 
 
@@ -1331,7 +1331,7 @@ f2ptr f2__largeinteger__minus(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 164426, nil);
 }
 def_pcfunk2(largeinteger__minus, this, that,
-	    "",
+	    "returns the result of subtracting a largeinteger and any other type of number.",
 	    return f2__largeinteger__minus(this_cause, this, that));
 
 
@@ -1349,7 +1349,7 @@ f2ptr f2__largeinteger__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 426241, nil);
 }
 def_pcfunk2(largeinteger__is_greater_than, this, that,
-	    "",
+	    "returns whether a largeinteger is greater than any other type of number.",
 	    return f2__largeinteger__is_greater_than(this_cause, this, that));
 
 
@@ -1367,7 +1367,7 @@ f2ptr f2__largeinteger__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   return f2larva__new(cause, 11351, nil);
 }
 def_pcfunk2(largeinteger__is_less_than, this, that,
-	    "",
+	    "returns whether a largeinteger is less than any other type of number.",
 	    return f2__largeinteger__is_less_than(this_cause, this, that));
 
 
@@ -1385,7 +1385,7 @@ f2ptr f2__largeinteger__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr n
   return f2larva__new(cause, 11353, nil);
 }
 def_pcfunk2(largeinteger__is_numerically_equal_to, this, that,
-	    "",
+	    "returns whether a largeinteger is numerically equal to any other type of number.",
 	    return f2__largeinteger__is_numerically_equal_to(this_cause, this, that));
 
 
@@ -1436,32 +1436,32 @@ void f2__primobject_largeinteger__initialize() {
   
   initialize_primobject_2_slot(largeinteger, is_negative, integer_array);
   
-  f2__primcfunk__init__2(largeinteger__less_than, this, that, "compare two largeintegers for which is less and return a boolean value as the result.");
-  f2__primcfunk__init__2(largeinteger__greater_than, this, that, "compare two largeintegers for which is greater and return a boolean value as the result.");
-  f2__primcfunk__init__2(largeinteger__add, this, that, "add two largeintegers and return a new largeinteger as the result.");
-  f2__primcfunk__init__1(largeinteger__negative, this, "returns the negative of a largeinteger.");
-  f2__primcfunk__init__2(largeinteger__subtract, this, that, "returns the result of subtracting two largeintegers.");
-  f2__primcfunk__init__2(largeinteger__bitshift_left, this, bit_distance, "returns the result of bitshifting one largeinteger to the left by an integer bit distance.");
-  f2__primcfunk__init__2(largeinteger__bitshift_right, this, bit_distance, "returns the result of bitshifting one largeinteger to the right by an integer bit distance.");
-  f2__primcfunk__init__2(largeinteger__multiply_largeinteger, this, that, "returns the result of multiplying two largeintegers.");
-  f2__primcfunk__init__2(largeinteger__quotient_and_remainder, this, that, "returns the quotient and remainder of a largeinteger division in a cons cell.");
-  f2__primcfunk__init__2(largeinteger__divide, this, that, "returns the result of dividing two largeintegers.");
-  f2__primcfunk__init__2(largeinteger__modulo, this, that, "returns the result of the modulo of two largeintegers.");
-  f2__primcfunk__init__1(largeinteger__print, this, "prints a large integer in decimal format to the standard output.");
-  f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that, "returns the greatest common factor of this and that.");
-  f2__primcfunk__init__1(largeinteger__square_root, this, "returns the square root of this.");
-  f2__primcfunk__init__1(largeinteger__prime_factor_indices, this, "returns the indices (i.e. [prime index]) of the prime factors of this.");
-  f2__primcfunk__init__1(largeinteger__as__double, this, "returns this as a double.");
-  f2__primcfunk__init__2(largeinteger__multiplied_by, this, that, "returns the result of multiplying a largeinteger by any other type of number.");
-  f2__primcfunk__init__2(largeinteger__divided_by, this, that, "returns the result of dividing a largeinteger by any other type of number.");
-  f2__primcfunk__init__2(largeinteger__plus, this, that, "returns the result of adding a largeinteger and any other type of number.");
-  f2__primcfunk__init__2(largeinteger__minus, this, that, "returns the result of subtracting a largeinteger and any other type of number.");
-  f2__primcfunk__init__2(largeinteger__is_greater_than, this, that, "returns whether a largeinteger is greater than any other type of number.");
-  f2__primcfunk__init__2(largeinteger__is_less_than, this, that, "returns whether a largeinteger is less than any other type of number.");
-  f2__primcfunk__init__2(largeinteger__is_numerically_equal_to, this, that, "returns whether a largeinteger is numerically equal to any other type of number.");
+  f2__primcfunk__init__2(largeinteger__less_than, this, that);
+  f2__primcfunk__init__2(largeinteger__greater_than, this, that);
+  f2__primcfunk__init__2(largeinteger__add, this, that);
+  f2__primcfunk__init__1(largeinteger__negative, this);
+  f2__primcfunk__init__2(largeinteger__subtract, this, that);
+  f2__primcfunk__init__2(largeinteger__bitshift_left, this, bit_distance);
+  f2__primcfunk__init__2(largeinteger__bitshift_right, this, bit_distance);
+  f2__primcfunk__init__2(largeinteger__multiply_largeinteger, this, that);
+  f2__primcfunk__init__2(largeinteger__quotient_and_remainder, this, that);
+  f2__primcfunk__init__2(largeinteger__divide, this, that);
+  f2__primcfunk__init__2(largeinteger__modulo, this, that);
+  f2__primcfunk__init__1(largeinteger__print, this);
+  f2__primcfunk__init__2(largeinteger__greatest_common_factor, this, that);
+  f2__primcfunk__init__1(largeinteger__square_root, this);
+  f2__primcfunk__init__1(largeinteger__prime_factor_indices, this);
+  f2__primcfunk__init__1(largeinteger__as__double, this);
+  f2__primcfunk__init__2(largeinteger__multiplied_by, this, that);
+  f2__primcfunk__init__2(largeinteger__divided_by, this, that);
+  f2__primcfunk__init__2(largeinteger__plus, this, that);
+  f2__primcfunk__init__2(largeinteger__minus, this, that);
+  f2__primcfunk__init__2(largeinteger__is_greater_than, this, that);
+  f2__primcfunk__init__2(largeinteger__is_less_than, this, that);
+  f2__primcfunk__init__2(largeinteger__is_numerically_equal_to, this, that);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(largeinteger__terminal_print_with_frame, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(largeinteger__terminal_print_with_frame, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

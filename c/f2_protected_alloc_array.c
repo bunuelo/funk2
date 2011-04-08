@@ -186,4 +186,3 @@ s64 funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t*
   }
   return (s64)(buffer_iter - buffer);
 }
-

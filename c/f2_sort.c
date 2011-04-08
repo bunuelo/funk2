@@ -118,7 +118,7 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr this) {
 }
 
 def_pcfunk1(sort_integer_array, integers,
-	    "",
+	    "sort an array of integers in place., """,
 	    return f2__integer_array__quicksort(this_cause, integers));
 
 
@@ -201,7 +201,7 @@ f2ptr f2__array__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   return f2__array__quicksort(cause, this, comparison_funk);
 }
 def_pcfunk2(array__sort, this, comparison_funk,
-	    "",
+	    "sort an array of elements in place by user-provided comparison_funk.",
 	    return f2__array__sort(this_cause, this, comparison_funk));
 
 
@@ -224,7 +224,7 @@ f2ptr f2__conslist__sort(f2ptr cause, f2ptr this, f2ptr comparison_funk) {
   return raw__conslist__sort(cause, this, comparison_funk);
 }
 def_pcfunk2(conslist__sort, this, comparison_funk,
-	    "",
+	    "returns a new conslist that is this conslist sorted by user-provided comparison_funk.",
 	    return f2__conslist__sort(this_cause, this, comparison_funk));
 
 
@@ -238,9 +238,9 @@ void f2__sort__initialize() {
   
   f2__sort__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(sort_integer_array, this, "sort an array of integers in place.");
-  f2__primcfunk__init__2(array__quicksort, this, comparison_funk, "sort an array of elements in place by user-provided comparison_funk.");
-  f2__primcfunk__init__2(array__sort, this, comparison_funk, "sort an array of elements in place by user-provided comparison_funk.");
-  f2__primcfunk__init__2(conslist__sort, this, comparison_funk, "returns a new conslist that is this conslist sorted by user-provided comparison_funk.");
+  f2__primcfunk__init__1(sort_integer_array, this);
+  f2__primcfunk__init__2(array__quicksort, this, comparison_funk);
+  f2__primcfunk__init__2(array__sort, this, comparison_funk);
+  f2__primcfunk__init__2(conslist__sort, this, comparison_funk);
 }
 

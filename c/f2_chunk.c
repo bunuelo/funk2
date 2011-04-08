@@ -70,7 +70,7 @@ f2ptr f2__chunk__save(f2ptr cause, f2ptr this, f2ptr filename) {
   return raw__chunk__save(cause, this, filename);
 }
 def_pcfunk2(chunk__save, this, filename,
-	    "",
+	    "Save this chunk to a file of filename.",
 	    return f2__chunk__save(this_cause, this, filename));
 
 
@@ -117,7 +117,7 @@ f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
   return new_chunk;
 }
 def_pcfunk1(chunk__load, filename,
-	    "",
+	    "Load a chunk from a filename.",
 	    return f2__chunk__load(this_cause, filename));
 
 
@@ -141,9 +141,9 @@ void f2__chunk__initialize() {
   f2__chunk__reinitialize_globalvars();
   
   {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_chunk.save__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__save, this, filename, cfunk, "save this chunk to a file of filename."); __funk2.globalenv.object_type.ptype.ptype_chunk.save__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__save, this, filename, cfunk); __funk2.globalenv.object_type.ptype.ptype_chunk.save__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__1(chunk__load, filename, "load a chunk from a filename");
+  f2__primcfunk__init__1(chunk__load, filename);
   
 }
 

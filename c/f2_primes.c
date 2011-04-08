@@ -90,7 +90,7 @@ f2ptr f2__prime_array__new(f2ptr cause, f2ptr prime_count) {
   return raw__prime_array__new(cause, prime_count__i);
 }
 def_pcfunk1(prime_array__new, prime_count,
-	    "",
+	    "generate the first <prime_count> prime numbers and return them in an array., """,
 	    return f2__prime_array__new(this_cause, prime_count));
 
 f2ptr raw__prime_array__new_by_extension(f2ptr cause, f2ptr this, u64 prime_count) {
@@ -133,7 +133,7 @@ f2ptr f2__prime_array__new_by_extension(f2ptr cause, f2ptr this, f2ptr prime_cou
   return raw__prime_array__new_by_extension(cause, this, prime_count__i);
 }
 def_pcfunk2(prime_array__new_by_extension, this, prime_count,
-	    "",
+	    "generate the first <prime_count> prime numbers by extending a shorted array of prime numbers.",
 	    return f2__prime_array__new_by_extension(this_cause, this, prime_count));
 
 // funk2_primes_t
@@ -174,7 +174,7 @@ f2ptr f2__prime(f2ptr cause, f2ptr prime_index) {
   return raw__prime(cause, prime_index__i);
 }
 def_pcfunk1(prime, prime_index,
-	    "",
+	    "return the <prime_index>'th prime (index 0 => 2, index 1 => 3, index 2 => 5, etc.)",
 	    return f2__prime(this_cause, prime_index));
 
 // **
@@ -192,8 +192,8 @@ void f2__primes__initialize() {
   
   f2__primes__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(prime_array__new, prime_count, "generate the first <prime_count> prime numbers and return them in an array.");
-  f2__primcfunk__init__2(prime_array__new_by_extension, this, prime_count, "generate the first <prime_count> prime numbers by extending a shorted array of prime numbers.");
-  f2__primcfunk__init__1(prime, prime_index, "return the <prime_index>'th prime (index 0 => 2, index 1 => 3, index 2 => 5, etc.)");
+  f2__primcfunk__init__1(prime_array__new, prime_count);
+  f2__primcfunk__init__2(prime_array__new_by_extension, this, prime_count);
+  f2__primcfunk__init__1(prime, prime_index);
 }
 

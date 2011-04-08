@@ -146,6 +146,6 @@ void f2__load__reinitialize_globalvars() {
 void f2__load__initialize() {
   f2__load__reinitialize_globalvars();
   
-  f2__primcfunk__init(load, "");
+  f2__primcfunk__init(load);
 }
 

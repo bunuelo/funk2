@@ -53,7 +53,6 @@
 #include "f2_garbage_collector.h"
 #include "f2_garbage_collector_pool.h"
 #include "f2_globalenv.h"
-#include "f2_glwindow.h"
 #include "f2_graph.h"
 #include "f2_graph_cluster.h"
 #include "f2_graph_match_error_correcting.h"
@@ -180,9 +179,6 @@ typedef struct funk2_s {
   funk2_openglu_t                     openglu;
   funk2_xxf86vm_t                     xxf86vm;
   funk2_xlib_t                        xlib;
-#if defined(F2__GLWINDOW__H)
-  funk2_glwindow_t                    glwindow;
-#endif
   funk2_cpu_t                         cpu;
   funk2_primes_t                      primes;
   funk2_object_t                      object;

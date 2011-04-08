@@ -103,7 +103,6 @@ void f2__initialize() {
   f2__simple_repl__initialize();
   f2__garbage_collector__initialize();
   f2__frame_objects__initialize();
-  f2__glwindow__initialize();
   f2__agent__initialize();
   f2__primobject_hash__initialize();
   f2__dlfcn__initialize();
@@ -188,7 +187,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_openglu__init(&(this->openglu));
   funk2_xxf86vm__init(&(this->xxf86vm));
   funk2_xlib__init(&(this->xlib));
-  funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
   funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
   
@@ -378,7 +376,6 @@ void funk2__destroy(funk2_t* this) {
   funk2_openglu__destroy(&(this->openglu));
   funk2_xxf86vm__destroy(&(this->xxf86vm));
   funk2_xlib__destroy(&(this->xlib));
-  funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_cmutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));

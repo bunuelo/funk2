@@ -23,30 +23,31 @@
 
 // stream
 
-def_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
+def_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
 
 f2ptr __file_stream__symbol        = -1;
 f2ptr __socket_stream__symbol      = -1;
 f2ptr __string_stream__symbol      = -1;
 f2ptr __text_window_stream__symbol = -1;
 
-f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_descriptor, f2ptr string, f2ptr index) {
-  return f2stream__new(cause, f2__cmutex__new(cause), stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
+f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_handle, f2ptr string, f2ptr index) {
+  return f2stream__new(cause, f2__cmutex__new(cause), stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
 }
-def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index,
+def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index,
 	    "",
-	    return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index));
+	    return f2__stream__new(this_cause, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index));
 
 
-f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor) {
+f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_handle) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
-  boolean_t rewindable = boolean__true;
-  f2ptr rewind_length = f2integer__new(cause, 0);
-  return f2__stream__new(cause, __file_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_descriptor, nil, nil);
+  assert_argument_type(file_handle, file_handle);
+  boolean_t rewindable    = boolean__true;
+  f2ptr     rewind_length = f2integer__new(cause, 0);
+  return f2__stream__new(cause, __file_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_handle, nil, nil);
 }
-def_pcfunk1(file_stream__new, file_descriptor,
+def_pcfunk1(file_stream__new, file_handle,
 	    "",
-	    return f2__file_stream__new(this_cause, file_descriptor));
+	    return f2__file_stream__new(this_cause, file_handle));
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this) {
   if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
@@ -55,15 +56,16 @@ boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this) {
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__file_stream__is_type(cause, this));}
 
 
-f2ptr f2__socket_stream__new(f2ptr cause, f2ptr file_descriptor) {
+f2ptr f2__socket_stream__new(f2ptr cause, f2ptr file_handle) {
   if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
-  boolean_t rewindable = boolean__true;
-  f2ptr rewind_length = f2integer__new(cause, 0);
-  return f2__stream__new(cause, __socket_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_descriptor, nil, nil);
+  assert_argument_type(file_handle, file_handle);
+  boolean_t rewindable    = boolean__true;
+  f2ptr     rewind_length = f2integer__new(cause, 0);
+  return f2__stream__new(cause, __socket_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_handle, nil, nil);
 }
-def_pcfunk1(socket_stream__new, file_descriptor,
+def_pcfunk1(socket_stream__new, file_handle,
 	    "",
-	    return f2__socket_stream__new(this_cause, file_descriptor));
+	    return f2__socket_stream__new(this_cause, file_handle));
 
 boolean_t raw__socket_stream__is_type(f2ptr cause, f2ptr this) {
   if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
@@ -74,8 +76,10 @@ f2ptr f2__socket_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(ra
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
-  boolean_t rewindable = boolean__true;
-  f2ptr rewind_length = f2integer__new(cause, 0);
+  assert_argument_type(string,  string);
+  assert_argument_type(integer, index);
+  boolean_t rewindable    = boolean__true;
+  f2ptr     rewind_length = f2integer__new(cause, 0);
   return f2__stream__new(cause, __string_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, nil, string, index);
 }
 def_pcfunk2(string_stream__new, string, index,
@@ -100,7 +104,7 @@ f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
   if (fd == -1) {
     return nil;
   }
-  return f2__file_stream__new(cause, f2integer__new(cause, fd));
+  return f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, fd)));
 }
 
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
@@ -119,30 +123,20 @@ def_pcfunk2(stream__new_open_file, filename, mode,
 
 f2ptr f2__file_stream__close(f2ptr cause, f2ptr this) {
   assert_argument_type(file_stream, this);
-  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  if (! raw__integer__is_type(cause, file_descriptor)) {
+  f2ptr file_handle = f2stream__file_handle(this, cause);
+  if (! raw__file_handle__is_type(cause, file_handle)) {
     return f2larva__new(cause, 1135156, nil);
   }
-  int fd = f2integer__i(file_descriptor, cause);
-  int result = close(fd);
-  if (result == -1) {
-    return nil;
-  }
-  return f2integer__new(cause, result);
+  return f2__file_handle__close(cause, file_handle);
 }
 
 f2ptr f2__socket_stream__close(f2ptr cause, f2ptr this) {
   assert_argument_type(socket_stream, this);
-  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  if (! raw__integer__is_type(cause, file_descriptor)) {
-    return f2larva__new(cause, 1213631, nil);
+  f2ptr file_handle = f2stream__file_handle(this, cause);
+  if (! raw__file_handle__is_type(cause, file_handle)) {
+    return f2larva__new(cause, 1135157, nil);
   }
-  int fd = f2integer__i(file_descriptor, cause);
-  int result = close(fd);
-  if (result == -1) {
-    return nil;
-  }
-  return f2integer__new(cause, result);
+  return f2__file_handle__close(cause, file_handle);
 }
 
 
@@ -165,7 +159,7 @@ f2ptr f2__stream__close(f2ptr cause, f2ptr this) {
   return raw__stream__close(cause, this);
 }
 def_pcfunk1(stream__close, this,
-	    "",
+	    "If this stream is a closable_stream, closes this stream.",
 	    return f2__stream__close(this_cause, this));
 
 f2ptr f2__stream__file_mode__rdonly(f2ptr cause) {return f2integer__new(cause, O_RDONLY);}
@@ -194,9 +188,8 @@ f2ptr f2__stream__new_open_file__rdwr(f2ptr cause, f2ptr filename) {
 }
 
 int raw__file_stream__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value) {
-  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  u64 fd                = f2integer__i(file_descriptor, cause);
-  return file_descriptor__set_nonblocking(fd, value);
+  f2ptr file_handle = f2stream__file_handle(this, cause);
+  return f2__file_handle__nonblocking__set(cause, this, f2bool__new(value));
 }
 
 f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -205,9 +198,8 @@ f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
 }
 
 int raw__socket_stream__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value) {
-  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  u64 fd                = f2integer__i(file_descriptor, cause);
-  return file_descriptor__set_nonblocking(fd, value);
+  f2ptr file_handle = f2stream__file_handle(this, cause);
+  return f2__file_handle__nonblocking__set(cause, this, f2bool__new(value));
 }
 
 f2ptr f2__socket_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -254,50 +246,22 @@ void raw__stream__ungetc(f2ptr cause, f2ptr this, char ch) {
 
 f2ptr f2__file_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
   assert_argument_type(file_stream, this);
-  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  if (! raw__integer__is_type(cause, file_descriptor)) {return f2larva__new(cause, 17, nil);}
-  u64 fd = f2integer__i(file_descriptor, cause);
-  u8  data[2] = {0, 0};
-  u32 bytes_read = 0;
-  read_nonblocking_result_t result = read_nonblocking(fd, data, 1, &bytes_read);
-  switch (result) {
-  case read_nonblocking_result__success:
-    if (bytes_read == 1) {
-      return f2char__new(cause, data[0]);
-    }
-    break;
-  case read_nonblocking_result__end_of_file:
+  f2ptr file_handle = f2stream__file_handle(this, cause);
+  f2ptr character   = f2__file_handle__try_read_character(cause, file_handle);
+  if (raw__larva__is_type(cause, character)) {
     return __funk2.reader.end_of_file_exception;
-  case read_nonblocking_result__read_failure:
-  case read_nonblocking_result__select_failure:
-  case read_nonblocking_result__unknown_failure:
-    break;
   }
-  return nil;
+  return character;
 }
 
 f2ptr f2__socket_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
-  assert_argument_type(socket_stream, this);
-  f2ptr file_descriptor = f2stream__file_descriptor(this, cause);
-  if (! raw__integer__is_type(cause, file_descriptor)) {return f2larva__new(cause, 17, nil);}
-  u64 fd = f2integer__i(file_descriptor, cause);
-  u8  data[2] = {0, 0};
-  u32 bytes_read = 0;
-  recv_nonblocking_result_t result = recv_nonblocking(fd, data, 1, &bytes_read);
-  switch (result) {
-  case recv_nonblocking_result__success:
-    if (bytes_read == 1) {
-      return f2char__new(cause, data[0]);
-    }
-    break;
-  case recv_nonblocking_result__disconnected:
+  assert_argument_type(file_stream, this);
+  f2ptr file_handle = f2stream__file_handle(this, cause);
+  f2ptr character   = f2__file_handle__try_read_character(cause, file_handle);
+  if (raw__larva__is_type(cause, character)) {
     return __funk2.reader.end_of_file_exception;
-  case recv_nonblocking_result__recv_failure:
-  case recv_nonblocking_result__select_failure:
-  case recv_nonblocking_result__unknown_failure:
-    break;
   }
-  return nil;
+  return character;
 }
 
 f2ptr f2__string_stream__try_ungetcless_read_character(f2ptr cause, f2ptr this) {
@@ -461,17 +425,17 @@ f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list24__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "stream"),
-						new__symbol(cause, "cmutex"),           f2__stream__cmutex(          cause, this),
-						new__symbol(cause, "stream_type"),     f2__stream__stream_type(    cause, this),
-						new__symbol(cause, "ungetc_stack"),    f2__stream__ungetc_stack(   cause, this),
-						new__symbol(cause, "rewind_stack"),    f2__stream__rewind_stack(   cause, this),
-						new__symbol(cause, "rewindable"),      f2__stream__rewindable(     cause, this),
-						new__symbol(cause, "rewind_length"),   f2__stream__rewind_length(  cause, this),
-						new__symbol(cause, "file_descriptor"), f2__stream__file_descriptor(cause, this),
-						new__symbol(cause, "string"),          f2__stream__string(         cause, this),
-						new__symbol(cause, "index"),           f2__stream__index(          cause, this),
-						new__symbol(cause, "line_number"),     f2__stream__line_number(    cause, this),
-						new__symbol(cause, "column_number"),   f2__stream__column_number(  cause, this)));
+						new__symbol(cause, "cmutex"),          f2__stream__cmutex(       cause, this),
+						new__symbol(cause, "stream_type"),     f2__stream__stream_type(  cause, this),
+						new__symbol(cause, "ungetc_stack"),    f2__stream__ungetc_stack( cause, this),
+						new__symbol(cause, "rewind_stack"),    f2__stream__rewind_stack( cause, this),
+						new__symbol(cause, "rewindable"),      f2__stream__rewindable(   cause, this),
+						new__symbol(cause, "rewind_length"),   f2__stream__rewind_length(cause, this),
+						new__symbol(cause, "file_handle"),     f2__stream__file_handle(  cause, this),
+						new__symbol(cause, "string"),          f2__stream__string(       cause, this),
+						new__symbol(cause, "index"),           f2__stream__index(        cause, this),
+						new__symbol(cause, "line_number"),     f2__stream__line_number(  cause, this),
+						new__symbol(cause, "column_number"),   f2__stream__column_number(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -517,7 +481,7 @@ void f2__primobject__stream__initialize() {
   
   // stream
   
-  initialize_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
+  initialize_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
   
   {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}

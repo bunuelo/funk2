@@ -25,7 +25,7 @@
 // stream
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
-declare_object_type_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number,
+declare_object_type_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number,
 			    f2ptr try_read_character__symbol;
 			    f2ptr try_read_character__funk;
 			    f2ptr rewind__symbol;
@@ -45,7 +45,7 @@ declare_object_type_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_st
 
 // stream
 
-declare_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_descriptor, string, index, line_number, column_number);
+declare_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);
@@ -61,7 +61,7 @@ f2ptr f2__string_stream(f2ptr cause, f2ptr string);
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode);
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode);
 f2ptr f2__file_stream__close(f2ptr cause, f2ptr this);
-f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_descriptor);
+f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_handle);
 f2ptr f2__stream__close(f2ptr cause, f2ptr this);
 f2ptr f2__stream__file_mode__rdonly(f2ptr cause);
 f2ptr f2__stream__file_mode__creat(f2ptr cause);

@@ -189,7 +189,7 @@ f2ptr f2__stream__new_open_file__rdwr(f2ptr cause, f2ptr filename) {
 
 int raw__file_stream__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value) {
   f2ptr file_handle = f2stream__file_handle(this, cause);
-  return f2__file_handle__nonblocking__set(cause, this, f2bool__new(value));
+  return f2__file_handle__nonblocking__set(cause, file_handle, f2bool__new(value));
 }
 
 f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -199,7 +199,7 @@ f2ptr f2__file_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
 
 int raw__socket_stream__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value) {
   f2ptr file_handle = f2stream__file_handle(this, cause);
-  return f2__file_handle__nonblocking__set(cause, this, f2bool__new(value));
+  return f2__file_handle__nonblocking__set(cause, file_handle, f2bool__new(value));
 }
 
 f2ptr f2__socket_stream__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {

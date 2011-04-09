@@ -434,7 +434,9 @@ f2ptr f2gtk_file_chooser_dialog__primobject_type__new_aux(f2ptr cause) {
 // funk2_gtk
 
 void funk2_gtk__thread__start_function(funk2_gtk_t* this) {
+  status("funk2_gtk__thread__start_function: waiting for main_thread__mutex to unlock.");
   funk2_processor_mutex__lock(&(this->main_thread__mutex));
+  status("funk2_gtk__thread__start_function: got main_thread__mutex lock and continuing.");
   if (this->main_thread__active) {
     funk2_processor_mutex__unlock(&(this->main_thread__mutex));
     status("funk2_gtk__thread__start_function warning: NOT beginning processor_thread because already active.");

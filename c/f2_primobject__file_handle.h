@@ -47,5 +47,11 @@ f2ptr  f2__file_handle__new(f2ptr cause, f2ptr fd);
 
 f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause);
 
+// **
+
+void f2__primobject__file_handle__reinitialize_globalvars();
+void f2__primobject__file_handle__initialize();
+
+
 #endif // F2__PRIMOBJECT__FILE_HANDLE__H
 

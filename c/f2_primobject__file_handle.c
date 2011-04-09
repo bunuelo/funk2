@@ -27,6 +27,9 @@ def_primobject_1_slot(file_handle,
 		      file_descriptor);
 
 f2ptr raw__file_handle__new(f2ptr cause, s64 file_descriptor) {
+  if (__file_handle__symbol == -1) {
+    __file_handle__symbol = new__symbol(cause, "file_handle");
+  }
   return f2file_handle__new(cause,
 			    f2integer__new(cause, file_descriptor));
 }

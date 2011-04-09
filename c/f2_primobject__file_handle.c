@@ -66,7 +66,7 @@ def_pcfunk1(file_handle__close, this,
 int raw__file_handle__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value) {
   f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
   s64   fd              = f2integer__i(file_descriptor, cause);
-  return file_handle__set_nonblocking(fd, value);
+  return file_descriptor__set_nonblocking(fd, value);
 }
 
 f2ptr f2__file_handle__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {

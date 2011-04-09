@@ -72,7 +72,7 @@ ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
   int msg_len = strlen(msg);
   u8* temp_msg = (u8*)alloca(2048 + msg_len);
   va_start(args, msg);
-  vsprintf(temp_msg, msg, args);
+  vsprintf((char*)temp_msg, msg, args);
   va_end(args);
   if (raw__file_stream__is_type(cause, stream)) {
     return raw__file_handle__write(cause, file_handle, strlen(temp_msg), temp_msg);

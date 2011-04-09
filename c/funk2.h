@@ -129,6 +129,7 @@
 #include "f2_status.h"
 #include "f2_string.h"
 #include "f2_surrogate_parent.h"
+#include "f2_system_file_handler.h"
 #include "f2_terminal_print.h"
 #include "f2_termios.h"
 #include "f2_time.h"

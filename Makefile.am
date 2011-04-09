@@ -359,6 +359,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_status.c \
   c/f2_string.c \
   c/f2_surrogate_parent.c \
+  c/f2_system_file_handler.c \
   c/f2_terminal_print.c \
   c/f2_termios.c \
   c/f2_tricolor_set.c \

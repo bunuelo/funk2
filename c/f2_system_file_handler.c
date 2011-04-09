@@ -35,11 +35,11 @@ void funk2_system_file_handle__destroy(funk2_system_file_handle_t* this) {
 
 // funk2_system_file_handler
 
-void funk2_system_file_handler__init(funk2_system_file_handle_t* this) {
-  funk2_hash__init(&(this->system_file_handle_fd_hash));
+void funk2_system_file_handler__init(funk2_system_file_handler_t* this) {
+  funk2_hash__init(&(this->system_file_handle_fd_hash), 16); // 2^16 bins
 }
 
-void funk2_system_file_handler__destroy(funk2_system_file_handle_t* this) {
+void funk2_system_file_handler__destroy(funk2_system_file_handler_t* this) {
   funk2_hash__destroy(&(this->system_file_handle_fd_hash));
 }
 

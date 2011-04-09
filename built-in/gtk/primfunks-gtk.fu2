@@ -38,6 +38,8 @@
 
 'widget'
 
+[globalize-funk gtk-widget-ref                                    &primfunk:gtk__widget__ref]
+[globalize-funk gtk-widget-unref                                  &primfunk:gtk__widget__unref]
 [globalize-funk gtk-widget-show_all                               &primfunk:gtk__widget__show_all]
 [globalize-funk gtk-widget-hide_all                               &primfunk:gtk__widget__hide_all]
 [globalize-funk gtk-widget-set_size_request                       &primfunk:gtk__widget__set_size_request]
@@ -77,7 +79,6 @@
 [globalize-funk gtk-pixbuf-get_height                             &primfunk:gtk__pixbuf__get_height]
 [globalize-funk gtk-pixbuf-get_rgba_pixel_data                    &primfunk:gtk__pixbuf__get_rgba_pixel_data]
 [globalize-funk gtk-pixbuf-get_rgb_pixel_data                     &primfunk:gtk__pixbuf__get_rgb_pixel_data]
-[globalize-funk gtk-pixbuf-unref                                  &primfunk:gtk__pixbuf__unref]
 [globalize-funk gtk-container-add                                 &primfunk:gtk__container__add]
 [globalize-funk gtk-container-remove                              &primfunk:gtk__container__remove]
 [globalize-funk gtk-box-pack_start                                &primfunk:gtk__box__pack_start]

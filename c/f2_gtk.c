@@ -667,6 +667,14 @@ void funk2_gtk__update_preview_event__signal_connect(funk2_gtk_t* this, GtkWidge
 
 // object
 
+void funk2_gtk__object__ref(funk2_gtk_t* this, GObject* object) {
+  {
+    gdk_threads_enter();
+    g_object_ref(G_OBJECT(object));
+    gdk_threads_leave();
+  }
+}
+
 void funk2_gtk__object__unref(funk2_gtk_t* this, GObject* object) {
   {
     gdk_threads_enter();
@@ -2495,29 +2503,6 @@ def_pcfunk1(gtk__pixbuf__get_rgb_pixel_data, pixbuf,
 	    return f2__gtk__pixbuf__get_rgb_pixel_data(this_cause, pixbuf));
 
 
-f2ptr raw__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
-#if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
-    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
-    funk2_gtk__object__unref(&(__funk2.gtk), (GObject*)gdk_pixbuf);
-    return nil;
-  } else {
-    return f2__gtk_not_supported_larva__new(cause);
-  }
-#else
-  return f2__gtk_not_supported_larva__new(cause);
-#endif
-}
-
-f2ptr f2__gtk__pixbuf__unref(f2ptr cause, f2ptr this) {
-  assert_argument_type(gdk_pixbuf, this);
-  return raw__gtk__pixbuf__unref(cause, this);
-}
-def_pcfunk1(gtk__pixbuf__unref, this,
-	    "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.",
-	    return f2__gtk__pixbuf__unref(this_cause, this));
-
-
 // container
 
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
@@ -2714,6 +2699,53 @@ def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args,
 
 
 // widget
+
+f2ptr raw__gtk__widget__ref(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
+    funk2_gtk__object__ref(&(__funk2.gtk), (GObject*)gdk_pixbuf);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__ref(f2ptr cause, f2ptr this) {
+  assert_argument_type(gdk_pixbuf, this);
+  return raw__gtk__widget__ref(cause, this);
+}
+def_pcfunk1(gtk__widget__ref, this,
+	    "Adds one reference to a pixbuf.  Use this if you need a Funk2 reference to a GdkPixbuf.  "
+	    "Use unref to release the Funk2 reference when you are finished, so that GTK can garbage collect the object.  ",
+	    return f2__gtk__widget__ref(this_cause, this));
+
+
+f2ptr raw__gtk__widget__unref(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
+    funk2_gtk__object__unref(&(__funk2.gtk), (GObject*)gdk_pixbuf);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__unref(f2ptr cause, f2ptr this) {
+  assert_argument_type(gdk_pixbuf, this);
+  return raw__gtk__widget__unref(cause, this);
+}
+def_pcfunk1(gtk__widget__unref, this,
+	    "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.",
+	    return f2__gtk__widget__unref(this_cause, this));
+
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
@@ -5376,6 +5408,8 @@ void f2__gtk__initialize() {
   
   // widget
   
+  f2__primcfunk__init__1(gtk__widget__ref,                          this);
+  f2__primcfunk__init__1(gtk__widget__unref,                        this);
   f2__primcfunk__init__1(gtk__widget__show_all,                     widget);
   f2__primcfunk__init__1(gtk__widget__hide_all,                     widget);
   f2__primcfunk__init__3(gtk__widget__set_size_request,             widget, width, height);
@@ -5431,7 +5465,6 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__1(gtk__pixbuf__get_height,                   this);
   f2__primcfunk__init__1(gtk__pixbuf__get_rgba_pixel_data,          this);
   f2__primcfunk__init__1(gtk__pixbuf__get_rgb_pixel_data,           this);
-  f2__primcfunk__init__1(gtk__pixbuf__unref,                        this);
   
   // container
   

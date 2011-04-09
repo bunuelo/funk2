@@ -304,6 +304,16 @@
   [have fiber_vbox remove fibermon_fiber]
   [have fibermon_fiber_hash remove [get fibermon_fiber fiber]]]
 
+[deftypefunk fibermon_processor execute move_fiber [fibermon_fiber destination_processor]
+  [if [not [is-type `fibermon_fiber fibermon_fiber]]
+      [error bug_type `attempted_to_remove_fiber_that_is_not_a_fibermon_fiber]]
+  [have [get fibermon_fiber widget] hide_all]
+  [have [get fibermon_fiber widget] ref]
+  [have fiber_vbox remove fibermon_fiber]
+  [have fibermon_fiber_hash remove [get fibermon_fiber fiber]]
+  [have destination_processor add_fiber fibermon_fiber]
+  [have [get fibermon_fiber widget] unref]]
+
 
 'fibermon'
 
@@ -373,9 +383,8 @@
 				[if [not [== old_known_index current_index]]
 				    [let [[fibermon_fiber [have fibermon_fiber_hash lookup fiber]]]
 				      [have index_fiber_hash remove fiber]
-				      [have [get processor_array elt old_known_index] remove_fiber fibermon_fiber]
-				      [have index_fiber_hash add fiber current_index]
-				      [have [get processor_array elt   current_index] add_fiber    fibermon_fiber]]]]
+				      [have [get processor_array elt old_known_index] move_fiber fibermon_fiber [get processor_array elt current_index]]
+				      [have index_fiber_hash add fiber current_index]]]]
 			    [let [[fibermon_fiber [new fibermon_fiber fiber]]]
 			      [have index_fiber_hash    add fiber current_index]
 			      [have fibermon_fiber_hash add fiber fibermon_fiber]

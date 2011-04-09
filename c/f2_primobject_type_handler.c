@@ -212,6 +212,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "optimize_data";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2optimize_data__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_fiber";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2optimize_fiber__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_context";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2optimize_context__primobject_type__new_aux(cause));}
+  {char* type_name = "file_handle";                      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                      f2file_handle__primobject_type__new_aux(cause));}
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {

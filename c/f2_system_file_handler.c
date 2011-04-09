@@ -46,7 +46,7 @@ void funk2_system_file_handler__destroy(funk2_system_file_handler_t* this) {
 funk2_system_file_handle_t* funk2_system_file_handler__get_system_file_handle_by_fd(funk2_system_file_handler_t* this, int fd) {
   funk2_system_file_handle_t* file_handle = (funk2_system_file_handle_t*)from_ptr(funk2_hash__lookup(&(this->system_file_handle_fd_hash), fd));
   if (file_handle == NULL) {
-    file_handle = (funk2_system_file_handle_t*)f2__malloc(sizeof(funk2_system_file_handlet_t));
+    file_handle = (funk2_system_file_handle_t*)f2__malloc(sizeof(funk2_system_file_handle_t));
     funk2_system_file_handle__init(file_handle, fd);
     funk2_hash__add(&(this->system_file_handle_fd_hash), fd, (u64)to_ptr(file_handle));
   }

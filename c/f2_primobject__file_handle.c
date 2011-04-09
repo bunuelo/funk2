@@ -72,6 +72,7 @@ f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__file_handle__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
   __file_handle__symbol = new__symbol(cause, "file_handle");
 }
 

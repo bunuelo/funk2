@@ -35,7 +35,7 @@ f2ptr f2__file_handle__new(f2ptr cause, f2ptr fd) {
   assert_argument_type(integer, fd);
   return raw__file_handle__new(cause, fd);
 }
-def_pcfunk2(file_handle__new, fd,
+def_pcfunk1(file_handle__new, fd,
 	    "Returns a new file_handle object for the given integral file_descriptor.",
 	    return f2__file_handle__new(this_cause, fd));
 

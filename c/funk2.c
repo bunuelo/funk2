@@ -64,6 +64,7 @@ void f2__initialize() {
   f2__primobject__stream__initialize();
   f2__primobject__traced_cmutex__initialize();
   f2__primobject__fiber_trigger__initialize();
+  f2__primobject__file_handle__initialize();
   f2__primcfunks__initialize();
   f2__array__initialize();
   f2__reader__initialize();

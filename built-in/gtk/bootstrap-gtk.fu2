@@ -28,8 +28,8 @@
 [deftypefunk gtk_widget execute update_preview_event-signal_connect [funk args]             [gtk-update_preview_event-signal_connect [get this widget] funk args]]
 
 'GtkWidget'
-[deftypefunk gdk_widget execute ref                    []                                      [gtk-widget-ref                    [get this widget]]]
-[deftypefunk gdk_widget execute unref                  []                                      [gtk-widget-unref                  [get this widget]]]
+[deftypefunk gtk_widget execute ref                    []                                      [gtk-widget-ref                    [get this widget]]]
+[deftypefunk gtk_widget execute unref                  []                                      [gtk-widget-unref                  [get this widget]]]
 [deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
 [deftypefunk gtk_widget execute hide_all               []                                      [gtk-widget-hide_all               [get this widget]]]
 [deftypefunk gtk_widget execute request_size           [width height]                          [gtk-widget-set_size_request       [get this widget] width height]]

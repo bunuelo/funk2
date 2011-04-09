@@ -33,6 +33,10 @@ declare_object_type_1_slot(file_handle,
 			   f2ptr nonblocking__set__funk;
 			   f2ptr try_read_character__symbol;
 			   f2ptr try_read_character__funk;
+			   f2ptr write__symbol;
+			   f2ptr write__funk;
+			   f2ptr send__symbol;
+			   f2ptr send__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -48,17 +52,20 @@ declare_object_type_1_slot(file_handle,
 declare_primobject_1_slot(file_handle,
 			  file_descriptor);
 
-f2ptr raw__file_handle__new(f2ptr cause, s64 file_descriptor);
-f2ptr  f2__file_handle__new(f2ptr cause, f2ptr file_descriptor);
-
-f2ptr raw__file_handle__close             (f2ptr cause, f2ptr this);
-f2ptr  f2__file_handle__close             (f2ptr cause, f2ptr this);
-int   raw__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, boolean_t value);
-f2ptr  f2__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, f2ptr value);
-f2ptr raw__file_handle__try_read_character(f2ptr cause, f2ptr this);
-f2ptr  f2__file_handle__try_read_character(f2ptr cause, f2ptr this);
-int   raw__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, boolean_t value);
-f2ptr  f2__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr   raw__file_handle__new               (f2ptr cause, s64 file_descriptor);
+f2ptr    f2__file_handle__new               (f2ptr cause, f2ptr file_descriptor);
+f2ptr   raw__file_handle__close             (f2ptr cause, f2ptr this);
+f2ptr    f2__file_handle__close             (f2ptr cause, f2ptr this);
+int     raw__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, boolean_t value);
+f2ptr    f2__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr   raw__file_handle__try_read_character(f2ptr cause, f2ptr this);
+f2ptr    f2__file_handle__try_read_character(f2ptr cause, f2ptr this);
+ssize_t raw__file_handle__write             (f2ptr cause, f2ptr this, s64 data__length, u8* data);
+f2ptr    f2__file_handle__write             (f2ptr cause, f2ptr this, f2ptr string);
+ssize_t raw__file_handle__send              (f2ptr cause, f2ptr this, s64 data__length, u8* data);
+f2ptr    f2__file_handle__send              (f2ptr cause, f2ptr this, f2ptr string);
+int     raw__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, boolean_t value);
+f2ptr    f2__file_handle__nonblocking__set  (f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause);
 

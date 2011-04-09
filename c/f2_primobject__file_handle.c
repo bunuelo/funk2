@@ -112,6 +112,56 @@ def_pcfunk1(file_handle__try_read_character, this,
 	    return f2__file_handle__try_read_character(this_cause, this));
 
 
+ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* data) {
+  if (! raw__file_handle__is_type(cause, this)) {
+    error(nil, "file_handle-writef error: this is not file_handle.");
+  }
+  f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
+  int   fd              = f2integer__i(file_descriptor, cause);
+  return write(fd, data, data__length);
+}
+
+f2ptr f2__file_handle__write(f2ptr cause, f2ptr this, f2ptr string) {
+  assert_argument_type(file_handle, this);
+  assert_argument_type(string,      string);
+  s64 string__length = raw__string__length(cause, string);
+  u8* string__str    = (u8*)from_ptr(f2__malloc(string__length + 1));
+  raw__string__str_copy(cause, string, string__str);
+  string__str[string__length] = 0;
+  f2ptr bytes_written = f2integer__new(cause, raw__file_handle__write(cause, this, string__length, string__str));
+  f2__free(to_ptr(string__str));
+  return bytes_written;
+}
+def_pcfunk2(file_handle__write, this, string,
+	    "Writes the given string to this file_handle.",
+	    return f2__file_handle__write(this_cause, this, string));
+
+
+ssize_t raw__file_handle__send(f2ptr cause, f2ptr this, s64 data__length, u8* data) {
+  if (! raw__file_handle__is_type(cause, this)) {
+    error(nil, "file_handle-writef error: this is not file_handle.");
+  }
+  f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
+  int   fd              = f2integer__i(file_descriptor, cause);
+  return send(fd, data, data__length, 0);
+}
+
+f2ptr f2__file_handle__send(f2ptr cause, f2ptr this, f2ptr string) {
+  assert_argument_type(file_handle, this);
+  assert_argument_type(string,      string);
+  s64 string__length = raw__string__length(cause, string);
+  u8* string__str    = (u8*)from_ptr(f2__malloc(string__length + 1));
+  raw__string__str_copy(cause, string, string__str);
+  string__str[string__length] = 0;
+  f2ptr bytes_written = f2integer__new(cause, raw__file_handle__send(cause, this, string__length, string__str));
+  f2__free(to_ptr(string__str));
+  return bytes_written;
+}
+def_pcfunk2(file_handle__send, this, string,
+	    "Sends the given string to this file_handle.",
+	    return f2__file_handle__send(this_cause, this, string));
+
+
 f2ptr raw__file_handle__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -139,6 +189,8 @@ f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "close";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk);}
   {char* slot_name = "nonblocking";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk);}
   {char* slot_name = "try_read_character";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__funk);}
+  {char* slot_name = "write";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk);}
+  {char* slot_name = "send";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk);}
   return this;
 }
@@ -170,6 +222,10 @@ void f2__primobject__file_handle__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__nonblocking__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk = never_gc(cfunk);}
   {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__try_read_character, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__funk = never_gc(cfunk);}
+  {char* symbol_str = "write"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__write, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk = never_gc(cfunk);}
+  {char* symbol_str = "send"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__send, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(file_handle__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk = never_gc(cfunk);}
   

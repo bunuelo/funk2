@@ -81,7 +81,7 @@ void f2__primobject__file_handle__initialize() {
   
   funk2_module_registration__add_module(&(__funk2.module_registration), "file_handle", "", &f2__primobject__file_handle__reinitialize_globalvars);
   
-  f2__file_handle__reinitialize_globalvars();
+  f2__primobject__file_handle__reinitialize_globalvars();
   
   // file_handle
   

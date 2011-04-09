@@ -75,9 +75,9 @@ ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
   vsprintf((char*)temp_msg, msg, args);
   va_end(args);
   if (raw__file_stream__is_type(cause, stream)) {
-    return raw__file_handle__write(cause, file_handle, strlen(temp_msg), temp_msg);
+    return raw__file_handle__write(cause, file_handle, strlen((char*)temp_msg), temp_msg);
   } else if (raw__socket_stream__is_type(cause, stream)) {
-    return raw__file_handle__send(cause, file_handle, strlen(temp_msg), temp_msg);
+    return raw__file_handle__send(cause, file_handle, strlen((char*)temp_msg), temp_msg);
   } else {
     return -1;
   }

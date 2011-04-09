@@ -24,20 +24,21 @@
 // file_handle
 
 def_primobject_1_slot(file_handle,
-		      fd);
+		      file_descriptor);
 
-f2ptr raw__file_handle__new(f2ptr cause, f2ptr fd) {
+f2ptr raw__file_handle__new(f2ptr cause, s64 file_descriptor) {
   return f2file_handle__new(cause,
-			    fd);
+			    f2integer__new(cause, file_descriptor));
 }
 
-f2ptr f2__file_handle__new(f2ptr cause, f2ptr fd) {
-  assert_argument_type(integer, fd);
-  return raw__file_handle__new(cause, fd);
+f2ptr f2__file_handle__new(f2ptr cause, f2ptr file_descriptor) {
+  assert_argument_type(integer, file_descriptor);
+  s64 file_descriptor__i = f2integer__i(file_descriptor, cause);
+  return raw__file_handle__new(cause, file_descriptor__i);
 }
-def_pcfunk1(file_handle__new, fd,
+def_pcfunk1(file_handle__new, file_descriptor,
 	    "Returns a new file_handle object for the given integral file_descriptor.",
-	    return f2__file_handle__new(this_cause, fd));
+	    return f2__file_handle__new(this_cause, file_descriptor));
 
 f2ptr raw__file_handle__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
@@ -45,7 +46,7 @@ f2ptr raw__file_handle__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list4__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "file_handle"),
-					       new__symbol(cause, "fd"),                f2__file_handle__fd(cause, this)));
+					       new__symbol(cause, "file_descriptor"),   f2__file_handle__file_descriptor(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -86,7 +87,7 @@ void f2__primobject__file_handle__initialize() {
   // file_handle
   
   initialize_primobject_1_slot(file_handle,
-			       fd);
+			       file_descriptor);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(file_handle__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk = never_gc(cfunk);}

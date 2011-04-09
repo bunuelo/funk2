@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__file_handle__slot_s funk2_object_type__file_handle__slot_t;
 declare_object_type_1_slot(file_handle,
-			   fd,
+			   file_descriptor,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -40,10 +40,10 @@ declare_object_type_1_slot(file_handle,
 #include "f2_primfunks.h"
 
 declare_primobject_1_slot(file_handle,
-			  fd);
+			  file_descriptor);
 
-f2ptr raw__file_handle__new(f2ptr cause, f2ptr fd);
-f2ptr  f2__file_handle__new(f2ptr cause, f2ptr fd);
+f2ptr raw__file_handle__new(f2ptr cause, s64 file_descriptor);
+f2ptr  f2__file_handle__new(f2ptr cause, f2ptr file_descriptor);
 
 f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause);
 

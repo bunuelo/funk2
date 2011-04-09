@@ -121,7 +121,14 @@ ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* d
   }
   f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
   int   fd              = f2integer__i(file_descriptor, cause);
-  return write(fd, data, data__length);
+  ssize_t bytes_written = -1;
+  {
+    funk2_system_file_handle_t* system_file_handle = funk2_system_file_handler__get_system_file_handle_by_fd(&(__funk2.system_file_handler), fd);
+    funk2_processor_mutex__lock(&(system_file_handle->access_mutex));
+    bytes_written = write(fd, data, data__length);
+    funk2_processor_mutex__unlock(&(system_file_handle->access_mutex));
+  }
+  return bytes_written;
 }
 
 f2ptr f2__file_handle__write(f2ptr cause, f2ptr this, f2ptr string) {
@@ -146,7 +153,14 @@ ssize_t raw__file_handle__send(f2ptr cause, f2ptr this, s64 data__length, u8* da
   }
   f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
   int   fd              = f2integer__i(file_descriptor, cause);
-  return send(fd, data, data__length, 0);
+  ssize_t bytes_written = -1;
+  {
+    funk2_system_file_handle_t* system_file_handle = funk2_system_file_handler__get_system_file_handle_by_fd(&(__funk2.system_file_handler), fd);
+    funk2_processor_mutex__lock(&(system_file_handle->access_mutex));
+    bytes_written = send(fd, data, data__length, 0);
+    funk2_processor_mutex__unlock(&(system_file_handle->access_mutex));
+  }
+  return bytes_written;
 }
 
 f2ptr f2__file_handle__send(f2ptr cause, f2ptr this, f2ptr string) {

@@ -39,8 +39,9 @@ struct funk2_system_file_handler_s {
   funk2_hash_t system_file_handle_fd_hash;
 };
 
-void funk2_system_file_handler__init   (funk2_system_file_handler_t* this);
-void funk2_system_file_handler__destroy(funk2_system_file_handler_t* this);
+void                        funk2_system_file_handler__init   (funk2_system_file_handler_t* this);
+void                        funk2_system_file_handler__destroy(funk2_system_file_handler_t* this);
+funk2_system_file_handle_t* funk2_system_file_handler__get_system_file_handle_by_fd(funk2_system_file_handler_t* this, int fd);
 
 
 // **

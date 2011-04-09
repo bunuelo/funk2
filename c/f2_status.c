@@ -70,7 +70,7 @@ ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "stream_writef error: stream is not stream.");}
   f2ptr file_handle = f2stream__file_handle(stream, cause);
   int msg_len = strlen(msg);
-  char* temp_msg = alloca(2048 + msg_len);
+  u8* temp_msg = (u8*)alloca(2048 + msg_len);
   va_start(args, msg);
   vsprintf(temp_msg, msg, args);
   va_end(args);

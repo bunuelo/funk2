@@ -24,6 +24,25 @@
 
 #include "f2_hash.h"
 
+typedef struct funk2_system_file_handle_s funk2_system_file_handle_t;
+struct funk2_system_file_handle_s {
+  funk2_processor_mutex_t access_mutex;
+  int                     fd;
+};
+
+void funk2_system_file_handle__init   (funk2_system_file_handle_t* this, int fd);
+void funk2_system_file_handle__destroy(funk2_system_file_handle_t* this);
+
+
+typedef struct funk2_system_file_handler_s funk2_system_file_handler_t;
+struct funk2_system_file_handler_s {
+  funk2_hash_t system_file_handle_fd_hash;
+};
+
+void funk2_system_file_handler__init   (funk2_system_file_handle_t* this);
+void funk2_system_file_handler__destroy(funk2_system_file_handle_t* this);
+
+
 // **
 
 void f2__system_file_handler__reinitialize_globalvars();

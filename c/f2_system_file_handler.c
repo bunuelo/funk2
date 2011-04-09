@@ -21,6 +21,29 @@
 
 #include "funk2.h"
 
+// funk2_system_file_handle
+
+void funk2_system_file_handle__init(funk2_system_file_handle_t* this, int fd) {
+  funk2_processor_mutex__init(&(this->access_mutex));
+  this->fd = fd;
+}
+
+void funk2_system_file_handle__destroy(funk2_system_file_handle_t* this) {
+  funk2_processor_mutex__destroy(&(this->access_mutex));
+}
+
+
+// funk2_system_file_handler
+
+void funk2_system_file_handler__init(funk2_system_file_handle_t* this) {
+  funk2_hash__init(&(this->system_file_handle_fd_hash));
+}
+
+void funk2_system_file_handler__destroy(funk2_system_file_handle_t* this) {
+  funk2_hash__destroy(&(this->system_file_handle_fd_hash));
+}
+
+
 // **
 
 void f2__system_file_handler__reinitialize_globalvars() {

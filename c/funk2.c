@@ -143,6 +143,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_cmutex));
   
+  funk2_system_file_handler__init(&(this->system_file_handler));
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   
   status("");
@@ -379,6 +380,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
   funk2_xmlrpc__destroy(&(this->xmlrpc));
+  funk2_system_file_handler__destroy(&(this->system_file_handler));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

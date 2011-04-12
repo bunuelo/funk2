@@ -84,9 +84,13 @@ struct funk2_gtk_s {
 
 #include "f2_primfunks.h"
 
+// g_object
+
+f2ptr f2g_object__primobject_type__new(f2ptr cause);
+
 // gtk_widget
 
-f2ptr f2gtk_widget__primobject_type__new(f2ptr cause);
+f2ptr f2gtk_widget__primobject_type__new_aux(f2ptr cause);
 
 
 // gtk_box

@@ -56,7 +56,7 @@ f2ptr     raw__traced_cmutex__lock(            f2ptr cause, f2ptr this);
 f2ptr      f2__traced_cmutex__lock(            f2ptr cause, f2ptr this);
 f2ptr     raw__traced_cmutex__unlock(          f2ptr cause, f2ptr this);
 f2ptr      f2__traced_cmutex__unlock(          f2ptr cause, f2ptr this);
-boolean_t raw__traced_cmutex__trylock(         f2ptr cause, f2ptr this);
+f2ptr     raw__traced_cmutex__trylock(         f2ptr cause, f2ptr this);
 f2ptr      f2__traced_cmutex__trylock(         f2ptr cause, f2ptr this);
 boolean_t raw__traced_cmutex__is_locked(       f2ptr cause, f2ptr this);
 f2ptr      f2__traced_cmutex__is_locked(       f2ptr cause, f2ptr this);

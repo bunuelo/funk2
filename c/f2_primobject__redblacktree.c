@@ -883,7 +883,13 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  if (raw__larva__is_type(cause, key)) {
+    return key;
+  }
   f2ptr node = raw__redblacktree__lookup_node_with_key(cause, this, key);
+  if (raw__larva__is_type(cause, node)) {
+    return node;
+  }
   if (node != nil) {
     raw__redblacktree__remove_node(cause, this, node);
   }

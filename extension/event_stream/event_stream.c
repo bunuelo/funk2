@@ -131,7 +131,7 @@ f2ptr raw__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) 
       return trigger_result;
     }
   }
-  return result;
+  return nil;
 }
 
 f2ptr f2__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
@@ -146,9 +146,9 @@ f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_even
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
   f2ptr remove_trigger          = raw__event_stream__remove_trigger(         cause, this);
   {
-    f2ptr result = f2__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
+    f2ptr removed_node = f2__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
+    if (raw__larva__is_type(cause, removed_node)) {
+      return removed_node;
     }
   }
   {
@@ -157,7 +157,7 @@ f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_even
       return trigger_result;
     }
   }
-  return result;
+  return nil;
 }
 
 f2ptr f2__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {

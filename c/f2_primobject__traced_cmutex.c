@@ -36,19 +36,25 @@ def_pcfunk0(traced_cmutex__new,
 	    "",
 	    return f2__traced_cmutex__new(this_cause));
 
-boolean_t raw__traced_cmutex__trylock(f2ptr cause, f2ptr this) {
+f2ptr raw__traced_cmutex__trylock(f2ptr cause, f2ptr this) {
   f2ptr     fiber   = f2__this__fiber(cause);
-  boolean_t failure = raw__cmutex__trylock(cause, f2__traced_cmutex__cmutex(cause, this));
+  f2ptr     cmutex  = f2__traced_cmutex__cmutex(cause, this);
+  boolean_t failure = raw__cmutex__trylock(cause, cmutex);
   if (! failure) {
+    f2ptr stack_trace = f2__fiber__stack_trace(cause, fiber);
+    if (raw__larva__is_type(cause, stack_trace)) {
+      raw__cmutex__unlock(cause, cmutex);
+      return stack_trace;
+    }
     f2__traced_cmutex__fiber_with_lock__set(cause, this, fiber);
-    f2__traced_cmutex__lock_stack__set(     cause, this, f2__fiber__stack_trace(cause, fiber));
+    f2__traced_cmutex__lock_stack__set(     cause, this, stack_trace);
   }
-  return failure;
+  return f2bool__new(failure);
 }
 
 f2ptr f2__traced_cmutex__trylock(f2ptr cause, f2ptr this) {
   assert_argument_type(traced_cmutex, this);
-  return f2bool__new(raw__traced_cmutex__trylock(cause, this));
+  return raw__traced_cmutex__trylock(cause, this);
 }
 def_pcfunk1(traced_cmutex__trylock, this,
 	    "",

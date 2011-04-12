@@ -2703,8 +2703,8 @@ def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args,
 f2ptr raw__gtk__widget__ref(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
-    funk2_gtk__object__ref(&(__funk2.gtk), (GObject*)gdk_pixbuf);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, this);
+    funk2_gtk__object__ref(&(__funk2.gtk), (GObject*)gtk_widget);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);
@@ -2719,7 +2719,7 @@ f2ptr f2__gtk__widget__ref(f2ptr cause, f2ptr this) {
   return raw__gtk__widget__ref(cause, this);
 }
 def_pcfunk1(gtk__widget__ref, this,
-	    "Adds one reference to a pixbuf.  Use this if you need a Funk2 reference to a GdkPixbuf.  "
+	    "Adds one reference to a widget.  Use this if you need a Funk2 reference to a GtkWidget.  "
 	    "Use unref to release the Funk2 reference when you are finished, so that GTK can garbage collect the object.  ",
 	    return f2__gtk__widget__ref(this_cause, this));
 
@@ -2727,8 +2727,8 @@ def_pcfunk1(gtk__widget__ref, this,
 f2ptr raw__gtk__widget__unref(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, this);
-    funk2_gtk__object__unref(&(__funk2.gtk), (GObject*)gdk_pixbuf);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, this);
+    funk2_gtk__object__unref(&(__funk2.gtk), (GObject*)gtk_widget);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);
@@ -2743,7 +2743,7 @@ f2ptr f2__gtk__widget__unref(f2ptr cause, f2ptr this) {
   return raw__gtk__widget__unref(cause, this);
 }
 def_pcfunk1(gtk__widget__unref, this,
-	    "Removes one reference to a pixbuf.  Use this if you don't need a funk2 reference to a GdkPixbuf anymore.",
+	    "Removes one reference to a widget.  Use this if you don't need a funk2 reference to a GtkWidget anymore.",
 	    return f2__gtk__widget__unref(this_cause, this));
 
 

@@ -462,7 +462,7 @@ test moving forward speed
 							 
 							 [look_left_and_right]]]
 						  [t
-						   [have this-resource think_to_self 'centered horizontally']]]
+						   [have this-resource think_to_self 'centered horizontally' retina_position_horizontal]]]
 					    ]
 					
 					[prog [have this-resource think_to_self   'no objects in view']

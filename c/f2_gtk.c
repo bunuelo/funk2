@@ -2715,7 +2715,7 @@ f2ptr raw__gtk__widget__ref(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__widget__ref(f2ptr cause, f2ptr this) {
-  assert_argument_type(gdk_pixbuf, this);
+  assert_argument_type(gtk_widget, this);
   return raw__gtk__widget__ref(cause, this);
 }
 def_pcfunk1(gtk__widget__ref, this,
@@ -2739,7 +2739,7 @@ f2ptr raw__gtk__widget__unref(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__gtk__widget__unref(f2ptr cause, f2ptr this) {
-  assert_argument_type(gdk_pixbuf, this);
+  assert_argument_type(gtk_widget, this);
   return raw__gtk__widget__unref(cause, this);
 }
 def_pcfunk1(gtk__widget__unref, this,

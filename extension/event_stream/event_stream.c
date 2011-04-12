@@ -262,7 +262,12 @@ f2ptr raw__event_stream__remove_all(f2ptr cause, f2ptr this) {
       return first;
     }
     if (first != nil) {
-      raw__event_stream__remove(cause, this, first);
+      {
+	f2ptr result = raw__event_stream__remove(cause, this, first);
+	if (raw__larva__is_type(cause, result)) {
+	  return result;
+	}
+      }
       try_again = boolean__true;
     }
   }
@@ -291,7 +296,12 @@ f2ptr raw__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr t
       f2ptr first__time                         = raw__event_stream_event__time(cause, first);
       s64   first__time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(first__time, cause), cause);
       if (first__time__nanoseconds_since_1970 < time__nanoseconds_since_1970) {
-	raw__event_stream__remove(cause, this, first);
+	{
+	  f2ptr result = raw__event_stream__remove(cause, this, first);
+	  if (raw__larva__is_type(cause, result)) {
+	    return result;
+	  }
+	}
 	try_again = boolean__true;
       }
     }

@@ -256,59 +256,18 @@
   [new []
        [construct traced_resource `hold_with_right_hand
 		  [funk [target]
-			[let* [[body  [get this body]]
-			       [mind  [get body mind]]
-			       [name  [get body name]]
-			       ] 
-			  [have this-resource think_to_self 'hold with right hand is starting' target]
-			  [if [get_visual_objects mind]
-			      [prog [print 11]
-				    [if [lookup_visual_object [get_visual_objects mind] target]
-					[if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target] lookup `distance]]
-					    [prog [if [null [get_right_hand_object_name mind]]
-						      [prog [print 'nothing in right hand'] 
-							    [mind-wait_to_call mind builtin_reactive physical pick_up_with_right_hand target]
-							    [print 'activated built-in pick_up']]
-						    [mind-wait_to_call mind learned_reactive physical empty_right_hand ]]]
-					  [prog 
-					   [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-					   [mind-wait_to_call mind builtin_reactive physical pick_up_with_right_hand target]]]
-				      [prog 
-				       [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-				       [mind-wait_to_call mind builtin_reactive physical pick_up_with_right_hand target]]]]
-			    [prog 
-			     [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-			     [mind-wait_to_call mind builtin_reactive physical pick_up_with_right_hand target]]]
-			  ]]]
-       
+			[have this-resource hold_with_right_hand target]]]
        nil]]
+
+
 
 
 [deframe hold_with_left_hand_resource [traced_resource] [[achieved nil]]
   [new []
        [construct traced_resource `hold_with_left_hand
 		  [funk [target]
-			[let* [[body [get this body]]
-			       [mind  [get body mind]]
-			       [name  [get body name]]
-			      ] 
-			  [have this-resource think_to_self 'hold with left hand is starting' target]
-			  [if [get_visual_objects mind]
-			      [if [lookup_visual_object [get_visual_objects mind] target]
-				  [if [> [get [get this body] arm_length] [have [lookup_visual_object [get_visual_objects mind] target]looup  `distance]]
-				      [if [null [get_left_hand_object_name mind]]
-					  [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]
-					[mind-wait_to_call mind learned_reactive physical empty_left_hand ]]
-				    [prog 
-				     [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-				     [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]]]
-				[prog 
-				 [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-				 [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]]]
-			    [prog 
-			     [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-			     [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]]]
-			  ]]] nil]]
+			[have this-resource hold_with_left_hand target]]]
+       nil]]
 
 '*********************fancy resources*******************'
 [deframe learned_open_fridge_resource [traced_resource] [[achieved nil]]

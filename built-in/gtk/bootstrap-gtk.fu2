@@ -27,9 +27,12 @@
 [deftypefunk gtk_widget execute response_event-signal_connect       [funk args]             [gtk-response_event-signal_connect       [get this widget] funk args]]
 [deftypefunk gtk_widget execute update_preview_event-signal_connect [funk args]             [gtk-update_preview_event-signal_connect [get this widget] funk args]]
 
+'GObject'
+[deftypefunk g_object get     g_object [] [g-object-ref   [get this g_object]]]
+[deftypefunk g_object execute ref      [] [g-object-ref   [get this g_object]]]
+[deftypefunk g_object execute unref    [] [g-object-unref [get this g_object]]]
+
 'GtkWidget'
-[deftypefunk gtk_widget execute ref                    []                                      [gtk-widget-ref                    [get this widget]]]
-[deftypefunk gtk_widget execute unref                  []                                      [gtk-widget-unref                  [get this widget]]]
 [deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
 [deftypefunk gtk_widget execute hide_all               []                                      [gtk-widget-hide_all               [get this widget]]]
 [deftypefunk gtk_widget execute request_size           [width height]                          [gtk-widget-set_size_request       [get this widget] width height]]

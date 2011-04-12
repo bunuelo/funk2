@@ -35,11 +35,13 @@
 
 [globalize-funk gtk-update_preview_event-signal_connect           &primfunk:gtk__update_preview_event__signal_connect]
 
+'object'
+
+[globalize-funk g-object-ref                                      &primfunk:g__object__ref]
+[globalize-funk g-object-unref                                    &primfunk:g__object__unref]
 
 'widget'
 
-[globalize-funk gtk-widget-ref                                    &primfunk:gtk__widget__ref]
-[globalize-funk gtk-widget-unref                                  &primfunk:gtk__widget__unref]
 [globalize-funk gtk-widget-show_all                               &primfunk:gtk__widget__show_all]
 [globalize-funk gtk-widget-hide_all                               &primfunk:gtk__widget__hide_all]
 [globalize-funk gtk-widget-set_size_request                       &primfunk:gtk__widget__set_size_request]

@@ -21,6 +21,23 @@
 
 #include "funk2.h"
 
+// g_object
+
+def_frame_object__global__1_slot(g_object, pointer);
+
+f2ptr f2__g_object__new(f2ptr cause, f2ptr pointer) {
+  return f2g_object__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GObject* raw__g_object__as__GObject(f2ptr cause, f2ptr this) {
+  return (GObject*)from_ptr(f2pointer__p(f2__g_object__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+
 // gtk_widget
 
 def_frame_object__global__1_slot(gtk_widget, pointer);
@@ -36,6 +53,14 @@ GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
 }
 
 #endif // F2__GTK__SUPPORTED
+
+
+f2ptr f2gtk_widget__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_widget__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "g_object"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
 
 
 // gtk_box
@@ -298,6 +323,12 @@ GdkPixbuf* raw__gdk_pixbuf__as__GdkPixbuf(f2ptr cause, f2ptr this) {
 }
 
 #endif // F2__GTK__SUPPORTED
+
+f2ptr f2gdk_pixbuf__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gdk_pixbuf__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "g_object"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
 
 
 // gtk_text_mark
@@ -667,7 +698,7 @@ void funk2_gtk__update_preview_event__signal_connect(funk2_gtk_t* this, GtkWidge
 
 // object
 
-void funk2_gtk__object__ref(funk2_gtk_t* this, GObject* object) {
+void funk2_g__object__ref(funk2_gtk_t* this, GObject* object) {
   {
     gdk_threads_enter();
     g_object_ref(G_OBJECT(object));
@@ -675,7 +706,7 @@ void funk2_gtk__object__ref(funk2_gtk_t* this, GObject* object) {
   }
 }
 
-void funk2_gtk__object__unref(funk2_gtk_t* this, GObject* object) {
+void funk2_g__object__unref(funk2_gtk_t* this, GObject* object) {
   {
     gdk_threads_enter();
     g_object_unref(G_OBJECT(object));
@@ -2698,13 +2729,13 @@ def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args,
 
 
 
-// widget
+// g_object
 
-f2ptr raw__gtk__widget__ref(f2ptr cause, f2ptr this) {
+f2ptr raw__g__object__ref(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, this);
-    funk2_gtk__object__ref(&(__funk2.gtk), (GObject*)gtk_widget);
+    GObject* g_object = raw__g_object__as__GObject(cause, this);
+    funk2_g__object__ref(&(__funk2.gtk), g_object);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);
@@ -2714,21 +2745,21 @@ f2ptr raw__gtk__widget__ref(f2ptr cause, f2ptr this) {
 #endif
 }
 
-f2ptr f2__gtk__widget__ref(f2ptr cause, f2ptr this) {
-  assert_argument_type(gtk_widget, this);
-  return raw__gtk__widget__ref(cause, this);
+f2ptr f2__g__object__ref(f2ptr cause, f2ptr this) {
+  assert_argument_type(g_object, this);
+  return raw__g__object__ref(cause, this);
 }
-def_pcfunk1(gtk__widget__ref, this,
-	    "Adds one reference to a widget.  Use this if you need a Funk2 reference to a GtkWidget.  "
+def_pcfunk1(g__object__ref, this,
+	    "Adds one reference to a widget.  Use this if you need a Funk2 reference to a GObject.  "
 	    "Use unref to release the Funk2 reference when you are finished, so that GTK can garbage collect the object.  ",
-	    return f2__gtk__widget__ref(this_cause, this));
+	    return f2__g__object__ref(this_cause, this));
 
 
-f2ptr raw__gtk__widget__unref(f2ptr cause, f2ptr this) {
+f2ptr raw__g__object__unref(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, this);
-    funk2_gtk__object__unref(&(__funk2.gtk), (GObject*)gtk_widget);
+    GObject* g_object = raw__g_object__as__GObject(cause, this);
+    funk2_g__object__unref(&(__funk2.gtk), g_object);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);
@@ -2738,14 +2769,16 @@ f2ptr raw__gtk__widget__unref(f2ptr cause, f2ptr this) {
 #endif
 }
 
-f2ptr f2__gtk__widget__unref(f2ptr cause, f2ptr this) {
-  assert_argument_type(gtk_widget, this);
-  return raw__gtk__widget__unref(cause, this);
+f2ptr f2__g__object__unref(f2ptr cause, f2ptr this) {
+  assert_argument_type(g_object, this);
+  return raw__g__object__unref(cause, this);
 }
-def_pcfunk1(gtk__widget__unref, this,
-	    "Removes one reference to a widget.  Use this if you don't need a funk2 reference to a GtkWidget anymore.",
-	    return f2__gtk__widget__unref(this_cause, this));
+def_pcfunk1(g__object__unref, this,
+	    "Removes one reference to a GTK object.  Use this if you don't need a funk2 reference to a GObject anymore.",
+	    return f2__g__object__unref(this_cause, this));
 
+
+// widget
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
@@ -5323,6 +5356,11 @@ void f2__gtk__initialize() {
   
   f2__string__reinitialize_globalvars();
   
+  // g_object
+  
+  init_frame_object__1_slot(g_object, pointer);
+  
+  
   // gtk_widget
   
   init_frame_object__1_slot(gtk_widget, pointer);
@@ -5406,10 +5444,13 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__3(gtk__update_preview_event__signal_connect, widget, funk, args);
   
+  // object
+  
+  f2__primcfunk__init__1(g__object__ref,                            this);
+  f2__primcfunk__init__1(g__object__unref,                          this);
+  
   // widget
   
-  f2__primcfunk__init__1(gtk__widget__ref,                          this);
-  f2__primcfunk__init__1(gtk__widget__unref,                        this);
   f2__primcfunk__init__1(gtk__widget__show_all,                     widget);
   f2__primcfunk__init__1(gtk__widget__hide_all,                     widget);
   f2__primcfunk__init__3(gtk__widget__set_size_request,             widget, width, height);

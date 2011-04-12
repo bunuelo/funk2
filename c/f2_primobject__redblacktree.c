@@ -41,6 +41,9 @@ def_pcfunk2(redblacktree__new, value_funk, value_comparison_funk,
 def_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
 
 f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
+  if (raw__larva__is_type(cause, key)) {
+    return key;
+  }
   return f2redblacktree_node__new(cause, parent, left, right, color, key);
 }
 
@@ -330,6 +333,9 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
       return nil;
     } else {
       f2ptr better_right_node = raw__redblacktree_node__minimum_not_less_than__node(cause, right_node, value_funk, value_comparison_funk, value);
+      if (raw__larva__is_type(cause, better_right_node)) {
+	return better_right_node;
+      }
       if (better_right_node == nil) {
 	return nil;
       } else {
@@ -342,6 +348,9 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
       return this;
     } else {
       f2ptr better_left_node = raw__redblacktree_node__minimum_not_less_than__node(cause, left_node, value_funk, value_comparison_funk, value);
+      if (raw__larva__is_type(cause, better_left_node)) {
+	return better_left_node;
+      }
       if (better_left_node == nil) {
 	return this;
       } else {
@@ -533,7 +542,7 @@ f2ptr raw__redblacktree__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key
 //  rbt_node__print(tree->head);
 //}
 
-void raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr node) {
+f2ptr raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr node) {
   f2__redblacktree_node__parent__set(cause, node, nil);
   f2__redblacktree_node__left__set(  cause, node, nil);
   f2__redblacktree_node__right__set( cause, node, nil);
@@ -542,20 +551,42 @@ void raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr node
   } else {
     f2ptr value_funk            = f2__redblacktree__value_funk(           cause, this);
     f2ptr value_comparison_funk = f2__redblacktree__value_comparison_funk(cause, this);
-    raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node, value_funk, value_comparison_funk);
+    {
+      f2ptr result = raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node, value_funk, value_comparison_funk);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
   }
+  return nil;
 }
 
-void raw__redblacktree__insert_node(f2ptr cause, f2ptr this, f2ptr node) {
-  raw__redblacktree__simple_binary_insert(cause, this, node);
+f2ptr raw__redblacktree__insert_node(f2ptr cause, f2ptr this, f2ptr node) {
+  {
+    f2ptr result = raw__redblacktree__simple_binary_insert(cause, this, node);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   f2__redblacktree_node__color__set(cause, node, new__symbol(cause, "red"));
   raw__redblacktree_node__insert_case1(cause, node);
   f2__redblacktree__head__set(cause, this, raw__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
 }
 
 f2ptr raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
+  if (raw__larva__is_type(cause, key)) {
+    return key;
+  }
   f2ptr node = f2__redblacktree_node__new(cause, key);
-  raw__redblacktree__insert_node(cause, this, node);
+  if (raw__larva__is_type(cause, node)) {
+    return node;
+  }
+  {
+    f2ptr result = raw__redblacktree__insert_node(cause, this, node);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   return nil;
 }
 

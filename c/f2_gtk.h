@@ -120,7 +120,7 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause);
 
 // gdk_pixbuf
 
-f2ptr f2gdk_pixbuf__primobject_type__new(f2ptr cause);
+f2ptr f2gdk_pixbuf__primobject_type__new_aux(f2ptr cause);
 
 
 // gtk_text_iter

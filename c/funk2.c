@@ -28,6 +28,7 @@ void f2__initialize() {
   f2__redblacktree__initialize();
   f2__memory__initialize();
   f2__ptypes__initialize();
+  f2__system_file_handler__initialize();
   
   // **********************************************************************************************************************************************************************************
   // ** 
@@ -61,9 +62,9 @@ void f2__initialize() {
   f2__primobject_list__initialize();
   f2__primobject_doublelinklist__initialize();
   f2__primobject__stream__initialize();
-  f2__primobject__text_buffer__initialize();
   f2__primobject__traced_cmutex__initialize();
   f2__primobject__fiber_trigger__initialize();
+  f2__primobject__file_handle__initialize();
   f2__primcfunks__initialize();
   f2__array__initialize();
   f2__reader__initialize();
@@ -75,7 +76,6 @@ void f2__initialize() {
   f2__load__initialize();
   f2__socket__initialize();
   f2__trace__initialize();
-  f2__serialize__initialize();
   f2__primfunks__errno__initialize();
   f2__primfunks__fcntl__initialize();
   f2__primfunks__ioctl__initialize();
@@ -103,10 +103,7 @@ void f2__initialize() {
   f2__simple_repl__initialize();
   f2__garbage_collector__initialize();
   f2__frame_objects__initialize();
-  f2__glwindow__initialize();
-  f2__physical_objects__initialize();
   f2__agent__initialize();
-  f2__object_lattice__initialize();
   f2__primobject_hash__initialize();
   f2__dlfcn__initialize();
   f2__cause__initialize();
@@ -147,6 +144,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_cmutex));
   
+  funk2_system_file_handler__init(&(this->system_file_handler));
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   
   status("");
@@ -190,13 +188,12 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_openglu__init(&(this->openglu));
   funk2_xxf86vm__init(&(this->xxf86vm));
   funk2_xlib__init(&(this->xlib));
-  funk2_glwindow__init(&(this->glwindow), (u8*)"funk2 glwindow", 1024, 768, 24, boolean__false);
   funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
   
 #if defined(F2__GTK__SUPPORTED)
   funk2_gtk__init(&(this->gtk), &argc, &argv);
-#endif
+#endif // F2__GTK__SUPPORTED
   
   f2ptr cause = initial_cause();
   
@@ -233,6 +230,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   } else {
     status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
   }
+  
+#if defined(F2__GTK__SUPPORTED)
+  funk2_gtk__start_gtk_main(&(__funk2.gtk));
+#endif // F2__GTK__SUPPORTED
   
   cause = f2__cause__new_with_inherited_properties(cause, nil);
   never_gc(cause);
@@ -380,11 +381,11 @@ void funk2__destroy(funk2_t* this) {
   funk2_openglu__destroy(&(this->openglu));
   funk2_xxf86vm__destroy(&(this->xxf86vm));
   funk2_xlib__destroy(&(this->xlib));
-  funk2_glwindow__destroy(&(this->glwindow));
   funk2_processor_mutex__destroy(&(this->event_id_cmutex));
   funk2_cpu__destroy(&(this->cpu));
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
   funk2_xmlrpc__destroy(&(this->xmlrpc));
+  funk2_system_file_handler__destroy(&(this->system_file_handler));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

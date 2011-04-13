@@ -336,9 +336,9 @@ void f2__zlib__initialize() {
   
   f2__zlib__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(string__deflate, this, "cfunk defined in f2_zlib.c");
-  f2__primcfunk__init__1(chunk__deflate,  this, "cfunk defined in f2_zlib.c");
-  f2__primcfunk__init__1(string__inflate, this, "cfunk defined in f2_zlib.c");
-  f2__primcfunk__init__1(chunk__inflate,  this, "cfunk defined in f2_zlib.c");
+  f2__primcfunk__init__1(string__deflate, this);
+  f2__primcfunk__init__1(chunk__deflate,  this);
+  f2__primcfunk__init__1(string__inflate, this);
+  f2__primcfunk__init__1(chunk__inflate,  this);
 }
 

@@ -503,7 +503,7 @@ void f2__funk2_node__initialize() {
   f2__funk2_node__reinitialize_globalvars();
   //f2ptr cause = f2_funk2_node_c__cause__new(initial_cause(), nil, nil);
   
-  f2__primcfunk__init(funk2_node_handler__known_node_info, "");
+  f2__primcfunk__init(funk2_node_handler__known_node_info);
   
 }
 

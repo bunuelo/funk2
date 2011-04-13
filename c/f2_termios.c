@@ -31,7 +31,7 @@ f2ptr f2__termios__height(f2ptr cause) {
   return f2integer__new(cause, raw__termios__height());
 }
 def_pcfunk0(termios__height,
-	    "",
+	    "returns the current height of the terminal.",
 	    return f2__termios__height(this_cause));
 
 int raw__termios__width() {
@@ -44,7 +44,7 @@ f2ptr f2__termios__width(f2ptr cause) {
   return f2integer__new(cause, raw__termios__width());
 }
 def_pcfunk0(termios__width,
-	    "",
+	    "returns the current width of the terminal.",
 	    return f2__termios__width(this_cause));
 
 int raw__termios__noecho() {
@@ -117,12 +117,12 @@ void f2__termios__initialize() {
   
   f2__termios__reinitialize_globalvars();
   
-  f2__primcfunk__init(termios__width, "returns the current width of the terminal. (as defined in termios.h)");
-  f2__primcfunk__init(termios__height, "returns the current height of the terminal.  (as defined in termios.h)");
-  f2__primcfunk__init(termios__noecho, "(as defined in termios.h)");
-  f2__primcfunk__init(termios__echo, "(as defined in termios.h)");
-  f2__primcfunk__init(termios__nocanon, "(as defined in termios.h)");
-  f2__primcfunk__init(termios__canon, "(as defined in termios.h)");
+  f2__primcfunk__init(termios__width);
+  f2__primcfunk__init(termios__height);
+  f2__primcfunk__init(termios__noecho);
+  f2__primcfunk__init(termios__echo);
+  f2__primcfunk__init(termios__nocanon);
+  f2__primcfunk__init(termios__canon);
 }
 
 

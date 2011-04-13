@@ -35,9 +35,7 @@
 #include "f2_primobject__circular_buffer.h"
 #include "f2_primobject__traced_cmutex.h"
 #include "f2_bug.h"
-#include "f2_physical_objects.h"
 #include "f2_agent.h"
-#include "f2_object_lattice.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
 #include "f2_perception_lattice.h"
@@ -57,6 +55,7 @@
 #include "f2_dlfcn.h"
 #include "f2_core_extension_funk.h"
 #include "f2_core_extension.h"
+#include "f2_primobject__file_handle.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_cmutex;
@@ -123,15 +122,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__list__slot_t                             primobject_type_list;
   funk2_object_type__doublelinklist__slot_t                   primobject_type_doublelinklist;
   funk2_object_type__circular_buffer__slot_t                  primobject_type_circular_buffer;
-  funk2_object_type__physical_rotation__slot_t                primobject_type_physical_rotation;
-  funk2_object_type__physical_position__slot_t                primobject_type_physical_position;
-  funk2_object_type__physical_transform__slot_t               primobject_type_physical_transform;
-  funk2_object_type__physical_texture__slot_t                 primobject_type_physical_texture;
-  funk2_object_type__physical_place__slot_t                   primobject_type_physical_place;
-  funk2_object_type__physical_scene__slot_t                   primobject_type_physical_scene;
   funk2_object_type__agent__slot_t                            primobject_type_agent;
-  funk2_object_type__object_lattice__slot_t                   primobject_type_object_lattice;
-  funk2_object_type__object_lattice_node__slot_t              primobject_type_object_lattice_node;
   funk2_object_type__hash__slot_t                             primobject_type_hash;
   funk2_object_type__cause__slot_t                            primobject_type_cause;
   funk2_object_type__largeinteger__slot_t                     primobject_type_largeinteger;
@@ -155,6 +146,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__optimize_data__slot_t                    primobject_type_optimize_data;
   funk2_object_type__optimize_fiber__slot_t                   primobject_type_optimize_fiber;
   funk2_object_type__optimize_context__slot_t                 primobject_type_optimize_context;
+  funk2_object_type__file_handle__slot_t                      primobject_type_file_handle;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;

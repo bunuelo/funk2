@@ -21,6 +21,11 @@
 
 #include "funk2.h"
 
+// int pthread_num_processors_np(void);
+// int pthread_processor_bind_np(int request, pthread_spu_t *answer, pthread_spu_t spu, pthread_t tid);
+// int pthread_processor_id_np(int request, pthread_spu_t *answer, pthread_spu_t spu);
+
+
 // funk2_virtual_processor_handler
 
 void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* this, u64 virtual_processor_count) {

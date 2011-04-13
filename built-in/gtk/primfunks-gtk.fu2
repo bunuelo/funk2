@@ -35,6 +35,10 @@
 
 [globalize-funk gtk-update_preview_event-signal_connect           &primfunk:gtk__update_preview_event__signal_connect]
 
+'object'
+
+[globalize-funk g-object-ref                                      &primfunk:g__object__ref]
+[globalize-funk g-object-unref                                    &primfunk:g__object__unref]
 
 'widget'
 
@@ -77,7 +81,6 @@
 [globalize-funk gtk-pixbuf-get_height                             &primfunk:gtk__pixbuf__get_height]
 [globalize-funk gtk-pixbuf-get_rgba_pixel_data                    &primfunk:gtk__pixbuf__get_rgba_pixel_data]
 [globalize-funk gtk-pixbuf-get_rgb_pixel_data                     &primfunk:gtk__pixbuf__get_rgb_pixel_data]
-[globalize-funk gtk-pixbuf-unref                                  &primfunk:gtk__pixbuf__unref]
 [globalize-funk gtk-container-add                                 &primfunk:gtk__container__add]
 [globalize-funk gtk-container-remove                              &primfunk:gtk__container__remove]
 [globalize-funk gtk-box-pack_start                                &primfunk:gtk__box__pack_start]

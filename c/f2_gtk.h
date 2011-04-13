@@ -84,9 +84,13 @@ struct funk2_gtk_s {
 
 #include "f2_primfunks.h"
 
+// g_object
+
+f2ptr f2g_object__primobject_type__new(f2ptr cause);
+
 // gtk_widget
 
-f2ptr f2gtk_widget__primobject_type__new(f2ptr cause);
+f2ptr f2gtk_widget__primobject_type__new_aux(f2ptr cause);
 
 
 // gtk_box
@@ -116,7 +120,7 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause);
 
 // gdk_pixbuf
 
-f2ptr f2gdk_pixbuf__primobject_type__new(f2ptr cause);
+f2ptr f2gdk_pixbuf__primobject_type__new_aux(f2ptr cause);
 
 
 // gtk_text_iter
@@ -166,9 +170,10 @@ f2ptr f2gtk_image__primobject_type__new_aux(f2ptr cause);
 
 // funk2_gtk
 
-void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc);
-void funk2_gtk__destroy(funk2_gtk_t* this);
-void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback);
+void funk2_gtk__init              (funk2_gtk_t* this, int* argv, char*** argc);
+void funk2_gtk__start_gtk_main    (funk2_gtk_t* this);
+void funk2_gtk__destroy           (funk2_gtk_t* this);
+void funk2_gtk__add_callback      (funk2_gtk_t* this, funk2_gtk_callback_t* callback);
 void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback, void* args);
 
 

@@ -141,7 +141,7 @@ f2ptr f2__stream__skip_whitespace(f2ptr cause, f2ptr stream) {
   return nil;
 }
 def_pcfunk1(stream__skip_whitespace, stream,
-	    "",
+	    "reads whitespace from a stream, until a non-whitespace character is encountered.",
 	    return f2__stream__skip_whitespace(this_cause, stream));
 
 f2ptr f2__stream__try_read_impossibility(f2ptr cause, f2ptr stream) {
@@ -1232,7 +1232,7 @@ f2ptr f2__stream__try_read__thread_safe(f2ptr cause, f2ptr stream) {
   return result;
 }
 def_pcfunk1(stream__try_read, stream,
-	    "",
+	    "simple hardcoded reader funktion for reading from a stream (such as stdin).  returns exception if no character is waiting (non-blocking).",
 	    return f2__stream__try_read__thread_safe(this_cause, stream));
 
 
@@ -1534,11 +1534,11 @@ void f2__reader__initialize() {
   
   f2__reader__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(exp__contains_comma,                   this,   "");
-  f2__primcfunk__init__1(exp__contains_cdr_comma,               this,   "");
-  f2__primcfunk__init__1(exp__contains_cdr_comma_at_this_level, this,   "");
-  f2__primcfunk__init__1(exp__comma_filter_backquoted,          this,   "");
-  f2__primcfunk__init__1(stream__skip_whitespace,               stream, "reads whitespace from a stream, until a non-whitespace character is encountered.");
-  f2__primcfunk__init__1(stream__try_read,                      stream, "simple hardcoded reader funktion for reading from a stream (such as stdin).  returns exception if no character is waiting (non-blocking).");
+  f2__primcfunk__init__1(exp__contains_comma,                   this);
+  f2__primcfunk__init__1(exp__contains_cdr_comma,               this);
+  f2__primcfunk__init__1(exp__contains_cdr_comma_at_this_level, this);
+  f2__primcfunk__init__1(exp__comma_filter_backquoted,          this);
+  f2__primcfunk__init__1(stream__skip_whitespace,               stream);
+  f2__primcfunk__init__1(stream__try_read,                      stream);
 }
 

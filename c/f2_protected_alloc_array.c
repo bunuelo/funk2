@@ -138,6 +138,7 @@ s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array
   return save_size;
 }
 
+/*
 void funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd) {
   u64 used_num = this->used_num;
   safe_write(fd, to_ptr(&used_num), sizeof(used_num));
@@ -186,4 +187,4 @@ s64 funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t*
   }
   return (s64)(buffer_iter - buffer);
 }
-
+*/

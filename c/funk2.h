@@ -53,7 +53,6 @@
 #include "f2_garbage_collector.h"
 #include "f2_garbage_collector_pool.h"
 #include "f2_globalenv.h"
-#include "f2_glwindow.h"
 #include "f2_graph.h"
 #include "f2_graph_cluster.h"
 #include "f2_graph_match_error_correcting.h"
@@ -73,14 +72,12 @@
 #include "f2_nil.h"
 #include "f2_number.h"
 #include "f2_object.h"
-#include "f2_object_lattice.h"
 #include "f2_opengl.h"
 #include "f2_optimize.h"
 #include "f2_packet.h"
 #include "f2_partial_order.h"
 #include "f2_peer_command_server.h"
 #include "f2_perception_lattice.h"
-#include "f2_physical_objects.h"
 #include "f2_ptype.h"
 #include "f2_ptypes.h"
 #include "f2_ptypes_memory.h"
@@ -97,6 +94,7 @@
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__environment.h"
 #include "f2_primobject__fiber_trigger.h"
+#include "f2_primobject__file_handle.h"
 #include "f2_primobject__frame.h"
 #include "f2_primobject__hash.h"
 #include "f2_primobject__largeinteger.h"
@@ -107,7 +105,6 @@
 #include "f2_primobject__stream.h"
 #include "f2_primobject__tensor.h"
 #include "f2_primobject__dynamic_library.h"
-#include "f2_primobject__text_buffer.h"
 #include "f2_primobject__traced_cmutex.h"
 #include "f2_primobject_type.h"
 #include "f2_primobject_type_handler.h"
@@ -124,7 +121,6 @@
 #include "f2_scheduler.h"
 #include "f2_scheduler_thread_controller.h"
 #include "f2_search.h"
-#include "f2_serialize.h"
 #include "f2_set.h"
 #include "f2_signal.h"
 #include "f2_socket.h"
@@ -134,6 +130,7 @@
 #include "f2_status.h"
 #include "f2_string.h"
 #include "f2_surrogate_parent.h"
+#include "f2_system_file_handler.h"
 #include "f2_terminal_print.h"
 #include "f2_termios.h"
 #include "f2_time.h"
@@ -157,6 +154,7 @@ typedef struct funk2_s {
   event_id_t                          event_id;
   funk2_processor_mutex_t             event_id_cmutex;
   // global variables in other source files
+  funk2_system_file_handler_t         system_file_handler;
   funk2_module_registration_t         module_registration;
   funk2_command_line_t                command_line;
   funk2_memory_t                      memory;
@@ -182,9 +180,6 @@ typedef struct funk2_s {
   funk2_openglu_t                     openglu;
   funk2_xxf86vm_t                     xxf86vm;
   funk2_xlib_t                        xlib;
-#if defined(F2__GLWINDOW__H)
-  funk2_glwindow_t                    glwindow;
-#endif
   funk2_cpu_t                         cpu;
   funk2_primes_t                      primes;
   funk2_object_t                      object;

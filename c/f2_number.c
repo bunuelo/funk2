@@ -25,7 +25,7 @@ f2ptr f2__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.number_globalvars.is_less_than__symbol, that);
 }
 def_pcfunk2(is_less_than, this, that,
-	    "",
+	    "Compares this object to that object using the is_less_than member funktion of this object.",
 	    return f2__is_less_than(this_cause, this, that));
 
 
@@ -33,7 +33,7 @@ f2ptr f2__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2__object__get_1(cause, this, __funk2.number_globalvars.is_greater_than__symbol, that);
 }
 def_pcfunk2(is_greater_than, this, that,
-	    "",
+	    "Compares this object to that object using the is_greater_than member funktion of this object.",
 	    return f2__is_greater_than(this_cause, this, that));
 
 
@@ -114,7 +114,7 @@ void f2__number__initialize() {
   
   f2__number__reinitialize_globalvars();
   
-  f2__primcfunk__init__2(is_greater_than, this, that, "Compares this object to that object using the is_greater_than member funktion of this object.");
-  f2__primcfunk__init__2(is_less_than,    this, that, "Compares this object to that object using the is_less_than member funktion of this object.");
+  f2__primcfunk__init__2(is_greater_than, this, that);
+  f2__primcfunk__init__2(is_less_than,    this, that);
 }
 

@@ -255,7 +255,7 @@ f2ptr f2__management_thread__add_save_memory_image_command(f2ptr cause, f2ptr fi
   return uid;
 }
 def_pcfunk1(management_thread__add_save_memory_image_command, filename,
-	    "",
+	    "add save command to management thread command list.",
 	    return f2__management_thread__add_save_memory_image_command(this_cause, filename));
 
 u64  raw__management_thread__add_load_memory_image_command(u8* filename) {return funk2_management_thread__add_load_memory_image_command(&(__funk2.management_thread), filename);}
@@ -269,7 +269,7 @@ f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr fi
   return uid;
 }
 def_pcfunk1(management_thread__add_load_memory_image_command, filename,
-	    "",
+	    "add load command to management thread command list.",
 	    return f2__management_thread__add_load_memory_image_command(this_cause, filename));
 
 u64  raw__management_thread__add_exit_command(s64 value) {return funk2_management_thread__add_exit_command(&(__funk2.management_thread), value);}
@@ -279,7 +279,7 @@ f2ptr f2__management_thread__add_exit_command(f2ptr cause, f2ptr value) {
   return uid;
 }
 def_pcfunk1(management_thread__add_exit_command, value,
-	    "",
+	    "add exit command to management thread command list.",
 	    return f2__management_thread__add_exit_command(this_cause, value));
 
 boolean_t raw__management_thread__check_command_uid_finished(u64 uid, void* user_result) {return funk2_management_thread__check_command_uid_finished(&(__funk2.management_thread), uid, user_result);}
@@ -295,7 +295,7 @@ f2ptr      f2__management_thread__check_command_uid_finished(f2ptr cause, f2ptr 
   return f2bool__new(is_finished);
 }
 def_pcfunk2(management_thread__check_command_uid_finished, uid, user_result_place,
-	    "",
+	    "check to see if a management thread command has finished.",
 	    return f2__management_thread__check_command_uid_finished(this_cause, uid, user_result_place));
 
 // **
@@ -308,9 +308,9 @@ void f2__management_thread__initialize() {
   
   f2__management_thread__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(management_thread__add_save_memory_image_command, filename,               "add save command to management thread command list.");
-  f2__primcfunk__init__1(management_thread__add_load_memory_image_command, filename,               "add load command to management thread command list.");
-  f2__primcfunk__init__1(management_thread__add_exit_command,              value,                  "add exit command to management thread command list.");
-  f2__primcfunk__init__2(management_thread__check_command_uid_finished,    uid, user_result_place, "check to see if a management thread command has finished.");
+  f2__primcfunk__init__1(management_thread__add_save_memory_image_command, filename);
+  f2__primcfunk__init__1(management_thread__add_load_memory_image_command, filename);
+  f2__primcfunk__init__1(management_thread__add_exit_command,              value);
+  f2__primcfunk__init__2(management_thread__check_command_uid_finished,    uid, user_result_place);
 }
 

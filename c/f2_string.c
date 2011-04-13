@@ -80,7 +80,7 @@ f2ptr f2__stringlist__concat(f2ptr cause, f2ptr this) {
   return f2__stringlist__new_string_from_concatenation(cause, this);
 }
 def_pcfunk1(stringlist__concat, this,
-	    "",
+	    "concatenate a list of strings together into a new resultant string.checks for the return value for a finished system command started by this fiber.",
 	    return f2__stringlist__concat(this_cause, this));
 
 f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
@@ -134,14 +134,14 @@ f2ptr f2__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_str
   return raw__stringlist__intersperse(cause, this, intersperse_string);
 }
 def_pcfunk2(stringlist__intersperse, this, intersperse_string,
-	    "",
+	    "concatenate a list of strings together into a new resultant string with a extra token string placed between each of the strings.",
 	    return f2__stringlist__intersperse(this_cause, this, intersperse_string));
 
 f2ptr f2__stringlist__rawcode(f2ptr cause, f2ptr this) {
   return f2__stringlist__intersperse(cause, this, new__string(cause, "\n"));
 }
 def_pcfunk1(stringlist__rawcode, this,
-	    "",
+	    "concatenate a list of strings separated by newlines ('\\n').",
 	    return f2__stringlist__rawcode(this_cause, this));
 
 
@@ -344,7 +344,7 @@ f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp) {
   return f2__exp__as__string__with_hash(cause, exp, f2__ptypehash__new(cause));
 }
 def_pcfunk1(exp__as__string, exp,
-	    "",
+	    "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.",
 	    return f2__exp__as__string(this_cause, exp));
 
 f2ptr raw__string__as__symbol(f2ptr cause, f2ptr this) {
@@ -361,7 +361,7 @@ f2ptr f2__string__as__symbol(f2ptr cause, f2ptr this) {
   return raw__string__as__symbol(cause, this);
 }
 def_pcfunk1(string__as__symbol, this,
-	    "",
+	    "convert a string to a symbol.",
 	    return f2__string__as__symbol(this_cause, this));
 
 f2ptr raw__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
@@ -413,7 +413,7 @@ f2ptr f2__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   return raw__string__save(cause, this, filename);
 }
 def_pcfunk2(string__save, this, filename,
-	    "",
+	    "save this string to a file of filename.",
 	    return f2__string__save(this_cause, this, filename));
 
 
@@ -464,7 +464,7 @@ f2ptr f2__string__load(f2ptr cause, f2ptr filename) {
   return raw__string__load(cause, filename);
 }
 def_pcfunk1(string__load, filename,
-	    "",
+	    "load a string from a filename",
 	    return f2__string__load(this_cause, filename));
 
 
@@ -529,7 +529,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   return new_seq;
 }
 def_pcfunk2(string__split, this, token,
-	    "",
+	    "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse.",
 	    return f2__string__split(this_cause, this, token));
 
 boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
@@ -570,14 +570,14 @@ f2ptr f2__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   return f2bool__new(raw__string__contains(cause, this, substring));
 }
 def_pcfunk2(string__contains, this, substring,
-	    "",
+	    "returns true when the string contains the specified substring.",
 	    return f2__string__contains(this_cause, this, substring));
 
 f2ptr f2__string__replace_all(f2ptr cause, f2ptr this, f2ptr token, f2ptr replacement) {
   return f2__stringlist__intersperse(cause, f2__string__split(cause, this, token), replacement);
 }
 def_pcfunk3(string__replace_all, this, token, replacement,
-	    "",
+	    "replaces all occurrances of token in this with replacement.",
 	    return f2__string__replace_all(this_cause, this, token, replacement));
 
 
@@ -612,7 +612,7 @@ f2ptr f2__string__substring(f2ptr cause, f2ptr this, f2ptr start_index, f2ptr en
   return raw__string__substring(cause, this, start_index__i, end_index__i);
 }
 def_pcfunk3(string__substring, this, start_index, end_index,
-	    "",
+	    "returns the substring between the given start and end indices.",
 	    return f2__string__substring(this_cause, this, start_index, end_index));
 
 
@@ -657,7 +657,7 @@ f2ptr f2__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__string__is_less_than(cause, this, that));
 }
 def_pcfunk2(string__is_less_than, this, that,
-	    "",
+	    "returns true when this string is_less_than that string.",
 	    return f2__string__is_less_than(this_cause, this, that));
 
 boolean_t raw__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -701,7 +701,7 @@ f2ptr f2__string__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   return f2bool__new(raw__string__is_greater_than(cause, this, that));
 }
 def_pcfunk2(string__is_greater_than, this, that,
-	    "",
+	    "returns true when this string is_greater_than that string.",
 	    return f2__string__is_greater_than(this_cause, this, that));
 
 
@@ -738,7 +738,7 @@ f2ptr f2__string__lowercase(f2ptr cause, f2ptr this) {
   return raw__string__lowercase(cause, this);
 }
 def_pcfunk1(string__lowercase, this,
-	    "",
+	    "returns a new string that represents the lowercased version of this string.",
 	    return f2__string__lowercase(this_cause, this));
 
 
@@ -775,7 +775,7 @@ f2ptr f2__string__uppercase(f2ptr cause, f2ptr this) {
   return raw__string__uppercase(cause, this);
 }
 def_pcfunk1(string__uppercase, this,
-	    "",
+	    "returns a new string that represents the uppercased version of this string.",
 	    return f2__string__uppercase(this_cause, this));
 
 
@@ -805,33 +805,33 @@ void f2__string__initialize() {
   
   f2__string__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(stringlist__concat,      this,                     "concatenate a list of strings together into a new resultant string.");
-  f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string, "concatenate a list of strings together into a new resultant string with a extra token string placed between each of the strings.");
-  f2__primcfunk__init__1(stringlist__rawcode,     this,                     "concatenate a list of strings separated by newlines ('\\n').");
+  f2__primcfunk__init__1(stringlist__concat,      this);
+  f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string);
+  f2__primcfunk__init__1(stringlist__rawcode,     this);
   
-  f2__primcfunk__init__1(exp__as__string, exp, "take any funk2 expression and turn this into a new string that can be read back into an equal expression by using string-read.");
+  f2__primcfunk__init__1(exp__as__string, exp);
   
-  f2__primcfunk__init__1(string__load,        filename,                 "load a string from a filename");
-  f2__primcfunk__init__3(string__replace_all, this, token, replacement, "replaces all occurrances of token in this with replacement.");
+  f2__primcfunk__init__1(string__load,        filename);
+  f2__primcfunk__init__3(string__replace_all, this, token, replacement);
   
   {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk, "convert a string to a symbol."); __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk = never_gc(cfunk);}
   {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_string.save__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__save, this, filename, cfunk, "save this string to a file of filename."); __funk2.globalenv.object_type.ptype.ptype_string.save__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__save, this, filename, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.save__funk = never_gc(cfunk);}
   {char* str = "split"; __funk2.globalenv.object_type.ptype.ptype_string.split__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__split, this, token, cfunk, "split a string into a list of strings (a stringlist).  this function is the inverse of stringlist-intersperse."); __funk2.globalenv.object_type.ptype.ptype_string.split__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__split, this, token, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.split__funk = never_gc(cfunk);}
   {char* str = "contains"; __funk2.globalenv.object_type.ptype.ptype_string.contains__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__contains, this, substring, cfunk, "returns true when the string contains the specified substring."); __funk2.globalenv.object_type.ptype.ptype_string.contains__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__contains, this, substring, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.contains__funk = never_gc(cfunk);}
   {char* str = "substring"; __funk2.globalenv.object_type.ptype.ptype_string.substring__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(string__substring, this, start_index, end_index, cfunk, "returns the substring between the given start and end indices."); __funk2.globalenv.object_type.ptype.ptype_string.substring__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(string__substring, this, start_index, end_index, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.substring__funk = never_gc(cfunk);}
   {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_less_than, this, that, cfunk, "returns true when this string is_less_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_less_than, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk = never_gc(cfunk);}
   {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_greater_than, this, that, cfunk, "returns true when this string is_greater_than that string."); __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_greater_than, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk = never_gc(cfunk);}
   {char* str = "lowercase"; __funk2.globalenv.object_type.ptype.ptype_string.lowercase__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__lowercase, this, that, cfunk, "returns a new string that represents the lowercased version of this string."); __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__lowercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk = never_gc(cfunk);}
   {char* str = "uppercase"; __funk2.globalenv.object_type.ptype.ptype_string.uppercase__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk, "returns a new string that represents the uppercased version of this string."); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
   
 }
 

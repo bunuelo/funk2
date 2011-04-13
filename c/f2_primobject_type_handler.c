@@ -70,7 +70,7 @@ f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type) {
   return nil;
 }
 def_pcfunk2(add_type, type_name, type,
-	    "",
+	    "Adds the symbolic type_name associated with type to the primobject_type_handler.",
 	    return f2__add_type(this_cause, type_name, type));
 
 f2ptr funk2_primobject_type_handler__types(funk2_primobject_type_handler_t* this, f2ptr cause) {
@@ -88,7 +88,7 @@ f2ptr f2__system__types(f2ptr cause) {
   return funk2_primobject_type_handler__types(&(__funk2.primobject_type_handler), cause);
 }
 def_pcfunk0(system__types,
-	    "",
+	    "Returns a new list of all of the types currently defined in the system.",
 	    return f2__system__types(this_cause));
 
 
@@ -107,7 +107,7 @@ f2ptr f2__system__type_names(f2ptr cause) {
   return funk2_primobject_type_handler__type_names(&(__funk2.primobject_type_handler), cause);
 }
 def_pcfunk0(system__type_names,
-	    "",
+	    "Returns a new list of all of the type names currently defined in the system.",
 	    return f2__system__type_names(this_cause));
 
 
@@ -130,7 +130,7 @@ f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name) {
   return type;
 }
 def_pcfunk1(lookup_type, type_name,
-	    "",
+	    "Returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.",
 	    return f2__lookup_type(this_cause, type_name));
 
 void funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause) {
@@ -188,16 +188,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "list";                             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                             f2list__primobject_type__new_aux(cause));}
   {char* type_name = "doublelinklist";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2doublelinklist__primobject_type__new_aux(cause));}
   {char* type_name = "circular_buffer";                  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                  f2circular_buffer__primobject_type__new_aux(cause));}
-  {char* type_name = "physical_rotation";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2physical_rotation__primobject_type__new(cause));}
-  {char* type_name = "physical_position";                funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                f2physical_position__primobject_type__new(cause));}
-  {char* type_name = "physical_transform";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2physical_transform__primobject_type__new(cause));}
-  {char* type_name = "physical_texture";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2physical_texture__primobject_type__new(cause));}
-  {char* type_name = "physical_object";                  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                  f2physical_object__primobject_type__new(cause));}
-  {char* type_name = "physical_place";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2physical_place__primobject_type__new(cause));}
-  {char* type_name = "physical_scene";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2physical_scene__primobject_type__new(cause));}
   {char* type_name = "agent";                            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                            f2agent__primobject_type__new(cause));}
-  {char* type_name = "object_lattice";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2object_lattice__primobject_type__new(cause));}
-  {char* type_name = "object_lattice_node";              funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),              f2object_lattice_node__primobject_type__new(cause));}
   {char* type_name = "hash";                             funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                             f2hash__primobject_type__new_aux(cause));}
   {char* type_name = "cause";                            funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                            f2cause__primobject_type__new_aux(cause));}
   {char* type_name = "largeinteger";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2largeinteger__primobject_type__new_aux(cause));}
@@ -221,17 +212,19 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "optimize_data";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2optimize_data__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_fiber";                   funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                   f2optimize_fiber__primobject_type__new_aux(cause));}
   {char* type_name = "optimize_context";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2optimize_context__primobject_type__new_aux(cause));}
+  {char* type_name = "file_handle";                      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                      f2file_handle__primobject_type__new_aux(cause));}
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "physical_sim_object";           funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),           f2physical_sim_object__primobject_type__new(cause));}
-  {char* type_name = "gtk_widget";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2gtk_widget__primobject_type__new(cause));}
+  {char* type_name = "g_object";                      funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                      f2g_object__primobject_type__new(cause));}
+  {char* type_name = "gtk_widget";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2gtk_widget__primobject_type__new_aux(cause));}
   {char* type_name = "gtk_box";                       funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                       f2gtk_box__primobject_type__new_aux(cause));}
   {char* type_name = "gtk_label";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2gtk_label__primobject_type__new_aux(cause));}
   {char* type_name = "gtk_scale";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2gtk_scale__primobject_type__new_aux(cause));}
   {char* type_name = "gtk_entry";                     funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                     f2gtk_entry__primobject_type__new_aux(cause));}
   {char* type_name = "gtk_text_buffer";               funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),               f2gtk_text_buffer__primobject_type__new_aux(cause));}
-  {char* type_name = "gdk_pixbuf";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2gdk_pixbuf__primobject_type__new(cause));}
+  {char* type_name = "gdk_pixbuf";                    funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                    f2gdk_pixbuf__primobject_type__new_aux(cause));}
   {char* type_name = "gtk_text_iter";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2gtk_text_iter__primobject_type__new(cause));}
   {char* type_name = "gtk_callback";                  funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                  f2gtk_callback__primobject_type__new(cause));}
   {char* type_name = "gtk_text_mark";                 funk2_primobject_type_handler__add_type(this, cause, f2symbol__new(cause, strlen(type_name), (u8*)type_name),                 f2gtk_text_mark__primobject_type__new(cause));}
@@ -287,10 +280,10 @@ void f2__primobject_type_handler__initialize() {
   
   f2__primobject_type_handler__reinitialize_globalvars();
   
-  f2__primcfunk__init__2(add_type,    type_name, type, "Adds the symbolic type_name associated with type to the primobject_type_handler.");
-  f2__primcfunk__init__1(lookup_type, type_name,       "Returns the type associated with the symbolic type_name, or nil if no such type has been added to the primobject_type_handler.");
-  f2__primcfunk__init__0(system__types,                "Returns a new list of all of the types currently defined in the system.");
-  f2__primcfunk__init__0(system__type_names,           "Returns a new list of all of the type names currently defined in the system.");
+  f2__primcfunk__init__2(add_type,    type_name, type);
+  f2__primcfunk__init__1(lookup_type, type_name);
+  f2__primcfunk__init__0(system__types);
+  f2__primcfunk__init__0(system__type_names);
   
 }
 

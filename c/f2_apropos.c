@@ -86,6 +86,6 @@ void f2__apropos__initialize() {
   
   f2__apropos__reinitialize_globalvars();
   
-  f2__primcfunk__init(apropos, "");
+  f2__primcfunk__init(apropos);
 }
 

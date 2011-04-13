@@ -192,7 +192,7 @@ f2ptr f2__global_scheduler__active_fibers(f2ptr cause) {
   return raw__scheduler__active_fibers(cause, __funk2.operating_system.scheduler);
 }
 def_pcfunk0(global_scheduler__active_fibers,
-	    "",
+	    "Returns a new list of all currently active fibers.",
 	    return f2__global_scheduler__active_fibers(this_cause));
 
 
@@ -203,7 +203,7 @@ f2ptr f2__global_scheduler__this_processor(f2ptr cause) {
   return raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), this_processor_thread__pool_index());
 }
 def_pcfunk0(global_scheduler__this_processor,
-	    "",
+	    "Returns the processor that is executing the current fiber.",
 	    return f2__global_scheduler__this_processor(this_cause));
 
 
@@ -217,7 +217,7 @@ f2ptr f2__global_scheduler__add_fiber_serial(f2ptr cause, f2ptr fiber) {
   return raw__global_scheduler__add_fiber_serial(cause, fiber);
 }
 def_pcfunk1(global_scheduler__add_fiber_serial, fiber,
-	    "",
+	    "Adds the given fiber to the current fiber's processor.",
 	    return f2__global_scheduler__add_fiber_serial(this_cause, fiber));
 
 
@@ -230,7 +230,7 @@ f2ptr f2__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   return raw__global_scheduler__add_fiber_parallel(cause, fiber);
 }
 def_pcfunk1(global_scheduler__add_fiber_parallel, fiber,
-	    "",
+	    "Adds the given fiber to the least used processor.",
 	    return f2__global_scheduler__add_fiber_parallel(this_cause, fiber));
 
 
@@ -243,7 +243,7 @@ f2ptr f2__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
   return raw__global_scheduler__add_fiber(cause, fiber);
 }
 def_pcfunk1(global_scheduler__add_fiber, fiber,
-	    "",
+	    "Adds the given fiber to the global scheduler.",
 	    return f2__global_scheduler__add_fiber(this_cause, fiber));
 
 
@@ -274,7 +274,7 @@ f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
   return raw__global_scheduler__remove_fiber(cause, fiber);
 }
 def_pcfunk1(global_scheduler__remove_fiber, fiber,
-	    "",
+	    "Removes the given fiber from it's assigned processor.",
 	    return f2__global_scheduler__remove_fiber(this_cause, fiber));
 
 
@@ -300,7 +300,7 @@ f2ptr f2__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   return nil;
 }
 def_pcfunk1(global_scheduler__complete_fiber, fiber,
-	    "",
+	    "Yields until the given fiber is complete.",
 	    return f2__global_scheduler__complete_fiber(this_cause, fiber));
 
 
@@ -366,7 +366,7 @@ f2ptr f2__this__fiber(f2ptr cause) {
   return raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 }
 def_pcfunk0(this__fiber,
-	    "",
+	    "Returns the currently executing fiber.",
 	    f2ptr this__fiber = f2__this__fiber(this_cause);
 	    if (! raw__eq(this_cause, simple_fiber, this__fiber)) {
 	      status(  "f2__this__fiber debug: discovered larva 246115 (not actually returned).");
@@ -416,13 +416,13 @@ void f2__scheduler__initialize() {
   initialize_primobject_1_slot(scheduler, processors);
   
   {char* symbol_str = "active_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__active_fibers, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__active_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk = never_gc(cfunk);}
   {char* symbol_str = "processor_with_fewest_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__processor_with_fewest_fibers, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__processor_with_fewest_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk = never_gc(cfunk);}
   {char* symbol_str = "add_fiber_to_least_used_processor"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__add_fiber_to_least_used_processor, this, fiber, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__add_fiber_to_least_used_processor, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // allocate scheduler and processors
   
@@ -451,18 +451,18 @@ void f2__scheduler__initialize() {
   
   f2__scheduler__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(global_scheduler__active_fibers,                              "Returns a new list of all currently active fibers.");
-  f2__primcfunk__init__0(global_scheduler__this_processor,                             "Returns the processor that is executing the current fiber.");
-  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,               fiber,      "Adds the given fiber to the current fiber's processor.");
-  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel,             fiber,      "Adds the given fiber to the least used processor.");
-  f2__primcfunk__init__1(global_scheduler__add_fiber,                      fiber,      "Adds the given fiber to the global scheduler.");
-  f2__primcfunk__init__1(global_scheduler__remove_fiber,                   fiber,      "Removes the given fiber from it's assigned processor.");
-  f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber,      "Yields until the given fiber is complete.");
-  f2__primcfunk__init__1(global_scheduler__processor_thread_current_fiber, pool_index, "");
-  f2__primcfunk__init__0(global_scheduler__current_fiber,                              "");
-  f2__primcfunk__init__1(global_scheduler__contains_active_fiber,          fiber,      "");
+  f2__primcfunk__init__0(global_scheduler__active_fibers);
+  f2__primcfunk__init__0(global_scheduler__this_processor);
+  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,               fiber);
+  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel,             fiber);
+  f2__primcfunk__init__1(global_scheduler__add_fiber,                      fiber);
+  f2__primcfunk__init__1(global_scheduler__remove_fiber,                   fiber);
+  f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber);
+  f2__primcfunk__init__1(global_scheduler__processor_thread_current_fiber, pool_index);
+  f2__primcfunk__init__0(global_scheduler__current_fiber);
+  f2__primcfunk__init__1(global_scheduler__contains_active_fiber,          fiber);
   
-  f2__primcfunk__init__0(this__fiber, "Returns the currently executing fiber.");
+  f2__primcfunk__init__0(this__fiber);
 }
 
 void f2__scheduler__destroy() {

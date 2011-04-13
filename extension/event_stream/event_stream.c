@@ -28,7 +28,10 @@
 f2ptr raw__event_stream_event__time_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
   f2ptr args_iter = args;
   f2ptr this = f2__cons__car(cause, args_iter);
-  return raw__event_stream_event__time(cause, this);
+  {
+    assert_argument_type(event_stream_event, this);
+    return raw__event_stream_event__time(cause, this);
+  }
 }
 
 f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
@@ -36,11 +39,15 @@ f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr env
   f2ptr this__time = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
   f2ptr that__time = f2__cons__car(cause, args_iter);
   {
-    f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this__time);
-    f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that__time);
-    s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-    s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-    return f2bool__new(this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+    assert_argument_type(time, this__time);
+    assert_argument_type(time, that__time);
+    {
+      f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this__time);
+      f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that__time);
+      s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
+      s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
+      return f2bool__new(this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+    }
   }
 }
 
@@ -52,9 +59,7 @@ f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time) {
 }
 
 f2ptr f2__event_stream_event__new(f2ptr cause, f2ptr time) {
-  if (! raw__time__is_type(cause, time)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(time, time);
   return raw__event_stream_event__new(cause, time);
 }
 export_cefunk1(event_stream_event__new, time, 0, "Returns a new event_stream_event object.");
@@ -74,9 +79,8 @@ f2ptr raw__event_stream_event__terminal_print_with_frame(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__event_stream_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__event_stream_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream_event,   this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__event_stream_event__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(event_stream_event__terminal_print_with_frame, this, terminal_print_frame, 0, "");
@@ -115,21 +119,24 @@ export_cefunk0(event_stream__new, 0, "Returns a new event_stream object.");
 f2ptr raw__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
   f2ptr add_trigger             = raw__event_stream__add_trigger(            cause, this);
-  f2ptr result = raw__redblacktree__insert(cause, event_time_redblacktree, event_stream_event);
+  {
+    f2ptr result = f2__redblacktree__insert(cause, event_time_redblacktree, event_stream_event);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   {
     f2ptr trigger_result = f2__fiber_trigger__trigger(cause, add_trigger);
     if (raw__larva__is_type(cause, trigger_result)) {
       return trigger_result;
     }
   }
-  return result;
+  return nil;
 }
 
 f2ptr f2__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  if ((! raw__event_stream__is_type(cause, this)) ||
-      (! raw__event_stream_event__is_type(cause, event_stream_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream,       this);
+  assert_argument_type(event_stream_event, event_stream_event);
   return raw__event_stream__add(cause, this, event_stream_event);
 }
 export_cefunk2(event_stream__add, this, event_stream_event, 0, "Add an event_stream_event to this event_stream.");
@@ -138,21 +145,24 @@ export_cefunk2(event_stream__add, this, event_stream_event, 0, "Add an event_str
 f2ptr raw__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
   f2ptr remove_trigger          = raw__event_stream__remove_trigger(         cause, this);
-  f2ptr result = raw__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
+  {
+    f2ptr removed_node = f2__redblacktree__remove(cause, event_time_redblacktree, event_stream_event);
+    if (raw__larva__is_type(cause, removed_node)) {
+      return removed_node;
+    }
+  }
   {
     f2ptr trigger_result = f2__fiber_trigger__trigger(cause, remove_trigger);
     if (raw__larva__is_type(cause, trigger_result)) {
       return trigger_result;
     }
   }
-  return result;
+  return nil;
 }
 
 f2ptr f2__event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  if ((! raw__event_stream__is_type(cause, this)) ||
-      (! raw__event_stream_event__is_type(cause, event_stream_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream,       this);
+  assert_argument_type(event_stream_event, event_stream_event);
   return raw__event_stream__remove(cause, this, event_stream_event);
 }
 export_cefunk2(event_stream__remove, this, event_stream_event, 0, "Remove an event_stream_event from this event_stream.");
@@ -164,9 +174,7 @@ f2ptr raw__event_stream__size(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__event_stream__size(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
   return raw__event_stream__size(cause, this);
 }
 export_cefunk1(event_stream__size, this, 0, "Returns the number of events in the event_stream.");
@@ -174,14 +182,12 @@ export_cefunk1(event_stream__size, this, 0, "Returns the number of events in the
 
 f2ptr raw__event_stream__first(f2ptr cause, f2ptr this) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  f2ptr event                   = raw__redblacktree__minimum(cause, event_time_redblacktree);
+  f2ptr event                   = f2__redblacktree__minimum(cause, event_time_redblacktree);
   return event;
 }
 
 f2ptr f2__event_stream__first(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
   return raw__event_stream__first(cause, this);
 }
 export_cefunk1(event_stream__first, this, 0, "Returns the first event in the event_stream.");
@@ -189,14 +195,12 @@ export_cefunk1(event_stream__first, this, 0, "Returns the first event in the eve
 
 f2ptr raw__event_stream__last(f2ptr cause, f2ptr this) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  f2ptr event                   = raw__redblacktree__maximum(cause, event_time_redblacktree);
+  f2ptr event                   = f2__redblacktree__maximum(cause, event_time_redblacktree);
   return event;
 }
 
 f2ptr f2__event_stream__last(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
   return raw__event_stream__last(cause, this);
 }
 export_cefunk1(event_stream__last, this, 0, "Returns the last event in the event_stream.");
@@ -204,15 +208,13 @@ export_cefunk1(event_stream__last, this, 0, "Returns the last event in the event
 
 f2ptr raw__event_stream__first_not_before(f2ptr cause, f2ptr this, f2ptr time) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  f2ptr event                   = raw__redblacktree__minimum_not_less_than(cause, event_time_redblacktree, time);
+  f2ptr event                   = f2__redblacktree__minimum_not_less_than(cause, event_time_redblacktree, time);
   return event;
 }
 
 f2ptr f2__event_stream__first_not_before(f2ptr cause, f2ptr this, f2ptr time) {
-  if ((! raw__event_stream__is_type(cause, this)) ||
-      (! raw__time__is_type(cause, time))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
+  assert_argument_type(time,         time);
   return raw__event_stream__first_not_before(cause, this, time);
 }
 export_cefunk2(event_stream__first_not_before, this, time, 0, "Returns the first event that is not before the given time in the event_stream.");
@@ -220,22 +222,20 @@ export_cefunk2(event_stream__first_not_before, this, time, 0, "Returns the first
 
 f2ptr raw__event_stream__last_not_after_or_at(f2ptr cause, f2ptr this, f2ptr time) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
-  f2ptr event                   = raw__redblacktree__maximum_not_greater_than_or_equal_to(cause, event_time_redblacktree, time);
+  f2ptr event                   = f2__redblacktree__maximum_not_greater_than_or_equal_to(cause, event_time_redblacktree, time);
   return event;
 }
 
 f2ptr f2__event_stream__last_not_after_or_at(f2ptr cause, f2ptr this, f2ptr time) {
-  if ((! raw__event_stream__is_type(cause, this)) ||
-      (! raw__time__is_type(cause, time))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
+  assert_argument_type(time,         time);
   return raw__event_stream__last_not_after_or_at(cause, this, time);
 }
 export_cefunk2(event_stream__last_not_after_or_at, this, time, 0, "Returns the first event that is not before the given time in the event_stream.");
 
 
 f2ptr raw__event_stream__new__iterator(f2ptr cause, f2ptr this) {
-  f2ptr first_event       = raw__event_stream__first(cause, this);
+  f2ptr first_event = raw__event_stream__first(cause, this);
   f2ptr first_event__time;
   if (first_event != nil) {
     first_event__time = raw__event_stream_event__time(cause, first_event);
@@ -247,9 +247,7 @@ f2ptr raw__event_stream__new__iterator(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__event_stream__new__iterator(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
   return raw__event_stream__new__iterator(cause, this);
 }
 export_cefunk1(event_stream__new__iterator, this, 0, "Returns a new event_stream_iterator set to point to the first event in the stream.");
@@ -260,8 +258,16 @@ f2ptr raw__event_stream__remove_all(f2ptr cause, f2ptr this) {
   while (try_again) {
     try_again   = boolean__false;
     f2ptr first = raw__event_stream__first(cause, this);
+    if (raw__larva__is_type(cause, first)) {
+      return first;
+    }
     if (first != nil) {
-      raw__event_stream__remove(cause, this, first);
+      {
+	f2ptr result = raw__event_stream__remove(cause, this, first);
+	if (raw__larva__is_type(cause, result)) {
+	  return result;
+	}
+      }
       try_again = boolean__true;
     }
   }
@@ -278,16 +284,24 @@ export_cefunk1(event_stream__remove_all, this, 0, "Removes all event_stream_even
 
 
 f2ptr raw__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr time) {
-  s64 time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(time, cause), cause);
-  boolean_t try_again = boolean__true;
+  s64       time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(time, cause), cause);
+  boolean_t try_again                    = boolean__true;
   while (try_again) {
     try_again   = boolean__false;
     f2ptr first = raw__event_stream__first(cause, this);
+    if (raw__larva__is_type(cause, first)) {
+      return first;
+    }
     if (first != nil) {
       f2ptr first__time                         = raw__event_stream_event__time(cause, first);
       s64   first__time__nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(first__time, cause), cause);
       if (first__time__nanoseconds_since_1970 < time__nanoseconds_since_1970) {
-	raw__event_stream__remove(cause, this, first);
+	{
+	  f2ptr result = raw__event_stream__remove(cause, this, first);
+	  if (raw__larva__is_type(cause, result)) {
+	    return result;
+	  }
+	}
 	try_again = boolean__true;
       }
     }
@@ -296,10 +310,8 @@ f2ptr raw__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__event_stream__remove_all_before_time(f2ptr cause, f2ptr this, f2ptr time) {
-  if ((! raw__event_stream__is_type(cause, this)) ||
-      (! raw__time__is_type(cause, time))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream, this);
+  assert_argument_type(time,         time);
   return raw__event_stream__remove_all_before_time(cause, this, time);
 }
 export_cefunk2(event_stream__remove_all_before_time, this, time, 0, "Removes all event_stream_events in this event_stream that have index_times before the given time.");
@@ -433,10 +445,8 @@ f2ptr raw__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr ind
 }
 
 f2ptr f2__event_stream_iterator__new(f2ptr cause, f2ptr event_stream, f2ptr index_time) {
-  if ((! raw__event_stream__is_type(cause, event_stream)) ||
-      ((index_time != nil) && (! raw__time__is_type(cause, index_time)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       event_stream, event_stream);
+  assert_argument_type_or_nil(time,         index_time);
   return raw__event_stream_iterator__new(cause, event_stream, index_time);
 }
 export_cefunk2(event_stream_iterator__new, event_stream, index_time, 0, "Returns a new event_stream_iterator object.");
@@ -455,23 +465,27 @@ f2ptr raw__event_stream_iterator__current(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__event_stream_iterator__current(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream_iterator__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream_iterator, this);
   return raw__event_stream_iterator__current(cause, this);
 }
 export_cefunk1(event_stream_iterator__current, event_stream, 0, "Returns the current event referenced by the event_stream_iterator.");
 
 
 f2ptr raw__event_stream_iterator__next(f2ptr cause, f2ptr this) {
-  f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
-  f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
+  f2ptr event_stream = raw__event_stream_iterator__event_stream(cause, this);
+  f2ptr index_time   = raw__event_stream_iterator__index_time(cause, this);
   if (index_time == nil) {
     f2ptr event_stream_event = raw__event_stream__first(cause, event_stream);
+    if (raw__larva__is_type(cause, event_stream_event)) {
+      return event_stream_event;
+    }
     if (event_stream_event == nil) {
       return nil;
     }
     index_time = raw__event_stream_event__time(cause, event_stream_event);
+    if (index_time == nil) {
+      return nil;
+    }
   }
   f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
   f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
@@ -481,35 +495,40 @@ f2ptr raw__event_stream_iterator__next(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__event_stream_iterator__next(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream_iterator__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream_iterator, this);
   return raw__event_stream_iterator__next(cause, this);
 }
 export_cefunk1(event_stream_iterator__next, event_stream, 0, "Returns the next event from this event_stream_iterator if one exists, nil otherwise.");
 
 
 f2ptr raw__event_stream_iterator__has__next(f2ptr cause, f2ptr this) {
-  f2ptr event_stream              = raw__event_stream_iterator__event_stream(cause, this);
-  f2ptr index_time                = raw__event_stream_iterator__index_time(cause, this);
+  f2ptr event_stream = raw__event_stream_iterator__event_stream(cause, this);
+  f2ptr index_time   = raw__event_stream_iterator__index_time(cause, this);
   if (index_time == nil) {
     f2ptr event_stream_event = raw__event_stream__first(cause, event_stream);
+    if (raw__larva__is_type(cause, event_stream_event)) {
+      return event_stream_event;
+    }
     if (event_stream_event == nil) {
       return nil;
     }
     index_time = raw__event_stream_event__time(cause, event_stream_event);
+    if (index_time == nil) {
+      return nil;
+    }
   }
   f2ptr nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, index_time);
   f2ptr nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);
   f2ptr slightly_greater_time     = f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970__i + 1));
   f2ptr next_event                = raw__event_stream__first_not_before(cause, event_stream, slightly_greater_time);
+  if (raw__larva__is_type(cause, next_event)) {
+    return next_event;
+  }
   return f2bool__new(next_event != nil);
 }
 
 f2ptr f2__event_stream_iterator__has__next(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream_iterator__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream_iterator, this);
   return raw__event_stream_iterator__has__next(cause, this);
 }
 export_cefunk1(event_stream_iterator__has__next, event_stream, 0, "Returns true if this event_stream_iterator has a next event, false otherwise.");
@@ -517,6 +536,9 @@ export_cefunk1(event_stream_iterator__has__next, event_stream, 0, "Returns true 
 
 f2ptr raw__event_stream_iterator__increment(f2ptr cause, f2ptr this) {
   f2ptr current_event = raw__event_stream_iterator__current(cause, this);
+  if (raw__larva__is_type(cause, current_event)) {
+    return current_event;
+  }
   if (current_event == nil) {
     return f2bool__new(boolean__false);
   }
@@ -529,9 +551,7 @@ f2ptr raw__event_stream_iterator__increment(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__event_stream_iterator__increment(f2ptr cause, f2ptr this) {
-  if (! raw__event_stream_iterator__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream_iterator, this);
   return raw__event_stream_iterator__increment(cause, this);
 }
 export_cefunk1(event_stream_iterator__increment, event_stream, 0, "Increments the event_stream_iterator, and returns true if successful, otherwise returns false.");
@@ -552,9 +572,8 @@ f2ptr raw__event_stream_iterator__terminal_print_with_frame(f2ptr cause, f2ptr t
 }
 
 f2ptr f2__event_stream_iterator__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__event_stream_iterator__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(event_stream_iterator, this);
+  assert_argument_type(terminal_print_frame,  terminal_print_frame);
   return raw__event_stream_iterator__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(event_stream_iterator__terminal_print_with_frame, this, terminal_print_frame, 0, "");

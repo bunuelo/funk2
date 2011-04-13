@@ -279,7 +279,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_garbage_collector.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
-  c/f2_glwindow.c \
   c/f2_gmodule.c \
   c/f2_graph.c \
   c/f2_graph_cluster.c \
@@ -302,7 +301,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_nil.c \
   c/f2_number.c \
   c/f2_object.c \
-  c/f2_object_lattice.c \
   c/f2_opengl.c \
   c/f2_optimize.c \
   c/f2_package.c \
@@ -310,7 +308,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_partial_order.c \
   c/f2_peer_command_server.c \
   c/f2_perception_lattice.c \
-  c/f2_physical_objects.c \
   c/f2_primes.c \
   c/f2_primobjects.c \
   c/f2_primobject__boolean.c \
@@ -320,6 +317,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \
   c/f2_primobject__fiber_trigger.c \
+  c/f2_primobject__file_handle.c \
   c/f2_primobject__frame.c \
   c/f2_primobject__hash.c \
   c/f2_primobject__list.c \
@@ -331,7 +329,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__set.c \
   c/f2_primobject__stream.c \
   c/f2_primobject__tensor.c \
-  c/f2_primobject__text_buffer.c \
   c/f2_primobject__traced_cmutex.c \
   c/f2_primobject_type.c \
   c/f2_primobject_type_handler.c \
@@ -354,7 +351,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_scheduler.c \
   c/f2_scheduler_thread_controller.c \
   c/f2_search.c \
-  c/f2_serialize.c \
   c/f2_set.c \
   c/f2_signal.c \
   c/f2_socket.c \
@@ -364,6 +360,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_status.c \
   c/f2_string.c \
   c/f2_surrogate_parent.c \
+  c/f2_system_file_handler.c \
   c/f2_terminal_print.c \
   c/f2_termios.c \
   c/f2_tricolor_set.c \

@@ -145,7 +145,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_cmutex));
   
-  funk2_system_procsesor__init(&(this->system_file_handler));
+  funk2_system_processor__init(&(this->system_file_handler));
   funk2_system_file_handler__init(&(this->system_file_handler));
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   

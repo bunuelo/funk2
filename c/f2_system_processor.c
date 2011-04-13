@@ -39,7 +39,22 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
       }
     }
   }
-  
+  if (this->processor_count == 0) {
+    this->processor_affinity_index = NULL;
+  } else {
+    this->processor_affinity_index = (u64*)from_ptr(f2__malloc(sizeof(u64) * this->processor_count));
+    {
+      s64 processor_index = 0;
+      s64 i;
+      for (i = 0; i < CPU_SETSIZE; i ++) {
+	if (CPU_ISSET(i, &initial_cpu_set) != 0) {
+	  this->processor_affinity_index[processor_index] = i;
+	  processor_index ++;
+	}
+      }
+    }
+    
+  }
 }
 
 void funk2_system_processor__destroy(funk2_system_processor_t* this) {
@@ -47,6 +62,12 @@ void funk2_system_processor__destroy(funk2_system_processor_t* this) {
 
 void funk2_system_processor__print_status(funk2_system_processor_t* this) {
   status("* funk2.system_processor.processor_count = " u64__fstr, this->processor_count);
+  {
+    s64 i;
+    for (i = 0; i < this->processor_count; i ++) {
+      status("* funk2.system_processor.processor_assignment_index[" s64__fstr "] = " u64__fstr, i, this->processor_affinity_index[i]);
+    }
+  }
 }
 
 // **

@@ -38,16 +38,27 @@ export_cefunk0(forgetful_event_stream__new, 0, "Returns a new forgetful_event_st
 
 
 f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  raw__event_stream__add(cause, this, event_stream_event);
+  {
+    f2ptr result = f2__event_stream__add(cause, this, event_stream_event);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
   boolean_t keep_all_events                                   = boolean__false;
   f2ptr     important_iterator_set                            = raw__forgetful_event_stream__important_iterator_set(cause, this);
   f2ptr     minimum_important_index_time                      = nil;
   s64       minimum_important_index_nanoseconds_since_1970__i = 0;
   set__iteration(cause, important_iterator_set, important_iterator,
-		 f2ptr index_time = raw__event_stream_iterator__index_time(cause, important_iterator);
+		 f2ptr index_time = f2__event_stream_iterator__index_time(cause, important_iterator);
+		 if (raw__larva__is_type(cause, index_time)) {
+		   return index_time;
+		 }
 		 if (index_time == nil) {
 		   keep_all_events = boolean__true;
 		 } else {
+		   if (! raw__time__is_type(cause, index_time)) {
+		     return f2larva__new(cause, 1355151, nil);
+		   }
 		   f2ptr index_time__nanoseconds_since_1970    = f2time__nanoseconds_since_1970(index_time, cause);
 		   s64   index_time__nanoseconds_since_1970__i = f2integer__i(index_time__nanoseconds_since_1970, cause);
 		   if ((minimum_important_index_time == nil) ||
@@ -59,19 +70,23 @@ f2ptr raw__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stre
 		 );
   if (! keep_all_events) {
     if (minimum_important_index_time != nil) {
-      raw__event_stream__remove_all_before_time(cause, this, minimum_important_index_time);
+      f2ptr result = f2__event_stream__remove_all_before_time(cause, this, minimum_important_index_time);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     } else {
-      raw__event_stream__remove_all(cause, this);
+      f2ptr result = f2__event_stream__remove_all(cause, this);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
     }
   }
   return nil;
 }
 
 f2ptr f2__forgetful_event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  if ((! raw__forgetful_event_stream__is_type(cause, this)) ||
-      (! raw__event_stream_event__is_type(cause, event_stream_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(forgetful_event_stream, this);
+  assert_argument_type(event_stream_event,     event_stream_event);
   return raw__forgetful_event_stream__add(cause, this, event_stream_event);
 }
 export_cefunk2(forgetful_event_stream__add, this, event_stream_event, 0,
@@ -84,10 +99,8 @@ f2ptr raw__forgetful_event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_s
 }
 
 f2ptr f2__forgetful_event_stream__remove(f2ptr cause, f2ptr this, f2ptr event_stream_event) {
-  if ((! raw__forgetful_event_stream__is_type(cause, this)) ||
-      (! raw__event_stream_event__is_type(cause, event_stream_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(forgetful_event_stream, this);
+  assert_argument_type(event_stream_event,     event_stream_event);
   return raw__forgetful_event_stream__remove(cause, this, event_stream_event);
 }
 export_cefunk2(forgetful_event_stream__remove, this, event_stream_event, 0,
@@ -100,10 +113,8 @@ void raw__forgetful_event_stream__add_important_iterator(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__forgetful_event_stream__add_important_iterator(f2ptr cause, f2ptr this, f2ptr iterator) {
-  if ((! raw__forgetful_event_stream__is_type(cause, this)) ||
-      (! raw__event_stream_iterator__is_type(cause, iterator))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(forgetful_event_stream, this);
+  assert_argument_type(event_stream_iterator,  iterator);
   raw__forgetful_event_stream__add_important_iterator(cause, this, iterator);
   return nil;
 }
@@ -117,10 +128,8 @@ void raw__forgetful_event_stream__remove_important_iterator(f2ptr cause, f2ptr t
 }
 
 f2ptr f2__forgetful_event_stream__remove_important_iterator(f2ptr cause, f2ptr this, f2ptr iterator) {
-  if ((! raw__forgetful_event_stream__is_type(cause, this)) ||
-      (! raw__event_stream_iterator__is_type(cause, iterator))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(forgetful_event_stream, this);
+  assert_argument_type(event_stream_iterator,  iterator);
   raw__forgetful_event_stream__remove_important_iterator(cause, this, iterator);
   return nil;
 }

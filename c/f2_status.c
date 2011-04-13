@@ -68,17 +68,16 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
 ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
   va_list args;
   if (! raw__stream__is_type(cause, stream)) {error(nil, "stream_writef error: stream is not stream.");}
-  f2ptr file_descriptor = f2stream__file_descriptor(stream, cause);
-  int fd = f2integer__i(file_descriptor, cause);
+  f2ptr file_handle = f2stream__file_handle(stream, cause);
   int msg_len = strlen(msg);
-  char* temp_msg = alloca(2048 + msg_len);
+  u8* temp_msg = (u8*)alloca(2048 + msg_len);
   va_start(args, msg);
-  vsprintf(temp_msg, msg, args);
+  vsprintf((char*)temp_msg, msg, args);
   va_end(args);
   if (raw__file_stream__is_type(cause, stream)) {
-    return write(fd, temp_msg, strlen(temp_msg));
+    return raw__file_handle__write(cause, file_handle, strlen((char*)temp_msg), temp_msg);
   } else if (raw__socket_stream__is_type(cause, stream)) {
-    return send(fd, temp_msg, strlen(temp_msg), 0);
+    return raw__file_handle__send(cause, file_handle, strlen((char*)temp_msg), temp_msg);
   } else {
     return -1;
   }

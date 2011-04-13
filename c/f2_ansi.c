@@ -21,18 +21,9 @@
 
 #include "funk2.h"
 
-f2ptr f2__ansi__stream__begin_command(f2ptr cause, f2ptr stream) {
-  raw__stream__writef(cause, stream, "%c[", 27);
-  return nil;
-}
-def_pcfunk1(ansi__stream__begin_command, stream,
-	    "",
-	    return f2__ansi__stream__begin_command(this_cause, stream));
-
 void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code) {
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "%dm", code);
+  raw__stream__writef(cause, stream, "%c[%dm", 27, code);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
 }
 
@@ -313,8 +304,7 @@ def_pcfunk1(ansi__stream__default_background, stream,
 f2ptr f2__ansi__stream__clear_screen(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "2J");
+  raw__stream__writef(cause, stream, "%c[2J", 27);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
@@ -325,8 +315,7 @@ def_pcfunk1(ansi__stream__clear_screen, stream,
 f2ptr f2__ansi__stream__clear_keyboard_leds(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "0q");
+  raw__stream__writef(cause, stream, "%c[0q", 27);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
@@ -337,8 +326,7 @@ def_pcfunk1(ansi__stream__clear_keyboard_leds, stream,
 f2ptr f2__ansi__stream__set_scroll_lock_led(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "1q");
+  raw__stream__writef(cause, stream, "%c[1q", 27);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
@@ -349,8 +337,7 @@ def_pcfunk1(ansi__stream__set_scroll_lock_led, stream,
 f2ptr f2__ansi__stream__set_num_lock_led(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "2q");
+  raw__stream__writef(cause, stream, "%c[2q", 27);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
@@ -361,8 +348,7 @@ def_pcfunk1(ansi__stream__set_num_lock_led, stream,
 f2ptr f2__ansi__stream__set_caps_lock_led(f2ptr cause, f2ptr stream) {
   assert_argument_type(stream, stream);
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "3q");
+  raw__stream__writef(cause, stream, "%c[3q", 27);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
   return nil;
 }
@@ -375,8 +361,7 @@ void raw__ansi__stream__move_cursor(f2ptr cause, f2ptr stream, int x, int y) {
     return;
   }
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  f2__ansi__stream__begin_command(cause, stream);
-  raw__stream__writef(cause, stream, "%d;%dH", y, x);
+  raw__stream__writef(cause, stream, "%c[%d;%dH", 27, y, x);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
 }
 
@@ -552,48 +537,47 @@ void f2__ansi__initialize() {
   
   f2__ansi__reinitialize_globalvars();
   
-  f2__primcfunk__init(ansi__stream__begin_command, "");
-  f2__primcfunk__init(ansi__stream__print_code, "");
-  f2__primcfunk__init(ansi__stream__reset, "");
-  f2__primcfunk__init(ansi__stream__bold, "");
-  f2__primcfunk__init(ansi__stream__half_bright, "");
-  f2__primcfunk__init(ansi__stream__underscore, "");
-  f2__primcfunk__init(ansi__stream__blink, "");
-  f2__primcfunk__init(ansi__stream__reverse_video, "");
-  f2__primcfunk__init(ansi__stream__normal_intensity, "");
-  f2__primcfunk__init(ansi__stream__underline_off, "");
-  f2__primcfunk__init(ansi__stream__blink_off, "");
-  f2__primcfunk__init(ansi__stream__reverse_video_off, "");
-  f2__primcfunk__init(ansi__stream__black_foreground, "");
-  f2__primcfunk__init(ansi__stream__red_foreground, "");
-  f2__primcfunk__init(ansi__stream__green_foreground, "");
-  f2__primcfunk__init(ansi__stream__brown_foreground, "");
-  f2__primcfunk__init(ansi__stream__blue_foreground, "");
-  f2__primcfunk__init(ansi__stream__magenta_foreground, "");
-  f2__primcfunk__init(ansi__stream__cyan_foreground, "");
-  f2__primcfunk__init(ansi__stream__white_foreground, "");
-  f2__primcfunk__init(ansi__stream__underscore_with_default_foreground, "");
-  f2__primcfunk__init(ansi__stream__underscore_off_with_default_foreground, "");
-  f2__primcfunk__init(ansi__stream__black_background, "");
-  f2__primcfunk__init(ansi__stream__red_background, "");
-  f2__primcfunk__init(ansi__stream__green_background, "");
-  f2__primcfunk__init(ansi__stream__brown_background, "");
-  f2__primcfunk__init(ansi__stream__blue_background, "");
-  f2__primcfunk__init(ansi__stream__magenta_background, "");
-  f2__primcfunk__init(ansi__stream__cyan_background, "");
-  f2__primcfunk__init(ansi__stream__white_background, "");
-  f2__primcfunk__init(ansi__stream__default_background, "");
-  f2__primcfunk__init(ansi__stream__clear_screen, "");
-  f2__primcfunk__init(ansi__stream__clear_keyboard_leds, "");
-  f2__primcfunk__init(ansi__stream__set_scroll_lock_led, "");
-  f2__primcfunk__init(ansi__stream__set_num_lock_led, "");
-  f2__primcfunk__init(ansi__stream__set_caps_lock_led, "");
-  f2__primcfunk__init(ansi__stream__move_cursor, "");
-  f2__primcfunk__init(ansi__stream__beep, "");
-  f2__primcfunk__init(ansi__stream__foreground, "");
-  f2__primcfunk__init(ansi__stream__background, "");
-  f2__primcfunk__init(ansi__stream__rectangle, "");
-  f2__primcfunk__init(ansi__stream__bordered_rectangle, "");
+  f2__primcfunk__init(ansi__stream__print_code);
+  f2__primcfunk__init(ansi__stream__reset);
+  f2__primcfunk__init(ansi__stream__bold);
+  f2__primcfunk__init(ansi__stream__half_bright);
+  f2__primcfunk__init(ansi__stream__underscore);
+  f2__primcfunk__init(ansi__stream__blink);
+  f2__primcfunk__init(ansi__stream__reverse_video);
+  f2__primcfunk__init(ansi__stream__normal_intensity);
+  f2__primcfunk__init(ansi__stream__underline_off);
+  f2__primcfunk__init(ansi__stream__blink_off);
+  f2__primcfunk__init(ansi__stream__reverse_video_off);
+  f2__primcfunk__init(ansi__stream__black_foreground);
+  f2__primcfunk__init(ansi__stream__red_foreground);
+  f2__primcfunk__init(ansi__stream__green_foreground);
+  f2__primcfunk__init(ansi__stream__brown_foreground);
+  f2__primcfunk__init(ansi__stream__blue_foreground);
+  f2__primcfunk__init(ansi__stream__magenta_foreground);
+  f2__primcfunk__init(ansi__stream__cyan_foreground);
+  f2__primcfunk__init(ansi__stream__white_foreground);
+  f2__primcfunk__init(ansi__stream__underscore_with_default_foreground);
+  f2__primcfunk__init(ansi__stream__underscore_off_with_default_foreground);
+  f2__primcfunk__init(ansi__stream__black_background);
+  f2__primcfunk__init(ansi__stream__red_background);
+  f2__primcfunk__init(ansi__stream__green_background);
+  f2__primcfunk__init(ansi__stream__brown_background);
+  f2__primcfunk__init(ansi__stream__blue_background);
+  f2__primcfunk__init(ansi__stream__magenta_background);
+  f2__primcfunk__init(ansi__stream__cyan_background);
+  f2__primcfunk__init(ansi__stream__white_background);
+  f2__primcfunk__init(ansi__stream__default_background);
+  f2__primcfunk__init(ansi__stream__clear_screen);
+  f2__primcfunk__init(ansi__stream__clear_keyboard_leds);
+  f2__primcfunk__init(ansi__stream__set_scroll_lock_led);
+  f2__primcfunk__init(ansi__stream__set_num_lock_led);
+  f2__primcfunk__init(ansi__stream__set_caps_lock_led);
+  f2__primcfunk__init(ansi__stream__move_cursor);
+  f2__primcfunk__init(ansi__stream__beep);
+  f2__primcfunk__init(ansi__stream__foreground);
+  f2__primcfunk__init(ansi__stream__background);
+  f2__primcfunk__init(ansi__stream__rectangle);
+  f2__primcfunk__init(ansi__stream__bordered_rectangle);
 }
 
 

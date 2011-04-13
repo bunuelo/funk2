@@ -1678,7 +1678,9 @@ f2ptr f2__exp__printable_value(f2ptr cause, f2ptr this) {
   f2ptr subexp_size_place = f2__place__new(cause, nil);
   return raw__exp__printable_value__with_ptypehash(cause, this, max_size, size, ptypehash, subexp_size_place);
 }
-def_pcfunk1(exp__printable_value, this, "", return f2__exp__printable_value(this_cause, this));
+def_pcfunk1(exp__printable_value, this,
+	    "Converts an object into a form that can be directly printed to the screen.",
+	    return f2__exp__printable_value(this_cause, this));
 
 
 
@@ -1697,7 +1699,7 @@ void f2__print__initialize() {
   
   f2__print__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(exp__printable_value, this, "Converts an object into a form that can be directly printed to the screen.");
+  f2__primcfunk__init__1(exp__printable_value, this);
   
 }
 

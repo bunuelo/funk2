@@ -307,18 +307,18 @@ void f2__graphviz__initialize() {
   
   f2__graphviz__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(graphviz__digraph,           codes,                               "compiles code for graphviz.");
-  f2__primcfunk__init__1(graphviz__node_color,        color,                               "compiles code for graphviz.");
-  f2__primcfunk__init__1(graphviz__edge_color,        color,                               "compiles code for graphviz.");
-  f2__primcfunk__init__3(graphviz__node,              name, label, color,                  "compiles code for graphviz.");
-  f2__primcfunk__init__3(graphviz__box_node,          name, label, color,                  "compiles code for graphviz.");
-  f2__primcfunk__init__2(graphviz__edge_tail_head,    tail, head,                          "compiles code for graphviz.");
-  f2__primcfunk__init__3(graphviz__edge,              from_node, to_node, color,           "compiles code for graphviz.");
-  f2__primcfunk__init__1(graphviz__exp__as__label,    exp,                                 "compiles code for graphviz.");
-  f2__primcfunk__init__1(graphviz__exp__as__name,     exp,                                 "compiles code for graphviz.");
-  f2__primcfunk__init__3(graphviz__edge_name,         label, left_node, right_node,        "compiles code for graphviz.");
-  f2__primcfunk__init__4(graphviz__raw_labelled_edge, label, left_node, right_node, color, "compiles code for graphviz.");
-  f2__primcfunk__init__3(graphviz__labelled_edge,     label, left_node, right_node,        "compiles code for graphviz.");
+  f2__primcfunk__init__1(graphviz__digraph,           codes);
+  f2__primcfunk__init__1(graphviz__node_color,        color);
+  f2__primcfunk__init__1(graphviz__edge_color,        color);
+  f2__primcfunk__init__3(graphviz__node,              name, label, color);
+  f2__primcfunk__init__3(graphviz__box_node,          name, label, color);
+  f2__primcfunk__init__2(graphviz__edge_tail_head,    tail, head);
+  f2__primcfunk__init__3(graphviz__edge,              from_node, to_node, color);
+  f2__primcfunk__init__1(graphviz__exp__as__label,    exp);
+  f2__primcfunk__init__1(graphviz__exp__as__name,     exp);
+  f2__primcfunk__init__3(graphviz__edge_name,         label, left_node, right_node);
+  f2__primcfunk__init__4(graphviz__raw_labelled_edge, label, left_node, right_node, color);
+  f2__primcfunk__init__3(graphviz__labelled_edge,     label, left_node, right_node);
   
   
 }

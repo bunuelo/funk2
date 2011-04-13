@@ -79,7 +79,7 @@ f2ptr f2__bug__pretty_print(f2ptr cause, f2ptr this) {
   return raw__bug__pretty_print(cause, this);
 }
 def_pcfunk1(bug__pretty_print, this,
-	    "",
+	    "Prints a bug object for human readability, suppressing large objects from printing in their entirety.",
 	    return f2__bug__pretty_print(this_cause, this));
 
 
@@ -133,9 +133,9 @@ void f2__bug__initialize() {
   initialize_primobject_2_slot(bug, bug_type, frame);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_bug.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bug__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_bug.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(bug__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_bug.terminal_print_with_frame__funk = never_gc(cfunk);}
   
-  f2__primcfunk__init__1(bug__pretty_print, this, "Prints a bug object for human readability, suppressing large objects from printing in their entirety.");
+  f2__primcfunk__init__1(bug__pretty_print, this);
   
 }
 

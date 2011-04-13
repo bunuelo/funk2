@@ -50,7 +50,6 @@ typedef enum ansi_color_e {
 #include "f2_primfunks.h"
 #include "f2_status.h"
 
-f2ptr f2__ansi__stream__begin_command(f2ptr cause, f2ptr stream);
 void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code);
 f2ptr f2__ansi__stream__print_code(f2ptr cause, f2ptr stream, f2ptr code);
 f2ptr f2__ansi__stream__reset(f2ptr cause, f2ptr stream);

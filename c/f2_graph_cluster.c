@@ -107,7 +107,7 @@ f2ptr f2__graph__cluster(f2ptr cause, f2ptr this) {
   return raw__graph__cluster(cause, this);
 }
 def_pcfunk1(graph__cluster, this,
-	    "",
+	    "Cluster this graph.",
 	    return f2__graph__cluster(this_cause, this));
 
 // **
@@ -122,6 +122,6 @@ void f2__graph_cluster__initialize() {
   f2__graph_cluster__reinitialize_globalvars();
   //f2ptr cause = initial_cause();
   
-  f2__primcfunk__init__1(graph__cluster, this, "Cluster this graph.");
+  f2__primcfunk__init__1(graph__cluster, this);
 }
 

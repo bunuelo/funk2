@@ -27,6 +27,11 @@
 [deftypefunk gtk_widget execute response_event-signal_connect       [funk args]             [gtk-response_event-signal_connect       [get this widget] funk args]]
 [deftypefunk gtk_widget execute update_preview_event-signal_connect [funk args]             [gtk-update_preview_event-signal_connect [get this widget] funk args]]
 
+'GObject'
+[deftypefunk g_object get     g_object [] this]
+[deftypefunk g_object execute ref      [] [g-object-ref   [get this g_object]]]
+[deftypefunk g_object execute unref    [] [g-object-unref [get this g_object]]]
+
 'GtkWidget'
 [deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
 [deftypefunk gtk_widget execute hide_all               []                                      [gtk-widget-hide_all               [get this widget]]]
@@ -122,12 +127,12 @@
 [deftypefunk gtk_image set image  [image]
   [let [[pixbuf [gtk-pixbuf-new_from_image image]]]
     [gtk-image-set_from_pixbuf [get this widget] pixbuf]
-    [gtk-pixbuf-unref pixbuf]]]
+    [have pixbuf unref]]]
 
 [defunk gtk-image-new_from_image [image]
   [let [[pixbuf [gtk-pixbuf-new_from_image image]]]
     [let [[gtk_image [gtk-image-new_from_pixbuf pixbuf]]]
-      [gtk-pixbuf-unref pixbuf]
+      [have pixbuf unref]
       gtk_image]]]
 
 [defunk gtk-image-new_from_file [filename]
@@ -191,7 +196,6 @@
 [deftypefunk gdk_pixbuf get     height          [] [gtk-pixbuf-get_height          this]]
 [deftypefunk gdk_pixbuf get     rgba_pixel_data [] [gtk-pixbuf-get_rgba_pixel_data this]]
 [deftypefunk gdk_pixbuf get     rgb_pixel_data  [] [gtk-pixbuf-get_rgb_pixel_data  this]]
-[deftypefunk gdk_pixbuf execute unref           [] [gtk-pixbuf-unref               this]]
 
 [defunk gtk-pixbuf-new_from_image [image]
   [gtk-pixbuf-new_from_rgba_data [get image width] [get image height] [get image rgba_data]]]

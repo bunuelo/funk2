@@ -540,16 +540,16 @@ void f2__graph_match_error_correcting__initialize() {
   
   // graph_edit_sequence
   initialize_primobject_3_slot(graph_edit_sequence, operations, cost, isomorphism);
-  f2__primcfunk__init__0(graph_edit_sequence__new, "");
-  f2__primcfunk__init__5(graph_edit_sequence__add, this, type, from, to, cost_function, "");
-  f2__primcfunk__init__3(graph_edit_sequence__add_mapping, this, left_node, right_node, "");
-  f2__primcfunk__init__5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function, "");
+  f2__primcfunk__init__0(graph_edit_sequence__new);
+  f2__primcfunk__init__5(graph_edit_sequence__add, this, type, from, to, cost_function);
+  f2__primcfunk__init__3(graph_edit_sequence__add_mapping, this, left_node, right_node);
+  f2__primcfunk__init__5(graph_edit_sequence__combine, this, that, lattice_node, graph, cost_function);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_edit_sequence__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_decomposition_lattice
-  f2__primcfunk__init__3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function, "");
+  f2__primcfunk__init__3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function);
   
 }
 

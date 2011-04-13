@@ -97,7 +97,7 @@ f2ptr f2__fiber_trigger_hash__add(f2ptr cause, f2ptr trigger, f2ptr fiber) {
   return raw__fiber_trigger_hash__add(cause, trigger, fiber);
 }
 def_pcfunk2(fiber_trigger_hash__add, trigger, fiber,
-	    "",
+	    "Adds a fiber to a fiber_trigger's global activation set.",
 	    return f2__fiber_trigger_hash__add(this_cause, trigger, fiber));
 
 
@@ -143,10 +143,10 @@ void f2__primobject__fiber_trigger__initialize() {
   initialize_primobject_0_slot(fiber_trigger);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__0_arg(fiber_trigger__new, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__0_arg(fiber_trigger__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk = never_gc(cfunk);}
   
   {char* symbol_str = "trigger"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_trigger__trigger, this, cfunk, "primobject_type funktion (defined in f2_primobjects.c)"); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_trigger__trigger, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk = never_gc(cfunk);}
   
   {
     f2ptr result = f2__fiber_trigger_hash(cause);
@@ -155,7 +155,7 @@ void f2__primobject__fiber_trigger__initialize() {
     }
   }
   
-  f2__primcfunk__init__2(fiber_trigger_hash__add, trigger, fiber, "Adds a fiber to a fiber_trigger's global activation set.");
+  f2__primcfunk__init__2(fiber_trigger_hash__add, trigger, fiber);
   
 }
 

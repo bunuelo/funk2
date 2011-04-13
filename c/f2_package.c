@@ -54,7 +54,7 @@ f2ptr f2__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, 
   return raw__source_expression__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 def_pcfunk2(source_expression__terminal_print_with_frame, this, terminal_print_frame,
-	    "",
+	    "Prints a source_expression object using a terminal_print_frame.",
 	    return f2__source_expression__terminal_print_with_frame(this_cause, this, terminal_print_frame));
 
 
@@ -80,7 +80,7 @@ f2ptr f2__source__load(f2ptr cause, f2ptr filename) {
   return f2__source__new(cause, code);
 }
 def_pcfunk1(source__load, filename,
-	    "",
+	    "load source code from a file named by filename.",
 	    return f2__source__load(this_cause, filename));
 
 f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
@@ -139,7 +139,7 @@ f2ptr f2__current_working_directory(f2ptr cause) {
   return current_working_directory;
 }
 def_pcfunk0(current_working_directory,
-	    "",
+	    "Returns a string representing the current working directory name.",
 	    return f2__current_working_directory(this_cause));
 
 f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
@@ -177,7 +177,7 @@ f2ptr f2__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__pathname__concat(cause, this, that);
 }
 def_pcfunk2(pathname__concat, this, that,
-	    "",
+	    "Concatenates two paths and returns the result in a new path string.",
 	    return f2__pathname__concat(this_cause, this, that));
 
 
@@ -220,7 +220,7 @@ f2ptr f2__pathnamelist__concat(f2ptr cause, f2ptr this) {
   return raw__pathnamelist__concat(cause, this);
 }
 def_pcfunk1(pathnamelist__concat, this,
-	    "",
+	    "Concatenates a list of paths and returns the result in a new path string.",
 	    return f2__pathnamelist__concat(this_cause, this));
 
 boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
@@ -237,7 +237,7 @@ f2ptr f2__pathname__is_absolute(f2ptr cause, f2ptr this) {
   return f2bool__new(raw__pathname__is_absolute(cause, this));
 }
 def_pcfunk1(pathname__is_absolute, this,
-	    "",
+	    "Returns true if pathname represents an absolute path.",
 	    return f2__pathname__is_absolute(this_cause, this));
 
 f2ptr raw__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
@@ -252,7 +252,7 @@ f2ptr f2__pathname__as__absolute_pathname(f2ptr cause, f2ptr this) {
   return raw__pathname__as__absolute_pathname(cause, this);
 }
 def_pcfunk1(pathname__as__absolute_pathname, this,
-	    "",
+	    "Returns an absolute pathname for this pathname.",
 	    return f2__pathname__as__absolute_pathname(this_cause, this));
 
 f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
@@ -275,7 +275,7 @@ f2ptr f2__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   return raw__pathname__directory_pathname(cause, this);
 }
 def_pcfunk1(pathname__directory_pathname, this,
-	    "",
+	    "Returns the directory part of a path.",
 	    return f2__pathname__directory_pathname(this_cause, this));
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
@@ -320,7 +320,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   return absolute_filenames;
 }
 def_pcfunk1(pathname__scan_for_filenames, pathname,
-	    "",
+	    "Scans a directory name and returns all filenames.",
 	    return f2__pathname__scan_for_filenames(this_cause, pathname));
 
 f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
@@ -358,7 +358,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
   return matching_filenames;
 }
 def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension,
-	    "",
+	    "Scans a directory name and returns all filenames that match the given extension.",
 	    return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
 
 f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
@@ -412,7 +412,7 @@ f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
   return raw__pathname__stat(cause, this);
 }
 def_pcfunk1(pathname__stat, this,
-	    "",
+	    "Returns a frame with stat info about this pathname.",
 	    return f2__pathname__stat(this_cause, this));
 
 
@@ -457,7 +457,7 @@ f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
   return result;
 }
 def_pcfunk1(pathname__exists, filename,
-	    "",
+	    "Returns a boolean value specifying whether or not the given pathname exists.",
 	    return f2__pathname__exists(this_cause, filename));
 
 
@@ -514,7 +514,7 @@ f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) 
   return result;
 }
 def_pcfunk2(pathname__rename, old_filename, new_filename,
-	    "",
+	    "Renames a pathname.",
 	    return f2__pathname__rename(this_cause, old_filename, new_filename));
 
 
@@ -536,7 +536,7 @@ f2ptr f2__getenv(f2ptr cause, f2ptr environment_variable) {
   return raw__getenv(cause, environment_variable);
 }
 def_pcfunk1(getenv, environment_variable,
-	    "",
+	    "Returns the environment definition of the given string variable or returns nil if the variable is not defined.",
 	    return f2__getenv(this_cause, environment_variable));
 
 
@@ -563,7 +563,7 @@ void f2__package__initialize() {
 			       body, first_line, last_line, first_column, last_column, subexpressions);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(source_expression__terminal_print_with_frame, this, terminal_print_frame, cfunk, "Prints a source_expression object using a terminal_print_frame.");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(source_expression__terminal_print_with_frame, this, terminal_print_frame, cfunk);
     __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // source
@@ -571,9 +571,9 @@ void f2__package__initialize() {
   initialize_primobject_1_slot(source,
 			       code);
   
-  f2__primcfunk__init__1(source__load, filename, "load source code from a file named by filename.");
+  f2__primcfunk__init__1(source__load, filename);
   
-  f2__primcfunk__init__1(source__eval, this, "");
+  f2__primcfunk__init__1(source__eval, this);
   
   // package
   
@@ -589,18 +589,18 @@ void f2__package__initialize() {
   
   // pathname
   
-  f2__primcfunk__init__2(pathname__concat,                          this, that,                 "Concatenates two paths and returns the result in a new path string.");
-  f2__primcfunk__init__1(pathnamelist__concat,                      this,                       "Concatenates a list of paths and returns the result in a new path string.");
-  f2__primcfunk__init__1(pathname__is_absolute,                     this,                       "Returns true if pathname represents an absolute path.");
-  f2__primcfunk__init__1(pathname__directory_pathname,              this,                       "Returns the directory part of a path.");
-  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname,                   "Scans a directory name and returns all filenames.");
-  f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension,        "Scans a directory name and returns all filenames that match the given extension.");
-  f2__primcfunk__init__0(current_working_directory,                                             "Returns a string representing the current working directory name.");
-  f2__primcfunk__init__1(pathname__as__absolute_pathname,           this,                       "Returns an absolute pathname for this pathname.");
-  f2__primcfunk__init__1(pathname__stat,                            this,                       "Returns a frame with stat info about this pathname.");
-  f2__primcfunk__init__1(pathname__exists,                          filename,                   "Returns a boolean value specifying whether or not the given pathname exists.");
-  f2__primcfunk__init__2(pathname__rename,                          old_filename, new_filename, "Renames a pathname.");
-  f2__primcfunk__init__1(getenv,                                    environment_variable,       "Returns the environment definition of the given string variable or returns nil if the variable is not defined.");
+  f2__primcfunk__init__2(pathname__concat,                          this, that);
+  f2__primcfunk__init__1(pathnamelist__concat,                      this);
+  f2__primcfunk__init__1(pathname__is_absolute,                     this);
+  f2__primcfunk__init__1(pathname__directory_pathname,              this);
+  f2__primcfunk__init__1(pathname__scan_for_filenames,              pathname);
+  f2__primcfunk__init__2(pathname__scan_for_filenames_by_extension, pathname, extension);
+  f2__primcfunk__init__0(current_working_directory);
+  f2__primcfunk__init__1(pathname__as__absolute_pathname,           this);
+  f2__primcfunk__init__1(pathname__stat,                            this);
+  f2__primcfunk__init__1(pathname__exists,                          filename);
+  f2__primcfunk__init__2(pathname__rename,                          old_filename, new_filename);
+  f2__primcfunk__init__1(getenv,                                    environment_variable);
   
 }
 

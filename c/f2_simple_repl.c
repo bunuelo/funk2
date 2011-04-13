@@ -67,7 +67,7 @@ void f2__simple_repl__initialize() {
   
   f2__simple_repl__reinitialize_globalvars();
   
-  f2__primcfunk__init__0(simple_repl, "");
+  f2__primcfunk__init__0(simple_repl);
 }
 
 

@@ -178,7 +178,7 @@ f2ptr f2__wrong_argument_number__bcs__set(f2ptr cause, f2ptr bytecodes) {
   return nil;
 }
 def_pcfunk1(wrong_argument_number__bcs__set, bytecodes,
-	    "",
+	    "Sets the interrupt for responding to the wrong number of arguments to a funk.",
 	    return f2__wrong_argument_number__bcs__set(this_cause, bytecodes));
 
 
@@ -2075,7 +2075,7 @@ void f2__compile__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.compile.raw__compile__symbol,                          nil);
   
   //f2__primcfunk__init__1(string__to_symbol, this, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
-  f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes, "sets the interrupt for responding to the wrong number of arguments to a funk.");
+  f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
   
 }
 

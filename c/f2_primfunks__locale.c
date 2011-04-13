@@ -92,14 +92,14 @@ void f2__primfunks__locale__initialize() {
   
   f2__primfunks__locale__reinitialize_globalvars();
   
-  f2__primcfunk__init(locale__setlocale, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_all, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_collate, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_ctype, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_messages, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_monetary, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_numeric, "(as defined in locale.h)");
-  f2__primcfunk__init(locale__lc_time, "(as defined in locale.h)");
+  f2__primcfunk__init(locale__setlocale);
+  f2__primcfunk__init(locale__lc_all);
+  f2__primcfunk__init(locale__lc_collate);
+  f2__primcfunk__init(locale__lc_ctype);
+  f2__primcfunk__init(locale__lc_messages);
+  f2__primcfunk__init(locale__lc_monetary);
+  f2__primcfunk__init(locale__lc_numeric);
+  f2__primcfunk__init(locale__lc_time);
 }
 
 void f2__primfunks__locale__destroy() {

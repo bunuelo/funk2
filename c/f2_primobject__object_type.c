@@ -110,7 +110,7 @@ void f2__primobject_object_type__initialize() {
   
   f2__primobject_object_type__reinitialize_globalvars();
   
-  f2__primcfunk__init(object_type__new, "");
+  f2__primcfunk__init(object_type__new);
   
   environment__add_var_value(initial_cause(), global_environment(), __object_type__symbol, nil);
 }

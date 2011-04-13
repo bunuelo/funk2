@@ -1326,11 +1326,11 @@ void f2__glwindow__initialize() {
     status("glwindow is not supported in this funk2 build.");
   }
   
-  f2__primcfunk__init__0(glwindow__supported, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__5(glwindow__create, title, width, height, depth, fullscreen, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__0(glwindow__handle_events, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__0(glwindow__destroy, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__2(glwindow__load_texture, name, filename, "glwindow cfunk declared in f2_glwindow.c");
-  f2__primcfunk__init__1(glwindow__texture_loaded, name, "glwindow cfunk declared in f2_glwindow.c");
+  f2__primcfunk__init__0(glwindow__supported);
+  f2__primcfunk__init__5(glwindow__create, title, width, height, depth, fullscreen);
+  f2__primcfunk__init__0(glwindow__handle_events);
+  f2__primcfunk__init__0(glwindow__destroy);
+  f2__primcfunk__init__2(glwindow__load_texture, name, filename);
+  f2__primcfunk__init__1(glwindow__texture_loaded, name);
 }
 

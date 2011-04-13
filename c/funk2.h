@@ -130,6 +130,7 @@
 #include "f2_status.h"
 #include "f2_string.h"
 #include "f2_surrogate_parent.h"
+#include "f2_system_processor.h"
 #include "f2_system_file_handler.h"
 #include "f2_terminal_print.h"
 #include "f2_termios.h"
@@ -154,6 +155,7 @@ typedef struct funk2_s {
   event_id_t                          event_id;
   funk2_processor_mutex_t             event_id_cmutex;
   // global variables in other source files
+  funk2_system_processor_t            system_processor;
   funk2_system_file_handler_t         system_file_handler;
   funk2_module_registration_t         module_registration;
   funk2_command_line_t                command_line;

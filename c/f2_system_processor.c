@@ -22,7 +22,7 @@
 #include "funk2.h"
 
 void funk2_system_processor__init(funk2_system_processor_t* this) {
-  processor_count = pthread_num_processors_np();
+  this->processor_count = pthread_num_processors_np();
 }
 
 void funk2_system_processor__destroy(funk2_system_processor_t* this) {

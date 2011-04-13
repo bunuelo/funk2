@@ -389,7 +389,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
   funk2_xmlrpc__destroy(&(this->xmlrpc));
   funk2_system_file_handler__destroy(&(this->system_file_handler));
-  funk2_processor__destroy(&(this->system_processor));
+  funk2_system_processor__destroy(&(this->system_processor));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

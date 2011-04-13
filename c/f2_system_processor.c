@@ -22,7 +22,24 @@
 #include "funk2.h"
 
 void funk2_system_processor__init(funk2_system_processor_t* this) {
+  cpu_set_t initial_cpu_set;
+  CPU_ZERO(&initial_cpu_set);
+  {
+    int result = sched_getaffinity(0, sizeof(cpu_set_t), &initial_cpu_set);
+    if (result != 0) {
+      error(nil, "funk2_system_processor__init error: sched_getaffinity error.");
+    }
+  }
   this->processor_count = 0;
+  {
+    s64 i;
+    for (i = 0; i < CPU_SETSIZE; i ++) {
+      if (CPU_ISSET(i, &initial_cpu_set) != 0) {
+	this->processor_count ++;
+      }
+    }
+  }
+  
 }
 
 void funk2_system_processor__destroy(funk2_system_processor_t* this) {

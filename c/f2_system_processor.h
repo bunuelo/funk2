@@ -27,7 +27,7 @@
 typedef struct funk2_system_processor_s funk2_system_processor_t;
 struct funk2_system_processor_s {
   u64            processor_count;
-  pthread_spu_t* processor_spu;
+  //pthread_spu_t* processor_spu;
 };
 
 void funk2_system_processor__init        (funk2_system_processor_t* this);

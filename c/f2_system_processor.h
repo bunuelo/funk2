@@ -32,7 +32,7 @@ struct funk2_system_processor_s {
 
 void funk2_system_processor__init        (funk2_system_processor_t* this);
 void funk2_system_processor__destroy     (funk2_system_processor_t* this);
-void funk2_system_processor__print_status(funk2_system_processor_t* this) {
+void funk2_system_processor__print_status(funk2_system_processor_t* this);
 
 
 // **

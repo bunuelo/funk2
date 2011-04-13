@@ -295,6 +295,7 @@ ideas: look carefully for - move to a different place in order to see
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
+    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     [let[[init_diff [get_neck_heading mind]]
 	 [slightly_looking_left 8]
 	 [slightly_looking_right [- 0 8]]]

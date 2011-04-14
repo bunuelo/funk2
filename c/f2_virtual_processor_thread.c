@@ -23,6 +23,36 @@
 
 // funk2_virtual_processor_thread
 
+void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processor_thread_t* this) {
+  cpu_set_t cpu_set;
+  CPU_ZERO(&cpu_set);
+  {
+    s64 i;
+    for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
+      CPU_SET(__funk2.system_processor.processor_assignment_index[i], &cpu_set);
+    }
+  }
+  {
+    int result = pthread_sched_setaffinity(pthread_self(), sizeof(cpu_set_t), &cpu_set);
+    if (result != 0) {
+      error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: sched_setaffinity");
+    }
+  }
+}
+
+void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_thread_t* this, u64 cpu_index) {
+  s64 system_cpu_index = cpu_index % __funk2.system_processor.processor_count;
+  cpu_set_t cpu_set;
+  CPU_ZERO(&cpu_set);
+  CPU_SET(__funk2.system_processor.processor_assignment_index[system_cpu_index], &cpu_set);
+  {
+    int result = pthread_sched_setaffinity(pthread_self(), sizeof(cpu_set_t), &cpu_set);
+    if (result != 0) {
+      error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: sched_setaffinity");
+    }
+  }
+}
+
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
   this->tid = (pid_t)syscall(SYS_gettid);
@@ -34,6 +64,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
     u64       virtual_processor_assignment_index = -1;
     boolean_t not_assigned_to_virtual_processor  = boolean__true;
     while(not_assigned_to_virtual_processor) {
+      funk2_virtual_processor_thread__set_cpu_affinity_all(this);
       {
 	funk2_processor_mutex__lock(&(this->assignment_mutex));
 	virtual_processor_assignment_index = this->virtual_processor_assignment_index;
@@ -44,6 +75,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	raw__spin_sleep_yield();
       }
     }
+    funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
     funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
     boolean_t                  we_are_next_in_line_to_execute = boolean__false;
     s64                        assigned_virtual_processor_thread_count;

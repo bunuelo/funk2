@@ -204,7 +204,7 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
     funk2_hash__remove(&(this->virtual_processor_index_pthread_hash), (u64)(virtual_processor_thread->processor_thread->pthread));
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
   }
-  funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
+  funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {

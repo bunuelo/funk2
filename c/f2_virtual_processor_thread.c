@@ -118,9 +118,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       //
       // We could unassign virtual_processor_thread from virtual_processor here, but we don't want to very often.
       //
-      funk2_processor_mutex__lock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
+      funk2_processor_mutex__lock(&(virtual_processor->virtual_processor_thread_count_mutex));
       s64 spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;
-      funk2_processor_mutex__unlock(&(virtual_processor->spinning_virtual_processor_thread_count_mutex));
+      funk2_processor_mutex__unlock(&(virtual_processor->virtual_processor_thread_count_mutex));
       if (spinning_virtual_processor_thread_count > 8) {
       	funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
       	funk2_virtual_processor_thread__unassign_from_virtual_processor(this);

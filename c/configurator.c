@@ -1,6 +1,6 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
-#define _GNU_SOURCE
 #include <sched.h>
 
 void print_usage() {

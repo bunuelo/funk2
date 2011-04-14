@@ -63,8 +63,8 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
   while (! (this->exit)) {
     u64       virtual_processor_assignment_index = -1;
     boolean_t not_assigned_to_virtual_processor  = boolean__true;
+    boolean_t should_unassign_from_processor     = boolean__true;
     while(not_assigned_to_virtual_processor) {
-      funk2_virtual_processor_thread__set_cpu_affinity_all(this);
       {
 	funk2_processor_mutex__lock(&(this->assignment_mutex));
 	virtual_processor_assignment_index = this->virtual_processor_assignment_index;
@@ -72,6 +72,10 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       }
       not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
       if (not_assigned_to_virtual_processor) {
+	if (should_unassign_from_processor) {
+	  funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	  should_unassign_from_processor = boolean__false;
+	}
 	raw__spin_sleep_yield();
       }
     }

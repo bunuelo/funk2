@@ -33,7 +33,7 @@ void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processo
     }
   }
   {
-    int result = pthread_sched_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
+    int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
     if (result != 0) {
       error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: sched_setaffinity");
     }
@@ -46,7 +46,7 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
   CPU_ZERO(&cpu_set);
   CPU_SET(__funk2.system_processor.processor_assignment_index[system_cpu_index], &cpu_set);
   {
-    int result = pthread_sched_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
+    int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
     if (result != 0) {
       error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: sched_setaffinity");
     }

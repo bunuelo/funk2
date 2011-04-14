@@ -63,9 +63,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
   while (! (this->exit)) {
     u64 virtual_processor_assignment_index = -1;
     {
-      boolean_t not_assigned_to_virtual_processor  = boolean__true;
-      boolean_t should_unassign_from_processor     = boolean__true;
-      boolean_t was_unassigned_from_processor      = boolean__false;
+      boolean_t not_assigned_to_virtual_processor = boolean__true;
       while(not_assigned_to_virtual_processor) {
 	{
 	  funk2_processor_mutex__lock(&(this->assignment_mutex));
@@ -74,16 +72,16 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	}
 	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
 	if (not_assigned_to_virtual_processor) {
-	  if (should_unassign_from_processor) {
-	    funk2_virtual_processor_thread__set_cpu_affinity_all(this);
-	    was_unassigned_from_processor  = boolean__true;
-	    should_unassign_from_processor = boolean__false;
-	  }
 	  raw__spin_sleep_yield();
 	}
-      }
-      if (was_unassigned_from_processor) {
-	funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
+	if (virtual_processor_assignment_index != this->processor_affinity_index) {
+	  if (virtual_processor_assignment_index == -1) {
+	    funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	  } else {
+	    funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
+	  }
+	  this->processor_affinity_index = virtual_processor_assignment_index;
+	}
       }
     }
     funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
@@ -142,6 +140,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->exit                               = boolean__false;
   this->exited                             = boolean__false;
   this->virtual_processor_stack_index      = 0;
+  this->processor_affiliation_index        = -1;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }

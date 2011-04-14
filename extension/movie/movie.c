@@ -435,6 +435,7 @@ export_cefunk2(movie_context__pointer__set, thing, value, 0, "Sets the pointer o
 
 
 f2ptr raw__movie_context__destroy(f2ptr cause, f2ptr this) {
+#ifdef F2__LIBAVCODEC_SUPPORTED
   f2ptr pointer = raw__movie_context__pointer(cause, this);
   if (pointer == nil) {
     return f2larva__new(cause, 123, nil);
@@ -444,6 +445,9 @@ f2ptr raw__movie_context__destroy(f2ptr cause, f2ptr this) {
   f2__free(to_ptr(movie_context));
   raw__movie_context__pointer__set(cause, this, nil);
   return nil;
+#else
+  return f2larva__new(cause, 511161, nil);
+#endif // F2__LIBAVCODEC_SUPPORTED
 }
 
 f2ptr f2__movie_context__destroy(f2ptr cause, f2ptr this) {

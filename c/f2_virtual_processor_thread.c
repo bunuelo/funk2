@@ -29,7 +29,7 @@ void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processo
   {
     s64 i;
     for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
-      CPU_SET(__funk2.system_processor.processor_assignment_index[i], &cpu_set);
+      CPU_SET(__funk2.system_processor.processor_affinity_index[i], &cpu_set);
     }
   }
   {
@@ -44,7 +44,7 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
   s64 system_cpu_index = cpu_index % __funk2.system_processor.processor_count;
   cpu_set_t cpu_set;
   CPU_ZERO(&cpu_set);
-  CPU_SET(__funk2.system_processor.processor_assignment_index[system_cpu_index], &cpu_set);
+  CPU_SET(__funk2.system_processor.processor_affinity_index[system_cpu_index], &cpu_set);
   {
     int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
     if (result != 0) {

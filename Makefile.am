@@ -624,6 +624,7 @@ clean-img:
 
 clean: clean-am clean-img
 	rm -f config_compile_time_id.h
+	rm -f config_bit_num.h
 	rm -f bin/funk2$(EXEEXT)
 	mkdir -p lib/.libs
 

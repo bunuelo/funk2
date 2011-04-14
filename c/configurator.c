@@ -59,6 +59,9 @@ int main(int argc, char** argv) {
 	}
       }
     }
+    if (processor_num == 0) {
+      processor_num = 1;
+    }
     printf("%u\n", processor_num);
   } else {
     printf("\n"

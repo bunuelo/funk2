@@ -103,7 +103,7 @@ libs = -lpthread
 #ifeq ($(processor_num),16)
 #  processor_flags = -Dprocessor_num_power=4
 #endif
-processor_flags = -Dprocessor_num_power=3
+#processor_flags = -Dprocessor_num_power=3
 
 funk2_objs   = $(funk2_server_objs)
 

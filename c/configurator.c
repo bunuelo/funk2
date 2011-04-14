@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <sched.h>
 
 void print_usage() {
   printf("\n"
@@ -15,6 +16,7 @@ void print_usage() {
 	 "\n    pointer-bit_num"
 	 "\n    float-bit_num"
 	 "\n    double-bit_num"
+	 "\n    processor_num"
 	 "\n"
 	 );
 }
@@ -41,6 +43,22 @@ int main(int argc, char** argv) {
     printf("%u\n", (unsigned int)sizeof(float) * 8);
   } else if (strcmp(command, "double-bit_num") == 0) {
     printf("%u\n", (unsigned int)sizeof(double) * 8);
+  } else if (strcmp(command, "processor_num") == 0) {
+    unsigned int processor_num = 0;
+    {
+      cpu_set_t cpu_set;
+      CPU_ZERO(&cpu_set);
+      sched_getaffinity(0, sizeof(cpu_set_t), &cpu_set);
+      {
+	unsigned int i;
+	for (i = 0; i < CPU_SETSIZE; i ++) {
+	  if (CPU_ISSET(i, &cpu_set)) {
+	    processor_num ++;
+	  }
+	}
+      }
+    }
+    printf("%u\n", processor_num);
   } else {
     printf("\n"
 	   "\nunknown configurator command, \"%s\"!"

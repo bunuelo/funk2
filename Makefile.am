@@ -177,6 +177,7 @@ config_bit_num.h: bin/configurator
 	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"   >> config_bit_num.h
 	echo "#define float__bit_num     `bin/configurator float-bit_num`"     >> config_bit_num.h
 	echo "#define double__bit_num    `bin/configurator double-bit_num`"    >> config_bit_num.h
+	echo "#define processor_num      `bin/configurator processor_num`"     >> config_bit_num.h
 	echo ""
 	echo "#define char__bit_num      `bin/configurator char-bit_num`"
 	echo "#define short__bit_num     `bin/configurator short-bit_num`"
@@ -186,6 +187,7 @@ config_bit_num.h: bin/configurator
 	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"
 	echo "#define float__bit_num     `bin/configurator float-bit_num`"
 	echo "#define double__bit_num    `bin/configurator double-bit_num`"
+	echo "#define processor_num      `bin/configurator processor_num`"
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).

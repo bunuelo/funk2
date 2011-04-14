@@ -490,7 +490,7 @@
 			[fibers-scan-loop [cdr fiber_iter]]]]]]]
 	  [if [fibers-scan-loop fibers]
 	      nil
-	    [prog [yield]
+	    [prog [millisleep 100]
 		  [fibers-wait-loop]]]]]
   [fibers-wait-loop]]
 

@@ -238,9 +238,7 @@
 [defunk package-load [name]
   [let [[load_if_modified_before_time [time]]]
     [let [[package [lookup-package name]]]
-      [mapc [funk [package_dependency]
-		  [package-load_if_modified_before package_dependency load_if_modified_before_time nil]]
-	    [get package package_dependencies]]
+      [packages-load_if_modified_before [get package package_dependencies] load_if_modified_before_time nil]
       [with-new-cause [cause-define cause-object_types_defined nil]
 		      [mapc [funk [source_dependency]
 				  [package_filename-load [pathname-concat [get package pathname] source_dependency]]]
@@ -266,17 +264,15 @@
 		[if [or [null loaded_all_dependencies_time]
 			[bytecode:less_than loaded_all_dependencies_time before_time]]
 		    [prog [terminal_format standard-terminal '\nchecking ' name ' for updated dependencies.']
-			  [mapc [funk [package_dependency]
-				      [let [[dependency_was_loaded [package-load_if_modified_before package_dependency before_time checked_package_hash]]]
-					[if dependency_was_loaded
-					    [= loaded_a_dependency t]]]]
-				[get package package_dependencies]]
+			  [let [[dependency_was_loaded [packages-load_if_modified_before [get package package_dependencies] before_time checked_package_hash]]]
+			    [if dependency_was_loaded
+				[= loaded_a_dependency t]]]
 			  [mapc [funk [binary_dependency]
 				      [let [[binary_pathname [pathname-concat [get package pathname] binary_dependency]]]
 					[let [[stat [pathname-stat binary_pathname]]]
 					  [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 					    [let [[binary_modified [or [null loaded_all_dependencies_time]
-								       [> time_of_last_modification loaded_all_dependencies_time]]]]
+								       [bytecode:greater_than time_of_last_modification loaded_all_dependencies_time]]]]
 					      [if binary_modified
 						  [= loaded_a_dependency t]]]]]]]
 				[get package binary_dependencies]]
@@ -297,13 +293,23 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
+[defunk packages-load_if_modified_before [names before_time checked_package_hash]
+  [if [null checked_package_hash]
+      [= checked_package_hash [new ptypehash]]]
+  [let [[loaded_a_dependency nil]]
+    [mapc [funk [name]
+		[let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+		  [if dependency_loaded
+		      [= loaded_a_dependency t]]]]
+	  names]
+    loaded_a_dependency]]
+
+
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
     [global_core_extension_handler-unload_changed]
     [global_dlfcn_dynamic_library-unload_changed]
-    [mapc [funk [name]
-		[package-load_if_modified_before name load_if_modified_before_time nil]]
-	  names]]]
+    [packages-load_if_modified_before names load_if_modified_before_time nil]]]
 
 [defmetro require [:rest names]
   `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]

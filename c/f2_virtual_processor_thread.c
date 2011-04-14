@@ -61,25 +61,31 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
   }
   status("starting virtual_processor_thread.");
   while (! (this->exit)) {
-    u64       virtual_processor_assignment_index = -1;
-    boolean_t not_assigned_to_virtual_processor  = boolean__true;
-    boolean_t should_unassign_from_processor     = boolean__true;
-    while(not_assigned_to_virtual_processor) {
-      {
-	funk2_processor_mutex__lock(&(this->assignment_mutex));
-	virtual_processor_assignment_index = this->virtual_processor_assignment_index;
-	funk2_processor_mutex__unlock(&(this->assignment_mutex));
-      }
-      not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
-      if (not_assigned_to_virtual_processor) {
-	if (should_unassign_from_processor) {
-	  funk2_virtual_processor_thread__set_cpu_affinity_all(this);
-	  should_unassign_from_processor = boolean__false;
+    u64 virtual_processor_assignment_index = -1;
+    {
+      boolean_t not_assigned_to_virtual_processor  = boolean__true;
+      boolean_t should_unassign_from_processor     = boolean__true;
+      boolean_t was_unassigned_from_processor      = boolean__false;
+      while(not_assigned_to_virtual_processor) {
+	{
+	  funk2_processor_mutex__lock(&(this->assignment_mutex));
+	  virtual_processor_assignment_index = this->virtual_processor_assignment_index;
+	  funk2_processor_mutex__unlock(&(this->assignment_mutex));
 	}
-	raw__spin_sleep_yield();
+	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
+	if (not_assigned_to_virtual_processor) {
+	  if (should_unassign_from_processor) {
+	    funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	    was_unassigned_from_processor  = boolean__true;
+	    should_unassign_from_processor = boolean__false;
+	  }
+	  raw__spin_sleep_yield();
+	}
+      }
+      if (was_unassigned_from_processor) {
+	funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
       }
     }
-    funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
     funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
     boolean_t                  we_are_next_in_line_to_execute = boolean__false;
     s64                        assigned_virtual_processor_thread_count;

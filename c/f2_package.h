@@ -43,11 +43,12 @@ declare_object_type_1_slot(source,
 // package
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
-declare_object_type_8_slot(package,
+declare_object_type_9_slot(package,
 			   pathname,
 			   name,
 			   package_dependencies,
 			   source_dependencies,
+			   load_cmutex,
 			   object_types_defined_set,
 			   loaded_all_dependencies_time,
 			   documentation,
@@ -82,11 +83,12 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause);
 
 // package
 
-declare_primobject_8_slot(package,
+declare_primobject_9_slot(package,
 			  pathname,
 			  name,
 			  package_dependencies,
 			  source_dependencies,
+			  load_cmutex,
 			  object_types_defined_set,
 			  loaded_all_dependencies_time,
 			  documentation,

@@ -39,7 +39,7 @@ struct funk2_virtual_processor_thread_s {
   pid_t                     tid; // as returned by gettid()
   funk2_processor_mutex_t   assignment_mutex;
   u64                       virtual_processor_assignment_index;
-  u64                       processor_affiliation_index;
+  u64                       processor_affinity_index;
   funk2_processor_thread_t* processor_thread;
   boolean_t                 exit;
   boolean_t                 exited;

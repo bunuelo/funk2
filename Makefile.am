@@ -103,7 +103,7 @@ libs = -lpthread
 #ifeq ($(processor_num),16)
 #  processor_flags = -Dprocessor_num_power=4
 #endif
-processor_flags = -Dprocessor_num_power=3
+#processor_flags = -Dprocessor_num_power=3
 
 funk2_objs   = $(funk2_server_objs)
 
@@ -177,6 +177,7 @@ config_bit_num.h: bin/configurator
 	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"   >> config_bit_num.h
 	echo "#define float__bit_num     `bin/configurator float-bit_num`"     >> config_bit_num.h
 	echo "#define double__bit_num    `bin/configurator double-bit_num`"    >> config_bit_num.h
+	echo "#define processor_num      `bin/configurator processor_num`"     >> config_bit_num.h
 	echo ""
 	echo "#define char__bit_num      `bin/configurator char-bit_num`"
 	echo "#define short__bit_num     `bin/configurator short-bit_num`"
@@ -186,6 +187,7 @@ config_bit_num.h: bin/configurator
 	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"
 	echo "#define float__bit_num     `bin/configurator float-bit_num`"
 	echo "#define double__bit_num    `bin/configurator double-bit_num`"
+	echo "#define processor_num      `bin/configurator processor_num`"
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
@@ -360,6 +362,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_status.c \
   c/f2_string.c \
   c/f2_surrogate_parent.c \
+  c/f2_system_processor.c \
   c/f2_system_file_handler.c \
   c/f2_terminal_print.c \
   c/f2_termios.c \
@@ -621,6 +624,7 @@ clean-img:
 
 clean: clean-am clean-img
 	rm -f config_compile_time_id.h
+	rm -f config_bit_num.h
 	rm -f bin/funk2$(EXEEXT)
 	mkdir -p lib/.libs
 

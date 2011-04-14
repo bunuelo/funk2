@@ -28,6 +28,7 @@ void f2__initialize() {
   f2__redblacktree__initialize();
   f2__memory__initialize();
   f2__ptypes__initialize();
+  f2__system_processor__initialize();
   f2__system_file_handler__initialize();
   
   // **********************************************************************************************************************************************************************************
@@ -144,6 +145,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_cmutex));
   
+  funk2_system_processor__init(&(this->system_processor));
   funk2_system_file_handler__init(&(this->system_file_handler));
   funk2_surrogate_parent__init(&(this->surrogate_parent));
   
@@ -153,6 +155,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("****************************************************************");
   status("");
   
+  funk2_system_processor__print_status(&(__funk2.system_processor));
   funk2_command_line__init(&(this->command_line), argc, argv);
   
   {
@@ -386,6 +389,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_surrogate_parent__destroy(&(this->surrogate_parent));
   funk2_xmlrpc__destroy(&(this->xmlrpc));
   funk2_system_file_handler__destroy(&(this->system_file_handler));
+  funk2_system_processor__destroy(&(this->system_processor));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

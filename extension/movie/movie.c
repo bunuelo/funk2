@@ -131,8 +131,6 @@ void libavcodec__video_encode_example(const char *filename) {
   av_free(picture);
 }
 
-#endif // F2__LIBAVCODEC_SUPPORTED
-
 
 // funk2_movie_context
 
@@ -227,9 +225,13 @@ void funk2_movie_context__destroy(funk2_movie_context_t* this) {
 }
 
 
+#endif // F2__LIBAVCODEC_SUPPORTED
+
+
 // movie_context
 
 f2ptr raw__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_rate, f2ptr frames_per_second, f2ptr pointer) {
+#ifdef F2__LIBAVCODEC_SUPPORTED
   return f2__frame__new(cause, f2list12__new(cause,
 					     new__symbol(cause, "type"),              new__symbol(cause, "movie_context"),
 					     new__symbol(cause, "width"),             width,
@@ -237,6 +239,9 @@ f2ptr raw__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_
 					     new__symbol(cause, "bit_rate"),          bit_rate,
 					     new__symbol(cause, "frames_per_second"), frames_per_second,
 					     new__symbol(cause, "pointer"),           pointer));
+#else
+  return f2larva__new(cause, 511161, nil);
+#endif // F2__LIBAVCODEC_SUPPORTED
 }
 
 f2ptr f2__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_rate, f2ptr frames_per_second) {
@@ -246,6 +251,7 @@ f2ptr f2__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_r
       (! raw__integer__is_type(cause, frames_per_second))) {
     return f2larva__new(cause, 1, nil);
   }
+#ifdef F2__LIBAVCODEC_SUPPORTED
   s64                    width__i             = f2integer__i(width,             cause);
   s64                    height__i            = f2integer__i(height,            cause);
   s64                    bit_rate__i          = f2integer__i(bit_rate,          cause);
@@ -256,6 +262,9 @@ f2ptr f2__movie_context__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr bit_r
   }
   f2ptr pointer = f2pointer__new(cause, to_ptr(movie_context));
   return raw__movie_context__new(cause, width, height, bit_rate, frames_per_second, pointer);
+#else
+  return f2larva__new(cause, 511161, nil);
+#endif // F2__LIBAVCODEC_SUPPORTED
 }
 export_cefunk4(movie_context__new, width, height, bit_rate, frames_per_second, 0, "Returns a new movie_context object.");
 
@@ -426,6 +435,7 @@ export_cefunk2(movie_context__pointer__set, thing, value, 0, "Sets the pointer o
 
 
 f2ptr raw__movie_context__destroy(f2ptr cause, f2ptr this) {
+#ifdef F2__LIBAVCODEC_SUPPORTED
   f2ptr pointer = raw__movie_context__pointer(cause, this);
   if (pointer == nil) {
     return f2larva__new(cause, 123, nil);
@@ -435,6 +445,9 @@ f2ptr raw__movie_context__destroy(f2ptr cause, f2ptr this) {
   f2__free(to_ptr(movie_context));
   raw__movie_context__pointer__set(cause, this, nil);
   return nil;
+#else
+  return f2larva__new(cause, 511161, nil);
+#endif // F2__LIBAVCODEC_SUPPORTED
 }
 
 f2ptr f2__movie_context__destroy(f2ptr cause, f2ptr this) {

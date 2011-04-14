@@ -95,12 +95,7 @@ typedef unsigned char boolean_t;
 #endif
 
 
-//#define scheduler_processor_num 1
-#if (processor_num_power <= 2)
-#  define ideal_scheduler_processor_num (4)
-#else
-#  define ideal_scheduler_processor_num (1<<(processor_num_power))
-#endif
+#define ideal_scheduler_processor_num processor_num
 
 #if (ideal_scheduler_processor_num > (1<<(pool_index__bit_num)))
 #  define scheduler_processor_num (1<<(pool_index__bit_num))

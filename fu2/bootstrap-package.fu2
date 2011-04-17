@@ -321,15 +321,18 @@
   [let [[loaded_a_dependency nil]]
     [mapc [funk [name]
 		[let [[package [lookup-package name]]]
-		  [let [[lock_load_mutex_failed t]]
-		    [while lock_load_mutex_failed
-		      [= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
-		      [if lock_load_mutex_failed
-			  [millisleep 4000]]]
-		    [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
-		      [if dependency_loaded
-			  [= loaded_a_dependency t]]]
-		    [have [get package load_cmutex] unlock]]]]
+		  [if [null package]
+		      [error bug_type `tried_to_load_package_that_does_not_exist
+			     package_name name]
+		    [let [[lock_load_mutex_failed t]]
+		      [while lock_load_mutex_failed
+			[= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
+			[if lock_load_mutex_failed
+			    [millisleep 4000]]]
+		      [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+			[if dependency_loaded
+			    [= loaded_a_dependency t]]]
+		      [have [get package load_cmutex] unlock]]]]]
 	  names]
     loaded_a_dependency]]
 

@@ -346,7 +346,7 @@ def_pcfunk1(fiber__print_stack_trace, this,
 
 f2ptr raw__fiber__wait_for_either_complete_or_encounter_bug__without_yield(f2ptr cause, f2ptr this) {
   f2ptr  this__fiber = f2__this__fiber(cause);
-  f2ptr  exit_cmutex = f2__fiber__exit_cmutex(cause, fiber_array[i]);
+  f2ptr  exit_cmutex = f2__fiber__exit_cmutex(cause, this);
   {
     raw__cmutex__lock(cause, exit_cmutex);
     f2ptr exit_status = f2__fiber__exit_status(cause, fiber_array[i]);

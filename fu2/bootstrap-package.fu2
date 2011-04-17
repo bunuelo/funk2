@@ -293,7 +293,7 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
-[defunk packages-load_if_modified_before [names before_time checked_package_hash]
+[defunk packages-load_if_modified_before-test [names before_time checked_package_hash]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
   [let* [[loaded_a_dependency nil]
@@ -312,6 +312,25 @@
 						   nil]]
 				      names]]]
     [apply &join load_fibers]
+    loaded_a_dependency]]
+
+
+[defunk packages-load_if_modified_before [names before_time checked_package_hash]
+  [if [null checked_package_hash]
+      [= checked_package_hash [new ptypehash]]]
+  [let [[loaded_a_dependency nil]]
+    [mapc [funk [name]
+		[let [[package [lookup-package name]]]
+		  [let [[lock_load_mutex_failed t]]
+		    [while lock_load_mutex_failed
+		      [= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
+		      [if lock_load_mutex_failed
+			  [millisleep 4000]]]
+		    [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+		      [if dependency_loaded
+			  [= loaded_a_dependency t]]]
+		    [have [get package load_cmutex] unlock]]]]
+	  names]
     loaded_a_dependency]]
 
 

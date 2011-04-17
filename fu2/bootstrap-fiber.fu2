@@ -30,7 +30,11 @@
 	[bug [get this value]]
       [get this value]]]]
 
-[defunk join [fiber]
-  [have fiber join]]
+[defunk join [:rest fibers]
+  [mapc [funk [fiber]
+	      [have fiber join]]
+	fibers]]
+
+
 
 

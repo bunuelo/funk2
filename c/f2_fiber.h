@@ -65,6 +65,8 @@ declare_object_type_27_slot(fiber,
 			    f2ptr quit__funk;
 			    f2ptr stack_trace__symbol; // get
 			    f2ptr stack_trace__funk;
+			    f2ptr wait_for_either_complete_or_encounter_bug__without_yield__symbol; // execute
+			    f2ptr wait_for_either_complete_or_encounter_bug__without_yield__funk;
 			    f2ptr terminal_print_with_frame__symbol; // execute
 			    f2ptr terminal_print_with_frame__funk;
 			    );

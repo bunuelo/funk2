@@ -477,7 +477,24 @@
 		   varpairs]
        @body]]]
 
-[defunk join [:rest fibers]
+`[defunk join-test [:rest fibers]
+  [define-funk fibers-wait-loop
+    [funk []
+	  [define-funk fibers-scan-loop
+	    [funk [fiber_iter]
+		  [if [null fiber_iter]
+		      t
+		    [let [[fiber [car fiber_iter]]]
+		      [if [null [get fiber is_complete]]
+			  nil
+			[fibers-scan-loop [cdr fiber_iter]]]]]]]
+	  [if [fibers-scan-loop fibers]
+	      nil
+	    [prog [millisleep 100]
+		  [fibers-wait-loop]]]]]
+  [fibers-wait-loop]]
+
+`[defunk join [:rest fibers]
   [define-funk fibers-wait-loop
     [funk []
 	  [define-funk fibers-scan-loop

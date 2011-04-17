@@ -293,7 +293,7 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
-[defunk packages-load_if_modified_before [names before_time checked_package_hash]
+[defunk packages-load_if_modified_before-test [names before_time checked_package_hash]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
   [let* [[loaded_a_dependency nil]
@@ -322,8 +322,9 @@
     [mapc [funk [name]
 		[let [[package [lookup-package name]]]
 		  [if [null package]
-		      [error bug_type `tried_to_load_package_that_does_not_exist
-			     package_name name]
+		      [error bug_type      `tried_to_load_package_that_does_not_exist
+			     package_name  name
+			     package_names [package_names]]
 		    [let [[lock_load_mutex_failed t]]
 		      [while lock_load_mutex_failed
 			[= lock_load_mutex_failed [have [get package load_cmutex] trylock]]

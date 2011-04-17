@@ -349,11 +349,11 @@ f2ptr raw__fiber__wait_for_either_complete_or_encounter_bug__without_yield(f2ptr
   f2ptr  exit_cmutex = f2__fiber__exit_cmutex(cause, this);
   {
     raw__cmutex__lock(cause, exit_cmutex);
-    f2ptr exit_status = f2__fiber__exit_status(cause, fiber_array[i]);
+    f2ptr exit_status = f2__fiber__exit_status(cause, this);
     if (exit_status == nil) {
       {
-	f2ptr fiber__complete_trigger = f2fiber__complete_trigger(fiber, cause);
-	f2ptr fiber__bug_trigger      = f2fiber__bug_trigger(     fiber, cause);
+	f2ptr fiber__complete_trigger = f2fiber__complete_trigger(this, cause);
+	f2ptr fiber__bug_trigger      = f2fiber__bug_trigger(     this, cause);
 	f2__fiber_trigger_hash__add(cause, complete__trigger, this__fiber);
 	f2__fiber_trigger_hash__add(cause, bug__trigger,      this__fiber);
       }

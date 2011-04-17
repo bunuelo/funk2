@@ -19,9 +19,54 @@
 
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
-[deftypefunk fiber execute wait_for_either_complete_or_encounter_bug []
+[defunk fiber-wait_for_either_complete_or_encounter_bug [this]
   [fiber-wait_for_either_complete_or_encounter_bug-without_yield this]
   [yield]]
+
+[defunk fiber-join [this]
+  [fiber-wait_for_either_complete_or_encounter_bug this]
+  [let [[exit_status [fiber-exit_status this]]]
+    [cond [[eq exit_status `complete]
+	   [get fiber value]]
+	  [[eq exit_status `bug]
+	   [let [[bug [get fiber value]]]
+	     [if [is-type `bug bug]
+		 [let [[bug_frame [get bug frame]]]
+		   [if [is-type `frame bug_frame]
+		       [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+			       [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
+			   [frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
+		   [bug bug]]
+	       [error bug_type    `fiber-join-fiber_paused_without_bug
+		      fiber_value bug
+		      stack_trace [get fiber stack_trace]]]]]
+	  [t
+	   [error bug_type    fiber-join-unknown-fiber-exit-status
+		  exit_status exit_status]]]]]
+
+[defunk fiber-sheltered_join [this]
+  [fiber-wait_for_either_complete_or_encounter_bug this]
+  [let [[exit_status [fiber-exit_status this]]]
+    [cond [[eq exit_status `complete]
+	   [get fiber value]]
+	  [[eq exit_status `bug]
+	   [let [[bug [get fiber value]]]
+	     [if [is-type `bug bug]
+		 [let [[bug_frame [get bug frame]]]
+		   [if [is-type `frame bug_frame]
+		       [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+			       [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
+			   [frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
+		   bug]
+	       [error bug_type    `fiber-join_sheltered-fiber_paused_without_bug
+		      fiber_value bug
+		      stack_trace [get fiber stack_trace]]]]]
+	  [t
+	   [error bug_type    fiber-sheltered_join-unknown-fiber-exit-status
+		  exit_status exit_status]]]]]
+
+[deftypefunk fiber execute wait_for_either_complete_or_encounter_bug []
+  [fiber-wait_for_either_complete_or_encounter_bug this]]
 
 [deftypefunk fiber execute join []
   [have this wait_for_either_complete_or_encounter_bug]
@@ -36,9 +81,4 @@
 		[= result [have fiber join]]]
 	  fibers]
     result]]
-
-
-
-
-
 

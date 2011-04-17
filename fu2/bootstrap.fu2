@@ -28,7 +28,7 @@
   [load 'fu2/bootstrap-frame.fu2']
   [load 'fu2/bootstrap-object.fu2']
   [load 'fu2/bootstrap-type_conversions.fu2']
-  [load 'fu2/bootstrap-fiber.fu2']
+  `[load 'fu2/bootstrap-fiber.fu2']
   [load 'fu2/bootstrap-bugs.fu2']
   [load 'fu2/bootstrap-boot.fu2']
   [load 'fu2/bootstrap-critics-reactive.fu2']

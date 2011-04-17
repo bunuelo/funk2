@@ -911,7 +911,7 @@
 						    [millisleep 100]]
 						 [= result [prog @codes]]]
 			     nil]]]
-     [join fiber]]]
+     [fiber-join fiber]]]
 
 [defmetro with-new-cause-old [:rest codes]
   `[let* [[result     `bug]

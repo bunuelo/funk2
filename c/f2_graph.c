@@ -331,7 +331,7 @@ def_pcfunk2(graph__nodes_with_label, this, label,
 
 
 boolean_t raw__graph__contains_node_label(f2ptr cause, f2ptr this, f2ptr label) {
-  return (raw__graph__nodes_label_hash(cause, this) != nil);
+  return (f2__graph__nodes_label_hash(cause, this) != nil);
 }
 
 f2ptr f2__graph__contains_node_label(f2ptr cause, f2ptr this, f2ptr label) {
@@ -373,7 +373,7 @@ def_pcfunk2(graph__edges_with_label, this, label,
 
 
 boolean_t raw__graph__contains_edge_label(f2ptr cause, f2ptr this, f2ptr label) {
-  return (raw__graph__edges_label_hash(cause, this) != nil);
+  return (f2__graph__edges_label_hash(cause, this) != nil);
 }
 
 f2ptr f2__graph__contains_edge_label(f2ptr cause, f2ptr this, f2ptr label) {

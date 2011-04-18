@@ -219,20 +219,6 @@ def_pcfunk2(graph__add_new_node, this, label,
 	    return f2__graph__add_new_node(this_cause, this, label));
 
 
-f2ptr raw__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
-  f2ptr nodes_label_hash = f2__graph__nodes_label_hash(cause, this);
-  return f2__ptypehash__lookup(cause, nodes_label_hash, label);
-}
-
-f2ptr f2__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
-  assert_argument_type(graph, this);
-  return raw__graph__nodes_with_label(cause, this, label);
-}
-def_pcfunk2(graph__nodes_with_label, this, label,
-	    "Returns a list of nodes with label in this graph.",
-	    return f2__graph__nodes_with_label(this_cause, this, label));
-
-
 f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   f2ptr edge_set              = f2__graph__edge_set(cause, this);
   f2ptr already_contains_edge = f2__set__add(cause, edge_set, edge);
@@ -329,6 +315,34 @@ def_pcfunk2(graph__contains_node, this, node,
 	    "Returns true if this graph contains a graph_node.",
 	    return f2__graph__contains_node(this_cause, this, node));
 
+
+f2ptr raw__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
+  f2ptr nodes_label_hash = f2__graph__nodes_label_hash(cause, this);
+  return raw__ptypehash__lookup(cause, nodes_label_hash, label);
+}
+
+f2ptr f2__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
+  assert_argument_type(graph, this);
+  return raw__graph__nodes_with_label(cause, this, label));
+}
+def_pcfunk2(graph__nodes_with_label, this, label,
+	    "Returns the list of nodes with this label.",
+	    return f2__graph__nodes_with_label(this_cause, this, label));
+
+
+boolean_t raw__graph__contains_node_label(f2ptr cause, f2ptr this, f2ptr label) {
+  return (raw__graph__nodes_label_hash(cause, this) != nil);
+}
+
+f2ptr f2__graph__contains_node_label(f2ptr cause, f2ptr this, f2ptr label) {
+  assert_argument_type(graph, this);
+  return f2bool__new(raw__graph__contains_node_label(cause, this, label));
+}
+def_pcfunk2(graph__contains_node_label, this, label,
+	    "Returns whether or not a node within this graph has this label.",
+	    return f2__graph__contains_node_label(this_cause, this, label));
+
+
 boolean_t raw__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
   f2ptr edge_set = f2__graph__edge_set(cause, this);
   return raw__set__contains(cause, edge_set, edge);
@@ -342,6 +356,35 @@ f2ptr f2__graph__contains_edge(f2ptr cause, f2ptr this, f2ptr edge) {
 def_pcfunk2(graph__contains_edge, this, edge,
 	    "Returns true if this graph contains a graph_edge.",
 	    return f2__graph__contains_edge(this_cause, this, edge));
+
+
+f2ptr raw__graph__edges_with_label(f2ptr cause, f2ptr this, f2ptr label) {
+  f2ptr edges_label_hash = f2__graph__edges_label_hash(cause, this);
+  return raw__ptypehash__lookup(cause, edges_label_hash, label);
+}
+
+f2ptr f2__graph__edges_with_label(f2ptr cause, f2ptr this, f2ptr label) {
+  assert_argument_type(graph, this);
+  return raw__graph__edges_with_label(cause, this, label));
+}
+def_pcfunk2(graph__edges_with_label, this, label,
+	    "Returns the list of edges with this label.",
+	    return f2__graph__edges_with_label(this_cause, this, label));
+
+
+boolean_t raw__graph__contains_edge_label(f2ptr cause, f2ptr this, f2ptr label) {
+  return (raw__graph__edges_label_hash(cause, this) != nil);
+}
+
+f2ptr f2__graph__contains_edge_label(f2ptr cause, f2ptr this, f2ptr label) {
+  assert_argument_type(graph, this);
+  return f2bool__new(raw__graph__contains_edge_label(cause, this, label));
+}
+def_pcfunk2(graph__contains_edge_label, this, label,
+	    "Returns whether or not a edge within this graph has this label.",
+	    return f2__graph__contains_edge_label(this_cause, this, label));
+
+
 
 boolean_t raw__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
   {
@@ -1427,12 +1470,15 @@ void f2__graph__initialize() {
   f2__primcfunk__init__1(graph__edges,                           this);
   f2__primcfunk__init__2(graph__add_node,                        this, node);
   f2__primcfunk__init__2(graph__add_new_node,                    this, label);
-  f2__primcfunk__init__2(graph__nodes_with_label,                this, label);
   f2__primcfunk__init__2(graph__add_edge,                        this, edge);
   f2__primcfunk__init__4(graph__add_new_edge,                    this, label, left_node, right_node);
   f2__primcfunk__init__1(graph__node_count,                      this);
   f2__primcfunk__init__2(graph__contains_node,                   this, node);
+  f2__primcfunk__init__2(graph__nodes_with_label,                this, label);
+  f2__primcfunk__init__2(graph__contains_node_label,             this, label);
   f2__primcfunk__init__2(graph__contains_edge,                   this, edge);
+  f2__primcfunk__init__2(graph__edges_with_label,                this, label);
+  f2__primcfunk__init__2(graph__contains_edge_label,             this, label);
   f2__primcfunk__init__2(graph__contains,                        this, graph);
   f2__primcfunk__init__2(graph__lookup_nodes_with_label,         this, node_label);
   f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this);

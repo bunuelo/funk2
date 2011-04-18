@@ -28,8 +28,6 @@
 [globalize-funk graph-nodes_with_label                &primfunk:graph__nodes_with_label]
 [globalize-funk graph-contains_node_label             &primfunk:graph__contains_node_label]
 [globalize-funk graph-contains_edge                   &primfunk:graph__contains_edge]
-[globalize-funk graph-edges_with_label                &primfunk:graph__edges_with_label]
-[globalize-funk graph-contains_edge_label             &primfunk:graph__contains_edge_label]
 [globalize-funk graph-contains                        &primfunk:graph__contains]
 [globalize-funk graph-lookup_nodes_with_label         &primfunk:graph__lookup_nodes_with_label]
 [globalize-funk graph-random_nonempty_strict_subgraph &primfunk:graph__random_nonempty_strict_subgraph]

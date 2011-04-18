@@ -358,34 +358,6 @@ def_pcfunk2(graph__contains_edge, this, edge,
 	    return f2__graph__contains_edge(this_cause, this, edge));
 
 
-f2ptr raw__graph__edges_with_label(f2ptr cause, f2ptr this, f2ptr label) {
-  f2ptr edges_label_hash = f2__graph__edges_label_hash(cause, this);
-  return raw__ptypehash__lookup(cause, edges_label_hash, label);
-}
-
-f2ptr f2__graph__edges_with_label(f2ptr cause, f2ptr this, f2ptr label) {
-  assert_argument_type(graph, this);
-  return raw__graph__edges_with_label(cause, this, label);
-}
-def_pcfunk2(graph__edges_with_label, this, label,
-	    "Returns the list of edges with this label.",
-	    return f2__graph__edges_with_label(this_cause, this, label));
-
-
-boolean_t raw__graph__contains_edge_label(f2ptr cause, f2ptr this, f2ptr label) {
-  return (raw__graph__edges_with_label(cause, this, label) != nil);
-}
-
-f2ptr f2__graph__contains_edge_label(f2ptr cause, f2ptr this, f2ptr label) {
-  assert_argument_type(graph, this);
-  return f2bool__new(raw__graph__contains_edge_label(cause, this, label));
-}
-def_pcfunk2(graph__contains_edge_label, this, label,
-	    "Returns whether or not a edge within this graph has this label.",
-	    return f2__graph__contains_edge_label(this_cause, this, label));
-
-
-
 boolean_t raw__graph__contains(f2ptr cause, f2ptr this, f2ptr graph) {
   {
     f2ptr graph__node_set = f2__graph__node_set(cause, graph);
@@ -1477,8 +1449,6 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph__nodes_with_label,                this, label);
   f2__primcfunk__init__2(graph__contains_node_label,             this, label);
   f2__primcfunk__init__2(graph__contains_edge,                   this, edge);
-  f2__primcfunk__init__2(graph__edges_with_label,                this, label);
-  f2__primcfunk__init__2(graph__contains_edge_label,             this, label);
   f2__primcfunk__init__2(graph__contains,                        this, graph);
   f2__primcfunk__init__2(graph__lookup_nodes_with_label,         this, node_label);
   f2__primcfunk__init__1(graph__random_nonempty_strict_subgraph, this);

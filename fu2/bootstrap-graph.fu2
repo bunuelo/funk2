@@ -28,8 +28,6 @@
 [deftypefunk graph get     nodes_with_label                [label]                      [graph-nodes_with_label                this label]]
 [deftypefunk graph get     contains_node_label             [label]                      [graph-contains_node_label             this label]]
 [deftypefunk graph get     contains_edge                   [edge]                       [graph-contains_edge                   this edge]]
-[deftypefunk graph get     edges_with_label                [label]                      [graph-edges_with_label                this label]]
-[deftypefunk graph get     contains_edge_label             [label]                      [graph-contains_edge_label             this label]]
 [deftypefunk graph get     contains                        [graph]                      [graph-contains                        this graph]]
 [deftypefunk graph get     lookup_nodes_with_label         [node_label]                 [graph-lookup_nodes_with_label         this node_label]]
 [deftypefunk graph get     random_nonempty_strict_subgraph []                           [graph-random_nonempty_strict_subgraph this]]

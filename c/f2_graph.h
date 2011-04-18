@@ -113,10 +113,6 @@ boolean_t raw__graph__contains_node_label            (f2ptr cause, f2ptr this, f
 f2ptr      f2__graph__contains_node_label            (f2ptr cause, f2ptr this, f2ptr label);
 boolean_t raw__graph__contains_edge                  (f2ptr cause, f2ptr this, f2ptr edge);
 f2ptr      f2__graph__contains_edge                  (f2ptr cause, f2ptr this, f2ptr edge);
-f2ptr     raw__graph__edges_with_label               (f2ptr cause, f2ptr this, f2ptr label);
-f2ptr      f2__graph__edges_with_label               (f2ptr cause, f2ptr this, f2ptr label);
-boolean_t raw__graph__contains_edge_label            (f2ptr cause, f2ptr this, f2ptr label);
-f2ptr      f2__graph__contains_edge_label            (f2ptr cause, f2ptr this, f2ptr label);
 boolean_t raw__graph__contains                       (f2ptr cause, f2ptr this, f2ptr graph);
 f2ptr      f2__graph__contains                       (f2ptr cause, f2ptr this, f2ptr graph);
 f2ptr     raw__graph__random_nonempty_strict_subgraph(f2ptr cause, f2ptr this);

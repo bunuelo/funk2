@@ -323,7 +323,7 @@ f2ptr raw__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
 
 f2ptr f2__graph__nodes_with_label(f2ptr cause, f2ptr this, f2ptr label) {
   assert_argument_type(graph, this);
-  return raw__graph__nodes_with_label(cause, this, label));
+  return raw__graph__nodes_with_label(cause, this, label);
 }
 def_pcfunk2(graph__nodes_with_label, this, label,
 	    "Returns the list of nodes with this label.",
@@ -365,7 +365,7 @@ f2ptr raw__graph__edges_with_label(f2ptr cause, f2ptr this, f2ptr label) {
 
 f2ptr f2__graph__edges_with_label(f2ptr cause, f2ptr this, f2ptr label) {
   assert_argument_type(graph, this);
-  return raw__graph__edges_with_label(cause, this, label));
+  return raw__graph__edges_with_label(cause, this, label);
 }
 def_pcfunk2(graph__edges_with_label, this, label,
 	    "Returns the list of edges with this label.",

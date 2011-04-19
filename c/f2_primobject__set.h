@@ -33,8 +33,8 @@ declare_object_type_4_slot(set, write_cmutex, key_count, bin_num_power, bin_arra
 			   f2ptr remove__funk;
 			   f2ptr copy_from__symbol;
 			   f2ptr copy_from__funk;
-			   f2ptr copy__symbol;
-			   f2ptr copy__funk;
+			   f2ptr new_copy__symbol;
+			   f2ptr new_copy__funk;
 			   f2ptr lookup__symbol;
 			   f2ptr lookup__funk;
 			   f2ptr contains__symbol;

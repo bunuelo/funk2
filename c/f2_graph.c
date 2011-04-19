@@ -661,24 +661,24 @@ def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node,
 f2ptr raw__graph__connected_node_sets__expand_node(f2ptr cause, f2ptr this, f2ptr remaining_node_set, f2ptr connected_node_set, f2ptr node) {
   raw__set__remove(cause, remaining_node_set, node);
   raw__set__add(cause, connected_node_set, node);
-  graph__node_out_edge__iteration(cause, this, node, edge,
-				  f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
-				  if (raw__set__contains(cause, remaining_node_set, edge__right_node)) {
-				    f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, edge__right_node);
+  graph__node__out_edge__iteration(cause, this, node, edge,
+				   f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
+				   if (raw__set__contains(cause, remaining_node_set, edge__right_node)) {
+				     f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, edge__right_node);
+				     if (raw__larva__is_type(cause, result)) {
+				       return result;
+				     }
+				   }
+				   );
+  graph__node__in_edge__iteration(cause, this, node, edge,
+				  f2ptr edge__left_node = f2__graph_edge__left_node(cause, edge);
+				  if (raw__set__contains(cause, remaining_node_set, edge__left_node)) {
+				    f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, edge__left_node);
 				    if (raw__larva__is_type(cause, result)) {
 				      return result;
 				    }
 				  }
 				  );
-  graph__node_in_edge__iteration(cause, this, node, edge,
-				 f2ptr edge__left_node = f2__graph_edge__left_node(cause, edge);
-				 if (raw__set__contains(cause, remaining_node_set, edge__left_node)) {
-				   f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, edge__left_node);
-				   if (raw__larva__is_type(cause, result)) {
-				     return result;
-				   }
-				 }
-				 );
   return nil;
 }
 

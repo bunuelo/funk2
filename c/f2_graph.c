@@ -709,29 +709,30 @@ def_pcfunk1(graph__connected_node_sets, this,
 	    return f2__graph__connected_node_sets(this_cause, this));
 
 
-boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr visited_node_set, f2ptr finished_node_set, f2ptr node) {
-  raw__set__add(cause, visited_node_set, node);
+boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr visited_but_not_finished_node_set, f2ptr finished_node_set, f2ptr node) {
+  raw__set__add(cause, visited_but_not_finished_node_set, node);
   graph__node__out_edge__iteration(cause, this, node, edge,
 				   f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
-				   if (raw__set__contains(cause, visited_node_set, edge__right_node)) {
+				   if (raw__set__contains(cause, visited_but_not_finished_node_set, edge__right_node)) {
 				     return boolean__true;
 				   }
 				   if (! raw__set__contains(cause, finished_node_set, edge__right_node)) {
-				     if (raw__graph__is_acyclic__expand_node(cause, this, visited_node_set, finished_node_set, edge__right_node)) {
+				     if (raw__graph__is_acyclic__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, edge__right_node)) {
 				       return boolean__true;
 				     }
 				   }
 				   );
+  raw__set__remove(cause, visited_but_not_finished_node_set, node);
   raw__set__add(cause, finished_node_set, node);
   return boolean__false;
 }
 
 f2ptr raw__graph__is_acyclic(f2ptr cause, f2ptr this) {
-  f2ptr node_set          = f2__graph__node_set(cause, this);
-  f2ptr visited_node_set  = f2__set__new(cause);
-  f2ptr finished_node_set = f2__set__new(cause);
+  f2ptr node_set                          = f2__graph__node_set(cause, this);
+  f2ptr visited_but_not_finished_node_set = f2__set__new(cause);
+  f2ptr finished_node_set                 = f2__set__new(cause);
   set__iteration(cause, node_set, node,
-		 if (raw__graph__is_acyclic__expand_node(cause, this, visited_node_set, finished_node_set, node)) {
+		 if (raw__graph__is_acyclic__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, node)) {
 		   // found cycle => is not acyclic
 		   return boolean__false;
 		 }

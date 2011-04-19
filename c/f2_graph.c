@@ -709,6 +709,61 @@ def_pcfunk1(graph__connected_node_sets, this,
 	    return f2__graph__connected_node_sets(this_cause, this));
 
 
+boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr visited_node_hash, f2ptr finished_node_hash, f2ptr node) {
+  raw__ptypehash__add(cause, visited_node_hash, node);
+  graph__node__out_edge__iteration(cause, this, node, edge,
+				   f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
+				   if (raw__set__contains(cause, visited_node_set, edge__right_node)) {
+				     return boolean__true;
+				   }
+				   if (! raw__set__contains(cause, finished_node_set, edge__right_node)) {
+				     if (raw__graph__is_acyclic__expand_node(cause, this, visited_node_hash, finished_node_hash, edge__right_node)) {
+				       return boolean__true;
+				     }
+				   }
+				   );
+  raw__ptypehash__add(cause, finished_node_hash, node);
+  return boolean__false;
+}
+
+f2ptr raw__graph__is_acyclic(f2ptr cause, f2ptr this) {
+  f2ptr connected_node_sets = raw__graph__connected_node_sets(cause, this);
+  {
+    f2ptr connected_node_set_iter = connected_node_sets;
+    while (connected_node_set_iter != nil) {
+      f2ptr connected_node_set = f2__cons__car(cause, connected_node_set_iter);
+      f2ptr visited_node_hash  = f2__ptypehash__new(cause);
+      f2ptr finished_node_hash = f2__ptypehash__new(cause);
+      {
+	f2ptr connected_nodes = raw__set__elements(cause, connected_node_set);
+	f2ptr connected_node_iter = connected_nodes;
+	while (connected_node_iter != nil) {
+	  f2ptr node = f2__cons__car(cause, connected_node_iter);
+	  if (raw__graph__is_acyclic__expand_node(cause, this, visited_node_hash, finished_node_hash, node)) {
+	    // found cycle => is not acyclic
+	    return boolean__false;
+	  }
+	  connected_node_iter = f2__cons__cdr(cause, connected_node_iter);
+	}
+      }
+      connected_node_set_iter = f2__cons__cdr(cause, connected_node_set_iter);
+    }
+  }
+  // is acyclic
+  return f2bool__new(boolean__true);
+}
+
+f2ptr f2__graph__is_acyclic(f2ptr cause, f2ptr this) {
+  assert_argument_type(graph, this);
+  return raw__graph__is_acyclic(cause, this);
+}
+def_pcfunk1(graph__is_acyclic, this,
+	    "Returns true if this graph does not contain cycles.",
+	    return f2__graph__connected_node_sets(this_cause, this));
+
+
+
+
 f2ptr raw__graph__as__dot_code(f2ptr cause, f2ptr this) {
   f2ptr node_codes = nil;
   {

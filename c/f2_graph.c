@@ -727,28 +727,15 @@ boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr vis
 }
 
 f2ptr raw__graph__is_acyclic(f2ptr cause, f2ptr this) {
-  f2ptr connected_node_sets = raw__graph__connected_node_sets(cause, this);
-  {
-    f2ptr connected_node_set_iter = connected_node_sets;
-    while (connected_node_set_iter != nil) {
-      f2ptr connected_node_set = f2__cons__car(cause, connected_node_set_iter);
-      f2ptr visited_node_set   = f2__set__new(cause);
-      f2ptr finished_node_set  = f2__set__new(cause);
-      {
-	f2ptr connected_nodes = raw__set__elements(cause, connected_node_set);
-	f2ptr connected_node_iter = connected_nodes;
-	while (connected_node_iter != nil) {
-	  f2ptr node = f2__cons__car(cause, connected_node_iter);
-	  if (raw__graph__is_acyclic__expand_node(cause, this, visited_node_set, finished_node_set, node)) {
-	    // found cycle => is not acyclic
-	    return boolean__false;
-	  }
-	  connected_node_iter = f2__cons__cdr(cause, connected_node_iter);
-	}
-      }
-      connected_node_set_iter = f2__cons__cdr(cause, connected_node_set_iter);
-    }
-  }
+  f2ptr node_set          = f2__graph__node_set(cause, this);
+  f2ptr visited_node_set  = f2__set__new(cause);
+  f2ptr finished_node_set = f2__set__new(cause);
+  set__iteration(cause, node_set, node,
+		 if (raw__graph__is_acyclic__expand_node(cause, this, visited_node_set, finished_node_set, node)) {
+		   // found cycle => is not acyclic
+		   return boolean__false;
+		 }
+		 );
   // is acyclic
   return f2bool__new(boolean__true);
 }

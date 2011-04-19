@@ -139,11 +139,11 @@ f2ptr      f2__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f
 				ptypehash__value__iteration(cause, graph__node__out_edge__iteration__edges_label_hash, graph__node__out_edge__iteration__edges, \
 							    f2ptr graph__node__out_edge__iteration__edges__iter = graph__node__out_edge__iteration__edges; \
 							    while (graph__node__out_edge__iteration__edges__iter != nil) { \
-							      f2ptr edge = f2__cons__car(cause, graph__node__out_edge__iteration__edges_iter); \
+							      f2ptr edge = f2__cons__car(cause, graph__node__out_edge__iteration__edges__iter); \
 							      {		\
 								code;	\
 							      }		\
-							      graph__node__out_edge__iteration__edges__iter = f2__cons__cdr(cause, graph__node__out_edge__iteration__edges_iter); \
+							      graph__node__out_edge__iteration__edges__iter = f2__cons__cdr(cause, graph__node__out_edge__iteration__edges__iter); \
 							    }		\
 							    );		\
 				);					\
@@ -156,11 +156,11 @@ f2ptr      f2__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f
 				ptypehash__value__iteration(cause, graph__node__in_edge__iteration__edges_label_hash, graph__node__in_edge__iteration__edges, \
 							    f2ptr graph__node__in_edge__iteration__edges__iter = graph__node__in_edge__iteration__edges; \
 							    while (graph__node__in_edge__iteration__edges__iter != nil) { \
-							      f2ptr edge = f2__cons__car(cause, graph__node__in_edge__iteration__edges_iter); \
+							      f2ptr edge = f2__cons__car(cause, graph__node__in_edge__iteration__edges__iter); \
 							      {		\
 								code;	\
 							      }		\
-							      graph__node__in_edge__iteration__edges__iter = f2__cons__cdr(cause, graph__node__in_edge__iteration__edges_iter); \
+							      graph__node__in_edge__iteration__edges__iter = f2__cons__cdr(cause, graph__node__in_edge__iteration__edges__iter); \
 							    }		\
 							    );		\
 				);					\

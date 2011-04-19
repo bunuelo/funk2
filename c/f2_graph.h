@@ -39,6 +39,8 @@ declare_object_type_3_slot(graph_edge, label, left_node, right_node,
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
 declare_object_type_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash,
+			   f2ptr connected_node_sets__symbol;
+			   f2ptr connected_node_sets__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

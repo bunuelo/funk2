@@ -746,7 +746,7 @@ f2ptr f2__graph__is_acyclic(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(graph__is_acyclic, this,
 	    "Returns true if this graph does not contain cycles.",
-	    return f2__graph__connected_node_sets(this_cause, this));
+	    return f2__graph__is_acyclic(this_cause, this));
 
 
 
@@ -810,6 +810,7 @@ def_pcfunk2(graph__terminal_print_with_frame, this, terminal_print_frame,
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
   {char* slot_name = "connected_node_sets";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk);}
+  {char* slot_name = "is_acyclic";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.is_acyclic__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk);}
   return this;
 }
@@ -1554,6 +1555,8 @@ void f2__graph__initialize() {
   
   __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__symbol = new__symbol(cause, "connected_node_sets");
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__connected_node_sets, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_graph.is_acyclic__symbol = new__symbol(cause, "is_acyclic");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__is_acyclic, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.is_acyclic__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk = never_gc(cfunk);}
   

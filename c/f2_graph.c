@@ -190,7 +190,7 @@ f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr already_contains_node = f2__set__add(cause, node_set, node);
   if (already_contains_node == nil) {
     f2ptr nodes_label_hash = f2__graph__nodes_label_hash(cause, this);
-    f2ptr node_label = f2__graph_node__label(cause, node);
+    f2ptr node_label       = f2__graph_node__label(cause, node);
     f2__ptypehash__add(cause, nodes_label_hash, node_label, f2cons__new(cause, node, f2__ptypehash__lookup(cause, nodes_label_hash, node_label)));
   }
   return already_contains_node;
@@ -658,6 +658,55 @@ def_pcfunk3(graph__edges_between_nodes, this, left_node, right_node,
 	    return f2__graph__edges_between_nodes(this_cause, this, left_node, right_node));
 
 
+f2ptr raw__graph__connected_node_sets__expand_node(f2ptr cause, f2ptr this, f2ptr remaining_node_set, f2ptr connected_node_set, f2ptr node) {
+  raw__set__remove(cause, remaining_node_set, node);
+  raw__set__add(cause, connected_node_set, node);
+  graph__node_out_edge__iteration(cause, this, node, edge,
+				  f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
+				  if (raw__set__contains(cause, remaining_node_set, edge__right_node)) {
+				    f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, edge__right_node);
+				    if (raw__larva__is_type(cause, result)) {
+				      return result;
+				    }
+				  }
+				  );
+  graph__node_in_edge__iteration(cause, this, node, edge,
+				 f2ptr edge__left_node = f2__graph_edge__left_node(cause, edge);
+				 if (raw__set__contains(cause, remaining_node_set, edge__left_node)) {
+				   f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, edge__left_node);
+				   if (raw__larva__is_type(cause, result)) {
+				     return result;
+				   }
+				 }
+				 );
+  return nil;
+}
+
+f2ptr raw__graph__connected_node_sets(f2ptr cause, f2ptr this) {
+  f2ptr connected_node_sets = nil;
+  f2ptr node_set            = f2__graph__node_set(cause, this);
+  f2ptr remaining_node_set  = raw__set__new_copy(cause, node_set);
+  while (! raw__set__is_empty(cause, remaining_node_set)) {
+    f2ptr node               = raw__set__an_arbitrary_element(cause, remaining_node_set);
+    f2ptr connected_node_set = f2__set__new(cause);
+    {
+      f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, node);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    connected_node_set = f2cons__new(cause, connected_node_set, connected_node_sets);
+  }
+  return connected_node_sets;
+}
+
+f2ptr f2__graph__connected_node_sets(f2ptr cause, f2ptr this) {
+  assert_argument_type(graph, this);
+  return raw__graph__connected_node_sets(cause, this);
+}
+def_pcfunk1(graph__connected_node_sets, this,
+	    "Returns a new list of sets of connected nodes within this graph.",
+	    return f2__graph__connected_node_sets(this_cause, this));
 
 
 f2ptr raw__graph__as__dot_code(f2ptr cause, f2ptr this) {
@@ -718,7 +767,8 @@ def_pcfunk2(graph__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk);}
+  {char* slot_name = "connected_node_sets";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -1460,7 +1510,9 @@ void f2__graph__initialize() {
   f2__primcfunk__init__3(graph__edges_between_nodes,             this, left_node, right_node);
   f2__primcfunk__init__1(graph__as__dot_code,                    this);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__symbol = new__symbol(cause, "connected_node_sets");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__connected_node_sets, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_list

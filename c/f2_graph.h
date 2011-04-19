@@ -131,7 +131,7 @@ f2ptr     raw__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f
 f2ptr      f2__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 f2ptr     raw__graph__connected_node_sets            (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__connected_node_sets            (f2ptr cause, f2ptr this);
-f2ptr     raw__graph__contains_cycle                 (f2ptr cause, f2ptr this);
+boolean_t raw__graph__contains_cycle                 (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__contains_cycle                 (f2ptr cause, f2ptr this);
 f2ptr     raw__graph__as__dot_code                   (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__as__dot_code                   (f2ptr cause, f2ptr this);

@@ -41,8 +41,8 @@ typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t
 declare_object_type_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash,
 			   f2ptr connected_node_sets__symbol;
 			   f2ptr connected_node_sets__funk;
-			   f2ptr is_acyclic__symbol;
-			   f2ptr is_acyclic__funk;
+			   f2ptr contains_cycle__symbol;
+			   f2ptr contains_cycle__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -131,8 +131,8 @@ f2ptr     raw__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f
 f2ptr      f2__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 f2ptr     raw__graph__connected_node_sets            (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__connected_node_sets            (f2ptr cause, f2ptr this);
-f2ptr     raw__graph__is_acyclic                     (f2ptr cause, f2ptr this);
-f2ptr      f2__graph__is_acyclic                     (f2ptr cause, f2ptr this);
+f2ptr     raw__graph__contains_cycle                 (f2ptr cause, f2ptr this);
+f2ptr      f2__graph__contains_cycle                 (f2ptr cause, f2ptr this);
 f2ptr     raw__graph__as__dot_code                   (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__as__dot_code                   (f2ptr cause, f2ptr this);
 f2ptr     raw__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);

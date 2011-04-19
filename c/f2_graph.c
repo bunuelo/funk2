@@ -709,7 +709,7 @@ def_pcfunk1(graph__connected_node_sets, this,
 	    return f2__graph__connected_node_sets(this_cause, this));
 
 
-boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr visited_but_not_finished_node_set, f2ptr finished_node_set, f2ptr node) {
+boolean_t raw__graph__contains_cycle__expand_node(f2ptr cause, f2ptr this, f2ptr visited_but_not_finished_node_set, f2ptr finished_node_set, f2ptr node) {
   raw__set__add(cause, visited_but_not_finished_node_set, node);
   graph__node__out_edge__iteration(cause, this, node, edge,
 				   f2ptr edge__right_node = f2__graph_edge__right_node(cause, edge);
@@ -717,7 +717,7 @@ boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr vis
 				     return boolean__true;
 				   }
 				   if (! raw__set__contains(cause, finished_node_set, edge__right_node)) {
-				     if (raw__graph__is_acyclic__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, edge__right_node)) {
+				     if (raw__graph__contains_cycle__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, edge__right_node)) {
 				       return boolean__true;
 				     }
 				   }
@@ -727,27 +727,27 @@ boolean_t raw__graph__is_acyclic__expand_node(f2ptr cause, f2ptr this, f2ptr vis
   return boolean__false;
 }
 
-f2ptr raw__graph__is_acyclic(f2ptr cause, f2ptr this) {
+boolean_t raw__graph__contains_cycle(f2ptr cause, f2ptr this) {
   f2ptr node_set                          = f2__graph__node_set(cause, this);
   f2ptr visited_but_not_finished_node_set = f2__set__new(cause);
   f2ptr finished_node_set                 = f2__set__new(cause);
   set__iteration(cause, node_set, node,
-		 if (raw__graph__is_acyclic__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, node)) {
+		 if (raw__graph__contains_cycle__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, node)) {
 		   // found cycle => is not acyclic
-		   return boolean__false;
+		   return boolean__true;
 		 }
 		 );
   // is acyclic
-  return f2bool__new(boolean__true);
+  return boolean__false;
 }
 
-f2ptr f2__graph__is_acyclic(f2ptr cause, f2ptr this) {
+f2ptr f2__graph__contains_cycle(f2ptr cause, f2ptr this) {
   assert_argument_type(graph, this);
-  return raw__graph__is_acyclic(cause, this);
+  return f2bool__new(raw__graph__contains_cycle(cause, this));
 }
-def_pcfunk1(graph__is_acyclic, this,
+def_pcfunk1(graph__contains_cycle, this,
 	    "Returns true if this graph does not contain cycles.",
-	    return f2__graph__is_acyclic(this_cause, this));
+	    return f2__graph__contains_cycle(this_cause, this));
 
 
 
@@ -811,7 +811,7 @@ def_pcfunk2(graph__terminal_print_with_frame, this, terminal_print_frame,
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2graph__primobject_type__new(cause);
   {char* slot_name = "connected_node_sets";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk);}
-  {char* slot_name = "is_acyclic";                f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.is_acyclic__funk);}
+  {char* slot_name = "contains_cycle";            f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.contains_cycle__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk);}
   return this;
 }
@@ -1556,8 +1556,8 @@ void f2__graph__initialize() {
   
   __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__symbol = new__symbol(cause, "connected_node_sets");
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__connected_node_sets, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk = never_gc(cfunk);}
-  __funk2.globalenv.object_type.primobject.primobject_type_graph.is_acyclic__symbol = new__symbol(cause, "is_acyclic");
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__is_acyclic, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.is_acyclic__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_graph.contains_cycle__symbol = new__symbol(cause, "contains_cycle");
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(graph__contains_cycle, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.contains_cycle__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk = never_gc(cfunk);}
   

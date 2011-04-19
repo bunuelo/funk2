@@ -695,7 +695,7 @@ f2ptr raw__graph__connected_node_sets(f2ptr cause, f2ptr this) {
 	return result;
       }
     }
-    connected_node_set = f2cons__new(cause, connected_node_set, connected_node_sets);
+    connected_node_sets = f2cons__new(cause, connected_node_set, connected_node_sets);
   }
   return connected_node_sets;
 }

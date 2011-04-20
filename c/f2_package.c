@@ -207,6 +207,13 @@ f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph
   return nil;
 }
 
+f2ptr f2__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph) {
+  assert_argument_type(package, this);
+  assert_argument_type(graph,   graph);
+  return raw__package__add_to_dependency_graph(cause, this, graph);
+}
+
+
 f2ptr raw__package__dependency_graph(f2ptr cause, f2ptr this) {
   f2ptr graph = f2__graph__new(cause);
   {

@@ -52,7 +52,7 @@ f2ptr raw__package_handler__terminal_print_with_frame(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__package_handler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(package_handler,    this);
+  assert_argument_type(package_handler,      this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__package_handler__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
@@ -63,7 +63,7 @@ def_pcfunk2(package_handler__terminal_print_with_frame, this, terminal_print_fra
 
 f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2package_handler__primobject_type__new(cause);
-  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), __funk2.globalenv.object_type.primobject.primobject_type_package_handler.terminal_print_with_frame__funk);
   return this;
 }
 

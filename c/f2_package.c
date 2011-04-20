@@ -159,7 +159,7 @@ def_pcfunk6(package__new, pathname, name, package_dependencies, source_dependenc
 
 f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph) {
   f2ptr name = f2__package__name(cause, this);
-  if (! raw__graph__contains_node_label(cause, name)) {
+  if (! raw__graph__contains_node_label(cause, graph, name)) {
     f2ptr package_dependencies = f2__package__package_dependencies(cause, this);
     f2ptr package_graph_node   = f2__graph_node__new(cause, name);
     f2__graph__add_node(cause, graph, package_graph_node);

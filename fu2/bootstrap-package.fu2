@@ -206,7 +206,7 @@
   [get [get [global_package_handler] package_frame] keys]]
 
 [defunk lookup-package [name]
-  [have [get [global_package_handler] package_frame] lookup name]]
+  [global_package_handler-lookup_package name]]
 
 [defmetro package [name]
   `[lookup-package [quote ,name]]]

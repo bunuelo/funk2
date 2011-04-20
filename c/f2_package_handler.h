@@ -30,6 +30,8 @@ typedef struct funk2_object_type__package_handler__slot_s funk2_object_type__pac
 declare_object_type_2_slot(package_handler,
 			   package_frame,
 			   package_search_paths,
+			   f2ptr lookup_package__symbol;
+			   f2ptr lookup_package__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -49,7 +51,9 @@ declare_primobject_2_slot(package_handler,
 			  package_frame,
 			  package_search_paths);
 
-f2ptr f2__package_handler__new(f2ptr cause);
+f2ptr  f2__package_handler__new           (f2ptr cause);
+f2ptr raw__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name);
+f2ptr  f2__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name);
 
 f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause);
 

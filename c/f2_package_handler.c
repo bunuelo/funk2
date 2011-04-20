@@ -72,7 +72,7 @@ f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause) {
 
 f2ptr f2__global_package_handler(f2ptr cause) {
   f2ptr global_package_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "global_package_handler"));
-  if (global_package_handler == nil) {
+  if (raw__larva__is_type(cause, global_package_handler)) {
     global_package_handler = f2__package_handler__new(cause);
     environment__define_var_value(cause, global_environment(), new__symbol(cause, "global_package_handler"), global_package_handler);
   }

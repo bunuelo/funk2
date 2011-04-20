@@ -1007,6 +1007,9 @@ f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause) {
     core_extension__ping(semantic_knowledge_base, semantic_causal_event);
     core_extension__ping(semantic_knowledge_base, semantic_relationship_key);
     core_extension__ping(semantic_knowledge_base, semantic_frame);
+    // used to be backward:
+    core_extension__ping(semantic_knowledge_base, semantic_object);
+    core_extension__ping(semantic_knowledge_base, semantic_event);
     status("semantic_knowledge_base initialized.");
   } else {
     status("semantic_knowledge_base already initialized.");

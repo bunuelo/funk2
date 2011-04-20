@@ -58,6 +58,11 @@ f2ptr  f2__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name);
 f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause);
 
 
+// global_package_handler
+
+f2ptr f2__global_package_handler                (f2ptr cause);
+f2ptr f2__global_package_handler__lookup_package(f2ptr cause, f2ptr name);
+
 // **
 
 void f2__package_handler__initialize();

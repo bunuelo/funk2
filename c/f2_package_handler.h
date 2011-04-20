@@ -30,6 +30,8 @@ typedef struct funk2_object_type__package_handler__slot_s funk2_object_type__pac
 declare_object_type_2_slot(package_handler,
 			   package_frame,
 			   package_search_paths,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__PACKAGE_HANDLER__TYPES__H

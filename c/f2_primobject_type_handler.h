@@ -42,6 +42,7 @@
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
 #include "f2_package.h"
+#include "f2_package_handler.h"
 #include "f2_graph.h"
 #include "f2_graph_match_error_correcting.h"
 #include "f2_gtk.h"
@@ -131,6 +132,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__source_expression__slot_t                primobject_type_source_expression;
   funk2_object_type__source__slot_t                           primobject_type_source;
   funk2_object_type__package__slot_t                          primobject_type_package;
+  funk2_object_type__package_handler__slot_t                  primobject_type_package_handler;
   funk2_object_type__graph_node__slot_t                       primobject_type_graph_node;
   funk2_object_type__graph_edge__slot_t                       primobject_type_graph_edge;
   funk2_object_type__graph__slot_t                            primobject_type_graph;

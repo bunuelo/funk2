@@ -22,11 +22,34 @@
 #include "funk2.h"
 
 
+// package_handler
+
+def_primobject_2_slot(package_handler,
+		      package_frame,
+		      package_search_paths);
+
+f2ptr f2__package_handler__new(f2ptr cause) {
+  f2ptr package_frame        = f2__frame__new(cause, nil);
+  f2ptr package_search_paths = nil;
+  return f2package__new(cause, package_frame, package_search_paths);
+}
+def_pcfunk0(package_handler__new,
+	    "",
+	    return f2__package_handler__new(this_cause));
+
+
+f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2package_handler__primobject_type__new(cause);
+  return this;
+}
+
+
+
 // **
 
 void f2__package_handler__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause();
-  
+  f2ptr cause = initial_cause();
+  __package_handler__symbol = new__symbol(cause, "package_handler");
 }
 
 void f2__package_handler__initialize() {
@@ -34,6 +57,10 @@ void f2__package_handler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "package_handler", "", &f2__cause__reinitialize_globalvars);
   //f2ptr cause = initial_cause();
   
+  // package_handler
   
+  initialize_primobject_2_slot(package,
+			       package_frame,
+			       package_search_paths);
   
 }  

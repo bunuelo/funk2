@@ -24,7 +24,13 @@
 
 #include "f2_primobjects.h"
 
+// package_handler
 
+typedef struct funk2_object_type__package_handler__slot_s funk2_object_type__package_handler__slot_t;
+declare_object_type_2_slot(package_handler,
+			   package_frame,
+			   package_search_paths,
+			   );
 
 #endif // F2__PACKAGE_HANDLER__TYPES__H
 
@@ -34,6 +40,16 @@
 
 #include "f2_primobjects.h"
 
+
+// package_handler
+
+declare_primobject_2_slot(package_handler,
+			  package_frame,
+			  package_search_paths);
+
+f2ptr f2__package_handler__new(f2ptr cause);
+
+f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause);
 
 
 // **

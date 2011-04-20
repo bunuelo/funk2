@@ -73,6 +73,7 @@
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
 [primfunk:load 'fu2/primfunks-object.fu2']
 [primfunk:load 'fu2/primfunks-package.fu2']
+[primfunk:load 'fu2/primfunks-package_handler.fu2']
 [primfunk:load 'fu2/primfunks-primes.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type_handler.fu2']

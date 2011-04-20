@@ -68,6 +68,21 @@ f2ptr f2package_handler__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// global_package_handler
+
+f2ptr f2__global_package_handler(f2ptr cause) {
+  f2ptr global_package_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "global_package_handler"));
+  if (global_package_handler == nil) {
+    global_package_handler = f2__package_handler__new(cause);
+    environment__define_var_value(cause, global_environment(), new__symbol(cause, "global_package_handler"), global_package_handler);
+  }
+  return global_package_handler;
+}
+def_pcfunk0(global_package_handler,
+	    "",
+	    return f2__global_package_handler(this_cause));
+
+
 
 // **
 
@@ -89,5 +104,10 @@ void f2__package_handler__initialize() {
   
   __funk2.globalenv.object_type.primobject.primobject_type_package_handler.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(package_handler__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package_handler.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  
+  // global_package_handler
+  
+  f2__primcfunk__init__0(global_package_handler);
   
 }  

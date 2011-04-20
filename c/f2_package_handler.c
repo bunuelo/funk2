@@ -59,7 +59,7 @@ void f2__package_handler__initialize() {
   
   // package_handler
   
-  initialize_primobject_2_slot(package,
+  initialize_primobject_2_slot(package_handler,
 			       package_frame,
 			       package_search_paths);
   

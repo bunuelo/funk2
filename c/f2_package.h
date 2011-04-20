@@ -53,6 +53,8 @@ declare_object_type_9_slot(package,
 			   loaded_all_dependencies_time,
 			   documentation,
 			   binary_dependencies,
+			   f2ptr dependency_graph__symbol;
+			   f2ptr dependency_graph__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

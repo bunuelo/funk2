@@ -24,7 +24,9 @@
 	       semantic_realm
 	       semantic_causal_event
 	       semantic_relationship_key
-	       semantic_frame]
+	       semantic_frame
+	       semantic_object
+	       semantic_event]
    :sources   ['semantic_knowledge_base-core.fu2']
     :binaries ['.libs/libf2e_semantic_knowledge_base.so']]
 

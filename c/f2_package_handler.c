@@ -31,7 +31,7 @@ def_primobject_2_slot(package_handler,
 f2ptr f2__package_handler__new(f2ptr cause) {
   f2ptr package_frame        = f2__frame__new(cause, nil);
   f2ptr package_search_paths = nil;
-  return f2package__new(cause, package_frame, package_search_paths);
+  return f2package_handler__new(cause, package_frame, package_search_paths);
 }
 def_pcfunk0(package_handler__new,
 	    "",

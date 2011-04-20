@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
 
-declare_object_type_26_slot(fiber,
+declare_object_type_27_slot(fiber,
 			    program_counter,
 			    stack,
 			    iter,
@@ -50,6 +50,7 @@ declare_object_type_26_slot(fiber,
 			    processor_assignment_scheduler_cmutex,
 			    processor_assignment_index,
 			    should_quit,
+			    exit_cmutex,
 			    exit_status,
 			    bug_trigger,
 			    complete_trigger,
@@ -64,6 +65,8 @@ declare_object_type_26_slot(fiber,
 			    f2ptr quit__funk;
 			    f2ptr stack_trace__symbol; // get
 			    f2ptr stack_trace__funk;
+			    f2ptr wait_for_either_complete_or_encounter_bug__without_yield__symbol; // execute
+			    f2ptr wait_for_either_complete_or_encounter_bug__without_yield__funk;
 			    f2ptr terminal_print_with_frame__symbol; // execute
 			    f2ptr terminal_print_with_frame__funk;
 			    );
@@ -147,7 +150,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_26_slot(fiber,
+declare_primobject_27_slot(fiber,
 			   program_counter,
 			   stack,
 			   iter,
@@ -171,6 +174,7 @@ declare_primobject_26_slot(fiber,
 			   processor_assignment_scheduler_cmutex,
 			   processor_assignment_index,
 			   should_quit,
+			   exit_cmutex,
 			   exit_status,
 			   bug_trigger,
 			   complete_trigger);

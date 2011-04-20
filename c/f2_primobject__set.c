@@ -179,19 +179,19 @@ def_pcfunk2(set__copy_from, this, that,
 	    return f2__set__copy_from(this_cause, this, that));
 
 
-f2ptr raw__set__copy(f2ptr cause, f2ptr this) {
+f2ptr raw__set__new_copy(f2ptr cause, f2ptr this) {
   f2ptr new_set = f2__set__new(cause);
   raw__set__copy_from(cause, new_set, this);
   return new_set;
 }
 
-f2ptr f2__set__copy(f2ptr cause, f2ptr this) {
+f2ptr f2__set__new_copy(f2ptr cause, f2ptr this) {
   assert_argument_type(set, this);
-  return raw__set__copy(cause, this);
+  return raw__set__new_copy(cause, this);
 }
-def_pcfunk1(set__copy, this,
+def_pcfunk1(set__new_copy, this,
 	    "",
-	    return f2__set__copy(this_cause, this));
+	    return f2__set__new_copy(this_cause, this));
 
 
 f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
@@ -347,7 +347,7 @@ f2ptr f2set__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "add";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.add__funk);}
   {char* slot_name = "remove";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.remove__funk);}
   {char* slot_name = "copy_from";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.copy_from__funk);}
-  {char* slot_name = "copy";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.copy__funk);}
+  {char* slot_name = "new_copy";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.new_copy__funk);}
   {char* slot_name = "lookup";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk);}
   {char* slot_name = "contains";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.contains__funk);}
   {char* slot_name = "elements";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.elements__funk);}
@@ -381,8 +381,8 @@ void f2__primobject_set__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__remove, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.remove__funk = never_gc(cfunk);}
   {char* symbol_str = "copy_from"; __funk2.globalenv.object_type.primobject.primobject_type_set.copy_from__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__copy_from, this, that, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.copy_from__funk = never_gc(cfunk);}
-  {char* symbol_str = "copy"; __funk2.globalenv.object_type.primobject.primobject_type_set.copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__copy, this, that, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.copy__funk = never_gc(cfunk);}
+  {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_set.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.new_copy__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__lookup, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "contains"; __funk2.globalenv.object_type.primobject.primobject_type_set.contains__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

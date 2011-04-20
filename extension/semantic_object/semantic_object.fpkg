@@ -19,9 +19,11 @@
 
 [defpackage semantic_object
   :documentation 'Basic physical knowledge for dealing with properties of objects, their noun references, classifier references, etc.'
-   :packages     [semantic_knowledge_base]
+   :packages     []
     :sources     ['semantic_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_object.so']]
+
+'used to depend on semantic_knowledge_base.'
 
 [defcore semantic_object 'extension/semantic_object/.libs/libf2e_semantic_object.so']
 

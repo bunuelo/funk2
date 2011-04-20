@@ -306,6 +306,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_opengl.c \
   c/f2_optimize.c \
   c/f2_package.c \
+  c/f2_package_handler.c \
   c/f2_packet.c \
   c/f2_partial_order.c \
   c/f2_peer_command_server.c \

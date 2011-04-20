@@ -174,7 +174,6 @@ boolean_t __semantic_object__core_extension__is_initialized = boolean__false;
 f2ptr f2__semantic_object__core_extension__initialize(f2ptr cause) {
   if (! __semantic_object__core_extension__is_initialized) {
     __semantic_object__core_extension__is_initialized = boolean__true;
-    core_extension__ping(semantic_object, semantic_knowledge_base);
     status("semantic_object initialized.");
   } else {
     status("semantic_object already initialized.");

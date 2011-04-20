@@ -95,87 +95,86 @@
 
 [deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
 
-[globalize packages_frame [frame]]
-[globalize packages_search_path `['built-in/alien/'
-				  'built-in/ansi/'
-				  'built-in/utilities/'
-				  'built-in/perception_lattice/'
-				  'built-in/object_lattice/'
-				  'built-in/number/'
-				  'built-in/math/'
-				  'built-in/mutex/'
-				  'built-in/graphviz/'
-				  'built-in/xmlrpc/'
-				  'built-in/graph_match_error_correcting/'
-				  'built-in/graph_cluster/'
-				  'built-in/gtk/'
-				  'built-in/natural_language/'
-				  'extension/cairo/'
-				  'extension/conceptnet/'
-				  'extension/equals_hash/'
-				  'extension/event_stream/'
-				  'extension/fibermon/'
-				  'extension/forgetful_event_stream/'
-				  'extension/forward_planner/'
-				  'extension/frame_ball/'
-				  'extension/graph_isomorphism/'
-				  'extension/image/'
-				  'extension/image_sequence/'
-				  'extension/lick/'
-				  'extension/mentality/'
-				  'extension/meta_semantic_knowledge_base/'
-				  'extension/movie/'
-				  'extension/propogator/'
-				  'extension/semantic_action_event/'
-				  'extension/semantic_containment_object/'
-				  'extension/semantic_directed_action_event/'
-				  'extension/semantic_event/'
-				  'extension/semantic_agent/'
-				  'extension/semantic_causal_event/'
-				  'extension/semantic_causal_object/'
-				  'extension/semantic_event_sequence/'
-				  'extension/semantic_frame/'
-				  'extension/semantic_knowledge_base/'
-				  'extension/semantic_object_type/'
-				  'extension/semantic_object/'
-				  'extension/semantic_ordered_object/'
-				  'extension/semantic_packable_object/'
-				  'extension/semantic_physical_object/'
-				  'extension/semantic_realm/'
-				  'extension/semantic_relationship_key/'
-				  'extension/semantic_resource/'
-				  'extension/semantic_resource_action_event/'
-				  'extension/semantic_resource_action_sequence/'
-				  'extension/semantic_temporal_object/'
-				  'extension/semantic_visual_object/'
-				  'extension/timeline/'
-				  'example/divisi2/'
-				  'example/em_two_webpage/'
-				  'example/english_language/'
-				  'example/funk2-htmldoc/'
-				  'example/funk2-webpage/'
-				  'example/graph_match/'
-				  'example/isis_world_client/'
-				  'example/isis_world_demo/'
-				  'example/isismon/'
-				  'example/little_carol_world/'
-				  'example/macbeth/'
-				  'example/mindmon/'
-				  'example/moral_compass/'
-				  'example/mind/'
-				  'example/muddy_carol/'
-				  'example/rct_webpage/'
-				  'example/roboverse/'
-				  'example/socket-client/'
-				  'example/socket-server/'
-				  'example/traced_mind/'
-				  'test/cairo-test/'
-				  'test/gtk-test/'
-				  'test/optimize-test/'
-				  'test/propogator-test/'
-				  'test/timeline-test/'
-				  'test/xmlrpc-test/'
-				  ]]
+[set [global_package_handler] package_search_paths `['built-in/alien/'
+						     'built-in/ansi/'
+						     'built-in/utilities/'
+						     'built-in/perception_lattice/'
+						     'built-in/object_lattice/'
+						     'built-in/number/'
+						     'built-in/math/'
+						     'built-in/mutex/'
+						     'built-in/graphviz/'
+						     'built-in/xmlrpc/'
+						     'built-in/graph_match_error_correcting/'
+						     'built-in/graph_cluster/'
+						     'built-in/gtk/'
+						     'built-in/natural_language/'
+						     'extension/cairo/'
+						     'extension/conceptnet/'
+						     'extension/equals_hash/'
+						     'extension/event_stream/'
+						     'extension/fibermon/'
+						     'extension/forgetful_event_stream/'
+						     'extension/forward_planner/'
+						     'extension/frame_ball/'
+						     'extension/graph_isomorphism/'
+						     'extension/image/'
+						     'extension/image_sequence/'
+						     'extension/lick/'
+						     'extension/mentality/'
+						     'extension/meta_semantic_knowledge_base/'
+						     'extension/movie/'
+						     'extension/propogator/'
+						     'extension/semantic_action_event/'
+						     'extension/semantic_containment_object/'
+						     'extension/semantic_directed_action_event/'
+						     'extension/semantic_event/'
+						     'extension/semantic_agent/'
+						     'extension/semantic_causal_event/'
+						     'extension/semantic_causal_object/'
+						     'extension/semantic_event_sequence/'
+						     'extension/semantic_frame/'
+						     'extension/semantic_knowledge_base/'
+						     'extension/semantic_object_type/'
+						     'extension/semantic_object/'
+						     'extension/semantic_ordered_object/'
+						     'extension/semantic_packable_object/'
+						     'extension/semantic_physical_object/'
+						     'extension/semantic_realm/'
+						     'extension/semantic_relationship_key/'
+						     'extension/semantic_resource/'
+						     'extension/semantic_resource_action_event/'
+						     'extension/semantic_resource_action_sequence/'
+						     'extension/semantic_temporal_object/'
+						     'extension/semantic_visual_object/'
+						     'extension/timeline/'
+						     'example/divisi2/'
+						     'example/em_two_webpage/'
+						     'example/english_language/'
+						     'example/funk2-htmldoc/'
+						     'example/funk2-webpage/'
+						     'example/graph_match/'
+						     'example/isis_world_client/'
+						     'example/isis_world_demo/'
+						     'example/isismon/'
+						     'example/little_carol_world/'
+						     'example/macbeth/'
+						     'example/mindmon/'
+						     'example/moral_compass/'
+						     'example/mind/'
+						     'example/muddy_carol/'
+						     'example/rct_webpage/'
+						     'example/roboverse/'
+						     'example/socket-client/'
+						     'example/socket-server/'
+						     'example/traced_mind/'
+						     'test/cairo-test/'
+						     'test/gtk-test/'
+						     'test/optimize-test/'
+						     'test/propogator-test/'
+						     'test/timeline-test/'
+						     'test/xmlrpc-test/'
+						     ]]
 
 [defmetro defpackage [name :rest dependencies]
   [let [[package_dependencies nil]
@@ -192,22 +191,22 @@
 		[[eq key `:binaries]      [= binary_dependencies  value]]
 		[t                        [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
 	[= iter [cddr iter]]]]
-    `[have packages_frame add [quote ,name] [new package
-						 [pathname-directory_pathname source-filename]
-						 [quote ,name]
-						 [conslist @[mapcar [funk [package_dependency]
-									  `[quote ,package_dependency]]
-								    package_dependencies]]
-						 [conslist @source_dependencies]
-						 ,documentation
-						 [conslist @binary_dependencies]
-						 ]]]]
+    `[have [get [global_package_handler] package_frame] add [quote ,name] [new package
+									       [pathname-directory_pathname source-filename]
+									       [quote ,name]
+									       [conslist @[mapcar [funk [package_dependency]
+													`[quote ,package_dependency]]
+												  package_dependencies]]
+									       [conslist @source_dependencies]
+									       ,documentation
+									       [conslist @binary_dependencies]
+									       ]]]]
 
 [defunk package_names []
-  [get packages_frame keys]]
+  [get [get [global_package_handler] package_frame] keys]]
 
 [defunk lookup-package [name]
-  [have packages_frame lookup name]]
+  [global_package_handler-lookup_package name]]
 
 [defmetro package [name]
   `[lookup-package [quote ,name]]]
@@ -232,15 +231,13 @@
   [mapc [funk [filename]
 	      [memory-debug_assert_valid]
 	      [package_filename-load filename]]
-	[pathnames-all_fpkg_filenames packages_search_path]]
+	[pathnames-all_fpkg_filenames [get [global_package_handler] package_search_paths]]]
   [memory-debug_assert_valid]]
 
 [defunk package-load [name]
   [let [[load_if_modified_before_time [time]]]
     [let [[package [lookup-package name]]]
-      [mapc [funk [package_dependency]
-		  [package-load_if_modified_before package_dependency load_if_modified_before_time nil]]
-	    [get package package_dependencies]]
+      [packages-load_if_modified_before [get package package_dependencies] load_if_modified_before_time nil]
       [with-new-cause [cause-define cause-object_types_defined nil]
 		      [mapc [funk [source_dependency]
 				  [package_filename-load [pathname-concat [get package pathname] source_dependency]]]
@@ -266,17 +263,15 @@
 		[if [or [null loaded_all_dependencies_time]
 			[bytecode:less_than loaded_all_dependencies_time before_time]]
 		    [prog [terminal_format standard-terminal '\nchecking ' name ' for updated dependencies.']
-			  [mapc [funk [package_dependency]
-				      [let [[dependency_was_loaded [package-load_if_modified_before package_dependency before_time checked_package_hash]]]
-					[if dependency_was_loaded
-					    [= loaded_a_dependency t]]]]
-				[get package package_dependencies]]
+			  [let [[dependency_was_loaded [packages-load_if_modified_before [get package package_dependencies] before_time checked_package_hash]]]
+			    [if dependency_was_loaded
+				[= loaded_a_dependency t]]]
 			  [mapc [funk [binary_dependency]
 				      [let [[binary_pathname [pathname-concat [get package pathname] binary_dependency]]]
 					[let [[stat [pathname-stat binary_pathname]]]
 					  [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 					    [let [[binary_modified [or [null loaded_all_dependencies_time]
-								       [> time_of_last_modification loaded_all_dependencies_time]]]]
+								       [bytecode:greater_than time_of_last_modification loaded_all_dependencies_time]]]]
 					      [if binary_modified
 						  [= loaded_a_dependency t]]]]]]]
 				[get package binary_dependencies]]
@@ -297,13 +292,59 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
+
+[defunk packages-load_if_modified_before [names before_time checked_package_hash]
+  [if [null checked_package_hash]
+      [= checked_package_hash [new ptypehash]]]
+  [let* [[loaded_a_dependency nil]
+	 [load_fibers         [mapcar [funk [name]
+					    [fiber [funk []
+							 [let [[package [lookup-package name]]]
+							   [if [get [get package dependency_graph] contains_cycle]
+							       [error bug_type     `tried_to_load_package_that_has_dependency_cycle
+								      package_name name]]
+							   [let [[lock_load_mutex_failed t]]
+							     [while lock_load_mutex_failed
+							       [= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
+							       [if lock_load_mutex_failed
+								   [millisleep 4000]]]
+							     [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+							       [if dependency_loaded
+								   [= loaded_a_dependency t]]]
+							     [have [get package load_cmutex] unlock]]]]
+						   nil]]
+				      names]]]
+    [apply &join load_fibers]
+    loaded_a_dependency]]
+
+[defunk packages-load_if_modified_before-old [names before_time checked_package_hash]
+  [if [null checked_package_hash]
+      [= checked_package_hash [new ptypehash]]]
+  [let [[loaded_a_dependency nil]]
+    [mapc [funk [name]
+		[let [[package [lookup-package name]]]
+		  [if [null package]
+		      [error bug_type      `tried_to_load_package_that_does_not_exist
+			     package_name  name
+			     package_names [package_names]]
+		    [let [[lock_load_mutex_failed t]]
+		      [while lock_load_mutex_failed
+			[= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
+			[if lock_load_mutex_failed
+			    [millisleep 4000]]]
+		      [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+			[if dependency_loaded
+			    [= loaded_a_dependency t]]]
+		      [have [get package load_cmutex] unlock]]]]]
+	  names]
+    loaded_a_dependency]]
+
+
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
     [global_core_extension_handler-unload_changed]
     [global_dlfcn_dynamic_library-unload_changed]
-    [mapc [funk [name]
-		[package-load_if_modified_before name load_if_modified_before_time nil]]
-	  names]]]
+    [packages-load_if_modified_before names load_if_modified_before_time nil]]]
 
 [defmetro require [:rest names]
   `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]

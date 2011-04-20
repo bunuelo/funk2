@@ -73,6 +73,7 @@
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
 [primfunk:load 'fu2/primfunks-object.fu2']
 [primfunk:load 'fu2/primfunks-package.fu2']
+[primfunk:load 'fu2/primfunks-package_handler.fu2']
 [primfunk:load 'fu2/primfunks-primes.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type_handler.fu2']
@@ -477,7 +478,7 @@
 		   varpairs]
        @body]]]
 
-[defunk join [:rest fibers]
+`[defunk join-test [:rest fibers]
   [define-funk fibers-wait-loop
     [funk []
 	  [define-funk fibers-scan-loop
@@ -490,7 +491,24 @@
 			[fibers-scan-loop [cdr fiber_iter]]]]]]]
 	  [if [fibers-scan-loop fibers]
 	      nil
-	    [prog [yield]
+	    [prog [millisleep 100]
+		  [fibers-wait-loop]]]]]
+  [fibers-wait-loop]]
+
+`[defunk join [:rest fibers]
+  [define-funk fibers-wait-loop
+    [funk []
+	  [define-funk fibers-scan-loop
+	    [funk [fiber_iter]
+		  [if [null fiber_iter]
+		      t
+		    [let [[fiber [car fiber_iter]]]
+		      [if [null [get fiber is_complete]]
+			  nil
+			[fibers-scan-loop [cdr fiber_iter]]]]]]]
+	  [if [fibers-scan-loop fibers]
+	      nil
+	    [prog [millisleep 100]
 		  [fibers-wait-loop]]]]]
   [fibers-wait-loop]]
 
@@ -839,7 +857,59 @@
 	    nil]
      nil]]
 
+[defunk fiber-wait_for_either_complete_or_encounter_bug [this]
+  [fiber-wait_for_either_complete_or_encounter_bug-without_yield this]
+  [yield]]
+
+[defunk fiber-join [this]
+  [fiber-wait_for_either_complete_or_encounter_bug this]
+  [let [[exit_status [fiber-exit_status this]]]
+    [cond [[eq exit_status `complete]
+	   [get this value]]
+	  [[eq exit_status `bug]
+	   [let [[bug [get this value]]]
+	     [if [is-type `bug bug]
+		 [let [[bug_frame [get bug frame]]]
+		   [if [is-type `frame bug_frame]
+		       [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+			       [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
+			   [frame-add_var_value bug_frame `stack_trace [get this stack_trace]]]]
+		   [bug bug]]
+	       [error bug_type    `fiber-join-fiber_paused_without_bug
+		      fiber_value bug
+		      stack_trace [get fiber stack_trace]]]]]
+	  [t
+	   [error bug_type    fiber-join-unknown-fiber-exit-status
+		  exit_status exit_status]]]]]
+
+[defunk fiber-sheltered_join [this]
+  [fiber-wait_for_either_complete_or_encounter_bug this]
+  [let [[exit_status [fiber-exit_status this]]]
+    [cond [[eq exit_status `complete]
+	   [get this value]]
+	  [[eq exit_status `bug]
+	   [let [[bug [get this value]]]
+	     [if [is-type `bug bug]
+		 [let [[bug_frame [get bug frame]]]
+		   [if [is-type `frame bug_frame]
+		       [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+			       [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
+			   [frame-add_var_value bug_frame `stack_trace [get this stack_trace]]]]
+		   bug]
+	       [error bug_type    `fiber-join_sheltered-fiber_paused_without_bug
+		      fiber_value bug
+		      stack_trace [get fiber stack_trace]]]]]
+	  [t
+	   [error bug_type    fiber-sheltered_join-unknown-fiber-exit-status
+		  exit_status exit_status]]]]]
+
 [defmetro with-new-cause [:rest codes]
+  `[fiber-join [fiber [funk-new_with_name with-new-cause []
+					  [set [this-cause] critics nil]
+					  @codes]
+		      nil]]]
+
+[defmetro with-new-cause-old [:rest codes]
   `[let* [[result     `bug]
 	  [main_fiber [this-fiber]]
 	  [fiber      [fiber [funk-new_with_name with-new-cause []
@@ -900,6 +970,12 @@
 		     exit_status exit_status]]]]]]
 
 [defmetro shelter [:rest codes]
+  `[fiber-sheltered_join [fiber [funk-new_with_name with-new-cause []
+						    [set [this-cause] critics nil]
+						    @codes]
+				nil]]]
+
+[defmetro shelter-old [:rest codes]
   `[let* [[result     `bug]
 	  [main_fiber [this-fiber]]
 	  [fiber      [fiber [funk-new_with_name shelter []

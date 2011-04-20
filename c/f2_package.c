@@ -224,6 +224,11 @@ f2ptr raw__package__dependency_graph(f2ptr cause, f2ptr this) {
   }
   return graph;
 }
+
+f2ptr f2__package__dependency_graph(f2ptr cause, f2ptr this) {
+  assert_argument_type(package, this);
+  return raw__package__dependency_graph(cause, this);
+}
 def_pcfunk1(package__dependency_graph, this,
 	    "Generates and returns the complete dependency graph of this package.",
 	    return f2__package__dependency_graph(this_cause, this));

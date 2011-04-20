@@ -300,6 +300,9 @@
 	 [load_fibers         [mapcar [funk [name]
 					    [fiber [funk []
 							 [let [[package [lookup-package name]]]
+							   [if [get [get package dependency_graph] contains_cycle]
+							       [error bug_type     `tried_to_load_package_that_has_dependency_cycle
+								      package_name name]]
 							   [let [[lock_load_mutex_failed t]]
 							     [while lock_load_mutex_failed
 							       [= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
@@ -349,32 +352,4 @@
 
 [defmetro load-package [name]
   `[package-load [quote ,name]]]
-
-`[deftypefunk package execute add_to_dependency_graph [graph]
-  [if [not [get graph contains_node_label [get this name]]]
-      [let [[package_dependencies [get this package_dependencies]]
-	    [this-graph_node      [new graph_node [get this name]]]]
-	[have graph add_node this-graph_node]
-	[mapc [funk [package_dependency]
-		    [let [[package_dependency-package [lookup-package package_dependency]]]
-		      [if [null package_dependency-package]
-			  [error bug_type     `package_does_not_exist
-				 package_name package_dependency]
-			[have package_dependency-package add_to_dependency_graph graph]]]]
-	      package_dependencies]
-	[mapc [funk [package_dependency]
-		    [let [[package_dependency-nodes_with_label [get graph nodes_with_label package_dependency]]]
-		      [if [null package_dependency-nodes_with_label]
-			  [error bug_type                `package_dependency_node_not_found_in_graph
-				 graph                   graph
-				 package_name            [get this name]
-				 package_dependency_name package_dependency]
-			[let [[package_dependency-graph_node [first package_dependency-nodes_with_label]]]
-			  [have graph add_new_edge `depends-on this-graph_node package_dependency-graph_node]]]]]
-	      package_dependencies]]]]
-
-`[deftypefunk package get dependency_graph []
-  [let [[graph [new graph]]]
-    [have this add_to_dependency_graph graph]
-    graph]]
 

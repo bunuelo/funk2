@@ -33,6 +33,16 @@ declare_object_type_3_slot(optimize_bytecode,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+// optimize_bytecode_chunk
+
+typedef struct funk2_object_type__optimize_bytecode_chunk__slot_s funk2_object_type__optimize_bytecode_chunk__slot_t;
+declare_object_type_3_slot(optimize_bytecode_chunk,
+			   bytecode_sequence,
+			   transition,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
@@ -99,6 +109,15 @@ declare_primobject_3_slot(optimize_bytecode,
 			  execution_count);
 
 f2ptr f2optimize_bytecode__primobject_type__new_aux(f2ptr cause);
+
+
+// optimize_bytecode_chunk
+
+declare_primobject_3_slot(optimize_bytecode_chunk,
+			  bytecode_sequence,
+			  transition);
+
+f2ptr f2optimize_bytecode_chunk__primobject_type__new_aux(f2ptr cause);
 
 
 // optimize_data

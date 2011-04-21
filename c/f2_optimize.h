@@ -113,7 +113,7 @@ f2ptr f2optimize_bytecode__primobject_type__new_aux(f2ptr cause);
 
 // optimize_bytecode_chunk
 
-declare_primobject_3_slot(optimize_bytecode_chunk,
+declare_primobject_2_slot(optimize_bytecode_chunk,
 			  bytecode_sequence,
 			  transition);
 

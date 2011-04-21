@@ -17,4 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk global_virtual_processor_handler-set_enable_hardware_affinities &primfunk:global_virtual_processor_handler__set_enable_hardware_affinities ]
+[globalize-funk global_virtual_processor_handler-set_enable_hardware_affinities &primfunk:global_virtual_processor_handler__set_enable_hardware_affinities]
+[globalize-funk global_virtual_processor_handler-get_enable_hardware_affinities &primfunk:global_virtual_processor_handler__get_enable_hardware_affinities]

@@ -251,6 +251,15 @@ def_pcfunk1(global_virtual_processor_handler__set_enable_hardware_affinities, en
 	    return f2__global_virtual_processor_handler__set_enable_hardware_affinities(this_cause, enable_hardware_affinities));
 
 
+f2ptr f2__global_virtual_processor_handler__get_enable_hardware_affinities(f2ptr cause) {
+  return f2bool__new(__funk2.virtual_processor_handler.enable_hardware_affinities);
+}
+def_pcfunk0(global_virtual_processor_handler__get_enable_hardware_affinities,
+	    "Gets a boolean value that tells the virtual_processor_handler whether or not to attempt to assign virtual_processors to specific underlying machine hardware processors.\n"
+	    "Setting this value to true can improve CPU and core caching behavior in some instances.",
+	    return f2__global_virtual_processor_handler__get_enable_hardware_affinities(this_cause));
+
+
 
 // **
 
@@ -265,6 +274,7 @@ void f2__virtual_processor_handler__initialize() {
   f2__virtual_processor_handler__reinitialize_globalvars();
   
   f2__primcfunk__init__1(global_virtual_processor_handler__set_enable_hardware_affinities, enable_hardware_affinities);
+  f2__primcfunk__init__0(global_virtual_processor_handler__get_enable_hardware_affinities);
   
 }
 

@@ -254,7 +254,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     iter = raw__list_cdr__set(cause, iter, f2__compile__block_exit_and_no_pop(cause, funk));
   }
   
-  //f2funk__is_funktional__set(funk, cause, funk__is_locally_funktional ? __funk2.globalenv.true__symbol : nil);
+  //f2funk__is_funktional__set(funk, cause, f2bool__new(funk__is_locally_funktional));
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
   
   return bcs_valid(funk_bcs);

@@ -134,37 +134,6 @@ def_pcfunk6(package__new, pathname, name, package_dependencies, source_dependenc
 	    "",
 	    return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies));
 
-/*
-
-[deftypefunk package execute add_to_dependency_graph [graph]
-  [if [not [get graph contains_node_label [get this name]]]
-      [let [[package_dependencies [get this package_dependencies]]
-	    [this-graph_node      [new graph_node [get this name]]]]
-	[have graph add_node this-graph_node]
-	[mapc [funk [package_dependency]
-		    [let [[package_dependency-package [lookup-package package_dependency]]]
-		      [if [null package_dependency-package]
-			  [error bug_type     `package_does_not_exist
-				 package_name package_dependency]
-			[have package_dependency-package add_to_dependency_graph graph]]]]
-	      package_dependencies]
-	[mapc [funk [package_dependency]
-		    [let [[package_dependency-nodes_with_label [get graph nodes_with_label package_dependency]]]
-		      [if [null package_dependency-nodes_with_label]
-			  [error bug_type                `package_dependency_node_not_found_in_graph
-				 graph                   graph
-				 package_name            [get this name]
-				 package_dependency_name package_dependency]
-			[let [[package_dependency-graph_node [first package_dependency-nodes_with_label]]]
-			  [have graph add_new_edge `depends-on this-graph_node package_dependency-graph_node]]]]]
-	      package_dependencies]]]]
-
-[deftypefunk package get dependency_graph []
-  [let [[graph [new graph]]]
-    [have this add_to_dependency_graph graph]
-    graph]]
-
- */
 
 f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph) {
   f2ptr name = f2__package__name(cause, this);

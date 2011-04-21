@@ -46,6 +46,7 @@ struct funk2_virtual_processor_handler_s {
   funk2_hash_t                           virtual_processor_index_pthread_hash;
   u64                                    virtual_processor_count;
   funk2_virtual_processor_t**            virtual_processor;
+  boolean_t                              enable_hardware_affinities;
 };
 
 void                              funk2_virtual_processor_handler__init(                                                                funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);

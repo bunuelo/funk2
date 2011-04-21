@@ -297,10 +297,14 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end                   
 
 
 
+f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these);
+
+
 // funk-optimize
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this, s64 maximum_loop_count);
 f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count);
+
 
 
 // **

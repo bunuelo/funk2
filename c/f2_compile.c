@@ -254,6 +254,8 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
     iter = raw__list_cdr__set(cause, iter, f2__compile__block_exit_and_no_pop(cause, funk));
   }
   
+  full_bcs = raw__bytecodes__remove_nops(cause, full_bcs);
+  
   //f2funk__is_funktional__set(funk, cause, f2bool__new(funk__is_locally_funktional));
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
   
@@ -851,7 +853,7 @@ f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boo
       return full_bcs;
     }
     boolean_t all_args_are_immutable = boolean__true;
-    if (is_funktional && (*is_funktional)) {
+    if ((is_funktional != NULL) && (*is_funktional)) {
       f2ptr arg_iter = f2cons__cdr(exps, cause);
       while (arg_iter) {
 	f2ptr arg = f2cons__car(arg_iter, cause);

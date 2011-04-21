@@ -36,7 +36,7 @@ declare_object_type_3_slot(optimize_bytecode,
 // optimize_bytecode_chunk
 
 typedef struct funk2_object_type__optimize_bytecode_chunk__slot_s funk2_object_type__optimize_bytecode_chunk__slot_t;
-declare_object_type_3_slot(optimize_bytecode_chunk,
+declare_object_type_2_slot(optimize_bytecode_chunk,
 			   bytecode_sequence,
 			   transition,
 			   f2ptr terminal_print_with_frame__symbol;

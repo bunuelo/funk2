@@ -159,32 +159,41 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
 
 void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("bytecode execution counts follow:");
-  status("  bytecode__lookup__execution_count                     = " u64__fstr, this->bytecode__lookup__execution_count);
   status("  bytecode__block_eval_args_next__execution_count       = " u64__fstr, this->bytecode__block_eval_args_next__execution_count);
+  status("  bytecode__lookup__execution_count                     = " u64__fstr, this->bytecode__lookup__execution_count);
   status("  bytecode__block_pop__execution_count                  = " u64__fstr, this->bytecode__block_pop__execution_count);
-  status("  bytecode__block_eval_args_begin__execution_count      = " u64__fstr, this->bytecode__block_eval_args_begin__execution_count);
-  status("  bytecode__block_eval_args_end__execution_count        = " u64__fstr, this->bytecode__block_eval_args_end__execution_count);
+  status("  bytecode__copy__execution_count                       = " u64__fstr, this->bytecode__copy__execution_count);
   status("  bytecode__funk__execution_count                       = " u64__fstr, this->bytecode__funk__execution_count);
   status("  bytecode__block_push__execution_count                 = " u64__fstr, this->bytecode__block_push__execution_count);
-  status("  bytecode__copy__execution_count                       = " u64__fstr, this->bytecode__copy__execution_count);
-  status("  bytecode__block_enter__execution_count                = " u64__fstr, this->bytecode__block_enter__execution_count);
-  status("  bytecode__block_define_last_argument__execution_count = " u64__fstr, this->bytecode__block_define_last_argument__execution_count);
-  status("  bytecode__else_jump__execution_count                  = " u64__fstr, this->bytecode__else_jump__execution_count);
-  status("  bytecode__block_define_argument__execution_count      = " u64__fstr, this->bytecode__block_define_argument__execution_count);
-  status("  bytecode__nop__execution_count                        = " u64__fstr, this->bytecode__nop__execution_count);
+  status("  bytecode__block_eval_args_end__execution_count        = " u64__fstr, this->bytecode__block_eval_args_end__execution_count);
+  status("  bytecode__block_eval_args_begin__execution_count      = " u64__fstr, this->bytecode__block_eval_args_begin__execution_count);
   status("  bytecode__push__execution_count                       = " u64__fstr, this->bytecode__push__execution_count);
   status("  bytecode__pop__execution_count                        = " u64__fstr, this->bytecode__pop__execution_count);
-  status("  bytecode__jump__execution_count                       = " u64__fstr, this->bytecode__jump__execution_count);
-  status("  bytecode__block_exit_and_no_pop__execution_count      = " u64__fstr, this->bytecode__block_exit_and_no_pop__execution_count);
-  status("  bytecode__block_define_rest_argument__execution_count = " u64__fstr, this->bytecode__block_define_rest_argument__execution_count);
-  status("  bytecode__block_exit_and_pop__execution_count         = " u64__fstr, this->bytecode__block_exit_and_pop__execution_count);
-  status("  bytecode__yield__execution_count                      = " u64__fstr, this->bytecode__yield__execution_count);
-  status("  bytecode__type_var__mutate__execution_count           = " u64__fstr, this->bytecode__type_var__mutate__execution_count);
+  status("  bytecode__block_enter__execution_count                = " u64__fstr, this->bytecode__block_enter__execution_count);
+  status("  bytecode__block_define_last_argument__execution_count = " u64__fstr, this->bytecode__block_define_last_argument__execution_count);
+  status("  bytecode__block_define_argument__execution_count      = " u64__fstr, this->bytecode__block_define_argument__execution_count);
   status("  bytecode__define__execution_count                     = " u64__fstr, this->bytecode__define__execution_count);
+  status("  bytecode__else_jump__execution_count                  = " u64__fstr, this->bytecode__else_jump__execution_count);
+  status("  bytecode__block_exit_and_pop__execution_count         = " u64__fstr, this->bytecode__block_exit_and_pop__execution_count);
+  status("  bytecode__jump__execution_count                       = " u64__fstr, this->bytecode__jump__execution_count);
+  status("  bytecode__block_define_rest_argument__execution_count = " u64__fstr, this->bytecode__block_define_rest_argument__execution_count);
+  status("  bytecode__nop__execution_count                        = " u64__fstr, this->bytecode__nop__execution_count);
+  status("  bytecode__type_var__mutate__execution_count           = " u64__fstr, this->bytecode__type_var__mutate__execution_count);
   status("  bytecode__swap__execution_count                       = " u64__fstr, this->bytecode__swap__execution_count);
+  status("  bytecode__yield__execution_count                      = " u64__fstr, this->bytecode__yield__execution_count);
   status("  bytecode__cons__execution_count                       = " u64__fstr, this->bytecode__cons__execution_count);
   status("  bytecode__car__set__execution_count                   = " u64__fstr, this->bytecode__car__set__execution_count);
   status("  bytecode__cdr__set__execution_count                   = " u64__fstr, this->bytecode__cdr__set__execution_count);
+  status("  bytecode__block_exit_and_no_pop__execution_count      = " u64__fstr, this->bytecode__block_exit_and_no_pop__execution_count);
+  status("  bytecode__numerically_equals__execution_count         = " u64__fstr, this->bytecode__numerically_equals__execution_count);
+  status("  bytecode__add__execution_count                        = " u64__fstr, this->bytecode__add__execution_count);
+  status("  bytecode__greater_than__execution_count               = " u64__fstr, this->bytecode__greater_than__execution_count);
+  status("  bytecode__subtract__execution_count                   = " u64__fstr, this->bytecode__subtract__execution_count);
+  status("  bytecode__divide__execution_count                     = " u64__fstr, this->bytecode__divide__execution_count);
+  status("  bytecode__multiply__execution_count                   = " u64__fstr, this->bytecode__multiply__execution_count);
+  status("  bytecode__less_than__execution_count                  = " u64__fstr, this->bytecode__less_than__execution_count);
+  status("  bytecode__not__execution_count                        = " u64__fstr, this->bytecode__not__execution_count);
+  // zero counts
   status("  bytecode__globalize_type_var__execution_count         = " u64__fstr, this->bytecode__globalize_type_var__execution_count);
   status("  bytecode__push_constant__execution_count              = " u64__fstr, this->bytecode__push_constant__execution_count);
   status("  bytecode__jump_funk__execution_count                  = " u64__fstr, this->bytecode__jump_funk__execution_count);
@@ -199,26 +208,14 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__compile__execution_count                    = " u64__fstr, this->bytecode__compile__execution_count);
   status("  bytecode__newenv__execution_count                     = " u64__fstr, this->bytecode__newenv__execution_count);
   status("  bytecode__machine_code__execution_count               = " u64__fstr, this->bytecode__machine_code__execution_count);
-
-  // logic
   status("  bytecode__eq__execution_count                         = " u64__fstr, this->bytecode__eq__execution_count);
-  status("  bytecode__not__execution_count                        = " u64__fstr, this->bytecode__not__execution_count);
   status("  bytecode__and__execution_count                        = " u64__fstr, this->bytecode__and__execution_count);
   status("  bytecode__or__execution_count                         = " u64__fstr, this->bytecode__or__execution_count);
-  
-  // math
-  status("  bytecode__add__execution_count                        = " u64__fstr, this->bytecode__add__execution_count);
   status("  bytecode__negative__execution_count                   = " u64__fstr, this->bytecode__negative__execution_count);
-  status("  bytecode__subtract__execution_count                   = " u64__fstr, this->bytecode__subtract__execution_count);
-  status("  bytecode__multiply__execution_count                   = " u64__fstr, this->bytecode__multiply__execution_count);
   status("  bytecode__inverse__execution_count                    = " u64__fstr, this->bytecode__inverse__execution_count);
-  status("  bytecode__divide__execution_count                     = " u64__fstr, this->bytecode__divide__execution_count);
   status("  bytecode__modulo__execution_count                     = " u64__fstr, this->bytecode__modulo__execution_count);
   status("  bytecode__increment__execution_count                  = " u64__fstr, this->bytecode__increment__execution_count);
   status("  bytecode__decrement__execution_count                  = " u64__fstr, this->bytecode__decrement__execution_count);
-  status("  bytecode__numerically_equals__execution_count         = " u64__fstr, this->bytecode__numerically_equals__execution_count);
-  status("  bytecode__less_than__execution_count                  = " u64__fstr, this->bytecode__less_than__execution_count);
-  status("  bytecode__greater_than__execution_count               = " u64__fstr, this->bytecode__greater_than__execution_count);
 }
 
 // push registers

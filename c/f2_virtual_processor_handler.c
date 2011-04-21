@@ -209,7 +209,7 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
     funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
     funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
     cons->next                                  = this->free_virtual_processor_threads;
-    cons->virtual_processor_thread              = this->virtual_processor[virtual_processor_index];
+    cons->virtual_processor_thread              = virtual_processor_thread;
     this->free_virtual_processor_threads        = cons;
     funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
   }

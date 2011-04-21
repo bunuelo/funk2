@@ -50,8 +50,9 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     funk2_processor_mutex__init(&(this->virtual_processor_index_pthread_hash_mutex));
     funk2_hash__init(&(this->virtual_processor_index_pthread_hash), 10);
   }
-  this->virtual_processor_count = virtual_processor_count;
-  this->virtual_processor       = NULL;
+  this->virtual_processor_count     = virtual_processor_count;
+  this->virtual_processor           = NULL;
+  this->hardware_affinities_enabled = boolean__false;
 }
 
 void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t* this) {

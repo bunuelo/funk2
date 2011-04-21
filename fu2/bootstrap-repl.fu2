@@ -839,6 +839,20 @@
 			      label_definitions]]
 	  body]]
 
+[defmetro error [:rest slot_value_pairs]
+  `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
+	      `source_expression [quote ,[cause-lookup source_expression]]
+              @[let [[iter          slot_value_pairs]
+		     [reverse_codes nil]]
+		 [while iter
+		   [let [[key [car iter]]]
+		     [= iter [cdr iter]]
+		     [let [[value [car iter]]]
+		       [= reverse_codes [cons `[quote ,key] reverse_codes]]
+		       [= reverse_codes [cons  value        reverse_codes]]]]
+		   [= iter [cdr iter]]]
+		 [reverse reverse_codes]]]]
+
 [defunk pause []
   [global_scheduler-remove_fiber [this-fiber]]
   [yield]]
@@ -1035,20 +1049,6 @@
 	     [t
 	      [error bug_type    shelter-unknown-fiber-exit-status
 		     exit_status exit_status]]]]]]
-
-[defmetro error [:rest slot_value_pairs]
-  `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
-	      `source_expression [quote ,[cause-lookup source_expression]]
-              @[let [[iter          slot_value_pairs]
-		     [reverse_codes nil]]
-		 [while iter
-		   [let [[key [car iter]]]
-		     [= iter [cdr iter]]
-		     [let [[value [car iter]]]
-		       [= reverse_codes [cons `[quote ,key] reverse_codes]]
-		       [= reverse_codes [cons  value        reverse_codes]]]]
-		   [= iter [cdr iter]]]
-		 [reverse reverse_codes]]]]
 
 [defmetro defmetro [name args :rest body]
   [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]

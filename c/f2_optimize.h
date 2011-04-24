@@ -43,6 +43,16 @@ declare_object_type_2_slot(optimize_chunk,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+// optimize_transition
+
+typedef struct funk2_object_type__optimize_transition__slot_s funk2_object_type__optimize_transition__slot_t;
+declare_object_type_2_slot(optimize_transition,
+			   bytecode_sequence,
+			   transition,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
@@ -118,6 +128,15 @@ declare_primobject_2_slot(optimize_chunk,
 			  transition);
 
 f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause);
+
+
+// optimize_transition
+
+declare_primobject_2_slot(optimize_transition,
+			  bytecode_sequence,
+			  transition);
+
+f2ptr f2optimize_transition__primobject_type__new_aux(f2ptr cause);
 
 
 // optimize_data

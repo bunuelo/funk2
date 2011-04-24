@@ -4543,9 +4543,10 @@ f2ptr raw__bytecodes__as__optimize_chunk(f2ptr cause, f2ptr these) {
 				 f2__optimize_chunk__transition__set(cause, chunk, transition);
 			       }
 			       break;
-			     } else if (raw__ptypehash__lookup(cause, chunk_sequence_ptypehash, iter)) {
+			     } else if ((iter != sequence) &&
+					raw__ptypehash__lookup(cause, chunk_sequence_ptypehash, iter)) {
 			       f2ptr transition_type = new__symbol(cause, "jumped-to");
-			       f2ptr next_chunk      = raw__ptypehash__lookup(cause, chunk_sequence_ptypehash, next);
+			       f2ptr next_chunk      = raw__ptypehash__lookup(cause, chunk_sequence_ptypehash, iter);
 			       f2ptr true_chunk      = nil;
 			       f2ptr false_chunk     = nil;
 			       f2ptr transition      = f2__optimize_transition__new(cause, transition_type, next_chunk, true_chunk, false_chunk);

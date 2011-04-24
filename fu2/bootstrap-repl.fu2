@@ -74,6 +74,7 @@
 [primfunk:load 'fu2/primfunks-locale.fu2']
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
 [primfunk:load 'fu2/primfunks-object.fu2']
+[primfunk:load 'fu2/primfunks-optimize.fu2']
 [primfunk:load 'fu2/primfunks-package.fu2']
 [primfunk:load 'fu2/primfunks-package_handler.fu2']
 [primfunk:load 'fu2/primfunks-primes.fu2']

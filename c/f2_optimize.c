@@ -121,18 +121,26 @@ f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause) {
 
 // optimize_transition
 
-def_primobject_2_slot(optimize_transition,
-		      bytecode_sequence,
-		      transition);
+def_primobject_4_slot(optimize_transition,
+		      transition_type,
+		      next_chunk,
+		      true_chunk,
+		      false_chunk);
 
-f2ptr f2__optimize_transition__new(f2ptr cause, f2ptr bytecode_sequence, f2ptr transition) {
+f2ptr f2__optimize_transition__new(f2ptr cause,
+				   f2ptr transition_type,
+				   f2ptr next_chunk,
+				   f2ptr true_chunk,
+				   f2ptr false_chunk) {
   return f2optimize_transition__new(cause,
-					bytecode_sequence,
-					transition);
+				    transition_type,
+				    next_chunk,
+				    true_chunk,
+				    false_chunk);
 }
-def_pcfunk2(optimize_transition__new, bytecode_sequence, transition,
+def_pcfunk4(optimize_transition__new, transition_type, next_chunk, true_chunk, false_chunk,
 	    "",
-	    return f2__optimize_transition__new(this_cause, bytecode_sequence, transition));
+	    return f2__optimize_transition__new(this_cause, transition_type, next_chunk, true_chunk, false_chunk));
 
 
 f2ptr raw__optimize_transition__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -141,15 +149,17 @@ f2ptr raw__optimize_transition__terminal_print_with_frame(f2ptr cause, f2ptr thi
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list6__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "optimize_transition"),
-					       new__symbol(cause, "bytecode_sequence"), f2__optimize_transition__bytecode_sequence(cause, this),
-					       new__symbol(cause, "transition"),        f2__optimize_transition__transition(       cause, this)));
+					       new__symbol(cause, "transition_type"), f2__optimize_transition__transition_type(cause, this),
+					       new__symbol(cause, "next_chunk"),      f2__optimize_transition__next_chunk(cause, this),
+					       new__symbol(cause, "true_chunk"),      f2__optimize_transition__true_chunk(cause, this),
+					       new__symbol(cause, "false_chunk"),     f2__optimize_transition__false_chunk(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__optimize_transition__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(optimize_transition,    this);
+  assert_argument_type(optimize_transition,  this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__optimize_transition__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
@@ -4556,9 +4566,11 @@ void f2__optimize__initialize() {
   
   // optimize_transition
   
-  initialize_primobject_2_slot(optimize_transition,
-			       bytecode_sequence,
-			       transition);
+  initialize_primobject_4_slot(optimize_transition,
+			       transition_type,
+			       next_chunk,
+			       true_chunk,
+			       false_chunk);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_transition__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__funk = never_gc(cfunk);}

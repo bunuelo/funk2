@@ -4242,6 +4242,92 @@ f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these) {
 }
 
 
+f2ptr raw__bytecodes__as__optimize_bytecode_chunk(f2ptr cause, f2ptr these) {
+  if (these == nil) {
+    return nil;
+  }
+  {
+    f2ptr iter = these;
+    while (iter != nil) {
+      f2ptr bytecode = f2__cons__car(cause, iter);
+      {
+	f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
+	if        (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "globalize-type_var"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code"))) {
+	  
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cons"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "consp"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "car-set"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "cdr-set"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "array_elt"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "set"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "swap"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "push_constant"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "pop"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "copy"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "lookup"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "define"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "mutate-type_var"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "nop"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "debug"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "tracer"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "endfunk"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "compile"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "yield"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "newenv"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "eq"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "not"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "and"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "or"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "add"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "negative"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "subtract"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "multiply"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "inverse"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "divide"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "modulo"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "increment"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "decrement"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "numerically_equals"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "less_than"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "greater_than"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_push"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_enter"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_rest_argument"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_argument"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_define_last_argument"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_pop"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_pop"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_exit_and_no_pop"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_begin"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_next"))) {
+	} else if (raw__eq(cause, bytecode__command, new__symbol(cause, "block_eval_args_end"))) {
+	} else {
+	  printf("\nbytecode UNRECOGNIZED: cannot optimize funk."); fflush(stdout);
+	  return f2larva__new(cause, 5123, nil);
+	}
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+}
+
+
 f2ptr raw__optimize_context__compile_new_bytecodes(f2ptr cause, f2ptr this, f2ptr funk) {
   f2ptr full_bcs = f2__compile__block_enter(cause);
   f2ptr iter_bcs = full_bcs;
@@ -4371,6 +4457,8 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count) {
   s64 maximum_loop_count__i = f2integer__i(maximum_loop_count, cause);
   return raw__funk__optimize(cause, this, maximum_loop_count__i);
 }
+
+
 
 
 // **

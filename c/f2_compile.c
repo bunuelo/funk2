@@ -216,9 +216,9 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
   
   // define args in funk environment
+  f2ptr var_iter = f2funk__args(funk, cause);
   if (var_iter != nil) {
     iter = raw__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause));
-    f2ptr var_iter = f2funk__args(funk, cause);
     while (var_iter != nil) {
       f2ptr var = f2cons__car(var_iter, cause);
       f2ptr cdr = f2cons__cdr(var_iter, cause);

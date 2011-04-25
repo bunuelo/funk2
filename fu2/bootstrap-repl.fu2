@@ -452,7 +452,7 @@
 	  exps]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
-  [have [get terminal_print_frame cmutex] lock]
+  [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
@@ -722,7 +722,7 @@
   x]
 
 [defunk terminal_write [terminal_print_frame x]
-  [have [get terminal_print_frame cmutex] lock]
+  [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [terminal_write-thread_unsafe terminal_print_frame x]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
@@ -734,7 +734,7 @@
   x]
 
 [defunk terminal_print [terminal_print_frame x]
-  [have [get terminal_print_frame cmutex] lock]
+  [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [terminal_print-thread_unsafe terminal_print_frame x]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
@@ -756,7 +756,7 @@
 
 [defmetro cmutexprog [cmutex :rest body]
   `[let [[cmutexprog-cmutex ,cmutex]]
-     [cmutex-lock   cmutexprog-cmutex]
+     [while [cmutex-trylock cmutexprog-cmutex]]
      [prog @body]
      [cmutex-unlock cmutexprog-cmutex]]]
 

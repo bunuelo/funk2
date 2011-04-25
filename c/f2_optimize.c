@@ -305,7 +305,7 @@ void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr th
 	  f2ptr next_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, next_bcs);
 	}
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash, finished_chunk_set);
       } else if (raw__eq(cause, transition_type, new__symbol(cause, "funk"))) {
 	{
 	  f2ptr transition_bcs = f2__compile__funk_bc(cause);
@@ -316,7 +316,7 @@ void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr th
 	  f2ptr next_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, next_bcs);
 	}
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash, finished_chunk_set);
       } else if (raw__eq(cause, transition_type, new__symbol(cause, "machine_code"))) {
 	error(nil, "raw__optimize_chunk__as__bytecodes__append_transition error: machine_code bytecode not fully implemented.");
       } else if (raw__eq(cause, transition_type, new__symbol(cause, "jump"))) {
@@ -326,7 +326,7 @@ void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr th
 	  f2ptr transition_bcs = f2__compile__jump(cause, next_bcs);
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
 	}
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash, finished_chunk_set);
       } else if (raw__eq(cause, transition_type, new__symbol(cause, "if-jump"))) {
 	f2ptr true_chunk = f2__optimize_transition__true_chunk(cause, transition);
 	f2ptr true_bcs   = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, true_chunk);
@@ -339,8 +339,8 @@ void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr th
 	  f2ptr false_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, false_chunk);
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, false_bcs);
 	}
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, true_chunk,  sequence_chunk_ptypehash);
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, false_chunk, sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, true_chunk,  sequence_chunk_ptypehash, finished_chunk_set);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, false_chunk, sequence_chunk_ptypehash, finished_chunk_set);
       } else if (raw__eq(cause, transition_type, new__symbol(cause, "else-jump"))) {
 	f2ptr false_chunk = f2__optimize_transition__false_chunk(cause, transition);
 	f2ptr false_bcs   = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, false_chunk);
@@ -353,15 +353,15 @@ void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr th
 	  f2ptr true_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, true_chunk);
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, true_bcs);
 	}
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, false_chunk, sequence_chunk_ptypehash);
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, true_chunk,  sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, false_chunk, sequence_chunk_ptypehash, finished_chunk_set);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, true_chunk,  sequence_chunk_ptypehash, finished_chunk_set);
       } else if (raw__eq(cause, transition_type, new__symbol(cause, "jumped-to"))) {
 	f2ptr next_chunk = f2__optimize_transition__next_chunk(cause, transition);
 	{
 	  f2ptr next_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
 	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, next_bcs);
 	}
-	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash, finished_chunk_set);
       } else {
 	error(nil, "raw__optimize_chunk__as__bytecodes__append_transition error: unknown transition_type.");
       }

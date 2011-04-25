@@ -37,3 +37,9 @@
 [deftypefunk integer get degree_arctangent []    [get [get this as-double] degree_arctangent]]
 [deftypefunk integer get power             [exp] [get [get this as-double] power             [get exp as-double]]]
 
+
+'cmutex'
+
+[deftypefunk cmutex execute lock [] [while [have this trylock]]]
+
+

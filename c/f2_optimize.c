@@ -233,6 +233,9 @@ f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these) {
 			   iter = next;
 			 }
 		       }
+		       if (new_sequence == nil) {
+			 new_sequence = f2__compile__nop(cause);
+		       }
 		       f2__optimize_chunk__bytecode_sequence__set(cause, chunk, new_sequence);
 		       );
   return raw__ptypehash__lookup(cause, chunk_sequence_ptypehash, these);

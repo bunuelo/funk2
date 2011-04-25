@@ -303,15 +303,22 @@
 							   [if [get [get package dependency_graph] contains_cycle]
 							       [error bug_type     `tried_to_load_package_that_has_dependency_cycle
 								      package_name name]]
-							   [let [[lock_load_mutex_failed t]]
-							     [while lock_load_mutex_failed
-							       [= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
-							       [if lock_load_mutex_failed
-								   [millisleep 4000]]]
-							     [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
-							       [if dependency_loaded
-								   [= loaded_a_dependency t]]]
-							     [have [get package load_cmutex] unlock]]]]
+							   [while [have [get package load_cmutex] trylock]
+							     [millisleep 100]]
+							   [let [[load_fiber [get package load_fiber]]]
+							     [if [null load_fiber]
+								 [prog [set package load_fiber [this-fiber]]
+								       [have [get package load_cmutex] unlock]
+								       [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+									 [if dependency_loaded
+									     [= loaded_a_dependency t]]]
+								       [while [have [get package load_cmutex] trylock]
+									 [millisleep 100]]
+								       [set package load_fiber nil]
+								       [have [get package load_cmutex] unlock]]
+							       [prog [have [get package load_cmutex] unlock]
+								     [join load_fiber]]]]
+							   ]]
 						   nil]]
 				      names]]]
     [apply &join load_fibers]
@@ -327,15 +334,22 @@
 		      [error bug_type      `tried_to_load_package_that_does_not_exist
 			     package_name  name
 			     package_names [package_names]]
-		    [let [[lock_load_mutex_failed t]]
-		      [while lock_load_mutex_failed
-			[= lock_load_mutex_failed [have [get package load_cmutex] trylock]]
-			[if lock_load_mutex_failed
-			    [millisleep 4000]]]
-		      [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
-			[if dependency_loaded
-			    [= loaded_a_dependency t]]]
-		      [have [get package load_cmutex] unlock]]]]]
+		    [while [have [get package load_cmutex] trylock]
+		      [millisleep 100]]
+		    [let [[load_fiber [get package load_fiber]]]
+		      [if [null load_fiber]
+			  [prog [set package load_fiber [this-fiber]]
+				[have [get package load_cmutex] unlock]
+				[let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+				  [if dependency_loaded
+				      [= loaded_a_dependency t]]]
+				[while [have [get package load_cmutex] trylock]
+				  [millisleep 100]]
+				[set package load_fiber nil]
+				[have [get package load_cmutex] unlock]]
+			[prog [have [get package load_cmutex] unlock]
+			      [join load_fiber]]]]
+		    ]]]
 	  names]
     loaded_a_dependency]]
 

@@ -39,6 +39,8 @@ typedef struct funk2_object_type__optimize_chunk__slot_s funk2_object_type__opti
 declare_object_type_2_slot(optimize_chunk,
 			   bytecode_sequence,
 			   transition,
+			   f2ptr as__bytecodes__symbol;
+			   f2ptr as__bytecodes__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

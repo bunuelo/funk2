@@ -239,6 +239,153 @@ def_pcfunk1(optimize_chunk__new_from_bytecodes, these,
 	    return f2__optimize_chunk__new_from_bytecodes(this_cause, these));
 
 
+void raw__optimize_chunk__as__bytecodes__gather_chunks(f2ptr cause, f2ptr this, f2ptr sequence_chunk_ptypehash) {
+  if (! raw__ptypehash__contains(cause, sequence_chunk_ptypehash, this)) {
+    {
+      f2ptr new_sequence = nil;
+      f2ptr new_iter     = nil;
+      {
+	f2ptr iter = f2__optimize_chunk__bytecode_sequence(cause, this);
+	while (iter != nil) {
+	  f2ptr bytecode = f2__cons__car(cause, iter);
+	  {
+	    f2ptr new_cons = f2cons__new(cause, bytecode, nil);
+	    if (new_iter == nil) {
+	      new_sequence = new_cons;
+	      new_iter     = new_cons;
+	    } else {
+	      f2__cons__cdr__set(cause, new_iter, new_cons);
+	      new_iter = new_cons;
+	    }
+	  }
+	  iter = f2__cons__cdr(cause, iter);
+	}
+      }
+      raw__ptypehash__add(cause, sequence_chunk_ptypehash, this, new_sequence);
+    }
+    f2ptr transition = f2__optimize_chunk__transition(cause, this);
+    if (transition != nil) {
+      {
+	f2ptr next_chunk = f2__optimize_transition__next_chunk(cause, transition);
+	if (next_chunk != nil) {
+	  raw__optimize_chunk__as__bytecodes__gather_chunks(cause, next_chunk, sequence_chunk_ptypehash);
+	}
+      }
+      {
+	f2ptr true_chunk = f2__optimize_transition__true_chunk(cause, transition);
+	if (true_chunk != nil) {
+	  raw__optimize_chunk__as__bytecodes__gather_chunks(cause, true_chunk, sequence_chunk_ptypehash);
+	}
+      }
+      {
+	f2ptr false_chunk = f2__optimize_transition__false_chunk(cause, transition);
+	if (false_chunk != nil) {
+	  raw__optimize_chunk__as__bytecodes__gather_chunks(cause, false_chunk, sequence_chunk_ptypehash);
+	}
+      }
+    }
+  }
+}
+
+void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr this, f2ptr sequence_chunk_ptypehash, f2ptr finished_chunk_set) {
+  if (! raw__set__contains(cause, finished_chunk_set, this)) {
+    raw__set__add(cause, finished_chunk_set, this);
+    f2ptr full_bcs   = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, this);
+    f2ptr iter_bcs   = full_bcs;
+    f2ptr transition = f2__optimize_chunk__transition(cause, this);
+    if (transition != nil) {
+      f2ptr transition_type = f2__optimize_transition__transition_type(cause, transition);
+      if (raw__eq(cause, transition_type, new__symbol(cause, "jump-funk"))) {
+	{
+	  f2ptr transition_bcs = f2__compile__jump_funk(cause);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	f2ptr next_chunk = f2__optimize_transition__next_chunk(cause, transition);
+	{
+	  f2ptr next_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+      } else if (raw__eq(cause, transition_type, new__symbol(cause, "funk"))) {
+	{
+	  f2ptr transition_bcs = f2__compile__funk_bc(cause);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	f2ptr next_chunk = f2__optimize_transition__next_chunk(cause, transition);
+	{
+	  f2ptr next_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+      } else if (raw__eq(cause, transition_type, new__symbol(cause, "machine_code"))) {
+	error(nil, "raw__optimize_chunk__as__bytecodes__append_transition error: machine_code bytecode not fully implemented.");
+      } else if (raw__eq(cause, transition_type, new__symbol(cause, "jump"))) {
+	f2ptr next_chunk = f2__optimize_transition__next_chunk(cause, transition);
+	f2ptr next_bcs   = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
+	{
+	  f2ptr transition_bcs = f2__compile__jump(cause, next_bcs);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+      } else if (raw__eq(cause, transition_type, new__symbol(cause, "if-jump"))) {
+	f2ptr true_chunk = f2__optimize_transition__true_chunk(cause, transition);
+	f2ptr true_bcs   = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, true_chunk);
+	{
+	  f2ptr transition_bcs = f2__compile__if_jump(cause, true_bcs);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	f2ptr false_chunk = f2__optimize_transition__false_chunk(cause, transition);
+	{
+	  f2ptr false_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, false_chunk);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, true_chunk,  sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, false_chunk, sequence_chunk_ptypehash);
+      } else if (raw__eq(cause, transition_type, new__symbol(cause, "else-jump"))) {
+	f2ptr false_chunk = f2__optimize_transition__false_chunk(cause, transition);
+	f2ptr false_bcs   = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, false_chunk);
+	{
+	  f2ptr transition_bcs = f2__compile__else_jump(cause, false_bcs);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	f2ptr true_chunk = f2__optimize_transition__true_chunk(cause, transition);
+	{
+	  f2ptr true_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, true_chunk);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, false_chunk, sequence_chunk_ptypehash);
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, true_chunk,  sequence_chunk_ptypehash);
+      } else if (raw__eq(cause, transition_type, new__symbol(cause, "jumped-to"))) {
+	f2ptr next_chunk = f2__optimize_transition__next_chunk(cause, transition);
+	{
+	  f2ptr next_bcs = raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, next_chunk);
+	  iter_bcs = raw__list_cdr__set(cause, iter_bcs, transition_bcs);
+	}
+	raw__optimize_chunk__as__bytecodes__append_transition(cause, next_chunk, sequence_chunk_ptypehash);
+      } else {
+	error(nil, "raw__optimize_chunk__as__bytecodes__append_transition error: unknown transition_type.");
+      }
+    }
+  }
+}
+
+f2ptr raw__optimize_chunk__as__bytecodes(f2ptr cause, f2ptr this) {
+  f2ptr sequence_chunk_ptypehash = f2__ptypehash__new(cause);
+  raw__optimize_chunk__as__bytecodes__gather_chunks(cause, this, sequence_chunk_ptypehash);
+  f2ptr finished_chunk_set = f2__set__new(cause);
+  raw__optimize_chunk__as__bytecodes__append_transition(cause, this, finished_chunk_set);
+  return raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, this);
+}
+
+f2ptr f2__optimize_chunk__as__bytecodes(f2ptr cause, f2ptr this) {
+  assert_argument_type(optimize_chunk, this);
+  return raw__optimize_chunk__as__bytecode(cause, this);
+}
+def_pcfunk1(optimize_chunk__as__bytecodes, this,
+	    "Returns a new sequence of bytecodes that represents this optimize_chunk.",
+	    return f2__optimize_chunk__as__bytecodes(this_cause, this));
+
+
 f2ptr raw__optimize_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -264,6 +411,7 @@ def_pcfunk2(optimize_chunk__terminal_print_with_frame, this, terminal_print_fram
 
 f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2optimize_chunk__primobject_type__new(cause);
+  {char* slot_name = "as-bytecodes";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk);}
   return this;
 }
@@ -4622,6 +4770,8 @@ void f2__optimize__initialize() {
   
   f2__primcfunk__init__1(optimize_chunk__new_from_bytecodes, these);
   
+  {char* symbol_str = "as-bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(optimize_chunk__as__bytecodes, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   

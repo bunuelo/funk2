@@ -356,6 +356,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end                   
 
 f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk);
 
+boolean_t raw__optimize_too_many_loops_larva__is_type(f2ptr cause, f2ptr object);
 
 f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these);
 

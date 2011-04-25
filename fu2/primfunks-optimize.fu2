@@ -17,4 +17,4 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk bytecodes-as-optimize_chunk &primfunk:bytecodes__as__optimize_chunk]
+[globalize-funk optimize_chunk-new_from_bytecodes &primfunk:optimize_chunk__new_from_bytecodes]

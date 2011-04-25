@@ -1024,7 +1024,7 @@
 		[error bug_type    `shelter-unknown-fiber-exit-status
 		       exit_status exit_status]]]]]]]
 
-[print 'debug 0']
+[terminal_format standard-terminal '\ndebug 0']
 
 [defmetro shelter-backup [:rest codes]
   `[let* [[result `bug]
@@ -1055,7 +1055,7 @@
 
 [print 'debug 1']
 
-`[defmetro defmetro [name args :rest body]
+[defmetro defmetro [name args :rest body]
   [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
   `[globalize-funk ,name [metro-new_with_name ,name ,args
 					       @body]]]

@@ -216,21 +216,23 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   f2ptr full_bcs = f2__compile__block_enter(cause); f2ptr iter = full_bcs;
   
   // define args in funk environment
-  iter = raw__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause));
-  f2ptr var_iter = f2funk__args(funk, cause);
-  while (var_iter) {
-    f2ptr var = f2cons__car(var_iter, cause);
-    f2ptr cdr = f2cons__cdr(var_iter, cause);
-    if (raw__symbol__eq(cause, var, __funk2.globalenv.and_rest__symbol)) {
-      iter = raw__list_cdr__set(cause, iter, f2__compile__block_define_rest_argument(cause, f2cons__car(cdr, cause)));
-      var_iter = nil;
-    } else {
-      if (cdr) {
-	iter = raw__list_cdr__set(cause, iter, f2__compile__block_define_argument(cause, var));
+  if (var_iter != nil) {
+    iter = raw__list_cdr__set(cause, iter, f2__compile__copy_args_to_iter(cause));
+    f2ptr var_iter = f2funk__args(funk, cause);
+    while (var_iter != nil) {
+      f2ptr var = f2cons__car(var_iter, cause);
+      f2ptr cdr = f2cons__cdr(var_iter, cause);
+      if (raw__symbol__eq(cause, var, __funk2.globalenv.and_rest__symbol)) {
+	iter = raw__list_cdr__set(cause, iter, f2__compile__block_define_rest_argument(cause, f2cons__car(cdr, cause)));
+	var_iter = nil;
       } else {
-	iter = raw__list_cdr__set(cause, iter, f2__compile__block_define_last_argument(cause, var));
+	if (cdr) {
+	  iter = raw__list_cdr__set(cause, iter, f2__compile__block_define_argument(cause, var));
+	} else {
+	  iter = raw__list_cdr__set(cause, iter, f2__compile__block_define_last_argument(cause, var));
+	}
+	var_iter = cdr;
       }
-      var_iter = cdr;
     }
   }
   

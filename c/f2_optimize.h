@@ -354,6 +354,7 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next                  
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc       (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end                        (f2ptr cause, f2ptr this);
 
+f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk);
 
 
 f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these);

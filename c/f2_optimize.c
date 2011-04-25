@@ -373,7 +373,7 @@ f2ptr raw__optimize_chunk__as__bytecodes(f2ptr cause, f2ptr this) {
   f2ptr sequence_chunk_ptypehash = f2__ptypehash__new(cause);
   raw__optimize_chunk__as__bytecodes__gather_chunks(cause, this, sequence_chunk_ptypehash);
   f2ptr finished_chunk_set = f2__set__new(cause);
-  raw__optimize_chunk__as__bytecodes__append_transition(cause, this, finished_chunk_set);
+  raw__optimize_chunk__as__bytecodes__append_transition(cause, this, sequence_chunk_ptypehash, finished_chunk_set);
   return raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, this);
 }
 

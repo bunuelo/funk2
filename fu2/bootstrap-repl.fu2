@@ -1055,7 +1055,7 @@
 
 [print 'debug 1']
 
-[defmetro defmetro [name args :rest body]
+`[defmetro defmetro [name args :rest body]
   [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
   `[globalize-funk ,name [metro-new_with_name ,name ,args
 					       @body]]]

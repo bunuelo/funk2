@@ -255,10 +255,10 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   }
   
   full_bcs = raw__bytecodes__remove_nops(cause, full_bcs);
-  {
-    f2ptr optimize_chunk = raw__optimize_chunk__new_from_bytecodes(cause, full_bcs);
-    full_bcs = raw__optimize_chunk__as__bytecodes(cause, optimize_chunk);
-  }
+  //{
+  //  f2ptr optimize_chunk = raw__optimize_chunk__new_from_bytecodes(cause, full_bcs);
+  //  full_bcs = raw__optimize_chunk__as__bytecodes(cause, optimize_chunk);
+  //}
   
   //f2funk__is_funktional__set(funk, cause, f2bool__new(funk__is_locally_funktional));
   f2funk__body_bytecodes__set(funk, cause, full_bcs);

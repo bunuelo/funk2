@@ -2437,9 +2437,6 @@ f2ptr f2__cmutex__lock(f2ptr cause, f2ptr this) {
   raw__cmutex__lock(cause, this);
   return nil;
 }
-def_pcfunk1(cmutex__lock, this,
-	    "",
-	    return f2__cmutex__lock(this_cause, this));
 
 void raw__cmutex__unlock(f2ptr cause, f2ptr this) {
   f2cmutex__unlock(this, cause);
@@ -5907,8 +5904,6 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cmutex__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_cmutex.new__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cmutex__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.new__funk = never_gc(cfunk);}
-  {char* str = "lock"; __funk2.globalenv.object_type.ptype.ptype_cmutex.lock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cmutex__lock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.lock__funk = never_gc(cfunk);}
   {char* str = "unlock"; __funk2.globalenv.object_type.ptype.ptype_cmutex.unlock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cmutex__unlock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.unlock__funk = never_gc(cfunk);}
   {char* str = "trylock"; __funk2.globalenv.object_type.ptype.ptype_cmutex.trylock__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}

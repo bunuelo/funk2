@@ -136,7 +136,7 @@ f2ptr raw__traced_cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
     frame = f2__frame__new(cause, f2list12__new(cause,
 						new__symbol(cause, "print_object_type"),       new__symbol(cause, "traced_cmutex"),
 						new__symbol(cause, "cause"),                   f2__ptype__cause(                         cause, this),
-						new__symbol(cause, "cmutex"),                   f2__traced_cmutex__cmutex(                  cause, this),
+						new__symbol(cause, "cmutex"),                  f2__traced_cmutex__cmutex(                  cause, this),
 						new__symbol(cause, "fiber_with_lock"),         f2__traced_cmutex__fiber_with_lock(        cause, this),
 						new__symbol(cause, "lock_stack"),              f2__traced_cmutex__lock_stack(             cause, this),
 						new__symbol(cause, "fibers_waiting_for_lock"), f2__traced_cmutex__fibers_waiting_for_lock(cause, this)));
@@ -157,7 +157,6 @@ def_pcfunk2(traced_cmutex__terminal_print_with_frame, this, terminal_print_frame
 
 f2ptr f2traced_cmutex__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2traced_cmutex__primobject_type__new(cause);
-  {char* slot_name = "lock";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock__funk);}
   {char* slot_name = "unlock";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__funk);}
   {char* slot_name = "trylock";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__funk);}
   {char* slot_name = "is_locked";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__funk);}
@@ -186,8 +185,6 @@ void f2__primobject__traced_cmutex__initialize() {
   
   initialize_primobject_4_slot(traced_cmutex, cmutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
   
-  {char* symbol_str = "lock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__lock, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock__funk = never_gc(cfunk);}
   {char* symbol_str = "unlock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__unlock, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__funk = never_gc(cfunk);}
   {char* symbol_str = "trylock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

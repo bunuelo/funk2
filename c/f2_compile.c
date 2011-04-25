@@ -259,8 +259,10 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   {
     f2ptr optimize_chunk      = raw__optimize_chunk__new_from_bytecodes(cause, full_bcs);
     f2ptr optimized_bytecodes = raw__optimize_chunk__possible_optimized_funk_bytecodes(cause, optimize_chunk, funk);
-    if ((optimized_bytecodes != nil) &&
-	(! raw__larva__is_type(cause, optimized_bytecodes))) {
+    if (raw__larva__is_type(cause, optimized_bytecodes)) {
+      return optimized_bytecodes;
+    }
+    if (optimized_bytecodes != nil) {
       full_bcs = optimized_bytecodes;
     } else {
       full_bcs = raw__optimize_chunk__as__bytecodes(cause, optimize_chunk);

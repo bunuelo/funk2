@@ -43,21 +43,22 @@ declare_object_type_1_slot(source,
 // package
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
-declare_object_type_9_slot(package,
-			   pathname,
-			   name,
-			   package_dependencies,
-			   source_dependencies,
-			   load_cmutex,
-			   object_types_defined_set,
-			   loaded_all_dependencies_time,
-			   documentation,
-			   binary_dependencies,
-			   f2ptr dependency_graph__symbol;
-			   f2ptr dependency_graph__funk;
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
+declare_object_type_10_slot(package,
+			    pathname,
+			    name,
+			    package_dependencies,
+			    source_dependencies,
+			    load_cmutex,
+			    load_fiber,
+			    object_types_defined_set,
+			    loaded_all_dependencies_time,
+			    documentation,
+			    binary_dependencies,
+			    f2ptr dependency_graph__symbol;
+			    f2ptr dependency_graph__funk;
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
 
 #endif // F2__PACKAGE__TYPES__H
 
@@ -87,16 +88,17 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause);
 
 // package
 
-declare_primobject_9_slot(package,
-			  pathname,
-			  name,
-			  package_dependencies,
-			  source_dependencies,
-			  load_cmutex,
-			  object_types_defined_set,
-			  loaded_all_dependencies_time,
-			  documentation,
-			  binary_dependencies);
+declare_primobject_10_slot(package,
+			   pathname,
+			   name,
+			   package_dependencies,
+			   source_dependencies,
+			   load_cmutex,
+			   load_fiber,
+			   object_types_defined_set,
+			   loaded_all_dependencies_time,
+			   documentation,
+			   binary_dependencies);
 
 f2ptr  f2__package__new                    (f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies);
 f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph);

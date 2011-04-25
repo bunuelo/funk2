@@ -104,19 +104,21 @@ def_pcfunk1(source__eval, this,
 
 // package
 
-def_primobject_9_slot(package,
-		      pathname,
-		      name,
-		      package_dependencies,
-		      source_dependencies,
-		      load_cmutex,
-		      object_types_defined_set,
-		      loaded_all_dependencies_time,
-		      documentation,
-		      binary_dependencies);
+def_primobject_10_slot(package,
+		       pathname,
+		       name,
+		       package_dependencies,
+		       source_dependencies,
+		       load_cmutex,
+		       load_fiber,
+		       object_types_defined_set,
+		       loaded_all_dependencies_time,
+		       documentation,
+		       binary_dependencies);
 
 f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies) {
   f2ptr load_cmutex                  = f2__cmutex__new(cause);
+  f2ptr load_fiber                   = nil;
   f2ptr object_types_defined_set     = f2__set__new(cause);
   f2ptr loaded_all_dependencies_time = nil;
   return f2package__new(cause,
@@ -125,6 +127,7 @@ f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_de
 			package_dependencies,
 			source_dependencies,
 			load_cmutex,
+			load_fiber,
 			object_types_defined_set,
 			loaded_all_dependencies_time,
 			documentation,
@@ -216,13 +219,14 @@ f2ptr raw__package__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list20__new(cause,
+    frame = f2__frame__new(cause, f2list22__new(cause,
 						new__symbol(cause, "print_object_type"),            new__symbol(cause, "package"),
 						new__symbol(cause, "pathname"),                     f2__package__pathname(                    cause, this),
 						new__symbol(cause, "name"),                         f2__package__name(                        cause, this),
 						new__symbol(cause, "package_dependencies"),         f2__package__package_dependencies(        cause, this),
 						new__symbol(cause, "source_dependencies"),          f2__package__source_dependencies(         cause, this),
 						new__symbol(cause, "load_cmutex"),                  f2__package__load_cmutex(                 cause, this),
+						new__symbol(cause, "load_fiber"),                   f2__package__load_fiber(                  cause, this),
 						new__symbol(cause, "object_types_defined_set"),     f2__package__object_types_defined_set(    cause, this),
 						new__symbol(cause, "loaded_all_dependencies_time"), f2__package__loaded_all_dependencies_time(cause, this),
 						new__symbol(cause, "documentation"),                f2__package__documentation(               cause, this),
@@ -697,16 +701,17 @@ void f2__package__initialize() {
   
   // package
   
-  initialize_primobject_9_slot(package,
-			       pathname,
-			       name,
-			       package_dependencies,
-			       source_dependencies,
-			       load_cmutex,
-			       object_types_defined_set,
-			       loaded_all_dependencies_time,
-			       documentation,
-			       binary_dependencies);
+  initialize_primobject_10_slot(package,
+				pathname,
+				name,
+				package_dependencies,
+				source_dependencies,
+				load_cmutex,
+				load_fiber,
+				object_types_defined_set,
+				loaded_all_dependencies_time,
+				documentation,
+				binary_dependencies);
   
   __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__symbol = new__symbol(cause, "dependency_graph");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__dependency_graph, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__funk = never_gc(cfunk);}

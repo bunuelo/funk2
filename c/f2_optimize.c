@@ -379,7 +379,7 @@ f2ptr raw__optimize_chunk__as__bytecodes(f2ptr cause, f2ptr this) {
 
 f2ptr f2__optimize_chunk__as__bytecodes(f2ptr cause, f2ptr this) {
   assert_argument_type(optimize_chunk, this);
-  return raw__optimize_chunk__as__bytecode(cause, this);
+  return raw__optimize_chunk__as__bytecodes(cause, this);
 }
 def_pcfunk1(optimize_chunk__as__bytecodes, this,
 	    "Returns a new sequence of bytecodes that represents this optimize_chunk.",

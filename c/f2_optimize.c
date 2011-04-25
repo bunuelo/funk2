@@ -91,51 +91,59 @@ def_pcfunk2(optimize_chunk__new, bytecode_sequence, transition,
 
 // optimize_chunk
 
-f2ptr raw__bytecodes__new_chunk_sequence_ptypehash(f2ptr cause, f2ptr these) {
-  f2ptr chunk_sequence_ptypehash = f2__ptypehash__new(cause);
+void raw__bytecodes__add_to_chunk_sequence_ptypehash(f2ptr cause, f2ptr these, f2ptr chunk_sequence_ptypehash, f2ptr seen_sequence_set) {
   if (these != nil) {
-    raw__ptypehash__add(cause, chunk_sequence_ptypehash, these, f2__optimize_chunk__new(cause, nil, nil));
-    {
-      f2ptr iter = these;
-      while (iter != nil) {
-	f2ptr next     = f2__cons__cdr(cause, iter);
-	f2ptr bytecode = f2__cons__car(cause, iter);
-	{
-	  f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
-	  if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
-	    raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
-	  } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk"))) {
-	    raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
-	  } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code"))) {
-	    raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
-	  } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump"))) {
-	    f2ptr jump_sequence = f2__bytecode__arg0(cause, bytecode);
-	    if (! raw__ptypehash__contains(cause, chunk_sequence_ptypehash, jump_sequence)) {
-	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, jump_sequence, f2__optimize_chunk__new(cause, nil, nil));
-	    }
-	  } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump"))) {
-	    f2ptr jump_sequence = f2__bytecode__arg0(cause, bytecode);
-	    if (! raw__ptypehash__contains(cause, chunk_sequence_ptypehash, jump_sequence)) {
-	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, jump_sequence, f2__optimize_chunk__new(cause, nil, nil));
-	    }
-	    raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
-	  } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump"))) {
-	    f2ptr jump_sequence = f2__bytecode__arg0(cause, bytecode);
-	    if (! raw__ptypehash__contains(cause, chunk_sequence_ptypehash, jump_sequence)) {
-	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, jump_sequence, f2__optimize_chunk__new(cause, nil, nil));
-	    }
-	    raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
-	  }	  
+    if (! raw__set__contains(cause, seen_sequence_set, these)) {
+      raw__ptypehash__add(cause, chunk_sequence_ptypehash, these, f2__optimize_chunk__new(cause, nil, nil));
+      {
+	f2ptr iter = these;
+	while (iter != nil) {
+	  if (! raw__set__contains(cause, seen_sequence_set, iter)) {
+	    raw__set__add(cause, seen_sequence_set, iter);
+	  }
+	  f2ptr next     = f2__cons__cdr(cause, iter);
+	  f2ptr bytecode = f2__cons__car(cause, iter);
+	  {
+	    f2ptr bytecode__command = f2__bytecode__command(cause, bytecode);
+	    if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump-funk"))) {
+	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
+	    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "funk"))) {
+	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
+	    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "machine_code"))) {
+	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
+	    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "jump"))) {
+	      f2ptr jump_sequence = f2__bytecode__arg0(cause, bytecode);
+	      if (! raw__ptypehash__contains(cause, chunk_sequence_ptypehash, jump_sequence)) {
+		raw__ptypehash__add(cause, chunk_sequence_ptypehash, jump_sequence, f2__optimize_chunk__new(cause, nil, nil));
+		raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, jump_sequence, chunk_sequence_ptypehash, seen_sequence_set);
+	      }
+	    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "if-jump"))) {
+	      f2ptr jump_sequence = f2__bytecode__arg0(cause, bytecode);
+	      if (! raw__ptypehash__contains(cause, chunk_sequence_ptypehash, jump_sequence)) {
+		raw__ptypehash__add(cause, chunk_sequence_ptypehash, jump_sequence, f2__optimize_chunk__new(cause, nil, nil));
+		raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, jump_sequence, chunk_sequence_ptypehash, seen_sequence_set);
+	      }
+	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
+	    } else if (raw__eq(cause, bytecode__command, new__symbol(cause, "else-jump"))) {
+	      f2ptr jump_sequence = f2__bytecode__arg0(cause, bytecode);
+	      if (! raw__ptypehash__contains(cause, chunk_sequence_ptypehash, jump_sequence)) {
+		raw__ptypehash__add(cause, chunk_sequence_ptypehash, jump_sequence, f2__optimize_chunk__new(cause, nil, nil));
+		raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, jump_sequence, chunk_sequence_ptypehash, seen_sequence_set);
+	      }
+	      raw__ptypehash__add(cause, chunk_sequence_ptypehash, next, f2__optimize_chunk__new(cause, nil, nil));
+	    }	  
+	  }
+	  iter = next;
 	}
-	iter = next;
       }
     }
   }
-  return chunk_sequence_ptypehash;
 }
 
 f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these) {
-  f2ptr chunk_sequence_ptypehash = raw__bytecodes__new_chunk_sequence_ptypehash(cause, these);
+  f2ptr chunk_sequence_ptypehash = f2__ptypehash__new(cause);
+  f2ptr seen_sequence_set        = f2__set__new(cause);
+  raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, these, chunk_sequence_ptypehash, seen_sequence_hash);
   ptypehash__iteration(cause, chunk_sequence_ptypehash, sequence, chunk,
 		       f2ptr new_sequence = nil;
 		       f2ptr new_iter     = nil;

@@ -1072,12 +1072,16 @@
 
 [globalize memory:debug nil]
 
+[exp-print 'debug 4']
+
 [defunk memory-debug_assert_valid []
   [if memory:debug
     [prog [terminal_format standard-terminal '\nfilename-load: Asserting memory valid...']
 	  [memory-debug_assert_valid]
 	  [terminal_format standard-terminal '  Memory is valid.']
 	  nil]]]
+
+[exp-print 'debug 5']
 
 [defunk exit [value]
   [management_thread-add_exit_command value]

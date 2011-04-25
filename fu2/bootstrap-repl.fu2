@@ -893,9 +893,11 @@
 		   [bug bug]]
 	       [error bug_type    `fiber-join-fiber_paused_without_bug
 		      fiber_value bug
+		      join_fiber  this
 		      stack_trace [get fiber stack_trace]]]]]
 	  [t
 	   [error bug_type    `fiber-join-unknown-fiber-exit-status
+		  join_fiber  this
 		  exit_status exit_status]]]]]
 
 [defunk fiber-sheltered_join [this]
@@ -914,9 +916,11 @@
 		   bug]
 	       [error bug_type    `fiber-join_sheltered-fiber_paused_without_bug
 		      fiber_value bug
+		      join_fiber  this
 		      stack_trace [get fiber stack_trace]]]]]
 	  [t
 	   [error bug_type    `fiber-sheltered_join-unknown-fiber-exit-status
+		  join_fiber  this
 		  exit_status exit_status]]]]]
 
 [defmetro with-new-cause [:rest codes]

@@ -215,6 +215,7 @@ f2ptr raw__optimize_context__active_fiber_branched             (f2ptr cause, f2p
 f2ptr raw__optimize_context__get_optimize_bytecode_for_sequence(f2ptr cause, f2ptr this, f2ptr bytecode_sequence);
 f2ptr raw__optimize_context__execute_one_bytecode              (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_context__complete_simulation               (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_context__compile_new_bytecodes             (f2ptr cause, f2ptr this, f2ptr funk);
 f2ptr raw__optimize_context__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr  f2__optimize_context__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

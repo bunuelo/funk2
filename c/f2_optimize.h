@@ -140,6 +140,12 @@ declare_primobject_4_slot(optimize_transition,
 			  true_chunk,
 			  false_chunk);
 
+f2ptr f2__optimize_transition__new(f2ptr cause,
+				   f2ptr transition_type,
+				   f2ptr next_chunk,
+				   f2ptr true_chunk,
+				   f2ptr false_chunk);
+
 f2ptr f2optimize_transition__primobject_type__new_aux(f2ptr cause);
 
 

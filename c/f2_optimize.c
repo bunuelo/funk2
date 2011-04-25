@@ -143,7 +143,7 @@ void raw__bytecodes__add_to_chunk_sequence_ptypehash(f2ptr cause, f2ptr these, f
 f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these) {
   f2ptr chunk_sequence_ptypehash = f2__ptypehash__new(cause);
   f2ptr seen_sequence_set        = f2__set__new(cause);
-  raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, these, chunk_sequence_ptypehash, seen_sequence_hash);
+  raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, these, chunk_sequence_ptypehash, seen_sequence_set);
   ptypehash__iteration(cause, chunk_sequence_ptypehash, sequence, chunk,
 		       f2ptr new_sequence = nil;
 		       f2ptr new_iter     = nil;

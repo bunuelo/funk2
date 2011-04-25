@@ -2587,8 +2587,6 @@ f2ptr f2__cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
   } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
     if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_cmutex.new__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_cmutex.new__funk;
-    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_cmutex.lock__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_cmutex.lock__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_cmutex.unlock__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_cmutex.unlock__funk;
     } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_cmutex.trylock__symbol)) {

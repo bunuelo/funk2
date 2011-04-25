@@ -1051,11 +1051,15 @@
 	      [error bug_type    `shelter-unknown-fiber-exit-status
 		     exit_status exit_status]]]]]]
 
+[print 'debug 0']
+
 [defmetro defmetro [name args :rest body]
   [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
   `[globalize-funk ,name [metro-new_with_name ,name ,args
 					       @body]]]
 
+
+[print 'debug 1']
 
 [defmetro defunk [name args :rest body]
   [terminal_format standard-terminal '\n' `[defunk ,name ,args]]

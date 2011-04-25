@@ -41,6 +41,8 @@ declare_object_type_2_slot(optimize_chunk,
 			   transition,
 			   f2ptr as__bytecodes__symbol;
 			   f2ptr as__bytecodes__funk;
+			   f2ptr optimized__symbol;
+			   f2ptr optimized__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -135,6 +137,8 @@ f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these);
 f2ptr  f2__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these);
 f2ptr raw__optimize_chunk__as__bytecodes     (f2ptr cause, f2ptr this);
 f2ptr  f2__optimize_chunk__as__bytecodes     (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_chunk__optimized         (f2ptr cause, f2ptr this);
+f2ptr  f2__optimize_chunk__optimized         (f2ptr cause, f2ptr this);
 
 f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause);
 

@@ -258,7 +258,8 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   
   {
     f2ptr optimize_chunk = raw__optimize_chunk__new_from_bytecodes(cause, full_bcs);
-    full_bcs = raw__optimize_chunk__as__bytecodes(cause, optimize_chunk);
+    optimize_chunk       = raw__optimize_chunk__optimized(cause, optimize_chunk);
+    full_bcs             = raw__optimize_chunk__as__bytecodes(cause, optimize_chunk);
   }
   full_bcs = raw__bytecodes__remove_nops(cause, full_bcs);
   

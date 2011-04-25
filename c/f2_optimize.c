@@ -407,17 +407,52 @@ def_pcfunk1(optimize_chunk__as__bytecodes, this,
 	    return f2__optimize_chunk__as__bytecodes(this_cause, this));
 
 
-f2ptr raw__optimize_chunk__optimized(f2ptr cause, f2ptr this) {
-  return this;
+f2ptr raw__optimize_chunk__possible_optimized_funk_bytecodes(f2ptr cause, f2ptr this, f2ptr funk) {
+  f2ptr transition = f2__optimize_chunk__transition(cause, this);
+  if (transition != nil) {
+    // only try to optimize funks without transitions for now.
+    return nil;
+  }
+  s64   maximum_loop_count = 2; // shouldn't have any loops, actually.
+  f2ptr optimize_context   = raw__optimize_context__new(cause, maximum_loop_count);
+  // attempt to unroll all loops in simulation
+  {
+    f2ptr initial_fiber = f2__optimize_context__initial_fiber(cause, optimize_context);
+    {
+      f2ptr result = raw__optimize_fiber__prepare_to_call_funk(cause, initial_fiber, funk);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+    f2ptr possible_too_many_loops_larva = raw__optimize_context__complete_simulation(cause, optimize_context);
+    if (raw__larva__is_type(cause, possible_too_many_loops_larva)) {
+      if (! raw__optimize_too_many_loops_larva__is_type(cause, possible_too_many_loops_larva)) {
+	return possible_too_many_loops_larva;
+      }
+      // need to extract loops.
+      printf("\noptimize warning: loop extraction not yet implemented."); fflush(stdout);
+      return nil;
+    }
+    {
+      f2ptr result = raw__optimize_context__compile_new_bytecodes(cause, optimize_context, funk);
+      if (raw__larva__is_type(cause, result)) {
+	return result;
+      }
+    }
+  }
+  {
+    f2ptr optimized_bytecodes = f2__optimize_context__optimized_bytecodes(cause, optimize_context);
+    return optimized_bytecodes;
+  }
 }
 
-f2ptr f2__optimize_chunk__optimized(f2ptr cause, f2ptr this) {
+f2ptr f2__optimize_chunk__possible_optimized_funk_bytecodes(f2ptr cause, f2ptr this) {
   assert_argument_type(optimize_chunk, this);
-  return raw__optimize_chunk__optimized(cause, this);
+  return raw__optimize_chunk__possible_optimized_funk_bytecodes(cause, this);
 }
-def_pcfunk1(optimize_chunk__optimized, this,
-	    "Returns a chunk (possibly the same chunk) that is an optimized version of this chunk.",
-	    return f2__optimize_chunk__optimized(this_cause, this));
+def_pcfunk1(optimize_chunk__possible_optimized_funk_bytecodes, this,
+	    "Returns optimized bytescodes for this funk or nil if no optimization can be found.",
+	    return f2__optimize_chunk__possible_optimized_funk_bytecodes(this_cause, this));
 
 
 f2ptr raw__optimize_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -445,9 +480,9 @@ def_pcfunk2(optimize_chunk__terminal_print_with_frame, this, terminal_print_fram
 
 f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2optimize_chunk__primobject_type__new(cause);
-  {char* slot_name = "as-bytecodes";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk);}
-  {char* slot_name = "optimized";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.optimized__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk);}
+  {char* slot_name = "as-bytecodes";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk);}
+  {char* slot_name = "possible_optimized_funk_bytecodes"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__funk);}
+  {char* slot_name = "terminal_print_with_frame";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -4807,8 +4842,8 @@ void f2__optimize__initialize() {
   
   {char* symbol_str = "as-bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(optimize_chunk__as__bytecodes, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk = never_gc(cfunk);}
-  {char* symbol_str = "optimized"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.optimized__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(optimize_chunk__optimized, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.optimized__funk = never_gc(cfunk);}
+  {char* symbol_str = "possible_optimized_funk_bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(optimize_chunk__possible_optimized_funk_bytecodes, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   

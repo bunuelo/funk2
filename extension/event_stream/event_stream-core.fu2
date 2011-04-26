@@ -31,6 +31,7 @@
   [print 'waiting for event.']
   [let [[event [get this current]]]
     [while [null event]
+      [print 'waiting for add trigger.']
       [wait-for-trigger [get [get this event_stream] add_trigger]]
       [print 'got add trigger!  8-D']
       [= event [get this current]]]

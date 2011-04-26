@@ -28,10 +28,12 @@
 [event_stream-core_extension-define_types]
 
 [deftypefunk event_stream_iterator execute wait_for_current []
+  [print 'waiting for event.']
   [let [[event [get this current]]]
     [while [null event]
       [wait-for-trigger [get [get this event_stream] add_trigger]]
-      [print 'got event']
+      [print 'got add trigger!  8D']
       [= event [get this current]]]
+    [print 'got event!']
     event]]
 

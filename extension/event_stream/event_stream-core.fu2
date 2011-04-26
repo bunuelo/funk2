@@ -31,6 +31,7 @@
   [let [[event [get this current]]]
     [while [null event]
       [wait-for-trigger [get [get this event_stream] add_trigger]]
+      [print 'got event']
       [= event [get this current]]]
     event]]
 

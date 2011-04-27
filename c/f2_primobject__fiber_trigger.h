@@ -28,6 +28,8 @@ typedef struct funk2_object_type__fiber_trigger__slot_s funk2_object_type__fiber
 declare_object_type_0_slot(fiber_trigger,
 			   f2ptr trigger__symbol;
 			   f2ptr trigger__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H

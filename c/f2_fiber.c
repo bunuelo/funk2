@@ -355,8 +355,8 @@ f2ptr raw__fiber__wait_for_either_complete_or_encounter_bug__without_yield(f2ptr
       {
 	f2ptr fiber__complete_trigger = f2fiber__complete_trigger(this, cause);
 	f2ptr fiber__bug_trigger      = f2fiber__bug_trigger(     this, cause);
-	f2__fiber_trigger_hash__add(cause, fiber__complete_trigger, this__fiber);
-	f2__fiber_trigger_hash__add(cause, fiber__bug_trigger,      this__fiber);
+	f2__fiber_trigger__add_waiting_fiber(cause, fiber__complete_trigger, this__fiber);
+	f2__fiber_trigger__add_waiting_fiber(cause, fiber__bug_trigger,      this__fiber);
       }
       f2__global_scheduler__remove_fiber(cause, this__fiber);
     }

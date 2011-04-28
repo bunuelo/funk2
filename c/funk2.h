@@ -74,6 +74,8 @@
 #include "f2_object.h"
 #include "f2_opengl.h"
 #include "f2_optimize.h"
+#include "f2_package.h"
+#include "f2_package_handler.h"
 #include "f2_packet.h"
 #include "f2_partial_order.h"
 #include "f2_peer_command_server.h"

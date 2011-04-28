@@ -26,8 +26,6 @@
 
 typedef struct funk2_object_type__traced_cmutex__slot_s funk2_object_type__traced_cmutex__slot_t;
 declare_object_type_4_slot(traced_cmutex, cmutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock,
-			   f2ptr lock__symbol;
-			   f2ptr lock__funk;
 			   f2ptr unlock__symbol;
 			   f2ptr unlock__funk;
 			   f2ptr trylock__symbol;

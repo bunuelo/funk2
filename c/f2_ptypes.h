@@ -825,8 +825,6 @@ typedef struct funk2_object_type__cmutex__slot_s {
   f2ptr new__funk;
   f2ptr is_locked__symbol;
   f2ptr is_locked__funk;
-  f2ptr lock__symbol;
-  f2ptr lock__funk;
   f2ptr unlock__symbol;
   f2ptr unlock__funk;
   f2ptr trylock__symbol;

@@ -84,8 +84,8 @@
 						    [if agent
 							[let [[current_action_sequence [semantic-get agent current_action_sequence]]]
 							  [if [null current_action_sequence]
-							      [prog `[error funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
-									    bug_type `current_action_sequence_is_nil
+							      [prog `[error bug_type `current_action_sequence_is_nil
+									    funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
 									    event    event]]
 							    [let [[semantic_event semantic_frame]]
 							      [have current_action_sequence        add_to_end         semantic_event]

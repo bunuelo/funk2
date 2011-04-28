@@ -33,6 +33,30 @@ declare_object_type_3_slot(optimize_bytecode,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+// optimize_chunk
+
+typedef struct funk2_object_type__optimize_chunk__slot_s funk2_object_type__optimize_chunk__slot_t;
+declare_object_type_2_slot(optimize_chunk,
+			   bytecode_sequence,
+			   transition,
+			   f2ptr as__bytecodes__symbol;
+			   f2ptr as__bytecodes__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
+// optimize_transition
+
+typedef struct funk2_object_type__optimize_transition__slot_s funk2_object_type__optimize_transition__slot_t;
+declare_object_type_4_slot(optimize_transition,
+			   transition_type,
+			   next_chunk,
+			   true_chunk,
+			   false_chunk,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // optimize_data
 
 typedef struct funk2_object_type__optimize_data__slot_s funk2_object_type__optimize_data__slot_t;
@@ -99,6 +123,37 @@ declare_primobject_3_slot(optimize_bytecode,
 			  execution_count);
 
 f2ptr f2optimize_bytecode__primobject_type__new_aux(f2ptr cause);
+
+
+// optimize_chunk
+
+declare_primobject_2_slot(optimize_chunk,
+			  bytecode_sequence,
+			  transition);
+
+f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these);
+f2ptr  f2__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these);
+f2ptr raw__optimize_chunk__as__bytecodes     (f2ptr cause, f2ptr this);
+f2ptr  f2__optimize_chunk__as__bytecodes     (f2ptr cause, f2ptr this);
+
+f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause);
+
+
+// optimize_transition
+
+declare_primobject_4_slot(optimize_transition,
+			  transition_type,
+			  next_chunk,
+			  true_chunk,
+			  false_chunk);
+
+f2ptr f2__optimize_transition__new(f2ptr cause,
+				   f2ptr transition_type,
+				   f2ptr next_chunk,
+				   f2ptr true_chunk,
+				   f2ptr false_chunk);
+
+f2ptr f2optimize_transition__primobject_type__new_aux(f2ptr cause);
 
 
 // optimize_data
@@ -297,10 +352,14 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end                   
 
 
 
+f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these);
+
+
 // funk-optimize
 
 f2ptr raw__funk__optimize(f2ptr cause, f2ptr this, s64 maximum_loop_count);
 f2ptr  f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count);
+
 
 
 // **

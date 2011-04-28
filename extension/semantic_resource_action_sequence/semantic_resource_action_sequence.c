@@ -161,18 +161,8 @@ f2ptr f2__semantic_resource_action_sequence__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_resource_action_sequence__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_resource_action_sequence__core_extension__initialize(f2ptr cause) {
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_event"), new__symbol(cause, "semantic_action_event__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_sequence"), new__symbol(cause, "semantic_event_sequence__core_extension__ping")), nil);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  core_extension__ping(semantic_resource_action_sequence, semantic_action_event);
+  core_extension__ping(semantic_resource_action_sequence, semantic_event_sequence);
   status("semantic_resource_action_sequence initialized.");
   return nil;
 }

@@ -19,3 +19,20 @@
 
 [deftypefunk fiber execute print_stack_trace [] [fiber-print_stack_trace this]]
 
+[deftypefunk fiber execute wait_for_either_complete_or_encounter_bug []
+  [fiber-wait_for_either_complete_or_encounter_bug this]]
+
+[deftypefunk fiber execute join []
+  [have this wait_for_either_complete_or_encounter_bug]
+  [let [[exit_status [get this exit_status]]]
+    [if [eq exit_status `bug]
+	[bug [get this value]]
+      [get this value]]]]
+
+[defunk join [:rest fibers]
+  [let [[result nil]]
+    [mapc [funk [fiber]
+		[= result [have fiber join]]]
+	  fibers]
+    result]]
+

@@ -39,6 +39,10 @@ declare_object_type_3_slot(graph_edge, label, left_node, right_node,
 // graph
 typedef struct funk2_object_type__graph__slot_s funk2_object_type__graph__slot_t;
 declare_object_type_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash,
+			   f2ptr connected_node_sets__symbol;
+			   f2ptr connected_node_sets__funk;
+			   f2ptr contains_cycle__symbol;
+			   f2ptr contains_cycle__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -107,6 +111,10 @@ u64       raw__graph__node_count                     (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__node_count                     (f2ptr cause, f2ptr this);
 boolean_t raw__graph__contains_node                  (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__graph__contains_node                  (f2ptr cause, f2ptr this, f2ptr node);
+f2ptr     raw__graph__nodes_with_label               (f2ptr cause, f2ptr this, f2ptr label);
+f2ptr      f2__graph__nodes_with_label               (f2ptr cause, f2ptr this, f2ptr label);
+boolean_t raw__graph__contains_node_label            (f2ptr cause, f2ptr this, f2ptr label);
+f2ptr      f2__graph__contains_node_label            (f2ptr cause, f2ptr this, f2ptr label);
 boolean_t raw__graph__contains_edge                  (f2ptr cause, f2ptr this, f2ptr edge);
 f2ptr      f2__graph__contains_edge                  (f2ptr cause, f2ptr this, f2ptr edge);
 boolean_t raw__graph__contains                       (f2ptr cause, f2ptr this, f2ptr graph);
@@ -121,10 +129,56 @@ f2ptr     raw__graph__edges_with_label_between_nodes (f2ptr cause, f2ptr this, f
 f2ptr      f2__graph__edges_with_label_between_nodes (f2ptr cause, f2ptr this, f2ptr label, f2ptr left_node, f2ptr right_node);
 f2ptr     raw__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
 f2ptr      f2__graph__edges_between_nodes            (f2ptr cause, f2ptr this, f2ptr left_node, f2ptr right_node);
+f2ptr     raw__graph__connected_node_sets            (f2ptr cause, f2ptr this);
+f2ptr      f2__graph__connected_node_sets            (f2ptr cause, f2ptr this);
+boolean_t raw__graph__contains_cycle                 (f2ptr cause, f2ptr this);
+f2ptr      f2__graph__contains_cycle                 (f2ptr cause, f2ptr this);
 f2ptr     raw__graph__as__dot_code                   (f2ptr cause, f2ptr this);
 f2ptr      f2__graph__as__dot_code                   (f2ptr cause, f2ptr this);
 f2ptr     raw__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr      f2__graph__terminal_print_with_frame      (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
+#define graph__node__out_edge__iteration(cause, this, node, edge, code) { \
+    f2ptr graph__node__out_edge__iteration__edges_label_hash_right_node_hash_left_node_hash = f2__graph__edges_label_hash_right_node_hash_left_node_hash(cause, this); \
+    f2ptr graph__node__out_edge__iteration__edges_label_hash_right_node_hash                = raw__ptypehash__lookup(cause, graph__node__out_edge__iteration__edges_label_hash_right_node_hash_left_node_hash, node); \
+    if (graph__node__out_edge__iteration__edges_label_hash_right_node_hash != nil) { \
+      ptypehash__value__iteration(cause, graph__node__out_edge__iteration__edges_label_hash_right_node_hash, graph__node__out_edge__iteration__edges_label_hash, \
+				  if (graph__node__out_edge__iteration__edges_label_hash != nil) { \
+				    ptypehash__value__iteration(cause, graph__node__out_edge__iteration__edges_label_hash, graph__node__out_edge__iteration__edges, \
+								f2ptr graph__node__out_edge__iteration__edges__iter = graph__node__out_edge__iteration__edges; \
+								while (graph__node__out_edge__iteration__edges__iter != nil) { \
+								  f2ptr edge = f2__cons__car(cause, graph__node__out_edge__iteration__edges__iter); \
+								  {	\
+								    code; \
+								  }	\
+								  graph__node__out_edge__iteration__edges__iter = f2__cons__cdr(cause, graph__node__out_edge__iteration__edges__iter); \
+								}	\
+								);	\
+				  }					\
+				  );					\
+    }									\
+  }
+
+#define graph__node__in_edge__iteration(cause, this, node, edge, code) { \
+    f2ptr graph__node__in_edge__iteration__edges_label_hash_left_node_hash_right_node_hash = f2__graph__edges_label_hash_left_node_hash_right_node_hash(cause, this); \
+    f2ptr graph__node__in_edge__iteration__edges_label_hash_left_node_hash                 = raw__ptypehash__lookup(cause, graph__node__in_edge__iteration__edges_label_hash_left_node_hash_right_node_hash, node); \
+    if (graph__node__in_edge__iteration__edges_label_hash_left_node_hash != nil) { \
+      ptypehash__value__iteration(cause, graph__node__in_edge__iteration__edges_label_hash_left_node_hash, graph__node__in_edge__iteration__edges_label_hash, \
+				  if (graph__node__in_edge__iteration__edges_label_hash != nil) { \
+				    ptypehash__value__iteration(cause, graph__node__in_edge__iteration__edges_label_hash, graph__node__in_edge__iteration__edges, \
+								f2ptr graph__node__in_edge__iteration__edges__iter = graph__node__in_edge__iteration__edges; \
+								while (graph__node__in_edge__iteration__edges__iter != nil) { \
+								  f2ptr edge = f2__cons__car(cause, graph__node__in_edge__iteration__edges__iter); \
+								  {	\
+								    code; \
+								  }	\
+								  graph__node__in_edge__iteration__edges__iter = f2__cons__cdr(cause, graph__node__in_edge__iteration__edges__iter); \
+								}	\
+								);	\
+				  }					\
+				  );					\
+    }									\
+  }
 
 f2ptr f2graph__primobject_type__new_aux(f2ptr cause);
 

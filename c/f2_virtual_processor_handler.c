@@ -50,8 +50,9 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     funk2_processor_mutex__init(&(this->virtual_processor_index_pthread_hash_mutex));
     funk2_hash__init(&(this->virtual_processor_index_pthread_hash), 10);
   }
-  this->virtual_processor_count = virtual_processor_count;
-  this->virtual_processor       = NULL;
+  this->virtual_processor_count     = virtual_processor_count;
+  this->virtual_processor           = NULL;
+  this->hardware_affinities_enabled = boolean__false;
 }
 
 void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t* this) {
@@ -205,6 +206,14 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
   }
   funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
+  { // add to free processor thread list
+    funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
+    funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
+    cons->next                                  = this->free_virtual_processor_threads;
+    cons->virtual_processor_thread              = virtual_processor_thread;
+    this->free_virtual_processor_threads        = cons;
+    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
+  }
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
@@ -230,5 +239,44 @@ funk2_virtual_processor_t* funk2_virtual_processor_handler__my_virtual_processor
 void funk2_virtual_processor_handler__yield(funk2_virtual_processor_handler_t* this) {
   funk2_virtual_processor_t* virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(this);
   funk2_virtual_processor__yield(virtual_processor);
+}
+
+
+f2ptr f2__global_virtual_processor_handler__hardware_affinities_enabled(f2ptr cause) {
+  return f2bool__new(__funk2.virtual_processor_handler.hardware_affinities_enabled);
+}
+def_pcfunk0(global_virtual_processor_handler__hardware_affinities_enabled,
+	    "Gets a boolean value that tells the virtual_processor_handler whether or not to attempt to assign virtual_processors to specific underlying machine hardware processors.\n"
+	    "Setting this value to true can improve CPU and core caching behavior in some instances.",
+	    return f2__global_virtual_processor_handler__hardware_affinities_enabled(this_cause));
+
+
+f2ptr f2__global_virtual_processor_handler__set_hardware_affinities_enabled(f2ptr cause, f2ptr hardware_affinities_enabled) {
+  __funk2.virtual_processor_handler.hardware_affinities_enabled = ((hardware_affinities_enabled != nil) ? boolean__true : boolean__false);
+  return nil;
+}
+def_pcfunk1(global_virtual_processor_handler__set_hardware_affinities_enabled, hardware_affinities_enabled,
+	    "Sets a boolean value that tells the virtual_processor_handler whether or not to attempt to assign virtual_processors to specific underlying machine hardware processors.\n"
+	    "This can improve CPU and core caching behavior in some instances.",
+	    return f2__global_virtual_processor_handler__set_hardware_affinities_enabled(this_cause, hardware_affinities_enabled));
+
+
+
+
+// **
+
+void f2__virtual_processor_handler__reinitialize_globalvars() {
+}
+
+void f2__virtual_processor_handler__initialize() {
+  //f2ptr cause = initial_cause();
+  
+  funk2_module_registration__add_module(&(__funk2.module_registration), "virtual_processor_handler", "", &f2__virtual_processor_handler__reinitialize_globalvars);
+  
+  f2__virtual_processor_handler__reinitialize_globalvars();
+  
+  f2__primcfunk__init__0(global_virtual_processor_handler__hardware_affinities_enabled);
+  f2__primcfunk__init__1(global_virtual_processor_handler__set_hardware_affinities_enabled, enable_hardware_affinities);
+  
 }
 

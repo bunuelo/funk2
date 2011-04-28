@@ -52,6 +52,7 @@
 [primfunk:load 'fu2/primfunks.fu2']
 [primfunk:load 'fu2/primfunks-array.fu2']
 [primfunk:load 'fu2/primfunks-apropos.fu2']
+[primfunk:load 'fu2/primfunks-cause.fu2']
 [primfunk:load 'fu2/primfunks-chunk.fu2']
 [primfunk:load 'fu2/primfunks-core_extension.fu2']
 [primfunk:load 'fu2/primfunks-core_extension_funk.fu2']
@@ -65,6 +66,7 @@
 [primfunk:load 'fu2/primfunks-fiber.fu2']
 [primfunk:load 'fu2/primfunks-fiber_trigger.fu2']
 [primfunk:load 'fu2/primfunks-frame.fu2']
+[primfunk:load 'fu2/primfunks-garbage_collector.fu2']
 [primfunk:load 'fu2/primfunks-gmodule.fu2']
 [primfunk:load 'fu2/primfunks-hash.fu2']
 [primfunk:load 'fu2/primfunks-ioctl.fu2']
@@ -72,13 +74,17 @@
 [primfunk:load 'fu2/primfunks-locale.fu2']
 [primfunk:load 'fu2/primfunks-management_thread.fu2']
 [primfunk:load 'fu2/primfunks-object.fu2']
+[primfunk:load 'fu2/primfunks-optimize.fu2']
 [primfunk:load 'fu2/primfunks-package.fu2']
+[primfunk:load 'fu2/primfunks-package_handler.fu2']
 [primfunk:load 'fu2/primfunks-primes.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type_handler.fu2']
 [primfunk:load 'fu2/primfunks-primobjects.fu2']
 [primfunk:load 'fu2/primfunks-print.fu2']
 [primfunk:load 'fu2/primfunks-ptypes.fu2']
+[primfunk:load 'fu2/primfunks-reader.fu2']
+[primfunk:load 'fu2/primfunks-redblacktree.fu2']
 [primfunk:load 'fu2/primfunks-scheduler.fu2']
 [primfunk:load 'fu2/primfunks-search.fu2']
 [primfunk:load 'fu2/primfunks-set.fu2']
@@ -90,10 +96,7 @@
 [primfunk:load 'fu2/primfunks-termios.fu2']
 [primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-trace.fu2']
-[primfunk:load 'fu2/primfunks-reader.fu2']
-[primfunk:load 'fu2/primfunks-redblacktree.fu2']
-[primfunk:load 'fu2/primfunks-garbage_collector.fu2']
-[primfunk:load 'fu2/primfunks-cause.fu2']
+[primfunk:load 'fu2/primfunks-virtual_processor_handler.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 
 [memory-assert_valid]
@@ -449,7 +452,7 @@
 	  exps]]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
-  [have [get terminal_print_frame cmutex] lock]
+  [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
@@ -477,7 +480,7 @@
 		   varpairs]
        @body]]]
 
-[defunk join [:rest fibers]
+`[defunk join-test [:rest fibers]
   [define-funk fibers-wait-loop
     [funk []
 	  [define-funk fibers-scan-loop
@@ -490,7 +493,24 @@
 			[fibers-scan-loop [cdr fiber_iter]]]]]]]
 	  [if [fibers-scan-loop fibers]
 	      nil
-	    [prog [yield]
+	    [prog [millisleep 100]
+		  [fibers-wait-loop]]]]]
+  [fibers-wait-loop]]
+
+`[defunk join [:rest fibers]
+  [define-funk fibers-wait-loop
+    [funk []
+	  [define-funk fibers-scan-loop
+	    [funk [fiber_iter]
+		  [if [null fiber_iter]
+		      t
+		    [let [[fiber [car fiber_iter]]]
+		      [if [null [get fiber is_complete]]
+			  nil
+			[fibers-scan-loop [cdr fiber_iter]]]]]]]
+	  [if [fibers-scan-loop fibers]
+	      nil
+	    [prog [millisleep 100]
 		  [fibers-wait-loop]]]]]
   [fibers-wait-loop]]
 
@@ -702,7 +722,7 @@
   x]
 
 [defunk terminal_write [terminal_print_frame x]
-  [have [get terminal_print_frame cmutex] lock]
+  [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [terminal_write-thread_unsafe terminal_print_frame x]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
@@ -714,7 +734,7 @@
   x]
 
 [defunk terminal_print [terminal_print_frame x]
-  [have [get terminal_print_frame cmutex] lock]
+  [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [terminal_print-thread_unsafe terminal_print_frame x]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
@@ -736,7 +756,7 @@
 
 [defmetro cmutexprog [cmutex :rest body]
   `[let [[cmutexprog-cmutex ,cmutex]]
-     [cmutex-lock   cmutexprog-cmutex]
+     [while [cmutex-trylock cmutexprog-cmutex]]
      [prog @body]
      [cmutex-unlock cmutexprog-cmutex]]]
 
@@ -820,6 +840,20 @@
 			      label_definitions]]
 	  body]]
 
+[defmetro error [:rest slot_value_pairs]
+  `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
+	      `source_expression [quote ,[cause-lookup source_expression]]
+              @[let [[iter          slot_value_pairs]
+		     [reverse_codes nil]]
+		 [while iter
+		   [let [[key [car iter]]]
+		     [= iter [cdr iter]]
+		     [let [[value [car iter]]]
+		       [= reverse_codes [cons `[quote ,key] reverse_codes]]
+		       [= reverse_codes [cons  value        reverse_codes]]]]
+		   [= iter [cdr iter]]]
+		 [reverse reverse_codes]]]]
+
 [defunk pause []
   [global_scheduler-remove_fiber [this-fiber]]
   [yield]]
@@ -839,7 +873,63 @@
 	    nil]
      nil]]
 
+[defunk fiber-wait_for_either_complete_or_encounter_bug [this]
+  [fiber-wait_for_either_complete_or_encounter_bug-without_yield this]
+  [yield]]
+
+[defunk fiber-join [this]
+  [fiber-wait_for_either_complete_or_encounter_bug this]
+  [let [[exit_status [fiber-exit_status this]]]
+    [cond [[eq exit_status `complete]
+	   [get this value]]
+	  [[eq exit_status `bug]
+	   [let [[bug [get this value]]]
+	     [if [is-type `bug bug]
+		 [let [[bug_frame [get bug frame]]]
+		   [if [is-type `frame bug_frame]
+		       [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+			       [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
+			   [frame-add_var_value bug_frame `stack_trace [get this stack_trace]]]]
+		   [bug bug]]
+	       [error bug_type    `fiber-join-fiber_paused_without_bug
+		      fiber_value bug
+		      join_fiber  this
+		      stack_trace [get fiber stack_trace]]]]]
+	  [t
+	   [error bug_type    `fiber-join-unknown-fiber-exit-status
+		  join_fiber  this
+		  exit_status exit_status]]]]]
+
+[defunk fiber-sheltered_join [this]
+  [fiber-wait_for_either_complete_or_encounter_bug this]
+  [let [[exit_status [fiber-exit_status this]]]
+    [cond [[eq exit_status `complete]
+	   [get this value]]
+	  [[eq exit_status `bug]
+	   [let [[bug [get this value]]]
+	     [if [is-type `bug bug]
+		 [let [[bug_frame [get bug frame]]]
+		   [if [is-type `frame bug_frame]
+		       [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
+			       [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
+			   [frame-add_var_value bug_frame `stack_trace [get this stack_trace]]]]
+		   bug]
+	       [error bug_type    `fiber-join_sheltered-fiber_paused_without_bug
+		      fiber_value bug
+		      join_fiber  this
+		      stack_trace [get fiber stack_trace]]]]]
+	  [t
+	   [error bug_type    `fiber-sheltered_join-unknown-fiber-exit-status
+		  join_fiber  this
+		  exit_status exit_status]]]]]
+
 [defmetro with-new-cause [:rest codes]
+  `[fiber-join [fiber [funk-new_with_name with-new-cause []
+					  [set [this-cause] critics nil]
+					  @codes]
+		      nil]]]
+
+[defmetro with-new-cause-old [:rest codes]
   `[let* [[result     `bug]
 	  [main_fiber [this-fiber]]
 	  [fiber      [fiber [funk-new_with_name with-new-cause []
@@ -896,10 +986,16 @@
 			 fiber_value bug
 			 stack_trace [get fiber stack_trace]]]]]
 	     [t
-	      [error bug_type    with-new-cause-unknown-fiber-exit-status
+	      [error bug_type    `with-new-cause-unknown-fiber-exit-status
 		     exit_status exit_status]]]]]]
 
 [defmetro shelter [:rest codes]
+  `[fiber-sheltered_join [fiber [funk-new_with_name with-new-cause []
+						    [set [this-cause] critics nil]
+						    @codes]
+				nil]]]
+
+[defmetro shelter-old [:rest codes]
   `[let* [[result     `bug]
 	  [main_fiber [this-fiber]]
 	  [fiber      [fiber [funk-new_with_name shelter []
@@ -956,28 +1052,13 @@
 			 fiber_value bug
 			 stack_trace [get fiber stack_trace]]]]]
 	     [t
-	      [error bug_type    shelter-unknown-fiber-exit-status
+	      [error bug_type    `shelter-unknown-fiber-exit-status
 		     exit_status exit_status]]]]]]
-
-[defmetro error [:rest slot_value_pairs]
-  `[error-new `source_filename   [quote ,[cause-lookup source-filename]]
-	      `source_expression [quote ,[cause-lookup source_expression]]
-              @[let [[iter          slot_value_pairs]
-		     [reverse_codes nil]]
-		 [while iter
-		   [let [[key [car iter]]]
-		     [= iter [cdr iter]]
-		     [let [[value [car iter]]]
-		       [= reverse_codes [cons `[quote ,key] reverse_codes]]
-		       [= reverse_codes [cons  value        reverse_codes]]]]
-		   [= iter [cdr iter]]]
-		 [reverse reverse_codes]]]]
 
 [defmetro defmetro [name args :rest body]
   [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
   `[globalize-funk ,name [metro-new_with_name ,name ,args
-					       @body]]]
-
+					      @body]]]
 
 [defmetro defunk [name args :rest body]
   [terminal_format standard-terminal '\n' `[defunk ,name ,args]]

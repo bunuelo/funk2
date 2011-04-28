@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk fiber-stack_trace       &primfunk:fiber__stack_trace]
-[globalize-funk fiber-print_stack_trace &primfunk:fiber__print_stack_trace]
-
+[globalize-funk fiber-exit_status                                             &primfunk:fiber__exit_status]
+[globalize-funk fiber-stack_trace                                             &primfunk:fiber__stack_trace]
+[globalize-funk fiber-print_stack_trace                                       &primfunk:fiber__print_stack_trace]
+[globalize-funk fiber-wait_for_either_complete_or_encounter_bug-without_yield &primfunk:fiber__wait_for_either_complete_or_encounter_bug__without_yield]
 

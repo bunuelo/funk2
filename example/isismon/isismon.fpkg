@@ -39,7 +39,7 @@
 
 [defpackage isismon_deliberative_planner_activator
   :packages [isismon_core]
-   :sources ['isismon_deliberative_planner_activator.fu2']]
+   :sources ['isismon_deliberative_forward_planner_activator.fu2']]
 
 [defpackage isismon_agent
   :packages [isismon_core

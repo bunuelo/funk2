@@ -38,7 +38,7 @@ goal state
        [= resource resource]
        [= name name]
        [= state_transform_funk state_transform_funk]
-       nil]]
+       nil]]]
 
 [deftypefunk action execute apply_transformation [state]
   [apply [get this state_transform_funk] state]]
@@ -48,6 +48,8 @@ goal state
        [construct traced_resource [type this]
 		  [funk []
 			[have this-resource think_to_self 'copy physical knowledge base']
+			[get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]
+
 			nil]]
        nil]]
 
@@ -67,6 +69,8 @@ goal state
 			[have this-resource think_to_self 'forward search']
 			nil]]
        nil]]
+
+
 
 [deframe deliberative_forward_planner_agency [agency] []
   [new []

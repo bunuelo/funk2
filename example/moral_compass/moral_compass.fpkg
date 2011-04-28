@@ -130,6 +130,10 @@
   :packages [traced_mind]
    :sources ['deliberative_execution_agency.fu2']]
 
+[defpackage deliberative_forward_planner_agency
+  :packages [traced_mind]
+   :sources ['deliberative_forward_planner_agency.fu2']]
+
 
 
 'reflective_layer'

@@ -37,10 +37,15 @@
   :packages [isismon_core]
    :sources ['isismon_learned_reactive_physical_activator.fu2']]
 
+[defpackage isismon_deliberative_planner_activator
+  :packages [isismon_core]
+   :sources ['isismon_deliberative_planner_activator.fu2']]
+
 [defpackage isismon_agent
   :packages [isismon_core
 	     isismon_builtin_reactive_physical_activator
 	     isismon_learned_reactive_physical_activator
+	     isismon_deliberative_planner_activator
 	     isismon_knowledge]
    :sources ['isismon_agent.fu2']]
 

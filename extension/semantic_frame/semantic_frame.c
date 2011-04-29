@@ -35,12 +35,12 @@ f2ptr f2__object__semantic__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr ar
     f2ptr iter = args;
     while (iter != nil) {
       if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
-															new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup"),
-															new__symbol(cause, "this"),     this,
-															new__symbol(cause, "slot"),     slot,
-															new__symbol(cause, "args"),     args))));
+	return f2larva__new(cause, 1421, f2__bug__new(cause, f2integer__new(cause, 1421), f2__frame__new(cause, f2list10__new(cause,
+															      new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup"),
+															      new__symbol(cause, "this"),     this,
+															      new__symbol(cause, "slot"),     slot,
+															      new__symbol(cause, "args"),     args))));
       }
       iter = f2__cons__cdr(cause, iter);
     }
@@ -82,12 +82,12 @@ f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
     f2ptr iter = args;
     while (iter != nil) {
       if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
-															new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
-															new__symbol(cause, "this"),     this,
-															new__symbol(cause, "slot"),     slot,
-															new__symbol(cause, "args"),     args))));
+	return f2larva__new(cause, 143222, f2__bug__new(cause, f2integer__new(cause, 143222), f2__frame__new(cause, f2list10__new(cause,
+																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
+																  new__symbol(cause, "this"),     this,
+																  new__symbol(cause, "slot"),     slot,
+																  new__symbol(cause, "args"),     args))));
       }
       iter = f2__cons__cdr(cause, iter);
     }
@@ -129,12 +129,12 @@ f2ptr f2__object__semantic__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr ar
     f2ptr iter = args;
     while (iter != nil) {
       if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), f2__frame__new(cause, f2list10__new(cause,
-															new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
-															new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
-															new__symbol(cause, "this"),     this,
-															new__symbol(cause, "slot"),     slot,
-															new__symbol(cause, "args"),     args))));
+	return f2larva__new(cause, 234234, f2__bug__new(cause, f2integer__new(cause, 234234), f2__frame__new(cause, f2list10__new(cause,
+																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
+																  new__symbol(cause, "this"),     this,
+																  new__symbol(cause, "slot"),     slot,
+																  new__symbol(cause, "args"),     args))));
       }
       iter = f2__cons__cdr(cause, iter);
     }
@@ -276,9 +276,7 @@ f2ptr raw__semantic_frame_event__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame_event__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__type(cause, this);
 }
 export_cefunk1(semantic_frame_event__type, thing, 0, "Returns the specific type of object that this semantic_frame_event is.");
@@ -289,9 +287,7 @@ f2ptr raw__semantic_frame_event__event_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame_event__event_type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__event_type(cause, this);
 }
 export_cefunk1(semantic_frame_event__event_type, thing, 0, "Returns the event_type of the semantic_frame_event.");
@@ -302,9 +298,7 @@ f2ptr raw__semantic_frame_event__event_type__set(f2ptr cause, f2ptr this, f2ptr 
 }
 
 f2ptr f2__semantic_frame_event__event_type__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__event_type__set(cause, this, value);
 }
 export_cefunk2(semantic_frame_event__event_type__set, thing, value, 0, "Sets the event_type of the semantic_frame_event.");
@@ -315,9 +309,7 @@ f2ptr raw__semantic_frame_event__semantic_frame(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame_event__semantic_frame(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__semantic_frame(cause, this);
 }
 export_cefunk1(semantic_frame_event__semantic_frame, thing, 0, "Returns the semantic_frame of the semantic_frame_event.");
@@ -328,9 +320,7 @@ f2ptr raw__semantic_frame_event__semantic_frame__set(f2ptr cause, f2ptr this, f2
 }
 
 f2ptr f2__semantic_frame_event__semantic_frame__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__semantic_frame__set(cause, this, value);
 }
 export_cefunk2(semantic_frame_event__semantic_frame__set, thing, value, 0, "Sets the semantic_frame of the semantic_frame_event.");
@@ -341,9 +331,7 @@ f2ptr raw__semantic_frame_event__key_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame_event__key_type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__key_type(cause, this);
 }
 export_cefunk1(semantic_frame_event__key_type, thing, 0, "Returns the key_type of the semantic_frame_event.");
@@ -354,9 +342,7 @@ f2ptr raw__semantic_frame_event__key_type__set(f2ptr cause, f2ptr this, f2ptr va
 }
 
 f2ptr f2__semantic_frame_event__key_type__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__key_type__set(cause, this, value);
 }
 export_cefunk2(semantic_frame_event__key_type__set, thing, value, 0, "Sets the key_type of the semantic_frame_event.");
@@ -367,9 +353,7 @@ f2ptr raw__semantic_frame_event__key(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame_event__key(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__key(cause, this);
 }
 export_cefunk1(semantic_frame_event__key, thing, 0, "Returns the key of the semantic_frame_event.");
@@ -380,9 +364,7 @@ f2ptr raw__semantic_frame_event__key__set(f2ptr cause, f2ptr this, f2ptr value) 
 }
 
 f2ptr f2__semantic_frame_event__key__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__key__set(cause, this, value);
 }
 export_cefunk2(semantic_frame_event__key__set, thing, value, 0, "Sets the key of the semantic_frame_event.");
@@ -393,9 +375,7 @@ f2ptr raw__semantic_frame_event__value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame_event__value(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__value(cause, this);
 }
 export_cefunk1(semantic_frame_event__value, thing, 0, "Returns the value of the semantic_frame_event.");
@@ -406,16 +386,14 @@ f2ptr raw__semantic_frame_event__value__set(f2ptr cause, f2ptr this, f2ptr value
 }
 
 f2ptr f2__semantic_frame_event__value__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_frame_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame_event, this);
   return raw__semantic_frame_event__value__set(cause, this, value);
 }
 export_cefunk2(semantic_frame_event__value__set, thing, value, 0, "Sets the value of the semantic_frame_event.");
 
 
 f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "event_stream_event")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame_event__type")));}
@@ -478,9 +456,7 @@ f2ptr raw__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
 
 
 f2ptr f2__semantic_frame__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_frame__new(cause, semantic_realm);
 }
 export_cefunk1(semantic_frame__new, semantic_realm, 0, "Returns a new semantic_frame object.");
@@ -530,7 +506,10 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
 		     return result;
 		   }
 		   if (semantic_frame_event != nil) {
-		     raw__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
+		     f2ptr result = f2__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
+		     if (raw__larva__is_type(cause, result)) {
+		       return result;
+		     }
 		   }
 		   );
   }
@@ -538,9 +517,7 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
 }
 
 f2ptr f2__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__add(cause, this, key_type, key, value);
 }
 export_cefunk4(semantic_frame__add, this, key_type, key, value, 0, "Adds the value to the key_type and key set of values.");
@@ -594,9 +571,7 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
 }
 
 f2ptr f2__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__remove(cause, this, key_type, key, value);
 }
 export_cefunk4(semantic_frame__remove, this, key_type, key, value, 0, "Removes the value from the key_type and key set of values.");
@@ -617,9 +592,7 @@ f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
 }
 
 f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__lookup(cause, this, key_type, key);
 }
 export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
@@ -634,9 +607,7 @@ boolean_t raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr ke
 }
 
 f2ptr f2__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__lookup_contains(cause, this, key_type, key, value);
 }
 export_cefunk4(semantic_frame__lookup_contains, this, key_type, key, value, 0, "Returns the values associated with the key_type and key.");
@@ -654,9 +625,7 @@ f2ptr raw__semantic_frame__assure_exists(f2ptr cause, f2ptr this, f2ptr key_type
 }
 
 f2ptr f2__semantic_frame__assure_exists(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__assure_exists(cause, this, key_type, key, value);
 }
 export_cefunk4(semantic_frame__assure_exists, this, key_type, key, value, 0, "Adds the semantic relationship if it does not already exist in this semantic_frame.");
@@ -679,9 +648,7 @@ f2ptr raw__semantic_frame__lookup_single_value(f2ptr cause, f2ptr this, f2ptr ke
 }
 
 f2ptr f2__semantic_frame__lookup_single_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__lookup_single_value(cause, this, key_type, key);
 }
 export_cefunk3(semantic_frame__lookup_single_value, this, key_type, key, 0, "Returns the single value associated with the key_type and key.  If there is no value associated, nil is returned.  It is a bug if more than one value is associated.");
@@ -714,9 +681,7 @@ f2ptr raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f
 }
 
 f2ptr f2__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__remove_all(cause, this, key_type, key);
 }
 export_cefunk3(semantic_frame__remove_all, this, key_type, key, 0, "Removes all associated values from this key_type and key.");
@@ -728,9 +693,7 @@ f2ptr raw__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, 
 }
 
 f2ptr f2__semantic_frame__replace_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__replace_all(cause, this, key_type, key, value);
 }
 export_cefunk4(semantic_frame__replace_all, this, key_type, key, value, 0, "Removes all associated values from this key_type and key, and adds the given value.");
@@ -742,10 +705,8 @@ void raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(f2ptr caus
 }
 
 f2ptr f2__semantic_frame__know_of_addition_to_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
-  if ((! raw__semantic_frame__is_type(cause, this)) ||
-      (! raw__semantic_knowledge_base__is_type(cause, this))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame,          this);
+  assert_argument_type(semantic_knowledge_base, semantic_knowledge_base);
   raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(cause, this, semantic_knowledge_base);
   return nil;
 }
@@ -758,10 +719,8 @@ void raw__semantic_frame__know_of_removal_from_semantic_knowledge_base(f2ptr cau
 }
 
 f2ptr f2__semantic_frame__know_of_removal_from_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
-  if ((! raw__semantic_frame__is_type(cause, this)) ||
-      (! raw__semantic_knowledge_base__is_type(cause, this))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame,          this);
+  assert_argument_type(semantic_knowledge_base, semantic_knowledge_base);
   raw__semantic_frame__know_of_removal_from_semantic_knowledge_base(cause, this, semantic_knowledge_base);
   return nil;
 }
@@ -803,12 +762,10 @@ boolean_t raw__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__semantic_frame__recursively_add_to_set(f2ptr cause, f2ptr this, f2ptr set, f2ptr maximum_size, f2ptr exact_size_place) {
-  if ((! raw__semantic_frame__is_type(cause, this)) ||
-      (! raw__set__is_type(cause, set)) ||
-      (! raw__integer__is_type(cause, maximum_size)) ||
-      ((exact_size_place != nil) && (! raw__place__is_type(cause, exact_size_place)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       semantic_frame, this);
+  assert_argument_type(       set,            set);
+  assert_argument_type(       integer,        maximum_size);
+  assert_argument_type_or_nil(place,          exact_size_place);
   s64 maximum_size__i = f2integer__i(maximum_size, cause);
   s64 exact_size__i   = 0;
   if (! raw__semantic_frame__recursively_add_to_set(cause, this, set, maximum_size__i, &exact_size__i)) {
@@ -854,11 +811,9 @@ void raw__semantic_frame__add_to_graph_with_node_ptypehash(f2ptr cause, f2ptr th
 }
 
 f2ptr f2__semantic_frame__add_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash) {
-  if ((! raw__semantic_frame__is_type(cause, this)) ||
-      (! raw__graph__is_type(cause, graph)) ||
-      (! raw__ptypehash__is_type(cause, node_ptypehash))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
+  assert_argument_type(graph,          graph);
+  assert_argument_type(ptypehash,      node_ptypehash);
   raw__semantic_frame__add_to_graph_with_node_ptypehash(cause, this, graph, node_ptypehash);
   return nil;
 }
@@ -870,9 +825,7 @@ f2ptr raw__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__as__graphviz_label(cause, this);
 }
 export_cefunk1(semantic_frame__as__graphviz_label, this, 0, "Simply returns the string 'semantic_frame' for rendering semantic frames in graphviz.");
@@ -883,9 +836,7 @@ boolean_t raw__semantic_frame__is_semantic_type(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__semantic_frame__is_semantic_type(f2ptr cause, f2ptr this, f2ptr type_name) {
-  if (! raw__semantic_frame__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__is_semantic_type(cause, this, type_name);
 }
 export_cefunk2(semantic_frame__is_semantic_type, this, type_name, 0, "Returns true if this semantic_frame is of the given semantic type, false otherwise.");
@@ -910,10 +861,8 @@ f2ptr raw__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
 }
 
 f2ptr f2__semantic_frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if ((! raw__semantic_frame__is_type(cause, this)) ||
-      (! raw__terminal_print_frame__is_type(cause, terminal_print_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_frame,       this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__semantic_frame__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(semantic_frame__terminal_print_with_frame, this, terminal_print_frame, 0, "");

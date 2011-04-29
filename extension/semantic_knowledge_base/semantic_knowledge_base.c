@@ -68,9 +68,7 @@ f2ptr raw__semantic_knowledge_base_event__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_knowledge_base_event__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base_event, this);
   return raw__semantic_knowledge_base_event__type(cause, this);
 }
 export_cefunk1(semantic_knowledge_base_event__type, thing, 0, "Returns the specific type of object that this semantic_knowledge_base_event is.");
@@ -81,9 +79,7 @@ f2ptr raw__semantic_knowledge_base_event__event_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_knowledge_base_event__event_type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base_event, this);
   return raw__semantic_knowledge_base_event__event_type(cause, this);
 }
 export_cefunk1(semantic_knowledge_base_event__event_type, thing, 0, "Returns the event_type of the semantic_knowledge_base_event.");
@@ -94,9 +90,7 @@ f2ptr raw__semantic_knowledge_base_event__event_type__set(f2ptr cause, f2ptr thi
 }
 
 f2ptr f2__semantic_knowledge_base_event__event_type__set(f2ptr cause, f2ptr this, f2ptr value) {
-  if (! raw__semantic_knowledge_base_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base_event, this);
   return raw__semantic_knowledge_base_event__event_type__set(cause, this, value);
 }
 export_cefunk2(semantic_knowledge_base_event__event_type__set, thing, value, 0, "Sets the event_type of the semantic_knowledge_base_event.");
@@ -107,9 +101,7 @@ f2ptr raw__semantic_knowledge_base_event__semantic_frame(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__semantic_knowledge_base_event__semantic_frame(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base_event, this);
   return raw__semantic_knowledge_base_event__semantic_frame(cause, this);
 }
 export_cefunk1(semantic_knowledge_base_event__semantic_frame, thing, 0, "Returns the semantic_frame of the semantic_knowledge_base_event.");
@@ -120,16 +112,14 @@ f2ptr raw__semantic_knowledge_base_event__semantic_frame__set(f2ptr cause, f2ptr
 }
 
 f2ptr f2__semantic_knowledge_base_event__semantic_frame__set(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  if (! raw__semantic_knowledge_base_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base_event, this);
   return raw__semantic_knowledge_base_event__semantic_frame__set(cause, this, semantic_frame);
 }
 export_cefunk2(semantic_knowledge_base_event__semantic_frame__set, thing, semantic_frame, 0, "Sets the semantic_frame of the semantic_knowledge_base_event.");
 
 
 f2ptr f2__semantic_knowledge_base_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "frame")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "event_stream_event")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_knowledge_base"), new__symbol(cause, "semantic_knowledge_base_event__type")));}
@@ -153,9 +143,7 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_
 }
 
 f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   f2ptr trace_event_stream          = f2__forgetful_event_stream__new(cause);
   f2ptr trace_add_semantic_frame    = nil;
   f2ptr trace_remove_semantic_frame = nil;
@@ -182,9 +170,7 @@ f2ptr raw__semantic_knowledge_base__as__graph(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_knowledge_base__as__graph(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
   return raw__semantic_knowledge_base__as__graph(cause, this);
 }
 export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semantic_knowledge_base to a graph.");
@@ -250,10 +236,8 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
   return raw__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_frame);
 }
 export_cefunk2(semantic_knowledge_base__add_semantic_frame, this, semantic_frame, 0, "Adds a semantic_frame to this semantic_knowledge_base.");
@@ -314,10 +298,8 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
 }
 
 f2ptr f2__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
   return raw__semantic_knowledge_base__remove_semantic_frame(cause, this, semantic_frame);
 }
 export_cefunk2(semantic_knowledge_base__remove_semantic_frame, this, semantic_frame, 0, "Removes a semantic_frame from this semantic_knowledge_base.");
@@ -329,10 +311,8 @@ boolean_t raw__semantic_knowledge_base__contains_semantic_frame(f2ptr cause, f2p
 }
 
 f2ptr f2__semantic_knowledge_base__contains_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
   return raw__semantic_knowledge_base__contains_semantic_frame(cause, this, semantic_frame);
 }
 export_cefunk2(semantic_knowledge_base__contains_semantic_frame, this, semantic_frame, 0, "Returns true if this semantic_knowledge_base contains the given semantic_frame.");
@@ -354,9 +334,7 @@ void raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
   raw__semantic_knowledge_base__remove_all(cause, this);
   return nil;
 }
@@ -372,10 +350,8 @@ f2ptr raw__semantic_knowledge_base__add_semantic_knowledge_base(f2ptr cause, f2p
 }
 
 f2ptr f2__semantic_knowledge_base__add_semantic_knowledge_base(f2ptr cause, f2ptr this, f2ptr semantic_knowledge_base) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_knowledge_base__is_type(cause, semantic_knowledge_base))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_knowledge_base, semantic_knowledge_base);
   return raw__semantic_knowledge_base__add_semantic_knowledge_base(cause, this, semantic_knowledge_base);
 }
 export_cefunk2(semantic_knowledge_base__add_semantic_knowledge_base, this, semantic_knowledge_base, 0, "Adds the semantic frames from semantic_knowledge_base to this semantic_knowledge_base.");
@@ -388,10 +364,8 @@ void raw__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr th
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr this, f2ptr trace_callback_name, f2ptr trace_callback_funk) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__funkable__is_type(cause, trace_callback_funk))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(funkable,                trace_callback_funk);
   raw__semantic_knowledge_base__add_trace_callback_funk(cause, this, trace_callback_name, trace_callback_funk);
   return nil;
 }
@@ -405,10 +379,8 @@ f2ptr raw__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2p
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_event(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__event_stream_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(event_stream_event,      event);
   raw__semantic_knowledge_base__add_trace_event(cause, this, event);
   return nil;
 }
@@ -435,10 +407,8 @@ f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr 
 }
 
 f2ptr f2__semantic_knowledge_base__know_of_semantic_frame_value_addition(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
   raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, this, semantic_frame, key_type, key, value);
   return nil;
 }
@@ -465,10 +435,8 @@ f2ptr raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr c
 }
 
 f2ptr f2__semantic_knowledge_base__know_of_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_frame__is_type(cause, semantic_frame))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
   raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value);
   return nil;
 }
@@ -496,12 +464,10 @@ boolean_t raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f
 }
 
 f2ptr f2__semantic_knowledge_base__recursively_add_semantic_frames_to_set(f2ptr cause, f2ptr this, f2ptr set, f2ptr maximum_size, f2ptr exact_size_place) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__set__is_type(cause, set)) ||
-      (! raw__integer__is_type(cause, maximum_size)) ||
-      ((exact_size_place != nil) && (! raw__place__is_type(cause, exact_size_place)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       semantic_knowledge_base, this);
+  assert_argument_type(       set,                     set);
+  assert_argument_type(       integer,                 maximum_size);
+  assert_argument_type_or_nil(place,                   exact_size_place);
   s64 maximum_size__i = f2integer__i(maximum_size, cause);
   s64 exact_size__i   = 0;
   if (! raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(cause, this, set, maximum_size__i, &exact_size__i)) {
@@ -526,13 +492,11 @@ boolean_t raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash(f2ptr c
 }
 
 f2ptr f2__semantic_knowledge_base__add_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, f2ptr maximum_size, f2ptr exact_size_place) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__graph__is_type(cause, graph)) ||
-      (! raw__ptypehash__is_type(cause, node_ptypehash)) ||
-      (! raw__integer__is_type(cause, maximum_size)) ||
-      ((exact_size_place != nil) && (raw__place__is_type(cause, exact_size_place)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       semantic_knowledge_base, this);
+  assert_argument_type(       graph,                   graph);
+  assert_argument_type(       ptypehash,               node_ptypehash);
+  assert_argument_type(       integer,                 maximum_size);
+  assert_argument_type_or_nil(place,                   exact_size_place);
   s64 maximum_size__i = f2integer__i(maximum_size, cause);
   s64 exact_size__i   = 0;
   if (! raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash(cause, this, graph, node_ptypehash, maximum_size__i, &exact_size__i)) {
@@ -644,9 +608,7 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
   return raw__semantic_knowledge_base__as__digraph_dot_code(cause, this);
 }
 export_cefunk1(semantic_knowledge_base__as__digraph_dot_code, this, 0, "Compile this semantic_knowledge base as digraph dot code (needs a digraph dot wrapper to be fully compiled).");
@@ -660,9 +622,7 @@ f2ptr raw__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2pt
 }
 
 f2ptr f2__semantic_knowledge_base__new__event_stream_iterator(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
   return raw__semantic_knowledge_base__new__event_stream_iterator(cause, this);
 }
 export_cefunk1(semantic_knowledge_base__new__event_stream_iterator, this, 0, "Returns a new event_stream_iterator for this semantic_knowledge_base's trace_event_stream.");
@@ -674,9 +634,7 @@ f2ptr raw__semantic_knowledge_base__semantic_frames(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_knowledge_base__semantic_frames(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
   return raw__semantic_knowledge_base__semantic_frames(cause, this);
 }
 export_cefunk1(semantic_knowledge_base__semantic_frames, this, 0, "Returns a new conslist of semantic_frames in this semantic_knowledge_base.");
@@ -706,10 +664,8 @@ f2ptr raw__semantic_knowledge_base__copy_differences_to(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__semantic_knowledge_base__copy_differences_to(f2ptr cause, f2ptr this, f2ptr target) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__semantic_knowledge_base__is_type(cause, target))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_knowledge_base, target);
   return raw__semantic_knowledge_base__copy_differences_to(cause, this, target);
 }
 export_cefunk2(semantic_knowledge_base__copy_differences_to, this, target, 0, "Makes the minimal number of changes to the target semantic_knowledge_base in order to make it a copy of this semantic_knowledge_base.");
@@ -764,12 +720,10 @@ f2ptr raw__semantic_knowledge_base__gather_lick_notes(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__semantic_knowledge_base__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__lick__is_type(cause, lick)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash)) ||
-      (! raw__integer__is_type(cause, max_size))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(lick,                    lick);
+  assert_argument_type(ptypehash,               note_object_hash);
+  assert_argument_type(integer,                 max_size);
   return raw__semantic_knowledge_base__gather_lick_notes(cause, this, lick, note_object_hash, max_size);
 }
 export_cefunk4(semantic_knowledge_base__gather_lick_notes, this, lick, note_object_hash, max_size, 0, "Licks this semantic_knowledge_base.");
@@ -875,10 +829,8 @@ f2ptr raw__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr f2__semantic_knowledge_base__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__ptypehash__is_type(cause, note_object_hash))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(ptypehash,               note_object_hash);
   return raw__semantic_knowledge_base__lick_to_chunk(cause, this, note_object_hash);
 }
 export_cefunk2(semantic_knowledge_base__lick_to_chunk, this, note_object_hash, 0, "Licks this semantic_knowledge_base.");
@@ -907,10 +859,8 @@ f2ptr raw__semantic_knowledge_base__lick_chunk__unlick_with_notes(f2ptr cause, f
 }
 
 f2ptr f2__semantic_knowledge_base__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  if ((! raw__lick_chunk__is_type(cause, lick_chunk)) ||
-      (! raw__ptypehash__is_type(cause, object_note_hash))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(lick_chunk, lick_chunk);
+  assert_argument_type(ptypehash,  object_note_hash);
   return raw__semantic_knowledge_base__lick_chunk__unlick_with_notes(cause, lick_chunk, object_note_hash);
 }
 export_cefunk2(semantic_knowledge_base__lick_chunk__unlick_with_notes, lick_chunk, object_note_hash, 0, "Unlicks this semantic_knowledge_base lick_chunk with notes.");
@@ -951,11 +901,9 @@ f2ptr raw__semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_object
 }
 
 f2ptr f2__semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2ptr this, f2ptr lick_chunk, f2ptr object_note_hash) {
-  if ((! raw__semantic_knowledge_base__is_type(cause, this)) ||
-      (! raw__lick_chunk__is_type(cause, lick_chunk)) ||
-      (! raw__ptypehash__is_type(cause, object_note_hash))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(lick_chunk,              lick_chunk);
+  assert_argument_type(ptypehash,               object_note_hash);
   return raw__semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects(cause, this, lick_chunk, object_note_hash);
 }
 export_cefunk3(semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this semantic_knowledge_base with notes.");

@@ -41,6 +41,8 @@ declare_object_type_2_slot(optimize_chunk,
 			   transition,
 			   f2ptr as__bytecodes__symbol;
 			   f2ptr as__bytecodes__funk;
+			   f2ptr possible_optimized_funk_bytecodes__symbol;
+			   f2ptr possible_optimized_funk_bytecodes__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -131,10 +133,12 @@ declare_primobject_2_slot(optimize_chunk,
 			  bytecode_sequence,
 			  transition);
 
-f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these);
-f2ptr  f2__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these);
-f2ptr raw__optimize_chunk__as__bytecodes     (f2ptr cause, f2ptr this);
-f2ptr  f2__optimize_chunk__as__bytecodes     (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_chunk__new_from_bytecodes               (f2ptr cause, f2ptr these);
+f2ptr  f2__optimize_chunk__new_from_bytecodes               (f2ptr cause, f2ptr these);
+f2ptr raw__optimize_chunk__as__bytecodes                    (f2ptr cause, f2ptr this);
+f2ptr  f2__optimize_chunk__as__bytecodes                    (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_chunk__possible_optimized_funk_bytecodes(f2ptr cause, f2ptr this, f2ptr funk);
+f2ptr  f2__optimize_chunk__possible_optimized_funk_bytecodes(f2ptr cause, f2ptr this, f2ptr funk);
 
 f2ptr f2optimize_chunk__primobject_type__new_aux(f2ptr cause);
 
@@ -211,6 +215,7 @@ f2ptr raw__optimize_context__active_fiber_branched             (f2ptr cause, f2p
 f2ptr raw__optimize_context__get_optimize_bytecode_for_sequence(f2ptr cause, f2ptr this, f2ptr bytecode_sequence);
 f2ptr raw__optimize_context__execute_one_bytecode              (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_context__complete_simulation               (f2ptr cause, f2ptr this);
+f2ptr raw__optimize_context__compile_new_bytecodes             (f2ptr cause, f2ptr this, f2ptr funk);
 f2ptr raw__optimize_context__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr  f2__optimize_context__terminal_print_with_frame         (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 
@@ -350,7 +355,9 @@ f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_next                  
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end__no_increment_pc       (f2ptr cause, f2ptr this);
 f2ptr raw__optimize_fiber__call_bytecode__block_eval_args_end                        (f2ptr cause, f2ptr this);
 
+f2ptr raw__optimize_fiber__prepare_to_call_funk(f2ptr cause, f2ptr this, f2ptr funk);
 
+boolean_t raw__optimize_too_many_loops_larva__is_type(f2ptr cause, f2ptr object);
 
 f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these);
 

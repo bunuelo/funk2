@@ -25,9 +25,13 @@
 // fiber_trigger
 
 typedef struct funk2_object_type__fiber_trigger__slot_s funk2_object_type__fiber_trigger__slot_t;
-declare_object_type_0_slot(fiber_trigger,
+declare_object_type_1_slot(fiber_trigger, waiting_fiber_set,
 			   f2ptr trigger__symbol;
 			   f2ptr trigger__funk;
+			   f2ptr add_waiting_fiber__symbol;
+			   f2ptr add_waiting_fiber__funk;
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 #endif // F2__PRIMOBJECT__FIBER_TRIGGER__TYPES__H
@@ -39,22 +43,17 @@ declare_object_type_0_slot(fiber_trigger,
 
 // fiber_trigger
 
-declare_primobject_0_slot(fiber_trigger);
+declare_primobject_1_slot(fiber_trigger, waiting_fiber_set);
 
-f2ptr raw__fiber_trigger__new    (f2ptr cause);
-f2ptr  f2__fiber_trigger__new    (f2ptr cause);
-f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this);
-f2ptr  f2__fiber_trigger__trigger(f2ptr cause, f2ptr this);
+f2ptr raw__fiber_trigger__new              (f2ptr cause);
+f2ptr  f2__fiber_trigger__new              (f2ptr cause);
+void  raw__fiber_trigger__add_waiting_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr  f2__fiber_trigger__add_waiting_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr raw__fiber_trigger__trigger          (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber_trigger__trigger          (f2ptr cause, f2ptr this);
 
 f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause);
 
-
-// fiber_trigger_hash (a global ptypehash)
-
-f2ptr  f2__fiber_trigger_hash                        (f2ptr cause);
-f2ptr raw__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
-f2ptr  f2__fiber_trigger_hash__add                   (f2ptr cause, f2ptr trigger, f2ptr fiber);
-f2ptr raw__fiber_trigger_hash__unpause_trigger_fibers(f2ptr cause, f2ptr trigger);
 
 // **
 

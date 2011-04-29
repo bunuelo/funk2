@@ -32,8 +32,9 @@ def_header_ceframe1(event_stream_event, time);
 f2ptr raw__event_stream_event__time_value   (f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args);
 
-f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time);
-f2ptr  f2__event_stream_event__new(f2ptr cause, f2ptr time);
+f2ptr raw__event_stream_event__type_create(f2ptr cause, f2ptr this, f2ptr time);
+f2ptr raw__event_stream_event__new        (f2ptr cause, f2ptr time);
+f2ptr  f2__event_stream_event__new        (f2ptr cause, f2ptr time);
 
 // event_stream
 

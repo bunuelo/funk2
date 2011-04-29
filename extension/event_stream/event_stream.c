@@ -54,9 +54,33 @@ f2ptr raw__event_stream_event__compare_value(f2ptr cause, f2ptr fiber, f2ptr env
 
 def_ceframe1(event_stream, event_stream_event, time);
 
+f2ptr raw__event_stream_event__type_create(f2ptr cause, f2ptr this, f2ptr time) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "event_stream_event"));
+  }
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "time"), time);
+  return this;
+}
+
+f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time) {
+  f2ptr this = f2__frame__new(cause, nil);
+  if (raw__larva__is_type(cause, this)) {
+    return this;
+  }
+  {
+    f2ptr result = raw__event_stream_event__type_create(cause, this, time);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+  }
+  return this;
+}
+
+/*
 f2ptr raw__event_stream_event__new(f2ptr cause, f2ptr time) {
   return f2event_stream_event__new(cause, time);
 }
+*/
 
 f2ptr f2__event_stream_event__new(f2ptr cause, f2ptr time) {
   assert_argument_type(time, time);

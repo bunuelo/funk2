@@ -149,8 +149,8 @@ f2ptr raw__event_stream__add(f2ptr cause, f2ptr this, f2ptr event_stream_event) 
       return result;
     }
   }
-  printf("\nevent_stream-add triggering add_trigger!"); fflush(stdout);
-  f2__terminal_print(cause, add_trigger);
+  //printf("\nevent_stream-add triggering add_trigger!"); fflush(stdout);
+  //f2__terminal_print(cause, add_trigger);
   {
     f2ptr trigger_result = f2__fiber_trigger__trigger(cause, add_trigger);
     if (raw__larva__is_type(cause, trigger_result)) {

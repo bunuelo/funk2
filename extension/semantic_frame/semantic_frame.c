@@ -506,7 +506,6 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
 		     return result;
 		   }
 		   if (semantic_frame_event != nil) {
-		     printf("\nsemantic_frame-add adding_trace_event to semantic_knowledge_base."); fflush(stdout);
 		     f2ptr result = f2__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
 		     if (raw__larva__is_type(cause, result)) {
 		       return result;

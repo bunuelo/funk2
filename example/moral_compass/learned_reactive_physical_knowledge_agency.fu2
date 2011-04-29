@@ -53,7 +53,7 @@
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]
     [while t
-      [print 'translate_visual_knowledge_to_physical_knowledge_resource waiting for visual_knowledge_iterator.']
+      `[print 'translate_visual_knowledge_to_physical_knowledge_resource waiting for visual_knowledge_iterator.']
       [let [[event [have visual_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
 	    [prog [have this-resource think_to_self 'translate visual->physical visual event: ' event]

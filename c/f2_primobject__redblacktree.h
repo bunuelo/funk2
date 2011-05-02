@@ -25,7 +25,7 @@
 // redblacktree
 
 typedef struct funk2_object_type__redblacktree__slot_s funk2_object_type__redblacktree__slot_t;
-declare_object_type_3_slot(redblacktree, head, value_funk, value_comparison_funk,
+declare_object_type_4_slot(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk,
 			   f2ptr insert__symbol;
 			   f2ptr insert__funk;
 			   f2ptr remove__symbol;
@@ -68,7 +68,7 @@ declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, )
 
 // redblacktree
 
-declare_primobject_3_slot(redblacktree, head, value_funk, value_comparison_funk);
+declare_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk);
 
 #define redblacktree__iteration_forward_by_node(cause, this, node, code) \
   {									\

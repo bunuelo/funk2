@@ -23,10 +23,11 @@
 
 // redblacktree
 
-def_primobject_3_slot(redblacktree, head, value_funk, value_comparison_funk);
+def_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk);
 
 f2ptr raw__redblacktree__new(f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk) {
-  return f2redblacktree__new(cause, head, value_funk, value_comparison_funk);
+  f2ptr mutate_mutex = f2__cmutex__new(cause);
+  return f2redblacktree__new(cause, mutate_mutex, head, value_funk, value_comparison_funk);
 }
 
 f2ptr f2__redblacktree__new(f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk) {
@@ -35,6 +36,7 @@ f2ptr f2__redblacktree__new(f2ptr cause, f2ptr value_funk, f2ptr value_compariso
 def_pcfunk2(redblacktree__new, value_funk, value_comparison_funk,
 	    "Returns a new redblacktree object.",
 	    return f2__redblacktree__new(this_cause, value_funk, value_comparison_funk));
+
 
 // redblacktree_node
 
@@ -485,7 +487,7 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
   if (raw__larva__is_type(cause, this__key__value)) {
     return this__key__value;
   }
-  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value,       this__key__value));
+  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, this__key__value));
   if (raw__larva__is_type(cause, comparison_result)) {
     return comparison_result;
   }
@@ -498,16 +500,18 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
     return this;
   }
   if (comparison_result != nil) {
-    if (f2__redblacktree_node__left(cause, this) == nil) {
+    f2ptr this__left = f2__redblacktree_node__left(cause, this);
+    if (this__left == nil) {
       return nil;
     } else {
-      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__left(cause, this), key, value_funk, value_comparison_funk);
+      return raw__redblacktree_node__lookup_node_with_key(cause, this__left, key, value_funk, value_comparison_funk);
     }
   } else {
-    if (f2__redblacktree_node__right(cause, this) == nil) {
+    f2ptr this__right = f2__redblacktree_node__right(cause, this);
+    if (this__right == nil) {
       return nil;
     } else {
-      return raw__redblacktree_node__lookup_node_with_key(cause, f2__redblacktree_node__right(cause, this), key, value_funk, value_comparison_funk);
+      return raw__redblacktree_node__lookup_node_with_key(cause, this__right, key, value_funk, value_comparison_funk);
     }
   }
 }
@@ -574,7 +578,7 @@ f2ptr raw__redblacktree__insert_node(f2ptr cause, f2ptr this, f2ptr node) {
   return nil;
 }
 
-f2ptr raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr raw__redblacktree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   if (raw__larva__is_type(cause, key)) {
     return key;
   }
@@ -589,6 +593,14 @@ f2ptr raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
     }
   }
   return nil;
+}
+
+f2ptr raw__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__insert__thread_unsafe(cause, this, key);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__insert(f2ptr cause, f2ptr this, f2ptr key) {
@@ -883,7 +895,7 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 #endif
 }
 
-f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   if (raw__larva__is_type(cause, key)) {
     return key;
   }
@@ -895,6 +907,14 @@ f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
     raw__redblacktree__remove_node(cause, this, node);
   }
   return node;
+}
+
+f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = f2__redblacktree__remove__thread_unsafe(cause, this, key);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
@@ -1205,7 +1225,7 @@ void f2__primobject__redblacktree__initialize() {
   
   // redblacktree
 
-  initialize_primobject_3_slot(redblacktree, head, value_funk, value_comparison_funk);
+  initialize_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__new, value_funk, value_comparison_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk = never_gc(cfunk);}

@@ -4153,15 +4153,12 @@ def_pcfunk2(gtk__notebook__set_scrollable, notebook, scrollable,
 f2ptr raw__gtk__label__new(f2ptr cause, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    GtkLabel* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
-    
-    assert_g_type(GTK_TYPE_LABEL, label);
-    
     u64 text__length = raw__string__length(cause, text);
     u8* text__str    = (u8*)alloca(text__length + 1);
     raw__string__str_copy(cause, text, text__str);
     text__str[text__length] = 0;
     
+    GtkLabel* label = funk2_gtk__label__new(&(__funk2.gtk), text__str);
     return f2__gtk_label__new(cause, f2pointer__new(cause, to_ptr(label)));
   } else {
     return f2__gtk_not_supported_larva__new(cause);

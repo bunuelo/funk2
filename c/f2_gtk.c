@@ -4569,7 +4569,7 @@ f2ptr raw__gtk__image__set_from_pixbuf(f2ptr cause, f2ptr image, f2ptr pixbuf) {
     GtkImage*  gdk_image  = raw__gtk_image__as__GtkImage(  cause, image);
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
     
-    assert_g_type(GTK_TYPE_IMAGE,  gtk_image);
+    assert_g_type(GTK_TYPE_IMAGE,  gdk_image);
     assert_g_type(GDK_TYPE_PIXBUF, gdk_pixbuf);
     
     funk2_gtk__image__set_from_pixbuf(&(__funk2.gtk), gdk_image, gdk_pixbuf);

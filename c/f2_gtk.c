@@ -1938,10 +1938,10 @@ def_pcfunk0(gtk__window__new,
     if (! G_TYPE_CHECK_INSTANCE_TYPE(variable, g_type)) {		\
       return f2larva__new(cause, 511, f2__bug__new(cause, f2integer__new(cause, 511), f2__frame__new(cause, f2list10__new(cause, \
 															  new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_g_type"), \
-															  new__symbol(cause, "source_filename"),    new__string(cause, __FILE__), \
-															  new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__), \
+															  new__symbol(cause, "source_filename"),    new__string(cause, (char*)__FILE__), \
+															  new__symbol(cause, "source_line_number"), f2integer__new(cause, (s64)__LINE__), \
 															  new__symbol(cause, "correct_g_type"),     new__symbol(cause, #g_type), \
-															  new__symbol(cause, "funktion"),           new__symbol(cause, __FUNCTION__))))); \
+															  new__symbol(cause, "funktion"),           new__symbol(cause, (char*)__FUNCTION__))))); \
     }									\
   }
 

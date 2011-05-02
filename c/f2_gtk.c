@@ -1934,10 +1934,23 @@ def_pcfunk0(gtk__window__new,
 	    return f2__gtk__window__new(this_cause));
 
 
+#define assert_g_type(g_type, variable) {				\
+    if (! G_TYPE_CHECK_INSTANCE_TYPE(variable, g_type)) {		\
+      return f2larva__new(cause, 511, f2__bug__new(cause, f2integer__new(cause, 511), f2__frame__new(cause, f2list10__new(cause, \
+															  new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_g_type"), \
+															  new__symbol(cause, "source_filename"),    new__string(cause, __FILE__), \
+															  new__symbol(cause, "source_line_number"), f2integer__new(cause, __LINE__), \
+															  new__symbol(cause, "correct_g_type"),     new__symbol(cause, #g_type), \
+															  new__symbol(cause, "funktion"),           new__symbol(cause, __FUNCTION__))))); \
+    }									\
+  }
+
 f2ptr raw__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+    
+    assert_g_type(GTK_TYPE_WINDOW, gtk_window);
     
     u64 title__length = raw__string__length(cause, title);
     u8* title__str    = (u8*)alloca(title__length + 1);

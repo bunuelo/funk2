@@ -3626,7 +3626,7 @@ f2ptr raw__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize
     GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
     GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
     
-    assert_g_type(GTK_TYPE_PANEL,  gtk_paned);
+    assert_g_type(GTK_TYPE_PANED,  gtk_paned);
     assert_g_type(GTK_TYPE_WIDGET, gtk_child);
     
     funk2_gtk__paned__pack1(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);
@@ -3655,7 +3655,7 @@ f2ptr raw__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize
     GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
     GtkWidget* gtk_child = raw__gtk_widget__as__GtkWidget(cause, child);
     
-    assert_g_type(GTK_TYPE_PANEL,  gtk_paned);
+    assert_g_type(GTK_TYPE_PANED,  gtk_paned);
     assert_g_type(GTK_TYPE_WIDGET, gtk_child);
     
     funk2_gtk__paned__pack2(&(__funk2.gtk), gtk_paned, gtk_child, (resize != nil) ? TRUE : FALSE, (shrink != nil) ? TRUE : FALSE);

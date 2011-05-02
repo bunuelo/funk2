@@ -3585,9 +3585,6 @@ f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr te
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkTextIter gtk_text_iter;
     raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
-    
-    assert_g_type(GTK_TYPE_TEXT_ITER, gtk_text_iter);
-    
     u64 text__length = raw__string__length(cause, text);
     u8* text__str    = (u8*)alloca(text__length + 1);
     raw__string__str_copy(cause, text, text__str);

@@ -3685,7 +3685,7 @@ f2ptr raw__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkWidget* gtk_paned   = raw__gtk_widget__as__GtkWidget(cause, paned);
     
-    assert_g_type(GTK_TYPE_PANEL, gtk_paned);
+    assert_g_type(GTK_TYPE_PANED, gtk_paned);
     
     s64        position__i = f2integer__i(position, cause);
     funk2_gtk__paned__set_position(&(__funk2.gtk), gtk_paned, position__i);

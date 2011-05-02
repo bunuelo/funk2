@@ -912,7 +912,7 @@ f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr ke
 f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
   raw__cmutex__lock(cause, mutate_mutex);
-  f2ptr result = f2__redblacktree__remove__thread_unsafe(cause, this, key);
+  f2ptr result = raw__redblacktree__remove__thread_unsafe(cause, this, key);
   raw__cmutex__unlock(cause, mutate_mutex);
   return result;
 }

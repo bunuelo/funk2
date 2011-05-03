@@ -38,8 +38,25 @@
     }									\
   }
 
+inline f2ptr assert_value__inline_function(f2ptr cause, f2ptr value, char* source_filename, int source_line_number, char* source_function_name, char* value_name) {
+  if (raw__larva__is_type(cause, value)) {
+    return f2__larva__invalid_value__new(cause,
+					 new__string(cause, source_filename),
+					 f2integer__new(cause, source_line_number),
+					 new__symbol(cause, source_function_name),
+					 new__symbol(cause, value_name),
+					 value);
+  }
+  return value;
+}
+
+#define assert_value(value) assert_value__inline_function(cause, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__, #value)
+
 f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr current_funktion_name,
 					    f2ptr correct_type, f2ptr actual_type, f2ptr argument_name, f2ptr argument_value);
+
+f2ptr f2__larva__invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr current_funktion_name,
+				    f2ptr value_name, f2ptr value);
 
 // **
 

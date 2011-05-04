@@ -239,6 +239,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   boolean_t popped_env_and_return     = boolean__false;
   boolean_t optimize_unused_beginning = boolean__true;
   
+
   f2ptr demetropolized_body = assert_value(f2funk__demetropolized_body(funk, cause));
   
   f2ptr body_bcs = assert_value(f2__compile__rawcode(cause, fiber, demetropolized_body, boolean__false, boolean__true, &popped_env_and_return, &funk__is_funktional, local_variables, &funk__is_locally_funktional, optimize_unused_beginning));

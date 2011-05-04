@@ -38,9 +38,6 @@
     }									\
   }
 
-inline f2ptr assert_value__inline_function(f2ptr cause, f2ptr value, char* source_filename, int source_line_number, char* source_function_name, char* value_name) {
-}
-
 #define assert_value(value) ({						\
       f2ptr assert_value_temp = value;					\
       if (raw__larva__is_type(cause, assert_value_temp)) {		\

@@ -167,7 +167,7 @@
 	       '<p>'
 	       'If our mental model contains knowledge of the correlations between a physical perceptual stream and a reflective mental perceptual stream, then the agent can use these correlations to predict the mental states of other agents based purely on their physical actions.  '
 	       'For example, if one agent performs a series of physical actions in order to accomplish a goal, such as preparing a slice of buttered toast using a knife and a loaf of bread and some butter in a kitchen, then these actions have been correlated with this agent\'s mental states, including the current goals that the agent is pursuing.  '
-	       '<table style="float:left; border-spacing:8px 8px;" width=400>'
+	       '<table style="float:right; border-spacing:8px 8px;" width=400>'
 	       '  <tr>'
 	       '    <td>'
 	       '      <small>'

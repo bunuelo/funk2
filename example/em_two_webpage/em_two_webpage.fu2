@@ -164,7 +164,7 @@
 	       '      <small>'
 	       '      <table>'
 	       '        <tr>'
-	       '          <td>'
+	       '          <td style="border-spacing:0px 0px;" border=0>'
 	       '            <img src="/images/em_two-layers.jpg" width=200>'
 	       '          </td>'
 	       '          <td>'

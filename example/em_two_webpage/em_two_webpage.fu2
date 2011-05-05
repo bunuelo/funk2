@@ -138,7 +138,7 @@
 	       '</p>'
 	       ''
 	       '<p>'
-	       '<table style="float:left;" width=202 border=1>'
+	       '<table style="float:left; border-spacing:10px 50px;" width=202>'
 	       '  <tr>'
 	       '    <td>'
 	       '      <img src="/images/physical_mental_causal.jpg">'

@@ -159,6 +159,7 @@
 	       ''
 	       ''
 	       '<p>'
+	       'This is some initial text...  '
 	       '<table style="float:left; border-spacing:8px 8px;" width=450>'
 	       '  <tr>'
 	       '    <td>'

@@ -158,7 +158,7 @@
 	       ''
 	       ''
 	       ''
-	       '<table width=450>'
+	       '<table border=1 width=450>'
 	       '  <tr>'
 	       '    <td>'
 	       '      <small>'

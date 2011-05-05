@@ -162,7 +162,7 @@
 	       '  <tr>'
 	       '    <td>'
 	       '      <small>'
-	       '      <table>'
+	       '      <table width=400>'
 	       '        <tr>'
 	       '          <td>'
 	       '            <img src="/images/em_two-layers.jpg" width=200>'

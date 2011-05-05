@@ -103,6 +103,7 @@
 	       'In order to help us define a grounded problem domain, we have chosen to focus on a rigid-body physical simulation of parents and children in the context of basic cooking tasks in a kitchen environment.  '
 	       'We chose parents and children because we feel that major parts of social and moral learning develops during early stages involving these familiar social relationships.  '
 	       'We chose the domain of basic kitchen cooking tasks because this is a non-trivial social commonsense reasoning domain that exists in some form in all human cultures.  '
+	       'Our physical simulation is called <a href="http://web.media.mit.edu/~dustin/simulator_setup/">IsisWorld</a>.'
 	       '</p>'
 	       ''
 	       '<h3>A Simple Social Reasoning Model</h3>'

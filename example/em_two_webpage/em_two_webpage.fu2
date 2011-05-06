@@ -128,7 +128,7 @@
 	       '<p><h3><a name="a_physically_grounded_social_problem_domain"></a>A Physically Grounded Social Problem Domain</h3></p>'
 	       ''
 	       '<p>'
-	       '<a name="figure_1"></a><table style="float:left; border-spacing:8px 8px;" width=200>'
+	       '<a name="figure_1"></a><table style="float:right; border-spacing:8px 8px;" width=200>'
 	       '  <tr>'
 	       '    <td>'
 	       '      <img src="/images/isisworld.jpg" width=200>'

@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_KNOW_OF_EXISTENCE_EVENT__H
 #define F2__EXTENSION__SEMANTIC_KNOW_OF_EXISTENCE_EVENT__H
 
-#include "../semantic_temporal_object/semantic_temporal_object.h"
+#include "../semantic_event/semantic_event.h"
 
 
 f2ptr     raw__semantic_know_of_existence_event__type_create                                                      (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name);

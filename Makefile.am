@@ -235,6 +235,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                   extension/semantic_event/libf2e_semantic_event.la \
                   extension/semantic_frame/libf2e_semantic_frame.la \
+                  extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.la \
                   extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
                   extension/semantic_object_type/libf2e_semantic_object_type.la \
                   extension/semantic_ordered_object/libf2e_semantic_ordered_object.la \
@@ -406,6 +407,7 @@ extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOUR
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES       = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                       = extension/semantic_event/semantic_event.c
 extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                       = extension/semantic_frame/semantic_frame.c
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_SOURCES   = extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                     = extension/semantic_knowledge_base/semantic_knowledge_base.c
 extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES                     = extension/semantic_ordered_object/semantic_ordered_object.c
 extension_semantic_object_type_libf2e_semantic_object_type_la_SOURCES                           = extension/semantic_object_type/semantic_object_type.c
@@ -474,6 +476,7 @@ all_core_extensions = \
   $(extension_semantic_causal_event_libf2e_semantic_causal_event_la) \
   $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
   $(extension_semantic_frame_libf2e_semantic_frame) \
+  $(extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la) \
   $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
   $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la) \
   $(extension_semantic_object_type_libf2e_semantic_object_type_la) \
@@ -570,6 +573,9 @@ extension_semantic_event_libf2e_semantic_event_la_CFLAGS  = $(lib_libfunk2_la_CF
 
 extension_semantic_frame_libf2e_semantic_frame_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_frame_libf2e_semantic_frame_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

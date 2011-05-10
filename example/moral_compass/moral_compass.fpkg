@@ -122,7 +122,8 @@
    :sources ['deliberative_layer.fu2']]
 
 [defpackage deliberative_meta_physical_knowledge_agency
-  :packages [traced_mind]
+  :packages [traced_mind
+	     semantic_know_of_existence_event]
    :sources ['deliberative_meta_physical_knowledge_agency.fu2']]
 
 [defpackage deliberative_execution_agency

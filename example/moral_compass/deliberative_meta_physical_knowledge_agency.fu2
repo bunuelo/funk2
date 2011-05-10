@@ -33,7 +33,7 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->meta_physical_knowledge]]
 
 
-[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [traced_resource] []
+[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [traced_resource] [[existence_physical_phenomenon_hash [hash]]]
   [new []
        [construct traced_resource `translate_physical_knowledge_to_meta_physical_knowledge
 		  [funk []
@@ -41,6 +41,12 @@
 			]]
        [= vital t]
        nil]]
+
+[deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource get new-physical_phenomenon_existence [physical_phenomenon]
+  [let [[existence_event [have existence_physical_phenomenon_hash lookup physical_phenomenon]]]
+    [if [null existence_event]
+	[= existence_event [new semantic_know_of_existence_event [get [get this mind] semantic_realm] physical_phenomenon]]]
+    existence_event]]
 
 [deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
@@ -51,7 +57,10 @@
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
-										 ]]
+										 [let [[physical_phenomenon [have semantic_frame lookup_single_value `property `physical_phenomenon]]]
+										   [let [[existence_event [get this physical_phenomenon_existence physical_phenomenon]]]
+										     [semantic-set existence_event absolute_start_time [get event time]]
+										     ]]]]
 			  [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[key_type       [get event key_type]]
 										     [key            [get event key]]]

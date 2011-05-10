@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_know_of_existence_event
-  :documentation 'Basic knowledge for dealing with events in time.'
-   :packages     [semantic_temporal_object]
+  :documentation 'Knowledge of the knowledge that a phenomenon exists.'
+   :packages     [semantic_event]
     :sources     ['semantic_know_of_existence_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_know_of_existence_event.so']]
 

@@ -42,7 +42,7 @@
        [= vital t]
        nil]]
 
-[deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource get new-physical_phenomenon_existence [physical_phenomenon]
+[deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource get physical_phenomenon_existence [physical_phenomenon]
   [let [[existence_event [have existence_physical_phenomenon_hash lookup physical_phenomenon]]]
     [if [null existence_event]
 	[= existence_event [new semantic_know_of_existence_event [get [get this mind] semantic_realm] physical_phenomenon]]]

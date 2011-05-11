@@ -135,6 +135,7 @@
 						     'extension/semantic_event_sequence/'
 						     'extension/semantic_frame/'
 						     'extension/semantic_know_of_existence_event/'
+						     'extension/semantic_know_of_relationship_event/'
 						     'extension/semantic_knowledge_base/'
 						     'extension/semantic_object_type/'
 						     'extension/semantic_object/'

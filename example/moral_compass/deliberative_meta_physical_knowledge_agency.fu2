@@ -46,6 +46,7 @@
   [let [[existence_event [have existence_physical_phenomenon_hash lookup physical_phenomenon]]]
     [if [null existence_event]
 	[prog [= existence_event [new semantic_know_of_existence_event [get [get this mind] semantic_realm] physical_phenomenon]]
+	      [have existence_physical_phenomenon_hash add physical_phenomenon existence_event]
 	      [have [get [get this mind] semantic_knowledge_base `meta_physical_knowledge] add_semantic_frame existence_event]]]
     existence_event]]
 

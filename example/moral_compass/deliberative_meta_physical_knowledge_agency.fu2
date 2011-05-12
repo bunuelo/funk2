@@ -33,7 +33,8 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->meta_physical_knowledge]]
 
 
-[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [traced_resource] [[existence_physical_phenomenon_hash [hash]]]
+[deframe translate_physical_knowledge_to_meta_physical_knowledge_resource [traced_resource] [[existence_physical_phenomenon_hash        [hash]]
+											     [existence_physical_relationship_ptypehash [new ptypehash]]]
   [new []
        [construct traced_resource `translate_physical_knowledge_to_meta_physical_knowledge
 		  [funk []
@@ -50,6 +51,14 @@
 	      [have [get [get this mind] semantic_knowledge_base `meta_physical_knowledge] add_semantic_frame existence_event]]]
     existence_event]]
 
+[deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource get physical_relationship_existence [physical_relationship]
+  [let [[relationship_event [have existence_physical_relationship_ptypehash lookup physical_relationship]]]
+    [if [null relationship_event]
+	[prog [= relationship_event [new semantic_know_of_relationship_event [get [get this mind] semantic_realm] physical_relationship]]
+	      [have existence_physical_relationship_ptypehash add physical_relationship relationship_event]
+	      [have [get [get this mind] semantic_knowledge_base `meta_physical_knowledge] add_semantic_frame relationship_event]]]
+    relationship_event]]
+
 [deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
     [while t
@@ -64,9 +73,15 @@
 										     [semantic-set existence_event absolute_start_time [get event time]]
 										     ]]]]
 			  [[and [is-type `semantic_frame_event event]
-				[eq event_type `add]]                          [let [[key_type [get event key_type]]
-										     [key      [get event key]]]
-										 ]]
+				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
+										     [event-key_type       [get event key_type]]
+										     [event-key            [get event key]]
+										     [event-value          [get event value]]]
+										 [let [[physical_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+														    event-semantic_frame event-key_type event-key event-value]]]
+										   [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
+										     [semantic-set relationship_event absolute_start_time [get event time]]
+										     ]]]]
 			  ]]]]
 	[have physical_knowledge_iterator increment]]]]]
 

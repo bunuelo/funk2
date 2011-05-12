@@ -58,7 +58,7 @@
     
     [let* [[perception            [get [get this mind] perception]]
 	   [perception-begin_time [get perception begin_time]]
-	   [perception-end_time   [get perception previous_time]]
+	   [perception-end_time   [get perception end_time]]
 	   [visual_objects        [get perception visual_objects]]]
       [have [get [get this mind] input_visual_knowledge] remove_all]
       [let [[semantic_realm        [get [get this mind] semantic_realm]]

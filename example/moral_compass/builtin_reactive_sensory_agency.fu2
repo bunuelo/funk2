@@ -101,6 +101,7 @@
 						  [result         [get action result]]]
 					      [let [[agent semantic_object]]
 						[let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm] action_name agent]]]
+						  [semantic-set action_semantic_frame phenomenal_name     `[semantic_action_event ,[gensym 'phenomenon']]]
 						  [semantic-set action_semantic_frame absolute_start_time perception-begin_time]
 						  [semantic-set action_semantic_frame absolute_end_time   perception-end_time]
 						  [have [get [get this mind] input_visual_knowledge] add_semantic_frame action_semantic_frame]

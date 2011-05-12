@@ -59,6 +59,9 @@
 	      [have [get [get this mind] semantic_knowledge_base `meta_physical_knowledge] add_semantic_frame relationship_event]]]
     relationship_event]]
 
+[deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute physical_relationship_existence-remove [physical_relationship]
+  [have existence_physical_relationship_ptypehash remove physical_relationship]]
+
 [deftypefunk translate_physical_knowledge_to_meta_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->meta_physical_knowledge]]]
     [while t
@@ -81,6 +84,17 @@
 														    event-semantic_frame event-key_type event-key event-value]]]
 										   [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
 										     [semantic-set relationship_event absolute_start_time [get event time]]
+										     ]]]]
+			  [[and [is-type `semantic_frame_event event]
+				[eq event_type `remove]]                       [let [[event-semantic_frame [get event semantic_frame]]
+										     [event-key_type       [get event key_type]]
+										     [event-key            [get event key]]
+										     [event-value          [get event value]]]
+										 [let [[physical_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+														    event-semantic_frame event-key_type event-key event-value]]]
+										   [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
+										     [semantic-set relationship_event absolute_end_time [get event time]]
+										     [have this physical_relationship_existence-remove physical_relationship]
 										     ]]]]
 			  ]]]]
 	[have physical_knowledge_iterator increment]]]]]

@@ -99,43 +99,43 @@ f2ptr f2__semantic_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_object__type, thing, 0, "Returns the specific type of object that this semantic_object is.");
 
 
-f2ptr raw__semantic_resource__phenomenal_name__lookup(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_object__phenomenal_name__lookup(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"));
 }
 
-f2ptr f2__semantic_resource__phenomenal_name__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_resource__is_type(cause, this)) {
+f2ptr f2__semantic_object__phenomenal_name__lookup(f2ptr cause, f2ptr this) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_resource__phenomenal_name__lookup(cause, this);
+  return raw__semantic_object__phenomenal_name__lookup(cause, this);
 }
-export_cefunk1(semantic_resource__phenomenal_name__lookup, this, 0, "");
+export_cefunk1(semantic_object__phenomenal_name__lookup, this, 0, "");
 
 
-f2ptr raw__semantic_resource__phenomenal_name__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_object__phenomenal_name__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), that);
 }
 
-f2ptr f2__semantic_resource__phenomenal_name__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_resource__is_type(cause, this)) {
+f2ptr f2__semantic_object__phenomenal_name__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_resource__phenomenal_name__add(cause, this, that);
+  return raw__semantic_object__phenomenal_name__add(cause, this, that);
 }
-export_cefunk2(semantic_resource__phenomenal_name__add, this, that, 0, "");
+export_cefunk2(semantic_object__phenomenal_name__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_resource__phenomenal_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_object__phenomenal_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), that);
 }
 
-f2ptr f2__semantic_resource__phenomenal_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_resource__is_type(cause, this)) {
+f2ptr f2__semantic_object__phenomenal_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if (! raw__semantic_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_resource__phenomenal_name__remove(cause, this, that);
+  return raw__semantic_object__phenomenal_name__remove(cause, this, that);
 }
-export_cefunk2(semantic_resource__phenomenal_name__remove, this, that, 0, "");
+export_cefunk2(semantic_object__phenomenal_name__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_object__noun__add(f2ptr cause, f2ptr this, f2ptr that) {

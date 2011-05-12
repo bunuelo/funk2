@@ -64,7 +64,7 @@
 	[mapc [funk [object]
 		    [let [[semantic_visual_object [new semantic_visual_object semantic_realm]]
 			  [phenomenal_name        [get object phenomenal_name]]]
-		      [semantic-add semantic_visual_object visual_phenomenal_name phenomenal_name]
+		      [semantic-set semantic_visual_object phenomenal_name phenomenal_name]
 		      [have [get [get this mind] input_visual_knowledge] add_semantic_frame semantic_visual_object]
 		      [have semantic_object_frame add phenomenal_name semantic_visual_object]]]
 	      visual_objects]

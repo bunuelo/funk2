@@ -56,10 +56,10 @@
   [while t
     [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     
-    [let* [[perception               [get [get this mind] perception]]
-	   [perception-previous_time [get perception previous_time]]
-	   [perception-time          [get perception time]]
-	   [visual_objects           [get perception visual_objects]]]
+    [let* [[perception            [get [get this mind] perception]]
+	   [perception-begin_time [get perception begin_time]]
+	   [perception-end_time   [get perception previous_time]]
+	   [visual_objects        [get perception visual_objects]]]
       [have [get [get this mind] input_visual_knowledge] remove_all]
       [let [[semantic_realm        [get [get this mind] semantic_realm]]
 	    [semantic_object_frame [frame]]]
@@ -101,8 +101,8 @@
 						  [result         [get action result]]]
 					      [let [[agent semantic_object]]
 						[let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm] action_name agent]]]
-						  [semantic-set action_semantic_frame absolute_start_time perception-previous_time]
-						  [semantic-set action_semantic_frame absolute_end_time   perception-time]
+						  [semantic-set action_semantic_frame absolute_start_time perception-begin_time]
+						  [semantic-set action_semantic_frame absolute_end_time   perception-end_time]
 						  [have [get [get this mind] input_visual_knowledge] add_semantic_frame action_semantic_frame]
 						  'should add argument frame for each action specifically.'
 						  ]]]]

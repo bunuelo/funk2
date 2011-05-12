@@ -139,7 +139,15 @@ f2ptr raw__semantic_know_of_relationship_event__cairo_render_frame(f2ptr cause, 
 							  new__symbol(cause, "cairo_render_type"), f2__object__type(cause, this)));
   f2ptr meta_relationship_set = f2__semantic_know_of_relationship_event__meta_relationship__lookup(cause, this);
   if (meta_relationship_set != nil) {
-    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "meta_relationship"), f2__set__an_arbitrary_element(cause, meta_relationship_set));
+    f2ptr meta_relationship = f2__set__an_arbitrary_element(cause, meta_relationship_set);
+    if (! raw__relationship_meta_semantic_object__is_type(cause, meta_relationship)) {
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "meta_relationship"), meta_relationship);
+    } else {
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "source"),   raw__relationship_meta_semantic_object__source(  cause, meta_relationship));
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "key"),      raw__relationship_meta_semantic_object__key(     cause, meta_relationship));
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "key_type"), raw__relationship_meta_semantic_object__key_type(cause, meta_relationship));
+      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "target"),   raw__relationship_meta_semantic_object__target(  cause, meta_relationship));
+    }
   }
   return render_frame;
 }

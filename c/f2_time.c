@@ -568,14 +568,16 @@ def_pcfunk1(time__timezone, this,
 
 
 f2ptr raw__time__as__graphviz_label(f2ptr cause, f2ptr this) {
-  return f2__time__date_and_time_string(cause, this);
+  return raw__time__date_and_time_string(cause, this);
 }
 
 f2ptr f2__time__as__graphviz_label(f2ptr cause, f2ptr this) {
   assert_argument_type(time, this);
   return raw__time__as__graphviz_label(cause, this);
 }
-export_cefunk1(time__as__graphviz_label, this, 0, "Returns a string representation of this time for rendering in graphviz.");
+def_pcfunk1(time__as__graphviz_label, this,
+	    "Returns a string representation of this time for rendering in graphviz.",
+	    return f2__time__as__graphviz_label(this_cause, this));
 
 
 f2ptr raw__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

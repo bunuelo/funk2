@@ -5581,8 +5581,12 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_
   do {
     int index;
     for (index = 0; index < gensym__length - 1; index ++) {
-      int random_num = random() % 26;
-      gensym__name[initial_string_length + index + 1] = ((u8)'a') + random_num;
+      int random_num = random() % (10 + 26);
+      if (random_num < 10) {
+	gensym__name[initial_string_length + index + 1] = ((u8)'0') + random_num;
+      } else {
+	gensym__name[initial_string_length + index + 1] = ((u8)'a') + (random_num - 10);
+      }
     }
     symbol_exists = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, total_gensym_length, gensym__name);
   } while (symbol_exists);

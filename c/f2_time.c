@@ -567,6 +567,17 @@ def_pcfunk1(time__timezone, this,
 //       %+     The date and time in date(1) format. (TZ) (Not supported in glibc2.)
 
 
+f2ptr raw__time__as__graphviz_label(f2ptr cause, f2ptr this) {
+  return f2__time__date_and_time_string(cause, this);
+}
+
+f2ptr f2__time__as__graphviz_label(f2ptr cause, f2ptr this) {
+  assert_argument_type(time, this);
+  return raw__time__as__graphviz_label(cause, this);
+}
+export_cefunk1(time__as__graphviz_label, this, 0, "Returns a string representation of this time for rendering in graphviz.");
+
+
 f2ptr raw__time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);

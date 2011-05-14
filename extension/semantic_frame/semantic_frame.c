@@ -828,7 +828,7 @@ f2ptr f2__semantic_frame__as__graphviz_label(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__as__graphviz_label(cause, this);
 }
-export_cefunk1(semantic_frame__as__graphviz_label, this, 0, "Simply returns the string 'semantic_frame' for rendering semantic frames in graphviz.");
+export_cefunk1(semantic_frame__as__graphviz_label, this, 0, "Returns a string representing the specific type of this semantic_frame for rendering semantic_frame objects in graphviz.");
 
 
 boolean_t raw__semantic_frame__is_semantic_type(f2ptr cause, f2ptr this, f2ptr type_name) {

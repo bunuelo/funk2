@@ -60,7 +60,7 @@
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
-										 [if [semantic-is-type `semantic_visual_object semantic_frame]
+										 [if [is-type `semantic_visual_object semantic_frame]
 										     [let [[phenomenal_name [semantic-get semantic_frame phenomenal_name]]]
 										       [let [[phenomenon_semantic_frame [get this physical_phenomenon_semantic_frame phenomenal_name]]]
 											 [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_semantic_frame phenomenon_semantic_frame]

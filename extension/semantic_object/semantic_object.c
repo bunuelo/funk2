@@ -218,6 +218,7 @@ export_cefunk0(semantic_object__core_extension__ping, 0, "");
 
 boolean_t __semantic_object__core_extension__is_initialized = boolean__false;
 f2ptr f2__semantic_object__core_extension__initialize(f2ptr cause) {
+  core_extension__ping(semantic_object, semantic_frame);
   if (! __semantic_object__core_extension__is_initialized) {
     __semantic_object__core_extension__is_initialized = boolean__true;
     status("semantic_object initialized.");

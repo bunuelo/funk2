@@ -96,7 +96,7 @@ export_cefunk1(semantic_situation__type, thing, 0, "Returns the specific type of
 
 
 f2ptr raw__semantic_situation__event__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "event"));
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"));
 }
 
 f2ptr f2__semantic_situation__event__lookup(f2ptr cause, f2ptr this) {
@@ -109,7 +109,7 @@ export_cefunk1(semantic_situation__event__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_situation__event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "event"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"), that);
 }
 
 f2ptr f2__semantic_situation__event__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -122,7 +122,7 @@ export_cefunk2(semantic_situation__event__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_situation__event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "event"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"), that);
 }
 
 f2ptr f2__semantic_situation__event__remove(f2ptr cause, f2ptr this, f2ptr that) {

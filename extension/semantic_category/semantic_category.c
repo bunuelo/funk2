@@ -96,7 +96,7 @@ export_cefunk1(semantic_category__type, thing, 0, "Returns the specific type of 
 
 
 f2ptr raw__semantic_category__positive_example__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive_example"));
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "positive_example"));
 }
 
 f2ptr f2__semantic_category__positive_example__lookup(f2ptr cause, f2ptr this) {
@@ -109,7 +109,7 @@ export_cefunk1(semantic_category__positive_example__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_category__positive_example__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive_example"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "positive_example"), that);
 }
 
 f2ptr f2__semantic_category__positive_example__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -122,7 +122,7 @@ export_cefunk2(semantic_category__positive_example__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_category__positive_example__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive_example"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "positive_example"), that);
 }
 
 f2ptr f2__semantic_category__positive_example__remove(f2ptr cause, f2ptr this, f2ptr that) {
@@ -135,7 +135,7 @@ export_cefunk2(semantic_category__positive_example__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_category__negative_example__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "negative_example"));
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "negative_example"));
 }
 
 f2ptr f2__semantic_category__negative_example__lookup(f2ptr cause, f2ptr this) {
@@ -148,7 +148,7 @@ export_cefunk1(semantic_category__negative_example__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_category__negative_example__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "negative_example"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "negative_example"), that);
 }
 
 f2ptr f2__semantic_category__negative_example__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -161,7 +161,7 @@ export_cefunk2(semantic_category__negative_example__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_category__negative_example__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "negative_example"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "negative_example"), that);
 }
 
 f2ptr f2__semantic_category__negative_example__remove(f2ptr cause, f2ptr this, f2ptr that) {

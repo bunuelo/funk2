@@ -138,11 +138,14 @@
 [defpackage reflective_layer
   :packages [traced_mind
 	     reflective_credit_assignment_agency
-	     english_language]
+	     english_language
+	     ]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_credit_assignment_agency
-  :packages [traced_mind]
+  :packages [traced_mind
+	     semantic_category
+	     semantic_situation]
    :sources ['reflective_credit_assignment_agency.fu2']]
 
 

@@ -250,6 +250,7 @@ lib_LTLIBRARIES = lib/libfunk2.la \
                   extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
                   extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la \
                   extension/semantic_situation/libf2e_semantic_situation.la \
+                  extension/semantic_situation_category/libf2e_semantic_situation_category.la \
                   extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                   extension/semantic_visual_object/libf2e_semantic_visual_object.la \
                   extension/timeline/libf2e_timeline.la
@@ -425,6 +426,7 @@ extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                 
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES           = extension/semantic_resource_action_event/semantic_resource_action_event.c
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES     = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
 extension_semantic_situation_libf2e_semantic_situation_la_SOURCES                                   = extension/semantic_situation/semantic_situation.c
+extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                 = extension/semantic_situation_category/semantic_situation_category.c
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                       = extension/semantic_temporal_object/semantic_temporal_object.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                           = extension/semantic_visual_object/semantic_visual_object.c
 extension_timeline_libf2e_timeline_la_SOURCES                                                       = extension/timeline/timeline.c
@@ -497,6 +499,7 @@ all_core_extensions = \
   $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
   $(extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la) \
   $(extension_semantic_situation_libf2e_semantic_situation_la) \
+  $(extension_semantic_situation_category_libf2e_semantic_situation_category_la) \
   $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la) \
   $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
   $(extension_timeline_libf2e_timeline_la)
@@ -627,6 +630,9 @@ extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequ
 
 extension_semantic_situation_libf2e_semantic_situation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_situation_libf2e_semantic_situation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_situation_category_libf2e_semantic_situation_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_situation_category_libf2e_semantic_situation_category_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

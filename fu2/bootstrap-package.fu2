@@ -149,6 +149,7 @@
 						     'extension/semantic_resource_action_event/'
 						     'extension/semantic_resource_action_sequence/'
 						     'extension/semantic_situation/'
+						     'extension/semantic_situation_category/'
 						     'extension/semantic_temporal_object/'
 						     'extension/semantic_visual_object/'
 						     'extension/timeline/'

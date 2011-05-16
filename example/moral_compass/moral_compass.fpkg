@@ -137,10 +137,16 @@
 
 [defpackage reflective_layer
   :packages [traced_mind
+	     reflective_meta_mental_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language
 	     ]
    :sources ['reflective_layer.fu2']]
+
+[defpackage reflective_meta_mental_knowledge_agency
+  :packages [semantic_resource_action_sequence
+	     traced_mind]
+   :sources ['reflective_meta_mental_knowledge_agency.fu2']]
 
 [defpackage reflective_credit_assignment_agency
   :packages [traced_mind
@@ -154,15 +160,9 @@
 
 [defpackage self_reflective_layer
   :packages [traced_mind
-	     self_reflective_meta_mental_knowledge_agency
 	     self_reflective_other_agents_knowledge_agency
 	     english_language]
    :sources ['self_reflective_layer.fu2']]
-
-[defpackage self_reflective_meta_mental_knowledge_agency
-  :packages [semantic_resource_action_sequence
-	     traced_mind]
-   :sources ['self_reflective_meta_mental_knowledge_agency.fu2']]
 
 [defpackage self_reflective_other_agents_knowledge_agency
   :packages [traced_mind]

@@ -12,13 +12,16 @@
  BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
  BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
  WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk semantic_category-core_extension-ping         semantic_category semantic_category__core_extension__ping]
-[defcorefunk semantic_category-core_extension-initialize   semantic_category semantic_category__core_extension__initialize]
-[defcorefunk semantic_category-core_extension-define_types semantic_category semantic_category__core_extension__define_types]
+[defpackage semantic_situation
+  :documentation 'Basic knowledge for dealing with positive and negative examples of a category.'
+   :packages     [semantic_object]
+    :sources     ['semantic_situation-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_situation.so']]
 
-[semantic_category-core_extension-define_types]
+[defcore semantic_situation 'extension/semantic_situation/.libs/libf2e_semantic_situation.so']
 

@@ -96,13 +96,11 @@ export_cefunk1(semantic_situation_category__type, thing, 0, "Returns the specifi
 
 
 f2ptr raw__semantic_situation_category__positive_example__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "positive_example"));
+  return raw__semantic_category__positive_example__lookup(cause, this);
 }
 
 f2ptr f2__semantic_situation_category__positive_example__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_situation_category__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_situation_category, this);
   return raw__semantic_situation_category__positive_example__lookup(cause, this);
 }
 export_cefunk1(semantic_situation_category__positive_example__lookup, this, 0, "");
@@ -133,20 +131,18 @@ export_cefunk2(semantic_situation_category__positive_example__remove, this, that
 
 
 f2ptr raw__semantic_situation_category__negative_example__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "negative_example"));
+  return raw__semantic_category__negative_example__lookup(cause, this);
 }
 
 f2ptr f2__semantic_situation_category__negative_example__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_situation_category__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_situation_category, this);
   return raw__semantic_situation_category__negative_example__lookup(cause, this);
 }
 export_cefunk1(semantic_situation_category__negative_example__lookup, this, 0, "");
 
 
 f2ptr raw__semantic_situation_category__negative_example__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__negative_example__add(cause, this, that);
+  return raw__semantic_category__negative_example__add(cause, this, that);
 }
 
 f2ptr f2__semantic_situation_category__negative_example__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -158,7 +154,7 @@ export_cefunk2(semantic_situation_category__negative_example__add, this, that, 0
 
 
 f2ptr raw__semantic_situation_category__negative_example__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__negative_example__remove(cause, this, that);
+  return raw__semantic_category__negative_example__remove(cause, this, that);
 }
 
 f2ptr f2__semantic_situation_category__negative_example__remove(f2ptr cause, f2ptr this, f2ptr that) {

@@ -19,7 +19,8 @@
 
 [defpackage semantic_situation_category
   :documentation 'Basic knowledge for dealing with positive and negative examples of a category.'
-   :packages     [semantic_category]
+   :packages     [semantic_category
+		  semantic_situation]
     :sources     ['semantic_situation_category-core.fu2']
      :binaries   ['.libs/libf2e_semantic_situation_category.so']]
 

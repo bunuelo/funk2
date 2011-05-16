@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_SITUATION_CATEGORY__H
 
 #include "../semantic_category/semantic_category.h"
+#include "../semantic_situation/semantic_situation.h"
 
 
 f2ptr     raw__semantic_situation_category__type_create             (f2ptr cause, f2ptr this, f2ptr semantic_realm);

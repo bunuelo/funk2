@@ -190,6 +190,7 @@ export_cefunk0(semantic_situation_category__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_situation_category__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_situation_category, semantic_category);
+  core_extension__ping(semantic_situation_category, semantic_situation);
   status("semantic_situation_category initialized.");
   return nil;
 }

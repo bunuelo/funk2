@@ -87,9 +87,7 @@ f2ptr raw__semantic_situation__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_situation__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_situation__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_situation, this);
   return raw__semantic_situation__type(cause, this);
 }
 export_cefunk1(semantic_situation__type, thing, 0, "Returns the specific type of object that this semantic_situation is.");
@@ -100,9 +98,7 @@ f2ptr raw__semantic_situation__event__lookup(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_situation__event__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_situation__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_situation, this);
   return raw__semantic_situation__event__lookup(cause, this);
 }
 export_cefunk1(semantic_situation__event__lookup, this, 0, "");
@@ -113,9 +109,8 @@ f2ptr raw__semantic_situation__event__add(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__semantic_situation__event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_situation__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_situation, this);
+  assert_argument_type(semantic_event,     that);
   return raw__semantic_situation__event__add(cause, this, that);
 }
 export_cefunk2(semantic_situation__event__add, this, that, 0, "");
@@ -126,9 +121,8 @@ f2ptr raw__semantic_situation__event__remove(f2ptr cause, f2ptr this, f2ptr that
 }
 
 f2ptr f2__semantic_situation__event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_situation__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_situation, this);
+  assert_argument_type(semantic_event,     that);
   return raw__semantic_situation__event__remove(cause, this, that);
 }
 export_cefunk2(semantic_situation__event__remove, this, that, 0, "");
@@ -156,6 +150,7 @@ export_cefunk0(semantic_situation__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_situation__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_situation, semantic_object);
+  core_extension__ping(semantic_situation, semantic_event);
   status("semantic_situation initialized.");
   return nil;
 }

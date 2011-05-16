@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_SITUATION__H
 
 #include "../semantic_object/semantic_object.h"
+#include "../semantic_event/semantic_event.h"
 
 
 f2ptr     raw__semantic_situation__type_create  (f2ptr cause, f2ptr this, f2ptr semantic_realm);

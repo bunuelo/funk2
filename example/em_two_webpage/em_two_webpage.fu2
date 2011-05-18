@@ -182,15 +182,15 @@
 	       'Further, the learned walking process receives proprioceptive information about the relative angles of the person\'s limbs, as well as somatosensory information about the pressure on the soles of the feet, as well as vestibular information about the accelleration forces on the head, including gravity.  '
 	       'Walking is a very complicated process, but walking is primarily a physical control problem.  '
 	       'Now, we are going to introduce a separate perceptual stream of information that does not describe the physical state of the body in the world.  '
-	       'This separate perceptual stream, refers to the interactions between the parallel mental processes in the mind.  '
-	       'We can distinguish between these two types of perceptual streams, by calling one type a Physical perceptual stream and the other we can call a Mental or Reflective perceptual stream of information.  '
+	       'This separate perceptual stream, refers to the interactions between the parallel mental processes.  '
+	       'We can distinguish between these two types of perceptual streams, by calling one type a Physical perceptual stream and the other we can call a Reflective perceptual stream of information.  '
 	       '</p>'
 	       ''
 	       '<p>'
 	       '<a name="figure_2"></a><table style="float:left; border-spacing:8px 8px;" width=202>'
 	       '  <tr>'
 	       '    <td>'
-	       '      <img src="/images/physical_mental_causal.jpg">'
+	       '      <img src="/images/physical_reflective_causal.jpg">'
 	       '    </td>'
 	       '  </tr>'
 	       '  <tr>'
@@ -199,22 +199,22 @@
 	       '    </td>'
 	       '  </tr>'
 	       '</table>'
-	       'Now, once we have a reflective perceptual stream that represents the mental state of the mind, we can begin to model processes of reflective thinking that solve problems in this mental state space.  '
+	       'Now, once we have a reflective perceptual stream that represents the reflective state of the mind, we can begin to model processes of reflective thinking that solve problems in this reflective state space.  '
 	       'For example, a reflective process could remember what deliberative processes are good for making different types of plans to handle different types of physical problems, such as the differences that must be considered between moving physical objects that display agency as opposed to physical objects that do not exhibit any form of agency.  '
-	       'Once we have made a distinction in our model between physical perceptions and reflective mental perceptions, we correlate these two streams, which allows us to infer mental events from physical events.  '
-	       '<a href="#figure_2">Figure&nbsp;2</a> emphasizes that the correlation of these two perceptual streams can be used to induce abstractions that causally relate mental goals to changes in the physical world.  '
+	       'Once we have made a distinction in our model between physical perceptions and reflective perceptions, we correlate these two streams, which allows us to infer reflective events from physical events.  '
+	       '<a href="#figure_2">Figure&nbsp;2</a> emphasizes that the correlation of these two perceptual streams can be used to induce abstractions that causally relate reflective events to physical events.  '
 	       '</p>'
 	       ''
 	       '<p><h4><a name="the_self_other_distinction_and_self_reflective_thinking"></a>The Self/Other Distinction and Self-Reflective Thinking</h4></p>'
 	       ''
 	       '<p>'
-	       'If our mental model contains knowledge of the correlations between a physical perceptual stream and a reflective mental perceptual stream, then the agent can use these correlations to predict the mental states of other agents based purely on their physical actions.  '
-	       'For example, if one agent performs a series of physical actions in order to accomplish a goal, such as preparing a slice of buttered toast using a knife and a loaf of bread and some butter in a kitchen, then these actions have been correlated with this agent\'s mental states, including the current goals that the agent is pursuing.  '
+	       'If our mental model contains knowledge of the correlations between a physical perceptual stream and a reflective perceptual stream, then the agent can use these correlations to predict the reflective states of other agents based purely on their physical actions.  '
+	       'For example, if one agent performs a series of physical actions in order to accomplish a goal, such as preparing a slice of buttered toast using a knife and a loaf of bread and some butter in a kitchen, then these actions have been correlated with this agent\'s reflective states, including the current goals that the agent is pursuing.  '
 	       'If this agent then sees the physical world changing, and he knows that he is not causing those changes, then he can attempt to infer the state of mind of another agent.  '
-	       'This type of inference process, based on the previous correlations of physical and mental perceptual streams, is what we refer to as a self-reflective thought process.  '
-	       'A self-reflective thought process introduces the social distinction between Self and Other mental state knowledge that is inferred by using the previously learned correlations between physical perceptions and reflective mental perceptions.  '
-	       'We refer to this type of self-reflective knowledge as "singly recursive" mental knowledge, or "thinking about what someone else is thinking about".  '
-	       'Sometimes this singly recursive mental knowledge is referred to as "theory of mind" knowledge in the cognitive science literature.  '
+	       'This type of inference process, based on the previous correlations of physical and reflective perceptual streams, is what we refer to as a self-reflective thought process.  '
+	       'A self-reflective thought process introduces the social distinction between Self and Other reflective state knowledge that is inferred by using the previously learned correlations between physical perceptions and reflective perceptions.  '
+	       'We refer to this type of self-reflective knowledge as "singly recursive" reflective knowledge, or "thinking about what someone else is thinking about".  '
+	       'Sometimes this singly recursive reflective knowledge is referred to as "theory of mind" knowledge in the cognitive science literature.  '
 	       '</p>'
 	       ''
 	       '<p>'
@@ -222,17 +222,17 @@
 	       'However, there is the possibility that an agent is not always running a self-reflective process that pays attention to another agent\'s physical actions in order to infer what their goals might be.  '
 	       'In many cases, such as in our simulation of parents and children in a kitchen, some agents might focus single-mindedly on a novel task without thinking about what the goals of surrounding agents might be.  '
 	       'This type of model allows for an agent that works against the goals of another agent without knowing the goals of the other agent.  '
-	       'One might argue that this type of situation where one agent clobbers the goals of another agent is due to a form of self-reflective mental laziness and not due to malicious intentions.  '
+	       'One might argue that this type of situation where one agent clobbers the goals of another agent is due to a form of self-reflective laziness and not due to malicious intentions.  '
 	       '</p>'
 	       ''
 	       '<p><h4><a name="guilt_pride_and_self_conscious_thinking"></a>Guilt, Pride, and Self-Conscious Thinking</h4></p>'
 	       ''
 	       '<p>'
 	       'Because we are interested in modelling how children learn from parents as well as how parents guide a child\'s cooperative behavior, we need to extend our model slightly in order to allow for modelling what one agent thinks about what another agent thinks about her. '
-	       'This form of double mental recursion is what we refer to as a self-conscious knowledge and the problems that are represented in this type of knowledge are handled by what we call self-conscious thought processes.  '
-	       'For example, a little boy may be cooking something in the kitchen and he may carelessly work against the goals of his sister; this situation may be recognized by an onlooking parent, and the parent may inform the boy of a mental mistake he has made: "Ralph, your sister was going to use some of that butter that you just finished."  '
-	       'The little boy, Ralph in this case, thinks that his mother thinks that he made a mental mistake.  '
-	       'We hypothesize that modelling this form of double mental recursion in conjunction with respectful social relationships may be useful for understanding emotions such as guilt and pride.  '
+	       'This form of double reflective recursion is what we refer to as a self-conscious knowledge and the problems that are represented in this type of knowledge are handled by what we call self-conscious thought processes.  '
+	       'For example, a little boy may be cooking something in the kitchen and he may carelessly work against the goals of his sister; this situation may be recognized by an onlooking parent, and the parent may inform the boy of a self-reflective mistake he has made: "Ralph, your sister was going to use some of that butter that you just finished."  '
+	       'The little boy, Ralph in this case, thinks that his mother thinks that he made a self-reflective mistake.  '
+	       'We hypothesize that modelling this form of double reflective recursion in conjunction with respectful social relationships may be useful for understanding emotions such as guilt and pride.  '
 	       'We have focused our model of children learning to cooperate in the context of parents on this sort of self-conscious learning feedback.  '
 	       '</p>'
 	       ''
@@ -249,8 +249,8 @@
 	       '            <img src="/images/em_two-layers.jpg" width=180>'
 	       '          </td>'
 	       '          <td style="border-spacing:0px 0px;" border=0>'
-	       '                &#149;&nbsp;<strong>Self-Conscious Thinking</strong>:    processes that manipulate doubly recursive mental representations.  <br>'
-	       '                &#149;&nbsp;<strong>Self-Reflective Thinking</strong>:   processes that manipulate singly recursive mental representations.  <br>'
+	       '                &#149;&nbsp;<strong>Self-Conscious Thinking</strong>:    processes that manipulate doubly recursive reflective representations.  <br>'
+	       '                &#149;&nbsp;<strong>Self-Reflective Thinking</strong>:   processes that manipulate singly recursive reflective representations.  <br>'
 	       '                &#149;&nbsp;<strong>Reflective Thinking</strong>:        processes that manipulate representations about one\'s own mind.  <br>'
 	       '                &#149;&nbsp;<strong>Deliberative Thinking</strong>:      processes that manipulate representations of the physical world.  <br>'
 	       '                &#149;&nbsp;<strong>Learned Reactive Thinking</strong>:  processes that have been learned and chunked for efficient execution.  <br>'
@@ -471,7 +471,7 @@
 	       'Okay, back to the promised goal of this tutorial.  '
 	       'Notice that there are a number of knowledge bases that are listed at the bottom of the main IsisMon window.  '
 	       'Some of these knowledge bases are not completely working, such as the "Other Agent\'s Knowledge" knowledge base.  '
-	       'We haven\'t finished self-reflective representations, but you can take a look at the "Meta Mental Knowledge" by clicking on the Time button to the right.  '
+	       'We haven\'t finished self-reflective representations, but you can take a look at the "Reflective Event Knowledge" by clicking on the Time button to the right.  '
 	       'Clicking the Time button will interpret any events in the knowledge base as a human readable timeline.  '
 	       'If you <emph>really</emph> want to see all of the knowledge in a knowledge base, you can click the Graph button.  '
 	       'Try the Graph button with the Physical or Visual knowledge bases just to keep your computer from overheating with the amount of semantic information in the higher layers.  '
@@ -580,7 +580,7 @@
 
 [defunk em_two-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
-       [set this title       'Semantic Representations of Mental Reflection Events']
+       [set this title       'Semantic Representations of Reflection Events']
        [set this date        'March 12th, 2011']
        [set this author      'Bo Morgan']
        [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
@@ -669,7 +669,7 @@
     moral_compass_visual_object
     reflective_credit_assignment_agency
     semantic_packable_object
-    self_reflective_meta_mental_knowledge_agency
+    reflective_event_knowledge_agency
     isis_visual_agent
     event_stream
     isismon_agent
@@ -722,7 +722,7 @@
 		       'img02.jpg'
 		       'left_logo_header.jpg'
 		       'right_logo_header.jpg'
-		       'physical_mental_causal.jpg'
+		       'physical_reflective_causal.jpg'
 		       'em_two-layers.jpg'
 		       'isisworld.jpg'
 		       

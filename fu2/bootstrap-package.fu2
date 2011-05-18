@@ -143,6 +143,7 @@
 						     'extension/semantic_ordered_object/'
 						     'extension/semantic_packable_object/'
 						     'extension/semantic_physical_object/'
+						     'extension/semantic_physical_relationship_event_goal/'
 						     'extension/semantic_realm/'
 						     'extension/semantic_relationship_key/'
 						     'extension/semantic_resource/'

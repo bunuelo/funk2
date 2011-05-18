@@ -278,10 +278,11 @@ u64  raw__management_thread__add_load_memory_image_command(u8* filename) {return
 f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
   u64 filename__length = f2string__length(filename, cause);
-  u8* raw_filename = (u8*)alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, raw_filename);
-  raw_filename[filename__length] = 0;
-  f2ptr uid = f2integer__new(cause, raw__management_thread__add_load_memory_image_command(raw_filename));
+  u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+  raw__string__str_copy(cause, filename, filename__str);
+  filename__str[filename__length] = 0;
+  f2ptr uid = f2integer__new(cause, raw__management_thread__add_load_memory_image_command(filename__str));
+  f2__free(to_ptr(filename__str));
   return uid;
 }
 def_pcfunk1(management_thread__add_load_memory_image_command, filename,

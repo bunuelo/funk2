@@ -506,6 +506,7 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
     case ENOTDIR:      error_str = "A component of the path is not a directory."; break;
     case EOVERFLOW:    error_str = "(stat()) path refers to a file whose size cannot be represented in the type off_t.  This can occur when an application compiled on a 32-bit platform without -D_FILE_OFFSET_BITS=64 calls stat() on a file whose size exceeds (2<<31)-1 bits."; break;
     }
+    status("raw__pathname__stat: failed to stat pathname \"%s\".", this__str);
     {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "failed_to_stat_pathname"));

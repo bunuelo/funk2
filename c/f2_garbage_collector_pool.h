@@ -36,6 +36,7 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 #ifndef F2__GARBAGE_COLLECTOR_POOL__H
 #define F2__GARBAGE_COLLECTOR_POOL__H
 
+#include "f2_archconfig.h"
 #include "f2_tricolor_set.h"
 #include "f2_memorypool.h"
 #include "f2_protected_alloc_array.h"

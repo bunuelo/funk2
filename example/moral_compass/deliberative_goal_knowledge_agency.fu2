@@ -17,35 +17,35 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe deliberative_physical_goal_knowledge_agency [agency] []
+[deframe deliberative_goal_knowledge_agency [agency] []
   [new []
-       [construct agency `physical_goal_knowledge]
+       [construct agency `goal_knowledge]
        
        nil]]
 
 
-[deftypefunk deliberative_physical_goal_knowledge_agency execute create_knowledge []
-  [new meta_semantic_knowledge_base `physical_goal_knowledge [get [get this mind] semantic_realm]]]
+[deftypefunk deliberative_goal_knowledge_agency execute create_knowledge []
+  [new meta_semantic_knowledge_base `goal_knowledge [get [get this mind] semantic_realm]]]
 
-[deftypefunk deliberative_physical_goal_knowledge_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_goal_knowledge]]
+[deftypefunk deliberative_goal_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->goal_knowledge]]
 
 
-[deframe translate_physical_knowledge_to_physical_goal_knowledge_resource [traced_resource] []
+[deframe translate_physical_knowledge_to_goal_knowledge_resource [traced_resource] []
   [new []
-       [construct traced_resource `translate_physical_knowledge_to_physical_goal_knowledge
+       [construct traced_resource `translate_physical_knowledge_to_goal_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
        [= vital t]
        nil]]
 
-[deftypefunk translate_physical_knowledge_to_physical_goal_knowledge_resource execute execute_resource_raw_funk []
-  [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_goal_knowledge]]]
+[deftypefunk translate_physical_knowledge_to_goal_knowledge_resource execute execute_resource_raw_funk []
+  [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->goal_knowledge]]]
     [while t
       [let [[event [have physical_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
-	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->physical_goal event: ' event]]
+	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->goal event: ' event]]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]

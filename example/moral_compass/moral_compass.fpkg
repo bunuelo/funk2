@@ -130,7 +130,7 @@
 
 [defpackage deliberative_goal_knowledge_agency
   :packages [traced_mind
-	     semantic_physical_relationship_event_goal]
+	     semantic_goal]
    :sources ['deliberative_goal_knowledge_agency.fu2']]
 
 [defpackage deliberative_execution_agency

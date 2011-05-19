@@ -191,14 +191,14 @@ config_bit_num.h: bin/configurator
 	echo ""
 
 # compile the repl prompt (garbage collection is disabled until funk2 is stopped and a new repl image is used).
-img/bootstrap-repl.img: $(all_core_extensions) bin/funk2$(EXEEXT)
+img/bootstrap-repl.img: bin/funk2$(EXEEXT)
 	mkdir -p img
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
 	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2 fu2/bootstrap-repl.fu2
 
 # bootstrap the funk2 processor from a basic repl-prompt.
-img/bootstrap.img: $(all_core_extensions) img/bootstrap-repl.img
+img/bootstrap.img: img/bootstrap-repl.img
 	mkdir -p img
 	rm -f img/bootstrap.img
 	export LD_LIBRARY_PATH=lib/.libs; export DYLD_LIBRARY_PATH=lib/.libs; export PATH="lib/.libs:$$PATH"; bin/funk2 fu2/bootstrap.fu2
@@ -462,58 +462,6 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-#
-#all_core_extensions = \
-#  $(extension_cairo_libf2e_cairo_la) \
-#  $(extension_causality_libf2e_causality_la) \
-#  $(extension_conceptnet_libf2e_conceptnet_la) \
-#  $(extension_equals_hash_libf2e_equals_hash_la) \
-#  $(extension_event_stream_libf2e_event_stream_la) \
-#  $(extension_fibermon_libf2e_fibermon_la) \
-#  $(extension_forgetful_event_stream_libf2e_forgetful_event_stream_la) \
-#  $(extension_forward_planner_libf2e_forward_planner_la) \
-#  $(extension_frame_ball_libf2e_frame_ball_la) \
-#  $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
-#  $(extension_image_libf2e_image_la) \
-#  $(extension_image_sequence_libf2e_image_sequence_la) \
-#  $(extension_lick_libf2e_lick_la) \
-#  $(extension_mentality_libf2e_mentality_la) \
-#  $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la) \
-#  $(extension_mindmon_libf2e_mindmon_la) \
-#  $(extension_movie_libf2e_movie_la) \
-#  $(extension_propogator_libf2e_propogator_la) \
-#  $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
-#  $(extension_semantic_agent_libf2e_semantic_agent_la) \
-#  $(extension_semantic_causal_object_libf2e_semantic_causal_object_la) \
-#  $(extension_semantic_category_libf2e_semantic_category_la) \
-#  $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
-#  $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
-#  $(extension_semantic_event_libf2e_semantic_event) \
-#  $(extension_semantic_causal_event_libf2e_semantic_causal_event_la) \
-#  $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
-#  $(extension_semantic_frame_libf2e_semantic_frame) \
-#  $(extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la) \
-#  $(extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la) \
-#  $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
-#  $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la) \
-#  $(extension_semantic_object_type_libf2e_semantic_object_type_la) \
-#  $(extension_semantic_object_libf2e_semantic_object_la) \
-#  $(extension_semantic_packable_object_libf2e_semantic_packable_object_la) \
-#  $(extension_semantic_physical_object_libf2e_semantic_physical_object_la) \
-#  $(extension_semantic_physical_relationship_event_goal_libf2e_semantic_physical_relationship_event_goal_la) \
-#  $(extension_semantic_realm_libf2e_semantic_realm_la) \
-#  $(extension_semantic_relationship_key_libf2e_semantic_relationship_key_la) \
-#  $(extension_semantic_resource_libf2e_semantic_resource_la) \
-#  $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
-#  $(extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la) \
-#  $(extension_semantic_situation_libf2e_semantic_situation_la) \
-#  $(extension_semantic_situation_category_libf2e_semantic_situation_category_la) \
-#  $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la) \
-#  $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la) \
-#  $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
-#  $(extension_timeline_libf2e_timeline_la)
-#
 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

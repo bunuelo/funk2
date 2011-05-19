@@ -136,7 +136,6 @@ f2ptr raw__semantic_goal__is_occurring__add(f2ptr cause, f2ptr this, f2ptr that)
 
 f2ptr f2__semantic_goal__is_occurring__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_goal, this);
-  assert_argument_type(semantic_is_occurring,     that);
   return raw__semantic_goal__is_occurring__add(cause, this, that);
 }
 export_cefunk2(semantic_goal__is_occurring__add, this, that, 0, "");
@@ -148,7 +147,6 @@ f2ptr raw__semantic_goal__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr th
 
 f2ptr f2__semantic_goal__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_goal, this);
-  assert_argument_type(semantic_is_occurring,     that);
   return raw__semantic_goal__is_occurring__remove(cause, this, that);
 }
 export_cefunk2(semantic_goal__is_occurring__remove, this, that, 0, "");

@@ -24,7 +24,8 @@
 
 // semantic_goal
 
-f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr is_occurring_funk) {
+  assert_argument_type(funkable, is_occurring_funk);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_goal"));
   }
@@ -34,16 +35,18 @@ f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
       return result;
     }
   }
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "is_occurring_funk"), is_occurring_funk);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"), nil);
   return this;
 }
 
-f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr is_occurring_funk) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_goal__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_goal__type_create(cause, this, semantic_realm, is_occurring_funk);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -51,13 +54,12 @@ f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm) {
   return this;
 }
 
-f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr is_occurring_funk) {
+  assert_argument_type(semantic_realm, semantic_realm);
+  assert_argument_type(funkable,       is_occurring_funk);
   return raw__semantic_goal__new(cause, semantic_realm);
 }
-export_cefunk1(semantic_goal__new, semantic_realm, 0, "Returns a new semantic_goal object.");
+export_cefunk2(semantic_goal__new, semantic_realm, is_occurring_funk, 0, "Returns a new semantic_goal object.");
 
 
 boolean_t raw__semantic_goal__is_type(f2ptr cause, f2ptr thing) {
@@ -93,49 +95,75 @@ f2ptr f2__semantic_goal__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_goal__type, thing, 0, "Returns the specific type of object that this semantic_goal is.");
 
 
-f2ptr raw__semantic_goal__event__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"));
+f2ptr raw__semantic_goal__is_occurring_funk(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "is_occurring_funk"));
 }
 
-f2ptr f2__semantic_goal__event__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_goal__is_occurring_funk(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_goal, this);  
+  return raw__semantic_goal__is_occurring_funk(cause, this);
+}
+export_cefunk1(semantic_goal__is_occurring_funk, this, 0, "Returns the is_occurring_funk of this semantic_goal.");
+
+
+f2ptr raw__semantic_goal__is_occurring_funk__set(f2ptr cause, f2ptr this, f2ptr is_occurring_funk) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "is_occurring_funk"), is_occurring_funk);
+}
+
+f2ptr f2__semantic_goal__is_occurring_funk__set(f2ptr cause, f2ptr this, f2ptr is_occurring_funk) {
   assert_argument_type(semantic_goal, this);
-  return raw__semantic_goal__event__lookup(cause, this);
+  assert_argument_type(funkable,      is_occurring_funk);
+  return raw__semantic_goal__is_occurring_funk__set(cause, this, is_occurring_funk);
 }
-export_cefunk1(semantic_goal__event__lookup, this, 0, "");
+export_cefunk2(semantic_goal__is_occurring_funk__set, this, is_occurring_funk, 0, "Sets the is_occurring_funk of this semantic_goal.");
 
 
-f2ptr raw__semantic_goal__event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"), that);
+
+f2ptr raw__semantic_goal__is_occurring__lookup(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"));
 }
 
-f2ptr f2__semantic_goal__event__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_goal__is_occurring__lookup(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_goal, this);
-  assert_argument_type(semantic_event,     that);
-  return raw__semantic_goal__event__add(cause, this, that);
+  return raw__semantic_goal__is_occurring__lookup(cause, this);
 }
-export_cefunk2(semantic_goal__event__add, this, that, 0, "");
+export_cefunk1(semantic_goal__is_occurring__lookup, this, 0, "");
 
 
-f2ptr raw__semantic_goal__event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"), that);
+f2ptr raw__semantic_goal__is_occurring__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"), that);
 }
 
-f2ptr f2__semantic_goal__event__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_goal__is_occurring__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_goal, this);
-  assert_argument_type(semantic_event,     that);
-  return raw__semantic_goal__event__remove(cause, this, that);
+  assert_argument_type(semantic_is_occurring,     that);
+  return raw__semantic_goal__is_occurring__add(cause, this, that);
 }
-export_cefunk2(semantic_goal__event__remove, this, that, 0, "");
+export_cefunk2(semantic_goal__is_occurring__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_goal__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"), that);
+}
+
+f2ptr f2__semantic_goal__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_goal, this);
+  assert_argument_type(semantic_is_occurring,     that);
+  return raw__semantic_goal__is_occurring__remove(cause, this, that);
+}
+export_cefunk2(semantic_goal__is_occurring__remove, this, that, 0, "");
 
 
 f2ptr f2__semantic_goal_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__event__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__event__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__event__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "is_occurring_funk"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_occurring_funk")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),             new__symbol(cause, "is_occurring_funk"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_occurring_funk__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "is_occurring"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_occurring__lookup")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "is_occurring"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_occurring__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "is_occurring"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_occurring__remove")));}
   return this;
 }
 

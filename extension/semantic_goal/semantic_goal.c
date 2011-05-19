@@ -57,7 +57,7 @@ f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr is_occurr
 f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr is_occurring_funk) {
   assert_argument_type(semantic_realm, semantic_realm);
   assert_argument_type(funkable,       is_occurring_funk);
-  return raw__semantic_goal__new(cause, semantic_realm);
+  return raw__semantic_goal__new(cause, semantic_realm, is_occurring_funk);
 }
 export_cefunk2(semantic_goal__new, semantic_realm, is_occurring_funk, 0, "Returns a new semantic_goal object.");
 

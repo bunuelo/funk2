@@ -207,55 +207,58 @@ img/bootstrap.img: $(all_core_extensions) img/bootstrap-repl.img
 
 ACLOCAL_AMFLAGS = -I m4
 
-lib_LTLIBRARIES = lib/libfunk2.la \
-                  extension/causality/libf2e_causality.la \
-                  extension/cairo/libf2e_cairo.la \
-                  extension/conceptnet/libf2e_conceptnet.la \
-                  extension/event_stream/libf2e_event_stream.la \
-                  extension/equals_hash/libf2e_equals_hash.la \
-                  extension/fibermon/libf2e_fibermon.la \
-                  extension/forgetful_event_stream/libf2e_forgetful_event_stream.la \
-                  extension/forward_planner/libf2e_forward_planner.la \
-                  extension/frame_ball/libf2e_frame_ball.la \
-                  extension/graph_isomorphism/libf2e_graph_isomorphism.la \
-                  extension/image/libf2e_image.la \
-                  extension/image_sequence/libf2e_image_sequence.la \
-                  extension/lick/libf2e_lick.la \
-                  extension/mentality/libf2e_mentality.la \
-                  extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
-                  extension/mindmon/libf2e_mindmon.la \
-                  extension/movie/libf2e_movie.la \
-                  extension/propogator/libf2e_propogator.la \
-                  extension/semantic_action_event/libf2e_semantic_action_event.la \
-                  extension/semantic_agent/libf2e_semantic_agent.la \
-                  extension/semantic_causal_event/libf2e_semantic_causal_event.la \
-                  extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
-                  extension/semantic_causal_object/libf2e_semantic_causal_object.la \
-                  extension/semantic_category/libf2e_semantic_category.la \
-                  extension/semantic_containment_object/libf2e_semantic_containment_object.la \
-                  extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
-                  extension/semantic_event/libf2e_semantic_event.la \
-                  extension/semantic_frame/libf2e_semantic_frame.la \
-                  extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.la \
-                  extension/semantic_know_of_relationship_event/libf2e_semantic_know_of_relationship_event.la \
-                  extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
-                  extension/semantic_object_type/libf2e_semantic_object_type.la \
-                  extension/semantic_ordered_object/libf2e_semantic_ordered_object.la \
-                  extension/semantic_object/libf2e_semantic_object.la \
-                  extension/semantic_packable_object/libf2e_semantic_packable_object.la \
-                  extension/semantic_physical_object/libf2e_semantic_physical_object.la \
-                  extension/semantic_physical_relationship_event_goal/libf2e_semantic_physical_relationship_event_goal.la \
-                  extension/semantic_realm/libf2e_semantic_realm.la \
-                  extension/semantic_relationship_key/libf2e_semantic_relationship_key.la \
-                  extension/semantic_resource/libf2e_semantic_resource.la \
-                  extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
-                  extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la \
-                  extension/semantic_situation/libf2e_semantic_situation.la \
-                  extension/semantic_situation_category/libf2e_semantic_situation_category.la \
-                  extension/semantic_situation_transition/libf2e_semantic_situation_transition.la \
-                  extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
-                  extension/semantic_visual_object/libf2e_semantic_visual_object.la \
-                  extension/timeline/libf2e_timeline.la
+
+
+all_core_extensions = extension/causality/libf2e_causality.la \
+                      extension/cairo/libf2e_cairo.la \
+                      extension/conceptnet/libf2e_conceptnet.la \
+                      extension/event_stream/libf2e_event_stream.la \
+                      extension/equals_hash/libf2e_equals_hash.la \
+                      extension/fibermon/libf2e_fibermon.la \
+                      extension/forgetful_event_stream/libf2e_forgetful_event_stream.la \
+                      extension/forward_planner/libf2e_forward_planner.la \
+                      extension/frame_ball/libf2e_frame_ball.la \
+                      extension/graph_isomorphism/libf2e_graph_isomorphism.la \
+                      extension/image/libf2e_image.la \
+                      extension/image_sequence/libf2e_image_sequence.la \
+                      extension/lick/libf2e_lick.la \
+                      extension/mentality/libf2e_mentality.la \
+                      extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
+                      extension/mindmon/libf2e_mindmon.la \
+                      extension/movie/libf2e_movie.la \
+                      extension/propogator/libf2e_propogator.la \
+                      extension/semantic_action_event/libf2e_semantic_action_event.la \
+                      extension/semantic_agent/libf2e_semantic_agent.la \
+                      extension/semantic_causal_event/libf2e_semantic_causal_event.la \
+                      extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
+                      extension/semantic_causal_object/libf2e_semantic_causal_object.la \
+                      extension/semantic_category/libf2e_semantic_category.la \
+                      extension/semantic_containment_object/libf2e_semantic_containment_object.la \
+                      extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
+                      extension/semantic_event/libf2e_semantic_event.la \
+                      extension/semantic_frame/libf2e_semantic_frame.la \
+                      extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.la \
+                      extension/semantic_know_of_relationship_event/libf2e_semantic_know_of_relationship_event.la \
+                      extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la \
+                      extension/semantic_object_type/libf2e_semantic_object_type.la \
+                      extension/semantic_ordered_object/libf2e_semantic_ordered_object.la \
+                      extension/semantic_object/libf2e_semantic_object.la \
+                      extension/semantic_packable_object/libf2e_semantic_packable_object.la \
+                      extension/semantic_physical_object/libf2e_semantic_physical_object.la \
+                      extension/semantic_physical_relationship_event_goal/libf2e_semantic_physical_relationship_event_goal.la \
+                      extension/semantic_realm/libf2e_semantic_realm.la \
+                      extension/semantic_relationship_key/libf2e_semantic_relationship_key.la \
+                      extension/semantic_resource/libf2e_semantic_resource.la \
+                      extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
+                      extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la \
+                      extension/semantic_situation/libf2e_semantic_situation.la \
+                      extension/semantic_situation_category/libf2e_semantic_situation_category.la \
+                      extension/semantic_situation_transition/libf2e_semantic_situation_transition.la \
+                      extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
+                      extension/semantic_visual_object/libf2e_semantic_visual_object.la \
+                      extension/timeline/libf2e_timeline.la
+
+lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
 
 #bin_PROGRAMS    = bin/funk2-static
 
@@ -460,56 +463,57 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-all_core_extensions = \
-  $(extension_cairo_libf2e_cairo_la) \
-  $(extension_causality_libf2e_causality_la) \
-  $(extension_conceptnet_libf2e_conceptnet_la) \
-  $(extension_equals_hash_libf2e_equals_hash_la) \
-  $(extension_event_stream_libf2e_event_stream_la) \
-  $(extension_fibermon_libf2e_fibermon_la) \
-  $(extension_forgetful_event_stream_libf2e_forgetful_event_stream_la) \
-  $(extension_forward_planner_libf2e_forward_planner_la) \
-  $(extension_frame_ball_libf2e_frame_ball_la) \
-  $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
-  $(extension_image_libf2e_image_la) \
-  $(extension_image_sequence_libf2e_image_sequence_la) \
-  $(extension_lick_libf2e_lick_la) \
-  $(extension_mentality_libf2e_mentality_la) \
-  $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la) \
-  $(extension_mindmon_libf2e_mindmon_la) \
-  $(extension_movie_libf2e_movie_la) \
-  $(extension_propogator_libf2e_propogator_la) \
-  $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
-  $(extension_semantic_agent_libf2e_semantic_agent_la) \
-  $(extension_semantic_causal_object_libf2e_semantic_causal_object_la) \
-  $(extension_semantic_category_libf2e_semantic_category_la) \
-  $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
-  $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
-  $(extension_semantic_event_libf2e_semantic_event) \
-  $(extension_semantic_causal_event_libf2e_semantic_causal_event_la) \
-  $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
-  $(extension_semantic_frame_libf2e_semantic_frame) \
-  $(extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la) \
-  $(extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la) \
-  $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
-  $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la) \
-  $(extension_semantic_object_type_libf2e_semantic_object_type_la) \
-  $(extension_semantic_object_libf2e_semantic_object_la) \
-  $(extension_semantic_packable_object_libf2e_semantic_packable_object_la) \
-  $(extension_semantic_physical_object_libf2e_semantic_physical_object_la) \
-  $(extension_semantic_physical_relationship_event_goal_libf2e_semantic_physical_relationship_event_goal_la) \
-  $(extension_semantic_realm_libf2e_semantic_realm_la) \
-  $(extension_semantic_relationship_key_libf2e_semantic_relationship_key_la) \
-  $(extension_semantic_resource_libf2e_semantic_resource_la) \
-  $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
-  $(extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la) \
-  $(extension_semantic_situation_libf2e_semantic_situation_la) \
-  $(extension_semantic_situation_category_libf2e_semantic_situation_category_la) \
-  $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la) \
-  $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la) \
-  $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
-  $(extension_timeline_libf2e_timeline_la)
-
+#
+#all_core_extensions = \
+#  $(extension_cairo_libf2e_cairo_la) \
+#  $(extension_causality_libf2e_causality_la) \
+#  $(extension_conceptnet_libf2e_conceptnet_la) \
+#  $(extension_equals_hash_libf2e_equals_hash_la) \
+#  $(extension_event_stream_libf2e_event_stream_la) \
+#  $(extension_fibermon_libf2e_fibermon_la) \
+#  $(extension_forgetful_event_stream_libf2e_forgetful_event_stream_la) \
+#  $(extension_forward_planner_libf2e_forward_planner_la) \
+#  $(extension_frame_ball_libf2e_frame_ball_la) \
+#  $(extension_graph_isomorphism_libf2e_graph_isomorphism_la) \
+#  $(extension_image_libf2e_image_la) \
+#  $(extension_image_sequence_libf2e_image_sequence_la) \
+#  $(extension_lick_libf2e_lick_la) \
+#  $(extension_mentality_libf2e_mentality_la) \
+#  $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la) \
+#  $(extension_mindmon_libf2e_mindmon_la) \
+#  $(extension_movie_libf2e_movie_la) \
+#  $(extension_propogator_libf2e_propogator_la) \
+#  $(extension_semantic_action_event_libf2e_semantic_action_event_la) \
+#  $(extension_semantic_agent_libf2e_semantic_agent_la) \
+#  $(extension_semantic_causal_object_libf2e_semantic_causal_object_la) \
+#  $(extension_semantic_category_libf2e_semantic_category_la) \
+#  $(extension_semantic_containment_object_libf2e_semantic_containment_object_la) \
+#  $(extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la) \
+#  $(extension_semantic_event_libf2e_semantic_event) \
+#  $(extension_semantic_causal_event_libf2e_semantic_causal_event_la) \
+#  $(extension_semantic_event_sequence_libf2e_semantic_event_sequence_la) \
+#  $(extension_semantic_frame_libf2e_semantic_frame) \
+#  $(extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la) \
+#  $(extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la) \
+#  $(extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la) \
+#  $(extension_semantic_ordered_object_libf2e_semantic_ordered_object_la) \
+#  $(extension_semantic_object_type_libf2e_semantic_object_type_la) \
+#  $(extension_semantic_object_libf2e_semantic_object_la) \
+#  $(extension_semantic_packable_object_libf2e_semantic_packable_object_la) \
+#  $(extension_semantic_physical_object_libf2e_semantic_physical_object_la) \
+#  $(extension_semantic_physical_relationship_event_goal_libf2e_semantic_physical_relationship_event_goal_la) \
+#  $(extension_semantic_realm_libf2e_semantic_realm_la) \
+#  $(extension_semantic_relationship_key_libf2e_semantic_relationship_key_la) \
+#  $(extension_semantic_resource_libf2e_semantic_resource_la) \
+#  $(extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la) \
+#  $(extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la) \
+#  $(extension_semantic_situation_libf2e_semantic_situation_la) \
+#  $(extension_semantic_situation_category_libf2e_semantic_situation_category_la) \
+#  $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la) \
+#  $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la) \
+#  $(extension_semantic_visual_object_libf2e_semantic_visual_object_la) \
+#  $(extension_timeline_libf2e_timeline_la)
+#
 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

@@ -96,7 +96,7 @@ export_cefunk1(semantic_goal__type, thing, 0, "Returns the specific type of obje
 
 
 f2ptr raw__semantic_goal__is_occurring_funk(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "is_occurring_funk"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "is_occurring_funk"));
 }
 
 f2ptr f2__semantic_goal__is_occurring_funk(f2ptr cause, f2ptr this) {
@@ -107,7 +107,7 @@ export_cefunk1(semantic_goal__is_occurring_funk, this, 0, "Returns the is_occurr
 
 
 f2ptr raw__semantic_goal__is_occurring_funk__set(f2ptr cause, f2ptr this, f2ptr is_occurring_funk) {
-  return raw__frame__add_var_value(cause, this, new__symbol(cause, "is_occurring_funk"), is_occurring_funk);
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "is_occurring_funk"), is_occurring_funk);
 }
 
 f2ptr f2__semantic_goal__is_occurring_funk__set(f2ptr cause, f2ptr this, f2ptr is_occurring_funk) {

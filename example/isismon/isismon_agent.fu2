@@ -330,6 +330,7 @@
 				other_agents_isismon_knowledge
 				reflective_event_isismon_knowledge
 				reflective_isismon_knowledge
+				physical_goal_isismon_knowledge
 				physical_event_isismon_knowledge
 				physical_isismon_knowledge
 				visual_isismon_knowledge
@@ -461,6 +462,9 @@
 		    [= reflective_isismon_knowledge [new isismon_knowledge this `reflective_knowledge]]
 		    [have vbox pack_start [get reflective_isismon_knowledge widget] nil nil 0]
 		    
+		    [= physical_goal_isismon_knowledge [new isismon_knowledge this `physical_goal_knowledge]]
+		    [have vbox pack_start [get physical_goal_isismon_knowledge widget] nil nil 0]
+		    
 		    [= physical_event_isismon_knowledge [new isismon_knowledge this `physical_event_knowledge]]
 		    [have vbox pack_start [get physical_event_isismon_knowledge widget] nil nil 0]
 		    
@@ -503,6 +507,7 @@
   [if other_agents_isismon_knowledge     [have other_agents_isismon_knowledge     update]]
   [if reflective_event_isismon_knowledge [have reflective_event_isismon_knowledge update]]
   [if reflective_isismon_knowledge       [have reflective_isismon_knowledge       update]]
+  [if physical_goal_isismon_knowledge    [have physical_goal_isismon_knowledge    update]]
   [if physical_event_isismon_knowledge   [have physical_event_isismon_knowledge   update]]
   [if physical_isismon_knowledge         [have physical_isismon_knowledge         update]]
   [if visual_isismon_knowledge           [have visual_isismon_knowledge           update]]

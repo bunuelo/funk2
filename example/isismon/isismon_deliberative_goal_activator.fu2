@@ -64,7 +64,7 @@
        
        
        [= create_physical_relationship_goal_resource__hbox [gtk-hbox-new 2]]
-       [= create_physical_relationship_goal_resource__button [gtk-button-new_with_label 'Turn Right - ']]
+       [= create_physical_relationship_goal_resource__button [gtk-button-new_with_label 'Create Physical Relationship Goal']]
        [= create_physical_relationship_goal_resource__source_object_type__label [gtk-label-new 'Source Object Type: ']]
        [= create_physical_relationship_goal_resource__source_object_type__entry [gtk-entry-new]]
        [= create_physical_relationship_goal_resource__key_type__label           [gtk-label-new 'Key Type: ']]

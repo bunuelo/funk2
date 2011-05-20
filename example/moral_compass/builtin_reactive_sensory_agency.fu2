@@ -112,6 +112,9 @@
 	      visual_objects]
 	`[print 'copying differences from input_visual_knowledge to visual_knowledge.']
 	[have [get [get this mind] input_visual_knowledge] copy_differences_to [get [get this mind] visual_knowledge]]
+	
+	'Once we have finished changing visual_knowledge, we add a special ending trace event.'
+	[have [get [get this mind] visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
 	]]]]
 
 

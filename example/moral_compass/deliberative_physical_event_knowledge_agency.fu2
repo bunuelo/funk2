@@ -34,7 +34,8 @@
 
 
 [deframe translate_physical_knowledge_to_physical_event_knowledge_resource [traced_resource] [[existence_physical_phenomenon_hash        [hash]]
-											     [existence_physical_relationship_ptypehash [new ptypehash]]]
+											      [existence_physical_relationship_ptypehash [new ptypehash]]
+											      [end_of_physical_event_changes_trigger     [new fiber_trigger]]]
   [new []
        [construct traced_resource `translate_physical_knowledge_to_physical_event_knowledge
 		  [funk []
@@ -96,6 +97,10 @@
 										     [semantic-set relationship_event absolute_end_time [get event time]]
 										     [have this physical_relationship_existence-remove physical_relationship]
 										     ]]]]
+			  [[and [is-type `semantic_knowledge_base_event event]
+				[eq event_type `end_of_physical_changes]]      [prog [have end_of_physical_event_changes_trigger trigger]
+										     [print 'triggered end_of_physical_event_changes_trigger!']
+										     nil]]
 			  ]]]]
 	[have physical_knowledge_iterator increment]]]]]
 

@@ -84,6 +84,9 @@
 																	     [have subject-phenomenon_semantic_frame assure_exists `preposition `on object-phenomenon_semantic_frame]]]]]
 															 ]]
 										       ]]]
+			  [[and [is-type `semantic_knowledge_base_event event]
+				[eq event_type `end_of_visual_changes]]        [prog [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_changes nil]]
+										     nil]]
 			  ]]]]
 	[have visual_knowledge_iterator increment]]]]]
 

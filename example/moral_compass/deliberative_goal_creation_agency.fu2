@@ -23,7 +23,7 @@
 [deframe deliberative_goal_creation_agency [agency] []
   [new []
        [construct agency `goal_creation]
-       
+       [have this add_resource [new create_physical_relationship_goal_resource]]
        nil]]
 
 [deftypefunk deliberative_goal_creation_agency execute create_knowledge []

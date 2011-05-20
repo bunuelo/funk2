@@ -20,20 +20,28 @@
 
 'goal_knowledge_resource'
 
-[deframe goal_knowledge_resource [traced_resource] [semantic_goal evaluate_is_occurring_trigger]
-  [new [initial-name initial-semantic_goal initial-evaluate_is_occurring_trigger]
+[deframe goal_knowledge_resource [traced_resource] [semantic_goal
+						    is_occuring_funk
+						    evaluate_is_occurring_trigger]
+  [new [initial-name
+	initial-semantic_goal
+	initial-is_occurring_funk
+	initial-evaluate_is_occurring_trigger]
        [construct traced_resource initial-name
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
        [= semantic_goal                 initial-semantic_goal]
+       [= is_occurring_funk             initial-is_occurring_funk]
        [= evaluate_is_occurring_trigger initial-evaluate_is_occurring_trigger]
        nil]]
 
 [deftypefunk goal_knowledge_resource execute execute_resource_raw_funk []
+  [terminal_format standard-terminal '\n' [get this name] ' resource activated.']
   [while t
     [wait-for-trigger evaluate_is_occurring_trigger]
-    [let [[is_occurring [apply [get semantic_goal is_occurring_funk] nil]]]
+    [terminal_format standard-terminal '\n' [get this name] ' resource triggered.']
+    [let [[is_occurring [apply is_occurring_funk nil]]]
       [semantic-set semantic_goal is_occurring is_occurring]]]]
 
 

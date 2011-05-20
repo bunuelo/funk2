@@ -25,7 +25,6 @@
 // semantic_goal
 
 f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
-  assert_argument_type(funkable, is_occurring_funk);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_goal"));
   }

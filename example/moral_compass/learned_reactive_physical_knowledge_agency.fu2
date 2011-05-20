@@ -63,6 +63,7 @@
 										 [if [is-type `semantic_visual_object semantic_frame]
 										     [let [[phenomenal_name [semantic-get semantic_frame phenomenal_name]]]
 										       [let [[phenomenon_semantic_frame [get this physical_phenomenon_semantic_frame phenomenal_name]]]
+											 [have phenomenon_semantic_frame add `property `object_type [semantic-get semantic_frame object_type]]
 											 [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_semantic_frame phenomenon_semantic_frame]
 											 ]]]]]
 			  [[and [is-type `semantic_frame_event event]

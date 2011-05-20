@@ -26,9 +26,9 @@
 #include "../semantic_event/semantic_event.h"
 
 
-f2ptr     raw__semantic_goal__type_create         (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr is_occurring_funk);
-f2ptr     raw__semantic_goal__new                 (f2ptr cause, f2ptr semantic_realm, f2ptr is_occurring_funk);
-f2ptr      f2__semantic_goal__new                 (f2ptr cause, f2ptr semantic_realm, f2ptr is_occurring_funk);
+f2ptr     raw__semantic_goal__type_create         (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_goal__new                 (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_goal__new                 (f2ptr cause, f2ptr semantic_realm);
 boolean_t raw__semantic_goal__is_type             (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_goal__is_type             (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_goal__type                (f2ptr cause, f2ptr this);

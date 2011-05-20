@@ -37,7 +37,6 @@
       [semantic-set semantic_goal is_occurring is_occurring]]]]
 
 
-
 'deliberative_goal_knowledge_agency'
 
 [deframe deliberative_goal_knowledge_agency [agency] []

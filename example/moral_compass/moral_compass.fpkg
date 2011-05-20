@@ -118,6 +118,7 @@
   :packages [traced_mind
 	     deliberative_physical_event_knowledge_agency
 	     deliberative_goal_knowledge_agency
+	     deliberative_goal_creation_agency
 	     deliberative_execution_agency
 	     english_language]
    :sources ['deliberative_layer.fu2']]
@@ -132,6 +133,11 @@
   :packages [traced_mind
 	     semantic_goal]
    :sources ['deliberative_goal_knowledge_agency.fu2']]
+
+[defpackage deliberative_goal_creation_agency
+  :packages [traced_mind
+	     semantic_goal]
+   :sources ['deliberative_goal_creation_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [traced_mind]

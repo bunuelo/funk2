@@ -21,7 +21,7 @@
 'goal_knowledge_resource'
 
 [deframe goal_knowledge_resource [traced_resource] [semantic_goal evaluate_is_occuring_trigger]
-  [new [initial-name initial-semantic_goal initial-evaluate_is_occuring_trigger]
+  [new [initial-name initial-semantic_goal initial-evaluate_is_occurring_trigger]
        [construct traced_resource initial-name
 		  [funk []
 			[have this execute_resource_raw_funk]

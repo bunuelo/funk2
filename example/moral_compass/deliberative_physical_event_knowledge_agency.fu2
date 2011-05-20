@@ -99,7 +99,6 @@
 										     ]]]]
 			  [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `end_of_physical_changes]]      [prog [have end_of_physical_event_changes_trigger trigger]
-										     [print 'triggered end_of_physical_event_changes_trigger!']
 										     nil]]
 			  ]]]]
 	[have physical_knowledge_iterator increment]]]]]

@@ -44,12 +44,19 @@
        nil]]
 
 [deftypefunk create_physical_relationship_goal_resource execute execute_resource_raw_funk [source_object_type key_type key target_object_type]
-  [let [[goal_resource_name [get [string-concat [get source_object_type as-string]
-						[get key_type           as-string]
-						[get key                as-string]
-						[get target_object_type as-string]] as-symbol]]]
-    [print goal_resource_name]]
-  nil]
+  [let [[goal_resource_name            [get [string-concat [get source_object_type as-string] '-'
+							   [get key_type           as-string] '-'
+							   [get key                as-string] '-'
+							   [get target_object_type as-string] '-goal'] as-symbol]]
+	[semantic_goal                 [new semantic_goal [get [get this mind] semantic_realm]]]
+	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_knowledge_to_physical_event_knowledge]
+					    end_of_physical_event_changes_trigger]]]
+    [let [[goal_resource [new goal_knowledge_resource
+			      goal_resource_name
+			      semantic_goal
+			      evaluate_is_occurring_trigger]]]
+      [print goal_resource]
+      nil]]]
 
 
 

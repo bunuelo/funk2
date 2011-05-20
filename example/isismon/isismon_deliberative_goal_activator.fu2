@@ -1,0 +1,104 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe isismon_agent_deliberative_goal_resource_activator [frame] [isismon_agent
+								     
+								     window
+								     vbox
+								     menu_bar
+								     file_menu_item
+								     file_menu
+								     file_exit_menu_item
+								     
+								     globalize_isis_world__hbox
+								     globalize_isis_world__button
+								     
+								     create_physical_relationship_goal_resource__hbox
+								     create_physical_relationship_goal_resource__button
+								     create_physical_relationship_goal_resource__source_object_type__label
+								     create_physical_relationship_goal_resource__source_object_type__entry
+								     create_physical_relationship_goal_resource__key_type__label
+								     create_physical_relationship_goal_resource__key_type__entry
+								     create_physical_relationship_goal_resource__key__label
+								     create_physical_relationship_goal_resource__key__entry
+								     create_physical_relationship_goal_resource__target_object_type__label
+								     create_physical_relationship_goal_resource__target_object_type__entry
+								     
+								     ]
+  [new [initial-isismon_agent]
+       [= isismon_agent initial-isismon_agent]
+       [= window [gtk-window-new]]
+       [set window title [format nil 'isismon - agent deliberative goal resource activator - ' [get [get isismon_agent isis_agent] name]]]
+       [set window transient_for [get isismon_agent window]]
+       [set window destroy_with_parent t]
+       [= vbox [gtk-vbox-new 2]]
+       
+       [= menu_bar            [gtk-menu_bar-new]]
+       [= file_menu_item      [gtk-menu_item-new 'File']]
+       [= file_menu           [gtk-menu-new]]
+       [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
+       [have file_exit_menu_item signal_connect 'activate'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       [have menu_bar append  file_menu_item]
+       [have file_menu append file_exit_menu_item]
+       [set file_menu_item submenu file_menu]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       
+       [= create_physical_relationship_goal_resource__hbox [gtk-hbox-new 2]]
+       [= create_physical_relationship_goal_resource__button [gtk-button-new_with_label 'Turn Right - ']]
+       [= create_physical_relationship_goal_resource__source_object_type__label [gtk-label-new 'Source Object Type: ']]
+       [= create_physical_relationship_goal_resource__source_object_type__entry [gtk-entry-new]]
+       [= create_physical_relationship_goal_resource__key_type__label           [gtk-label-new 'Key Type: ']]
+       [= create_physical_relationship_goal_resource__key_type__entry           [gtk-entry-new]]
+       [= create_physical_relationship_goal_resource__key__label                [gtk-label-new 'Key: ']]
+       [= create_physical_relationship_goal_resource__key__entry                [gtk-entry-new]]
+       [= create_physical_relationship_goal_resource__target_object_type__label [gtk-label-new 'Target Object Type: ']]
+       [= create_physical_relationship_goal_resource__target_object_type__entry [gtk-entry-new]]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__button nil nil 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__source_object_type__label nil nil 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__source_object_type__entry t t 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__key_type__label           nil nil 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__key_type__entry           t t 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__key__label                nil nil 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__key__entry                t t 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__target_object_type__label nil nil 0]
+       [have create_physical_relationship_goal_resource__hbox pack_start create_physical_relationship_goal_resource__target_object_type__entry t t 0]
+       [have vbox pack_start create_physical_relationship_goal_resource__hbox nil nil 0]
+       [have create_physical_relationship_goal_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `deliberative `goal_creation `create_physical_relationship_goal
+			 [have [get create_physical_relationship_goal_resource__source_object_type__entry text] read]
+			 [have [get create_physical_relationship_goal_resource__key_type__entry text]           read]
+			 [have [get create_physical_relationship_goal_resource__key__entry text]                read]
+			 [have [get create_physical_relationship_goal_resource__target_object_type__entry text] read]
+			 ]]
+	     nil]
+       
+       
+       [have window add vbox]
+       
+       [have window show_all]]]
+
+[deftypefunk isismon_agent_deliberative_goal_resource_activator execute activate_resource [layer_name agency_name resource_name :rest args]
+  [let [[activate_resource [get [get [get isismon_agent isis_agent] mind] resource `builtin_reactive `neural_plug `activate_resource]]]
+    [have-apply activate_resource command `[,layer_name ,agency_name ,resource_name @args]]]]
+

@@ -21,7 +21,7 @@
 'goal_knowledge_resource'
 
 [deframe goal_knowledge_resource [traced_resource] [semantic_goal
-						    is_occuring_funk
+						    is_occurring_funk
 						    evaluate_is_occurring_trigger]
   [new [initial-name
 	initial-semantic_goal

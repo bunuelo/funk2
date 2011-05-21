@@ -100,7 +100,9 @@
    :sources ['moral_compass_perception.fu2']]
 
 [defpackage learned_reactive_sensory_agency
-  :packages [traced_mind moral_compass_perception]
+  :packages [traced_mind
+	     moral_compass_perception
+	     semantic_object_type]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency

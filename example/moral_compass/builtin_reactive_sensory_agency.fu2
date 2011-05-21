@@ -47,7 +47,8 @@
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
   [new semantic_knowledge_base `input_visual_knowledge [get [get this mind] semantic_realm]]
-  [new semantic_knowledge_base `visual_knowledge       [get [get this mind] semantic_realm]]]
+  [new semantic_knowledge_base `visual_knowledge       [get [get this mind] semantic_realm]]
+  [new semantic_knowledge_base `object_type_knowledge  [get [get this mind] semantic_realm]]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
   nil]

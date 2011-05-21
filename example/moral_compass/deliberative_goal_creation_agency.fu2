@@ -50,7 +50,7 @@
 				evaluate_is_occurring_trigger]]]
 	[have [get [get this mind] agency `deliberative `goal_knowledge] add_resource goal_resource]
 	[have goal_resource activate]
-	nil]]]]  
+	nil]]]]
 
 [deftypefunk deliberative_goal_creation_agency execute create_builtin_goals []
   

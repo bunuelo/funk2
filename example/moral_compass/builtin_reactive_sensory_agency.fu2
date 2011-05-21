@@ -76,6 +76,7 @@
 			[if [null semantic_object_type]
 			    [prog [= semantic_object_type [new semantic_object_type [get [get this mind] semantic_realm]]]
 				  [semantic-set semantic_object_type phenomenal_name object_type]
+				  [have [get [get this mind] semantic_knowledge_base `object_type_knowledge] add_semantic_frame semantic_object_type]
 				  [have semantic_object_type_name_ptypehash add object_type semantic_object_type]]]
 			[semantic-add semantic_object_type example phenomenal_name]]]]
 	      visual_objects]

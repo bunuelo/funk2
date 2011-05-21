@@ -41,6 +41,7 @@
 	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_knowledge_to_physical_event_knowledge]
 					    end_of_physical_event_changes_trigger]]]
     `[terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
+    [semantic-set semantic_goal phenomenal_name goal_resource_name]
     [let [[is_occurring_funk [funk []
 				   nil]]]
       [let [[goal_resource [new goal_knowledge_resource

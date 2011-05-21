@@ -33,10 +33,10 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->goal_creation]]
 
 [deftypefunk deliberative_goal_creation_agency execute create_physical_relationship_goal [source_object_type key_type key target_object_type]
-  [let [[goal_resource_name            [get [string-concat [get source_object_type as-string] '-'
-							   [get key_type           as-string] '-'
-							   [get key                as-string] '-'
-							   [get target_object_type as-string] '-goal'] as-symbol]]
+  [let [[goal_resource_name            [get [string-concat [get source_object_type as-string] '_'
+							   [get key_type           as-string] '_'
+							   [get key                as-string] '_'
+							   [get target_object_type as-string] '_goal_knowledge'] as-symbol]]
 	[semantic_goal                 [new semantic_goal [get [get this mind] semantic_realm]]]
 	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_knowledge_to_physical_event_knowledge]
 					    end_of_physical_event_changes_trigger]]]

@@ -190,7 +190,7 @@ f2ptr f2__semantic_object__classifier__remove(f2ptr cause, f2ptr this, f2ptr tha
 export_cefunk2(semantic_object__classifier__remove, this, that, 0, "");
 
 
-f2ptr f2__semantic_object_type__new(f2ptr cause) {
+f2ptr f2__semantic_object__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_frame")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__is_type")));}
@@ -230,7 +230,7 @@ f2ptr f2__semantic_object__core_extension__initialize(f2ptr cause) {
 export_cefunk0(semantic_object__core_extension__initialize, 0, "");
 
 f2ptr f2__semantic_object__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "semantic_object"), f2__semantic_object_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "semantic_object"), f2__semantic_object__primobject_type__new(cause));
   status("semantic_object defined types.");
   return nil;
 }

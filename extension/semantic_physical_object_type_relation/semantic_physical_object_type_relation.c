@@ -25,6 +25,7 @@
 // semantic_physical_object_type_relation
 
 f2ptr raw__semantic_physical_object_type_relation__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr target_object_type) {
+  assert_argument_type(semantic_object_type, target_object_type);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_physical_object_type_relation"));
   }
@@ -42,13 +43,13 @@ f2ptr raw__semantic_physical_object_type_relation__type_create(f2ptr cause, f2pt
   return this;
 }
 
-f2ptr raw__semantic_physical_object_type_relation__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_physical_object_type_relation__new(f2ptr cause, f2ptr semantic_realm, f2ptr target_object_type) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_physical_object_type_relation__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_physical_object_type_relation__type_create(cause, this, semantic_realm, target_object_type);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -56,13 +57,12 @@ f2ptr raw__semantic_physical_object_type_relation__new(f2ptr cause, f2ptr semant
   return this;
 }
 
-f2ptr f2__semantic_physical_object_type_relation__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_physical_object_type_relation__new(cause, semantic_realm);
+f2ptr f2__semantic_physical_object_type_relation__new(f2ptr cause, f2ptr semantic_realm, f2ptr target_object_type) {
+  assert_argument_type(semantic_realm,       semantic_realm);
+  assert_argument_type(semantic_object_type, target_object_type);
+  return raw__semantic_physical_object_type_relation__new(cause, semantic_realm, target_object_type);
 }
-export_cefunk1(semantic_physical_object_type_relation__new, semantic_realm, 0, "Returns a new semantic_physical_object_type_relation object.");
+export_cefunk2(semantic_physical_object_type_relation__new, semantic_realm, target_object_type, 0, "Given a semantic_object_type, returns a new semantic_physical_object_type_relation object.");
 
 
 boolean_t raw__semantic_physical_object_type_relation__is_type(f2ptr cause, f2ptr thing) {

@@ -25,9 +25,9 @@
 #include "../semantic_object/semantic_object.h"
 
 
-f2ptr     raw__semantic_physical_object_type_relation__type_create               (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_physical_object_type_relation__new                       (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_physical_object_type_relation__new                       (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_physical_object_type_relation__type_create               (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr target_object_type);
+f2ptr     raw__semantic_physical_object_type_relation__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr target_object_type);
+f2ptr      f2__semantic_physical_object_type_relation__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr target_object_type);
 boolean_t raw__semantic_physical_object_type_relation__is_type                   (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_physical_object_type_relation__is_type                   (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_physical_object_type_relation__type                      (f2ptr cause, f2ptr this);

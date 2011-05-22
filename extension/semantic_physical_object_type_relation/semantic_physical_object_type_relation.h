@@ -25,19 +25,19 @@
 #include "../semantic_object/semantic_object.h"
 
 
-f2ptr     raw__semantic_physical_object_type_relation__type_create  (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_physical_object_type_relation__new          (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_physical_object_type_relation__new          (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_physical_object_type_relation__is_type      (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_physical_object_type_relation__is_type      (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_physical_object_type_relation__type         (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_physical_object_type_relation__type         (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_physical_object_type_relation__event__lookup(f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_physical_object_type_relation__event__lookup(f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_physical_object_type_relation__event__add   (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_physical_object_type_relation__event__add   (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_physical_object_type_relation__event__remove(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_physical_object_type_relation__event__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_physical_object_type_relation__type_create               (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_physical_object_type_relation__new                       (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_physical_object_type_relation__new                       (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_physical_object_type_relation__is_type                   (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_physical_object_type_relation__is_type                   (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_physical_object_type_relation__type                      (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_physical_object_type_relation__type                      (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_physical_object_type_relation__target_object_type__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_physical_object_type_relation__target_object_type__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_physical_object_type_relation__target_object_type__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_physical_object_type_relation__target_object_type__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_physical_object_type_relation__target_object_type__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_physical_object_type_relation__target_object_type__remove(f2ptr cause, f2ptr this, f2ptr that);
 
 // **
 

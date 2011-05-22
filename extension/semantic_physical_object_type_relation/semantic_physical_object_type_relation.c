@@ -193,6 +193,7 @@ export_cefunk0(semantic_physical_object_type_relation__core_extension__ping, 0, 
 
 f2ptr f2__semantic_physical_object_type_relation__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_physical_object_type_relation, semantic_object);
+  core_extension__ping(semantic_physical_object_type_relation, semantic_object_type);
   status("semantic_physical_object_type_relation initialized.");
   return nil;
 }

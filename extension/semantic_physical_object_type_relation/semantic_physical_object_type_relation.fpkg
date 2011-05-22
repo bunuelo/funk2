@@ -19,7 +19,8 @@
 
 [defpackage semantic_physical_object_type_relation
   :documentation 'Basic knowledge for counting physical_object_type relations.'
-   :packages     [semantic_object]
+   :packages     [semantic_object
+		  semantic_object_type]
     :sources     ['semantic_physical_object_type_relation-core.fu2']
      :binaries   ['.libs/libf2e_semantic_physical_object_type_relation.so']]
 

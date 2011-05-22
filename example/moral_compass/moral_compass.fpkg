@@ -103,7 +103,8 @@
   :packages [traced_mind
 	     moral_compass_perception
 	     semantic_object_type
-	     semantic_physical_object_type]
+	     semantic_physical_object_type
+	     semantic_physical_object_type_relation]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency

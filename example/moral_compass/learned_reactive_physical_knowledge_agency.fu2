@@ -24,6 +24,7 @@
   [new []
        [construct agency `physical_knowledge]
        [have this add_resource [new translate_visual_knowledge_to_physical_knowledge_resource]]
+       [have this add_resource [new translate_physical_knowledge_to_physical_type_knowledge_resource]]
        this]]
 
 

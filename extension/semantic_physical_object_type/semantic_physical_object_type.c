@@ -94,7 +94,7 @@ export_cefunk1(semantic_physical_object_type__type, thing, 0, "Returns the speci
 
 
 f2ptr raw__semantic_physical_object_type__preposition__in__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "preposition__in"));
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "preposition-in"));
 }
 
 f2ptr f2__semantic_physical_object_type__preposition__in__lookup(f2ptr cause, f2ptr this) {
@@ -105,31 +105,31 @@ export_cefunk1(semantic_physical_object_type__preposition__in__lookup, this, 0, 
 
 
 f2ptr raw__semantic_physical_object_type__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "preposition__in"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "preposition-in"), that);
 }
 
 f2ptr f2__semantic_physical_object_type__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_physical_object_type, this);
-  assert_argument_type(integer,                       that);
+  assert_argument_type(semantic_physical_object_type,          this);
+  assert_argument_type(semantic_physical_object_type_relation, that);
   return raw__semantic_physical_object_type__preposition__in__add(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type__preposition__in__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_physical_object_type__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "preposition__in"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "preposition-in"), that);
 }
 
 f2ptr f2__semantic_physical_object_type__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_physical_object_type, this);
-  assert_argument_type(integer,                       that);
+  assert_argument_type(semantic_physical_object_type,          this);
+  assert_argument_type(semantic_physical_object_type_relation, that);
   return raw__semantic_physical_object_type__preposition__in__remove(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type__preposition__in__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_physical_object_type__preposition__on__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "preposition__on"));
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "preposition-on"));
 }
 
 f2ptr f2__semantic_physical_object_type__preposition__on__lookup(f2ptr cause, f2ptr this) {
@@ -140,24 +140,24 @@ export_cefunk1(semantic_physical_object_type__preposition__on__lookup, this, 0, 
 
 
 f2ptr raw__semantic_physical_object_type__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "preposition__on"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "preposition-on"), that);
 }
 
 f2ptr f2__semantic_physical_object_type__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_physical_object_type, this);
-  assert_argument_type(integer,                       that);
+  assert_argument_type(semantic_physical_object_type,          this);
+  assert_argument_type(semantic_physical_object_type_relation, that);
   return raw__semantic_physical_object_type__preposition__on__add(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type__preposition__on__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_physical_object_type__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "preposition__on"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "preposition-on"), that);
 }
 
 f2ptr f2__semantic_physical_object_type__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_physical_object_type, this);
-  assert_argument_type(integer,                       that);
+  assert_argument_type(semantic_physical_object_type,          this);
+  assert_argument_type(semantic_physical_object_type_relation, that);
   return raw__semantic_physical_object_type__preposition__on__remove(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type__preposition__on__remove, this, that, 0, "");

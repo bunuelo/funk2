@@ -119,6 +119,7 @@
     [if [null semantic_physical_object_type]
 	[prog [= semantic_physical_object_type [new semantic_physical_object_type [get [get this mind] semantic_realm]]]
 	      [semantic-set semantic_physical_object_type phenomenal_name phenomenal_name]
+	      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame semantic_physical_object_type]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object_type]
 	      ]]
     semantic_physical_object_type]]
@@ -150,6 +151,7 @@
 												  [relation     nil]]
 											      [if [or [null relation_set] [get relation_set is_empty]]
 												  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-value-semantic_object_type]]
+													[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
 													[have event-semantic_frame-semantic_object_type add `preposition_on event-value-object_type relation]]
 												[= relation [get relation_set an_arbitrary_element]]]
 											      
@@ -164,6 +166,7 @@
 												  [relation     nil]]
 											      [if [or [null relation_set] [get relation_set is_empty]]
 												  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-value-semantic_object_type]]
+													[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
 													[have event-semantic_frame-semantic_object_type add `preposition_in event-value-object_type relation]]
 												[= relation [get relation_set an_arbitrary_element]]]
 											      

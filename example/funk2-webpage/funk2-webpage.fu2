@@ -265,7 +265,7 @@
 					     'Causally tracing funk execution and completion events allows us a powerful and intricate reflective tool.'
 					     'These numerous and intricate events are compiled into graphs and other representations for both debugging as well as planning in order to avoid software failures.'
 					     'Declarative and goal-oriented software systems that are not reflectively controlled are notoriously difficult to control and often attempt to solve problems by diving into an under constrained search.  '
-					     'Building pattern recognition that deals not only with the problem space but with the mental space of the solver itself is necessary for learning to solve more difficult control problems.  '
+					     'Building pattern recognition that deals not only with the problem space but with the reflective space of the solver itself is necessary for learning to solve more difficult control problems.  '
 					     ]]
 	  this]
 	[let [[this [new htmldoc_post]]]
@@ -348,7 +348,7 @@
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
 	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-	  [set this entry       [string-prog 'Funk2 is largely inspired by Marvin Minsky\'s theory that the ability of humans to quickly adapt and switch between mental representations and processes is a metacognitive problem of reflective control.'
+	  [set this entry       [string-prog 'Funk2 is largely inspired by Marvin Minsky\'s theory that the ability of humans to quickly adapt and switch between reflective representations and processes is a metacognitive problem of reflective control.'
 					     'His book, <u>Society of Mind</u>, organizes and describes in surprisingly both dense and understandable English the hundreds of different types of reasoning that a human performs.'
 					     'In his most recent book, <u>The Emotion Machine</u>, Prof. Minsky tells a story about how what we normally call &#8220;emotions&#8221; are actually self-reflective forms of control processes for switching between ways of thinking.'
 					     'We have built and demonstrated basic reactive and deliberative planning algorithms in Funk2 that demonstrate simple aspects of the lower layers of this theory.'

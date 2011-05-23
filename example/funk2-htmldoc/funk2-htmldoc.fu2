@@ -341,7 +341,7 @@
 	       [string-concat 'color: ' [get context font_color] ';']
 	       '}'
 	       ''
-	       'h1, h2, h3 {'
+	       'h1, h2, h3, h4 {'
 	       '	margin-top: 0;'
 	       '}'
 	       ''
@@ -351,10 +351,14 @@
 	       '}'
 	       ''
 	       'h2 {'
-	       '	font-size: 1.6em;'
+	       '	font-size: 1.4em;'
 	       '}'
 	       ''
 	       'h3 {'
+	       '	font-size: 1.2em;'
+	       '}'
+	       ''
+	       'h4 {'
 	       '	font-size: 1em;'
 	       '}'
 	       ''
@@ -1063,7 +1067,7 @@
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [person]
 							       [if [get person external_url]
-								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
+								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '</a></li>']
 								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
 							 [get context advisors]]]
 				'					</ul>'
@@ -1075,7 +1079,7 @@
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [person]
 							       [if [get person external_url]
-								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
+								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '</a></li>']
 								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
 							 [get context graduate_students]]]
 				'					</ul>'
@@ -1087,7 +1091,7 @@
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [person]
 							       [if [get person external_url]
-								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '...</a></li>']
+								   [string-concat '<li><a href="' [get person external_url] '">' [get person name] '</a></li>']
 								 [string-concat '<li><a href="/person/' [get person username] '">' [get person name] '</a></li>']]]
 							 [get context undergraduate_students]]]
 				'					</ul>'
@@ -1099,7 +1103,7 @@
 				'					<ul>'
 				[stringlist-prog [mapcar [funk [project]
 							       [if [get project external_url]
-								   [string-concat '<li><a href="' [get project external_url] '">' [get project name] '...</a></li>']
+								   [string-concat '<li><a href="' [get project external_url] '">' [get project name] '</a></li>']
 								 [string-concat '<li><a href="/project/' [get project codename] '">' [get project name] '</a></li>']]]
 							 [get context projects]]]
 				'					</ul>'
@@ -1120,7 +1124,7 @@
 	       [prog '				<li>'
 		     '					<h2>Categories</h2>'
 		     '					<ul>'
-		     '						<li><a href="http://www-formal.stanford.edu/jmc/whatisai/whatisai.html">Artificial Intelligence...</a></li>'
+		     '						<li><a href="http://www-formal.stanford.edu/jmc/whatisai/whatisai.html">Artificial Intelligence</a></li>'
 		     '						<li><a href="#">Neuroscience</a></li>'
 		     '						<li><a href="#">Commonsense Reasoning</a></li>'
 		     '						<li><a href="#">Distributed Computation</a></li>'

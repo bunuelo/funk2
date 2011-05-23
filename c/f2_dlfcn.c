@@ -444,9 +444,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this
     f2ptr dlfcn_dynamic_library_pointer_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this);
     ptypehash__value__iteration(cause, dlfcn_dynamic_library_pointer_hash, dynamic_library,
 				f2ptr changed_on_disk = f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library);
-				if (raw__larva__is_type(cause, changed_on_disk)) {
-				  return changed_on_disk;
-				}
+				assert_value(changed_on_disk);
 				if (changed_on_disk != nil) {
 				  changed_libraries = f2cons__new(cause, dynamic_library, changed_libraries);
 				}

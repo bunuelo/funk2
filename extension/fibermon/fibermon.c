@@ -23,11 +23,9 @@
 
 f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");
+  assert_value(i);
   if (! raw__integer__is_type(cause, i)) {
-    if (raw__larva__is_type(cause, i)) {
-      return i;
-    }
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 12365, nil);
   }
   s64 i__i = f2integer__i(i, cause);
   if      (i__i <                                1024ull)  {return f2__exp__as__string(cause, i);}
@@ -41,11 +39,9 @@ export_cefunk1(fibermon__bytes__to_memory_string, this, 0, "");
 
 f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");
+  assert_value(i);
   if (! raw__integer__is_type(cause, i)) {
-    if (raw__larva__is_type(cause, i)) {
-      return i;
-    }
-    return f2larva__new(cause, 1, nil);
+    return f2larva__new(cause, 1245, nil);
   }
   s64 i__i = f2integer__i(i, cause);
   if      (i__i <                                              1000ull)  {return f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, i),                                                                                    new__string(cause, "ns")));}
@@ -316,8 +312,8 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 0), new__string(cause, "execution_efficiency"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 0), new__string(cause, "total_used_memory"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "total_free_memory"));
-  f2__gtk__box__pack_start(cause, this__vbox, this__table,           nil, nil, f2integer__new(cause, 0));
-  f2__gtk__box__pack_start(cause, this__vbox, this__progress_bar,    nil, nil, f2integer__new(cause, 0));
+  f2__gtk__box__pack_start(cause, this__vbox, this__table,        nil, nil, f2integer__new(cause, 0));
+  f2__gtk__box__pack_start(cause, this__vbox, this__progress_bar, nil, nil, f2integer__new(cause, 0));
   f2__gtk__box__pack_start(cause, this__vbox, this__fiber_vbox, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
   f2__gtk__container__add(cause, this__frame, this__vbox);
   return nil;
@@ -353,8 +349,8 @@ export_cefunk1(fibermon_processor__redraw_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this) {
-  f2ptr this__fibermon_fiber_hash  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), nil); if (! raw__ptypehash__is_type(cause, this__fibermon_fiber_hash)) {return f2larva__new(cause, 91, nil);}
-  f2ptr this__index                = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"),               nil); if (! raw__integer__is_type(  cause, this__index))               {return f2larva__new(cause, 92, nil);}
+  f2ptr this__fibermon_fiber_hash = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), nil); if (! raw__ptypehash__is_type(cause, this__fibermon_fiber_hash)) {return f2larva__new(cause, 91, nil);}
+  f2ptr this__index               = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"),               nil); if (! raw__integer__is_type(  cause, this__index))               {return f2larva__new(cause, 92, nil);}
   {
     f2ptr this__bytecodes_per_second = f2integer__new(cause, 0);
     f2ptr this__execution_efficiency = f2integer__new(cause, 0);

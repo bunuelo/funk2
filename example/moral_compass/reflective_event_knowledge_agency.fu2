@@ -18,36 +18,36 @@
  rights to redistribute these changes.'
 
 
-[deframe self_reflective_meta_mental_knowledge_agency [agency] []
+[deframe reflective_event_knowledge_agency [agency] []
   [new []					 
-       [construct agency `meta_mental_knowledge]
+       [construct agency `reflective_event_knowledge]
 
-       [have this add_resource [new translate_mental_knowledge_to_meta_mental_knowledge_resource]]
+       [have this add_resource [new translate_reflective_knowledge_to_reflective_event_knowledge_resource]]
        
        this]]
 
-[deftypefunk self_reflective_meta_mental_knowledge_agency execute create_knowledge []
-  [new meta_semantic_knowledge_base `meta_mental_knowledge [get [get this mind] semantic_realm]]]
+[deftypefunk reflective_event_knowledge_agency execute create_knowledge []
+  [new meta_semantic_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]
 
-[deftypefunk self_reflective_meta_mental_knowledge_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `mental_knowledge `mental_knowledge->meta_mental_knowledge]]
+[deftypefunk reflective_event_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `reflective_knowledge `reflective_knowledge->reflective_event_knowledge]]
 
 
-[deframe translate_mental_knowledge_to_meta_mental_knowledge_resource [traced_resource] []
+[deframe translate_reflective_knowledge_to_reflective_event_knowledge_resource [traced_resource] []
   [new []
-       [construct traced_resource `translate_mental_knowledge_to_meta_mental_knowledge
+       [construct traced_resource `translate_reflective_knowledge_to_reflective_event_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
        [= vital t]
        nil]]
 
-[deftypefunk translate_mental_knowledge_to_meta_mental_knowledge_resource execute execute_resource_raw_funk []
+[deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource execute execute_resource_raw_funk []
   `[= debug t]
-  [let [[mental_knowledge_iterator      [get [get this mind] knowledge_event_stream_iterator `mental_knowledge->meta_mental_knowledge]]
-	[meta_mental_sequence_knowledge [get [get this mind] semantic_knowledge_base         `meta_mental_sequence_knowledge]]]
+  [let [[reflective_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `reflective_knowledge->reflective_event_knowledge]]
+	[reflective_event_knowledge    [get [get this mind] semantic_knowledge_base         `reflective_event_knowledge]]]
     [while t
-      [let [[event [have mental_knowledge_iterator wait_for_current]]]
+      [let [[event [have reflective_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
 	    [prog [let [[event_type [get event event_type]]]
 		    [cond [[is-type `semantic_knowledge_base_event event]
@@ -73,11 +73,11 @@
 									  [semantic-add current_action_sequence is_caused_by cause]]
 								    [get causes_set elements]]]]
 							[if agent
-							    [if [not [get meta_mental_sequence_knowledge contains_semantic_frame agent]]
-								[have meta_mental_sequence_knowledge add_semantic_frame agent]]]
-							[if [not [get meta_mental_sequence_knowledge contains_semantic_frame target]]
-							    [have meta_mental_sequence_knowledge add_semantic_frame target]]
-							[have meta_mental_sequence_knowledge add_semantic_frame current_action_sequence]
+							    [if [not [get reflective_event_knowledge contains_semantic_frame agent]]
+								[have reflective_event_knowledge add_semantic_frame agent]]]
+							[if [not [get reflective_event_knowledge contains_semantic_frame target]]
+							    [have reflective_event_knowledge add_semantic_frame target]]
+							[have reflective_event_knowledge add_semantic_frame current_action_sequence]
 							[semantic-add target action_sequence         current_action_sequence]
 							[semantic-set target current_action_sequence current_action_sequence]]]]
 						   [t
@@ -85,11 +85,11 @@
 							[let [[current_action_sequence [semantic-get agent current_action_sequence]]]
 							  [if [null current_action_sequence]
 							      [prog `[error bug_type `current_action_sequence_is_nil
-									    funkname `translate_mental_knowledge_to_meta_mental_knowledge_resource-execute_resource_raw_funk
+									    funkname `translate_reflective_knowledge_to_reflective_event_knowledge_resource-execute_resource_raw_funk
 									    event    event]]
 							    [let [[semantic_event semantic_frame]]
 							      [have current_action_sequence        add_to_end         semantic_event]
-							      [have meta_mental_sequence_knowledge add_semantic_frame semantic_event]
+							      [have reflective_event_knowledge add_semantic_frame semantic_event]
 							      '  => add to action_sequence_cause_frame for the affected agent.']]]]]]
 					     ]]
 					  ]
@@ -133,7 +133,7 @@
 					  ]]]
 				 ]]
 			  ]]]]
-	[have mental_knowledge_iterator increment]]]]]
+	[have reflective_knowledge_iterator increment]]]]]
 
 
 

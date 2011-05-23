@@ -23,7 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT_TYPE__H
 
 #include "../semantic_object_type/semantic_object_type.h"
-#include "../semantic_object_type_relation/semantic_object_type_relation.h"
+#include "../semantic_physical_object_type_relation/semantic_physical_object_type_relation.h"
 
 
 f2ptr     raw__semantic_physical_object_type__type_create    (f2ptr cause, f2ptr this, f2ptr semantic_realm);

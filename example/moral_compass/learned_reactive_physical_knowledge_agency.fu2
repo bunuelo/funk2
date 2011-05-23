@@ -18,6 +18,8 @@
  rights to redistribute these changes.'
 
 
+'learned_reactive_physical_knowledge_agency'
+
 [deframe learned_reactive_physical_knowledge_agency [agency] []
   [new []
        [construct agency `physical_knowledge]
@@ -26,12 +28,18 @@
 
 
 [deftypefunk learned_reactive_physical_knowledge_agency execute create_knowledge []
-  [new meta_semantic_knowledge_base `physical_knowledge [get [get this mind] semantic_realm]]
+  [new meta_semantic_knowledge_base `physical_knowledge      [get [get this mind] semantic_realm]]
+  [new meta_semantic_knowledge_base `physical_type_knowledge [get [get this mind] semantic_realm]]
   ]
 
 [deftypefunk learned_reactive_physical_knowledge_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge `visual_knowledge->physical_knowledge]]
+  [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge   `visual_knowledge->physical_knowledge]
+  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_type_knowledge]
+  ]
 
+
+
+'translate_visual_knowledge_to_physical_knowledge_resource'
 
 [deframe translate_visual_knowledge_to_physical_knowledge_resource [traced_resource] []
   [new []
@@ -50,7 +58,6 @@
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object]
 	      ]]
     semantic_physical_object]]
-
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]
@@ -92,6 +99,65 @@
 										     nil]]
 			  ]]]]
 	[have visual_knowledge_iterator increment]]]]]
+
+
+
+'translate_physical_knowledge_to_physical_type_knowledge_resource'
+
+[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [traced_resource] []
+  [new []
+       [construct traced_resource `translate_physical_knowledge_to_physical_type_knowledge
+		  [funk []
+			[have this execute_resource_raw_funk]
+			]]
+       [= vital t]
+       nil]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_type [phenomenal_name]
+  [let [[semantic_physical_object_type [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]]
+    [if [null semantic_physical_object_type]
+	[prog [= semantic_physical_object_type [new semantic_physical_object_type [get [get this mind] semantic_realm]]]
+	      [semantic-set semantic_physical_object_type phenomenal_name phenomenal_name]
+	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object_type]
+	      ]]
+    semantic_physical_object_type]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
+  [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]]
+    [while t
+      `[print 'translate_physical_knowledge_to_physical_type_knowledge_resource waiting for physical_knowledge_iterator.']
+      [let [[event [have physical_knowledge_iterator wait_for_current]]]
+	[if [not [null event]]
+	    [prog [have this-resource think_to_self 'translate physical->physical_type physical event: ' event]
+		  [let [[event_type [get event event_type]]]
+		    [cond [[and [is-type `semantic_frame_event event]
+				[eq event_type `add]]                          [let [[key_type [get event key_type]]
+										     [key      [get event key]]]
+										 [cond [[eq key_type `preposition] [cond [[eq key `in] [let [[subject [get event semantic_frame]]
+																	     [object  [get event value]]]
+																	 [let [[subject-phenomenal_name [semantic-get subject phenomenal_name]]
+																	       [subject-object_type     [semantic-get subject object_type]]
+																	       [object-phenomenal_name  [semantic-get object  phenomenal_name]]
+																	       [object-object_type      [semantic-get object  object_type]]]
+																	   [let [[subject-semantic_physical_object_type [get this semantic_physical_object_type subject-object_type]]
+																		 [object-semantic_physical_object_type  [get this semantic_physical_object_type object-object_type]]]
+																	     [have subject-semantic_physical_object_type assure_exists `preposition `in object-semantic_physical_object_type]]]]]
+															 [[eq key `on] [let [[subject [get event semantic_frame]]
+																	     [object  [get event value]]]
+																	 [let [[subject-phenomenal_name [semantic-get subject phenomenal_name]]
+																	       [subject-object_type     [semantic-get subject object_type]]
+																	       [object-phenomenal_name  [semantic-get object  phenomenal_name]]
+																	       [object-object_type      [semantic-get object  object_type]]]
+																	   [let [[subject-semantic_physical_object_type [get this semantic_physical_object_type subject-object_type]]
+																		 [object-semantic_physical_object_type  [get this semantic_physical_object_type object-object_type]]]
+																	     [have subject-semantic_physical_object_type assure_exists `preposition `on object-semantic_physical_object_type]]]]]
+															 ]]
+										       ]]]
+			  [[and [is-type `semantic_knowledge_base_event event]
+				[eq event_type `end_of_physical_changes]]      [prog [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_type_changes nil]]
+										     nil]]
+			  ]]]]
+	[have physical_knowledge_iterator increment]]]]]
 
 
 

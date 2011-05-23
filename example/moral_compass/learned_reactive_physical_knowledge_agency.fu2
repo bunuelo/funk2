@@ -151,10 +151,17 @@
 												  [relation     nil]]
 											      [if [or [null relation_set] [get relation_set is_empty]]
 												  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-value-semantic_object_type]]
+													[semantic-set relation phenomenal_name [get [string-concat [get event-semantic_frame-object_type as-string]
+																				   '_'
+																				   [get `preposition_on as-string]
+																				   '_'
+																				   [get event-value-object_type as-string]
+																				   '_object_type_relation']
+																		    as-symbol]]
 													[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
 													[have event-semantic_frame-semantic_object_type add `preposition_on event-value-object_type relation]]
-												[= relation [get relation_set an_arbitrary_element]]]
-											      
+												[prog [= relation [get relation_set an_arbitrary_element]]
+												      [semantic-set [+ [semantic-get relation count] 1]]]]
 											      ]]]]
 										       [[and [eq event-key_type `preposition] [eq event-key `in]]
 											[terminal_format standard-terminal '\ndebug: got add preposition-in relation.']
@@ -166,10 +173,17 @@
 												  [relation     nil]]
 											      [if [or [null relation_set] [get relation_set is_empty]]
 												  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-value-semantic_object_type]]
+													[semantic-set relation phenomenal_name [get [string-concat [get event-semantic_frame-object_type as-string]
+																				   '_'
+																				   [get `preposition_on as-string]
+																				   '_'
+																				   [get event-value-object_type as-string]
+																				   '_object_type_relation']
+																		    as-symbol]]
 													[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
 													[have event-semantic_frame-semantic_object_type add `preposition_in event-value-object_type relation]]
-												[= relation [get relation_set an_arbitrary_element]]]
-											      
+												[prog [= relation [get relation_set an_arbitrary_element]]
+												      [semantic-set [+ [semantic-get relation count] 1]]]]
 											      ]]]]
 										       ]
 										 ]]

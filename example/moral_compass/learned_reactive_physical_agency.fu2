@@ -576,6 +576,7 @@
 								     [mind-wait_to_call mind learned_reactive physical turn_left 2]]
 								    [t
 								     [mind-wait_to_call mind learned_reactive physical move_forward 2]]]
+
 							      [mind-wait_to_call mind learned_reactive physical search_for desired_object]
 							      [= patience [patience -1]]]]]]]]]
 				  [walk_around [> 0 [have [lookup_visual_object [get_visual_objects mind] obstacle] lookup `retina_position_horizontal]]]]

@@ -144,11 +144,15 @@ f2ptr raw__semantic_know_of_relationship_event__cairo_render_frame(f2ptr cause, 
       f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "meta_relationship"), meta_relationship);
     } else {
       f2ptr cairo_source = raw__relationship_meta_semantic_object__source(  cause, meta_relationship);
-      if (raw__semantic_frame__is_type(cause, cairo_source)) {
+      if (raw__semantic_object__is_type(cause, cairo_source)) {
+	cairo_source = f2__object__semantic__get(cause, cairo_source, new__symbol(cause, "phenomenal_name"), nil);
+      } else if (raw__semantic_frame__is_type(cause, cairo_source)) {
 	cairo_source = new__symbol(cause, "<semantic_frame>");
       }
       f2ptr cairo_target = raw__relationship_meta_semantic_object__target(  cause, meta_relationship);
-      if (raw__semantic_frame__is_type(cause, cairo_target)) {
+      if (raw__semantic_object__is_type(cause, cairo_target)) {
+	cairo_target = f2__object__semantic__get(cause, cairo_target, new__symbol(cause, "phenomenal_name"), nil);
+      } else if (raw__semantic_frame__is_type(cause, cairo_target)) {
 	cairo_target = new__symbol(cause, "<semantic_frame>");
       }
       f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "source"),   cairo_source);

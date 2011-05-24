@@ -336,7 +336,6 @@
 				physical_type_isismon_knowledge
 				physical_event_isismon_knowledge
 				physical_isismon_knowledge
-				object_type_isismon_knowledge
 				visual_isismon_knowledge
 				
 				]
@@ -489,9 +488,6 @@
 		    [= physical_isismon_knowledge [new isismon_knowledge this `physical_knowledge]]
 		    [have vbox pack_start [get physical_isismon_knowledge widget] nil nil 0]
 		    
-		    [= object_type_isismon_knowledge [new isismon_knowledge this `object_type_knowledge]]
-		    [have vbox pack_start [get object_type_isismon_knowledge widget] nil nil 0]
-		    
 		    [= visual_isismon_knowledge [new isismon_knowledge this `visual_knowledge]]
 		    [have vbox pack_start [get visual_isismon_knowledge widget] nil nil 0]
 		    
@@ -533,7 +529,6 @@
   [if physical_type_isismon_knowledge              [have physical_type_isismon_knowledge              update]]
   [if physical_event_isismon_knowledge             [have physical_event_isismon_knowledge             update]]
   [if physical_isismon_knowledge                   [have physical_isismon_knowledge                   update]]
-  [if object_type_isismon_knowledge                [have object_type_isismon_knowledge                update]]
   [if visual_isismon_knowledge                     [have visual_isismon_knowledge                     update]]
   nil]
 

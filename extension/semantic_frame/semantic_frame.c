@@ -837,6 +837,14 @@ f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
   boolean_t found_current_value = boolean__false;
   f2ptr     current_value       = nil;
   if (value_set != nil) {
+    if (! raw__set__is_type(cause, value_set)) {
+      return f2larva__new(cause, 2734, f2__bug__new(cause, f2integer__new(cause, 2734), f2__frame__new(cause, f2list10__new(cause,
+															    new__symbol(cause, "bug_type"), new__symbol(cause, "object_slot_contains_non_set"),
+															    new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
+															    new__symbol(cause, "this"),     this,
+															    new__symbol(cause, "slot"),     slot,
+															    new__symbol(cause, "args"),     args))));
+    }
     set__iteration(cause, value_set, value,
 		   if (found_current_value) {
 		     return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,

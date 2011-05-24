@@ -334,6 +334,7 @@
 				reflective_isismon_knowledge
 				physical_event_isismon_knowledge
 				physical_type_relationship_isismon_knowledge
+				physical_type_event_isismon_knowledge
 				physical_type_isismon_knowledge
 				physical_isismon_knowledge
 				object_type_isismon_knowledge
@@ -483,6 +484,9 @@
 		    [= physical_type_relationship_isismon_knowledge [new isismon_knowledge this `physical_type_relationship_knowledge]]
 		    [have vbox pack_start [get physical_type_relationship_isismon_knowledge widget] nil nil 0]
 		    
+		    [= physical_type_event_isismon_knowledge [new isismon_knowledge this `physical_type_event_knowledge]]
+		    [have vbox pack_start [get physical_type_event_isismon_knowledge widget] nil nil 0]
+		    
 		    [= physical_type_isismon_knowledge [new isismon_knowledge this `physical_type_knowledge]]
 		    [have vbox pack_start [get physical_type_isismon_knowledge widget] nil nil 0]
 		    
@@ -531,6 +535,7 @@
   [if reflective_isismon_knowledge                 [have reflective_isismon_knowledge                 update]]
   [if physical_event_isismon_knowledge             [have physical_event_isismon_knowledge             update]]
   [if physical_type_relationship_isismon_knowledge [have physical_type_relationship_isismon_knowledge update]]
+  [if physical_type_event_isismon_knowledge        [have physical_type_event_isismon_knowledge        update]]
   [if physical_type_isismon_knowledge              [have physical_type_isismon_knowledge              update]]
   [if physical_isismon_knowledge                   [have physical_isismon_knowledge                   update]]
   [if object_type_isismon_knowledge                [have object_type_isismon_knowledge                update]]

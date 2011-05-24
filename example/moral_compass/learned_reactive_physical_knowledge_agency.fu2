@@ -181,7 +181,7 @@
 												  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-value-semantic_object_type]]
 													[semantic-set relation phenomenal_name [get [string-concat [get event-semantic_frame-object_type as-string]
 																				   '_'
-																				   [get `preposition_on as-string]
+																				   [get `preposition_in as-string]
 																				   '_'
 																				   [get event-value-object_type as-string]
 																				   '_object_type_relation']

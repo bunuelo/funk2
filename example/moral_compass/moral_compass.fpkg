@@ -121,7 +121,6 @@
 [defpackage deliberative_layer
   :packages [traced_mind
 	     deliberative_physical_event_knowledge_agency
-	     deliberative_physical_type_relationship_knowledge_agency
 	     deliberative_goal_knowledge_agency
 	     deliberative_goal_creation_agency
 	     deliberative_execution_agency
@@ -133,12 +132,6 @@
 	     semantic_know_of_existence_event
 	     semantic_know_of_relationship_event]
    :sources ['deliberative_physical_event_knowledge_agency.fu2']]
-
-[defpackage deliberative_physical_type_relationship_knowledge_agency
-  :packages [traced_mind
-	     semantic_know_of_existence_event
-	     semantic_know_of_relationship_event]
-   :sources ['deliberative_physical_type_relationship_knowledge_agency.fu2']]
 
 [defpackage deliberative_goal_knowledge_agency
   :packages [traced_mind

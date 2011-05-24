@@ -135,7 +135,7 @@
     [while t
       [let [[event [have physical_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
-	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->physical_type_relationship event: ' event]]
+	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->physical_type event: ' event]]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]

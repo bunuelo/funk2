@@ -120,8 +120,8 @@
 'translate_physical_type_knowledge_to_physical_type_event_knowledge_resource'
 
 [deframe translate_physical_type_knowledge_to_physical_type_event_knowledge_resource [traced_resource] [[existence_physical_type_phenomenon_hash        [hash]]
-											      [existence_physical_type_relationship_ptypehash [new ptypehash]]
-											      [end_of_physical_type_event_changes_trigger     [new fiber_trigger]]]
+													[existence_physical_type_relationship_ptypehash [new ptypehash]]
+													[end_of_physical_type_event_changes_trigger     [new fiber_trigger]]]
   [new []
        [construct traced_resource `translate_physical_type_knowledge_to_physical_type_event_knowledge
 		  [funk []

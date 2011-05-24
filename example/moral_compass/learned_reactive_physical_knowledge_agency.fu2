@@ -161,7 +161,7 @@
 													[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
 													[have event-semantic_frame-semantic_object_type add `preposition_on event-value-object_type relation]]
 												[prog [= relation [get relation_set an_arbitrary_element]]
-												      [semantic-set [+ [semantic-get relation count] 1]]]]
+												      [semantic-set relation [+ [semantic-get relation count] 1]]]]
 											      ]]]]
 										       [[and [eq event-key_type `preposition] [eq event-key `in]]
 											[terminal_format standard-terminal '\ndebug: got add preposition-in relation.']

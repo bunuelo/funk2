@@ -183,7 +183,7 @@
 													[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
 													[have event-semantic_frame-semantic_object_type add `preposition_in event-value-object_type relation]]
 												[prog [= relation [get relation_set an_arbitrary_element]]
-												      [semantic-set [+ [semantic-get relation count] 1]]]]
+												      [semantic-set relation [+ [semantic-get relation count] 1]]]]
 											      ]]]]
 										       ]
 										 ]]

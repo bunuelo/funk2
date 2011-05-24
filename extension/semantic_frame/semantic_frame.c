@@ -376,14 +376,8 @@ export_cefunk4(semantic_frame__remove, this, key_type, key, value, 0, "Removes t
 f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
-  if (raw__larva__is_type(cause, key_type__object_key)) {
-    return key_type__object_key;
-  }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
-  if (raw__larva__is_type(cause, key__object_key)) {
-    return key__object_key;
-  }
+  f2ptr key_type__object_key = assure_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
+  f2ptr key__object_key      = assure_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
   return raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
 }
 
@@ -394,12 +388,12 @@ f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr 
 export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
 
 
-boolean_t raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr set = raw__semantic_frame__lookup(cause, this, key_type, key);
+f2ptr raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr set = assure_value(raw__semantic_frame__lookup(cause, this, key_type, key));
   if (set == nil) {
-    return boolean__false;
+    return f2bool__new(boolean__false);
   }
-  return raw__set__contains(cause, set, value);
+  return f2bool__new(raw__set__contains(cause, set, value));
 }
 
 f2ptr f2__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -410,7 +404,8 @@ export_cefunk4(semantic_frame__lookup_contains, this, key_type, key, value, 0, "
 
 
 f2ptr raw__semantic_frame__assure_exists(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__lookup_contains(cause, this, key_type, key, value)) {
+  f2ptr contains = assure_value(raw__semantic_frame__lookup_contains(cause, this, key_type, key, value));
+  if (contains == nil) {
     f2ptr result = raw__semantic_frame__add(cause, this, key_type, key, value);
     if (raw__larva__is_type(cause, result)) {
       return result;

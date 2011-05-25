@@ -30,32 +30,80 @@ ideas: look carefully for - move to a different place in order to see
 
 '**************** functions****************'
 
-[deftypefunk mind get look_for-current_object []
-  [have [get [get [get this layer `learned_reactive] agency `physical] 
-				     resource `look_for] lookup `my_current_object]]
+`[deftypefunk mind get look_for-current_object []
+   [have [get [get [get this layer `learned_reactive] agency `physical] 
+	      resource `look_for] lookup `my_current_object]]
+'[get mind  look_for-current
+ [get [get this agency] look_for-current'
 
-[deftypefunk mind get resource_achieved [resource]
-  [have [get [get [get this layer `learned_reactive] agency `physical] 
-				     resource resource] lookup `achieved]]
-[defunk get_visual_objects [mind]
-  [if [get mind perception]
-      [get [get mind perception] visual_objects]]]
+[deftypefunk learned_reactive_physical_agency get look_for-current_object []
+  [have [get this resource `look_for] lookup `my_current_object]]
 
-[defunk get_left_hand_object_name [mind]
+
+`[deftypefunk mind get resource_achieved [resource]
+   [have [get [get [get this layer `learned_reactive] agency `physical] 
+	      resource resource] lookup `achieved]]
+
+`[defunk get_visual_objects [mind]
+   [if [get mind perception]
+       [get [get mind perception] visual_objects]]]
+
+'[get_visual_objects mind]
+ [get [get this agency] visual_objects] '
+
+[deftypefunk learned_reactive_physical_agency get visual_objects
+  [if [get [get this mind] perception]
+      [get [get [get this mind] perception] visual_objects]]]
+
+`[defunk get_left_hand_object_name [mind]
    [if [get mind perception]
        [get [get mind perception] left_hand_object_name]]]
 
-[defunk get_right_hand_object_name [mind]
-  [if [get mind perception]
-      [get [get mind perception] right_hand_object_name]]]
+[deftypefunk learned_reactive_physical_agency get left_hand_object_name 
+  [if [get [get this mind] perception]
+      [get [get [get this mind] perception] left_hand_object_name]]]
 
-[defunk get_neck_pitch [mind]
-  [if [get mind perception]
-      [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
+`[defunk get_right_hand_object_name [mind]
+   [if [get mind perception]
+       [get [get mind perception] right_hand_object_name]]]
 
-[defunk get_neck_heading [mind]
+[deftypefunk learned_reactive_physical_agency get right_hand_object_name 
+  [if [get [get this mind] perception]
+      [get [get [get this mind] perception] right_hand_object_name]]]
+
+`[defunk get_neck_pitch [mind]
+   [if [get mind perception]
+       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
+
+[deftypfunk learned_reactive_physical_agency get neck_pitch 
+  [if [get [get this mind] perception]
+      [have [have [have [get [get [get this mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
+
+`[defunk get_neck_heading [mind]
   [if [get mind perception]
       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
+
+[deftypefunk learned_reactive_physical_agency get neck_heading 
+  [if [get [get this mind] perception]
+      [have [have [have [get [get [get this  mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
+
+`[defunk get_object_distance [mind object_name]
+   [have [lookup_visual_object [get_visual_objects mind] object_name] lookup `distance]]
+
+[deftypefunk learned_reactive_physical_agency get object_distance [object_name]
+   [have [lookup_visual_object [get this visual_objects] object_name] lookup `distance]]
+
+`[defunk get_object_orientation [mind object_name]
+  [print 'get_object_orientation']
+  [have [lookup_visual_object [get_visual_objects mind] object_name] lookup `orientation]]
+
+[deftypefunk learned_reactive_physical_agency get object_orientation [object_name]
+  [have [lookup_visual_object [get this visual_objects] object_name] lookup `orientation]]
+
+
+
+
+'***************'
 
 [defunk list-contains_substring [sequence subexp]
   [let [[match nil]]
@@ -83,17 +131,10 @@ ideas: look carefully for - move to a different place in order to see
 		visual_objects]
   match]]
 
-[defunk get_object_distance [mind object_name]
-   [have [lookup_visual_object [get_visual_objects mind] object_name] lookup `distance]]
 
-[defunk get_object_orientation [mind object_name]
-  [print 'get_object_orientation']
-  [have [lookup_visual_object [get_visual_objects mind] object_name] lookup `orientation]]
 
 [defunk get_object_x_orientation [visual_objects object_name] 
   [have [have visual_objects lookup object_name] lookup `orientation]]
-
-
 
 
 '*******************resourece functions***********************'
@@ -200,7 +241,7 @@ ideas: look carefully for - move to a different place in order to see
     [try_to_hold]]]]
 
 [deftypefunk look_right_resource execute look_right [steps speed]
-  [= achieved nil]
+  
   [format stdout ' look_right']
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
@@ -213,10 +254,10 @@ ideas: look carefully for - move to a different place in order to see
       [= counter [+ counter 1]]
       ]
     [mind-wait_to_call mind builtin_reactive physical look_right_stop]]
-  [= achieved t]]
+  ]
 
 [deftypefunk look_left_resource execute look_left [steps speed]
-  [= achieved nil]
+  
   [format stdout ' look_left']
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
@@ -229,11 +270,11 @@ ideas: look carefully for - move to a different place in order to see
     [= counter [+ counter 1]]
     ]
   [mind-wait_to_activate mind builtin_reactive physical look_left_stop]]
-  [= achieved t]
+  
   [print 'achieved']]
 
 [deftypefunk level_pitch_resource execute level_pitch[]
-  [set this achieved nil]
+  
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
@@ -255,7 +296,7 @@ ideas: look carefully for - move to a different place in order to see
   [have this-resource think_to_self 'leveling pitch finished']]
 
 [deftypefunk look_at_floor_resource execute look_at_floor[]
-  [set this achieved nil]
+  
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	  [name  [get body name]]]
@@ -273,7 +314,7 @@ ideas: look carefully for - move to a different place in order to see
   [have this-resource think_to_self 'looking at floor finished']]
 
 [deftypefunk look_at_sky_resource execute look_at_sky[]
-  [set this achieved nil]
+  
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	  [name  [get body name]]]
@@ -291,7 +332,7 @@ ideas: look carefully for - move to a different place in order to see
   [have this-resource think_to_self 'looking at sky finished']]
 
 [deftypefunk align_body_with_neck_resource execute align_body_with_neck []
-  [set this achieved nil]
+  
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
@@ -330,7 +371,7 @@ ideas: look carefully for - move to a different place in order to see
 
 
 [deftypefunk learned_open_fridge_resource execute learned_open_fridge []
-  [set this achieved nil]
+  
   
 			[let* [[body [get this body]]
 			       [mind  [get body mind]] 
@@ -357,7 +398,7 @@ ideas: look carefully for - move to a different place in order to see
 			    ]]]
 
 [deftypefunk slice_toast_resource execute slice_toast []
-  [set this achieved nil]
+  
   [let* [[body [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
@@ -369,13 +410,13 @@ ideas: look carefully for - move to a different place in order to see
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand  `loaf]]
     
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get mind look_for-current_object] as-string] 'table']
+    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'table']
 	[prog [mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-				     [get mind look_for-current_object]]]
+				     [get [get his agency] look_for-current_object]]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
     
     [let [[loaf [get mind right_hand_object_name]]
-	  [table [get mind look_for-current_object]]]
+	  [table [get [get his agency] look_for-current_object]]]
 			    
       [mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
       [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
@@ -568,7 +609,7 @@ ideas: look carefully for - move to a different place in order to see
   [let* [[body [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]
-	 [arm_length 5.5]]
+	 [arm_length 5]]
     
     [if [or [have [get desired_object as-string] contains 'fridge']
 	    [have [get desired_object as-string] contains 'toaster']]
@@ -886,12 +927,12 @@ do something when distance stops changing
 	[mind-wait_to_call mind learned_reactive physical pick_up_loaf_and_butter]]
     
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get mind look_for-current_object] as-string] 'table']
+    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'table']
 	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-			   [get mind look_for-current_object]]
+			   [get [get his agency] look_for-current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
     [let [[loaf [get mind right_hand_object_name]]
-	  [table [get mind look_for-current_object]]]
+	  [table [get [get his agency] look_for-current_object]]]
       [mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
       [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
       [mind-wait_to_call mind learned_reactive physical look_for `toaster]
@@ -936,13 +977,13 @@ do something when distance stops changing
     [mind-wait_to_call mind learned_reactive physical look_for `knife]   
     
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get mind look_for-current_object] as-string] 'table']
+    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'table']
 	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-			   [get mind look_for-current_object]]
+			   [get [get his agency] look_for-current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
-    [mind-wait_to_call mind learned_reactive physical use_left_hand [get mind look_for-current_object] `put_on ]
+    [mind-wait_to_call mind learned_reactive physical use_left_hand [get [get his agency] look_for-current_object] `put_on ]
     [mind-wait_to_call mind learned_reactive physical look_for `knife]    
-    [if [string-contains [get [get mind look_for-current_object] as-string] 'knife']
+    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'knife']
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand `knife]
       [have this-resource think_to_self 'not doing anything because cannot find knife']]
     [mind-wait_to_call mind learned_reactive physical slice_toast]
@@ -983,143 +1024,6 @@ do something when distance stops changing
 [defunk calculate_turning_speed [angle]
   [/  [/ angle 0.0258] 0.03]]
 
-
-[defunk factorial [n]
-  [defunk helper [n so-far] [if [= n 1]	1    [helper [- n 1] [* so-far n]]]]  [helper n 1]]
-
-[defunk mod [x y]
-  [if [> y 0] [while [>= x y][= x [- x y]]][= x 0]]x]
-
-[defunk power [a b] 
-  [let [[blah 0]]  
-    [if [= b 1][= blah 1]
-      [if [= [mod b 2] 0]
-	  [= blah [* [power a [/ b 2]] [power a [/ b 2]]]]
-	[= blah [* [* [power a [/ [- b 1] 2]] [power a [/ [- b 1] 2]]] a]]]]
-    blah]]
-  
 [defunk degree_to_radian [x]
   [*[/ x 180] pi]]
 
-[defunk sine [x]
-  [+ [- [+ [- x[/ [power x 3] [factorial 3]]] [/ [power x 5] [factorial 5]]] [/ [power x 7] [factorial 7]]]]]
-
-[defunk arcsin [x]
-  [+  [-  [+  [- x [* 0.5 [/ [power x 3] 3]]][ * 0.385 [/ [power x 5] [factorial 5]]]] [* 0.3125 [/ [power x 7] [factorial 7]]]]]]
-
-
-`[deftypefunk stand_in_front_of_resource execute stand_in_front_of [object]
-  [have this-resource think_to_self 'stand_in_front_of' object 'activated!']
-  [let* [[body  [get this body]]
-	 [mind  [get body mind]]
-	 [name  [get body name]]
-	 [d                   4]]
-    
-    [labels [[find_final_distance       [orientation_diff init_distance]
-					`[print 'find_final_distance']
-					[let [[c 
-					       [get [- [+ [* init_distance init_distance] 
-							  [* d d]]
-						       [* 2 [* [* [get [abs orientation_diff] degree_cosine] init_distance ] d]]] power 0.5]
-					      ]]
-					  c]]
-
-	     [find_init_angle           [orientation_diff final_distance]
-					`[print 'find_init_angle']
-					[let* [[sine_of_diff [get orientation_diff degree_sine]]
-					       [sine_beta [/ [* d sine_of_diff]
-							     final_distance]]
-					       [beta         [get sine_beta degree_arcsine]]]
-					  beta]]
-	     [find_turning_speed        [init_angle]
-					`[print 'find turning speed']
-					[* init_angle step_factor]]
-	     [should_i_turn_right       [init_orientation init_angle]
-					  `[print 'should i turn right?']
-					  [if [< init_orientation 0]
-					      [if [< [+ init_orientation_difference init_angle] 120]
-						  t
-						nil]
-					    [if [< [+ init_orientation_difference init_angle] 120]
-						nil
-					      t]]]
-	     [should_i_move_forward     [current_neck_angle final_angle]
-					[print 'should i move forward?']
-					[if [< [abs current_neck_angle][abs final_angle]]
-					    t
-					  nil]]
-	     [find_desired_init_orientation        [turn_right init_turning_angle init_orientation]
-						   [let [[raw 0]]
-						     [if turn_right 
-							 [= raw [+ init_turning_angle init_orientation]] 
-						       [ = raw [- init_orientation init_turning_angle]]]
-						     [if [< raw -180]
-							 [+ 360 raw]
-						       [if [> raw 180]
-							   [- raw 360]
-							 raw]
-						       raw]]]
-				
-	     [find_walking_speed        [alpha heading]
-					[let* [[dist  [* [/ [get alpha degree_sine] [get heading degree_sine]] d]]
-					       [speed [min [* dist 4] 10]]]
-					    [format stdout 'dist'  dist 'alpha' alpha 'heading' heading]
-					    speed]]]
-	    [print 'finished labeling']
-	    [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
-	    `[print 'hi']
-	    [mind-wait_to_call mind learned_reactive physical center_body_horizontally_on object]
-	    [= init_orientation            [get_object_orientation mind object]]
-	    [= init_orientation_difference [ - 180 [abs init_orientation]]]
-	    [= init_distance               [get_object_distance mind object]]
-	    [= final_distance              [find_final_distance init_orientation_difference init_distance]]
-	    'distance needed to travel, law of cosine'
-	    [= init_angle                  [find_init_angle init_orientation_difference final_distance]]
-	    'angle one would have turned if one does not choose to move backwards'
-	    [= init_turning_angle          [if [< [+ init_orientation_difference init_angle] 120]
-					       init_angle
-					     [- 180 init_angle]]]
-	    
-	    [= turn_right                  [should_i_turn_right init_orientation init_angle]]
-	    'turn right only if object on the right and moving forward'
-	    [= desired_init_orientation    [find_desired_init_orientation turn_right init_turning_angle init_orientation]]
-	    'as indicator for how far one turns initially. distinction between moving forward and moving back'
-	    [= final_neck_angle            [if [> [+ init_orientation_difference init_angle] 120]
-					       [- [- 180 init_angle] init_orientation_difference]
-					     [+ init_orientation_difference init_angle]]]
-	    'different final neck angle for moving backwards and moving forward'
-	    [= init_turning_speed          [find_turning_speed init_turning_angle]]
-	    'deprecated'
-	    [= current_distance            nil]
-	    
-	    [format stdout 'init_orientation' init_orientation 'init_diff' init_orientation_difference 'init_distance'  init_distance 'init_angle'  init_angle 'final_neck_angle'  final_neck_angle 'final distance' final_distance 'init_turning_angle' init_turning_angle 'desired_init_orientation' desired_init_orientation]
-	    
-	    [if [< [abs init_orientation_difference] 5]
-		
-		[have this-resource walk_forward_or_back object]
-	      
-	      [prog [have this-resource turn_for_fixed_angle turn_right init_turning_angle]]
-	      [let [[walking_speed 20]]
-		'stops when angle is very good, or when distance and angle are good at the same time'
-		[while [null [or [< [abs [- [get_neck_heading mind] final_neck_angle]] 5]
-			         [and [< [abs [- [abs [get_neck_heading mind]] [abs final_neck_angle]]] 15]
-				      [< [abs [- 5 [get_object_distance mind object]]] 1]]]]
-		 [print 'waiting for trigger']
-		  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-		  [= walking_speed [find_walking_speed [abs [- [abs [get_neck_heading mind]] [abs final_neck_angle]]] [abs [get_neck_heading mind]]]]
-		  [if [should_i_move_forward [get_neck_heading mind] final_neck_angle]
-		      
-		      [prog `[print [get_neck_heading mind]]
-			    [mind-wait_to_call mind learned_reactive physical move_forward 1 walking_speed]
-			    [format stdout 'walking_speed' walking_speed]
-			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-			    [mind-wait_to_call mind learned_reactive physical center_head_on object]]
-		    [prog `[print [get_neck_heading mind]]
-			  [mind-wait_to_call mind learned_reactive physical move_backward 1 walking_speed]
-			  [format stdout 'walking_speed' walking_speed]
-			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-			  [mind-wait_to_call mind learned_reactive physical center_head_on object]]]]]
-	      
-	      [mind-wait_to_call mind learned_reactive physical center_head_on object]
-	      [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
-	      `[print 'exited while loop']]]]]

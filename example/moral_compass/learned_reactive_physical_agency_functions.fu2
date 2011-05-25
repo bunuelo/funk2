@@ -33,16 +33,13 @@ ideas: look carefully for - move to a different place in order to see
 `[deftypefunk mind get look_for-current_object []
    [have [get [get [get this layer `learned_reactive] agency `physical] 
 	      resource `look_for] lookup `my_current_object]]
-<<<<<<< HEAD
-'[get mind  look_for-current
- [get [get this agency] look_for-current'
-=======
->>>>>>> master
+
+
 
 [deftypefunk learned_reactive_physical_agency get look_for-current_object []
   [have [get this resource `look_for] lookup `my_current_object]]
 
-<<<<<<< HEAD
+
 
 `[deftypefunk mind get resource_achieved [resource]
    [have [get [get [get this layer `learned_reactive] agency `physical] 
@@ -52,14 +49,12 @@ ideas: look carefully for - move to a different place in order to see
    [if [get mind perception]
        [get [get mind perception] visual_objects]]]
 
-'[get_visual_objects mind]
- [get [get this agency] visual_objects] '
 
 [deftypefunk learned_reactive_physical_agency get visual_objects
   [if [get [get this mind] perception]
       [get [get [get this mind] perception] visual_objects]]]
 
-=======
+
 
 `[deftypefunk mind get resource_achieved [resource]
    [have [get [get [get this layer `learned_reactive] agency `physical] 
@@ -74,50 +69,34 @@ ideas: look carefully for - move to a different place in order to see
   [if [get [get this mind] perception]
       [get [get [get this mind] perception] visual_objects]]]
 
->>>>>>> master
+
 `[defunk get_left_hand_object_name [mind]
    [if [get mind perception]
        [get [get mind perception] left_hand_object_name]]]
 
-<<<<<<< HEAD
-[deftypefunk learned_reactive_physical_agency get left_hand_object_name 
-  [if [get [get this mind] perception]
-      [get [get [get this mind] perception] left_hand_object_name]]]
-=======
 [deftypefunk learned_reactive_physical_agency get left_hand_object_name []
   [if [get [get this mind] perception]
       [prog [print 'debug']
 	    [get [get [get this mind] perception] left_hand_object_name]]]]
->>>>>>> master
 
 `[defunk get_right_hand_object_name [mind]
    [if [get mind perception]
        [get [get mind perception] right_hand_object_name]]]
 
-<<<<<<< HEAD
-[deftypefunk learned_reactive_physical_agency get right_hand_object_name 
-=======
+
 [deftypefunk learned_reactive_physical_agency get right_hand_object_name []
->>>>>>> master
   [if [get [get this mind] perception]
       [get [get [get this mind] perception] right_hand_object_name]]]
 
 `[defunk get_neck_pitch [mind]
    [if [get mind perception]
        [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
-<<<<<<< HEAD
 
-[deftypfunk learned_reactive_physical_agency get neck_pitch 
-  [if [get [get this mind] perception]
-      [have [have [have [get [get [get this mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
-
-=======
 
 [deftypefunk learned_reactive_physical_agency get neck_pitch []
   [if [get [get this mind] perception]
       [have [have [have [get [get [get this mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
-''
->>>>>>> master
+
 `[defunk get_neck_heading [mind]
   [if [get mind perception]
       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
@@ -127,22 +106,15 @@ ideas: look carefully for - move to a different place in order to see
       [have [have [have [get [get [get this  mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
 
 `[defunk get_object_distance [mind object_name]
-<<<<<<< HEAD
-   [have [lookup_visual_object [get_visual_objects mind] object_name] lookup `distance]]
-=======
-   [have [lookup_visual_object [get [get this agency] visual_objects] object_name] lookup `distance]]
->>>>>>> master
+[have [lookup_visual_object [get [get this agency] visual_objects] object_name] lookup `distance]]
+
 
 [deftypefunk learned_reactive_physical_agency get object_distance [object_name]
    [have [lookup_visual_object [get this visual_objects] object_name] lookup `distance]]
 
 `[defunk get_object_orientation [mind object_name]
   [print 'get_object_orientation']
-<<<<<<< HEAD
-  [have [lookup_visual_object [get_visual_objects mind] object_name] lookup `orientation]]
-=======
   [have [lookup_visual_object [get [get this agency] visual_objects] object_name] lookup `orientation]]
->>>>>>> master
 
 [deftypefunk learned_reactive_physical_agency get object_orientation [object_name]
   [have [lookup_visual_object [get this visual_objects] object_name] lookup `orientation]]

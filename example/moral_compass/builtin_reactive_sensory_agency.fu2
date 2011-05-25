@@ -72,13 +72,14 @@
 	   [perception-begin_time                       [get perception begin_time]]
 	   [perception-end_time                         [get perception end_time]]
 	   [perception-visual_objects                   [get perception visual_objects]]
-	   [previous_perception-visual_objects          [get previous_perception visual_objects]]
-	   [previous_perception-visual_object_ptypehash [new ptypehash]]]
-      
-      [mapc [funk [previous_visual_object]
-		  [let [[previous_visual_object-phenomenal_name [get previous_visual_object phenomenal_name]]]
-		    [have previous_perception-visual_object_ptypehash add previous_visual_object-phenomenal_name previous_visual_object]]]
-	    previous_perception-visual_objects]
+	   [previous_perception-visual_objects          [if previous_perception
+							    [get previous_perception visual_objects]]]
+	   [previous_perception-visual_object_ptypehash [let [[ptypehash [new ptypehash]]]
+							  [mapc [funk [previous_visual_object]
+								      [let [[previous_visual_object-phenomenal_name [get previous_visual_object phenomenal_name]]]
+									[have ptypehash add previous_visual_object-phenomenal_name previous_visual_object]]]
+								previous_perception-visual_objects]
+							  ptypehash]]]
       
       [mapc [funk [visual_object]
 		  [let [[visual_object-phenomenal_name [get visual_object phenomenal_name]]

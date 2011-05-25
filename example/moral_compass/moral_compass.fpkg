@@ -100,7 +100,11 @@
    :sources ['moral_compass_perception.fu2']]
 
 [defpackage learned_reactive_sensory_agency
-  :packages [traced_mind moral_compass_perception]
+  :packages [traced_mind
+	     moral_compass_perception
+	     semantic_object_type
+	     semantic_physical_object_type
+	     semantic_physical_object_type_relation]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency
@@ -117,7 +121,9 @@
 [defpackage deliberative_layer
   :packages [traced_mind
 	     deliberative_physical_event_knowledge_agency
+	     deliberative_physical_type_relationship_knowledge_agency
 	     deliberative_goal_knowledge_agency
+	     deliberative_goal_creation_agency
 	     deliberative_execution_agency
 	     deliberative_forward_planner_agency
 	     english_language]
@@ -129,10 +135,21 @@
 	     semantic_know_of_relationship_event]
    :sources ['deliberative_physical_event_knowledge_agency.fu2']]
 
+[defpackage deliberative_physical_type_relationship_knowledge_agency
+  :packages [traced_mind
+	     semantic_know_of_existence_event
+	     semantic_know_of_relationship_event]
+   :sources ['deliberative_physical_type_relationship_knowledge_agency.fu2']]
+
 [defpackage deliberative_goal_knowledge_agency
   :packages [traced_mind
-	     semantic_physical_relationship_event_goal]
+	     semantic_goal]
    :sources ['deliberative_goal_knowledge_agency.fu2']]
+
+[defpackage deliberative_goal_creation_agency
+  :packages [traced_mind
+	     semantic_goal]
+   :sources ['deliberative_goal_creation_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [traced_mind]

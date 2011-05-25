@@ -289,7 +289,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 				return key__string;
 			      }
 			      key_length_array[index] = raw__string__length(cause, key__string);
-			      key_string_array[index] = (u8*)from_ptr(f2__malloc(key_length_array[index]));
+			      key_string_array[index] = (u8*)from_ptr(f2__malloc(key_length_array[index] + 1));
 			      raw__string__str_copy(cause, key__string, key_string_array[index]);
 			      key_string_array[index][key_length_array[index]] = 0;
 			    }
@@ -299,7 +299,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 				return value__string;
 			      }
 			      value_length_array[index] = raw__string__length(cause, value__string);
-			      value_string_array[index] = (u8*)from_ptr(f2__malloc(value_length_array[index]));
+			      value_string_array[index] = (u8*)from_ptr(f2__malloc(value_length_array[index] + 1));
 			      raw__string__str_copy(cause, value__string, value_string_array[index]);
 			      value_string_array[index][value_length_array[index]] = 0;
 			    }

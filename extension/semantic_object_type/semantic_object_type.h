@@ -22,7 +22,22 @@
 #ifndef F2__EXTENSION__SEMANTIC_OBJECT_TYPE__H
 #define F2__EXTENSION__SEMANTIC_OBJECT_TYPE__H
 
+#include "../semantic_object/semantic_object.h"
 
+
+f2ptr     raw__semantic_object_type__type_create    (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_object_type__new            (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_object_type__new            (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_object_type__is_type        (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_object_type__is_type        (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_object_type__type           (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_object_type__type           (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_object_type__example__lookup(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_object_type__example__lookup(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_object_type__example__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_object_type__example__add   (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_object_type__example__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_object_type__example__remove(f2ptr cause, f2ptr this, f2ptr that);
 
 // **
 

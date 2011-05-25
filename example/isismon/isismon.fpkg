@@ -37,15 +37,25 @@
   :packages [isismon_core]
    :sources ['isismon_learned_reactive_physical_activator.fu2']]
 
+<<<<<<< HEAD
 [defpackage isismon_deliberative_planner_activator
   :packages [isismon_core]
    :sources ['isismon_deliberative_forward_planner_activator.fu2']]
+=======
+[defpackage isismon_deliberative_goal_activator
+  :packages [isismon_core]
+   :sources ['isismon_deliberative_goal_activator.fu2']]
+>>>>>>> 7c525b18a7ec6f762a613cf620166024aad3a1af
 
 [defpackage isismon_agent
   :packages [isismon_core
 	     isismon_builtin_reactive_physical_activator
 	     isismon_learned_reactive_physical_activator
+<<<<<<< HEAD
 	     isismon_deliberative_planner_activator
+=======
+	     isismon_deliberative_goal_activator
+>>>>>>> 7c525b18a7ec6f762a613cf620166024aad3a1af
 	     isismon_knowledge]
    :sources ['isismon_agent.fu2']]
 

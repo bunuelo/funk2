@@ -17,12 +17,43 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'goal_knowledge_resource'
+
+[deframe goal_knowledge_resource [traced_resource] [semantic_goal
+						    is_occurring_funk
+						    evaluate_is_occurring_trigger]
+  [new [initial-name
+	initial-semantic_goal
+	initial-is_occurring_funk
+	initial-evaluate_is_occurring_trigger]
+       [construct traced_resource initial-name
+		  [funk []
+			[have this execute_resource_raw_funk]
+			]]
+       [= semantic_goal                 initial-semantic_goal]
+       [= is_occurring_funk             initial-is_occurring_funk]
+       [= evaluate_is_occurring_trigger initial-evaluate_is_occurring_trigger]
+       nil]]
+
+[deftypefunk goal_knowledge_resource execute execute_resource_raw_funk []
+  [terminal_format standard-terminal '\n' [get this name] ' resource activated.']
+  [while t
+    [wait-for-trigger evaluate_is_occurring_trigger]
+    [terminal_format standard-terminal '\n' [get this name] ' resource triggered.']
+    [if [not [get [get [get this mind] semantic_knowledge_base `goal_knowledge] contains_semantic_frame semantic_goal]]
+	[have [get [get this mind] semantic_knowledge_base `goal_knowledge] add_semantic_frame semantic_goal]]
+    [let [[is_occurring [apply is_occurring_funk nil]]]
+      [semantic-set semantic_goal is_occurring is_occurring]]]]
+
+
+'deliberative_goal_knowledge_agency'
+
 [deframe deliberative_goal_knowledge_agency [agency] []
   [new []
        [construct agency `goal_knowledge]
        
        nil]]
-
 
 [deftypefunk deliberative_goal_knowledge_agency execute create_knowledge []
   [new meta_semantic_knowledge_base `goal_knowledge [get [get this mind] semantic_realm]]]
@@ -31,40 +62,9 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->goal_knowledge]]
 
 
-[deframe translate_physical_knowledge_to_goal_knowledge_resource [traced_resource] []
-  [new []
-       [construct traced_resource `translate_physical_knowledge_to_goal_knowledge
-		  [funk []
-			[have this execute_resource_raw_funk]
-			]]
-       [= vital t]
-       nil]]
-
-[deftypefunk translate_physical_knowledge_to_goal_knowledge_resource execute execute_resource_raw_funk []
-  [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->goal_knowledge]]]
-    [while t
-      [let [[event [have physical_knowledge_iterator wait_for_current]]]
-	[if [not [null event]]
-	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->goal event: ' event]]
-		  [let [[event_type [get event event_type]]]
-		    [cond [[and [is-type `semantic_knowledge_base_event event]
-				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
-										 [let [[physical_phenomenon [have semantic_frame lookup_single_value `property `physical_phenomenon]]]
-										   ]]]
-			  [[and [is-type `semantic_frame_event event]
-				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
-										     [event-key_type       [get event key_type]]
-										     [event-key            [get event key]]
-										     [event-value          [get event value]]]
-										 ]]
-			  [[and [is-type `semantic_frame_event event]
-				[eq event_type `remove]]                       [let [[event-semantic_frame [get event semantic_frame]]
-										     [event-key_type       [get event key_type]]
-										     [event-key            [get event key]]
-										     [event-value          [get event value]]]
-										 ]]
-			  ]]]]
-	[have physical_knowledge_iterator increment]]]]]
+[deftypefunk deliberative_goal_knowledge_agency execute add_physical_object_class_relationship_goal [left_object_class relationship_key_type relationship_key right_object_class]
+  'need to add object classes to visual knowledge and physical knowledge before writing this.'
+  ]
 
 
 

@@ -429,13 +429,13 @@ ideas: look carefully for - move to a different place in order to see
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand  `loaf]]
     
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'table']
+    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'table']
 	[prog [mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-				     [get [get his agency] look_for-current_object]]]
+				     [get [get this agency] look_for-current_object]]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
     
     [let [[loaf [get mind right_hand_object_name]]
-	  [table [get [get his agency] look_for-current_object]]]
+	  [table [get [get this agency] look_for-current_object]]]
 			    
       [mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
       [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
@@ -946,12 +946,12 @@ do something when distance stops changing
 	[mind-wait_to_call mind learned_reactive physical pick_up_loaf_and_butter]]
     
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'table']
+    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'table']
 	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-			   [get [get his agency] look_for-current_object]]
+			   [get [get this agency] look_for-current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
     [let [[loaf [get mind right_hand_object_name]]
-	  [table [get [get his agency] look_for-current_object]]]
+	  [table [get [get this agency] look_for-current_object]]]
       [mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
       [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
       [mind-wait_to_call mind learned_reactive physical look_for `toaster]
@@ -996,13 +996,13 @@ do something when distance stops changing
     [mind-wait_to_call mind learned_reactive physical look_for `knife]   
     
     [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'table']
+    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'table']
 	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-			   [get [get his agency] look_for-current_object]]
+			   [get [get this agency] look_for-current_object]]
       [have this-resource think_to_self 'not doing anything because cannot find table']]
-    [mind-wait_to_call mind learned_reactive physical use_left_hand [get [get his agency] look_for-current_object] `put_on ]
+    [mind-wait_to_call mind learned_reactive physical use_left_hand [get [get this agency] look_for-current_object] `put_on ]
     [mind-wait_to_call mind learned_reactive physical look_for `knife]    
-    [if [string-contains [get [get [get his agency] look_for-current_object] as-string] 'knife']
+    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'knife']
 	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand `knife]
       [have this-resource think_to_self 'not doing anything because cannot find knife']]
     [mind-wait_to_call mind learned_reactive physical slice_toast]

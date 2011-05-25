@@ -22,211 +22,6 @@
 #include "semantic_frame.h"
 
 
-// object-semantic-lookup, object-semantic-lookup-apply
-
-f2ptr f2__object__semantic__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  if (raw__larva__is_type(cause, slot)) {
-    return slot;
-  }
-  {
-    f2ptr iter = args;
-    while (iter != nil) {
-      if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 1421, f2__bug__new(cause, f2integer__new(cause, 1421), f2__frame__new(cause, f2list10__new(cause,
-															      new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
-															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup"),
-															      new__symbol(cause, "this"),     this,
-															      new__symbol(cause, "slot"),     slot,
-															      new__symbol(cause, "args"),     args))));
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
-  f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-lookup"), slot);
-  if (raw__larva__is_type(cause, funk)) {
-    return funk;
-  }
-  if (! raw__funkable__is_type(cause, funk)) {
-    return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-lookup_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup"),
-															  new__symbol(cause, "this"),     this,
-															  new__symbol(cause, "slot"),     slot,
-															  new__symbol(cause, "args"),     args))));
-  }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
-  return result;
-}
-export_cefunk2_and_rest(object__semantic__lookup, this, slot, args, 0, "");
-
-f2ptr f2__object__semantic__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__lookup(cause, this, slot, args);
-}
-export_cefunk3(object__semantic__lookup__apply, this, slot, args, 0, "");
-
-
-// object-semantic-add, object-semantic-add-apply
-
-f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  if (raw__larva__is_type(cause, slot)) {
-    return slot;
-  }
-  {
-    f2ptr iter = args;
-    while (iter != nil) {
-      if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 143222, f2__bug__new(cause, f2integer__new(cause, 143222), f2__frame__new(cause, f2list10__new(cause,
-																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
-																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
-																  new__symbol(cause, "this"),     this,
-																  new__symbol(cause, "slot"),     slot,
-																  new__symbol(cause, "args"),     args))));
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
-  f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-add"), slot);
-  if (raw__larva__is_type(cause, funk)) {
-    return funk;
-  }
-  if (! raw__funkable__is_type(cause, funk)) {
-    return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-add_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
-															  new__symbol(cause, "this"),     this,
-															  new__symbol(cause, "slot"),     slot,
-															  new__symbol(cause, "args"),     args))));
-  }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
-  return result;
-}
-export_cefunk2_and_rest(object__semantic__add, this, slot, args, 0, "");
-
-f2ptr f2__object__semantic__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__add(cause, this, slot, args);
-}
-export_cefunk3(object__semantic__add__apply, this, slot, args, 0, "");
-
-
-// object-semantic-remove, object-semantic-remove-apply
-
-f2ptr f2__object__semantic__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  if (raw__larva__is_type(cause, slot)) {
-    return slot;
-  }
-  {
-    f2ptr iter = args;
-    while (iter != nil) {
-      if (! raw__cons__is_type(cause, iter)) {
-	return f2larva__new(cause, 234234, f2__bug__new(cause, f2integer__new(cause, 234234), f2__frame__new(cause, f2list10__new(cause,
-																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
-																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
-																  new__symbol(cause, "this"),     this,
-																  new__symbol(cause, "slot"),     slot,
-																  new__symbol(cause, "args"),     args))));
-      }
-      iter = f2__cons__cdr(cause, iter);
-    }
-  }
-  f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-remove"), slot);
-  if (! raw__funkable__is_type(cause, funk)) {
-    if (raw__larva__is_type(cause, funk)) {
-      return funk;
-    }
-    return f2larva__new(cause, 2346, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-remove_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
-															  new__symbol(cause, "this"),     this,
-															  new__symbol(cause, "slot"),     slot,
-															  new__symbol(cause, "args"),     args))));
-  }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
-  if (raw__larva__is_type(cause, result)) {
-    f2__terminal_print(cause, result);
-  }
-  return result;
-}
-export_cefunk2_and_rest(object__semantic__remove,        this, slot, args, 0, "");
-
-f2ptr f2__object__semantic__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__remove(cause, this, slot, args);
-}
-export_cefunk3(object__semantic__remove__apply, this, slot, args, 0, "");
-
-
-f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  f2ptr     value_set           = f2__object__semantic__lookup__apply(cause, this, slot, args);
-  boolean_t found_current_value = boolean__false;
-  f2ptr     current_value       = nil;
-  if (value_set != nil) {
-    set__iteration(cause, value_set, value,
-		   if (found_current_value) {
-		     return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
-																	   new__symbol(cause, "bug_type"), new__symbol(cause, "object_has_more_than_one_value_in_slot"),
-																	   new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
-																	   new__symbol(cause, "this"),     this,
-																	   new__symbol(cause, "slot"),     slot,
-																	   new__symbol(cause, "args"),     args))));
-		   }
-		   current_value = value;
-		   found_current_value = boolean__true;
-		   );
-  }
-  if (! found_current_value) {
-    return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_slot_value"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
-															  new__symbol(cause, "this"),     this,
-															  new__symbol(cause, "slot"),     slot,
-															  new__symbol(cause, "args"),     args))));
-  }
-  return current_value;
-}
-export_cefunk2_and_rest(object__semantic__get, this, slot, args, 0, "");
-
-f2ptr f2__object__semantic__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__get(cause, this, slot, args);
-}
-export_cefunk3(object__semantic__get__apply, this, slot, args, 0, "");
-
-
-// not thread safe.  (need cmutexes at each semantic_slot)
-f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  f2ptr current_value = f2__object__semantic__get(cause, this, slot, nil);
-  if (raw__larva__is_type(cause, current_value)) {
-    return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list12__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-set"),
-															  new__symbol(cause, "this"),     this,
-															  new__symbol(cause, "slot"),     slot,
-															  new__symbol(cause, "args"),     args,
-															  new__symbol(cause, "suberror"), current_value))));
-  }
-  f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
-  return f2__object__semantic__add(cause, this, slot, args);
-}
-export_cefunk2_and_rest(object__semantic__set, this, slot, args, 0, "");
-
-f2ptr f2__object__semantic__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__set(cause, this, slot, args);
-}
-export_cefunk3(object__semantic__set__apply, this, slot, args, 0, "");
-
-
-
-
 // semantic_frame_event
 
 f2ptr raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -415,7 +210,7 @@ f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
 
 // semantic_frame
 
-def_ceframe6(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame);
+def_ceframe7(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame_mutate_cmutex, frame);
 
 f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
@@ -438,6 +233,7 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_mutate_cmutex"),         f2__cmutex__new(cause));
     f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);
   }
   return this;
@@ -580,14 +376,8 @@ export_cefunk4(semantic_frame__remove, this, key_type, key, value, 0, "Removes t
 f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
-  if (raw__larva__is_type(cause, key_type__object_key)) {
-    return key_type__object_key;
-  }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
-  if (raw__larva__is_type(cause, key__object_key)) {
-    return key__object_key;
-  }
+  f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
+  f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
   return raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
 }
 
@@ -598,12 +388,12 @@ f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr 
 export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
 
 
-boolean_t raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr set = raw__semantic_frame__lookup(cause, this, key_type, key);
+f2ptr raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr set = assert_value(raw__semantic_frame__lookup(cause, this, key_type, key));
   if (set == nil) {
-    return boolean__false;
+    return f2bool__new(boolean__false);
   }
-  return raw__set__contains(cause, set, value);
+  return f2bool__new(raw__set__contains(cause, set, value));
 }
 
 f2ptr f2__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -614,7 +404,8 @@ export_cefunk4(semantic_frame__lookup_contains, this, key_type, key, value, 0, "
 
 
 f2ptr raw__semantic_frame__assure_exists(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (! raw__semantic_frame__lookup_contains(cause, this, key_type, key, value)) {
+  f2ptr contains = assert_value(raw__semantic_frame__lookup_contains(cause, this, key_type, key, value));
+  if (contains == nil) {
     f2ptr result = raw__semantic_frame__add(cause, this, key_type, key, value);
     if (raw__larva__is_type(cause, result)) {
       return result;
@@ -887,6 +678,231 @@ f2ptr f2__semantic_frame_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__terminal_print_with_frame")));}
   return this;
 }
+
+
+
+// semantic_frame object accessors
+
+// object-semantic-lookup, object-semantic-lookup-apply
+
+f2ptr f2__object__semantic__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  if (raw__larva__is_type(cause, this)) {
+    return this;
+  }
+  if (raw__larva__is_type(cause, slot)) {
+    return slot;
+  }
+  {
+    f2ptr iter = args;
+    while (iter != nil) {
+      if (! raw__cons__is_type(cause, iter)) {
+	return f2larva__new(cause, 1421, f2__bug__new(cause, f2integer__new(cause, 1421), f2__frame__new(cause, f2list10__new(cause,
+															      new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup"),
+															      new__symbol(cause, "this"),     this,
+															      new__symbol(cause, "slot"),     slot,
+															      new__symbol(cause, "args"),     args))));
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-lookup"), slot);
+  if (raw__larva__is_type(cause, funk)) {
+    return funk;
+  }
+  if (! raw__funkable__is_type(cause, funk)) {
+    return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-lookup_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  return result;
+}
+export_cefunk2_and_rest(object__semantic__lookup, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__lookup(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__lookup__apply, this, slot, args, 0, "");
+
+
+// object-semantic-add, object-semantic-add-apply
+
+f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  if (raw__larva__is_type(cause, this)) {
+    return this;
+  }
+  if (raw__larva__is_type(cause, slot)) {
+    return slot;
+  }
+  {
+    f2ptr iter = args;
+    while (iter != nil) {
+      if (! raw__cons__is_type(cause, iter)) {
+	return f2larva__new(cause, 143222, f2__bug__new(cause, f2integer__new(cause, 143222), f2__frame__new(cause, f2list10__new(cause,
+																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
+																  new__symbol(cause, "this"),     this,
+																  new__symbol(cause, "slot"),     slot,
+																  new__symbol(cause, "args"),     args))));
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-add"), slot);
+  if (raw__larva__is_type(cause, funk)) {
+    return funk;
+  }
+  if (! raw__funkable__is_type(cause, funk)) {
+    return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-add_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  return result;
+}
+export_cefunk2_and_rest(object__semantic__add, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__add__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__add(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__add__apply, this, slot, args, 0, "");
+
+
+// object-semantic-remove, object-semantic-remove-apply
+
+f2ptr f2__object__semantic__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  if (raw__larva__is_type(cause, this)) {
+    return this;
+  }
+  if (raw__larva__is_type(cause, slot)) {
+    return slot;
+  }
+  {
+    f2ptr iter = args;
+    while (iter != nil) {
+      if (! raw__cons__is_type(cause, iter)) {
+	return f2larva__new(cause, 234234, f2__bug__new(cause, f2integer__new(cause, 234234), f2__frame__new(cause, f2list10__new(cause,
+																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
+																  new__symbol(cause, "this"),     this,
+																  new__symbol(cause, "slot"),     slot,
+																  new__symbol(cause, "args"),     args))));
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-remove"), slot);
+  if (! raw__funkable__is_type(cause, funk)) {
+    if (raw__larva__is_type(cause, funk)) {
+      return funk;
+    }
+    return f2larva__new(cause, 2346, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-remove_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  if (raw__larva__is_type(cause, result)) {
+    f2__terminal_print(cause, result);
+  }
+  return result;
+}
+export_cefunk2_and_rest(object__semantic__remove,        this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__remove__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__remove(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__remove__apply, this, slot, args, 0, "");
+
+
+f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr     value_set           = f2__object__semantic__lookup__apply(cause, this, slot, args);
+  boolean_t found_current_value = boolean__false;
+  f2ptr     current_value       = nil;
+  if (value_set != nil) {
+    if (! raw__set__is_type(cause, value_set)) {
+      return f2larva__new(cause, 2734, f2__bug__new(cause, f2integer__new(cause, 2734), f2__frame__new(cause, f2list10__new(cause,
+															    new__symbol(cause, "bug_type"), new__symbol(cause, "object_slot_contains_non_set"),
+															    new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
+															    new__symbol(cause, "this"),     this,
+															    new__symbol(cause, "slot"),     slot,
+															    new__symbol(cause, "args"),     args))));
+    }
+    set__iteration(cause, value_set, value,
+		   if (found_current_value) {
+		     return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
+																	   new__symbol(cause, "bug_type"), new__symbol(cause, "object_has_more_than_one_value_in_slot"),
+																	   new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
+																	   new__symbol(cause, "this"),     this,
+																	   new__symbol(cause, "slot"),     slot,
+																	   new__symbol(cause, "args"),     args))));
+		   }
+		   current_value = value;
+		   found_current_value = boolean__true;
+		   );
+  }
+  if (! found_current_value) {
+    return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_slot_value"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-get"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args))));
+  }
+  return current_value;
+}
+export_cefunk2_and_rest(object__semantic__get, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__get(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__get__apply, this, slot, args, 0, "");
+
+
+f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  assert_argument_type(semantic_frame, this);
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  f2ptr result = nil;
+  f2__cmutex__lock(cause, frame_mutate_cmutex);
+  {
+    f2ptr current_value = f2__object__semantic__get(cause, this, slot, nil);
+    if (raw__larva__is_type(cause, current_value)) {
+      result = f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list12__new(cause,
+															      new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-set"),
+															      new__symbol(cause, "this"),     this,
+															      new__symbol(cause, "slot"),     slot,
+															      new__symbol(cause, "args"),     args,
+															      new__symbol(cause, "suberror"), current_value))));
+    } else {
+      f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
+      result = f2__object__semantic__add(cause, this, slot, args);
+    }
+  }
+  f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  return result;
+}
+export_cefunk2_and_rest(object__semantic__set, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__set(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__set__apply, this, slot, args, 0, "");
+
+
+
 
 
 

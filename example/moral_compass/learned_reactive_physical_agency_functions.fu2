@@ -34,8 +34,26 @@ ideas: look carefully for - move to a different place in order to see
    [have [get [get [get this layer `learned_reactive] agency `physical] 
 	      resource `look_for] lookup `my_current_object]]
 
+
+
 [deftypefunk learned_reactive_physical_agency get look_for-current_object []
   [have [get this resource `look_for] lookup `my_current_object]]
+
+
+
+`[deftypefunk mind get resource_achieved [resource]
+   [have [get [get [get this layer `learned_reactive] agency `physical] 
+	      resource resource] lookup `achieved]]
+
+`[defunk get_visual_objects [mind]
+   [if [get mind perception]
+       [get [get mind perception] visual_objects]]]
+
+
+[deftypefunk learned_reactive_physical_agency get visual_objects
+  [if [get [get this mind] perception]
+      [get [get [get this mind] perception] visual_objects]]]
+
 
 
 `[deftypefunk mind get resource_achieved [resource]
@@ -51,6 +69,7 @@ ideas: look carefully for - move to a different place in order to see
   [if [get [get this mind] perception]
       [get [get [get this mind] perception] visual_objects]]]
 
+
 `[defunk get_left_hand_object_name [mind]
    [if [get mind perception]
        [get [get mind perception] left_hand_object_name]]]
@@ -64,6 +83,7 @@ ideas: look carefully for - move to a different place in order to see
    [if [get mind perception]
        [get [get mind perception] right_hand_object_name]]]
 
+
 [deftypefunk learned_reactive_physical_agency get right_hand_object_name []
   [if [get [get this mind] perception]
       [get [get [get this mind] perception] right_hand_object_name]]]
@@ -72,20 +92,22 @@ ideas: look carefully for - move to a different place in order to see
    [if [get mind perception]
        [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
 
+
 [deftypefunk learned_reactive_physical_agency get neck_pitch []
   [if [get [get this mind] perception]
       [have [have [have [get [get [get this mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `pitch]]]
-''
+
 `[defunk get_neck_heading [mind]
   [if [get mind perception]
       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
 
-[deftypefunk learned_reactive_physical_agency get neck_heading 
+[deftypefunk learned_reactive_physical_agency get neck_heading []
   [if [get [get this mind] perception]
       [have [have [have [get [get [get this  mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
 
 `[defunk get_object_distance [mind object_name]
-   [have [lookup_visual_object [get [get this agency] visual_objects] object_name] lookup `distance]]
+[have [lookup_visual_object [get [get this agency] visual_objects] object_name] lookup `distance]]
+
 
 [deftypefunk learned_reactive_physical_agency get object_distance [object_name]
    [have [lookup_visual_object [get this visual_objects] object_name] lookup `distance]]

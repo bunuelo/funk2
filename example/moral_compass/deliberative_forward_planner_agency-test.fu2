@@ -131,7 +131,9 @@
     matching_event]]
 
 [defunk test_goal [knowledge]
-  [if [and [contains_event_goal knowledge test_goal_event]]]]
+  [if [and [contains_event_goal knowledge test_goal_event2]
+	   [contains_event_goal knowledge test_goal_event2]]
+      t]]
 
 
 

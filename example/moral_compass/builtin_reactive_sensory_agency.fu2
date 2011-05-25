@@ -46,7 +46,8 @@
        nil]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
-  [new semantic_knowledge_base `visual_knowledge [get [get this mind] semantic_realm]]
+  [new semantic_knowledge_base `visual_knowledge        [get [get this mind] semantic_realm]]
+  [new semantic_knowledge_base `visual_action_knowledge [get [get this mind] semantic_realm]]
   ]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
@@ -112,7 +113,7 @@
 						  [semantic-set action_semantic_frame phenomenal_name     [gensym 'semantic_action_event']]
 						  [semantic-set action_semantic_frame absolute_start_time perception-begin_time]
 						  [semantic-set action_semantic_frame absolute_end_time   perception-end_time]
-						  [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame action_semantic_frame]
+						  [have [get [get this mind] semantic_knowledge_base `visual_action_knowledge] add_semantic_frame action_semantic_frame]
 						  'should add argument frame for each action specifically.'
 						  ]]]]
 				      actions]

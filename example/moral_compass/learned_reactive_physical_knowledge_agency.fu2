@@ -80,7 +80,7 @@
 			  [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[key_type [get event key_type]]
 										     [key      [get event key]]]
-										 [terminal_format standard-terminal '\nvisual->physical relation add event: ' key_type ' ' key]
+										 `[terminal_format standard-terminal '\nvisual->physical relation add event: ' key_type ' ' key]
 										 [cond [[eq key_type `preposition] [cond [[eq key `in] [let [[subject [get event semantic_frame]]
 																	     [object  [get event value]]]
 																	 [let [[subject-phenomenal_name [semantic-get subject phenomenal_name]]

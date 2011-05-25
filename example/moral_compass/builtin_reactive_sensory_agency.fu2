@@ -57,6 +57,7 @@
   [let [[semantic_visual_object [have semantic_visual_object_ptypehash lookup phenomenal_name]]]
     [if [null semantic_visual_object]
 	[prog [= semantic_visual_object [new semantic_visual_object [get [get this mind] semantic_realm]]]
+	      [have semantic_visual_object_ptypehash add phenomenal_name semantic_visual_object]
 	      [semantic-set semantic_visual_object phenomenal_name phenomenal_name]
 	      [semantic-set semantic_visual_object object_type     object_type]
 	      [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame semantic_visual_object]]]

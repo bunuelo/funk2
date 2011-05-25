@@ -321,7 +321,7 @@ ideas: look carefully for - move to a different place in order to see
 	      [cond [[ > [- init_diff 0] slightly_looking_left]
 		     [mind-wait_to_call mind learned_reactive physical turn_left 3 [/ [* step_factor init_diff] 3]]]
 		    [[ < [- init_diff 0] slightly_looking_right]
-		     [mind-wait_to_call mind learned_reactive physical turn_right 3[/ [* step_factor init_diff] 3]]]
+		     [mind-wait_to_call mind learned_reactive physical turn_right 3[/ [* step_factor [abs init_diff]] 3]]]
 		    [t
 		     [have this-resource think_to_self 'no need to turn']]]
 	      
@@ -471,13 +471,13 @@ ideas: look carefully for - move to a different place in order to see
 						[distance                   [have [lookup_visual_object [get_visual_objects mind] desired_object] lookup `distance]]]
 					    [cond [[>  retina_position_horizontal 0.015]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 60.0 [* 400 retina_position_horizontal]]]
+							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 60.0 [* 450 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
 						  [[< retina_position_horizontal [- 0 0.015]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 60.0 [ abs [* 400 retina_position_horizontal]]]]							 
+							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 60.0 [ abs [* 450 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
 							 
 							 [turn_left_and_right]]]
@@ -538,14 +538,14 @@ ideas: look carefully for - move to a different place in order to see
 					    [cond [[>  retina_position_horizontal [min [* 0.01  distance] 0.01]]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
 							 
-							 [mind-wait_to_call mind learned_reactive physical look_right 1 [abs [* step_factor [/ [* 250  retina_position_horizontal] distance]]]]
+							 [mind-wait_to_call mind learned_reactive physical look_right 1 [abs [* step_factor [/ [* 400  retina_position_horizontal] distance]]]]
 							 [have this-resource think_to_self   'I looked right']
 							 
 							 [look_left_and_right]]]
 						  [[< retina_position_horizontal [max [- 0 [* 0.01  distance]][- 0 0.01]]]
 						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
 							 
-							 [mind-wait_to_call mind learned_reactive physical look_left 1 [abs [* step_factor [/ [* 250  retina_position_horizontal] distance]]]]
+							 [mind-wait_to_call mind learned_reactive physical look_left 1 [abs [* step_factor [/ [* 400  retina_position_horizontal] distance]]]]
 							 [have this-resource think_to_self 'I looked left']
 							 
 							 [look_left_and_right]]]

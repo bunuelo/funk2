@@ -44,7 +44,7 @@ f2ptr      f2__semantic_object__classifier__add   (f2ptr cause, f2ptr this, f2pt
 f2ptr     raw__semantic_object__classifier__remove(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__semantic_object__classifier__remove(f2ptr cause, f2ptr this, f2ptr that);
 
-f2ptr f2__semantic_object_type__new(f2ptr cause);
+f2ptr f2__semantic_object__primobject_type__new(f2ptr cause);
 
 // **
 

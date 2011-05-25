@@ -1,3 +1,4 @@
+
 'Copyright (c) 2007-2011 Bo Morgan.
  All rights reserved.
  
@@ -145,7 +146,9 @@ goal state
 
 [defunk test_goal [knowledge_base]
   [if [[have knowledge_base lookup `semantic_frame_set] contains test_sp_object1]
-      [prog [if 
+
+      [prog [if ]]]]
+
 
 
 [deftypefunk meta_semantic_knowledge_base get difference []

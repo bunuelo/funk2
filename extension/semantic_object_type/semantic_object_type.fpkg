@@ -18,6 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_object_type
-  :sources   ['semantic_object_type-core.fu2']
-   :binaries ['.libs/libf2e_semantic_object_type.so']]
+  :documentation 'Basic knowledge for dealing with specific object of different and equivalent types.'
+   :packages     [semantic_object]
+    :sources     ['semantic_object_type-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_object_type.so']]
+
+[defcore semantic_object_type 'extension/semantic_object_type/.libs/libf2e_semantic_object_type.so']
 

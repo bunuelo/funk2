@@ -37,7 +37,7 @@
 
 
 
-[deframe propogate_visual_objects_to_visual_knowledge_resource [traced_resource] []
+[deframe propogate_visual_objects_to_visual_knowledge_resource [traced_resource] [[semantic_object_type_name_ptypehash [new ptypehash]]]
   [new []
        [construct traced_resource `propogate_visual_objects_to_visual_knowledge
 		  [funk []
@@ -47,7 +47,8 @@
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
   [new semantic_knowledge_base `input_visual_knowledge [get [get this mind] semantic_realm]]
-  [new semantic_knowledge_base `visual_knowledge       [get [get this mind] semantic_realm]]]
+  [new semantic_knowledge_base `visual_knowledge       [get [get this mind] semantic_realm]]
+  [new semantic_knowledge_base `object_type_knowledge  [get [get this mind] semantic_realm]]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
   nil]
@@ -65,10 +66,19 @@
 	    [semantic_object_frame [frame]]]
 	[mapc [funk [object]
 		    [let [[semantic_visual_object [new semantic_visual_object semantic_realm]]
+			  [object_type            [get object object_type]]
 			  [phenomenal_name        [get object phenomenal_name]]]
 		      [semantic-set semantic_visual_object phenomenal_name phenomenal_name]
+		      [semantic-set semantic_visual_object object_type     object_type]
 		      [have [get [get this mind] input_visual_knowledge] add_semantic_frame semantic_visual_object]
-		      [have semantic_object_frame add phenomenal_name semantic_visual_object]]]
+		      [have semantic_object_frame add phenomenal_name semantic_visual_object]
+		      [let [[semantic_object_type [have semantic_object_type_name_ptypehash lookup object_type]]]
+			[if [null semantic_object_type]
+			    [prog [= semantic_object_type [new semantic_object_type [get [get this mind] semantic_realm]]]
+				  [semantic-set semantic_object_type phenomenal_name object_type]
+				  [have [get [get this mind] semantic_knowledge_base `object_type_knowledge] add_semantic_frame semantic_object_type]
+				  [have semantic_object_type_name_ptypehash add object_type semantic_object_type]]]
+			[semantic-add semantic_object_type example phenomenal_name]]]]
 	      visual_objects]
 	[mapc [funk [visual_object]
 		    [let [[semantic_object [have semantic_object_frame lookup [get visual_object phenomenal_name]]]]
@@ -112,6 +122,9 @@
 	      visual_objects]
 	`[print 'copying differences from input_visual_knowledge to visual_knowledge.']
 	[have [get [get this mind] input_visual_knowledge] copy_differences_to [get [get this mind] visual_knowledge]]
+	
+	'Once we have finished changing visual_knowledge, we add a special ending trace event.'
+	[have [get [get this mind] visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
 	]]]]
 
 

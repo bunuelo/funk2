@@ -17,58 +17,58 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe deliberative_physical_event_knowledge_agency [agency] []
+[deframe deliberative_physical_type_relationship_knowledge_agency [agency] []
   [new []
-       [construct agency `physical_event_knowledge]
+       [construct agency `physical_type_relationship_knowledge]
        
-       [have this add_resource [new translate_physical_knowledge_to_physical_event_knowledge_resource]]
+       [have this add_resource [new translate_physical_knowledge_to_physical_type_relationship_knowledge_resource]]
        
        nil]]
 
 
-[deftypefunk deliberative_physical_event_knowledge_agency execute create_knowledge []
-  [new meta_semantic_knowledge_base `physical_event_knowledge [get [get this mind] semantic_realm]]]
+[deftypefunk deliberative_physical_type_relationship_knowledge_agency execute create_knowledge []
+  [new meta_semantic_knowledge_base `physical_type_relationship_knowledge [get [get this mind] semantic_realm]]]
 
-[deftypefunk deliberative_physical_event_knowledge_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_event_knowledge]]
+[deftypefunk deliberative_physical_type_relationship_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_type_relationship_knowledge]]
 
 
-[deframe translate_physical_knowledge_to_physical_event_knowledge_resource [traced_resource] [[existence_physical_phenomenon_hash        [hash]]
+[deframe translate_physical_knowledge_to_physical_type_relationship_knowledge_resource [traced_resource] [[existence_physical_phenomenon_hash        [hash]]
 											      [existence_physical_relationship_ptypehash [new ptypehash]]
-											      [end_of_physical_event_changes_trigger     [new fiber_trigger]]]
+											      [end_of_physical_type_relationship_changes_trigger     [new fiber_trigger]]]
   [new []
-       [construct traced_resource `translate_physical_knowledge_to_physical_event_knowledge
+       [construct traced_resource `translate_physical_knowledge_to_physical_type_relationship_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
        [= vital t]
        nil]]
 
-[deftypefunk translate_physical_knowledge_to_physical_event_knowledge_resource get physical_phenomenon_existence [physical_phenomenon]
+[deftypefunk translate_physical_knowledge_to_physical_type_relationship_knowledge_resource get physical_phenomenon_existence [physical_phenomenon]
   [let [[existence_event [have existence_physical_phenomenon_hash lookup physical_phenomenon]]]
     [if [null existence_event]
 	[prog [= existence_event [new semantic_know_of_existence_event [get [get this mind] semantic_realm] physical_phenomenon]]
 	      [have existence_physical_phenomenon_hash add physical_phenomenon existence_event]
-	      [have [get [get this mind] semantic_knowledge_base `physical_event_knowledge] add_semantic_frame existence_event]]]
+	      [have [get [get this mind] semantic_knowledge_base `physical_type_relationship_knowledge] add_semantic_frame existence_event]]]
     existence_event]]
 
-[deftypefunk translate_physical_knowledge_to_physical_event_knowledge_resource get physical_relationship_existence [physical_relationship]
+[deftypefunk translate_physical_knowledge_to_physical_type_relationship_knowledge_resource get physical_relationship_existence [physical_relationship]
   [let [[relationship_event [have existence_physical_relationship_ptypehash lookup physical_relationship]]]
     [if [null relationship_event]
 	[prog [= relationship_event [new semantic_know_of_relationship_event [get [get this mind] semantic_realm] physical_relationship]]
 	      [have existence_physical_relationship_ptypehash add physical_relationship relationship_event]
-	      [have [get [get this mind] semantic_knowledge_base `physical_event_knowledge] add_semantic_frame relationship_event]]]
+	      [have [get [get this mind] semantic_knowledge_base `physical_type_relationship_knowledge] add_semantic_frame relationship_event]]]
     relationship_event]]
 
-[deftypefunk translate_physical_knowledge_to_physical_event_knowledge_resource execute physical_relationship_existence-remove [physical_relationship]
+[deftypefunk translate_physical_knowledge_to_physical_type_relationship_knowledge_resource execute physical_relationship_existence-remove [physical_relationship]
   [have existence_physical_relationship_ptypehash remove physical_relationship]]
 
-[deftypefunk translate_physical_knowledge_to_physical_event_knowledge_resource execute execute_resource_raw_funk []
-  [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_event_knowledge]]]
+[deftypefunk translate_physical_knowledge_to_physical_type_relationship_knowledge_resource execute execute_resource_raw_funk []
+  [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_relationship_knowledge]]]
     [while t
       [let [[event [have physical_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
-	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->physical_event event: ' event]]
+	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate physical->physical_type_relationship event: ' event]]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
@@ -100,7 +100,7 @@
 										     ]]
 										 ]]
 			  [[and [is-type `semantic_knowledge_base_event event]
-				[eq event_type `end_of_physical_changes]]      [prog [have end_of_physical_event_changes_trigger trigger]
+				[eq event_type `end_of_physical_changes]]      [prog [have end_of_physical_type_relationship_changes_trigger trigger]
 										     nil]]
 			  ]]]]
 	[have physical_knowledge_iterator increment]]]]]

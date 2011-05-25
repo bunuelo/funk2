@@ -17,12 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_physical_relationship_event_goal
+[defpackage semantic_goal
   :documentation 'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
    :packages     [semantic_object
 		  semantic_event]
-    :sources     ['semantic_physical_relationship_event_goal-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_physical_relationship_event_goal.so']]
+    :sources     ['semantic_goal-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_goal.so']]
 
-[defcore semantic_physical_relationship_event_goal 'extension/semantic_physical_relationship_event_goal/.libs/libf2e_semantic_physical_relationship_event_goal.so']
+[defcore semantic_goal 'extension/semantic_goal/.libs/libf2e_semantic_goal.so']
 

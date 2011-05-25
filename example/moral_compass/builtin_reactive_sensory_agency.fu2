@@ -77,7 +77,7 @@
 			[mapc [funk [preposition]
 				    [let [[prepositional_object_names [have preposition_frame lookup preposition]]]
 				      [mapc [funk [prepositional_object_name]
-						  [let [[prepositional_semantic_visual_object [get this semantic_visual_object lookup prepositional_object_name]]]
+						  [let [[prepositional_semantic_visual_object [get this semantic_visual_object prepositional_object_name]]]
 						    [if [null prepositional_semantic_visual_object]
 							[terminal_format standard-terminal '\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of prepositional object, ' prepositional_object_name '.']
 						      [cond [[eq preposition `in] [have semantic_visual_object assure_exists `preposition `in prepositional_semantic_visual_object]]

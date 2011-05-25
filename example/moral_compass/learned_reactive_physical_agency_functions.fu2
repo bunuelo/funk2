@@ -101,7 +101,7 @@ ideas: look carefully for - move to a different place in order to see
   [if [get mind perception]
       [have [have [have [get [get mind perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
 
-[deftypefunk learned_reactive_physical_agency get neck_heading 
+[deftypefunk learned_reactive_physical_agency get neck_heading []
   [if [get [get this mind] perception]
       [have [have [have [get [get [get this  mind] perception] proprioceptual_frame] lookup `neck] lookup `orientation] lookup `heading]]]
 

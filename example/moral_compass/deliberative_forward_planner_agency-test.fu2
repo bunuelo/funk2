@@ -116,7 +116,7 @@
   ]
 
 
-[defunk contains_event_goal [knowledge goal_event]
+[defunk contains_event [knowledge goal_event]
   [let [[matching_event nil]]
     [mapc [funk [event] 
 		
@@ -131,9 +131,26 @@
     matching_event]]
 
 [defunk test_goal [knowledge]
-  [if [and [contains_event_goal knowledge test_goal_event2]
-	   [contains_event_goal knowledge test_goal_event2]]
+  [if [and [contains_event knowledge test_goal_event2]
+	   [contains_event knowledge test_goal_event2]]
       t]]
+
+[defunk apply_transition_to_situation [transition situation]
+  [mapc [funk [event_to_add]
+	      [if [null [contains_event situation event_to_add]]
+		  [semantic-add situation event event_to_add]]]
+	[semantic-lookup transition add-event]]
+  [mapc [funk [event_to_remove]
+	      [if [contains_event situation event_to_remove]
+		  [semantic-remove situation event event_to_remove]]]
+	[semantic-lookup transition remove-event]]]
+
+
+[defunk BFS-test [knowledge action_list]
+  [let [[forward_list []]
+	[backward_list []]
+	]]]
+
 
 
 

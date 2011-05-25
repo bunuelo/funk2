@@ -49,7 +49,7 @@
 										       '_'
 										       [get key as-string]]
 									as-symbol]]]
-				       [terminal_format standard-terminal '\n' goal_resource_name ' checking if ' semantic_source_type ' has ' relation_symbol_name ' relation with ' target_object_type]
+				       [terminal_format standard-terminal '\n' goal_resource_name ' checking if ' semantic_source_type ' has ' relation_symbolic_name ' relation with ' target_object_type]
 				       [let [[relation_set [have semantic_source_type lookup relation_symbolic_name target_object_type]]]
 					 [if [not [or [null relation_set]
 						      [get relation_set is_empty]]]

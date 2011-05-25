@@ -65,6 +65,10 @@ goal state
   [globalize test_event_object3 [new semantic_event test_semantic_realm `3]]
   [globalize test_event_object4 [new semantic_event test_semantic_realm `4]]
   [globalize test_event_object5 [new semantic_event test_semantic_realm `5]]
+
+  [globalize test_goal_event_object1 [new semantic_event test_semantic_realm `1]]
+  [globalize test_goal_event_object2 [new semantic_event test_semantic_realm `2]]
+
   [globalize test_event_list `[,test_event_object1  
 			       ,test_event_object2  
 			       ,test_event_object3  
@@ -107,10 +111,10 @@ goal state
   ]
   
 
-[globalize test_semantic_realm [new semantic_realm]]
-[make_test_physical_knowledge]
-[make_test_event_knowledge]
-[make_test_situation_knowledge]
+`[globalize test_semantic_realm [new semantic_realm]]
+`[make_test_physical_knowledge]
+`[make_test_event_knowledge]
+`[make_test_situation_knowledge]
 
 [defunk make_test_transitions []
   [globalize test_situation_transition1 [new semantic_situation_transition test_semantic_realm]]
@@ -144,10 +148,22 @@ goal state
   ]
 
 
-[defunk test_goal [knowledge_base]
-  [if [[have knowledge_base lookup `semantic_frame_set] contains test_sp_object1]
+[defunk contains_event_goal [knowledge goal_event]
+  [let [[matching_event nil]]
+    [mapc [funk [event] 
+		
+		[if [and [= [semantic-get event type]
+			    [semantic-get goal_event type]]
+			 [= [semantic-get event action_name]
+			    [semantic-get goal event action_name]]]
+		    [= matching_event event]]]
+	  [have knowledge_base lookup `semantic_frame_set]]
+    
+    
+    matching_event]]
 
-      [prog [if ]]]]
+[defunk test_goal [knowledge]
+  [if [and [contains_event_goal knowledge test_goal_event
 
 
 

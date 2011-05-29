@@ -88,8 +88,8 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [[and [is-type `semantic_goal_object    event-semantic_frame]
-											     [eq      `property event-key_type event-key_type]
+										 [cond [[and [is-type `semantic_goal           event-semantic_frame]
+											     [eq      `property                event-key_type]
 											     [eq      `is_occurring            event-key]]
 											[let [[goal_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 														       event-semantic_frame event-key_type event-key event-value]]]
@@ -103,8 +103,8 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [[and [is-type `semantic_goal_object    event-semantic_frame]
-											     [eq      `property event-key_type event-key_type]
+										 [cond [[and [is-type `semantic_goal           event-semantic_frame]
+											     [eq      `property                event-key_type]
 											     [eq      `is_occurring            event-key]]
 											[let [[goal_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 														       event-semantic_frame event-key_type event-key event-value]]]

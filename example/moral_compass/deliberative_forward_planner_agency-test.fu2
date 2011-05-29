@@ -1,67 +1,82 @@
+
+'
+
+[globalize test_semantic_realm [new semantic_realm]]
+[make_test_physical_knowledge]
+[make_test_event_knowledge]
+[make_test_situation_knowledge]
+[make_test_transitions]
+'
+
+[defunk t []
+  [require semantic_situation_transition]
+  [load 'example/moral_compass/deliberative_forward_planner_agency-test.fu2']]
+
+
 [defunk make_test_physical_knowledge []
   [globalize test_physical_knowledge [new meta_semantic_knowledge_base `test_physical_knowledge test_semantic_realm]]
 
-  [globalize test_sp_object1 [new semantic_physical_object test_semantic_realm]]
-  [globalize test_sp_object2 [new semantic_physical_object test_semantic_realm]]
-  [globalize test_sp_object3 [new semantic_physical_object test_semantic_realm]]
-  [globalize test_sp_object4 [new semantic_physical_object test_semantic_realm]]
-  [globalize test_sp_object5 [new semantic_physical_object test_semantic_realm]]
+  [globalize test_physical_object1 [new semantic_physical_object test_semantic_realm]]
+  [globalize test_physical_object2 [new semantic_physical_object test_semantic_realm]]
+  [globalize test_physical_object3 [new semantic_physical_object test_semantic_realm]]
+  [globalize test_physical_object4 [new semantic_physical_object test_semantic_realm]]
+  [globalize test_physical_object5 [new semantic_physical_object test_semantic_realm]]
   
-  [globalize test_object_list `[,test_sp_object1  
-				,test_sp_object2  
-				,test_sp_object3  
-				,test_sp_object4  
-				,test_sp_object5]]
+  [globalize test_object_list `[,test_physical_object1  
+				,test_physical_object2  
+				,test_physical_object3  
+				,test_physical_object4  
+				,test_physical_object5]]
   
   [mapc [funk [object]
 	      [have test_physical_knowledge add_semantic_frame object]]
 	test_object_list]
   
   [mapc [funk [object]
-	    [semantic-add test_sp_object1 preposition-in object]]
+	    [semantic-add test_physical_object1 preposition-in object]]
 	test_object_list]
   
   [mapc [funk [object]
-	      [semantic-add test_sp_object2 preposition-on object]]
+	      [semantic-add test_physical_object2 preposition-on object]]
       test_object_list]]
 
 [defunk make_test_event_knowledge []
   [globalize test_event_knowledge [new meta_semantic_knowledge_base `test_event_knowledge test_semantic_realm]]
   
-  [globalize test_event_object1 [new semantic_event test_semantic_realm `1]]
-  [globalize test_event_object2 [new semantic_event test_semantic_realm `2]]
-  [globalize test_event_object3 [new semantic_event test_semantic_realm `3]]
-  [globalize test_event_object4 [new semantic_event test_semantic_realm `4]]
-  [globalize test_event_object5 [new semantic_event test_semantic_realm `5]]
+  [globalize test_event1 [new semantic_event test_semantic_realm `1]]
+  [globalize test_event2 [new semantic_event test_semantic_realm `2]]
+  [globalize test_event3 [new semantic_event test_semantic_realm `3]]
+  [globalize test_event4 [new semantic_event test_semantic_realm `4]]
+  [globalize test_event5 [new semantic_event test_semantic_realm `5]]
 
-  [globalize test_goal_event_object1 [new semantic_event test_semantic_realm `1]]
-  [globalize test_goal_event_object2 [new semantic_event test_semantic_realm `2]]
+  [globalize test_goal_event1 [new semantic_event test_semantic_realm `1]]
+  [globalize test_goal_event2 [new semantic_event test_semantic_realm `2]]
 
-  [globalize test_event_list `[,test_event_object1  
-			       ,test_event_object2  
-			       ,test_event_object3  
-			       ,test_event_object4  
-			       ,test_event_object5]]
+  [globalize test_event_list `[,test_event1  
+			       ,test_event2  
+			       ,test_event3  
+			       ,test_event4  
+			       ,test_event5]]
 
 
   [mapc [funk [object]
-	      [have test_event_knowledge add_semantic_frame object]
-	test_event_list]]
-	]
+	      [have test_event_knowledge add_semantic_frame object]]
+	      test_event_list]
+  ]
 
 [defunk make_test_situation_knowledge []
   [globalize test_situation_knowledge [new meta_semantic_knowledge_base `test_situation_knowledge test_semantic_realm]]
-  [globalize test_situation_object1 [new semantic_situation test_semantic_realm]]
-  [globalize test_situation_object2 [new semantic_situation test_semantic_realm]]
-  [globalize test_situation_object3 [new semantic_situation test_semantic_realm]]
-  [globalize test_situation_object4 [new semantic_situation test_semantic_realm]]
-  [globalize test_situation_object5 [new semantic_situation test_semantic_realm]]
+  [globalize test_situation1 [new semantic_situation test_semantic_realm]]
+  [globalize test_situation2 [new semantic_situation test_semantic_realm]]
+  [globalize test_situation3 [new semantic_situation test_semantic_realm]]
+  [globalize test_situation4 [new semantic_situation test_semantic_realm]]
+  [globalize test_situation5 [new semantic_situation test_semantic_realm]]
   
-  [globalize test_situation_list `[,test_situation_object1  
-				   ,test_situation_object2  
-				   ,test_situation_object3  
-				   ,test_situation_object4  
-				   ,test_situation_object5]]
+  [globalize test_situation_list `[,test_situation1  
+				   ,test_situation2  
+				   ,test_situation3  
+				   ,test_situation4  
+				   ,test_situation5]]
  [let [[i 0]]
    [while [< i 4]
      [let [[situation [get [get test_situation_list as-array] elt i]]]
@@ -78,11 +93,6 @@
   
   ]
   
-
-`[globalize test_semantic_realm [new semantic_realm]]
-`[make_test_physical_knowledge]
-`[make_test_event_knowledge]
-`[make_test_situation_knowledge]
 
 [defunk make_test_transitions []
   [globalize test_situation_transition1 [new semantic_situation_transition test_semantic_realm]]
@@ -116,7 +126,7 @@
   ]
 
 
-[defunk contains_event_goal [knowledge goal_event]
+[deftypefunk semantic_situation get contains_event [goal_event]
   [let [[matching_event nil]]
     [mapc [funk [event] 
 		
@@ -125,15 +135,64 @@
 			 [= [semantic-get event action_name]
 			    [semantic-get goal event action_name]]]
 		    [= matching_event event]]]
-	  [have knowledge_base lookup `semantic_frame_set]]
-    
-    
+	  [semantic-lookup situation event]]
     matching_event]]
 
-[defunk test_goal [knowledge]
-  [if [and [contains_event_goal knowledge test_goal_event2]
-	   [contains_event_goal knowledge test_goal_event2]]
+[defunk test_goal [situation]
+  [if [and [contains_event situation test_goal_event1]
+	   [contains_event situation test_goal_event2]]
       t]]
+
+[deftypefunk knowledge get as-situation []
+  [let [[situation [new semantic_situation]]]
+    [mapc [funk [event]
+		[semantic-add situation event event]]
+	  [get this semantic_frames]]
+    situation]]
+
+'only for event knowledge bases'
+
+[defunk apply_transition_to_situation [transition situation]
+  [let [[new_situation situation]]
+    [mapc [funk [event_to_add]
+		[if [null [contains_event situation event_to_add]]
+		    [semantic-add new_situation event event_to_add]]]
+	  [semantic-lookup transition add-event]]
+    [mapc [funk [event_to_remove]
+		[if [contains_event situation event_to_remove]
+		    [semantic-remove new_situation event event_to_remove]]]
+	  [semantic-lookup transition remove-event]]
+    new_situation]]
+  
+
+[defunk BFS-test [init_knowledge transition_list]
+  [let* [[init_state      `[,[get init_knowledge as situation][]]]
+	[forward_list     [list init_state]]
+	[explored_states  [new set]]
+	[current_state    `init_state]
+	]
+    [have explored_states add init_state]
+
+    [labels [[find_path [state]
+			[let [[path []]
+			      [current_state state]]
+			  [while [cdr current_state]
+			    [= path [have path add [cdr current_state]]]]]]
+	     [search    [state]
+			[let [[destination nil]]
+			  [if [test_goal state]
+			      [= destination state]
+			    [prog [mapc [funk [transition]
+					      [let [[new_situation [apply_transition_to_situation state transition]]]
+						[if [null [get explored_states contain new_situation]]
+						    [prog [have explored_states add new_situation]
+							  [have forward_list add new_situation]]]]]
+					[transition_list]]
+				  [= current_state [car forward_list]]
+				  [= forward_list [cdr forward_list]]]]]]]
+	    [search current_state]]
+    ]]
+
 
 
 
@@ -141,7 +200,7 @@
   nil]
 'compare 2 knowledge bases'
 
-[deframe action [] [name
+`[deframe action [] [name
 		    [state_transform_funk [funk [knowledge_base]
 						nil]]
 		    [resource resource ]

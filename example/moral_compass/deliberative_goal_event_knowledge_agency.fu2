@@ -79,7 +79,7 @@
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
-										 [let [[goal_phenomenon [get semantic_frame phenomenal_name]]]
+										 [let [[goal_phenomenon [semantic-get semantic_frame phenomenal_name]]]
 										   [let [[existence_event [get this goal_phenomenon_existence goal_phenomenon]]]
 										     [semantic-set existence_event absolute_start_time [get event time]]
 										     ]]]]

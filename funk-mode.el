@@ -100,7 +100,7 @@
 	      "package" "parc" "parcar" "parlet" "parog" "partimes" "pause" "prog" "put"
 	      "quote"
 	      "require" "resume"
-	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-lookup-apply" "semantic-add" "semantic-add-apply" "semantic-remove" "semantic-remove-apply" "semantic-get" "semantic-set"
+	      "set" "set-apply" "shelter" "semantic-lookup" "semantic-lookup-apply" "semantic-add" "semantic-add-apply" "semantic-assure_set" "semantic-assure_set-apply" "semantic-remove" "semantic-remove-apply" "semantic-get" "semantic-set"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
 	      "wait-for-trigger" "while" "with" "with-new-cause"
 	      "yield"

@@ -131,7 +131,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
   f2ptr left_center_comparison  = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value,   center_value)));
   f2ptr center_right_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, center_value, right_value)));
   if ((left_center_comparison  != nil) &&
-      (right_center_comparison != nil)) {
+      (center_right_comparison != nil)) {
     // interval overlaps with center value of this node
     f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);

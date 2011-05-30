@@ -21,9 +21,11 @@
   [let [[interval_tree [new interval_tree
 			    [funk [x] [have x lookup `left]]
 			    [funk [x] [have x lookup `right]]
-			    [funk [x y] [< x y]]]]]
+			    [funk [x y] [< x y]]
+			    [funk [x y] [/ [+ x y] 2]]
+			    ]]]
     
-    [have interval_tree insert [frame left 0 right 10]]
+    [have interval_tree insert [frame left 0.0 right 10.0]]
     
     interval_tree]]
 

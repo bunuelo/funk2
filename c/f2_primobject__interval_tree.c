@@ -125,8 +125,8 @@ def_pcfunk4(interval_tree_node__new, center_value, left_value_funk, right_value_
 
 
 f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
-  f2ptr left_value  = assert_value(cause, f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,  f2list1__new(cause, element)));
-  f2ptr right_value = assert_value(cause, f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, element)));
+  f2ptr left_value  = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,  f2list1__new(cause, element)));
+  f2ptr right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, element)));
   
   return nil;
 }

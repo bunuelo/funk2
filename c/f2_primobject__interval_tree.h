@@ -25,7 +25,7 @@
 // interval_tree
 
 typedef struct funk2_object_type__interval_tree__slot_s funk2_object_type__interval_tree__slot_t;
-declare_object_type_4_slot(interval_tree, mutate_mutex, head, value_funk, value_comparison_funk,
+declare_object_type_5_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_comparison_funk,
 			   f2ptr insert__symbol;
 			   f2ptr insert__funk;
 			   f2ptr terminal_print_with_frame__symbol;

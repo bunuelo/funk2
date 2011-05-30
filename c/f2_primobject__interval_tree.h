@@ -53,7 +53,7 @@ declare_object_type_5_slot(interval_tree_node, center_value, left_node, right_no
 
 // interval_tree
 
-declare_primobject_5_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_comparison_funk);
+declare_primobject_6_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
 
 f2ptr raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr  f2__interval_tree__new(f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);

@@ -78,6 +78,7 @@ f2ptr raw__interval_tree_node__new(f2ptr cause, f2ptr center_value, f2ptr left_v
   f2ptr overlapping_left_redblacktree  = nil;
   f2ptr overlapping_right_redblacktree = nil;
   return f2interval_tree_node__new(cause,
+				   center_value,
 				   left_node,
 				   right_node,
 				   overlapping_left_redblacktree,

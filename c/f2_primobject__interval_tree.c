@@ -146,7 +146,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
       if (left_node == nil) {
 	f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, left_value, right_value)));
 	left_node = f2__interval_tree_node__new(cause, center_value, left_value_funk, right_value_funk, value_comparison_funk);
-	f2__interval_tree_interval__left_node__set(cause, this, left_node);
+	f2__interval_tree_node__left_node__set(cause, this, left_node);
       }
       return raw__interval_tree_node__insert(cause, left_node, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
     } else {
@@ -155,7 +155,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
       if (right_node == nil) {
 	f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, right_value, right_value)));
 	right_node = f2__interval_tree_node__new(cause, center_value, left_value_funk, right_value_funk, value_comparison_funk);
-	f2__interval_tree_interval__right_node__set(cause, this, right_node);
+	f2__interval_tree_node__right_node__set(cause, this, right_node);
       }
       return raw__interval_tree_node__insert(cause, right_node, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
     }

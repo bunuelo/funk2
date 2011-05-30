@@ -71,8 +71,7 @@ f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__interval_tree__reinitialize_globalvars() {
-  __interval_tree__symbol      = f2symbol__new(initial_cause(), strlen("interval_tree"),      (u8*)"interval_tree");
-  __interval_tree_node__symbol = f2symbol__new(initial_cause(), strlen("interval_tree_node"), (u8*)"interval_tree_node");
+  __interval_tree__symbol = new__symbol(initial_cause(), "interval_tree");
 }
 
 void f2__primobject__interval_tree__initialize() {

@@ -34,7 +34,7 @@ declare_object_type_4_slot(interval_tree, mutate_mutex, head, value_funk, value_
 // interval_tree_node
 
 typedef struct funk2_object_type__interval_tree_node__slot_s funk2_object_type__interval_tree_node__slot_t;
-declare_object_type_4_slot(interval_tree_node, mutate_mutex, head, value_funk, value_comparison_funk,
+declare_object_type_5_slot(interval_tree_node, center_value, left_node, right_node, overlapping_left_redblacktree, overlapping_right_redblacktree,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -59,10 +59,10 @@ f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause);
 
 // interval_tree_node
 
-declare_primobject_4_slot(interval_tree_node, mutate_mutex, head, value_funk, value_comparison_funk);
+declare_primobject_5_slot(interval_tree_node, center_value, left_node, right_node, overlapping_left_redblacktree, overlapping_right_redblacktree);
 
-f2ptr     raw__interval_tree_node__new(f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk);
-f2ptr      f2__interval_tree_node__new(f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
+f2ptr     raw__interval_tree_node__new(f2ptr cause, f2ptr center_value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk);
+f2ptr      f2__interval_tree_node__new(f2ptr cause, f2ptr center_value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk);
 
 f2ptr f2interval_tree_node__primobject_type__new_aux(f2ptr cause);
 

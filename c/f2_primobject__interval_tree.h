@@ -30,7 +30,17 @@ declare_object_type_4_slot(interval_tree, mutate_mutex, head, value_funk, value_
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+
+// interval_tree_node
+
+typedef struct funk2_object_type__interval_tree_node__slot_s funk2_object_type__interval_tree_node__slot_t;
+declare_object_type_4_slot(interval_tree_node, mutate_mutex, head, value_funk, value_comparison_funk,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 #endif // F2__PRIMOBJECT__INTERVAL_TREE__TYPES__H
+
 
 #ifndef F2__PRIMOBJECT__INTERVAL_TREE__H
 #define F2__PRIMOBJECT__INTERVAL_TREE__H
@@ -45,6 +55,16 @@ f2ptr     raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr value_funk, f2p
 f2ptr      f2__interval_tree__new(f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
 
 f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause);
+
+
+// interval_tree_node
+
+declare_primobject_4_slot(interval_tree_node, mutate_mutex, head, value_funk, value_comparison_funk);
+
+f2ptr     raw__interval_tree_node__new(f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk);
+f2ptr      f2__interval_tree_node__new(f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
+
+f2ptr f2interval_tree_node__primobject_type__new_aux(f2ptr cause);
 
 
 // **

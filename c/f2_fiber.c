@@ -157,6 +157,21 @@ def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds,
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber, this);
   boolean_t is_complete;
+  f2ptr     exit_cmutex = f2fiber__exit_cmutex(this, cause);
+  f2ptr     exit_status;
+  if (! raw__cmutex__trylock(cause, exit_cmutex)) { // successful lock
+    exit_status = f2fiber__exit_status(this, cause);
+    f2cmutex__unlock(exit_cmutex, cause);
+  } else {
+    // if we fail to lock the execute_cmutex, we assume that it is executing.
+    exit_status = nil;
+  }
+  return (exit_status != nil);
+}
+
+boolean_t raw__fiber__is_complete__old(f2ptr cause, f2ptr this) {
+  assert_argument_type(fiber, this);
+  boolean_t is_complete;
   f2ptr     execute_cmutex = f2fiber__execute_cmutex(this, cause);
   if (! raw__cmutex__trylock(cause, execute_cmutex)) { // successful lock
     is_complete = (f2fiber__is_complete(this, cause) ? boolean__true : boolean__false);

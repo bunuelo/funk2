@@ -45,6 +45,8 @@ declare_object_type_5_slot(interval_tree_node, center_value, left_node, right_no
 			   f2ptr insert__funk;
 			   f2ptr add_intervals_containing_value_to_set__symbol;
 			   f2ptr add_intervals_containing_value_to_set__funk;
+			   f2ptr overlapping_elements__symbol;
+			   f2ptr overlapping_elements__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

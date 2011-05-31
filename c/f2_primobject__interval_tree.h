@@ -28,6 +28,8 @@ typedef struct funk2_object_type__interval_tree__slot_s funk2_object_type__inter
 declare_object_type_6_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk,
 			   f2ptr insert__symbol;
 			   f2ptr insert__funk;
+			   f2ptr intervals_containing_value__symbol;
+			   f2ptr intervals_containing_value__funk;
 			   f2ptr add_intervals_containing_value_to_set__symbol;
 			   f2ptr add_intervals_containing_value_to_set__funk;
 			   f2ptr terminal_print_with_frame__symbol;

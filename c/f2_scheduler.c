@@ -281,20 +281,10 @@ def_pcfunk1(global_scheduler__remove_fiber, fiber,
 void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
-    if (raw__fiber__is_complete(cause, fiber)) {
-      complete = boolean__true;
-    } else {
-      f2__this__fiber__yield(cause);
-    }
-  } while (! complete);
-}
-
-void raw__global_scheduler__complete_fiber__old__2011_05_31(f2ptr cause, f2ptr fiber) {
-  boolean_t complete = boolean__false;
-  do {
     if(f2cmutex__trylock(f2fiber__execute_cmutex(fiber, cause), cause) == 0) {
       if(f2fiber__is_complete(fiber, cause) ||
-	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause)))) {
+	 (f2fiber__paused(fiber, cause) && raw__bug__is_type(cause, f2fiber__value(fiber, cause))) ||
+	 (f2fiber__processor_assignment_index(fiber, cause) == nil)) {
 	complete = boolean__true;
       }
       f2cmutex__unlock(f2fiber__execute_cmutex(fiber, cause), cause);

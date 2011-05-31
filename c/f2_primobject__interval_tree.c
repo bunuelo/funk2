@@ -211,7 +211,7 @@ def_pcfunk6(interval_tree_node__insert, this, element, left_value_funk, right_va
 
 f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk) {
   f2ptr center_value            = f2__interval_tree_node__center_value(cause, this);
-  f2ptr center_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value, center_value)));
+  f2ptr center_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, center_value, value)));
   if (center_value_comparison != nil) {
     // value is to the right of center_value
     printf("\nvalue is to the right of center_value"); fflush(stdout);

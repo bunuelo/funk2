@@ -224,10 +224,10 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 				       // keep looping backwards
 				     } else {
 				       // value is greater than right_value of element, so stop looping and descend right branch of tree.
-				       goto done_with_redblacktree_iteration;
+				       goto raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_right_redblacktree__done_with_redblacktree_iteration;
 				     }
 				     );
-  done_with_redblacktree_iteration:
+  raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_right_redblacktree__done_with_redblacktree_iteration:
     {
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
       if (right_node != nil) {
@@ -247,10 +247,10 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 				      // keep looping forwards
 				    } else {
 				      // left_value of element is greater than the value, so stop looping and descend left branch of tree.
-				      goto done_with_redblacktree_iteration;
+				      goto raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_left_redblacktree__done_with_redblacktree_iteration;
 				    }
 				    );
-  done_with_redblacktree_iteration:
+  raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_left_redblacktree__done_with_redblacktree_iteration:
     {
       f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
       if (left_node != nil) {

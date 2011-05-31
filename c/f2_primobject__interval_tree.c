@@ -75,7 +75,7 @@ f2ptr raw__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2p
     f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
     f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
     f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
-    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, head, value, set));
+    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, head, value, set, left_value_funk, right_value_funk, value_comparison_funk));
   }
   return nil;
 }

@@ -228,11 +228,13 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 				     }
 				     );
   done_with_redblacktree_iteration:
-    f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
-    if (right_node != nil) {
-      assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, right_node, value, set, left_value_funk, right_value_funk, value_comparison_funk));
+    {
+      f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
+      if (right_node != nil) {
+	assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, right_node, value, set, left_value_funk, right_value_funk, value_comparison_funk));
+      }
+      return nil;
     }
-    return nil;
   } else {
     // value is to the left of center_value
     f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
@@ -249,9 +251,11 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 				    }
 				    );
   done_with_redblacktree_iteration:
-    f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
-    if (left_node != nil) {
-      return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, left_node, value, set, left_value_funk, right_value_funk, value_comparison_funk);
+    {
+      f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
+      if (left_node != nil) {
+	return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, left_node, value, set, left_value_funk, right_value_funk, value_comparison_funk);
+      }
     }
     return nil;
   }

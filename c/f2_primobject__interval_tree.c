@@ -270,7 +270,7 @@ def_pcfunk6(interval_tree_node__add_intervals_containing_value_to_set, this, val
 
 f2ptr raw__interval_tree_node__overlapping_elements(f2ptr cause, f2ptr this) {
   f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
-  return raw__redblacktree__elements(cause, overlapping_left_redblacktree);
+  return f2__redblacktree__elements(cause, overlapping_left_redblacktree);
 }
 
 f2ptr f2__interval_tree_node__overlapping_elements(f2ptr cause, f2ptr this) {

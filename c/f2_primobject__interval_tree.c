@@ -177,7 +177,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
     f2__redblacktree__insert(cause, overlapping_right_redblacktree, element);
     return nil;
   } else {
-    f2ptr right_center_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, right_value,  center_value)));
+    f2ptr right_center_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, right_value, center_value)));
     if (right_center_comparison != nil) {
       // interval is completely to the left of the center value of this node
       f2ptr left_node = f2__interval_tree_node__left_node(cause, this);

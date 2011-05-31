@@ -26,6 +26,7 @@
 			    ]]]
     
     [have interval_tree insert [frame left 0.0 right 10.0]]
+    [have interval_tree insert [frame left 0.0 right 10.0]]
     
     interval_tree]]
 

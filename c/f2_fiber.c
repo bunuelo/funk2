@@ -156,9 +156,8 @@ def_pcfunk2(fiber__sleep_for_nanoseconds, this, nanoseconds,
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this) {
   assert_argument_type(fiber, this);
-  boolean_t is_complete;
-  f2ptr     exit_cmutex = f2fiber__exit_cmutex(this, cause);
-  f2ptr     exit_status;
+  f2ptr exit_cmutex = f2fiber__exit_cmutex(this, cause);
+  f2ptr exit_status;
   if (! raw__cmutex__trylock(cause, exit_cmutex)) { // successful lock
     exit_status = f2fiber__exit_status(this, cause);
     f2cmutex__unlock(exit_cmutex, cause);

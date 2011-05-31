@@ -214,20 +214,26 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
   f2ptr center_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value, center_value)));
   if (center_value_comparison != nil) {
     // value is to the right of center_value
+    printf("\nvalue is to the right of center_value"); fflush(stdout);
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
     redblacktree__iteration_backward(cause, overlapping_right_redblacktree, element,
 				     f2ptr right_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,      f2list1__new(cause, element)));
 				     f2ptr value_right_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value, right_value)));
 				     if (value_right_comparison != nil) {
 				       // value is less than the right_value of element
+				       printf("\nvalue is less than the right_value of element"); fflush(stdout);
 				       f2__set__add(cause, set, element);
 				       // keep looping backwards
+				       printf("\nkeep looping backwards"); fflush(stdout);
 				     } else {
-				       // value is greater than right_value of element, so stop looping and descend right branch of tree.
+				       // value is greater than right_value of element, so stop looping.
+				       printf("\nvalue is greater than right_value of element, so stop looping."); fflush(stdout);
 				       goto raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_right_redblacktree__done_with_redblacktree_iteration;
 				     }
 				     );
   raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_right_redblacktree__done_with_redblacktree_iteration:
+    // descend right branch of tree
+    printf("\ndescend right branch of tree"); fflush(stdout);
     {
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
       if (right_node != nil) {
@@ -237,20 +243,26 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
     }
   } else {
     // value is to the left of center_value
+    printf("\nvalue is to the left of center_value"); fflush(stdout);
     f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
     redblacktree__iteration_forward(cause, overlapping_left_redblacktree, element,
 				    f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
 				    f2ptr left_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, value)));
 				    if (left_value_comparison != nil) {
 				      // left_value of element is less than the value
+				      printf("\nleft_value of element is less than the value"); fflush(stdout);
 				      f2__set__add(cause, set, element);
 				      // keep looping forwards
+				      printf("\nkeep looping forwards"); fflush(stdout);
 				    } else {
-				      // left_value of element is greater than the value, so stop looping and descend left branch of tree.
+				      // left_value of element is greater than the value, so stop looping.
+				      printf("\nleft_value of element is greater than the value, so stop looping."); fflush(stdout);
 				      goto raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_left_redblacktree__done_with_redblacktree_iteration;
 				    }
 				    );
   raw__interval_tree_node__add_intervals_containing_value_to_set____overlapping_left_redblacktree__done_with_redblacktree_iteration:
+    // descend left branch of tree
+    printf("\ndescend left branch of tree"); fflush(stdout);
     {
       f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
       if (left_node != nil) {

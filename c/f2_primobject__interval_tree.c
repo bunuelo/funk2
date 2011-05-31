@@ -87,19 +87,19 @@ def_pcfunk3(interval_tree__add_intervals_containing_value_to_set, this, value, s
 	    return f2__interval_tree__add_intervals_containing_value_to_set(this_cause, this, value, set));
 
 
-f2ptr raw__interval_tree__intervals_containing_value(f2ptr cause, f2ptr this) {
+f2ptr raw__interval_tree__intervals_containing_value(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr set = f2__set__new(cause);
-  assert_value(raw__interval_tree__add_intervals_containing_value_to_set(cause, this, set));
+  assert_value(raw__interval_tree__add_intervals_containing_value_to_set(cause, this, value, set));
   return set;
 }
 
-f2ptr f2__interval_tree__invervals_containing_value(f2ptr cause, f2ptr this) {
+f2ptr f2__interval_tree__invervals_containing_value(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__intervals_containing_value(cause, this);
 }
-def_pcfunk1(interval_tree__intervals_containing_value, this,
+def_pcfunk2(interval_tree__intervals_containing_value, this, value,
 	    "Returns a new set that contains the intervals in this interval_tree that contain the given value.",
-	    return f2__interval_tree__intervals_containing_value(this_cause, this));
+	    return f2__interval_tree__intervals_containing_value(this_cause, this, value));
 
 
 f2ptr raw__interval_tree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -252,14 +252,17 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
   }
 }
 
-f2ptr f2__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set) {
+f2ptr f2__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk) {
   assert_argument_type(interval_tree_node, this);
   assert_argument_type(set,                set);
-  return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, this, value, set);
+  assert_argument_type(funkable,           left_value_funk);
+  assert_argument_type(funkable,           right_value_funk);
+  assert_argument_type(funkable,           value_comparison_funk);
+  return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, this, value, set, left_value_funk, right_value_funk, value_comparison_funk);
 }
-def_pcfunk3(interval_tree_node__add_intervals_containing_value_to_set, this, value, set,
+def_pcfunk6(interval_tree_node__add_intervals_containing_value_to_set, this, value, set, left_value_funk, right_value_funk, value_comparison_funk,
 	    "Adds intervals from this interval_tree_node that contain the given value to the given set.",
-	    return f2__interval_tree_node__add_intervals_containing_value_to_set(this_cause, this, value, set));
+	    return f2__interval_tree_node__add_intervals_containing_value_to_set(this_cause, this, value, set, left_value_funk, right_value_funk, value_comparison_funk));
 
 
 f2ptr raw__interval_tree_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -316,9 +319,9 @@ void f2__primobject__interval_tree__initialize() {
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.insert__symbol = new__symbol(cause, "insert");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__insert, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.insert__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__symbol = new__symbol(cause, "add_intervals_containing_value_to_set");
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__add_intervals_containing_value_to_set, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(interval_tree__add_intervals_containing_value_to_set, this, value, set, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_containing_value__symbol = new__symbol(cause, "intervals_containing_value");
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__intervals_containing_value, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_containing_value__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__intervals_containing_value, this, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_containing_value__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.terminal_print_with_frame__funk = never_gc(cfunk);}
   
@@ -332,7 +335,8 @@ void f2__primobject__interval_tree__initialize() {
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.insert__symbol = new__symbol(cause, "insert");
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(interval_tree_node__insert, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.insert__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.add_intervals_containing_value_to_set__symbol = new__symbol(cause, "add_intervals_containing_value_to_set");
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(interval_tree_node__add_intervals_containing_value_to_set, this, value, set, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.add_intervals_containing_value_to_set__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__6_arg(interval_tree_node__add_intervals_containing_value_to_set, this, value, set, left_value_funk, right_value_funk, value_comparison_funk, cfunk);
+    __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.add_intervals_containing_value_to_set__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.terminal_print_with_frame__funk = never_gc(cfunk);}
   

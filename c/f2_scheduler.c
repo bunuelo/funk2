@@ -281,7 +281,7 @@ def_pcfunk1(global_scheduler__remove_fiber, fiber,
 void raw__global_scheduler__complete_fiber(f2ptr cause, f2ptr fiber) {
   boolean_t complete = boolean__false;
   do {
-    if (raw__fiber__is_complete(fiber, cause)) {
+    if (raw__fiber__is_complete(cause, fiber)) {
       complete = boolean__true;
     } else {
       f2__this__fiber__yield(cause);

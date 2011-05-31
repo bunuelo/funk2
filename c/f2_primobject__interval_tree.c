@@ -224,19 +224,20 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 				       // keep looping backwards
 				     } else {
 				       // value is greater than right_value of element, so stop looping and descend right branch of tree.
-				       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
-				       if (right_node != nil) {
-					 return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, right_node, value, set, left_value_funk, right_value_funk, value_comparison_funk);
-				       }
-				       return nil;
+				       goto done_with_redblacktree_iteration;
 				     }
 				     );
+  done_with_redblacktree_iteration:
+    f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
+    if (right_node != nil) {
+      assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, right_node, value, set, left_value_funk, right_value_funk, value_comparison_funk));
+    }
     return nil;
   } else {
     // value is to the left of center_value
     f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
     redblacktree__iteration_forward(cause, overlapping_left_redblacktree, element,
-				    f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,      f2list1__new(cause, element)));
+				    f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
 				    f2ptr left_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, value)));
 				    if (left_value_comparison != nil) {
 				      // left_value of element is less than the value
@@ -244,13 +245,14 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 				      // keep looping forwards
 				    } else {
 				      // left_value of element is greater than the value, so stop looping and descend left branch of tree.
-				      f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
-				      if (left_node != nil) {
-					return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, left_node, value, set, left_value_funk, right_value_funk, value_comparison_funk);
-				      }
-				      return nil;
+				      goto done_with_redblacktree_iteration;
 				    }
 				    );
+  done_with_redblacktree_iteration:
+    f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
+    if (left_node != nil) {
+      return raw__interval_tree_node__add_intervals_containing_value_to_set(cause, left_node, value, set, left_value_funk, right_value_funk, value_comparison_funk);
+    }
     return nil;
   }
 }

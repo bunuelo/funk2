@@ -191,7 +191,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
       // interval is completely to the right of the center value of this node
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
       if (right_node == nil) {
-	f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, right_value, right_value)));
+	f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, left_value, right_value)));
 	right_node = f2__interval_tree_node__new(cause, center_value, left_value_funk, right_value_funk, value_comparison_funk);
 	f2__interval_tree_node__right_node__set(cause, this, right_node);
       }

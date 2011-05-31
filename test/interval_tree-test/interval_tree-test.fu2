@@ -22,7 +22,7 @@
 			    [funk [x] [have x lookup `left]]
 			    [funk [x] [have x lookup `right]]
 			    [funk [x y] [< x y]]
-			    [funk [x y] [/ [+ x y] 2]]
+			    [funk [x y] [/ [+ x y] 2.0]]
 			    ]]]
     
     [have interval_tree insert [frame left 0.0 right 10.0]]

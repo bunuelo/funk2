@@ -95,7 +95,7 @@ f2ptr raw__interval_tree__intervals_containing_value(f2ptr cause, f2ptr this, f2
 
 f2ptr f2__interval_tree__invervals_containing_value(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(interval_tree, this);
-  return raw__interval_tree__intervals_containing_value(cause, this);
+  return raw__interval_tree__intervals_containing_value(cause, this, value);
 }
 def_pcfunk2(interval_tree__intervals_containing_value, this, value,
 	    "Returns a new set that contains the intervals in this interval_tree that contain the given value.",

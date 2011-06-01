@@ -132,6 +132,7 @@ f2ptr raw__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this
     f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
     f2ptr left_value_funk        = f2__interval_tree__left_value_funk(       cause, this);
     f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
+    f2ptr value_equality_funk    = f2__interval_tree__value_equality_funk(   cause, this);
     f2ptr value_comparison_funk  = f2__interval_tree__value_comparison_funk( cause, this);
     f2ptr element__left_value    = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,  f2list1__new(cause, element)));
     f2ptr element__right_value   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, element)));

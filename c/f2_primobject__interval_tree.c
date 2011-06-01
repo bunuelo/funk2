@@ -88,6 +88,27 @@ def_pcfunk2(interval_tree__insert, this, element,
 	    return f2__interval_tree__insert(this_cause, this, element));
 
 
+f2ptr raw__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
+  f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
+  f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
+  assert_value(raw__redblacktree__remove(cause, all_left_redblacktree,  element));
+  assert_value(raw__redblacktree__remove(cause, all_right_redblacktree, element));
+  f2ptr head = f2__interval_tree__head(cause, this);
+  if (head != nil) {
+    assert_value(raw__interval_tree_node__simple_remove(cause, this, element));
+  }
+  return f2larva__new(cause, 23516, nil);
+}
+
+f2ptr f2__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
+  assert_argument_type(interval_tree, this);
+  return raw__interval_tree__remove(cause, this, element);
+}
+def_pcfunk2(interval_tree__remove, this, element,
+	    "Removes an interval element from this interval_tree.",
+	    return f2__interval_tree__remove(this_cause, this, element));
+
+
 f2ptr raw__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set) {
   f2ptr head = f2__interval_tree__head(cause, this);
   if (head != nil) {
@@ -207,6 +228,7 @@ def_pcfunk2(interval_tree__terminal_print_with_frame, this, terminal_print_frame
 f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2interval_tree__primobject_type__new(cause);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                                __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.insert__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove"),                                __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.remove__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_intervals_containing_value_to_set"), __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_containing_value"),            __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_containing_value__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_overlapping_interval"),        __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_overlapping_interval__funk);
@@ -318,14 +340,14 @@ f2ptr raw__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr elem
       // interval is completely to the left of the center value of this node
       f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
       if (left_node == nil) {
-	return nil; // failure to find element
+	return f2larva__new(cause, 23424, nil); // failure to find element
       }
       return raw__interval_tree_node__simple_remove(cause, left_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
     } else {
       // interval is completely to the right of the center value of this node
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
       if (right_node == nil) {
-	return nil; // failure to find element
+	return f2larva__new(cause, 23425, nil); // failure to find element
       }
       return raw__interval_tree_node__simple_remove(cause, right_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
     }
@@ -725,6 +747,8 @@ void f2__primobject__interval_tree__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(interval_tree__new, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.new__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.insert__symbol = new__symbol(cause, "insert");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__insert, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.insert__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.remove__symbol = new__symbol(cause, "remove");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(interval_tree__remove, this, element, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.remove__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__symbol = new__symbol(cause, "add_intervals_containing_value_to_set");
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(interval_tree__add_intervals_containing_value_to_set, this, value, set, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_containing_value__symbol = new__symbol(cause, "intervals_containing_value");

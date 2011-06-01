@@ -28,6 +28,8 @@ typedef struct funk2_object_type__interval_tree__slot_s funk2_object_type__inter
 declare_object_type_9_slot(interval_tree, mutate_mutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk,
 			   f2ptr insert__symbol;
 			   f2ptr insert__funk;
+			   f2ptr remove__symbol;
+			   f2ptr remove__funk;
 			   f2ptr intervals_containing_value__symbol;
 			   f2ptr intervals_containing_value__funk;
 			   f2ptr intervals_overlapping_interval__symbol;

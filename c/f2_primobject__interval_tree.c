@@ -354,7 +354,7 @@ void raw__interval_tree_node__insert_case_4(f2ptr cause, f2ptr this) {
   f2ptr parent_node__right_node      =  f2__interval_tree_node__right_node(      cause, parent_node);
   f2ptr parent_node__left_node       =  f2__interval_tree_node__left_node(       cause, parent_node);
   {
-    f2ptr next_node;
+    f2ptr next_node = this;
     if (raw__eq(cause, this, parent_node__right_node) && raw__eq(cause, parent_node, grandparent_node__left_node)) {
       raw__interval_tree_node__rotate_left(cause, parent_node);
       next_node = f2__interval_tree_node__left_node(cause, this);

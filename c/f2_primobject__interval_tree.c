@@ -95,7 +95,11 @@ f2ptr raw__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
   assert_value(raw__redblacktree__remove(cause, all_right_redblacktree, element));
   f2ptr head = f2__interval_tree__head(cause, this);
   if (head != nil) {
-    assert_value(raw__interval_tree_node__simple_remove(cause, this, element));
+    f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
+    f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
+    f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
+    f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
+    assert_value(raw__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
   }
   return f2larva__new(cause, 23516, nil);
 }

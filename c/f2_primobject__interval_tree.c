@@ -23,13 +23,17 @@
 
 // interval_tree
 
-def_primobject_7_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+def_primobject_9_slot(interval_tree, mutate_mutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 
 f2ptr raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
-  f2ptr mutate_mutex = f2__cmutex__new(cause);
+  f2ptr mutate_mutex           = f2__cmutex__new(cause);
+  f2ptr all_left_redblacktree  = f2__redblacktree__new(cause, left_value_funk,  value_comparison_funk);
+  f2ptr all_right_redblacktree = f2__redblacktree__new(cause, right_value_funk, value_comparison_funk);
   return f2interval_tree__new(cause,
 			      mutate_mutex,
 			      head,
+			      all_left_redblacktree,
+			      all_right_redblacktree,
 			      left_value_funk,
 			      right_value_funk,
 			      value_equality_funk,
@@ -653,7 +657,7 @@ void f2__primobject__interval_tree__initialize() {
   
   // interval_tree
   
-  initialize_primobject_7_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+  initialize_primobject_9_slot(interval_tree, mutate_mutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
   
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.new__symbol = new__symbol(cause, "new");
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(interval_tree__new, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.new__funk = never_gc(cfunk);}

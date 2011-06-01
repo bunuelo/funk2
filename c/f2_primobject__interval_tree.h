@@ -25,7 +25,7 @@
 // interval_tree
 
 typedef struct funk2_object_type__interval_tree__slot_s funk2_object_type__interval_tree__slot_t;
-declare_object_type_7_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk,
+declare_object_type_7_slot(interval_tree, mutate_mutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk,
 			   f2ptr insert__symbol;
 			   f2ptr insert__funk;
 			   f2ptr intervals_containing_value__symbol;
@@ -65,7 +65,7 @@ declare_object_type_7_slot(interval_tree_node, color, center_value, parent_node,
 
 // interval_tree
 
-declare_primobject_7_slot(interval_tree, mutate_mutex, head, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+declare_primobject_9_slot(interval_tree, mutate_mutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 
 f2ptr raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr  f2__interval_tree__new(f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);

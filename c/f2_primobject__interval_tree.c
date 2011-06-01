@@ -366,6 +366,8 @@ void raw__interval_tree_node__insert_case_4(f2ptr cause, f2ptr this) {
   }
 }
 
+void raw__interval_tree_node__insert_case_1(f2ptr cause, f2ptr this);
+
 void raw__interval_tree_node__insert_case_3(f2ptr cause, f2ptr this) {
   f2ptr uncle_node = raw__interval_tree_node__uncle_node(cause, this);
   if ((uncle_node != nil) && raw__interval_tree_node__is_red(cause, uncle_node)) {

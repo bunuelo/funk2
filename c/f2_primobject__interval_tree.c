@@ -250,9 +250,9 @@ f2ptr raw__interval_tree_node__grandparent_node(f2ptr cause, f2ptr this) {
 }
 
 void raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk) {
-  //    this                 right
-  //        \       =>      /
-  //         right      this
+  //    this                 right    //
+  //        \       =>      /         //
+  //         right      this          //
   
   f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
   f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
@@ -285,9 +285,9 @@ void raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_va
 }
 
 void raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk) {
-  //      this      left
-  //     /      =>      \ 
-  // left                this
+  //         this      left         //
+  //        /      =>      \        //
+  //    left                this    //
   
   f2ptr left_node             = f2__interval_tree_node__left_node( cause, this);
   f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);

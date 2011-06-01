@@ -296,7 +296,7 @@ void raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this) {
 
 void raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this) {
   f2ptr that = f2__interval_tree_node__left_node(cause, this);      // Set that.
-  f2__interval_tree_node__left_node__set(cause, this, f2__interval_tree_node__right(cause, that));     // Turn that's right subtree into this's left subtree.
+  f2__interval_tree_node__left_node__set(cause, this, f2__interval_tree_node__right_node(cause, that));     // Turn that's right subtree into this's left subtree.
   if (f2__interval_tree_node__right_node(cause, that)) {
     f2__interval_tree_node__parent_node__set(cause, f2__interval_tree_node__right_node(cause, that), this);
   }

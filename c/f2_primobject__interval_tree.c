@@ -58,7 +58,16 @@ f2ptr raw__interval_tree__insert(f2ptr cause, f2ptr this, f2ptr element) {
     head = f2__interval_tree_node__new(cause, nil, center_value, left_value_funk, right_value_funk, value_comparison_funk);
     f2__interval_tree__head__set(cause, this, head);
   }
-  return raw__interval_tree_node__insert(cause, head, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
+  assert_value(raw__interval_tree_node__insert(cause, head, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk));
+  do {
+    f2ptr head__parent_node = f2__interval_tree_node__parent_node(cause, head);
+    if (head__parent_node == nil) {
+      break;
+    }
+    head = head__parent_node;
+  } while (1);
+  f2__interval_tree__head__set(cause, this, head);
+  return nil;
 }
 
 f2ptr f2__interval_tree__insert(f2ptr cause, f2ptr this, f2ptr element) {

@@ -173,7 +173,7 @@ f2ptr raw__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this
   return set;
 }
 
-f2ptr f2__interval_tree__invervals_overlapping_interval(f2ptr cause, f2ptr this, f2ptr element) {
+f2ptr f2__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this, f2ptr element) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__intervals_overlapping_interval(cause, this, element);
 }

@@ -249,76 +249,56 @@ f2ptr raw__interval_tree_node__grandparent_node(f2ptr cause, f2ptr this) {
   return f2__interval_tree_node__parent_node(cause, parent_node);
 }
 
-//void raw__redblacktree_node__rotate_left(f2ptr cause, f2ptr this) {
-//  f2ptr that = f2__redblacktree_node__right(cause, this);                                   // Set that.
-//  f2__redblacktree_node__right__set(cause, this, f2__redblacktree_node__left(cause, that)); // Turn that's left subtree into this's right subtree.
-//  if (f2__redblacktree_node__left(cause, that)) {
-//    f2__redblacktree_node__parent__set(cause, f2__redblacktree_node__left(cause, that), this);
-//  }
-//  f2__redblacktree_node__parent__set(cause, that, f2__redblacktree_node__parent(cause, this)); // Link this's parent to that.
-//  if (f2__redblacktree_node__parent(cause, this) != nil) {
-//    if (raw__eq(cause, this, f2__redblacktree_node__left(cause, f2__redblacktree_node__parent(cause, this)))) {
-//      f2__redblacktree_node__left__set(cause, f2__redblacktree_node__parent(cause, this), that);
-//    } else {
-//      f2__redblacktree_node__right__set(cause, f2__redblacktree_node__parent(cause, this), that);
-//    }
-//  }
-//  f2__redblacktree_node__left__set(cause, that, this); // Put this on that's left.
-//  f2__redblacktree_node__parent__set(cause, this, that);
-//}
-
 void raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this) {
-  f2ptr that = f2__interval_tree_node__right_node(cause, this);                                   // Set that.
-  f2__interval_tree_node__right_node__set(cause, this, f2__interval_tree_node__left_node(cause, that)); // Turn that's left subtree into this's right subtree.
-  if (f2__interval_tree_node__left_node(cause, that)) {
-    f2__interval_tree_node__parent_node__set(cause, f2__interval_tree_node__left_node(cause, that), this);
+  f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
+  f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
+  
+  f2__interval_tree_node__right_node__set(cause, this, right_node__left_node);
+  
+  if (right_node__left_node != nil) {
+    f2__interval_tree_node__parent_node__set(cause, right_node__left_node, this);
   }
-  f2__interval_tree_node__parent_node__set(cause, that, f2__interval_tree_node__parent_node(cause, this)); // Link this's parent to that.
-  if (f2__interval_tree_node__parent_node(cause, this) != nil) {
-    if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this)))) {
-      f2__interval_tree_node__left_node__set(cause, f2__interval_tree_node__parent_node(cause, this), that);
+  
+  f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
+  f2__interval_tree_node__parent_node__set(cause, right_node, parent_node);
+  
+  if (parent_node != nil) {
+    f2ptr parent_node__left_node = f2__interval_tree_node__left_node(cause, parent_node);
+    if (raw__eq(cause, this, parent_node__left_node)) {
+      f2__interval_tree_node__left_node__set(cause, parent_node, right_node);
     } else {
-      f2__interval_tree_node__right_node__set(cause, f2__interval_tree_node__parent_node(cause, this), that);
+      f2__interval_tree_node__right_node__set(cause, parent_node, right_node);
     }
   }
-  f2__interval_tree_node__left_node__set(cause, that, this); // Put this on that's left.
-  f2__interval_tree_node__parent_node__set(cause, this, that);
+  
+  f2__interval_tree_node__left_node__set(  cause, right_node, this);
+  f2__interval_tree_node__parent_node__set(cause, this,       right_node);
 }
 
-//void raw__redblacktree_node__rotate_right(f2ptr cause, f2ptr this) {
-//  f2ptr that = f2__redblacktree_node__left(cause, this);      // Set that.
-//  f2__redblacktree_node__left__set(cause, this, f2__redblacktree_node__right(cause, that));     // Turn that's right subtree into this's left subtree.
-//  if (f2__redblacktree_node__right(cause, that)) {
-//    f2__redblacktree_node__parent__set(cause, f2__redblacktree_node__right(cause, that), this);
-//  }
-//  f2__redblacktree_node__parent__set(cause, that, f2__redblacktree_node__parent(cause, this));    // Link this's parent to that.
-//  if (f2__redblacktree_node__parent(cause, this) != nil) {
-//    if (raw__eq(cause, this, f2__redblacktree_node__left(cause, f2__redblacktree_node__parent(cause, this)))) {
-//      f2__redblacktree_node__left__set(cause, f2__redblacktree_node__parent(cause, this), that);
-//    } else {
-//      f2__redblacktree_node__right__set(cause, f2__redblacktree_node__parent(cause, this), that);
-//    }
-//  }
-//  f2__redblacktree_node__right__set(cause, that, this);             // Put this on that's left.
-//  f2__redblacktree_node__parent__set(cause, this, that);
-//}
-
 void raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this) {
-  f2ptr that = f2__interval_tree_node__left_node(cause, this);      // Set that.
-  f2__interval_tree_node__left_node__set(cause, this, f2__interval_tree_node__right_node(cause, that));     // Turn that's right subtree into this's left subtree.
-  if (f2__interval_tree_node__right_node(cause, that)) {
-    f2__interval_tree_node__parent_node__set(cause, f2__interval_tree_node__right_node(cause, that), this);
+  f2ptr left_node             = f2__interval_tree_node__left_node( cause, this);
+  f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);
+  
+  f2__interval_tree_node__left_node__set(cause, this, left_node__right_node);
+  
+  if (left_node__right_node != nil) {
+    f2__interval_tree_node__parent_node__set(cause, left_node__right_node, this);
   }
-  f2__interval_tree_node__parent_node__set(cause, that, f2__interval_tree_node__parent_node(cause, this));    // Link this's parent to that.
-  if (f2__interval_tree_node__parent_node(cause, this) != nil) {
-    if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this)))) {
-      f2__interval_tree_node__left_node__set(cause, f2__interval_tree_node__parent_node(cause, this), that);
+  
+  f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
+  f2__interval_tree_node__parent_node__set(cause, left_node, parent_node);
+  
+  if (parent_node != nil) {
+    f2ptr parent_node__left_node = f2__interval_tree_node__left_node(cause, parent_node);
+    if (raw__eq(cause, this, parent_node__left_node)) {
+      f2__interval_tree_node__left_node__set(cause, parent_node, left_node);
     } else {
-      f2__interval_tree_node__right_node__set(cause, f2__interval_tree_node__parent_node(cause, this), that);
+      f2__interval_tree_node__right_node__set(cause, parent_node, left_node);
     }
   }
-  f2__interval_tree_node__right_node__set(cause, that, this);             // Put this on that's left.
-  f2__interval_tree_node__parent_node__set(cause, this, that);
+  
+  f2__interval_tree_node__right_node__set( cause, left_node, this);
+  f2__interval_tree_node__parent_node__set(cause, this,      left_node);
 }
 
 

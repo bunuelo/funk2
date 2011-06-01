@@ -51,12 +51,16 @@ def_pcfunk5(interval_tree__new, left_value_funk, right_value_funk, value_equalit
 
 f2ptr raw__interval_tree__insert(f2ptr cause, f2ptr this, f2ptr element) {
   assert_argument_type(interval_tree, this);
-  f2ptr head                  = f2__interval_tree__head(cause, this);
-  f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
-  f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
-  f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
-  f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
-  f2ptr value_center_funk     = f2__interval_tree__value_center_funk(    cause, this);
+  f2ptr head                   = f2__interval_tree__head(cause, this);
+  f2ptr left_value_funk        = f2__interval_tree__left_value_funk(       cause, this);
+  f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
+  f2ptr value_equality_funk    = f2__interval_tree__value_equality_funk(   cause, this);
+  f2ptr value_comparison_funk  = f2__interval_tree__value_comparison_funk( cause, this);
+  f2ptr value_center_funk      = f2__interval_tree__value_center_funk(     cause, this);
+  f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
+  f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
+  assert_value(f2__redblacktree__insert(cause, all_left_redblacktree,  element));
+  assert_value(f2__redblacktree__insert(cause, all_right_redblacktree, element));
   if (head == nil) {
     f2ptr left_value   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,   f2list1__new(cause, element)));
     f2ptr right_value  = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,  f2list1__new(cause, element)));

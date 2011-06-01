@@ -25,9 +25,9 @@
 			    [funk [x y] [/ [+ x y] 2.0]]
 			    ]]]
     
-    [have interval_tree insert [frame left 1.0 right 2.0]]
-    [have interval_tree insert [frame left 3.0 right 4.0]]
-    [have interval_tree insert [frame left 5.0 right 6.0]]
+    [have interval_tree insert [frame left -6.0 right 9.0]]
+    [have interval_tree insert [frame left  3.0 right 4.0]]
+    [have interval_tree insert [frame left  5.0 right 6.0]]
     
     interval_tree]]
 

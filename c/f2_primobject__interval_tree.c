@@ -55,7 +55,7 @@ f2ptr raw__interval_tree__insert(f2ptr cause, f2ptr this, f2ptr element) {
     f2ptr left_value   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,   f2list1__new(cause, element)));
     f2ptr right_value  = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,  f2list1__new(cause, element)));
     f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, left_value, right_value)));
-    head = f2__interval_tree_node__new(cause, new__symbol(cause, "black"), center_value, left_value_funk, right_value_funk, value_comparison_funk);
+    head = f2__interval_tree_node__new(cause, new__symbol(cause, "red"), center_value, left_value_funk, right_value_funk, value_comparison_funk);
     f2__interval_tree__head__set(cause, this, head);
   }
   return raw__interval_tree_node__insert(cause, head, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
@@ -139,9 +139,10 @@ f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause) {
 
 // interval_tree_node
 
-def_primobject_6_slot(interval_tree_node, color, center_value, left_node, right_node, overlapping_left_redblacktree, overlapping_right_redblacktree);
+def_primobject_7_slot(interval_tree_node, color, center_value, parent_node, left_node, right_node, overlapping_left_redblacktree, overlapping_right_redblacktree);
 
 f2ptr raw__interval_tree_node__new(f2ptr cause, f2ptr color, f2ptr center_value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk) {
+  f2ptr parent_node                    = nil;
   f2ptr left_node                      = nil;
   f2ptr right_node                     = nil;
   f2ptr overlapping_left_redblacktree  = f2__redblacktree__new(cause, left_value_funk,  value_comparison_funk);
@@ -149,6 +150,7 @@ f2ptr raw__interval_tree_node__new(f2ptr cause, f2ptr color, f2ptr center_value,
   return f2interval_tree_node__new(cause,
 				   color,
 				   center_value,
+				   parent_node,
 				   left_node,
 				   right_node,
 				   overlapping_left_redblacktree,
@@ -163,7 +165,7 @@ def_pcfunk5(interval_tree_node__new, color, center_value, left_value_funk, right
 	    return f2__interval_tree_node__new(this_cause, color, center_value, left_value_funk, right_value_funk, value_comparison_funk));
 
 
-f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+f2ptr raw__interval_tree_node__simple_insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr center_value            = f2__interval_tree_node__center_value(cause, this);
   f2ptr left_value              = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
   f2ptr right_value             = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,      f2list1__new(cause, element)));
@@ -176,7 +178,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
     f2__redblacktree__insert(cause, overlapping_left_redblacktree,  element);
     f2__redblacktree__insert(cause, overlapping_right_redblacktree, element);
-    return nil;
+    return this;
   } else {
     f2ptr right_center_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, right_value, center_value)));
     if (right_center_comparison != nil) {
@@ -184,21 +186,36 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
       f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
       if (left_node == nil) {
 	f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, left_value, right_value)));
-	left_node = f2__interval_tree_node__new(cause, new__symbol(cause, "black"), center_value, left_value_funk, right_value_funk, value_comparison_funk);
-	f2__interval_tree_node__left_node__set(cause, this, left_node);
+	left_node = f2__interval_tree_node__new(cause, new__symbol(cause, "red"), center_value, left_value_funk, right_value_funk, value_comparison_funk);
+	f2__interval_tree_node__parent_node__set(cause, left_node, this);
+	f2__interval_tree_node__left_node__set(  cause, this,      left_node);
       }
-      return raw__interval_tree_node__insert(cause, left_node, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
+      return raw__interval_tree_node__simple_insert(cause, left_node, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
     } else {
       // interval is completely to the right of the center value of this node
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
       if (right_node == nil) {
 	f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, left_value, right_value)));
-	right_node = f2__interval_tree_node__new(cause, new__symbol(cause, "black"), center_value, left_value_funk, right_value_funk, value_comparison_funk);
-	f2__interval_tree_node__right_node__set(cause, this, right_node);
+	right_node = f2__interval_tree_node__new(cause, new__symbol(cause, "red"), center_value, left_value_funk, right_value_funk, value_comparison_funk);
+	f2__interval_tree_node__parent_node__set(cause, right_node, this);
+	f2__interval_tree_node__right_node__set( cause, this,       right_node);
       }
-      return raw__interval_tree_node__insert(cause, right_node, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
+      return raw__interval_tree_node__simple_insert(cause, right_node, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
     }
   }
+}
+
+f2ptr f2__interval_tree_node__simple_insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+  assert_argument_type(interval_tree_node, this);
+  return raw__interval_tree_node__simple_insert(cause, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
+}
+def_pcfunk6(interval_tree_node__simple_insert, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk,
+	    "Inserts a new interval element into this interval_tree.",
+	    return f2__interval_tree_node__simple_insert(this_cause, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk));
+
+
+f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+  return raw__interval_tree_node__simple_insert(cause, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk);
 }
 
 f2ptr f2__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
@@ -320,6 +337,7 @@ def_pcfunk2(interval_tree_node__terminal_print_with_frame, this, terminal_print_
 
 f2ptr f2interval_tree_node__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2interval_tree_node__primobject_type__new(cause);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "simple_insert"),                         __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.simple_insert__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                                __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.insert__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_intervals_containing_value_to_set"), __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.add_intervals_containing_value_to_set__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "overlapping_elements"),                  __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.overlapping_elements__funk);
@@ -361,10 +379,12 @@ void f2__primobject__interval_tree__initialize() {
   
   // interval_tree_node
   
-  initialize_primobject_6_slot(interval_tree_node, color, center_value, left_node, right_node, overlapping_left_redblacktree, overlapping_right_redblacktree);
+  initialize_primobject_7_slot(interval_tree_node, color, center_value, parent_node, left_node, right_node, overlapping_left_redblacktree, overlapping_right_redblacktree);
   
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.new__symbol = new__symbol(cause, "new");
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(interval_tree_node__new, color, center_value, left_value_funk, right_value_funk, value_comparison_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.new__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.simple_insert__symbol = new__symbol(cause, "simple_insert");
+  {f2__primcfunk__init__with_c_cfunk_var__6_arg(interval_tree_node__simple_insert, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.simple_insert__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.insert__symbol = new__symbol(cause, "insert");
   {f2__primcfunk__init__with_c_cfunk_var__6_arg(interval_tree_node__insert, this, element, left_value_funk, right_value_funk, value_comparison_funk, value_center_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.insert__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_interval_tree_node.add_intervals_containing_value_to_set__symbol = new__symbol(cause, "add_intervals_containing_value_to_set");

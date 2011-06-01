@@ -340,9 +340,9 @@ void raw__interval_tree_node__insert_case_5(f2ptr cause, f2ptr this) {
   f2__interval_tree_node__color__set(cause, parent_node,      new__symbol(cause, "black"));
   f2__interval_tree_node__color__set(cause, grandparent_node, new__symbol(cause, "red"));
   if (raw__eq(cause, this, parent_node__left_node) && raw__eq(cause, parent_node, grandparent_node__left_node)) {
-    raw__interval_tree_node__rotate_right(cause, this);
+    raw__interval_tree_node__rotate_right(cause, grandparent_node);
   } else { // (raw__eq(cause, this, parent_node__right_node) && raw__eq(cause, parent_node, grandparent_node__right_node)) {
-    raw__interval_tree_node__rotate_left(cause, this);
+    raw__interval_tree_node__rotate_left(cause, grandparent_node);
   }
 }
 

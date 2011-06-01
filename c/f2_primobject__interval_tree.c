@@ -412,7 +412,6 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
     f2__interval_tree_node__color__set(cause, insert_node, insert_node__color);
     // check insert case 1
     raw__interval_tree_node__insert_case_1(cause, insert_node);
-    
   }
   return nil;
 }

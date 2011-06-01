@@ -266,7 +266,7 @@ void raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this) {
   }
   f2__interval_tree_node__parent_node__set(cause, that, f2__interval_tree_node__parent_node(cause, this)); // Link this's parent to that.
   if (f2__interval_tree_node__parent_node(cause, this) != nil) {
-    if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent(cause, this)))) {
+    if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this)))) {
       f2__interval_tree_node__left_node__set(cause, f2__interval_tree_node__parent_node(cause, this), that);
     } else {
       f2__interval_tree_node__right_node__set(cause, f2__interval_tree_node__parent_node(cause, this), that);

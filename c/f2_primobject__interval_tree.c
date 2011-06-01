@@ -270,7 +270,7 @@ f2ptr f2__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr eleme
   assert_argument_type(interval_tree_node, this);
   return raw__interval_tree_node__simple_remove(cause, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 }
-def_pcfunk5(interval_tree_node__simple_remove, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk,
+def_pcfunk6(interval_tree_node__simple_remove, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk,
 	    "Inserts a new interval element into this interval_tree.",
 	    return f2__interval_tree_node__simple_remove(this_cause, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
 

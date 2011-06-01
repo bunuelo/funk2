@@ -297,6 +297,7 @@ f2ptr raw__interval_tree_node__terminal_print_with_frame(f2ptr cause, f2ptr this
   if (frame == nil) {
     frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"),              new__symbol(cause, "interval_tree_node"));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "color"),                          f2__interval_tree_node__color(                         cause, this));
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "center_value"),                   f2__interval_tree_node__center_value(                  cause, this));
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "overlapping_left_redblacktree"),  f2__interval_tree_node__overlapping_left_redblacktree( cause, this));
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "overlapping_right_redblacktree"), f2__interval_tree_node__overlapping_right_redblacktree(cause, this));

@@ -24,10 +24,10 @@
 
 #include "../../c/funk2.h"
 
-def_header_ceframe3(semantic_event_tree, width, height, rgba_data);
+def_header_ceframe1(semantic_event_tree, interval_tree);
 
-f2ptr     raw__semantic_event_tree__new                       (f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
-f2ptr      f2__semantic_event_tree__new                       (f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data);
+f2ptr     raw__semantic_event_tree__new(f2ptr cause);
+f2ptr      f2__semantic_event_tree__new(f2ptr cause);
 
 f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause);
 

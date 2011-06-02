@@ -21,34 +21,17 @@
 
 #include "semantic_event_tree.h"
 
-def_ceframe3(semantic_event_tree, semantic_event_tree, width, height, rgba_data);
+def_ceframe1(semantic_event_tree, semantic_event_tree, interval_tree);
 
-f2ptr raw__semantic_event_tree__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
-  s64 width__i  = f2integer__i(width,  cause);
-  s64 height__i = f2integer__i(height, cause);
-  if ((width__i < 0) || (height__i < 0)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (rgba_data == nil) {
-    rgba_data = raw__chunk__new(cause, 4 * width__i * height__i);
-  } else {
-    s64 rgba_data__length = f2chunk__length(rgba_data, cause);
-    if (rgba_data__length != 4 * width__i * height__i) {
-      return f2larva__new(cause, 3, nil);
-    }
-  }
-  return f2semantic_event_tree__new(cause, width, height, rgba_data);
+f2ptr raw__semantic_event_tree__new(f2ptr cause) {
+  f2ptr interval_tree = nil;
+  return f2semantic_event_tree__new(cause, interval_tree);
 }
 
-f2ptr f2__semantic_event_tree__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
-  if ((! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      ((rgba_data != nil) && (! raw__chunk__is_type(cause, rgba_data)))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_event_tree__new(cause, width, height, rgba_data);
+f2ptr f2__semantic_event_tree__new(f2ptr cause) {
+  return raw__semantic_event_tree__new(cause);
 }
-export_cefunk3(semantic_event_tree__new, width, height, rgba_data, 0, "Returns a new semantic_event_tree object.  rgba_data can be nil, in which case a black semantic_event_tree is returned.");
+export_cefunk0(semantic_event_tree__new, 0, "Returns a new semantic_event_tree object.");
 
 
 f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause) {

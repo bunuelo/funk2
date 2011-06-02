@@ -26,7 +26,7 @@ ideas: look carefully for - move to a different place in order to see
 [defunk l []
   [load 'example/moral_compass/learned_reactive_physical_agency_functions.fu2']]
 [globalize step_factor 10]
-[globalize arm_length 5]
+[globalize arm_length 4.5]
 
 '**************** functions****************'
 
@@ -124,8 +124,29 @@ ideas: look carefully for - move to a different place in order to see
 
 '***************'
 
+[defunk list-contains_substring_multiple_match [sequence subexp]
+  [let [[match [new list]]]
+    [mapc [funk [exp]
+		[if [string-contains [get exp as-string] [get subexp as-string]]
+		    [have match add exp]]]
+	  sequence]
+    [format stdout 'match' match]
+    match
+    ]]
+
+[deftypefunk learned_reactive_physical_agency execute find_closest_object [list_of_obj]
+  [let [[obj []]]
+    [mapc [funk [object_name]
+		[if obj
+		    [if [< [have [lookup_visual_object [get this visual_objects] object_name] lookup `distance]
+			   [have [lookup_visual_object [get this visual_objects] obj] lookup `distance]]
+			[= obj object_name]]
+		  [= obj object_name]]]
+	  list_of_obj]
+    obj]]
+
 [defunk list-contains_substring [sequence subexp]
-  [let [[match nil]]
+  [let [[match []]]
     [mapc [funk [exp]
 		[if [string-contains [get exp as-string] [get subexp as-string]]
 		    [= match exp]]]
@@ -141,6 +162,17 @@ ideas: look carefully for - move to a different place in order to see
     
     [list-contains_substring list_of_object_names object_type]
     ]]
+
+[deftypefunk learned_reactive_physical_agency get visual_objects_contain_object_type_closest_match [visual_objects object_type] 
+  [let [[list_of_object_names
+	 [mapcar      [funk [object]
+			    [have object lookup `phenomenal_name]]
+		      visual_objects]]]
+    
+    
+    [have this find_closest_object [list-contains_substring_multiple_match list_of_object_names object_type]]
+    ]]
+
 
 [defunk lookup_visual_object [visual_objects object_name]
   [let [[ match nil]]
@@ -158,39 +190,55 @@ ideas: look carefully for - move to a different place in order to see
 
 '*******************resourece functions***********************'
 
-[deftypefunk use_left_hand_resource execute use_left_hand [target action]
-  [format stdout  'use_left_hand' target action]
+[deftypefunk use_left_hand_resource execute use_left_hand [target actions]
+  [format stdout  'use_left_hand' target actions]
   [let* [[body [get this body]]
 	 [mind  [get body mind]] 
 	 [name  [get body name]]
 	 ]
-    [mind-wait_to_activate mind builtin_reactive physical use_left_hand target action]]]
+    [print 'in the middle of use left hand']
+    [mind-wait_to_activate mind builtin_reactive physical use_left_hand target actions]]]
 
-[deftypefunk use_right_hand_resource execute use_right_hand [target action]
-   [format stdout ' use right hand' action target]
+[deftypefunk use_right_hand_resource execute use_right_hand [target actions]
+  [format stdout ' use right hand' actions target]
   [let* [[body [get this body]]
 	 [mind  [get body mind]] 
 	 [name  [get body name]]
 	 ]
- 
-   [mind-wait_to_call mind builtin_reactive physical use_right_hand target action]]]
+    [print 'in the middle of use right hand']
+    [mind-wait_to_call mind builtin_reactive physical use_right_hand target actions]]]
 
 
 
 [deftypefunk hold_with_right_hand_resource execute hold_with_right_hand [target]
   [let* [[body [get this body]]
-			       [mind  [get body mind]]
-			       [name  [get body name]]]
-    [have this-resource think_to_self 'hold with right hand is starting' target]
+	 [mind  [get body mind]]
+	 [name  [get body name]]
+	 [arm_length       2.5]]
+        [have this-resource think_to_self 'hold with right hand is starting' target]
     [labels [[try_to_hold []
+			  [print arm_length]
+			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			  [print 'try to hold']
-			  [if [get [get this agency] visual_objects]
-			      [if [lookup_visual_object [get [get this agency] visual_objects] target]
-				  [if [>  arm_length [have [lookup_visual_object [get [get this agency] visual_objects] target]lookup `distance]]
-				      [if [null [get [get this agency] right_hand_object_name]]
-					  [mind-wait_to_call mind builtin_reactive physical pick_up_with_right_hand target]
-					[prog [mind-wait_to_call mind learned_reactive physical empty_right_hand]
-					      [try_to_hold]]]
+			  [if [null [eq target [get [get this agency] right_hand_object_name]]]
+			      [if [get [get this agency] visual_objects]
+				  [if [lookup_visual_object [get [get this agency] visual_objects] target]
+				      [prog [if [have [lookup_visual_object [get [get this agency] visual_objects] target] lookup `preposition_frame] 
+						[prog [if [have [have [lookup_visual_object [get [get this agency] visual_objects] target] lookup `preposition_frame] lookup `in]
+							  [let [[prep_obj [car [have [have [lookup_visual_object [get [get this agency] visual_objects] target] lookup `preposition_frame] lookup `in]]]]
+							    [if [have [get prep_obj as-string] contains 'fridge']
+								[= arm_length 4.5]]]]
+						      ]]
+					    
+					    [if [>  arm_length [have [lookup_visual_object [get [get this agency] visual_objects] target]lookup `distance]]
+						[if [null [get [get this agency] right_hand_object_name]]
+						    [mind-wait_to_call mind builtin_reactive physical pick_up_with_right_hand target]
+						  [prog [mind-wait_to_call mind learned_reactive physical empty_right_hand]
+							[try_to_hold]]]
+					      [prog 
+					       [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
+					       
+					       [try_to_hold]]]]
 				    [prog 
 				     [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
 				     
@@ -198,69 +246,94 @@ ideas: look carefully for - move to a different place in order to see
 				[prog 
 				 [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
 				 
-				 [try_to_hold]]]
-			    [prog 
-			     [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
-			     
-			     [try_to_hold]]]
+				 [try_to_hold]]]]
 			  ]]
-    [try_to_hold]]]]
-
-`[deftypefunk hold_with_left_hand_resource execute hold_with_left_hand [target]
-  [let* [[body [get this body]]
-			       [mind  [get body mind]]
-			       [name  [get body name]]
-			      ] 
-			  [have this-resource think_to_self 'hold with left hand is starting' target]
-			  [if [get [get this agency] visual_objects]
-			      [if [lookup_visual_object [get [get this agency] visual_objects] target]
-				  [if [>  arm_length [have [lookup_visual_object [get [get this agency] visual_objects] target]looup  `distance]]
-				      [if [null [get [get this agency] left_hand_object_name]]
-					  [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]
-					[mind-wait_to_call mind learned_reactive physical empty_left_hand ]]
-				    [prog 
-				     [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-				     [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]]]
-				[prog 
-				 [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-				 [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]]]
-			    [prog 
-			     [mind-wait_to_call mind learned_reactive physical walk_directly_towards target]
-			     [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]]]
-			  ]]
-'idea: whenever walk_directly_towards stops moving forward, it returns failure; when it fails, activate stand_in_front_of'
+	    [try_to_hold]]]]
 
 [deftypefunk hold_with_left_hand_resource execute hold_with_left_hand [target]
   [let* [[body [get this body]]
-			       [mind  [get body mind]]
-			       [name  [get body name]]]
-    [have this-resource think_to_self 'hold with left hand is starting' target]
+	 [mind  [get body mind]]
+	 [name  [get body name]]
+	 [arm_length       2.5]]
+        [have this-resource think_to_self 'hold with left hand is starting' target]
     [labels [[try_to_hold []
+			  [print arm_length]
+			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			  [print 'try to hold']
-			  [if [get [get this agency] visual_objects]
-			      [if [lookup_visual_object [get [get this agency] visual_objects] target]
-				   [if [> arm_length [have [lookup_visual_object [get [get this agency] visual_objects] target]lookup `distance]]
-				       [if [null [get [get this agency] left_hand_object_name]]
-					   [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]
-					 [prog [mind-wait_to_call mind learned_reactive physical empty_left_hand]
-					       [try_to_hold]]]
-				     [prog 
+			  [if [null [eq target [get [get this agency] left_hand_object_name]]]
+			      [if [get [get this agency] visual_objects]
+				  [if [lookup_visual_object [get [get this agency] visual_objects] target]
+				      [prog [if [have [lookup_visual_object [get [get this agency] visual_objects] target] lookup `preposition_frame] 
+						[prog [if [have [have [lookup_visual_object [get [get this agency] visual_objects] target] lookup `preposition_frame] lookup `in]
+							  [let [[prep_obj [car [have [have [lookup_visual_object [get [get this agency] visual_objects] target] lookup `preposition_frame] lookup `in]]]]
+							    [if [have [get prep_obj as-string] contains 'fridge']
+								[= arm_length 4.5]]]]
+						      ]]
+					    
+					    [if [>  arm_length [have [lookup_visual_object [get [get this agency] visual_objects] target]lookup `distance]]
+						[if [null [get [get this agency] left_hand_object_name]]
+						    [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]
+						  [prog [mind-wait_to_call mind learned_reactive physical empty_left_hand]
+							[try_to_hold]]]
+					      [prog 
+					       [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
+					       
+					       [try_to_hold]]]]
+				    [prog 
 				     [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
 				     
 				     [try_to_hold]]]
 				[prog 
 				 [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
 				 
-				 [try_to_hold]]]
-			    [prog 
-			     [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
-			     
-			     [try_to_hold]]]
+				 [try_to_hold]]]]
 			  ]]
-    [try_to_hold]]]]
+	    [try_to_hold]]]]
+
+'idea: whenever walk_directly_towards stops moving forward, it returns failure; when it fails, activate stand_in_front_of'
+
+`[deftypefunk hold_with_left_hand_resource execute hold_with_left_hand [target]
+  [let* [[body [get this body]]
+	 [mind  [get body mind]]
+	 [name  [get body name]]
+	 [arm_length       2.5]]
+
+    [if [or [have [get target as-string] contains 'fridge']
+	    [have [get target as-string] contains 'oven']]
+	[= arm_length 4.5]]
+    [if [have [get target as-string] contains 'table']
+	[= arm_length 3.5]]
+
+    [have this-resource think_to_self 'hold with left hand is starting' target]
+    [labels [[try_to_hold []
+			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
+			  [print 'try to hold']
+			   [if [null [eq target [get [get this agency] left_hand_object_name]]]
+			
+			      [if [get [get this agency] visual_objects]
+				  [if [lookup_visual_object [get [get this agency] visual_objects] target]
+				      [if [> arm_length [have [lookup_visual_object [get [get this agency] visual_objects] target]lookup `distance]]
+					  [if [null [get [get this agency] left_hand_object_name]]
+					      [mind-wait_to_call mind builtin_reactive physical pick_up_with_left_hand target]
+					    [prog [mind-wait_to_call mind learned_reactive physical empty_left_hand]
+						  [try_to_hold]]]
+					[prog 
+					 [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
+					 
+					 [try_to_hold]]]
+				[prog 
+				 [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
+				 
+				 [try_to_hold]]]
+				[prog 
+				 [mind-wait_to_call mind learned_reactive physical stand_in_front_of target]
+			     
+				 [try_to_hold]]]]
+			  ]]
+	    [try_to_hold]]]]
+
 
 [deftypefunk look_right_resource execute look_right [steps speed]
-  
   [format stdout ' look_right']
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
@@ -301,6 +374,7 @@ ideas: look carefully for - move to a different place in order to see
 	 [slightly_looking_up 5]
 	 [slightly_looking_down [- 0 24]]]
       [labels [[adjust_neck []
+			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			    [cond [[ > [- [get [get this agency] neck_pitch] level_neck_pitch] slightly_looking_up]
 				   [prog [have this-resource think_to_self 'looking down, pitch = '[get [get this agency] neck_pitch]]
 					[mind-wait_to_call mind learned_reactive physical look_down 1 
@@ -322,6 +396,7 @@ ideas: look carefully for - move to a different place in order to see
     [let[[floor_pitch [- 0 40]]
 	 [off_set          10]]
       [labels [[adjust_neck []
+			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			    [if [> [get [get this agency] neck_pitch][+ 2 floor_pitch]]
 				[prog [have this-resource think_to_self 'looking down, pitch = '[get [get this agency] neck_pitch]]
 				      [mind-wait_to_call mind learned_reactive physical look_down 1 
@@ -340,6 +415,7 @@ ideas: look carefully for - move to a different place in order to see
     [let[[sky_pitch 28]
 	 [off_set          10]]
       [labels [[adjust_neck []
+			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			    [if [> [get [get this agency] neck_pitch] [-  sky_pitch 2]]
 				[prog [have this-resource think_to_self 'looking up, pitch = '[get [get this agency] neck_pitch]]
 				      [mind-wait_to_call mind learned_reactive physical look_up1 
@@ -399,7 +475,7 @@ ideas: look carefully for - move to a different place in order to see
 			  [print 'now']
 			  [mind-wait_to_call mind learned_reactive physical look_for `fridge]
 			  [print 'now1']
-			  [let[[ fridge [have [get [get [get mind layer `builtin_reactive] agency `physical] resource `look_for_resource] lookup `my_current_object]]]
+			  [let[[ fridge [have [get [get [get mind layer `builtin_reactive] agency `physical] resource `look_for] lookup `my_current_object]]]
 			    [if [get [get this agency] visual_objects]
 				[if [lookup_visual_object [get [get this agency] visual_objects] fridge]
 				    [if [> [get [get this body] arm_length] [have [lookup_visual_object [get [get this agency] visual_objects] fridge] lookup  `distance]]
@@ -416,39 +492,7 @@ ideas: look carefully for - move to a different place in order to see
 			    
 			    ]]]
 
-[deftypefunk slice_toast_resource execute slice_toast []
-  
-  [let* [[body [get this body]]
-	 [mind  [get body mind]]
-	 [name  [get body name]]]
-    [format stdout 'slice_toast']
-    [if [null [string-contains [get [get this agency] left_hand_object_name] 'knife']]
-	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand `knife]]
-    
-    [if [null [string-contains [get [get this agency] right_hand_object_name] 'loaf']]
-	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand  `loaf]]
-    
-    [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'table']
-	[prog [mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-				     [get [get this agency] look_for-current_object]]]
-      [have this-resource think_to_self 'not doing anything because cannot find table']]
-    
-    [let [[loaf [get mind right_hand_object_name]]
-	  [table [get [get this agency] look_for-current_object]]]
-			    
-      [mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
-      [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
-      [mind-wait_to_call mind learned_reactive physical look_for `toaster]
-      [let 
-	  [[toaster   [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]]
-	
-	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `put_in ]
-	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_on]
-	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_off]]
-      [mind-wait_to_call mind learned_reactive physical hold_with_right_hand loaf ]
-      
-      ]]]
+
 
 '***************************Centering************************************'
 [deftypefunk center_body_horizontally_on_resource execute center_body_horizontally_on [desired_object]
@@ -468,13 +512,13 @@ ideas: look carefully for - move to a different place in order to see
 						[distance                   [have [lookup_visual_object [get [get this agency] visual_objects] desired_object] lookup `distance]]]
 					    [cond [[>  retina_position_horizontal 0.02]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 60.0 [* 400 retina_position_horizontal]]]
+							 [mind-wait_to_call mind learned_reactive physical turn_right 1 [+ 55.0 [* 600 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
 						  [[< retina_position_horizontal [- 0 0.02]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 60.0 [ abs [* 400 retina_position_horizontal]]]]							 
+							 [mind-wait_to_call mind learned_reactive physical turn_left 1 [+ 55.0 [ abs [* 600 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
 							 
 							 [turn_left_and_right]]]
@@ -533,13 +577,13 @@ ideas: look carefully for - move to a different place in order to see
 						[distance                   [have [lookup_visual_object [get [get this agency] visual_objects] desired_object] lookup `distance]]]
 					    [cond [[>  retina_position_horizontal 0.015]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-							 [mind-wait_to_call mind builtin_reactive physical turn_right_start [+ 60.0 [* 500 retina_position_horizontal]]]
+							 [mind-wait_to_call mind builtin_reactive physical turn_right_start [+ 60.0 [* 700 retina_position_horizontal]]]
 							 [have this-resource think_to_self   'i turned right']
 							 
 							 [turn_left_and_right]]]
 						  [[< retina_position_horizontal [- 0 0.015]]
 						   [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-							 [mind-wait_to_call mind builtin_reactive physical turn_left_start [+ 60.0 [ abs [* 500 retina_position_horizontal]]]]							 
+							 [mind-wait_to_call mind builtin_reactive physical turn_left_start [+ 60.0 [ abs [* 700 retina_position_horizontal]]]]							 
 							 [have this-resource think_to_self 'i turned left']
 							 
 							 [turn_left_and_right]]]
@@ -608,14 +652,14 @@ ideas: look carefully for - move to a different place in order to see
 					    [cond [[>  retina_position_horizontal [min [* 0.01  distance] 0.01]]
 						   [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
 							 
-							 [mind-wait_to_call mind builtin_reactive physical look_right_start [abs [* step_factor [/ [* 400  retina_position_horizontal] distance]]]]
+							 [mind-wait_to_call mind builtin_reactive physical look_right_start [abs [* step_factor [/ [* 600  retina_position_horizontal] distance]]]]
 							 [have this-resource think_to_self   'I looked right']
 							 
 							 [look_left_and_right]]]
 						  [[< retina_position_horizontal [max [- 0 [* 0.01  distance]][- 0 0.01]]]
 						   [prog [have this-resource think_to_self   'x too negative'   retina_position_horizontal]
 							 
-							 [mind-wait_to_call mind builtin_reactive physical look_left_start [abs [* step_factor [/ [* 400  retina_position_horizontal] distance]]]]
+							 [mind-wait_to_call mind builtin_reactive physical look_left_start [abs [* step_factor [/ [* 600  retina_position_horizontal] distance]]]]
 							 [have this-resource think_to_self 'I looked left']
 							 
 							 [look_left_and_right]]]
@@ -644,7 +688,7 @@ ideas: look carefully for - move to a different place in order to see
 	 [arm_length 5]]
     
     [if [or [have [get desired_object as-string] contains 'fridge']
-	    [have [get desired_object as-string] contains 'toaster']]
+	    [have [get desired_object as-string] contains 'oven']]
 	[= arm_length 5.5]]
     
     [have this-resource think_to_self 'walk_directly_towards activated' desired_object]
@@ -679,12 +723,15 @@ ideas: look carefully for - move to a different place in order to see
   [let* [[body [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]
-	 [arm_length 2.5]]
+	 [arm_length 2.5]
+	 [in_fridge  []]]
 
     [if [or [have [get desired_object as-string] contains 'fridge']
 	    [have [get desired_object as-string] contains 'oven']]
 	[= arm_length 4.5]]
-
+    [if [have [get desired_object as-string] contains 'table']
+	[= arm_length 3.5]]
+    
     [have this-resource think_to_self 'walk_continously_towards activated' desired_object]
     [labels [[start_off []  
 		       [print 'startoff']
@@ -695,12 +742,14 @@ ideas: look carefully for - move to a different place in order to see
 					 [have [have [lookup_visual_object [get [get this agency] visual_objects] desired_object] lookup `preposition_frame] lookup `in]]
 				    [let [[prep_obj [car [have [have [lookup_visual_object [get [get this agency] visual_objects] desired_object] lookup `preposition_frame] lookup `in]]]]
 				      [if [have [get prep_obj as-string] contains 'fridge']
-					  [= arm_length 4.5]]]]
+					  [prog [= arm_length 4.5]
+						[= in_fridge  t]]]]]
+				
 				[let [[distance [have [lookup_visual_object [get [get this agency] visual_objects] desired_object] lookup `distance]]]
 				  [if [> arm_length distance]
 				      [have this-resource think_to_self 'object within arm_length']
 				    [prog
-				     [mind-activate mind learned_reactive physical center_body_on desired_object]
+				     [mind-wait_to_call mind learned_reactive physical center_body_on desired_object]
 				     [have this-resource think_to_self 'activating move_forward']
 				     [mind-activate mind builtin_reactive physical move_forward_start 11]
 				     [walk]]]]]
@@ -729,11 +778,11 @@ ideas: look carefully for - move to a different place in order to see
 			       [prog [have this-resource think_to_self 'yes object, activating center on']
 				     [cond [[>  retina_position_horizontal 0.015]
 					    [prog [have this-resource think_to_self   'x too positive' retina_position_horizontal]
-						  [mind-activate mind builtin_reactive physical turn_right_start  [+ 60.0 [* 600 retina_position_horizontal]]]
+						  [mind-activate mind builtin_reactive physical turn_right_start  [+ 40.0 [* 800 retina_position_horizontal]]]
 						  [have this-resource think_to_self   'i turne right']]]
 					   [[< retina_position_horizontal [- 0 0.015]]
 					    [prog [have this-resource think_to_self   'x too negative' retina_position_horizontal]
-						  [mind-activate mind builtin_reactive physical turn_left_start [+ 60.0 [ abs [* 600 retina_position_horizontal]]]]							 
+						  [mind-activate mind builtin_reactive physical turn_left_start [+ 40.0 [ abs [* 800 retina_position_horizontal]]]]							 
 						  [have this-resource think_to_self 'i turned left']
 						  ]]
 					   [t
@@ -744,22 +793,24 @@ ideas: look carefully for - move to a different place in order to see
 						 [mind-activate mind builtin_reactive physical look_up_start [min 200.0 [* 200 retina_position_vertical]]]
 						 [have this-resource think_to_self   'i looked up']
 						 
-						 [look_up_and_down]]]
+						 ]]
 					   [[< retina_position_vertical [- 0 [+ 0.4 [/ 0.3 distance]]]]
 					    [prog [have this-resource think_to_self   'y too negative' retina_position_vertical 'compared to' [- 0 [+ 0.3 [/ 0.3 distance]]]]
 						 
 						  [mind-activate mind builtin_reactive physical look_down_start  [min 200.0 [abs [* 200 retina_position_vertical]]]] 
 						  [have this-resource think_to_self 'i looked down']
 						  
-						  [look_up_and_down]]]
+						  ]]
 					   [t
 					    [have this-resource think_to_self 'centered vertically']]]
 				     
 				     [walk]]]]
 			 [prog [have this-resource think_to_self 'dont have desired object, activating search']
+			       [mind-activate mind builtin_reactive physical move_forward_stop]
 			       [mind-wait_to_call mind learned_reactive physical search_for desired_object]
 			       [walk]]]
 		    [prog [have this-resource think_to_self 'dont have objects, activating search']
+			  [mind-activate mind builtin_reactive physical move_forward_stop]
 			   [mind-wait_to_call mind learned_reactive physical search_for desired_object]
 			   [walk]
 			   ]]]]
@@ -817,134 +868,7 @@ ideas: look carefully for - move to a different place in order to see
 	    [turn_left_and_right]]]
   ]
 
-[deftypefunk stand_in_front_of_resource execute stand_in_front_of [init_object]
-  [have this-resource think_to_self 'stand_in_front_of' init_object 'activated!']
-  [let* [[body  [get this body]]
-	 [mind  [get body mind]]
-	 [name  [get body name]]
-	 [object init_object]]
-    
-    [labels [[find_final_distance       [orientation_diff init_distance]
-					[print 'find_final_distance']
-					[let [[c 
-					       [get [- [+ [* init_distance init_distance] 
-							  25]
-						       [* [* [get [abs orientation_diff] degree_cosine] init_distance ] 10]] power 0.5]]
-					      ]
-					  c]]
 
-	     [find_init_angle           [orientation_diff final_distance]
-					[print 'find_init_angle']
-					[let* [[sine_of_diff [get orientation_diff degree_sine]]
-					       [sine_beta [/ [* 5 sine_of_diff]
-							     final_distance]]
-					       [beta         [get sine_beta degree_arcsine]]]
-					  beta]]
-	     [find_turning_speed        [init_angle]
-					[print 'find turning speed']
-					[* init_angle step_factor]]
-	     [should_i_turn_right       [init_orientation init_angle]
-					  [print 'should i turn right?']
-					  [if [< init_orientation 0]
-					      [if [< [+ init_orientation_difference init_angle] 120]
-						  t
-						nil]
-					    [if [< [+ init_orientation_difference init_angle] 120]
-						nil
-					      t]]]
-	     [should_i_move_forward     [current_neck_angle final_angle]
-					[print 'should i move forward?']
-					[if [< [abs current_neck_angle][abs final_angle]]
-					    t
-					  nil]]
-	     [find_desired_init_orientation        [turn_right init_turning_angle init_orientation]
-						   [let [[raw 0]]
-						     [if turn_right 
-							 [= raw [+ init_turning_angle init_orientation]] 
-						       [ = raw [- init_orientation init_turning_angle]]]
-						     [if [< raw -180]
-							 [+ 360 raw]
-						       [if [> raw 180]
-							   [- raw 360]
-							 raw]
-						       raw]]]
-				
-	     [find_walking_speed        [alpha heading]
-					[let* [[dist  [* [/ [get alpha degree_sine] [get heading degree_sine]] 5]]
-					       [speed [min [* dist 4] 10]]]
-					    [format stdout 'dist'  dist 'alpha' alpha 'heading' heading]
-					    speed]]]
-	    [print 'finished labeling']
-	    [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
-	    [print 'hi']
-	    [print object]
-	    [mind-wait_to_call mind learned_reactive physical search_for init_object] 
-
-	    [if [and [and [get [get this agency] visual_objects]
-			  [lookup_visual_object [get [get this agency] visual_objects] object]]
-		     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]]
-		[let [[prep_object [car [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]]]
-		  [if prep_object
-		      [= object prep_object]]]
-	       [print 'cannot find object']]
-		     
-	    [mind-wait_to_call mind learned_reactive physical center_body_horizontally_on object]
-	    [= init_orientation            [get [get this agency] object_orientation  object]]
-	    [= init_orientation_difference [ - 180 [abs init_orientation]]]
-	    [= init_distance               [get [get this agency] object_distance object]]
-	    [= final_distance              [find_final_distance init_orientation_difference init_distance]]
-	    'distance needed to travel, law of cosine'
-	    [= init_angle                  [find_init_angle init_orientation_difference final_distance]]
-	    'angle one would have turned if one does not choose to move backwards'
-	    [= init_turning_angle          [if [< [+ init_orientation_difference init_angle] 120]
-					       init_angle
-					     [- 180 init_angle]]]
-	    
-	    [= turn_right                  [should_i_turn_right init_orientation init_angle]]
-	    'turn right only if object on the right and moving forward'
-	    [= desired_init_orientation    [find_desired_init_orientation turn_right init_turning_angle init_orientation]]
-	    'as indicator for how far one turns initially. distinction between moving forward and moving back'
-	    [= final_neck_angle            [if [> [+ init_orientation_difference init_angle] 120]
-					       [- [- 180 init_angle] init_orientation_difference]
-					     [+ init_orientation_difference init_angle]]]
-	    'different final neck angle for moving backwards and moving forward'
-	    [= init_turning_speed          [find_turning_speed init_turning_angle]]
-	    'deprecated'
-	    [= current_distance            nil]
-	    
-	    [format stdout 'init_orientation' init_orientation 'init_diff' init_orientation_difference 'init_distance'  init_distance 'init_angle'  init_angle 'final_neck_angle'  final_neck_angle 'final distance' final_distance 'init_turning_angle' init_turning_angle 'desired_init_orientation' desired_init_orientation]
-	    
-	    [if [< [abs init_orientation_difference] 5]
-		
-		[have this-resource walk_forward_or_back object]
-	      
-	      [prog [have this-resource turn_for_fixed_angle turn_right init_turning_angle]]
-	      [let [[walking_speed 20]]
-		'stops when angle is very good, or when distance and angle are good at the same time'
-		[while [null [or [< [abs [- [get [get this agency] neck_heading] final_neck_angle]] 5]
-			         [and [< [abs [- [abs [get [get this agency] neck_heading]] [abs final_neck_angle]]] 15]
-				      [< [abs [- 5 [get [get this agency] object_distance object]]] 1]]]]
-		  [print 'waiting for trigger']
-		  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-		  [= walking_speed [find_walking_speed [abs [- [abs [get [get this agency] neck_heading]] [abs final_neck_angle]]] [abs [get [get this agency] neck_heading]]]]
-		  [if [should_i_move_forward [get [get this agency] neck_heading] final_neck_angle]
-		      
-		      [prog [print [get [get this agency] neck_heading]]
-			    [mind-wait_to_call mind learned_reactive physical move_forward 1 walking_speed]
-			    [format stdout 'walking_speed' walking_speed]
-			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-			    [mind-wait_to_call mind learned_reactive physical center_head_on object]]
-		    [prog [print [get [get this agency] neck_heading]]
-			  [mind-wait_to_call mind learned_reactive physical move_backward 1 walking_speed]
-			  [format stdout 'walking_speed' walking_speed]
-			  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-			  [mind-wait_to_call mind learned_reactive physical center_head_on object]]]]]
-	      
-	      [mind-wait_to_call mind learned_reactive physical center_head_on object]
-	      [mind-wait_to_call mind learned_reactive physical align_body_with_neck]
-	      [print 'exited while loop']
-	      [mind-wait_to_call mind learned_reactive physical walk_directly_towards init_object]
-	      ]]]]
 
 
 '***************************Look carefully for********************'
@@ -997,7 +921,7 @@ ideas: look carefully for - move to a different place in order to see
 					[let [[c 
 					       [get [- [+ [* init_distance init_distance] 
 							  25]
-						       [* [* [get [abs orientation_diff] degree_cosine] init_distance ] 10]] power 0.5]]
+						       [* [* [get [abs orientation_diff] degree_cosine] init_distance ] 10.0]] power 0.5]]
 					      ]
 					  c]]
 
@@ -1049,15 +973,15 @@ ideas: look carefully for - move to a different place in order to see
 				       [mind-wait_to_call mind learned_reactive physical search_for init_object] 
 				       [if [and [and [and [get [get this agency] visual_objects]
 							  [lookup_visual_object [get [get this agency] visual_objects] object]]
-						     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]
-						     [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]]
+						     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]]
+						[have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]
 					   [let [[prep_object [car [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]]]
 					     [if prep_object
 						 [= object prep_object]]]]
 				       [if [and [and [and [get [get this agency] visual_objects]
 							  [lookup_visual_object [get [get this agency] visual_objects] object]]
-						     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]
-						     [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]]
+						     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]]
+						[have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]
 					   [let [[prep_object [car [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `on]]]]
 					     [if prep_object
 						 [= object prep_object]]]]
@@ -1067,9 +991,12 @@ ideas: look carefully for - move to a different place in order to see
 				       [= init_orientation_difference [ - 180 [abs init_orientation]]]
 				       [= init_distance               [get [get this agency] object_distance object]]
 				       
-				       [if [and [< init_orientation_difference 10]
-						[and [>  init_distance 4.5]
-						     [<  init_distance 5.5]]]
+				       [if [or [and [< init_orientation_difference 15]
+						    [and [>  init_distance 3.7]
+							 [<  init_distance 6]]]
+					       [and [< init_orientation_difference 25]
+						    [and [>  init_distance 4]
+							 [<  init_distance 5.5]]]]
 					   [have this-resource think_to_self 'already in front of']
 					 [prep]]]
 
@@ -1102,7 +1029,8 @@ ideas: look carefully for - move to a different place in order to see
 							  [steps          1]]
 						      [if [< final_distance 1]
 							  [= walking_speed [* 11 final_distance]]
-							[= steps  [get final_distance as-integer]]]
+							[= steps  [+ 1 [get final_distance as-integer]]]]
+						      [have this-resource think_to_self 'steps' steps]
 						      [mind-activate mind learned_reactive physical move_forward steps walking_speed]
 						      [mind-wait_to_call  mind learned_reactive physical center_head_on object]
 						      [mind-wait_to_call mind learned_reactive physical align_body_with_neck]]]
@@ -1110,12 +1038,12 @@ ideas: look carefully for - move to a different place in order to see
 						    [let [[walking_speed 12]
 							  [steps          1]
 							  [final_distance [- [get [+ 25
-										     [get init_distance power 2]]
+										     [get init_distance power 2.0]]
 										  power 0.5]
 									     final_distance ]]]
 						      [if [< final_distance 1]
 							  [= walking_speed [* 11 final_distance]]
-							[= steps [get final_distance as-integer]]]
+							[= steps [+ 1 [get final_distance as-integer]]]]
 						      [mind-activate mind learned_reactive physical move_backward steps walking_speed]
 						      [mind-wait_to_call  mind learned_reactive physical center_head_on object]
 						      [mind-wait_to_call mind learned_reactive physical align_body_with_neck]]]]]]
@@ -1123,6 +1051,7 @@ ideas: look carefully for - move to a different place in order to see
 	    [decide]
 	    [print 'finished']
 	    [mind-wait_to_call mind learned_reactive physical walk_directly_towards init_object]
+	    [have this-resource think_to_self 'finished walking_directly_towards']
 	    ]]]
 
 '*****************Look for vertically*******************************'
@@ -1173,43 +1102,50 @@ ideas: look carefully for - move to a different place in order to see
 				]]
 	    [vertical_search]
 	    [mind-wait_to_call mind learned_reactive physical level_pitch]
+	   
 	    [have this-resource think_to_self 'finished searching vertically']]]]
 
 '*************************Make toast********************************'
-[deftypefunk walk_directly_towards_resource execute walk_continuously_towards []
-  [let* [[body [get this body]]
-	 [mind  [get body mind]]
-	 [name  [get body name]]]
-    
 
 
-]]
-[deftypefunk slice_toast_resource execute slice_toast []
+
+
+[deftypefunk slice_toast_resource execute slice_toast [table knife loaf butter]
   [let* [[body [get this body]]
-	 [mind  [get body mind]]
-	 [name  [get body name]]]
+	 [mind [get body mind]]
+	 [name [get body name]]]
+    [format stdout 'butter' butter]
     [format stdout 'slice_toast']
-    [if [null [and [string-contains [get [get this agency] left_hand_object_name] 'knife'] 
-		   [string-contains [get [get this agency] right_hand_object_name] 'loaf']]]
-	[mind-wait_to_call mind learned_reactive physical pick_up_loaf_and_butter]]
+    [print 'put_on 1']
+    [mind-wait_to_call mind builtin_reactive physical use_right_hand table `put_on ]
     
-    [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'table']
-	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-			   [get [get this agency] look_for-current_object]]
-      [have this-resource think_to_self 'not doing anything because cannot find table']]
-    [let [[loaf [get mind right_hand_object_name]]
-	  [table [get [get this agency] look_for-current_object]]]
-      [mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
-      [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
-      [mind-wait_to_call mind learned_reactive physical look_for `toaster]
-      [let 
-	  [[toaster   [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]]
-	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `put_in ]
-	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_on]
-	[mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_off]]
-      [mind-wait_to_call mind learned_reactive physical hold_with_right_hand loaf ]
+    [mind-wait_to_call mind learned_reactive physical use_left_hand loaf `divide]
+    [print 'divide loaf']
+    [mind-wait_to_call mind learned_reactive physical look_for `toaster]
+    [let 
+	[[toaster   [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]
+	 [slice     [get [get this agency] right_hand_object_name]]]
+      [mind-wait_to_call mind learned_reactive physical stand_in_front_of toaster]
+      [mind-wait_to_call mind learned_reactive physical use_right_hand toaster `put_in ]
+      [mind-wait_to_call mind learned_reactive physical use_right_hand toaster `turn_on]
+      
+      `[mind-wait_to_call mind learned_reactive physical hold_with_right_hand slice ]
+      [print 'debug 1000']
+      [mind-wait_to_call mind learned_reactive physical butter_toast table knife slice butter]
       ]]]
+
+[deftypefunk butter_toast_resource execute butter_toast [table knife slice butter]
+  [let* [[body [get this body]]
+	 [mind  [get body mind]]
+	 [name  [get body name]]]
+    [format stdout 'butter_toast']
+    [mind-wait_to_call mind learned_reactive physical hold_with_right_hand butter]
+    [mind-wait_to_call mind learned_reactive physical use_left_hand butter `scoop]
+    [print 'put_on 2']
+    [mind-wait_to_call mind builtin_reactive physical use_right_hand table `put_on ]
+    
+    [mind-wait_to_call mind learned_reactive physical hold_with_right_hand slice]
+    [mind-wait_to_call mind learned_reactive physical use_left_hand slice `wipe]]]
 
 'Ralph\'s goals'
 'pick up loaf and butter'
@@ -1233,10 +1169,19 @@ ideas: look carefully for - move to a different place in order to see
 'turn-on stove'
 'turn-off stove'
 
+
+
+
 [deftypefunk pick_up_loaf_and_butter_resource execute pick_up_loaf_and_butter []
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
-	 [name  [get body name]]]
+	 [name  [get body name]]
+	 [loaf               []]
+	 [butter             []]
+	 [table              []]
+	 [knife              []]
+	 [butter             []]]
+
     [if [null [string-contains [get [get [get this agency] right_hand_object_name] as-string] 'loaf']]
 	[prog [mind-wait_to_call mind learned_reactive physical look_for `loaf]
 	      [mind-wait_to_call mind learned_reactive physical hold_with_right_hand  
@@ -1247,7 +1192,33 @@ ideas: look carefully for - move to a different place in order to see
 	[prog [mind-wait_to_call mind learned_reactive physical look_for `butter]
 	      [mind-wait_to_call mind learned_reactive physical hold_with_left_hand 
 				 [have [get [get [get mind layer `learned_reactive] agency `physical] 
-					    resource `look_for] lookup `my_current_object]]]]]]
+					    resource `look_for] lookup `my_current_object]]]]
+    
+    [= loaf  [get [get this agency] right_hand_object_name]]
+    
+    [format stdout 'butter' butter]
+    [mind-wait_to_call mind learned_reactive physical look_for `knife]   
+    [= knife [get [get this agency] look_for-current_object]]
+    [= butter [get [get this agency] left_hand_object_name]]
+    [mind-wait_to_call mind learned_reactive physical look_for `table]
+    
+    [= table [get [get this agency] look_for-current_object]]
+    [format stdout 'table '  table]
+
+    [if [string-contains [get table  as-string] 'table']
+	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
+			   table]
+      [have this-resource think_to_self 'not doing anything because cannot find table']]
+    [print 'put_on 3']
+    [mind-wait_to_call mind builtin_reactive physical use_left_hand table `put_on ]
+    
+    [mind-wait_to_call mind learned_reactive physical hold_with_left_hand 
+		       knife]
+    [format stdout 'lefthand ' [get [get this agency] left_hand_object_name]]
+    [print 'debug table bug']
+    [print table]
+    [mind-wait_to_call mind learned_reactive physical slice_toast table knife loaf butter]
+    ]]
 
 
 [deftypefunk make_toast_resource execute make_toast []
@@ -1256,28 +1227,104 @@ ideas: look carefully for - move to a different place in order to see
 	 [name  [get body name]]]
     [print [get [get this agency] left_hand_object_name]]
     [print [get [get this agency] right_hand_object_name]]
-    [if [null [and [string-contains [get [get [get this agency] left_hand_object_name] as-string]'butter']
+   
+    `[if [null [and [string-contains [get [get [get this agency] left_hand_object_name] as-string]'butter']
 		   [string-contains [get [get [get this agency] right_hand_object_name] as-string] 'loaf']]]
 	[mind-wait_to_call mind learned_reactive physical pick_up_loaf_and_butter]]
-    [if [or [null [get [get this agency] visual_objects]]
-	    [null [visual_objects_contain_object_type [get [get this agency] visual_objects] `knife]]]
-	[prog [mind-wait_to_call mind learned_reactive physical level_pitch]
-	      [mind-wait_to_call mind learned_reactive physical move_backward 1 10.0]]]
-    [mind-wait_to_call mind learned_reactive physical look_for `knife]   
+
+    [mind-wait_to_call mind learned_reactive physical pick_up_loaf_and_butter]
     
-    [mind-wait_to_call mind learned_reactive physical look_for `table]
-    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'table']
-	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
-			   [get [get this agency] look_for-current_object]]
-      [have this-resource think_to_self 'not doing anything because cannot find table']]
-    [mind-wait_to_call mind learned_reactive physical use_left_hand [get [get this agency] look_for-current_object] `put_on ]
-    [mind-wait_to_call mind learned_reactive physical look_for `knife]    
-    [if [string-contains [get [get [get this agency] look_for-current_object] as-string] 'knife']
-	[mind-wait_to_call mind learned_reactive physical hold_with_left_hand `knife]
-      [have this-resource think_to_self 'not doing anything because cannot find knife']]
-    [mind-wait_to_call mind learned_reactive physical slice_toast]
+
     ]]
 
+'******************************make egg*****************************'
+
+`[deftypefunk make_egg_resource execute make_egg []
+  [let* [[body  [get this body]]
+	 [mind  [get body mind]]
+	 [name  [get body name]]]
+    
+    `[print [get [get this agency] left_hand_object_name]]
+    `[print [get [get this agency] right_hand_object_name]]
+   
+    [if [null [and [string-contains [get [get [get this agency] left_hand_object_name] as-string]'butter']
+		   [string-contains [get [get [get this agency] right_hand_object_name] as-string] 'egg']]]
+	[mind-wait_to_call mind learned_reactive physical pick_up_egg_and_butter]]
+
+    ]]
+
+`[deftypefunk pick_up_egg_and_butter_resource execute pick_up_egg_and_butter []
+  [let* [[body  [get this body]]
+	 [mind  [get body mind]]
+	 [name  [get body name]]
+	 [loaf               []]
+	 [egg                []]
+	 [table              []]
+	 [knife              []]
+	 [butter             []]]
+    
+    [if [null [string-contains [get [get [get this agency] right_hand_object_name] as-string] 'egg']]
+	[prog [mind-wait_to_call mind learned_reactive physical look_for `egg]
+	      [mind-wait_to_call mind learned_reactive physical hold_with_right_hand  
+				 [have [get [get [get mind layer `learned_reactive] agency `physical] 
+					    resource `look_for] lookup `my_current_object]]]]
+    
+    [if [null [string-contains [get [get [get this agency] left_hand_object_name] as-string] 'butter']]
+	[prog [mind-wait_to_call mind learned_reactive physical look_for `butter]
+	      [mind-wait_to_call mind learned_reactive physical hold_with_left_hand 
+				 [have [get [get [get mind layer `learned_reactive] agency `physical] 
+					    resource `look_for] lookup `my_current_object]]]]
+    
+    [= egg  [get [get this agency] right_hand_object_name]]
+    [= butter [get [get this agency] left_hand_object_name]]
+    
+    [mind-wait_to_call mind learned_reactive physical look_for `knife]   
+    [= knife [get [get this agency] look_for-current_object]]
+    
+    [mind-wait_to_call mind learned_reactive physical look_for `table]
+    
+    [= table [get [get this agency] look_for-current_object]]
+    [print table]
+
+    [if [string-contains [get table  as-string] 'table']
+	[mind-wait_to_call mind learned_reactive physical walk_directly_towards  
+			   table]
+      [have this-resource think_to_self 'not doing anything because cannot find table']]
+    [print 'put_on 4']
+    [mind-wait_to_call mind builtin_reactive physical use_right_hand table `put_on ]
+    [mind-wait_to_call mind learned_reactive physical hold_with_right_hand 
+		       knife]
+
+    [mind-wait_to_call mind learned_reactive physical butter_pan table knife egg butter]
+    ]]
+
+
+`[deftypefunk butter_pan_resource execute butter_pan [table knife egg butter]
+  [let* [[body [get this body]]
+	 [mind [get body mind]]
+	 [name [get body name]]
+	 [oven              []]]
+    [format stdout 'slice_toast']
+
+    `[mind-wait_to_call mind learned_reactive physical use_right_hand table `put_on ]
+    [mind-wait_to_call mind learned_reactive physical use_right_hand butter `scoop]
+    [mind-wait_to_call mind learned_reactive physical look_for `pan]
+    [let 
+	[[pan   [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]]
+      
+      [mind-wait_to_call mind learned_reactive physical hold_with_left_hand pan]
+      [mind-wait_to_call mind learned_reactive physical use_right_hand pan `wipe]
+      [mind-wait_to_call mind learned_reactive physical look_for `oven]
+      [= oven [have [get [get [get mind layer `learned_reactive] agency `physical] resource `look_for] lookup `my_current_object]]
+      [mind-wait_to_call mind learned_reactive physical walk_directly_towards oven]      
+      [mind-wait_to_call mind learned_reactive physical use_left_hand oven put_on]
+      [mind-wait_to_call mind learned_reactive physical use_right_hand oven `turn_on]
+      [mind-wait_to_call mind learned_reactive physical hold_with_left_hand egg]
+      [mind-wait_to_call mind learned_reactive physical walk_directly_towards pan]
+      `[mind-wait_to_call mind learned_reactive physical use_left_hand egg `open]
+      [mind-wait_to_call mind learned_reactive physical use_left_hand pan `put_on]
+      [mind-wait_to_call mind learned_reactive physical use_right_hand oven `turn_off]
+      ]]]
 
 '*******************demo**********************************************'
 [defunk globalize_isis_world []
@@ -1287,7 +1334,7 @@ ideas: look carefully for - move to a different place in order to see
   [globalize_isis_world]
    [have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `look_for object_name]
-  [have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
+   [have [get [get [get [get isis_world agent_mind `Lauren] layer `builtin_reactive] agency `neural_plug] resource `activate_resource] 
 	command `learned_reactive `physical `hold_with_right_hand 
 	[have [get [get [get [get isis_world agent_mind `Lauren] layer `learned_reactive] agency `physical] 
 		   resource `look_for] lookup `my_current_object]]]

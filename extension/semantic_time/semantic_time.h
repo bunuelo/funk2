@@ -26,8 +26,20 @@
 
 def_header_ceframe1(semantic_time, value);
 
-f2ptr raw__semantic_time__new(f2ptr cause, f2ptr width);
-f2ptr  f2__semantic_time__new(f2ptr cause, f2ptr width);
+f2ptr     raw__semantic_time__new                    (f2ptr cause, f2ptr value);
+f2ptr      f2__semantic_time__new                    (f2ptr cause, f2ptr value);
+boolean_t raw__semantic_time__is__before             (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_time__is__before             (f2ptr cause, f2ptr this);
+boolean_t raw__semantic_time__is__after              (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_time__is__after              (f2ptr cause, f2ptr this);
+boolean_t raw__semantic_time__is__now                (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_time__is__now                (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_time__is_less_than           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_time__is_less_than           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_time__is_greater_than        (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_time__is_greater_than        (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that);
 
 f2ptr f2__semantic_time_type__new_aux(f2ptr cause);
 

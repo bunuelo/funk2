@@ -38,6 +38,51 @@ f2ptr f2__semantic_time__new(f2ptr cause, f2ptr value) {
 }
 export_cefunk1(semantic_time__new, value, 0, "Returns a new semantic_time object.  Possible initial values include any time object, or one of the symbols: before, after, or now.");
 
+f2ptr raw__semantic_time(f2ptr cause) {
+  return f2__semantic_time__new(cause, f2__time(cause));
+}
+
+f2ptr f2__semantic_time(f2ptr cause) {
+  return raw__semantic_time(cause);
+}
+export_cefunk0(semantic_time, 0, "Returns a new semantic_time object with the current absolute time.");
+
+
+boolean_t raw__semantic_time__is__before(f2ptr cause, f2ptr this) {
+  f2ptr value = f2__semantic_time__value(cause, this);
+  return raw__eq(cause, new__symbol(cause, "before"), value);
+}
+
+f2ptr f2__semantic_time__is__before(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_time, this);
+  return raw__semantic_time__is__before(cause, this);
+}
+export_cefunk1(semantic_time__is__before, this, 0, "Returns whether this semantic_time symbolically represents the time `before.");
+
+
+boolean_t raw__semantic_time__is__after(f2ptr cause, f2ptr this) {
+  f2ptr value = f2__semantic_time__value(cause, this);
+  return raw__eq(cause, new__symbol(cause, "after"), value);
+}
+
+f2ptr f2__semantic_time__is__after(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_time, this);
+  return raw__semantic_time__is__after(cause, this);
+}
+export_cefunk1(semantic_time__is__after, this, 0, "Returns whether this semantic_time symbolically represents the time `after.");
+
+
+boolean_t raw__semantic_time__is__now(f2ptr cause, f2ptr this) {
+  f2ptr value = f2__semantic_time__value(cause, this);
+  return raw__eq(cause, new__symbol(cause, "now"), value);
+}
+
+f2ptr f2__semantic_time__is__now(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_time, this);
+  return raw__semantic_time__is__now(cause, this);
+}
+export_cefunk1(semantic_time__is__now, this, 0, "Returns whether this semantic_time symbolically represents the time `now.");
+
 
 f2ptr raw__semantic_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__value = f2__semantic_time__value(cause, this);
@@ -260,6 +305,9 @@ export_cefunk2(semantic_time__is_numerically_equal_to, this, that, 0, "Returns w
 
 f2ptr f2__semantic_time_type__new_aux(f2ptr cause) {
   f2ptr this = f2__semantic_time_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is-before"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is__before")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is-after"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is__after")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is-now"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is__now")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_less_than"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is_less_than")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_greater_than"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is_greater_than")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_numerically_equal_to"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is_numerically_equal_to")));}

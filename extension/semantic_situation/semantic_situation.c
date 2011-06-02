@@ -24,7 +24,7 @@
 
 // semantic_situation
 
-f2ptr raw__semantic_situation__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_situation__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr time) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_situation"));
   }
@@ -34,16 +34,17 @@ f2ptr raw__semantic_situation__type_create(f2ptr cause, f2ptr this, f2ptr semant
       return result;
     }
   }
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "time"), time);
   return this;
 }
 
-f2ptr raw__semantic_situation__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_situation__new(f2ptr cause, f2ptr semantic_realm, f2ptr time) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_situation__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_situation__type_create(cause, this, semantic_realm, time);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -51,13 +52,12 @@ f2ptr raw__semantic_situation__new(f2ptr cause, f2ptr semantic_realm) {
   return this;
 }
 
-f2ptr f2__semantic_situation__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_situation__new(cause, semantic_realm);
+f2ptr f2__semantic_situation__new(f2ptr cause, f2ptr semantic_realm, f2ptr time) {
+  assert_argument_type(semantic_realm, semantic_realm);
+  assert_argument_type(time,           time);
+  return raw__semantic_situation__new(cause, semantic_realm, time);
 }
-export_cefunk1(semantic_situation__new, semantic_realm, 0, "Returns a new semantic_situation object.");
+export_cefunk2(semantic_situation__new, semantic_realm, time, 0, "Returns a new semantic_situation object.");
 
 
 boolean_t raw__semantic_situation__is_type(f2ptr cause, f2ptr thing) {
@@ -91,6 +91,41 @@ f2ptr f2__semantic_situation__type(f2ptr cause, f2ptr this) {
   return raw__semantic_situation__type(cause, this);
 }
 export_cefunk1(semantic_situation__type, thing, 0, "Returns the specific type of object that this semantic_situation is.");
+
+
+f2ptr raw__semantic_situation__time__lookup(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "time"));
+}
+
+f2ptr f2__semantic_situation__time__lookup(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_situation, this);
+  return raw__semantic_situation__time__lookup(cause, this);
+}
+export_cefunk1(semantic_situation__time__lookup, this, 0, "");
+
+
+f2ptr raw__semantic_situation__time__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "time"), that);
+}
+
+f2ptr f2__semantic_situation__time__add(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_situation, this);
+  assert_argument_type(semantic_time,     that);
+  return raw__semantic_situation__time__add(cause, this, that);
+}
+export_cefunk2(semantic_situation__time__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_situation__time__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "time"), that);
+}
+
+f2ptr f2__semantic_situation__time__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_situation, this);
+  assert_argument_type(semantic_time,     that);
+  return raw__semantic_situation__time__remove(cause, this, that);
+}
+export_cefunk2(semantic_situation__time__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_situation__event__lookup(f2ptr cause, f2ptr this) {
@@ -133,6 +168,9 @@ f2ptr f2__semantic_situation_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__time__lookup")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__time__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__time__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__event__lookup")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__event__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_situation"), new__symbol(cause, "semantic_situation__event__remove")));}

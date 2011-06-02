@@ -39,10 +39,6 @@ f2ptr f2__semantic_time__new(f2ptr cause, f2ptr value) {
 export_cefunk1(semantic_time__new, value, 0, "Returns a new semantic_time object.  Possible initial values include any time object, or one of the symbols: before, after, or now.");
 
 
-//  {char* slot_name = "is_less_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_less_than__funk);}
-//  {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
-//  {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
-
 f2ptr raw__semantic_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   {
     boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this);
@@ -107,6 +103,14 @@ f2ptr raw__semantic_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   }
 }
 
+f2ptr f2__semantic_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_time, this);
+  assert_argument_type(semantic_time, that);
+  return raw__semantic_time__is_less_than(cause, this, that);
+}
+export_cefunk2(semantic_time__is_less_than, this, that, 0, "Returns whether this semantic_time is less than that semantic_time.");
+
+
 f2ptr raw__semantic_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
   {
     boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this);
@@ -170,6 +174,14 @@ f2ptr raw__semantic_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
     }
   }
 }
+
+f2ptr f2__semantic_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_time, this);
+  assert_argument_type(semantic_time, that);
+  return raw__semantic_time__is_greater_than(cause, this, that);
+}
+export_cefunk2(semantic_time__is_greater_than, this, that, 0, "Returns whether this semantic_time is greater than that semantic_time.");
+
 
 f2ptr raw__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
   {
@@ -237,6 +249,13 @@ f2ptr raw__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr
     }
   }
 }
+
+f2ptr f2__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_time, this);
+  assert_argument_type(semantic_time, that);
+  return raw__semantic_time__is_numerically_equal_to(cause, this, that);
+}
+export_cefunk2(semantic_time__is_numerically_equal_to, this, that, 0, "Returns whether this semantic_time is numerically equal to that semantic_time (now == now, before == before, after == after).");
 
 
 f2ptr f2__semantic_time_type__new_aux(f2ptr cause) {

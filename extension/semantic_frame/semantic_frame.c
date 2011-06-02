@@ -902,6 +902,40 @@ f2ptr f2__object__semantic__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2pt
 export_cefunk3(object__semantic__set__apply, this, slot, args, 0, "");
 
 
+f2ptr f2__object__semantic__assure_set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  assert_argument_type(semantic_frame, this);
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  f2ptr result = nil;
+  f2__cmutex__lock(cause, frame_mutate_cmutex);
+  {
+    f2ptr current_value = f2__object__semantic__get(cause, this, slot, nil);
+    if (raw__larva__is_type(cause, current_value)) {
+      result = f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list12__new(cause,
+															      new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-set"),
+															      new__symbol(cause, "this"),     this,
+															      new__symbol(cause, "slot"),     slot,
+															      new__symbol(cause, "args"),     args,
+															      new__symbol(cause, "suberror"), current_value))));
+    } else {
+      f2ptr new_value = assert_value(f2__cons__car(cause, args));
+      if (! raw__eq(cause, new_value, current_value)) {
+	f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
+	result = f2__object__semantic__add(cause, this, slot, args);
+      }
+    }
+  }
+  f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  return result;
+}
+export_cefunk2_and_rest(object__semantic__assure_set, this, slot, args, 0, "");
+
+f2ptr f2__object__semantic__assure_set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__assure_set(cause, this, slot, args);
+}
+export_cefunk3(object__semantic__assure_set__apply, this, slot, args, 0, "");
+
+
 
 
 

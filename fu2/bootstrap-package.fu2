@@ -179,6 +179,7 @@
 						     'example/traced_mind/'
 						     'test/cairo-test/'
 						     'test/gtk-test/'
+						     'test/interval_tree-test/'
 						     'test/optimize-test/'
 						     'test/propogator-test/'
 						     'test/timeline-test/'

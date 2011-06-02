@@ -38,8 +38,8 @@
 							   [get key                as-string] '_'
 							   [get target_object_type as-string] '_goal_knowledge'] as-symbol]]
 	[semantic_goal                 [new semantic_goal [get [get this mind] semantic_realm]]]
-	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_knowledge_to_physical_event_knowledge]
-					    end_of_physical_event_changes_trigger]]]
+	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_type_knowledge_to_physical_type_event_knowledge]
+					    end_of_physical_type_event_changes_trigger]]]
     `[terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
     [semantic-set semantic_goal phenomenal_name goal_resource_name]
     [let [[is_occurring_funk [funk []
@@ -66,15 +66,13 @@
 
 [deftypefunk deliberative_goal_creation_agency execute create_builtin_goals []
   
-  [have this create_physical_relationship_goal `knife   `preposition `on `table]
-  [have this create_physical_relationship_goal `butter  `preposition `on `table]
-  [have this create_physical_relationship_goal `loaf    `preposition `on `table]
-  [have this create_physical_relationship_goal `toaster `preposition `on `table]
+  [have this create_physical_relationship_goal `knife  `preposition `on `table]
+  [have this create_physical_relationship_goal `butter `preposition `on `table]
+  [have this create_physical_relationship_goal `loaf   `preposition `on `table]
   
-  [have this create_physical_relationship_goal `knife   `preposition `in `fridge]
-  [have this create_physical_relationship_goal `butter  `preposition `in `fridge]
-  [have this create_physical_relationship_goal `loaf    `preposition `in `fridge]
-  [have this create_physical_relationship_goal `toaster `preposition `in `fridge]
+  [have this create_physical_relationship_goal `knife  `preposition `in `fridge]
+  [have this create_physical_relationship_goal `butter `preposition `in `fridge]
+  [have this create_physical_relationship_goal `loaf   `preposition `in `fridge]
   
   nil]
 

@@ -119,6 +119,7 @@ void f2__initialize() {
   f2__surrogate_parent__initialize();
   f2__graphviz__initialize();
   f2__primobject__redblacktree__initialize();
+  f2__primobject__interval_tree__initialize();
   f2__xmlrpc__initialize();
   f2__package__initialize();
   f2__package_handler__initialize();

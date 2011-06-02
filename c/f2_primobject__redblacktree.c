@@ -80,7 +80,7 @@ boolean_t raw__redblacktree_node__is_red(f2ptr cause, f2ptr this) {
 }
 
 void raw__redblacktree_node__rotate_left(f2ptr cause, f2ptr this) {
-  f2ptr that = f2__redblacktree_node__right(cause, this);                                    // Set that.
+  f2ptr that = f2__redblacktree_node__right(cause, this);                                   // Set that.
   f2__redblacktree_node__right__set(cause, this, f2__redblacktree_node__left(cause, that)); // Turn that's left subtree into this's right subtree.
   if (f2__redblacktree_node__left(cause, that)) {
     f2__redblacktree_node__parent__set(cause, f2__redblacktree_node__left(cause, that), this);

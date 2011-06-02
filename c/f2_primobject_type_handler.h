@@ -41,6 +41,7 @@
 #include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
+#include "f2_primobject__interval_tree.h"
 #include "f2_package.h"
 #include "f2_package_handler.h"
 #include "f2_graph.h"
@@ -129,6 +130,8 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__largeinteger__slot_t                     primobject_type_largeinteger;
   funk2_object_type__redblacktree__slot_t                     primobject_type_redblacktree;
   funk2_object_type__redblacktree_node__slot_t                primobject_type_redblacktree_node;
+  funk2_object_type__interval_tree__slot_t                    primobject_type_interval_tree;
+  funk2_object_type__interval_tree_node__slot_t               primobject_type_interval_tree_node;
   funk2_object_type__source_expression__slot_t                primobject_type_source_expression;
   funk2_object_type__source__slot_t                           primobject_type_source;
   funk2_object_type__package__slot_t                          primobject_type_package;

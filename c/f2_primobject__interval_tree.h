@@ -30,6 +30,8 @@ declare_object_type_9_slot(interval_tree, mutate_mutex, head, all_left_redblackt
 			   f2ptr insert__funk;
 			   f2ptr remove__symbol;
 			   f2ptr remove__funk;
+			   f2ptr intervals__symbol;
+			   f2ptr intervals__funk;
 			   f2ptr intervals_containing_value__symbol;
 			   f2ptr intervals_containing_value__funk;
 			   f2ptr intervals_overlapping_interval__symbol;

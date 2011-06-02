@@ -71,8 +71,19 @@ declare_object_type_7_slot(interval_tree_node, color, center_value, parent_node,
 
 declare_primobject_9_slot(interval_tree, mutate_mutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 
-f2ptr raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
-f2ptr  f2__interval_tree__new(f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
+f2ptr raw__interval_tree__new                                  (f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
+f2ptr  f2__interval_tree__new                                  (f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
+f2ptr raw__interval_tree__insert                               (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__interval_tree__insert                               (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr raw__interval_tree__remove                               (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__interval_tree__remove                               (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr raw__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set);
+f2ptr  f2__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set);
+f2ptr raw__interval_tree__intervals_containing_value           (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__interval_tree__intervals_containing_value           (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__interval_tree__intervals_overlapping_interval       (f2ptr cause, f2ptr this, f2ptr element);
+
+
 
 f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause);
 

@@ -58,9 +58,7 @@ f2ptr raw__semantic_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_n
 }
 
 f2ptr f2__semantic_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_event__new(cause, semantic_realm, action_name);
 }
 export_cefunk2(semantic_event__new, semantic_realm, action_name, 0, "Returns a new semantic_event object.");
@@ -93,9 +91,7 @@ f2ptr raw__semantic_event__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__type(cause, this);
 }
 export_cefunk1(semantic_event__type, thing, 0, "Returns the specific type of object that this semantic_event is.");
@@ -106,9 +102,7 @@ f2ptr raw__semantic_event__action_name__lookup(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event__action_name__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__action_name__lookup(cause, this);
 }
 export_cefunk1(semantic_event__action_name__lookup, this, 0, "");
@@ -119,9 +113,7 @@ f2ptr raw__semantic_event__action_name__add(f2ptr cause, f2ptr this, f2ptr that)
 }
 
 f2ptr f2__semantic_event__action_name__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__action_name__add(cause, this, that);
 }
 export_cefunk2(semantic_event__action_name__add, this, that, 0, "");
@@ -132,9 +124,7 @@ f2ptr raw__semantic_event__action_name__remove(f2ptr cause, f2ptr this, f2ptr th
 }
 
 f2ptr f2__semantic_event__action_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__action_name__remove(cause, this, that);
 }
 export_cefunk2(semantic_event__action_name__remove, this, that, 0, "");
@@ -145,9 +135,7 @@ f2ptr raw__semantic_event__absolute_start_time__lookup(f2ptr cause, f2ptr this) 
 }
 
 f2ptr f2__semantic_event__absolute_start_time__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__absolute_start_time__lookup(cause, this);
 }
 export_cefunk1(semantic_event__absolute_start_time__lookup, this, 0, "");
@@ -158,9 +146,8 @@ f2ptr raw__semantic_event__absolute_start_time__add(f2ptr cause, f2ptr this, f2p
 }
 
 f2ptr f2__semantic_event__absolute_start_time__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
+  assert_argument_type(semantic_time,  that);
   return raw__semantic_event__absolute_start_time__add(cause, this, that);
 }
 export_cefunk2(semantic_event__absolute_start_time__add, this, that, 0, "");
@@ -171,9 +158,8 @@ f2ptr raw__semantic_event__absolute_start_time__remove(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_event__absolute_start_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
+  assert_argument_type(semantic_time,  that);
   return raw__semantic_event__absolute_start_time__remove(cause, this, that);
 }
 export_cefunk2(semantic_event__absolute_start_time__remove, this, that, 0, "");
@@ -184,9 +170,7 @@ f2ptr raw__semantic_event__absolute_end_time__lookup(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event__absolute_end_time__lookup(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__absolute_end_time__lookup(cause, this);
 }
 export_cefunk1(semantic_event__absolute_end_time__lookup, this, 0, "");
@@ -197,9 +181,8 @@ f2ptr raw__semantic_event__absolute_end_time__add(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr f2__semantic_event__absolute_end_time__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
+  assert_argument_type(semantic_time,  that);
   return raw__semantic_event__absolute_end_time__add(cause, this, that);
 }
 export_cefunk2(semantic_event__absolute_end_time__add, this, that, 0, "");
@@ -210,9 +193,8 @@ f2ptr raw__semantic_event__absolute_end_time__remove(f2ptr cause, f2ptr this, f2
 }
 
 f2ptr f2__semantic_event__absolute_end_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
+  assert_argument_type(semantic_time,  that);
   return raw__semantic_event__absolute_end_time__remove(cause, this, that);
 }
 export_cefunk2(semantic_event__absolute_end_time__remove, this, that, 0, "");
@@ -387,9 +369,7 @@ f2ptr raw__semantic_event__cairo_render_frame(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event__cairo_render_frame(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event, this);
   return raw__semantic_event__cairo_render_frame(cause, this);
 }
 export_cefunk1(semantic_event__cairo_render_frame, this, 0, "Generates a cairo_render_frame for this event.");
@@ -427,7 +407,7 @@ export_cefunk0(semantic_event__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_event__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_event, semantic_temporal_object);
-  //core_extension__ping(semantic_event, semantic_knowledge_base);
+  core_extension__ping(semantic_event, semantic_time);
   status("semantic_event initialized.");
   return nil;
 }

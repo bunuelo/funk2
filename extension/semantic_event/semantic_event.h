@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_EVENT__H
 
 #include "../semantic_temporal_object/semantic_temporal_object.h"
+#include "../semantic_time/semantic_time.h"
 
 
 f2ptr     raw__semantic_event__type_create                                                      (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name);

@@ -50,10 +50,10 @@ f2ptr raw__semantic_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
       now = assert_value(f2__time(cause));
     }
     if (this__is__now) {
-      this = now;
+      this__value = now;
     }
     if (that__is__now) {
-      that = now;
+      that__value = now;
     }
   }
   boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
@@ -122,10 +122,10 @@ f2ptr raw__semantic_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
       now = assert_value(f2__time(cause));
     }
     if (this__is__now) {
-      this = now;
+      this__value = now;
     }
     if (that__is__now) {
-      that = now;
+      that__value = now;
     }
   }
   boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
@@ -197,10 +197,10 @@ f2ptr raw__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr
       now = assert_value(f2__time(cause));
     }
     if (this__is__now) {
-      this = now;
+      this__value = now;
     }
     if (that__is__now) {
-      that = now;
+      that__value = now;
     }
   }
   boolean_t this__is_type__time = raw__time__is_type(cause, this__value);

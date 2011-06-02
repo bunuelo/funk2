@@ -258,6 +258,7 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/semantic_situation_category/libf2e_semantic_situation_category.la \
                       extension/semantic_situation_transition/libf2e_semantic_situation_transition.la \
                       extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
+                      extension/semantic_time/libf2e_semantic_time.la \
                       extension/semantic_visual_object/libf2e_semantic_visual_object.la \
                       extension/timeline/libf2e_timeline.la
 
@@ -442,6 +443,7 @@ extension_semantic_situation_libf2e_semantic_situation_la_SOURCES               
 extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                       = extension/semantic_situation_category/semantic_situation_category.c
 extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES                   = extension/semantic_situation_transition/semantic_situation_transition.c
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                             = extension/semantic_temporal_object/semantic_temporal_object.c
+extension_semantic_time_libf2e_semantic_time_la_SOURCES                                                   = extension/semantic_time/semantic_time.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                 = extension/semantic_visual_object/semantic_visual_object.c
 extension_timeline_libf2e_timeline_la_SOURCES                                                             = extension/timeline/timeline.c
 
@@ -616,6 +618,9 @@ extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_
 
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_time_libf2e_semantic_time_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_time_libf2e_semantic_time_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

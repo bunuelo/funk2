@@ -90,7 +90,7 @@ f2ptr f2__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr t
   assert_argument_type(time, that);
   return raw__semantic_event_tree__semantic_event__value_center(cause, this, that);
 }
-export_cefunk2(semantic_event_tree__semantic_event__value_comparison, this, that, 0, "Returns whether a semantic_event_tree-semantic_event value is less than another semantic_event_tree-semantic_event value.");
+export_cefunk2(semantic_event_tree__semantic_event__value_center, this, that, 0, "Returns whether a semantic_event_tree-semantic_event value is less than another semantic_event_tree-semantic_event value.");
 
 
 // semantic_event_tree

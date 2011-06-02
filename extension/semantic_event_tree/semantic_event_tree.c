@@ -187,7 +187,7 @@ f2ptr f2__semantic_event_tree__core_extension__initialize(f2ptr cause) {
 export_cefunk0(semantic_event_tree__core_extension__initialize, 0, "");
 
 f2ptr f2__semantic_event_tree__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree_type__new_aux(cause));
   status("semantic_event_tree define types.");
   return nil;
 }

@@ -39,9 +39,211 @@ f2ptr f2__semantic_time__new(f2ptr cause, f2ptr value) {
 export_cefunk1(semantic_time__new, value, 0, "Returns a new semantic_time object.  Possible initial values include any time object, or one of the symbols: before, after, or now.");
 
 
+//  {char* slot_name = "is_less_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_less_than__funk);}
+//  {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
+//  {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
+
+f2ptr raw__semantic_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  {
+    boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this);
+    boolean_t that__is__now = raw__eq(cause, new__symbol(cause, "now"), that);
+    f2ptr     now           = nil;
+    if (this__is__now || that__is__now) {
+      now = assert_value(f2__time(cause));
+    }
+    if (this__is__now) {
+      this = now;
+    }
+    if (that__is__now) {
+      that = now;
+    }
+  }
+  f2ptr     this__value         = f2__semantic_time__value(cause, this);
+  f2ptr     that__value         = f2__semantic_time__value(cause, that);
+  boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
+  boolean_t that__is_type__time = raw__time__is_type(cause, that__value);
+  if (this__is_type__time && that__is_type__time) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    return f2bool__new(this__value__nanoseconds_since_1970__i < that__value__nanoseconds_since_1970__i);
+  } else if (this__is_type__time) { // ! that__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+      return f2bool__new(boolean__true);
+    } else {
+      return f2larva__new(cause, 321515, nil);
+    }
+  } else if (that__is_type__time) { // ! this__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), this__is_type__time)) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321516, nil);
+    }
+  } else { // (! this__is_type__time) && (! that__is_type__time)
+    if (raw__eq(cause, new__symbol(cause, "before"), this__is_type__time)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+	return f2bool__new(boolean__true);
+      } else {
+	return f2larva__new(cause, 321517, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__is_type__time)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321518, nil);
+      }
+    } else {
+      return f2larva__new(cause, 321519, nil);
+    }
+  }
+}
+
+f2ptr raw__semantic_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  {
+    boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this);
+    boolean_t that__is__now = raw__eq(cause, new__symbol(cause, "now"), that);
+    f2ptr     now           = nil;
+    if (this__is__now || that__is__now) {
+      now = assert_value(f2__time(cause));
+    }
+    if (this__is__now) {
+      this = now;
+    }
+    if (that__is__now) {
+      that = now;
+    }
+  }
+  f2ptr     this__value         = f2__semantic_time__value(cause, this);
+  f2ptr     that__value         = f2__semantic_time__value(cause, that);
+  boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
+  boolean_t that__is_type__time = raw__time__is_type(cause, that__value);
+  if (this__is_type__time && that__is_type__time) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    return f2bool__new(this__value__nanoseconds_since_1970__i > that__value__nanoseconds_since_1970__i);
+  } else if (this__is_type__time) { // ! that__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321515, nil);
+    }
+  } else if (that__is_type__time) { // ! this__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), this__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__is_type__time)) {
+      return f2bool__new(boolean__true);
+    } else {
+      return f2larva__new(cause, 321516, nil);
+    }
+  } else { // (! this__is_type__time) && (! that__is_type__time)
+    if (raw__eq(cause, new__symbol(cause, "before"), this__is_type__time)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321517, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__is_type__time)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+	return f2bool__new(boolean__true);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321518, nil);
+      }
+    } else {
+      return f2larva__new(cause, 321519, nil);
+    }
+  }
+}
+
+f2ptr raw__semantic_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
+  {
+    boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this);
+    boolean_t that__is__now = raw__eq(cause, new__symbol(cause, "now"), that);
+    f2ptr     now           = nil;
+    if (this__is__now && that__is__now) {
+      return f2bool__new(boolean__true);
+    }
+    if (this__is__now || that__is__now) {
+      now = assert_value(f2__time(cause));
+    }
+    if (this__is__now) {
+      this = now;
+    }
+    if (that__is__now) {
+      that = now;
+    }
+  }
+  f2ptr     this__value         = f2__semantic_time__value(cause, this);
+  f2ptr     that__value         = f2__semantic_time__value(cause, that);
+  boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
+  boolean_t that__is_type__time = raw__time__is_type(cause, that__value);
+  if (this__is_type__time && that__is_type__time) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    return f2bool__new(this__value__nanoseconds_since_1970__i == that__value__nanoseconds_since_1970__i);
+  } else if (this__is_type__time) { // ! that__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321515, nil);
+    }
+  } else if (that__is_type__time) { // ! this__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), this__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__is_type__time)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321516, nil);
+    }
+  } else { // (! this__is_type__time) && (! that__is_type__time)
+    if (raw__eq(cause, new__symbol(cause, "before"), this__is_type__time)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+	return f2bool__new(boolean__true);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321517, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__is_type__time)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__is_type__time)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__is_type__time)) {
+	return f2bool__new(boolean__true);
+      } else {
+	return f2larva__new(cause, 321518, nil);
+      }
+    } else {
+      return f2larva__new(cause, 321519, nil);
+    }
+  }
+}
+
+
 f2ptr f2__semantic_time_type__new_aux(f2ptr cause) {
   f2ptr this = f2__semantic_time_type__new(cause);
-  //{f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "clear"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__clear")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_less_than"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is_less_than")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_greater_than"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is_greater_than")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_numerically_equal_to"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_time__is_numerically_equal_to")));}
   return this;
 }
 

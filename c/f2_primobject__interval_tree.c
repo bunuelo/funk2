@@ -101,7 +101,9 @@ f2ptr raw__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
   f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
   f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
   f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
-  return raw__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
+  // we could check the returned removed_from_node from the simple_remove command, and do the red-black tree deletion cases here.
+  assert_value(raw__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+  return nil;
 }
 
 f2ptr f2__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
@@ -111,6 +113,19 @@ f2ptr f2__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
 def_pcfunk2(interval_tree__remove, this, element,
 	    "Removes an interval element from this interval_tree.",
 	    return f2__interval_tree__remove(this_cause, this, element));
+
+
+f2ptr raw__interval_tree__intervals(f2ptr cause, f2ptr this) {
+  f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
+  return raw__redblacktree__leaves(cause, all_left_redblacktree);
+}
+
+f2ptr f2__interval_tree__intervals(f2ptr cause, f2ptr this) {
+  return raw__interval_tree__intervals(cause, this);
+}
+def_pcfunk1(interval_tree__intervals, this,
+	    "Returns all of the intervals in this interval_tree.",
+	    return f2__interval_tree__intervals(this_cause, this));
 
 
 f2ptr raw__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set) {
@@ -213,7 +228,7 @@ f2ptr raw__interval_tree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   if (frame == nil) {
     frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "interval_tree"));
-    f2__frame__add_var_value(cause, frame, new__symbol(cause, "head"),              f2__interval_tree__head(cause, this));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "intervals"),         f2__interval_tree__intervals(cause, this));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -233,6 +248,7 @@ f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2interval_tree__primobject_type__new(cause);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                                __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.insert__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove"),                                __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.remove__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "intervals"),                             __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_intervals_containing_value_to_set"), __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.add_intervals_containing_value_to_set__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_containing_value"),            __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_containing_value__funk);
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_overlapping_interval"),        __funk2.globalenv.object_type.primobject.primobject_type_interval_tree.intervals_overlapping_interval__funk);

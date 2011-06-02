@@ -77,6 +77,8 @@ f2ptr raw__interval_tree__insert                               (f2ptr cause, f2p
 f2ptr  f2__interval_tree__insert                               (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr raw__interval_tree__remove                               (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr  f2__interval_tree__remove                               (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr raw__interval_tree__intervals                            (f2ptr cause, f2ptr this);
+f2ptr  f2__interval_tree__intervals                            (f2ptr cause, f2ptr this);
 f2ptr raw__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set);
 f2ptr  f2__interval_tree__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set);
 f2ptr raw__interval_tree__intervals_containing_value           (f2ptr cause, f2ptr this, f2ptr value);

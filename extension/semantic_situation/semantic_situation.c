@@ -110,7 +110,7 @@ f2ptr raw__semantic_situation__time__add(f2ptr cause, f2ptr this, f2ptr that) {
 
 f2ptr f2__semantic_situation__time__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_situation, this);
-  assert_argument_type(semantic_time,     that);
+  assert_argument_type(time,               that);
   return raw__semantic_situation__time__add(cause, this, that);
 }
 export_cefunk2(semantic_situation__time__add, this, that, 0, "");
@@ -122,7 +122,7 @@ f2ptr raw__semantic_situation__time__remove(f2ptr cause, f2ptr this, f2ptr that)
 
 f2ptr f2__semantic_situation__time__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_situation, this);
-  assert_argument_type(semantic_time,     that);
+  assert_argument_type(time,               that);
   return raw__semantic_situation__time__remove(cause, this, that);
 }
 export_cefunk2(semantic_situation__time__remove, this, that, 0, "");

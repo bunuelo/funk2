@@ -46,11 +46,7 @@ export_cefunk1(semantic_event_tree__semantic_event__right_value, this, 0, "Retur
 
 
 f2ptr raw__semantic_event_tree__semantic_event__value_equality(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  f2ptr that__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  return f2bool__new(this__nanoseconds_since_1970__i == that__nanoseconds_since_1970__i);
+  return raw__semantic_time__is_numerically_equal_to(cause, this, that);
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_equality(f2ptr cause, f2ptr this, f2ptr that) {
@@ -62,11 +58,7 @@ export_cefunk2(semantic_event_tree__semantic_event__value_equality, this, that, 
 
 
 f2ptr raw__semantic_event_tree__semantic_event__value_comparison(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  f2ptr that__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  return f2bool__new(this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i);
+  return raw__semantic_time__is_less_than(cause, this, that);
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_comparison(f2ptr cause, f2ptr this, f2ptr that) {
@@ -78,11 +70,26 @@ export_cefunk2(semantic_event_tree__semantic_event__value_comparison, this, that
 
 
 f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  f2ptr that__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  return f2time__new(cause, f2integer__new(cause, (this__nanoseconds_since_1970__i + that__nanoseconds_since_1970__i) >> 1));
+  f2ptr this__value = f2__semantic_time__value(cause, this);
+  f2ptr that__value = f2__semantic_time__value(cause, that);
+  s64   sum_nanoseconds = 0;
+  s64   sum_count       = 0;
+  if (raw__time__is_type(cause, this__value)) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    sum_nanoseconds += this__value__nanoseconds_since_1970__i;
+    sum_count       ++;
+  }
+  if (raw__time__is_type(cause, that__value)) {
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    sum_nanoseconds += that__value__nanoseconds_since_1970__i;
+    sum_count       ++;
+  }
+  if (sum_count == 0) {
+    return f2__time__new(cause, f2integer__new(cause, 1307097806073446000ull));
+  }
+  return f2time__new(cause, f2integer__new(cause, sum_nanoseconds / sum_count));
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr this, f2ptr that) {

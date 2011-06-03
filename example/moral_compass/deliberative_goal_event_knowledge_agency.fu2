@@ -81,7 +81,7 @@
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
 										 [let [[goal_phenomenon [semantic-get semantic_frame phenomenal_name]]]
 										   [let [[existence_event [get this goal_phenomenon_existence goal_phenomenon]]]
-										     [semantic-set existence_event absolute_start_time [get event time]]
+										     [semantic-set existence_event absolute_start_time [new semantic_time [get event time]]]
 										     ]]]]
 			  [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
@@ -97,7 +97,7 @@
 											      [let [[goal_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 															     event-semantic_frame event-key_type event-key event-value]]]
 												[let [[relationship_event [get this goal_relationship_existence goal_relationship]]]
-												  [semantic-set relationship_event absolute_start_time [get event time]]
+												  [semantic-set relationship_event absolute_start_time [new semantic_time [get event time]]]
 												  ]]]]
 										       ]
 										 ]]
@@ -112,7 +112,7 @@
 											[let [[goal_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 														       event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this goal_relationship_existence goal_relationship]]]
-											    [semantic-set relationship_event absolute_end_time [get event time]]
+											    [semantic-set relationship_event absolute_end_time [new semantic_time [get event time]]]
 											    [have this goal_relationship_existence-remove goal_relationship]
 											    ]]]
 										       ]

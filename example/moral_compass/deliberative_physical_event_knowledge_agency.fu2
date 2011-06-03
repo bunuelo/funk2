@@ -84,7 +84,7 @@
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
 										 [let [[physical_phenomenon [have semantic_frame lookup_single_value `property `physical_phenomenon]]]
 										   [let [[existence_event [get this physical_phenomenon_existence physical_phenomenon]]]
-										     [semantic-set existence_event absolute_start_time [get event time]]
+										     [semantic-set existence_event absolute_start_time [new semantic_time [get event time]]]
 										     ]]]]
 			  [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
@@ -96,7 +96,7 @@
 											[let [[physical_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 															   event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
-											    [semantic-set relationship_event absolute_start_time [get event time]]
+											    [semantic-set relationship_event absolute_start_time [new semantic_time [get event time]]]
 											    ]]]
 										       ]
 										 ]]
@@ -110,7 +110,7 @@
 											[let [[physical_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 															   event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
-											    [semantic-set relationship_event absolute_end_time [get event time]]
+											    [semantic-set relationship_event absolute_end_time [new semantic_time [get event time]]]
 											    [have this physical_relationship_existence-remove physical_relationship]
 											    ]]]
 										       ]
@@ -166,7 +166,7 @@
 				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
 										 [let [[physical_type_phenomenon [have semantic_frame lookup_single_value `property `physical_type_phenomenon]]]
 										   [let [[existence_event [get this physical_type_phenomenon_existence physical_type_phenomenon]]]
-										     [semantic-set existence_event absolute_start_time [get event time]]
+										     [semantic-set existence_event absolute_start_time [new semantic_time [get event time]]]
 										     ]]]]
 			  [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
@@ -178,7 +178,7 @@
 											[let [[physical_type_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 																event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this physical_type_relationship_existence physical_type_relationship]]]
-											    [semantic-set relationship_event absolute_start_time [get event time]]
+											    [semantic-set relationship_event absolute_start_time [new semantic_time [get event time]]]
 											    ]]]
 										       ]
 										 ]]
@@ -192,7 +192,7 @@
 											[let [[physical_type_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 																event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this physical_type_relationship_existence physical_type_relationship]]]
-											    [semantic-set relationship_event absolute_end_time [get event time]]
+											    [semantic-set relationship_event absolute_end_time [new semantic_time [get event time]]]
 											    [have this physical_type_relationship_existence-remove physical_type_relationship]
 											    ]]]
 										       ]

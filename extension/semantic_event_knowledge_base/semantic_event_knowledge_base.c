@@ -22,6 +22,32 @@
 #include "semantic_event_knowledge_base.h"
 
 
+f2ptr raw__semantic_event_knowledge_base__know_of_remove__before_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+  printf("-"); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__semantic_event_knowledge_base__know_of_remove__before_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
+  return raw__semantic_event_knowledge_base__know_of_remove__before_callback(cause, this, semantic_frame, key_type, key, value);
+}
+export_cefunk5(semantic_event_knowledge_base__know_of_remove__before_callback, this, semantic_frame, key_type, key, value, 0, "Callback for semantic_event_knowledge_base to update internal semantic_event_tree.");
+
+
+f2ptr raw__semantic_event_knowledge_base__know_of_add__after_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+  printf("+"); fflush(stdout);
+  return nil;
+}
+
+f2ptr f2__semantic_event_knowledge_base__know_of_add__after_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
+  assert_argument_type(semantic_knowledge_base, this);
+  assert_argument_type(semantic_frame,          semantic_frame);
+  return raw__semantic_event_knowledge_base__know_of_add__after_callback(cause, this, semantic_frame, key_type, key, value);
+}
+export_cefunk5(semantic_event_knowledge_base__know_of_add__after_callback, this, semantic_frame, key_type, key, value, 0, "Callback for semantic_event_knowledge_base to update internal semantic_event_tree.");
+
+
 // semantic_event_knowledge_base
 
 f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
@@ -31,6 +57,8 @@ f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr sem
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                new__symbol(cause, "semantic_event_knowledge_base"));
   raw__frame__add_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree__new(cause));
+  assert_value(raw__semantic_knowledge_base__add_trace_callback_funk__remove_semantic_frame_value__before(cause, this, f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__know_of_remove__before_callback"))));
+  assert_value(raw__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__after(    cause, this, f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__know_of_add__after_callback"))));
   return this;
 }
 

@@ -27,8 +27,16 @@
 
 def_header_ceframe1(semantic_event_tree, interval_tree);
 
-f2ptr     raw__semantic_event_tree__new(f2ptr cause);
-f2ptr      f2__semantic_event_tree__new(f2ptr cause);
+f2ptr raw__semantic_event_tree__new                     (f2ptr cause);
+f2ptr  f2__semantic_event_tree__new                     (f2ptr cause);
+f2ptr raw__semantic_event_tree__insert                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr  f2__semantic_event_tree__insert                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr raw__semantic_event_tree__remove                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr  f2__semantic_event_tree__remove                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr raw__semantic_event_tree__events_containing_time  (f2ptr cause, f2ptr this, f2ptr time);
+f2ptr  f2__semantic_event_tree__events_containing_time  (f2ptr cause, f2ptr this, f2ptr time);
+f2ptr raw__semantic_event_tree__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr  f2__semantic_event_tree__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event);
 
 f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause);
 

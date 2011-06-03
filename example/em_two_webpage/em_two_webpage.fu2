@@ -642,6 +642,7 @@
     semantic_action_event
     image_sequence
     meta_semantic_knowledge_base
+    semantic_event_knowledge_base
     deliberative_layer
     conceptnet
     mind

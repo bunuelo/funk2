@@ -27,7 +27,7 @@
        this]]
 
 [deftypefunk reflective_event_knowledge_agency execute create_knowledge []
-  [new meta_semantic_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]
+  [new semantic_event_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]
 
 [deftypefunk reflective_event_knowledge_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `reflective_knowledge `reflective_knowledge->reflective_event_knowledge]]

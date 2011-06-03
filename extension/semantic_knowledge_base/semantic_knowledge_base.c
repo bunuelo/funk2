@@ -362,6 +362,7 @@ export_cefunk3(semantic_knowledge_base__add_trace_callback_funk, this, trace_cal
 
 f2ptr raw__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__before(f2ptr cause, f2ptr this, f2ptr funk) {
   raw__semantic_knowledge_base__add_trace_callback_funk(cause, this, new__symbol(cause, "add_semantic_frame_value-before"), funk);
+  return nil;
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__before(f2ptr cause, f2ptr this, f2ptr funk) {
@@ -374,6 +375,7 @@ export_cefunk2(semantic_knowledge_base__add_trace_callback_funk__add_semantic_fr
 
 f2ptr raw__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__after(f2ptr cause, f2ptr this, f2ptr funk) {
   raw__semantic_knowledge_base__add_trace_callback_funk(cause, this, new__symbol(cause, "add_semantic_frame_value-after"), funk);
+  return nil;
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__after(f2ptr cause, f2ptr this, f2ptr funk) {
@@ -386,6 +388,7 @@ export_cefunk2(semantic_knowledge_base__add_trace_callback_funk__add_semantic_fr
 
 f2ptr raw__semantic_knowledge_base__add_trace_callback_funk__remove_semantic_frame_value__before(f2ptr cause, f2ptr this, f2ptr funk) {
   raw__semantic_knowledge_base__add_trace_callback_funk(cause, this, new__symbol(cause, "remove_semantic_frame_value-before"), funk);
+  return nil;
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_callback_funk__remove_semantic_frame_value__before(f2ptr cause, f2ptr this, f2ptr funk) {

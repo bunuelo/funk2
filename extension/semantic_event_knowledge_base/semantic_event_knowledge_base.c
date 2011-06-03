@@ -29,8 +29,8 @@ f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr sem
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_knowledge_base"));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                new__symbol(cause, "semantic_event_knowledge_base"));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree__new(cause));
   return this;
 }
 

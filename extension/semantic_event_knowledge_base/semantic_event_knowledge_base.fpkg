@@ -19,7 +19,8 @@
 
 [defpackage semantic_event_knowledge_base
   :packages   [meta_semantic_knowledge_base
-	       semantic_event]
+	       semantic_event
+	       semantic_event_tree]
    :sources   ['semantic_event_knowledge_base-core.fu2']
     :binaries ['.libs/libf2e_semantic_event_knowledge_base.so']]
 

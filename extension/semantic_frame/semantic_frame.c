@@ -279,7 +279,7 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
     {
       f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
       set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
-		     assert_value(raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value));
+		     assert_value(raw__semantic_knowledge_base__know_before_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value));
 		     assert_value(f2__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event));
 		     );
     }
@@ -294,6 +294,15 @@ f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
     raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
   }
   raw__set__add(cause, value_set, value);
+  if (raw__semantic_frame__trace_add(cause, this) != nil) {
+    raw__semantic_frame__initialize_tracing(cause, this);
+    {
+      f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
+      set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
+		     assert_value(raw__semantic_knowledge_base__know_after_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value));
+		     );
+    }
+  }
   return nil;
 }
 
@@ -317,7 +326,7 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
     {
       f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
       set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
-		     assert_value(raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value));
+		     assert_value(raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value));
 		     assert_value(raw__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event));
 		     );
     }
@@ -335,6 +344,15 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
 														      new__symbol(cause, "key_type"),      key_type,
 														      new__symbol(cause, "key"),           key,
 														      new__symbol(cause, "value"),         value))));
+  }
+  if (raw__semantic_frame__trace_remove(cause, this) != nil) {
+    raw__semantic_frame__initialize_tracing(cause, this);
+    {
+      f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
+      set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
+		     assert_value(raw__semantic_knowledge_base__know_after_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value));
+		     );
+    }
   }
   return nil;
 }

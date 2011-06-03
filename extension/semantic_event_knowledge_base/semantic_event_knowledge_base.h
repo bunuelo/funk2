@@ -25,6 +25,7 @@
 #include "../../c/funk2.h"
 #include "../semantic_event/semantic_event.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
+#include "../semantic_event_tree/semantic_event_tree.h"
 
 
 // semantic_event_knowledge_base

@@ -29,6 +29,7 @@ f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr sem
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
+  
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_knowledge_base"));
   return this;
 }
@@ -98,6 +99,7 @@ export_cefunk0(semantic_event_knowledge_base__core_extension__ping, 0, "");
 f2ptr f2__semantic_event_knowledge_base__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_event_knowledge_base, meta_semantic_knowledge_base);
   core_extension__ping(semantic_event_knowledge_base, semantic_event);
+  core_extension__ping(semantic_event_knowledge_base, semantic_event_tree);
   f2__add_type(cause, new__symbol(cause, "semantic_event_knowledge_base"), f2__semantic_event_knowledge_base_type__new(cause));
   status("semantic_event_knowledge_base initialized.");
   return nil;

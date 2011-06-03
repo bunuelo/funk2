@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_EVENT_KNOWLEDGE_BASE__H
 
 #include "../../c/funk2.h"
+#include "../semantic_event/semantic_event.h"
 #include "../meta_semantic_knowledge_base/meta_semantic_knowledge_base.h"
 
 

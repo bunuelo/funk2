@@ -77,9 +77,7 @@ f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr sem
 }
 
 f2ptr f2__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_event_knowledge_base__new(cause, name, semantic_realm);
 }
 export_cefunk2(semantic_event_knowledge_base__new, name, semantic_realm, 0, "Given a name and a semantic_realm, returns a new semantic_event_knowledge_base object.");
@@ -112,16 +110,14 @@ f2ptr raw__semantic_event_knowledge_base__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event_knowledge_base__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event_knowledge_base__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_knowledge_base, this);
   return raw__semantic_event_knowledge_base__type(cause, this);
 }
 export_cefunk1(semantic_event_knowledge_base__type, thing, 0, "Returns the specific type of object that this semantic_event_knowledge_base is.");
 
 
 f2ptr raw__semantic_event_knowledge_base__semantic_event_tree(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree__new(cause), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree__new(cause), nil);
 }
 
 f2ptr f2__semantic_event_knowledge_base__semantic_event_tree(f2ptr cause, f2ptr this) {

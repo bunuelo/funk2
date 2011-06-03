@@ -18,11 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_event_knowledge_base
-  :documentation 'Basic knowledge for dealing with collections of knowledge, where semantic_events are also indexed for temporal retrieval.'
-   :packages     [semantic_object
-		  semantic_event]
-    :sources     ['semantic_event_knowledge_base-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_event_knowledge_base.so']]
-
-[defcore semantic_event_knowledge_base 'extension/semantic_event_knowledge_base/.libs/libf2e_semantic_event_knowledge_base.so']
+  :packages   [meta_semantic_knowledge_base]
+   :sources   ['semantic_event_knowledge_base-core.fu2']
+    :binaries ['.libs/libf2e_semantic_event_knowledge_base.so']]
 

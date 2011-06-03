@@ -24,38 +24,22 @@
 
 // semantic_event_knowledge_base
 
-f2ptr raw__semantic_event_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
-  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_knowledge_base"));
-  }
-  {
-    f2ptr result = raw__semantic_object__type_create(cause, this, semantic_realm);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  return this;
-}
-
-f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__frame__new(cause, nil);
+f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  f2ptr this = f2__meta_semantic_knowledge_base__new(cause, name, semantic_realm);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  {
-    f2ptr result = raw__semantic_event_knowledge_base__type_create(cause, this, semantic_realm);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_knowledge_base"));
   return this;
 }
 
-f2ptr f2__semantic_event_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
-  assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_event_knowledge_base__new(cause, semantic_realm);
+f2ptr f2__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_event_knowledge_base__new(cause, name, semantic_realm);
 }
-export_cefunk1(semantic_event_knowledge_base__new, semantic_realm, 0, "Returns a new semantic_event_knowledge_base object.");
+export_cefunk2(semantic_event_knowledge_base__new, name, semantic_realm, 0, "Given a name and a semantic_realm, returns a new semantic_event_knowledge_base object.");
 
 
 boolean_t raw__semantic_event_knowledge_base__is_type(f2ptr cause, f2ptr thing) {
@@ -85,55 +69,19 @@ f2ptr raw__semantic_event_knowledge_base__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event_knowledge_base__type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_event_knowledge_base, this);
+  if (! raw__semantic_event_knowledge_base__is_type(cause, this)) {
+    return f2larva__new(cause, 1, nil);
+  }
   return raw__semantic_event_knowledge_base__type(cause, this);
 }
 export_cefunk1(semantic_event_knowledge_base__type, thing, 0, "Returns the specific type of object that this semantic_event_knowledge_base is.");
 
 
-f2ptr raw__semantic_event_knowledge_base__event__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"));
-}
-
-f2ptr f2__semantic_event_knowledge_base__event__lookup(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_event_knowledge_base, this);
-  return raw__semantic_event_knowledge_base__event__lookup(cause, this);
-}
-export_cefunk1(semantic_event_knowledge_base__event__lookup, this, 0, "");
-
-
-f2ptr raw__semantic_event_knowledge_base__event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"), that);
-}
-
-f2ptr f2__semantic_event_knowledge_base__event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event_knowledge_base, this);
-  assert_argument_type(semantic_event,     that);
-  return raw__semantic_event_knowledge_base__event__add(cause, this, that);
-}
-export_cefunk2(semantic_event_knowledge_base__event__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_event_knowledge_base__event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "event"), that);
-}
-
-f2ptr f2__semantic_event_knowledge_base__event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event_knowledge_base, this);
-  assert_argument_type(semantic_event,     that);
-  return raw__semantic_event_knowledge_base__event__remove(cause, this, that);
-}
-export_cefunk2(semantic_event_knowledge_base__event__remove, this, that, 0, "");
-
-
 f2ptr f2__semantic_event_knowledge_base_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__event__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__event__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "event"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__event__remove")));}
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "meta_semantic_knowledge_base")));
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__type")));}
   return this;
 }
 
@@ -146,20 +94,15 @@ f2ptr f2__semantic_event_knowledge_base__core_extension__ping(f2ptr cause) {
 }
 export_cefunk0(semantic_event_knowledge_base__core_extension__ping, 0, "");
 
+
 f2ptr f2__semantic_event_knowledge_base__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(semantic_event_knowledge_base, semantic_object);
-  core_extension__ping(semantic_event_knowledge_base, semantic_event);
+  core_extension__ping(semantic_event_knowledge_base, meta_semantic_knowledge_base);
+  f2__add_type(cause, new__symbol(cause, "semantic_event_knowledge_base"), f2__semantic_event_knowledge_base_type__new(cause));
   status("semantic_event_knowledge_base initialized.");
   return nil;
 }
 export_cefunk0(semantic_event_knowledge_base__core_extension__initialize, 0, "");
 
-f2ptr f2__semantic_event_knowledge_base__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "semantic_event_knowledge_base"), f2__semantic_event_knowledge_base_type__new(cause));
-  status("semantic_event_knowledge_base define types.");
-  return nil;
-}
-export_cefunk0(semantic_event_knowledge_base__core_extension__define_types, 0, "");
 
 f2ptr f2__semantic_event_knowledge_base__core_extension__destroy(f2ptr cause) {
   status("semantic_event_knowledge_base destroyed.");

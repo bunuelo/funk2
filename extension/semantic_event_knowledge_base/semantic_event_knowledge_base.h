@@ -27,9 +27,9 @@
 
 // semantic_event_knowledge_base
 
-f2ptr     raw__semantic_event_knowledge_base__type_create  (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr time);
-f2ptr     raw__semantic_event_knowledge_base__new          (f2ptr cause, f2ptr semantic_realm, f2ptr time);
-f2ptr      f2__semantic_event_knowledge_base__new          (f2ptr cause, f2ptr semantic_realm, f2ptr time);
+f2ptr     raw__semantic_event_knowledge_base__type_create  (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_event_knowledge_base__new          (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_event_knowledge_base__new          (f2ptr cause, f2ptr semantic_realm);
 boolean_t raw__semantic_event_knowledge_base__is_type      (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_event_knowledge_base__is_type      (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_event_knowledge_base__type         (f2ptr cause, f2ptr this);
@@ -43,9 +43,9 @@ f2ptr      f2__semantic_event_knowledge_base__event__remove(f2ptr cause, f2ptr t
 
 // **
 
-f2ptr f2__semantic_event_knowledge_base__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_event_knowledge_base__core_extension__ping      (f2ptr cause);
 f2ptr f2__semantic_event_knowledge_base__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_event_knowledge_base__core_extension__destroy(f2ptr cause);
+f2ptr f2__semantic_event_knowledge_base__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_EVENT_KNOWLEDGE_BASE__H
 

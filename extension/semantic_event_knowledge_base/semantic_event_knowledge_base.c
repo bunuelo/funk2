@@ -28,7 +28,7 @@ f2ptr raw__semantic_event_knowledge_base__know_of_remove__before_callback(f2ptr 
     if (raw__eq(cause, new__symbol(cause, "property"), key_type) && (raw__eq(cause, new__symbol(cause, "absolute_start_time"), key) ||
 								     raw__eq(cause, new__symbol(cause, "absolute_end_time"),   key))) {
       f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
-      assert_value(f2__semantic_event_tree__remove(cause, semantic_event));
+      assert_value(f2__semantic_event_tree__remove(cause, semantic_event_tree, semantic_event));
     }
   }
   return nil;
@@ -48,7 +48,7 @@ f2ptr raw__semantic_event_knowledge_base__know_of_add__after_callback(f2ptr caus
     if (raw__eq(cause, new__symbol(cause, "property"), key_type) && (raw__eq(cause, new__symbol(cause, "absolute_start_time"), key) ||
 								     raw__eq(cause, new__symbol(cause, "absolute_end_time"),   key))) {
       f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
-      assert_value(f2__semantic_event_tree__insert(cause, semantic_event));
+      assert_value(f2__semantic_event_tree__insert(cause, semantic_event_tree, semantic_event));
     }
   }
   return nil;

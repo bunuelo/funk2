@@ -271,44 +271,29 @@ f2ptr raw__semantic_frame__add_event__new(f2ptr cause, f2ptr this, f2ptr key_typ
 }
 
 f2ptr raw__semantic_frame__add(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr semantic_frame_event = nil;
   if (raw__semantic_frame__trace_add(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
-    f2ptr trace_event_stream = raw__semantic_frame__trace_event_stream(cause, this);
-    semantic_frame_event = raw__semantic_frame__add_event__new(cause, this, key_type, key, value);
+    f2ptr trace_event_stream   = raw__semantic_frame__trace_event_stream(cause, this);
+    f2ptr semantic_frame_event = raw__semantic_frame__add_event__new(cause, this, key_type, key, value);
     raw__event_stream__add(cause, trace_event_stream, semantic_frame_event);
+    {
+      f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
+      set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
+		     assert_value(raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value));
+		     assert_value(f2__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event));
+		     );
+    }
   }
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
-  if (raw__larva__is_type(cause, key_type__object_key)) {
-    return key_type__object_key;
-  }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
-  if (raw__larva__is_type(cause, key__object_key)) {
-    return key__object_key;
-  }
-  f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
+  f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
+  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
   if (value_set == nil) {
     value_set = f2__set__new(cause);
     raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
   }
   raw__set__add(cause, value_set, value);
-  {
-    f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
-    set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
-		   f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_addition(cause, semantic_knowledge_base, this, key_type, key, value);
-		   if (raw__larva__is_type(cause, result)) {
-		     return result;
-		   }
-		   if (semantic_frame_event != nil) {
-		     f2ptr result = f2__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
-		     if (raw__larva__is_type(cause, result)) {
-		       return result;
-		     }
-		   }
-		   );
-  }
   return nil;
 }
 
@@ -324,24 +309,24 @@ f2ptr raw__semantic_frame__remove_event__new(f2ptr cause, f2ptr this, f2ptr key_
 }
 
 f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr semantic_frame_event = nil;
   if (raw__semantic_frame__trace_remove(cause, this) != nil) {
     raw__semantic_frame__initialize_tracing(cause, this);
-    f2ptr trace_event_stream = raw__semantic_frame__trace_event_stream(cause, this);
-    semantic_frame_event = raw__semantic_frame__remove_event__new(cause, this, key_type, key, value);
+    f2ptr trace_event_stream   = raw__semantic_frame__trace_event_stream(cause, this);
+    f2ptr semantic_frame_event = raw__semantic_frame__remove_event__new(cause, this, key_type, key, value);
     raw__event_stream__add(cause, trace_event_stream, semantic_frame_event);
+    {
+      f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
+      set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
+		     assert_value(raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value));
+		     assert_value(raw__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event));
+		     );
+    }
   }
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
-  f2ptr key_type__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key_type);
-  if (raw__larva__is_type(cause, key_type__object_key)) {
-    return key_type__object_key;
-  }
-  f2ptr key__object_key = raw__semantic_realm__object_key(cause, semantic_realm, key);
-  if (raw__larva__is_type(cause, key__object_key)) {
-    return key__object_key;
-  }
-  f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+  f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
+  f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
+  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
   if ((value_set == nil) || (! raw__set__remove(cause, value_set, value))) {
     return f2larva__new(cause, 53, f2__bug__new(cause, f2integer__new(cause, 53), f2__frame__new(cause, f2list12__new(cause,
 														      new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame"),
@@ -350,18 +335,6 @@ f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
 														      new__symbol(cause, "key_type"),      key_type,
 														      new__symbol(cause, "key"),           key,
 														      new__symbol(cause, "value"),         value))));
-  }
-  {
-    f2ptr semantic_knowledge_base_set = raw__semantic_frame__semantic_knowledge_base_set(cause, this);
-    set__iteration(cause, semantic_knowledge_base_set, semantic_knowledge_base,
-		   f2ptr result = raw__semantic_knowledge_base__know_of_semantic_frame_value_removal(cause, semantic_knowledge_base, this, key_type, key, value);
-		   if (raw__larva__is_type(cause, result)) {
-		     return result;
-		   }
-		   if (semantic_frame_event != nil) {
-		     raw__semantic_knowledge_base__add_trace_event(cause, semantic_knowledge_base, semantic_frame_event);
-		   }
-		   );
   }
   return nil;
 }

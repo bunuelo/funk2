@@ -50,8 +50,8 @@ f2ptr raw__semantic_event_tree__semantic_event__value_equality(f2ptr cause, f2pt
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_equality(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  assert_argument_type(time, that);
+  assert_argument_type(semantic_time, this);
+  assert_argument_type(semantic_time, that);
   return raw__semantic_event_tree__semantic_event__value_equality(cause, this, that);
 }
 export_cefunk2(semantic_event_tree__semantic_event__value_equality, this, that, 0, "Returns whether a semantic_event_tree-semantic_event value is equal to another semantic_event_tree-semantic_event value.");
@@ -62,8 +62,8 @@ f2ptr raw__semantic_event_tree__semantic_event__value_comparison(f2ptr cause, f2
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_comparison(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  assert_argument_type(time, that);
+  assert_argument_type(semantic_time, this);
+  assert_argument_type(semantic_time, that);
   return raw__semantic_event_tree__semantic_event__value_comparison(cause, this, that);
 }
 export_cefunk2(semantic_event_tree__semantic_event__value_comparison, this, that, 0, "Returns whether a semantic_event_tree-semantic_event value is less than another semantic_event_tree-semantic_event value.");
@@ -131,8 +131,8 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(time, this);
-  assert_argument_type(time, that);
+  assert_argument_type(semantic_time, this);
+  assert_argument_type(semantic_time, that);
   return raw__semantic_event_tree__semantic_event__value_center(cause, this, that);
 }
 export_cefunk2(semantic_event_tree__semantic_event__value_center, this, that, 0, "Returns whether a semantic_event_tree-semantic_event value is less than another semantic_event_tree-semantic_event value.");
@@ -188,7 +188,7 @@ f2ptr raw__semantic_event_tree__events_containing_time(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_event_tree__events_containing_time(f2ptr cause, f2ptr this, f2ptr time) {
-  assert_argument_type(time, time);
+  assert_argument_type(semantic_time, time);
   return raw__semantic_event_tree__events_containing_time(cause, this, time);
 }
 export_cefunk2(semantic_event_tree__events_containing_time, this, time, 0, "Returns a new set of events in this semantic_event_tree that contain the given time.");

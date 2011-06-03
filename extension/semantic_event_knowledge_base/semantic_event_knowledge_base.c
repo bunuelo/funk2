@@ -117,7 +117,7 @@ export_cefunk1(semantic_event_knowledge_base__type, thing, 0, "Returns the speci
 
 
 f2ptr raw__semantic_event_knowledge_base__semantic_event_tree(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree__new(cause), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), nil);
 }
 
 f2ptr f2__semantic_event_knowledge_base__semantic_event_tree(f2ptr cause, f2ptr this) {

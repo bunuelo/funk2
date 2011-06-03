@@ -70,26 +70,64 @@ export_cefunk2(semantic_event_tree__semantic_event__value_comparison, this, that
 
 
 f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__value = f2__semantic_time__value(cause, this);
-  f2ptr that__value = f2__semantic_time__value(cause, that);
-  s64   sum_nanoseconds = 0;
-  s64   sum_count       = 0;
-  if (raw__time__is_type(cause, this__value)) {
+  f2ptr     this__value          = f2__semantic_time__value(cause, this);
+  f2ptr     that__value          = f2__semantic_time__value(cause, that);
+  boolean_t this__value__is__now = raw__eq(cause, new__symbol(cause, "now"), this__value);
+  boolean_t that__value__is__now = raw__eq(cause, new__symbol(cause, "now"), that__value);
+  if (this__value__is__now && that__value__is__now) {
+    return f2__semantic_time__new(cause, f2__time(cause));
+  }
+  if (this__value__is__now) {
+    this__value = f2__time(cause);
+  }
+  if (that__value__is__now) {
+    that__value = f2__time(cause);
+  }
+  boolean_t this__value__is__time = raw__time__is_type(cause, this__value);
+  boolean_t that__value__is__time = raw__time__is_type(cause, that__value);
+  if ((! this__value__is__time) && (! this__value__is__time)) {
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+	return f2__semantic_time__new(cause, new__symbol(cause, "before"));
+      } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+	return f2__semantic_time__new(cause, f2__time(cause));
+      } else {
+	return f2larva__new(cause, 24626, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+	return f2__semantic_time__new(cause, f2__time(cause));
+      } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+	return f2__semantic_time__new(cause, new__symbol(cause, "after"));
+      } else {
+	return f2larva__new(cause, 24626, nil);
+      }
+    } else {
+      return f2larva__new(cause, 24626, nil);
+    }
+  } else if (! this__value__is__time) {
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      return f2__semantic_time__new(cause, new__symbol(cause, "before"));
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      return f2__semantic_time__new(cause, new__symbol(cause, "after"));
+    } else {
+      return f2larva__new(cause, 24626, nil);
+    }
+  } else if (! that__value__is__time) {
+    if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+      return f2__semantic_time__new(cause, new__symbol(cause, "before"));
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+      return f2__semantic_time__new(cause, new__symbol(cause, "after"));
+    } else {
+      return f2larva__new(cause, 24626, nil);
+    }
+  } else {
     f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
     s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
-    sum_nanoseconds += this__value__nanoseconds_since_1970__i;
-    sum_count       ++;
-  }
-  if (raw__time__is_type(cause, that__value)) {
     f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
     s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
-    sum_nanoseconds += that__value__nanoseconds_since_1970__i;
-    sum_count       ++;
+    return f2__semantic_time__new(cause, f2time__new(cause, f2integer__new(cause, (this__value__nanoseconds_since_1970__i + that__value__nanoseconds_since_1970__i) >> 1)));
   }
-  if (sum_count == 0) {
-    return f2__time__new(cause, f2integer__new(cause, 1307097806073446000ull));
-  }
-  return f2time__new(cause, f2integer__new(cause, sum_nanoseconds / sum_count));
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr this, f2ptr that) {

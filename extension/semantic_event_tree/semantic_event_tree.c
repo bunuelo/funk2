@@ -122,9 +122,9 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
       return f2larva__new(cause, 24626, nil);
     }
   } else {
-    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
     s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
-    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
     s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
     return f2__semantic_time__new(cause, f2time__new(cause, f2integer__new(cause, (this__value__nanoseconds_since_1970__i + that__value__nanoseconds_since_1970__i) >> 1)));
   }

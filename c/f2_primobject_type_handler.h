@@ -58,22 +58,23 @@
 #include "f2_core_extension_funk.h"
 #include "f2_core_extension.h"
 #include "f2_primobject__file_handle.h"
+#include "f2_primobject__matrix.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_cmutex;
   f2ptr                   type_hash;
 } funk2_primobject_type_handler_t;
 
-void  funk2_primobject_type_handler__init(funk2_primobject_type_handler_t* this);
-void  funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* this);
-void  funk2_primobject_type_handler__add_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type);
-f2ptr funk2_primobject_type_handler__lookup_type(funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name);
-void  funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_handler_t* this, f2ptr cause);
+void  funk2_primobject_type_handler__init                         (funk2_primobject_type_handler_t* this);
+void  funk2_primobject_type_handler__destroy                      (funk2_primobject_type_handler_t* this);
+void  funk2_primobject_type_handler__add_type                     (funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name, f2ptr type);
+f2ptr funk2_primobject_type_handler__lookup_type                  (funk2_primobject_type_handler_t* this, f2ptr cause, f2ptr type_name);
+void  funk2_primobject_type_handler__add_nil_primobject           (funk2_primobject_type_handler_t* this, f2ptr cause);
 void  funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
-void  funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause);
-void  funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause);
+void  funk2_primobject_type_handler__add_builtin_primobjects      (funk2_primobject_type_handler_t* this, f2ptr cause);
+void  funk2_primobject_type_handler__add_builtin_frame_objects    (funk2_primobject_type_handler_t* this, f2ptr cause);
 
-f2ptr f2__add_type(f2ptr cause, f2ptr type_name, f2ptr type);
+f2ptr f2__add_type   (f2ptr cause, f2ptr type_name, f2ptr type);
 f2ptr f2__lookup_type(f2ptr cause, f2ptr type_name);
 
 typedef struct funk2_primobject_object_types_s funk2_primobject_object_types_t;
@@ -154,6 +155,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__optimize_fiber__slot_t                   primobject_type_optimize_fiber;
   funk2_object_type__optimize_context__slot_t                 primobject_type_optimize_context;
   funk2_object_type__file_handle__slot_t                      primobject_type_file_handle;
+  funk2_object_type__matrix__slot_t                           primobject_type_matrix;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;

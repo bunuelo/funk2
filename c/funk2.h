@@ -100,6 +100,7 @@
 #include "f2_primobject__frame.h"
 #include "f2_primobject__hash.h"
 #include "f2_primobject__largeinteger.h"
+#include "f2_primobject__matrix.h"
 #include "f2_primobject__object.h"
 #include "f2_primobject__object_type.h"
 #include "f2_primobject__ptypehash.h"

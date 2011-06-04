@@ -340,6 +340,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__hash.c \
   c/f2_primobject__list.c \
   c/f2_primobject__largeinteger.c \
+  c/f2_primobject__matrix.c \
   c/f2_primobject__object.c \
   c/f2_primobject__object_type.c \
   c/f2_primobject__ptypehash.c \

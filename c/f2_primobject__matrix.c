@@ -106,8 +106,8 @@ f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2
       raw__ptypehash__add(cause, value_column_ptypehash, column, value);
       raw__ptypehash__add(cause, value_row_ptypehash,    row,    value);
     } else {
-      raw__ptypehash__remove(cause, value_column_ptypehash, column, value);
-      raw__ptypehash__remove(cause, value_row_ptypehash,    row,    value);
+      raw__ptypehash__remove(cause, value_column_ptypehash, column);
+      raw__ptypehash__remove(cause, value_row_ptypehash,    row);
       if (raw__ptypehash__is_empty(cause, value_column_ptypehash)) {
 	raw__ptypehash__remove(cause, column_row_ptypehash, row);
 	if (raw__ptypehash__is_empty(cause, column_row_ptypehash)) {

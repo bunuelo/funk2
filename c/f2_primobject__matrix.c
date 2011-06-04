@@ -171,7 +171,7 @@ void f2__primobject__matrix__initialize() {
   {char* symbol_str = "elt"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(matrix__elt, this, column, row, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__funk = never_gc(cfunk);}
   {char* symbol_str = "elt-set"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(matrix__elt__set, this, column, row, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(matrix__elt__set, this, column, row, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(matrix__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__funk = never_gc(cfunk);}
   

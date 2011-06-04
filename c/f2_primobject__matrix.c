@@ -69,7 +69,7 @@ f2ptr f2__matrix__elt(f2ptr cause, f2ptr this, f2ptr column, f2ptr row) {
   assert_argument_type(matrix, this);
   return raw__matrix__elt(cause, this, column, row);
 }
-def_pcfunk3(matrix__elt__set, this, column, row,
+def_pcfunk3(matrix__elt, this, column, row,
 	    "Returns the value for the given column and row of this matrix.",
 	    return f2__matrix__elt(this_cause, this, column, row));
 

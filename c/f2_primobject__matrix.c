@@ -129,7 +129,6 @@ f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2
 
 f2ptr f2__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
   assert_argument_type(matrix, this);
-  assert_argument_type(number, value);
   return raw__matrix__elt__set(cause, this, column, row, value);
 }
 def_pcfunk4(matrix__elt__set, this, column, row, value,

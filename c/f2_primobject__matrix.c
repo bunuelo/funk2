@@ -75,8 +75,9 @@ def_pcfunk3(matrix__elt, this, column, row,
 
 
 f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
-  f2ptr zero_value = f2__matrix__zero_value(cause, this);
-  if (f2__number__is_numerically_equal_to(cause, value, zero_value) != nil) {
+  f2ptr zero_value  = f2__matrix__zero_value(cause, this);
+  f2ptr equals_zero = assert_value(f2__number__is_numerically_equal_to(cause, value, zero_value));
+  if (equals_zero != nil) {
     value = nil;
   }
   f2ptr mutate_cmutex = f2__matrix__mutate_cmutex(cause, this);

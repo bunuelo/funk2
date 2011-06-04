@@ -23,19 +23,22 @@
 
 // matrix
 
-def_primobject_3_slot(matrix,
+def_primobject_4_slot(matrix,
 		      mutate_cmutex,
-		      row_first_ptypehash,
-		      column_first_ptypehash);
+		      zero_value,
+		      column_row_ptypehash,
+		      row_column_ptypehash);
 
 f2ptr raw__matrix__new(f2ptr cause) {
-  f2ptr mutate_cmutex          = f2__cmutex__new(cause);
-  f2ptr row_first_ptypehash    = nil;
-  f2ptr column_first_ptypehash = nil;
+  f2ptr mutate_cmutex        = f2__cmutex__new(cause);
+  f2ptr zero_value           = f2integer__new(cause, 0);
+  f2ptr column_row_ptypehash = nil;
+  f2ptr row_column_ptypehash = nil;
   return f2matrix__new(cause,
 		       mutate_cmutex,
-		       row_first_ptypehash,
-		       column_first_ptypehash);
+		       zero_value,
+		       column_row_ptypehash,
+		       row_column_ptypehash);
 }
 
 f2ptr f2__matrix__new(f2ptr cause) {
@@ -45,6 +48,70 @@ def_pcfunk0(matrix__new,
 	    "Returns a new matrix object.",
 	    return f2__matrix__new(this_cause));
 
+
+f2ptr raw__matrix__elt(f2ptr cause, f2ptr this, f2ptr column, f2ptr row) {
+  f2ptr column_row_ptypehash = f2__matrix__column_row_ptypehash(cause, this);
+  if (column_row_ptypehash == nil) {
+    return f2__matrix__zero_value(cause, this);
+  }
+  f2ptr value_column_ptypehash = raw__ptypehash__lookup(cause, column_row_ptypehash, row);
+  if (value_column_ptypehash == nil) {
+    return f2__matrix__zero_value(cause, this);
+  }
+  f2ptr value = raw__ptypehash__lookup(cause, value_column_ptypehash, column);
+  if (value == nil) {
+    return f2__matrix__zero_value(cause, this);
+  }
+  return value;
+}
+
+f2ptr f2__matrix__elt(f2ptr cause, f2ptr this, f2ptr column, f2ptr row) {
+  assert_argument_type(matrix, this);
+  return raw__matrix__elt(cause, this, column, row);
+}
+def_pcfunk3(matrix__elt__set, this, column, row,
+	    "Returns the value for the given column and row of this matrix.",
+	    return f2__matrix__elt(this_cause, this, column, row));
+
+
+f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
+  f2ptr mutate_mutex = f2__matrix__mutate_mutex(cause, this);
+  raw__cmutex__lock(cause, mutate_mutex);
+  {
+    f2ptr column_row_ptypehash = f2__matrix__column_row_ptypehash(cause, this);
+    if (column_row_ptypehash == nil) {
+      column_row_ptypehash = f2__ptypehash__new(cause);
+      f2__matrix__column_row_ptypehash__set(cause, this, column_row_ptypehash);
+    }
+    f2ptr row_column_ptypehash = f2__matrix__row_column_ptypehash(cause, this);
+    if (row_column_ptypehash == nil) {
+      row_column_ptypehash = f2__ptypehash__new(cause);
+      f2__matrix__row_column_ptypehash__set(cause, this, row_column_ptypehash);
+    }
+    f2ptr value_column_ptypehash = raw__ptypehash__lookup(cause, column_row_ptypehash, row);
+    if (value_column_ptypehash == nil) {
+      value_column_ptypehash = f2__ptypehash__new(cause);
+      raw__ptypehash__add(cause, column_row_ptypehash, row, value_column_ptypehash);
+    }
+    f2ptr value_row_ptypehash = raw__ptypehash__lookup(cause, row_column_ptypehash, column);
+    if (value_row_ptypehash == nil) {
+      value_row_ptypehash = f2__ptypehash__new(cause);
+      raw__ptypehash__add(cause, row_column_ptypehash, column, value_row_ptypehash);
+    }
+    raw__ptypehash__add(cause, value_column_ptypehash, column, value);
+    raw__ptypehash__add(cause, value_row_ptypehash,    row,    value);
+  }
+  raw__cmutex__unlock(cause, mutate_cmutex);
+  return nil;
+}
+
+f2ptr f2__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
+  assert_argument_type(matrix, this);
+  return raw__matrix__elt__set(cause, this, column, row, value);
+}
+def_pcfunk4(matrix__elt__set, this, column, row, value,
+	    "Sets the value for the given column and row of this matrix.",
+	    return f2__matrix__elt__set(this_cause, this, column, row, value));
 
 
 f2ptr raw__matrix__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -71,6 +138,8 @@ def_pcfunk2(matrix__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2matrix__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2matrix__primobject_type__new(cause);
+  {char* slot_name = "elt";                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__funk);}
+  {char* slot_name = "elt";                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__funk);}
   return this;
 }
@@ -93,11 +162,16 @@ void f2__primobject__matrix__initialize() {
   
   // matrix
   
-  initialize_primobject_3_slot(matrix,
+  initialize_primobject_4_slot(matrix,
 			       mutate_cmutex,
-			       row_first_ptypehash,
-			       column_first_ptypehash);
+			       zero_value,
+			       column_row_ptypehash,
+			       row_column_ptypehash);
   
+  {char* symbol_str = "elt"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(matrix__elt, this, column, row, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__funk = never_gc(cfunk);}
+  {char* symbol_str = "elt-set"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(matrix__elt__set, this, column, row, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(matrix__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__funk = never_gc(cfunk);}
   

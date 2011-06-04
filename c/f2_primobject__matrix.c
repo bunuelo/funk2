@@ -75,6 +75,10 @@ def_pcfunk3(matrix__elt, this, column, row,
 
 
 f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
+  f2ptr zero_value = f2__matrix__zero_value(cause, this);
+  if (f2__number__is_numerically_equal_to(cause, value, zero_value) != nil) {
+    value = nil;
+  }
   f2ptr mutate_cmutex = f2__matrix__mutate_cmutex(cause, this);
   raw__cmutex__lock(cause, mutate_cmutex);
   {
@@ -98,8 +102,25 @@ f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2
       value_row_ptypehash = f2__ptypehash__new(cause);
       raw__ptypehash__add(cause, row_column_ptypehash, column, value_row_ptypehash);
     }
-    raw__ptypehash__add(cause, value_column_ptypehash, column, value);
-    raw__ptypehash__add(cause, value_row_ptypehash,    row,    value);
+    if (value != nil) {
+      raw__ptypehash__add(cause, value_column_ptypehash, column, value);
+      raw__ptypehash__add(cause, value_row_ptypehash,    row,    value);
+    } else {
+      raw__ptypehash__remove(cause, value_column_ptypehash, column, value);
+      raw__ptypehash__remove(cause, value_row_ptypehash,    row,    value);
+      if (raw__ptypehash__is_empty(cause, value_column_ptypehash)) {
+	raw__ptypehash__remove(cause, column_row_ptypehash, row);
+	if (raw__ptypehash__is_empty(cause, column_row_ptypehash)) {
+	  f2__matrix__column_row_ptypehash__set(cause, this, nil);
+	}
+      }
+      if (raw__ptypehash__is_empty(cause, value_row_ptypehash)) {
+	raw__ptypehash__remove(cause, row_column_ptypehash, column);
+	if (raw__ptypehash__is_empty(cause, row_column_ptypehash)) {
+	  f2__matrix__row_column_ptypehash__set(cause, this, nil);
+	}
+      }
+    }
   }
   raw__cmutex__unlock(cause, mutate_cmutex);
   return nil;
@@ -107,6 +128,7 @@ f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2
 
 f2ptr f2__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
   assert_argument_type(matrix, this);
+  assert_argument_type(number, value);
   return raw__matrix__elt__set(cause, this, column, row, value);
 }
 def_pcfunk4(matrix__elt__set, this, column, row, value,

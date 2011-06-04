@@ -25,8 +25,10 @@
 // matrix
 
 typedef struct funk2_object_type__matrix__slot_s funk2_object_type__matrix__slot_t;
-declare_object_type_1_slot(matrix,
-			   file_descriptor,
+declare_object_type_3_slot(matrix,
+			   mutate_cmutex,
+			   row_first_ptypehash,
+			   column_first_ptypehash,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -39,11 +41,13 @@ declare_object_type_1_slot(matrix,
 
 #include "f2_primfunks.h"
 
-declare_primobject_1_slot(matrix,
-			  file_descriptor);
+declare_primobject_3_slot(matrix,
+			  mutate_cmutex,
+			  row_first_ptypehash,
+			  column_first_ptypehash);
 
-f2ptr raw__matrix__new(f2ptr cause, s64 file_descriptor);
-f2ptr  f2__matrix__new(f2ptr cause, f2ptr file_descriptor);
+f2ptr raw__matrix__new(f2ptr cause);
+f2ptr  f2__matrix__new(f2ptr cause);
 
 f2ptr f2matrix__primobject_type__new_aux(f2ptr cause);
 

@@ -23,26 +23,27 @@
 
 // matrix
 
-def_primobject_1_slot(matrix,
-		      file_descriptor);
+def_primobject_3_slot(matrix,
+		      mutate_cmutex,
+		      row_first_ptypehash,
+		      column_first_ptypehash);
 
-f2ptr raw__matrix__new(f2ptr cause, s64 file_descriptor) {
-  if (__matrix__symbol == -1) {
-    __matrix__symbol = new__symbol(cause, "matrix");
-  }
+f2ptr raw__matrix__new(f2ptr cause) {
+  f2ptr mutate_cmutex          = f2__cmutex__new(cause);
+  f2ptr row_first_ptypehash    = nil;
+  f2ptr column_first_ptypehash = nil;
   return f2matrix__new(cause,
-			    f2integer__new(cause, file_descriptor));
+		       mutate_cmutex,
+		       row_first_ptypehash,
+		       column_first_ptypehash);
 }
 
-f2ptr f2__matrix__new(f2ptr cause, f2ptr file_descriptor) {
-  assert_argument_type(integer, file_descriptor);
-  s64 file_descriptor__i = f2integer__i(file_descriptor, cause);
-  return raw__matrix__new(cause, file_descriptor__i);
+f2ptr f2__matrix__new(f2ptr cause) {
+  return raw__matrix__new(cause);
 }
-def_pcfunk1(matrix__new, file_descriptor,
-	    "Returns a new matrix object for the given integral file_descriptor.",
-	    return f2__matrix__new(this_cause, file_descriptor));
-
+def_pcfunk0(matrix__new,
+	    "Returns a new matrix object.",
+	    return f2__matrix__new(this_cause));
 
 
 
@@ -51,15 +52,15 @@ f2ptr raw__matrix__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list4__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "matrix"),
-					       new__symbol(cause, "file_descriptor"),   f2__matrix__file_descriptor(cause, this)));
+					       new__symbol(cause, "print_object_type"),   new__symbol(cause, "matrix"),
+					       new__symbol(cause, "row_first_ptypehash"), f2__matrix__row_first_ptypehash(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__matrix__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(matrix,          this);
+  assert_argument_type(matrix,               this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__matrix__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
@@ -92,8 +93,10 @@ void f2__primobject__matrix__initialize() {
   
   // matrix
   
-  initialize_primobject_1_slot(matrix,
-			       file_descriptor);
+  initialize_primobject_3_slot(matrix,
+			       mutate_cmutex,
+			       row_first_ptypehash,
+			       column_first_ptypehash);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(matrix__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__funk = never_gc(cfunk);}

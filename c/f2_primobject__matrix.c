@@ -75,8 +75,8 @@ def_pcfunk3(matrix__elt__set, this, column, row,
 
 
 f2ptr raw__matrix__elt__set(f2ptr cause, f2ptr this, f2ptr column, f2ptr row, f2ptr value) {
-  f2ptr mutate_mutex = f2__matrix__mutate_mutex(cause, this);
-  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr mutate_cmutex = f2__matrix__mutate_cmutex(cause, this);
+  raw__cmutex__lock(cause, mutate_cmutex);
   {
     f2ptr column_row_ptypehash = f2__matrix__column_row_ptypehash(cause, this);
     if (column_row_ptypehash == nil) {

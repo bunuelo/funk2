@@ -26,9 +26,9 @@
 #include "../semantic_event/semantic_event.h"
 
 
-f2ptr     raw__semantic_self__type_create  (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr time);
-f2ptr     raw__semantic_self__new          (f2ptr cause, f2ptr semantic_realm, f2ptr time);
-f2ptr      f2__semantic_self__new          (f2ptr cause, f2ptr semantic_realm, f2ptr time);
+f2ptr     raw__semantic_self__type_create  (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_self__new          (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_self__new          (f2ptr cause, f2ptr semantic_realm);
 boolean_t raw__semantic_self__is_type      (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_self__is_type      (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_self__type         (f2ptr cause, f2ptr this);

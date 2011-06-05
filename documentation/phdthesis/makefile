@@ -3,16 +3,16 @@ default: phdthesis.pdf
 phdthesis.pdf: \
   makefile \
   phdthesis.tex \
-  frontbackmatter/Abstract.tex \
-  frontbackmatter/Acknowledgments.tex \
-  frontbackmatter/Bibliography.tex \
-  frontbackmatter/Colophon.tex \
-  frontbackmatter/Contents.tex \
-  frontbackmatter/Declaration.tex \
-  frontbackmatter/Dedication.tex \
-  frontbackmatter/Publication.tex \
-  frontbackmatter/Titleback.tex \
-  frontbackmatter/Titlepage.tex \
+  frontbackmatter/abstract.tex \
+  frontbackmatter/acknowledgments.tex \
+  frontbackmatter/bibliography.tex \
+  frontbackmatter/colophon.tex \
+  frontbackmatter/contents.tex \
+  frontbackmatter/declaration.tex \
+  frontbackmatter/dedication.tex \
+  frontbackmatter/publication.tex \
+  frontbackmatter/titleback.tex \
+  frontbackmatter/titlepage.tex \
   chapters/chapter_stages.tex
 	pdflatex phdthesis.tex
 	pdflatex phdthesis.tex

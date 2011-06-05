@@ -3,16 +3,16 @@ default: phdthesis.pdf
 phdthesis.pdf: \
   makefile \
   phdthesis.tex \
-  FrontBackmatter/Abstract.tex \
-  FrontBackmatter/Acknowledgments.tex \
-  FrontBackmatter/Bibliography.tex \
-  FrontBackmatter/Colophon.tex \
-  FrontBackmatter/Contents.tex \
-  FrontBackmatter/Declaration.tex \
-  FrontBackmatter/Dedication.tex \
-  FrontBackmatter/Publication.tex \
-  FrontBackmatter/Titleback.tex \
-  FrontBackmatter/Titlepage.tex \
+  frontbackmatter/Abstract.tex \
+  frontbackmatter/Acknowledgments.tex \
+  frontbackmatter/Bibliography.tex \
+  frontbackmatter/Colophon.tex \
+  frontbackmatter/Contents.tex \
+  frontbackmatter/Declaration.tex \
+  frontbackmatter/Dedication.tex \
+  frontbackmatter/Publication.tex \
+  frontbackmatter/Titleback.tex \
+  frontbackmatter/Titlepage.tex \
   chapters/chapter_stages.tex
 	pdflatex phdthesis.tex
 	pdflatex phdthesis.tex
@@ -20,7 +20,7 @@ phdthesis.pdf: \
 clean:
 	rm -f phdthesis.pdf
 	rm -f chapters/*.aux
-	rm -f FrontBackmatter/*.aux
+	rm -f frontbackmatter/*.aux
 	rm -f phdthesis.aux
 	rm -f phdthesis.lof
 	rm -f phdthesis.log

@@ -1,6 +1,5 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.3.30)  30 MAR 2011 15:22
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.6)  5 JUN 2011 10:30
 entering extended mode
- restricted \write18 enabled.
  %&-line parsing enabled.
 **phdthesis.tex
 (./phdthesis.tex
@@ -83,26 +82,26 @@ Package typearea, 2009/07/24 v3.04a KOMA-Script package (type area)
 
 \ta@bcor=\skip41
 \ta@div=\count79
-Package typearea Info: You've used standard option `a4paper'.
+Package typearea Info: You've used standard option `letterpaper'.
 (typearea)             This is correct!
-(typearea)             Internaly I'm using `paper=a4'.
+(typearea)             Internaly I'm using `paper=letter'.
 (typearea)             If you'd like to set the option with \KOMAoptions,
-(typearea)             you'd have to use `paper=a4' there
-(typearea)             instead of `a4paper', too.
+(typearea)             you'd have to use `paper=letter' there
+(typearea)             instead of `letterpaper', too.
 \ta@hblk=\skip42
 \ta@vblk=\skip43
 \ta@temp=\skip44
 Package typearea Info: These are the values describing the layout:
 (typearea)             DIV  = 10
 (typearea)             BCOR = 14.22636pt
-(typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 408.2971pt
-(typearea)              DIV departure   = -3%
-(typearea)              \evensidemargin = 44.38632pt
-(typearea)              \oddsidemargin  = 0.28453pt
-(typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 514.20023pt
-(typearea)              \topmargin      = 12.2347pt
+(typearea)             \paperwidth      = 614.295pt
+(typearea)              \textwidth      = 420.04808pt
+(typearea)              DIV departure   = -7%
+(typearea)              \evensidemargin = 47.74371pt
+(typearea)              \oddsidemargin  = 1.96323pt
+(typearea)             \paperheight     = 794.96999pt
+(typearea)              \textheight     = 527.80023pt
+(typearea)              \topmargin      = 7.227pt
 (typearea)              \headheight     = 17.0pt
 (typearea)              \headsep        = 20.40001pt
 (typearea)              \topskip        = 11.0pt
@@ -583,13 +582,13 @@ Package classicthesis Info: A4 paper, Palatino or other on input line 240.
 Package typearea Info: These are the values describing the layout:
 (typearea)             DIV  = areaset
 (typearea)             BCOR = 14.22636pt
-(typearea)             \paperwidth      = 597.50793pt
+(typearea)             \paperwidth      = 614.295pt
 (typearea)              \textwidth      = 312.0pt
-(typearea)              \evensidemargin = 108.58438pt
-(typearea)              \oddsidemargin  = 32.38356pt
-(typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 677.04997pt
-(typearea)              \topmargin      = -44.25435pt
+(typearea)              \evensidemargin = 119.77576pt
+(typearea)              \oddsidemargin  = 37.97925pt
+(typearea)             \paperheight     = 794.96999pt
+(typearea)              \textheight     = 724.65pt
+(typearea)              \topmargin      = -60.94667pt
 (typearea)              \headheight     = 15.95pt
 (typearea)              \headsep        = 20.40001pt
 (typearea)              \topskip        = 11.0pt
@@ -762,14 +761,14 @@ Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 181.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 181.
 Package hyperref Info: Option `hypertexnames' set `true' on input line 181.
  (./phdthesis.aux
-(./FrontBackmatter/DirtyTitlepage.aux) (./FrontBackmatter/Titlepage.aux)
-(./FrontBackmatter/Titleback.aux) (./FrontBackmatter/Dedication.aux)
-(./FrontBackmatter/Abstract.aux) (./FrontBackmatter/Publication.aux)
-(./FrontBackmatter/Acknowledgments.aux) (./FrontBackmatter/Contents.aux)
+(./frontbackmatter/DirtyTitlepage.aux) (./frontbackmatter/Titlepage.aux)
+(./frontbackmatter/Titleback.aux) (./frontbackmatter/Dedication.aux)
+(./frontbackmatter/Abstract.aux) (./frontbackmatter/Publication.aux)
+(./frontbackmatter/Acknowledgments.aux) (./frontbackmatter/Contents.aux)
 (./chapters/chapter01.aux) (./chapters/chapter_stages.aux)
 (./chapters/chapter02.aux) (./chapters/chapter03.aux) (./chapters/chapter0A.aux
-) (./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Colophon.aux)
-(./FrontBackmatter/Declaration.aux))
+) (./frontbackmatter/Bibliography.aux) (./frontbackmatter/Colophon.aux)
+(./frontbackmatter/Declaration.aux))
 \openout1 = `phdthesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 190.
@@ -852,9 +851,9 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
 ABD: EveryShipout initializing macros
-\openout2 = `FrontBackmatter/DirtyTitlepage.aux'.
+\openout2 = `frontbackmatter/DirtyTitlepage.aux'.
 
- (./FrontBackmatter/DirtyTitlepage.tex
+ (./frontbackmatter/DirtyTitlepage.tex
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -863,10 +862,10 @@ Package microtype Info: Character `029' is missing
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-\openout2 = `FrontBackmatter/Titlepage.aux'.
+\openout2 = `frontbackmatter/Titlepage.aux'.
 
 
-(./FrontBackmatter/Titlepage.tex [2
+(./frontbackmatter/Titlepage.tex [2
 
 
 
@@ -876,14 +875,13 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<gfx/TFZsuperellipse_bw.pdf, id=167, 260.5755pt x 203.14595pt>
-File: gfx/TFZsuperellipse_bw.pdf Graphic file (type pdf)
+<gfx/model-6.pdf, id=167, 437.635pt x 612.2875pt>
+File: gfx/model-6.pdf Graphic file (type pdf)
+ <use gfx/model-6.pdf>
+[3 <./gfx/model-6.pdf>])
+\openout2 = `frontbackmatter/Titleback.aux'.
 
-<use gfx/TFZsuperellipse_bw.pdf> [3 <./gfx/TFZsuperellipse_bw.pdf>])
-\openout2 = `FrontBackmatter/Titleback.aux'.
-
-
-(./FrontBackmatter/Titleback.tex
+ (./frontbackmatter/Titleback.tex
 LaTeX Font Info:    Try loading font information for TS1+pplj on input line 7.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ts1pplj.fd
@@ -892,10 +890,10 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 
 
 ]
-\openout2 = `FrontBackmatter/Dedication.aux'.
+\openout2 = `frontbackmatter/Dedication.aux'.
 
 
-(./FrontBackmatter/Dedication.tex) [5
+(./frontbackmatter/Dedication.tex) [5
 
 
 
@@ -905,9 +903,9 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 
 
 ]
-\openout2 = `FrontBackmatter/Abstract.aux'.
+\openout2 = `frontbackmatter/Abstract.aux'.
 
- (./FrontBackmatter/Abstract.tex)
+ (./frontbackmatter/Abstract.tex)
 [7
 
 ] [8
@@ -915,9 +913,9 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 
 
 ]
-\openout2 = `FrontBackmatter/Publication.aux'.
+\openout2 = `frontbackmatter/Publication.aux'.
 
- (./FrontBackmatter/Publication.tex) [9
+ (./frontbackmatter/Publication.tex) [9
 
 
 
@@ -926,10 +924,10 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 
 
 ]
-\openout2 = `FrontBackmatter/Acknowledgments.aux'.
+\openout2 = `frontbackmatter/Acknowledgments.aux'.
 
 
-(./FrontBackmatter/Acknowledgments.tex
+(./frontbackmatter/Acknowledgments.tex
 LaTeX Font Info:    Font shape `T1/pplj/m/sl' in size <10.95> not available
 (Font)              Font shape `T1/pplj/m/it' tried instead on input line 6.
 LaTeX Font Info:    Font shape `T1/pplj/bx/n' in size <10.95> not available
@@ -950,9 +948,9 @@ ne 11.
 
 
 ]
-\openout2 = `FrontBackmatter/Contents.aux'.
+\openout2 = `frontbackmatter/Contents.aux'.
 
- (./FrontBackmatter/Contents.tex (./phdthesis.toc)
+ (./frontbackmatter/Contents.tex (./phdthesis.toc)
 \tf@toc=\write4
 \openout4 = `phdthesis.toc'.
 
@@ -1068,7 +1066,7 @@ er fonts for math. (Palatino
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
 (Font)              scaled to size 8.50006pt on input line 242.
  (./Examples/classicthesis-article.tex [7])
-(./Examples/classicthesis-book.tex [8]) (./Examples/classicthesis-cv.tex))
+(./Examples/classicthesis-book.tex) (./Examples/classicthesis-cv.tex [8]))
 [9] [10
 
 
@@ -1138,15 +1136,15 @@ e 96.
 Package natbib Warning: Citation `knuth:1976' on page 18 undefined on input lin
 e 97.
 
-[18]
 
-Package natbib Warning: Citation `sommerville:1992' on page 19 undefined on inp
+Package natbib Warning: Citation `sommerville:1992' on page 18 undefined on inp
 ut line 108.
 
 
-Package natbib Warning: Citation `sommerville:1992' on page 19 undefined on inp
+Package natbib Warning: Citation `sommerville:1992' on page 18 undefined on inp
 ut line 109.
 
+[18]
 
 Package natbib Warning: Citation `knuth:1976' on page 19 undefined on input lin
 e 138.
@@ -1166,23 +1164,28 @@ e 140.
 Package natbib Warning: Citation `knuth:1976' on page 19 undefined on input lin
 e 140.
 
-<gfx/example_1.jpg, id=468, 240.9pt x 180.675pt>
+<gfx/example_1.jpg, id=471, 240.9pt x 180.675pt>
 File: gfx/example_1.jpg Graphic file (type jpg)
  <use gfx/example_1.jpg>
-<gfx/example_2.jpg, id=469, 240.9pt x 180.675pt>
+<gfx/example_2.jpg, id=472, 240.9pt x 180.675pt>
 File: gfx/example_2.jpg Graphic file (type jpg)
  <use gfx/example_2.jpg>
-<gfx/example_3.jpg, id=470, 240.9pt x 180.675pt>
+<gfx/example_3.jpg, id=473, 240.9pt x 180.675pt>
 File: gfx/example_3.jpg Graphic file (type jpg)
  <use gfx/example_3.jpg>
-<gfx/example_4.jpg, id=471, 240.9pt x 180.675pt>
+<gfx/example_4.jpg, id=474, 240.9pt x 180.675pt>
 File: gfx/example_4.jpg Graphic file (type jpg)
  <use gfx/example_4.jpg>)
-[19] [20 <./gfx/example_1.jpg> <./gfx/example_2.jpg> <./gfx/example_3.jpg> <./g
-fx/example_4.jpg>]
+[19 <./gfx/example_1.jpg> <./gfx/example_2.jpg> <./gfx/example_3.jpg> <./gfx/ex
+ample_4.jpg>]
 \openout2 = `chapters/chapter03.aux'.
 
- (./chapters/chapter03.tex
+ (./chapters/chapter03.tex [20
+
+
+
+
+]
 Chapter 4.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
 (Font)              scaled to size 7.65005pt on input line 24.
@@ -1190,12 +1193,7 @@ LaTeX Font Info:    Try loading font information for U+fplmbb on input line 26.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
-) [21
-
-
-
-
-]) [22] [23
+) [21]) [22] [23
 
 
 
@@ -1207,19 +1205,19 @@ File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 
 (./chapters/chapter0A.tex
 Appendix A.
-) [25
+[25
 
 
 
-] [26]
-\openout2 = `FrontBackmatter/Bibliography.aux'.
+]) [26]
+\openout2 = `frontbackmatter/Bibliography.aux'.
 
- (./FrontBackmatter/Bibliography.tex
+ (./frontbackmatter/Bibliography.tex
 No file phdthesis.bbl.
 )
-\openout2 = `FrontBackmatter/Colophon.aux'.
+\openout2 = `frontbackmatter/Colophon.aux'.
 
- (./FrontBackmatter/Colophon.tex
+ (./frontbackmatter/Colophon.tex
 
 Package natbib Warning: Citation `bringhurst:2002' on page 27 undefined on inpu
 t line 19.
@@ -1242,9 +1240,9 @@ t line 21.
 
 
 ]
-\openout2 = `FrontBackmatter/Declaration.aux'.
+\openout2 = `frontbackmatter/Declaration.aux'.
 
- (./FrontBackmatter/Declaration.tex) [29
+ (./frontbackmatter/Declaration.tex) [29
 
 
 
@@ -1252,15 +1250,15 @@ t line 21.
 
 Package natbib Warning: There were undefined citations.
 
-(./phdthesis.aux (./FrontBackmatter/DirtyTitlepage.aux)
-(./FrontBackmatter/Titlepage.aux) (./FrontBackmatter/Titleback.aux)
-(./FrontBackmatter/Dedication.aux) (./FrontBackmatter/Abstract.aux)
-(./FrontBackmatter/Publication.aux) (./FrontBackmatter/Acknowledgments.aux)
-(./FrontBackmatter/Contents.aux) (./chapters/chapter01.aux)
+(./phdthesis.aux (./frontbackmatter/DirtyTitlepage.aux)
+(./frontbackmatter/Titlepage.aux) (./frontbackmatter/Titleback.aux)
+(./frontbackmatter/Dedication.aux) (./frontbackmatter/Abstract.aux)
+(./frontbackmatter/Publication.aux) (./frontbackmatter/Acknowledgments.aux)
+(./frontbackmatter/Contents.aux) (./chapters/chapter01.aux)
 (./chapters/chapter_stages.aux) (./chapters/chapter02.aux)
 (./chapters/chapter03.aux) (./chapters/chapter0A.aux)
-(./FrontBackmatter/Bibliography.aux) (./FrontBackmatter/Colophon.aux)
-(./FrontBackmatter/Declaration.aux))
+(./frontbackmatter/Bibliography.aux) (./frontbackmatter/Colophon.aux)
+(./frontbackmatter/Declaration.aux))
 
  *File List*
 scrreprt.cls    2009/07/24 v3.04a KOMA-Script document class (report)
@@ -1375,16 +1373,16 @@ phdthesis.out
 phdthesis.out
 supp-pdf.mkii
   mt-ppl.cfg    2005/11/16 v1.6 microtype config. file: Palatino (RS)
-FrontBackmatter/DirtyTitlepage.tex
-FrontBackmatter/Titlepage.tex
-gfx/TFZsuperellipse_bw.pdf
-FrontBackmatter/Titleback.tex
+frontbackmatter/DirtyTitlepage.tex
+frontbackmatter/Titlepage.tex
+gfx/model-6.pdf
+frontbackmatter/Titleback.tex
  ts1pplj.fd    2004/09/06 font definitions for TS1/pplj.
-FrontBackmatter/Dedication.tex
-FrontBackmatter/Abstract.tex
-FrontBackmatter/Publication.tex
-FrontBackmatter/Acknowledgments.tex
-FrontBackmatter/Contents.tex
+frontbackmatter/Dedication.tex
+frontbackmatter/Abstract.tex
+frontbackmatter/Publication.tex
+frontbackmatter/Acknowledgments.tex
+frontbackmatter/Contents.tex
    uzeur.fd    2005/01/11 v4.0 (WaS)
   mt-eur.cfg    2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
    uzeus.fd    2005/01/11 v4.0 (WaS)
@@ -1406,17 +1404,17 @@ gfx/example_4.jpg
 chapters/chapter03.tex
  ufplmbb.fd    2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 chapters/chapter0A.tex
-FrontBackmatter/Bibliography.tex
-FrontBackmatter/Colophon.tex
-FrontBackmatter/Declaration.tex
+frontbackmatter/Bibliography.tex
+frontbackmatter/Colophon.tex
+frontbackmatter/Declaration.tex
  ***********
 
  ) 
 Here is how much of TeX's memory you used:
- 16168 strings out of 493848
- 239923 string characters out of 1152823
- 596905 words of memory out of 3000000
- 18364 multiletter control sequences out of 15000+50000
+ 16165 strings out of 493848
+ 239815 string characters out of 1152824
+ 587894 words of memory out of 3000000
+ 18361 multiletter control sequences out of 15000+50000
  92008 words of font info for 385 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  52i,14n,67p,361b,3045s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1434,9 +1432,9 @@ usr/share/texmf-texlive/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb></usr
 /share/texmf-texlive/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-texl
 ive/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-texlive/fonts/type1/u
 rw/palatino/uplri8a.pfb>
-Output written on phdthesis.pdf (43 pages, 357732 bytes).
+Output written on phdthesis.pdf (43 pages, 311050 bytes).
 PDF statistics:
- 640 PDF objects out of 1000 (max. 8388607)
+ 641 PDF objects out of 1000 (max. 8388607)
  222 named destinations out of 1000 (max. 500000)
  72522 words of extra memory for PDF output out of 74296 (max. 10000000)
 

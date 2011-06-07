@@ -18,9 +18,10 @@
  rights to redistribute these changes.'
 
 [deframe isis_agent_body [moral_agent_body] [says
-					     [arm_length 3]
+					     [arm_length                    3]
 					     sense_frame
-					     [retina_image_sequence [new image_sequence nil]]]
+					     [retina_image_sequence_enabled nil]
+					     [retina_image_sequence         [new image_sequence nil]]]
   [new [physical_world moral_compass name]
        [construct moral_agent_body physical_world moral_compass name]
        this]]
@@ -100,10 +101,14 @@
 [deftypefunk isis_agent_body get previous_time []
   [get [get this physical_world] previous_time]]
 
-[deftypefunk isis_agent_body execute update_after_step_simulation []
+[deftypefunk isis_agent_body execute update_retina_image_sequence []
   [let [[image [have this sense_funk2_retina_image]]]
-    [have retina_image_sequence add_image_to_end image]
-    [= sense_frame [have this raw_sense_world]]]]
+    [have retina_image_sequence add_image_to_end image]]]
+
+[deftypefunk isis_agent_body execute update_after_step_simulation []
+  [if retina_image_sequence_enabled
+      [have this update_retina_image_sequence]]
+  [= sense_frame [have this raw_sense_world]]]
 
 [deftypefunk isis_agent_body get objects []
   [print 'This funktion is deprecated.']

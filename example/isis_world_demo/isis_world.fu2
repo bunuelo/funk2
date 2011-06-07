@@ -18,11 +18,12 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world [physical_world] [[initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
-				      [step_mutex [new mutex]]
+[deframe isis_world [physical_world] [[initialize_events               [new redblacktree [funk [event] [have event lookup `time]] &<]]
+				      [step_mutex                      [new mutex]]
 				      client
 				      sense_agent_frame
-				      [overview_image_sequence [new image_sequence nil]]]
+				      [overview_image_sequence_enabled nil]
+				      [overview_image_sequence         [new image_sequence nil]]]
   [new [client]
        [construct physical_world]
        [set this client client]
@@ -92,7 +93,8 @@
     [have overview_image_sequence add_image_to_end image]]]
 
 [deftypefunk isis_world execute update_after_step_simulation []
-  [have this update_overview_image_sequence]
+  [if overview_image_sequence_enabled
+      [have this update_overview_image_sequence]]
   [mapc [funk [agent_name]
 	      [let [[agent_body [get this agent_body agent_name]]]
 		[have agent_body update_after_step_simulation]]]

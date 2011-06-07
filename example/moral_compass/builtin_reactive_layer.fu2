@@ -40,10 +40,10 @@
   ]
 
 [deftypefunk builtin_reactive_layer execute connect_knowledge_reflection []
-  [have [get [get this mind] builtin_reactive_knowledge] add_trace_callback_funk `add_semantic_frame_value
+  [have [get [get this mind] semantic_knowledge_base `builtin_reactive_knowledge] add_trace_callback_funk `add_semantic_frame_value
 	[funk [semantic_knowledge_base semantic_frame key_type key value]
 	      [have this know_of_addition_of_semantic_frame_value semantic_frame key_type key value]]]
-  [have [get [get this mind] builtin_reactive_knowledge] add_trace_callback_funk `remove_semantic_frame_value
+  [have [get [get this mind] semantic_knowledge_base `builtin_reactive_knowledge] add_trace_callback_funk `remove_semantic_frame_value
 	[funk [semantic_knowledge_base semantic_frame key_type key value]
 	      [have this know_of_removal_of_semantic_frame_value semantic_frame key_type key value]]]
   [have [get this agency `sensory] connect_knowledge_reflection]

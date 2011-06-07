@@ -89,7 +89,7 @@
 						     [have active_mutex lock]
 						     [if [not active]
 							 [prog [fiber [funk []
-									    [while [global_scheduler-contains_fiber fiber]
+									    [while [global_scheduler-contains_active_fiber fiber]
 									      [millisleep 100]]
 									    [have active_mutex unlock]]
 								      nil]

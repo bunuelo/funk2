@@ -331,8 +331,8 @@
 				other_agents_isismon_knowledge
 				goal_event_isismon_knowledge
 				goal_isismon_knowledge
-				reflective_event_isismon_knowledge
-				reflective_isismon_knowledge
+				old_reflective_event_isismon_knowledge
+				old_reflective_isismon_knowledge
 				physical_type_event_isismon_knowledge
 				physical_type_isismon_knowledge
 				physical_event_isismon_knowledge
@@ -474,11 +474,11 @@
 		    [= goal_isismon_knowledge [new isismon_knowledge this `goal_knowledge]]
 		    [have vbox pack_start [get goal_isismon_knowledge widget] nil nil 0]
 		    
-		    [= reflective_event_isismon_knowledge [new isismon_knowledge this `reflective_event_knowledge]]
-		    [have vbox pack_start [get reflective_event_isismon_knowledge widget] nil nil 0]
+		    [= old_reflective_event_isismon_knowledge [new isismon_knowledge this `old_reflective_event_knowledge]]
+		    [have vbox pack_start [get old_reflective_event_isismon_knowledge widget] nil nil 0]
 		    
-		    [= reflective_isismon_knowledge [new isismon_knowledge this `reflective_knowledge]]
-		    [have vbox pack_start [get reflective_isismon_knowledge widget] nil nil 0]
+		    [= old_reflective_isismon_knowledge [new isismon_knowledge this `old_reflective_knowledge]]
+		    [have vbox pack_start [get old_reflective_isismon_knowledge widget] nil nil 0]
 		    
 		    [= physical_type_event_isismon_knowledge [new isismon_knowledge this `physical_type_event_knowledge]]
 		    [have vbox pack_start [get physical_type_event_isismon_knowledge widget] nil nil 0]
@@ -528,8 +528,8 @@
   [if other_agents_isismon_knowledge               [have other_agents_isismon_knowledge               update]]
   [if goal_event_isismon_knowledge                 [have goal_event_isismon_knowledge                 update]]
   [if goal_isismon_knowledge                       [have goal_isismon_knowledge                       update]]
-  [if reflective_event_isismon_knowledge           [have reflective_event_isismon_knowledge           update]]
-  [if reflective_isismon_knowledge                 [have reflective_isismon_knowledge                 update]]
+  [if old_reflective_event_isismon_knowledge       [have old_reflective_event_isismon_knowledge       update]]
+  [if old_reflective_isismon_knowledge             [have old_reflective_isismon_knowledge             update]]
   [if physical_type_event_isismon_knowledge        [have physical_type_event_isismon_knowledge        update]]
   [if physical_type_isismon_knowledge              [have physical_type_isismon_knowledge              update]]
   [if physical_event_isismon_knowledge             [have physical_event_isismon_knowledge             update]]

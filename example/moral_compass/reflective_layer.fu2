@@ -28,7 +28,6 @@
        this]]
 
 [deftypefunk reflective_layer execute create_knowledge []
-  [new semantic_event_knowledge_base `old_reflective_knowledge [get [get this mind] semantic_realm]]
   [have [get this agency `old_reflective_event_knowledge] create_knowledge]
   nil]
 

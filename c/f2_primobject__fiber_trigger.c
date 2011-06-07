@@ -119,10 +119,10 @@ def_pcfunk2(fiber_trigger__add_waiting_fiber_and_remove_from_scheduler, this, fi
 	    return f2__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler(this_cause, this, fiber));
 
 
-f2ptr raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr cmutex, f2ptr fiber) {
+f2ptr raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber) {
   f2ptr this__cmutex = f2__fiber_trigger__cmutex(cause, this);
   raw__cmutex__lock(cause, this__cmutex);
-  boolean_t lock_failure = raw__cmutex__trylock(cause, cmutex);
+  boolean_t lock_failure = raw__traced_cmutex__trylock(cause, traced_cmutex);
   f2ptr     result       = nil;
   if (lock_failure) {
     result = raw__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler__thread_unsafe(cause, this, fiber);
@@ -132,15 +132,15 @@ f2ptr raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_fro
   return f2bool__new(lock_failure);
 }
 
-f2ptr f2__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr cmutex, f2ptr fiber) {
+f2ptr f2__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber) {
   assert_argument_type(fiber_trigger, this);
-  assert_argument_type(cmutex,        cmutex);
+  assert_argument_type(traced_cmutex, traced_cmutex);
   assert_argument_type(fiber,         fiber);
-  return raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(cause, this, cmutex, fiber);
+  return raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(cause, this, traced_cmutex, fiber);
 }
-def_pcfunk3(fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure, this, cmutex, fiber,
+def_pcfunk3(fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure, this, traced_cmutex, fiber,
 	    "",
-	    return f2__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(this_cause, this, cmutex, fiber));
+	    return f2__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(this_cause, this, traced_cmutex, fiber));
 
 
 f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -206,7 +206,7 @@ void f2__primobject__fiber_trigger__initialize() {
   {char* symbol_str = "add_waiting_fiber_and_remove_from_scheduler"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_trigger__add_waiting_fiber_and_remove_from_scheduler, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__funk = never_gc(cfunk);}
   {char* symbol_str = "trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure, this, cmutex, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure, this, traced_cmutex, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_trigger__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk = never_gc(cfunk);}
   

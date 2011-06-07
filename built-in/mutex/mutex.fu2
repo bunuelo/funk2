@@ -24,7 +24,7 @@
   [have traced_cmutex trylock]]
 
 [deftypefunk mutex execute lock []
-  [while [have unlocked_trigger trylock_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure traced_cmutex [this-fiber]]
+  [while [have unlocked_trigger trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure traced_cmutex [this-fiber]]
     [yield]]]
 
 [deftypefunk mutex execute unlock []

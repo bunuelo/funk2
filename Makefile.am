@@ -237,7 +237,6 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                       extension/semantic_event/libf2e_semantic_event.la \
                       extension/semantic_event_tree/libf2e_semantic_event_tree.la \
-                      extension/semantic_family_member_self/libf2e_semantic_family_member_self.la \
                       extension/semantic_frame/libf2e_semantic_frame.la \
                       extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.la \
                       extension/semantic_know_of_relationship_event/libf2e_semantic_know_of_relationship_event.la \
@@ -426,7 +425,6 @@ extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOUR
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                 = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                                 = extension/semantic_event/semantic_event.c
 extension_semantic_event_tree_libf2e_semantic_event_tree_la_SOURCES                                       = extension/semantic_event_tree/semantic_event_tree.c
-extension_semantic_family_member_self_libf2e_semantic_family_member_self_la_SOURCES                       = extension/semantic_family_member_self/semantic_family_member_self.c
 extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                                 = extension/semantic_frame/semantic_frame.c
 extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_SOURCES                   = extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
 extension_semantic_goal_libf2e_semantic_goal_la_SOURCES                                                   = extension/semantic_goal/semantic_goal.c
@@ -562,9 +560,6 @@ extension_semantic_event_libf2e_semantic_event_la_CFLAGS  = $(lib_libfunk2_la_CF
 
 extension_semantic_event_tree_libf2e_semantic_event_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_tree_libf2e_semantic_event_tree_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_semantic_family_member_self_libf2e_semantic_family_member_self_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_family_member_self_libf2e_semantic_family_member_self_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_frame_libf2e_semantic_frame_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_frame_libf2e_semantic_frame_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

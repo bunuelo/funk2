@@ -91,7 +91,6 @@
 							 [let [[locked_mutex [new mutex]]]
 							   [have locked_mutex lock]
 							   [fiber [funk []
-									[global_scheduler-remove_fiber fiber]
 									[have active_mutex unlock]
 									[have locked_mutex unlock]]
 								  nil]

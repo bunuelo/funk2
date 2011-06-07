@@ -32,7 +32,7 @@
 		  [funk [agent_description agent_speech]
 			[have this-resource think_to_self 'I hear from ' agent_description ', ' agent_speech '.']
 			[let [[hear_language_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
-			  [have [get [get this mind] builtin_reactive_knowledge] add_semantic_frame hear_language_frame]
+			  [have [get [get this mind] semantic_knowledge_base `builtin_reactive_knowledge] add_semantic_frame hear_language_frame]
 			  [have hear_language_frame add `language `symbols agent_speech]]]]
        nil]]
 

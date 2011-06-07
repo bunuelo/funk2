@@ -39,7 +39,7 @@ def_pcfunk0(fiber_trigger__new,
 	    return f2__fiber_trigger__new(this_cause));
 
 
-f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
+f2ptr raw__fiber_trigger__trigger__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr waiting_fiber_set = f2__fiber_trigger__waiting_fiber_set(cause, this);
   f2__fiber_trigger__waiting_fiber_set__set(cause, this, f2__set__new(cause));
   set__iteration(cause, waiting_fiber_set, waiting_fiber,
@@ -52,7 +52,14 @@ f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
 		 }
 		 );
   return nil;
-  //return raw__fiber_trigger_hash__unpause_trigger_fibers(cause, this);
+}
+
+f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
+  f2ptr cmutex = f2__fiber_trigger__cmutex(cause, this);
+  raw__cmutex__lock(cause, cmutex);
+  f2ptr result = raw__fiber_trigger__trigger__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, cmutex);
+  return result;
 }
 
 f2ptr f2__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
@@ -64,9 +71,16 @@ def_pcfunk1(fiber_trigger__trigger, this,
 	    return f2__fiber_trigger__trigger(this_cause, this));
 
 
-void raw__fiber_trigger__add_waiting_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+void raw__fiber_trigger__add_waiting_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {  
   f2ptr waiting_fiber_set = f2__fiber_trigger__waiting_fiber_set(cause, this);
   raw__set__add(cause, waiting_fiber_set, fiber);
+}
+
+void raw__fiber_trigger__add_waiting_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {  
+  f2ptr cmutex = f2__fiber_trigger__cmutex(cause, this);
+  raw__cmutex__lock(cause, cmutex);
+  raw__fiber_trigger__add_waiting_fiber__thread_unsafe(cause, this, fiber);
+  raw__cmutex__unlock(cause, cmutex);
 }
 
 f2ptr f2__fiber_trigger__add_waiting_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -78,6 +92,26 @@ f2ptr f2__fiber_trigger__add_waiting_fiber(f2ptr cause, f2ptr this, f2ptr fiber)
 def_pcfunk2(fiber_trigger__add_waiting_fiber, this, fiber,
 	    "",
 	    return f2__fiber_trigger__add_waiting_fiber(this_cause, this, fiber));
+
+
+f2ptr raw__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr cmutex = f2__fiber_trigger__cmutex(cause, this);
+  raw__cmutex__lock(cause, cmutex);
+  raw__fiber_trigger__add_waiting_fiber__thread_unsafe(cause, this, fiber);
+  f2ptr raw__global_scheduler__remove_fiber__result = raw__global_scheduler__remove_fiber(cause, fiber);
+  raw__cmutex__unlock(cause, cmutex);
+  assert_value(raw__global_scheduler__remove_fiber__result);
+  return nil;
+}
+
+f2ptr f2__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler(f2ptr cause, f2ptr this, f2ptr fiber) {
+  assert_argument_type(fiber_trigger, this);
+  assert_argument_type(fiber,         fiber);
+  return raw__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler(cause, this, fiber);
+}
+def_pcfunk2(fiber_trigger__add_waiting_fiber_and_remove_from_scheduler, this, fiber,
+	    "",
+	    return f2__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler(this_cause, this, fiber));
 
 
 f2ptr raw__fiber_trigger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -104,9 +138,10 @@ def_pcfunk2(fiber_trigger__terminal_print_with_frame, this, terminal_print_frame
 
 f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber_trigger__primobject_type__new(cause);
-  {char* slot_name = "trigger";                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk);}
-  {char* slot_name = "add_waiting_fiber";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk);}
+  {char* slot_name = "trigger";                                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk);}
+  {char* slot_name = "add_waiting_fiber";                           f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber__funk);}
+  {char* slot_name = "add_waiting_fiber_and_remove_from_scheduler"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__funk);}
+  {char* slot_name = "terminal_print_with_frame";                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -138,6 +173,8 @@ void f2__primobject__fiber_trigger__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber_trigger__trigger, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk = never_gc(cfunk);}
   {char* symbol_str = "add_waiting_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_trigger__add_waiting_fiber, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_waiting_fiber_and_remove_from_scheduler"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_trigger__add_waiting_fiber_and_remove_from_scheduler, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_trigger__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk = never_gc(cfunk);}
   

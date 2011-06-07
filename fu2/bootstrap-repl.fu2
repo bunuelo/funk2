@@ -862,8 +862,8 @@
   [global_scheduler-add_fiber fiber]]
 
 [defunk wait-for-trigger [fiber_trigger]
-  [have fiber_trigger add_waiting_fiber [this-fiber]]
-  [pause]]
+  [have fiber_trigger add_waiting_fiber_and_remove_from_scheduler [this-fiber]]
+  [yield]]
 
 [defmetro on-trigger [trigger :rest body]
   `[let [[trigger ,trigger]]

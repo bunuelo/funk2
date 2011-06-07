@@ -185,7 +185,7 @@
 		    [have view_stack_trace_menu_item signal_connect 'activate'
 			  [funk []
 				[terminal_format standard-terminal '\n\nfibermon printing fiber stack trace blocks:\n']
-				[print [get [get fiber stack_trace] blocks]]
+				[mapc &print [get [get fiber stack_trace] blocks]]
 				[terminal_format standard-terminal '\n\n']]
 			  nil]
 		    [have view_stack_trace_first_block_menu_item signal_connect 'activate'

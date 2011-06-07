@@ -116,6 +116,7 @@
 				 view_menu_item
 				 view_menu
 				 view_fiber_menu_item
+				 view_fiber_value_menu_item
 				 view_cause_menu_item
 				 view_stack_trace_menu_item
 				 view_stack_trace_first_block_menu_item
@@ -174,6 +175,12 @@
 			  [funk []
 				[terminal_format standard-terminal '\n\nfibermon printing fiber:\n']
 				[print fiber]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    [have view_fiber_value_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber value:\n']
+				[print [get fiber value]]
 				[terminal_format standard-terminal '\n\n']]
 			  nil]
 		    [have view_cause_menu_item signal_connect 'activate'

@@ -23,11 +23,12 @@
 
 // fiber_trigger
 
-def_primobject_1_slot(fiber_trigger, waiting_fiber_set);
+def_primobject_2_slot(fiber_trigger, cmutex, waiting_fiber_set);
 
 f2ptr raw__fiber_trigger__new(f2ptr cause) {
+  f2ptr cmutex            = f2cmutex__new(cause);
   f2ptr waiting_fiber_set = f2__set__new(cause);
-  return f2fiber_trigger__new(cause, waiting_fiber_set);
+  return f2fiber_trigger__new(cause, cmutex, waiting_fiber_set);
 }
 
 f2ptr f2__fiber_trigger__new(f2ptr cause) {
@@ -128,7 +129,7 @@ void f2__primobject__fiber_trigger__initialize() {
   
   // fiber_trigger
   
-  initialize_primobject_0_slot(fiber_trigger);
+  initialize_primobject_2_slot(fiber_trigger, cmutex, waiting_fiber_set);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(fiber_trigger__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk = never_gc(cfunk);}

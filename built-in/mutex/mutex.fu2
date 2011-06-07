@@ -17,17 +17,19 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe mutex [frame] [[traced_cmutex [new traced_cmutex]]]]
+[deframe mutex [frame] [[unlocked_trigger [new fiber_trigger]]
+			[traced_cmutex    [new traced_cmutex]]]]
 
 [deftypefunk mutex execute trylock []
   [have traced_cmutex trylock]]
 
 [deftypefunk mutex execute lock []
   [while [have traced_cmutex trylock]
-    [millisleep 100]]]
+    [wait-for-trigger unlocked_trigger]]]
 
 [deftypefunk mutex execute unlock []
-  [have traced_cmutex unlock]]
+  [have traced_cmutex unlock]
+  [have unlocked_trigger trigger]]
 
 [deftypefunk mutex get is_locked []
   [get traced_cmutex is_locked]]

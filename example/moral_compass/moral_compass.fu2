@@ -78,34 +78,3 @@
 [deftypefunk moral_compass get perception []
   [get [get this layer `builtin_reactive] perception]]
 
-`[deftypefunk moral_compass get visual_objects []
-  [print 'moral_compass-visual_objects deprecated (use moral_compass-perception instead)']
-  [get [get this perception] visual_objects]]
-
-`[deftypefunk moral_compass get objects []
-  [print 'get-moral_compass-objects is deprecated.']
-  [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
-    [if reactive_sensory_sense
-	[have reactive_sensory_sense lookup `objects]
-      nil]]]
-
-`[deftypefunk moral_compass get isis_sense_frame []
-  [print 'get-moral_compass-isis_sense_frame is deprecated.']
-  [let [[reactive_sensory_sense [get [get this agency `builtin_reactive `sensory] builtin_reactive_sensory_sense]]]
-    reactive_sensory_sense]]
-
-`[deftypefunk moral_compass get sense []
-  [print 'get-moral_compass-sense is deprecated.']
-  [get this isis_sense_frame]]
-
-`[deftypefunk moral_compass get isis_object_frame []
-  [print 'get-moral_compass-isis_object_frame is deprecated.']
-  [let [[reactive_sensory_sense [get this sense]]]
-    [if reactive_sensory_sense
-	[have reactive_sensory_sense lookup `objects]
-      [frame]]]]
-
-`[deftypefunk moral_compass get objects []
-  [print 'This function is deprecated.']
-  [get this isis_object_frame]]
-

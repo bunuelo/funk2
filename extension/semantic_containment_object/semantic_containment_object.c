@@ -22,9 +22,9 @@
 #include "semantic_containment_object.h"
 
 
-// object-semantic-contains-lookup, object-semantic-contains-lookup-apply
+// object-semantic-contains-lookup_set, object-semantic-contains-lookup_set-apply
 
-f2ptr f2__object__semantic__containment__contains__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__containment__contains__lookup_set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -41,14 +41,14 @@ f2ptr f2__object__semantic__containment__contains__lookup(f2ptr cause, f2ptr thi
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-containment-contains-lookup"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-containment-contains-lookup_set"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-containment-contains-lookup_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-containment-contains-lookup"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-containment-contains-lookup_set_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-containment-contains-lookup_set"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -56,12 +56,12 @@ f2ptr f2__object__semantic__containment__contains__lookup(f2ptr cause, f2ptr thi
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__containment__contains__lookup, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__containment__contains__lookup_set, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__containment__contains__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__containment__contains__lookup(cause, this, slot, args);
+f2ptr f2__object__semantic__containment__contains__lookup_set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__containment__contains__lookup_set(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__containment__contains__lookup__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__containment__contains__lookup_set__apply, this, slot, args, 0, "");
 
 
 // object-semantic-contains-add, object-semantic-add-apply
@@ -149,9 +149,9 @@ export_cefunk3(object__semantic__containment__contains__remove__apply, this, slo
 
 
 
-// object-semantic-is_contained_by-lookup, object-semantic-is_contained_by-lookup-apply
+// object-semantic-is_contained_by-lookup_set, object-semantic-is_contained_by-lookup_set-apply
 
-f2ptr f2__object__semantic__containment__is_contained_by__lookup(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+f2ptr f2__object__semantic__containment__is_contained_by__lookup_set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
@@ -168,14 +168,14 @@ f2ptr f2__object__semantic__containment__is_contained_by__lookup(f2ptr cause, f2
     }
   }
   f2ptr fiber = f2__this__fiber(cause);
-  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-containment-is_contained_by-lookup"), slot);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, new__symbol(cause, "semantic-containment-is_contained_by-lookup_set"), slot);
   if (raw__larva__is_type(cause, funk)) {
     return funk;
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-containment-is_contained_by-lookup_funk"),
-															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-containment-is_contained_by-lookup"),
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-containment-is_contained_by-lookup_set_funk"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-containment-is_contained_by-lookup_set"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
@@ -183,12 +183,12 @@ f2ptr f2__object__semantic__containment__is_contained_by__lookup(f2ptr cause, f2
   f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
   return result;
 }
-export_cefunk2_and_rest(object__semantic__containment__is_contained_by__lookup, this, slot, args, 0, "");
+export_cefunk2_and_rest(object__semantic__containment__is_contained_by__lookup_set, this, slot, args, 0, "");
 
-f2ptr f2__object__semantic__containment__is_contained_by__lookup__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__semantic__containment__is_contained_by__lookup(cause, this, slot, args);
+f2ptr f2__object__semantic__containment__is_contained_by__lookup_set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__semantic__containment__is_contained_by__lookup_set(cause, this, slot, args);
 }
-export_cefunk3(object__semantic__containment__is_contained_by__lookup__apply, this, slot, args, 0, "");
+export_cefunk3(object__semantic__containment__is_contained_by__lookup_set__apply, this, slot, args, 0, "");
 
 
 // object-semantic-is_contained_by-add, object-semantic-is_contained_by-add-apply
@@ -351,17 +351,17 @@ f2ptr f2__semantic_containment_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_containment_object__type, thing, 0, "Returns the specific type of object that this semantic_containment_object is.");
 
 
-f2ptr raw__semantic_containment_object__containment__contains__lookup(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "containment-contains"), containment__type_name);
+f2ptr raw__semantic_containment_object__containment__contains__lookup_set(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "containment-contains"), containment__type_name);
 }
 
-f2ptr f2__semantic_containment_object__containment__contains__lookup(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
+f2ptr f2__semantic_containment_object__containment__contains__lookup_set(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
   if (! raw__semantic_containment_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_containment_object__containment__contains__lookup(cause, this, containment__type_name);
+  return raw__semantic_containment_object__containment__contains__lookup_set(cause, this, containment__type_name);
 }
-export_cefunk2(semantic_containment_object__containment__contains__lookup, this, containment__type_name, 0, "Returns the set of containment_objects that are related to this containment_object in the given containment__type_name-way, returns nil if no such set exists.");
+export_cefunk2(semantic_containment_object__containment__contains__lookup_set, this, containment__type_name, 0, "Returns the set of containment_objects that are related to this containment_object in the given containment__type_name-way, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_containment_object__containment__contains__add(f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object) {
@@ -416,17 +416,17 @@ f2ptr f2__semantic_containment_object__containment__contains__remove(f2ptr cause
 export_cefunk3(semantic_containment_object__containment__contains__remove, this, containment__type_name, containment_object, 0, "Removes the given containment_object to no longer relate to this containment_object in the given containment__type_name-way.");
 
 
-f2ptr raw__semantic_containment_object__containment__is_contained_by__lookup(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "containment-is_contained_by"), containment__type_name);
+f2ptr raw__semantic_containment_object__containment__is_contained_by__lookup_set(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "containment-is_contained_by"), containment__type_name);
 }
 
-f2ptr f2__semantic_containment_object__containment__is_contained_by__lookup(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
+f2ptr f2__semantic_containment_object__containment__is_contained_by__lookup_set(f2ptr cause, f2ptr this, f2ptr containment__type_name) {
   if (! raw__semantic_containment_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_containment_object__containment__is_contained_by__lookup(cause, this, containment__type_name);
+  return raw__semantic_containment_object__containment__is_contained_by__lookup_set(cause, this, containment__type_name);
 }
-export_cefunk2(semantic_containment_object__containment__is_contained_by__lookup, this, containment__type_name, 0, "Returns the set of containment_objects that are related to this containment_object in the given containment-type_name-way, returns nil if no such set exists.");
+export_cefunk2(semantic_containment_object__containment__is_contained_by__lookup_set, this, containment__type_name, 0, "Returns the set of containment_objects that are related to this containment_object in the given containment-type_name-way, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_containment_object__containment__is_contained_by__add(f2ptr cause, f2ptr this, f2ptr containment__type_name, f2ptr containment_object) {
@@ -461,15 +461,15 @@ export_cefunk3(semantic_containment_object__containment__is_contained_by__remove
 
 f2ptr f2__semantic_containment_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "containment-contains-lookup"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__contains__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-contains-add"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__contains__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-contains-remove"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__contains__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-is_contained_by-lookup"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__is_contained_by__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-is_contained_by-add"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__is_contained_by__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-is_contained_by-remove"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__is_contained_by__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "containment-contains-lookup_set"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__contains__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-contains-add"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__contains__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-contains-remove"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__contains__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-is_contained_by-lookup_set"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__is_contained_by__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-is_contained_by-add"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__is_contained_by__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "containment-is_contained_by-remove"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_containment_object"), new__symbol(cause, "semantic_containment_object__containment__is_contained_by__remove")));}
   return this;
 }
 

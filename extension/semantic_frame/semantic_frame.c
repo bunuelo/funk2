@@ -453,8 +453,8 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
 
 
 f2ptr raw__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   /*
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
     boolean_t keep_looping;
     do {

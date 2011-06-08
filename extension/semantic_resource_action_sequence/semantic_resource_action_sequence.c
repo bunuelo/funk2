@@ -107,10 +107,8 @@ f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2
   f2ptr render_frame = f2__frame__new(cause, f2list2__new(cause,
 							  new__symbol(cause, "cairo_render_type"), f2__object__type(cause, this)));
   {
-    f2ptr action_name_set = f2__semantic_event__action_name__lookup_set(cause, this);
-    if (action_name_set != nil) {
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "action_name"), f2__set__an_arbitrary_element(cause, action_name_set));
-    }
+    f2ptr action_name = raw__semantic_event__action_name(cause, this);
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "action_name"), action_name);
   }
   {
     f2ptr agent      = f2__semantic_action_event__agent(cause, this);

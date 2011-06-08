@@ -858,7 +858,6 @@ f2ptr f2__object__semantic__get__thread_unsafe(f2ptr cause, f2ptr this, f2ptr sl
 f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
-  f2ptr result = nil;
   f2__cmutex__lock(cause, frame_mutate_cmutex);
   f2ptr result = f2__object__semantic__get__thread_unsafe(cause, this, slot, args);
   f2__cmutex__unlock(cause, frame_mutate_cmutex);

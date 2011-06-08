@@ -95,17 +95,17 @@ f2ptr f2__semantic_temporal_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_temporal_object__type, thing, 0, "Returns the specific type of object that this semantic_temporal_object is.");
 
 
-f2ptr raw__semantic_temporal_object__next__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_ordered_object__ordered__next__lookup(cause, this, new__symbol(cause, "temporal"));
+f2ptr raw__semantic_temporal_object__next__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_ordered_object__ordered__next__lookup_set(cause, this, new__symbol(cause, "temporal"));
 }
 
-f2ptr f2__semantic_temporal_object__next__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_temporal_object__next__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_temporal_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_temporal_object__next__lookup(cause, this);
+  return raw__semantic_temporal_object__next__lookup_set(cause, this);
 }
-export_cefunk1(semantic_temporal_object__next__lookup, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
+export_cefunk1(semantic_temporal_object__next__lookup_set, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_temporal_object__next__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
@@ -138,17 +138,17 @@ export_cefunk2(semantic_temporal_object__next__remove, this, temporal_object, 0,
 
 
 
-f2ptr raw__semantic_temporal_object__previous__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_ordered_object__ordered__previous__lookup(cause, this, new__symbol(cause, "temporal"));
+f2ptr raw__semantic_temporal_object__previous__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_ordered_object__ordered__previous__lookup_set(cause, this, new__symbol(cause, "temporal"));
 }
 
-f2ptr f2__semantic_temporal_object__previous__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_temporal_object__previous__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_temporal_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_temporal_object__previous__lookup(cause, this);
+  return raw__semantic_temporal_object__previous__lookup_set(cause, this);
 }
-export_cefunk1(semantic_temporal_object__previous__lookup, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
+export_cefunk1(semantic_temporal_object__previous__lookup_set, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_temporal_object__previous__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
@@ -181,17 +181,17 @@ export_cefunk2(semantic_temporal_object__previous__remove, this, temporal_object
 
 
 
-f2ptr raw__semantic_temporal_object__contains__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_containment_object__containment__contains__lookup(cause, this, new__symbol(cause, "temporal"));
+f2ptr raw__semantic_temporal_object__contains__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_containment_object__containment__contains__lookup_set(cause, this, new__symbol(cause, "temporal"));
 }
 
-f2ptr f2__semantic_temporal_object__contains__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_temporal_object__contains__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_temporal_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_temporal_object__contains__lookup(cause, this);
+  return raw__semantic_temporal_object__contains__lookup_set(cause, this);
 }
-export_cefunk1(semantic_temporal_object__contains__lookup, this, 0, "Returns the set of containment_objects that happen after this containment_object, returns nil if no such set exists.");
+export_cefunk1(semantic_temporal_object__contains__lookup_set, this, 0, "Returns the set of containment_objects that happen after this containment_object, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_temporal_object__contains__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
@@ -224,17 +224,17 @@ export_cefunk2(semantic_temporal_object__contains__remove, this, temporal_object
 
 
 
-f2ptr raw__semantic_temporal_object__is_contained_by__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_containment_object__containment__is_contained_by__lookup(cause, this, new__symbol(cause, "temporal"));
+f2ptr raw__semantic_temporal_object__is_contained_by__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_containment_object__containment__is_contained_by__lookup_set(cause, this, new__symbol(cause, "temporal"));
 }
 
-f2ptr f2__semantic_temporal_object__is_contained_by__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_temporal_object__is_contained_by__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_temporal_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_temporal_object__is_contained_by__lookup(cause, this);
+  return raw__semantic_temporal_object__is_contained_by__lookup_set(cause, this);
 }
-export_cefunk1(semantic_temporal_object__is_contained_by__lookup, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
+export_cefunk1(semantic_temporal_object__is_contained_by__lookup_set, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_temporal_object__is_contained_by__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
@@ -265,17 +265,17 @@ f2ptr f2__semantic_temporal_object__is_contained_by__remove(f2ptr cause, f2ptr t
 export_cefunk2(semantic_temporal_object__is_contained_by__remove, this, temporal_object, 0, "Removes the given temporal_object to no longer happen after this temporal_object.");
 
 
-f2ptr raw__semantic_temporal_object__absolute_time__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"));
+f2ptr raw__semantic_temporal_object__absolute_time__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_time"));
 }
 
-f2ptr f2__semantic_temporal_object__absolute_time__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_temporal_object__absolute_time__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_temporal_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_temporal_object__absolute_time__lookup(cause, this);
+  return raw__semantic_temporal_object__absolute_time__lookup_set(cause, this);
 }
-export_cefunk1(semantic_temporal_object__absolute_time__lookup, this, 0, "");
+export_cefunk1(semantic_temporal_object__absolute_time__lookup_set, this, 0, "");
 
 
 f2ptr raw__semantic_temporal_object__absolute_time__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -306,24 +306,24 @@ export_cefunk2(semantic_temporal_object__absolute_time__remove, this, that, 0, "
 
 f2ptr f2__semantic_temporal_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_packable_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "next"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__next__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "next"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__next__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "next"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__next__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "previous"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__previous__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "previous"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__previous__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "previous"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__previous__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "contains"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__contains__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "contains"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__contains__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "contains"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__contains__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "is_contained_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_contained_by__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "is_contained_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_contained_by__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "is_contained_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_contained_by__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "absolute_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__absolute_time__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "absolute_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__absolute_time__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "absolute_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__absolute_time__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "next"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__next__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "next"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__next__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "next"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__next__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "previous"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__previous__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "previous"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__previous__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "previous"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__previous__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "contains"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__contains__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "contains"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__contains__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "contains"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__contains__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "is_contained_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_contained_by__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "is_contained_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_contained_by__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "is_contained_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__is_contained_by__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "absolute_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__absolute_time__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "absolute_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__absolute_time__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "absolute_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_temporal_object"), new__symbol(cause, "semantic_temporal_object__absolute_time__remove")));}
   return this;
 }
 

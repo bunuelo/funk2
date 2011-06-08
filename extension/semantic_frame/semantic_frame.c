@@ -1028,8 +1028,8 @@ f2ptr f2__object__semantic__set__thread_unsafe(f2ptr cause, f2ptr this, f2ptr sl
 
 f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
-  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   /*
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
     boolean_t keep_looping;
     do {
@@ -1092,8 +1092,8 @@ f2ptr f2__object__semantic__assure_set__thread_unsafe(f2ptr cause, f2ptr this, f
 
 f2ptr f2__object__semantic__assure_set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
-  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   /*
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
     boolean_t keep_looping;
     do {

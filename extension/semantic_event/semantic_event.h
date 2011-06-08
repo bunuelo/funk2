@@ -33,12 +33,10 @@ boolean_t raw__semantic_event__is_type                                          
 f2ptr      f2__semantic_event__is_type                                                          (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_event__type                                                             (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_event__type                                                             (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__action_name__lookup_set                                          (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event__action_name__lookup_set                                          (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__action_name__add                                                 (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__action_name__add                                                 (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event__action_name__remove                                              (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event__action_name__remove                                              (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__action_name                                                      (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event__action_name                                                      (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event__action_name__set                                                 (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event__action_name__set                                                 (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__semantic_event__absolute_start_time                                              (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_event__absolute_start_time                                              (f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_event__absolute_start_time__set                                         (f2ptr cause, f2ptr this, f2ptr that);

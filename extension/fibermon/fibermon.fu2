@@ -145,6 +145,8 @@
        
        [set this fiber fiber]
        
+       'We maintain a reference to the frame until we finish initializing it.'
+       [have frame ref]
        [fiber [funk []
 		    [have command_pause_menu_item signal_connect 'activate'
 			  [funk []
@@ -235,7 +237,8 @@
 				[terminal_format standard-terminal '\n\n']]
 			  nil]
 		    
-		    ]
+		    'We release our extra reference to the frame since we have now finished initializing it.'
+		    [have frame unref]]
 	      nil]
        
        [have this recompute_statistics]

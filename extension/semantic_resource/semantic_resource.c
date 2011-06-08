@@ -30,7 +30,7 @@ f2ptr raw__semantic_resource__new(f2ptr cause, f2ptr semantic_realm) {
     return this;
   }
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource"));
-  raw__semantic_resource__current_action_sequence__add(cause, this, nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "current_action_sequence"), nil);
   return this;
 }
 

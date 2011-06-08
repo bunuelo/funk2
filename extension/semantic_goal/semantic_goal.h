@@ -26,25 +26,23 @@
 #include "../semantic_event/semantic_event.h"
 
 
-f2ptr     raw__semantic_goal__type_create         (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_goal__new                 (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_goal__new                 (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_goal__is_type             (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_goal__is_type             (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_goal__type                (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_goal__type                (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_goal__is_occurring__lookup(f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_goal__is_occurring__lookup(f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_goal__is_occurring__add   (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_goal__is_occurring__add   (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_goal__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_goal__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_goal__type_create      (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_goal__new              (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_goal__new              (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_goal__is_type          (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_goal__is_type          (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_goal__type             (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_goal__type             (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_goal__is_occurring     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_goal__is_occurring     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_goal__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_goal__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that);
 
 // **
 
-f2ptr f2__semantic_goal__core_extension__ping(f2ptr cause);
+f2ptr f2__semantic_goal__core_extension__ping      (f2ptr cause);
 f2ptr f2__semantic_goal__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_goal__core_extension__destroy(f2ptr cause);
+f2ptr f2__semantic_goal__core_extension__destroy   (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_GOAL__H
 

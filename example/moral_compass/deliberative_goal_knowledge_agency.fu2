@@ -44,7 +44,7 @@
     [if [not [get [get [get this mind] semantic_knowledge_base `goal_knowledge] contains_semantic_frame semantic_goal]]
 	[have [get [get this mind] semantic_knowledge_base `goal_knowledge] add_semantic_frame semantic_goal]]
     [let [[is_occurring [apply is_occurring_funk nil]]]
-      [semantic-assure_set semantic_goal is_occurring is_occurring]]]]
+      [set semantic_goal is_occurring is_occurring]]]]
 
 
 'deliberative_goal_knowledge_agency'

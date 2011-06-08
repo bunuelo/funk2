@@ -422,7 +422,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
     if (! raw__set__is_type(cause, value_set)) {
       return f2larva__new(cause, 92734, f2__bug__new(cause, f2integer__new(cause, 92734), f2__frame__new(cause, f2list10__new(cause,
 															      new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_slot_contains_non_set"),
-															      new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-get"),
+															      new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
 															      new__symbol(cause, "this"),     this,
 															      new__symbol(cause, "key_type"), key_type,
 															      new__symbol(cause, "key"),      key))));
@@ -431,7 +431,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
 		   if (found_current_value) {
 		     return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list10__new(cause,
 																	     new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_has_more_than_one_value_in_slot"),
-																	     new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-get"),
+																	     new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
 																	     new__symbol(cause, "this"),     this,
 																	     new__symbol(cause, "key_type"), key_type,
 																	     new__symbol(cause, "key"),      key))));
@@ -443,7 +443,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
   if (! found_current_value) {
     return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list10__new(cause,
 															    new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_does_not_have_slot_value"),
-															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-get"),
+															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
 															    new__symbol(cause, "this"),     this,
 															    new__symbol(cause, "key_type"), key_type,
 															    new__symbol(cause, "key"),      key))));
@@ -500,14 +500,16 @@ f2ptr raw__semantic_frame__replace_type_var_value__thread_unsafe(f2ptr cause, f2
   if (raw__larva__is_type(cause, current_value)) {
     return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list12__new(cause,
 															    new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
-															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-replace"),
+															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-replace_type_var_value"),
 															    new__symbol(cause, "this"),     this,
 															    new__symbol(cause, "key_type"), key_type,
 															    new__symbol(cause, "key"),      key,
 															    new__symbol(cause, "suberror"), current_value))));
   } else {
-    assert_value(raw__semantic_frame__remove(cause, this, key_type, key, current_value));
-    return raw__semantic_frame__add(cause, this, key_type, key, value);
+    if (! raw__eq(cause, current_value, value)) {
+      assert_value(raw__semantic_frame__remove(cause, this, key_type, key, current_value));
+      return raw__semantic_frame__add(cause, this, key_type, key, value);
+    }
   }
 }
 

@@ -863,9 +863,33 @@ f2ptr f2__object__semantic__get__thread_unsafe(f2ptr cause, f2ptr this, f2ptr sl
 f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
-  f2__cmutex__lock(cause, frame_mutate_cmutex);
+  {
+    boolean_t keep_looping;
+    do {
+      f2ptr read_count;
+      f2ptr write_in_progress;
+      f2__cmutex__lock(cause, frame_mutate_cmutex);
+      read_count        = raw__semantic_frame__read_count(cause, this);
+      write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
+      if (write_in_progress != nil) {
+	keep_looping = boolean__true;
+	f2__this__fiber__yield(cause);
+      } else {
+	keep_looping = boolean__false;
+	read_count = f2integer__new(cause, f2integer__i(read_count, cause) + 1);
+	raw__semantic_frame__read_count__set(cause, this, read_count);
+      }
+      f2__cmutex__unlock(cause, frame_mutate_cmutex);
+    } while (keep_looping);
+  }
   f2ptr result = f2__object__semantic__get__thread_unsafe(cause, this, slot, args);
-  f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  {
+    f2__cmutex__lock(cause, frame_mutate_cmutex);
+    f2ptr read_count = raw__semantic_frame__read_count(cause, this);
+    read_count       = f2integer__new(cause, f2integer__i(read_count, cause) - 1);
+    raw__semantic_frame__read_count__set(cause, this, read_count);
+    f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  }
   return result;
 }
 export_cefunk2_and_rest(object__semantic__get, this, slot, args, 0, "");
@@ -895,9 +919,32 @@ f2ptr f2__object__semantic__set__thread_unsafe(f2ptr cause, f2ptr this, f2ptr sl
 f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
-  f2__cmutex__lock(cause, frame_mutate_cmutex);
+  {
+    boolean_t keep_looping;
+    do {
+      f2ptr read_count;
+      f2ptr write_in_progress;
+      f2__cmutex__lock(cause, frame_mutate_cmutex);
+      read_count        = raw__semantic_frame__read_count(cause, this);
+      write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
+      if ((f2integer__i(read_count, cause) != 0) ||
+	  (write_in_progress != nil)) {
+	keep_looping = boolean__true;
+	f2__this__fiber__yield(cause);
+      } else {
+	keep_looping = boolean__false;
+	write_in_progress = f2bool__new(boolean__true);
+	raw__semantic_frame__write_in_progress__set(cause, this, write_in_progress);
+      }
+      f2__cmutex__unlock(cause, frame_mutate_cmutex);
+    } while (keep_looping);
+  }
   f2ptr result = f2__object__semantic__set__thread_unsafe(cause, this, slot, args);
-  f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  {
+    f2__cmutex__lock(cause, frame_mutate_cmutex);
+    raw__semantic_frame__write_in_progress__set(cause, this, nil);
+    f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  }
   return result;
 }
 export_cefunk2_and_rest(object__semantic__set, this, slot, args, 0, "");

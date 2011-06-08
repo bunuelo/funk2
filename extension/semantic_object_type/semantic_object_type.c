@@ -93,15 +93,15 @@ f2ptr f2__semantic_object_type__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_object_type__type, thing, 0, "Returns the specific type of object that this semantic_object_type is.");
 
 
-f2ptr raw__semantic_object_type__example__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "example"));
+f2ptr raw__semantic_object_type__example__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "example"));
 }
 
-f2ptr f2__semantic_object_type__example__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_object_type__example__lookup_set(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_object_type, this);
-  return raw__semantic_object_type__example__lookup(cause, this);
+  return raw__semantic_object_type__example__lookup_set(cause, this);
 }
-export_cefunk1(semantic_object_type__example__lookup, this, 0, "");
+export_cefunk1(semantic_object_type__example__lookup_set, this, 0, "");
 
 
 f2ptr raw__semantic_object_type__example__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -130,12 +130,12 @@ export_cefunk2(semantic_object_type__example__remove, this, that, 0, "");
 
 f2ptr f2__semantic_object_type_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "example"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__example__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "example"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__example__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "example"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__example__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "example"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__example__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "example"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__example__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "example"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type"), new__symbol(cause, "semantic_object_type__example__remove")));}
   return this;
 }
 

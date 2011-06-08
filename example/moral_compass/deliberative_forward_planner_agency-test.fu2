@@ -135,7 +135,7 @@
 			 [= [semantic-get event action_name]
 			    [semantic-get goal event action_name]]]
 		    [= matching_event event]]]
-	  [semantic-lookup situation event]]
+	  [semantic-lookup_set situation event]]
     matching_event]]
 
 [defunk test_goal [situation]
@@ -157,11 +157,11 @@
     [mapc [funk [event_to_add]
 		[if [null [contains_event situation event_to_add]]
 		    [semantic-add new_situation event event_to_add]]]
-	  [semantic-lookup transition add-event]]
+	  [semantic-lookup_set transition add-event]]
     [mapc [funk [event_to_remove]
 		[if [contains_event situation event_to_remove]
 		    [semantic-remove new_situation event event_to_remove]]]
-	  [semantic-lookup transition remove-event]]
+	  [semantic-lookup_set transition remove-event]]
     new_situation]]
   
 

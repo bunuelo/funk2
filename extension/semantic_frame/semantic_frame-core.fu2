@@ -21,8 +21,8 @@
 [defcorefunk semantic_frame-core_extension-initialize   semantic_frame semantic_frame__core_extension__initialize]
 [defcorefunk semantic_frame-core_extension-define_types semantic_frame semantic_frame__core_extension__define_types]
 
-[defcorefunk object-semantic-lookup           semantic_frame object__semantic__lookup]
-[defcorefunk object-semantic-lookup-apply     semantic_frame object__semantic__lookup__apply]
+[defcorefunk object-semantic-lookup_set       semantic_frame object__semantic__lookup_set]
+[defcorefunk object-semantic-lookup_set-apply semantic_frame object__semantic__lookup_set__apply]
 [defcorefunk object-semantic-add              semantic_frame object__semantic__add]
 [defcorefunk object-semantic-add-apply        semantic_frame object__semantic__add__apply]
 [defcorefunk object-semantic-remove           semantic_frame object__semantic__remove]
@@ -37,8 +37,8 @@
 [semantic_frame-core_extension-define_types]
 
 
-[defmetro semantic-lookup           [this slot_name :rest args] `[object-semantic-lookup           ,this [quote ,slot_name] @args]]
-[defmetro semantic-lookup-apply     [this slot_name       args] `[object-semantic-lookup-apply     ,this [quote ,slot_name] ,args]]
+[defmetro semantic-lookup_set       [this slot_name :rest args] `[object-semantic-lookup_set           ,this [quote ,slot_name] @args]]
+[defmetro semantic-lookup_set-apply [this slot_name       args] `[object-semantic-lookup_set-apply     ,this [quote ,slot_name] ,args]]
 [defmetro semantic-add              [this slot_name :rest args] `[object-semantic-add              ,this [quote ,slot_name] @args]]
 [defmetro semantic-add-apply        [this slot_name       args] `[object-semantic-add-apply        ,this [quote ,slot_name] ,args]]
 [defmetro semantic-remove           [this slot_name :rest args] `[object-semantic-remove           ,this [quote ,slot_name] @args]]

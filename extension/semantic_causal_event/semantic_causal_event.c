@@ -102,17 +102,17 @@ export_cefunk1(semantic_causal_event__type, thing, 0, "Returns the specific type
 
 
 
-f2ptr raw__semantic_causal_event__causes__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_causal_object__causal__causes__lookup(cause, this, new__symbol(cause, "event"));
+f2ptr raw__semantic_causal_event__causes__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_causal_object__causal__causes__lookup_set(cause, this, new__symbol(cause, "event"));
 }
 
-f2ptr f2__semantic_causal_event__causes__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_causal_event__causes__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_causal_event__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_causal_event__causes__lookup(cause, this);
+  return raw__semantic_causal_event__causes__lookup_set(cause, this);
 }
-export_cefunk1(semantic_causal_event__causes__lookup, this, 0, "Returns the set of causal_events that cause this causal_event, returns nil if no such set exists.");
+export_cefunk1(semantic_causal_event__causes__lookup_set, this, 0, "Returns the set of causal_events that cause this causal_event, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_causal_event__causes__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
@@ -144,17 +144,17 @@ f2ptr f2__semantic_causal_event__causes__remove(f2ptr cause, f2ptr this, f2ptr c
 export_cefunk2(semantic_causal_event__causes__remove, this, causal_event, 0, "Removes the given causal_event from the set of causes for this causal_event.");
 
 
-f2ptr raw__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this) {
-  return raw__semantic_causal_object__causal__is_caused_by__lookup(cause, this, new__symbol(cause, "event"));
+f2ptr raw__semantic_causal_event__is_caused_by__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_causal_object__causal__is_caused_by__lookup_set(cause, this, new__symbol(cause, "event"));
 }
 
-f2ptr f2__semantic_causal_event__is_caused_by__lookup(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_causal_event__is_caused_by__lookup_set(f2ptr cause, f2ptr this) {
   if (! raw__semantic_causal_event__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_causal_event__is_caused_by__lookup(cause, this);
+  return raw__semantic_causal_event__is_caused_by__lookup_set(cause, this);
 }
-export_cefunk1(semantic_causal_event__is_caused_by__lookup, this, 0, "Returns the set of causal_events that have caused this causal_event, returns nil if no such set exists.");
+export_cefunk1(semantic_causal_event__is_caused_by__lookup_set, this, 0, "Returns the set of causal_events that have caused this causal_event, returns nil if no such set exists.");
 
 
 f2ptr raw__semantic_causal_event__is_caused_by__add(f2ptr cause, f2ptr this, f2ptr causal_event) {
@@ -189,15 +189,15 @@ f2ptr f2__semantic_causal_event_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list2__new(cause,
 							    new__symbol(cause, "semantic_event"),
 							    new__symbol(cause, "semantic_causal_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "causes"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__causes__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "causes"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__causes__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "causes"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__causes__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup"), new__symbol(cause, "is_caused_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_caused_by__lookup")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "is_caused_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_caused_by__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "is_caused_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_caused_by__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "causes"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__causes__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "causes"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__causes__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "causes"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__causes__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "is_caused_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_caused_by__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "is_caused_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_caused_by__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "is_caused_by"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_causal_event"), new__symbol(cause, "semantic_causal_event__is_caused_by__remove")));}
   return this;
 }
 
@@ -239,7 +239,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
     }
     ptypehash__iteration(cause, timeline_event_semantic_event_hash, semantic_event, timeline_event,
 			 {
-			   f2ptr next_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "next"), nil);
+			   f2ptr next_set = f2__object__semantic__lookup_set(cause, semantic_event, new__symbol(cause, "next"), nil);
 			   if (next_set != nil) {
 			     set__iteration(cause, next_set, next_semantic_event,
 					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, next_semantic_event)) {
@@ -250,7 +250,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			   }
 			 }
 			 {
-			   f2ptr contains_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "contains"), nil);
+			   f2ptr contains_set = f2__object__semantic__lookup_set(cause, semantic_event, new__symbol(cause, "contains"), nil);
 			   if (contains_set != nil) {
 			     set__iteration(cause, contains_set, contains_semantic_event,
 					    if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, contains_semantic_event)) {
@@ -263,7 +263,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			 if (raw__semantic_causal_event__is_type(cause, semantic_event)) {
 			   f2ptr semantic_causal_event = semantic_event;
 			   
-			   f2ptr causes_set = f2__object__semantic__lookup(cause, semantic_causal_event, new__symbol(cause, "causes"), nil);
+			   f2ptr causes_set = f2__object__semantic__lookup_set(cause, semantic_causal_event, new__symbol(cause, "causes"), nil);
 			   if (raw__larva__is_type(cause, causes_set)) {
 			     return causes_set;
 			   }
@@ -282,7 +282,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			   s64 nanoseconds__example_count = 0;
 			   s64 nanoseconds__sum = 0;
 			   {
-			     f2ptr is_contained_by_set = f2__object__semantic__lookup(cause, semantic_event, new__symbol(cause, "is_contained_by"), nil);
+			     f2ptr is_contained_by_set = f2__object__semantic__lookup_set(cause, semantic_event, new__symbol(cause, "is_contained_by"), nil);
 			     if (is_contained_by_set != nil) {
 			       set__iteration(cause, is_contained_by_set, is_contained_by_semantic_event,
 					      if (raw__ptypehash__contains(cause, timeline_event_semantic_event_hash, is_contained_by_semantic_event)) {
@@ -304,7 +304,7 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 			   if (raw__semantic_causal_event__is_type(cause, semantic_event)) {
 			     f2ptr semantic_causal_event = semantic_event;
 			     
-			     f2ptr is_caused_by_set = f2__object__semantic__lookup(cause, semantic_causal_event, new__symbol(cause, "is_caused_by"), nil);
+			     f2ptr is_caused_by_set = f2__object__semantic__lookup_set(cause, semantic_causal_event, new__symbol(cause, "is_caused_by"), nil);
 			     if (raw__larva__is_type(cause, is_caused_by_set)) {
 			       return is_caused_by_set;
 			     }

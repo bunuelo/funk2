@@ -59,8 +59,8 @@
     [if [null semantic_visual_object]
 	[prog [= semantic_visual_object [new semantic_visual_object [get [get this mind] semantic_realm]]]
 	      [have semantic_visual_object_ptypehash add phenomenal_name semantic_visual_object]
-	      [semantic-set semantic_visual_object phenomenal_name phenomenal_name]
-	      [semantic-set semantic_visual_object object_type     object_type]]]
+	      [set semantic_visual_object phenomenal_name phenomenal_name]
+	      [set semantic_visual_object object_type     object_type]]]
     semantic_visual_object]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects []
@@ -176,9 +176,9 @@
 						  [result         [get action result]]]
 					      [let [[agent semantic_visual_object]]
 						[let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm] action_name agent]]]
-						  [semantic-set action_semantic_frame phenomenal_name     [gensym 'semantic_action_event']]
-						  [semantic-set action_semantic_frame absolute_start_time [new semantic_time [if perception-begin_time perception-begin_time `before]]]
-						  [semantic-set action_semantic_frame absolute_end_time   [new semantic_time [if perception-end_time   perception-end_time   `after]]]
+						  [set action_semantic_frame phenomenal_name     [gensym 'semantic_action_event']]
+						  [set action_semantic_frame absolute_start_time [new semantic_time [if perception-begin_time perception-begin_time `before]]]
+						  [set action_semantic_frame absolute_end_time   [new semantic_time [if perception-end_time   perception-end_time   `after]]]
 						  [have [get [get this mind] semantic_knowledge_base `visual_action_knowledge] add_semantic_frame action_semantic_frame]
 						  'should add argument frame for each action specifically.'
 						  ]]]]

@@ -97,141 +97,106 @@ f2ptr f2__semantic_event__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_event__type, thing, 0, "Returns the specific type of object that this semantic_event is.");
 
 
-f2ptr raw__semantic_event__action_name__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"));
+f2ptr raw__semantic_event__action_name(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"));
 }
 
-f2ptr f2__semantic_event__action_name__lookup_set(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_event__action_name(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_event, this);
-  return raw__semantic_event__action_name__lookup_set(cause, this);
+  return raw__semantic_event__action_name(cause, this);
 }
-export_cefunk1(semantic_event__action_name__lookup_set, this, 0, "");
+export_cefunk1(semantic_event__action_name, this, 0, "");
 
 
-f2ptr raw__semantic_event__action_name__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"), that);
+f2ptr raw__semantic_event__action_name__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"), that);
 }
 
-f2ptr f2__semantic_event__action_name__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_event__action_name__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_event, this);
-  return raw__semantic_event__action_name__add(cause, this, that);
+  return raw__semantic_event__action_name__set(cause, this, that);
 }
-export_cefunk2(semantic_event__action_name__add, this, that, 0, "");
+export_cefunk2(semantic_event__action_name__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_event__action_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"), that);
+f2ptr raw__semantic_event__absolute_start_time(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"));
 }
 
-f2ptr f2__semantic_event__action_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_event__absolute_start_time(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_event, this);
-  return raw__semantic_event__action_name__remove(cause, this, that);
+  return raw__semantic_event__absolute_start_time(cause, this);
 }
-export_cefunk2(semantic_event__action_name__remove, this, that, 0, "");
+export_cefunk1(semantic_event__absolute_start_time, this, 0, "");
 
 
-f2ptr raw__semantic_event__absolute_start_time__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"));
-}
-
-f2ptr f2__semantic_event__absolute_start_time__lookup_set(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_event, this);
-  return raw__semantic_event__absolute_start_time__lookup_set(cause, this);
-}
-export_cefunk1(semantic_event__absolute_start_time__lookup_set, this, 0, "");
-
-
-f2ptr raw__semantic_event__absolute_start_time__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), that);
+f2ptr raw__semantic_event__absolute_start_time__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), that);
 }
 
-f2ptr f2__semantic_event__absolute_start_time__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_event__absolute_start_time__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_event, this);
   assert_argument_type(semantic_time,  that);
-  return raw__semantic_event__absolute_start_time__add(cause, this, that);
+  return raw__semantic_event__absolute_start_time__set(cause, this, that);
 }
-export_cefunk2(semantic_event__absolute_start_time__add, this, that, 0, "");
+export_cefunk2(semantic_event__absolute_start_time__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_event__absolute_start_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), that);
+f2ptr raw__semantic_event__absolute_end_time(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"));
 }
 
-f2ptr f2__semantic_event__absolute_start_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_event__absolute_end_time(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_event, this);
+  return raw__semantic_event__absolute_end_time(cause, this);
+}
+export_cefunk1(semantic_event__absolute_end_time, this, 0, "");
+
+
+f2ptr raw__semantic_event__absolute_end_time__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"), that);
+}
+
+f2ptr f2__semantic_event__absolute_end_time__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_event, this);
   assert_argument_type(semantic_time,  that);
-  return raw__semantic_event__absolute_start_time__remove(cause, this, that);
+  return raw__semantic_event__absolute_end_time__set(cause, this, that);
 }
-export_cefunk2(semantic_event__absolute_start_time__remove, this, that, 0, "");
-
-
-f2ptr raw__semantic_event__absolute_end_time__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"));
-}
-
-f2ptr f2__semantic_event__absolute_end_time__lookup_set(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_event, this);
-  return raw__semantic_event__absolute_end_time__lookup_set(cause, this);
-}
-export_cefunk1(semantic_event__absolute_end_time__lookup_set, this, 0, "");
-
-
-f2ptr raw__semantic_event__absolute_end_time__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"), that);
-}
-
-f2ptr f2__semantic_event__absolute_end_time__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event, this);
-  assert_argument_type(semantic_time,  that);
-  return raw__semantic_event__absolute_end_time__add(cause, this, that);
-}
-export_cefunk2(semantic_event__absolute_end_time__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_event__absolute_end_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"), that);
-}
-
-f2ptr f2__semantic_event__absolute_end_time__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event, this);
-  assert_argument_type(semantic_time,  that);
-  return raw__semantic_event__absolute_end_time__remove(cause, this, that);
-}
-export_cefunk2(semantic_event__absolute_end_time__remove, this, that, 0, "");
+export_cefunk2(semantic_event__absolute_end_time__set, this, that, 0, "");
 
 
 
 f2ptr raw__semantic_event__update_parent_container_start_and_end_times_with_child_start_time(f2ptr cause, f2ptr this, f2ptr child_start_time) {
-  f2ptr absolute_start_time = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil));
-  f2ptr absolute_end_time   = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"),   nil));
+  f2ptr absolute_start_time = assert_value(raw__semantic_event__absolute_start_time(cause, this));
+  f2ptr absolute_end_time   = assert_value(raw__semantic_event__absolute_end_time(  cause, this));
   if (raw__semantic_time__is__before(cause, child_start_time)) {
-    f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2list1__new(cause, f2__semantic_time__new(cause, new__symbol(cause, "before"))));
+    raw__semantic_event__absolute_start_time__set(cause, this, f2__semantic_time__new(cause, new__symbol(cause, "before")));
   } else {
     if (raw__semantic_time__is__before(cause, absolute_start_time) ||
 	(f2__is_less_than(cause, child_start_time, absolute_start_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2list1__new(cause, child_start_time));
+      raw__semantic_event__absolute_start_time__set(cause, this, child_start_time);
     }
     if (raw__semantic_time__is__after(cause, absolute_end_time) ||
 	(f2__is_greater_than(cause, child_start_time, absolute_end_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2list1__new(cause, child_start_time));
+      raw__semantic_event__absolute_end_time__set(cause, this, child_start_time);
     }
   }
   return nil;
 }
 
 f2ptr raw__semantic_event__update_parent_container_start_and_end_times_with_child_end_time(f2ptr cause, f2ptr this, f2ptr child_end_time) {
-  f2ptr absolute_start_time = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil));
-  f2ptr absolute_end_time   = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"),   nil));
+  f2ptr absolute_start_time = assert_value(raw__semantic_event__absolute_start_time(cause, this));
+  f2ptr absolute_end_time   = assert_value(raw__semantic_event__absolute_end_time(  cause, this));
   if (raw__semantic_time__is__after(cause, child_end_time)) {
-    f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2list1__new(cause, f2__semantic_time__new(cause, new__symbol(cause, "after"))));
+    raw__semantic_event__absolute_end_time__set(cause, this, f2__semantic_time__new(cause, new__symbol(cause, "after")));
   } else {
     if (raw__semantic_time__is__before(cause, absolute_start_time) ||
 	(f2__is_less_than(cause, child_end_time, absolute_start_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2list1__new(cause, child_end_time));
+      raw__semantic_event__absolute_start_time__set(cause, this, child_end_time);
     }
     if (raw__semantic_time__is__after(cause, absolute_end_time) ||
 	(f2__is_greater_than(cause, child_end_time, absolute_end_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2list1__new(cause, child_end_time));
+      raw__semantic_event__absolute_end_time__set(cause, this, child_end_time);
     }
   }
   return nil;
@@ -239,11 +204,11 @@ f2ptr raw__semantic_event__update_parent_container_start_and_end_times_with_chil
 
 f2ptr raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(f2ptr cause, f2ptr this, f2ptr child_semantic_event) {
   {
-    f2ptr child_semantic_event__absolute_start_time = f2__object__semantic__get(cause, child_semantic_event, new__symbol(cause, "absolute_start_time"), nil);
+    f2ptr child_semantic_event__absolute_start_time = raw__semantic_event__absolute_start_time(cause, child_semantic_event);
     assert_value(raw__semantic_event__update_parent_container_start_and_end_times_with_child_start_time(cause, this, child_semantic_event__absolute_start_time));
   }
   {
-    f2ptr child_semantic_event__absolute_end_time = f2__object__semantic__get(cause, child_semantic_event, new__symbol(cause, "absolute_end_time"), nil);
+    f2ptr child_semantic_event__absolute_end_time = raw__semantic_event__absolute_end_time(cause, child_semantic_event);
     assert_value(raw__semantic_event__update_parent_container_start_and_end_times_with_child_end_time(cause, this, child_semantic_event__absolute_end_time));
   }
   return nil;
@@ -258,36 +223,36 @@ export_cefunk2(semantic_event__update_parent_container_start_and_end_times_with_
 
 
 f2ptr raw__semantic_event__update_child_container_start_and_end_times_with_parent_start_time(f2ptr cause, f2ptr this, f2ptr parent_start_time) {
-  f2ptr absolute_start_time = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil));
-  f2ptr absolute_end_time   = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"),   nil));
+  f2ptr absolute_start_time = assert_value(raw__semantic_event__absolute_start_time(cause, this));
+  f2ptr absolute_end_time   = assert_value(raw__semantic_event__absolute_end_time(  cause, this));
   if (raw__semantic_time__is__before(cause, parent_start_time)) {
-    f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2list1__new(cause, f2__semantic_time__new(cause, new__symbol(cause, "before"))));
+    raw__semantic_event__absolute_start_time__set(cause, this, f2__semantic_time__new(cause, new__symbol(cause, "before")));
   } else {
     if (raw__semantic_time__is__before(cause, absolute_start_time) ||
 	(f2__is_less_than(cause, absolute_start_time, parent_start_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2list1__new(cause, parent_start_time));
+      raw__semantic_event__absolute_start_time__set(cause, this, parent_start_time);
     }
     if (raw__semantic_time__is__after(cause, absolute_end_time) ||
 	(f2__is_less_than(cause, absolute_end_time, parent_start_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2list1__new(cause, parent_start_time));
+      raw__semantic_event__absolute_end_time__set(cause, this, parent_start_time);
     }
   }
   return nil;
 }
 
 f2ptr raw__semantic_event__update_child_container_start_and_end_times_with_parent_end_time(f2ptr cause, f2ptr this, f2ptr parent_end_time) {
-  f2ptr absolute_start_time = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil));
-  f2ptr absolute_end_time   = assert_value(f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"),   nil));
+  f2ptr absolute_start_time = assert_value(raw__semantic_event__absolute_start_time(cause, this));
+  f2ptr absolute_end_time   = assert_value(raw__semantic_event__absolute_end_time(  cause, this));
   if (raw__semantic_time__is__after(cause, parent_end_time)) {
-    f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2list1__new(cause, f2__semantic_time__new(cause, new__symbol(cause, "after"))));
+    raw__semantic_event__absolute_end_time__set(cause, this, f2__semantic_time__new(cause, new__symbol(cause, "after")));
   } else {
     if (raw__semantic_time__is__before(cause, absolute_start_time) ||
 	(f2__is_greater_than(cause, absolute_start_time, parent_end_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_start_time"), f2list1__new(cause, parent_end_time));
+      raw__semantic_event__absolute_end_time__set(cause, this, parent_end_time);
     }
     if (raw__semantic_time__is__after(cause, absolute_end_time) ||
 	(f2__is_greater_than(cause, absolute_end_time, parent_end_time) != nil)) {
-      f2__object__semantic__set(cause, this, new__symbol(cause, "absolute_end_time"), f2list1__new(cause, parent_end_time));
+      raw__semantic_event__absolute_end_time__set(cause, this, parent_end_time);
     }
   }
   return nil;
@@ -295,11 +260,11 @@ f2ptr raw__semantic_event__update_child_container_start_and_end_times_with_paren
 
 f2ptr raw__semantic_event__update_child_container_start_and_end_times_with_parent_event(f2ptr cause, f2ptr this, f2ptr parent_semantic_event) {
   {
-    f2ptr parent_semantic_event__absolute_start_time = f2__object__semantic__get(cause, parent_semantic_event, new__symbol(cause, "absolute_start_time"), nil);
+    f2ptr parent_semantic_event__absolute_start_time = raw__semantic_event__absolute_start_time(cause, parent_semantic_event);
     assert_value(raw__semantic_event__update_child_container_start_and_end_times_with_parent_start_time(cause, this, parent_semantic_event__absolute_start_time));
   }
   {
-    f2ptr parent_semantic_event__absolute_end_time = f2__object__semantic__get(cause, parent_semantic_event, new__symbol(cause, "absolute_end_time"), nil);
+    f2ptr parent_semantic_event__absolute_end_time = raw__semantic_event__absolute_end_time(cause, parent_semantic_event);
     assert_value(raw__semantic_event__update_child_container_start_and_end_times_with_parent_end_time(cause, this, parent_semantic_event__absolute_end_time));
   }
   return nil;
@@ -333,21 +298,18 @@ export_cefunk1(semantic_event__cairo_render_frame, this, 0, "Generates a cairo_r
 
 f2ptr f2__semantic_event_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_temporal_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),                                                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                                                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "action_name"),                                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__action_name__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "action_name"),                                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__action_name__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "action_name"),                                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__action_name__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "absolute_start_time"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_start_time__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "absolute_start_time"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_start_time__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "absolute_start_time"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_start_time__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "absolute_end_time"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_end_time__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "absolute_end_time"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_end_time__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "absolute_end_time"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_end_time__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "update_parent_container_start_and_end_times_with_child_event"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__update_parent_container_start_and_end_times_with_child_event")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "update_child_container_start_and_end_times_with_parent_event"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__update_child_container_start_and_end_times_with_parent_event")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "cairo_render_frame"),                                           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__cairo_render_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                                                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                                                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "action_name"),                                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__action_name")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "action_name"),                                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__action_name__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "absolute_start_time"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_start_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "absolute_start_time"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_start_time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "absolute_end_time"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_end_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "absolute_end_time"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__absolute_end_time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "update_parent_container_start_and_end_times_with_child_event"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__update_parent_container_start_and_end_times_with_child_event")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "update_child_container_start_and_end_times_with_parent_event"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__update_child_container_start_and_end_times_with_parent_event")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_render_frame"),                                           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__cairo_render_frame")));}
   return this;
 }
 

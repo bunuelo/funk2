@@ -57,16 +57,16 @@
 				  [let [[semantic_frame [get event semantic_frame]]]
 				    [cond [[is-type `semantic_resource_action_event semantic_frame]
 					   
-					   [let [[action_name [semantic-get semantic_frame action_name]]
-						 [agent       [semantic-get semantic_frame agent]]
-						 [target      [semantic-get semantic_frame target]]]
+					   [let [[action_name [get semantic_frame action_name]]
+						 [agent       [get semantic_frame agent]]
+						 [target      [get semantic_frame target]]]
 					     [cond [[eq action_name `cause_being_active]
-						    [let [[absolute_start_time [semantic-get semantic_frame absolute_start_time]]]
+						    [let [[absolute_start_time [get semantic_frame absolute_start_time]]]
 						      [let [[current_action_sequence [new semantic_resource_action_sequence
 											  [get [get this mind] semantic_realm]
 											  `event_sequence
 											  target]]]
-							[semantic-set current_action_sequence absolute_start_time absolute_start_time]
+							[set current_action_sequence absolute_start_time absolute_start_time]
 							[let [[causes_set [semantic-lookup_set semantic_frame is_caused_by]]]
 							  [if [not [null causes_set]]
 							      [mapc [funk [cause]
@@ -79,10 +79,10 @@
 							    [have old_reflective_event_knowledge add_semantic_frame target]]
 							[have old_reflective_event_knowledge add_semantic_frame current_action_sequence]
 							[semantic-add target action_sequence         current_action_sequence]
-							[semantic-set target current_action_sequence current_action_sequence]]]]
+							[set target current_action_sequence current_action_sequence]]]]
 						   [t
 						    [if agent
-							[let [[current_action_sequence [semantic-get agent current_action_sequence]]]
+							[let [[current_action_sequence [get agent current_action_sequence]]]
 							  [if [null current_action_sequence]
 							      [prog `[error bug_type `current_action_sequence_is_nil
 									    funkname `translate_old_reflective_knowledge_to_old_reflective_event_knowledge_resource-execute_resource_raw_funk
@@ -98,15 +98,15 @@
 				  [let [[semantic_frame [get event semantic_frame]]]
 				    [cond [[is-type `semantic_resource_action_event semantic_frame]
 					   
-					   [let [[action_name       [semantic-get semantic_frame action_name]]
-						 [agent             [semantic-get semantic_frame agent]]
-						 [target            [semantic-get semantic_frame target]]
-						 [absolute_end_time [semantic-get semantic_frame absolute_end_time]]]
+					   [let [[action_name       [get semantic_frame action_name]]
+						 [agent             [get semantic_frame agent]]
+						 [target            [get semantic_frame target]]
+						 [absolute_end_time [get semantic_frame absolute_end_time]]]
 					     [cond [[eq action_name `cause_being_active]
 						    
-						    [let [[current_action_sequence [semantic-get target current_action_sequence]]]
-						      [semantic-set current_action_sequence absolute_end_time absolute_end_time]
-						      [semantic-set target current_action_sequence nil]]]]
+						    [let [[current_action_sequence [get target current_action_sequence]]]
+						      [set current_action_sequence absolute_end_time absolute_end_time]
+						      [set target current_action_sequence nil]]]]
 					     ]]
 					  ]
 				    ]]]]

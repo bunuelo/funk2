@@ -24,7 +24,7 @@
 // semantic_event_tree__semantic_event
 
 f2ptr raw__semantic_event_tree__semantic_event__left_value(f2ptr cause, f2ptr this) {
-  return f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_start_time"), nil);
+  return f2__semantic_event__absolute_start_time(cause, this);
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__left_value(f2ptr cause, f2ptr this) {
@@ -35,7 +35,7 @@ export_cefunk1(semantic_event_tree__semantic_event__left_value, this, 0, "Return
 
 
 f2ptr raw__semantic_event_tree__semantic_event__right_value(f2ptr cause, f2ptr this) {
-  return f2__object__semantic__get(cause, this, new__symbol(cause, "absolute_end_time"), nil);
+  return f2__semantic_event__absolute_end_time(cause, this);
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__right_value(f2ptr cause, f2ptr this) {

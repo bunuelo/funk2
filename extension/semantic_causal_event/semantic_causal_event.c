@@ -218,12 +218,12 @@ f2ptr raw__semantic_knowledge_base__as__timeline(f2ptr cause, f2ptr this) {
 	    f2ptr semantic_event = semantic_frame;
 	    {
 	      f2ptr render_frame               = f2__object__get(cause, semantic_event, new__symbol(cause, "cairo_render_frame"), nil);
-	      f2ptr absolute_start_time        = assert_value(f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_start_time"), nil));
+	      f2ptr absolute_start_time        = assert_value(f2__semantic_event__absolute_start_time(cause, semantic_event));
 	      f2ptr absolute_start_time__value = f2__semantic_time__value(cause, absolute_start_time);
 	      if (! raw__time__is_type(cause, absolute_start_time__value)) {
 		absolute_start_time__value = nil;
 	      }
-	      f2ptr absolute_end_time        = assert_value(f2__object__semantic__get(cause, semantic_event, new__symbol(cause, "absolute_end_time"),   nil));
+	      f2ptr absolute_end_time        = assert_value(f2__semantic_event__absolute_end_time(cause, semantic_event));
 	      f2ptr absolute_end_time__value = f2__semantic_time__value(cause, absolute_end_time);
 	      if (! raw__time__is_type(cause, absolute_end_time__value)) {
 		absolute_end_time__value = nil;

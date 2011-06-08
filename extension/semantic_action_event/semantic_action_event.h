@@ -27,19 +27,17 @@
 
 // semantic_action_event
 
-f2ptr     raw__semantic_action_event__type_create      (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name, f2ptr agent);
-f2ptr     raw__semantic_action_event__new              (f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent);
-f2ptr      f2__semantic_action_event__new              (f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent);
-boolean_t raw__semantic_action_event__is_type          (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_action_event__is_type          (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_action_event__type             (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_action_event__type             (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_action_event__agent__lookup_set(f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_action_event__agent__lookup_set(f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_action_event__agent__add       (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_action_event__agent__add       (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_action_event__agent__remove    (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_action_event__agent__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_action_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr action_name, f2ptr agent);
+f2ptr     raw__semantic_action_event__new        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent);
+f2ptr      f2__semantic_action_event__new        (f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent);
+boolean_t raw__semantic_action_event__is_type    (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_action_event__is_type    (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_action_event__type       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_action_event__type       (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_action_event__agent      (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_action_event__agent      (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_action_event__agent__set (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action_event__agent__set (f2ptr cause, f2ptr this, f2ptr that);
 
 f2ptr f2__semantic_action_event_type__new(f2ptr cause);
 

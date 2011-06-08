@@ -126,6 +126,10 @@ f2ptr      f2__semantic_frame__remove                                      (f2pt
 f2ptr     raw__semantic_frame__remove_event__new                           (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_frame__lookup_set                                  (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr      f2__semantic_frame__lookup_set                                  (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr     raw__semantic_frame__lookup_type_var_value                       (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr      f2__semantic_frame__lookup_type_var_value                       (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr     raw__semantic_frame__replace_type_var_value                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
+f2ptr      f2__semantic_frame__replace_type_var_value                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_frame__remove_all                                  (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr      f2__semantic_frame__remove_all                                  (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr     raw__semantic_frame__replace_all                                 (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
@@ -161,10 +165,6 @@ f2ptr f2__object__semantic__add              (f2ptr cause, f2ptr this, f2ptr slo
 f2ptr f2__object__semantic__add__apply       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 f2ptr f2__object__semantic__remove           (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 f2ptr f2__object__semantic__remove__apply    (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
-f2ptr f2__object__semantic__get              (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
-f2ptr f2__object__semantic__get__apply       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
-f2ptr f2__object__semantic__set              (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
-f2ptr f2__object__semantic__set__apply       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 
 
 

@@ -33,12 +33,6 @@ boolean_t raw__semantic_resource_action_event__is_type                   (f2ptr 
 f2ptr      f2__semantic_resource_action_event__is_type                   (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_resource_action_event__type                      (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_resource_action_event__type                      (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_resource_action_event__agent__lookup_set         (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_resource_action_event__agent__lookup_set         (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_resource_action_event__agent__add                (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_resource_action_event__agent__add                (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_resource_action_event__agent__remove             (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_resource_action_event__agent__remove             (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__semantic_resource_action_event__event_sequence__lookup_set(f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_resource_action_event__event_sequence__lookup_set(f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_resource_action_event__event_sequence__add       (f2ptr cause, f2ptr this, f2ptr that);

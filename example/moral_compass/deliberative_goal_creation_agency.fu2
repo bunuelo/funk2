@@ -42,6 +42,7 @@
 					    end_of_physical_type_event_changes_trigger]]]
     [terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
     [semantic-set semantic_goal phenomenal_name goal_resource_name]
+    [print 'debug 0']
     [let [[is_occurring_funk [funk []
 				   [let [[semantic_source_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type source_object_type]]
 					 [semantic_target_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type target_object_type]]]
@@ -55,13 +56,17 @@
 						      [get relation_set is_empty]]]
 					     t
 					   nil]]]]]]]
+      [print 'debug 1']
       [let [[goal_resource [new goal_knowledge_resource
 				goal_resource_name
 				semantic_goal
 				is_occurring_funk
 				evaluate_is_occurring_trigger]]]
+	[print 'debug 2']
 	[have [get [get this mind] agency `deliberative `goal_knowledge] add_resource goal_resource]
+	[print 'debug 3']
 	[set goal_resource vital t]
+	[print 'debug 4']
 	nil]]]]
 
 [deftypefunk deliberative_goal_creation_agency execute create_builtin_goals []

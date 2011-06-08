@@ -24,25 +24,25 @@
 
 #include "../semantic_object/semantic_object.h"
 
-f2ptr     raw__semantic_causal_object__type_create                 (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_causal_object__new                         (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_causal_object__new                         (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_causal_object__is_type                     (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_causal_object__is_type                     (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_causal_object__type                        (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_causal_object__type                        (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_causal_object__causal__causes__lookup      (f2ptr cause, f2ptr this, f2ptr causal__type_name);
-f2ptr      f2__semantic_causal_object__causal__causes__lookup      (f2ptr cause, f2ptr this, f2ptr causal__type_name);
-f2ptr     raw__semantic_causal_object__causal__causes__add         (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr      f2__semantic_causal_object__causal__causes__add         (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr     raw__semantic_causal_object__causal__causes__remove      (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr      f2__semantic_causal_object__causal__causes__remove      (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr     raw__semantic_causal_object__causal__is_caused_by__lookup(f2ptr cause, f2ptr this, f2ptr causal__type_name);
-f2ptr      f2__semantic_causal_object__causal__is_caused_by__lookup(f2ptr cause, f2ptr this, f2ptr causal__type_name);
-f2ptr     raw__semantic_causal_object__causal__is_caused_by__add   (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr      f2__semantic_causal_object__causal__is_caused_by__add   (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr     raw__semantic_causal_object__causal__is_caused_by__remove(f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
-f2ptr      f2__semantic_causal_object__causal__is_caused_by__remove(f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr     raw__semantic_causal_object__type_create                     (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_causal_object__new                             (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_causal_object__new                             (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_causal_object__is_type                         (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_causal_object__is_type                         (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_causal_object__type                            (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_causal_object__type                            (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_causal_object__causal__causes__lookup_set      (f2ptr cause, f2ptr this, f2ptr causal__type_name);
+f2ptr      f2__semantic_causal_object__causal__causes__lookup_set      (f2ptr cause, f2ptr this, f2ptr causal__type_name);
+f2ptr     raw__semantic_causal_object__causal__causes__add             (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr      f2__semantic_causal_object__causal__causes__add             (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr     raw__semantic_causal_object__causal__causes__remove          (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr      f2__semantic_causal_object__causal__causes__remove          (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr     raw__semantic_causal_object__causal__is_caused_by__lookup_set(f2ptr cause, f2ptr this, f2ptr causal__type_name);
+f2ptr      f2__semantic_causal_object__causal__is_caused_by__lookup_set(f2ptr cause, f2ptr this, f2ptr causal__type_name);
+f2ptr     raw__semantic_causal_object__causal__is_caused_by__add       (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr      f2__semantic_causal_object__causal__is_caused_by__add       (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr     raw__semantic_causal_object__causal__is_caused_by__remove    (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
+f2ptr      f2__semantic_causal_object__causal__is_caused_by__remove    (f2ptr cause, f2ptr this, f2ptr causal__type_name, f2ptr causal_object);
 
 // **
 

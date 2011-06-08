@@ -495,7 +495,8 @@ f2ptr f2__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr k
 export_cefunk3(semantic_frame__lookup_type_var_value, this, key_type, key, 0, "Returns the one value associated with the key_type and key.");
 
 
-f2ptr raw__semantic_frame__replace_type_var_value__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  assert_argument_type(semantic_frame, this);
   f2ptr current_value = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
   if (raw__larva__is_type(cause, current_value)) {
     return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list12__new(cause,
@@ -505,17 +506,12 @@ f2ptr raw__semantic_frame__replace_type_var_value__thread_unsafe(f2ptr cause, f2
 															    new__symbol(cause, "key_type"), key_type,
 															    new__symbol(cause, "key"),      key,
 															    new__symbol(cause, "suberror"), current_value))));
-  } else {
-    if (! raw__eq(cause, current_value, value)) {
-      assert_value(raw__semantic_frame__remove(cause, this, key_type, key, current_value));
-      return raw__semantic_frame__add(cause, this, key_type, key, value);
-    }
   }
-  return nil;
-}
-
-f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
-  assert_argument_type(semantic_frame, this);
+  if (raw__eq(cause, current_value, value)) {
+    return nil;
+  }
+  assert_value(raw__semantic_frame__remove__handle_before_callbacks(cause, this, key_type, key, current_value));
+  assert_value(raw__semantic_frame__add__handle_before_callbacks(   cause, this, key_type, key, value));
   /*
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
@@ -539,7 +535,13 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
     } while (keep_looping);
   }
   */
-  f2ptr result = raw__semantic_frame__replace_type_var_value__thread_unsafe(cause, this, key_type, key, value);
+  f2ptr result = nil;
+  {
+    result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
+    if (! raw__larva__is_type(cause, result)) {
+      result = raw__semantic_frame__add__without_callbacks(cause, this, key_type, key, value);
+    }
+  }
   /*
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
@@ -547,6 +549,8 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
     f2__cmutex__unlock(cause, frame_mutate_cmutex);
   }
   */
+  assert_value(raw__semantic_frame__remove__handle_after_callbacks(cause, this, key_type, key, current_value));
+  assert_value(raw__semantic_frame__add__handle_after_callbacks(   cause, this, key_type, key, value));
   return result;
 }
 

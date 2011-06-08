@@ -210,7 +210,7 @@ f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
 
 // semantic_frame
 
-def_ceframe7(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame_mutate_cmutex, frame);
+def_ceframe8(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame_mutate_cmutex, read_count, write_in_progress, frame);
 
 f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
@@ -228,12 +228,17 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
       trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
       trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
     }
+    f2ptr frame_mutate_cmutex = f2__cmutex__new(cause);
+    f2ptr read_count          = f2integer__new(cause, 0);
+    f2ptr write_in_progress   = nil;
     f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"),              semantic_realm);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_add"),                   trace_add);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
-    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_mutate_cmutex"),         f2__cmutex__new(cause));
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_mutate_cmutex"),         frame_mutate_cmutex);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "read_count"),                  read_count);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "write_in_progress"),           write_in_progress);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);
   }
   return this;
@@ -871,26 +876,27 @@ f2ptr f2__object__semantic__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2pt
 export_cefunk3(object__semantic__get__apply, this, slot, args, 0, "");
 
 
+f2ptr f2__object__semantic__set__thread_unsafe(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr current_value = f2__object__semantic__get__thread_unsafe(cause, this, slot, nil);
+  if (raw__larva__is_type(cause, current_value)) {
+    return f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list12__new(cause,
+															  new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-set"),
+															  new__symbol(cause, "this"),     this,
+															  new__symbol(cause, "slot"),     slot,
+															  new__symbol(cause, "args"),     args,
+															  new__symbol(cause, "suberror"), current_value))));
+  } else {
+    f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
+    return f2__object__semantic__add(cause, this, slot, args);
+  }
+}
+
 f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
-  f2ptr result = nil;
   f2__cmutex__lock(cause, frame_mutate_cmutex);
-  {
-    f2ptr current_value = f2__object__semantic__get__thread_unsafe(cause, this, slot, nil);
-    if (raw__larva__is_type(cause, current_value)) {
-      result = f2larva__new(cause, 2347, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list12__new(cause,
-															      new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
-															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-set"),
-															      new__symbol(cause, "this"),     this,
-															      new__symbol(cause, "slot"),     slot,
-															      new__symbol(cause, "args"),     args,
-															      new__symbol(cause, "suberror"), current_value))));
-    } else {
-      f2__object__semantic__remove(cause, this, slot, f2cons__new(cause, current_value, nil));
-      result = f2__object__semantic__add(cause, this, slot, args);
-    }
-  }
+  f2ptr result = f2__object__semantic__set__thread_unsafe(cause, this, slot, args);
   f2__cmutex__unlock(cause, frame_mutate_cmutex);
   return result;
 }

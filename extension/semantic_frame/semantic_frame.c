@@ -511,6 +511,7 @@ f2ptr raw__semantic_frame__replace_type_var_value__thread_unsafe(f2ptr cause, f2
       return raw__semantic_frame__add(cause, this, key_type, key, value);
     }
   }
+  return nil;
 }
 
 f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {

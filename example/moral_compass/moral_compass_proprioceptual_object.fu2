@@ -30,15 +30,15 @@
        [= pitch   initial-pitch]
        [= roll    initial-roll]]]
 
-[deframe moral_compass_proprioceptual_object [frame] [object_type
+[deframe moral_compass_proprioceptual_object [frame] [physical_object_type
 						      position
 						      orientation]
-  [new [initial-object_type
+  [new [initial-physical_object_type
 	initial-position
 	initial-orientation]
-       [= object_type initial-object_type]
-       [= position    initial-position]
-       [= orientation initial-orientation]
+       [= physical_object_type initial-physical_object_type]
+       [= position             initial-position]
+       [= orientation          initial-orientation]
        ]]
 
 

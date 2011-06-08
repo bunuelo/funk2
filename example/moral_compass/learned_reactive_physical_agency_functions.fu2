@@ -153,24 +153,24 @@ ideas: look carefully for - move to a different place in order to see
 	  sequence]
     match]]
 
-[defunk visual_objects_contain_object_type [visual_objects object_type] 
+[defunk visual_objects_contain_physical_object_type [visual_objects physical_object_type] 
   [let [[list_of_object_names
 	 [mapcar      [funk [object]
 			    [have object lookup `phenomenal_name]]
 		      visual_objects]]]
     
     
-    [list-contains_substring list_of_object_names object_type]
+    [list-contains_substring list_of_object_names physical_object_type]
     ]]
 
-[deftypefunk learned_reactive_physical_agency get visual_objects_contain_object_type_closest_match [visual_objects object_type] 
+[deftypefunk learned_reactive_physical_agency get visual_objects_contain_physical_object_type_closest_match [visual_objects physical_object_type] 
   [let [[list_of_object_names
 	 [mapcar      [funk [object]
 			    [have object lookup `phenomenal_name]]
 		      visual_objects]]]
     
     
-    [have this find_closest_object [list-contains_substring_multiple_match list_of_object_names object_type]]
+    [have this find_closest_object [list-contains_substring_multiple_match list_of_object_names physical_object_type]]
     ]]
 
 
@@ -872,30 +872,30 @@ ideas: look carefully for - move to a different place in order to see
 
 
 '***************************Look carefully for********************'
-[deftypefunk look_carefully_for_resource execute look_carefully_for [desired_object_type]
+[deftypefunk look_carefully_for_resource execute look_carefully_for [desired_physical_object_type]
   [let* [[body [get this body]]
 	 [mind  [get body mind]]
 	 [name  [get body name]]]
     [let [[patience 15]]
-      [have this think_to_self 'look_carefully_for activated' desired_object_type]
+      [have this think_to_self 'look_carefully_for activated' desired_physical_object_type]
       [while [> patience 0]
 	[have this think_to_self 'I still have ' patience 'patience']
 	[wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 	[mind-wait_to_call mind learned_reactive physical level_pitch]
 	`[print [get [get this agency] visual_objects]]
-	`[print [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]
+	`[print [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]
 	[if [or [null [get [get this agency] visual_objects]]
-		[null [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]]
+		[null [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]]
 	    [prog [have this think_to_self  'no objects in view']
 		  [mind-wait_to_call mind learned_reactive physical look_at_floor]
 		  [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 		  [if [or [null [get [get this agency] visual_objects]]
-			  [null [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]]
+			  [null [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]]
 		      [prog [have this think_to_self 'still no objects in view after looking down, preparing to look up']
 			    [mind-wait_to_call mind learned_reactive physical look_at_sky]
 			    [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			    [if [or [null [get [get this agency] visual_objects]] 
-				    [null [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]] 
+				    [null [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]] 
 				[prog [have this think_to_self 'still no objects in view after looking up, preparing to level pitch and turn left']
 				      [mind-wait_to_call mind learned_reactive physical level_pitch]
 				      [mind-wait_to_call mind learned_reactive physical turn_left 1  200.0]
@@ -1057,7 +1057,7 @@ ideas: look carefully for - move to a different place in order to see
 '*****************Look for vertically*******************************'
 
 
-[deftypefunk look_for_vertically_resource execute look_for_vertically [desired_object_type]
+[deftypefunk look_for_vertically_resource execute look_for_vertically [desired_physical_object_type]
   
   [let* [[body  [get this body]]
 	 [mind  [get body mind]]
@@ -1068,20 +1068,20 @@ ideas: look carefully for - move to a different place in order to see
 	 [my_current_object nil]
 	 
 	 ]
-    [have this-resource think_to_self 'look_for_vertically activated' desired_object_type]
+    [have this-resource think_to_self 'look_for_vertically activated' desired_physical_object_type]
     [labels [[vertical_search []
 			      [wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 			      [if [and [get [get this agency] visual_objects] 
-				       [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]
-				  [= my_current_object [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]
+				       [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]
+				  [= my_current_object [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]
 				[prog 
 				 [if [null already_searched_down]
 				     [prog [= already_search_down t]
-					   [have this-resource think_to_self 'havent found '  desired_object_type  ',searching downward']
+					   [have this-resource think_to_self 'havent found '  desired_physical_object_type  ',searching downward']
 					   [mind-wait_to_call mind learned_reactive physical look_down 1 250]
 					   [vertical_search]
 					   ]
-				   [prog [have this-resource think_to_self 'havent found '  desired_object_type  ',searching upward']	
+				   [prog [have this-resource think_to_self 'havent found '  desired_physical_object_type  ',searching upward']	
 					 [mind-wait_to_call mind learned_reactive physical look_up 1 500]
 					 [horizontal_search]
 					 ]]]]]
@@ -1090,8 +1090,8 @@ ideas: look carefully for - move to a different place in order to see
 				
 				[wait-for-trigger [get [get mind resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
 				[if [and [get [get this agency] visual_objects] 
-					 [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]
-				    [= my_current_object [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]
+					 [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]
+				    [= my_current_object [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]
 				  [prog 
 					 [have this-resource think_to_self  'no desired object type in view']
 					 [mind-wait_to_call mind learned_reactive physical level_pitch]

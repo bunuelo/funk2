@@ -166,8 +166,8 @@
 		  [prog [have this           add_new_trace_story_event [get cause-resource name] `activate [frame direct_object `me]]
 			[have cause-resource add_new_trace_story_event `I                        `activate [frame direct_object name]]]]
 	      nil]
-      [error object_type     `resource
-	     object_typefunk `activate
+      [error bug_object_type     `resource
+	     bug_object_typefunk `activate
 	     error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource execute wait_to_activate [:rest args]

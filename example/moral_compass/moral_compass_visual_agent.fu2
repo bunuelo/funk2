@@ -27,7 +27,7 @@
 
 
 [deframe moral_compass_visual_agent [moral_compass_visual_object] [actions]
-  [new [initial-object_type
+  [new [initial-physical_object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal
 	initial-retina_position_vertical
@@ -36,7 +36,7 @@
 	initial-preposition_frame
 	initial-actions]
        [construct moral_compass_visual_object
-		  initial-object_type
+		  initial-physical_object_type
 		  initial-phenomenal_name
 		  initial-retina_position_horizontal
 		  initial-retina_position_vertical

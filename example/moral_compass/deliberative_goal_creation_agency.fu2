@@ -32,25 +32,25 @@
 [deftypefunk deliberative_goal_creation_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->goal_creation]]
 
-[deftypefunk deliberative_goal_creation_agency execute create_physical_relationship_goal [source_object_type key_type key target_object_type]
-  [let [[goal_resource_name            [get [string-concat [get source_object_type as-string] '_'
+[deftypefunk deliberative_goal_creation_agency execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+  [let [[goal_resource_name            [get [string-concat [get source_physical_object_type as-string] '_'
 							   [get key_type           as-string] '_'
 							   [get key                as-string] '_'
-							   [get target_object_type as-string] '_goal_knowledge'] as-symbol]]
+							   [get target_physical_object_type as-string] '_goal_knowledge'] as-symbol]]
 	[semantic_goal                 [new semantic_goal [get [get this mind] semantic_realm]]]
 	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_type_knowledge_to_physical_type_event_knowledge]
 					    end_of_physical_type_event_changes_trigger]]]
     `[terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
     [set semantic_goal phenomenal_name goal_resource_name]
     [let [[is_occurring_funk [funk []
-				   [let [[semantic_source_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type source_object_type]]
-					 [semantic_target_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type target_object_type]]]
+				   [let [[semantic_source_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type source_physical_object_type]]
+					 [semantic_target_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type target_physical_object_type]]]
 				     [let [[relation_symbolic_name [get [string-concat [get key_type as-string]
 										       '_'
 										       [get key as-string]]
 									as-symbol]]]
-				       `[terminal_format standard-terminal '\n' goal_resource_name ' checking if ' semantic_source_type ' has ' relation_symbolic_name ' relation with ' target_object_type]
-				       [let [[relation_set [have semantic_source_type lookup relation_symbolic_name target_object_type]]]
+				       `[terminal_format standard-terminal '\n' goal_resource_name ' checking if ' semantic_source_type ' has ' relation_symbolic_name ' relation with ' target_physical_object_type]
+				       [let [[relation_set [have semantic_source_type lookup relation_symbolic_name target_physical_object_type]]]
 					 [if [not [or [null relation_set]
 						      [get relation_set is_empty]]]
 					     t
@@ -82,13 +82,13 @@
 [deframe create_physical_relationship_goal_resource [traced_resource] []
   [new []
        [construct traced_resource `create_physical_relationship_goal
-		  [funk [source_object_type key_type key target_object_type]
-			[have this execute_resource_raw_funk source_object_type key_type key target_object_type]
+		  [funk [source_physical_object_type key_type key target_physical_object_type]
+			[have this execute_resource_raw_funk source_physical_object_type key_type key target_physical_object_type]
 			]]
        nil]]
 
-[deftypefunk create_physical_relationship_goal_resource execute execute_resource_raw_funk [source_object_type key_type key target_object_type]
-  [have [get this agency] create_physical_relationship_goal source_object_type key_type key target_object_type]]
+[deftypefunk create_physical_relationship_goal_resource execute execute_resource_raw_funk [source_physical_object_type key_type key target_physical_object_type]
+  [have [get this agency] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
 
 

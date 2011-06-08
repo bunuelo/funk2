@@ -398,8 +398,8 @@
 							[achieved          nil]] 
   [new []
        [construct traced_resource `look_carefully_for
-		  [funk [desired_object_type]
-			[have this-resource look_carefully_for desired_object_type]]]
+		  [funk [desired_physical_object_type]
+			[have this-resource look_carefully_for desired_physical_object_type]]]
 	       nil]]
 
 
@@ -412,8 +412,8 @@
 							 [achieved          nil]]
   [new []
        [construct traced_resource `look_for_vertically
-		  [funk [desired_object_type]
-			[have this-resource look_for_vertically desired_object_type]]]
+		  [funk [desired_physical_object_type]
+			[have this-resource look_for_vertically desired_physical_object_type]]]
 		
        nil]]
 
@@ -453,14 +453,14 @@
 					      [achieved nil]]
   [new []
        [construct traced_resource `look_for
-		  [funk [desired_object_type]
+		  [funk [desired_physical_object_type]
 			[let* [[body [get this body]]
 			       [mind  [get body mind]]
 			       [name  [get body name]]
 			       
 			       ]
 			  [let [[patience 35]]
-			    [have this-resource think_to_self 'look_for activated' desired_object_type]
+			    [have this-resource think_to_self 'look_for activated' desired_physical_object_type]
 			    [while 
 				[> patience 0]
 			      [have this-resource think_to_self 'I still have' patience ' patience']
@@ -471,18 +471,18 @@
 				   [have this-resource think_to_self  'no objects in view']
 				   [mind-wait_to_call mind learned_reactive physical turn_left 1 360]
 				   ]
-				[if [null [visual_objects_contain_object_type [get [get this agency] visual_objects] desired_object_type]]
+				[if [null [visual_objects_contain_physical_object_type [get [get this agency] visual_objects] desired_physical_object_type]]
 				    [prog [have this-resource think_to_self 'i see these objects:' [get [get this agency] visual_objects]]
 					  [mind-wait_to_call mind learned_reactive physical turn_left 1 360]
 					  [print 'activated turn-left']
 					[= patience [- patience 1]]
 					]
 				  [prog [= patience 0]
-					[= my_current_object [get [get this agency] visual_objects_contain_object_type_closest_match [get [get this agency] visual_objects] desired_object_type]]
+					[= my_current_object [get [get this agency] visual_objects_contain_physical_object_type_closest_match [get [get this agency] visual_objects] desired_physical_object_type]]
 					[have this-resource think_to_self 'found'my_current_object ]
 					]]]]
 			    [if [null my_current_object]
-				[mind-wait_to_call mind learned_reactive physical look_for_vertically desired_object_type]
+				[mind-wait_to_call mind learned_reactive physical look_for_vertically desired_physical_object_type]
 			      [have this-resource think_to_self 'achieved looking']]]]]]
        nil]]
 

@@ -414,7 +414,7 @@ f2ptr f2__semantic_frame__lookup_set(f2ptr cause, f2ptr this, f2ptr key_type, f2
 export_cefunk3(semantic_frame__lookup_set, this, key_type, key, 0, "Returns the set of values associated with the key_type and key.");
 
 
-f2ptr raw__semantic_frame__get__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr raw__semantic_frame__lookup__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr     value_set           = f2__semantic_frame__lookup_set(cause, this, key_type, key);
   boolean_t found_current_value = boolean__false;
   f2ptr     current_value       = nil;
@@ -452,7 +452,7 @@ f2ptr raw__semantic_frame__get__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key
 }
 
 
-f2ptr raw__semantic_frame__get(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
     boolean_t keep_looping;
@@ -473,7 +473,7 @@ f2ptr raw__semantic_frame__get(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
     } while (keep_looping);
   }
-  f2ptr result = raw__semantic_frame__get__thread_unsafe(cause, this, key_type, key);
+  f2ptr result = raw__semantic_frame__lookup__thread_unsafe(cause, this, key_type, key);
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
     f2ptr read_count = raw__semantic_frame__read_count(cause, this);
@@ -484,9 +484,9 @@ f2ptr raw__semantic_frame__get(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr ke
   return result;
 }
 
-f2ptr f2__semantic_frame__get(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   assert_argument_type(semantic_frame, this);
-  return raw__semantic_frame__get(cause, this, key_type, key);
+  return raw__semantic_frame__lookup(cause, this, key_type, key);
 }
 
 
@@ -968,6 +968,7 @@ f2ptr f2__object__semantic__get__thread_unsafe(f2ptr cause, f2ptr this, f2ptr sl
 
 f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
+  /*
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
     boolean_t keep_looping;
@@ -988,7 +989,9 @@ f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
     } while (keep_looping);
   }
+  */
   f2ptr result = f2__object__semantic__get__thread_unsafe(cause, this, slot, args);
+  /*
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
     f2ptr read_count = raw__semantic_frame__read_count(cause, this);
@@ -996,6 +999,7 @@ f2ptr f2__object__semantic__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
     raw__semantic_frame__read_count__set(cause, this, read_count);
     f2__cmutex__unlock(cause, frame_mutate_cmutex);
   }
+  */
   return result;
 }
 export_cefunk2_and_rest(object__semantic__get, this, slot, args, 0, "");
@@ -1025,6 +1029,7 @@ f2ptr f2__object__semantic__set__thread_unsafe(f2ptr cause, f2ptr this, f2ptr sl
 f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  /*
   {
     boolean_t keep_looping;
     do {
@@ -1045,12 +1050,15 @@ f2ptr f2__object__semantic__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
     } while (keep_looping);
   }
+  */
   f2ptr result = f2__object__semantic__set__thread_unsafe(cause, this, slot, args);
+  /*
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
     raw__semantic_frame__write_in_progress__set(cause, this, nil);
     f2__cmutex__unlock(cause, frame_mutate_cmutex);
   }
+  */
   return result;
 }
 export_cefunk2_and_rest(object__semantic__set, this, slot, args, 0, "");
@@ -1085,6 +1093,7 @@ f2ptr f2__object__semantic__assure_set__thread_unsafe(f2ptr cause, f2ptr this, f
 f2ptr f2__object__semantic__assure_set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   assert_argument_type(semantic_frame, this);
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  /*
   {
     boolean_t keep_looping;
     do {
@@ -1105,12 +1114,15 @@ f2ptr f2__object__semantic__assure_set(f2ptr cause, f2ptr this, f2ptr slot, f2pt
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
     } while (keep_looping);
   }
+  */
   f2ptr result = f2__object__semantic__assure_set__thread_unsafe(cause, this, slot, args);
+  /*
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
     raw__semantic_frame__write_in_progress__set(cause, this, nil);
     f2__cmutex__unlock(cause, frame_mutate_cmutex);
   }
+  */
   return result;
 }
 export_cefunk2_and_rest(object__semantic__assure_set, this, slot, args, 0, "");

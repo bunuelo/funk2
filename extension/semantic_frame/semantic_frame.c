@@ -453,7 +453,6 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
 
 
 f2ptr raw__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
-  /*
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
     boolean_t keep_looping;
@@ -474,9 +473,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr 
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
     } while (keep_looping);
   }
-  */
   f2ptr result = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
-  /*
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
     f2ptr read_count = raw__semantic_frame__read_count(cause, this);
@@ -484,7 +481,6 @@ f2ptr raw__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr 
     raw__semantic_frame__read_count__set(cause, this, read_count);
     f2__cmutex__unlock(cause, frame_mutate_cmutex);
   }
-  */
   return result;
 }
 
@@ -512,43 +508,41 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
   }
   assert_value(raw__semantic_frame__remove__handle_before_callbacks(cause, this, key_type, key, current_value));
   assert_value(raw__semantic_frame__add__handle_before_callbacks(   cause, this, key_type, key, value));
-  /*
-  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   {
-    boolean_t keep_looping;
-    do {
-      f2ptr read_count;
-      f2ptr write_in_progress;
-      f2__cmutex__lock(cause, frame_mutate_cmutex);
-      read_count        = raw__semantic_frame__read_count(cause, this);
-      write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
-      if ((f2integer__i(read_count, cause) != 0) ||
-	  (write_in_progress != nil)) {
-	keep_looping = boolean__true;
-	f2__this__fiber__yield(cause);
-      } else {
-	keep_looping = boolean__false;
-	write_in_progress = f2bool__new(boolean__true);
-	raw__semantic_frame__write_in_progress__set(cause, this, write_in_progress);
+    f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+    {
+      boolean_t keep_looping;
+      do {
+	f2ptr read_count;
+	f2ptr write_in_progress;
+	f2__cmutex__lock(cause, frame_mutate_cmutex);
+	read_count        = raw__semantic_frame__read_count(cause, this);
+	write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
+	if ((f2integer__i(read_count, cause) != 0) ||
+	    (write_in_progress != nil)) {
+	  keep_looping = boolean__true;
+	  f2__this__fiber__yield(cause);
+	} else {
+	  keep_looping = boolean__false;
+	  write_in_progress = f2bool__new(boolean__true);
+	  raw__semantic_frame__write_in_progress__set(cause, this, write_in_progress);
+	}
+	f2__cmutex__unlock(cause, frame_mutate_cmutex);
+      } while (keep_looping);
+    }
+    f2ptr result = nil;
+    {
+      result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
+      if (! raw__larva__is_type(cause, result)) {
+	result = raw__semantic_frame__add__without_callbacks(cause, this, key_type, key, value);
       }
+    }
+    {
+      f2__cmutex__lock(cause, frame_mutate_cmutex);
+      raw__semantic_frame__write_in_progress__set(cause, this, nil);
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
-    } while (keep_looping);
-  }
-  */
-  f2ptr result = nil;
-  {
-    result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
-    if (! raw__larva__is_type(cause, result)) {
-      result = raw__semantic_frame__add__without_callbacks(cause, this, key_type, key, value);
     }
   }
-  /*
-  {
-    f2__cmutex__lock(cause, frame_mutate_cmutex);
-    raw__semantic_frame__write_in_progress__set(cause, this, nil);
-    f2__cmutex__unlock(cause, frame_mutate_cmutex);
-  }
-  */
   assert_value(raw__semantic_frame__remove__handle_after_callbacks(cause, this, key_type, key, current_value));
   assert_value(raw__semantic_frame__add__handle_after_callbacks(   cause, this, key_type, key, value));
   return result;

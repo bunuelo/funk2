@@ -414,6 +414,82 @@ f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr 
 export_cefunk3(semantic_frame__lookup, this, key_type, key, 0, "Returns the values associated with the key_type and key.");
 
 
+f2ptr raw__semantic_frame__get__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  f2ptr     value_set           = f2__semantic_frame__lookup(cause, this, key_type, key);
+  boolean_t found_current_value = boolean__false;
+  f2ptr     current_value       = nil;
+  if (value_set != nil) {
+    if (! raw__set__is_type(cause, value_set)) {
+      return f2larva__new(cause, 92734, f2__bug__new(cause, f2integer__new(cause, 92734), f2__frame__new(cause, f2list10__new(cause,
+															      new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_slot_contains_non_set"),
+															      new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-get"),
+															      new__symbol(cause, "this"),     this,
+															      new__symbol(cause, "key_type"), key_type,
+															      new__symbol(cause, "key"),      key))));
+    }
+    set__iteration(cause, value_set, value,
+		   if (found_current_value) {
+		     return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list10__new(cause,
+																	     new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_has_more_than_one_value_in_slot"),
+																	     new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-get"),
+																	     new__symbol(cause, "this"),     this,
+																	     new__symbol(cause, "key_type"), key_type,
+																	     new__symbol(cause, "key"),      key))));
+		   }
+		   current_value = value;
+		   found_current_value = boolean__true;
+		   );
+  }
+  if (! found_current_value) {
+    return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list10__new(cause,
+															    new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_does_not_have_slot_value"),
+															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-get"),
+															    new__symbol(cause, "this"),     this,
+															    new__symbol(cause, "key_type"), key_type,
+															    new__symbol(cause, "key"),      key))));
+  }
+  return current_value;
+}
+
+
+f2ptr raw__semantic_frame__get(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  {
+    boolean_t keep_looping;
+    do {
+      f2ptr read_count;
+      f2ptr write_in_progress;
+      f2__cmutex__lock(cause, frame_mutate_cmutex);
+      read_count        = raw__semantic_frame__read_count(cause, this);
+      write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
+      if (write_in_progress != nil) {
+	keep_looping = boolean__true;
+	f2__this__fiber__yield(cause);
+      } else {
+	keep_looping = boolean__false;
+	read_count = f2integer__new(cause, f2integer__i(read_count, cause) + 1);
+	raw__semantic_frame__read_count__set(cause, this, read_count);
+      }
+      f2__cmutex__unlock(cause, frame_mutate_cmutex);
+    } while (keep_looping);
+  }
+  f2ptr result = raw__semantic_frame__get__thread_unsafe(cause, this, key_type, key);
+  {
+    f2__cmutex__lock(cause, frame_mutate_cmutex);
+    f2ptr read_count = raw__semantic_frame__read_count(cause, this);
+    read_count       = f2integer__new(cause, f2integer__i(read_count, cause) - 1);
+    raw__semantic_frame__read_count__set(cause, this, read_count);
+    f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  }
+  return result;
+}
+
+f2ptr f2__semantic_frame__get(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+  assert_argument_type(semantic_frame, this);
+  return raw__semantic_frame__get(cause, this, key_type, key);
+}
+
+
 f2ptr raw__semantic_frame__lookup_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr set = assert_value(raw__semantic_frame__lookup(cause, this, key_type, key));
   if (set == nil) {

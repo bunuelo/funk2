@@ -414,7 +414,7 @@ f2ptr f2__semantic_frame__lookup_set(f2ptr cause, f2ptr this, f2ptr key_type, f2
 export_cefunk3(semantic_frame__lookup_set, this, key_type, key, 0, "Returns the set of values associated with the key_type and key.");
 
 
-f2ptr raw__semantic_frame__lookup__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr     value_set           = f2__semantic_frame__lookup_set(cause, this, key_type, key);
   boolean_t found_current_value = boolean__false;
   f2ptr     current_value       = nil;
@@ -452,8 +452,9 @@ f2ptr raw__semantic_frame__lookup__thread_unsafe(f2ptr cause, f2ptr this, f2ptr 
 }
 
 
-f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr raw__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  /*
   {
     boolean_t keep_looping;
     do {
@@ -473,7 +474,9 @@ f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
       f2__cmutex__unlock(cause, frame_mutate_cmutex);
     } while (keep_looping);
   }
-  f2ptr result = raw__semantic_frame__lookup__thread_unsafe(cause, this, key_type, key);
+  */
+  f2ptr result = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
+  /*
   {
     f2__cmutex__lock(cause, frame_mutate_cmutex);
     f2ptr read_count = raw__semantic_frame__read_count(cause, this);
@@ -481,13 +484,74 @@ f2ptr raw__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr
     raw__semantic_frame__read_count__set(cause, this, read_count);
     f2__cmutex__unlock(cause, frame_mutate_cmutex);
   }
+  */
   return result;
 }
 
-f2ptr f2__semantic_frame__lookup(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
+f2ptr f2__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   assert_argument_type(semantic_frame, this);
-  return raw__semantic_frame__lookup(cause, this, key_type, key);
+  return raw__semantic_frame__lookup_type_var_value(cause, this, key_type, key);
 }
+export_cefunk3(semantic_frame__lookup_type_var_value, this, key_type, key, 0, "Returns the one value associated with the key_type and key.");
+
+
+f2ptr raw__semantic_frame__replace_type_var_value__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr current_value = f2__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
+  if (raw__larva__is_type(cause, current_value)) {
+    return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list12__new(cause,
+															    new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-replace"),
+															    new__symbol(cause, "this"),     this,
+															    new__symbol(cause, "key_type"), key_type,
+															    new__symbol(cause, "key"),      key,
+															    new__symbol(cause, "suberror"), current_value))));
+  } else {
+    assert_value(raw__semantic_frame__remove(cause, this, key_type, key, current_value));
+    return raw__semantic_frame__add(cause, this, key_type, key, value);
+  }
+}
+
+f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  assert_argument_type(semantic_frame, this);
+  /*
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  {
+    boolean_t keep_looping;
+    do {
+      f2ptr read_count;
+      f2ptr write_in_progress;
+      f2__cmutex__lock(cause, frame_mutate_cmutex);
+      read_count        = raw__semantic_frame__read_count(cause, this);
+      write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
+      if ((f2integer__i(read_count, cause) != 0) ||
+	  (write_in_progress != nil)) {
+	keep_looping = boolean__true;
+	f2__this__fiber__yield(cause);
+      } else {
+	keep_looping = boolean__false;
+	write_in_progress = f2bool__new(boolean__true);
+	raw__semantic_frame__write_in_progress__set(cause, this, write_in_progress);
+      }
+      f2__cmutex__unlock(cause, frame_mutate_cmutex);
+    } while (keep_looping);
+  }
+  */
+  f2ptr result = raw__semantic_frame__replace_type_var_value__thread_unsafe(cause, this, key_type, key, value);
+  /*
+  {
+    f2__cmutex__lock(cause, frame_mutate_cmutex);
+    raw__semantic_frame__write_in_progress__set(cause, this, nil);
+    f2__cmutex__unlock(cause, frame_mutate_cmutex);
+  }
+  */
+  return result;
+}
+
+f2ptr f2__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  assert_argument_type(semantic_frame, this);
+  return raw__semantic_frame__replace_type_var_value(cause, this, key_type, key, value);
+}
+export_cefunk4(semantic_frame__replace_type_var_value, this, key_type, key, value, 0, "");
 
 
 f2ptr raw__semantic_frame__lookup_set_contains(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -743,6 +807,8 @@ f2ptr f2__semantic_frame_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add"),                                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__add")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_set"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "lookup_type_var_value"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__lookup_type_var_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "replace_type_var_value"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__replace_type_var_value")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "lookup_set_contains"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__lookup_set_contains")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "assure_exists"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__assure_exists")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__remove_all")));}

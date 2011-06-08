@@ -506,6 +506,7 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
   if (raw__eq(cause, current_value, value)) {
     return nil;
   }
+  f2ptr result = nil;
   assert_value(raw__semantic_frame__remove__handle_before_callbacks(cause, this, key_type, key, current_value));
   assert_value(raw__semantic_frame__add__handle_before_callbacks(   cause, this, key_type, key, value));
   {
@@ -530,7 +531,6 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
 	f2__cmutex__unlock(cause, frame_mutate_cmutex);
       } while (keep_looping);
     }
-    f2ptr result = nil;
     {
       result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
       if (! raw__larva__is_type(cause, result)) {

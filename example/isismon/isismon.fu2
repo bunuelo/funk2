@@ -130,7 +130,8 @@
 [deframe isismon_preferences [frame] [isis_world_server_hostname
 				      project_directory
 				      agent_directory
-				      movie_export_directory]
+				      movie_export_directory
+				      cameras_enabled]
   [new []
        [have this create_default_directories]
        [have this fix_invalid_with_defaults]]]
@@ -142,17 +143,19 @@
   [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
 [deftypefunk isismon_preferences execute fix_invalid_with_defaults []
-  [if [null [have this lookup `isis_world_server_hostname]] [have this add `isis_world_server_hostname 'localhost']]
-  [if [null [have this lookup `project_directory]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
-  [if [null [have this lookup `agent_directory]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
-  [if [null [have this lookup `movie_export_directory]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
+  [if [not [get this contains `isis_world_server_hostname]] [have this add `isis_world_server_hostname 'localhost']]
+  [if [not [get this contains `project_directory]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+  [if [not [get this contains `agent_directory]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
+  [if [not [get this contains `movie_export_directory]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
+  [if [not [get this contains `cameras_enabled]]            [have this add `cameras_enabled            t]]]
+
 
 [deftypefunk isismon_preferences execute save [filename]
   [lick-to-file this filename]]
 
 [defunk isismon_preferences-load [filename]
   [let [[result [shelter [unlick-from-file filename]]]]
-    [if [eq result `bug]
+    [if [is-type `bug result]
 	nil
       [prog [have result fix_invalid_with_defaults]
 	    result]]]]
@@ -169,6 +172,8 @@
 					    isis_world_server_hostname__hbox
 					    isis_world_server_hostname__title_label
 					    isis_world_server_hostname__data_entry
+					    
+					    cameras_enabled__check_menu_item
 					    
 					    project_directory
 					    project_directory__hbox
@@ -207,6 +212,10 @@
 	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
 	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_entry    nil nil 0]
 	 [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]]
+       
+       [= cameras_enabled__check_menu_item 'Cameras Enabled']
+       [have vbox pack_start cameras_enabled__check_menu_item nil nil 0]
+       [set cameras_enabled__check_menu_item active [get [get isismon preferences] cameras_enabled]]
        
        [= project_directory [get [get isismon preferences] project_directory]]
        [= project_directory__hbox [gtk-hbox-new 0]]
@@ -308,6 +317,7 @@
 		     [set preferences project_directory          project_directory]
 		     [set preferences agent_directory            agent_directory]
 		     [set preferences movie_export_directory     movie_export_directory]
+		     [set preferences cameras_enabled            [get cameras_enabled__check_menu_item active]]
 		     [set isismon preferences preferences]
 		     [have isismon save_preferences]]
 		   [have window destroy]]

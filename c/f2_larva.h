@@ -55,13 +55,12 @@
       assert_value_temp;						\
     })
 
-#define error(frame_args) {						\
-    return f2__larva__error__new(cause,					\
-				 new__string(cause, (char*)__FILE__),	\
-				 f2integer__new(cause, __LINE__),	\
-				 new__symbol(cause, (char*)__FUNCTION__), \
-				 frame_args);				\
-  }
+#define new__error(frame_args)						\
+  f2__larva__error__new(cause,						\
+			new__string(cause, (char*)__FILE__),		\
+			f2integer__new(cause, __LINE__),		\
+			new__symbol(cause, (char*)__FUNCTION__),	\
+			frame_args);
 
 f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr current_funktion_name,
 					    f2ptr correct_type, f2ptr actual_type, f2ptr argument_name, f2ptr argument_value);

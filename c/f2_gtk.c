@@ -1784,7 +1784,7 @@ boolean_t funk2_gtk__check_button__get_active(funk2_gtk_t* this, GtkCheckButton*
 void funk2_gtk__check_button__set_active(funk2_gtk_t* this, GtkCheckButton* check_button, boolean_t active) {
   {
     gdk_threads_enter();
-    gtk_check_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), active ? TRUE : FALSE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), active ? TRUE : FALSE);
     gdk_threads_leave();
   }
 }

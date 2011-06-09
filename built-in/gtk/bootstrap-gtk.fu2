@@ -67,7 +67,6 @@
 [deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer [get this widget]]]
 
 'GtkProgressBar'
-[deftypefunk gtk_progress_bar get     widget      []            this]
 [deftypefunk gtk_progress_bar set     fraction    [fraction]    [gtk-progress_bar-set_fraction    [get this widget] fraction]]
 [deftypefunk gtk_progress_bar set     text        [text]        [gtk-progress_bar-set_text        [get this widget] text]]
 [deftypefunk gtk_progress_bar set     orientation [orientation] [gtk-progress_bar-set_orientation [get this widget] orientation]]
@@ -92,12 +91,10 @@
 
 'GtkBox'
 
-[deftypefunk gtk_box get     widget     []                          this]
 [deftypefunk gtk_box execute pack_start [child expand fill padding] [gtk-box-pack_start [get this widget] [get child widget] expand fill padding]]
 
 'GtkTextBuffer'
 
-[deftypefunk gtk_text_buffer get     widget       []      this]
 [deftypefunk gtk_text_buffer get     start_iter   []      [gtk-text_buffer-get_start_iter [get this widget]]]
 [deftypefunk gtk_text_buffer execute select_range [range] [gtk-text_buffer-select_range   [get this widget] range]]
 [deftypefunk gtk_text_buffer set     select_range [range] [gtk-text_buffer-select_range   [get this widget] range]]
@@ -110,19 +107,16 @@
 
 'GtkLabel'
 
-[deftypefunk gtk_label get widget     []           this]
 [deftypefunk gtk_label set text       [text]       [gtk-label-set_text       [get this widget] text]]
 [deftypefunk gtk_label set selectable [selectable] [gtk-label-set_selectable [get this widget] selectable]]
 
 'GtkEntry'
 
-[deftypefunk gtk_entry get widget []     this]
 [deftypefunk gtk_entry get text   []     [gtk-entry-get_text [get this widget]]]
 [deftypefunk gtk_entry set text   [text] [gtk-entry-set_text [get this widget] text]]
 
 'GtkImage'
 
-[deftypefunk gtk_image get widget []       this]
 [deftypefunk gtk_image set pixbuf [pixbuf] [gtk-image-set_from_pixbuf [get this widget] pixbuf]]
 [deftypefunk gtk_image set image  [image]
   [let [[pixbuf [gtk-pixbuf-new_from_image image]]]
@@ -148,7 +142,6 @@
 
 'GtkMenuBar'
 
-[deftypefunk gtk_menu_bar get     widget []      this]
 [deftypefunk gtk_menu_bar execute append [child] [gtk-menu_bar-append [get this widget] [get child widget]]]
 
 'GtkMenuItem'
@@ -162,7 +155,6 @@
 
 'GtkMenu'
 
-[deftypefunk gtk_menu get     widget []      this]
 [deftypefunk gtk_menu execute append [child] [gtk-menu-append [get this widget] [get child widget]]]
 
 'GtkCheckButton'
@@ -172,7 +164,6 @@
 
 'GtkFileChooserDialog'
 
-[deftypefunk gtk_file_chooser_dialog get     widget                  []                      this]
 [deftypefunk gtk_file_chooser_dialog set     current_folder          [filename]              [gtk-file_chooser_dialog-set_current_folder        [get this widget] filename]]
 [deftypefunk gtk_file_chooser_dialog set     current_name            [current_name]          [gtk-file_chooser_dialog-set_current_name          [get this widget] current_name]]
 [deftypefunk gtk_file_chooser_dialog set     filename                [filename]              [gtk-file_chooser_dialog-set_filename              [get this widget] filename]]

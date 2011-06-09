@@ -110,6 +110,9 @@
       [have this update_retina_image_sequence]]
   [= sense_frame [have this raw_sense_world]]]
 
+[deftypefunk isis_agent_body set all_cameras_enabled [enabled]
+  [= retina_image_sequence_enabled enabled]]
+
 [deftypefunk isis_agent_body get objects []
   [print 'This funktion is deprecated.']
   [get [get this mind] objects]]

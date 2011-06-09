@@ -213,7 +213,7 @@
 	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_entry    nil nil 0]
 	 [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]]
        
-       [= cameras_enabled__check_button [gtk-check_button-new 'Cameras Enabled']]
+       [= cameras_enabled__check_button [gtk-check_button-new 'Cameras Enabled by Default in New Projects']]
        [have vbox pack_start cameras_enabled__check_button nil nil 0]
        [set cameras_enabled__check_button active [get [get isismon preferences] cameras_enabled]]
        
@@ -350,6 +350,7 @@
 				  stop_button
 				  step_button
 				  update_button
+				  cameras_enabled_check_button
 				  
 				  movie_gtk_image
 				  scale
@@ -378,15 +379,19 @@
        [= controller_vbox  [gtk-vbox-new 2]]
        
        [= controller_button_hbox [gtk-hbox-new 2]]
-       [= play_button   [gtk-button-new_with_label 'Play']]
-       [= stop_button   [gtk-button-new_with_label 'Stop']]
-       [= step_button   [gtk-button-new_with_label 'Step 1 Second']]
-       [= update_button [gtk-button-new_with_label 'Update']]
-       [have controller_button_hbox pack_start play_button   nil nil 0]
-       [have controller_button_hbox pack_start stop_button   nil nil 0]
-       [have controller_button_hbox pack_start step_button   nil nil 0]
-       [have controller_button_hbox pack_start update_button nil nil 0]
+       [= play_button                  [gtk-button-new_with_label 'Play']]
+       [= stop_button                  [gtk-button-new_with_label 'Stop']]
+       [= step_button                  [gtk-button-new_with_label 'Step 1 Second']]
+       [= update_button                [gtk-button-new_with_label 'Update']]
+       [= cameras_enabled_check_button [gtk-check_button-new      'Cameras Enabled']]
+       [have controller_button_hbox pack_start play_button                  nil nil 0]
+       [have controller_button_hbox pack_start stop_button                  nil nil 0]
+       [have controller_button_hbox pack_start step_button                  nil nil 0]
+       [have controller_button_hbox pack_start update_button                nil nil 0]
+       [have controller_button_hbox pack_start cameras_enabled_check_button nil nil 0]
        [have controller_vbox pack_start controller_button_hbox nil nil 0]
+       
+       [set cameras_enabled_check_button active [get [get isismon preferences] cameras_enabled]]
        
        [have play_button signal_connect 'clicked'
 	     [funk []
@@ -411,6 +416,12 @@
 	     [funk []
 		   [= need_update t]
 		   [have [get this cycle_trigger] trigger]]
+	     nil]
+       [have cameras_enabled_check_button signal_connect 'toggled'
+	     [funk []
+		   [let [[cameras_enabled [get cameras_enabled_check_button active]]]
+		     [terminal_format standard-terminal '\nIsisMon: Cameras ' [if cameras_enabled 'Enabled' 'Disabled'] '.']
+		     [set isis_world all_cameras_enabled cameras_enabled]]]
 	     nil]
        
        [= entry_hbox [gtk-hbox-new 2]]
@@ -461,6 +472,8 @@
   [terminal_format standard-terminal '\nIsisMon Project creating new IsisWorld.']
   [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]
     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
+    [let [[cameras_enabled [get [get isismon preferences] cameras_enabled]]]
+      [set isis_world all_cameras_enabled cameras_enabled]]
     [have [get this cycle_trigger] trigger]]]
 
 [defunk isismon_project-new_from_file [isismon filename]

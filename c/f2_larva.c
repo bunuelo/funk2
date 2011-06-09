@@ -48,6 +48,16 @@ f2ptr f2__larva__invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr so
 }
 
 
+f2ptr f2__larva__error__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name, f2ptr frame_args) {
+  f2ptr bug_frame = f2__frame__new(cause, frame_args);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),           new__symbol(cause, "error"));
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_filename"),    source_filename);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_line_number"), source_line_number);
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funktion_name"),      funktion_name);
+  return f2larva__new(cause, 13, f2__bug__new(cause, f2integer__new(cause, 13), bug_frame));
+}
+
+
 // **
 
 void f2__larva__reinitialize_globalvars() {

@@ -360,14 +360,18 @@ f2ptr raw__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr elem
       // interval is completely to the left of the center value of this node
       f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
       if (left_node == nil) {
-	return f2larva__new(cause, 23424, nil); // failure to find element
+	error(f2list4__new(cause,
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "failure_to_find_element"),
+			   new__symbol(cause, "element"),  element));
       }
       return raw__interval_tree_node__simple_remove(cause, left_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
     } else {
       // interval is completely to the right of the center value of this node
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
       if (right_node == nil) {
-	return f2larva__new(cause, 23425, nil); // failure to find element
+	error(f2list4__new(cause,
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "failure_to_find_element"),
+			   new__symbol(cause, "element"),  element));
       }
       return raw__interval_tree_node__simple_remove(cause, right_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
     }

@@ -74,6 +74,12 @@
     [have hbox         pack_start   insensitive_button nil nil 0]
     [have hbox         pack_start   shrink_button nil nil 0]
     [have hbox         pack_start   check_button nil nil 0]
+    
+    [have check_button signal_connect 'toggled'
+	  [funk []
+		[terminal_format standard-terminal '\ntoggled check_button active: ' [get check_button active]]]
+	  nil]
+    
     [have vpaned       pack1        hbox nil nil]
     
     [have swindow      add          text_view]

@@ -167,7 +167,8 @@
 
 'GtkCheckButton'
 
-
+[deftypefunk gtk_check_button get active []       [gtk-check_button-get_active [get this widget]]]
+[deftypefunk gtk_check_button set active [active] [gtk-check_button-set_active [get this widget] active]]
 
 'GtkFileChooserDialog'
 

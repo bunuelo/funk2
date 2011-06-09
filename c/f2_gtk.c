@@ -1771,6 +1771,24 @@ GtkCheckButton* funk2_gtk__check_button__new(funk2_gtk_t* this, char* label) {
   return check_button;
 }
 
+boolean_t funk2_gtk__check_button__get_active(funk2_gtk_t* this, GtkCheckButton* check_button) {
+  boolean_t active;
+  {
+    gdk_threads_enter();
+    active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check_button)) ? boolean__true : boolean__false;
+    gdk_threads_leave();
+  }
+  return active;
+}
+
+void funk2_gtk__check_button__set_active(funk2_gtk_t* this, GtkCheckButton* check_button, boolean_t active) {
+  {
+    gdk_threads_enter();
+    gtk_check_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), active ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 // file_chooser_dialog
 
@@ -5006,9 +5024,11 @@ def_pcfunk2(gtk__menu__append, menu, append_widget,
 f2ptr raw__gtk__check_button__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    u64             label__length = raw__string__length(cause, label);
-    u8*             label__str    = (u8*)from_ptr(f2__malloc(label__length + 1));
-    GtkCheckButton* check_button  = funk2_gtk__check_button__new(&(__funk2.gtk), (char*)label__str);
+    u64 label__length = raw__string__length(cause, label);
+    u8* label__str    = (u8*)from_ptr(f2__malloc(label__length + 1));
+    raw__string__str_copy(cause, label, label__str);
+    label__str[label__length] = 0;
+    GtkCheckButton* check_button = funk2_gtk__check_button__new(&(__funk2.gtk), (char*)label__str);
     f2__free(to_ptr(label__str));
     return f2__gtk_check_button__new(cause, f2pointer__new(cause, to_ptr(check_button)));
   } else {
@@ -5026,6 +5046,57 @@ f2ptr f2__gtk__check_button__new(f2ptr cause, f2ptr label) {
 def_pcfunk1(gtk__check_button__new, label,
 	    "Returns a new GtkCheckButton with the given label.",
 	    return f2__gtk__check_button__new(this_cause, label));
+
+
+f2ptr raw__gtk__check_button__get_active(f2ptr cause, f2ptr this) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkCheckButton* gtk_check_button = raw__gtk_check_button__as__GtkCheckButton(cause, this);
+    
+    assert_g_type(GTK_TYPE_CHECK_BUTTON, gtk_check_button);
+    
+    return f2bool__new(funk2_gtk__check_button__get_active(&(__funk2.gtk), gtk_check_button));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__check_button__get_active(f2ptr cause, f2ptr this) {
+  assert_argument_type(gtk_check_button, this);
+  return raw__gtk__check_button__get_active(cause, this);
+}
+def_pcfunk1(gtk__check_button__get_active, this, 
+	    "Returns true if this check_button's check box is checked, false otherwise.",
+	    return f2__gtk__check_button__get_active(this_cause, this));
+
+
+f2ptr raw__gtk__check_button__set_active(f2ptr cause, f2ptr this, f2ptr active) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkCheckButton* gtk_check_button = raw__gtk_check_button__as__GtkCheckButton(cause, this);
+    
+    assert_g_type(GTK_TYPE_CHECK_BUTTON, gtk_check_button);
+    
+    funk2_gtk__check_button__set_active(&(__funk2.gtk), gtk_check_button, (active != nil) ? boolean__true : boolean__false);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__check_button__set_active(f2ptr cause, f2ptr this, f2ptr active) {
+  assert_argument_type(gtk_check_button, this);
+  return raw__gtk__check_button__set_active(cause, this, active);
+}
+def_pcfunk2(gtk__check_button__set_active, this, active,
+	    "Sets this check_button's check box as checked (active) depending on the given boolean active value.",
+	    return f2__gtk__check_button__set_active(this_cause, this, active));
 
 
 // file_chooser_dialog
@@ -5974,7 +6045,9 @@ void f2__gtk__initialize() {
   
   // check_button
   
-  f2__primcfunk__init__1(gtk__check_button__new, label);
+  f2__primcfunk__init__1(gtk__check_button__new,        label);
+  f2__primcfunk__init__1(gtk__check_button__get_active, this);
+  f2__primcfunk__init__2(gtk__check_button__set_active, this, active);
   
   // keyval
   

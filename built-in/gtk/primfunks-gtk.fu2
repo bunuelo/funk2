@@ -134,6 +134,8 @@
 [globalize-funk gtk-menu-new                                      &primfunk:gtk__menu__new]
 [globalize-funk gtk-menu-append                                   &primfunk:gtk__menu__append]
 [globalize-funk gtk-check_button-new                              &primfunk:gtk__check_button__new]
+[globalize-funk gtk-check_button-get_active                       &primfunk:gtk__check_button__get_active]
+[globalize-funk gtk-check_button-set_active                       &primfunk:gtk__check_button__set_active]
 [globalize-funk gtk-file_chooser_dialog-new_for_file_open         &primfunk:gtk__file_chooser_dialog__new_for_file_open]
 [globalize-funk gtk-file_chooser_dialog-new_for_folder_select     &primfunk:gtk__file_chooser_dialog__new_for_folder_select]
 [globalize-funk gtk-file_chooser_dialog-new_for_file_save         &primfunk:gtk__file_chooser_dialog__new_for_file_save]

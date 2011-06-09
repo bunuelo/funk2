@@ -165,6 +165,10 @@
 [deftypefunk gtk_menu get     widget []      this]
 [deftypefunk gtk_menu execute append [child] [gtk-menu-append [get this widget] [get child widget]]]
 
+'GtkCheckButton'
+
+
+
 'GtkFileChooserDialog'
 
 [deftypefunk gtk_file_chooser_dialog get     widget                  []                      this]

@@ -435,6 +435,29 @@ f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// gtk_check_button
+
+def_frame_object__global__1_slot(gtk_check_button, pointer);
+
+f2ptr f2__gtk_check_button__new(f2ptr cause, f2ptr pointer) {
+  return f2gtk_check_button__new(cause, pointer);
+}
+
+#if defined(F2__GTK__SUPPORTED)
+
+GtkCheckButton* raw__gtk_check_button__as__GtkCheckButton(f2ptr cause, f2ptr this) {
+  return (GtkCheckButton*)from_ptr(f2pointer__p(f2__gtk_check_button__pointer(cause, this), cause));
+}
+
+#endif // F2__GTK__SUPPORTED
+
+f2ptr f2gtk_check_button__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2gtk_check_button__primobject_type__new(cause);
+  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  return this;
+}
+
+
 // gtk_file_chooser_dialog
 
 def_frame_object__global__1_slot(gtk_file_chooser_dialog, pointer);
@@ -1733,6 +1756,19 @@ void funk2_gtk__menu__append(funk2_gtk_t* this, GtkMenu* menu, GtkWidget* append
     gtk_menu_append(GTK_MENU(menu), GTK_WIDGET(append_widget));
     gdk_threads_leave();
   }
+}
+
+
+// check_button
+
+GtkCheckButton* funk2_gtk__check_button__new(funk2_gtk_t* this, char* label) {
+  GtkCheckButton* check_button;
+  {
+    gdk_threads_enter();
+    check_button = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(label));
+    gdk_threads_leave();
+  }
+  return check_button;
 }
 
 
@@ -4965,6 +5001,33 @@ def_pcfunk2(gtk__menu__append, menu, append_widget,
 	    return f2__gtk__menu__append(this_cause, menu, append_widget));
 
 
+// check_button
+
+f2ptr raw__gtk__check_button__new(f2ptr cause, f2ptr label) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    u64             label__length = raw__string__length(cause, label);
+    u8*             label__str    = (u8*)from_ptr(f2__malloc(label__length + 1));
+    GtkCheckButton* check_button  = funk2_gtk__check_button__new(&(__funk2.gtk), (char*)label__str);
+    f2__free(to_ptr(label__str));
+    return f2__gtk_check_button__new(cause, f2pointer__new(cause, to_ptr(check_button)));
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__check_button__new(f2ptr cause, f2ptr label) {
+  assert_argument_type(string, label);
+  return raw__gtk__check_button__new(cause, label);
+}
+def_pcfunk1(gtk__check_button__new, label,
+	    "Returns a new GtkCheckButton with the given label.",
+	    return f2__gtk__check_button__new(this_cause, label));
+
+
 // file_chooser_dialog
 
 f2ptr raw__gtk__file_chooser_dialog__new_for_file_open(f2ptr cause, f2ptr parent_window) {
@@ -5909,6 +5972,9 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__0(gtk__menu__new);
   f2__primcfunk__init__2(gtk__menu__append, menu, add_widget);
   
+  // check_button
+  
+  f2__primcfunk__init__1(gtk__check_button__new, label);
   
   // keyval
   

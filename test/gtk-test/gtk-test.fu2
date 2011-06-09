@@ -42,6 +42,7 @@
 	[save_button        [gtk-button-new_with_label 'Save']]
 	[insensitive_button [gtk-button-new_with_label 'Insensitive']]
 	[shrink_button      [gtk-button-new_with_label 'Shrink']]
+	[check_button       [gtk-check_button-new 'Check']]
 	[swindow            [gtk-scrolled_window-new]]
 	[notebook           [gtk-notebook-new]]
 	[logo_image         [gtk-image-new_from_file 'icons/funk2.png']]
@@ -72,6 +73,7 @@
     [have hbox         pack_start   save_button nil nil 0]
     [have hbox         pack_start   insensitive_button nil nil 0]
     [have hbox         pack_start   shrink_button nil nil 0]
+    [have hbox         pack_start   check_button nil nil 0]
     [have vpaned       pack1        hbox nil nil]
     
     [have swindow      add          text_view]

@@ -26,6 +26,7 @@
 		       knowledge_event_stream_iterator_frame
 		       global_semantic_realm]
   [new []
+       [terminal_format standard-terminal '\ncreating mind.']
        [cause-define semantic_frame-trace_add                            t]
        [cause-define semantic_frame-trace_remove                         t]
        [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]

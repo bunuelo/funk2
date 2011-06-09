@@ -22,6 +22,7 @@
 
 [deframe mental_layer [frame] [index name mind agency_frame]
   [new [new-index new-name]
+       [terminal_format standard-terminal '\ncreating ' new-name ' mental_layer.']
        [= index        new-index]
        [= name         new-name]
        [= mind         nil] 'We set this when we add the layer to a mind.'

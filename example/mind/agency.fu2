@@ -22,6 +22,7 @@
 
 [deframe agency [frame] [name layer resource_frame trace_story]
   [new [new-name]
+       [terminal_format standard-terminal '\ncreating ' new-name ' agency.']
        [= name           new-name]
        [= layer          nil] 'We set this when we add the resource to a layer.'
        [= resource_frame [frame]]

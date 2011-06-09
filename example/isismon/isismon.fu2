@@ -213,7 +213,7 @@
 	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_entry    nil nil 0]
 	 [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]]
        
-       [= cameras_enabled__check_menu_item 'Cameras Enabled']
+       [= cameras_enabled__check_menu_item [gtk-check_menu_item-new 'Cameras Enabled']]
        [have vbox pack_start cameras_enabled__check_menu_item nil nil 0]
        [set cameras_enabled__check_menu_item active [get [get isismon preferences] cameras_enabled]]
        

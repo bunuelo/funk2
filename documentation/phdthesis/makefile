@@ -1,5 +1,7 @@
 default: phdthesis.pdf
 
+#  bibliography.bib
+
 phdthesis.pdf: \
   makefile \
   phdthesis.tex \
@@ -13,9 +15,15 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
+  chapters/chapter01.tex \
+  chapters/chapter02.tex \
+  chapters/chapter03.tex \
+  chapters/chapter0A.tex \
   chapters/chapter_stages.tex
-	pdflatex phdthesis.tex
-	pdflatex phdthesis.tex
+	pdflatex phdthesis
+	bibtex   phdthesis
+	pdflatex phdthesis
+	pdflatex phdthesis
 
 clean:
 	rm -f phdthesis.pdf

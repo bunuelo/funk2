@@ -15,7 +15,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/chapter01.tex \
+  chapters/chapter_introduction.tex \
   chapters/chapter02.tex \
   chapters/chapter03.tex \
   chapters/chapter0A.tex \

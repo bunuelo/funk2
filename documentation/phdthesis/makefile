@@ -25,7 +25,8 @@ phdthesis.pdf: \
   chapters/chapter_appendix_artificial_intelligence.tex \
   chapters/chapter_appendix_computer_science.tex \
   chapters/chapter_appendix_mental_health.tex \
-  chapters/chapter_appendix_education.tex
+  chapters/chapter_appendix_education.tex \
+  gfx/agent_environment.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

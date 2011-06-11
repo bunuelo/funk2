@@ -82,10 +82,34 @@ need other ways to represent our knowledge in addition to logic.
 
 If we are going to be clear about what we mean by meta-knowledge, we
 first must be more precise about what we mean by knowledge in the
-first place.  
+first place.
 
-\includegraphics[width=4cm]{gfx/agent_environment}
+\subsection{The Reinforcement Learning Model}
 
+Figure~\ref{fig:agent_environment} shows the basic reinforcement
+learning model.  In this model, we make a distinction between a
+computational process that is the environment and a computational
+process that is the agent.  These two processes communicate
+information along three channels: (1) an action channel from the agent
+to the environment, (2) a perception channel from the environment to
+the agent, and (3) a reward channel from the environment to the agent.
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=4cm]{gfx/agent_environment}
+  \caption[The Reinforcement Learning Model]{The Reinforcement Learning Model.}
+  \label{fig:agent_environment}
+\end{figure}
+
+The reinforcement learning model is a useful model because it is one
+of the simplest formulations of goal-oriented learning.
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=4cm]{gfx/perception_categorization}
+  \caption[Learning to Approximate the Reward Function]{Learning to Approximate the Reward Function.}
+  \label{fig:perception_categorization}
+\end{figure}
 
 
 \subsection{Layers of Knowledge about Knowledge}

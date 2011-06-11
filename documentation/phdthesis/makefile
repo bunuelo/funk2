@@ -16,10 +16,16 @@ phdthesis.pdf: \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
   chapters/chapter_introduction.tex \
+  chapters/chapter_stages.tex \
   chapters/chapter02.tex \
   chapters/chapter03.tex \
-  chapters/chapter0A.tex \
-  chapters/chapter_stages.tex
+  chapters/chapter_appendix_philosophy.tex \
+  chapters/chapter_appendix_psychology.tex \
+  chapters/chapter_appendix_neuroscience.tex \
+  chapters/chapter_appendix_artificial_intelligence.tex \
+  chapters/chapter_appendix_computer_science.tex \
+  chapters/chapter_appendix_mental_health.tex \
+  chapters/chapter_appendix_education.tex
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

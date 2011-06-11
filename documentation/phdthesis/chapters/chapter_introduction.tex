@@ -23,8 +23,7 @@ different for another purpose.
  --- \defcitealias{minsky:1991}{Marvin Minsky}\citetalias{minsky:1991} \citep{minsky:1991}
 \end{flushright}
 
-\section{Section One}
-
+\section{Two Popular Approaches to Modelling Intelligence}
 
 Recently, there have been two directions of research with the goal of
 building a machine that explains intelligent human behavior.  The
@@ -41,18 +40,71 @@ complicated problems requiring a lot of background knowledge, but
 fails to adapt to changing environments, for which the algorithm has
 not already been trained.
 
+\section{The Commonsense Reasoning Problem Domain}
+
+Commonsense reasoning is a long-standing goal of the field of
+artificial intelligence.  One of the difficulties in developing
+algorithms for dealing with a commonsense reasoning domain is that the
+algorithm needs a lot of background knowledge about a given domain
+before it can answer even simple questions about it.  However, this
+knowledge is often only true in very specific situations and has many
+exceptional cases.  For example, the knowledge that most birds can fly
+is generally true, but we also know that many birds are flightless,
+such as penguins, ostriches, and road runners.  Also, we have
+knowledge about the typical behavior of objects; for example, we know
+that refridgerators keep things cold, but we also reason efficiently
+about exceptional cases, such as when the refridgerator is not plugged
+in, or when the power goes out.
+
+\subsection{The Valley of Complex Adaptability}
+
+We would like to build intelligent machines that are able to perform
+household tasks, such as cooking, cleaning, and doing the laundry, but
+these tasks seem deep within the ``valley of complex adaptability''.
+
+
+\subsection{Representations for Commonsense Reasoning}
+
+There have been many approaches to artificial intelligence that use
+first-order logic as a representation for these types of knowledge and
+their exceptions, but these systems become cumbersome in their
+inability to express ``fuzzy'' sorts of relationships, such as when
+the knowledge is applicable, for example the modifiers, ``most of the
+time'', ``usually'', and ``almost never'', are difficult to express in
+first-order logic.  When we have a lot of knowledge, we need ways to
+keep track of in which situations this knowledge is useful.  This is a
+form of ``meta-knowledge'', or knowledge about knowledge.
+Meta-knowledge about first-order logic cannot be expressed in
+first-order logic, so logic fails us in this regard.  Therefore, we
+need other ways to represent our knowledge in addition to logic.
+
+\subsection{Circular Causality and Knowledge about Knowledge}
+
+
+
+
+
+\section{Using Background Knowledge in a Goal-Oriented Domain}
+
 We are working on an algorithm that benefits from both of these
 approaches by learning from cultural language knowledge, while
 reflectively monitoring and recognizing the failures of this knowledge
 when it is used in a goal-oriented domain.
 
+\section{A New Lisp Programming Language for Modern Computer Architectures}
+
 Toward this end we have developed a reflective programming language
 allowing us the ability to monitor the execution and interactions
-between large numbers of complicated lisp-like processes.  Further, we
-have developed a cognitive architecture within our language that
-provides structures for layering reflective processes, resulting in a
-hierarchy of control algorithms that respond to failures in the layers
-below.
+between large numbers of complicated lisp-like processes.
+
+\section{A Reflective Cognitive Architecture for Layering Failure Tolerant Control Algorithms}
+
+Further, we have developed a cognitive architecture within our
+language that provides structures for layering reflective processes,
+resulting in a hierarchy of control algorithms that respond to
+failures in the layers below.
+
+\section{A Demonstration in a Social Commonsense Reasoning Domain}
 
 Finally, we present an example of our cognitive architecture learning
 in the context of a social commonsense reasoning domain with parents

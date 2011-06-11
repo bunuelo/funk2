@@ -27,6 +27,7 @@ phdthesis.pdf: \
   chapters/chapter_appendix_mental_health.tex \
   chapters/chapter_appendix_education.tex \
   gfx/agent_environment.pdf \
+  gfx/reinforcement_learning.pdf \
   gfx/perception_categorization.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

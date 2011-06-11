@@ -84,9 +84,52 @@ If we are going to be clear about what we mean by meta-knowledge, we
 first must be more precise about what we mean by knowledge in the
 first place.
 
+\subsection{The Objective Modelling Assumption}
+
+First, we assume that the phenomenon that we are trying to model,
+namely human intelligence, is an objective process that we can
+describe.  This is the objective-subjective philosophical assumption
+that is inherent in any objective scientific hypothesis.  We refer the
+reader to Appendix~\ref{appendix:philosophy} for a further discussion
+of the objective assumption.  Briefly, we make this assumption in
+order to avoid logical problems of circular causality that occur when
+trying to find a non-objective description of reflective thinking.
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=4cm]{gfx/object_description}
+  \caption[The objective-subjective modelling assumption]{The objective-subjective modelling assumption.}
+  \label{fig:object_description}
+\end{figure}
+
+\subsection{The Agent-Environment Model}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=4cm]{gfx/agent_environment}
+  \caption[The agent-environment model]{The agent-environment model.}
+  \label{fig:agent_environment}
+\end{figure}
+
+Figure~\ref{fig:agent_environment} shows the basic agent-environment
+model.  In this model, we make a distinction between the environment
+and the agent.  At any given time, the agent and the environment are
+each represented as a specific form of data.  Further, these
+representations change over time, according to a given transfer
+function.  We will treat this system as a deterministic system,
+although one could imagine adding random variables to the transfer
+function, but the basic theory is the same.  The two processes
+communicate information along two channels: (1) an action channel from
+the agent to the environment, and (2) a perception channel from the
+environment to the agent.  
+
+
+
+
+
 \subsection{The Reinforcement Learning Model}
 
-Figure~\ref{fig:agent_environment} shows the basic reinforcement
+Figure~\ref{fig:reinforcement_learning} shows the basic reinforcement
 learning model.  In this model, we make a distinction between a
 computational process that is the environment and a computational
 process that is the agent.  These two processes communicate
@@ -96,9 +139,9 @@ the agent, and (3) a reward channel from the environment to the agent.
 
 \begin{figure}[bth]
   \center
-  \includegraphics[width=4cm]{gfx/agent_environment}
+  \includegraphics[width=4cm]{gfx/reinforcement_learning}
   \caption[The reinforcement learning model]{The reinforcement learning model.}
-  \label{fig:agent_environment}
+  \label{fig:reinforcement_learning}
 \end{figure}
 
 The reinforcement learning model is a useful model because it is one

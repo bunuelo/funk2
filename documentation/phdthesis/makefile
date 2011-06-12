@@ -15,7 +15,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/chapter_introduction.tex \
+  chapters/chapter_models_of_cognition.tex \
   chapters/chapter_stages.tex \
   chapters/chapter02.tex \
   chapters/chapter03.tex \
@@ -26,6 +26,7 @@ phdthesis.pdf: \
   chapters/chapter_appendix_computer_science.tex \
   chapters/chapter_appendix_mental_health.tex \
   chapters/chapter_appendix_education.tex \
+  gfx/objective_description.pdf \
   gfx/agent_environment.pdf \
   gfx/reinforcement_learning.pdf \
   gfx/perception_categorization.pdf

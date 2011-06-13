@@ -56,27 +56,49 @@ that refridgerators keep things cold, but we also reason efficiently
 about exceptional cases, such as when the refridgerator is not plugged
 in, or when the power goes out.
 
-\subsection{The Valley of Complex Adaptability}
+\section{Representations for Commonsense Reasoning}
+
+There have been many approaches to artificial intelligence that use
+first-order logic as a representation for these types of knowledge and
+their exceptions, but these systems become cumbersome in their
+inability to express ``fuzzy'' sorts of relationships, such as when
+the knowledge is applicable, for example the modifiers, ``most of the
+time'', ``usually'', and ``almost never'', are difficult to express in
+first-order logic.  When we have a lot of knowledge, we need ways to
+keep track of in which situations this knowledge is useful.  This is a
+form of ``meta-knowledge'', or knowledge about knowledge.
+Meta-knowledge about first-order logic cannot be expressed in
+first-order logic, so logic fails us in this regard.  Therefore, we
+need other ways to represent our knowledge in addition to logic.
+
+
+
+
+
+
+
+\section{Adaptability in Complex Environments}
 
 We would like to build intelligent machines that are able to perform
 household tasks, such as cooking, cleaning, and doing the laundry, but
-these tasks seem deep within the ``valley of complex adaptability''.
-We would like our machines to expertly handle these extremely
-complicated problems, and we would also like them to adapt to learn in
-unexpected or novel situations.  One popular approach to building a
-machine that performs complicated tasks is to give the machine a large
-training dataset that details every possible situation that the
-machine may find itself within, along with the correct action in that
-situation.  This is the so-called ``supervised'' learning approach.
-These algorithms do not adapt to novel situations well, and collecting
-these datasets is often impossible for many problems, such as cooking
-and cleaning because it is too difficult to enumerate all possible
-situations, in which the machine may find itself.  Also, if the
-machine is cooking a meal, we would like to be able to explain an idea
-for a new recipe to the machine, or to perhaps be a partner in
-discovering new recipes, or we may simply want to explain to the
-machine that a guest has a specific allergy to walnuts, making that
-ingredient an exception for this meal but not others.
+these tasks seem insurmountably complex, containing organically
+unpredictable events.  We would like our machines to expertly handle
+these extremely complicated problems, and we would also like them to
+adapt to learn in unexpected or novel situations.  One popular
+approach to building a machine that performs complicated tasks is to
+give the machine a large training dataset that details every possible
+situation that the machine may find itself within, along with the
+correct action in that situation.  This is the so-called
+``supervised'' learning approach.  These algorithms do not adapt to
+novel situations well, and collecting these datasets is often
+impossible for many problems, such as cooking and cleaning because it
+is too difficult to enumerate all possible situations, in which the
+machine may find itself.  Also, if the machine is cooking a meal, we
+would like to be able to explain an idea for a new recipe to the
+machine, or to perhaps be a partner in discovering new recipes, or we
+may simply want to explain to the machine that a guest has a specific
+allergy to walnuts, making that ingredient an exception for this meal
+but not others.
 Figure~\ref{fig:problem_complexity_versus_algorithm_adaptability}
 shows how problem complexity and algorithm adaptability can be thought
 of as a two-dimensional space into which different algorithmic
@@ -89,7 +111,7 @@ approaches can be used as solutions.
   \label{fig:problem_complexity_versus_algorithm_adaptability}
 \end{figure}
 
-\subsection{The Agent-Environment Model}
+\section{The Agent-Environment Model}
 
 \begin{figure}[bth]
   \center
@@ -114,43 +136,60 @@ The two processes communicate information along two channels: (1) an
 action channel from the agent to the environment, and (2) a perception
 channel from the environment to the agent.
 
+\section{Categorizing Perceptions and Actions based on Goals}
 
-
-
-
-\subsection{The Reinforcement Learning Model}
-
-Figure~\ref{fig:reinforcement_learning} shows the basic reinforcement
-learning model.  In this model, we make a distinction between a
-computational process that is the environment and a computational
-process that is the agent.  These two processes communicate
-information along three channels: (1) an action channel from the agent
-to the environment, (2) a perception channel from the environment to
-the agent, and (3) a reward channel from the environment to the agent.
-
-\begin{figure}[bth]
-  \center
-  \includegraphics[width=4cm]{gfx/reinforcement_learning}
-  \caption[The reinforcement learning model]{The reinforcement learning model.}
-  \label{fig:reinforcement_learning}
-\end{figure}
-
-The reinforcement learning model is a useful model because it is one
-of the simplest formulations of goal-oriented learning.
+Once we have a basic reinforcement learning algorithm, we can try to
+categorize our perception and action space in order to learn what
+parts of the state space should be sought or avoided.  This is one
+very simple way for the agent to learn new goals from its experience
+interacting with the environment.
 Figure~\ref{fig:perception_categorization} shows how the simplest
-types of categorizations of perceptions can be learned.  Note that any
-categorization is more or less useful to us based on how well it
-approximates the reward function.
+types of categorizations of perceptions can be learned.
 
 \begin{figure}[bth]
   \center
   \includegraphics[height=4cm]{gfx/perception_categorization}
-  \caption[Categorizing perceptions and actions by knowing rewards]{Categorizing perceptions and actions by knowing rewards.}
+  \caption[Categorizing perceptions and actions based on goals]{Categorizing perceptions and actions based on goals.}
   \label{fig:perception_categorization}
 \end{figure}
 
 
-\section{Inference, Planning, and Machine Learning are all Partial Solutions}
+
+\section{Feedback Control Model for Accomplishing Goals}
+
+Now that we have discussed the basic model of learning from experience
+what good goal states may be from rewards, let us consider the
+representations for the state space of the perceptions and actions of
+our model.  Control theory has given us many useful models for agents
+that control continuous environments.  For example,
+Figure~\ref{fig:feedback_control} shows a simple difference feedback
+control circuit that is used in simple linear control systems.  The
+system is given a desired state, there is a difference device that
+calculates the difference between the actual perceived value from the
+environment, and the control system then executes an action based on
+that difference, which affects the environment.  The result in such a
+negative feedback loop is that the agent's perception of the
+environment is closer to the desired state.
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=6cm]{gfx/feedback_control}
+  \caption[The feedback control model for accomplishing goals]{The feedback control model for accomplishing goals.}
+  \label{fig:feedback_control}
+\end{figure}
+
+
+
+\section{The Planning Model}
+
+In 1959, Newell, Shaw, and Simon published a report on a means-end
+analysis model that was designed to solve any symbolically represented
+problem \cite{newell:1959}.  This work has grown into the Soar model
+for better solving symbolic planning problems, and dealing with
+impasses for when the planning search runs out of options.
+
+
+
 
 ``These systems use multiple representations including semantic
 networks, propositional and first-order probabilistic graphical
@@ -159,30 +198,15 @@ axioms, shape descriptions, and even English sentences.'' --- Push
 Singh's webpage
 
 
+\section{Goal-Oriented Learning}
 
-\subsection{The Origins of Knowledge}
+\section{The Origins of Knowledge}
 
 If we are going to be clear about what we mean by meta-knowledge, we
 first must be more precise about what we mean by knowledge in the
 first place.
 
 
-\subsection{Layers of Knowledge about Knowledge}
-
-
-\subsection{Representations for Commonsense Reasoning}
-
-There have been many approaches to artificial intelligence that use
-first-order logic as a representation for these types of knowledge and
-their exceptions, but these systems become cumbersome in their
-inability to express ``fuzzy'' sorts of relationships, such as when
-the knowledge is applicable, for example the modifiers, ``most of the
-time'', ``usually'', and ``almost never'', are difficult to express in
-first-order logic.  When we have a lot of knowledge, we need ways to
-keep track of in which situations this knowledge is useful.  This is a
-form of ``meta-knowledge'', or knowledge about knowledge.
-Meta-knowledge about first-order logic cannot be expressed in
-first-order logic, so logic fails us in this regard.  Therefore, we
-need other ways to represent our knowledge in addition to logic.
+\section{Layers of Knowledge about Knowledge}
 
 

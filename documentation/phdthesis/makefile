@@ -1,7 +1,5 @@
 default: phdthesis.pdf
 
-#  bibliography.bib
-
 phdthesis.pdf: \
   makefile \
   phdthesis.tex \

@@ -2,3 +2,78 @@
 \chapter{A System}\label{ch:a_system}
 %*****************************************
 
+\section{Reflectively Traced Frame Memory}
+
+
+I've written an entire multi-core operating system, including a
+compiler, on top of this traceable and distributed memory layer.  It
+doesn't run as fast as a highly optimized operating system, but this
+project is about building models that are reflectively traced.
+Everything is open-source, can be downloaded from my webpage, and
+compiled by simply typing "./configure; make".  Gerry sees this as a
+complete waste of two or three years of my PhD, which is frustrating.
+
+I've built the system with the sole intention of building a massive
+combination of many artificial intelligence techniques.  I can run
+thousands of parallel processes concurrently on my 8-core machine.  They
+can control and watch one another execute.  I feel that the field of AI
+is not separate from the low-level details of software engineering, and
+my project embodies that philosophy.
+
+Many people see AI as being a theoretical and mathematical field, and I
+strongly disagree.  We need good software engineers, not mathematicians
+to solve most of the problems we face in getting these massive software
+systems to work together.
+
+That said, I have built a layered cognitive architecture on top of my
+custom operating system, programming language, and compiler.  The
+cognitive architecture is what I gave you a demo of.
+
+Joe Paradiso understands what he calls the "dynamic range" of my thesis,
+but I fear that my advisors are unsatisfied or simply uninterested in
+the technical solutions to the software engineering that I've spent most
+of my time doing.  The goal of my project is to build a demo of part of
+Marvin's architecture, and the domain of commonsense reasoning in a
+kitchen is I feel the right way to develop those high-level theories.
+
+If you have references for the kitchen as a good problem solving domain,
+those would be very helpful.  I know you've done a lot of work with
+kitchens and models of mind.  Kitchens are ubiquitous across cultures.
+They have a clear production goal, food.  They involve many many mental
+realms: math, physics, chemistry, thermodynamics, natural language,
+social, family, imprimer learning, children, parents, concurrent
+planning, etc.
+
+
+\section{An Operating System}
+
+\section{A Programming Language}
+
+
+
+\subsection{Why not use Lisp?}
+
+Lisp is a great programming language.  We wrote a custom programming
+language for the project and didn't use lisp.  Lisp simply isn't fast
+enough, and isn't very well supported; when you find a bug in a lisp
+compiler, it is difficult to find the support to fix the bug.  We
+wrote the first version of the reflectively traced memory system in
+lisp and realized that Steele Bourne Common Lisp had memory bugs when
+the system grew beyond 600 megabytes of RAM.  Allegro Lisp is a
+commercial solution, but it costs many hundreds of dollars for their
+commercial compiler, and we feel strongly against having that
+commercial requirement for building academically intentioned
+open-source software.  The main problem with lisp is it's lack of
+speed and lack of support, so we found ourselves writing a lot of C
+extensions even when programming in Lisp.  C is good for speeding up
+inner loops of algorithms as well as necessary for interfacing with
+the Linux, Mac, or Windows operating systems, which are all written in
+C.
+
+\section{A Layered Cognitive Architecture}
+
+Further, we have developed a cognitive architecture within our
+language that provides structures for layering reflective processes,
+resulting in a hierarchy of control algorithms that respond to
+failures in the layers below.
+

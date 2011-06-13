@@ -5,6 +5,7 @@ default: phdthesis.pdf
 phdthesis.pdf: \
   makefile \
   phdthesis.tex \
+  bibliography.bib \
   frontbackmatter/abstract.tex \
   frontbackmatter/acknowledgments.tex \
   frontbackmatter/bibliography.tex \

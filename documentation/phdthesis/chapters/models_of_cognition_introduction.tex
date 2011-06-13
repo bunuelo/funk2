@@ -61,22 +61,33 @@ in, or when the power goes out.
 We would like to build intelligent machines that are able to perform
 household tasks, such as cooking, cleaning, and doing the laundry, but
 these tasks seem deep within the ``valley of complex adaptability''.
+We would like our machines to expertly handle these extremely
+complicated problems, and we would also like them to adapt to learn in
+unexpected or novel situations.  One popular approach to building a
+machine that performs complicated tasks is to give the machine a large
+training dataset that details every possible situation that the
+machine may find itself within, along with the correct action in that
+situation.  This is the so-called ``supervised'' learning approach.
+These algorithms do not adapt to novel situations well, and collecting
+these datasets is often impossible for many problems, such as cooking
+and cleaning because it is too difficult to enumerate all possible
+situations, in which the machine may find itself.  Also, if the
+machine is cooking a meal, we would like to be able to explain an idea
+for a new recipe to the machine, or to perhaps be a partner in
+discovering new recipes, or we may simply want to explain to the
+machine that a guest has a specific allergy to walnuts, making that
+ingredient an exception for this meal but not others.
+Figure~\ref{fig:problem_complexity_versus_algorithm_adaptability}
+shows how problem complexity and algorithm adaptability can be thought
+of as a two-dimensional space into which different algorithmic
+approaches can be used as solutions.
 
-
-\subsection{Representations for Commonsense Reasoning}
-
-There have been many approaches to artificial intelligence that use
-first-order logic as a representation for these types of knowledge and
-their exceptions, but these systems become cumbersome in their
-inability to express ``fuzzy'' sorts of relationships, such as when
-the knowledge is applicable, for example the modifiers, ``most of the
-time'', ``usually'', and ``almost never'', are difficult to express in
-first-order logic.  When we have a lot of knowledge, we need ways to
-keep track of in which situations this knowledge is useful.  This is a
-form of ``meta-knowledge'', or knowledge about knowledge.
-Meta-knowledge about first-order logic cannot be expressed in
-first-order logic, so logic fails us in this regard.  Therefore, we
-need other ways to represent our knowledge in addition to logic.
+\begin{figure}[bth]
+  \center
+  \includegraphics[height=6cm]{gfx/problem_complexity_versus_algorithm_adaptability}
+  \caption[Problem complexity versus algorithm adaptability]{Problem complexity versus algorithm adaptability.}
+  \label{fig:problem_complexity_versus_algorithm_adaptability}
+\end{figure}
 
 \subsection{The Agent-Environment Model}
 
@@ -94,10 +105,14 @@ each represented as a specific static form of data.  Further, these
 representations change over time, according to a given transfer
 function.  We will treat this system as a deterministic system,
 although one could imagine adding random variables to the transfer
-function, but the basic theory is the same.  The two processes
-communicate information along two channels: (1) an action channel from
-the agent to the environment, and (2) a perception channel from the
-environment to the agent.
+function: the basic theory is the same.  It is easier to add
+randomness to a deterministic theory than the opposite.  There are
+also many benefits to developing a deterministic model with perhaps a
+pseudorandom aspect because this allows for the repeatability of
+scientific experiments, for which the model may be used as a metric.
+The two processes communicate information along two channels: (1) an
+action channel from the agent to the environment, and (2) a perception
+channel from the environment to the agent.
 
 
 
@@ -154,5 +169,20 @@ first place.
 
 \subsection{Layers of Knowledge about Knowledge}
 
+
+\subsection{Representations for Commonsense Reasoning}
+
+There have been many approaches to artificial intelligence that use
+first-order logic as a representation for these types of knowledge and
+their exceptions, but these systems become cumbersome in their
+inability to express ``fuzzy'' sorts of relationships, such as when
+the knowledge is applicable, for example the modifiers, ``most of the
+time'', ``usually'', and ``almost never'', are difficult to express in
+first-order logic.  When we have a lot of knowledge, we need ways to
+keep track of in which situations this knowledge is useful.  This is a
+form of ``meta-knowledge'', or knowledge about knowledge.
+Meta-knowledge about first-order logic cannot be expressed in
+first-order logic, so logic fails us in this regard.  Therefore, we
+need other ways to represent our knowledge in addition to logic.
 
 

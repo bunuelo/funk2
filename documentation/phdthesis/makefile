@@ -33,7 +33,8 @@ phdthesis.pdf: \
   gfx/objective_description.pdf \
   gfx/agent_environment.pdf \
   gfx/reinforcement_learning.pdf \
-  gfx/perception_categorization.pdf
+  gfx/perception_categorization.pdf \
+  gfx/problem_complexity_versus_algorithm_adaptability.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

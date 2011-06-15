@@ -120,16 +120,16 @@ shows how problem complexity and algorithm adaptability can be thought
 of as a two-dimensional space into which different algorithmic
 approaches can be used as solutions.
 
-\section{The Agent-Environment Model}
+\section{The Agent Environment Model}
 
 \begin{figure}[bth]
   \center
   \includegraphics[width=4cm]{gfx/agent_environment}
-  \caption[The agent-environment model]{The agent-environment model.}
+  \caption[The agent environment model]{The agent environment model.}
   \label{fig:agent_environment}
 \end{figure}
 
-Figure~\ref{fig:agent_environment} shows the basic agent-environment
+Figure~\ref{fig:agent_environment} shows the basic agent environment
 model.  In this model, we make a distinction between the environment
 and the agent.  At any given time, the agent and the environment are
 each represented as a specific static form of data.  Further, these
@@ -145,6 +145,16 @@ The two processes communicate information along two channels: (1) an
 action channel from the agent to the environment, and (2) a perception
 channel from the environment to the agent.
 
+\section{The Multiple Agent Environment Model}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=4cm]{gfx/multiple_agent_environment}
+  \caption[The multiple agent environment model]{The multiple agent environment model.}
+  \label{fig:multiple_agent_environment}
+\end{figure}
+
+
 \section{The Baby-Machine Approach}
 
 \subsection{The Reinforcement Learning Model}
@@ -157,7 +167,7 @@ channel from the environment to the agent.
 \end{figure}
 
 Figure~\ref{fig:reinforcement_learning} shows the basic reinforcement
-learning model.  This model is an agent-environment model, but there
+learning model.  This model is an agent environment model, but there
 is an extra information channel from the environment to the agent,
 which communicates a numerical reward signal.  We can now say that the
 agent has a learning problem.  The agent must learn what actions to

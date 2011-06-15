@@ -23,6 +23,52 @@ different for another purpose.
  --- \defcitealias{minsky:1991}{Marvin Minsky}\citetalias{minsky:1991} \citep{minsky:1991}
 \end{flushright}
 
+\section{The Common Sense Reasoning Problem Domain}
+
+Common sense is the set of common reasoning abilities shared by most
+people in a given social group.  Another way to say this is that
+common sense is the set of reasoning abilities that one would assume
+of a typical person that they meet for the first time and know nothing
+about.  For example, most people have a naive theory of physics, so
+you would expect someone to know that things fall when they are not
+supported and liquids flow or are absorbed unless they are in a
+container.  Common sense relies on a lot of knowledge that is assumed
+that most everyone knows.
+
+Building a machine that demonstrates common sense reasoning is a
+long-standing goal of the field of artificial intelligence.  One of
+the difficulties in developing algorithms for dealing with a common
+sense reasoning domain is that the algorithm needs a lot of background
+knowledge about a given domain before it can answer even simple
+questions about it.  However, this knowledge is often only true in
+very specific situations and has many exceptional cases.  For example,
+the knowledge that most birds can fly is generally true, but we also
+know that many birds are flightless, such as penguins, ostriches, and
+road runners.  Also, we have knowledge about the typical behavior of
+objects; for example, we know that refrigerators keep things cold,
+but we also reason efficiently about exceptional cases, such as when
+the refrigerator is not plugged in, or when the power goes out.
+
+\subsection{Representations for Common Sense Reasoning}
+
+There have been many approaches to artificial intelligence that use
+first-order logic as a representation for these types of knowledge and
+their exceptions, but these systems become cumbersome in their
+inability to express ``fuzzy'' sorts of relationships, such as when
+the knowledge is applicable, for example the modifiers, ``most of the
+time'', ``usually'', and ``almost never'', are difficult to express in
+first-order logic.  When we have a lot of knowledge, we need ways to
+keep track of in which situations this knowledge is useful.  This is a
+form of ``meta-knowledge'', or knowledge about knowledge.
+Meta-knowledge about first-order logic cannot be expressed in
+first-order logic, so another type of representation is required for
+this type of knowledge.  Therefore, we need other ways to represent
+our knowledge in addition to logic.
+
+
+
+
+
 \section{Two Popular Approaches to Modelling Intelligence}
 
 Recently, there have been two directions of research with the goal of
@@ -40,44 +86,14 @@ complicated problems requiring a lot of background knowledge, but
 fails to adapt to changing environments, for which the algorithm has
 not already been trained.
 
-\section{The Commonsense Reasoning Problem Domain}
+\subsection{Adaptability in Complex Environments}
 
-Commonsense reasoning is a long-standing goal of the field of
-artificial intelligence.  One of the difficulties in developing
-algorithms for dealing with a commonsense reasoning domain is that the
-algorithm needs a lot of background knowledge about a given domain
-before it can answer even simple questions about it.  However, this
-knowledge is often only true in very specific situations and has many
-exceptional cases.  For example, the knowledge that most birds can fly
-is generally true, but we also know that many birds are flightless,
-such as penguins, ostriches, and road runners.  Also, we have
-knowledge about the typical behavior of objects; for example, we know
-that refridgerators keep things cold, but we also reason efficiently
-about exceptional cases, such as when the refridgerator is not plugged
-in, or when the power goes out.
-
-\section{Representations for Commonsense Reasoning}
-
-There have been many approaches to artificial intelligence that use
-first-order logic as a representation for these types of knowledge and
-their exceptions, but these systems become cumbersome in their
-inability to express ``fuzzy'' sorts of relationships, such as when
-the knowledge is applicable, for example the modifiers, ``most of the
-time'', ``usually'', and ``almost never'', are difficult to express in
-first-order logic.  When we have a lot of knowledge, we need ways to
-keep track of in which situations this knowledge is useful.  This is a
-form of ``meta-knowledge'', or knowledge about knowledge.
-Meta-knowledge about first-order logic cannot be expressed in
-first-order logic, so logic fails us in this regard.  Therefore, we
-need other ways to represent our knowledge in addition to logic.
-
-
-
-
-
-
-
-\section{Adaptability in Complex Environments}
+\begin{figure}[bth]
+  \center
+  \includegraphics[height=6cm]{gfx/problem_complexity_versus_algorithm_adaptability}
+  \caption[Problem complexity versus algorithm adaptability]{Problem complexity versus algorithm adaptability.}
+  \label{fig:problem_complexity_versus_algorithm_adaptability}
+\end{figure}
 
 We would like to build intelligent machines that are able to perform
 household tasks, such as cooking, cleaning, and doing the laundry, but
@@ -104,14 +120,7 @@ shows how problem complexity and algorithm adaptability can be thought
 of as a two-dimensional space into which different algorithmic
 approaches can be used as solutions.
 
-\begin{figure}[bth]
-  \center
-  \includegraphics[height=6cm]{gfx/problem_complexity_versus_algorithm_adaptability}
-  \caption[Problem complexity versus algorithm adaptability]{Problem complexity versus algorithm adaptability.}
-  \label{fig:problem_complexity_versus_algorithm_adaptability}
-\end{figure}
-
-\section{The Agent-Environment Model}
+\section{Learning in the Agent-Environment Model}
 
 \begin{figure}[bth]
   \center
@@ -136,7 +145,7 @@ The two processes communicate information along two channels: (1) an
 action channel from the agent to the environment, and (2) a perception
 channel from the environment to the agent.
 
-\section{Categorizing Perceptions and Actions based on Goals}
+\subsection{Categorizing Perceptions and Actions based on Reward}
 
 Once we have a basic reinforcement learning algorithm, we can try to
 categorize our perception and action space in order to learn what
@@ -153,9 +162,12 @@ types of categorizations of perceptions can be learned.
   \label{fig:perception_categorization}
 \end{figure}
 
+\subsection{Categorizing Perceptions and Actions based on Goals}
 
+One problem with the reinforcement learning approach is that the only
+representation of success or failure is a single number, the reward.
 
-\section{Feedback Control Model for Accomplishing Goals}
+\subsection{Feedback Control Model for Accomplishing Goals}
 
 Now that we have discussed the basic model of learning from experience
 what good goal states may be from rewards, let us consider the
@@ -179,8 +191,7 @@ environment is closer to the desired state.
 \end{figure}
 
 
-
-\section{The Planning Model}
+\subsection{The Planning Model}
 
 In 1959, Newell, Shaw, and Simon published a report on a means-end
 analysis model that was designed to solve any symbolically represented
@@ -198,7 +209,9 @@ axioms, shape descriptions, and even English sentences.'' --- Push
 Singh's webpage
 
 
-\section{Goal-Oriented Learning}
+\subsection{Goal-Oriented Learning}
+
+
 
 \section{The Origins of Knowledge}
 

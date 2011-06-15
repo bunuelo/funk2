@@ -2,54 +2,108 @@
 \chapter{A System}\label{ch:a_system}
 %*****************************************
 
+\section{System Overview}
+
+Building a machine that demonstrates the general intelligence required
+for commonsense reasoning is a longstanding goal of the field of
+artificial intelligence.  There have been many approaches to building
+a machine that demonstrates general intelligence, some are based on
+logical representations, others are based on large collections of
+statistical knowledge, while still others approach the problem by
+learning everything from scratch from the physical world.  We see the
+problem as requiring a combination of many different types of
+representations and reasoning processes.
+
+We worked with Push Singh from 1999 to 2006 on the first version of
+the Emotion Machine architecture, EM1.  During that period, we
+discussed that one weakness in the EM1 system is its reliance on
+tracing only the declarative prolog statements, among other necessary
+but untraced procedural code.  Although EM1 contained a large amount
+of procedural knowledge, none of the effects of this procedural
+knowledge could be debugged reflectively.  Toward solving this
+problem, we have based our approach on a memory layer that can trace
+the provenance of select memory events.
+
+Because the Emotion Machine theory of mind requires a variety of many
+reasoning processes to be controlled, we have built an operating
+system on top of this traceable memory layer.
+
+Further, the Emotion Machine is organized into layers of different
+representations, so we have built a lisp-like language on top this
+operating system.  The benefit of having a lisp-like language is the
+language's ability to efficiently represent and simulate new
+programming languages.
+
+Within our lisp-like language we have written an implementation of a
+layered reflective cognitive architecture, inspired by EM1.
+
+Finally, we demonstrate our cognitive architecture in a rigid-body
+physical environment, where multiple agents demonstrate learning from
+both being told solutions to problems as well as learning from the
+environment in which situations these solutions succeed or fail.  We
+show how our procedurally traced memory can be used to assign credit
+to those deliberative processes that are responsible for the failure,
+facilitating learning how to better plan for these types of problems
+in the future.
+
 \section{Reflectively Traced Frame Memory}
 
+Procedural tracing can be thought of as enabling a part of an
+interpreter that checks for important events as a process runs.  This
+ability can be used to trace the temporal order of events, i.e.
+generating a trace, or to otherwise organize or summarize events in a
+more useful way that can be used by other procedures, either
+concurrently or after the fact.  Having this ability built into the
+memory system, allows keeping track of the provenance of information as
+it is written and read.  This ability is built into all structures in
+the architecture, so if any tracing of data provenance is required at
+any time for any object, this ability can be enabled.
 
-I've written an entire multi-core operating system, including a
-compiler, on top of this traceable and distributed memory layer.  It
-doesn't run as fast as a highly optimized operating system, but this
-project is about building models that are reflectively traced.
-Everything is open-source, can be downloaded from my webpage, and
-compiled by simply typing "./configure; make".  Gerry sees this as a
-complete waste of two or three years of my PhD, which is frustrating.
+At higher levels, these procedural tracing events result in event
+streams that can be listened to by multiple concurrent processes that
+each allocate iterators for a stream.  As a concurrent process
+increments its iterator, it reasons about the event that has occurred in
+the object memory, and the result of this reasoning is the creation of
+meta knowledge in a causally consistent knowledge base.  This is an
+example of the "glom" theory of cognitive evolution (reference needed; I
+think you mentioned this in class), where cognitive abilities are added
+on top of previous cognitive abilities without changing the underlying
+functionality.  I've used procedural tracing to maintain multiple
+consistent representations for the same knowledge.
 
-I've built the system with the sole intention of building a massive
-combination of many artificial intelligence techniques.  I can run
-thousands of parallel processes concurrently on my 8-core machine.  They
-can control and watch one another execute.  I feel that the field of AI
-is not separate from the low-level details of software engineering, and
-my project embodies that philosophy.
+When a plan fails, we need to correct the knowledge that generated that
+plan.  When multiple processes are adding knowledge to the same
+knowledge base, it becomes important to keep track of the provenance of
+this knowledge, when we need to make distinctions between situations
+that appear identical.  If we need to learn a new rule for
+categorization of situations, or even a new category entirely, we need
+to go back to the correct features and processes that performed those
+categorizations of the identical situations that we need to further
+distinguish.
 
-Many people see AI as being a theoretical and mathematical field, and I
-strongly disagree.  We need good software engineers, not mathematicians
-to solve most of the problems we face in getting these massive software
-systems to work together.
-
-That said, I have built a layered cognitive architecture on top of my
-custom operating system, programming language, and compiler.  The
-cognitive architecture is what I gave you a demo of.
-
-Joe Paradiso understands what he calls the "dynamic range" of my thesis,
-but I fear that my advisors are unsatisfied or simply uninterested in
-the technical solutions to the software engineering that I've spent most
-of my time doing.  The goal of my project is to build a demo of part of
-Marvin's architecture, and the domain of commonsense reasoning in a
-kitchen is I feel the right way to develop those high-level theories.
-
-If you have references for the kitchen as a good problem solving domain,
-those would be very helpful.  I know you've done a lot of work with
-kitchens and models of mind.  Kitchens are ubiquitous across cultures.
-They have a clear production goal, food.  They involve many many mental
-realms: math, physics, chemistry, thermodynamics, natural language,
-social, family, imprimer learning, children, parents, concurrent
-planning, etc.
 
 
 \section{An Operating System}
 
+We've written a multi-core operating system, including a
+compiler, on top of this traceable and distributed memory layer.
+
+Because the system is meant to combine many artificial intelligence
+techniques, we have tested our platform running thousands of parallel
+processes concurrently on an 8-core machine.  These processes can
+control and watch one another execute.  We feel that the field of AI
+is not separate from the low-level details of software engineering,
+and my project embodies that philosophy.
+
+Many people see AI as being a purely theoretical and mathematical
+field, and we strongly disagree.  We need good software engineers in
+order to solve most of the problems we face in getting these massive
+software systems to work together.
+
 \section{A Programming Language}
 
-
+We have built a layered cognitive architecture on top of our custom
+operating system, programming language, and compiler.
 
 \subsection{Why not use Lisp?}
 

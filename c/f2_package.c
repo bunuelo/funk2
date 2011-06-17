@@ -354,7 +354,7 @@ def_pcfunk1(pathnamelist__concat, this,
 
 boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length));
+  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
@@ -389,7 +389,7 @@ def_pcfunk1(pathname__as__absolute_pathname, this,
 
 f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length));
+  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
@@ -503,7 +503,7 @@ def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension,
 
 f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length));
+  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
@@ -665,7 +665,7 @@ def_pcfunk2(pathname__rename, old_filename, new_filename,
 
 f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
   u64 environment_variable__length = raw__string__length(cause, environment_variable);
-  u8* environment_variable__str    = (u8*)from_ptr(f2__malloc(environment_variable__length));
+  u8* environment_variable__str    = (u8*)from_ptr(f2__malloc(environment_variable__length + 1));
   raw__string__str_copy(cause, environment_variable, environment_variable__str);
   environment_variable__str[environment_variable__length] = 0;
   

@@ -12,9 +12,53 @@ We tested our cognitive architecture learning in the context of a
 social commonsense reasoning domain with parents that teach children
 as they attempt to accomplish cooking tasks in a kitchen.  Kitchens
 are a good example of a rich learning environment for children
-\cite{dewey:1907}.  Kitchens are ubiquitous across cultures.  They
+\citep{dewey:1907}.  Kitchens are ubiquitous across cultures.  They
 have a clear production goal, food.  They involve many many mental
 realms: math, physics, chemistry, thermodynamics, natural language,
 social, family, imprimer learning, children, parents, concurrent
 planning, etc.
+
+\section{Working in a World of Building Blocks}
+
+In his PhD thesis, Terry Winograd worked in the world of building
+blocks \citep{winograd:1970}.  This program maintained traces of its
+goals and subgoals, which enabled it to answer questions about why it
+performed certain actions.  This system worked because it stored
+goals.
+
+Knowing the goal state of the computation is important, and we do not
+ignore this aspect in tracing the deliberative layer.  Our system is
+able to answer these sorts of questions, as this simply requires
+climbing the stack of mental resource activations, but when debugging
+the deliberative process, it is helpful to know not only know the
+ending point of computation but also the means toward that end.
+
+\subsection{Why Not Work Within a Building Blocks Domain?}
+
+The building blocks approach is a good precedent.  I did not want to
+get buried in the morass of common sense knowledge problems about
+cooking, but I did want to approach a domain in which there are a
+variety of objects requiring complex models of cause and effect.
+
+We have conscripted our domain of object types in the kitchen, such
+that it is currently comparable to the number of object types that
+Winograd used in his thesis.  Our object types do have different ways
+that they may be used, which is a small addition of complexity.
+Although we do not introduce many of the complexities of ontological
+reasoning, a common approach to commonsense reasoning, e.g. Cyc
+\citep{lenat:1990}, our system demonstrates an important new approach
+to commonsense reasoning that grounds learning by being told in the
+domain of goal-oriented reasoning, which allows organizing and
+debugging knowledge in terms of what goals it is useful for
+accomplishing.
+
+\subsection{Terry Winograd's SHRDLU and Goal Tracing}
+
+I am building upon what was learned from Winograd's thesis
+\citep{winograd:1970} in terms of using traces of the deliberative
+process as well as using a semantic model of the world in order to
+understand communications between agents.  I have chosen to use a
+simpler and more direct language interface between agents that refers
+more directly to the semantic information and mental processes
+involved.
 

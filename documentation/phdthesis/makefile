@@ -31,6 +31,7 @@ phdthesis.pdf: \
   chapters/appendix_education.tex \
   gfx/objective_description.pdf \
   gfx/agent_environment.pdf \
+  gfx/multiple_agent_environment.pdf \
   gfx/reinforcement_learning.pdf \
   gfx/perception_categorization.pdf \
   gfx/problem_complexity_versus_algorithm_adaptability.pdf
@@ -50,4 +51,6 @@ clean:
 	rm -f phdthesis.lot
 	rm -f phdthesis.out
 	rm -f phdthesis.toc
+	rm -f phdthesis.bbl
+	rm -f phdthesis.blg
 

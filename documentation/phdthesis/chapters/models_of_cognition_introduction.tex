@@ -20,111 +20,14 @@ have goals---and two objects may seem similar for one purpose but
 different for another purpose.
 \end{quote}
 \begin{flushright}
- --- \defcitealias{minsky:1991}{Marvin Minsky}\citetalias{minsky:1991} \citep{minsky:1991}
+ --- \defcitealias{minsky:1991}{Marvin Minsky}\citetalias{minsky:1991}
 \end{flushright}
-
-\section{The Common Sense Reasoning Problem Domain}
-
-Common sense is the set of common reasoning abilities shared by most
-people in a given social group.  Another way to say this is that
-common sense is the set of reasoning abilities that one would assume
-of a typical person that they meet for the first time and know nothing
-about.  For example, most people have a naive theory of physics, so
-you would expect someone to know that things fall when they are not
-supported and liquids flow or are absorbed unless they are in a
-container.  Common sense relies on a lot of knowledge that is assumed
-that most everyone knows.
-
-Building a machine that demonstrates common sense reasoning is a
-long-standing goal of the field of artificial intelligence.  One of
-the difficulties in developing algorithms for dealing with a common
-sense reasoning domain is that the algorithm needs a lot of background
-knowledge about a given domain before it can answer even simple
-questions about it.  However, this knowledge is often only true in
-very specific situations and has many exceptional cases.  For example,
-the knowledge that most birds can fly is generally true, but we also
-know that many birds are flightless, such as penguins, ostriches, and
-road runners.  Also, we have knowledge about the typical behavior of
-objects; for example, we know that refrigerators keep things cold,
-but we also reason efficiently about exceptional cases, such as when
-the refrigerator is not plugged in, or when the power goes out.
-
-\subsection{Representations for Common Sense Reasoning}
-
-There have been many approaches to artificial intelligence that use
-first-order logic as a representation for these types of knowledge and
-their exceptions, but these systems become cumbersome in their
-inability to express ``fuzzy'' sorts of relationships, such as when
-the knowledge is applicable, for example the modifiers, ``most of the
-time'', ``usually'', and ``almost never'', are difficult to express in
-first-order logic.  When we have a lot of knowledge, we need ways to
-keep track of in which situations this knowledge is useful.  This is a
-form of ``meta-knowledge'', or knowledge about knowledge.
-Meta-knowledge about first-order logic cannot be expressed in
-first-order logic, so another type of representation is required for
-this type of knowledge.  Therefore, we need other ways to represent
-our knowledge in addition to logic.
-
-
-
-
-
-\section{Two Popular Approaches to Modelling Intelligence}
-
-Recently, there have been two directions of research with the goal of
-building a machine that explains intelligent human behavior.  The
-first approach is to build a baby-machine that learns from scratch to
-accomplish goals through interactions with its environment.  The
-second approach is to give the machine an abundance of knowledge that
-represents correct behavior.
-
-Each of these solutions has benefits and drawbacks.  The baby-machine
-approach is good for dealing with novel problems, but these problems
-are necessarily simple because complex problems require a lot of
-background knowledge.  The data abundance approach deals well with
-complicated problems requiring a lot of background knowledge, but
-fails to adapt to changing environments, for which the algorithm has
-not already been trained.
-
-\subsection{Adaptability in Complex Environments}
-
-\begin{figure}[bth]
-  \center
-  \includegraphics[height=6cm]{gfx/problem_complexity_versus_algorithm_adaptability}
-  \caption[Problem complexity versus algorithm adaptability]{Problem complexity versus algorithm adaptability.}
-  \label{fig:problem_complexity_versus_algorithm_adaptability}
-\end{figure}
-
-We would like to build intelligent machines that are able to perform
-household tasks, such as cooking, cleaning, and doing the laundry, but
-these tasks seem insurmountably complex, containing organically
-unpredictable events.  We would like our machines to expertly handle
-these extremely complicated problems, and we would also like them to
-adapt to learn in unexpected or novel situations.  One popular
-approach to building a machine that performs complicated tasks is to
-give the machine a large training dataset that details every possible
-situation that the machine may find itself within, along with the
-correct action in that situation.  This is the so-called
-``supervised'' learning approach.  These algorithms do not adapt to
-novel situations well, and collecting these datasets is often
-impossible for many problems, such as cooking and cleaning because it
-is too difficult to enumerate all possible situations, in which the
-machine may find itself.  Also, if the machine is cooking a meal, we
-would like to be able to explain an idea for a new recipe to the
-machine, or to perhaps be a partner in discovering new recipes, or we
-may simply want to explain to the machine that a guest has a specific
-allergy to walnuts, making that ingredient an exception for this meal
-but not others.
-Figure~\ref{fig:problem_complexity_versus_algorithm_adaptability}
-shows how problem complexity and algorithm adaptability can be thought
-of as a two-dimensional space into which different algorithmic
-approaches can be used as solutions.
 
 \section{The Agent Environment Model}
 
 \begin{figure}[bth]
   \center
-  \includegraphics[width=4cm]{gfx/agent_environment}
+  \includegraphics[height=5cm]{gfx/agent_environment}
   \caption[The agent environment model]{The agent environment model.}
   \label{fig:agent_environment}
 \end{figure}
@@ -149,10 +52,17 @@ channel from the environment to the agent.
 
 \begin{figure}[bth]
   \center
-  \includegraphics[width=4cm]{gfx/multiple_agent_environment}
+  \includegraphics[height=5cm]{gfx/multiple_agent_environment}
   \caption[The multiple agent environment model]{The multiple agent environment model.}
   \label{fig:multiple_agent_environment}
 \end{figure}
+
+In order to model social intelligence, we introduce the multiple agent
+environment model shown in
+Figure~\ref{fig:multiple_agent_environment}.  One interesting property
+of the multiple agent environment model is that any communication
+between any two agent processes must occur through the environment
+process.
 
 
 \section{The Baby-Machine Approach}
@@ -161,7 +71,7 @@ channel from the environment to the agent.
 
 \begin{figure}[bth]
   \center
-  \includegraphics[width=4cm]{gfx/reinforcement_learning}
+  \includegraphics[height=5cm]{gfx/reinforcement_learning}
   \caption[The reinforcement learning model]{The reinforcement learning model.}
   \label{fig:reinforcement_learning}
 \end{figure}
@@ -198,20 +108,22 @@ a policy that determines what action should be executed for every part
 of the state space, based on some sort of summation of rewards over
 time.  There have a been a number of ways of formalizing this
 summation process as finite or infinite horizon problems
-\cite{sutton:1998}.  Dynamic programming can be used for finding an
-optimal or an approximately optimal policy \cite{bertsekas:1995}.
-
-
-
+\citep{sutton:1998}.  Dynamic programming can be used for finding an
+optimal or an approximately optimal policy \citep{bertsekas:1995}.
 
 \subsection{Categorizing Perceptions and Actions based on Goals}
 
-There are a number of problems with the reinforcement learning
-approach to problem solving.  The primary problem with reinforcement learning is that 
+One problem with the reinforcement learning approach is that the only
+representation of success or failure is a single number, the reward.
+The basic reinforcement learning problem has been defined for finite
+propositional state spaces.
 
-One problem with the reinforcement
-learning approach is that the only representation of success or
-failure is a single number, the reward.
+A representation called \ac{RMDP} has been proposed
+\citep{guestrin:2003} in order to extend reinforcement learning to
+larger relational problem domains, but this method only focuses on an
+object-oriented reward that does not have any global feedback about
+the overall value of the situation.
+
 
 \subsection{Feedback Control Model for Accomplishing Goals}
 
@@ -240,24 +152,16 @@ environment is closer to the desired state.
 
 In 1959, Newell, Shaw, and Simon published a report on a means-end
 analysis model that was designed to solve any symbolically represented
-problem \cite{newell:1959}.  Their system was called the General
-Problem Solver (\ac{GPS}), and worked by being able to work with
-relational representations of current and desired states.  The agent
-had a catalogue of differences between states that it knew how to
-minimize.  The system worked by finding the largest difference and
-executing the associated method for reducing this difference.  This
-work has grown into the Soar model for better solving symbolic
-planning problems, and dealing with impasses for when the planning
-search runs out of options.
+problem \citep{newell:1959}.  Their system was called the \ac{GPS}, and
+worked by being able to work with relational representations of
+current and desired states.  The agent had a catalogue of differences
+between states that it knew how to minimize.  The system worked by
+finding the largest difference and executing the associated method for
+reducing this difference.  This work has grown into the Soar model for
+better solving symbolic planning problems, and dealing with impasses
+for when the planning search runs out of options.
 
 
-
-
-``These systems use multiple representations including semantic
-networks, propositional and first-order probabilistic graphical
-models, case bases of story scripts, rule based systems, logical
-axioms, shape descriptions, and even English sentences.'' --- Push
-Singh's webpage
 
 
 \subsection{Goal-Oriented Learning}
@@ -272,5 +176,170 @@ first place.
 
 
 \section{Layers of Knowledge about Knowledge}
+
+
+
+
+\section{Two Popular Approaches to Modelling Intelligence}
+
+Recently, there have been two directions of research with the goal of
+building a machine that explains intelligent human behavior.  The
+first approach is to build a baby-machine that learns from scratch to
+accomplish goals through interactions with its environment.  The
+second approach is to give the machine an abundance of knowledge that
+represents correct behavior.
+
+Each of these solutions has benefits and drawbacks.  The baby-machine
+approach is good for dealing with novel problems, but these problems
+are necessarily simple because complex problems require a lot of
+background knowledge.  The data abundance approach deals well with
+complicated problems requiring a lot of background knowledge, but
+fails to adapt to changing environments, for which the algorithm has
+not already been trained.
+
+\subsection{Adaptability in Complex Environments}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[height=6cm]{gfx/problem_complexity_versus_algorithm_adaptability}
+  \caption[Problem complexity versus algorithm adaptability]{Problem
+    complexity versus algorithm adaptability.}
+  \label{fig:problem_complexity_versus_algorithm_adaptability}
+\end{figure}
+
+We would like to build intelligent machines that are able to perform
+household tasks, such as cooking, cleaning, and doing the laundry, but
+these tasks seem insurmountably complex, containing organically
+unpredictable events.  We would like our machines to expertly handle
+these extremely complicated problems, and we would also like them to
+adapt to learn in unexpected or novel situations.  One popular
+approach to building a machine that performs complicated tasks is to
+give the machine a large training dataset that details every possible
+situation that the machine may find itself within, along with the
+correct action in that situation.  This is the so-called
+``supervised'' learning approach.  These algorithms do not adapt to
+novel situations well, and collecting these datasets is often
+impossible for many problems, such as cooking and cleaning because it
+is too difficult to enumerate all possible situations, in which the
+machine may find itself.  Also, if the machine is cooking a meal, we
+would like to be able to explain an idea for a new recipe to the
+machine, or to perhaps be a partner in discovering new recipes, or we
+may simply want to explain to the machine that a guest has a specific
+allergy to walnuts, making that ingredient an exception for this meal
+but not others.
+Figure~\ref{fig:problem_complexity_versus_algorithm_adaptability}
+shows how problem complexity and algorithm adaptability can be thought
+of as a two-dimensional space into which different algorithmic
+approaches can be used as solutions.
+
+\subsection{The Abundant Data Approach}
+
+There have been many approaches to modelling complex forms of
+reasoning by collecting large amounts of knowledge that describes
+correct or acceptable behavior in a domain.  For example, there are
+examples of complex multi-agent commonsense simulation environments
+collects thousands of examples of users interacting in a complicated
+object-oriented social simulation \citep{orkin:2009},
+\citep{orkin:2010}.  These systems have complicated domains, but these
+projects do not attempt to build agents that attempt to accomplish
+goals.  Instead, these systems are inference systems that simply try
+to reproduce typical behavior, rather than goal-directed behavior.
+
+There are many commonsense reasoning systems that do not interact with
+simulation environments at all, but which attempt to demonstrate
+commonsense reasoning by being told large amounts of knowledge.  The
+Cyc project is one large such project that has been told large amounts
+of logical knowledge \citep{lenat:1990}.  There is also effort
+directed toward populating Cyc with knowledge automatically gathered
+from the web \citep{matuszek:2005}.  The OpenMind project
+\citep{singh:2002} is a project that gathers large amounts of
+approximately correct commonsense knowledge from people online.  The
+OpenMind knowledge has been turned into many inference systems that
+can compare and generate new commonsense knowledge \citep{liu:2004a,
+  liu:2004b, speer:2008}.
+
+\section{The Common Sense Reasoning Problem Domain}
+
+Common sense is the set of common reasoning abilities shared by most
+people in a given social group.  Another way to say this is that
+common sense is the set of reasoning abilities that one would assume
+of a typical person that they meet for the first time and know nothing
+about.  For example, most people have a naive theory of physics, so
+you would expect someone to know that things fall when they are not
+supported and liquids flow or are absorbed unless they are in a
+container.  Common sense relies on a lot of knowledge that is assumed
+that most everyone knows.
+
+%TS>> what is a given social group... i share very little reasoning abiltities about user TS>>interface with my daughter or the director of CMU Siliicon Valley or my bike riding 
+%TS>> friends, or my brothers,....
+
+%TS>> not crisp enough ... a person is not defined as a person...but realtive to a 
+%TS>> role we have with them,,, a mechanic talks differently to a woman or man, a professor
+%TS>> or his accountant about cars 
+
+%TS>> again, people have different theories of physics than each other 
+
+%TS>> i have been served food in which the floating stuff  was designed to change through 
+%TS>> the period of servign and eating soup  ..
+
+%TS>> I am ready for  a fight on that , i live with a woman, a teenage girl, an autistic,
+%TS>> my neighbor is a morman, the woman next door is totally rich... very diffferent 
+%TS>> world views... even about how to deal with trash from a dinner. 
+
+%TS>> I don't know what YOU mean by common sense yet,,,, define something specific
+%TS>> does it cover diffferent minds or clones, what about its edges,   
+
+
+Building a machine that demonstrates common sense reasoning is a
+long-standing goal of the field of artificial intelligence.  One of
+the difficulties in developing algorithms for dealing with a common
+sense reasoning domain is that the algorithm needs a lot of background
+knowledge about a given domain before it can answer even simple
+questions about it.  However, this knowledge is often only true in
+very specific situations and has many exceptional cases.  For example,
+the knowledge that most birds can fly is generally true, but we also
+know that many birds are flightless, such as penguins, ostriches, and
+road runners.  Also, we have knowledge about the typical behavior of
+objects; for example, we know that refrigerators keep things cold,
+but we also reason efficiently about exceptional cases, such as when
+the refrigerator is not plugged in, or when the power goes out.
+
+%TS>> yes but those are examples we have seen for decades with varying 
+%TS>> logical relations solving them
+%TS>> show some that we haven't been able to do or places where you hold
+%TS>> up where others have always been brittle 
+%TS>> flexibility, integrity, hypocracy, intentionality changing belief systems...? 
+
+
+\subsection{Representations for Common Sense Reasoning}
+
+There have been many approaches to artificial intelligence that use
+first-order logic as a representation for these types of knowledge and
+their exceptions, but these systems become cumbersome in their
+inability to express ``fuzzy'' sorts of relationships, such as when
+the knowledge is applicable, for example the modifiers, ``most of the
+time'', ``usually'', and ``almost never'', are difficult to express in
+first-order logic.  When we have a lot of knowledge, we need ways to
+keep track of in which situations this knowledge is useful.  This is a
+form of ``meta-knowledge'', or knowledge about knowledge.
+Meta-knowledge about first-order logic cannot be expressed in
+first-order logic, so another type of representation is required for
+this type of knowledge.  Therefore, we need other ways to represent
+our knowledge in addition to logic.
+
+\begin{quote}
+``Nonetheless, theorem proving is in the worst case an intractable
+  problem, even with no variables or unification, so no algorithm is
+  going to work on the problem all the time. In this respect, theorem
+  proving, for all its superficial formalism, is a lot like other
+  branches of AI.  Where a theorist views a problem as solved if he
+  has found an efficient algorithm or a discouraging lower bound, an
+  AI researcher is often happy to find an algorithm that seems to work
+  on some interesting problems, even though he doesn't really know the
+  bounds of what it can do. Exploration will reveal the extent of its
+  powers-each time it solves one more interesting problem something
+  has been
+  gained.''~---~\defcitealias{mcdermott:1987}{Drew~McDermott}\citetalias{mcdermott:1987}
+\end{quote}
 
 

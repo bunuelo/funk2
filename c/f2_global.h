@@ -29,8 +29,6 @@
 #include "f2_debug_macros.h"
 #include "f2_system_headers.h"
 
-typedef unsigned int  uint;
-
 #ifndef F2__APPLE
 typedef unsigned char boolean_t;
 #endif // F2__APPLE

@@ -76,7 +76,7 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
   clock_id_t      clk_serv_id;
   mach_timespec_t tm;
   
-  uint64_t start, end, delta, nano;
+  u64 start, end, delta, nano;
   
   int retval = -1;
   switch (clk_id) {

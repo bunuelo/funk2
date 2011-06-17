@@ -468,6 +468,12 @@
        [have [get this cycle_trigger] trigger]
        ]]
 
+`[[small burrito
+	 bean and rice guacamole, lettuce, no cheese]
+  [chips and salsa]
+  [himicha drink]]
+
+
 [deftypefunk isismon_project execute create_new_isis_world []
   [terminal_format standard-terminal '\nIsisMon Project creating new IsisWorld.']
   [let [[isis_world_server_hostname [get [get isismon preferences] isis_world_server_hostname]]]

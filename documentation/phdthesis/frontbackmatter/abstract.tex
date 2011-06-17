@@ -10,51 +10,86 @@
 
 \chapter*{Abstract}
 
-Building a machine that demonstrates the general intelligence required
-for commonsense reasoning is a longstanding goal of the field of
-artificial intelligence.  There have been many approaches to building
-a machine that demonstrates general intelligence, some are based on
-logical representations, others are based on large collections of
-statistical knowledge, while still others approach the problem by
-learning everything from scratch from the physical world.  We see the
-problem as requiring a combination of many different types of
-representations and reasoning processes.
+A system built on a layered reflective cognitive architecture, such as
+that advocated by Minsky, presents many novel and difficult
+software-engineering problems.  Some of these problems can be
+ameliorated by erecting the system on a substrate that implicitly
+supports tracing of results and behavior of the system to the data and
+through the procedures that produced those results and that behavior.
+Good traces make the system accountable: it enables the analysis of
+success and failure, and thus enhances the ability to learn from
+mistakes.
 
-We worked with Push Singh from 1999 to 2006 on the first version of
-the Emotion Machine architecture, EM1.  During that period, we
-discussed that one weakness in the EM1 system is its reliance on
-tracing only the declarative prolog statements, among other necessary
-but untraced procedural code.  Although EM1 contained a large amount
-of procedural knowledge, none of the effects of this procedural
-knowledge could be debugged reflectively.  Toward solving this
-problem, we have based our approach on a memory layer that can trace
-the provenance of select memory events.
+I have constructed just such a substrate.  It provides for general
+parallelism and concurrency, while supporting the automatic collection
+of audit trails for all processes, including the processes that
+analyze audit trails.  My system natively supports a Lisp-like
+language.  In such a language, as in machine language, a program is
+data that can be easily manipulated by a program.  This makes it
+easier for a user (or an automatic procedure) to read, edit, and write
+programs, as they are debugged.
 
-Because the Emotion Machine theory of mind requires a variety of many
-reasoning processes to be controlled, we have built an operating
-system on top of this traceable memory layer.
-
-Further, the Emotion Machine is organized into layers of different
-representations, so we have built a lisp-like language on top this
-operating system.  The benefit of having a lisp-like language is the
-language's ability to efficiently represent and simulate new
-programming languages.
-
-Within our lisp-like language we have written an implementation of a
-layered reflective cognitive architecture, inspired by EM1.
-
-Finally, we demonstrate our cognitive architecture in a rigid-body
-physical environment, where multiple agents demonstrate learning from
-both being told solutions to problems as well as learning from the
-environment in which situations these solutions succeed or fail.  We
-show how our procedurally traced memory can be used to assign credit
-to those deliberative processes that are responsible for the failure,
+Building on the work of Pushpinder Singh I build and demonstrate an
+example cognitive architecture simulation of life in a rigidbody
+physical environment.  In my demonstration multiple agents can learn
+from experience of success or failure, or by being explicitly taught
+by other agents (including the user).  In my demonstration I show how
+procedurally traced memory can be used to assign credit to those
+deliberative processes that are responsible for the failure,
 facilitating learning how to better plan for these types of problems
 in the future.
 
 \endgroup
 
 \vfill
+
+
+
+%Building a machine that demonstrates the general intelligence required
+%for commonsense reasoning is a longstanding goal of the field of
+%artificial intelligence.  There have been many approaches to building
+%a machine that demonstrates general intelligence, some are based on
+%logical representations, others are based on large collections of
+%statistical knowledge, while still others approach the problem by
+%learning everything from scratch from the physical world.  We see the
+%problem as requiring a combination of many different types of
+%representations and reasoning processes.
+%
+%We worked with Push Singh from 1999 to 2006 on the first version of
+%the Emotion Machine architecture, EM1.  During that period, we
+%discussed that one weakness in the EM1 system is its reliance on
+%tracing only the declarative prolog statements, among other necessary
+%but untraced procedural code.  Although EM1 contained a large amount
+%of procedural knowledge, none of the effects of this procedural
+%knowledge could be debugged reflectively.  Toward solving this
+%problem, we have based our approach on a memory layer that can trace
+%the provenance of select memory events.
+%
+%Because the Emotion Machine theory of mind requires a variety of many
+%reasoning processes to be controlled, we have built an operating
+%system on top of this traceable memory layer.
+%
+%Further, the Emotion Machine is organized into layers of different
+%representations, so we have built a lisp-like language on top this
+%operating system.  The benefit of having a lisp-like language is the
+%language's ability to efficiently represent and simulate new
+%programming languages.
+%
+%Within our lisp-like language we have written an implementation of a
+%layered reflective cognitive architecture, inspired by EM1.
+%
+%Finally, we demonstrate our cognitive architecture in a rigid-body
+%physical environment, where multiple agents demonstrate learning from
+%both being told solutions to problems as well as learning from the
+%environment in which situations these solutions succeed or fail.  We
+%show how our procedurally traced memory can be used to assign credit
+%to those deliberative processes that are responsible for the failure,
+%facilitating learning how to better plan for these types of problems
+%in the future.
+
+
+
+
 
 
 %Systems that demonstrate social and physical world learning have had

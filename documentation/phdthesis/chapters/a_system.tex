@@ -14,15 +14,15 @@ learning everything from scratch from the physical world.  We see the
 problem as requiring a combination of many different types of
 representations and reasoning processes.
 
-We worked with Push Singh from 1999 to 2006 on the first version of
-the Emotion Machine architecture, EM1.  During that period, we
-discussed that one weakness in the EM1 system is its reliance on
-tracing only the declarative prolog statements, among other necessary
-but untraced procedural code.  Although EM1 contained a large amount
-of procedural knowledge, none of the effects of this procedural
-knowledge could be debugged reflectively.  Toward solving this
-problem, we have based our approach on a memory layer that can trace
-the provenance of select memory events.
+We worked with Pushpinder Singh from 1999 to 2006 on the first version
+of the Emotion Machine architecture, EM1 \citep{singh:2005}.  During
+that period, we discussed that one weakness in the EM1 system is its
+reliance on tracing only the declarative prolog statements, among
+other necessary but untraced procedural code.  Although EM1 contained
+a large amount of procedural knowledge, none of the effects of this
+procedural knowledge could be debugged reflectively.  Toward solving
+this problem, we have based our approach on a memory layer that can
+trace the provenance of select memory events.
 
 Because the Emotion Machine theory of mind requires a variety of many
 reasoning processes to be controlled, we have built an operating
@@ -130,4 +130,45 @@ Further, we have developed a cognitive architecture within our
 language that provides structures for layering reflective processes,
 resulting in a hierarchy of control algorithms that respond to
 failures in the layers below.
+
+
+
+
+\section{Procedural Tracing}
+
+The idea of having procedural tracing at the operating system level is
+important because it does allow all programs running on the operating
+system to assign credit to processes when bugs do occur.
+
+%TS>> then you have to refer to the robust os literature and talk about their methods for
+%TS>>tracing and justify it with their literature and then show how yours adds to it and 
+%TS>>defend it against and in that community... ....might be a distraction .....
+%TS>operating system... seems pretty general... how bout in the" memory's working set"
+
+Although it is important to have protected memory boundaries between
+programs for reasons of security, privacy, and stability, having good
+ways for processes that do share memory to trace the provenance of
+individual memory events, allows for much tighter and intelligent
+interaction between all processes in the entire system.
+        
+
+\subsection{Trace Only an Appropriate Level of Abstraction}
+
+It does not make sense to trace below a certain depth of processing.
+If we were to trace all of the lowest level details of execution at
+all times, there would be no way to take advantage of that amount
+of detailed information.
+
+There are barriers in my system for only allowing tracing to occur for
+specific parts of the code.  The ability to focus the tracing of object
+usage allows the possibility of tracing either high or low-level events
+in a uniform manner.
+
+\subsection{Keeping Tracing from Taking Too Much Time and Storage}
+
+When a set of objects are out of the focus of tracing, these objects run
+operate at full speed and do not increase the memory usage of the
+tracing component.  There is a new proposal by McCarthy to build a new
+programming language that remembers everything that it does; it is
+called Elephant 2000 \citep{mccarthy:1994}.
 

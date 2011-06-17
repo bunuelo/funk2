@@ -438,8 +438,9 @@ f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
-  u8* file__str = (u8*)from_ptr(f2__malloc(file__length));
+  u8* file__str = (u8*)from_ptr(f2__malloc(file__length + 1));
   u64 read_length = read(fd, file__str, file__length);
+  file__str[file__length] = 0;
   if (read_length != file__length) {
     printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
     f2__free(to_ptr(file__str));

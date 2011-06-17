@@ -42,6 +42,10 @@ typedef unsigned char boolean_t;
 #  pragma warning(disable: 424)
 // remark #981: operands are evaluated in unspecified order
 #  pragma warning(disable: 981)
+// remark #869: parameter "cause" was never referenced
+#  pragma warning(disable: 869)
+// remark #1418: external function definition with no prior declaration
+#  pragma warning(disable: 1418)
 #endif	// __INTEL_COMPILER
 
 #define int_bit_num    (sizeof(int)*8)

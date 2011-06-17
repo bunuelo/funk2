@@ -269,35 +269,35 @@ def_pcfunk0(current_working_directory,
 
 f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
   int separator_count = 0;
-  {
-    u64 this__length = raw__string__length(cause, this);
-    u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
-    raw__string__str_copy(cause, this, this__str);
-    this__str[this__length] = 0;
-    
-    u64 that__length = raw__string__length(cause, that);
-    u8* that__str    = (u8*)from_ptr(f2__malloc(that__length + 1));
-    raw__string__str_copy(cause, that, that__str);
-    that__str[that__length] = 0;
-    
-    if (this__str[this__length - 1] == '/') {
-      separator_count ++;
-    }
-    if (that__str[0] == '/') {
-      separator_count ++;
-    }
-    f2__free(to_ptr(this__str));
-    f2__free(to_ptr(that__str));
+  u64 this__length = raw__string__length(cause, this);
+  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  
+  u64 that__length = raw__string__length(cause, that);
+  u8* that__str    = (u8*)from_ptr(f2__malloc(that__length + 1));
+  raw__string__str_copy(cause, that, that__str);
+  that__str[that__length] = 0;
+  
+  if (this__str[this__length - 1] == '/') {
+    separator_count ++;
+  }
+  if (that__str[0] == '/') {
+    separator_count ++;
   }
   
+  f2ptr result;
   if (separator_count == 0) {
-    return f2__stringlist__concat(cause, f2list3__new(cause, this, new__string(cause, "/"), that));
+    result = f2__stringlist__concat(cause, f2list3__new(cause, this, new__string(cause, "/"), that));
   } else if (separator_count == 1) {
-    return f2__stringlist__concat(cause, f2list2__new(cause, this, that));
+    result = f2__stringlist__concat(cause, f2list2__new(cause, this, that));
   } else { // separator_count == 2
     this__str[this__length - 1] = 0;
-    return f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, (char*)this__str), that));
+    result = f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, (char*)this__str), that));
   }
+  f2__free(to_ptr(this__str));
+  f2__free(to_ptr(that__str));
+  return result;
 }
 
 f2ptr f2__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {

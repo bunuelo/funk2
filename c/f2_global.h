@@ -40,6 +40,8 @@ typedef unsigned char boolean_t;
 #  pragma warning(disable: 271)
 // remark #424: extra ";" ignored
 #  pragma warning(disable: 424)
+// remark #981: operands are evaluated in unspecified order
+#  pragma warning(disable: 981)
 #endif	// __INTEL_COMPILER
 
 #define int_bit_num    (sizeof(int)*8)

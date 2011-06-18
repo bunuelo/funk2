@@ -45,11 +45,19 @@ boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
   return boolean__true;
 }
 
-f2ptr raw__ptypehash__new(f2ptr cause, s64 bin_num_power__i) {
-  f2ptr thread_safe   = f2bool__new(boolean__true);
-  f2ptr write_cmutex  = f2cmutex__new(cause);
-  f2ptr read_cmutex   = f2cmutex__new(cause);
-  f2ptr read_count    = f2integer__new(cause, 0);
+f2ptr raw__ptypehash__new(f2ptr cause, f2ptr thread_safe, s64 bin_num_power__i) {
+  f2ptr write_cmutex;
+  f2ptr read_cmutex;
+  f2ptr read_count;
+  if (thread_safe != nil) {
+    write_cmutex = f2cmutex__new(cause);
+    read_cmutex  = f2cmutex__new(cause);
+    read_count   = f2integer__new(cause, 0);
+  } else {
+    write_cmutex = nil;
+    read_cmutex  = nil;
+    read_count   = nil;
+  }
   f2ptr key_count     = f2integer__new(cause, 0);
   f2ptr bin_num_power = f2integer__new(cause, bin_num_power__i);
   f2ptr bin_array     = raw__array__new(cause, 1ll << bin_num_power__i);
@@ -59,7 +67,7 @@ f2ptr raw__ptypehash__new(f2ptr cause, s64 bin_num_power__i) {
 }
 
 #define ptypehash__default_start_bin_num_power 5
-f2ptr f2__ptypehash__new(f2ptr cause) {return raw__ptypehash__new(cause, ptypehash__default_start_bin_num_power);}
+f2ptr f2__ptypehash__new(f2ptr cause) {return raw__ptypehash__new(cause, f2bool__new(boolean__true), ptypehash__default_start_bin_num_power);}
 def_pcfunk0(ptypehash__new,
 	    "",
 	    return f2__ptypehash__new(this_cause));
@@ -123,7 +131,7 @@ void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2ptypehash__bin_array(this, cause);
-  f2ptr temp_ptypehash   = raw__ptypehash__new(cause, bin_num_power__i + 1);
+  f2ptr temp_ptypehash   = raw__ptypehash__new(cause, f2bool__new(boolean__false), bin_num_power__i + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
     status("f2__ptypehash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, bin_num << 1);
@@ -145,7 +153,10 @@ void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 
 f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
-  raw__ptypehash__lock_for_write(cause, this);
+  f2ptr thread_safe = f2ptypehash__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__ptypehash__lock_for_write(cause, this);
+  }
   //f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -179,7 +190,9 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
-  raw__ptypehash__unlock_from_write(cause, this);
+  if (thread_safe != nil) {
+    raw__ptypehash__unlock_from_write(cause, this);
+  }
   //f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return nil;
 }
@@ -196,7 +209,10 @@ def_pcfunk3(ptypehash__add, this, slot_name, value,
 boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  raw__ptypehash__lock_for_write(cause, this);
+  f2ptr thread_safe = f2ptypehash__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__ptypehash__lock_for_write(cause, this);
+  }
   //f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
   {
     f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
@@ -232,7 +248,9 @@ boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  raw__ptypehash__unlock_from_write(cause, this);
+  if (thread_safe != nil) {
+    raw__ptypehash__unlock_from_write(cause, this);
+  }
   //f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return key_was_removed;
 }
@@ -286,9 +304,14 @@ f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
   //status("ptypehash (" u64__fstr ") attempting to lock write cmutex.", this);
   //f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
-  raw__ptypehash__lock_for_read(cause, this);
+  f2ptr thread_safe = f2ptypehash__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__ptypehash__lock_for_read(cause, this);
+  }
   f2ptr result = raw__ptypehash__lookup_keyvalue_pair__thread_unsafe(cause, this, key);
-  raw__ptypehash__unlock_from_read(cause, this);
+  if (thread_safe != nil) {
+    raw__ptypehash__unlock_from_read(cause, this);
+  }
   //f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return result;
 }
@@ -335,7 +358,10 @@ def_pcfunk2(ptypehash__contains, this, key,
 
 f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
   //f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
-  raw__ptypehash__lock_for_read(cause, this);
+  f2ptr thread_safe = f2ptypehash__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__ptypehash__lock_for_read(cause, this);
+  }
   {
     f2ptr bin_array         = f2__ptypehash__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -344,13 +370,17 @@ f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
       if (keyvalue_pair_iter) {
 	f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
-	raw__ptypehash__unlock_from_read(cause, this);
+	if (thread_safe != nil) {
+	  raw__ptypehash__unlock_from_read(cause, this);
+	}
 	//f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
 	return keyvalue_pair;
       }
     }
   }
-  raw__ptypehash__unlock_from_read(cause, this);
+  if (thread_safe != nil) {
+    raw__ptypehash__unlock_from_read(cause, this);
+  }
   //f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return nil;
 }

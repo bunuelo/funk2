@@ -57,10 +57,14 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 
 // frame
 
-def_primobject_2_slot(frame, new_type_cmutex, type_ptypehash);
+def_primobject_4_slot(frame, write_cmutex, read_cmutex, read_count, type_ptypehash);
 
 f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
-  f2ptr this = f2frame__new(cause, f2cmutex__new(cause), f2__ptypehash__new(cause));
+  f2ptr write_cmutex   = f2cmutex__new(cause);
+  f2ptr read_cmutex    = f2cmutex__new(cause);
+  f2ptr read_count     = f2integer__new(cause, 0);
+  f2ptr type_ptypehash = f2__ptypehash__new(cause);
+  f2ptr this           = f2frame__new(cause, write_cmutex, read_cmutex, read_count, type_ptypehash);
   {
     f2ptr iter = slot_value_pairs;
     while (iter) {
@@ -81,21 +85,79 @@ def_pcfunk0_and_rest(frame__new, slot_value_pairs,
 		     "",
 		     return f2__frame__new(this_cause, slot_value_pairs));
 
+
+boolean_t raw__frame__trylock_for_write(f2ptr cause, f2ptr this) {
+  boolean_t failure;
+  {
+    f2ptr write_cmutex = f2frame__write_cmutex(this, cause);
+    f2ptr read_cmutex  = f2frame__read_cmutex( this, cause);
+    raw__cmutex__lock(cause, write_cmutex);
+    raw__cmutex__lock(cause, read_cmutex);
+    f2ptr read_count    = f2frame__read_count(this, cause);
+    s64   read_count__i = f2integer__i(read_count, cause);
+    if (read_count__i == 0) {
+      failure = boolean__false;
+    } else {
+      failure = boolean__true;
+      raw__cmutex__unlock(cause, read_cmutex);
+      raw__cmutex__unlock(cause, write_cmutex);
+    }
+  }
+  return failure;
+}
+
+void raw__frame__lock_for_write(f2ptr cause, f2ptr this) {
+  while (raw__frame__trylock_for_write(cause, this)) {
+    f2__this__fiber__yield(cause);
+  }
+}
+
+void raw__frame__unlock_from_write(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex  = f2frame__read_cmutex( this, cause);
+  f2ptr write_cmutex = f2frame__write_cmutex(this, cause);
+  raw__cmutex__unlock(cause, read_cmutex);
+  raw__cmutex__unlock(cause, write_cmutex);
+}
+
+void raw__frame__lock_for_read(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex = f2frame__read_cmutex(this, cause);
+  raw__cmutex__lock(cause, read_cmutex);
+  f2ptr read_count    = f2frame__read_count(this, cause);
+  s64   read_count__i = f2integer__i(read_count, cause);
+  read_count__i ++;
+  read_count = f2integer__new(cause, read_count__i);
+  f2frame__read_count__set(this, cause, read_count);
+  raw__cmutex__unlock(cause, read_cmutex);
+}
+
+void raw__frame__unlock_from_read(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex = f2frame__read_cmutex(this, cause);
+  raw__cmutex__lock(cause, read_cmutex);
+  f2ptr read_count    = f2frame__read_count(this, cause);
+  s64   read_count__i = f2integer__i(read_count, cause);
+  read_count__i --;
+  read_count = f2integer__new(cause, read_count__i);
+  f2frame__read_count__set(this, cause, read_count);
+  raw__cmutex__unlock(cause, read_cmutex);
+}
+
+
+
 f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  raw__frame__lock_for_write(cause, this);
   f2ptr frame__type_ptypehash = f2frame__type_ptypehash(this, cause);
-  release__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
+  debug__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
   f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
   if (! type__ptypehash) {
-    f2cmutex__lock(f2frame__new_type_cmutex(this, cause), cause);
     type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
     if (! type__ptypehash) {
       type__ptypehash = f2__ptypehash__new(cause);
       f2__ptypehash__add(cause, frame__type_ptypehash, type, type__ptypehash);
     }
-    f2cmutex__unlock(f2frame__new_type_cmutex(this, cause), cause);
   }
-  release__assert(raw__ptypehash__is_type(cause, type__ptypehash), nil, "type__ptypehash is not ptypehash.");
+  debug__assert(raw__ptypehash__is_type(cause, type__ptypehash), nil, "type__ptypehash is not ptypehash.");
   f2__ptypehash__add(cause, type__ptypehash, var, value);
+  raw__frame__unlock_from_write(cause, this);
   return nil;
 }
 
@@ -107,31 +169,42 @@ def_pcfunk4(frame__add_type_var_value, this, type, var, value,
 	    "",
 	    return f2__frame__add_type_var_value(this_cause, this, type, var, value));
 
-f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+f2ptr f2__frame__lookup_type_var_assignment_cons__thread_unsafe(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__ptypehash = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, type__ptypehash, var);
     if (keyvalue_pair) {
+      raw__frame__unlock_from_read(cause, this);
       return keyvalue_pair;
     }
   }
   return not_defined_value;
+}
+
+f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+  raw__frame__lock_for_read(cause, this);
+  f2ptr result = f2__frame__lookup_type_var_assignment_cons__thread_unsafe(cause, this, type, var, not_defined_value);
+  raw__frame__unlock_from_read(cause, this);
+  return result;
 }
 def_pcfunk4(frame__lookup_type_var_assignment_cons, this, type, var, not_defined_value,
 	    "",
 	    return f2__frame__lookup_type_var_assignment_cons(this_cause, this, type, var, not_defined_value));
 
 f2ptr raw__frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
+  raw__frame__lock_for_read(cause, this);
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__ptypehash = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, type__ptypehash, var);
     if (keyvalue_pair) {
       f2ptr retval = f2cons__cdr(keyvalue_pair, cause);
+      raw__frame__unlock_from_read(cause, this);
       return retval;
     }
   }
+  raw__frame__unlock_from_read(cause, this);
   return not_defined_value;
 }
 
@@ -144,15 +217,18 @@ def_pcfunk4(frame__lookup_type_var_value, this, type, var, not_defined_value,
 	    return f2__frame__lookup_type_var_value(this_cause, this, type, var, not_defined_value));
 
 f2ptr raw__frame__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value) {
+  raw__frame__lock_for_write(cause, this);
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);
   if (type__keyvalue_pair) {
     f2ptr type__ptypehash = f2cons__cdr(type__keyvalue_pair, cause);
     f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, type__ptypehash, var);
     if (keyvalue_pair) {
       f2cons__cdr__set(keyvalue_pair, cause, value);
+      raw__frame__unlock_from_write(cause, this);
       return nil;
     }
   }
+  raw__frame__unlock_from_write(cause, this);
   return not_defined_value;
 }
 
@@ -916,7 +992,7 @@ void f2__primobject_frame__initialize() {
   
   // frame
   
-  initialize_primobject_2_slot(frame, new_type_cmutex, type_ptypehash);
+  initialize_primobject_4_slot(frame, write_cmutex, read_cmutex, read_count, type_ptypehash);
   
   {char* symbol_str = "add_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_frame.add_type_var_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(frame__add_type_var_value, this, type, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_frame.add_type_var_value__funk = never_gc(cfunk);}

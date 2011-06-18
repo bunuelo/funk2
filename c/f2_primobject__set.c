@@ -60,7 +60,7 @@ f2ptr raw__set__new(f2ptr cause, boolean_t thread_safe, s64 bin_num_power__i) {
 }
 
 #define set__default_start_bin_num_power 3
-f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, set__default_start_bin_num_power);}
+f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, boolean__true, set__default_start_bin_num_power);}
 def_pcfunk0(set__new,
 	    "",
 	    return f2__set__new(this_cause));
@@ -124,7 +124,7 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2set__bin_array(this, cause);
-  f2ptr temp_set         = raw__set__new(cause, bin_num_power__i + 1);
+  f2ptr temp_set         = raw__set__new(cause, boolean__false, bin_num_power__i + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
     status("f2__set__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, bin_num << 1);

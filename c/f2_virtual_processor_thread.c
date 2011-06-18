@@ -53,12 +53,57 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
   }
 }
 
+void funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(funk2_virtual_processor_thread_t* this) {
+  this->last_checked__nanoseconds_since_1970     = 0;
+  this->last_checked__nanoseconds_execution_time = 0;
+  this->spin_loop_sleep_nanoseconds              = 10 * 1000000ull; // sleep 10ms in the beginning by default
+}
+
+u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_virtual_processor_thread_t* this) {
+  u64 current__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+  if (this->last_checked__nanoseconds_since_1970 == 0) {
+    u64 current__nanoseconds_execution_time        = raw__processor_thread__execution_nanoseconds(nil);
+    this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
+    this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
+  } else if ((current__nanoseconds_since_1970 - this->last_checked__nanoseconds_since_1970) >= nanoseconds_per_second) {
+    u64 current__nanoseconds_execution_time = raw__processor_thread__execution_nanoseconds(nil);
+    s64 elapsed__nanoseconds                = (current__nanoseconds_since_1970     - this->last_checked__nanoseconds_since_1970);
+    s64 elapsed__nanoseconds_execution_time = (current__nanoseconds_execution_time - this->last_checked__nanoseconds_execution_time);
+    // estimate new spin_loop_sleep_nanoseconds
+    if ((elapsed__nanoseconds_execution_time == 0) ||
+	(elapsed__nanoseconds / elapsed__nanoseconds_execution_time) > 1000) {
+      // we need to sleep less.
+      if (this->spin_loop_sleep_nanoseconds > 1) {
+	// divide sleep time by two, if we're not already sleeping only one nanosecond.
+	this->spin_loop_sleep_nanoseconds >>= 1;
+      }
+    } else {
+      // we need to sleep more.
+      if (this->spin_loop_sleep_nanoseconds < (s64)(10 * nanoseconds_per_second)) {
+	// multiply sleep time by two, if we're not already sleeping more than 10 seconds.
+	this->spin_loop_sleep_nanoseconds <<= 1;
+      }
+    }
+    // save times for next estimation
+    this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
+    this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
+  }
+  return this->spin_loop_sleep_nanoseconds;
+}
+
+void funk2_virtual_processor_thread__spin_sleep_yield(funk2_virtual_processor_thread_t* this) {
+  u64 spin_loop_sleep_nanoseconds = funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(this);
+  sched_yield();
+  f2__nanosleep(spin_loop_sleep_nanoseconds);
+}
+
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
   this->tid = (pid_t)syscall(SYS_gettid);
   while (__funk2.memory.bootstrapping_mode) {
     raw__spin_sleep_yield();
   }
+  funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(this);
   status("starting virtual_processor_thread.");
   while (! (this->exit)) {
     u64 virtual_processor_assignment_index = -1;
@@ -73,7 +118,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	}
 	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
 	if (not_assigned_to_virtual_processor) {
-	  raw__spin_sleep_yield();
+	  funk2_virtual_processor_thread__spin_sleep_yield(this);
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {
@@ -120,8 +165,10 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	while (did_something) {
 	  did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
 	}
-	if (! did_something) {
-	  f2__nanosleep(1000000);
+	if (did_something) {
+	  funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(this);
+	} else {
+	  funk2_virtual_processor_thread__spin_sleep_yield(this);
 	}
       } else {
 	//
@@ -132,7 +179,8 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
 	  funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
 	} else {
-	  f2__nanosleep(line_length * line_length * 10000000);
+	  funk2_virtual_processor_thread__spin_sleep_yield(this);
+	  //f2__nanosleep(line_length * line_length * 10000000);
 	}
 	//raw__spin_sleep_yield();
       }
@@ -144,12 +192,14 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 
 void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
   funk2_processor_mutex__init(&(this->assignment_mutex));
-  this->tid                                = (pid_t)0;
-  this->virtual_processor_assignment_index = -1;
-  this->exit                               = boolean__false;
-  this->exited                             = boolean__false;
-  this->virtual_processor_stack_index      = 0;
-  this->processor_affinity_index           = -1;
+  this->tid                                      = (pid_t)0;
+  this->virtual_processor_assignment_index       = -1;
+  this->exit                                     = boolean__false;
+  this->exited                                   = boolean__false;
+  this->virtual_processor_stack_index            = 0;
+  this->processor_affinity_index                 = -1;
+  this->last_checked__nanoseconds_since_1970     = 0;
+  this->last_checked__nanoseconds_execution_time = 0;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }

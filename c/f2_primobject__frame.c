@@ -59,11 +59,13 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 
 def_primobject_4_slot(frame, write_cmutex, read_cmutex, read_count, type_ptypehash);
 
+#define frame__type_ptypehash__default_start_bin_num_power 3
+#define frame__var_ptypehash__default_start_bin_num_power  5
 f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
   f2ptr write_cmutex   = f2cmutex__new(cause);
   f2ptr read_cmutex    = f2cmutex__new(cause);
   f2ptr read_count     = f2integer__new(cause, 0);
-  f2ptr type_ptypehash = f2__ptypehash__new(cause);
+  f2ptr type_ptypehash = raw__ptypehash__new(cause, boolean__false, frame__type_ptypehash__default_start_bin_num_power);
   f2ptr this           = f2frame__new(cause, write_cmutex, read_cmutex, read_count, type_ptypehash);
   {
     f2ptr iter = slot_value_pairs;
@@ -151,7 +153,7 @@ f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
   if (! type__ptypehash) {
     type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
     if (! type__ptypehash) {
-      type__ptypehash = f2__ptypehash__new(cause);
+      type__ptypehash = raw__ptypehash__new(cause, boolean__false, frame__var_ptypehash__default_start_bin_num_power);;
       f2__ptypehash__add(cause, frame__type_ptypehash, type, type__ptypehash);
     }
   }

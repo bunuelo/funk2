@@ -46,6 +46,7 @@ struct funk2_virtual_processor_thread_s {
   u64                       virtual_processor_stack_index;
   u64                       last_checked__nanoseconds_since_1970;
   u64                       last_checked__nanoseconds_execution_time;
+  u64                       spin_loop_sleep_nanoseconds;
 };
 
 void* funk2_virtual_processor_thread__start_function(                 void* args);

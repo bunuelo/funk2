@@ -200,6 +200,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->processor_affinity_index                 = -1;
   this->last_checked__nanoseconds_since_1970     = 0;
   this->last_checked__nanoseconds_execution_time = 0;
+  this->spin_loop_sleep_nanoseconds              = 0;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }

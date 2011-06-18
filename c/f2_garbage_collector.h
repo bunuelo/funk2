@@ -32,6 +32,8 @@ typedef struct funk2_garbage_collector_s funk2_garbage_collector_t;
 #include "f2_garbage_collector_pool.h"
 #include "f2_never_delete_list.h"
 
+#define minimum_seconds_between_garbage_collections 20
+
 // garbage_collector
 
 struct funk2_garbage_collector_s {

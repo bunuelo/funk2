@@ -146,7 +146,7 @@ void raw__spin_sleep_yield() {
 void raw__fast_spin_sleep_yield() {
   sched_yield();
   //f2__sleep(1000);
-  f2__nanosleep(1000);
+  //f2__nanosleep(1000);
 }
 
 u64 raw__nanoseconds_since_1970() {

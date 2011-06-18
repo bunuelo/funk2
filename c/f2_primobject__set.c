@@ -105,7 +105,7 @@ void raw__set__lock_for_read(f2ptr cause, f2ptr this) {
   s64   read_count__i = f2integer__i(read_count, cause);
   read_count__i ++;
   read_count = f2integer__new(cause, read_count__i);
-  f2sett__read_count__set(this, cause, read_count);
+  f2set__read_count__set(this, cause, read_count);
   raw__cmutex__unlock(cause, read_cmutex);
 }
 

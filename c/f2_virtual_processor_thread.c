@@ -65,7 +65,7 @@ u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_v
     u64 current__nanoseconds_execution_time        = raw__processor_thread__execution_nanoseconds(nil);
     this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
     this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
-  } else if ((current__nanoseconds_since_1970 - this->last_checked__nanoseconds_since_1970) >= nanoseconds_per_second) {
+  } else if ((current__nanoseconds_since_1970 - this->last_checked__nanoseconds_since_1970) >= (10ull * nanoseconds_per_second)) {
     u64 current__nanoseconds_execution_time = raw__processor_thread__execution_nanoseconds(nil);
     s64 elapsed__nanoseconds                = (current__nanoseconds_since_1970     - this->last_checked__nanoseconds_since_1970);
     s64 elapsed__nanoseconds_execution_time = (current__nanoseconds_execution_time - this->last_checked__nanoseconds_execution_time);

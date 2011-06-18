@@ -179,7 +179,7 @@ f2ptr                  f2_trace_c__cause__new(f2ptr cause);
 f2ptr              f2_serialize_c__cause__new(f2ptr cause);
 f2ptr                     funk2_c__cause__new(f2ptr cause);
 
-f2ptr f2bool__new(uint raw_value);
+f2ptr f2bool__new(boolean_t raw_value);
 
 void f2__globalenv__initialize();
 

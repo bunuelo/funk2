@@ -84,6 +84,7 @@ u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_v
 	this->spin_loop_sleep_nanoseconds <<= 1;
       }
     }
+    printf("\nnew sleep nanoseconds: " u64__fstr, this->spin_loop_sleep_nanoseconds);
     // save times for next estimation
     this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
     this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;

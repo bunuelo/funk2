@@ -24,7 +24,7 @@
 
 // set
 
-def_primobject_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array);
+def_primobject_7_slot(set, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
 
 boolean_t raw__set__valid(f2ptr cause, f2ptr this) {
   if (! raw__set__is_type(cause, this)) {return 0;}
@@ -38,9 +38,23 @@ boolean_t raw__set__valid(f2ptr cause, f2ptr this) {
   return 1;
 }
 
-f2ptr raw__set__new(f2ptr cause, s64 bin_num_power) {
-  f2ptr bin_array = raw__array__new(cause, 1ll << bin_num_power);
-  f2ptr this = f2set__new(cause, f2cmutex__new(cause), f2integer__new(cause, 0), f2integer__new(cause, bin_num_power), bin_array);
+f2ptr raw__set__new(f2ptr cause, boolean_t thread_safe, s64 bin_num_power__i) {
+  f2ptr write_cmutex;
+  f2ptr read_cmutex;
+  f2ptr read_count;
+  if (thread_safe) {
+    write_cmutex = f2cmutex__new(cause);
+    read_cmutex  = f2cmutex__new(cause);
+    read_count   = f2integer__new(cause, 0);
+  } else {
+    write_cmutex = nil;
+    read_cmutex  = nil;
+    read_count   = nil;
+  }
+  f2ptr key_count     = f2integer__new(cause, 0);
+  f2ptr bin_num_power = f2integer__new(cause, bin_num_power__i);
+  f2ptr bin_array     = raw__array__new(cause, 1ll << bin_num_power__i);
+  f2ptr this = f2set__new(cause, f2bool__new(thread_safe), write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
   debug__assert(raw__set__valid(cause, this), nil, "raw__set__new assert failed: f2__set__valid(this)");
   return this;
 }
@@ -50,6 +64,61 @@ f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, set__default_start_
 def_pcfunk0(set__new,
 	    "",
 	    return f2__set__new(this_cause));
+
+boolean_t raw__set__trylock_for_write(f2ptr cause, f2ptr this) {
+  boolean_t failure;
+  {
+    f2ptr write_cmutex = f2set__write_cmutex(this, cause);
+    f2ptr read_cmutex  = f2set__read_cmutex( this, cause);
+    raw__cmutex__lock(cause, write_cmutex);
+    raw__cmutex__lock(cause, read_cmutex);
+    f2ptr read_count    = f2set__read_count(this, cause);
+    s64   read_count__i = f2integer__i(read_count, cause);
+    if (read_count__i == 0) {
+      failure = boolean__false;
+    } else {
+      failure = boolean__true;
+      raw__cmutex__unlock(cause, read_cmutex);
+      raw__cmutex__unlock(cause, write_cmutex);
+    }
+  }
+  return failure;
+}
+
+void raw__set__lock_for_write(f2ptr cause, f2ptr this) {
+  while (raw__set__trylock_for_write(cause, this)) {
+    f2__this__fiber__yield(cause);
+  }
+}
+
+void raw__set__unlock_from_write(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex  = f2set__read_cmutex( this, cause);
+  f2ptr write_cmutex = f2set__write_cmutex(this, cause);
+  raw__cmutex__unlock(cause, read_cmutex);
+  raw__cmutex__unlock(cause, write_cmutex);
+}
+
+void raw__set__lock_for_read(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex = f2set__read_cmutex(this, cause);
+  raw__cmutex__lock(cause, read_cmutex);
+  f2ptr read_count    = f2set__read_count(this, cause);
+  s64   read_count__i = f2integer__i(read_count, cause);
+  read_count__i ++;
+  read_count = f2integer__new(cause, read_count__i);
+  f2sett__read_count__set(this, cause, read_count);
+  raw__cmutex__unlock(cause, read_cmutex);
+}
+
+void raw__set__unlock_from_read(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex = f2set__read_cmutex(this, cause);
+  raw__cmutex__lock(cause, read_cmutex);
+  f2ptr read_count    = f2set__read_count(this, cause);
+  s64   read_count__i = f2integer__i(read_count, cause);
+  read_count__i --;
+  read_count = f2integer__new(cause, read_count__i);
+  f2set__read_count__set(this, cause, read_count);
+  raw__cmutex__unlock(cause, read_cmutex);
+}
 
 void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
@@ -75,7 +144,11 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
 
 f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__add assert failed: f2__set__valid(this)");
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  f2ptr thread_safe = f2set__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__set__lock_for_write(cause, this);
+  }
+  //f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -87,7 +160,10 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter,  cause);
     if (raw__eq(cause, key, iter__key)) {
-      f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+      if (thread_safe != nil) {
+	raw__set__unlock_from_write(cause, this);
+      }
+      //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
       return f2bool__new(boolean__true);
     }
     key_iter = f2cons__cdr(key_iter, cause);
@@ -101,7 +177,10 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
   if (key_count__i >= (1ll << bin_num_power__i)) {
     f2__set__double_size__thread_unsafe(cause, this);
   }
-  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+  if (thread_safe != nil) {
+    raw__set__unlock_from_write(cause, this);
+  }
+  //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -116,7 +195,11 @@ def_pcfunk2(set__add, this, element,
 boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__remove assert failed: f2__set__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  f2ptr thread_safe = f2set__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__set__lock_for_write(cause, this);
+  }
+  //f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   {
     f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -150,7 +233,10 @@ boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+  if (thread_safe != nil) {
+    raw__set__unlock_from_write(cause, this);
+  }
+  //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return key_was_removed;
 }
 
@@ -195,7 +281,11 @@ def_pcfunk1(set__new_copy, this,
 
 
 f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  f2ptr thread_safe = f2set__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__set__lock_for_read(cause, this);
+  }
+  //f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   {
     f2ptr bin_array         = f2__set__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -204,12 +294,18 @@ f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
       f2ptr key_iter = raw__array__elt(cause, bin_array, index);
       if (key_iter) {
 	f2ptr key = f2cons__car(key_iter, cause);
-	f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+	if (thread_safe != nil) {
+	  raw__set__unlock_from_read(cause, this);
+	}
+	//f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
 	return key;
       }
     }
   }
-  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+  if (thread_safe != nil) {
+    raw__set__unlock_from_read(cause, this);
+  }
+  //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -224,7 +320,11 @@ def_pcfunk1(set__an_arbitrary_element, this,
 
 f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  f2ptr thread_safe = f2set__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__set__lock_for_read(cause, this);
+  }
+  //f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -236,12 +336,18 @@ f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter, cause);
     if (raw__eq(cause, key, iter__key)) {
-      f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+      if (thread_safe != nil) {
+	raw__set__unlock_from_read(cause, this);
+      }
+      //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
       return iter__key;
     }
     key_iter = f2cons__cdr(key_iter, cause);
   }
-  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+  if (thread_safe != nil) {
+    raw__set__unlock_from_read(cause, this);
+  }
+  //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
@@ -256,7 +362,11 @@ def_pcfunk2(set__lookup, this, element,
 
 boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__contains assert failed: f2__set__valid(this)");
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  f2ptr thread_safe = f2set__thread_safe(this, cause);
+  if (thread_safe != nil) {
+    raw__set__lock_for_read(cause, this);
+  }
+  //f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -268,12 +378,18 @@ boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   while(key_iter) {
     f2ptr iter__key = f2cons__car(key_iter, cause);
     if (raw__eq(cause, key, iter__key)) {
-      f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+      if (thread_safe != nil) {
+	raw__set__unlock_from_read(cause, this);
+      }
+      //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
       return boolean__true;
     }
     key_iter = f2cons__cdr(key_iter, cause);
   }
-  f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
+  if (thread_safe != nil) {
+    raw__set__unlock_from_read(cause, this);
+  }
+  //f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return boolean__false;
 }
 

@@ -32,7 +32,7 @@ void funk2_primobject_type_handler__destroy(funk2_primobject_type_handler_t* thi
 
 void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handler_t* this, f2ptr cause) {
   funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
-  f2ptr new_type_hash = raw__ptypehash__new(cause, 5);
+  f2ptr new_type_hash = raw__ptypehash__new(cause, boolean__true, 5);
   this->type_hash = new_type_hash;
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "type_hash"), new_type_hash);
   funk2_processor_mutex__unlock(&(this->type_hash_cmutex));

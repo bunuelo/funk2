@@ -59,7 +59,7 @@ f2ptr raw__set__new(f2ptr cause, boolean_t thread_safe, s64 bin_num_power__i) {
   return this;
 }
 
-#define set__default_start_bin_num_power 3
+#define set__default_start_bin_num_power 7
 f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, boolean__true, set__default_start_bin_num_power);}
 def_pcfunk0(set__new,
 	    "",

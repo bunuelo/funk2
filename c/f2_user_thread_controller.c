@@ -36,7 +36,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -49,7 +49,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_proces
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
 }
 
@@ -65,12 +65,12 @@ void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread
 
 void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
   while (this->done_count > 0) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -83,7 +83,7 @@ void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_t
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count --;
@@ -105,7 +105,7 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -118,7 +118,7 @@ void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_use
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
 }
 
@@ -137,7 +137,7 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -150,7 +150,7 @@ void funk2_user_thread_controller__free_white_exps__user_process(funk2_user_thre
   this->done_count ++;
   funk2_processor_mutex__unlock(&(this->done_mutex));
   while (! (this->everyone_done)) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
 }
 
@@ -170,7 +170,7 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   while (this->done_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
@@ -215,7 +215,7 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
   while (this->waiting_count < memory_pool_num) {
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
 }
 
@@ -239,7 +239,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
     else if                         (this->grey_from_other_nodes.start) {funk2_user_thread_controller__grey_from_other_nodes__user_process(           &(this->grey_from_other_nodes));}
     else if                               (this->free_white_exps.start) {funk2_user_thread_controller__free_white_exps__user_process(                 &(this->free_white_exps));}
     else if                                          (this->exit.start) {funk2_user_thread_controller__exit__user_process(                            &(this->exit));}
-    raw__fast_spin_sleep_yield();
+    raw__spin_sleep_yield();
   }
   this->waiting_count --;
   funk2_processor_mutex__unlock(&(this->waiting_count_mutex));

@@ -4382,7 +4382,7 @@ def_primobject_9_slot(optimize_context,
 
 f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   assert_argument_type(integer, maximum_loop_count);
-  f2ptr optimize_bytecode_sequence_hash = f2__ptypehash__new(cause);
+  f2ptr optimize_bytecode_sequence_hash = f2__ptypehash__thread_unsafe__new(cause);
   f2ptr initial_fiber          = nil;
   f2ptr active_fiber_set       = f2__set__new(cause);
   f2ptr branched_fiber_set     = f2__set__new(cause);
@@ -4609,7 +4609,7 @@ f2ptr raw__optimize_context__compile_new_bytecodes_for_fiber_and_branches(f2ptr 
 
 f2ptr raw__bytecodes__remove_nops(f2ptr cause, f2ptr these) {
   f2ptr full_bcs = these;
-  f2ptr nop_bcs_next_hash = f2__ptypehash__new(cause);
+  f2ptr nop_bcs_next_hash = f2__ptypehash__thread_unsafe__new(cause);
   // Remove nops while keeping track of their next pointer in a hash.
   {
     f2ptr prev = nil;

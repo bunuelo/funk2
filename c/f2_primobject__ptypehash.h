@@ -69,6 +69,7 @@ declare_primobject_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, rea
 
 f2ptr     raw__ptypehash__new                       (f2ptr cause, boolean_t thread_safe, s64 bin_num_power);
 f2ptr      f2__ptypehash__new                       (f2ptr cause);
+f2ptr      f2__ptypehash__thread_unsafe__new        (f2ptr cause);
 f2ptr     raw__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 boolean_t raw__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);

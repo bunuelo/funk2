@@ -67,10 +67,12 @@ f2ptr raw__ptypehash__new(f2ptr cause, boolean_t thread_safe, s64 bin_num_power_
 }
 
 #define ptypehash__default_start_bin_num_power 6
-f2ptr f2__ptypehash__new(f2ptr cause) {return raw__ptypehash__new(cause, f2bool__new(boolean__true), ptypehash__default_start_bin_num_power);}
+f2ptr f2__ptypehash__new(f2ptr cause) {return raw__ptypehash__new(cause, boolean__true, ptypehash__default_start_bin_num_power);}
 def_pcfunk0(ptypehash__new,
 	    "",
 	    return f2__ptypehash__new(this_cause));
+
+f2ptr f2__ptypehash__thread_unsafe__new(f2ptr cause) {return raw__ptypehash__new(cause, boolean__false, ptypehash__default_start_bin_num_power);}
 
 boolean_t raw__ptypehash__trylock_for_write(f2ptr cause, f2ptr this) {
   boolean_t failure;

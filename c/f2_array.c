@@ -236,7 +236,7 @@ def_pcfunk2(array__equals_hash_value__loop_free, this, node_hash,
 
 
 f2ptr raw__array__equals_hash_value(f2ptr cause, f2ptr this) {
-  f2ptr node_hash = f2__ptypehash__new(cause);
+  f2ptr node_hash = f2__ptypehash__thread_unsafe__new(cause);
   return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
 }
 

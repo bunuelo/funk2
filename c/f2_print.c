@@ -1678,7 +1678,7 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
 f2ptr f2__exp__printable_value(f2ptr cause, f2ptr this) {
   f2ptr max_size          = f2integer__new(cause, 100);
   f2ptr size              = f2integer__new(cause, 0);
-  f2ptr ptypehash         = f2__ptypehash__new(cause);
+  f2ptr ptypehash         = f2__ptypehash__thread_unsafe__new(cause);
   f2ptr subexp_size_place = f2__place__new(cause, nil);
   return raw__exp__printable_value__with_ptypehash(cause, this, max_size, size, ptypehash, subexp_size_place);
 }

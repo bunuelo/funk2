@@ -183,7 +183,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	if (did_something) {
 	  funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(this);
 	} else {
-	  funk2_virtual_processor_thread__spin_sleep_yield(this);
+	  raw__spin_sleep_yield();
 	}
       } else {
 	//

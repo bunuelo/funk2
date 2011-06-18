@@ -142,7 +142,7 @@ void raw__bytecodes__add_to_chunk_sequence_ptypehash(f2ptr cause, f2ptr these, f
 
 f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these) {
   f2ptr chunk_sequence_ptypehash = raw__ptypehash__new(cause, boolean__false, 6);
-  f2ptr seen_sequence_set        = raw__set__new(cause, 6);
+  f2ptr seen_sequence_set        = raw__set__new(cause, boolean__false, 6);
   raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, these, chunk_sequence_ptypehash, seen_sequence_set);
   ptypehash__iteration(cause, chunk_sequence_ptypehash, sequence, chunk,
 		       f2ptr new_sequence = nil;
@@ -393,7 +393,7 @@ void raw__optimize_chunk__as__bytecodes__append_transition(f2ptr cause, f2ptr th
 f2ptr raw__optimize_chunk__as__bytecodes(f2ptr cause, f2ptr this) {
   f2ptr sequence_chunk_ptypehash = raw__ptypehash__new(cause, boolean__false, 6);
   raw__optimize_chunk__as__bytecodes__gather_chunks(cause, this, sequence_chunk_ptypehash);
-  f2ptr finished_chunk_set = raw__set__new(cause, 6);
+  f2ptr finished_chunk_set = raw__set__new(cause, boolean__false, 6);
   raw__optimize_chunk__as__bytecodes__append_transition(cause, this, sequence_chunk_ptypehash, finished_chunk_set);
   return raw__ptypehash__lookup(cause, sequence_chunk_ptypehash, this);
 }

@@ -66,8 +66,8 @@ def_pcfunk0(ptypehash__new,
 boolean_t raw__ptypehash__trylock_for_write(f2ptr cause, f2ptr this) {
   boolean_t failure;
   {
-    f2ptr read_cmutex  = f2ptypehash__read_cmutex(this, cause);
     f2ptr write_cmutex = f2ptypehash__write_cmutex(this, cause);
+    f2ptr read_cmutex  = f2ptypehash__read_cmutex( this, cause);
     raw__cmutex__lock(cause, write_cmutex);
     raw__cmutex__lock(cause, read_cmutex);
     f2ptr read_count    = f2ptypehash__read_count(this, cause);
@@ -85,7 +85,7 @@ boolean_t raw__ptypehash__trylock_for_write(f2ptr cause, f2ptr this) {
 
 void raw__ptypehash__lock_for_write(f2ptr cause, f2ptr this) {
   while (raw__ptypehash__trylock_for_write(cause, this)) {
-    raw__fast_spin_sleep_yield();
+    f2__this__fiber__yield(cause);
   }
 }
 

@@ -56,7 +56,7 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 void funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(funk2_virtual_processor_thread_t* this) {
   this->last_checked__nanoseconds_since_1970     = 0;
   this->last_checked__nanoseconds_execution_time = 0;
-  this->spin_loop_sleep_nanoseconds              = nanoseconds_per_second / 10; // sleep 10ms in the beginning by default
+  this->spin_loop_sleep_nanoseconds              = nanoseconds_per_second / 10; // sleep 100ms in the beginning by default
   this->spin_loop_count_since_last_checked       = 0;
 }
 

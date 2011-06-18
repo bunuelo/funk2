@@ -71,7 +71,7 @@ u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_v
     s64 elapsed__nanoseconds_execution_time = (current__nanoseconds_execution_time - this->last_checked__nanoseconds_execution_time);
     // estimate new spin_loop_sleep_nanoseconds
     if ((elapsed__nanoseconds_execution_time == 0) ||
-	(elapsed__nanoseconds / elapsed__nanoseconds_execution_time) > 1000) {
+	(elapsed__nanoseconds / elapsed__nanoseconds_execution_time) > 100) {
       // we need to sleep less.
       if (this->spin_loop_sleep_nanoseconds > 1) {
 	// divide sleep time by two, if we're not already sleeping only one nanosecond.

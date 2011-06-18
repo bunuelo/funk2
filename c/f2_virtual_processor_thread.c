@@ -57,48 +57,52 @@ void funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(
   this->last_checked__nanoseconds_since_1970     = 0;
   this->last_checked__nanoseconds_execution_time = 0;
   this->spin_loop_sleep_nanoseconds              = 10 * 1000000ull; // sleep 10ms in the beginning by default
+  this->spin_loop_count_since_last_checked       = 0;
 }
 
 u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_virtual_processor_thread_t* this) {
-  u64 current__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-  if (this->last_checked__nanoseconds_since_1970 == 0) {
-    u64 current__nanoseconds_execution_time        = raw__processor_thread__execution_nanoseconds(nil);
-    this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
-    this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
-  } else if ((current__nanoseconds_since_1970 - this->last_checked__nanoseconds_since_1970) >= (10ull * nanoseconds_per_second)) {
-    u64 current__nanoseconds_execution_time = raw__processor_thread__execution_nanoseconds(nil);
-    s64 elapsed__nanoseconds                = (current__nanoseconds_since_1970     - this->last_checked__nanoseconds_since_1970);
-    s64 elapsed__nanoseconds_execution_time = (current__nanoseconds_execution_time - this->last_checked__nanoseconds_execution_time);
-    // estimate new spin_loop_sleep_nanoseconds
-    s64 time_to_execution_ratio = (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time);
-    boolean_t changed = boolean__false;
-    if ((time_to_execution_ratio == -1) ||
-	(time_to_execution_ratio > 16)) {
-      // we need to sleep less.
-      if (this->spin_loop_sleep_nanoseconds > 1) {
-	// divide sleep time by two, if we're not already sleeping only one nanosecond.
-	this->spin_loop_sleep_nanoseconds >>= 1;
-	changed = boolean__true;
+  if (this->spin_loop_count_since_last_checked >= 1024) {
+    u64 current__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    if (this->last_checked__nanoseconds_since_1970 == 0) {
+      u64 current__nanoseconds_execution_time        = raw__processor_thread__execution_nanoseconds(nil);
+      this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
+      this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
+    } else if ((current__nanoseconds_since_1970 - this->last_checked__nanoseconds_since_1970) >= (10ull * nanoseconds_per_second)) {
+      u64 current__nanoseconds_execution_time = raw__processor_thread__execution_nanoseconds(nil);
+      s64 elapsed__nanoseconds                = (current__nanoseconds_since_1970     - this->last_checked__nanoseconds_since_1970);
+      s64 elapsed__nanoseconds_execution_time = (current__nanoseconds_execution_time - this->last_checked__nanoseconds_execution_time);
+      // estimate new spin_loop_sleep_nanoseconds
+      s64 time_to_execution_ratio = (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time);
+      boolean_t changed = boolean__false;
+      if ((time_to_execution_ratio == -1) ||
+	  (time_to_execution_ratio > 16)) {
+	// we need to sleep less.
+	if (this->spin_loop_sleep_nanoseconds > 1) {
+	  // divide sleep time by two, if we're not already sleeping only one nanosecond.
+	  this->spin_loop_sleep_nanoseconds >>= 1;
+	  changed = boolean__true;
+	}
+      } else if (time_to_execution_ratio < 8) {
+	// we need to sleep more.
+	if (this->spin_loop_sleep_nanoseconds < (s64)(10 * nanoseconds_per_second)) {
+	  // multiply sleep time by two, if we're not already sleeping more than 10 seconds.
+	  this->spin_loop_sleep_nanoseconds <<= 1;
+	  changed = boolean__true;
+	}
       }
-    } else if (time_to_execution_ratio < 8) {
-      // we need to sleep more.
-      if (this->spin_loop_sleep_nanoseconds < (s64)(10 * nanoseconds_per_second)) {
-	// multiply sleep time by two, if we're not already sleeping more than 10 seconds.
-	this->spin_loop_sleep_nanoseconds <<= 1;
-	changed = boolean__true;
+      if (changed) {
+	printf("\n");
+	printf("\nspin_loop_sleep_nanoseconds        : " u64__fstr, this->spin_loop_sleep_nanoseconds);
+	printf("\nelapsed__nanoseconds               : " s64__fstr, elapsed__nanoseconds);
+	printf("\nelapsed__nanoseconds_execution_time: " s64__fstr, elapsed__nanoseconds_execution_time);
+	printf("\nratio                              : " s64__fstr, (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time));
       }
+      // save times for next estimation
+      this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
+      this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
     }
-    if (changed) {
-      printf("\n");
-      printf("\nspin_loop_sleep_nanoseconds        : " u64__fstr, this->spin_loop_sleep_nanoseconds);
-      printf("\nelapsed__nanoseconds               : " s64__fstr, elapsed__nanoseconds);
-      printf("\nelapsed__nanoseconds_execution_time: " s64__fstr, elapsed__nanoseconds_execution_time);
-      printf("\nratio                              : " s64__fstr, (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time));
-    }
-    // save times for next estimation
-    this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
-    this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;
   }
+  this->spin_loop_count_since_last_checked ++;
   return this->spin_loop_sleep_nanoseconds;
 }
 
@@ -212,6 +216,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->last_checked__nanoseconds_since_1970     = 0;
   this->last_checked__nanoseconds_execution_time = 0;
   this->spin_loop_sleep_nanoseconds              = 0;
+  this->spin_loop_count_since_last_checked       = 0;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
 }

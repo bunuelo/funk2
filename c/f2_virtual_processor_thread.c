@@ -61,7 +61,7 @@ void funk2_virtual_processor_thread__reset_spin_loop_sleep_nanoseconds_estimate(
 }
 
 u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_virtual_processor_thread_t* this) {
-  if (this->spin_loop_count_since_last_checked >= 1024) {
+  if (this->spin_loop_count_since_last_checked >= 10) {
     u64 current__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     if (this->last_checked__nanoseconds_since_1970 == 0) {
       u64 current__nanoseconds_execution_time        = raw__processor_thread__execution_nanoseconds(nil);

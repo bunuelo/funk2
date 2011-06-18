@@ -76,7 +76,7 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
   clock_id_t      clk_serv_id;
   mach_timespec_t tm;
   
-  uint64_t start, end, delta, nano;
+  u64 start, end, delta, nano;
   
   int retval = -1;
   switch (clk_id) {
@@ -140,13 +140,13 @@ void f2__nanosleep(u64 nanoseconds) {
 void raw__spin_sleep_yield() {
   sched_yield();
   //f2__sleep(10000);
-  f2__nanosleep(10000);
+  f2__nanosleep(1000000);
 }
 
 void raw__fast_spin_sleep_yield() {
   sched_yield();
   //f2__sleep(1000);
-  //f2__nanosleep(1000);
+  f2__nanosleep(1000);
 }
 
 u64 raw__nanoseconds_since_1970() {

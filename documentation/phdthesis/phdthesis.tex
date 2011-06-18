@@ -54,7 +54,7 @@
 % ********************************************************************
 % Re-usable information
 % ********************************************************************
-\newcommand{\myTitle}{The Utility of Cultural Knowledge\xspace}
+\newcommand{\myTitle}{A Substrate for Accountable Layered Systems\xspace}
 \newcommand{\myDegree}{Ph.D. in the Media Arts and Sciences\xspace}
 \newcommand{\myName}{Bo Morgan\xspace}
 \newcommand{\myProf}{Marvin Minsky\xspace}
@@ -69,10 +69,11 @@
 %*******************************************************
 % Packages with options that might require adjustments
 %*******************************************************
-\usepackage[latin1]{inputenc} 
-\usepackage[ngerman,american]{babel}           
-\usepackage[square,numbers]{natbib} 
-\usepackage[fleqn]{amsmath} % math environments and more by the AMS 
+\usepackage[latin1]{inputenc}
+\usepackage[ngerman,american]{babel}
+\usepackage{natbib}
+%\usepackage[square,numbers]{natbib}
+\usepackage[fleqn]{amsmath} % math environments and more by the AMS
 
 %*******************************************************
 \usepackage{classicthesis-ldpkg} % [backref]
@@ -207,34 +208,53 @@
 \cleardoublepage\include{frontbackmatter/acknowledgments}
 \pagestyle{scrheadings}
 \cleardoublepage\include{frontbackmatter/contents}
-%********************************************************************
+%*******************************************************
 % Mainmatter
 %*******************************************************
 \pagenumbering{arabic}
-% use \cleardoublepage here to avoid problems with pdfbookmark
-\cleardoublepage\part{Modelling Human Thinking}
-\include{chapters/chapter01}
-\cleardoublepage\part{Stages of Learning Examples}
-\include{chapters/chapter_stages}
-\cleardoublepage\part{Learning to Get what we Want}
-\include{chapters/chapter02}
-%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-\include{chapters/chapter03}
-%\include{multiToC} % <--- just debug stuff, ignore for your documents
-% ********************************************************************
+\cleardoublepage\part{The Problem}
+\include{chapters/models_of_cognition_introduction}
+\include{chapters/literature_of_cognition_and_commonsense}
+\include{chapters/problems_to_solve}
+\include{chapters/theory_and_alternatives}
+\cleardoublepage\part{Our Solution}
+\include{chapters/a_system}
+\include{chapters/experiments}
+\cleardoublepage\part{Conclusion}
+\include{chapters/discussion}
+\include{chapters/future}
+
+% 1. models of cognition intro
+% 2. literature of cognition/ commonsense (s)
+% 3. problems i will solve
+% 4. theory and alternatives
+% 5. a system
+% 6. experiments with it
+% 7. discussion (how it can integrate and expand on and changes what will happen
+% 8. future
+
+
+%*******************************************************
 % Backmatter
 %*******************************************************
 \appendix
 \cleardoublepage\part{Appendix}
-\include{chapters/chapter0A}
-%********************************************************************
+\include{chapters/appendix_philosophy}
+\include{chapters/appendix_psychology}
+\include{chapters/appendix_neuroscience}
+\include{chapters/appendix_artificial_intelligence}
+\include{chapters/appendix_computer_science}
+\include{chapters/appendix_mental_health}
+\include{chapters/appendix_education}
+\include{chapters/appendix_the_code}
+%*******************************************************
 % Other Stuff in the Back
 %*******************************************************
 \cleardoublepage\include{frontbackmatter/bibliography}
 \cleardoublepage\include{frontbackmatter/colophon}
 \cleardoublepage\include{frontbackmatter/declaration}
-% ********************************************************************
+% ******************************************************
 % Game Over: Restart, Restore or Quit?
 %*******************************************************
 \end{document}
-% ********************************************************************
+% ******************************************************************

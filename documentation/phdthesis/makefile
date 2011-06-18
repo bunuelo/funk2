@@ -3,6 +3,7 @@ default: phdthesis.pdf
 phdthesis.pdf: \
   makefile \
   phdthesis.tex \
+  bibliography.bib \
   frontbackmatter/abstract.tex \
   frontbackmatter/acknowledgments.tex \
   frontbackmatter/bibliography.tex \
@@ -13,9 +14,31 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/chapter_stages.tex
-	pdflatex phdthesis.tex
-	pdflatex phdthesis.tex
+  chapters/models_of_cognition_introduction.tex \
+  chapters/literature_of_cognition_and_commonsense.tex \
+  chapters/problems_to_solve.tex \
+  chapters/theory_and_alternatives.tex \
+  chapters/a_system.tex \
+  chapters/experiments.tex \
+  chapters/discussion.tex \
+  chapters/future.tex \
+  chapters/appendix_philosophy.tex \
+  chapters/appendix_psychology.tex \
+  chapters/appendix_neuroscience.tex \
+  chapters/appendix_artificial_intelligence.tex \
+  chapters/appendix_computer_science.tex \
+  chapters/appendix_mental_health.tex \
+  chapters/appendix_education.tex \
+  gfx/objective_description.pdf \
+  gfx/agent_environment.pdf \
+  gfx/multiple_agent_environment.pdf \
+  gfx/reinforcement_learning.pdf \
+  gfx/perception_categorization.pdf \
+  gfx/problem_complexity_versus_algorithm_adaptability.pdf
+	pdflatex phdthesis
+	bibtex   phdthesis
+	pdflatex phdthesis
+	pdflatex phdthesis
 
 clean:
 	rm -f phdthesis.pdf
@@ -28,4 +51,6 @@ clean:
 	rm -f phdthesis.lot
 	rm -f phdthesis.out
 	rm -f phdthesis.toc
+	rm -f phdthesis.bbl
+	rm -f phdthesis.blg
 

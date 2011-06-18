@@ -910,7 +910,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
     f2ptr whole_decimal_value__largeinteger = raw__largeinteger__new_from_s64(cause, 0);
     {
       f2ptr  ten__largeinteger        = raw__largeinteger__new_from_s64(cause, 10);
-      f2ptr* ten_power__largeintegers = (f2ptr*)alloca(sizeof(f2ptr) * whole_decimal_length);
+      f2ptr* ten_power__largeintegers = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * whole_decimal_length));
       ten_power__largeintegers[0]     = raw__largeinteger__new_from_s64(cause, 1);
       {
 	s64 index;
@@ -927,6 +927,7 @@ f2ptr f2__stream__try_read_number(f2ptr cause, f2ptr stream) {
 	iter = f2cons__cdr(iter, cause);
 	whole_decimal_digit --;
       }
+      f2__free(to_ptr(ten_power__largeintegers));
     }
     s64 part_decimal_denomenator = 1;
     {s64 k; for (k = 0; k < part_decimal_length; k ++) {part_decimal_denomenator *= 10;}}

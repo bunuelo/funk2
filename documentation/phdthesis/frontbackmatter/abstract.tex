@@ -9,56 +9,143 @@
 \let\cleardoublepage\relax
 
 \chapter*{Abstract}
-%Between the ages of 1-3 years old, children display primary emotions,
-%such as joy, disappointment, and surprise.  These emotional processes
-%have been hypothesized to be related to the process of failing or
-%succeeding to accomplish a goal.  Around age 4, children begin to
-%display emotions that involve the self, such as guilt and shame.  It
-%has been hypothesized that these emotions relate to another person's
-%evaluation of the child's goals as good or bad.
-%
-%We approach modelling this developmental process by applying Marvin
-%Minsky's theory of the child-imprimer relationship.  According to
-%Minsky's theory, at a young age, a human child becomes attached to a
-%person that functions as a teacher.  The imprimer could be a parent or
-%a caregiver or another person in the child's life, but the function of
-%the imprimer is to provide feedback to the child in terms of what
-%goals are good or bad for the child to pursue.
 
+A system built on a layered reflective cognitive architecture, such as
+that advocated by Minsky, presents many novel and difficult
+software-engineering problems.  Some of these problems can be
+ameliorated by erecting the system on a substrate that implicitly
+supports tracing of results and behavior of the system to the data and
+through the procedures that produced those results and that behavior.
+Good traces make the system accountable: it enables the analysis of
+success and failure, and thus enhances the ability to learn from
+mistakes.
 
+I have constructed just such a substrate.  It provides for general
+parallelism and concurrency, while supporting the automatic collection
+of audit trails for all processes, including the processes that
+analyze audit trails.  My system natively supports a Lisp-like
+language.  In such a language, as in machine language, a program is
+data that can be easily manipulated by a program.  This makes it
+easier for a user (or an automatic procedure) to read, edit, and write
+programs, as they are debugged.
 
-
-Recently, there have been two directions of research with the goal of
-building a machine that explains intelligent human behavior.  The
-first approach is the machine learning approach and the second is the
-pattern recognition approach.  Each of these solutions has benefits
-and drawbacks.  The machine learning approach attempts to build a
-machine that learns to accomplish goals by learning the effects of its
-actions by interacting with its environment.  The pattern recognition
-approach is given large amounts of knowledge and finds statistical
-regularities within this knowledge in order to generate more
-knowledge.  Machine learning is good for dealing with novel problems,
-but these problems are necessarily simple because complex problems
-require background knowledge.  Pattern recognition deals well with
-complicated problems requiring a lot of background knowledge, but
-fails to adapt to changing environments, for which the algorithm has
-not already been trained.
-
-We are working on an algorithm that combines these two extremes into
-an algorithm that inherits cultural language knowledge, while
-recognizing the failures of this knowledge through failures and
-successes when this knowledge is used.  We develop a definition of the
-utility of cultural knowledge in a domain that is grounded in
-goal-oriented action that corrects this knowledge by learning in the
-context of failure and success.
-
-\begin{quote}
-Problem-sovlers must find relevant data.  How does the human mind retrieve what it needs from among so many millions of knowledge iterms?  Different AI systems have attempted to use a variety of different methods for this.  Some assign keywords, attributes, or descriptors to each item and tehn locate data by feature-matching or by using more sophisticated associative data-base methods.  Oythers use graaph-matching or analogical case-based adaptation.  Yet others try to find relevant information by threading their ways through systematic, usually hierarchical classifications of knowledge---sometimes called ``ontologies''.  But, to me, all such ideaas seem deficient because it is not enough to classify items of information simply in terms of the features or structures of those items themselves.  This is because we rarely use a representation in an intentional vaccuum, but we always have goals---and two objectss may seem similar for one purpose but different for another purpose.
-\end{quote}
-
-
-
+Building on the work of Pushpinder Singh I build and demonstrate an
+example cognitive architecture simulation of life in a rigidbody
+physical environment.  In my demonstration multiple agents can learn
+from experience of success or failure, or by being explicitly taught
+by other agents (including the user).  In my demonstration I show how
+procedurally traced memory can be used to assign credit to those
+deliberative processes that are responsible for the failure,
+facilitating learning how to better plan for these types of problems
+in the future.
 
 \endgroup
 
 \vfill
+
+
+
+%Building a machine that demonstrates the general intelligence required
+%for commonsense reasoning is a longstanding goal of the field of
+%artificial intelligence.  There have been many approaches to building
+%a machine that demonstrates general intelligence, some are based on
+%logical representations, others are based on large collections of
+%statistical knowledge, while still others approach the problem by
+%learning everything from scratch from the physical world.  We see the
+%problem as requiring a combination of many different types of
+%representations and reasoning processes.
+%
+%We worked with Push Singh from 1999 to 2006 on the first version of
+%the Emotion Machine architecture, EM1.  During that period, we
+%discussed that one weakness in the EM1 system is its reliance on
+%tracing only the declarative prolog statements, among other necessary
+%but untraced procedural code.  Although EM1 contained a large amount
+%of procedural knowledge, none of the effects of this procedural
+%knowledge could be debugged reflectively.  Toward solving this
+%problem, we have based our approach on a memory layer that can trace
+%the provenance of select memory events.
+%
+%Because the Emotion Machine theory of mind requires a variety of many
+%reasoning processes to be controlled, we have built an operating
+%system on top of this traceable memory layer.
+%
+%Further, the Emotion Machine is organized into layers of different
+%representations, so we have built a lisp-like language on top this
+%operating system.  The benefit of having a lisp-like language is the
+%language's ability to efficiently represent and simulate new
+%programming languages.
+%
+%Within our lisp-like language we have written an implementation of a
+%layered reflective cognitive architecture, inspired by EM1.
+%
+%Finally, we demonstrate our cognitive architecture in a rigid-body
+%physical environment, where multiple agents demonstrate learning from
+%both being told solutions to problems as well as learning from the
+%environment in which situations these solutions succeed or fail.  We
+%show how our procedurally traced memory can be used to assign credit
+%to those deliberative processes that are responsible for the failure,
+%facilitating learning how to better plan for these types of problems
+%in the future.
+
+
+
+
+
+
+%Systems that demonstrate social and physical world learning have had
+%not been successful at tracing cause and effect reflectively. Lack of
+%reflective debugging of procedural knowledge has continued to be the
+%reason that many AI systems from qualitative reasoning, to ontology
+%based common sense approaches to logical AI approaches have been
+%brittle.  This thesis demonstrates a layered architecture for
+%reflective intelligence.  Based on the XXXX human cognitive model, the
+%reflective intelligence includes 6 layers reactive, learned reactive,
+%deliberative, reflective, self-reflective, and self-conscious
+%thinking. The model is designed to drive system learning with a
+%imprimer attachment theory, a theory of how children inherit goals
+%from parents.
+%
+%The theory is demonstrated in a simulated physical space.  The
+%demonstraton shows multiple autonomous knowledgeable agents learning
+%both from being told solutions to problems as well as learning from
+%running their own exploration experiments to reflect on solutions that
+%succeed or fail.
+%
+%This thesis puts forward a first trace based demonstration of
+%reflection for debugging layered and heterogeneous procedural
+%knowledge systems.
+
+
+%There have been two directions of research with the goal of building a
+%machine that explains intelligent human behavior.  The first approach
+%is to build a baby-machine that learns from scratch to accomplish
+%goals through interactions with its environment.  The second approach
+%is to give the machine an abundance of knowledge that represents
+%correct behavior.
+%
+%Each of these solutions has benefits and drawbacks.  The baby-machine
+%approach is good for dealing with novel problems, but these problems
+%are necessarily simple because complex problems require a lot of
+%background knowledge.  The data abundance approach deals well with
+%complicated problems requiring a lot of background knowledge, but
+%fails to adapt to changing environments, for which the algorithm has
+%not already been trained.
+%
+%We are working on an algorithm that benefits from both of these
+%approaches by learning from cultural language knowledge, while
+%reflectively monitoring and recognizing the failures of this knowledge
+%when it is used in a goal-oriented domain.
+%
+%Toward this end we have developed a reflective programming language
+%allowing us the ability to monitor the execution and interactions
+%between large numbers of complicated lisp-like processes.  Further, we
+%have developed a cognitive architecture within our language that
+%provides structures for layering reflective processes, resulting in a
+%hierarchy of control algorithms that respond to failures in the layers
+%below.
+%
+%Finally, we present an example of our cognitive architecture learning
+%in the context of a social commonsense reasoning domain with parents
+%that teach children as they attempt to accomplish cooking tasks in a
+%kitchen.
+

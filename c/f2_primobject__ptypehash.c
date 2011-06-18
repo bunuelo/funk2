@@ -66,7 +66,7 @@ f2ptr raw__ptypehash__new(f2ptr cause, boolean_t thread_safe, s64 bin_num_power_
   return this;
 }
 
-#define ptypehash__default_start_bin_num_power 5
+#define ptypehash__default_start_bin_num_power 6
 f2ptr f2__ptypehash__new(f2ptr cause) {return raw__ptypehash__new(cause, f2bool__new(boolean__true), ptypehash__default_start_bin_num_power);}
 def_pcfunk0(ptypehash__new,
 	    "",

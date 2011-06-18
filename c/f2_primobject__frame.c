@@ -60,7 +60,7 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 def_primobject_4_slot(frame, write_cmutex, read_cmutex, read_count, type_ptypehash);
 
 #define frame__type_ptypehash__default_start_bin_num_power 3
-#define frame__var_ptypehash__default_start_bin_num_power  5
+#define frame__var_ptypehash__default_start_bin_num_power  6
 f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
   f2ptr write_cmutex   = f2cmutex__new(cause);
   f2ptr read_cmutex    = f2cmutex__new(cause);

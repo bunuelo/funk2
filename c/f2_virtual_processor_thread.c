@@ -73,30 +73,30 @@ u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_v
       s64 elapsed__nanoseconds_execution_time = (current__nanoseconds_execution_time - this->last_checked__nanoseconds_execution_time);
       // estimate new spin_loop_sleep_nanoseconds
       s64 time_to_execution_ratio = (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time);
-      boolean_t changed = boolean__false;
+      //boolean_t changed = boolean__false;
       if ((time_to_execution_ratio == -1) ||
 	  (time_to_execution_ratio > 128)) {
 	// we need to sleep less.
 	if (this->spin_loop_sleep_nanoseconds > 1) {
 	  // divide sleep time by two, if we're not already sleeping only one nanosecond.
 	  this->spin_loop_sleep_nanoseconds >>= 1;
-	  changed = boolean__true;
+	  //changed = boolean__true;
 	}
       } else if (time_to_execution_ratio < 64) {
 	// we need to sleep more.
 	if (this->spin_loop_sleep_nanoseconds < (s64)(nanoseconds_per_second / 10)) {
 	  // multiply sleep time by two, if we're not already sleeping more than 10 seconds.
 	  this->spin_loop_sleep_nanoseconds <<= 1;
-	  changed = boolean__true;
+	  //changed = boolean__true;
 	}
       }
-      if (changed) {
-	printf("\n");
-	printf("\nspin_loop_sleep_nanoseconds        : " u64__fstr, this->spin_loop_sleep_nanoseconds);
-	printf("\nelapsed__nanoseconds               : " s64__fstr, elapsed__nanoseconds);
-	printf("\nelapsed__nanoseconds_execution_time: " s64__fstr, elapsed__nanoseconds_execution_time);
-	printf("\nratio                              : " s64__fstr, (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time));
-      }
+      //if (changed) {
+      //printf("\n");
+      //printf("\nspin_loop_sleep_nanoseconds        : " u64__fstr, this->spin_loop_sleep_nanoseconds);
+      //printf("\nelapsed__nanoseconds               : " s64__fstr, elapsed__nanoseconds);
+      //printf("\nelapsed__nanoseconds_execution_time: " s64__fstr, elapsed__nanoseconds_execution_time);
+      //printf("\nratio                              : " s64__fstr, (elapsed__nanoseconds_execution_time == 0) ? -1 : (elapsed__nanoseconds / elapsed__nanoseconds_execution_time));
+      //}
       // save times for next estimation
       this->last_checked__nanoseconds_since_1970     = current__nanoseconds_since_1970;
       this->last_checked__nanoseconds_execution_time = current__nanoseconds_execution_time;

@@ -67,7 +67,7 @@ declare_object_type_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, re
 
 declare_primobject_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
 
-f2ptr     raw__ptypehash__new                       (f2ptr cause, f2ptr thread_safe, s64 bin_num_power);
+f2ptr     raw__ptypehash__new                       (f2ptr cause, boolean_t thread_safe, s64 bin_num_power);
 f2ptr      f2__ptypehash__new                       (f2ptr cause);
 f2ptr     raw__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);

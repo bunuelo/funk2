@@ -45,11 +45,11 @@ boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
   return boolean__true;
 }
 
-f2ptr raw__ptypehash__new(f2ptr cause, f2ptr thread_safe, s64 bin_num_power__i) {
+f2ptr raw__ptypehash__new(f2ptr cause, boolean_t thread_safe, s64 bin_num_power__i) {
   f2ptr write_cmutex;
   f2ptr read_cmutex;
   f2ptr read_count;
-  if (thread_safe != nil) {
+  if (thread_safe) {
     write_cmutex = f2cmutex__new(cause);
     read_cmutex  = f2cmutex__new(cause);
     read_count   = f2integer__new(cause, 0);
@@ -61,7 +61,7 @@ f2ptr raw__ptypehash__new(f2ptr cause, f2ptr thread_safe, s64 bin_num_power__i) 
   f2ptr key_count     = f2integer__new(cause, 0);
   f2ptr bin_num_power = f2integer__new(cause, bin_num_power__i);
   f2ptr bin_array     = raw__array__new(cause, 1ll << bin_num_power__i);
-  f2ptr this          = f2ptypehash__new(cause, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
+  f2ptr this          = f2ptypehash__new(cause, f2bool__new(thread_safe), write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
   debug__assert(raw__ptypehash__valid(cause, this), nil, "raw__ptypehash__new assert failed: f2__ptypehash__valid(this)");
   return this;
 }

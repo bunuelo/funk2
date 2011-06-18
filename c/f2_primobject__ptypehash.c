@@ -90,6 +90,8 @@ void raw__ptypehash__lock_for_write(f2ptr cause, f2ptr this) {
 }
 
 void raw__ptypehash__unlock_from_write(f2ptr cause, f2ptr this) {
+  f2ptr read_cmutex  = f2ptypehash__read_cmutex( this, cause);
+  f2ptr write_cmutex = f2ptypehash__write_cmutex(this, cause);
   raw__cmutex__unlock(cause, read_cmutex);
   raw__cmutex__unlock(cause, write_cmutex);
 }

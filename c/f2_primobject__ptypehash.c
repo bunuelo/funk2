@@ -23,7 +23,7 @@
 
 // ptypehash
 
-def_primobject_6_slot(ptypehash, write_cmutex, read_mutex, read_count, key_count, bin_num_power, bin_array);
+def_primobject_6_slot(ptypehash, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
 
 boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
   if (! raw__ptypehash__is_type(cause, this)) {

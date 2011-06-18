@@ -231,7 +231,7 @@ boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  raw__ptypehash__unlock_froom_write(cause, this);
+  raw__ptypehash__unlock_from_write(cause, this);
   //f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
   return key_was_removed;
 }

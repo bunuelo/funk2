@@ -84,7 +84,7 @@ u64 funk2_virtual_processor_thread__estimate_spin_loop_sleep_nanoseconds(funk2_v
 	}
       } else if (time_to_execution_ratio < 64) {
 	// we need to sleep more.
-	if (this->spin_loop_sleep_nanoseconds < (s64)(10 * nanoseconds_per_second)) {
+	if (this->spin_loop_sleep_nanoseconds < (s64)(nanoseconds_per_second / 10)) {
 	  // multiply sleep time by two, if we're not already sleeping more than 10 seconds.
 	  this->spin_loop_sleep_nanoseconds <<= 1;
 	  changed = boolean__true;

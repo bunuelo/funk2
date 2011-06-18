@@ -23,7 +23,7 @@
 
 // ptypehash
 
-def_primobject_6_slot(ptypehash, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
+def_primobject_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
 
 boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
   if (! raw__ptypehash__is_type(cause, this)) {
@@ -46,13 +46,14 @@ boolean_t raw__ptypehash__valid(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__ptypehash__new(f2ptr cause, s64 bin_num_power__i) {
+  f2ptr thread_safe   = f2bool__new(boolean__true);
   f2ptr write_cmutex  = f2cmutex__new(cause);
   f2ptr read_cmutex   = f2cmutex__new(cause);
   f2ptr read_count    = f2integer__new(cause, 0);
   f2ptr key_count     = f2integer__new(cause, 0);
   f2ptr bin_num_power = f2integer__new(cause, bin_num_power__i);
   f2ptr bin_array     = raw__array__new(cause, 1ll << bin_num_power__i);
-  f2ptr this          = f2ptypehash__new(cause, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
+  f2ptr this          = f2ptypehash__new(cause, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
   debug__assert(raw__ptypehash__valid(cause, this), nil, "raw__ptypehash__new assert failed: f2__ptypehash__valid(this)");
   return this;
 }
@@ -532,7 +533,7 @@ void f2__primobject__ptypehash__initialize() {
   
   // ptypehash
   
-  initialize_primobject_6_slot(ptypehash, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
+  initialize_primobject_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
   
   {char* symbol_str = "contains"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.contains__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__contains, this, key, cfunk);

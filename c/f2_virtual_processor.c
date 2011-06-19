@@ -174,7 +174,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	  locked_mutex = boolean__true;
 	}
 	if (! locked_mutex) {
-	  raw__spin_sleep_yield();
+	  raw__fast_spin_sleep_yield();
 	}
       }
       if (yielding_virtual_processor_thread->exit) {

@@ -79,34 +79,28 @@ boolean_t raw__ptypehash__trylock_for_write(f2ptr cause, f2ptr this) {
   {
     f2ptr write_cmutex = f2ptypehash__write_cmutex(this, cause);
     f2ptr read_cmutex  = f2ptypehash__read_cmutex( this, cause);
-    {
-      boolean_t write_lock_failure;
-      boolean_t read_lock_failure;
-      boolean_t not_done = boolean__true;
-      do {
-	write_lock_failure = raw__cmutex__trylock(cause, write_cmutex);
-	read_lock_failure  = raw__cmutex__trylock(cause, read_cmutex);
-	if (write_lock_failure || read_lock_failure) {
-	  if (write_lock_failure) {
-	    raw__cmutex__unlock(cause, write_cmutex);
-	  }
-	  if (read_lock_failure) {
-	    raw__cmutex__unlock(cause, read_cmutex);
-	  }
-	  raw__spin_sleep_yield();
-	} else {
-	  not_done = boolean__false;
-	}
-      } while (not_done);
-    }
-    f2ptr read_count    = f2ptypehash__read_count(this, cause);
-    s64   read_count__i = f2integer__i(read_count, cause);
-    if (read_count__i == 0) {
-      failure = boolean__false;
-    } else {
+    boolean_t write_lock_failure;
+    boolean_t read_lock_failure;
+    write_lock_failure = raw__cmutex__trylock(cause, write_cmutex);
+    read_lock_failure  = raw__cmutex__trylock(cause, read_cmutex);
+    if (write_lock_failure || read_lock_failure) {
+      if (write_lock_failure) {
+	raw__cmutex__unlock(cause, write_cmutex);
+      }
+      if (read_lock_failure) {
+	raw__cmutex__unlock(cause, read_cmutex);
+      }
       failure = boolean__true;
-      raw__cmutex__unlock(cause, read_cmutex);
-      raw__cmutex__unlock(cause, write_cmutex);
+    } else {
+      f2ptr read_count    = f2frame__read_count(this, cause);
+      s64   read_count__i = f2integer__i(read_count, cause);
+      if (read_count__i != 0) {
+	raw__cmutex__unlock(cause, read_cmutex);
+	raw__cmutex__unlock(cause, write_cmutex);
+	failure = boolean__true;
+      } else {
+	failure = boolean__false;
+      }
     }
   }
   return failure;

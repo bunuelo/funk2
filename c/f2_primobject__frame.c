@@ -109,12 +109,12 @@ boolean_t raw__frame__trylock_for_write(f2ptr cause, f2ptr this) {
     }
     f2ptr read_count    = f2frame__read_count(this, cause);
     s64   read_count__i = f2integer__i(read_count, cause);
-    if (read_count__i == 0) {
-      failure = boolean__false;
-    } else {
-      failure = boolean__true;
+    if (read_count__i != 0) {
       raw__cmutex__unlock(cause, read_cmutex);
       raw__cmutex__unlock(cause, write_cmutex);
+      failure = boolean__true;
+    } else {
+      failure = boolean__false;
     }
   }
   return failure;

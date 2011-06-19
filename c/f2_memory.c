@@ -398,11 +398,14 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64));
   i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    printf("\nfunk2_memory__save_image_to_file: saving pool %d.", pool_index); fflush(stdout);
-    status(  "funk2_memory__save_image_to_file: saving pool %d.", pool_index);
+    printf("\nfunk2_memory__compress_for_saving: compressing pool %d.", pool_index); fflush(stdout);
+    status(  "funk2_memory__compress_for_saving: compressing pool %d.", pool_index);
     funk2_memorypool__compress_for_saving(&(this->pool[pool_index]));
+  }
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    printf("\nfunk2_memory__write_compressed_to_stream: saving pool %d.", pool_index); fflush(stdout);
+    status(  "funk2_memory__write_compressed_to_stream: saving pool %d.", pool_index);
     funk2_memorypool__write_compressed_to_stream(&(this->pool[pool_index]), fd);
-    //funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, to_ptr(&f2_i), sizeof(f2ptr));
   {

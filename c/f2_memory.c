@@ -381,7 +381,7 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
 void* funk2_memory__save_image_to_file__thread_start_compress_memorypool(void* memorypool_arg) {
   funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
   funk2_memorypool__compress_for_saving(memorypool);
-  printf("\nfunk2_memory__save_image_to_file: done compressing memory pool " u64__fptr ".", memorypool->pool_index); fflush(stdout);
+  printf("\nfunk2_memory__save_image_to_file: done compressing memory pool " u64__fstr ".", memorypool->pool_index); fflush(stdout);
   return NULL;
 }
 

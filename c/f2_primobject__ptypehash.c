@@ -106,6 +106,7 @@ boolean_t raw__ptypehash__trylock_for_write(f2ptr cause, f2ptr this) {
 
 void raw__ptypehash__lock_for_write(f2ptr cause, f2ptr this) {
   while (raw__ptypehash__trylock_for_write(cause, this)) {
+    printf("\nptypehash failure.");
     raw__spin_sleep_yield();
   }
 }

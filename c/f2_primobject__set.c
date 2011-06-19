@@ -97,6 +97,7 @@ boolean_t raw__set__trylock_for_write(f2ptr cause, f2ptr this) {
 
 void raw__set__lock_for_write(f2ptr cause, f2ptr this) {
   while (raw__set__trylock_for_write(cause, this)) {
+    printf("\nset failure.");
     raw__spin_sleep_yield();
   }
 }

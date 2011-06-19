@@ -88,7 +88,7 @@ void              funk2_memorypool__free_used_block                             
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree          (funk2_memorypool_t* this, f2size_t byte_num);
 boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory      (funk2_memorypool_t* this, funk2_memory_t* memory);
 void              funk2_memorypool__compress_for_saving                            (funk2_memorypool_t* this);
-void              funk2_memorypool__write_compressed_to_stream                     (funk2_memorypool_t* this);
+void              funk2_memorypool__write_compressed_to_stream                     (funk2_memorypool_t* this, int fd);
 //void              funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd);
 void              funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_memorypool_t* this);
 void              funk2_memorypool__rebuild_memory_trees_from_image                (funk2_memorypool_t* this);

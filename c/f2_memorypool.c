@@ -501,6 +501,61 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
   return found_invalid;
 }
 
+void funk2_memorypool__compress_for_saving(funk2_memorypool_t* this) {
+  status("funk2_memorypool__save_to_stream: compressing memorypool.");
+  u64 compressed_length = 0;
+  u8* compressed_data;
+  {
+    u8* uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);
+    u64 uncompressed_length = this->total_global_memory;
+    compressed_length       = 0;
+    boolean_t failure       = zlib__deflate_length(uncompressed_data, uncompressed_length, &compressed_length);
+    if (failure) {
+      error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
+    }
+    compressed_data = (u8*)from_ptr(f2__malloc(compressed_length));
+    failure         = zlib__deflate(compressed_data, &compressed_length, uncompressed_data, uncompressed_length);
+    if (failure) {
+      error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
+    }
+  }
+  this->temporary_compressed_data_for_saving__length = compressed_length;
+  this->temporary_compressed_data_for_saving         = compressed_data;
+}
+
+void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int fd) {
+  u64 compressed_length = this->temporary_compressed_data_for_saving__length;
+  u8* compressed_data   = this->temporary_compressed_data_for_saving;
+  this->temporary_compressed_data_for_saving__length = 0;
+  this->temporary_compressed_data_for_saving         = NULL;
+  {
+    f2size_t size_i;
+    size_i = compressed_length;          safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    size_i = this->total_global_memory;  safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    size_i = this->total_free_memory;    safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    size_i = this->next_unique_block_id; safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    
+    status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr " compressed_length=" u64__fstr "  (writing compressed image to disk now)",
+	   this->dynamic_memory.ptr, this->dynamic_memory.ptr,
+	   this->total_global_memory,
+	   (u64)compressed_length);
+    
+    safe_write(fd, to_ptr(compressed_data), compressed_length);
+    
+    status("funk2_memorypool__save_to_stream: done writing memorypool image to disk.");
+    
+    f2__free(to_ptr(compressed_data));
+  }
+  {
+    this->used_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
+    rbt_tree__save_to_stream(&(this->used_memory_tree), fd);
+  }
+  {
+    this->free_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
+    rbt_tree__save_to_stream(&(this->free_memory_tree), fd);
+  }
+}
+
 void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
   // save compressed memory image
   {

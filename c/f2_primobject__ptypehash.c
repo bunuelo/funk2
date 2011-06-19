@@ -79,15 +79,13 @@ boolean_t raw__ptypehash__trylock_for_write(f2ptr cause, f2ptr this) {
   {
     f2ptr write_cmutex = f2ptypehash__write_cmutex(this, cause);
     f2ptr read_cmutex  = f2ptypehash__read_cmutex( this, cause);
-    boolean_t write_lock_failure;
-    boolean_t read_lock_failure;
-    write_lock_failure = raw__cmutex__trylock(cause, write_cmutex);
-    read_lock_failure  = raw__cmutex__trylock(cause, read_cmutex);
+    boolean_t write_lock_failure = raw__cmutex__trylock(cause, write_cmutex);
+    boolean_t read_lock_failure  = raw__cmutex__trylock(cause, read_cmutex);
     if (write_lock_failure || read_lock_failure) {
-      if (write_lock_failure) {
+      if (! write_lock_failure) {
 	raw__cmutex__unlock(cause, write_cmutex);
       }
-      if (read_lock_failure) {
+      if (! read_lock_failure) {
 	raw__cmutex__unlock(cause, read_cmutex);
       }
       failure = boolean__true;

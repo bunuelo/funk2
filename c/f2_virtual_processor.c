@@ -145,6 +145,7 @@ void funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread
   this->spinning_virtual_processor_thread_count --;
   //status("funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread: this->spinning_virtual_processor_thread_count=" s64__fstr, this->spinning_virtual_processor_thread_count);
   funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
+  funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
 }
 
 void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {

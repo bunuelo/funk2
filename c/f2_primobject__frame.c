@@ -120,7 +120,6 @@ boolean_t raw__frame__trylock_for_write(f2ptr cause, f2ptr this) {
 
 void raw__frame__lock_for_write(f2ptr cause, f2ptr this) {
   while (raw__frame__trylock_for_write(cause, this)) {
-    printf("\nframe failure.");
     raw__spin_sleep_yield();
   }
 }

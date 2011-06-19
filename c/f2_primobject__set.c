@@ -81,7 +81,7 @@ boolean_t raw__set__trylock_for_write(f2ptr cause, f2ptr this) {
       }
       failure = boolean__true;
     } else {
-      f2ptr read_count    = f2frame__read_count(this, cause);
+      f2ptr read_count    = f2set__read_count(this, cause);
       s64   read_count__i = f2integer__i(read_count, cause);
       if (read_count__i != 0) {
 	raw__cmutex__unlock(cause, read_cmutex);
@@ -97,7 +97,6 @@ boolean_t raw__set__trylock_for_write(f2ptr cause, f2ptr this) {
 
 void raw__set__lock_for_write(f2ptr cause, f2ptr this) {
   while (raw__set__trylock_for_write(cause, this)) {
-    printf("\nset failure.");
     raw__spin_sleep_yield();
   }
 }

@@ -107,7 +107,7 @@ boolean_t raw__frame__trylock_for_write(f2ptr cause, f2ptr this) {
 	  if (read_lock_failure) {
 	    raw__cmutex__unlock(cause, read_cmutex);
 	  }
-	  f2__this__fiber__yield(cause);
+	  raw__spin_sleep_yield();
 	} else {
 	  not_done = boolean__false;
 	}
@@ -128,7 +128,7 @@ boolean_t raw__frame__trylock_for_write(f2ptr cause, f2ptr this) {
 
 void raw__frame__lock_for_write(f2ptr cause, f2ptr this) {
   while (raw__frame__trylock_for_write(cause, this)) {
-    f2__this__fiber__yield(cause);
+    raw__spin_sleep_yield();
   }
 }
 

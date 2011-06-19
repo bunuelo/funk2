@@ -133,7 +133,9 @@ void raw__frame__unlock_from_write(f2ptr cause, f2ptr this) {
 
 void raw__frame__lock_for_read(f2ptr cause, f2ptr this) {
   f2ptr read_cmutex = f2frame__read_cmutex(this, cause);
-  raw__cmutex__lock(cause, read_cmutex);
+  while (raw__cmutex__trylock(cause, read_cmutex)) {
+    raw__spin_sleep_yield();
+  }
   f2ptr read_count    = f2frame__read_count(this, cause);
   s64   read_count__i = f2integer__i(read_count, cause);
   read_count__i ++;
@@ -144,7 +146,9 @@ void raw__frame__lock_for_read(f2ptr cause, f2ptr this) {
 
 void raw__frame__unlock_from_read(f2ptr cause, f2ptr this) {
   f2ptr read_cmutex = f2frame__read_cmutex(this, cause);
-  raw__cmutex__lock(cause, read_cmutex);
+  while (raw__cmutex__trylock(cause, read_cmutex)) {
+    raw__spin_sleep_yield();
+  }
   f2ptr read_count    = f2frame__read_count(this, cause);
   s64   read_count__i = f2integer__i(read_count, cause);
   read_count__i --;

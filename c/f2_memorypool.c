@@ -508,15 +508,15 @@ void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
     u64 compressed_length = 0;
     u8* compressed_data;
     {
-      u8*       uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);
-      u64       uncompressed_length = this->total_global_memory;
-      compressed_length             = 0;
-      boolean_t failure             = zlib__deflate_length(uncompressed_data, uncompressed_length, &compressed_length);
+      u8* uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);
+      u64 uncompressed_length = this->total_global_memory;
+      compressed_length       = 0;
+      boolean_t failure       = zlib__deflate_length(uncompressed_data, uncompressed_length, &compressed_length);
       if (failure) {
 	error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
       }
-      compressed_data               = (u8*)from_ptr(f2__malloc(compressed_length));
-      failure                       = zlib__deflate(compressed_data, &compressed_length, uncompressed_data, uncompressed_length);
+      compressed_data = (u8*)from_ptr(f2__malloc(compressed_length));
+      failure         = zlib__deflate(compressed_data, &compressed_length, uncompressed_data, uncompressed_length);
       if (failure) {
 	error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
       }

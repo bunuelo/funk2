@@ -46,6 +46,10 @@ typedef unsigned char boolean_t;
 #  pragma warning(disable: 869)
 // remark #1418: external function definition with no prior declaration
 #  pragma warning(disable: 1418)
+// remark #2259: non-pointer conversion may lose significant bits
+#  pragma warning(disable: 2259)
+// remark #1599: declaration hides variable
+#  pragma warning(disable: 1599)
 #endif	// __INTEL_COMPILER
 
 #define int_bit_num    (sizeof(int)*8)

@@ -96,16 +96,22 @@ boolean_t raw__frame__trylock_for_write(f2ptr cause, f2ptr this) {
     {
       boolean_t write_lock_failure;
       boolean_t read_lock_failure;
+      boolean_t not_done = boolean__true;
       do {
 	write_lock_failure = raw__cmutex__trylock(cause, write_cmutex);
 	read_lock_failure  = raw__cmutex__trylock(cause, read_cmutex);
-	if (write_lock_failure) {
-	  raw__cmutex__unlock(cause, write_cmutex);
+	if (write_lock_failure || read_lock_failure) {
+	  if (write_lock_failure) {
+	    raw__cmutex__unlock(cause, write_cmutex);
+	  }
+	  if (read_lock_failure) {
+	    raw__cmutex__unlock(cause, read_cmutex);
+	  }
+	  f2__this__fiber__yield(cause);
+	} else {
+	  not_done = boolean__false;
 	}
-	if (read_lock_failure) {
-	  raw__cmutex__unlock(cause, read_cmutex);
-	}
-      } while (write_lock_failure || read_lock_failure);
+      } while (not_done);
     }
     f2ptr read_count    = f2frame__read_count(this, cause);
     s64   read_count__i = f2integer__i(read_count, cause);

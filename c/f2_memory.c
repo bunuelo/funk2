@@ -381,6 +381,7 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
 void* funk2_memory__save_image_to_file__thread_start_compress_memorypool(void* memorypool_arg) {
   funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
   funk2_memorypool__compress_for_saving(memorypool);
+  printf("\nfunk2_memory__save_image_to_file: done compressing memory pool " u64__fptr ".", memorypool->pool_index); fflush(stdout);
   return NULL;
 }
 
@@ -423,7 +424,6 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    printf("\nfunk2_memory__write_compressed_to_stream: saving pool %d.", pool_index); fflush(stdout);
     status(  "funk2_memory__write_compressed_to_stream: saving pool %d.", pool_index);
     funk2_memorypool__write_compressed_to_stream(&(this->pool[pool_index]), fd);
   }
@@ -683,7 +683,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
 void f2__memory__initialize() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__init((&__funk2.memory.pool[pool_index]));
+    funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
   }
   
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);

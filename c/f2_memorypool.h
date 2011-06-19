@@ -38,6 +38,7 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 #include "f2_zlib.h"
 
 struct funk2_memorypool_s {
+  u64                            pool_index;
   funk2_processor_mutex_t        global_memory_allocate_mutex;
   boolean_t                      should_enlarge_memory_now;
   f2size_t                       should_enlarge_memory_now__need_at_least_byte_num;
@@ -71,7 +72,7 @@ struct funk2_memorypool_s {
 
 // funk2_memorypool
 
-void              funk2_memorypool__init                                           (funk2_memorypool_t* pool);
+void              funk2_memorypool__init                                           (funk2_memorypool_t* pool, u64 pool_index);
 void              funk2_memorypool__destroy                                        (funk2_memorypool_t* this);
 f2size_t          funk2_memorypool__total_used_memory                              (funk2_memorypool_t* this);
 f2size_t          funk2_memorypool__total_free_memory                              (funk2_memorypool_t* this);

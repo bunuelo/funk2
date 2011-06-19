@@ -139,13 +139,13 @@ void f2__nanosleep(u64 nanoseconds) {
 
 void raw__spin_sleep_yield() {
   sched_yield();
-  f2__nanosleep(10 * 1000000ull);
+  f2__nanosleep(100 * 1000000ull);
 }
 
 void raw__fast_spin_sleep_yield() {
   sched_yield();
   //f2__sleep(1000);
-  //f2__nanosleep(1000);
+  f2__nanosleep(1000);
 }
 
 u64 raw__nanoseconds_since_1970() {

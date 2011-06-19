@@ -139,7 +139,7 @@ void f2__nanosleep(u64 nanoseconds) {
 
 void raw__spin_sleep_yield() {
   sched_yield();
-  f2__nanosleep(10 * 1000000ull);
+  f2__nanosleep(1 * 1000000ull);
 }
 
 void raw__fast_spin_sleep_yield() {

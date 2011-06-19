@@ -378,6 +378,12 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
   return retval;
 }
 
+void* funk2_memory__save_image_to_file__thread_start_compress_memorypool(void* memorypool_arg) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
+  funk2_memorypool__compress_for_saving(memorypool);
+  return NULL;
+}
+
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
   printf("\nfunk2_memory__save_image_to_file: saving memory image."); fflush(stdout);
   status("  funk2_memory__save_image_to_file: saving memory image.");
@@ -397,11 +403,30 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   u64   i;
   i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64));
   i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    printf("\nfunk2_memory__compress_for_saving: compressing pool %d.", pool_index); fflush(stdout);
-    status(  "funk2_memory__compress_for_saving: compressing pool %d.", pool_index);
-    funk2_memorypool__compress_for_saving(&(this->pool[pool_index]));
+  
+  {
+    pthread_t compress_memorypool_thread[memory_pool_num];
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	printf("\nfunk2_memory__compress_for_saving: compressing pool %d.", pool_index); fflush(stdout);
+	status(  "funk2_memory__compress_for_saving: compressing pool %d.", pool_index);
+	pthread_create(&(compress_memorypool_thread[pool_index]), NULL, &funk2_memory__save_image_to_file__thread_start_compress_memorypool, (void*)(&(this->pool[pool_index])));
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(compress_memorypool_thread[pool_index], NULL);
+      }
+    }
   }
+  //for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  //printf("\nfunk2_memory__compress_for_saving: compressing pool %d.", pool_index); fflush(stdout);
+  //status(  "funk2_memory__compress_for_saving: compressing pool %d.", pool_index);
+  //funk2_memorypool__compress_for_saving(&(this->pool[pool_index]));
+  //}
+  
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     printf("\nfunk2_memory__write_compressed_to_stream: saving pool %d.", pool_index); fflush(stdout);
     status(  "funk2_memory__write_compressed_to_stream: saving pool %d.", pool_index);

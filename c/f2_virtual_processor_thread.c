@@ -199,7 +199,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  //f2__nanosleep(line_length * line_length * 10000000);
 	}
 	*/
-	//raw__spin_sleep_yield();
+	raw__spin_sleep_yield();
       }
     }
   }

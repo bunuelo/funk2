@@ -36,11 +36,21 @@ phdthesis.pdf: \
   gfx/perception_categorization.pdf \
   gfx/problem_complexity_versus_algorithm_adaptability.pdf \
   gfx/feedback_control.pdf \
-  gfx/difference_engine_feedback_control.pdf
+  gfx/difference_engine_feedback_control.pdf \
+  gfx/fsm.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis
 	pdflatex phdthesis
+
+%.pdf: %.neato makefile
+	neato $< -Tpdf > $@
+
+%.pdf: %.dot makefile
+	dot -Txdot $< | dot2tex -c -ftikz -tmath > temp.tex
+	pdflatex temp.tex
+	rm -f temp.tex
+	mv -f temp.pdf $@
 
 clean:
 	rm -f phdthesis.pdf

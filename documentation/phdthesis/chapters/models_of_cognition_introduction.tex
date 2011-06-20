@@ -23,6 +23,31 @@ different for another purpose.
  --- \defcitealias{minsky:1991}{Marvin Minsky}\citetalias{minsky:1991}
 \end{flushright}
 
+In this first chapter I will give an overview of the problem of social
+problem solving.  I will begin with a model of a single problem
+solver in an environment.  Discuss the idea of a simple numerical goal
+for the agent and then extend this model to a relational domain with
+abstractions over states.  The goal-oriented learning problem will be
+introduced, and then extended to a multiple agent problem solving
+model, where each agent may be pursuing different goals.  I will use a
+simple kitchen cooking scenario to motivate our model of learning to
+solve problems in a social agent environment.
+
+In later chapters I will introduce experiments I have performed with a
+closed-loop system that learns---not simply from a one dimensional
+reward signal, but from inheriting cultural knowledge from other
+agents and reflectively debugging the use of this knowledge when it
+has been used by the planner and fails in execution.  One type of
+information that my model transmits between agents is similar to plan
+representations that are used in the planning community, such as
+sequences of goal states to be achieved.  These high-level procedures
+are specified in a language that is shared by the agents, and refers
+to both mental and physical actions of the agents.
+
+The social problem solving agent is interesting because of the lack of
+knowledge that one agent has of the other agents' minds---their goals
+and beliefs.
+
 \section{The Agent Environment Model}
 
 \begin{figure}[bth]
@@ -48,24 +73,18 @@ The two processes communicate information along two channels: (1) an
 action channel from the agent to the environment, and (2) a perception
 channel from the environment to the agent.
 
-\section{The Multiple Agent Environment Model}
+
+\section{The Problem Space}
+
+\subsection{The State Transition Model}
 
 \begin{figure}[bth]
   \center
-  \includegraphics[height=5cm]{gfx/multiple_agent_environment}
-  \caption[The multiple agent environment model]{The multiple agent environment model.}
-  \label{fig:multiple_agent_environment}
+  \includegraphics[width=8cm]{gfx/fsm}
+  \caption[A state transition model]{A state transition model.}
+  \label{fig:difference_engine_feedback_control}
 \end{figure}
 
-In order to model social intelligence, we introduce the multiple agent
-environment model shown in
-Figure~\ref{fig:multiple_agent_environment}.  One interesting property
-of the multiple agent environment model is that any communication
-between any two agent processes must occur through the environment
-process.
-
-
-\section{The Baby-Machine Approach}
 
 \subsection{The Reinforcement Learning Model}
 
@@ -162,6 +181,13 @@ reducing this difference.  This work has grown into the Soar model
 dealing with impasses for when the planning search runs out of
 options.
 
+Planners assume a correct model of the world, which is usually either
+deterministic or a form of fuzzy or probabilistic representation.
+Planning is an important part of the complete closed-loop solution to
+the learning to problem-solve problem, but planners don't execute
+their plans and therefor don't have good methods for credit assignment
+when plans failures.
+
 \subsection{Difference-Engine Model for Accomplishing Multiple Goals}
 
 \begin{figure}[bth]
@@ -171,8 +197,24 @@ options.
   \label{fig:difference_engine_feedback_control}
 \end{figure}
 
-Minsky discusses the difference-engine model of \citep[p.78]{minsky:1988}
+\citep[p.78]{minsky:1988}
 
+
+\section{The Multiple Agent Environment Model}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[height=5cm]{gfx/multiple_agent_environment}
+  \caption[The multiple agent environment model]{The multiple agent environment model.}
+  \label{fig:multiple_agent_environment}
+\end{figure}
+
+In order to model social intelligence, we introduce the multiple agent
+environment model shown in
+Figure~\ref{fig:multiple_agent_environment}.  One interesting property
+of the multiple agent environment model is that any communication
+between any two agent processes must occur through the environment
+process.
 
 
 \section{The Origins of Knowledge}

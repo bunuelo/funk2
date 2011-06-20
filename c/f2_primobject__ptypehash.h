@@ -25,7 +25,7 @@
 // ptypehash
 
 typedef struct funk2_object_type__ptypehash__slot_s funk2_object_type__ptypehash__slot_t;
-declare_object_type_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bin_array,
+declare_object_type_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array,
 			   f2ptr contains__symbol;
 			   f2ptr contains__funk;
 			   f2ptr an_arbitrary_keyvalue_pair__symbol;
@@ -65,10 +65,11 @@ declare_object_type_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bi
 
 // ptypehash
 
-declare_primobject_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bin_array);
+declare_primobject_7_slot(ptypehash, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
 
-f2ptr     raw__ptypehash__new                       (f2ptr cause, s64 bin_num_power);
+f2ptr     raw__ptypehash__new                       (f2ptr cause, boolean_t thread_safe, s64 bin_num_power);
 f2ptr      f2__ptypehash__new                       (f2ptr cause);
+f2ptr      f2__ptypehash__thread_unsafe__new        (f2ptr cause);
 f2ptr     raw__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 boolean_t raw__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);

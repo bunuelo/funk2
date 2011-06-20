@@ -1691,7 +1691,7 @@ f2ptr raw__ptypehash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chun
   f2ptr key_count__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0));
   f2ptr bin_num_power__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 8));
   f2ptr bin_array__lick_note     = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 16));
-  f2ptr ptypehash = f2ptypehash__new(cause, f2__cmutex__new(cause), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note);
+  f2ptr ptypehash = f2ptypehash__new(cause, f2bool__new(boolean__true), f2__cmutex__new(cause), f2__cmutex__new(cause), f2integer__new(cause, 0), key_count__lick_note, bin_num_power__lick_note, bin_array__lick_note);
   return ptypehash;
 }
 

@@ -26,7 +26,7 @@
 // set
 
 typedef struct funk2_object_type__set__slot_s funk2_object_type__set__slot_t;
-declare_object_type_7_slot(set, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array,
+declare_object_type_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array,
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
 			   f2ptr remove__symbol;
@@ -58,9 +58,9 @@ declare_object_type_7_slot(set, thread_safe, write_cmutex, read_cmutex, read_cou
 
 // set
 
-declare_primobject_7_slot(set, thread_safe, write_cmutex, read_cmutex, read_count, key_count, bin_num_power, bin_array);
+declare_primobject_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array);
 
-f2ptr     raw__set__new                 (f2ptr cause, boolean_t thread_safe, s64 bin_num_power);
+f2ptr     raw__set__new                 (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__set__new                 (f2ptr cause);
 f2ptr     raw__set__add                 (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__add                 (f2ptr cause, f2ptr this, f2ptr key);

@@ -34,7 +34,9 @@ phdthesis.pdf: \
   gfx/multiple_agent_environment.pdf \
   gfx/reinforcement_learning.pdf \
   gfx/perception_categorization.pdf \
-  gfx/problem_complexity_versus_algorithm_adaptability.pdf
+  gfx/problem_complexity_versus_algorithm_adaptability.pdf \
+  gfx/feedback_control.pdf \
+  gfx/difference_engine_feedback_control.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

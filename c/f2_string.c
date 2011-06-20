@@ -196,7 +196,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     if (ch_value >= 28) {
       snprintf((char*)temp_str, 1024, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch_value);
     } else {
-      snprintf((char*)temp_str, 1024, "%c%c" X64__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (u64)ch_value);
+      snprintf((char*)temp_str, 1024, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch_value);
     }
     return f2string__new(cause, strlen((char*)temp_str), temp_str);
   } break;
@@ -438,9 +438,8 @@ f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
-  u8* file__str = (u8*)from_ptr(f2__malloc(file__length + 1));
+  u8* file__str = (u8*)from_ptr(f2__malloc(file__length));
   u64 read_length = read(fd, file__str, file__length);
-  file__str[file__length] = 0;
   if (read_length != file__length) {
     printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
     f2__free(to_ptr(file__str));

@@ -33,7 +33,7 @@ void fiber_hash__destroy(fiber_hash_t* this) {
 }
 
 void fiber_hash__add_fiber_funk2_node(fiber_hash_t* this, f2ptr fiber, funk2_node_t* funk2_node) {
-  u64                bin_index = fiber & this->hash_value_bit_mask;
+  uint               bin_index = fiber & this->hash_value_bit_mask;
   fiber_hash_node_t* new_node  = (fiber_hash_node_t*)from_ptr(f2__malloc(sizeof(fiber_hash_node_t)));
   new_node->fiber        = fiber;
   new_node->funk2.node   = funk2_node;
@@ -42,7 +42,7 @@ void fiber_hash__add_fiber_funk2_node(fiber_hash_t* this, f2ptr fiber, funk2_nod
 }
 
 void fiber_hash__add_fiber_funk2_packet(fiber_hash_t* this, f2ptr fiber, funk2_packet_t* funk2_packet) {
-  u64                bin_index = fiber & this->hash_value_bit_mask;
+  uint               bin_index = fiber & this->hash_value_bit_mask;
   fiber_hash_node_t* new_node  = (fiber_hash_node_t*)from_ptr(f2__malloc(sizeof(fiber_hash_node_t)));
   new_node->fiber        = fiber;
   new_node->funk2.packet = funk2_packet;
@@ -51,7 +51,7 @@ void fiber_hash__add_fiber_funk2_packet(fiber_hash_t* this, f2ptr fiber, funk2_p
 }
 
 fiber_hash_node_t* fiber_hash__lookup_fiber_hash_node(fiber_hash_t* this, f2ptr fiber) {
-  u64 bin_index = fiber & this->hash_value_bit_mask;
+  uint bin_index = fiber & this->hash_value_bit_mask;
   fiber_hash_node_t* node = this->array[bin_index];
   while (node) {
     if (node->fiber == fiber) {

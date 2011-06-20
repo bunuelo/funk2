@@ -378,13 +378,6 @@ f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
   return retval;
 }
 
-void* funk2_memory__save_image_to_file__thread_start_compress_memorypool(void* memorypool_arg) {
-  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
-  funk2_memorypool__compress_for_saving(memorypool);
-  printf("\nfunk2_memory__save_image_to_file: done compressing memory pool " u64__fstr ".", memorypool->pool_index); fflush(stdout);
-  return NULL;
-}
-
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
   printf("\nfunk2_memory__save_image_to_file: saving memory image."); fflush(stdout);
   status("  funk2_memory__save_image_to_file: saving memory image.");
@@ -404,28 +397,10 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   u64   i;
   i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64));
   i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
-  
-  printf("\nfunk2_memory__save_image_to_file: compressing memory pools."); fflush(stdout);
-  status(  "funk2_memory__save_image_to_file: compressing memory pools.");
-  {
-    pthread_t compress_memorypool_thread[memory_pool_num];
-    {
-      s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	pthread_create(&(compress_memorypool_thread[pool_index]), NULL, &funk2_memory__save_image_to_file__thread_start_compress_memorypool, (void*)(&(this->pool[pool_index])));
-      }
-    }
-    {
-      s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	pthread_join(compress_memorypool_thread[pool_index], NULL);
-      }
-    }
-  }
-  
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status(  "funk2_memory__write_compressed_to_stream: saving pool %d.", pool_index);
-    funk2_memorypool__write_compressed_to_stream(&(this->pool[pool_index]), fd);
+    printf("\nfunk2_memory__save_image_to_file: saving pool %d.", pool_index); fflush(stdout);
+    status(  "funk2_memory__save_image_to_file: saving pool %d.", pool_index);
+    funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
   }
   f2_i = this->global_environment_f2ptr; safe_write(fd, to_ptr(&f2_i), sizeof(f2ptr));
   {
@@ -663,7 +638,7 @@ void funk2_memory__memory_test(funk2_memory_t* this) {
 
 f2ptr f2__memory__assert_valid(f2ptr cause) {
   f2ptr return_result = nil;
-  funk2_processor_mutex__user_lock(&(__funk2.garbage_collector.do_collection_mutex));
+  funk2_processor_mutex__lock(&(__funk2.garbage_collector.do_collection_mutex));
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     f2ptr result = raw__memorypool__assert_valid(cause, pool_index);
@@ -683,7 +658,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
 void f2__memory__initialize() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
+    funk2_memorypool__init((&__funk2.memory.pool[pool_index]));
   }
   
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);

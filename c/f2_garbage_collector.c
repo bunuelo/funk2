@@ -129,9 +129,8 @@ boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector
 
 void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this) {
   status("funk2_garbage_collector: spread_all_blackness.");
-  u64 cycle_count = 0;
+  u64 cycle_count    = 0;
   while (funk2_garbage_collector__still_have_grey_nodes(this)) {
-    status("funk2_garbage_collector: spread_all_blackness cycle " u64__fstr ".", cycle_count);
     // parallelized
     funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
     // parallelized
@@ -218,7 +217,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 	  should_collect_garbage = boolean__true;
 	}
       }
-      if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > (minimum_seconds_between_garbage_collections * 1000000000ull)) {
+      if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 10 * 1000000000ull) {
 	doing_garbage_collect_now = boolean__true;
       }
     }

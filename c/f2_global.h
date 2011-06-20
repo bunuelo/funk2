@@ -29,22 +29,11 @@
 #include "f2_debug_macros.h"
 #include "f2_system_headers.h"
 
+typedef unsigned int  uint;
+
 #ifndef F2__APPLE
 typedef unsigned char boolean_t;
 #endif // F2__APPLE
-
-#if defined(__INTEL_COMPILER)
-// remark #271: trailing comma is nonstandard
-#  pragma warning(disable: 271)
-// remark #424: extra ";" ignored
-#  pragma warning(disable: 424)
-// remark #981: operands are evaluated in unspecified order
-#  pragma warning(disable: 981)
-// remark #869: parameter "cause" was never referenced
-#  pragma warning(disable: 869)
-// remark #1418: external function definition with no prior declaration
-#  pragma warning(disable: 1418)
-#endif	// __INTEL_COMPILER
 
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)

@@ -2747,7 +2747,7 @@ f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   if (ch >= 28) {
     char_string__length = snprintf((char*)char_string, 128, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch);
   } else {
-    char_string__length = snprintf((char*)char_string, 128, "%c%c" X64__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (u64)ch);
+    char_string__length = snprintf((char*)char_string, 128, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch);
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__char__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, char_string__length, char_string);

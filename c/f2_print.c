@@ -352,7 +352,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	} else {
 	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} width ++;
 	  if(stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_hex_char, cause));} width ++;
-	  sprintf(temp_str, X64__fstr, (u64)ch); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+	  sprintf(temp_str, "%X", (uint)ch); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	}
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
@@ -388,7 +388,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
 	int  i;
 	int  length = f2symbol__length(exp, cause);
-	char* temp_str_buf = (char*)from_ptr(f2__malloc(length + 1)); f2symbol__str_copy(exp, cause, (u8*)temp_str_buf); temp_str_buf[length] = 0;
+	char* temp_str_buf = (char*)alloca(length + 1); f2symbol__str_copy(exp, cause, (u8*)temp_str_buf); temp_str_buf[length] = 0;
 	char ch;
 	int  subexp_size[2];
 	boolean_t all_cool = 1;
@@ -419,7 +419,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__symbol_quote, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	}
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
-	f2__free(to_ptr(temp_str_buf));
       } break;
       case ptype_chunk: {
 	f2__write__ansi_color(cause, stream, print__ansi__chunk__foreground, use_ansi_colors, use_html);
@@ -1065,13 +1064,12 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							    if (raw__symbol__is_type(cause, type_keyvalue_pair__key)) {
 							      f2ptr symbol = type_keyvalue_pair__key;
 							      u64 symbol__length = raw__symbol__length(cause, symbol);
-							      u8* symbol__str    = (u8*)from_ptr(f2__malloc(symbol__length + 1));
+							      u8* symbol__str    = (u8*)alloca(symbol__length + 1);
 							      raw__symbol__str_copy(cause, symbol, symbol__str);
 							      symbol__str[symbol__length] = 0;
 							      f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
-							      if (stream) {raw__stream__writef(cause, stream, "%s", symbol__str);} width += symbol__length;
-							      f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
-							      f2__free(to_ptr(symbol__str));
+							    if (stream) {raw__stream__writef(cause, stream, "%s", symbol__str);} width += symbol__length;
+							    f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
 							    } else {
 							      f2__write_pretty(cause, fiber, stream, type_keyvalue_pair__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 							    }
@@ -1086,13 +1084,12 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 							  if (raw__symbol__is_type(cause, keyvalue_pair__key)) {
 							    f2ptr symbol = keyvalue_pair__key;
 							    u64 symbol__length = raw__symbol__length(cause, symbol);
-							    u8* symbol__str    = (u8*)from_ptr(f2__malloc(symbol__length + 1));
+							    u8* symbol__str    = (u8*)alloca(symbol__length + 1);
 							    raw__symbol__str_copy(cause, symbol, symbol__str);
 							    symbol__str[symbol__length] = 0;
 							    f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 							    if (stream) {raw__stream__writef(cause, stream, "%s", symbol__str);} width += symbol__length;
 							    f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
-							    f2__free(to_ptr(symbol__str));
 							  } else {
 							    f2__write_pretty(cause, fiber, stream, keyvalue_pair__key, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 							  }
@@ -1313,7 +1310,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      }
 	      {
 		int subexp_size[2];
-		char* temp_slot_name_str = (char*)from_ptr(f2__malloc(max_slot_name_length + 1));
+		char* temp_slot_name_str = (char*)alloca(max_slot_name_length + 1);
 		f2ptr keyvalue_pair_iter = keyvalue_pairs;
 		while (keyvalue_pair_iter) {
 		  f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
@@ -1332,7 +1329,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		  }
 		  keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
 		}
-		f2__free(to_ptr(temp_slot_name_str));
 	      }
 	    } else {
 	      array_is_not_known_primobject = 1; // we print unknown primobjects in the same format of basic arrays

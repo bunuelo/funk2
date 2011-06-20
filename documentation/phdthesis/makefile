@@ -37,7 +37,8 @@ phdthesis.pdf: \
   gfx/problem_complexity_versus_algorithm_adaptability.pdf \
   gfx/feedback_control.pdf \
   gfx/difference_engine_feedback_control.pdf \
-  gfx/state_action.pdf
+  gfx/state_action.pdf \
+  gfx/partially_observable.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

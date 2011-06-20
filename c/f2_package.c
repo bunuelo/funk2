@@ -268,17 +268,17 @@ def_pcfunk0(current_working_directory,
 	    return f2__current_working_directory(this_cause));
 
 f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
-  int separator_count = 0;
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  u8* this__str    = (u8*)alloca(this__length + 1);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
-  
+
   u64 that__length = raw__string__length(cause, that);
-  u8* that__str    = (u8*)from_ptr(f2__malloc(that__length + 1));
+  u8* that__str    = (u8*)alloca(that__length + 1);
   raw__string__str_copy(cause, that, that__str);
   that__str[that__length] = 0;
   
+  int separator_count = 0;
   if (this__str[this__length - 1] == '/') {
     separator_count ++;
   }
@@ -286,18 +286,14 @@ f2ptr raw__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
     separator_count ++;
   }
   
-  f2ptr result;
   if (separator_count == 0) {
-    result = f2__stringlist__concat(cause, f2list3__new(cause, this, new__string(cause, "/"), that));
+    return f2__stringlist__concat(cause, f2list3__new(cause, this, new__string(cause, "/"), that));
   } else if (separator_count == 1) {
-    result = f2__stringlist__concat(cause, f2list2__new(cause, this, that));
+    return f2__stringlist__concat(cause, f2list2__new(cause, this, that));
   } else { // separator_count == 2
     this__str[this__length - 1] = 0;
-    result = f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, (char*)this__str), that));
+    return f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, (char*)this__str), that));
   }
-  f2__free(to_ptr(this__str));
-  f2__free(to_ptr(that__str));
-  return result;
 }
 
 f2ptr f2__pathname__concat(f2ptr cause, f2ptr this, f2ptr that) {
@@ -354,14 +350,11 @@ def_pcfunk1(pathnamelist__concat, this,
 
 boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  u8* this__str    = (u8*)alloca(this__length);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  boolean_t result = (this__str[0] == '/');
-  
-  f2__free(to_ptr(this__str));
-  return result;
+  return (this__str[0] == '/');
 }
 
 f2ptr f2__pathname__is_absolute(f2ptr cause, f2ptr this) {
@@ -389,7 +382,7 @@ def_pcfunk1(pathname__as__absolute_pathname, this,
 
 f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  u8* this__str    = (u8*)alloca(this__length);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
@@ -399,9 +392,7 @@ f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   } else {
     this__str[0] = 0;
   }
-  f2ptr result = new__string(cause, (char*)this__str);
-  f2__free(to_ptr(this__str));
-  return result;
+  return new__string(cause, (char*)this__str);
 }
 
 f2ptr f2__pathname__directory_pathname(f2ptr cause, f2ptr this) {
@@ -415,11 +406,11 @@ def_pcfunk1(pathname__directory_pathname, this,
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   assert_argument_type(string, pathname);
   u64 pathname__length = raw__string__length(cause, pathname);
-  u8* pathname__str    = (u8*)from_ptr(f2__malloc(pathname__length + 1));
+  u8* pathname__str    = (u8*)alloca(pathname__length + 1);
   raw__string__str_copy(cause, pathname, pathname__str);
   pathname__str[pathname__length] = 0;
   
-  f2ptr result = nil;
+  f2ptr absolute_filenames = nil;
   {
     DIR* dirp = opendir((char*)pathname__str);
     if (dirp == NULL) {
@@ -438,24 +429,20 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
       case ENOTDIR: errno_str = "name is not a directory.";                              break;
       }
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "description"), new__string(cause, errno_str));
-      result = f2larva__new(cause, 67, f2__bug__new(cause, f2integer__new(cause, 67), bug_frame));
-    } else {
-      f2ptr absolute_filenames = nil;
-      struct dirent* directory_entry;
-      do {
-	directory_entry = readdir(dirp);
-	if (directory_entry) {
-	  f2ptr relative_filename = f2__pathname__concat(cause, pathname, new__string(cause, directory_entry->d_name));
-	  f2ptr absolute_filename = f2__pathname__as__absolute_pathname(cause, relative_filename);
-	  absolute_filenames = f2cons__new(cause, absolute_filename, absolute_filenames);
-	}
-      } while (directory_entry);
-      closedir(dirp);
-      result = absolute_filenames;
+      return f2larva__new(cause, 67, f2__bug__new(cause, f2integer__new(cause, 67), bug_frame));
     }
+    struct dirent* directory_entry;
+    do {
+      directory_entry = readdir(dirp);
+      if (directory_entry) {
+	f2ptr relative_filename = f2__pathname__concat(cause, pathname, new__string(cause, directory_entry->d_name));
+	f2ptr absolute_filename = f2__pathname__as__absolute_pathname(cause, relative_filename);
+	absolute_filenames = f2cons__new(cause, absolute_filename, absolute_filenames);
+      }
+    } while (directory_entry);
+    closedir(dirp);
   }
-  f2__free(to_ptr(pathname__str));
-  return result;
+  return absolute_filenames;
 }
 def_pcfunk1(pathname__scan_for_filenames, pathname,
 	    "Scans a directory name and returns all filenames.",
@@ -470,7 +457,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
   }
   
   u64 extension__length = raw__string__length(cause, extension);
-  u8* extension__str    = (u8*)from_ptr(f2__malloc(extension__length + 1));
+  u8* extension__str    = (u8*)alloca(extension__length + 1);
   raw__string__str_copy(cause, extension, extension__str);
   extension__str[extension__length] = 0;
   
@@ -481,7 +468,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
       f2ptr filename = f2__cons__car(cause, iter);
       
       u64 filename__length = raw__string__length(cause, filename);
-      u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+      u8* filename__str    = (u8*)alloca(filename__length + 1);
       raw__string__str_copy(cause, filename, filename__str);
       filename__str[filename__length] = 0;
       
@@ -490,11 +477,9 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
 	f2ptr matching_filename = filename;
 	matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);
       }
-      f2__free(to_ptr(filename__str));
       iter = f2__cons__cdr(cause, iter);
     }
   }
-  f2__free(to_ptr(extension__str));
   return matching_filenames;
 }
 def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension,
@@ -503,11 +488,10 @@ def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension,
 
 f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
   u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  u8* this__str    = (u8*)alloca(this__length);
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  f2ptr result = nil;
   struct stat buf;
   if (stat((char*)this__str, &buf) != 0) {
     char* error_str = "unknown error occurred.";
@@ -529,27 +513,24 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),    new__symbol(cause, "pathname-stat"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),        this);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "description"), new__string(cause, error_str));
-      result = f2larva__new(cause, 655, f2__bug__new(cause, f2integer__new(cause, 655), bug_frame));
+      return f2larva__new(cause, 655, f2__bug__new(cause, f2integer__new(cause, 655), bug_frame));
     }
-  } else {
-    f2ptr stat_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "id_of_device_containing_file"),        f2integer__new(cause, (s64)buf.st_dev));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "inode_number"),                        f2integer__new(cause, (s64)buf.st_ino));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "protection_mode"),                     f2integer__new(cause, (s64)buf.st_mode));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_hard_links"),                f2integer__new(cause, (s64)buf.st_nlink));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "user_id_of_owner"),                    f2integer__new(cause, (s64)buf.st_uid));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "group_id_of_owner"),                   f2integer__new(cause, (s64)buf.st_gid));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "device_id"),                           f2integer__new(cause, (s64)buf.st_rdev));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "total_size_in_bytes"),                 f2integer__new(cause, (s64)buf.st_size));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "blocksize_for_file_system_io"),        f2integer__new(cause, (s64)buf.st_blksize));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_512_byte_blocks_allocated"), f2integer__new(cause, (s64)buf.st_blocks));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_access"),                 raw__time__new_from_unix_time(cause, buf.st_atime));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_modification"),           raw__time__new_from_unix_time(cause, buf.st_mtime));
-    f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_status_change"),          raw__time__new_from_unix_time(cause, buf.st_ctime));
-    result = stat_frame;
   }
-  f2__free(to_ptr(this__str));
-  return result;
+  f2ptr stat_frame = f2__frame__new(cause, nil);
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "id_of_device_containing_file"),        f2integer__new(cause, (s64)buf.st_dev));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "inode_number"),                        f2integer__new(cause, (s64)buf.st_ino));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "protection_mode"),                     f2integer__new(cause, (s64)buf.st_mode));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_hard_links"),                f2integer__new(cause, (s64)buf.st_nlink));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "user_id_of_owner"),                    f2integer__new(cause, (s64)buf.st_uid));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "group_id_of_owner"),                   f2integer__new(cause, (s64)buf.st_gid));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "device_id"),                           f2integer__new(cause, (s64)buf.st_rdev));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "total_size_in_bytes"),                 f2integer__new(cause, (s64)buf.st_size));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "blocksize_for_file_system_io"),        f2integer__new(cause, (s64)buf.st_blksize));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_512_byte_blocks_allocated"), f2integer__new(cause, (s64)buf.st_blocks));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_access"),                 raw__time__new_from_unix_time(cause, buf.st_atime));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_modification"),           raw__time__new_from_unix_time(cause, buf.st_mtime));
+  f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_status_change"),          raw__time__new_from_unix_time(cause, buf.st_ctime));
+  return stat_frame;
 }
 
 f2ptr f2__pathname__stat(f2ptr cause, f2ptr this) {
@@ -665,19 +646,15 @@ def_pcfunk2(pathname__rename, old_filename, new_filename,
 
 f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
   u64 environment_variable__length = raw__string__length(cause, environment_variable);
-  u8* environment_variable__str    = (u8*)from_ptr(f2__malloc(environment_variable__length + 1));
+  u8* environment_variable__str    = (u8*)alloca(environment_variable__length);
   raw__string__str_copy(cause, environment_variable, environment_variable__str);
   environment_variable__str[environment_variable__length] = 0;
   
   char* environment_value = getenv((char*)environment_variable__str);
-  f2ptr result;
   if (environment_value == NULL) {
-    result = nil;
-  } else {
-    result =new__string(cause, environment_value);
+    return nil;
   }
-  f2__free(to_ptr(environment_variable__str));
-  return result;
+  return new__string(cause, environment_value);
 }
 
 f2ptr f2__getenv(f2ptr cause, f2ptr environment_variable) {

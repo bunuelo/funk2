@@ -78,12 +78,6 @@ channel from the environment to the agent.
 
 \subsection{The State-Action Model}
 
-Our agent is in an environment, which is in a specific state.  Our
-agent performs an action, which can affect the state of the
-environment.  Figure~\ref{fig:state_action} shows a simple \ac{FSM}
-state-action model, which has two states for the environment and two
-actions for the agent to perform in each of these states.
-
 \begin{figure}[bth]
   \center
   \includegraphics[width=6cm]{gfx/state_action}
@@ -92,6 +86,12 @@ actions for the agent to perform in each of these states.
     from each of the two states.}
   \label{fig:state_action}
 \end{figure}
+
+Our agent is in an environment, which is in a specific state.  Our
+agent performs an action, which can affect the state of the
+environment.  Figure~\ref{fig:state_action} shows a simple \ac{FSM}
+state-action model, which has two states for the environment and two
+actions for the agent to perform in each of these states.
 
 Now, the state-action model is a good model for fully observable
 environments, but our agent process does not have complete access to

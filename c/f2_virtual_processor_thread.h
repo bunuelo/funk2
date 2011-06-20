@@ -44,10 +44,6 @@ struct funk2_virtual_processor_thread_s {
   boolean_t                 exit;
   boolean_t                 exited;
   u64                       virtual_processor_stack_index;
-  u64                       last_checked__nanoseconds_since_1970;
-  u64                       last_checked__nanoseconds_execution_time;
-  u64                       spin_loop_count_since_last_checked;
-  u64                       spin_loop_sleep_nanoseconds;
 };
 
 void* funk2_virtual_processor_thread__start_function(                 void* args);

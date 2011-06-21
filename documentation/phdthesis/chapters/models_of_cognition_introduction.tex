@@ -91,14 +91,9 @@ Our agent is in an environment, which is in a specific state.  Our
 agent performs an action, which can affect the state of the
 environment.  Figure~\ref{fig:state_action} shows a simple \ac{FSM}
 state-action model, which has two states for the environment and two
-actions for the agent to perform in each of these states.
-
-Now, the state-action model is a good model for fully observable
-environments, but our agent process does not have complete access to
-the state of its environment.  Our agent's perceptual stream of
-information depends on the state of the environment, but it is a
-function of the environment and not the actual state of the
-environment.
+actions for the agent to perform in each of these states.  The
+state-action model is a simple model for how actions map to changes in
+the state of the environment.
 
 \subsection{Partially Observable State Model}
 
@@ -108,6 +103,24 @@ environment.
   \caption[The partially observable state model]{The partially observable model.}
   \label{fig:partially_observable}
 \end{figure}
+
+The agent process does not have complete access to the state of its
+environment.  Our agent's perceptual stream of information depends on
+the state of the environment, but it is a function of the environment
+and not the actual state of the environment.  In other words, the
+perceptual state that is communicated from the environment to the
+agent is an injective function mapping the environment to the
+perception of the agent.
+
+\subsection{Agent Abstract Physical Model}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=6cm]{gfx/environment_perception_physical}
+  \caption[The agent has an abstract physical model of the environment.]{The agent has an abstract physical model of the environment.}
+  \label{fig:environment_perception_physical}
+\end{figure}
+
 
 
 

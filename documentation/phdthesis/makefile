@@ -40,7 +40,8 @@ phdthesis.pdf: \
   gfx/state_action.pdf \
   gfx/partially_observable.pdf \
   gfx/environment_perception_physical.pdf \
-  gfx/frame_representation.pdf
+  gfx/frame_representation.pdf \
+  gfx/frame_perception.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

@@ -38,7 +38,9 @@ phdthesis.pdf: \
   gfx/feedback_control.pdf \
   gfx/difference_engine_feedback_control.pdf \
   gfx/state_action.pdf \
-  gfx/partially_observable.pdf
+  gfx/partially_observable.pdf \
+  gfx/environment_perception_physical.pdf \
+  gfx/frame_representation.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

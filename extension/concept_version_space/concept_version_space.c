@@ -34,8 +34,21 @@ f2ptr f2__concept_version_space__new(f2ptr cause) {
 export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_space object.");
 
 
+f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr variable_set = raw__concept_version_space__variable_set(cause, this);
+  raw__set__add(cause, variable_set, key);
+  return nil;
+}
+
+f2ptr f2__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr key) {
+  return raw__concept_version_space__add_variable(cause, this, key);
+}
+export_cefunk2(concept_version_space__add_variable, this, key, 0, "Adds a new variable key to this concept_version_space.");
+
+
 f2ptr f2__concept_version_space_type__new_aux(f2ptr cause) {
   f2ptr this = f2__concept_version_space_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space__add_variable")));}
   return this;
 }
 

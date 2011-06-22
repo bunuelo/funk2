@@ -258,7 +258,7 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
 
 // concept_version_space
 
-def_ceframe4(concept_version_space, concept_version_space, variable_ptypehash, specific_hypotheses, general_hypotheses);
+def_ceframe3(concept_version_space, concept_version_space, variable_ptypehash, specific_hypotheses, general_hypotheses);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
   f2ptr variable_ptypehash  = f2__ptypehash__new(cause);

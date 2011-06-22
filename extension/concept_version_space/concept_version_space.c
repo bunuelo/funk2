@@ -23,7 +23,7 @@
 
 // concept_version_space_variable
 
-def_ceframe1(concept_version_space_variable, concept_version_space, name);
+def_ceframe1(concept_version_space, concept_version_space_variable, name);
 
 f2ptr raw__concept_version_space_variable__new(f2ptr cause, f2ptr name) {
   return f2concept_version_space_variable__new(cause, name);

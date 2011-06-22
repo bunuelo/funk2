@@ -183,6 +183,7 @@
 						     'example/socket-server/'
 						     'example/traced_mind/'
 						     'test/cairo-test/'
+						     'test/concept_version_space-test/'
 						     'test/gtk-test/'
 						     'test/interval_tree-test/'
 						     'test/optimize-test/'

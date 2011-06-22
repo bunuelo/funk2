@@ -23,6 +23,8 @@
     [have h1 add_variable_value `color `red]
     [have h1 add_variable_value `shape `cube]
     [have h2 add_variable_value `color `red]
+    [terminal_format standard-terminal '\nh1: ' h1]
+    [terminal_format standard-terminal '\nh2: ' h2]
     [if [not [get h2 is_consistent_with_or_more_general_than h1]] [error bug_type `concept_version_space-test_hypothesis_orderings number 1]]
     nil]]
 

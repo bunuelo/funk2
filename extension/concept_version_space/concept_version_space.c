@@ -163,21 +163,37 @@ f2ptr raw__concept_version_space_hypothesis__variable_value_is_consistent_with_o
 
 
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
-  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
-  f2ptr example__positive             = raw__concept_version_space_example__positive(                        cause, example);
-  f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-  ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
-		       if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
-			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			   return f2bool__new(! ((positive != nil) == (example__positive != nil)));
+  f2ptr positive          = raw__concept_version_space_hypothesis__positive(cause, this);
+  f2ptr example__positive = raw__concept_version_space_example__positive(   cause, example);
+  if ((positive != nil) && (example__positive != nil)) {
+    f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, example__variable_name);
+			 if ((raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) ||
+			     ((! raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) &&
+			      (! raw__eq(cause, value, example_value)))) {
+			   return f2bool__new(boolean__false);
 			 }
-			 f2ptr example_value = raw__concept_version_space_example__lookup_variable_value(cause, example, variable_name);
-			 if (! raw__eq(cause, value, example_value)) {
-			   return f2bool__new(! ((positive != nil) == (example__positive != nil)));
+			 );
+    return f2bool__new(boolean__true);
+  } else if ((positive != nil) && (example__positive == nil)) {
+    f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, example__variable_name);
+			 if ((raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) ||
+			     ((! raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) &&
+			      (! raw__eq(cause, value, example_value)))) {
+			   return f2bool__new(boolean__true);
 			 }
-		       }
-		       );
-  return f2bool__new((positive != nil) == (example__positive != nil));
+			 );
+    return f2bool__new(boolean__false);
+  } else if ((positive == nil) && (example__positive != nil)) {
+    // not yet implemented.
+    return nil;
+  } else { // ((positive == nil) && (example__positive == nil))
+    // not yet implemented.
+    return nil;
+  }
 }
 
 f2ptr f2__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {

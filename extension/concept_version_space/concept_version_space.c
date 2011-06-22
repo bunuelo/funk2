@@ -21,16 +21,17 @@
 
 #include "concept_version_space.h"
 
-def_ceframe1(concept_version_space, concept_version_space, width);
+def_ceframe1(concept_version_space, concept_version_space, variable_set);
 
-f2ptr raw__concept_version_space__new(f2ptr cause, f2ptr width) {
-  return f2concept_version_space__new(cause, width);
+f2ptr raw__concept_version_space__new(f2ptr cause) {
+  f2ptr variable_set = f2__set__new(cause);
+  return f2concept_version_space__new(cause, variable_set);
 }
 
-f2ptr f2__concept_version_space__new(f2ptr cause, f2ptr width) {
-  return raw__concept_version_space__new(cause, width);
+f2ptr f2__concept_version_space__new(f2ptr cause, f2ptr variable_set) {
+  return raw__concept_version_space__new(cause);
 }
-export_cefunk1(concept_version_space__new, width, 0, "Returns a new concept_version_space object.");
+export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_space object.");
 
 
 f2ptr f2__concept_version_space_type__new_aux(f2ptr cause) {

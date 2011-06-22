@@ -24,10 +24,10 @@
 
 #include "../../c/funk2.h"
 
-def_header_ceframe1(concept_version_space, width);
+def_header_ceframe1(concept_version_space, variable_set);
 
-f2ptr     raw__concept_version_space__new(f2ptr cause, f2ptr width);
-f2ptr      f2__concept_version_space__new(f2ptr cause, f2ptr width);
+f2ptr raw__concept_version_space__new(f2ptr cause);
+f2ptr  f2__concept_version_space__new(f2ptr cause);
 
 f2ptr f2__concept_version_space_type__new_aux(f2ptr cause);
 

@@ -72,7 +72,7 @@ export_cefunk0(concept_version_space_example__new, 0, "Returns a new concept_ver
 
 f2ptr raw__concept_version_space_example__add_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, this);
-  raw__ptypehash__add(cause, value_set, variable_name, value);
+  raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
   return nil;
 }
 

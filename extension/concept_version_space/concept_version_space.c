@@ -227,8 +227,8 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
 def_ceframe2(concept_version_space, concept_version_space, specific_hypotheses, general_hypotheses);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
-  f2ptr specific_hypotheses = nil;
-  f2ptr general_hypotheses  = nil;
+  f2ptr specific_hypotheses = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause, f2bool__new(boolean__false)));
+  f2ptr general_hypotheses  = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause, f2bool__new(boolean__true)));
   return f2concept_version_space__new(cause, specific_hypotheses, general_hypotheses);
 }
 

@@ -24,6 +24,6 @@
 	       [have this add_variable_value `y 1]
 	       this]]
 	]
-    `[have cvs add_example e1]
+    [have cvs train_on_example e1]
     cvs]]
 

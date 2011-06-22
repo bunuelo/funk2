@@ -21,40 +21,6 @@
 
 #include "concept_version_space.h"
 
-// concept_version_space_variable
-
-def_ceframe2(concept_version_space, concept_version_space_variable, name, value_set);
-
-f2ptr raw__concept_version_space_variable__new(f2ptr cause, f2ptr name) {
-  f2ptr value_set = f2__set__new(cause);
-  return f2concept_version_space_variable__new(cause, name, value_set);
-}
-
-f2ptr f2__concept_version_space_variable__new(f2ptr cause, f2ptr name) {
-  return raw__concept_version_space_variable__new(cause, name);
-}
-export_cefunk1(concept_version_space_variable__new, name, 0, "Returns a new concept_version_space_variable object.");
-
-
-f2ptr raw__concept_version_space_variable__add_value(f2ptr cause, f2ptr this, f2ptr value) {
-  f2ptr value_set = raw__concept_version_space_variable__value_set(cause, this);
-  raw__set__add(cause, value_set, value);
-  return nil;
-}
-
-f2ptr f2__concept_version_space_variable__add_value(f2ptr cause, f2ptr this, f2ptr value) {
-  return raw__concept_version_space_variable__add_value(cause, this, value);
-}
-export_cefunk2(concept_version_space_variable__add_value, this, value, 0, "Adds a value to this concept_version_space_variable.");
-
-
-f2ptr f2__concept_version_space_variable_type__new_aux(f2ptr cause) {
-  f2ptr this = f2__concept_version_space_variable_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_value"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_variable__add_value")));}
-  return this;
-}
-
-
 // concept_version_space_example
 
 def_ceframe2(concept_version_space, concept_version_space_example, positive, value_variable_name_ptypehash);
@@ -258,13 +224,12 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
 
 // concept_version_space
 
-def_ceframe3(concept_version_space, concept_version_space, variable_ptypehash, specific_hypotheses, general_hypotheses);
+def_ceframe2(concept_version_space, concept_version_space, specific_hypotheses, general_hypotheses);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
-  f2ptr variable_ptypehash  = f2__ptypehash__new(cause);
   f2ptr specific_hypotheses = nil;
   f2ptr general_hypotheses  = nil;
-  return f2concept_version_space__new(cause, variable_ptypehash, specific_hypotheses, general_hypotheses);
+  return f2concept_version_space__new(cause, specific_hypotheses, general_hypotheses);
 }
 
 f2ptr f2__concept_version_space__new(f2ptr cause) {
@@ -273,22 +238,20 @@ f2ptr f2__concept_version_space__new(f2ptr cause) {
 export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_space object.");
 
 
-f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr name) {
-  f2ptr variable_ptypehash             = raw__concept_version_space__variable_ptypehash(cause, this);
-  f2ptr concept_version_space_variable = f2__concept_version_space_variable__new(cause, name);
-  raw__ptypehash__add(cause, variable_ptypehash, name, concept_version_space_variable);
+f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
+  
   return nil;
 }
 
-f2ptr f2__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr name) {
-  return raw__concept_version_space__add_variable(cause, this, name);
+f2ptr f2__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
+  return raw__concept_version_space__train_on_example(cause, this, example);
 }
-export_cefunk2(concept_version_space__add_variable, this, name, 0, "Adds a new variable key to this concept_version_space.");
+export_cefunk2(concept_version_space__train_on_example, this, example, 0, "Trains this concept_version_space on the given example.");
 
 
 f2ptr f2__concept_version_space_type__new_aux(f2ptr cause) {
   f2ptr this = f2__concept_version_space_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space__add_variable")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "train_on_example"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space__train_on_example")));}
   return this;
 }
 

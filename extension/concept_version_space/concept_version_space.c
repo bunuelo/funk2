@@ -215,18 +215,6 @@ f2ptr f2__concept_version_space_hypothesis__is_consistent_with_or_more_general_t
 export_cefunk2(concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis, this, hypothesis, 0, "Returns true if this hypothesis is consistent with or more general than the given hypothesis.");
 
 
-f2ptr raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
-  return (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, this, hypothesis) == nil);
-}
-
-f2ptr f2__concept_version_space_hypothesis__is_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
-  assert_argument_type(concept_version_space_hypothesis, this);
-  assert_argument_type(concept_version_space_hypothesis, hypothesis);
-  return raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, this, hypothesis);
-}
-export_cefunk2(concept_version_space_hypothesis__is_more_specific_than_hypothesis, this, hypothesis, 0, "Returns true if this hypothesis is more specific than the given hypothesis.");
-
-
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
   return ((raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, this, hypothesis) != nil) &&
 	  (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, hypothesis, this) != nil));
@@ -253,8 +241,21 @@ f2ptr f2__concept_version_space_hypothesis__is_more_general_than_hypothesis(f2pt
 export_cefunk2(concept_version_space_hypothesis__is_more_general_than_hypothesis, this, hypothesis, 0, "Returns true if this hypothesis is more general than the given hypothesis.");
 
 
+f2ptr raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
+  return (raw__concept_version_space_hypothesis__is_more_general_than_hypothesis(cause, hypothesis, this) != nil);
+}
+
+f2ptr f2__concept_version_space_hypothesis__is_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  assert_argument_type(concept_version_space_hypothesis, hypothesis);
+  return raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, this, hypothesis);
+}
+export_cefunk2(concept_version_space_hypothesis__is_more_specific_than_hypothesis, this, hypothesis, 0, "Returns true if this hypothesis is more specific than the given hypothesis.");
+
+
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
-  return (raw__concept_version_space_hypothesis__is_more_general_than_hypothesis(cause, this, hypothesis) == nil);
+  return ((raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, this, hypothesis) != nil) ||
+	  (raw__concept_version_space_hypothesis__is_consistent_with_hypothesis(cause, this, hypothesis) != nil));
 }
 
 f2ptr f2__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
@@ -295,9 +296,9 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lookup_variable_value"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__lookup_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_example"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_example")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_or_more_general_than_hypothesis"),  f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_more_specific_than_hypothesis"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_more_specific_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_hypothesis"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_more_general_than_hypothesis"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_more_general_than_hypothesis")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_more_specific_than_hypothesis"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_more_specific_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_or_more_specific_than_hypothesis"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__terminal_print_with_frame")));}
   return this;

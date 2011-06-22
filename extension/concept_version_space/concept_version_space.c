@@ -179,6 +179,37 @@ f2ptr f2__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cau
 export_cefunk2(concept_version_space_hypothesis__is_consistent_with_example, this, example, 0, "Returns whether or not this hypothesis is consistent with the given example.");
 
 
+f2ptr raw__concept_version_space_hypothesis__is_consistent_with_hypothesis__helper(f2ptr cause, f2ptr this, f2ptr hypothesis) {
+  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
+  f2ptr hypothesis__positive          = raw__concept_version_space_hypothesis__positive(                     cause, hypothesis);
+  f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
+  ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
+		       if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
+			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
+			   return f2bool__new(! ((positive != nil) == (hypothesis__positive != nil)));
+			 }
+			 f2ptr hypothesis_value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, variable_name);
+			 if (! raw__eq(cause, value, hypothesis_value)) {
+			   return f2bool__new(! ((positive != nil) == (hypothesis__positive != nil)));
+			 }
+		       }
+		       );
+  return f2bool__new((positive != nil) == (hypothesis__positive != nil));
+}
+
+f2ptr raw__concept_version_space_hypothesis__is_consistent_with_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
+  return ((raw__concept_version_space_hypothesis__is_consistent_with_hypothesis__helper(cause, this, hypothesis) != nil) &&
+	  (raw__concept_version_space_hypothesis__is_consistent_with_hypothesis__helper(cause, hypothesis, this) != nil));
+}
+
+f2ptr f2__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  assert_argument_type(concept_version_space_example,    example);
+  return raw__concept_version_space_hypothesis__is_consistent_with_example(cause, this, example);
+}
+export_cefunk2(concept_version_space_hypothesis__is_consistent_with_example, this, example, 0, "Returns whether or not this hypothesis is consistent with the given example.");
+
+
 f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);

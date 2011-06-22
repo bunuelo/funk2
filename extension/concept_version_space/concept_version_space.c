@@ -171,8 +171,8 @@ export_cefunk2(concept_version_space_hypothesis__is_consistent_with_example, thi
 
 
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
-  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
-  f2ptr hypothesis__positive          = raw__concept_version_space_hypothesis__positive(                     cause, hypothesis);
+  f2ptr positive             = raw__concept_version_space_hypothesis__positive(cause, this);
+  f2ptr hypothesis__positive = raw__concept_version_space_hypothesis__positive(cause, hypothesis);
   if ((positive != nil) && (hypothesis__positive != nil)) {
     f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
     ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
@@ -183,14 +183,28 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 			 );
     return f2bool__new(boolean__true);
   } else if ((positive != nil) && (hypothesis__positive == nil)) {
-    //f2ptr hypothesis__value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, hypothesis);
-    //ptypehash__iteration(cause, hypothesis__value_variable_name_ptypehash, hypothesis__variable_name, hypothesis__value,
-    //			 f2ptr value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, hypothesis__variable_name);
-    //			 if (! raw__eq(cause, 
-    //			 );
-    //return f2bool__new(boolean__true);
+    f2ptr hypothesis__value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, hypothesis);
+    ptypehash__iteration(cause, hypothesis__value_variable_name_ptypehash, hypothesis__variable_name, hypothesis__value,
+    			 f2ptr value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, hypothesis__variable_name);
+    			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
+			   if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
+			     return f2bool__new(boolean__false);
+			   }
+			 }
+			 );
+    return f2bool__new(boolean__true);
+  } else if ((positive == nil) && (hypothesis__positive != nil)) {
+    return f2bool__new(boolean__false);
+  } else { // ((positive == nil) && (hypothesis__positive == nil))
+    f2ptr hypothesis__value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, hypothesis);
+    ptypehash__iteration(cause, hypothesis__value_variable_name_ptypehash, hypothesis__variable_name, hypothesis__value,
+			 f2ptr value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, hypothesis__variable_name);
+			 if (! raw__eq(cause, value, hypothesis__value)) {
+			   return f2bool__new(boolean__false);
+			 }
+			 );
+    return f2bool__new(boolean__true);
   }
-  return f2larva__new(cause, 24515, nil);
 }
 
 f2ptr f2__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {

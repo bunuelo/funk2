@@ -272,7 +272,6 @@ f2ptr f2__concept_version_space__core_extension__initialize(f2ptr cause) {
 export_cefunk0(concept_version_space__core_extension__initialize, 0, "");
 
 f2ptr f2__concept_version_space__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "concept_version_space_variable"),   f2__concept_version_space_variable_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "concept_version_space_example"),    f2__concept_version_space_example_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "concept_version_space_hypothesis"), f2__concept_version_space_hypothesis_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "concept_version_space"),            f2__concept_version_space_type__new_aux(cause));

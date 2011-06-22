@@ -160,15 +160,15 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr ca
   ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
 		       if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
 			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			   return f2bool__new(! ((positive != nil) == (positive__example != nil)));
+			   return f2bool__new(! ((positive != nil) == (example__positive != nil)));
 			 }
 			 f2ptr example_value = raw__concept_version_space_example__lookup_variable_value(cause, example, variable_name);
 			 if (! raw__eq(cause, value, example_value)) {
-			   return f2bool__new(! ((positive != nil) == (positive__example != nil)));
+			   return f2bool__new(! ((positive != nil) == (example__positive != nil)));
 			 }
 		       }
 		       );
-  return f2bool__new((positive != nil) == (positive__example != nil));
+  return f2bool__new((positive != nil) == (example__positive != nil));
 }
 
 f2ptr f2__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {

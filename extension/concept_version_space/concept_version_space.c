@@ -28,7 +28,7 @@ f2ptr raw__concept_version_space__new(f2ptr cause) {
   return f2concept_version_space__new(cause, variable_set);
 }
 
-f2ptr f2__concept_version_space__new(f2ptr cause, f2ptr variable_set) {
+f2ptr f2__concept_version_space__new(f2ptr cause) {
   return raw__concept_version_space__new(cause);
 }
 export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_space object.");

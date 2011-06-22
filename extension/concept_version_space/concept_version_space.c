@@ -300,9 +300,9 @@ f2ptr raw__concept_version_space_hypothesis__minimal_generalization_consistent_w
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
 			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, example__variable_name);
 			 if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			   raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__value);
+			   raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, example__value);
 			 } else if (! raw__eq(cause, hypothesis__value, example__value)) {
-			   raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, new__symbol(cause, "-"));
+			   raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, new__symbol(cause, "-"));
 			 }
 			 );
     return hypothesis;

@@ -36,14 +36,14 @@ f2ptr f2__concept_version_space_variable__new(f2ptr cause, f2ptr name) {
 export_cefunk1(concept_version_space_variable__new, name, 0, "Returns a new concept_version_space_variable object.");
 
 
-f2ptr raw__concept_version_space_variable__add_value(f2ptr cause, f2ptr value) {
+f2ptr raw__concept_version_space_variable__add_value(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr value_set = raw__concept_version_space_variable__value_set(cause, this);
   raw__set__add(caues, value_set, value);
   return nil;
 }
 
-f2ptr f2__concept_version_space_variable__add_value(f2ptr cause, f2ptr value) {
-  return raw__concept_version_space_variable__add_value(cause, value);
+f2ptr f2__concept_version_space_variable__add_value(f2ptr cause, f2ptr this, f2ptr value) {
+  return raw__concept_version_space_variable__add_value(cause, this, value);
 }
 export_cefunk2(concept_version_space_variable__add_value, this, value, 0, "Adds a value to this concept_version_space_variable.");
 

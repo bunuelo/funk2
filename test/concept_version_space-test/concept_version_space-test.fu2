@@ -93,7 +93,7 @@
   [let [[h1 [new concept_version_space_hypothesis t]]
 	[h2 [new concept_version_space_hypothesis nil]]]
     [have h1 add_variable_value `color `red]
-    [have h1 add_variable_value `shape `cube]
+    [have h1 add_variable_value `shape `-]
     [have h2 add_variable_value `color `red]
     [have h2 add_variable_value `shape `-]
     [terminal_format standard-terminal '\nh1: ' h1]

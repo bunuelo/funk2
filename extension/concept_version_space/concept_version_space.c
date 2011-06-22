@@ -169,6 +169,12 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr ca
   return f2bool__new(boolean__true);
 }
 
+f2ptr f2__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  assert_argument_type(concept_version_space_example,    example);
+  return raw__concept_version_space_hypothesis__is_consistent_with_example(cause, this, example);
+}
+export_cefunk2(concept_version_space_hypothesis__is_consistent_with_example, this, example, 0, "Returns whether or not this hypothesis is consistent with the given example.");
 
 
 f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

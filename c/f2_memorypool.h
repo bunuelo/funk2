@@ -52,6 +52,8 @@ struct funk2_memorypool_s {
   u64                            next_unique_block_id;
   s64                            temporary_compressed_data_for_loading__length;
   u8*                            temporary_compressed_data_for_loading;
+  s64                            temporary_compressed_data_for_saving__length;
+  u8*                            temporary_compressed_data_for_saving;
 };
 
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))

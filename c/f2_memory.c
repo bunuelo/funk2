@@ -727,7 +727,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
 void f2__memory__initialize() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
-    funk2_memorypool__init((&__funk2.memory.pool[pool_index]));
+    funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
   }
   
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);

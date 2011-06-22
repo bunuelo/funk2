@@ -155,19 +155,20 @@ export_cefunk3(concept_version_space_hypothesis__add_variable_value, this, varia
 
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
+  f2ptr example__positive             = raw__concept_version_space_example__positive(                        cause, example);
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
   ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
 		       if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
 			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			   return f2bool__new(! (positive != nil));
+			   return f2bool__new(! ((positive != nil) == (positive__example != nil)));
 			 }
 			 f2ptr example_value = raw__concept_version_space_example__lookup_variable_value(cause, example, variable_name);
 			 if (! raw__eq(cause, value, example_value)) {
-			   return f2bool__new(! (positive != nil));
+			   return f2bool__new(! ((positive != nil) == (positive__example != nil)));
 			 }
 		       }
 		       );
-  return f2bool__new(positive != nil);
+  return f2bool__new((positive != nil) == (positive__example != nil));
 }
 
 f2ptr f2__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {

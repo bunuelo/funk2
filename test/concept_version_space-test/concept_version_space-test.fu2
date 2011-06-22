@@ -18,5 +18,6 @@
  rights to redistribute these changes.'
 
 [defunk concept_version_space-test []
-  ]
+  
+  nil]
 

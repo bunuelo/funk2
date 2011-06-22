@@ -18,6 +18,19 @@
  rights to redistribute these changes.'
 
 [defunk concept_version_space-test []
-  
-  nil]
+  [let [[cvs [new concept_version_space]]
+	[e1  [let [[this [new concept_version_space_example t]]]
+	       [have this add_variable_value `x 1]
+	       [have this add_variable_value `y 1]
+	       this]]
+	[e2  [let [[this [new concept_version_space_example t]]]
+	       [have this add_variable_value `x 1]
+	       [have this add_variable_value `y 2]
+	       this]]
+	[e3  [let [[this [new concept_version_space_example nil]]]
+	       [have this add_variable_value `x 2]
+	       [have this add_variable_value `y 2]
+	       this]]
+	]
+    cvs]]
 

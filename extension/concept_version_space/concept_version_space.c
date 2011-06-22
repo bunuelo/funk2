@@ -43,11 +43,11 @@ f2ptr f2__concept_version_space_variable_type__new_aux(f2ptr cause) {
 
 // concept_version_space
 
-def_ceframe1(concept_version_space, concept_version_space, variable_set);
+def_ceframe1(concept_version_space, concept_version_space, variable_ptypehash);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
-  f2ptr variable_set = f2__set__new(cause);
-  return f2concept_version_space__new(cause, variable_set);
+  f2ptr variable_ptypehash = f2__ptypehash__new(cause);
+  return f2concept_version_space__new(cause, variable_ptypehash);
 }
 
 f2ptr f2__concept_version_space__new(f2ptr cause) {
@@ -56,16 +56,17 @@ f2ptr f2__concept_version_space__new(f2ptr cause) {
 export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_space object.");
 
 
-f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr key) {
-  f2ptr variable_set = raw__concept_version_space__variable_set(cause, this);
-  raw__set__add(cause, variable_set, key);
+f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr name) {
+  f2ptr variable_ptypehash             = raw__concept_version_space__variable_ptypehash(cause, this);
+  f2ptr concept_version_space_variable = f2__concept_version_space_variable__new(cause, name);
+  raw__ptypehash__add(cause, variable_ptypehash, name, concept_version_space_variable);
   return nil;
 }
 
-f2ptr f2__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr key) {
-  return raw__concept_version_space__add_variable(cause, this, key);
+f2ptr f2__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr name) {
+  return raw__concept_version_space__add_variable(cause, this, name);
 }
-export_cefunk2(concept_version_space__add_variable, this, key, 0, "Adds a new variable key to this concept_version_space.");
+export_cefunk2(concept_version_space__add_variable, this, name, 0, "Adds a new variable key to this concept_version_space.");
 
 
 f2ptr f2__concept_version_space_type__new_aux(f2ptr cause) {

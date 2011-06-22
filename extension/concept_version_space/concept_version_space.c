@@ -285,6 +285,11 @@ export_cefunk2(concept_version_space_hypothesis__is_consistent_with_or_more_spec
 
 
 f2ptr raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
+  if (example__positive == nil) {
+    // example must be positive in order to generalize based on it.
+    return f2larva__new(cause, 232464, nil);
+  }
   f2ptr positive = raw__concept_version_space_hypothesis__positive(cause, this);
   if (positive != nil) {
     return f2larva__new(cause, 234525, nil);

@@ -38,7 +38,7 @@ export_cefunk1(concept_version_space_variable__new, name, 0, "Returns a new conc
 
 f2ptr raw__concept_version_space_variable__add_value(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr value_set = raw__concept_version_space_variable__value_set(cause, this);
-  raw__set__add(caues, value_set, value);
+  raw__set__add(cause, value_set, value);
   return nil;
 }
 

@@ -82,6 +82,17 @@ f2ptr f2__concept_version_space_example__add_variable_value(f2ptr cause, f2ptr t
 export_cefunk3(concept_version_space_example__add_variable_value, this, variable_name, value, 0, "Adds a variable value to this concept_version_space_example.");
 
 
+f2ptr raw__concept_version_space_example__lookup_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
+  f2ptr value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, this);
+  return raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+}
+
+f2ptr f2__concept_version_space_example__lookup_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
+  return raw__concept_version_space_example__lookup_variable_value(cause, this, variable_name);
+}
+export_cefunk2(concept_version_space_example__lookup_variable_value, this, variable_name, 0, "Lookup a variable value from this concept_version_space_example.");
+
+
 f2ptr raw__concept_version_space_example__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -99,8 +110,8 @@ f2ptr raw__concept_version_space_example__terminal_print_with_frame(f2ptr cause,
 }
 
 f2ptr f2__concept_version_space_example__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(concept_version_space_example,       this);
-  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  assert_argument_type(concept_version_space_example, this);
+  assert_argument_type(terminal_print_frame,          terminal_print_frame);
   return raw__concept_version_space_example__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(concept_version_space_example__terminal_print_with_frame, this, terminal_print_frame, 0, "");
@@ -109,6 +120,7 @@ export_cefunk2(concept_version_space_example__terminal_print_with_frame, this, t
 f2ptr f2__concept_version_space_example_type__new_aux(f2ptr cause) {
   f2ptr this = f2__concept_version_space_example_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable_value"),        f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_example__add_variable_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lookup_variable_value"),     f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_example__lookup_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_example__terminal_print_with_frame")));}
   return this;
 }
@@ -141,14 +153,23 @@ f2ptr f2__concept_version_space_hypothesis__add_variable_value(f2ptr cause, f2pt
 export_cefunk3(concept_version_space_hypothesis__add_variable_value, this, variable_name, value, 0, "Adds a variable value to this concept_version_space_hypothesis.");
 
 
-/*
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
   ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
-		       
+		       if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
+			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
+			   return f2bool__new(boolean__false);
+			 }
+			 f2ptr example_value = raw__concept_version_space_example__lookup_variable_value(cause, example, variable_name);
+			 if (! raw__eq(cause, value, example_value)) {
+			   return f2bool__new(boolean__false);
+			 }
+		       }
 		       );
+  return f2bool__new(boolean__true);
 }
-*/
+
+
 
 f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
@@ -175,8 +196,9 @@ export_cefunk2(concept_version_space_hypothesis__terminal_print_with_frame, this
 
 f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
   f2ptr this = f2__concept_version_space_hypothesis_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable_value"),        f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__add_variable_value")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__terminal_print_with_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable_value"),         f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__add_variable_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_example"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_example")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),  f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__terminal_print_with_frame")));}
   return this;
 }
 

@@ -213,6 +213,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/cairo/libf2e_cairo.la \
+                      extension/concept_version_space/libf2e_concept_version_space.la \
                       extension/conceptnet/libf2e_conceptnet.la \
                       extension/event_stream/libf2e_event_stream.la \
                       extension/equals_hash/libf2e_equals_hash.la \
@@ -401,6 +402,7 @@ lib_libfunk2_la_SOURCES = \
 
 extension_causality_libf2e_causality_la_SOURCES                                                           = extension/causality/causality.c
 extension_cairo_libf2e_cairo_la_SOURCES                                                                   = extension/cairo/cairo.c
+extension_concept_version_space_libf2e_concept_version_space_la_SOURCES                                   = extension/concept_version_space/concept_version_space.c
 extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                         = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                                     = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                       = extension/equals_hash/equals_hash.c
@@ -499,6 +501,9 @@ extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_causality_libf2e_causality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_concept_version_space_libf2e_concept_version_space_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_concept_version_space_libf2e_concept_version_space_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

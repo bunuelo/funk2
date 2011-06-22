@@ -110,6 +110,7 @@
 						     'built-in/gtk/'
 						     'built-in/natural_language/'
 						     'extension/cairo/'
+						     'extension/concept_version_space/'
 						     'extension/conceptnet/'
 						     'extension/equals_hash/'
 						     'extension/event_stream/'

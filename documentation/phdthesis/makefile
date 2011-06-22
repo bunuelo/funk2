@@ -41,7 +41,8 @@ phdthesis.pdf: \
   gfx/partially_observable.pdf \
   gfx/environment_perception_physical.pdf \
   gfx/frame_representation.pdf \
-  gfx/frame_perception.pdf
+  gfx/frame_perception.pdf \
+  gfx/physical_perception.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

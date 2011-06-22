@@ -2,6 +2,36 @@
 \chapter{A System}\label{ch:a_system}
 %*****************************************
 
+\subsection{Debugging Plans by Reflectively Tracing the Provenance of Knowledge}
+
+The thesis is focusing on provenance of knowledge.  From perception to
+other knowledge representations, through planning and failed steps.
+Normally, when plans fail, rule learning (or other learning method) is
+used to update beginning and ending conditions for actions.  Very
+complex planning methods exist that all assume that the current world
+model is perfect (in either a deterministic or probabilistic
+representation of the world).  Currently, plans are called policies
+that handle all possible contingencies, in which the agent may find
+itself.  When these plans fail, it is often unclear which part of the
+plan was responsible for the failure.  In the simplest cases, a
+specific low-level action may have been executing, which implies that
+precondition categories were incorrectly mapped to postconditions or
+the range of postconditions was not broad enough.  In the worst cases,
+it is impossible to tell what part of the plan failed because the plan
+is such a complicated tangle of compiled numbers that the only
+recourse is to nudge a few of these numbers in a hill-climbing sense.
+Rethinking this problem with my new approach that maintains provenance
+for knowledge used in creating plans allows debugging the complex web
+of knowledge and processes involved in creating that
+knowledge---rather than simply updating the rules related to a single
+action.
+
+The planner that I've built in my system is not as complicated as
+state of the art planners that currently exist in the field, but my
+planner allows a reflective process to debug the failure of plans
+created by our planner by tracing the provenance of the knowledge in
+the plan representation itself.
+
 \section{System Overview}
 
 Building a machine that demonstrates the general intelligence required

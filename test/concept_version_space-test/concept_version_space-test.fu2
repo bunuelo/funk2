@@ -17,7 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defunk concept_version_space-test_hypothesis_orderings []
+  [let [[h1 [new concept_version_space_hypothesis t]]
+	[h2 [new concept_version_space_hypothesis nil]]]
+    [if [not [get h1 is_more_general_than_hypothesis  h2]] [error bug_type `concept_version_space-test_hypothesis_orderings number 1]]
+    [if      [get h2 is_more_general_than_hypothesis  h1]  [error bug_type `concept_version_space-test_hypothesis_orderings number 2]]
+    [if [not [get h2 is_more_specific_than_hypothesis h1]] [error bug_type `concept_version_space-test_hypothesis_orderings number 3]]
+    [if      [get h1 is_more_specific_than_hypothesis h2]  [error bug_type `concept_version_space-test_hypothesis_orderings number 4]]
+    
+    nil]]
+
 [defunk concept_version_space-test []
+  [concept_version_space-test_hypothesis_orderings]
   [let [[cvs [new concept_version_space]]
 	[e1  [let [[this [new concept_version_space_example t]]]
 	       [have this add_variable_value `x 1]

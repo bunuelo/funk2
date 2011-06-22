@@ -21,6 +21,28 @@
 
 #include "concept_version_space.h"
 
+// concept_version_space_variable
+
+def_ceframe1(concept_version_space_variable, concept_version_space, name);
+
+f2ptr raw__concept_version_space_variable__new(f2ptr cause, f2ptr name) {
+  return f2concept_version_space_variable__new(cause, name);
+}
+
+f2ptr f2__concept_version_space_variable__new(f2ptr cause, f2ptr name) {
+  return raw__concept_version_space_variable__new(cause, name);
+}
+export_cefunk1(concept_version_space_variable__new, name, 0, "Returns a new concept_version_space_variable object.");
+
+
+f2ptr f2__concept_version_space_variable_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__concept_version_space_variable_type__new(cause);
+  return this;
+}
+
+
+// concept_version_space
+
 def_ceframe1(concept_version_space, concept_version_space, variable_set);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
@@ -68,7 +90,8 @@ f2ptr f2__concept_version_space__core_extension__initialize(f2ptr cause) {
 export_cefunk0(concept_version_space__core_extension__initialize, 0, "");
 
 f2ptr f2__concept_version_space__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "concept_version_space"), f2__concept_version_space_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "concept_version_space_variable"), f2__concept_version_space_variable_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "concept_version_space"),          f2__concept_version_space_type__new_aux(cause));
   status("concept_version_space types defined.");
   return nil;
 }

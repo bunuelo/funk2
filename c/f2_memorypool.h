@@ -69,26 +69,28 @@ struct funk2_memorypool_s {
 
 // funk2_memorypool
 
-void              funk2_memorypool__init(funk2_memorypool_t* pool);
-void              funk2_memorypool__destroy(funk2_memorypool_t* this);
-f2size_t          funk2_memorypool__total_used_memory(funk2_memorypool_t* this);
-f2size_t          funk2_memorypool__total_free_memory(funk2_memorypool_t* this);
-void              funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this);
-void              funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this);
-void              funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this);
-void              funk2_memorypool__memory_test(funk2_memorypool_t* this);
-f2ptr              raw__memorypool__assert_valid(f2ptr cause, s64 pool_index);
-void              funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num);
-void              funk2_memorypool__used_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block);
-void              funk2_memorypool__free_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block);
-u8                funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this);
-void              funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_t* block);
-funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num);
-boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory);
-void              funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd);
+void              funk2_memorypool__init                                           (funk2_memorypool_t* pool);
+void              funk2_memorypool__destroy                                        (funk2_memorypool_t* this);
+f2size_t          funk2_memorypool__total_used_memory                              (funk2_memorypool_t* this);
+f2size_t          funk2_memorypool__total_free_memory                              (funk2_memorypool_t* this);
+void              funk2_memorypool__memory_test__dynamic_memory                    (funk2_memorypool_t* this);
+void              funk2_memorypool__memory_test__byte_num_zero                     (funk2_memorypool_t* this);
+void              funk2_memorypool__memory_test__all_known_types                   (funk2_memorypool_t* this);
+void              funk2_memorypool__memory_test                                    (funk2_memorypool_t* this);
+f2ptr              raw__memorypool__assert_valid                                   (f2ptr cause, s64 pool_index);
+void              funk2_memorypool__change_total_memory_available                  (funk2_memorypool_t* this, f2size_t byte_num);
+void              funk2_memorypool__used_memory_tree__insert                       (funk2_memorypool_t* this, funk2_memblock_t* block);
+void              funk2_memorypool__free_memory_tree__insert                       (funk2_memorypool_t* this, funk2_memblock_t* block);
+u8                funk2_memorypool__defragment_free_memory_blocks_in_place         (funk2_memorypool_t* this);
+void              funk2_memorypool__free_used_block                                (funk2_memorypool_t* this, funk2_memblock_t* block);
+funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree          (funk2_memorypool_t* this, f2size_t byte_num);
+boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory      (funk2_memorypool_t* this, funk2_memory_t* memory);
+void              funk2_memorypool__compress_for_saving                            (funk2_memorypool_t* this);
+void              funk2_memorypool__write_compressed_to_stream                     (funk2_memorypool_t* this, int fd);
+//void              funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd);
 void              funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_memorypool_t* this);
-void              funk2_memorypool__rebuild_memory_trees_from_image(funk2_memorypool_t* this);
-void              funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd);
+void              funk2_memorypool__rebuild_memory_trees_from_image                (funk2_memorypool_t* this);
+void              funk2_memorypool__load_from_stream                               (funk2_memorypool_t* this, int fd);
 
 #endif // F2__MEMORYPOOL__H
 

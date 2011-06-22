@@ -82,6 +82,29 @@ f2ptr f2__concept_version_space_example__add_variable_value(f2ptr cause, f2ptr t
 export_cefunk3(concept_version_space_example__add_variable_value, this, variable_name, value, 0, "Adds a variable value to this concept_version_space_example.");
 
 
+f2ptr raw__concept_version_space_example__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list2__new(cause,
+					       new__symbol(cause, "print_object_type"), f2__object__type(cause, this)));
+    f2ptr value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, this);
+    ptypehash__iteration(cause, value_variable_name_ptypehash, key, value,
+			 f2__frame__add_var_value(cause, frame, key, value);
+			 );
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__concept_version_space_example__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(concept_version_space_example,       this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__concept_version_space_example__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(concept_version_space_example__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
 f2ptr f2__concept_version_space_example_type__new_aux(f2ptr cause) {
   f2ptr this = f2__concept_version_space_example_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable_value"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_example__add_variable_value")));}

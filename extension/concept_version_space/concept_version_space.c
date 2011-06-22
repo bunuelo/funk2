@@ -61,13 +61,13 @@ def_ceframe2(concept_version_space, concept_version_space_example, name, value_v
 
 f2ptr raw__concept_version_space_example__new(f2ptr cause) {
   f2ptr value_variable_name_ptypehash = f2__ptypehash__new(cause);
-  return f2concept_version_space_example__new(cause, name, value_variable_name_ptypehash);
+  return f2concept_version_space_example__new(cause, value_variable_name_ptypehash);
 }
 
-f2ptr f2__concept_version_space_example__new(f2ptr cause, f2ptr name) {
-  return raw__concept_version_space_example__new(cause, name);
+f2ptr f2__concept_version_space_example__new(f2ptr cause) {
+  return raw__concept_version_space_example__new(cause);
 }
-export_cefunk1(concept_version_space_example__new, name, 0, "Returns a new concept_version_space_example object.");
+export_cefunk0(concept_version_space_example__new, 0, "Returns a new concept_version_space_example object.");
 
 
 f2ptr raw__concept_version_space_example__add_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {

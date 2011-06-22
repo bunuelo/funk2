@@ -57,7 +57,7 @@ f2ptr f2__concept_version_space_variable_type__new_aux(f2ptr cause) {
 
 // concept_version_space_example
 
-def_ceframe2(concept_version_space, concept_version_space_example, name, value_variable_name_ptypehash);
+def_ceframe1(concept_version_space, concept_version_space_example, value_variable_name_ptypehash);
 
 f2ptr raw__concept_version_space_example__new(f2ptr cause) {
   f2ptr value_variable_name_ptypehash = f2__ptypehash__new(cause);

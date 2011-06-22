@@ -18,15 +18,12 @@
  rights to redistribute these changes.'
 
 [defunk concept_version_space-test_hypothesis_orderings []
-  [let [[h1  [new concept_version_space_hypothesis t]]
-	[h1a [new concept_version_space_hypothesis t]]
-	[h2  [new concept_version_space_hypothesis nil]]]
-    [if [not [get h1 is_consistent_with_hypothesis    h1a]] [error bug_type `concept_version_space-test_hypothesis_orderings number 1]]
-    [if [not [get h1 is_more_general_than_hypothesis  h2]]  [error bug_type `concept_version_space-test_hypothesis_orderings number 2]]
-    [if      [get h2 is_more_general_than_hypothesis  h1]   [error bug_type `concept_version_space-test_hypothesis_orderings number 3]]
-    [if [not [get h2 is_more_specific_than_hypothesis h1]]  [error bug_type `concept_version_space-test_hypothesis_orderings number 4]]
-    [if      [get h1 is_more_specific_than_hypothesis h2]   [error bug_type `concept_version_space-test_hypothesis_orderings number 5]]
-    
+  [let [[h1 [new concept_version_space_hypothesis t]]
+	[h2 [new concept_version_space_hypothesis t]]]
+    [have h1 add_variable_value `color `red]
+    [have h1 add_variable_value `shape `cube]
+    [have h2 add_variable_value `color `red]
+    [if [not [get h2 is_consistent_with_or_more_general_than h1]] [error bug_type `concept_version_space-test_hypothesis_orderings number 1]]
     nil]]
 
 [defunk concept_version_space-test []

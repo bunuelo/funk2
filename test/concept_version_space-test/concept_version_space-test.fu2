@@ -232,7 +232,6 @@
   nil]
 
 [defunk concept_version_space-test []
-  [concept_version_space-test_hypothesis_orderings]
   [let [[cvs [new concept_version_space]]
 	[e1  [let [[this [new concept_version_space_example t]]]
 	       [have this add_variable_value `x 1]

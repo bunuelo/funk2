@@ -238,7 +238,12 @@
 	       [have this add_variable_value `x 1]
 	       [have this add_variable_value `y 1]
 	       this]]
+	[e2  [let [[this [new concept_version_space_example nil]]]
+	       [have this add_variable_value `x 1]
+	       [have this add_variable_value `y 2]
+	       this]]
 	]
-    [have cvs train_on_example e1]
+    `[have cvs train_on_example e1]
+    [have cvs train_on_example e2]
     cvs]]
 

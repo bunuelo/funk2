@@ -328,12 +328,12 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 			     } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
 			     } else { // hypothesis__value is not special symbol
 			     }
-			   } else { // value is not special symbol
+			   } else { // hypothesis__value is not special symbol
 			     if (raw__eq(cause, value, new__symbol(cause, "?"))) {
 			     } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {	
 			       // value is more specific that hypothesis__value
 			       return f2bool__new(boolean__false);
-			     } else { // hypothesis__value is not special symbol
+			     } else { // value is not special symbol
 			       if (raw__eq(cause, hypothesis__value, value)) {
 				 // value is more specific that hypothesis__value
 				 return f2bool__new(boolean__false);
@@ -354,27 +354,38 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 			 f2ptr value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, hypothesis__variable_name);
 			 if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
 			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
+			     // value is consistent with hypothesis__value
 			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
+			     // value is more general than hypothesis__value
 			   } else { // hypothesis__value is not special symbol
+			     // value is more specific than hypothesis__value
+			     return f2bool__new(boolean__false);
 			   }
 			 } else if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
 			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     // value is more specific that hypothesis__value
-			     return f2bool__new(boolean__false);
+			     // value is more general than hypothesis__value
 			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
+			     // value is consistent with hypothesis__value
 			   } else { // hypothesis__value is not special symbol
+			     // value is more general than hypothesis__value
 			   }
-			 } else { // value is not special symbol
+			 } else { // hypothesis__value is not special symbol
 			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
+			     // value is more general than hypothesis__value
 			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {	
-			   } else { // hypothesis__value is not special symbol
+			     // value is more specific than hypothesis__value
+			     return f2bool__new(boolean__false);
+			   } else { // value is not special symbol
 			     if (raw__eq(cause, hypothesis__value, value)) {
+			       // value is consistent with hypothesis__value
 			     } else {
+			       // value is neither more general nor more specific than hypothesis__value
+			       return f2bool__new(boolean__false);
 			     }
 			   }
 			 }
 			 );
-    return f2bool__new(boolean__true);
+    return f2bool__new(boolean__false);
   }
 }
 

@@ -553,7 +553,6 @@ export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_spa
 
 
 f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
-  /*
   f2ptr general_hypotheses  = raw__concept_version_space__general_hypotheses(cause, this);
   f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
   f2ptr example__positive   = raw__concept_version_space_example__positive(cause, example);
@@ -639,7 +638,6 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
     }
   } else {
   }
-  */
   return nil;
 }
 

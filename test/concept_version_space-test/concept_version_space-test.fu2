@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defunk concept_version_space-test_hypothesis_orderings []
+  `[
   [let [[h1 [new concept_version_space_hypothesis t]]
 	[h2 [new concept_version_space_hypothesis t]]]
     [have h1 add_variable_value `color `red]
@@ -229,6 +230,7 @@
     [terminal_format standard-terminal '\ne: ' e]
     [if [not [get h is_consistent_with_example e]] [error bug_type `concept_version_space-test_hypothesis_orderings-o number 1]]
     nil]
+  ]
   nil]
 
 [defunk concept_version_space-test []

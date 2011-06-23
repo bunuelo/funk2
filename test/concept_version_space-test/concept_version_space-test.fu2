@@ -73,7 +73,7 @@
     [if      [get h1 is_consistent_with_hypothesis                       h2]  [error bug_type `concept_version_space-test_hypothesis_orderings-c number 9]]
     [if      [get h2 is_consistent_with_hypothesis                       h1]  [error bug_type `concept_version_space-test_hypothesis_orderings-c number 10]]
     nil]
-
+  
   `[
   [let [[h1 [new concept_version_space_hypothesis nil]]
 	[h2 [new concept_version_space_hypothesis nil]]]

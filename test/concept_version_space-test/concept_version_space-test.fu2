@@ -166,6 +166,8 @@
     [if      [get h1 is_consistent_with_hypothesis                       h2]  [error bug_type `concept_version_space-test_hypothesis_orderings-h number 9]]
     [if      [get h2 is_consistent_with_hypothesis                       h1]  [error bug_type `concept_version_space-test_hypothesis_orderings-h number 10]]
     nil]
+  ]
+  
   [let [[h [new concept_version_space_hypothesis t]]
 	[e [new concept_version_space_example    t]]]
     [have e add_variable_value `color `red]
@@ -174,6 +176,8 @@
     [terminal_format standard-terminal '\ne: ' e]
     [if [not [get h is_consistent_with_example e]] [error bug_type `concept_version_space-test_hypothesis_orderings-i number 1]]
     nil]
+  
+  `[
   [let [[h [new concept_version_space_hypothesis t]]
 	[e [new concept_version_space_example    t]]]
     [have h add_variable_value `color `red]

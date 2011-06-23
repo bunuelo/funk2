@@ -225,7 +225,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr ca
 			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, example__variable_name);
 			 if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
 			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-")) ||
-			       (! raw__eq(cause, hypothesis__value, example__value))) {
+			       raw__eq(cause, hypothesis__value, example__value)) {
 			     return f2bool__new(boolean__false);
 			   }
 			 }
@@ -237,7 +237,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr ca
 			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, example__variable_name);
 			 if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
 			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-")) ||
-			       (! raw__eq(cause, hypothesis__value, example__value))) {
+			       raw__eq(cause, hypothesis__value, example__value)) {
 			     return f2bool__new(boolean__true);
 			   }
 			 }

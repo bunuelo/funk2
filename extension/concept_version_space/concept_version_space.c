@@ -183,7 +183,7 @@ f2ptr f2__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, 
   assert_argument_type(concept_version_space_hypothesis, this);
   return raw__concept_version_space_hypothesis__exclude_variable_value(cause, this, variable_name, value);
 }
-export_cefunk2(concept_version_space_hypothesis__exclude_variable_value, this, variable_name, value, 0, "Exclude a variable value from being consistent with this concept_version_space_hypothesis by specializing the hypothesis.");
+export_cefunk3(concept_version_space_hypothesis__exclude_variable_value, this, variable_name, value, 0, "Exclude a variable value from being consistent with this concept_version_space_hypothesis by specializing the hypothesis.");
 
 
 f2ptr raw__concept_version_space_hypothesis__include_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
@@ -212,7 +212,7 @@ f2ptr f2__concept_version_space_hypothesis__include_variable_value(f2ptr cause, 
   assert_argument_type(concept_version_space_hypothesis, this);
   return raw__concept_version_space_hypothesis__include_variable_value(cause, this, variable_name, value);
 }
-export_cefunk2(concept_version_space_hypothesis__include_variable_value, this, variable_name, value, 0, "Include a variable value in being consistent with this concept_version_space_hypothesis by generalizing the hypothesis.");
+export_cefunk3(concept_version_space_hypothesis__include_variable_value, this, variable_name, value, 0, "Include a variable value in being consistent with this concept_version_space_hypothesis by generalizing the hypothesis.");
 
 
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {

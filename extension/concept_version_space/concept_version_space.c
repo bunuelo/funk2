@@ -643,7 +643,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	    {
 	      boolean_t specific_hypothesis_is_more_general_than_another = boolean__false;
 	      {
-		f2ptr iter_compare = specific_hypothesis;
+		f2ptr iter_compare = specific_hypotheses;
 		while (iter_compare != nil) {
 		  f2ptr specific_hypothesis_compare = f2__cons__car(cause, iter_compare);
 		  if (! raw__eq(cause, specific_hypothesis, specific_hypothesis_compare)) {

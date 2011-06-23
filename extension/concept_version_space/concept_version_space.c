@@ -217,8 +217,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
     f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
     ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
 			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, variable_name);
-    			 if ((raw__eq(cause, value, new__symbol(cause, "-")) &&
-			      (! raw__eq(cause, hypothesis__value, new__symbol(cause, "-")))) ||
+			 if ((! raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) &&
 			     (! raw__eq(cause, value, hypothesis__value))) {
 			   return f2bool__new(boolean__false);
 			 }

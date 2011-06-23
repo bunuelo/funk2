@@ -242,9 +242,9 @@
 	       [have this add_variable_value `y 2]
 	       this]]
 	]
-    [have cvs train_on_example e1]
-    [terminal_format standard-terminal '\ncvs: ' cvs]
     [have cvs train_on_example e2]
+    [terminal_format standard-terminal '\ncvs: ' cvs]
+    [have cvs train_on_example e1]
     [terminal_format standard-terminal '\ncvs: ' cvs]
     cvs]]
 

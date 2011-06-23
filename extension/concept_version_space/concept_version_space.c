@@ -443,23 +443,12 @@ f2ptr raw__concept_version_space_hypothesis__minimal_generalization_consistent_w
     // example must be positive in order to generalize based on it.
     return f2larva__new(cause, 232464, nil);
   }
-  f2ptr positive = raw__concept_version_space_hypothesis__positive(cause, this);
-  if (positive != nil) {
-    // not yet implemented.
-    return f2larva__new(cause, 234525, nil);
-  } else { // (positive == nil)
-    f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
-    f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
-    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
-			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, example__variable_name);
-			 if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			   raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, example__value);
-			 } else if (! raw__eq(cause, hypothesis__value, example__value)) {
-			   raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, new__symbol(cause, "-"));
-			 }
-			 );
-    return hypothesis;
-  }
+  f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
+  f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+  ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+		       raw__concept_version_space_hypothesis__include_variable_value(cause, hypothesis, example__variable_name);
+		       );
+  return hypothesis;
 }
 
 f2ptr f2__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {

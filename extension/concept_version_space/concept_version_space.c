@@ -157,6 +157,64 @@ f2ptr f2__concept_version_space_hypothesis__lookup_variable_value(f2ptr cause, f
 export_cefunk2(concept_version_space_hypothesis__lookup_variable_value, this, variable_name, 0, "Lookup a variable value from this concept_version_space_hypothesis.");
 
 
+f2ptr raw__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
+  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
+  f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
+  if (positive != nil) {
+    if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
+    } else {
+      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+      if (! raw__eq(cause, current_value, value)) {
+	raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "-"));
+      }
+    }
+  } else {
+    if (raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+      if (! raw__eq(cause, current_value, value)) {
+	raw__ptypehash__remove(cause, value_variable_name_ptypehash, variable_name);
+      }
+    }
+  }
+}
+
+f2ptr f2__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  return raw__concept_version_space_hypothesis__exclude_variable_value(cause, this, variable_name, value);
+}
+export_cefunk2(concept_version_space_hypothesis__exclude_variable_value, this, variable_name, value, 0, "Exclude a variable value from being consistent with this concept_version_space_hypothesis by specializing the hypothesis.");
+
+
+f2ptr raw__concept_version_space_hypothesis__include_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
+  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
+  f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
+  if (positive != nil) {
+    if (raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+      if (! raw__eq(cause, current_value, value)) {
+	raw__ptypehash__remove(cause, value_variable_name_ptypehash, variable_name);
+      }
+    }
+  } else {
+    if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
+    } else {
+      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+      if (! raw__eq(cause, current_value, value)) {
+	raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "?"));
+      }
+    }
+  }
+}
+
+f2ptr f2__concept_version_space_hypothesis__include_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  return raw__concept_version_space_hypothesis__include_variable_value(cause, this, variable_name, value);
+}
+export_cefunk2(concept_version_space_hypothesis__include_variable_value, this, variable_name, value, 0, "Include a variable value in being consistent with this concept_version_space_hypothesis by generalizing the hypothesis.");
+
+
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
   if (example__positive != nil) {
@@ -439,6 +497,8 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "new_copy"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__new_copy")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable_value"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__add_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lookup_variable_value"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__lookup_variable_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "exclude_variable_value"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__exclude_variable_value")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "include_variable_value"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__include_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_example"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_example")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_or_more_general_than_hypothesis"),  f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_hypothesis"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_hypothesis")));}

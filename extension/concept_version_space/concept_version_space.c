@@ -446,7 +446,7 @@ f2ptr raw__concept_version_space_hypothesis__minimal_generalization_consistent_w
   f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
   f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
   ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
-		       raw__concept_version_space_hypothesis__include_variable_value(cause, hypothesis, example__variable_name);
+		       raw__concept_version_space_hypothesis__include_variable_value(cause, hypothesis, example__variable_name, example__value);
 		       );
   return hypothesis;
 }

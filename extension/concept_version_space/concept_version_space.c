@@ -467,7 +467,29 @@ f2ptr f2__concept_version_space_hypothesis__minimal_generalization_consistent_wi
   assert_argument_type(concept_version_space_example,    example);
   return raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, this, example);
 }
-export_cefunk2(concept_version_space_hypothesis__minimal_generalization_consistent_with_example, this, example, 0, "Returns the minimal generalization of this hypothesis that is also consistent with the given example.");
+export_cefunk2(concept_version_space_hypothesis__minimal_generalization_consistent_with_example, this, example, 0, "Returns the minimal generalization of this hypothesis that is also consistent with the given positive example.");
+
+
+f2ptr raw__concept_version_space_hypothesis__minimal_specification_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
+  if (example__positive != nil) {
+    // example must be negative in order to specialize based on it.
+    return f2larva__new(cause, 232465, nil);
+  }
+  f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
+  f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+  ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+		       raw__concept_version_space_hypothesis__exclude_variable_value(cause, hypothesis, example__variable_name, example__value);
+		       );
+  return hypothesis;
+}
+
+f2ptr f2__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  assert_argument_type(concept_version_space_example,    example);
+  return raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(cause, this, example);
+}
+export_cefunk2(concept_version_space_hypothesis__minimal_specialization_consistent_with_example, this, example, 0, "Returns the minimal specialization of this hypothesis that is also consistent with the given negative example.");
 
 
 f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -508,6 +530,7 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_more_specific_than_hypothesis"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_more_specific_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_or_more_specific_than_hypothesis"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "minimal_generalization_consistent_with_example"),      f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__minimal_generalization_consistent_with_example")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "minimal_specialization_consistent_with_example"),      f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__minimal_specialization_consistent_with_example")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__terminal_print_with_frame")));}
   return this;
 }

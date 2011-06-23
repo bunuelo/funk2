@@ -649,6 +649,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		  if (! raw__eq(cause, specific_hypothesis, specific_hypothesis_compare)) {
 		    if (raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, specific_hypothesis, specific_hypothesis_compare)) {
 		      specific_hypothesis_is_more_general_than_another = boolean__true;
+		      goto raw__concept_version_space__train_on_example__specific_hypothesis_is_more_general_than_another__done;
 		    }
 		  }
 		  iter_compare = f2__cons__cdr(cause, iter_compare);
@@ -759,6 +760,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		  if (! raw__eq(cause, general_hypothesis, general_hypothesis_compare)) {
 		    if (raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, general_hypothesis, general_hypothesis_compare)) {
 		      general_hypothesis_is_more_specific_than_another = boolean__true;
+		      goto raw__concept_version_space__train_on_example__general_hypothesis_is_more_specific_than_another__done;
 		    }
 		  }
 		  iter_compare = f2__cons__cdr(cause, iter_compare);

@@ -426,7 +426,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 			   }
 			   );
     }
-    return f2bool__new(boolean__false);
+    return f2bool__new(boolean__true);
   }
 }
 

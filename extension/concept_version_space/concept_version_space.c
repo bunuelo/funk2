@@ -470,7 +470,7 @@ f2ptr f2__concept_version_space_hypothesis__minimal_generalization_consistent_wi
 export_cefunk2(concept_version_space_hypothesis__minimal_generalization_consistent_with_example, this, example, 0, "Returns the minimal generalization of this hypothesis that is also consistent with the given positive example.");
 
 
-f2ptr raw__concept_version_space_hypothesis__minimal_specification_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
   if (example__positive != nil) {
     // example must be negative in order to specialize based on it.

@@ -324,7 +324,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 				 return f2bool__new(boolean__false);
 			       } else {
 				 // value is neither more specific nor more general than hypothesis__value
-				 return f2bool__new(boolean__false);
+				 //return f2bool__new(boolean__false);
 			       }
 			     }
 			   }
@@ -359,7 +359,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 				 return f2bool__new(boolean__false);
 			       } else {
 				 // value is neither more specific nor more general than hypothesis__value
-				 return f2bool__new(boolean__false);
+				 //return f2bool__new(boolean__false);
 			       }
 			     }
 			   }
@@ -400,7 +400,7 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_
 			       // value is consistent with hypothesis__value
 			     } else {
 			       // value is neither more general nor more specific than hypothesis__value
-			       return f2bool__new(boolean__false);
+			       //return f2bool__new(boolean__false);
 			     }
 			   }
 			 }

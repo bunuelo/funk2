@@ -634,7 +634,37 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	raw__concept_version_space__specific_hypotheses__set(cause, this, specific_hypotheses);
       }
       // remove any specific_hypothesis that is more general than any other specific hypothesis.
-      
+      {
+	f2ptr new_specific_hypotheses = nil;
+	{
+	  f2ptr iter = specific_hypotheses;
+	  while (iter != nil) {
+	    f2ptr specific_hypothesis = f2__cons__car(cause, iter);
+	    {
+	      boolean_t specific_hypothesis_is_more_general_than_another = boolean__false;
+	      {
+		f2ptr iter_compare = specific_hypothesis;
+		while (iter_compare != nil) {
+		  f2ptr specific_hypothesis_compare = f2__cons__car(cause, iter_compare);
+		  if (! raw__eq(cause, specific_hypothesis, specific_hypothesis_compare)) {
+		    if (raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, specific_hypothesis, specific_hypothesis_compare)) {
+		      specific_hypothesis_is_more_general_than_another = boolean__true;
+		    }
+		  }
+		  iter_compare = f2__cons__cdr(cause, iter_compare);
+		}
+	      }
+	    raw__concept_version_space__train_on_example__specific_hypothesis_is_more_general_than_another__done:
+	      if (! specific_hypothesis_is_more_general_than_another) {
+		new_specific_hypotheses = f2cons__new(cause, specific_hypothesis, new_specific_hypotheses);
+	      }
+	    }
+	    iter = f2__cons__cdr(cause, iter);
+	  }
+	}
+	specific_hypotheses = new_specific_hypotheses;
+	raw__concept_version_space__specific_hypotheses__set(cause, this, specific_hypotheses);
+      }
     }
   } else {
   }

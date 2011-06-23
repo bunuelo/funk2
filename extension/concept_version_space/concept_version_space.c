@@ -177,6 +177,7 @@ f2ptr raw__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause,
       }
     }
   }
+  return nil;
 }
 
 f2ptr f2__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
@@ -206,6 +207,7 @@ f2ptr raw__concept_version_space_hypothesis__include_variable_value(f2ptr cause,
       }
     }
   }
+  return nil;
 }
 
 f2ptr f2__concept_version_space_hypothesis__include_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {

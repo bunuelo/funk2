@@ -361,7 +361,6 @@ f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cau
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list2__new(cause,
 					       new__symbol(cause, "print_object_type"), f2__object__type(cause, this)));
-    f2__frame__add_var_value(cause, frame, new__symbol(cause, "positive"), f2__concept_version_space_hypothesis__positive(cause, this));
     f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
     ptypehash__iteration(cause, value_variable_name_ptypehash, key, value,
 			 f2__frame__add_var_value(cause, frame, key, value);

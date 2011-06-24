@@ -509,7 +509,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  while (iter != nil) {
 	    f2ptr removed_specific_hypothesis = f2__cons__car(cause, iter);
 	    {
-	      f2ptr removed_specific_hypothesis__minimal_generalizations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, removed_specific_hypothesis, example));
+	      f2ptr removed_specific_hypothesis__minimal_generalizations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_generalizations_consistent_with_example(cause, removed_specific_hypothesis, example));
 	      {
 		f2ptr removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter = removed_specific_hypothesis__minimal_generalizations_consistent_with_example;
 		while (removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter != nil) {
@@ -629,7 +629,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  while (iter != nil) {
 	    f2ptr removed_general_hypothesis = f2__cons__car(cause, iter);
 	    {
-	      f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(cause, removed_general_hypothesis, example));
+	      f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(cause, removed_general_hypothesis, example));
 	      {
 		f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example__iter = removed_general_hypothesis__minimal_specializations_consistent_with_example;
 		while (removed_general_hypothesis__minimal_specializations_consistent_with_example__iter != nil) {

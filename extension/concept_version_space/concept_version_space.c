@@ -311,48 +311,56 @@ f2ptr f2__concept_version_space_hypothesis__is_consistent_with_or_more_specific_
 export_cefunk2(concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis, this, hypothesis, 0, "Returns true if this hypothesis is consistent with or more specific than the given hypothesis.");
 
 
-f2ptr raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr raw__concept_version_space_hypothesis__minimal_generalizations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
   if (example__positive == nil) {
     // example must be positive in order to generalize based on it.
     return f2larva__new(cause, 232464, nil);
   }
-  f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
-  f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
-  ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
-		       raw__concept_version_space_hypothesis__include_variable_value(cause, hypothesis, example__variable_name, example__value);
-		       );
-  return hypothesis;
+  f2ptr new_hypotheses = nil;
+  {
+    f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
+    f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+			 raw__concept_version_space_hypothesis__include_variable_value(cause, hypothesis, example__variable_name, example__value);
+			 );
+    new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
+  }
+  return new_hypotheses;
 }
 
-f2ptr f2__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr f2__concept_version_space_hypothesis__minimal_generalizations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   assert_argument_type(concept_version_space_hypothesis, this);
   assert_argument_type(concept_version_space_example,    example);
-  return raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, this, example);
+  return raw__concept_version_space_hypothesis__minimal_generalizations_consistent_with_example(cause, this, example);
 }
-export_cefunk2(concept_version_space_hypothesis__minimal_generalization_consistent_with_example, this, example, 0, "Returns the minimal generalization of this hypothesis that is also consistent with the given positive example.");
+export_cefunk2(concept_version_space_hypothesis__minimal_generalizations_consistent_with_example, this, example, 0, "Returns the minimal generalizations of this hypothesis that is also consistent with the given positive example.");
 
 
-f2ptr raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
   if (example__positive != nil) {
     // example must be negative in order to specialize based on it.
     return f2larva__new(cause, 232465, nil);
   }
-  f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
-  f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
-  ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
-		       raw__concept_version_space_hypothesis__exclude_variable_value(cause, hypothesis, example__variable_name, example__value);
-		       );
-  return hypothesis;
+  f2ptr new_hypotheses = nil;
+  {
+    f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
+    f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+			 raw__concept_version_space_hypothesis__exclude_variable_value(cause, hypothesis, example__variable_name, example__value);
+			 );
+    new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
+  }
+  return new_hypotheses;
 }
 
-f2ptr f2__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr f2__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
   assert_argument_type(concept_version_space_hypothesis, this);
   assert_argument_type(concept_version_space_example,    example);
-  return raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(cause, this, example);
+  return raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(cause, this, example);
 }
-export_cefunk2(concept_version_space_hypothesis__minimal_specialization_consistent_with_example, this, example, 0, "Returns the minimal specialization of this hypothesis that is also consistent with the given negative example.");
+export_cefunk2(concept_version_space_hypothesis__minimal_specializations_consistent_with_example, this, example, 0, "Returns the minimal specializations of this hypothesis that is also consistent with the given negative example.");
 
 
 f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -501,27 +509,36 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  while (iter != nil) {
 	    f2ptr removed_specific_hypothesis = f2__cons__car(cause, iter);
 	    {
-	      f2ptr removed_specific_hypothesis__minimal_generalization_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, removed_specific_hypothesis, example));
+	      f2ptr removed_specific_hypothesis__minimal_generalizations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, removed_specific_hypothesis, example));
 	      {
-		boolean_t is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__false;
-		{
-		  f2ptr general_iter = general_hypotheses;
-		  while (general_iter != nil) {
-		    f2ptr general_hypothesis = f2__cons__car(cause, general_iter);
+		f2ptr removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter = removed_specific_hypothesis__minimal_generalizations_consistent_with_example;
+		while (removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter != nil) {
+		  f2ptr removed_specific_hypothesis__minimal_generalization_consistent_with_example = f2__cons__car(cause, removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter);
+		  {
 		    {
-		      if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, general_hypothesis, removed_specific_hypothesis__minimal_generalization_consistent_with_example)) {
-			is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__true;
-			goto raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_general_hypothesis__done;
+		      boolean_t is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__false;
+		      {
+			f2ptr general_iter = general_hypotheses;
+			while (general_iter != nil) {
+			  f2ptr general_hypothesis = f2__cons__car(cause, general_iter);
+			  {
+			    if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, general_hypothesis, removed_specific_hypothesis__minimal_generalization_consistent_with_example)) {
+			      is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__true;
+			      goto raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_general_hypothesis__done;
+			    }
+			  }
+			  general_iter = f2__cons__cdr(cause, general_iter);
+			}
+		      }
+		    raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_general_hypothesis__done:
+		      if (is_consistent_or_more_general_than_at_least_one_general_hypothesis) {
+			new_specific_hypotheses = f2cons__new(cause, removed_specific_hypothesis__minimal_generalization_consistent_with_example, new_specific_hypotheses);
 		      }
 		    }
-		    general_iter = f2__cons__cdr(cause, general_iter);
 		  }
+		  removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter = f2__cons__cdr(cause, removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter);
 		}
-	      raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_general_hypothesis__done:
-		if (is_consistent_or_more_general_than_at_least_one_general_hypothesis) {
-		  new_specific_hypotheses = f2cons__new(cause, removed_specific_hypothesis__minimal_generalization_consistent_with_example, new_specific_hypotheses);
-		}
-	      }
+	      }	
 	    }
 	    iter = f2__cons__cdr(cause, iter);
 	  }
@@ -612,25 +629,32 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  while (iter != nil) {
 	    f2ptr removed_general_hypothesis = f2__cons__car(cause, iter);
 	    {
-	    f2ptr removed_general_hypothesis__minimal_specialization_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(cause, removed_general_hypothesis, example));
-	    {
-		boolean_t is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__false;
-		{
-		  f2ptr specific_iter = specific_hypotheses;
-		  while (specific_iter != nil) {
-		    f2ptr specific_hypothesis = f2__cons__car(cause, specific_iter);
+	      f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_specialization_consistent_with_example(cause, removed_general_hypothesis, example));
+	      {
+		f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example__iter = removed_general_hypothesis__minimal_specializations_consistent_with_example;
+		while (removed_general_hypothesis__minimal_specializations_consistent_with_example__iter != nil) {
+		  f2ptr removed_general_hypothesis__minimal_specialization_consistent_with_example = f2__cons__car(cause, removed_general_hypothesis__minimal_specializations_consistent_with_example__iter);
+		  {
+		    boolean_t is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__false;
 		    {
-		      if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(cause, specific_hypothesis, removed_general_hypothesis__minimal_specialization_consistent_with_example)) {
-			is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__true;
-			goto raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done;
+		      f2ptr specific_iter = specific_hypotheses;
+		      while (specific_iter != nil) {
+			f2ptr specific_hypothesis = f2__cons__car(cause, specific_iter);
+			{
+			  if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(cause, specific_hypothesis, removed_general_hypothesis__minimal_specialization_consistent_with_example)) {
+			    is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__true;
+			    goto raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done;
+			  }
+			}
+			specific_iter = f2__cons__cdr(cause, specific_iter);
 		      }
 		    }
-		    specific_iter = f2__cons__cdr(cause, specific_iter);
+		  raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done:
+		    if (is_consistent_or_more_specific_than_at_least_one_specific_hypothesis) {
+		      new_general_hypotheses = f2cons__new(cause, removed_general_hypothesis__minimal_specialization_consistent_with_example, new_general_hypotheses);
+		    }
 		  }
-		}
-	      raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done:
-		if (is_consistent_or_more_specific_than_at_least_one_specific_hypothesis) {
-		  new_general_hypotheses = f2cons__new(cause, removed_general_hypothesis__minimal_specialization_consistent_with_example, new_general_hypotheses);
+		  removed_general_hypothesis__minimal_specializations_consistent_with_example__iter = f2__cons__cdr(cause, removed_general_hypothesis__minimal_specializations_consistent_with_example__iter);
 		}
 	      }
 	    }

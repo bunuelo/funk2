@@ -48,24 +48,66 @@
 
 'gtk_timeline_window'
 
-[deframe gtk_timeline_window [frame] [gtk_timeline
-				      gtk_window]
+[deframe gtk_timeline_window [frame] [window
+				      vbox
+				      menu_bar
+				      file_menu_item
+				      file_menu
+				      file_export_menu_item
+				      file_close_menu_item
+				      
+				      gtk_timeline
+				      ]
   [new [initial-timeline]
-       [= gtk_timeline [new gtk_timeline initial-timeline]]
+       [= window                [gtk-window-new]]
+       [= gtk_timeline          [new gtk_timeline initial-timeline]]
+       [= vbox                  [gtk-vbox-new 0]]
+       [= menu_bar              [gtk-menu_bar-new]]
+       [= file_menu_item        [gtk-menu_item-new 'File']]
+       [= file_menu             [gtk-menu-new]]
+       [= file_export_menu_item [gtk-menu_item-new 'Export...']]
+       [= file_close_menu_item  [gtk-menu_item-new 'Close']]
        
-       [= gtk_window [gtk-window-new]]
-       [have gtk_window add gtk_timeline]
-       [set  gtk_window size [+ [get gtk_timeline width] 4] [+ [get gtk_timeline height] 4]]
+       [have vbox pack_start menu_bar nil nil 0]
+       [have menu_bar append file_menu_item]
+       [set  file_menu_item submenu file_menu]
+       [have file_menu append file_export_menu_item]
+       [have file_menu append file_close_menu_item]
+       
+       [have file_export_menu_item signal_connect 'activate'
+	     [funk []
+		   [have this start_export_dialog]]
+	     nil]
+       [have file_close_menu_item signal_connect 'activate'
+	     [funk []
+		   [have this destroy]]
+	     nil]
+       
+       [have vbox pack_start gtk_timeline nil nil 0]
+       
+       [have window add vbox]
+       [set  window size [+ [get gtk_timeline width] 4] [+ [get gtk_timeline height] 4]]
        
        nil]]
 
 [deftypefunk gtk_timeline_window get widget []
-  gtk_window]
+  window]
+
+[deftypefunk gtk_timeline_window execute destroy []
+  [have window destroy]]
 
 [deftypefunk gtk_timeline_window set title [title]
-  [set gtk_window title title]]
+  [set window title title]]
+
+[deftypefunk gtk_timeline_window set size [width height]
+  [set window size width height]]
 
 [deftypefunk gtk_timeline_window execute show_all []
-  [have gtk_window show_all]]
+  [have window show_all]]
 
+
+[deftypefunk gtk_timeline_window execute start_export_dialog []
+  [terminal_format standard-terminal '\ngtk_timeline_window: starting export dialog.']
+  
+  nil]
 

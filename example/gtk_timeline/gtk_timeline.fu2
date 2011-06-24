@@ -114,6 +114,25 @@
        [have entry_hbox pack_start scale_label nil nil 0]
        [have entry_hbox pack_start scale_entry nil nil 0]
        
+       [have width_entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     [if [eq keyval GDK_Return]
+			 [let [[width_text [get width_entry text]]]
+			   [let [[new_width [shelter [have width_text read]]]]
+			     [if [is-type `bug new_width]
+				 [prog [terminal_format standard-terminal '\ngtk_timeline_window: found bug while trying to read new width, ' width_text '.']
+				       [set width_entry text [get [get gtk_timeline width] as-string]]]
+			       [let [[new_width_double [shelter [get new_width as-double]]]]
+				 [if [is-type `bug new_width_double]
+				     [prog [terminal_format standard-terminal '\ngtk_timeline_window: found bug while trying to convert new width, ' new_width ', to double.']
+					   [set width_entry text [get [get gtk_timeline width] as-string]]]
+				   
+				   [= timeline_width new_width_double]
+				   [have this update_gtk_timeline]
+				   ]]]]]]]]
+	     nil]
+       
        [have scale_entry key_press_event-signal_connect
 	     [funk [key_event]
 		   [let [[keyval [have key_event lookup `keyval]]]

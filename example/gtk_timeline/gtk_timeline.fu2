@@ -22,17 +22,18 @@
 
 [deframe gtk_timeline [frame] [timeline
 			       
-			       internal_scale
 			       image
 			       gtk_scrolled_window
 			       gtk_image]
-  [new [initial-timeline]
+  [new [initial-timeline scale]
        [= timeline initial-timeline]
        
        [set timeline x_width 100.0]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
-       [set this scale 4]
-       
+       [= image          [timeline-as-image timeline scale]]
+       [= gtk_image      [gtk-image-new_from_image image]]
+       [have gtk_scrolled_window add_with_viewport gtk_image]]
+  
        nil]]
 
 [deftypefunk gtk_timeline get widget []
@@ -47,18 +48,12 @@
 [deftypefunk gtk_timeline execute save_to_pdf [filename]
   [have timeline save_to_pdf filename]]
 
-[deftypefunk gtk_timeline get scale []
-  internal_scale]
-
-[deftypefunk gtk_timeline set scale [scale]
-  [= internal_scale new_scale]
-  [= image          [timeline-as-image timeline scale]]
-  [= gtk_image      [gtk-image-new_from_image image]]
-  [have gtk_scrolled_window add_with_viewport gtk_image]]
 
 'gtk_timeline_window'
 
-[deframe gtk_timeline_window [frame] [window
+[deframe gtk_timeline_window [frame] [timeline
+				      
+				      window
 				      vbox
 				      menu_bar
 				      file_menu_item
@@ -75,8 +70,10 @@
 				      gtk_timeline
 				      ]
   [new [initial-timeline]
+       [= timeline initial-timeline]
+       
        [= window                [gtk-window-new]]
-       [= gtk_timeline          [new gtk_timeline initial-timeline]]
+       [= gtk_timeline          [new gtk_timeline initial-timeline 4]]
        [= vbox                  [gtk-vbox-new 0]]
        [= menu_bar              [gtk-menu_bar-new]]
        [= file_menu_item        [gtk-menu_item-new 'File']]
@@ -122,7 +119,12 @@
 				 [if [is-type `bug new_scale_double]
 				     [prog [terminal_format standard-terminal '\ngtk_timeline_window: found bug while trying to convert new scale, ' new_scale ', to double.']
 					   [set scale_entry text [get [get gtk_timeline scale] as-string]]]
-				   [set gtk_timeline scale new_scale_double]]]]]]]]]
+				   
+				   [have vbox remove gtk_timeline]
+				   [= gtk_timeline [new gtk_timeline timeline new_scale_double]]
+				   [have vbox pack_start gtk_timeline t t 0]
+				   
+				   ]]]]]]]]
 	     nil]
        
        [have vbox pack_start entry_hbox nil nil 0]

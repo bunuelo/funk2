@@ -345,12 +345,12 @@ f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_
   }
   f2ptr new_hypotheses = nil;
   {
-    f2ptr hypothesis                             = raw__concept_version_space_hypothesis__new_copy(cause, this);
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
+			 f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
 			 raw__concept_version_space_hypothesis__exclude_variable_value(cause, hypothesis, example__variable_name, example__value);
+			 new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
 			 );
-    new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
   }
   return new_hypotheses;
 }

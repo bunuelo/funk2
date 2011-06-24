@@ -108,6 +108,18 @@
 
 [deftypefunk gtk_timeline_window execute start_export_dialog []
   [terminal_format standard-terminal '\ngtk_timeline_window: starting export dialog.']
-  
-  nil]
+  [let [[save_dialog [gtk-file_chooser_dialog-new_for_file_save nil]]]
+    [have save_dialog connect_hide_on_delete]
+    [have save_dialog add_file_filter_pattern 'Portable Document Files (*.pdf)' '*.pdf']
+    [set  save_dialog current_name 'Untitled Timeline.pdf']
+    [have save_dialog response_event-signal_connect
+	  [funk [event_frame]
+		[let [[response_id [have event_frame lookup `response_id]]]
+		  [if [eq response_id GTK_RESPONSE_ACCEPT]
+		      [prog [terminal_format standard-terminal '\ngot accept response: filename = ' [get save_dialog filename]]
+			    ]]]
+		[have save_dialog destroy]]
+	  nil]
+    [have save_dialog show_all]
+    ]]
 

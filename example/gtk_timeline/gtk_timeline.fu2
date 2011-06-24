@@ -32,8 +32,8 @@
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
        [= image          [timeline-as-image timeline scale]]
        [= gtk_image      [gtk-image-new_from_image image]]
-       [have gtk_scrolled_window add_with_viewport gtk_image]]
-  
+       [have gtk_scrolled_window add_with_viewport gtk_image]
+       
        nil]]
 
 [deftypefunk gtk_timeline get widget []

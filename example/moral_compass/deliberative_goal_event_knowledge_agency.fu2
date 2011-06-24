@@ -41,8 +41,8 @@
 'translate_goal_knowledge_to_goal_event_knowledge_resource'
 
 [deframe translate_goal_knowledge_to_goal_event_knowledge_resource [traced_resource] [[existence_goal_phenomenon_hash        [hash]]
-											      [existence_goal_relationship_ptypehash [new ptypehash]]
-											      [end_of_goal_event_changes_trigger     [new fiber_trigger]]]
+										      [existence_goal_relationship_ptypehash [new ptypehash]]
+										      [end_of_goal_event_changes_trigger     [new fiber_trigger]]]
   [new []
        [construct traced_resource `translate_goal_knowledge_to_goal_event_knowledge
 		  [funk []

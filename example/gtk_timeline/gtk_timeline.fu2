@@ -80,7 +80,7 @@
        [= file_close_menu_item  [gtk-menu_item-new 'Close']]
        [= entry_hbox            [gtk-hbox-new 0]]
        [= width_entry           [gtk-entry-new]] [set width_entry text '100']
-       [= height_entry          [gtk-entry-new]] [set scale_entry text '4']
+       [= scale_entry           [gtk-entry-new]] [set scale_entry text '4']
        
        [have vbox pack_start menu_bar nil nil 0]
        [have menu_bar append file_menu_item]

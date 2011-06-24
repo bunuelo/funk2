@@ -96,8 +96,8 @@
 
 [deftypefunk timeline execute save_to_pdf [filename]
   [have this calculate_positions]
-  [let [[x_width  [* 72.0 [get this x_width]]]
-	[y_height [* 72.0 [get this y_height]]]]
+  [let [[x_width  [* 16.0 [get this x_width]]]
+	[y_height [* 16.0 [get this y_height]]]]
     [let* [[cairo_surface [new cairo_pdf_surface filename [get x_width as-double] [get y_height as-double]]]
 	   [cairo_context [new cairo_context cairo_surface]]]
       [have cairo_context scale [get x_width as-double] [get y_height as-double]]

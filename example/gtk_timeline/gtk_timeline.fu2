@@ -22,6 +22,7 @@
 
 [deframe gtk_timeline [frame] [timeline
 			       
+			       scale
 			       image
 			       gtk_scrolled_window
 			       gtk_image]
@@ -29,10 +30,8 @@
        [= timeline initial-timeline]
        
        [set timeline x_width 100.0]
-       [= image               [timeline-as-image timeline 16]]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
-       [= gtk_image           [gtk-image-new_from_image image]]
-       [have gtk_scrolled_window add_with_viewport gtk_image]
+       [set this scale 4]
        
        nil]]
 
@@ -48,6 +47,12 @@
 [deftypefunk gtk_timeline execute save_to_pdf [filename]
   [have timeline save_to_pdf filename]]
 
+[deftypefunk gtk_timeline set scale [new_scale]
+  [= scale     new_scale]
+  [= image     [timeline-as-image timeline scale]]
+  [= gtk_image [gtk-image-new_from_image image]]
+  [have gtk_scrolled_window add_with_viewport gtk_image]]
+
 'gtk_timeline_window'
 
 [deframe gtk_timeline_window [frame] [window
@@ -57,6 +62,10 @@
 				      file_menu
 				      file_export_menu_item
 				      file_close_menu_item
+				      
+				      entry_hbox
+				      width_entry
+				      scale_entry
 				      
 				      gtk_timeline
 				      ]
@@ -69,6 +78,9 @@
        [= file_menu             [gtk-menu-new]]
        [= file_export_menu_item [gtk-menu_item-new 'Export...']]
        [= file_close_menu_item  [gtk-menu_item-new 'Close']]
+       [= entry_hbox            [gtk-hbox-new 0]]
+       [= width_entry           [gtk-entry-new]] [set width_entry text '100']
+       [= height_entry          [gtk-entry-new]] [set scale_entry text '4']
        
        [have vbox pack_start menu_bar nil nil 0]
        [have menu_bar append file_menu_item]
@@ -85,7 +97,7 @@
 		   [have this destroy]]
 	     nil]
        
-       [have vbox pack_start gtk_timeline nil nil 0]
+       [have vbox pack_start gtk_timeline t t 0]
        
        [have window add vbox]
        [set  window size [+ [get gtk_timeline width] 4] [+ [get gtk_timeline height] 4]]

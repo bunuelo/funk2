@@ -22,7 +22,7 @@
 
 [deframe gtk_timeline [frame] [timeline
 			       
-			       scale
+			       internal_scale
 			       image
 			       gtk_scrolled_window
 			       gtk_image]
@@ -47,10 +47,13 @@
 [deftypefunk gtk_timeline execute save_to_pdf [filename]
   [have timeline save_to_pdf filename]]
 
-[deftypefunk gtk_timeline set scale [new_scale]
-  [= scale     new_scale]
-  [= image     [timeline-as-image timeline scale]]
-  [= gtk_image [gtk-image-new_from_image image]]
+[deftypefunk gtk_timeline get scale []
+  internal_scale]
+
+[deftypefunk gtk_timeline set scale [scale]
+  [= internal_scale new_scale]
+  [= image          [timeline-as-image timeline scale]]
+  [= gtk_image      [gtk-image-new_from_image image]]
   [have gtk_scrolled_window add_with_viewport gtk_image]]
 
 'gtk_timeline_window'
@@ -106,6 +109,22 @@
        [have entry_hbox pack_start scale_label nil nil 0]
        [have entry_hbox pack_start scale_entry nil nil 0]
        
+       [have scale_entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     [if [eq keyval GDK_Return]
+			 [let [[scale_text [get scale_entry text]]]
+			   [let [[new_scale [shelter [have scale_text read]]]]
+			     [if [is-type `bug new_scale]
+				 [prog [terminal_format standard-terminal '\ngtk_timeline_window: found bug while trying to read new scale, ' scale_text '.']
+				       [set scale_entry text [get [get gtk_timeline scale] as-string]]]
+			       [let [[new_scale_double [shelter [get new_scale as-double]]]]
+				 [if [is-type `bug new_scale_double]
+				     [prog [terminal_format standard-terminal '\ngtk_timeline_window: found bug while trying to convert new scale, ' new_scale ', to double.']
+					   [set scale_entry text [get [get gtk_timeline scale] as-string]]]
+				   [set gtk_timeline scale new_scale_double]]]]]]]]]
+	     nil]
+       
        [have vbox pack_start entry_hbox nil nil 0]
        [have vbox pack_start gtk_timeline t t 0]
        
@@ -142,6 +161,7 @@
 		  [if [eq response_id GTK_RESPONSE_ACCEPT]
 		      [let [[filename [get save_dialog filename]]]
 			[have gtk_timeline save_to_pdf filename]
+			[terminal_format standard-terminal '\ngtk_timeline_window: done exporting ' filename '.']
 			]]]
 		[have save_dialog destroy]]
 	  nil]

@@ -493,61 +493,63 @@ export_cefunk3(semantic_frame__lookup_type_var_value, this, key_type, key, 0, "R
 
 f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   assert_argument_type(semantic_frame, this);
-  f2ptr current_value = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
-  if (raw__larva__is_type(cause, current_value)) {
-    return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list12__new(cause,
-															    new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
-															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-replace_type_var_value"),
-															    new__symbol(cause, "this"),     this,
-															    new__symbol(cause, "key_type"), key_type,
-															    new__symbol(cause, "key"),      key,
-															    new__symbol(cause, "suberror"), current_value))));
-  }
-  if (raw__eq(cause, current_value, value)) {
-    return nil;
-  }
   f2ptr result              = nil;
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
   f2__cmutex__lock(cause, frame_mutate_cmutex);
   {
-    assert_value(raw__semantic_frame__remove__handle_before_callbacks(cause, this, key_type, key, current_value));
-    assert_value(raw__semantic_frame__add__handle_before_callbacks(   cause, this, key_type, key, value));
-    {
-      f2ptr frame_read_mutate_cmutex = raw__semantic_frame__frame_read_mutate_cmutex(cause, this);
-      {
-	boolean_t keep_looping;
-	do {
-	  f2ptr read_count;
-	  f2ptr write_in_progress;
-	  f2__cmutex__lock(cause, frame_read_mutate_cmutex);
-	  read_count        = raw__semantic_frame__read_count(cause, this);
-	  write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
-	  if ((f2integer__i(read_count, cause) != 0) ||
-	      (write_in_progress != nil)) {
-	    keep_looping = boolean__true;
-	    f2__this__fiber__yield(cause);
-	  } else {
-	    keep_looping = boolean__false;
-	    write_in_progress = f2bool__new(boolean__true);
-	    raw__semantic_frame__write_in_progress__set(cause, this, write_in_progress);
+    f2ptr current_value = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
+    if (raw__larva__is_type(cause, current_value)) {
+      result = f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list12__new(cause,
+																new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+																new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-replace_type_var_value"),
+																new__symbol(cause, "this"),     this,
+																new__symbol(cause, "key_type"), key_type,
+																new__symbol(cause, "key"),      key,
+																new__symbol(cause, "suberror"), current_value))));
+    } else {
+      if (raw__eq(cause, current_value, value)) {
+	result = nil;
+      } else {
+	assert_value(raw__semantic_frame__remove__handle_before_callbacks(cause, this, key_type, key, current_value));
+	assert_value(raw__semantic_frame__add__handle_before_callbacks(   cause, this, key_type, key, value));
+	{
+	  f2ptr frame_read_mutate_cmutex = raw__semantic_frame__frame_read_mutate_cmutex(cause, this);
+	  {
+	    boolean_t keep_looping;
+	    do {
+	      f2ptr read_count;
+	      f2ptr write_in_progress;
+	      f2__cmutex__lock(cause, frame_read_mutate_cmutex);
+	      read_count        = raw__semantic_frame__read_count(cause, this);
+	      write_in_progress = raw__semantic_frame__write_in_progress(cause, this);
+	      if ((f2integer__i(read_count, cause) != 0) ||
+		  (write_in_progress != nil)) {
+		keep_looping = boolean__true;
+		f2__this__fiber__yield(cause);
+	      } else {
+		keep_looping = boolean__false;
+		write_in_progress = f2bool__new(boolean__true);
+		raw__semantic_frame__write_in_progress__set(cause, this, write_in_progress);
+	      }
+	      f2__cmutex__unlock(cause, frame_read_mutate_cmutex);
+	    } while (keep_looping);
 	  }
-	  f2__cmutex__unlock(cause, frame_read_mutate_cmutex);
-	} while (keep_looping);
-      }
-      {
-	result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
-	if (! raw__larva__is_type(cause, result)) {
-	  result = raw__semantic_frame__add__without_callbacks(cause, this, key_type, key, value);
+	  {
+	    result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
+	    if (! raw__larva__is_type(cause, result)) {
+	      result = raw__semantic_frame__add__without_callbacks(cause, this, key_type, key, value);
+	    }
+	  }
+	  {
+	    f2__cmutex__lock(cause, frame_read_mutate_cmutex);
+	    raw__semantic_frame__write_in_progress__set(cause, this, nil);
+	    f2__cmutex__unlock(cause, frame_read_mutate_cmutex);
+	  }
 	}
-      }
-      {
-	f2__cmutex__lock(cause, frame_read_mutate_cmutex);
-	raw__semantic_frame__write_in_progress__set(cause, this, nil);
-	f2__cmutex__unlock(cause, frame_read_mutate_cmutex);
+	assert_value(raw__semantic_frame__remove__handle_after_callbacks(cause, this, key_type, key, current_value));
+	assert_value(raw__semantic_frame__add__handle_after_callbacks(   cause, this, key_type, key, value));
       }
     }
-    assert_value(raw__semantic_frame__remove__handle_after_callbacks(cause, this, key_type, key, current_value));
-    assert_value(raw__semantic_frame__add__handle_after_callbacks(   cause, this, key_type, key, value));
   }
   f2__cmutex__unlock(cause, frame_mutate_cmutex);
   return result;

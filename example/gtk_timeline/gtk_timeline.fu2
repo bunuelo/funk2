@@ -21,16 +21,18 @@
 'gtk_timeline'
 
 [deframe gtk_timeline [frame] [timeline
+			       width
 			       scale
 			       
 			       image
 			       gtk_scrolled_window
 			       gtk_image]
-  [new [initial-timeline initial-scale]
+  [new [initial-timeline initial-width initial-scale]
        [= timeline initial-timeline]
+       [= width    initial-width]
        [= scale    initial-scale]
        
-       [set timeline x_width 100.0]
+       [set timeline x_width [get width as-double]]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
        [= image          [timeline-as-image timeline scale]]
        [= gtk_image      [gtk-image-new_from_image image]]
@@ -72,12 +74,14 @@
 				      scale_entry
 				      
 				      gtk_timeline
+				      [timeline_width 100]
+				      [timeline_scale 4]
 				      ]
   [new [initial-timeline]
        [= timeline initial-timeline]
        
        [= window                [gtk-window-new]]
-       [= gtk_timeline          [new gtk_timeline initial-timeline 4]]
+       [= gtk_timeline          [new gtk_timeline initial-timeline timeline_width timeline_scale]]
        [= vbox                  [gtk-vbox-new 0]]
        [= menu_bar              [gtk-menu_bar-new]]
        [= file_menu_item        [gtk-menu_item-new 'File']]
@@ -86,9 +90,9 @@
        [= file_close_menu_item  [gtk-menu_item-new 'Close']]
        [= entry_hbox            [gtk-hbox-new 0]]
        [= width_label           [gtk-label-new 'Width: ']]
-       [= width_entry           [gtk-entry-new]] [set width_entry text '100']
+       [= width_entry           [gtk-entry-new]] [set width_entry text [get timeline_width as-string]]
        [= scale_label           [gtk-label-new 'Scale: ']]
-       [= scale_entry           [gtk-entry-new]] [set scale_entry text '4']
+       [= scale_entry           [gtk-entry-new]] [set scale_entry text [get timeline_scale as-string]]
        
        [have vbox pack_start menu_bar nil nil 0]
        [have menu_bar append file_menu_item]
@@ -124,11 +128,8 @@
 				     [prog [terminal_format standard-terminal '\ngtk_timeline_window: found bug while trying to convert new scale, ' new_scale ', to double.']
 					   [set scale_entry text [get [get gtk_timeline scale] as-string]]]
 				   
-				   [have vbox remove gtk_timeline]
-				   [= gtk_timeline [new gtk_timeline timeline new_scale_double]]
-				   [have vbox pack_start gtk_timeline t t 0]
-				   [have gtk_timeline show_all]
-				   [have this reset_size]
+				   [= timeline_scale new_scale_double]
+				   [have this update_gtk_timeline]
 				   ]]]]]]]]
 	     nil]
        
@@ -156,7 +157,14 @@
   [have window show_all]]
 
 [deftypefunk gtk_timeline_window execute reset_size []
-  [set window size [+ [get gtk_timeline width] 24] [+ [get gtk_timeline height] 4]]]
+  [set window size [+ [get gtk_timeline width] 24] [+ [get gtk_timeline height] 64]]]
+
+[deftypefunk gtk_timeline_window execute update_gtk_timeline []
+  [have vbox remove gtk_timeline]
+  [= gtk_timeline [new gtk_timeline timeline timeline_width timeline_scale]]
+  [have vbox pack_start gtk_timeline t t 0]
+  [have gtk_timeline show_all]
+  [have this reset_size]]
 
 [deftypefunk gtk_timeline_window execute start_export_dialog []
   [terminal_format standard-terminal '\ngtk_timeline_window: starting export dialog.']

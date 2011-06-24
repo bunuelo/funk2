@@ -45,6 +45,8 @@
 [deftypefunk gtk_timeline get height []
   [get image height]]
 
+[deftypefunk gtk_timeline execute save_to_pdf [filename]
+  [have timeline save_to_pdf filename]]
 
 'gtk_timeline_window'
 
@@ -116,8 +118,9 @@
 	  [funk [event_frame]
 		[let [[response_id [have event_frame lookup `response_id]]]
 		  [if [eq response_id GTK_RESPONSE_ACCEPT]
-		      [prog [terminal_format standard-terminal '\ngot accept response: filename = ' [get save_dialog filename]]
-			    ]]]
+		      [let [[filename [get save_dialog filename]]]
+			[have gtk_timeline save_to_pdf filename]
+			]]]
 		[have save_dialog destroy]]
 	  nil]
     [have save_dialog show_all]

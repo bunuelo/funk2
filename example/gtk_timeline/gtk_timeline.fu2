@@ -1,0 +1,71 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'gtk_timeline'
+
+[deframe gtk_timeline [frame] [timeline
+			       
+			       image
+			       gtk_scrolled_window
+			       gtk_image]
+  [new [initial-timeline]
+       [= timeline initial-timeline]
+       
+       [set timeline x_width 100.0]
+       [= image               [timeline-as-image timeline 16]]
+       [= gtk_scrolled_window [gtk-scrolled_window-new]]
+       [= gtk_image           [gtk-image-new_from_image image]]
+       [have gtk_scrolled_window add_with_viewport gtk_image]
+       
+       nil]]
+
+[deftypefunk gtk_timeline get widget []
+  gtk_scrolled_window]
+
+[deftypefunk gtk_timeline get width []
+  [get image width]]
+
+[deftypefunk gtk_timeline get height []
+  [get image height]]
+
+
+'gtk_timeline_window'
+
+[deframe gtk_timeline_window [frame] [gtk_window
+				      gtk_timeline]
+  [new [initial-timeline]
+       [= gtk_timeline [new gtk_timeline initial-timeline]]
+       
+       [set gtk_window [gtk-window-new]]
+       [have gtk_window add gtk_timeline]
+       [set  gtk_window size [+ [get gtk_timeline width] 4] [+ [get gtk_timeline height] 4]]
+       
+       nil]]
+
+[deftypefunk gtk_timeline_window get widget []
+  gtk_window]
+
+[deftypefunk gtk_timeline_window set title [title]
+  [set gtk_window title title]]
+
+[deftypefunk gtk_timeline_window execute show_all []
+  [have gtk_window show_all]]
+
+

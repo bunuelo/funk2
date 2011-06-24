@@ -26,7 +26,8 @@
 	     mindmon]]
 
 [defpackage isismon_knowledge
-  :packages [isismon_core]
+  :packages [isismon_core
+	     gtk_timeline]
    :sources ['isismon_knowledge.fu2']]
 
 [defpackage isismon_builtin_reactive_physical_activator

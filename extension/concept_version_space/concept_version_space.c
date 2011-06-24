@@ -423,7 +423,7 @@ f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr va
     f2ptr iter = specific_hypotheses;
     while (iter != nil) {
       f2ptr hypothesis = f2__cons__car(cause, iter);
-      raw__concept_version_space_hypothesis__add_variable_value(cause, variable_name, new__symbol(cause, "-"));
+      raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, variable_name, new__symbol(cause, "-"));
       iter = f2__cons__cdr(cause, iter);
     }
   }
@@ -431,7 +431,7 @@ f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr va
     f2ptr iter = general_hypotheses;
     while (iter != nil) {
       f2ptr hypothesis = f2__cons__car(cause, iter);
-      raw__concept_version_space_hypothesis__add_variable_value(cause, variable_name, new__symbol(cause, "?"));
+      raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, variable_name, new__symbol(cause, "?"));
       iter = f2__cons__cdr(cause, iter);
     }
   }

@@ -123,7 +123,7 @@
 				   [have vbox remove gtk_timeline]
 				   [= gtk_timeline [new gtk_timeline timeline new_scale_double]]
 				   [have vbox pack_start gtk_timeline t t 0]
-				   
+				   [have gtk_timeline show_all]
 				   ]]]]]]]]
 	     nil]
        

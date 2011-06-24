@@ -2103,13 +2103,21 @@ void pfunk2__f2scheduler_cmutex__lock(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
-  while (1) {
-    trylock_result = funk2_processor_mutex__trylock(ptype_scheduler_cmutex__m(this, cause));
-    if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
-      raw__fast_spin_sleep_yield();
-      // no user process yield, thus is safe for scheduler and cannot be used by user process.
-    } else {
-      break;
+  {
+    u64 lock_tries = 0;
+    while (1) {
+      trylock_result = funk2_processor_mutex__trylock(ptype_scheduler_cmutex__m(this, cause));
+      if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
+	lock_tries ++;
+	if (lock_tries > 1000) {
+	  raw__spin_sleep_yield();
+	} else {
+	  raw__fast_spin_sleep_yield();
+	}
+	// no user process yield, thus is safe for scheduler and cannot be used by user process.
+      } else {
+	break;
+      }
     }
   }
   __pure__f2scheduler_cmutex__locked_state__set(this, boolean__true);

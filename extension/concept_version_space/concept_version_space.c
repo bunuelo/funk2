@@ -94,23 +94,22 @@ f2ptr f2__concept_version_space_example_type__new_aux(f2ptr cause) {
 
 // concept_version_space_hypothesis
 
-def_ceframe2(concept_version_space, concept_version_space_hypothesis, positive, value_variable_name_ptypehash);
+def_ceframe1(concept_version_space, concept_version_space_hypothesis, value_variable_name_ptypehash);
 
-f2ptr raw__concept_version_space_hypothesis__new(f2ptr cause, f2ptr positive) {
+f2ptr raw__concept_version_space_hypothesis__new(f2ptr cause) {
   f2ptr value_variable_name_ptypehash = f2__ptypehash__new(cause);
-  return f2concept_version_space_hypothesis__new(cause, positive, value_variable_name_ptypehash);
+  return f2concept_version_space_hypothesis__new(cause, value_variable_name_ptypehash);
 }
 
-f2ptr f2__concept_version_space_hypothesis__new(f2ptr cause, f2ptr positive) {
-  return raw__concept_version_space_hypothesis__new(cause, positive);
+f2ptr f2__concept_version_space_hypothesis__new(f2ptr cause) {
+  return raw__concept_version_space_hypothesis__new(cause);
 }
-export_cefunk1(concept_version_space_hypothesis__new, positive, 0, "Returns a new concept_version_space_hypothesis object.");
+export_cefunk0(concept_version_space_hypothesis__new, 0, "Returns a new concept_version_space_hypothesis object.");
 
 
 f2ptr raw__concept_version_space_hypothesis__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr positive                                  = raw__concept_version_space_hypothesis__positive(cause, this);
   f2ptr value_variable_name_ptypehash             = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-  f2ptr hypothesis                                = f2__concept_version_space_hypothesis__new(cause, positive);
+  f2ptr hypothesis                                = f2__concept_version_space_hypothesis__new(cause);
   f2ptr hypothesis__value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, hypothesis);
   ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
 		       raw__ptypehash__add(cause, hypothesis__value_variable_name_ptypehash, variable_name, value);
@@ -140,12 +139,7 @@ export_cefunk3(concept_version_space_hypothesis__add_variable_value, this, varia
 f2ptr raw__concept_version_space_hypothesis__lookup_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
   if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
-    f2ptr positive = raw__concept_version_space_hypothesis__positive(cause, this);
-    if (positive != nil) {
-      return new__symbol(cause, "?");
-    } else {
-      return new__symbol(cause, "-");
-    }
+    return f2larva__new(cause, 245126, nil);
   } else {
     return raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
   }
@@ -158,23 +152,15 @@ export_cefunk2(concept_version_space_hypothesis__lookup_variable_value, this, va
 
 
 f2ptr raw__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
-  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-  if (positive != nil) {
-    if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
-      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
-    } else {
-      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
-      if (! raw__eq(cause, current_value, value)) {
-	raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "-"));
-      }
-    }
+  if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+    return f2larva__new(cause, 1351365, nil);
   } else {
-    if (raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
-      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
-      if (! raw__eq(cause, current_value, value)) {
-	raw__ptypehash__remove(cause, value_variable_name_ptypehash, variable_name);
-      }
+    f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+    if (raw__eq(cause, current_value, new__symbol(cause, "?"))) {
+      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
+    } else if (! raw__eq(cause, current_value, value)) {
+      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "-"));
     }
   }
   return nil;
@@ -188,23 +174,15 @@ export_cefunk3(concept_version_space_hypothesis__exclude_variable_value, this, v
 
 
 f2ptr raw__concept_version_space_hypothesis__include_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
-  f2ptr positive                      = raw__concept_version_space_hypothesis__positive(                     cause, this);
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-  if (positive != nil) {
-    if (raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
-      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
-      if (! raw__eq(cause, current_value, value)) {
-	raw__ptypehash__remove(cause, value_variable_name_ptypehash, variable_name);
-      }
-    }
+  if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+    return f2larva__new(cause, 24612616, nil);
   } else {
-    if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
+    f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+    if (raw__eq(cause, current_value, new__symbol(cause, "-"))) {
       raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
-    } else {
-      f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
-      if (! raw__eq(cause, current_value, value)) {
-	raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "?"));
-      }
+    } else if (! raw__eq(cause, current_value, value)) {
+      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "?"));
     }
   }
   return nil;
@@ -224,20 +202,10 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr ca
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
 			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, example__variable_name);
 			 if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
+			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-")) ||
+			       (! raw__eq(cause, hypothesis__value, example__value)))
 			     return f2bool__new(boolean__false);
-			   } else {
-			     f2ptr positive = raw__concept_version_space_hypothesis__positive(cause, this);
-			     if (positive != nil) {
-			       if (raw__eq(cause, hypothesis__value, example__value)) {
-				 return f2bool__new(boolean__false);
-			       }
-			     } else {
-			       if (! raw__eq(cause, hypothesis__value, example__value)) {
-				 return f2bool__new(boolean__false);
-			       }
-			     }
-			   }
+			 }
 			 }
 			 );
     return f2bool__new(boolean__true);
@@ -246,19 +214,9 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example(f2ptr ca
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
 			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, example__variable_name);
 			 if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
-			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
+			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?")) ||
+			       (raw__eq(cause, hypothesis__value, example__value))) {
 			     return f2bool__new(boolean__false);
-			   } else {
-			     f2ptr positive = raw__concept_version_space_hypothesis__positive(cause, this);
-			     if (positive != nil) {
-			       if (! raw__eq(cause, hypothesis__value, example__value)) {
-				 return f2bool__new(boolean__false);
-			       }
-			     } else {
-			       if (raw__eq(cause, hypothesis__value, example__value)) {
-				 return f2bool__new(boolean__false);
-			       }
-			     }
 			   }
 			 }
 			 );
@@ -275,138 +233,23 @@ export_cefunk2(concept_version_space_hypothesis__is_consistent_with_example, thi
 
 
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
-  f2ptr positive             = raw__concept_version_space_hypothesis__positive(cause, this);
-  f2ptr hypothesis__positive = raw__concept_version_space_hypothesis__positive(cause, hypothesis);
-  if ((positive != nil) && (hypothesis__positive != nil)) {
-    f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-    ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
-			 if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
-			   f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, variable_name);
+  f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
+  ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
+		       if (! raw__eq(cause, value, new__symbol(cause, "?"))) {
+			 f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, variable_name);
+			 if (raw__eq(cause, value, new__symbol(cause, "-"))) {
+			   if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
+			     return f2bool__new(boolean__false);
+			   }
+			 } else {
 			   if ((! raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) &&
 			       (! raw__eq(cause, value, hypothesis__value))) {
 			     return f2bool__new(boolean__false);
 			   }
 			 }
-			 );
-    return f2bool__new(boolean__true);
-  } else if ((positive != nil) && (hypothesis__positive == nil)) {
-    {
-      f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-      ptypehash__iteration(cause, value_variable_name_ptypehash, variable_name, value,
-			   f2ptr hypothesis__value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, hypothesis, variable_name);
-			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			       // value is consistent with hypothesis__value
-			     } else if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
-			       // value is more general than hypothesis__value
-			     } else { // hypothesis__value is not special symbol
-			       // value is more general than hypothesis__value
-			     }
-			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			     if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			       // value is more specific than hypothesis__value
-			       return f2bool__new(boolean__false);
-			     } else if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
-			       // value is consistent with hypothesis__value
-			     } else { // hypothesis__value is not special symbol
-			       // value is more specific than hypothesis__value
-			       return f2bool__new(boolean__false);
-			     }
-			   } else { // value is not special symbol
-			     if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			       // value is more specific than hypothesis__value
-			       return f2bool__new(boolean__false);
-			     } else if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
-			       // value is more general than hypothesis__value
-			     } else { // hypothesis__value is not special symbol
-			       if (raw__eq(cause, value, hypothesis__value)) {
-				 // value is more specific than hypothesis__value
-				 return f2bool__new(boolean__false);
-			       } else {
-				 // value is neither more specific nor more general than hypothesis__value
-				 //return f2bool__new(boolean__false);
-			       }
-			     }
-			   }
-			   );
-    }
-    {
-      f2ptr hypothesis__value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, hypothesis);
-      ptypehash__iteration(cause, hypothesis__value_variable_name_ptypehash, hypothesis__variable_name, hypothesis__value,
-			   f2ptr value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, hypothesis__variable_name);
-			   if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			     if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			       // value is more specific that hypothesis__value
-			       return f2bool__new(boolean__false);
-			     } else { // hypothesis__value is not special symbol
-			       // value is more specific that hypothesis__value
-			       return f2bool__new(boolean__false);
-			     }
-			   } else if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
-			     if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			     } else { // hypothesis__value is not special symbol
-			     }
-			   } else { // hypothesis__value is not special symbol
-			     if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {	
-			       // value is more specific that hypothesis__value
-			       return f2bool__new(boolean__false);
-			     } else { // value is not special symbol
-			       if (raw__eq(cause, hypothesis__value, value)) {
-				 // value is more specific that hypothesis__value
-				 return f2bool__new(boolean__false);
-			       } else {
-				 // value is neither more specific nor more general than hypothesis__value
-				 //return f2bool__new(boolean__false);
-			       }
-			     }
-			   }
-			   );
-    }
-    return f2bool__new(boolean__true);
-  } else if ((positive == nil) && (hypothesis__positive != nil)) {
-    return f2bool__new(boolean__false);
-  } else { // ((positive == nil) && (hypothesis__positive == nil))
-    f2ptr hypothesis__value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, hypothesis);
-    ptypehash__iteration(cause, hypothesis__value_variable_name_ptypehash, hypothesis__variable_name, hypothesis__value,
-			 f2ptr value = raw__concept_version_space_hypothesis__lookup_variable_value(cause, this, hypothesis__variable_name);
-			 if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
-			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     // value is consistent with hypothesis__value
-			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			     // value is more general than hypothesis__value
-			   } else { // hypothesis__value is not special symbol
-			     // value is more specific than hypothesis__value
-			     return f2bool__new(boolean__false);
-			   }
-			 } else if (raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
-			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     // value is more general than hypothesis__value
-			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {
-			     // value is consistent with hypothesis__value
-			   } else { // hypothesis__value is not special symbol
-			     // value is more general than hypothesis__value
-			   }
-			 } else { // hypothesis__value is not special symbol
-			   if (raw__eq(cause, value, new__symbol(cause, "?"))) {
-			     // value is more general than hypothesis__value
-			   } else if (raw__eq(cause, value, new__symbol(cause, "-"))) {	
-			     // value is more specific than hypothesis__value
-			     return f2bool__new(boolean__false);
-			   } else { // value is not special symbol
-			     if (raw__eq(cause, hypothesis__value, value)) {
-			       // value is consistent with hypothesis__value
-			     } else {
-			       // value is neither more general nor more specific than hypothesis__value
-			       //return f2bool__new(boolean__false);
-			     }
-			   }
-			 }
-			 );
-    return f2bool__new(boolean__true);
-  }
+		       }
+		       );
+  return f2bool__new(boolean__true);
 }
 
 f2ptr f2__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis) {
@@ -558,12 +401,13 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
 
 // concept_version_space
 
-def_ceframe2(concept_version_space, concept_version_space, specific_hypotheses, general_hypotheses);
+def_ceframe3(concept_version_space, concept_version_space, variable_name_set, specific_hypotheses, general_hypotheses);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
+  f2ptr variable_name_set   = f2__set__new(cause);
   f2ptr specific_hypotheses = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause, f2bool__new(boolean__false)));
   f2ptr general_hypotheses  = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause, f2bool__new(boolean__true)));
-  return f2concept_version_space__new(cause, specific_hypotheses, general_hypotheses);
+  return f2concept_version_space__new(cause, variable_name_set, specific_hypotheses, general_hypotheses);
 }
 
 f2ptr f2__concept_version_space__new(f2ptr cause) {
@@ -572,10 +416,43 @@ f2ptr f2__concept_version_space__new(f2ptr cause) {
 export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_space object.");
 
 
+f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
+  f2ptr variable_set        = raw__concept_version_space__variable_set(       cause, this);
+  f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
+  f2ptr general_hypotheses  = raw__concept_version_space__general_hypotheses( cause, this);
+  {
+    f2ptr iter = specific_hypotheses;
+    while (iter != nil) {
+      f2ptr hypothesis = f2__cons__car(cause, iter);
+      raw__concept_version_space_hypothesis__add_variable_value(cause, variable_name, new__symbol(cause, "-"));
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  {
+    f2ptr iter = general_hypotheses;
+    while (iter != nil) {
+      f2ptr hypothesis = f2__cons__car(cause, iter);
+      raw__concept_version_space_hypothesis__add_variable_value(cause, variable_name, new__symbol(cause, "?"));
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  raw__set__add(cause, variable_set, variable_name);
+  return nil;
+}
+
 f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
+  f2ptr variable_set        = raw__concept_version_space__variable_set(cause, this);
   f2ptr general_hypotheses  = raw__concept_version_space__general_hypotheses(cause, this);
   f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
   f2ptr example__positive   = raw__concept_version_space_example__positive(cause, example);
+  {
+    f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
+    ptypehash__key__iteration(cause, example__value_variable_name_ptypehash, example__variable_name,
+			      if (! raw__set__contains(cause, variable_set, example__variable_name)) {
+				assert_value(raw__concept_version_space__add_variable(cause, this, example__variable_name));
+			      }
+			      );
+  }
   if (example__positive != nil) {
     {
       // remove all general_hypotheses that are not consistent with example.
@@ -625,8 +502,8 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  while (iter != nil) {
 	    f2ptr removed_specific_hypothesis = f2__cons__car(cause, iter);
 	    {
-	    f2ptr removed_specific_hypothesis__minimal_generalization_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, removed_specific_hypothesis, example));
-	    {
+	      f2ptr removed_specific_hypothesis__minimal_generalization_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_generalization_consistent_with_example(cause, removed_specific_hypothesis, example));
+	      {
 		boolean_t is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__false;
 		{
 		  f2ptr general_iter = general_hypotheses;

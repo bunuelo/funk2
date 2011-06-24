@@ -64,7 +64,9 @@
 				      file_close_menu_item
 				      
 				      entry_hbox
+				      width_label
 				      width_entry
+				      scale_label
 				      scale_entry
 				      
 				      gtk_timeline
@@ -79,7 +81,9 @@
        [= file_export_menu_item [gtk-menu_item-new 'Export...']]
        [= file_close_menu_item  [gtk-menu_item-new 'Close']]
        [= entry_hbox            [gtk-hbox-new 0]]
+       [= width_label           [gtk-label-new 'Width: ']]
        [= width_entry           [gtk-entry-new]] [set width_entry text '100']
+       [= scale_label           [gtk-label-new 'Scale: ']]
        [= scale_entry           [gtk-entry-new]] [set scale_entry text '4']
        
        [have vbox pack_start menu_bar nil nil 0]
@@ -97,7 +101,9 @@
 		   [have this destroy]]
 	     nil]
        
+       [have entry_hbox pack_start width_label nil nil 0]
        [have entry_hbox pack_start width_entry nil nil 0]
+       [have entry_hbox pack_start scale_label nil nil 0]
        [have entry_hbox pack_start scale_entry nil nil 0]
        
        [have vbox pack_start entry_hbox nil nil 0]

@@ -1242,7 +1242,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
       }
     }
     {
-      boolean_t draw_dot_grid = boolean__true;
+      boolean_t draw_dot_grid = boolean__false;
       if (draw_dot_grid) {
 	s64 y;
 	for (y = 0; y < (((int)(timeline__y_height + 0.5)) - 1); y ++) {

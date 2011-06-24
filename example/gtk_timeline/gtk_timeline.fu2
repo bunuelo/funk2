@@ -97,10 +97,14 @@
 		   [have this destroy]]
 	     nil]
        
+       [have entry_hbox pack_start width_entry nil nil 0]
+       [have entry_hbox pack_start scale_entry nil nil 0]
+       
+       [have vbox pack_start entry_hbox nil nil 0]
        [have vbox pack_start gtk_timeline t t 0]
        
        [have window add vbox]
-       [set  window size [+ [get gtk_timeline width] 4] [+ [get gtk_timeline height] 4]]
+       [set  window size [+ [get gtk_timeline width] 24] [+ [get gtk_timeline height] 4]]
        
        nil]]
 

@@ -19,5 +19,6 @@
 
 [defpackage gtk_timeline
   :packages [gtk
-	     timeline]]
+	     timeline]
+   :sources ['gtk_timeline.fu2']]
 

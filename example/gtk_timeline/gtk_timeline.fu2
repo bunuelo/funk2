@@ -48,12 +48,12 @@
 
 'gtk_timeline_window'
 
-[deframe gtk_timeline_window [frame] [gtk_window
-				      gtk_timeline]
+[deframe gtk_timeline_window [frame] [gtk_timeline
+				      gtk_window]
   [new [initial-timeline]
        [= gtk_timeline [new gtk_timeline initial-timeline]]
        
-       [set gtk_window [gtk-window-new]]
+       [= gtk_window [gtk-window-new]]
        [have gtk_window add gtk_timeline]
        [set  gtk_window size [+ [get gtk_timeline width] 4] [+ [get gtk_timeline height] 4]]
        

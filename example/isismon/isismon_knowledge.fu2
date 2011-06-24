@@ -94,6 +94,9 @@
 [deftypefunk isismon_knowledge get widget []
   knowledge_vbox]
 
+[deftypefunk isismon_knowledge get name []
+  knowledge_name]
+
 [deftypefunk isismon_knowledge get semantic_knowledge_base []
   [get [get [get isismon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]  
 

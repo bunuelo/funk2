@@ -25,16 +25,18 @@
 		       resources_waiting_for_mental_trigger_event_frame
 		       knowledge_event_stream_iterator_frame
 		       global_semantic_realm
-		       semantic_knowledge_base_ptypehash]
+		       semantic_knowledge_base_ptypehash
+		       semantic_knowledge_base_add_event_callback_funks]
   [new []
        [terminal_format standard-terminal '\ncreating mind.']
        [cause-define semantic_frame-trace_add                            t]
        [cause-define semantic_frame-trace_remove                         t]
        [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
        [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
-       [= layer_frame                           [frame]]
-       [= knowledge_event_stream_iterator_frame [frame]]
-       [= semantic_knowledge_base_ptypehash     [new ptypehash]]
+       [= layer_frame                                      [frame]]
+       [= knowledge_event_stream_iterator_frame            [frame]]
+       [= semantic_knowledge_base_ptypehash                [new ptypehash]]
+       [= semantic_knowledge_base_add_event_callback_funks nil]
        this]]
 
 [deftypefunk mind get name []
@@ -163,7 +165,10 @@
 
 [deftypefunk mind execute add_semantic_knowledge_base [semantic_knowledge_base]
   [let [[name [get semantic_knowledge_base name]]]
-    [have semantic_knowledge_base_ptypehash add name semantic_knowledge_base]]]
+    [have semantic_knowledge_base_ptypehash add name semantic_knowledge_base]]
+  [mapc [funk [callback_funk]
+	      [funkall callback_funk semantic_knowledge_base]]
+	semantic_knowledge_base_add_event_callback_funks]]
 
 [deftypefunk mind get semantic_knowledge_base [name]
   [let [[semantic_knowledge_base [have semantic_knowledge_base_ptypehash lookup name]]]
@@ -171,6 +176,12 @@
 	[error bug_type                     `mind-get-semantic_knowledge_base-not_defined
 	       semantic_knowledge_base_name name]
       semantic_knowledge_base]]]
+
+[deftypefunk mind get semantic_knowledge_bases []
+  [get semantic_knowledge_base_ptypehash values]]
+
+[deftypefunk mind execute add_semantic_knowledge_base_add_event_callback_funk [callback_funk]
+  [= semantic_knowledge_base_add_event_callback_funks [cons callback_funk semantic_knowledge_base_add_event_callback_funks]]]  
 
 [deftypefunk mind get resource [layer_name agency_name resource_name]
   [get [get this layer layer_name] resource agency_name resource_name]]

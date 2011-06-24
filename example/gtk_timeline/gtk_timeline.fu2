@@ -21,12 +21,14 @@
 'gtk_timeline'
 
 [deframe gtk_timeline [frame] [timeline
+			       scale
 			       
 			       image
 			       gtk_scrolled_window
 			       gtk_image]
-  [new [initial-timeline scale]
+  [new [initial-timeline initial-scale]
        [= timeline initial-timeline]
+       [= scale    initial-scale]
        
        [set timeline x_width 100.0]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
@@ -49,7 +51,7 @@
   [get image height]]
 
 [deftypefunk gtk_timeline execute save_to_pdf [filename]
-  [have timeline save_to_pdf filename]]
+  [have timeline save_to_pdf filename scale]]
 
 'gtk_timeline_window'
 

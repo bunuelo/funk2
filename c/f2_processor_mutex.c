@@ -91,8 +91,16 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     funk2_processor_mutex__error();
   }
 #endif
-  while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-    raw__fast_spin_sleep_yield();
+  {
+    u64 lock_tries = 0;
+    while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+      lock_tries ++;
+      if (lock_tries > 1000) {
+	raw__spin_sleep_yield();
+      } else {
+	raw__fast_spin_sleep_yield();
+      }
+    }
   }
 }
 
@@ -103,11 +111,21 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
     funk2_processor_mutex__error();
   }
 #endif
-  while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-    if (__funk2.user_thread_controller.please_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
-      funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
+  {
+    u64 lock_tries = 0;
+    while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+      if (__funk2.user_thread_controller.please_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
+	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
+      }
+      {
+	lock_tries ++;
+	if (lock_tries > 1000) {
+	  raw__spin_sleep_yield();
+	} else {
+	  raw__fast_spin_sleep_yield();
+	}
+      }
     }
-    raw__fast_spin_sleep_yield();
   }
 }
 

@@ -53,7 +53,7 @@
   [get image height]]
 
 [deftypefunk gtk_timeline execute save_to_pdf [filename]
-  [have timeline save_to_pdf filename scale]]
+  [have timeline save_to_pdf filename timeline_scale]]
 
 'gtk_timeline_window'
 

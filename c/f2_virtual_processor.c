@@ -86,13 +86,23 @@ boolean_t funk2_virtual_processor__already_executing_next_bytecodes(funk2_virtua
 boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   boolean_t did_something = boolean__false;
   boolean_t locked_mutex  = boolean__false;
-  while ((! locked_mutex) &&
-	 (! (virtual_processor_thread->exit))) {
-    if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
-      locked_mutex = boolean__true;
-    }
-    if (! locked_mutex) {
-      raw__fast_spin_sleep_yield();
+  {
+    u64 lock_tries = 0;
+    while ((! locked_mutex) &&
+	   (! (virtual_processor_thread->exit))) {
+      if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
+	locked_mutex = boolean__true;
+      }
+      if (! locked_mutex) {
+	lock_tries ++;
+	if ((lock_tries > 1000) ||
+	    __funk2.scheduler_thread_controller.please_wait ||
+	    __funk2.user_thread_controller.please_wait) {
+	  raw__spin_sleep_yield();
+	} else {
+	  raw__fast_spin_sleep_yield();
+	}
+      }
     }
   }
   if (! (virtual_processor_thread->exit)) {
@@ -165,16 +175,31 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
     funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
     // let spinning processor execute some bytecodes before returning from yield...
-    raw__fast_spin_sleep_yield();
+    if (__funk2.scheduler_thread_controller.please_wait ||
+	__funk2.user_thread_controller.please_wait) {
+      raw__spin_sleep_yield();
+    } else {
+      raw__fast_spin_sleep_yield();
+    }
     {
       boolean_t locked_mutex = boolean__false;
-      while ((! locked_mutex) &&
-	     (! (yielding_virtual_processor_thread->exit))) {
-	if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
-	  locked_mutex = boolean__true;
-	}
-	if (! locked_mutex) {
-	  raw__fast_spin_sleep_yield();
+      {
+	u64 lock_tries = 0;
+	while ((! locked_mutex) &&
+	       (! (yielding_virtual_processor_thread->exit))) {
+	  if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
+	    locked_mutex = boolean__true;
+	  }
+	  if (! locked_mutex) {
+	    lock_tries ++;
+	    if ((lock_tries > 1000) ||
+		__funk2.scheduler_thread_controller.please_wait ||
+		__funk2.user_thread_controller.please_wait) {
+	      raw__spin_sleep_yield();
+	    } else {
+	      raw__fast_spin_sleep_yield();
+	    }
+	  }
 	}
       }
       if (yielding_virtual_processor_thread->exit) {

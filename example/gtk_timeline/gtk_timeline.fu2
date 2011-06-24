@@ -21,21 +21,21 @@
 'gtk_timeline'
 
 [deframe gtk_timeline [frame] [timeline
-			       width
-			       scale
+			       timeline_width
+			       timeline_scale
 			       
 			       image
 			       gtk_scrolled_window
 			       gtk_image]
-  [new [initial-timeline initial-width initial-scale]
-       [= timeline initial-timeline]
-       [= width    initial-width]
-       [= scale    initial-scale]
+  [new [initial-timeline initial-timeline_width initial-timeline_scale]
+       [= timeline       initial-timeline]
+       [= timeline_width initial-timeline_width]
+       [= timeline_scale initial-timeline_scale]
        
-       [set timeline x_width [get width as-double]]
+       [set timeline x_width [get timeline_width as-double]]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
-       [= image          [timeline-as-image timeline scale]]
-       [= gtk_image      [gtk-image-new_from_image image]]
+       [= image               [timeline-as-image timeline timeline_scale]]
+       [= gtk_image           [gtk-image-new_from_image image]]
        [have gtk_scrolled_window add_with_viewport gtk_image]
        
        nil]]

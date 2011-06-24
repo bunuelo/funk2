@@ -27,7 +27,8 @@
        this]]
 
 [deftypefunk self_conscious_layer execute create_knowledge []
-  [new semantic_event_knowledge_base `self_conscious_knowledge [get [get this mind] semantic_realm]]]
+  `[new semantic_event_knowledge_base `self_conscious_knowledge [get [get this mind] semantic_realm]]
+  ]
 
 [deftypefunk self_conscious_layer execute connect_knowledge_reflection []
   nil]

@@ -32,7 +32,7 @@
        this]]
 
 [deftypefunk deliberative_layer execute create_knowledge []
-  [new semantic_event_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]
+  `[new semantic_event_knowledge_base `deliberative_knowledge [get [get this mind] semantic_realm]]
   [have [get this agency `physical_event_knowledge] create_knowledge]
   [have [get this agency `goal_knowledge]           create_knowledge]
   [have [get this agency `goal_event_knowledge]     create_knowledge]

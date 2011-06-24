@@ -30,7 +30,7 @@
 
 
 [deftypefunk deliberative_goal_event_knowledge_agency execute create_knowledge []
-  [new semantic_event_knowledge_base `goal_event_knowledge [get [get this mind] semantic_realm]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `goal_event_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk deliberative_goal_event_knowledge_agency execute connect_knowledge_reflection []

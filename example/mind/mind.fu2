@@ -24,7 +24,8 @@
 		       layer_frame
 		       resources_waiting_for_mental_trigger_event_frame
 		       knowledge_event_stream_iterator_frame
-		       global_semantic_realm]
+		       global_semantic_realm
+		       semantic_knowledge_base_ptypehash]
   [new []
        [terminal_format standard-terminal '\ncreating mind.']
        [cause-define semantic_frame-trace_add                            t]
@@ -33,6 +34,7 @@
        [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
        [= layer_frame                           [frame]]
        [= knowledge_event_stream_iterator_frame [frame]]
+       [= semantic_knowledge_base_ptypehash     [new ptypehash]]
        this]]
 
 [deftypefunk mind get name []
@@ -159,8 +161,16 @@
 [defmetro mind-wait_to_activate [mind layer_name agency_name resource_name :rest args]
   `[have ,mind wait_to_activate [quote ,layer_name] [quote ,agency_name] [quote ,resource_name] @args]]
 
+[deftypefunk mind execute add_semantic_knowledge_base [semantic_knowledge_base]
+  [let [[name [get semantic_knowledge_base name]]]
+    [have semantic_knowledge_base_ptypehash add name semantic_knowledge_base]]]
+
 [deftypefunk mind get semantic_knowledge_base [name]
-  [have [get this semantic_realm] lookup_semantic_knowledge_base name]]
+  [let [[semantic_knowledge_base [have semantic_knowledge_base_ptypehash lookup name]]]
+    [if [null semantic_knowledge_base]
+	[error bug_type                     `mind-get-semantic_knowledge_base-not_defined
+	       semantic_knowledge_base_name name]
+      semantic_knowledge_base]]]
 
 [deftypefunk mind get resource [layer_name agency_name resource_name]
   [get [get this layer layer_name] resource agency_name resource_name]]

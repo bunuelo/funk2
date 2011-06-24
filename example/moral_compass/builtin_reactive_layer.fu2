@@ -35,7 +35,7 @@
   ]
 
 [deftypefunk builtin_reactive_layer execute create_knowledge []
-  [new semantic_knowledge_base `builtin_reactive_knowledge [get [get this mind] semantic_realm]]
+  `[new semantic_knowledge_base `builtin_reactive_knowledge [get [get this mind] semantic_realm]]
   [have [get this agency `sensory] create_knowledge]
   ]
 

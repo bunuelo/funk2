@@ -404,8 +404,8 @@ def_ceframe3(concept_version_space, concept_version_space, variable_name_set, sp
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
   f2ptr variable_name_set   = f2__set__new(cause);
-  f2ptr specific_hypotheses = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause, f2bool__new(boolean__false)));
-  f2ptr general_hypotheses  = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause, f2bool__new(boolean__true)));
+  f2ptr specific_hypotheses = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
+  f2ptr general_hypotheses  = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
   return f2concept_version_space__new(cause, variable_name_set, specific_hypotheses, general_hypotheses);
 }
 

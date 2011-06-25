@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
 	i --;
       }
       u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-      printf("\n%f", ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)) / ((double)(total_spins)));
+      printf("\n%f", ((double)(total_spins)) / ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)));
     }
     pthread_mutex_destroy(&mutex);
   } else {

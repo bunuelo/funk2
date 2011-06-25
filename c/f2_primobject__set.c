@@ -99,7 +99,7 @@ f2ptr raw__set__add__debug(f2ptr cause, f2ptr this, f2ptr key, char* source_file
     f2set__key_count__set(this, cause, f2integer__new(cause, key_count__i));
   }
   if (key_count__i >= (1ll << bin_num_power__i)) {
-    raw__set__double_size__thread_unsafe(cause, this, source_filename, source_line_number, source_funktion_name);
+    raw__set__double_size__thread_unsafe__debug(cause, this, source_filename, source_line_number, source_funktion_name);
   }
   f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;

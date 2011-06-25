@@ -87,8 +87,9 @@ int main(int argc, char** argv) {
     pthread_mutex_t mutex;
     pthread_mutex_init(&mutex, NULL);
     pthread_mutex_lock(&mutex);
+    s64 total_spins = 1000000;
     {
-      s64 i = 100000;
+      s64 i = total_spins;
       u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
       while (pthread_mutex_trylock(&mutex)) {
 	if (i <= 0) {
@@ -97,7 +98,7 @@ int main(int argc, char** argv) {
 	i --;
       }
       u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-      printf("\n%f", ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)) / 10000.0);
+      printf("\n%f", ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)) / ((double)(total_spins)));
     }
     pthread_mutex_destroy(&mutex);
   } else {

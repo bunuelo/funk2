@@ -51,14 +51,14 @@ def_pcfunk0(set__new,
 	    "",
 	    return f2__set__new(this_cause));
 
-void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
+void raw__set__double_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char* source_filename, int source_line_number, char* source_funktion_name) {
   f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2set__bin_array(this, cause);
   f2ptr temp_set         = raw__set__new(cause, bin_num_power__i + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
-    status("f2__set__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, bin_num << 1);
+    status("raw__set__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]", bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
       f2ptr key_iter = raw__array__elt(cause, bin_array, bin_index);
@@ -73,8 +73,8 @@ void f2__set__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2set__bin_array__set(    this, cause, f2set__bin_array(    temp_set, cause));
 }
 
-f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
-  debug__assert(raw__set__valid(cause, this), nil, "f2__set__add assert failed: f2__set__valid(this)");
+f2ptr raw__set__add__debug(f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name) {
+  debug__assert(raw__set__valid(cause, this), nil, "raw__set__add assert failed: f2__set__valid(this)");
   f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -99,15 +99,15 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
     f2set__key_count__set(this, cause, f2integer__new(cause, key_count__i));
   }
   if (key_count__i >= (1ll << bin_num_power__i)) {
-    f2__set__double_size__thread_unsafe(cause, this);
+    raw__set__double_size__thread_unsafe(cause, this, source_filename, source_line_number, source_funktion_name);
   }
   f2cmutex__unlock(f2set__write_cmutex(this, cause), cause);
   return nil;
 }
 
-f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
+f2ptr f2__set__add__debug(f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name) {
   assert_argument_type(set, this);
-  return raw__set__add(cause, this, key);
+  return raw__set__add__debug(cause, this, key, source_filename, source_line_number, source_funktion_name);
 }
 def_pcfunk2(set__add, this, element,
 	    "",

@@ -57,7 +57,7 @@ void raw__ptypehash__double_size__thread_unsafe__debug(f2ptr cause, f2ptr this, 
   f2ptr temp_ptypehash   = raw__ptypehash__new(cause, bin_num_power__i + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
-    status("f2__ptypehash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]" , bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
+    status("raw__ptypehash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]", bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);

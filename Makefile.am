@@ -164,7 +164,7 @@ mkdir_p = ${INSTALL} -d
 bin/configurator: c/configurator.c
 	mkdir -p bin
 	mkdir -p lib/.libs
-	gcc $(cc_flags) c/configurator.c -o $@
+	gcc $(cc_flags) c/configurator.c -lrt -o $@
 
 config_bit_num.h: bin/configurator
 	rm -f config_bit_num.h

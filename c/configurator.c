@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sched.h>
+#include <time.h>
 #include <pthread.h>
 
 void print_usage() {

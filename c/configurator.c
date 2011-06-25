@@ -121,7 +121,7 @@ int main(int argc, char** argv) {
 	  }
 	}
       }
-      printf("\n%f", processor_usage);
+      printf("\n%lu", sleep_nanoseconds);
     }
     pthread_mutex_destroy(&mutex);
   } else {

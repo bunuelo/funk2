@@ -173,6 +173,27 @@ void funk2_set__save_to_stream(funk2_set_t* this, int fd) {
   }
 }
 
+u64 funk2_set__save_to_buffer(funk2_set_t* this, u8* initial_buffer) {
+  u8* buffer = initial_buffer;
+  {
+    u64 bin_num = 1ull << this->bin_power;
+    u64 element_count = this->element_count;
+    //safe_write(fd, to_ptr(&element_count), sizeof(element_count));
+    memcpy(buffer, &element_count, sizeof(element_count)); buffer += sizeof(element_count);
+    u64 i;
+    for (i = 0; i < bin_num; i ++) {
+      funk2_set_node_t* iter = this->bin[i];
+      while (iter) {
+	funk2_set_element_t element = iter->element;
+	//safe_write(fd, to_ptr(&element), sizeof(element));
+	memcpy(buffer, &element, sizeof(element)); buffer += sizeof(element);
+	iter = iter->next;
+      }
+    }
+  }
+  return (buffer - initial_buffer);
+}
+
 void funk2_set__load_from_stream(funk2_set_t* this, int fd) {
   u64 element_count;
   safe_read(fd, to_ptr(&element_count), sizeof(element_count));

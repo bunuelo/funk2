@@ -65,6 +65,7 @@ void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_col
 void funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_pool(funk2_garbage_collector_mutation_buffer_t* this, funk2_garbage_collector_pool_t* pool);
 s64  funk2_garbage_collector_mutation_buffer__calculate_save_size(funk2_garbage_collector_mutation_buffer_t* this);
 void funk2_garbage_collector_mutation_buffer__save_to_stream(funk2_garbage_collector_mutation_buffer_t* this, int fd);
+u64  funk2_garbage_collector_mutation_buffer__save_to_buffer(funk2_garbage_collector_mutation_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_mutation_buffer__load_from_stream(funk2_garbage_collector_mutation_buffer_t* this, int fd);
 
 // garbage_collector_no_more_references_buffer
@@ -82,6 +83,7 @@ void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_referenc
 void funk2_garbage_collector_no_more_references_buffer__flush_no_more_references_knowledge_to_gc_pool(funk2_garbage_collector_no_more_references_buffer_t* this, funk2_garbage_collector_pool_t* pool);
 s64  funk2_garbage_collector_no_more_references_buffer__calculate_save_size(funk2_garbage_collector_no_more_references_buffer_t* this);
 void funk2_garbage_collector_no_more_references_buffer__save_to_stream(funk2_garbage_collector_no_more_references_buffer_t* this, int fd);
+u64  funk2_garbage_collector_no_more_references_buffer__save_to_buffer(funk2_garbage_collector_no_more_references_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_no_more_references_buffer__load_from_stream(funk2_garbage_collector_no_more_references_buffer_t* this, int fd);
 
 // garbage_collector_protected_f2ptr_buffer
@@ -98,6 +100,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_colle
 void funk2_garbage_collector_protected_f2ptr_buffer__know_of_no_more_references(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp);
 void funk2_garbage_collector_protected_f2ptr_buffer__flush_no_more_references_knowledge_to_gc_pool(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_garbage_collector_pool_t* pool);
 void funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd);
+u64  funk2_garbage_collector_protected_f2ptr_buffer__save_to_buffer(funk2_garbage_collector_protected_f2ptr_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd);
 
 // garbage_collector_other_grey_buffer
@@ -114,6 +117,7 @@ void funk2_garbage_collector_other_grey_buffer__know_of_other_grey(funk2_garbage
 void funk2_garbage_collector_other_grey_buffer__flush_other_greys(funk2_garbage_collector_other_grey_buffer_t* this, funk2_garbage_collector_pool_t* pool);
 s64  funk2_garbage_collector_other_grey_buffer__calculate_save_size(funk2_garbage_collector_other_grey_buffer_t* this);
 void funk2_garbage_collector_other_grey_buffer__save_to_stream(funk2_garbage_collector_other_grey_buffer_t* this, int fd);
+u64  funk2_garbage_collector_other_grey_buffer__save_to_buffer(funk2_garbage_collector_other_grey_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_collector_other_grey_buffer_t* this, int fd);
 
 // garbage_collector_pool
@@ -129,6 +133,8 @@ struct funk2_garbage_collector_pool_s {
   u8*                                                 temporary_load_buffer;
   s64                                                 temporary_load_buffer_offset;
   s64                                                 temporary_load_buffer_size;
+  u8*                                                 temporary_save_buffer;
+  s64                                                 temporary_save_buffer_size;
 };
 
 void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this);
@@ -160,6 +166,8 @@ void      funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_coll
 void      funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_pool_t* this);
 s64       funk2_garbage_collector_pool__calculate_save_size(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t* this, int fd);
+void      funk2_garbage_collector_pool__create_save_buffer(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__save_buffer_to_stream(funk2_garbage_collector_pool_t* this, int fd);
 void      funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool_t* this, int fd);
 s64       funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_t* this, u8* buffer);
 

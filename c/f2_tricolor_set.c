@@ -92,6 +92,14 @@ void funk2_tricolor_set__save_to_stream(funk2_tricolor_set_t* this, int fd) {
   funk2_set__save_to_stream(&(this->white_set), fd);
 }
 
+u64 funk2_tricolor_set__save_to_buffer(funk2_tricolor_set_t* this, u8* initial_buffer) {
+  u8* buffer = initial_buffer;
+  buffer += funk2_set__save_to_buffer(&(this->black_set), buffer);
+  buffer += funk2_set__save_to_buffer(&(this->grey_set),  buffer);
+  buffer += funk2_set__save_to_buffer(&(this->white_set), buffer);
+  return (buffer - initial_buffer);
+}
+
 void funk2_tricolor_set__load_from_stream(funk2_tricolor_set_t* this, int fd) {
   funk2_set__load_from_stream(&(this->black_set), fd);
   funk2_set__load_from_stream(&(this->grey_set),  fd);

@@ -292,8 +292,15 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   {
     int pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      status("saving garbage collector pool %d to stream %d.", pool_index, fd);
-      funk2_garbage_collector_pool__save_to_stream(&(this->gc_pool[pool_index]), fd);
+      status("creating garbage collector pool %d save buffer.", pool_index);
+      funk2_garbage_collector_pool__create_save_buffer(&(this->gc_pool[pool_index]));
+    }
+  }
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      status("saving garbage collector pool %d buffer to stream %d.", pool_index, fd);
+      funk2_garbage_collector_pool__save_buffer_to_stream(&(this->gc_pool[pool_index]), fd);
     }
   }
   status("saving garbage collector never_delete_list to stream %d.", fd);

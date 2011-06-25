@@ -55,7 +55,7 @@ void funk2_protected_alloc_array_event_array__reset(funk2_protected_alloc_array_
 
 void funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this) {
   this->used_num = 0;
-  this->length   = 1024 * 1024;
+  this->length   = 8ull * 1024 * 1024;
   this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->length));
   u64 i;
   for (i = 0; i < this->length; i ++) {

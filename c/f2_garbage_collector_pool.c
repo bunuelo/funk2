@@ -36,7 +36,7 @@ void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this) {
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
-  this->alloc_length = 1024 * 1024;
+  this->alloc_length = 16ull * 1024 * 1024;
   this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
 }
 

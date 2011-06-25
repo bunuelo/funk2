@@ -27,6 +27,8 @@ void print_usage() {
 typedef unsigned long long u64;
 typedef   signed long long s64;
 
+#define nanoseconds_per_second ((u64)1000000000ull)
+
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
   clock_gettime(CLOCK_REALTIME, &ts);

@@ -35,6 +35,25 @@ typedef unsigned int  uint;
 typedef unsigned char boolean_t;
 #endif // F2__APPLE
 
+#if defined(__INTEL_COMPILER)
+// remark #383: value copied to temporary, reference to temporary used
+//#  pragma warning(disable: 383)
+// remark #271: trailing comma is nonstandard
+#  pragma warning(disable: 271)
+// remark #424: extra ";" ignored
+#  pragma warning(disable: 424)
+// remark #981: operands are evaluated in unspecified order
+#  pragma warning(disable: 981)
+// remark #869: parameter "cause" was never referenced
+#  pragma warning(disable: 869)
+// remark #1418: external function definition with no prior declaration
+#  pragma warning(disable: 1418)
+// remark #2259: non-pointer conversion may lose significant bits
+#  pragma warning(disable: 2259)
+// remark #1599: declaration hides variable
+#  pragma warning(disable: 1599)
+#endif	// __INTEL_COMPILER
+
 #define int_bit_num    (sizeof(int)*8)
 #define max_uint_value ((unsigned int)-1)
 

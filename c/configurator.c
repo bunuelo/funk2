@@ -20,7 +20,7 @@ void print_usage() {
 	 "\n    float-bit_num"
 	 "\n    double-bit_num"
 	 "\n    processor_num"
-	 "\n    pthread_efficiency"
+	 "\n    deep_sleep_nanoseconds"
 	 "\n"
 	 );
 }
@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
       processor_num = 1;
     }
     printf("%u\n", processor_num);
-  } else if (strcmp(command, "pthread_efficiency") == 0) {
+  } else if (strcmp(command, "deep_sleep_nanoseconds") == 0) {
     pthread_mutex_t mutex;
     pthread_mutex_init(&mutex, NULL);
     pthread_mutex_lock(&mutex);

@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
     pthread_mutex_t mutex;
     pthread_mutex_init(&mutex, NULL);
     pthread_mutex_lock(&mutex);
-    s64 total_spins = 10000000;
+    s64 total_spins = 100000000;
     {
       s64 i = total_spins;
       u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();

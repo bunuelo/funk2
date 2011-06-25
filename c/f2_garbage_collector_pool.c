@@ -666,7 +666,6 @@ s64 funk2_garbage_collector_pool__calculate_save_size(funk2_garbage_collector_po
     save_size += funk2_garbage_collector_mutation_buffer__calculate_save_size(&(this->other_mutations));
     save_size += funk2_garbage_collector_no_more_references_buffer__calculate_save_size(&(this->other_no_more_references));
     save_size += funk2_garbage_collector_protected_f2ptr_buffer__calculate_save_size(&(this->other_protected_f2ptr));
-    //save_size += funk2_protected_alloc_array__calculate_save_size(&(this->protected_alloc_array));
     int pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
       save_size += funk2_garbage_collector_other_grey_buffer__calculate_save_size(&(this->other_grey_buffer[pool_index]));
@@ -680,7 +679,6 @@ void funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t
   funk2_garbage_collector_mutation_buffer__save_to_stream(&(this->other_mutations), fd);
   funk2_garbage_collector_no_more_references_buffer__save_to_stream(&(this->other_no_more_references), fd);
   funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(&(this->other_protected_f2ptr), fd);
-  //funk2_protected_alloc_array__save_to_stream(&(this->protected_alloc_array), fd);
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_other_grey_buffer__save_to_stream(&(this->other_grey_buffer[pool_index]), fd);
@@ -692,7 +690,6 @@ void funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool
   funk2_garbage_collector_mutation_buffer__load_from_stream(&(this->other_mutations), fd);
   funk2_garbage_collector_no_more_references_buffer__load_from_stream(&(this->other_no_more_references), fd);
   funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(&(this->other_protected_f2ptr), fd);
-  //funk2_protected_alloc_array__load_from_stream(&(this->protected_alloc_array), fd);
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_other_grey_buffer__load_from_stream(&(this->other_grey_buffer[pool_index]), fd);
@@ -706,7 +703,6 @@ s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_
     buffer_iter += funk2_garbage_collector_mutation_buffer__load_from_buffer(          &(this->other_mutations),          buffer_iter);
     buffer_iter += funk2_garbage_collector_no_more_references_buffer__load_from_buffer(&(this->other_no_more_references), buffer_iter);
     buffer_iter += funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(   &(this->other_protected_f2ptr),    buffer_iter);
-    //buffer_iter += funk2_protected_alloc_array__load_from_buffer(                      &(this->protected_alloc_array),    buffer_iter);
     {
       int pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

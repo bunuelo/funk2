@@ -123,6 +123,7 @@ void funk2_garbage_collector_other_grey_buffer__load_from_stream(funk2_garbage_c
 // garbage_collector_pool
 
 struct funk2_garbage_collector_pool_s {
+  u64                                                 pool_index;
   funk2_tricolor_set_t                                tricolor_set;
   funk2_garbage_collector_mutation_buffer_t           other_mutations;
   funk2_garbage_collector_no_more_references_buffer_t other_no_more_references;
@@ -137,7 +138,7 @@ struct funk2_garbage_collector_pool_s {
   s64                                                 temporary_save_buffer_size;
 };
 
-void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, u64 pool_index);
 void      funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp);

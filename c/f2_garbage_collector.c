@@ -30,7 +30,7 @@ void funk2_garbage_collector__init(funk2_garbage_collector_t* this) {
   
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_garbage_collector_pool__init(&(this->gc_pool[pool_index]));
+    funk2_garbage_collector_pool__init(&(this->gc_pool[pool_index]), pool_index);
   }
   
   funk2_never_delete_list__init(&(this->never_delete_list));
@@ -275,6 +275,16 @@ s64 funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t* this
   return save_size;
 }
 
+void* funk2_garbage_collector__save_to_stream__start_thread_create_garbage_collector_pool_buffer(void* garbage_collector_pool_arg) {
+  funk2_garbage_collector_pool_t* garbage_collector_pool = (funk2_garbage_collector_pool_t*)garbage_collector_pool_arg;
+  {
+    funk2_garbage_collector_pool__create_save_buffer(garbage_collector_pool);
+    status("done creating garbage collector pool " u64__fstr " save buffer.", garbage_collector_pool->pool_index);
+  }
+  return NULL;
+}
+
+
 void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd) {
   status("saving garbage collector to stream %d.", fd);
   {
@@ -292,8 +302,22 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   {
     int pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      status("creating garbage collector pool %d save buffer.", pool_index);
-      funk2_garbage_collector_pool__create_save_buffer(&(this->gc_pool[pool_index]));
+    }
+  }
+  status("creating garbage collector save buffers.");
+  {
+    pthread_t save_gc_pool_thread[memory_pool_num];
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_create(&(save_gc_pool_thread[pool_index]), NULL, &funk2_garbage_collector__save_to_stream__start_thread_create_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(save_gc_pool_thread[pool_index], NULL);
+      }
     }
   }
   {

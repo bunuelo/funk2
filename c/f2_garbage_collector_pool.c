@@ -437,9 +437,10 @@ s64 funk2_garbage_collector_other_grey_buffer__load_from_buffer(funk2_garbage_co
 
 // garbage_collector_pool
 
-void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this) {
+void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, this__pool_index) {
   status("initializing garbage collector pool.");
   
+  this->pool_index = this__pool_index;
   funk2_tricolor_set__init(&(this->tricolor_set));
   funk2_garbage_collector_mutation_buffer__init(&(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__init(&(this->other_no_more_references));

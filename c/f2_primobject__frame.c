@@ -60,7 +60,7 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 def_primobject_2_slot(frame, new_type_cmutex, type_ptypehash);
 
 f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
-  f2ptr this = f2frame__new(cause, f2cmutex__new(cause), raw__ptypehash__new(cause, 3));
+  f2ptr this = f2frame__new(cause, f2cmutex__new(cause), raw__ptypehash__new(cause, 4));
   {
     f2ptr iter = slot_value_pairs;
     while (iter) {

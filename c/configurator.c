@@ -91,10 +91,10 @@ int main(int argc, char** argv) {
       s64 i = 10000;
       u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
       while (pthread_mutex_trylock(&mutex)) {
-	i ++;
 	if (i <= 0) {
 	  break;
 	}
+	i --;
       }
       u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
       printf("\n%f", ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)) / 10000.0);

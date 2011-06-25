@@ -328,7 +328,7 @@
 				
 				entry
 				
-				isismon_knowledge_ptypehash
+				[isismon_knowledge_ptypehash [new ptypehash]]
 				
 				]
   [new [initial_isismon_project initial_isis_agent]

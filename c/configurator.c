@@ -24,6 +24,9 @@ void print_usage() {
 	 );
 }
 
+typedef unsigned long long u64;
+typedef   signed long long s64;
+
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
   clock_gettime(CLOCK_REALTIME, &ts);
@@ -82,7 +85,7 @@ int main(int argc, char** argv) {
     pthread_mutex_init(&mutex, NULL);
     pthread_mutex_lock(&mutex);
     {
-      unsigned int i = 10000;
+      s64 i = 10000;
       u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
       while (pthread_mutex_trylock(&mutex)) {
 	i ++;

@@ -96,22 +96,30 @@ int main(int argc, char** argv) {
     pthread_mutex_init(&mutex, NULL);
     pthread_mutex_lock(&mutex);
     {
-      u64 sleep_nanoseconds = 1;
-      s64 total_spins = 1000;
-      {
-	s64 i = total_spins;
-	u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-	u64 begin__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
-	while (pthread_mutex_trylock(&mutex)) {
-	  if (i <= 0) {
-	    break;
+      u64    sleep_nanoseconds = 1;
+      double processor_usage   = 100.0;
+      while (processor_usage > (1.0 / 1000.0)) {
+	s64 total_spins = 1000;
+	{
+	  s64 i = total_spins;
+	  u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+	  u64 begin__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
+	  while (pthread_mutex_trylock(&mutex)) {
+	    if (i <= 0) {
+	      break;
+	    }
+	    i --;
+	    raw__nanosleep(sleep_nanoseconds);
 	  }
-	  i --;
-	  raw__nanosleep(sleep_nanoseconds);
+	  u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+	  u64 end__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
+	  processor_usage = ((double)(end__execution_nanoseconds - begin__execution_nanoseconds)) / ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970));
+	  printf("\n(%f)", processor_usage);
+	  if (processor_usage > (1.0 / 1000.0)) {
+	    sleep_nanoseconds <<= 1;
+	  }
 	}
-	u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-	u64 end__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
-	printf("\n%f", ((double)(end__execution_nanoseconds - begin__execution_nanoseconds)) / ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)));
+	printf("\n%f", processor_usage);
       }
     }
     pthread_mutex_destroy(&mutex);

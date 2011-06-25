@@ -60,7 +60,7 @@ void funk2_primobject__frame__destroy(funk2_primobject__frame_t* this) {
 def_primobject_2_slot(frame, new_type_cmutex, type_ptypehash);
 
 f2ptr f2__frame__new(f2ptr cause, f2ptr slot_value_pairs) {
-  f2ptr this = f2frame__new(cause, f2cmutex__new(cause), f2__ptypehash__new(cause));
+  f2ptr this = f2frame__new(cause, f2cmutex__new(cause), raw__ptypehash__new(cause, 3));
   {
     f2ptr iter = slot_value_pairs;
     while (iter) {
@@ -89,7 +89,7 @@ f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
     f2cmutex__lock(f2frame__new_type_cmutex(this, cause), cause);
     type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
     if (! type__ptypehash) {
-      type__ptypehash = f2__ptypehash__new(cause);
+      type__ptypehash = raw__ptypehash__new(cause, 6);
       f2__ptypehash__add(cause, frame__type_ptypehash, type, type__ptypehash);
     }
     f2cmutex__unlock(f2frame__new_type_cmutex(this, cause), cause);

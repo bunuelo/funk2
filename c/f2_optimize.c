@@ -141,7 +141,7 @@ void raw__bytecodes__add_to_chunk_sequence_ptypehash(f2ptr cause, f2ptr these, f
 }
 
 f2ptr raw__optimize_chunk__new_from_bytecodes(f2ptr cause, f2ptr these) {
-  f2ptr chunk_sequence_ptypehash = raw__ptypehash__new(cause, 6);
+  f2ptr chunk_sequence_ptypehash = raw__ptypehash__new(cause, 7);
   f2ptr seen_sequence_set        = raw__set__new(cause, 6);
   raw__bytecodes__add_to_chunk_sequence_ptypehash(cause, these, chunk_sequence_ptypehash, seen_sequence_set);
   ptypehash__iteration(cause, chunk_sequence_ptypehash, sequence, chunk,

@@ -76,7 +76,8 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
       if (! processor_assignment_scheduler_cmutex__failed_to_lock) {
 	f2cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
       }
-      raw__fast_spin_sleep_yield();
+      f2__this__fiber__yield(cause);
+      //raw__fast_spin_sleep_yield();
     }
   }
   boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
@@ -144,7 +145,8 @@ f2ptr raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) 
 	if (! processor_assignment_scheduler_cmutex__failed_to_lock) {
 	  f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
 	}
-	raw__fast_spin_sleep_yield();
+	f2__this__fiber__yield(cause);
+	//raw__fast_spin_sleep_yield();
       }
     }
   }

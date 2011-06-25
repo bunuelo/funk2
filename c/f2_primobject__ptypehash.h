@@ -69,7 +69,7 @@ declare_primobject_4_slot(ptypehash, write_cmutex, key_count, bin_num_power, bin
 
 f2ptr     raw__ptypehash__new                       (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__ptypehash__new                       (f2ptr cause);
-f2ptr     raw__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
+f2ptr     raw__ptypehash__add__debug                (f2ptr cause, f2ptr this, f2ptr key, f2ptr value, char* source_filename, int source_line_number, char* source_funktion_name);
 f2ptr      f2__ptypehash__add                       (f2ptr cause, f2ptr this, f2ptr key, f2ptr value);
 boolean_t raw__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__ptypehash__remove                    (f2ptr cause, f2ptr this, f2ptr key);
@@ -96,6 +96,10 @@ f2ptr f2__ptypehash__values(f2ptr cause, f2ptr this);
 
 f2ptr f2ptypehash__primobject_type__new(f2ptr cause);
 f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause);
+
+#define raw__ptypehash__double_size__thread_unsafe(cause, this) raw__ptypehash__double_size__thread_unsafe__debug(cause, this, __FILE__, __LINE__, __FUNCTION__)
+#define raw__ptypehash__add(cause, this, key, value)            raw__ptypehash__add__debug(cause, this, key, value, __FILE__, __LINE__, __FUNCTION__)
+#define  f2__ptypehash__add(cause, this, key, value)             f2__ptypehash__add__debug(cause, this, key, value, __FILE__, __LINE__, __FUNCTION__)
 
 #define ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) { \
   f2ptr iteration__cause = (cause); \

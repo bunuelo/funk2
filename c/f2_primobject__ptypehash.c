@@ -50,14 +50,14 @@ def_pcfunk0(ptypehash__new,
 	    "",
 	    return f2__ptypehash__new(this_cause));
 
-void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
+void raw__ptypehash__double_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char* source_filename, int source_line_number, char* source_funktion_name) {
   f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2ptypehash__bin_array(this, cause);
   f2ptr temp_ptypehash   = raw__ptypehash__new(cause, bin_num_power__i + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
-    status("f2__ptypehash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, bin_num << 1);
+    status("f2__ptypehash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]" , bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);
@@ -74,7 +74,7 @@ void f2__ptypehash__double_size__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptypehash__bin_array__set(    this, cause, f2ptypehash__bin_array(    temp_ptypehash, cause));
 }
 
-f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+f2ptr raw__ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value, char* source_filename, int source_line_number, char* source_funktion_name) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
   f2cmutex__lock(f2ptypehash__write_cmutex(this, cause), cause);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
@@ -103,7 +103,7 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
       key_count__i ++;
       f2ptypehash__key_count__set(this, cause, f2integer__new(cause, key_count__i));
       if ((key_count__i << 1) >= (1ll << bin_num_power__i)) {
-	f2__ptypehash__double_size__thread_unsafe(cause, this);
+	raw__ptypehash__double_size__thread_unsafe__debug(cause, this, source_filename, source_line_number, source_funktion_name);
       }
     }
   } else {
@@ -113,9 +113,9 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   return nil;
 }
 
-f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+f2ptr f2__ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value, char* source_filename, int source_line_number, char* source_funktion_name) {
   assert_argument_type(ptypehash, this);
-  return raw__ptypehash__add(cause, this, key, value);
+  return raw__ptypehash__add__debug(cause, this, key, value, source_filename, source_line_number, source_funktion_name);
 }
 def_pcfunk3(ptypehash__add, this, slot_name, value,
 	    "",

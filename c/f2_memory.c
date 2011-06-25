@@ -382,12 +382,13 @@ void* funk2_memory__save_image_to_file__thread_start_compress_memorypool(void* m
   funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
   funk2_memorypool__compress_for_saving(memorypool);
   printf("\nfunk2_memory__save_image_to_file: done compressing memory pool " u64__fstr ".", memorypool->pool_index); fflush(stdout);
+  status(  "funk2_memory__save_image_to_file: done compressing memory pool " u64__fstr ".", memorypool->pool_index);
   return NULL;
 }
 
 boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
   printf("\nfunk2_memory__save_image_to_file: saving memory image."); fflush(stdout);
-  status("  funk2_memory__save_image_to_file: saving memory image.");
+  status(  "funk2_memory__save_image_to_file: saving memory image.");
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
   int pool_index;

@@ -30,6 +30,14 @@ typedef   signed long long s64;
 
 #define nanoseconds_per_second ((u64)1000000000ull)
 
+void raw__nanosleep(u64 nanoseconds) {
+  struct timespec sleepTime;
+  struct timespec remainingSleepTime;
+  sleepTime.tv_sec  = nanoseconds / nanoseconds_per_second;
+  sleepTime.tv_nsec = nanoseconds - ((nanoseconds / nanoseconds_per_second) * nanoseconds_per_second);
+  nanosleep(&sleepTime, &remainingSleepTime);
+}
+
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
   clock_gettime(CLOCK_REALTIME, &ts);
@@ -99,6 +107,7 @@ int main(int argc, char** argv) {
 	    break;
 	  }
 	  i --;
+	  raw__nanosleep(sleep_nanoseconds);
 	}
 	u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 	u64 end__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();

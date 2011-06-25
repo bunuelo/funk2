@@ -98,7 +98,8 @@ int main(int argc, char** argv) {
     {
       u64    sleep_nanoseconds = 1;
       double processor_usage   = 100.0;
-      while (processor_usage > (1.0 / 10000.0)) {
+      double target_usage      = (1.0 / 10000.0);
+      while (processor_usage > target_usage) {
 	s64 total_spins = 100;
 	{
 	  s64 i = total_spins;
@@ -115,7 +116,7 @@ int main(int argc, char** argv) {
 	  u64 end__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
 	  processor_usage = ((double)(end__execution_nanoseconds - begin__execution_nanoseconds)) / ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970));
 	  printf("\n(%f at %lu)", processor_usage, sleep_nanoseconds);
-	  if (processor_usage > (1.0 / 10000.0)) {
+	  if (processor_usage > target_usage) {
 	    sleep_nanoseconds <<= 1;
 	  }
 	}

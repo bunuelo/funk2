@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sched.h>
+#include <pthread.h>
 
 void print_usage() {
   printf("\n"
@@ -18,8 +19,21 @@ void print_usage() {
 	 "\n    float-bit_num"
 	 "\n    double-bit_num"
 	 "\n    processor_num"
+	 "\n    pthread_efficiency"
 	 "\n"
 	 );
+}
+
+u64 raw__nanoseconds_since_1970() {
+  struct timespec ts;
+  clock_gettime(CLOCK_REALTIME, &ts);
+  return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
+}
+
+u64 raw__processor_thread__execution_nanoseconds(f2ptr cause) {
+  struct timespec ts;
+  clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
+  return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 }
 
 int main(int argc, char** argv) {
@@ -63,6 +77,23 @@ int main(int argc, char** argv) {
       processor_num = 1;
     }
     printf("%u\n", processor_num);
+  } else if (strcmp(command, "pthread_efficiency") == 0) {
+    pthread_mutex_t mutex;
+    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_lock(&mutex);
+    {
+      unsigned int i = 10000;
+      u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+      while (pthread_mutex_trylock(&mutex)) {
+	i ++;
+	if (i <= 0) {
+	  break;
+	}
+      }
+      u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+      printf("\n%f", ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970)) / 10000.0);
+    }
+    pthread_mutex_destroy(&mutex);
   } else {
     printf("\n"
 	   "\nunknown configurator command, \"%s\"!"

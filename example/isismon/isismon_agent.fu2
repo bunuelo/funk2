@@ -511,7 +511,7 @@
 [deftypefunk isismon_agent execute update []
   [mapc [funk [isismon_knowledge]
 	      [if isismon_knowledge [have isismon_knowledge update]]]
-	isismon_knowledges]
+	[get isismon_knowledge_ptypehash values]]
   nil]
 
 [deftypefunk isismon_agent get retina_image_sequence []

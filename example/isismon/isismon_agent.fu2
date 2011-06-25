@@ -328,6 +328,7 @@
 				
 				entry
 				
+				[isismon_knowledge_mutex     [new mutex]]
 				[isismon_knowledge_ptypehash [new ptypehash]]
 				
 				]
@@ -473,6 +474,10 @@
 				      [have this add_isismon_knowledge name]]]]
 			  [get [get isis_agent mind] semantic_knowledge_bases]]
 		    
+		    [have [get isis_agent mind] add_semantic_knowledge_base_add_event_callback_funk [funk [semantic_knowledge_base]
+													  [let [[name [get semantic_knowledge_base name]]]
+													    [have this add_isismon_knowledge name]]]]
+		    
 		    [have [get this widget] show_all]
 		    [have this update]
 		    ]
@@ -482,9 +487,11 @@
        nil]]
 
 [deftypefunk isismon_agent execute add_isismon_knowledge [isismon_knowledge_name]
+  [have isismon_knowledge_mutex lock]
   [let [[isismon_knowledge [new isismon_knowledge this isismon_knowledge_name]]]
     [have isismon_knowledge_ptypehash add isismon_knowledge_name isismon_knowledge]
-    [have vbox pack_start isismon_knowledge nil nil 0]]]
+    [have vbox pack_start isismon_knowledge nil nil 0]]
+  [have isismon_knowledge_mutex unlock]]
 
 [defunk isismon_agent-new_from_name [isismon_project name]
   [let [[moral_compass [new moral_compass]]]

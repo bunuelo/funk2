@@ -253,6 +253,7 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/semantic_physical_object/libf2e_semantic_physical_object.la \
                       extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.la \
                       extension/semantic_goal/libf2e_semantic_goal.la \
+                      extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.la \
                       extension/semantic_physical_object_type/libf2e_semantic_physical_object_type.la \
                       extension/semantic_physical_object_type_relation/libf2e_semantic_physical_object_type_relation.la \
                       extension/semantic_realm/libf2e_semantic_realm.la \
@@ -434,6 +435,7 @@ extension_semantic_event_tree_libf2e_semantic_event_tree_la_SOURCES             
 extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                                 = extension/semantic_frame/semantic_frame.c
 extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_SOURCES                   = extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
 extension_semantic_goal_libf2e_semantic_goal_la_SOURCES                                                   = extension/semantic_goal/semantic_goal.c
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_SOURCES = extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.c
 extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_SOURCES             = extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
 extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_SOURCES       = extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.c
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                               = extension/semantic_knowledge_base/semantic_knowledge_base.c
@@ -578,6 +580,9 @@ extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_
 
 extension_semantic_goal_libf2e_semantic_goal_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_goal_libf2e_semantic_goal_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

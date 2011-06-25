@@ -115,13 +115,13 @@ int main(int argc, char** argv) {
 	  u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 	  u64 end__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
 	  processor_usage = ((double)(end__execution_nanoseconds - begin__execution_nanoseconds)) / ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970));
-	  printf("\n(%f at %lu)", processor_usage, sleep_nanoseconds);
+	  printf("(%f at %lu)\n", processor_usage, sleep_nanoseconds);
 	  if (processor_usage > target_usage) {
 	    sleep_nanoseconds <<= 1;
 	  }
 	}
       }
-      printf("\n%lu", sleep_nanoseconds);
+      printf("%lu\n", sleep_nanoseconds);
     }
     pthread_mutex_destroy(&mutex);
   } else {

@@ -35,7 +35,7 @@ u64 raw__nanoseconds_since_1970() {
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 }
 
-u64 raw__processor_thread__execution_nanoseconds(f2ptr cause) {
+u64 raw__processor_thread__execution_nanoseconds() {
   struct timespec ts;
   clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);

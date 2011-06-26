@@ -27,9 +27,9 @@
 #include "../semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.h"
 
 
-f2ptr     raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_proprioceptual_object__new        (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_proprioceptual_object__new        (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr physical_object_type, f2ptr position, f2ptr orientation);
+f2ptr     raw__semantic_proprioceptual_object__new        (f2ptr cause, f2ptr semantic_realm, f2ptr physical_object_type, f2ptr position, f2ptr orientation);
+f2ptr      f2__semantic_proprioceptual_object__new        (f2ptr cause, f2ptr semantic_realm, f2ptr physical_object_type, f2ptr position, f2ptr orientation);
 boolean_t raw__semantic_proprioceptual_object__is_type    (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_proprioceptual_object__is_type    (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_proprioceptual_object__type       (f2ptr cause, f2ptr this);

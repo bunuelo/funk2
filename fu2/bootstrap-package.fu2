@@ -151,6 +151,7 @@
 						     'extension/semantic_physical_object_type/'
 						     'extension/semantic_physical_object_type_relation/'
 						     'extension/semantic_proprioception/'
+						     'extension/semantic_proprioceptual_object/'
 						     'extension/semantic_realm/'
 						     'extension/semantic_relationship_key/'
 						     'extension/semantic_resource/'

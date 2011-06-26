@@ -148,7 +148,9 @@ void funk2_virtual_processor_handler__start_virtual_processors(funk2_virtual_pro
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
   funk2_virtual_processor_thread_t* virtual_processor_thread = NULL;
+  funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
   if (! (this->free_virtual_processor_threads)) {
+    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
     virtual_processor_thread = (funk2_virtual_processor_thread_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_t)));
     funk2_virtual_processor_thread__init(virtual_processor_thread);
     {
@@ -167,12 +169,11 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
       }
     }
   } else {
-    funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
     funk2_virtual_processor_thread_cons_t* cons = this->free_virtual_processor_threads;
     this->free_virtual_processor_threads        = cons->next;
     virtual_processor_thread                    = cons->virtual_processor_thread;
-    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
     f2__free(to_ptr(cons));
+    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
   }
   return virtual_processor_thread;
 }

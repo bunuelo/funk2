@@ -45,12 +45,12 @@
   [new semantic_proprioceptual_object semantic_realm
        physical_object_type
        [new semantic_proprioceptual_position semantic_realm
-	    [get position x]
-	    [get position y]
-	    [get position z]]
+	    [get [get position x] as-double]
+	    [get [get position y] as-double]
+	    [get [get position z] as-double]]
        [new semantic_proprioceptual_orientation semantic_realm
-	    [get orientation heading]
-	    [get orientation pitch]
-	    [get orientation roll]]]]
+	    [get [get orientation heading] as-double]
+	    [get [get orientation pitch]   as-double]
+	    [get [get orientation roll]    as-double]]]]
 
 

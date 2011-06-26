@@ -82,7 +82,8 @@
 	     'learned_reactive_physical_agency_functions.fu2']]
 
 [defpackage moral_compass_proprioceptual_object
-  :packages [traced_mind]
+  :packages [traced_mind
+	     semantic_proprioception]
    :sources ['moral_compass_proprioceptual_object.fu2']]
 
 [defpackage moral_compass_visual_object

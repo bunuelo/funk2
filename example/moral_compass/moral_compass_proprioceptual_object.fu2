@@ -49,8 +49,8 @@
 	    [get position y]
 	    [get position z]]
        [new semantic_proprioceptual_orientation semantic_realm
-	    [get position heading]
-	    [get position pitch]
-	    [get position roll]]]]
+	    [get orientation heading]
+	    [get orientation pitch]
+	    [get orientation roll]]]]
 
 

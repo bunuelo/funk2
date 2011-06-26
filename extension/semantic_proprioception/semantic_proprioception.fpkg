@@ -19,7 +19,8 @@
 
 [defpackage semantic_proprioception
   :documentation 'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
-   :packages     [semantic_object]
+   :packages     [semantic_object
+		  semantic_proprioceptual_object]
     :sources     ['semantic_proprioception-core.fu2']
      :binaries   ['.libs/libf2e_semantic_proprioception.so']]
 

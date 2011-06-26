@@ -24,7 +24,7 @@
 
 // semantic_proprioception
 
-f2ptr raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_proprioception"));
   }
@@ -34,20 +34,20 @@ f2ptr raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr s
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "body"),       nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "neck"),       nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "left_hand"),  nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "right_hand"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "body"),       body);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "neck"),       neck);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "left_hand"),  left_hand);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "right_hand"), right_hand);
   return this;
 }
 
-f2ptr raw__semantic_proprioception__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioception__new(f2ptr cause, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_proprioception__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_proprioception__type_create(cause, this, semantic_realm, body, neck, left_hand, right_hand);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -55,11 +55,15 @@ f2ptr raw__semantic_proprioception__new(f2ptr cause, f2ptr semantic_realm) {
   return this;
 }
 
-f2ptr f2__semantic_proprioception__new(f2ptr cause, f2ptr semantic_realm) {
-  assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_proprioception__new(cause, semantic_realm);
+f2ptr f2__semantic_proprioception__new(f2ptr cause, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand) {
+  assert_argument_type(semantic_realm,                 semantic_realm);
+  assert_argument_type(semantic_proprioceptual_object, body);
+  assert_argument_type(semantic_proprioceptual_object, neck);
+  assert_argument_type(semantic_proprioceptual_object, left_hand);
+  assert_argument_type(semantic_proprioceptual_object, right_hand);
+  return raw__semantic_proprioception__new(cause, semantic_realm, body, neck, left_hand, right_hand);
 }
-export_cefunk1(semantic_proprioception__new, semantic_realm, 0, "Returns a new semantic_proprioception object.");
+export_cefunk5(semantic_proprioception__new, semantic_realm, body, neck, left_hand, right_hand, 0, "Returns a new semantic_proprioception object.");
 
 
 boolean_t raw__semantic_proprioception__is_type(f2ptr cause, f2ptr thing) {
@@ -210,7 +214,7 @@ export_cefunk0(semantic_proprioception__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_proprioception__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_proprioception, semantic_object);
-  core_extension__ping(semantic_proprioception, semantic_event);
+  core_extension__ping(semantic_proprioception, semantic_proprioceptual_object);
   status("semantic_proprioception initialized.");
   return nil;
 }

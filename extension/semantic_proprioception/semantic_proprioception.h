@@ -26,9 +26,9 @@
 #include "../semantic_event/semantic_event.h"
 
 
-f2ptr     raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_proprioception__new        (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_proprioception__new        (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand);
+f2ptr     raw__semantic_proprioception__new        (f2ptr cause, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand);
+f2ptr      f2__semantic_proprioception__new        (f2ptr cause, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand);
 boolean_t raw__semantic_proprioception__is_type    (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_proprioception__is_type    (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_proprioception__type       (f2ptr cause, f2ptr this);

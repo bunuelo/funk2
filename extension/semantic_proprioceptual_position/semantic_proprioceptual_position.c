@@ -188,7 +188,6 @@ export_cefunk0(semantic_proprioceptual_position__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_proprioceptual_position__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_proprioceptual_position, semantic_object);
-  core_extension__ping(semantic_proprioceptual_position, semantic_event);
   status("semantic_proprioceptual_position initialized.");
   return nil;
 }

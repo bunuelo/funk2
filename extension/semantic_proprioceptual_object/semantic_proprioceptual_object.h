@@ -26,17 +26,13 @@
 #include "../semantic_event/semantic_event.h"
 
 
-f2ptr     raw__semantic_proprioceptual_object__type_create      (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_proprioceptual_object__new              (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_proprioceptual_object__new              (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_proprioceptual_object__is_type          (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_proprioceptual_object__is_type          (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_proprioceptual_object__type             (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_proprioceptual_object__type             (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_proprioceptual_object__is_occurring     (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_proprioceptual_object__is_occurring     (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_proprioceptual_object__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_proprioceptual_object__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_proprioceptual_object__new        (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_proprioceptual_object__new        (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_proprioceptual_object__is_type    (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_proprioceptual_object__is_type    (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_proprioceptual_object__type       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_proprioceptual_object__type       (f2ptr cause, f2ptr this);
 
 // **
 

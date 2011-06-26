@@ -52,7 +52,6 @@
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `visual_knowledge         [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `visual_action_knowledge  [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `proprioceptual_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
@@ -196,6 +195,35 @@
       ]]]
 
 
+'propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource'
+
+[deframe propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource [traced_resource] [[previous_perception nil]]
+  [new []
+       [construct traced_resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge
+		  [funk []
+			[have this update_visual_knowledge_from_visual_objects]]]
+       [= vital t]
+       nil]]
+
+[deftypefunk propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource execute create_knowledge []
+  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `proprioceptual_knowledge [get [get this mind] semantic_realm]]]
+  ]
+
+[deftypefunk propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource execute connect_knowledge_reflection []
+  nil]
+
+[deftypefunk propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource execute update_visual_knowledge_from_visual_objects []
+  [while t
+    [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
+    
+    [terminal_format standard-terminal '\n' perception]
+    
+    [= previous_perception perception]
+    'Once we have finished changing visual_knowledge, we add a special ending trace event.'
+    [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
+    ]]]
+
+
 'builtin_reactive_sensory_agency'
 
 [deframe builtin_reactive_sensory_agency [agency] []
@@ -204,14 +232,17 @@
        
        [have this add_resource [new continuous_sensing_resource]]
        [have this add_resource [new propogate_visual_objects_to_visual_knowledge_resource]]
+       [have this add_resource [new propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource]]
        
        this]]
 
 [deftypefunk builtin_reactive_sensory_agency execute create_knowledge []
-  [have [get this resource `propogate_visual_objects_to_visual_knowledge] create_knowledge]]
+  [have [get this resource `propogate_visual_objects_to_visual_knowledge]                 create_knowledge]
+  [have [get this resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge] create_knowledge]]
 
 [deftypefunk builtin_reactive_sensory_agency execute connect_knowledge_reflection []
-  [have [get this resource `propogate_visual_objects_to_visual_knowledge] connect_knowledge_reflection]]
+  [have [get this resource `propogate_visual_objects_to_visual_knowledge]                 connect_knowledge_reflection]
+  [have [get this resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge] connect_knowledge_reflection]]
 
 [deftypefunk builtin_reactive_sensory_agency get perception []
   [get [get this resource `continuous_sensing] perception]]

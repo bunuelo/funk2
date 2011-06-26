@@ -56,6 +56,7 @@
 	     semantic_agent
 	     semantic_event
 	     semantic_action_event
+	     moral_compass_proprioceptual_object
 	     semantic_proprioception]
    :sources ['builtin_reactive_sensory_agency.fu2']]
 

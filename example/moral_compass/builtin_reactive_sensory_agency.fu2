@@ -231,7 +231,7 @@
 		[semantic_right_hand [get right_hand as-semantic_frame [get [get this mind] semantic_realm]]]]
 	    `[terminal_format standard-terminal '\nsemantic_left_hand: ' semantic_left_hand]
 	    
-	    [= semantic_proprioception [new semantic_proprioception [get this semantic_realm]
+	    [= semantic_proprioception [new semantic_proprioception [get [get this mind] semantic_realm]
 					    semantic_body
 					    semantic_neck
 					    semantic_left_hand

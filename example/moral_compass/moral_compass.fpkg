@@ -55,7 +55,8 @@
 	     semantic_visual_object
 	     semantic_agent
 	     semantic_event
-	     semantic_action_event]
+	     semantic_action_event
+	     semantic_proprioception]
    :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency

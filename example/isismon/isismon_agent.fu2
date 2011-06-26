@@ -400,8 +400,9 @@
        [= view_sense_menu_item [gtk-menu_item-new 'Sense']]
        [have view_sense_menu_item signal_connect 'activate'
 	     [funk []
-		   [format stdout '\n' [get this name] '\'s sensory information:'
-			   '\n  ' [have isis_agent sense_world]]]
+		   [terminal_format stadard-terminal
+				    '\n' [get this name] '\'s sensory information:'
+				    '\n  ' [have isis_agent sense_world]]]
 	     nil]
        [have view_menu append view_sense_menu_item]
        
@@ -410,9 +411,10 @@
 	     [funk []
 		   [let [[perception [get [get isis_agent mind] perception]]]
 		     [if [null perception]
-			 [format stdout '\n' [get this name] '\'s has no perception']
-		       [format stdout '\n' [get this name] '\'s perception:'
-			       '\n  ' [get [get isis_agent mind] perception]]]]]
+			 [terminal_format standard-terminal '\n' [get this name] '\'s has no perception']
+		       [terminal_format standard-terminal
+					'\n' [get this name] '\'s perception:'
+					'\n  ' [get [get isis_agent mind] perception]]]]]
 	     nil]
        [have view_menu append view_perception_menu_item]
        
@@ -421,9 +423,10 @@
 	     [funk []
 		   [let [[perception [get [get isis_agent mind] perception]]]
 		     [if [null perception]
-			 [format stdout '\n' [get this name] '\'s has no perception']
-		       [format stdout '\n' [get this name] '\'s proprioceptual frame:'
-			       '\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]]]
+			 [terminal_format standard-terminal '\n' [get this name] '\'s has no perception']
+		       [terminal_format standard-terminal
+					'\n' [get this name] '\'s proprioceptual frame:'
+					'\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]]]
 	     nil]
        [have view_menu append view_proprioceptual_frame_menu_item]
        
@@ -432,9 +435,10 @@
 	     [funk []
 		   [let [[perception [get [get isis_agent mind] perception]]]
 		     [if [null perception]
-			 [format stdout '\n' [get this name] '\'s has no perception']
-		       [format stdout '\n' [get this name] '\'s visual objects:'
-			       '\n  ' [have perception lookup `visual_objects]]]]]
+			 [terminal_format standard-terminal '\n' [get this name] '\'s has no perception']
+		       [terminal_format standard-terminal
+					'\n' [get this name] '\'s visual objects:'
+					'\n  ' [have perception lookup `visual_objects]]]]]
 	     nil]
        [have view_menu append view_visual_objects_menu_item]
        
@@ -523,7 +527,7 @@
 
 [deftypefunk isismon_agent execute update_entry []
   [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
-    [set entry text [format nil 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
+    [set entry text [terminal_format standard-terminal 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
     ]]
 
 [deftypefunk isismon_agent execute update []

@@ -34,7 +34,10 @@ f2ptr raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr s
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "body"),       nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "neck"),       nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "left_hand"),  nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "right_hand"), nil);
   return this;
 }
 
@@ -92,46 +95,107 @@ f2ptr f2__semantic_proprioception__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_proprioception__type, thing, 0, "Returns the specific type of object that this semantic_proprioception is.");
 
 
-f2ptr raw__semantic_proprioception__is_occurring(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"));
+f2ptr raw__semantic_proprioception__body(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "body"));
 }
 
-f2ptr f2__semantic_proprioception__is_occurring(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_proprioception__body(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_proprioception, this);
-  return raw__semantic_proprioception__is_occurring(cause, this);
+  return raw__semantic_proprioception__body(cause, this);
 }
-export_cefunk1(semantic_proprioception__is_occurring, this, 0, "");
+export_cefunk1(semantic_proprioception__body, this, 0, "");
 
 
-f2ptr raw__semantic_proprioception__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"), that);
+f2ptr raw__semantic_proprioception__body__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "body"), that);
 }
 
-f2ptr f2__semantic_proprioception__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_proprioception__body__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_proprioception, this);
-  return raw__semantic_proprioception__is_occurring__set(cause, this, that);
+  return raw__semantic_proprioception__body__set(cause, this, that);
 }
-export_cefunk2(semantic_proprioception__is_occurring__set, this, that, 0, "");
+export_cefunk2(semantic_proprioception__body__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_proprioception__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "is_occurring"), that);
+f2ptr raw__semantic_proprioception__neck(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "neck"));
 }
 
-f2ptr f2__semantic_proprioception__is_occurring__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_proprioception__neck(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_proprioception, this);
-  return raw__semantic_proprioception__is_occurring__remove(cause, this, that);
+  return raw__semantic_proprioception__neck(cause, this);
 }
-export_cefunk2(semantic_proprioception__is_occurring__remove, this, that, 0, "");
+export_cefunk1(semantic_proprioception__neck, this, 0, "");
+
+
+f2ptr raw__semantic_proprioception__neck__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "neck"), that);
+}
+
+f2ptr f2__semantic_proprioception__neck__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_proprioception, this);
+  return raw__semantic_proprioception__neck__set(cause, this, that);
+}
+export_cefunk2(semantic_proprioception__neck__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_proprioception__left_hand(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "left_hand"));
+}
+
+f2ptr f2__semantic_proprioception__left_hand(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_proprioception, this);
+  return raw__semantic_proprioception__left_hand(cause, this);
+}
+export_cefunk1(semantic_proprioception__left_hand, this, 0, "");
+
+
+f2ptr raw__semantic_proprioception__left_hand__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "left_hand"), that);
+}
+
+f2ptr f2__semantic_proprioception__left_hand__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_proprioception, this);
+  return raw__semantic_proprioception__left_hand__set(cause, this, that);
+}
+export_cefunk2(semantic_proprioception__left_hand__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_proprioception__right_hand(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "right_hand"));
+}
+
+f2ptr f2__semantic_proprioception__right_hand(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_proprioception, this);
+  return raw__semantic_proprioception__right_hand(cause, this);
+}
+export_cefunk1(semantic_proprioception__right_hand, this, 0, "");
+
+
+f2ptr raw__semantic_proprioception__right_hand__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "right_hand"), that);
+}
+
+f2ptr f2__semantic_proprioception__right_hand__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_proprioception, this);
+  return raw__semantic_proprioception__right_hand__set(cause, this, that);
+}
+export_cefunk2(semantic_proprioception__right_hand__set, this, that, 0, "");
 
 
 f2ptr f2__semantic_proprioception_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_occurring"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__is_occurring")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "is_occurring"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__is_occurring__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "body"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__body")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "body"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__body__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "neck"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__neck")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "neck"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__neck__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "left_hand"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__left_hand")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "left_hand"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__left_hand__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "right_hand"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__right_hand")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "right_hand"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioception"), new__symbol(cause, "semantic_proprioception__right_hand__set")));}
   return this;
 }
 

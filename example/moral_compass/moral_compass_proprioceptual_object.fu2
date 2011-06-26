@@ -44,7 +44,7 @@
 [deftypefunk moral_compass_proprioceptual_object get as-semantic_frame [semantic_realm]
   [new semantic_proprioceptual_object semantic_realm
        physical_object_type
-       [new semantic_proprioceptual_positive semantic_realm
+       [new semantic_proprioceptual_position semantic_realm
 	    [get position x]
 	    [get position y]
 	    [get position z]]

@@ -41,4 +41,16 @@
        [= orientation          initial-orientation]
        ]]
 
+[deftypefunk moral_compass_proprioceptual_object get as-semantic_frame [semantic_realm]
+  [new semantic_proprioceptual_object semantic_realm
+       physical_object_type
+       [new semantic_proprioceptual_positive semantic_realm
+	    [get position x]
+	    [get position y]
+	    [get position z]]
+       [new semantic_proprioceptual_orientation semantic_realm
+	    [get position heading]
+	    [get position pitch]
+	    [get position roll]]]]
+
 

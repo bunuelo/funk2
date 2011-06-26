@@ -258,6 +258,7 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/semantic_physical_object_type_relation/libf2e_semantic_physical_object_type_relation.la \
                       extension/semantic_proprioception/libf2e_semantic_proprioception.la \
                       extension/semantic_proprioceptual_object/libf2e_semantic_proprioceptual_object.la \
+                      extension/semantic_proprioceptual_orientation/libf2e_semantic_proprioceptual_orientation.la \
                       extension/semantic_proprioceptual_position/libf2e_semantic_proprioceptual_position.la \
                       extension/semantic_realm/libf2e_semantic_realm.la \
                       extension/semantic_relationship_key/libf2e_semantic_relationship_key.la \
@@ -451,6 +452,7 @@ extension_semantic_physical_object_type_libf2e_semantic_physical_object_type_la_
 extension_semantic_physical_object_type_relation_libf2e_semantic_physical_object_type_relation_la_SOURCES = extension/semantic_physical_object_type_relation/semantic_physical_object_type_relation.c
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                               = extension/semantic_proprioception/semantic_proprioception.c
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                 = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_SOURCES       = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
 extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_SOURCES             = extension/semantic_proprioceptual_position/semantic_proprioceptual_position.c
 extension_semantic_realm_libf2e_semantic_realm_la_SOURCES                                                 = extension/semantic_realm/semantic_realm.c
 extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES                           = extension/semantic_relationship_key/semantic_relationship_key.c
@@ -625,6 +627,9 @@ extension_semantic_proprioception_libf2e_semantic_proprioception_la_CFLAGS  = $(
 
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

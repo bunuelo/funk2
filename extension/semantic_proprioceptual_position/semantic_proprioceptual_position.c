@@ -24,7 +24,7 @@
 
 // semantic_proprioceptual_position
 
-f2ptr raw__semantic_proprioceptual_position__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioceptual_position__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr x, f2ptr y, f2ptr z) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_proprioceptual_position"));
   }
@@ -34,19 +34,19 @@ f2ptr raw__semantic_proprioceptual_position__type_create(f2ptr cause, f2ptr this
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "x"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "y"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "z"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "x"), x);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "y"), y);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "z"), z);
   return this;
 }
 
-f2ptr raw__semantic_proprioceptual_position__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioceptual_position__new(f2ptr cause, f2ptr semantic_realm, f2ptr x, f2ptr y, f2ptr z) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_proprioceptual_position__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_proprioceptual_position__type_create(cause, this, semantic_realm, x, y, z);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -54,11 +54,14 @@ f2ptr raw__semantic_proprioceptual_position__new(f2ptr cause, f2ptr semantic_rea
   return this;
 }
 
-f2ptr f2__semantic_proprioceptual_position__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_proprioceptual_position__new(f2ptr cause, f2ptr semantic_realm, f2ptr x, f2ptr y, f2ptr z) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_proprioceptual_position__new(cause, semantic_realm);
+  assert_argument_type(double,         x);
+  assert_argument_type(double,         y);
+  assert_argument_type(double,         z);
+  return raw__semantic_proprioceptual_position__new(cause, semantic_realm, x, y, z);
 }
-export_cefunk1(semantic_proprioceptual_position__new, semantic_realm, 0, "Returns a new semantic_proprioceptual_position object.");
+export_cefunk4(semantic_proprioceptual_position__new, semantic_realm, x, y, z, 0, "Returns a new semantic_proprioceptual_position object.");
 
 
 boolean_t raw__semantic_proprioceptual_position__is_type(f2ptr cause, f2ptr thing) {

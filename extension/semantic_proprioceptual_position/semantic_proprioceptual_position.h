@@ -26,9 +26,9 @@
 #include "../semantic_event/semantic_event.h"
 
 
-f2ptr     raw__semantic_proprioceptual_position__type_create      (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_proprioceptual_position__new              (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_proprioceptual_position__new              (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_proprioceptual_position__type_create      (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr x, f2ptr y, f2ptr z);
+f2ptr     raw__semantic_proprioceptual_position__new              (f2ptr cause, f2ptr semantic_realm, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__semantic_proprioceptual_position__new              (f2ptr cause, f2ptr semantic_realm, f2ptr x, f2ptr y, f2ptr z);
 boolean_t raw__semantic_proprioceptual_position__is_type          (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_proprioceptual_position__is_type          (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_proprioceptual_position__type             (f2ptr cause, f2ptr this);

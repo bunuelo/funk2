@@ -24,7 +24,7 @@
 
 // semantic_proprioceptual_orientation
 
-f2ptr raw__semantic_proprioceptual_orientation__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioceptual_orientation__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr heading, f2ptr pitch, f2ptr roll) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_proprioceptual_orientation"));
   }
@@ -34,19 +34,19 @@ f2ptr raw__semantic_proprioceptual_orientation__type_create(f2ptr cause, f2ptr t
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "x"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "y"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "z"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "heading"), heading);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "pitch"),   pitch);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "roll"),    roll);
   return this;
 }
 
-f2ptr raw__semantic_proprioceptual_orientation__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioceptual_orientation__new(f2ptr cause, f2ptr semantic_realm, f2ptr heading, f2ptr pitch, f2ptr roll) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_proprioceptual_orientation__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_proprioceptual_orientation__type_create(cause, this, semantic_realm, heading, pitch, roll);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -54,11 +54,14 @@ f2ptr raw__semantic_proprioceptual_orientation__new(f2ptr cause, f2ptr semantic_
   return this;
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_proprioceptual_orientation__new(f2ptr cause, f2ptr semantic_realm, f2ptr heading, f2ptr pitch, f2ptr roll) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_proprioceptual_orientation__new(cause, semantic_realm);
+  assert_argument_type(double,         heading);
+  assert_argument_type(double,         pitch);
+  assert_argument_type(double,         roll);
+  return raw__semantic_proprioceptual_orientation__new(cause, semantic_realm, heading, pitch, roll);
 }
-export_cefunk1(semantic_proprioceptual_orientation__new, semantic_realm, 0, "Returns a new semantic_proprioceptual_orientation object.");
+export_cefunk4(semantic_proprioceptual_orientation__new, semantic_realm, heading, pitch, roll, 0, "Returns a new semantic_proprioceptual_orientation object.");
 
 
 boolean_t raw__semantic_proprioceptual_orientation__is_type(f2ptr cause, f2ptr thing) {
@@ -94,70 +97,70 @@ f2ptr f2__semantic_proprioceptual_orientation__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_proprioceptual_orientation__type, thing, 0, "Returns the specific type of object that this semantic_proprioceptual_orientation is.");
 
 
-f2ptr raw__semantic_proprioceptual_orientation__x(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "x"));
+f2ptr raw__semantic_proprioceptual_orientation__heading(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "heading"));
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__x(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_proprioceptual_orientation__heading(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_proprioceptual_orientation, this);
-  return raw__semantic_proprioceptual_orientation__x(cause, this);
+  return raw__semantic_proprioceptual_orientation__heading(cause, this);
 }
-export_cefunk1(semantic_proprioceptual_orientation__x, this, 0, "");
+export_cefunk1(semantic_proprioceptual_orientation__heading, this, 0, "");
 
 
-f2ptr raw__semantic_proprioceptual_orientation__x__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "x"), that);
+f2ptr raw__semantic_proprioceptual_orientation__heading__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "heading"), that);
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__x__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_proprioceptual_orientation__heading__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_proprioceptual_orientation, this);
-  return raw__semantic_proprioceptual_orientation__x__set(cause, this, that);
+  return raw__semantic_proprioceptual_orientation__heading__set(cause, this, that);
 }
-export_cefunk2(semantic_proprioceptual_orientation__x__set, this, that, 0, "");
+export_cefunk2(semantic_proprioceptual_orientation__heading__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_proprioceptual_orientation__y(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "y"));
+f2ptr raw__semantic_proprioceptual_orientation__pitch(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "pitch"));
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__y(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_proprioceptual_orientation__pitch(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_proprioceptual_orientation, this);
-  return raw__semantic_proprioceptual_orientation__y(cause, this);
+  return raw__semantic_proprioceptual_orientation__pitch(cause, this);
 }
-export_cefunk1(semantic_proprioceptual_orientation__y, this, 0, "");
+export_cefunk1(semantic_proprioceptual_orientation__pitch, this, 0, "");
 
 
-f2ptr raw__semantic_proprioceptual_orientation__y__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "y"), that);
+f2ptr raw__semantic_proprioceptual_orientation__pitch__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "pitch"), that);
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__y__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_proprioceptual_orientation__pitch__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_proprioceptual_orientation, this);
-  return raw__semantic_proprioceptual_orientation__y__set(cause, this, that);
+  return raw__semantic_proprioceptual_orientation__pitch__set(cause, this, that);
 }
-export_cefunk2(semantic_proprioceptual_orientation__y__set, this, that, 0, "");
+export_cefunk2(semantic_proprioceptual_orientation__pitch__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_proprioceptual_orientation__z(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "z"));
+f2ptr raw__semantic_proprioceptual_orientation__roll(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "roll"));
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__z(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_proprioceptual_orientation__roll(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_proprioceptual_orientation, this);
-  return raw__semantic_proprioceptual_orientation__z(cause, this);
+  return raw__semantic_proprioceptual_orientation__roll(cause, this);
 }
-export_cefunk1(semantic_proprioceptual_orientation__z, this, 0, "");
+export_cefunk1(semantic_proprioceptual_orientation__roll, this, 0, "");
 
 
-f2ptr raw__semantic_proprioceptual_orientation__z__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "z"), that);
+f2ptr raw__semantic_proprioceptual_orientation__roll__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "roll"), that);
 }
 
-f2ptr f2__semantic_proprioceptual_orientation__z__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_proprioceptual_orientation__roll__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_proprioceptual_orientation, this);
-  return raw__semantic_proprioceptual_orientation__z__set(cause, this, that);
+  return raw__semantic_proprioceptual_orientation__roll__set(cause, this, that);
 }
-export_cefunk2(semantic_proprioceptual_orientation__z__set, this, that, 0, "");
+export_cefunk2(semantic_proprioceptual_orientation__roll__set, this, that, 0, "");
 
 
 f2ptr f2__semantic_proprioceptual_orientation_type__new(f2ptr cause) {
@@ -165,12 +168,12 @@ f2ptr f2__semantic_proprioceptual_orientation_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "x"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__x")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "x"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__x__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "y"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__y")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "y"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__y__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "z"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__z")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "z"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__z__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "heading"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__heading")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "heading"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__heading__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "pitch"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__pitch")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "pitch"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__pitch__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "roll"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__roll")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "roll"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_proprioceptual_orientation"), new__symbol(cause, "semantic_proprioceptual_orientation__roll__set")));}
   return this;
 }
 
@@ -178,7 +181,7 @@ f2ptr f2__semantic_proprioceptual_orientation_type__new(f2ptr cause) {
 
 // **
 
-f2ptr f2__semantic_proprioceptual_orientation__core_extension__ping(f2ptr cause) {
+ f2ptr f2__semantic_proprioceptual_orientation__core_extension__ping(f2ptr cause) {
   return nil;
 }
 export_cefunk0(semantic_proprioceptual_orientation__core_extension__ping, 0, "");

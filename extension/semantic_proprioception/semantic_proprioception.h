@@ -23,7 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_PROPRIOCEPTION__H
 
 #include "../semantic_object/semantic_object.h"
-#include "../semantic_event/semantic_event.h"
+#include "../semantic_proprioceptual_object/semantic_proprioceptual_object.h"
 
 
 f2ptr     raw__semantic_proprioception__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr body, f2ptr neck, f2ptr left_hand, f2ptr right_hand);

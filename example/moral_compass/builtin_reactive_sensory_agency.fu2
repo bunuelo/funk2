@@ -17,6 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+'continuous_sensing_resource'
+
 [deframe continuous_sensing_resource [traced_resource] [perception
 							[perception_trigger [new fiber_trigger]]]
   [new []
@@ -36,6 +38,7 @@
        nil]]
 
 
+'propogate_visual_objects_to_visual_knowledge_resource'
 
 [deframe propogate_visual_objects_to_visual_knowledge_resource [traced_resource] [[previous_perception              nil]
 										  [semantic_visual_object_ptypehash [new ptypehash]]]
@@ -47,8 +50,9 @@
        nil]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `visual_knowledge [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `visual_action_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `visual_knowledge         [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `visual_action_knowledge  [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_knowledge_base `proprioceptual_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
@@ -191,6 +195,8 @@
       [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
       ]]]
 
+
+'builtin_reactive_sensory_agency'
 
 [deframe builtin_reactive_sensory_agency [agency] []
   [new []

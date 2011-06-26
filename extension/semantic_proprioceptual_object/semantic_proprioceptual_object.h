@@ -23,7 +23,8 @@
 #define F2__EXTENSION__SEMANTIC_PROPRIOCEPTUAL_OBJECT__H
 
 #include "../semantic_object/semantic_object.h"
-#include "../semantic_event/semantic_event.h"
+#include "../semantic_proprioceptual_position/semantic_proprioceptual_position.h"
+#include "../semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.h"
 
 
 f2ptr     raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm);

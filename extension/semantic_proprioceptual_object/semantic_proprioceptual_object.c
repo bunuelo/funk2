@@ -24,7 +24,7 @@
 
 // semantic_proprioceptual_object
 
-f2ptr raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr physical_object_type, f2ptr position, f2ptr orientation) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_proprioceptual_object"));
   }
@@ -34,19 +34,19 @@ f2ptr raw__semantic_proprioceptual_object__type_create(f2ptr cause, f2ptr this, 
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"),     new__symbol(cause, "physical_object_type"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "position"),             nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "orientation"),          nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"),     new__symbol(cause, "physical_object_type"), physical_object_type);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "position"),             position);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "orientation"),          orientation);
   return this;
 }
 
-f2ptr raw__semantic_proprioceptual_object__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_proprioceptual_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr physical_object_type, f2ptr position, f2ptr orientation) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_proprioceptual_object__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_proprioceptual_object__type_create(cause, this, semantic_realm, physical_object_type, position, orientation);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -54,11 +54,14 @@ f2ptr raw__semantic_proprioceptual_object__new(f2ptr cause, f2ptr semantic_realm
   return this;
 }
 
-f2ptr f2__semantic_proprioceptual_object__new(f2ptr cause, f2ptr semantic_realm) {
-  assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_proprioceptual_object__new(cause, semantic_realm);
+f2ptr f2__semantic_proprioceptual_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr physical_object_type, f2ptr position, f2ptr orientation) {
+  assert_argument_type(semantic_realm,                      semantic_realm);
+  assert_argument_type(symbol,                              physical_object_type);
+  assert_argument_type(semantic_proprioceptual_position,    position);
+  assert_argument_type(semantic_proprioceptual_orientation, orientation);
+  return raw__semantic_proprioceptual_object__new(cause, semantic_realm, physical_object_type, position, orientation);
 }
-export_cefunk1(semantic_proprioceptual_object__new, semantic_realm, 0, "Returns a new semantic_proprioceptual_object object.");
+export_cefunk4(semantic_proprioceptual_object__new, semantic_realm, physical_object_type, position, orientation, 0, "Returns a new semantic_proprioceptual_object object.");
 
 
 boolean_t raw__semantic_proprioceptual_object__is_type(f2ptr cause, f2ptr thing) {
@@ -185,7 +188,8 @@ export_cefunk0(semantic_proprioceptual_object__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_proprioceptual_object__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_proprioceptual_object, semantic_object);
-  core_extension__ping(semantic_proprioceptual_object, semantic_event);
+  core_extension__ping(semantic_proprioceptual_object, semantic_proprioceptual_position);
+  core_extension__ping(semantic_proprioceptual_object, semantic_proprioceptual_orientation);
   status("semantic_proprioceptual_object initialized.");
   return nil;
 }

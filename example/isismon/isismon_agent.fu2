@@ -322,6 +322,7 @@
 				view_menu
 				view_menu_item
 				view_sense_menu_item
+				view_perception_menu_item
 				view_visual_objects_menu_item
 				view_proprioceptual_frame_menu_item
 				isismon_agent_mind_menu
@@ -404,6 +405,16 @@
 	     nil]
        [have view_menu append view_sense_menu_item]
        
+       [= view_perception_menu_item [gtk-menu_item-new 'Perception']]
+       [have view_perception_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[perception [get [get isis_agent mind] perception]]]
+		     [if [null perception]
+			 [format stdout '\n' [get this name] '\'s has no perception']
+		       [format stdout '\n' [get this name] '\'s perception:'
+			       '\n  ' [get [get isis_agent mind] perception]]]]]
+	     nil]
+       [have view_menu append view_perception_menu_item]
        
        [= view_proprioceptual_frame_menu_item [gtk-menu_item-new 'Proprioceptual Frame']]
        [have view_proprioceptual_frame_menu_item signal_connect 'activate'

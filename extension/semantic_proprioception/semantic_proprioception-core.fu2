@@ -22,3 +22,11 @@
 
 [semantic_proprioception-core_extension-define_types]
 
+[deftypefunk semantic_proprioception execute add_to_semantic_knowledge_base [semantic_knowledge_base]
+  [have semantic_knowledge_base add_semantic_frame this]
+  [have [get this body]       add_to_semantic_knowledge_base semantic_knowledge_base]
+  [have [get this neck]       add_to_semantic_knowledge_base semantic_knowledge_base]
+  [have [get this left_hand]  add_to_semantic_knowledge_base semantic_knowledge_base]
+  [have [get this right_hand] add_to_semantic_knowledge_base semantic_knowledge_base]
+  nil]
+

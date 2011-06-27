@@ -19,7 +19,8 @@
 
 [defpackage semantic_somatosensation
   :documentation 'Knowledge of semantosensory perception.'
-   :packages     [semantic_object]
+   :packages     [semantic_object
+		  semantic_somatosensory_object]
     :sources     ['semantic_somatosensation-core.fu2']
      :binaries   ['.libs/libf2e_semantic_somatosensation.so']]
 

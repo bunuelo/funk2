@@ -234,14 +234,12 @@
 	   [neck                 [have proprioceptual_frame lookup `neck]]
 	   [left_hand            [have proprioceptual_frame lookup `left_hand]]
 	   [right_hand           [have proprioceptual_frame lookup `right_hand]]]
-      `[terminal_format standard-terminal '\n' perception]
       
       [if [null semantic_proprioception]
 	  [let [[semantic_body       [get body       as-semantic_frame [get [get this mind] semantic_realm]]]
 		[semantic_neck       [get neck       as-semantic_frame [get [get this mind] semantic_realm]]]
 		[semantic_left_hand  [get left_hand  as-semantic_frame [get [get this mind] semantic_realm]]]
 		[semantic_right_hand [get right_hand as-semantic_frame [get [get this mind] semantic_realm]]]]
-	    `[terminal_format standard-terminal '\nsemantic_left_hand: ' semantic_left_hand]
 	    
 	    [= semantic_proprioception [new semantic_proprioception [get [get this mind] semantic_realm]
 					    semantic_body

@@ -163,6 +163,7 @@
 						     'extension/semantic_situation/'
 						     'extension/semantic_situation_category/'
 						     'extension/semantic_situation_transition/'
+						     'extension/semantic_somatosensory_object/'
 						     'extension/semantic_temporal_object/'
 						     'extension/semantic_time/'
 						     'extension/semantic_visual_object/'

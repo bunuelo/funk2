@@ -250,8 +250,7 @@
 
 'propogate_somatosensory_objects_to_somatosensory_knowledge_resource'
 
-[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception     nil]
-												[semantic_proprioception nil]]
+[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception nil]]
   [new []
        [construct traced_resource `propogate_somatosensory_objects_to_somatosensory_knowledge
 		  [funk []
@@ -271,6 +270,8 @@
     [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
     [let* [[perception           [get [get this mind] perception]]]
       `[terminal_format standard-terminal '\n' perception]
+      
+      
       
       [= previous_perception perception]]
     'Once we have finished changing somatosensory_knowledge, we add a special ending trace event.'

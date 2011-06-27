@@ -34,8 +34,8 @@ f2ptr raw__semantic_somatosensation__type_create(f2ptr cause, f2ptr this, f2ptr 
       return result;
     }
   }
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "left_hand"),  nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "right_hand"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "left_hand"),  nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "right_hand"), nil);
   return this;
 }
 

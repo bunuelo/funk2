@@ -250,7 +250,8 @@
 
 'propogate_somatosensory_objects_to_somatosensory_knowledge_resource'
 
-[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception nil]]
+[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception      nil]
+												[semantic_somatosensation nil]]
   [new []
        [construct traced_resource `propogate_somatosensory_objects_to_somatosensory_knowledge
 		  [funk []
@@ -273,7 +274,26 @@
 	   [right_hand_object_name [get perception right_hand_object_name]]]
       `[terminal_format standard-terminal '\n' perception]
       
-      
+      [if [null semantic_somatosensation]
+	  [let [[left_hand_semantic_object  nil]
+		[right_hand_semantic_object nil]]
+	    [if left_hand_object_name
+		[prog [= left_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+		      [set left_hand_semantic_object phenomenal_name left_hand_object_name]]]
+	    [if right_hand_object_name
+		[prog [= right_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+		      [set right_hand_semantic_object phenomenal_name right_hand_object_name]]]
+	    
+	    [= semantic_somatosensation [new semantic_somatosensation [get [get this mind] semantic_realm]]]
+	    
+	    [set semantic_somatosensation left_hand  left_hand_semantic_object]
+	    [set semantic_somatosensation right_hand left_hand_semantic_object]
+	    
+	    [have semantic_somatosensation add_to_semantic_knowledge_base [get [get this mind] semantic_knowledge_base `somatosensory_knowledge]]
+	    
+	    ]
+	[prog [terminal_format standard-terminal '\nShould update somatosensation here.']
+	      ]]
       
       [= previous_perception perception]]
     'Once we have finished changing somatosensory_knowledge, we add a special ending trace event.'

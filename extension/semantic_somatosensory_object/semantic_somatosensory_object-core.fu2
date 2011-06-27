@@ -22,3 +22,7 @@
 
 [semantic_somatosensory_object-core_extension-define_types]
 
+[deftypefunk semantic_somatosensory_object execute add_to_semantic_knowledge_base [semantic_knowledge_base]
+  [have semantic_knowledge_base add_semantic_frame this]
+  nil]
+

@@ -23,7 +23,8 @@
 [deframe self_conscious_layer [mental_layer] []
   [new []
        [construct mental_layer 5 `self_conscious]
-       [have this add_agency [new self_conscious_imprimer_agency]]
+       [parog [have this add_agency [new self_conscious_imprimer_agency]]
+	      ]
        this]]
 
 [deftypefunk self_conscious_layer execute create_knowledge []

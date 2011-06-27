@@ -23,8 +23,8 @@
 [deframe reflective_layer [mental_layer] []
   [new []
        [construct mental_layer 3 `reflective]
-       [have this add_agency [new old_reflective_event_knowledge_agency]]
-       [have this add_agency [new reflective_credit_assignment_agency]]
+       [parog [have this add_agency [new old_reflective_event_knowledge_agency]]
+	      [have this add_agency [new reflective_credit_assignment_agency]]]
        this]]
 
 [deftypefunk reflective_layer execute create_knowledge []

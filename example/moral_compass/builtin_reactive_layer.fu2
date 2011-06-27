@@ -23,9 +23,9 @@
 [deframe builtin_reactive_layer [mental_layer] []
   [new []
        [construct mental_layer 0 `builtin_reactive]
-       [have this add_agency [new builtin_reactive_neural_plug_agency]]
-       [have this add_agency [new builtin_reactive_sensory_agency]]
-       [have this add_agency [new builtin_reactive_physical_agency]]
+       [parog [have this add_agency [new builtin_reactive_neural_plug_agency]]
+	      [have this add_agency [new builtin_reactive_sensory_agency]]
+	      [have this add_agency [new builtin_reactive_physical_agency]]]
        this]]
 
 [deftypefunk builtin_reactive_layer execute know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]

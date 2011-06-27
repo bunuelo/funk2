@@ -135,7 +135,6 @@ export_cefunk0(semantic_somatosensory_object__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_somatosensory_object__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_somatosensory_object, semantic_object);
-  core_extension__ping(semantic_somatosensory_object, semantic_event);
   status("semantic_somatosensory_object initialized.");
   return nil;
 }

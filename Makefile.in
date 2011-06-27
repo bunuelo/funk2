@@ -658,6 +658,26 @@ extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_
 	$(CFLAGS) \
 	$(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LIBADD =
+am_extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_OBJECTS = extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_OBJECTS = $(am_extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_OBJECTS)
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LIBADD =
+am_extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_OBJECTS = extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_OBJECTS = $(am_extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_OBJECTS)
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LIBADD =
 am_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS = extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS = $(am_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_OBJECTS)
@@ -895,6 +915,8 @@ SOURCES = $(extension_cairo_libf2e_cairo_la_SOURCES) \
 	$(extension_semantic_situation_libf2e_semantic_situation_la_SOURCES) \
 	$(extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES) \
 	$(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES) \
+	$(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES) \
+	$(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES) \
 	$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES) \
 	$(extension_semantic_time_libf2e_semantic_time_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
@@ -956,6 +978,8 @@ DIST_SOURCES = $(extension_cairo_libf2e_cairo_la_SOURCES) \
 	$(extension_semantic_situation_libf2e_semantic_situation_la_SOURCES) \
 	$(extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES) \
 	$(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES) \
+	$(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES) \
+	$(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES) \
 	$(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES) \
 	$(extension_semantic_time_libf2e_semantic_time_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
@@ -1288,6 +1312,8 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/semantic_situation/libf2e_semantic_situation.la \
                       extension/semantic_situation_category/libf2e_semantic_situation_category.la \
                       extension/semantic_situation_transition/libf2e_semantic_situation_transition.la \
+                      extension/semantic_somatosensation/libf2e_semantic_somatosensation.la \
+                      extension/semantic_somatosensory_object/libf2e_semantic_somatosensory_object.la \
                       extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                       extension/semantic_time/libf2e_semantic_time.la \
                       extension/semantic_visual_object/libf2e_semantic_visual_object.la \
@@ -1481,6 +1507,8 @@ extension_semantic_self_libf2e_semantic_self_la_SOURCES = extension/semantic_sel
 extension_semantic_situation_libf2e_semantic_situation_la_SOURCES = extension/semantic_situation/semantic_situation.c
 extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES = extension/semantic_situation_category/semantic_situation_category.c
 extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES = extension/semantic_situation_transition/semantic_situation_transition.c
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES = extension/semantic_somatosensation/semantic_somatosensation.c
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES = extension/semantic_somatosensory_object/semantic_somatosensory_object.c
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES = extension/semantic_temporal_object/semantic_temporal_object.c
 extension_semantic_time_libf2e_semantic_time_la_SOURCES = extension/semantic_time/semantic_time.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES = extension/semantic_visual_object/semantic_visual_object.c
@@ -1618,6 +1646,10 @@ extension_semantic_situation_category_libf2e_semantic_situation_category_la_LDFL
 extension_semantic_situation_category_libf2e_semantic_situation_category_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_time_libf2e_semantic_time_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -2330,6 +2362,28 @@ extension/semantic_situation_transition/extension_semantic_situation_transition_
 	extension/semantic_situation_transition/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_situation_transition/libf2e_semantic_situation_transition.la: $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_OBJECTS) $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_DEPENDENCIES) extension/semantic_situation_transition/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LINK) -rpath $(libdir) $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_OBJECTS) $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LIBADD) $(LIBS)
+extension/semantic_somatosensation/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_somatosensation
+	@: > extension/semantic_somatosensation/$(am__dirstamp)
+extension/semantic_somatosensation/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_somatosensation/$(DEPDIR)
+	@: > extension/semantic_somatosensation/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo:  \
+	extension/semantic_somatosensation/$(am__dirstamp) \
+	extension/semantic_somatosensation/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_somatosensation/libf2e_semantic_somatosensation.la: $(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_OBJECTS) $(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_DEPENDENCIES) extension/semantic_somatosensation/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LINK) -rpath $(libdir) $(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_OBJECTS) $(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LIBADD) $(LIBS)
+extension/semantic_somatosensory_object/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_somatosensory_object
+	@: > extension/semantic_somatosensory_object/$(am__dirstamp)
+extension/semantic_somatosensory_object/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_somatosensory_object/$(DEPDIR)
+	@: > extension/semantic_somatosensory_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo:  \
+	extension/semantic_somatosensory_object/$(am__dirstamp) \
+	extension/semantic_somatosensory_object/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_somatosensory_object/libf2e_semantic_somatosensory_object.la: $(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_OBJECTS) $(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_DEPENDENCIES) extension/semantic_somatosensory_object/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LINK) -rpath $(libdir) $(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_OBJECTS) $(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LIBADD) $(LIBS)
 extension/semantic_temporal_object/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_temporal_object
 	@: > extension/semantic_temporal_object/$(am__dirstamp)
@@ -3004,6 +3058,10 @@ mostlyclean-compile:
 	-rm -f extension/semantic_situation_category/extension_semantic_situation_category_libf2e_semantic_situation_category_la-semantic_situation_category.lo
 	-rm -f extension/semantic_situation_transition/extension_semantic_situation_transition_libf2e_semantic_situation_transition_la-semantic_situation_transition.$(OBJEXT)
 	-rm -f extension/semantic_situation_transition/extension_semantic_situation_transition_libf2e_semantic_situation_transition_la-semantic_situation_transition.lo
+	-rm -f extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.$(OBJEXT)
+	-rm -f extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo
+	-rm -f extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.$(OBJEXT)
+	-rm -f extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo
 	-rm -f extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.$(OBJEXT)
 	-rm -f extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo
 	-rm -f extension/semantic_time/extension_semantic_time_libf2e_semantic_time_la-semantic_time.$(OBJEXT)
@@ -3198,6 +3256,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_situation/$(DEPDIR)/extension_semantic_situation_libf2e_semantic_situation_la-semantic_situation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_situation_category/$(DEPDIR)/extension_semantic_situation_category_libf2e_semantic_situation_category_la-semantic_situation_category.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_situation_transition/$(DEPDIR)/extension_semantic_situation_transition_libf2e_semantic_situation_transition_la-semantic_situation_transition.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_somatosensation/$(DEPDIR)/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_somatosensory_object/$(DEPDIR)/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_temporal_object/$(DEPDIR)/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_time/$(DEPDIR)/extension_semantic_time_libf2e_semantic_time_la-semantic_time.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_visual_object/$(DEPDIR)/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.Plo@am__quote@
@@ -3677,6 +3737,22 @@ extension/semantic_situation_transition/extension_semantic_situation_transition_
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_situation_transition/semantic_situation_transition.c' object='extension/semantic_situation_transition/extension_semantic_situation_transition_libf2e_semantic_situation_transition_la-semantic_situation_transition.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_situation_transition/extension_semantic_situation_transition_libf2e_semantic_situation_transition_la-semantic_situation_transition.lo `test -f 'extension/semantic_situation_transition/semantic_situation_transition.c' || echo '$(srcdir)/'`extension/semantic_situation_transition/semantic_situation_transition.c
+
+extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo: extension/semantic_somatosensation/semantic_somatosensation.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_CFLAGS) $(CFLAGS) -MT extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo -MD -MP -MF extension/semantic_somatosensation/$(DEPDIR)/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.Tpo -c -o extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo `test -f 'extension/semantic_somatosensation/semantic_somatosensation.c' || echo '$(srcdir)/'`extension/semantic_somatosensation/semantic_somatosensation.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_somatosensation/$(DEPDIR)/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.Tpo extension/semantic_somatosensation/$(DEPDIR)/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_somatosensation/semantic_somatosensation.c' object='extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_somatosensation/extension_semantic_somatosensation_libf2e_semantic_somatosensation_la-semantic_somatosensation.lo `test -f 'extension/semantic_somatosensation/semantic_somatosensation.c' || echo '$(srcdir)/'`extension/semantic_somatosensation/semantic_somatosensation.c
+
+extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo: extension/semantic_somatosensory_object/semantic_somatosensory_object.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo -MD -MP -MF extension/semantic_somatosensory_object/$(DEPDIR)/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.Tpo -c -o extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo `test -f 'extension/semantic_somatosensory_object/semantic_somatosensory_object.c' || echo '$(srcdir)/'`extension/semantic_somatosensory_object/semantic_somatosensory_object.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_somatosensory_object/$(DEPDIR)/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.Tpo extension/semantic_somatosensory_object/$(DEPDIR)/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_somatosensory_object/semantic_somatosensory_object.c' object='extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_somatosensory_object/extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la-semantic_somatosensory_object.lo `test -f 'extension/semantic_somatosensory_object/semantic_somatosensory_object.c' || echo '$(srcdir)/'`extension/semantic_somatosensory_object/semantic_somatosensory_object.c
 
 extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo: extension/semantic_temporal_object/semantic_temporal_object.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS) $(CFLAGS) -MT extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo -MD -MP -MF extension/semantic_temporal_object/$(DEPDIR)/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.Tpo -c -o extension/semantic_temporal_object/extension_semantic_temporal_object_libf2e_semantic_temporal_object_la-semantic_temporal_object.lo `test -f 'extension/semantic_temporal_object/semantic_temporal_object.c' || echo '$(srcdir)/'`extension/semantic_temporal_object/semantic_temporal_object.c
@@ -4780,6 +4856,8 @@ clean-libtool:
 	-rm -rf extension/semantic_situation/.libs extension/semantic_situation/_libs
 	-rm -rf extension/semantic_situation_category/.libs extension/semantic_situation_category/_libs
 	-rm -rf extension/semantic_situation_transition/.libs extension/semantic_situation_transition/_libs
+	-rm -rf extension/semantic_somatosensation/.libs extension/semantic_somatosensation/_libs
+	-rm -rf extension/semantic_somatosensory_object/.libs extension/semantic_somatosensory_object/_libs
 	-rm -rf extension/semantic_temporal_object/.libs extension/semantic_temporal_object/_libs
 	-rm -rf extension/semantic_time/.libs extension/semantic_time/_libs
 	-rm -rf extension/semantic_visual_object/.libs extension/semantic_visual_object/_libs
@@ -5128,6 +5206,10 @@ distclean-generic:
 	-rm -f extension/semantic_situation_category/$(am__dirstamp)
 	-rm -f extension/semantic_situation_transition/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_situation_transition/$(am__dirstamp)
+	-rm -f extension/semantic_somatosensation/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_somatosensation/$(am__dirstamp)
+	-rm -f extension/semantic_somatosensory_object/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_somatosensory_object/$(am__dirstamp)
 	-rm -f extension/semantic_temporal_object/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_temporal_object/$(am__dirstamp)
 	-rm -f extension/semantic_time/$(DEPDIR)/$(am__dirstamp)
@@ -5146,7 +5228,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type/$(DEPDIR) extension/semantic_physical_object_type_relation/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type/$(DEPDIR) extension/semantic_physical_object_type_relation/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -5194,7 +5276,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type/$(DEPDIR) extension/semantic_physical_object_type_relation/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/mindmon/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type/$(DEPDIR) extension/semantic_physical_object_type_relation/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

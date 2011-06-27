@@ -268,7 +268,9 @@
 [deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource execute update_somatosensory_knowledge_from_somatosensory_objects []
   [while t
     [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-    [let* [[perception           [get [get this mind] perception]]]
+    [let* [[perception             [get [get this mind] perception]]
+	   [left_hand_object_name  [get perception left_hand_object_name]]
+	   [right_hand_object_name [get perception right_hand_object_name]]]
       `[terminal_format standard-terminal '\n' perception]
       
       

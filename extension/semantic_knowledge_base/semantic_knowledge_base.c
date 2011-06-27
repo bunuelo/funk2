@@ -315,7 +315,7 @@ void raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
     f2ptr iter = semantic_frames;
     while (iter != nil) {
       f2ptr semantic_frame = f2__cons__car(cause, iter);
-      raw__semantic_knowledge_base__remove_semantic_frame(cause, this, semantic_frame);
+      assert_value(raw__semantic_knowledge_base__remove_semantic_frame(cause, this, semantic_frame));
       iter = f2__cons__cdr(cause, iter);
     }
   }
@@ -490,8 +490,7 @@ f2ptr raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(f2p
 f2ptr f2__semantic_knowledge_base__know_before_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   assert_argument_type(semantic_knowledge_base, this);
   assert_argument_type(semantic_frame,          semantic_frame);
-  raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value);
-  return nil;
+  return raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value);
 }
 export_cefunk5(semantic_knowledge_base__know_before_semantic_frame_value_removal, this, semantic_frame, key_type, key, value, 0, "Usually called by a semantic_frame that belongs to this knowledge base when a value is removed from the frame.");
 
@@ -724,7 +723,7 @@ f2ptr raw__semantic_knowledge_base__copy_differences_to(f2ptr cause, f2ptr this,
       while (iter != nil) {
 	f2ptr target__semantic_frame = f2cons__car(iter, cause);
 	if (! raw__semantic_knowledge_base__contains_semantic_frame(cause, this, target__semantic_frame)) {
-	  raw__semantic_knowledge_base__remove_semantic_frame(cause, target, target__semantic_frame);
+	  assert_value(raw__semantic_knowledge_base__remove_semantic_frame(cause, target, target__semantic_frame));
 	}
 	iter = f2cons__cdr(iter, cause);
       }

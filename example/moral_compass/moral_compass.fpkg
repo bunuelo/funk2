@@ -57,7 +57,8 @@
 	     semantic_event
 	     semantic_action_event
 	     moral_compass_proprioceptual_object
-	     semantic_proprioception]
+	     semantic_proprioception
+	     semantic_somatosensation]
    :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency

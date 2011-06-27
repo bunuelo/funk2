@@ -277,17 +277,19 @@
       [if [null semantic_somatosensation]
 	  [let [[left_hand_semantic_object  nil]
 		[right_hand_semantic_object nil]]
-	    [if left_hand_object_name
-		[prog [= left_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
-		      [set left_hand_semantic_object phenomenal_name left_hand_object_name]]]
-	    [if right_hand_object_name
-		[prog [= right_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
-		      [set right_hand_semantic_object phenomenal_name right_hand_object_name]]]
 	    
 	    [= semantic_somatosensation [new semantic_somatosensation [get [get this mind] semantic_realm]]]
 	    
-	    [set semantic_somatosensation left_hand  left_hand_semantic_object]
-	    [set semantic_somatosensation right_hand left_hand_semantic_object]
+	    [if left_hand_object_name
+		[prog [= left_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+		      [set left_hand_semantic_object phenomenal_name left_hand_object_name]
+		      [set semantic_somatosensation left_hand left_hand_semantic_object]
+		      ]]
+	    [if right_hand_object_name
+		[prog [= right_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+		      [set right_hand_semantic_object phenomenal_name right_hand_object_name]
+		      [set semantic_somatosensation right_hand right_hand_semantic_object]
+		      ]]
 	    
 	    [have semantic_somatosensation add_to_semantic_knowledge_base [get [get this mind] semantic_knowledge_base `somatosensory_knowledge]]
 	    

@@ -306,7 +306,7 @@ f2ptr f2__semantic_knowledge_base__contains_semantic_frame(f2ptr cause, f2ptr th
 export_cefunk2(semantic_knowledge_base__contains_semantic_frame, this, semantic_frame, 0, "Returns true if this semantic_knowledge_base contains the given semantic_frame.");
 
 
-void raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
   f2ptr semantic_frame_set = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
   f2ptr semantic_frames    = nil;
   set__iteration(cause, semantic_frame_set, semantic_frame,
@@ -319,12 +319,12 @@ void raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
       iter = f2__cons__cdr(cause, iter);
     }
   }
+  return nil;
 }
 
 f2ptr f2__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_knowledge_base, this);
-  raw__semantic_knowledge_base__remove_all(cause, this);
-  return nil;
+  return raw__semantic_knowledge_base__remove_all(cause, this);
 }
 export_cefunk1(semantic_knowledge_base__remove_all, this, 0, "Removes all semantic_frames from this knowledge_base.");
 

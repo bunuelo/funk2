@@ -250,8 +250,9 @@
 
 'propogate_somatosensory_objects_to_somatosensory_knowledge_resource'
 
-[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception      nil]
-												[semantic_somatosensation nil]]
+[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception                           nil]
+												[semantic_somatosensation                      nil]
+												[semantic_semantosensory_object_name_ptypehash [new ptypehash]]]
   [new []
        [construct traced_resource `propogate_somatosensory_objects_to_somatosensory_knowledge
 		  [funk []
@@ -265,6 +266,13 @@
 
 [deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource execute connect_knowledge_reflection []
   nil]
+
+[deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource get somatosensory_object [phenomenal_name]
+  [let [[somatosensory_object [have semantic_semantosensory_object_name_ptypehash lookup phenomenal_name]]]
+    [if [null somatosensory_object]
+	[prog [= somatosensory_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+	      [set somatosensory_object phenomenal_name phenomenal_name]]]
+    somatosensory_object]]
 
 [deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource execute update_somatosensory_knowledge_from_somatosensory_objects []
   [while t
@@ -295,7 +303,24 @@
 	    
 	    ]
 	[prog [terminal_format standard-terminal '\nShould update somatosensation here.']
-	      ]]
+	      
+	      [let [[previous_left_hand_object_name  [get previous_perception left_hand_object_name]]
+		    [previous_right_hand_object_name [get previous_perception right_hand_object_name]]]
+		
+		[if [not [eq left_hand_object_name previous_left_hand_object_name]]
+		    [let [[previous_left_hand_semantic_object nil]
+			  [left_hand_semantic_object          nil]]
+		      [if [not [null previous_left_hand_object_name]]
+			  [prog [= previous_left_hand_semantic_object [get this somatosensory_object previous_left_hand_object_name]]
+				[have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] remove_semantic_frame previous_left_hand_semantic_object]]]
+		      [if [not [null left_hand_object_name]]
+			  [prog [= left_hand_semantic_object [get this somatosensory_object left_hand_object_name]]
+				[have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_semantic_frame left_hand_semantic_object]]]
+		      [set semantic_somatosensation left_hand  left_hand_semantic_object]
+		      [set semantic_somatosensation right_hand right_hand_semantic_object]
+		      ]]
+		
+		]]]
       
       [= previous_perception perception]]
     'Once we have finished changing somatosensory_knowledge, we add a special ending trace event.'

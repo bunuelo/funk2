@@ -271,7 +271,8 @@
   [let [[somatosensory_object [have semantic_semantosensory_object_name_ptypehash lookup phenomenal_name]]]
     [if [null somatosensory_object]
 	[prog [= somatosensory_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
-	      [set somatosensory_object phenomenal_name phenomenal_name]]]
+	      [set somatosensory_object phenomenal_name phenomenal_name]
+	      [have semantic_semantosensory_object_name_ptypehash add phenomenal_name somatosensory_object]]]
     somatosensory_object]]
 
 [deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource execute update_somatosensory_knowledge_from_somatosensory_objects []

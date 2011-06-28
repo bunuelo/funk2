@@ -636,7 +636,7 @@ f2ptr raw__interval_tree_node__insert_case_3(f2ptr cause, f2ptr this, f2ptr left
 f2ptr raw__interval_tree_node__insert_case_2(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
   f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
   if (raw__interval_tree_node__is_black(cause, parent_node)) {
-    return;
+    return nil;
   } else {
     assert_value(raw__interval_tree_node__insert_case_3(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
   }

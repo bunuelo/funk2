@@ -86,6 +86,8 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "view_fiber_menu_item"), this__view_fiber_menu_item);
   f2ptr this__view_fiber_value_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Fiber Value"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "view_fiber_value_menu_item"), this__view_fiber_value_menu_item);
+  f2ptr this__view_bug_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Fiber Value"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_bug_menu_item"), this__view_bug_menu_item);
   f2ptr this__view_cause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Cause"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "view_cause_menu_item"), this__view_cause_menu_item);
   f2ptr this__view_stack_trace_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Stack Trace"));
@@ -125,6 +127,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   raw__gtk__menu__append(cause, this__view_menu, this__view_fiber_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_fiber_value_menu_item);
+  raw__gtk__menu__append(cause, this__view_menu, this__view_bug_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_cause_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_stack_trace_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_stack_trace_first_block_menu_item);

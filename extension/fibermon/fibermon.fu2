@@ -117,6 +117,7 @@
 				 view_menu
 				 view_fiber_menu_item
 				 view_fiber_value_menu_item
+				 view_bug_menu_item
 				 view_cause_menu_item
 				 view_stack_trace_menu_item
 				 view_stack_trace_first_block_menu_item
@@ -184,6 +185,21 @@
 				[terminal_format standard-terminal '\n\nfibermon printing fiber value:\n']
 				[print [get fiber value]]
 				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    [have view_bug_menu_item signal_connect 'activate'
+			  [funk []
+				[let [[fiber-value [get fiber value]]]
+				  [if [not [is-type `bug fiber-value]]
+				      [terminal_format standard-terminal '\n\nfibermon: fiber value is not bug.\n']
+				    [prog [terminal_format standard-terminal '\n\nfibermon printing bug:\n']
+					  [labels [[print_bug [bug]
+							      [print bug]
+							      [cond [[eq [get bug bug_type] 7]
+								     [let [[subbug [have [get bug frame] lookup `value]]]
+								       [print_bug subbug]]]
+								    ]]]
+						  [print_bug fiber-value]]
+					  [terminal_format standard-terminal '\n\n']]]]]
 			  nil]
 		    [have view_cause_menu_item signal_connect 'activate'
 			  [funk []

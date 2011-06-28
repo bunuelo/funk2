@@ -52,7 +52,8 @@
 	     isismon_learned_reactive_physical_activator
 	     isismon_deliberative_planner_activator
 	     isismon_deliberative_goal_activator
-	     isismon_knowledge]
+	     isismon_knowledge
+	     isismon_agent_visualization]
    :sources ['isismon_agent.fu2']]
 
 [defpackage isismon

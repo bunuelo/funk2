@@ -190,6 +190,7 @@
 						     'example/socket-client/'
 						     'example/socket-server/'
 						     'example/traced_mind/'
+						     'example/visualize/'
 						     'test/cairo-test/'
 						     'test/concept_version_space-test/'
 						     'test/gtk-test/'

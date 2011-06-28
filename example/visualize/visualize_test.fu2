@@ -1,0 +1,3 @@
+
+[globalize client [new xmlrpc_client 'http://simonetti:8010/RPC2']]
+

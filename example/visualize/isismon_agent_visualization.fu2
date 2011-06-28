@@ -28,9 +28,24 @@
 
 
 [deftypefunk isismon_agent_visualization execute start []
-  [terminal_format '\nisismon_agent_visualization here.']
-  [terminal_format '\n  isismon_agent: ' isismon_agent]
+  [terminal_format standard-terminal '\nisismon_agent_visualization here.']
   
+  [system 'python example/visualize/xmlserver.py']
   
-  nil]
+  [let [[isis_agent [get isismon_agent isis_agent]]]
+    [let [[mind [get isis_agent mind]]]
+      [let [[resources [get mind resources]]]
+	
+	[mapc [funk [resource]
+		    [terminal_format standard-terminal '\nresource: ' [get resource name]]
+		    ]
+	      resources]
+	
+	
+	nil]]]]
 
+[deftypefunk isismon_agent_visualization execute destroy []
+  
+  
+  [terminal_format standard-terminal '\nisismon_agent_visualization destroyed.']
+  nil]

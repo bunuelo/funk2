@@ -447,7 +447,7 @@
        [have view_visualization_menu_item signal_connect 'activate'
 	     [funk []
 		   [terminal_format standard-terminal '\nStarting Python visualization.']
-		   [new isismon_agent_visualization this]]
+		   [shelter [new isismon_agent_visualization this]]]
 	     nil]
        [have view_menu append view_visualization_menu_item]
        

@@ -43,8 +43,8 @@ f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
     //f2ptr end_time                              = f2__time__new(cause, f2integer__new(cause, start_time__nanoseconds_since_1970__i + 1));
     //f2ptr start_semantic_time                   = f2__semantic_time__new(cause, start_time);
     //f2ptr end_semantic_time                     = f2__semantic_time__new(cause, end_time);
-    f2ptr start_semantic_time                   = f2__semantic_time__new(cause, new__symbol(cause, "before"));
-    f2ptr end_semantic_time                     = f2__semantic_time__new(cause, new__symbol(cause, "after"));
+    f2ptr start_semantic_time = f2__semantic_time__new(cause, new__symbol(cause, "before"));
+    f2ptr end_semantic_time   = f2__semantic_time__new(cause, new__symbol(cause, "after"));
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), start_semantic_time);
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_end_time"),   end_semantic_time);
   }

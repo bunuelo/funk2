@@ -264,22 +264,24 @@ f2ptr  f2__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2p
 
 // widget
 
-f2ptr raw__gtk__widget__show_all(              f2ptr cause, f2ptr widget);
-f2ptr  f2__gtk__widget__show_all(              f2ptr cause, f2ptr widget);
-f2ptr raw__gtk__widget__hide_all(              f2ptr cause, f2ptr widget);
-f2ptr  f2__gtk__widget__hide_all(              f2ptr cause, f2ptr widget);
-f2ptr raw__gtk__widget__set_size_request(      f2ptr cause, f2ptr widget, f2ptr width, f2ptr height);
-f2ptr  f2__gtk__widget__set_size_request(      f2ptr cause, f2ptr widget, f2ptr width, f2ptr height);
-f2ptr raw__gtk__widget__get_visible(           f2ptr cause, f2ptr widget);
-f2ptr  f2__gtk__widget__get_visible(           f2ptr cause, f2ptr widget);
-f2ptr raw__gtk__widget__destroy(               f2ptr cause, f2ptr widget);
-f2ptr  f2__gtk__widget__destroy(               f2ptr cause, f2ptr widget);
+f2ptr raw__gtk__widget__show_all              (f2ptr cause, f2ptr widget);
+f2ptr  f2__gtk__widget__show_all              (f2ptr cause, f2ptr widget);
+f2ptr raw__gtk__widget__hide_all              (f2ptr cause, f2ptr widget);
+f2ptr  f2__gtk__widget__hide_all              (f2ptr cause, f2ptr widget);
+f2ptr raw__gtk__widget__set_size_request      (f2ptr cause, f2ptr widget, f2ptr width, f2ptr height);
+f2ptr  f2__gtk__widget__set_size_request      (f2ptr cause, f2ptr widget, f2ptr width, f2ptr height);
+f2ptr raw__gtk__widget__get_visible           (f2ptr cause, f2ptr widget);
+f2ptr  f2__gtk__widget__get_visible           (f2ptr cause, f2ptr widget);
+f2ptr raw__gtk__widget__destroy               (f2ptr cause, f2ptr widget);
+f2ptr  f2__gtk__widget__destroy               (f2ptr cause, f2ptr widget);
 f2ptr raw__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget);
 f2ptr  f2__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget);
-f2ptr raw__gtk__widget__modify_fg(             f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
-f2ptr  f2__gtk__widget__modify_fg(             f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
-f2ptr raw__gtk__widget__modify_bg(             f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
-f2ptr  f2__gtk__widget__modify_bg(             f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
+f2ptr raw__gtk__widget__modify_fg             (f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
+f2ptr  f2__gtk__widget__modify_fg             (f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
+f2ptr raw__gtk__widget__modify_bg             (f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
+f2ptr  f2__gtk__widget__modify_bg             (f2ptr cause, f2ptr widget, f2ptr state, f2ptr color);
+f2ptr raw__gtk__widget__set_sensitive         (f2ptr cause, f2ptr widget, f2ptr sensitive);
+f2ptr  f2__gtk__widget__set_sensitive         (f2ptr cause, f2ptr widget, f2ptr sensitive);
 
 
 // beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.

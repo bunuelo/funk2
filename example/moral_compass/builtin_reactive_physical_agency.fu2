@@ -38,8 +38,8 @@
 [deframe drop_from_left_hand_resource     [traced_resource] [] [new [] [construct traced_resource `drop_from_left_hand     [funk []                   [have [get this body] drop_from_left_hand]]]]]
 [deframe pick_up_with_right_hand_resource [traced_resource] [] [new [] [construct traced_resource `pick_up_with_right_hand [funk [target]             [have [get this body] pick_up_with_right_hand target]]]]]
 [deframe pick_up_with_left_hand_resource  [traced_resource] [] [new [] [construct traced_resource `pick_up_with_left_hand  [funk [target]             [have [get this body] pick_up_with_left_hand  target]]]]]
-[deframe use_right_hand_resource          [traced_resource] [] [new [] [construct traced_resource `use_right_hand          [funk [target actions]     [print 'builtin layer']  [have [get this body] use_right_hand          target actions]]]]]
-[deframe use_left_hand_resource           [traced_resource] [] [new [] [construct traced_resource `use_left_hand           [funk [target actions]      [print 'builtin layer'] [have [get this body] use_left_hand           target actions]]]]]
+[deframe use_right_hand_resource          [traced_resource] [] [new [] [construct traced_resource `use_right_hand          [funk [target actions]     [have [get this body] use_right_hand          target actions]]]]]
+[deframe use_left_hand_resource           [traced_resource] [] [new [] [construct traced_resource `use_left_hand           [funk [target actions]     [have [get this body] use_left_hand           target actions]]]]]
 [deframe open_fridge_resource             [traced_resource] [] [new [] [construct traced_resource `open_fridge             [funk []                   [have [get this body] open_fridge]]]]]
 [deframe say_resource                     [traced_resource] [] [new [] [construct traced_resource `say                     [funk [message]            [have [get this body] say                     message]]]]]
 

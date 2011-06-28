@@ -1,0 +1,4 @@
+[defpackage visualize_test
+  :packages [xmlrpc]
+   :sources ['visualize_test.fu2']]
+

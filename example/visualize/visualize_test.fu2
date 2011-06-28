@@ -1,0 +1,4 @@
+
+[globalize client [new xmlrpc_client 'http://imprimer:8010/RPC2']]
+
+[print 'hi']

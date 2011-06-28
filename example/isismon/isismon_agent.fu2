@@ -325,6 +325,7 @@
 				view_perception_menu_item
 				view_visual_objects_menu_item
 				view_proprioceptual_frame_menu_item
+				view_visualization_menu_item
 				isismon_agent_mind_menu
 				
 				entry
@@ -418,6 +419,18 @@
 	     nil]
        [have view_menu append view_perception_menu_item]
        
+       [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
+       [have view_visual_objects_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[perception [get [get isis_agent mind] perception]]]
+		     [if [null perception]
+			 [terminal_format standard-terminal '\n' [get this name] ' has no perception']
+		       [terminal_format standard-terminal
+					'\n' [get this name] '\'s visual objects:'
+					'\n  ' [have perception lookup `visual_objects]]]]]
+	     nil]
+       [have view_menu append view_visual_objects_menu_item]
+       
        [= view_proprioceptual_frame_menu_item [gtk-menu_item-new 'Proprioceptual Frame']]
        [have view_proprioceptual_frame_menu_item signal_connect 'activate'
 	     [funk []
@@ -430,17 +443,13 @@
 	     nil]
        [have view_menu append view_proprioceptual_frame_menu_item]
        
-       [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
-       [have view_visual_objects_menu_item signal_connect 'activate'
+       [= view_visualization_menu_item [gtk-menu_item-new 'Visualization']]
+       [have view_visualization_menu_item signal_connect 'activate'
 	     [funk []
-		   [let [[perception [get [get isis_agent mind] perception]]]
-		     [if [null perception]
-			 [terminal_format standard-terminal '\n' [get this name] ' has no perception']
-		       [terminal_format standard-terminal
-					'\n' [get this name] '\'s visual objects:'
-					'\n  ' [have perception lookup `visual_objects]]]]]
+		   [terminal_format standard-terminal '\nStarting Python visualization.']
+		   [new isismon_agent_visualization this]]
 	     nil]
-       [have view_menu append view_visual_objects_menu_item]
+       [have view_menu append view_visualization_menu_item]
        
        [= isismon_agent_mind_menu [new isismon_agent_mind_menu this]]
        [have menu_bar append isismon_agent_mind_menu]

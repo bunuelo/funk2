@@ -1,4 +1,3 @@
 
-[globalize client [new xmlrpc_client 'http://imprimer:8010/RPC2']]
+[globalize client [new xmlrpc_client 'http://simonetti:8010/RPC2']]
 
-[print 'hi']

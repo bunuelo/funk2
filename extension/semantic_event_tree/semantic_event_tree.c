@@ -86,11 +86,13 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
   boolean_t this__value__is__time = raw__time__is_type(cause, this__value);
   boolean_t that__value__is__time = raw__time__is_type(cause, that__value);
   if ((! this__value__is__time) && (! this__value__is__time)) {
-    return f2__semantic_time__new(cause, f2__time(cause));
-    /*
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
       if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
-      if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
-	return f2__semantic_time__new(cause, new__symbol(cause, "before"));
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"), new__symbol(cause, "not_allowing_midpoints_of_before_before_temporal_relationships"),
+				       new__symbol(cause, "this"),     this,
+				       new__symbol(cause, "that"),     that));
+	//return f2__semantic_time__new(cause, new__symbol(cause, "before"));
       } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
 	return f2__semantic_time__new(cause, f2__time(cause));
       } else {
@@ -100,14 +102,17 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
       if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
 	return f2__semantic_time__new(cause, f2__time(cause));
       } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
-	return f2__semantic_time__new(cause, new__symbol(cause, "after"));
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"), new__symbol(cause, "not_allowing_midpoints_of_after_after_temporal_relationships"),
+				       new__symbol(cause, "this"),     this,
+				       new__symbol(cause, "that"),     that));
+	//return f2__semantic_time__new(cause, new__symbol(cause, "after"));
       } else {
 	return f2larva__new(cause, 24626, nil);
       }
     } else {
       return f2larva__new(cause, 24626, nil);
     }
-    */
   } else if (! this__value__is__time) {
     f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
     s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);

@@ -253,7 +253,7 @@
 									 [funktion_name      [have [get bug frame] lookup `funktion_name]]]
 								     [terminal_format standard-terminal '\nfibermon: defining ' bug_variable ': in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string]]
 								     [print_bug subbug]]]
-								  [[eq [get bug bug_type] 7]
+								  [[eq [get bug bug_type] 13]
 								   [let [[bug_name           [have [get bug frame] lookup `bug_name]]
 									 [source_filename    [have [get bug frame] lookup `source_filename]]
 									 [source_line_number [have [get bug frame] lookup `source_line_number]]

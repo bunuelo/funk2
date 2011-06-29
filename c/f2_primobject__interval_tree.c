@@ -58,11 +58,22 @@ f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
   f2ptr value_center_funk      = f2__interval_tree__value_center_funk(     cause, this);
   f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
   f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
+  
+  f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
+  f2ptr right_value           = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,      f2list1__new(cause, element)));
+  f2ptr left_right_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, right_value)));
+  f2ptr left_right_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, left_value, right_value)));
+  if ((left_right_comparison == nil) &&
+      (left_right_equality   == nil)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "element_left_is_greater_than_element_right"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "element"),  element));
+  }
+  
   assert_value(f2__redblacktree__insert(cause, all_left_redblacktree,  element));
   assert_value(f2__redblacktree__insert(cause, all_right_redblacktree, element));
   if (head == nil) {
-    f2ptr left_value   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,   f2list1__new(cause, element)));
-    f2ptr right_value  = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,  f2list1__new(cause, element)));
     f2ptr center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, left_value, right_value)));
     head = f2__interval_tree_node__new(cause, nil, center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
     f2__interval_tree__head__set(cause, this, head);

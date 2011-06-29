@@ -103,6 +103,8 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_fiber_menu_item"), this__environment_define_fiber_menu_item);
   f2ptr this__environment_define_fiber_value_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Fiber Value"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_fiber_value_menu_item"), this__environment_define_fiber_value_menu_item);
+  f2ptr this__environment_define_bug_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Fiber Value"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_bug_menu_item"), this__environment_define_bug_menu_item);
   f2ptr this__environment_define_cause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Cause"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_cause_menu_item"), this__environment_define_cause_menu_item);
   f2ptr this__environment_define_stack_trace_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Stack Trace"));
@@ -139,6 +141,8 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_fiber_menu_item);
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_fiber_value_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_bug_menu_item);
+  raw__gtk__widget__set_sensitive(cause, this__environment_define_bug_menu_item, f2bool__new(boolean__false));
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_cause_menu_item);
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_stack_trace_menu_item);
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_stack_trace_first_block_menu_item);
@@ -248,8 +252,14 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	     raw__bug__is_type(cause, f2fiber__value(this__fiber, cause))) {
     // paint menu_bar if fiber is paused and has *bug* in value register.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 1.0), f2double__new(cause, 0.5), f2double__new(cause, 0.5)));
-    f2ptr this__view_bug_menu_item  = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "view_bug_menu_item"), nil);
-    f2__gtk__widget__set_sensitive(cause, this__view_bug_menu_item, f2bool__new(boolean__true));
+    {
+      f2ptr this__view_bug_menu_item = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "view_bug_menu_item"), nil);
+      f2__gtk__widget__set_sensitive(cause, this__view_bug_menu_item, f2bool__new(boolean__true));
+    }
+    {
+      f2ptr this__environment_define_bug_menu_item = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "environment_define_bug_menu_item"), nil);
+      f2__gtk__widget__set_sensitive(cause, this__environment_define_bug_menu_item, f2bool__new(boolean__true));
+    }
   } else if (f2fiber__paused(this__fiber, cause) != nil) {
     // paint menu_bar if fiber is paused.
     f2__gtk__widget__modify_bg(cause, this__menu_bar, new__symbol(cause, "normal"), f2__gdk__rgb_color__new(cause, f2double__new(cause, 0.0), f2double__new(cause, 0.5), f2double__new(cause, 0.5)));

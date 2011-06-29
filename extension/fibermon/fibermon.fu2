@@ -126,6 +126,7 @@
 				 environment_menu
 				 environment_define_fiber_menu_item
 				 environment_define_fiber_value_menu_item
+				 environment_define_bug_menu_item
 				 environment_define_cause_menu_item
 				 environment_define_stack_trace_menu_item
 				 environment_define_stack_trace_first_block_menu_item
@@ -233,6 +234,22 @@
 				[terminal_format standard-terminal '\n\nenvironment define fiber value.\n']
 				[new fibermon_define_object_dialog [get fiber value] `fiber-value]
 				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_bug_menu_item signal_connect 'activate'
+			  [funk []
+				[let [[fiber-value [get fiber value]]]
+				  [if [not [is-type `bug fiber-value]]
+				      [terminal_format standard-terminal '\n\nfibermon: fiber value is not bug.\n']
+				    [prog [terminal_format standard-terminal '\n\nfibermon printing bug:\n']
+					  [labels [[print_bug [bug]
+							      [print bug]
+							      [cond [[eq [get bug bug_type] 7]
+								     [let [[subbug [have [get bug frame] lookup `value]]]
+								       [print_bug subbug]]]
+								    ]]]
+						  [print_bug fiber-value]]
+					  [terminal_format standard-terminal '\n\n']]]]]
 			  nil]
 		    
 		    [have environment_define_cause_menu_item signal_connect 'activate'

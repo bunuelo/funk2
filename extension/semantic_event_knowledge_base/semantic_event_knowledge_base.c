@@ -69,8 +69,9 @@ f2ptr raw__semantic_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr sem
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
+  f2ptr semantic_event_tree = f2__semantic_event_tree__new(cause);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                new__symbol(cause, "semantic_event_knowledge_base"));
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), f2__semantic_event_tree__new(cause));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "semantic_event_tree"), semantic_event_tree);
   assert_value(raw__semantic_knowledge_base__add_trace_callback_funk__remove_semantic_frame_value__before(cause, this, f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__know_of_remove__before_callback"))));
   assert_value(raw__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__after(    cause, this, f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__know_of_add__after_callback"))));
   return this;

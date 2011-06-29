@@ -517,7 +517,7 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
     assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, lower_node, upper_node__center_value, move_up_element_set, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
     set__iteration(cause, move_up_element_set, element,
 		   assert_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
-		   assert_value(f2__redblacktree__insert(cause, upper_node__overlapping_left_redblacktree, element));
+		   assert_value(f2__redblacktree__insert(cause, upper_node__overlapping_left_redblacktree,  element));
 		   assert_value(f2__redblacktree__insert(cause, upper_node__overlapping_right_redblacktree, element));
 		   );
   }

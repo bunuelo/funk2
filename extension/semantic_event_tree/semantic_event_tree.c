@@ -180,7 +180,8 @@ f2ptr raw__semantic_event_tree__insert(f2ptr cause, f2ptr this, f2ptr semantic_e
 }
 
 f2ptr f2__semantic_event_tree__insert(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  assert_argument_type(semantic_event, semantic_event);
+  assert_argument_type(semantic_event_tree, this);
+  assert_argument_type(semantic_event,      semantic_event);
   return raw__semantic_event_tree__insert(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_tree__insert, this, semantic_event, 0, "Inserts a semantic_event into this semantic_event_tree.");
@@ -192,7 +193,8 @@ f2ptr raw__semantic_event_tree__remove(f2ptr cause, f2ptr this, f2ptr semantic_e
 }
 
 f2ptr f2__semantic_event_tree__remove(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  assert_argument_type(semantic_event, semantic_event);
+  assert_argument_type(semantic_event_tree, this);
+  assert_argument_type(semantic_event,      semantic_event);
   return raw__semantic_event_tree__remove(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_tree__remove, this, semantic_event, 0, "Removes a semantic_event from this semantic_event_tree.");
@@ -204,7 +206,8 @@ f2ptr raw__semantic_event_tree__events_containing_time(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_event_tree__events_containing_time(f2ptr cause, f2ptr this, f2ptr time) {
-  assert_argument_type(semantic_time, time);
+  assert_argument_type(semantic_event_tree, this);
+  assert_argument_type(semantic_time,       time);
   return raw__semantic_event_tree__events_containing_time(cause, this, time);
 }
 export_cefunk2(semantic_event_tree__events_containing_time, this, time, 0, "Returns a new set of events in this semantic_event_tree that contain the given time.");
@@ -216,7 +219,8 @@ f2ptr raw__semantic_event_tree__events_overlapping_event(f2ptr cause, f2ptr this
 }
 
 f2ptr f2__semantic_event_tree__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  assert_argument_type(semantic_event, semantic_event);
+  assert_argument_type(semantic_event_tree, this);
+  assert_argument_type(semantic_event,      semantic_event);
   return raw__semantic_event_tree__events_overlapping_event(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_tree__events_overlapping_event, this, semantic_event, 0, "Returns a new set of events in this semantic_event_tree that overlap the given event.");

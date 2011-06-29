@@ -42,7 +42,8 @@ phdthesis.pdf: \
   gfx/environment_perception_physical.pdf \
   gfx/frame_representation.pdf \
   gfx/frame_perception.pdf \
-  gfx/physical_perception.pdf
+  gfx/physical_perception.pdf \
+  gfx/goal_state.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

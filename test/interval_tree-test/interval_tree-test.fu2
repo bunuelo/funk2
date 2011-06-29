@@ -37,6 +37,9 @@
 		[= element [frame left y right x]]]
 	      [have interval_tree insert element]
 	      [set element_array elt i element]
-	      ]]]]]
+	      ]]]
+	[dotimes [i element_count]
+	  [print i]
+	  [have interval_tree remove [get element_array elt i]]]]]
     interval_tree]]
 

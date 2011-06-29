@@ -713,7 +713,6 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 	}
       }
     }
-    return nil;
   }
   if ((value_center_comparison != nil) ||
       (center_value_equality   != nil)) {
@@ -743,8 +742,8 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause
 	}
       }
     }
-    return nil;
   }
+  return nil;
 }
 
 f2ptr f2__interval_tree_node__add_intervals_containing_value_to_set(f2ptr cause, f2ptr this, f2ptr value, f2ptr set, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {

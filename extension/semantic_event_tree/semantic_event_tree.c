@@ -87,21 +87,21 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
   boolean_t that__value__is__time = raw__time__is_type(cause, that__value);
   if ((! this__value__is__time) && (! this__value__is__time)) {
     if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
-      if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
 	return new__error(f2list6__new(cause,
 				       new__symbol(cause, "bug_name"), new__symbol(cause, "not_allowing_midpoints_of_before_before_temporal_relationships"),
 				       new__symbol(cause, "this"),     this,
 				       new__symbol(cause, "that"),     that));
 	//return f2__semantic_time__new(cause, new__symbol(cause, "before"));
-      } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
 	return f2__semantic_time__new(cause, f2__time(cause));
       } else {
 	return f2larva__new(cause, 24626, nil);
       }
     } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
-      if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
 	return f2__semantic_time__new(cause, f2__time(cause));
-      } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
 	return new__error(f2list6__new(cause,
 				       new__symbol(cause, "bug_name"), new__symbol(cause, "not_allowing_midpoints_of_after_after_temporal_relationships"),
 				       new__symbol(cause, "this"),     this,

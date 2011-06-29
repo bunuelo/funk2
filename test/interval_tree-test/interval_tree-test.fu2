@@ -25,7 +25,7 @@
 			    [funk [x y] [< x y]]
 			    [funk [x y] [/ [+ x y] 2.0]]
 			    ]]]
-    [let [[element_count 10]]
+    [let [[element_count 2]]
       [let [[element_array [new array element_count]]]
 	[dotimes [i element_count]
 	  [let [[element [frame left [random 1000] right [random 1000]]]]

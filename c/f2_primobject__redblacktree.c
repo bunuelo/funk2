@@ -1224,7 +1224,7 @@ void f2__primobject__redblacktree__initialize() {
   f2__primobject__redblacktree__reinitialize_globalvars();
   
   // redblacktree
-
+  
   initialize_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk);
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}

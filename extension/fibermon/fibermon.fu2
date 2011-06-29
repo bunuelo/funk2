@@ -125,6 +125,7 @@
 				 environment_menu_item
 				 environment_menu
 				 environment_define_fiber_menu_item
+				 environment_define_fiber_value_menu_item
 				 environment_define_cause_menu_item
 				 environment_define_stack_trace_menu_item
 				 environment_define_stack_trace_first_block_menu_item
@@ -224,6 +225,13 @@
 			  [funk []
 				[terminal_format standard-terminal '\n\nenvironment define fiber.\n']
 				[new fibermon_define_object_dialog fiber `fiber]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_fiber_value_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nenvironment define fiber value.\n']
+				[new fibermon_define_object_dialog [get fiber value] `fiber-value]
 				[terminal_format standard-terminal '\n\n']]
 			  nil]
 		    

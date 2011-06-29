@@ -28,7 +28,7 @@
     [let [[element_count 2]]
       [let [[element_array [new array element_count]]]
 	[dotimes [i element_count]
-	  [let [[element [frame left [random 1000] right [random 1000]]]]
+	  [let [[element [frame left [get [random 1000] as-double] right [get [random 1000] as-double]]]]
 	    [have interval_tree insert element]
 	    [set element_array elt i element]]]]]
     interval_tree]]

@@ -432,6 +432,7 @@
 			       [have this reorganize_fibers]
 			       [have this recompute_statistics]
 			       [have this redraw]
+			       [sleep 1]
 			       [if [not [get win visible]]
 				   [= done t]]]
 			     [have win destroy]

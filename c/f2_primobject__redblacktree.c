@@ -50,7 +50,7 @@ f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr r
 f2ptr f2__redblacktree_node__new(f2ptr cause) {
   return raw__redblacktree_node__new(cause, nil, nil, nil, nil);
 }
-def_pcfunk1(redblacktree_node__new,
+def_pcfunk0(redblacktree_node__new,
 	    "",
 	    return f2__redblacktree_node__new(this_cause));
 

@@ -357,16 +357,16 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 			  );
   set__iteration(cause, left_element_set, element,
 		 if (! raw__set__contains(cause, right_element_set, element)) {
-		   return new__error(cause, f2list4__new(cause,
-							 new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-							 new__symbol(cause, "this"),     this));
+		   return new__error(f2list4__new(cause,
+						  new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+						  new__symbol(cause, "this"),     this));
 		 }
 		 );
   set__iteration(cause, right_element_set, element,
 		 if (! raw__set__contains(cause, left_element_set, element)) {
-		   return new__error(cause, f2list4__new(cause,
-							 new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-							 new__symbol(cause, "this"),     this));
+		   return new__error(f2list4__new(cause,
+						  new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+						  new__symbol(cause, "this"),     this));
 		 }
 		 );
   return nil;

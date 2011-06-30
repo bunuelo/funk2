@@ -1021,7 +1021,7 @@ f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr va
     return nil;
   }
   f2ptr count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, node);
-  f2ptr key                 = f2__ptypehash__an_arbitrary_element(cause, count_key_ptypehash);
+  f2ptr key                 = f2__ptypehash__an_arbitrary_key(cause, count_key_ptypehash);
   return key;
 }
 

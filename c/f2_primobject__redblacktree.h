@@ -110,7 +110,7 @@ declare_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_co
 #define redblacktree__iteration_backward(cause, this, key, code)	\
   redblacktree__iteration_backward_by_node(cause, this, redblacktree_node, \
                                            f2ptr redblacktree__iteration_forward__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node); \
-                                           ptypehash__iteration(cause, redblacktree__iteration_forward__count_key_ptypehash, key, count, \
+                                           ptypehash__iteration(cause, redblacktree__iteration_forward__count_key_ptypehash, key, redblacktree__iteration_forward__count, \
 								s64 redblacktree__iteration_forward__count__i = f2integer__i(redblacktree__iteration_forward__count, cause); \
 								s64 redblacktree__iteration_forward__count__index; \
 								for (redblacktree__iteration_forward__count__index = 0; redblacktree__iteration_forward__count__index < redblacktree__iteration_forward__count__i; redblacktree__iteration_forward__count__index ++) { \

@@ -358,8 +358,8 @@ f2ptr raw__interval_tree_node__simple_insert(f2ptr cause, f2ptr this, f2ptr elem
     // interval overlaps with center value of this node
     f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
-    f2__redblacktree__insert(cause, overlapping_left_redblacktree,  element);
-    f2__redblacktree__insert(cause, overlapping_right_redblacktree, element);
+    assert_value(f2__redblacktree__insert(cause, overlapping_left_redblacktree,  element));
+    assert_value(f2__redblacktree__insert(cause, overlapping_right_redblacktree, element));
     return this;
   } else {
     f2ptr right_center_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, right_value, center_value)));
@@ -410,8 +410,8 @@ f2ptr raw__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr elem
     // interval overlaps with center value of this node
     f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
-    f2__redblacktree__remove(cause, overlapping_left_redblacktree,  element);
-    f2__redblacktree__remove(cause, overlapping_right_redblacktree, element);
+    assert_value(f2__redblacktree__remove(cause, overlapping_left_redblacktree,  element));
+    assert_value(f2__redblacktree__remove(cause, overlapping_right_redblacktree, element));
     return this;
   } else {
     f2ptr right_center_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, right_value, center_value)));

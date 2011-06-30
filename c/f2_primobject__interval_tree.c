@@ -374,7 +374,7 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 
 f2ptr f2__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
   assert_argument_type(interval_tree_node, this);
-  return raw__interval_tree_node__assert_value(cause, this);
+  return raw__interval_tree_node__assert_valid(cause, this);
 }
 
 #define F2__DEBUG__INTERVAL_TREE_NODE 1

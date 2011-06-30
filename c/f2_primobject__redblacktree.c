@@ -43,9 +43,7 @@ def_pcfunk2(redblacktree__new, value_funk, value_comparison_funk,
 def_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
 
 f2ptr raw__redblacktree_node__new(f2ptr cause, f2ptr parent, f2ptr left, f2ptr right, f2ptr color, f2ptr key) {
-  if (raw__larva__is_type(cause, key)) {
-    return key;
-  }
+  assert_value(key);
   return f2redblacktree_node__new(cause, parent, left, right, color, key);
 }
 
@@ -319,25 +317,16 @@ f2ptr raw__redblacktree_node__maximum_node(f2ptr cause, f2ptr this) {
 
 
 f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr this, f2ptr value_funk, f2ptr value_comparison_funk, f2ptr value) {
-  f2ptr fiber      = f2__this__fiber(cause);
-  f2ptr key        = f2__redblacktree_node__key(cause, this);
-  f2ptr key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key));
-  if (raw__larva__is_type(cause, key__value)) {
-    return key__value;
-  }
-  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, value));
-  if (raw__larva__is_type(cause, comparison_result)) {
-    return comparison_result;
-  }
+  f2ptr fiber             = f2__this__fiber(cause);
+  f2ptr key               = f2__redblacktree_node__key(cause, this);
+  f2ptr key__value        = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key)));
+  f2ptr comparison_result = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, value)));
   if (comparison_result != nil) {
     f2ptr right_node        = f2__redblacktree_node__right(cause, this);
     if (right_node == nil) {
       return nil;
     } else {
-      f2ptr better_right_node = raw__redblacktree_node__minimum_not_less_than__node(cause, right_node, value_funk, value_comparison_funk, value);
-      if (raw__larva__is_type(cause, better_right_node)) {
-	return better_right_node;
-      }
+      f2ptr better_right_node = assert_value(raw__redblacktree_node__minimum_not_less_than__node(cause, right_node, value_funk, value_comparison_funk, value));
       if (better_right_node == nil) {
 	return nil;
       } else {
@@ -349,10 +338,7 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
     if (left_node == nil) {
       return this;
     } else {
-      f2ptr better_left_node = raw__redblacktree_node__minimum_not_less_than__node(cause, left_node, value_funk, value_comparison_funk, value);
-      if (raw__larva__is_type(cause, better_left_node)) {
-	return better_left_node;
-      }
+      f2ptr better_left_node = assert_value(raw__redblacktree_node__minimum_not_less_than__node(cause, left_node, value_funk, value_comparison_funk, value));
       if (better_left_node == nil) {
 	return this;
       } else {
@@ -364,25 +350,16 @@ f2ptr raw__redblacktree_node__minimum_not_less_than__node(f2ptr cause, f2ptr thi
 
 
 f2ptr raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(f2ptr cause, f2ptr this, f2ptr value_funk, f2ptr value_comparison_funk, f2ptr value) {
-  f2ptr fiber      = f2__this__fiber(cause);
-  f2ptr key        = f2__redblacktree_node__key(cause, this);
-  f2ptr key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key));
-  if (raw__larva__is_type(cause, key__value)) {
-    return key__value;
-  }
-  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, value));
-  if (raw__larva__is_type(cause, comparison_result)) {
-    return comparison_result;
-  }
+  f2ptr fiber             = f2__this__fiber(cause);
+  f2ptr key               = f2__redblacktree_node__key(cause, this);
+  f2ptr key__value        = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key)));
+  f2ptr comparison_result = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, value)));
   if (comparison_result == nil) {
     f2ptr left_node        = f2__redblacktree_node__left(cause, this);
     if (left_node == nil) {
       return nil;
     } else {
-      f2ptr better_left_node = raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(cause, left_node, value_funk, value_comparison_funk, value);
-      if (raw__larva__is_type(cause, better_left_node)) {
-	return better_left_node;
-      }
+      f2ptr better_left_node = assert_value(raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(cause, left_node, value_funk, value_comparison_funk, value));
       if (better_left_node == nil) {
 	return nil;
       } else {
@@ -394,10 +371,7 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(f2ptr c
     if (right_node == nil) {
       return this;
     } else {
-      f2ptr better_right_node = raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(cause, right_node, value_funk, value_comparison_funk, value);
-      if (raw__larva__is_type(cause, better_right_node)) {
-	return better_right_node;
-      }
+      f2ptr better_right_node = assert_value(raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(cause, right_node, value_funk, value_comparison_funk, value));
       if (better_right_node == nil) {
 	return this;
       } else {
@@ -433,21 +407,12 @@ f2ptr raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2pt
 #ifdef DEBUG_REDBLACKTREE
   debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif
-  f2ptr new_node__key     = f2__redblacktree_node__key(cause, new_node);
-  f2ptr this__key         = f2__redblacktree_node__key(cause, this);
-  f2ptr fiber             = f2__this__fiber(cause);
-  f2ptr new_node__key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, new_node__key));
-  if (raw__larva__is_type(cause, new_node__key__value)) {
-    return new_node__key__value;
-  }
-  f2ptr this__key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key));
-  if (raw__larva__is_type(cause, this__key__value)) {
-    return this__key__value;
-  }
-  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, new_node__key__value, this__key__value));
-  if (raw__larva__is_type(cause, comparison_result)) {
-    return comparison_result;
-  }
+  f2ptr new_node__key        = f2__redblacktree_node__key(cause, new_node);
+  f2ptr this__key            = f2__redblacktree_node__key(cause, this);
+  f2ptr fiber                = f2__this__fiber(cause);
+  f2ptr new_node__key__value = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, new_node__key)));
+  f2ptr this__key__value     = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key)));
+  f2ptr comparison_result    = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, new_node__key__value, this__key__value)));
   if (comparison_result != nil) {
     if (f2__redblacktree_node__left(cause, this) == nil) {
       f2__redblacktree_node__parent__set(cause, new_node, this);
@@ -455,10 +420,7 @@ f2ptr raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2pt
       f2__redblacktree_node__right__set( cause, new_node, nil);
       f2__redblacktree_node__left__set(  cause, this,     new_node);
     } else {
-      f2ptr result = raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__left(cause, this), new_node, value_funk, value_comparison_funk);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
+      assert_value(raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__left(cause, this), new_node, value_funk, value_comparison_funk));
     }
   } else {
     if (f2__redblacktree_node__right(cause, this) == nil) {
@@ -467,35 +429,20 @@ f2ptr raw__redblacktree_node__simple_binary_insert(f2ptr cause, f2ptr this, f2pt
       f2__redblacktree_node__right__set( cause, new_node, nil);
       f2__redblacktree_node__right__set( cause, this,     new_node);
     } else {
-      f2ptr result = raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__right(cause, this), new_node, value_funk, value_comparison_funk);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
+      assert_value(raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree_node__right(cause, this), new_node, value_funk, value_comparison_funk));
     }
   }
   return nil;
 }
 
 f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {
-  f2ptr     this__key = f2__redblacktree_node__key(cause, this);
-  f2ptr     fiber     = f2__this__fiber(cause);
-  f2ptr key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key));
-  if (raw__larva__is_type(cause, key__value)) {
-    return key__value;
-  }
-  f2ptr this__key__value = f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key));
-  if (raw__larva__is_type(cause, this__key__value)) {
-    return this__key__value;
-  }
-  f2ptr comparison_result = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, this__key__value));
-  if (raw__larva__is_type(cause, comparison_result)) {
-    return comparison_result;
-  }
-  f2ptr comparison_result2 = f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, this__key__value, key__value));
-  if (raw__larva__is_type(cause, comparison_result2)) {
-    return comparison_result2;
-  }
-  boolean_t equality_result = (! comparison_result) && (! comparison_result2);
+  f2ptr     this__key          = f2__redblacktree_node__key(cause, this);
+  f2ptr     fiber              = f2__this__fiber(cause);
+  f2ptr     key__value         = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key)));
+  f2ptr     this__key__value   = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key)));
+  f2ptr     comparison_result  = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, this__key__value)));
+  f2ptr     comparison_result2 = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, this__key__value, key__value)));
+  boolean_t equality_result    = (! comparison_result) && (! comparison_result2);
   if (equality_result) {
     return this;
   }
@@ -555,23 +502,13 @@ f2ptr raw__redblacktree__simple_binary_insert(f2ptr cause, f2ptr this, f2ptr nod
   } else {
     f2ptr value_funk            = f2__redblacktree__value_funk(           cause, this);
     f2ptr value_comparison_funk = f2__redblacktree__value_comparison_funk(cause, this);
-    {
-      f2ptr result = raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node, value_funk, value_comparison_funk);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
-    }
+    assert_value(raw__redblacktree_node__simple_binary_insert(cause, f2__redblacktree__head(cause, this), node, value_funk, value_comparison_funk));
   }
   return nil;
 }
 
 f2ptr raw__redblacktree__insert_node(f2ptr cause, f2ptr this, f2ptr node) {
-  {
-    f2ptr result = raw__redblacktree__simple_binary_insert(cause, this, node);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__redblacktree__simple_binary_insert(cause, this, node));
   f2__redblacktree_node__color__set(cause, node, new__symbol(cause, "red"));
   raw__redblacktree_node__insert_case1(cause, node);
   f2__redblacktree__head__set(cause, this, raw__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
@@ -579,19 +516,9 @@ f2ptr raw__redblacktree__insert_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr raw__redblacktree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
-  if (raw__larva__is_type(cause, key)) {
-    return key;
-  }
-  f2ptr node = f2__redblacktree_node__new(cause, key);
-  if (raw__larva__is_type(cause, node)) {
-    return node;
-  }
-  {
-    f2ptr result = raw__redblacktree__insert_node(cause, this, node);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(key);
+  f2ptr node = assert_value(f2__redblacktree_node__new(cause, key));
+  assert_value(raw__redblacktree__insert_node(cause, this, node));
   return nil;
 }
 
@@ -896,13 +823,8 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
-  if (raw__larva__is_type(cause, key)) {
-    return key;
-  }
-  f2ptr node = raw__redblacktree__lookup_node_with_key(cause, this, key);
-  if (raw__larva__is_type(cause, node)) {
-    return node;
-  }
+  assert_value(key);
+  assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));
   if (node != nil) {
     raw__redblacktree__remove_node(cause, this, node);
   }
@@ -919,8 +841,7 @@ f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
 
 f2ptr f2__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(redblacktree, this);
-  f2ptr node = raw__redblacktree__remove(cause, this, key);
-  return f2bool__new(node != nil);
+  return raw__redblacktree__remove(cause, this, key);
 }
 def_pcfunk2(redblacktree__remove, this, key,
 	    "Remove one instance of a key from a red-black-tree.",
@@ -1025,10 +946,7 @@ def_pcfunk2(redblacktree__minimum_not_less_than__node, this, value,
 
 
 f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr value) {
-  f2ptr node = raw__redblacktree__minimum_not_less_than__node(cause, this, value);
-  if (raw__larva__is_type(cause, node)) {
-    return node;
-  }
+  f2ptr node = assert_value(raw__redblacktree__minimum_not_less_than__node(cause, this, value));
   if (node == nil) {
     return nil;
   }
@@ -1065,10 +983,7 @@ def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to__node, this, valu
 
 
 f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr this, f2ptr value) {
-  f2ptr node = raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, value);
-  if (raw__larva__is_type(cause, node)) {
-    return node;
-  }
+  f2ptr node = assert_value(raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, value));
   if (node == nil) {
     return nil;
   }
@@ -1135,14 +1050,8 @@ def_pcfunk1(redblacktree__size, this,
 
 
 f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
-  f2ptr maximum_node = raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, maximum);
-  if (raw__larva__is_type(cause, maximum_node)) {
-    return maximum_node;
-  }
-  f2ptr minimum_node = raw__redblacktree__minimum_not_less_than__node(cause, this, minimum);
-  if (raw__larva__is_type(cause, minimum_node)) {
-    return minimum_node;
-  }
+  f2ptr     maximum_node = assert_value(raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, maximum));
+  f2ptr     minimum_node = assert_value(raw__redblacktree__minimum_not_less_than__node(cause, this, minimum));
   f2ptr     sequence     = nil;
   f2ptr     iter_node    = maximum_node;
   boolean_t done         = boolean__false;

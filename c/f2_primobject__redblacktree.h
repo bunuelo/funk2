@@ -57,7 +57,7 @@ declare_object_type_4_slot(redblacktree, mutate_mutex, head, value_funk, value_c
 // redblacktree_node
 
 typedef struct funk2_object_type__redblacktree_node__slot_s funk2_object_type__redblacktree_node__slot_t;
-declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key, );
+declare_object_type_5_slot(redblacktree_node, parent, left, right, color, key_set, );
 
 #endif // F2__PRIMOBJECT__REDBLACKTREE__TYPES__H
 
@@ -81,15 +81,17 @@ declare_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_co
     }									\
   }
 
-#define redblacktree__iteration_forward(cause, this, key, code) \
+#define redblacktree__iteration_forward(cause, this, key, code)		\
   redblacktree__iteration_forward_by_node(cause, this, redblacktree_node, \
-					  f2ptr key = f2__redblacktree_node__key(cause, redblacktree_node); \
-					  {				\
-					    code;			\
-					  }				\
+                                          f2ptr redblacktree__iteration_forward__key_set = f2__redblacktree_node__key_set(cause, redblacktree_node); \
+                                          set__iteration(cause, redblacktree__iteration_forward__key_set, key,	\
+							 {		\
+							   code;	\
+							 }		\
+							 )		\
 					  )
 
-#define redblacktree__iteration(cause, this, key, code) \
+#define redblacktree__iteration(cause, this, key, code)		\
   redblacktree__iteration_forward(cause, this, key, code)
 
 #define redblacktree__iteration_backward_by_node(cause, this, node, code) \
@@ -105,10 +107,12 @@ declare_primobject_4_slot(redblacktree, mutate_mutex, head, value_funk, value_co
 
 #define redblacktree__iteration_backward(cause, this, key, code)	\
   redblacktree__iteration_backward_by_node(cause, this, redblacktree_node, \
-					   f2ptr key = f2__redblacktree_node__key(cause, redblacktree_node); \
-					   {				\
-					     code;			\
-					   }				\
+                                           f2ptr redblacktree__iteration_forward__key_set = f2__redblacktree_node__key_set(cause, redblacktree_node); \
+                                           set__iteration(cause, redblacktree__iteration_forward__key_set, key,	\
+							  {		\
+							    code;	\
+							  }		\
+							  );		\
 					   )
 
 f2ptr     raw__redblacktree__new                                       (f2ptr cause, f2ptr head, f2ptr value_funk, f2ptr value_comparison_funk);
@@ -144,7 +148,7 @@ f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause);
 
 // redblacktree_node
 
-declare_primobject_5_slot(redblacktree_node, parent, left, right, color, key);
+declare_primobject_5_slot(redblacktree_node, parent, left, right, color, key_set);
 
 f2ptr f2redblacktree_node__primobject_type__new(f2ptr cause);
 

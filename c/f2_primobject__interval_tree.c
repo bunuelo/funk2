@@ -230,12 +230,15 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
     {
       f2ptr redblacktree_node = raw__redblacktree__minimum_not_less_than__node(cause, all_left_redblacktree, element__left_value);
       while (redblacktree_node != nil) {
-	f2ptr redblacktree_node__element             = f2__redblacktree_node__key(cause, redblacktree_node);
+	f2ptr redblacktree_node__key_set             = f2__redblacktree_node__key_set(cause, redblacktree_node);
+	f2ptr redblacktree_node__element             = f2__set__an_arbitrary_element(cause, redblacktree_node__key_set);
 	f2ptr redblacktree_node__element__left_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, redblacktree_node__element)));
 	f2ptr equality                               = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, redblacktree_node__element__left_value, element__right_value)));
 	f2ptr comparison                             = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, redblacktree_node__element__left_value, element__right_value)));
 	if ((equality != nil) || (comparison != nil)) {
-	  raw__set__add(cause, set, redblacktree_node__element);
+	  set__iteration(cause, redblacktree_node__key_set, element_iter,
+			 raw__set__add(cause, set, element_iter);
+			 );
 	} else {
 	  break;
 	}
@@ -245,12 +248,15 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
     {
       f2ptr redblacktree_node = raw__redblacktree__minimum_not_less_than__node(cause, all_right_redblacktree, element__left_value);
       while (redblacktree_node != nil) {
-	f2ptr redblacktree_node__element              = f2__redblacktree_node__key(cause, redblacktree_node);
+	f2ptr redblacktree_node__key_set              = f2__redblacktree_node__key_set(cause, redblacktree_node);
+	f2ptr redblacktree_node__element              = f2__set__an_arbitrary_element(cause, redblacktree_node__key_set);
 	f2ptr redblacktree_node__element__right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,      f2list1__new(cause, redblacktree_node__element)));
 	f2ptr equality                                = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, redblacktree_node__element__right_value, element__right_value)));
 	f2ptr comparison                              = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, redblacktree_node__element__right_value, element__right_value)));
 	if ((equality != nil) || (comparison != nil)) {
-	  raw__set__add(cause, set, redblacktree_node__element);
+	  set__iteration(cause, redblacktree_node__key_set, element_iter,
+			 raw__set__add(cause, set, element_iter);
+			 );
 	} else {
 	  break;
 	}

@@ -877,28 +877,24 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   assert_value(key);
-  f2ptr removed_node = nil;
-  {
-    f2ptr node = assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));
-    if (node != nil) {
-      f2ptr node__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, node);
-      f2ptr old_count = raw__ptypehash__lookup(cause, node__count_key_ptypehash, key);
-      if (old_count == nil) {
-	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"), new__symbol(cause, "key_is_not_in_redblacktree"),
-				       new__symbol(cause, "this"),     this,
-				       new__symbol(cause, "key"),      key));
-      }
-      s64 old_count__i = f2integer__i(old_count, cause);
-      if (old_count__i == 1) {
-	raw__ptypehash__remove(cause, node__count_key_ptypehash, key);
-	removed_node = node;
-      } else {
-	raw__ptypehash__add(cause, node__count_key_ptypehash, key, f2integer__new(cause, old_count__i - 1));
-      }
+  f2ptr node = assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));
+  if (node != nil) {
+    f2ptr node__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, node);
+    f2ptr old_count = raw__ptypehash__lookup(cause, node__count_key_ptypehash, key);
+    if (old_count == nil) {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "key_is_not_in_redblacktree"),
+				     new__symbol(cause, "this"),     this,
+				     new__symbol(cause, "key"),      key));
+    }
+    s64 old_count__i = f2integer__i(old_count, cause);
+    if (old_count__i == 1) {
+      raw__redblacktree__remove_node(cause, this, node);
+    } else {
+      raw__ptypehash__add(cause, node__count_key_ptypehash, key, f2integer__new(cause, old_count__i - 1));
     }
   }
-  return removed_node;
+  return nil;
 }
 
 f2ptr raw__redblacktree__remove(f2ptr cause, f2ptr this, f2ptr key) {

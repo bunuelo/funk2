@@ -824,7 +824,7 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   assert_value(key);
-  assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));
+  f2ptr node = assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));
   if (node != nil) {
     raw__redblacktree__remove_node(cause, this, node);
   }

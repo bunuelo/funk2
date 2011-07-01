@@ -927,7 +927,10 @@ f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr ke
   }
   s64 old_count__i = f2integer__i(old_count, cause);
   if (old_count__i == 1) {
-    raw__redblacktree__remove_node(cause, this, node);
+    raw__ptypehash__remove(cause, node__count_key_ptypehash, key);
+    if (raw__ptypehash__is_empty(cause, node__count_key_ptypehash)) {
+      raw__redblacktree__remove_node(cause, this, node);
+    }
   } else {
     raw__ptypehash__add(cause, node__count_key_ptypehash, key, f2integer__new(cause, old_count__i - 1));
   }

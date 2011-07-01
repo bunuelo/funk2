@@ -612,7 +612,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);
   
   // before node rotation, we remove elements that will need to be moved up.
-  f2ptr move_up_element_list = f2__list__new(cause);
+  f2ptr move_up_element_list = f2__list__new(cause, nil);
   {
     f2ptr upper_node               = left_node;
     f2ptr lower_node               = this;

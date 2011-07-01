@@ -545,6 +545,9 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   //        \       =>      /         //
   //         right      this          //
   
+  f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
+  f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
+  
   // before node rotation, we remove elements that will need to be moved up.
   f2ptr move_up_element_set = f2__set__new(cause);
   {
@@ -560,9 +563,6 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   }
   
   // begin rotate.
-  f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
-  f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
-  
   f2__interval_tree_node__right_node__set(cause, this, right_node__left_node);
   
   if (right_node__left_node != nil) {
@@ -610,6 +610,9 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   //        /      =>      \        //
   //    left                this    //
   
+  f2ptr left_node             = f2__interval_tree_node__left_node( cause, this);
+  f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);
+  
   // before node rotation, we remove elements that will need to be moved up.
   f2ptr move_up_element_set = f2__set__new(cause);
   {
@@ -625,9 +628,6 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   }
   
   // begin rotate.
-  f2ptr left_node             = f2__interval_tree_node__left_node( cause, this);
-  f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);
-  
   f2__interval_tree_node__left_node__set(cause, this, left_node__right_node);
   
   if (left_node__right_node != nil) {

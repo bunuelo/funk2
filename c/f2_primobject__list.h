@@ -67,6 +67,19 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this);
 
 f2ptr f2list__primobject_type__new_aux(f2ptr cause);
 
+#define list__iteration(cause, this, element, code) {			\
+    f2ptr list__iteration__iter = f2__list__cons_cells(cause, this);	\
+    while (list__iteration__iter != nil) {				\
+      f2ptr element = f2__cons__car(cause, list__iteration__iter);	\
+      {									\
+	code;								\
+      }									\
+      list__iteration__iter = f2__cons__cdr(cause, list__iteration__iter); \
+    }									\
+  }
+
+
+
 // **
 
 void f2__primobject_list__reinitialize_globalvars();

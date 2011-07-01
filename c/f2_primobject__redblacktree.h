@@ -159,6 +159,8 @@ f2ptr f2redblacktree_node__primobject_type__new(f2ptr cause);
 f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this);
 f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this);
 
+f2ptr f2redblacktree_node__primobject_type__new_aux(f2ptr cause);
+
 // **
 
 void f2__primobject__redblacktree__reinitialize_globalvars();

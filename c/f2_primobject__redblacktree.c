@@ -875,6 +875,39 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 #endif
 }
 
+
+f2ptr raw__redblacktree_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, nil);
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"),   new__symbol(cause, "redblacktree_node"));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "left"),                f2__redblacktree_node__left(               cause, this));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "right"),               f2__redblacktree_node__right(              cause, this));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "color"),               f2__redblacktree_node__color(              cause, this));
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "count_key_ptypehash"), f2__redblacktree_node__count_key_ptypehash(cause, this));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__redblacktree_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(redblacktree_node,         this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__redblacktree_node__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(redblacktree_node__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__redblacktree_node__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2redblacktree_node__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2redblacktree_node__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   assert_value(key);
   f2ptr node = assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));

@@ -618,7 +618,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
     f2ptr lower_node               = this;
     f2ptr upper_node__center_value = f2__interval_tree_node__center_value(cause, upper_node);
     assert_value(raw__interval_tree_node__add_intervals_containing_value_to_list(cause, lower_node, upper_node__center_value, move_up_element_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
-    list__iteration(cause, move_up_element_set, element,
+    list__iteration(cause, move_up_element_list, element,
 		    assert_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
 		    );
   }
@@ -652,7 +652,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
     f2ptr upper_node__overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, upper_node);
     f2ptr upper_node__overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, upper_node);
     
-    list__iteration(cause, move_up_element_set, element,
+    list__iteration(cause, move_up_element_list, element,
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
 		    assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif

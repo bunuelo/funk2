@@ -57,10 +57,11 @@ declare_object_type_3_slot(list, write_cmutex, length, cons_cells,
 
 declare_primobject_3_slot(list, write_cmutex, length, cons_cells);
 
-f2ptr f2__list__new   (f2ptr cause, f2ptr elements);
-f2ptr f2__list__cons_cells(f2ptr cause, f2ptr this);
-f2ptr f2__list__add   (f2ptr cause, f2ptr this, f2ptr element);
-f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__list__new       (f2ptr cause, f2ptr elements);
+//f2ptr  f2__list__cons_cells(f2ptr cause, f2ptr this);
+f2ptr raw__list__add       (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__list__add       (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__list__lookup    (f2ptr cause, f2ptr this, f2ptr element);
 
 f2ptr f2__list__car(f2ptr cause, f2ptr this);
 f2ptr f2__list__cdr(f2ptr cause, f2ptr this);

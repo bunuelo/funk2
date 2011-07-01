@@ -43,7 +43,8 @@ def_pcfunk1(list__car, this,
 	    "",
 	    return f2__list__car(this_cause, this));
 
-f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
+
+f2ptr raw__list__cdr(f2ptr cause, f2ptr this) {
   f2ptr length     = f2list__length(this, cause);
   s64   length__i  = f2integer__i(length, cause);
   f2ptr cons_cells = f2list__cons_cells(this, cause);
@@ -57,11 +58,17 @@ f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
     return nil;
   }
 }
+
+f2ptr f2__list__cdr(f2ptr cause, f2ptr this) {
+  assert_argument_type(list, this);
+  return raw__list__cdr(cause, this);
+}
 def_pcfunk1(list__cdr, this,
 	    "",
 	    return f2__list__cdr(this_cause, this));
 
-f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
+
+f2ptr raw__list__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
   f2list__cons_cells__set(this, cause, f2cons__new(cause, element, f2list__cons_cells(this, cause)));
   f2ptr length = f2list__length(this, cause);
@@ -70,11 +77,17 @@ f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
   return nil;
 }
+
+f2ptr f2__list__add(f2ptr cause, f2ptr this, f2ptr element) {
+  assert_argument_type(list, this);
+  return raw__list__add(cause, this, element);
+}
 def_pcfunk2(list__add, this, element,
 	    "",
 	    return f2__list__add(this_cause, this, element));
 
-f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
+
+f2ptr raw__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
   f2ptr iter = f2list__cons_cells(this, cause);
   while (iter) {
@@ -88,9 +101,15 @@ f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__unlock(f2list__write_cmutex(this, cause), cause);
   return nil;
 }
+
+f2ptr f2__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
+  assert_argument_type(list, this);
+  return raw__list__lookup(cause, this, element);
+}
 def_pcfunk2(list__lookup, this, element,
 	    "",
 	    return f2__list__lookup(this_cause, this, element));
+
 
 f2ptr raw__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);
@@ -108,6 +127,7 @@ f2ptr f2__list__equals(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(list__equals, this, that,
 	    "",
 	    return f2__list__equals(this_cause, this, that));
+
 
 f2ptr raw__list__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
   f2ptr cons_cells = f2__list__cons_cells(cause, this);

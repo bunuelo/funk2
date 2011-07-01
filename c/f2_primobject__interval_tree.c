@@ -194,7 +194,7 @@ def_pcfunk3(interval_tree__add_intervals_containing_value_to_list, this, value, 
 
 
 f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value) {
-  f2ptr list = f2__list__new(cause);
+  f2ptr list = f2__list__new(cause, nil);
   assert_value(raw__interval_tree__add_intervals_containing_value_to_list(cause, this, value, set));
   return set;
 }

@@ -57,7 +57,10 @@ declare_object_type_4_slot(redblacktree, mutate_mutex, head, value_funk, value_c
 // redblacktree_node
 
 typedef struct funk2_object_type__redblacktree_node__slot_s funk2_object_type__redblacktree_node__slot_t;
-declare_object_type_5_slot(redblacktree_node, parent, left, right, color, count_key_ptypehash, );
+declare_object_type_5_slot(redblacktree_node, parent, left, right, color, count_key_ptypehash,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
 
 #endif // F2__PRIMOBJECT__REDBLACKTREE__TYPES__H
 

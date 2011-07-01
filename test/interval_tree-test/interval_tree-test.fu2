@@ -111,10 +111,10 @@
       [terminal_format standard-terminal '\n  redblacktree: ' [get redblacktree leaves]]
       [terminal_format standard-terminal '\nINSERT ' x4]
       [have redblacktree insert x4]
-      `[
       [terminal_format standard-terminal '\n  redblacktree: ' [get redblacktree leaves]]
       [terminal_format standard-terminal '\nREMOVE ' x1]
       [have redblacktree remove x1]
+      `[
       [terminal_format standard-terminal '\n  redblacktree: ' [get redblacktree leaves]]
       [terminal_format standard-terminal '\nINSERT ' x5]
       [have redblacktree insert x5]

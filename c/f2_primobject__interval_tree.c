@@ -545,6 +545,21 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   //        \       =>      /         //
   //         right      this          //
   
+  // before node rotation, we remove elements that will need to be moved up.
+  f2ptr move_up_element_set = f2__set__new(cause);
+  {
+    f2ptr upper_node                                 = right_node;
+    f2ptr upper_node__overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, upper_node);
+    f2ptr upper_node__overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, upper_node);
+    f2ptr lower_node                                 = this;
+    f2ptr upper_node__center_value                   = f2__interval_tree_node__center_value(cause, upper_node);
+    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, lower_node, upper_node__center_value, move_up_element_set, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    set__iteration(cause, move_up_element_set, element,
+		   assert_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+		   );
+  }
+  
+  // begin rotate.
   f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
   f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
   
@@ -568,20 +583,15 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   
   f2__interval_tree_node__left_node__set(  cause, right_node, this);
   f2__interval_tree_node__parent_node__set(cause, this,       right_node);
+  // end rotate.
   
   // node rotation is done, so now fix overlapping sets.
-  
   {
     f2ptr upper_node                                 = right_node;
     f2ptr upper_node__overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, upper_node);
     f2ptr upper_node__overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, upper_node);
-    f2ptr lower_node                                 = this;
-    f2ptr upper_node__center_value                   = f2__interval_tree_node__center_value(cause, upper_node);
     
-    f2ptr move_up_element_set = f2__set__new(cause);
-    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, lower_node, upper_node__center_value, move_up_element_set, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
     set__iteration(cause, move_up_element_set, element,
-		   assert_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
@@ -600,6 +610,21 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   //        /      =>      \        //
   //    left                this    //
   
+  // before node rotation, we remove elements that will need to be moved up.
+  f2ptr move_up_element_set = f2__set__new(cause);
+  {
+    f2ptr upper_node                                 = left_node;
+    f2ptr upper_node__overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, upper_node);
+    f2ptr upper_node__overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, upper_node);
+    f2ptr lower_node                                 = this;
+    f2ptr upper_node__center_value                   = f2__interval_tree_node__center_value(cause, upper_node);
+    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, lower_node, upper_node__center_value, move_up_element_set, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    set__iteration(cause, move_up_element_set, element,
+		   assert_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+		   );
+  }
+  
+  // begin rotate.
   f2ptr left_node             = f2__interval_tree_node__left_node( cause, this);
   f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);
   
@@ -623,20 +648,15 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   
   f2__interval_tree_node__right_node__set( cause, left_node, this);
   f2__interval_tree_node__parent_node__set(cause, this,      left_node);
+  // end rotate.
   
   // node rotation is done, so now fix overlapping sets.
-  
   {
     f2ptr upper_node                                 = left_node;
     f2ptr upper_node__overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, upper_node);
     f2ptr upper_node__overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, upper_node);
-    f2ptr lower_node                                 = this;
-    f2ptr upper_node__center_value                   = f2__interval_tree_node__center_value(cause, upper_node);
     
-    f2ptr move_up_element_set = f2__set__new(cause);
-    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_set(cause, lower_node, upper_node__center_value, move_up_element_set, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
     set__iteration(cause, move_up_element_set, element,
-		   assert_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif

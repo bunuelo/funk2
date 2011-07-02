@@ -429,11 +429,11 @@ f2ptr raw__redblacktree_node__simple_binary_insert_key(f2ptr cause, f2ptr this, 
   f2ptr this__count_key_ptypehash      = f2__redblacktree_node__count_key_ptypehash(cause, this);
   f2ptr this__key                      = f2__ptypehash__an_arbitrary_key(cause, this__count_key_ptypehash);
   if (key == nil) {
-    if (raw__ptypehash__is_empty(cause, count_key_ptypehash)) {
+    if (raw__ptypehash__is_empty(cause, this__count_key_ptypehash)) {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
 				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "value"),    value));
+				     new__symbol(cause, "key"),      key));
     }
   }
   f2ptr fiber                          = f2__this__fiber(cause);
@@ -501,11 +501,11 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
   f2ptr     this__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, this);
   f2ptr     this__key                 = f2__ptypehash__an_arbitrary_key(cause, this__count_key_ptypehash);
   if (key == nil) {
-    if (raw__ptypehash__is_empty(cause, count_key_ptypehash)) {
+    if (raw__ptypehash__is_empty(cause, this__count_key_ptypehash)) {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
 				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "value"),    value));
+				     new__symbol(cause, "key"),      key));
     }
   }
   f2ptr     fiber                     = f2__this__fiber(cause);
@@ -998,10 +998,9 @@ f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
   f2ptr key                 = f2__ptypehash__an_arbitrary_key(cause, count_key_ptypehash);
   if (key == nil) {
     if (raw__ptypehash__is_empty(cause, count_key_ptypehash)) {
-      return new__error(f2list6__new(cause,
+      return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
-				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "value"),    value));
+				     new__symbol(cause, "this"),     this));
     }
   }
   return key;
@@ -1028,10 +1027,9 @@ f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
   f2ptr key                 = f2__ptypehash__an_arbitrary_key(cause, count_key_ptypehash);
   if (key == nil) {
     if (raw__ptypehash__is_empty(cause, count_key_ptypehash)) {
-      return new__error(f2list6__new(cause,
+      return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
-				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "value"),    value));
+				     new__symbol(cause, "this"),     this));
     }
   }
   return key;

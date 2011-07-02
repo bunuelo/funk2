@@ -806,7 +806,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
-    if (center_value_equality == nil) {
+    //if (center_value_equality == nil) {
       // descend right branch of tree
       {
 	f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
@@ -814,7 +814,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 	  assert_value(raw__interval_tree_node__add_intervals_containing_value_to_list(cause, right_node, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
 	}
       }
-    }
+      //}
   }
   if ((value_center_comparison != nil) ||
       (center_value_equality   != nil)) {
@@ -841,7 +841,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
-    if (center_value_equality == nil) {
+    //if (center_value_equality == nil) {
       // descend left branch of tree
       {
 	f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
@@ -849,7 +849,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 	  return raw__interval_tree_node__add_intervals_containing_value_to_list(cause, left_node, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 	}
       }
-    }
+      //}
   }
   return nil;
 }

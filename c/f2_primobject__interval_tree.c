@@ -540,7 +540,7 @@ f2ptr raw__interval_tree_node__grandparent_node(f2ptr cause, f2ptr this) {
   return f2__interval_tree_node__parent_node(cause, parent_node);
 }
 
-f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   //    this                 right    //
   //        \       =>      /         //
   //         right      this          //

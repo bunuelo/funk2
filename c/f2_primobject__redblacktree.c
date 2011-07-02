@@ -865,7 +865,7 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (f2__redblacktree_node__left(cause, node) == nil || f2__redblacktree_node__right(cause, node) == nil) { 
     raw__redblacktree__remove_node_with_at_most_one_child(cause, this, node);
   } else {
-    f2ptr node__left__max = assert_value(raw__redblacktree_node__maximum_node(cause, f2__redblacktree_node__left(cause, node)));
+    f2ptr node__left__max = raw__redblacktree_node__maximum_node(cause, f2__redblacktree_node__left(cause, node));
     
     debug__assert(f2__redblacktree_node__right(cause, node__left__max) == nil, nil, "rbt_node__remove_node: (node__left__max->right == NULL) failed.");
     

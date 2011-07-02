@@ -88,6 +88,10 @@ f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, 
 f2ptr f2__larva__invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr current_funktion_name,
 				    f2ptr value_name, f2ptr value);
 
+f2ptr f2__larva__caught_invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name,
+					   f2ptr value_name, f2ptr value,
+					   f2ptr additional_args);
+
 f2ptr f2__larva__error__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name, f2ptr frame_args);
 
 // **

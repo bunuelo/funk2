@@ -593,7 +593,7 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   return nil;
 }
 
-f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   //         this      left         //
   //        /      =>      \        //
   //    left                this    //
@@ -638,10 +638,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   
   // node rotation is done, so now fix overlapping sets.
   {
-    f2ptr upper_node                                 = left_node;
-    f2ptr upper_node__overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, upper_node);
-    f2ptr upper_node__overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, upper_node);
-    
+    f2ptr upper_node = left_node;
     list__iteration(cause, move_up_element_list, element,
 		    assert_value(f2__interval_tree_node__insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
 		    );
@@ -669,7 +666,7 @@ f2ptr raw__interval_tree_node__uncle_node(f2ptr cause, f2ptr this) {
 }
 
 
-f2ptr raw__interval_tree_node__insert_case_5(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__insert_case_5(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr grandparent_node            = raw__interval_tree_node__grandparent_node(cause, this);
   f2ptr grandparent_node__left_node =  f2__interval_tree_node__left_node(       cause, grandparent_node);
   f2ptr parent_node                 =  f2__interval_tree_node__parent_node(     cause, this);
@@ -677,14 +674,14 @@ f2ptr raw__interval_tree_node__insert_case_5(f2ptr cause, f2ptr this, f2ptr left
   f2__interval_tree_node__color__set(cause, parent_node,      new__symbol(cause, "black"));
   f2__interval_tree_node__color__set(cause, grandparent_node, new__symbol(cause, "red"));
   if (raw__eq(cause, this, parent_node__left_node) && raw__eq(cause, parent_node, grandparent_node__left_node)) {
-    assert_value(raw__interval_tree_node__rotate_right(cause, grandparent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__rotate_right(cause, grandparent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   } else { // (raw__eq(cause, this, parent_node__right_node) && raw__eq(cause, parent_node, grandparent_node__right_node)) {
-    assert_value(raw__interval_tree_node__rotate_left(cause, grandparent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__rotate_left(cause, grandparent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   }
   return nil;
 }
 
-f2ptr raw__interval_tree_node__insert_case_4(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__insert_case_4(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr grandparent_node             = raw__interval_tree_node__grandparent_node(cause, this);
   f2ptr grandparent_node__left_node  =  f2__interval_tree_node__left_node(       cause, grandparent_node);
   f2ptr grandparent_node__right_node =  f2__interval_tree_node__right_node(      cause, grandparent_node);
@@ -694,20 +691,20 @@ f2ptr raw__interval_tree_node__insert_case_4(f2ptr cause, f2ptr this, f2ptr left
   {
     f2ptr next_node = this;
     if (raw__eq(cause, this, parent_node__right_node) && raw__eq(cause, parent_node, grandparent_node__left_node)) {
-      assert_value(raw__interval_tree_node__rotate_left(cause, parent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+      assert_value(raw__interval_tree_node__rotate_left(cause, parent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
       next_node = f2__interval_tree_node__left_node(cause, this);
     } else if (raw__eq(cause, this, parent_node__left_node)  && raw__eq(cause, parent_node, grandparent_node__right_node)) {
-      assert_value(raw__interval_tree_node__rotate_right(cause, parent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+      assert_value(raw__interval_tree_node__rotate_right(cause, parent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
       next_node = f2__interval_tree_node__right_node(cause, this);
     }
-    assert_value(raw__interval_tree_node__insert_case_5(cause, next_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__insert_case_5(cause, next_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   }
   return nil;
 }
 
-f2ptr raw__interval_tree_node__insert_case_1(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
+f2ptr raw__interval_tree_node__insert_case_1(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 
-f2ptr raw__interval_tree_node__insert_case_3(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__insert_case_3(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr uncle_node = raw__interval_tree_node__uncle_node(cause, this);
   if ((uncle_node != nil) && raw__interval_tree_node__is_red(cause, uncle_node)) {
     f2ptr parent_node      =  f2__interval_tree_node__parent_node(     cause, this);
@@ -715,30 +712,30 @@ f2ptr raw__interval_tree_node__insert_case_3(f2ptr cause, f2ptr this, f2ptr left
     f2__interval_tree_node__color__set(cause, parent_node,      new__symbol(cause, "black"));
     f2__interval_tree_node__color__set(cause, uncle_node,       new__symbol(cause, "black"));
     f2__interval_tree_node__color__set(cause, grandparent_node, new__symbol(cause, "red"));
-    assert_value(raw__interval_tree_node__insert_case_1(cause, grandparent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__insert_case_1(cause, grandparent_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   } else {
-    assert_value(raw__interval_tree_node__insert_case_4(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__insert_case_4(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   }
   return nil;
 }
 
-f2ptr raw__interval_tree_node__insert_case_2(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__insert_case_2(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
   if (raw__interval_tree_node__is_black(cause, parent_node)) {
     return nil;
   } else {
-    assert_value(raw__interval_tree_node__insert_case_3(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__insert_case_3(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   }
   return nil;
 }
 
-f2ptr raw__interval_tree_node__insert_case_1(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
+f2ptr raw__interval_tree_node__insert_case_1(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
   if (parent_node == nil) {
     f2__interval_tree_node__color__set(cause, this, new__symbol(cause, "black"));
   } else {
     // check insert case 2
-    assert_value(raw__interval_tree_node__insert_case_2(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__insert_case_2(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   }
   return nil;
 }
@@ -753,7 +750,7 @@ f2ptr raw__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2
     insert_node__color = new__symbol(cause, "red");
     f2__interval_tree_node__color__set(cause, insert_node, insert_node__color);
     // check insert case 1
-    assert_value(raw__interval_tree_node__insert_case_1(cause, insert_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(raw__interval_tree_node__insert_case_1(cause, insert_node, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   }
   return nil;
 }

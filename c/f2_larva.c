@@ -48,6 +48,36 @@ f2ptr f2__larva__invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr so
 }
 
 
+f2ptr f2__larva__caught_invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name,
+					   f2ptr value_name, f2ptr value,
+					   f2ptr additional_args) {
+  f2ptr bug_frame = f2__frame__new(cause, f2list12__new(cause,
+							new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_value"),
+							new__symbol(cause, "source_filename"),    source_filename,
+							new__symbol(cause, "source_line_number"), source_line_number,
+							new__symbol(cause, "funktion_name"),      funktion_name,
+							new__symbol(cause, "value_name"),         value_name,
+							new__symbol(cause, "value"),              value));
+  if (raw__conslist__is_type(cause, additional_args)) {
+    f2ptr iter = additional_args;
+    while (iter != nil) {
+      f2ptr additional_arg_name  = f2__cons__car(cause, iter);
+      iter = f2__cons__cdr(cause, iter);
+      if (iter != nil) {
+	f2ptr additional_arg_value = f2__cons__car(cause, iter);
+	f2__frame__add_var_value(cause, bug_frame, additional_arg_name, additional_arg_value);
+	iter = f2__cons__cdr(cause, iter);
+      } else {
+	f2__frame__add_var_value(cause, bug_frame, additional_arg_name, new__symbol(cause, "<no-bug-argument-value>"));
+      }
+    }
+  } else {
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug-argument-values"), new__symbol(cause, "<invalid>"));
+  }
+  return f2larva__new(cause, 8, f2__bug__new(cause, f2integer__new(cause, 8), bug_frame));
+}
+
+
 f2ptr f2__larva__error__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name, f2ptr frame_args) {
   f2ptr bug_frame = f2__frame__new(cause, frame_args);
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),           new__symbol(cause, "error"));

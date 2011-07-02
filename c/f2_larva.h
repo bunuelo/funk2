@@ -55,6 +55,26 @@
       assert_value_temp;						\
     })
 
+#define catch_value(value, additional_frame_args) ({			\
+      f2ptr assert_value_temp = value;					\
+      if (raw__larva__is_type(cause, assert_value_temp)) {		\
+	f2ptr assert_value_temp__bug = f2larva__bug(assert_value_temp, cause); \
+	if (assert_value_temp__bug == nil) {				\
+	  assert_value_temp__bug = f2__bug__new_from_larva(cause, assert_value_temp); \
+	}								\
+	return f2__larva__caught_invalid_value__new(cause,		\
+						    new__string(cause, (char*)__FILE__), \
+						    f2integer__new(cause, __LINE__), \
+						    new__symbol(cause, (char*)__FUNCTION__), \
+						    new__symbol(cause, #value),	\
+						    assert_value_temp__bug, \
+						    additional_frame_args); \
+      }									\
+      assert_value_temp;						\
+    })
+
+
+
 #define new__error(frame_args)						\
   f2__larva__error__new(cause,						\
 			new__string(cause, (char*)__FILE__),		\

@@ -768,6 +768,48 @@ f2ptr raw__interval_tree_node__uncle_node(f2ptr cause, f2ptr this) {
 }
 
 
+f2ptr raw__interval_tree_node__head(f2ptr cause, f2ptr this) {
+  if (this == nil) {
+    return nil;
+  }
+  f2ptr iter        = this;
+  f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
+  while (parent != nil) {
+    iter        = parent_node;
+    parent_node = f2__interval_tree_node__parent_node(cause, iter);
+  }
+  return iter;
+}
+
+
+f2ptr raw__interval_tree_node__minimum_node(f2ptr cause, f2ptr this) {
+  if (this == nil) {
+    return nil;
+  }
+  f2ptr iter      = this;
+  f2ptr left_node = f2__interval_tree_node__left_node(cause, this);
+  while (left_node != nil) {
+    iter      = left_node;
+    left_node = f2__interval_tree_node__left_node(cause, iter);
+  }
+  return iter;
+}
+
+
+f2ptr raw__interval_tree_node__maximum_node(f2ptr cause, f2ptr this) {
+  if (this == nil) {
+    return nil;
+  }
+  f2ptr iter       = this;
+  f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
+  while (right_node != nil) {
+    iter       = right_node;
+    right_node = f2__interval_tree_node__right_node(cause, iter);
+  }
+  return iter;
+}
+
+
 f2ptr raw__interval_tree_node__insert_case_5(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr grandparent_node            = raw__interval_tree_node__grandparent_node(cause, this);
   f2ptr grandparent_node__left_node =  f2__interval_tree_node__left_node(       cause, grandparent_node);
@@ -803,8 +845,6 @@ f2ptr raw__interval_tree_node__insert_case_4(f2ptr cause, f2ptr this, f2ptr left
   }
   return nil;
 }
-
-f2ptr raw__interval_tree_node__insert_case_1(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 
 f2ptr raw__interval_tree_node__insert_case_3(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr uncle_node = raw__interval_tree_node__uncle_node(cause, this);

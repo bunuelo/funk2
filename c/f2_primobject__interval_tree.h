@@ -108,6 +108,10 @@ f2ptr  f2__interval_tree_node__simple_remove                         (f2ptr caus
 f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
 f2ptr  f2__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
 
+f2ptr raw__interval_tree_node__head         (f2ptr cause, f2ptr this);
+f2ptr raw__interval_tree_node__minimum_node (f2ptr cause, f2ptr this);
+f2ptr raw__interval_tree_node__maximum_node (f2ptr cause, f2ptr this);
+
 void  raw__interval_tree_node__delete_case_6(f2ptr cause, f2ptr this);
 void  raw__interval_tree_node__delete_case_5(f2ptr cause, f2ptr this);
 void  raw__interval_tree_node__delete_case_4(f2ptr cause, f2ptr this);

@@ -920,7 +920,7 @@ def_pcfunk7(interval_tree_node__insert, this, element, left_value_funk, right_va
 
 void raw__interval_tree_node__delete_case_6(f2ptr cause, f2ptr this) {
   f2ptr this__sibling = raw__interval_tree_node__sibling_node(cause, this);
-  f2__interval_tree_node__color__set(cause, this__sibling, f2__interval_tree_node__color(cause, f2__interval_tree_node__parent(cause, this)));
+  f2__interval_tree_node__color__set(cause, this__sibling, f2__interval_tree_node__color(cause, f2__interval_tree_node__parent_node(cause, this)));
   f2__interval_tree_node__color__set(cause, f2__interval_tree_node__parent_node(cause, this), new__symbol(cause, "black"));
   if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this)))) {
     // Here, this__sibling->right->color == rbt_color__red.

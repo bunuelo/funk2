@@ -51,13 +51,13 @@
 	  `[print fiber]
 	  `[print [get fiber cause_reg]]
 	  `[print [get fiber cause]]
-	  [ansi-stream-foreground [get standard-terminal stream] 10] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-foreground [get standard-terminal stream] 15]
-	  [terminal_format standard-terminal bug]
+	  `[terminal_format standard-terminal bug]
+	  [ansi-stream-foreground [get standard-terminal stream] 7]
 	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 	    [if bug-fiber
 		[prog [terminal_format standard-terminal '\n\nBug Fiber Stack Trace:']
 		      [have bug print_backtrace]
-		      [mapc &print [get [get bug-fiber stack_trace] blocks]]]]]]
+		      [mapc [funk [x] [terminal_format standard-terminal '\n  ' x]] [get [get bug-fiber stack_trace] blocks]]]]]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     [repl]]]
 

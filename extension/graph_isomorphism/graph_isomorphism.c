@@ -545,12 +545,12 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_widt
   }
   raw__redblacktree__insert(cause, search_beam_redblacktree, initial_isomorphism);
   f2ptr best_complete_isomorphism = nil;
-  while (! raw__redblacktree__empty(cause, search_beam_redblacktree)) {
+  while (! raw__redblacktree__is_empty(cause, search_beam_redblacktree)) {
     f2ptr expansion_redblacktree = f2__redblacktree__new(cause, value_cfunk, value_compare_cfunk);
     {
       s64 beam_index = 0;
       while ((beam_index < beam_width) &&
-	     (! raw__redblacktree__empty(cause, search_beam_redblacktree))) {
+	     (! raw__redblacktree__is_empty(cause, search_beam_redblacktree))) {
 	f2ptr minimum_cost_isomorphism = raw__redblacktree__minimum(cause, search_beam_redblacktree);
 	raw__redblacktree__remove(cause, search_beam_redblacktree, minimum_cost_isomorphism);
 	{

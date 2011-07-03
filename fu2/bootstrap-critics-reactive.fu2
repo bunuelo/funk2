@@ -56,6 +56,7 @@
 	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 	    [if bug-fiber
 		[prog [terminal_format standard-terminal '\n\nBug Fiber Stack Trace:']
+		      [have bug print_backtrace]
 		      [mapc &print [get [get bug-fiber stack_trace] blocks]]]]]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     [repl]]]

@@ -919,7 +919,7 @@ def_pcfunk7(interval_tree_node__insert, this, element, left_value_funk, right_va
 ///vvvv
 
 void raw__interval_tree_node__delete_case_6(f2ptr cause, f2ptr this) {
-  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  f2ptr this__sibling = raw__interval_tree_node__sibling_node(cause, this);
   f2__interval_tree_node__color__set(cause, this__sibling, f2__interval_tree_node__color(cause, f2__interval_tree_node__parent(cause, this)));
   f2__interval_tree_node__color__set(cause, f2__interval_tree_node__parent_node(cause, this), new__symbol(cause, "black"));
   if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this)))) {
@@ -934,7 +934,7 @@ void raw__interval_tree_node__delete_case_6(f2ptr cause, f2ptr this) {
 }
 
 void raw__interval_tree_node__delete_case_5(f2ptr cause, f2ptr this) {
-  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  f2ptr this__sibling = raw__interval_tree_node__sibling_node(cause, this);
   if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this))) &&
       raw__interval_tree_node__is_black(cause, this__sibling) &&
       raw__interval_tree_node__is_red(  cause, f2__interval_tree_node__left_node( cause, this__sibling)) &&
@@ -954,7 +954,7 @@ void raw__interval_tree_node__delete_case_5(f2ptr cause, f2ptr this) {
 }
 
 void raw__interval_tree_node__delete_case_4(f2ptr cause, f2ptr this) {
-  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  f2ptr this__sibling = raw__interval_tree_node__sibling_node(cause, this);
   if (raw__interval_tree_node__is_red(  cause, f2__interval_tree_node__parent_node(cause, this)) &&
       raw__interval_tree_node__is_black(cause, this__sibling) &&
       raw__interval_tree_node__is_black(cause, f2__interval_tree_node__left_node( cause, this__sibling)) &&
@@ -969,7 +969,7 @@ void raw__interval_tree_node__delete_case_4(f2ptr cause, f2ptr this) {
 void raw__interval_tree_node__delete_case_1(f2ptr cause, f2ptr this);
 
 void raw__interval_tree_node__delete_case_3(f2ptr cause, f2ptr this) {
-  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  f2ptr this__sibling = raw__interval_tree_node__sibling_node(cause, this);
   if (this__sibling) {
     if (raw__interval_tree_node__is_black(cause, f2__interval_tree_node__parent_node(cause, this)) &&
 	raw__interval_tree_node__is_black(cause, this__sibling) &&
@@ -984,7 +984,7 @@ void raw__interval_tree_node__delete_case_3(f2ptr cause, f2ptr this) {
 }
 
 void raw__interval_tree_node__delete_case_2(f2ptr cause, f2ptr this) {
-  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  f2ptr this__sibling = raw__interval_tree_node__sibling_node(cause, this);
   if (raw__interval_tree_node__is_red(cause, this__sibling)) {
     f2__interval_tree_node__color__set(cause, f2__interval_tree_node__parent_node(cause, this), new__symbol(cause, "red"));
     f2__interval_tree_node__color__set(cause, this__sibling, new__symbol(cause, "black"));

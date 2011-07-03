@@ -142,6 +142,97 @@ def_pcfunk2(interval_tree__remove, this, element,
 	    return f2__interval_tree__remove(this_cause, this, element));
 
 
+///vvvvv
+
+void raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr node__child  = (f2__interval_tree_node__left_node(cause, node) != nil) ? f2__interval_tree_node__left_node(cause, node) : f2__interval_tree_node__right_node(cause, node);
+  f2ptr node__parent = f2__interval_tree_node__parent_node(cause, node);
+  f2ptr node__left   = f2__interval_tree_node__left_node(  cause, node);
+  f2ptr node__right  = f2__interval_tree_node__right_node( cause, node);
+  if (node__left == nil) { 
+    if (node__parent) {
+      if (f2__interval_tree_node__right_node(cause, node__parent) == node) {
+	f2__interval_tree_node__right_node__set(cause, node__parent, node__right);
+	if (node__right) {
+	  f2__interval_tree_node__parent_node__set(cause, node__right, node__parent);
+	}
+      } else {
+	f2__interval_tree_node__left_node__set(cause, node__parent, node__right);
+	if (node__right) {
+	  f2__interval_tree_node__parent_node__set(cause, node__right, node__parent);
+	}
+      }
+    } else {
+      f2__interval_tree__head__set(cause, this, node__right);
+      if (node__right) {
+	f2__interval_tree_node__parent_node__set(cause, node__right, nil);
+      }
+    }
+  } else { // (node->right == NULL)
+    if (node__parent) {
+      if (f2__interval_tree_node__right_node(cause, node__parent) == node) {
+	f2__interval_tree_node__right_node__set(cause, node__parent, node__left);
+	if (node__left) {
+	  f2__interval_tree_node__parent_node__set(cause, node__left, node__parent);
+	}
+      } else {
+	f2__interval_tree_node__left_node__set(cause, node__parent, node__left);
+	if (node__left) {
+	  f2__interval_tree_node__parent_node__set(cause, node__left, node__parent);
+	}
+      }
+    } else {
+      f2__interval_tree__head__set(cause, this, node__left);
+      if (node__left) {
+	f2__interval_tree_node__parent_node__set(cause, node__left, nil);
+      }
+    }
+  }
+  
+  if (node__child) {
+    if (raw__eq(cause, f2__interval_tree_node__color(cause, node), new__symbol(cause, "black"))) {
+      if (raw__eq(cause, f2__interval_tree_node__color(cause, node__child), new__symbol(cause, "red"))) {
+	f2__interval_tree_node__color__set(cause, node__child, new__symbol(cause, "black"));
+      } else {
+	raw__interval_tree_node__delete_case_1(cause, node__child);
+      }
+    }
+  }
+}
+
+void raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
+  if (f2__interval_tree_node__left_node(cause, node) == nil || f2__interval_tree_node__right_node(cause, node) == nil) { 
+    raw__interval_tree__remove_node_with_at_most_one_child(cause, this, node);
+  } else {
+    f2ptr node__left__max = raw__interval_tree_node__maximum_node(cause, f2__interval_tree_node__left(cause, node));
+    
+    //debug__assert(f2__interval_tree_node__right_node(cause, node__left__max) == nil, nil, "interval_tree_node__remove_node: (node__left__max->right == NULL) failed.");
+    
+    raw__interval_tree_node__swap_nodes(cause, node__left__max, node);
+    
+    raw__interval_tree__remove_node_with_at_most_one_child(cause, this, node);
+    
+    if (f2__interval_tree_node__parent_node(cause, node__left__max) == nil) {
+      f2__interval_tree__head__set(cause, this, node__left__max);
+    }
+  }
+  
+  f2__interval_tree__head__set(cause, this, raw__interval_tree_node__head(cause, f2__interval_tree__head(cause, this))); 
+  
+  if (f2__interval_tree__head(cause, this) != nil) {
+    if (f2__interval_tree_node__color(cause, raw__eq(cause, f2__interval_tree__head(cause, this)), new__symbol(cause, "red"))) {
+      f2__interval_tree_node__color__set(cause, f2__interval_tree__head(cause, this), new__symbol(cause, "black"));
+    }
+  }
+  
+  //#ifdef DEBUG_REDBLACKTREE
+  //debug__assert(! raw__interval_tree__contains_node(this, node), nil, "raw__interval_tree__remove_node failed: tree still contains node.");
+  //#endif
+}
+
+///^^^^
+
+
 f2ptr raw__interval_tree__intervals__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
   return raw__redblacktree__leaves(cause, all_left_redblacktree);
@@ -363,30 +454,35 @@ def_pcfunk6(interval_tree_node__new, color, center_value, left_value_funk, right
 
 
 f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
-  f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
-  f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
-  f2ptr left_element_set  = f2__set__new(cause);
-  f2ptr right_element_set = f2__set__new(cause);
-  redblacktree__iteration(cause, overlapping_left_redblacktree, element,
-			  raw__set__add(cause, left_element_set, element);
-			  );
-  redblacktree__iteration(cause, overlapping_right_redblacktree, element,
-			  raw__set__add(cause, right_element_set, element);
-			  );
-  set__iteration(cause, left_element_set, element,
-		 if (! raw__set__contains(cause, right_element_set, element)) {
-		   return new__error(f2list4__new(cause,
-						  new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-						  new__symbol(cause, "this"),     this));
-		 }
-		 );
-  set__iteration(cause, right_element_set, element,
-		 if (! raw__set__contains(cause, left_element_set, element)) {
-		   return new__error(f2list4__new(cause,
-						  new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-						  new__symbol(cause, "this"),     this));
-		 }
-		 );
+  { // make sure overlapping_left_redblacktree and overlapping_right_redblacktree have the same elements.
+    f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
+    f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
+    f2ptr left_element_set  = f2__set__new(cause);
+    f2ptr right_element_set = f2__set__new(cause);
+    redblacktree__iteration(cause, overlapping_left_redblacktree, element,
+			    raw__set__add(cause, left_element_set, element);
+			    );
+    redblacktree__iteration(cause, overlapping_right_redblacktree, element,
+			    raw__set__add(cause, right_element_set, element);
+			    );
+    set__iteration(cause, left_element_set, element,
+		   if (! raw__set__contains(cause, right_element_set, element)) {
+		     return new__error(f2list4__new(cause,
+						    new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+						    new__symbol(cause, "this"),     this));
+		   }
+		   );
+    set__iteration(cause, right_element_set, element,
+		   if (! raw__set__contains(cause, left_element_set, element)) {
+		     return new__error(f2list4__new(cause,
+						    new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+						    new__symbol(cause, "this"),     this));e
+		   }
+		   );
+  }
+  { // 
+    
+  }
   return nil;
 }
 
@@ -769,6 +865,209 @@ def_pcfunk7(interval_tree_node__insert, this, element, left_value_funk, right_va
 	    "Inserts a new interval element into this interval_tree.",
 	    return f2__interval_tree_node__insert(this_cause, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
 
+
+
+///vvvv
+
+void raw__interval_tree_node__delete_case_6(f2ptr cause, f2ptr this) {
+  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  f2__interval_tree_node__color__set(cause, this__sibling, f2__interval_tree_node__color(cause, f2__interval_tree_node__parent(cause, this)));
+  f2__interval_tree_node__color__set(cause, f2__interval_tree_node__parent_node(cause, this), new__symbol(cause, "black"));
+  if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this)))) {
+    // Here, this__sibling->right->color == rbt_color__red.
+    f2__interval_tree_node__color__set(cause, f2__interval_tree_node__right_node(cause, this__sibling), new__symbol(cause, "black"));
+    raw__interval_tree_node__rotate_left(cause, f2__interval_tree_node__parent_node(cause, this));
+  } else {
+    // Here, this__sibling->left->color == rbt_color__red.
+    f2__interval_tree_node__color__set(cause, f2__interval_tree_node__left_node(cause, this__sibling), new__symbol(cause, "black"));
+    raw__interval_tree_node__rotate_right(cause, f2__interval_tree_node__parent_node(cause, this));
+  }
+}
+
+void raw__interval_tree_node__delete_case_5(f2ptr cause, f2ptr this) {
+  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  if (raw__eq(cause, this, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, this))) &&
+      raw__interval_tree_node__is_black(cause, this__sibling) &&
+      raw__interval_tree_node__is_red(  cause, f2__interval_tree_node__left_node( cause, this__sibling)) &&
+      raw__interval_tree_node__is_black(cause, f2__interval_tree_node__right_node(cause, this__sibling))) {
+    f2__interval_tree_node__color__set(cause, this__sibling, new__symbol(cause, "red"));
+    f2__interval_tree_node__color__set(cause, f2__interval_tree_node__left_node(cause, this__sibling), new__symbol(cause, "black"));
+    raw__interval_tree_node__rotate_right(cause, this__sibling);
+  } else if (raw__eq(cause, this, f2__interval_tree_node__right_node(cause, f2__interval_tree_node__parent_node(cause, this))) &&
+	     raw__interval_tree_node__is_black(cause, this__sibling) &&
+	     raw__interval_tree_node__is_red(  cause, f2__interval_tree_node__right_node(cause, this__sibling)) &&
+	     raw__interval_tree_node__is_black(cause, f2__interval_tree_node__left( cause, this__sibling))) {
+    f2__interval_tree_node__color__set(cause, this__sibling, new__symbol(cause, "red"));
+    f2__interval_tree_node__color__set(cause, f2__interval_tree_node__right(cause, this__sibling), new__symbol(cause, "black"));
+    raw__interval_tree_node__rotate_left(cause, this__sibling);
+  }
+  raw__interval_tree_node__delete_case_6(cause, this);
+}
+
+void raw__interval_tree_node__delete_case_4(f2ptr cause, f2ptr this) {
+  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  if (raw__interval_tree_node__is_red(  cause, f2__interval_tree_node__parent_node(cause, this)) &&
+      raw__interval_tree_node__is_black(cause, this__sibling) &&
+      raw__interval_tree_node__is_black(cause, f2__interval_tree_node__left_node( cause, this__sibling)) &&
+      raw__interval_tree_node__is_black(cause, f2__interval_tree_node__right_node(cause, this__sibling))) {
+    f2__interval_tree_node__color__set(cause, this__sibling, new__symbol(cause, "red"));
+    f2__interval_tree_node__color__set(cause, f2__interval_tree_node__parent_node(cause, this), new__symbol(cause, "black"));
+  } else if (f2__interval_tree_node__parent_node(cause, this) != nil) {
+    raw__interval_tree_node__delete_case_5(cause, this);
+  }
+}
+
+void raw__interval_tree_node__delete_case_1(f2ptr cause, f2ptr this);
+
+void raw__interval_tree_node__delete_case_3(f2ptr cause, f2ptr this) {
+  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  if (this__sibling) {
+    if (raw__interval_tree_node__is_black(cause, f2__interval_tree_node__parent_node(cause, this)) &&
+	raw__interval_tree_node__is_black(cause, this__sibling) &&
+	raw__interval_tree_node__is_black(cause, f2__interval_tree_node__left_node( cause, this__sibling)) &&
+	raw__interval_tree_node__is_black(cause, f2__interval_tree_node__right_node(cause, this__sibling))) {
+      f2__interval_tree_node__color__set(cause, this__sibling, new__symbol(cause, "red"));
+      raw__interval_tree_node__delete_case_1(cause, f2__interval_tree_node__parent_node(cause, this));
+    } else {
+      raw__interval_tree_node__delete_case_4(cause, this);
+    }
+  }
+}
+
+void raw__interval_tree_node__delete_case_2(f2ptr cause, f2ptr this) {
+  f2ptr this__sibling = raw__interval_tree_node__sibling(cause, this);
+  if (raw__interval_tree_node__is_red(cause, this__sibling)) {
+    f2__interval_tree_node__color__set(cause, f2__interval_tree_node__parent_node(cause, this), new__symbol(cause, "red"));
+    f2__interval_tree_node__color__set(cause, this__sibling, new__symbol(cause, "black"));
+    if (this == f2__interval_tree_node__left(cause, f2__interval_tree_node__parent_node(cause, this))) {
+      raw__interval_tree_node__rotate_left(cause, f2__interval_tree_node__parent_node(cause, this));
+    } else {
+      raw__interval_tree_node__rotate_right(cause, f2__interval_tree_node__parent_node(cause, this));
+    }
+  }
+  raw__interval_tree_node__delete_case_3(cause, this);
+}
+
+void raw__redblacktree_node__delete_case_1(f2ptr cause, f2ptr this) {
+  if (f2__interval_tree_node__parent_node(cause, this) != nil) {
+    raw__interval_tree_node__delete_case_2(cause, this);
+  }
+}
+
+void raw__interval_tree_node__replace_node(f2ptr cause, f2ptr dest, f2ptr src) {
+  f2ptr src__parent = f2__interval_tree_node__parent_node(cause, src);
+  f2ptr src__left   = f2__interval_tree_node__left_node(  cause, src);
+  f2ptr src__right  = f2__interval_tree_node__right_node( cause, src);
+  f2__interval_tree_node__parent_node__set(cause, dest, src__parent);
+  f2__interval_tree_node__left_node__set(  cause, dest, src__left);
+  f2__interval_tree_node__right_node__set( cause, dest, src__right);
+  if (src__parent) {
+    if (raw__eq(cause, f2__interval_tree_node__left_node(cause, src__parent), src)) {
+      f2__interval_tree_node__left_node__set(cause, src__parent, dest);
+    } else { // (src__parent->right == src)
+      //#ifdef DEBUG_REDBLACKTREE
+      //debug__assert(f2__redblacktree_node__right(cause, src__parent) == src, nil, "raw__redblacktree_node__replace_node assertion failure: src__parent->right == src.");
+      //#endif
+      f2__interval_tree_node__right_node__set(cause, src__parent, dest);
+    }
+  }
+  if (src__left != nil) {
+    f2__interval_tree_node__parent_node__set(cause, src__left, dest);
+  }
+  if (src__right != nil) {
+    f2__interval_tree_node__parent_node__set(cause, src__right, dest);
+  }
+  //#ifdef DEBUG_REDBLACKTREE
+  //debug__assert(raw__redblacktree_node__is_valid(cause, dest), nil, "raw__redblacktree_node__replace_node assertion failure: raw__redblacktree_node__is_valid(cause, dest).");
+  //#endif
+}
+
+void raw__interval_tree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
+  f2ptr node1__parent       = f2__interval_tree_node__parent_node(cause, node1);
+  f2ptr node1__parent__left = f2__interval_tree_node__parent_node(cause, node1) ? f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, node1)) : nil;
+  f2ptr node1__left         = f2__interval_tree_node__left_node(  cause, node1);
+  f2ptr node1__right        = f2__interval_tree_node__right_node( cause, node1);
+  f2ptr node1__color        = f2__interval_tree_node__color(      cause, node1);
+  f2ptr node2__parent       = f2__interval_tree_node__parent_node(cause, node2);
+  f2ptr node2__parent__left = f2__interval_tree_node__parent_node(cause, node2) ? f2__interval_tree_node__left_node(cause, f2__redblacktree_node__parent_node(cause, node2)) : nil;
+  f2ptr node2__left         = f2__interval_tree_node__left_node(  cause, node2);
+  f2ptr node2__right        = f2__interval_tree_node__right_node( cause, node2);
+  f2ptr node2__color        = f2__interval_tree_node__color(      cause, node2);
+  
+  // copy values to node2
+  if (raw__eq(cause, node1__parent, node2)) {
+    f2__interval_tree_node__parent_node__set(cause, node2, node1);
+  } else {
+    f2__interval_tree_node__parent_node__set(cause, node2, node1__parent);
+    if (node1__parent) {
+      if (raw__eq(cause, node1__parent__left, node1)) {
+	f2__interval_tree_node__left_node__set(cause, node1__parent, node2);
+      } else { // (node1__parent->right == node1)
+	//#ifdef DEBUG_REDBLACKTREE
+	//debug__assert(f2__redblacktree_node__right(cause, node1__parent) == node1, nil, "raw__redblacktree_node__replace_node assertion failure: node1__parent->right == node1.");
+	//#endif
+	f2__interval_tree_node__right_node__set(cause, node1__parent, node2);
+      }
+    }
+  }
+  if (raw__eq(cause, node1__left, node2)) {
+    f2__interval_tree_node__left_node__set(cause, node2, node1);
+  } else {
+    f2__interval_tree_node__left_node__set(cause, node2, node1__left);
+    if (node1__left) {
+      f2__interval_tree_node__parent_node__set(cause, node1__left, node2);
+    }
+  }
+  if (raw__eq(cause, node1__right, node2)) {
+    f2__interval_tree_node__right_node__set(cause, node2, node1);
+  } else {
+    f2__interval_tree_node__right_node__set(cause, node2, node1__right);
+    if (node1__right) {
+      f2__interval_tree_node__parent_node__set(cause, node1__right, node2);
+    }
+  }
+  f2__interval_tree_node__color__set(cause, node2, node1__color);
+  
+  // copy values to node1
+  if (raw__eq(cause, node2__parent, node1)) {
+    f2__interval_tree_node__parent_node__set(cause, node1, node2);
+  } else {
+    f2__interval_tree_node__parent_node__set(cause, node1, node2__parent);
+    if (node2__parent != nil) {
+      if (raw__eq(cause, node2__parent__left, node2)) {
+	f2__interval_tree_node__left_node__set(cause, node2__parent, node1);
+      } else { // (node1__parent->right == node1)
+	//#ifdef DEBUG_REDBLACKTREE
+	//debug__assert(f2__redblacktree_node__right(cause, node2__parent) == node2, nil, "raw__redblacktree_node__replace_node assertion failure: node2__parent->right == node2.");
+	//#endif
+	f2__interval_tree_node__right_node__set(cause, node2__parent, node1);
+      }
+    }
+  }
+  if (raw__eq(cause, node2__left, node1)) {
+    f2__interval_tree_node__left_node__set(cause, node1, node2);
+  } else {
+    f2__interval_tree_node__left_node__set(cause, node1, node2__left);
+    if (node2__left != nil) {
+      f2__interval_tree_node__parent_node__set(cause, node2__left, node1);
+    }
+  }
+  if (raw__eq(cause, node2__right, node1)) {
+    f2__interval_tree_node__right_node__set(cause, node1, node2);
+  } else {
+    f2__interval_tree_node__right_node__set(cause, node1, node2__right);
+    if (node2__right != nil) {
+      f2__interval_tree_node__parent_node__set(cause, node2__right, node1);
+    }
+  }
+  f2__interval_tree_node__color__set(cause, node1, node2__color);
+  //#ifdef DEBUG_REDBLACKTREE
+  //debug__assert(raw__interval_tree_node__is_valid(cause, node1), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node1).");
+  //debug__assert(raw__interval_tree_node__is_valid(cause, node2), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node2).");
+  //#endif
+}
+
+///^^^^^
 
 f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
   f2ptr center_value            = f2__interval_tree_node__center_value(cause, this);

@@ -88,6 +88,10 @@ f2ptr  f2__interval_tree__intervals_containing_value            (f2ptr cause, f2
 f2ptr raw__interval_tree__intervals_overlapping_interval        (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr  f2__interval_tree__intervals_overlapping_interval        (f2ptr cause, f2ptr this, f2ptr element);
 
+void  raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr this, f2ptr node);
+void  raw__interval_tree__remove_node                       (f2ptr cause, f2ptr this, f2ptr node);
+
+
 f2ptr f2interval_tree__primobject_type__new_aux(f2ptr cause);
 
 
@@ -103,6 +107,18 @@ f2ptr raw__interval_tree_node__simple_remove                         (f2ptr caus
 f2ptr  f2__interval_tree_node__simple_remove                         (f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
 f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
 f2ptr  f2__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
+
+void  raw__interval_tree_node__delete_case_6(f2ptr cause, f2ptr this);
+void  raw__interval_tree_node__delete_case_5(f2ptr cause, f2ptr this);
+void  raw__interval_tree_node__delete_case_4(f2ptr cause, f2ptr this);
+void  raw__interval_tree_node__delete_case_3(f2ptr cause, f2ptr this);
+void  raw__interval_tree_node__delete_case_2(f2ptr cause, f2ptr this);
+void  raw__interval_tree_node__delete_case_1(f2ptr cause, f2ptr this);
+void  raw__interval_tree_node__replace_node (f2ptr cause, f2ptr dest, f2ptr src);
+void  raw__interval_tree_node__swap_nodes   (f2ptr cause, f2ptr node1, f2ptr node2);
+
+
+
 
 f2ptr f2interval_tree_node__primobject_type__new_aux(f2ptr cause);
 

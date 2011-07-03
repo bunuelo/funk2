@@ -123,7 +123,7 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
   // we could check the returned removed_from_node from the simple_remove command, and do the red-black tree deletion cases here.
   f2ptr remove_node = assert_value(raw__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
   if (raw__interval_tree_node__is_empty(cause, remove_node)) {
-    print("\nbleh.");
+    printf("\nbleh.");
   }
   return nil;
 }
@@ -500,6 +500,13 @@ f2ptr f2__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 }
 
 #define F2__DEBUG__INTERVAL_TREE_NODE 1
+
+
+boolean_t raw__interval_tree_node__is_empty(f2ptr cause, f2ptr this) {
+  f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
+  return raw__redblacktree__is_empty(cause, overlapping_left_redblacktree);
+}
+
 
 f2ptr raw__interval_tree_node__simple_insert(f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   f2ptr center_value            = f2__interval_tree_node__center_value(cause, this);

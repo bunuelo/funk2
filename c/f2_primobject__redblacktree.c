@@ -1191,17 +1191,17 @@ def_pcfunk1(redblacktree__leaves, this,
 	    return f2__redblacktree__leaves(this_cause, this));
 
 
-boolean_t raw__redblacktree__empty(f2ptr cause, f2ptr this) {
+boolean_t raw__redblacktree__is_empty(f2ptr cause, f2ptr this) {
   return (f2__redblacktree__head(cause, this) == nil);
 }
 
-f2ptr f2__redblacktree__empty(f2ptr cause, f2ptr this) {
+f2ptr f2__redblacktree__is_empty(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
-  return raw__redblacktree__empty(cause, this);
+  return raw__redblacktree__is_empty(cause, this);
 }
-def_pcfunk1(redblacktree__empty, this,
+def_pcfunk1(redblacktree__is_empty, this,
 	    "Returns whether this redblacktree is empty.",
-	    return f2__redblacktree__empty(this_cause, this));
+	    return f2__redblacktree__is_empty(this_cause, this));
 
 
 u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
@@ -1352,8 +1352,8 @@ void f2__primobject__redblacktree__initialize() {
   {char* symbol_str = "size"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__size, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__funk = never_gc(cfunk);}
   
-  {char* symbol_str = "empty"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__empty, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.empty__funk = never_gc(cfunk);}
+  {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.is_empty__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__is_empty, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.is_empty__funk = never_gc(cfunk);}
   
   {char* symbol_str = "leaves_within_range"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__leaves_within_range, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__funk = never_gc(cfunk);}

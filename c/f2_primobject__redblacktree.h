@@ -146,8 +146,8 @@ f2ptr     raw__redblacktree__leaves                                    (f2ptr ca
 f2ptr      f2__redblacktree__leaves                                    (f2ptr cause, f2ptr this);
 u64       raw__redblacktree__size                                      (f2ptr cause, f2ptr this);
 f2ptr      f2__redblacktree__size                                      (f2ptr cause, f2ptr this);
-boolean_t raw__redblacktree__empty                                     (f2ptr cause, f2ptr this);
-f2ptr      f2__redblacktree__empty                                     (f2ptr cause, f2ptr this);
+boolean_t raw__redblacktree__is_empty                                  (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree__is_empty                                  (f2ptr cause, f2ptr this);
 f2ptr     raw__redblacktree__leaves_within_range                       (f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum);
 f2ptr      f2__redblacktree__leaves_within_range                       (f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum);
 

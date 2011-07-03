@@ -774,7 +774,7 @@ f2ptr raw__interval_tree_node__head(f2ptr cause, f2ptr this) {
   }
   f2ptr iter        = this;
   f2ptr parent_node = f2__interval_tree_node__parent_node(cause, this);
-  while (parent != nil) {
+  while (parent_node != nil) {
     iter        = parent_node;
     parent_node = f2__interval_tree_node__parent_node(cause, iter);
   }

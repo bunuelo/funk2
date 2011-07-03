@@ -220,7 +220,7 @@ void raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2__interval_tree__head__set(cause, this, raw__interval_tree_node__head(cause, f2__interval_tree__head(cause, this))); 
   
   if (f2__interval_tree__head(cause, this) != nil) {
-    if (f2__interval_tree_node__color(cause, raw__eq(cause, f2__interval_tree__head(cause, this)), new__symbol(cause, "red"))) {
+    if (raw__eq(cause, f2__interval_tree_node__color(cause, f2__interval_tree__head(cause, this)), new__symbol(cause, "red"))) {
       f2__interval_tree_node__color__set(cause, f2__interval_tree__head(cause, this), new__symbol(cause, "black"));
     }
   }

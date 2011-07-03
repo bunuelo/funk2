@@ -204,7 +204,7 @@ void raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (f2__interval_tree_node__left_node(cause, node) == nil || f2__interval_tree_node__right_node(cause, node) == nil) { 
     raw__interval_tree__remove_node_with_at_most_one_child(cause, this, node);
   } else {
-    f2ptr node__left__max = raw__interval_tree_node__maximum_node(cause, f2__interval_tree_node__left(cause, node));
+    f2ptr node__left__max = raw__interval_tree_node__maximum_node(cause, f2__interval_tree_node__left_node(cause, node));
     
     //debug__assert(f2__interval_tree_node__right_node(cause, node__left__max) == nil, nil, "interval_tree_node__remove_node: (node__left__max->right == NULL) failed.");
     

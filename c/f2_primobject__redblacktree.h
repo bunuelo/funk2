@@ -46,8 +46,8 @@ declare_object_type_4_slot(redblacktree, mutate_mutex, head, value_funk, value_c
 			   f2ptr leaves__funk;
 			   f2ptr size__symbol;
 			   f2ptr size__funk;
-			   f2ptr empty__symbol;
-			   f2ptr empty__funk;
+			   f2ptr is_empty__symbol;
+			   f2ptr is_empty__funk;
 			   f2ptr leaves_within_range__symbol;
 			   f2ptr leaves_within_range__funk;
 			   f2ptr terminal_print_with_frame__symbol;

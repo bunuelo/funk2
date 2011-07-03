@@ -768,6 +768,15 @@ f2ptr raw__interval_tree_node__uncle_node(f2ptr cause, f2ptr this) {
 }
 
 
+f2ptr raw__interval_tree_node__sibling_node(f2ptr cause, f2ptr node) {
+  if (raw__eq(cause, node, f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, node)))) {
+    return f2__interval_tree_node__right_node(cause, f2__interval_tree_node__parent_node(cause, node));
+  } else {
+    return f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, node));
+  }
+}
+
+
 f2ptr raw__interval_tree_node__head(f2ptr cause, f2ptr this) {
   if (this == nil) {
     return nil;

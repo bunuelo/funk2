@@ -194,7 +194,12 @@ void raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr t
       if (raw__eq(cause, f2__interval_tree_node__color(cause, node__child), new__symbol(cause, "red"))) {
 	f2__interval_tree_node__color__set(cause, node__child, new__symbol(cause, "black"));
       } else {
-	raw__interval_tree_node__delete_case_1(cause, node__child);
+	f2ptr left_value_funk       = f2__interval_tree__left_value_funk(cause, this);
+	f2ptr right_value_funk      = f2__interval_tree__right_value_funk(cause, this);
+	f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(cause, this);
+	f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
+	f2ptr value_center_funk     = f2__interval_tree__value_center_funk(cause, this);
+	raw__interval_tree_node__delete_case_1(cause, node__child, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
       }
     }
   }

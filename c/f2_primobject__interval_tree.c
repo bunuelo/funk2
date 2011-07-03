@@ -476,7 +476,7 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 		   if (! raw__set__contains(cause, left_element_set, element)) {
 		     return new__error(f2list4__new(cause,
 						    new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-						    new__symbol(cause, "this"),     this));e
+						    new__symbol(cause, "this"),     this));
 		   }
 		   );
   }

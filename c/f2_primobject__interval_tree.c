@@ -698,7 +698,7 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   {
     f2ptr upper_node = right_node;
     list__iteration(cause, move_up_element_list, element,
-		    assert_value(f2__interval_tree_node__insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
+		    assert_value(f2__interval_tree_node__simple_insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
 		    );
   }
   return nil;
@@ -754,7 +754,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   {
     f2ptr upper_node = left_node;
     list__iteration(cause, move_up_element_list, element,
-		    assert_value(f2__interval_tree_node__insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
+		    assert_value(f2__interval_tree_node__simple_insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
 		    );
   }
   return nil;

@@ -597,7 +597,11 @@ f2ptr raw__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr elem
 				       new__symbol(cause, "this"),     this,
 				       new__symbol(cause, "element"),  element));
       }
-      return raw__interval_tree_node__simple_remove(cause, left_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
+      return catch_value(raw__interval_tree_node__simple_remove(cause, left_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk),
+			 f2list6__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "error_in_recursive_simple_remove"),
+				      new__symbol(cause, "this"),     this,
+				      new__symbol(cause, "element"),  element));
     } else {
       // interval is completely to the right of the center value of this node
       f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
@@ -607,7 +611,11 @@ f2ptr raw__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr elem
 				       new__symbol(cause, "this"),     this,
 				       new__symbol(cause, "element"),  element));
       }
-      return raw__interval_tree_node__simple_remove(cause, right_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
+      return catch_value(raw__interval_tree_node__simple_remove(cause, right_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk),
+			 f2list6__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "error_in_recursive_simple_remove"),
+				      new__symbol(cause, "this"),     this,
+				      new__symbol(cause, "element"),  element));			 
     }
   }
 }

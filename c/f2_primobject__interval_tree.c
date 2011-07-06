@@ -1143,10 +1143,11 @@ void raw__interval_tree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) 
 ///^^^^^
 
 f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
-  f2ptr center_value            = f2__interval_tree_node__center_value(cause, this);
-  f2ptr center_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, center_value, value)));
-  f2ptr value_center_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value,        center_value)));
-  f2ptr center_value_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, center_value, value)));
+  f2ptr center_value                   = f2__interval_tree_node__center_value(cause, this);
+  f2ptr center_value_comparison        = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, center_value, value)));
+  f2ptr value_center_comparison        = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value,        center_value)));
+  f2ptr center_value_equality          = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, center_value, value)));
+  f2ptr set_found_in_right_overlapping = f2__set__new(cause);
   if ((center_value_comparison != nil) ||
       (center_value_equality   != nil)) {
     // value is to the right of center_value
@@ -1162,6 +1163,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 					 (value_right_comparison != nil)) {
 				       // value is less than the right_value of element
 				       f2__list__add(cause, list, element);
+				       f2__set__add(cause, set_found_in_right_overlapping, element);
 				       // keep looping backwards
 				     } else {
 				       // value is greater than right_value of element, so stop looping.
@@ -1190,17 +1192,19 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #endif
     f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
     redblacktree__iteration_forward(cause, overlapping_left_redblacktree, element,
-				    f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
-				    f2ptr left_value_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, left_value, value)));
-				    f2ptr left_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, value)));
-				    if ((left_value_equality   != nil) ||
-					(left_value_comparison != nil)) {
-				      // left_value of element is less than the value
-				      f2__list__add(cause, list, element);
-				      // keep looping forwards
-				    } else {
-				      // left_value of element is greater than the value, so stop looping.
-				      goto raw__interval_tree_node__add_intervals_containing_value_to_list____overlapping_left_redblacktree__done_with_redblacktree_iteration;
+				    if (! raw__set__contains(cause, set_found_in_right_overlapping, element)) {
+				      f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
+				      f2ptr left_value_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, left_value, value)));
+				      f2ptr left_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, value)));
+				      if ((left_value_equality   != nil) ||
+					  (left_value_comparison != nil)) {
+					// left_value of element is less than the value
+					f2__list__add(cause, list, element);
+					// keep looping forwards
+				      } else {
+					// left_value of element is greater than the value, so stop looping.
+					goto raw__interval_tree_node__add_intervals_containing_value_to_list____overlapping_left_redblacktree__done_with_redblacktree_iteration;
+				      }
 				    }
 				    );
   raw__interval_tree_node__add_intervals_containing_value_to_list____overlapping_left_redblacktree__done_with_redblacktree_iteration:

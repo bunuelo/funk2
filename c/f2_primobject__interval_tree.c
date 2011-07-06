@@ -670,12 +670,13 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
     f2ptr upper_node               = right_node;
     f2ptr lower_node               = this;
     f2ptr upper_node__center_value = f2__interval_tree_node__center_value(cause, upper_node);
-    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_list(cause, lower_node, upper_node__center_value, move_up_element_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(f2__interval_tree_node__add_intervals_containing_value_to_list(cause, lower_node, upper_node__center_value, move_up_element_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
     list__iteration(cause, move_up_element_list, element,
 		    catch_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk),
-				f2list4__new(cause,
-					     new__symbol(cause, "bug_name"), new__symbol(cause, "bad_value_returned_by_add_intervals_containing_value_could_not_be_found_in_simple_remove"),
-					     new__symbol(cause, "this"),     this));
+				f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),   new__symbol(cause, "bad_value_returned_by_add_intervals_containing_value_could_not_be_found_in_simple_remove"),
+					     new__symbol(cause, "right_node"), right_node,
+					     new__symbol(cause, "this"),       this));
 		    );
   }
   
@@ -726,12 +727,13 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
     f2ptr upper_node               = left_node;
     f2ptr lower_node               = this;
     f2ptr upper_node__center_value = f2__interval_tree_node__center_value(cause, upper_node);
-    assert_value(raw__interval_tree_node__add_intervals_containing_value_to_list(cause, lower_node, upper_node__center_value, move_up_element_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+    assert_value(f2__interval_tree_node__add_intervals_containing_value_to_list(cause, lower_node, upper_node__center_value, move_up_element_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
     list__iteration(cause, move_up_element_list, element,
 		    catch_value(raw__interval_tree_node__simple_remove(cause, lower_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk),
-				f2list4__new(cause,
-					     new__symbol(cause, "bug_name"), new__symbol(cause, "bad_value_returned_by_add_intervals_containing_value_could_not_be_found_in_simple_remove"),
-					     new__symbol(cause, "this"),     this));
+				f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),  new__symbol(cause, "bad_value_returned_by_add_intervals_containing_value_could_not_be_found_in_simple_remove"),
+					     new__symbol(cause, "left_node"), left_node,
+					     new__symbol(cause, "this"),      this));
 		    );
   }
   

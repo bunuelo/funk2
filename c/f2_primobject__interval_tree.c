@@ -110,8 +110,8 @@ def_pcfunk2(interval_tree__insert, this, element,
 f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {
   f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
   f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
-  assert_value(raw__redblacktree__remove(cause, all_left_redblacktree,  element));
-  assert_value(raw__redblacktree__remove(cause, all_right_redblacktree, element));
+  assert_value(f2__redblacktree__remove(cause, all_left_redblacktree,  element));
+  assert_value(f2__redblacktree__remove(cause, all_right_redblacktree, element));
   f2ptr head = f2__interval_tree__head(cause, this);
   if (head == nil) {
     return f2larva__new(cause, 23516, nil);
@@ -243,7 +243,7 @@ void raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 
 f2ptr raw__interval_tree__intervals__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
-  return raw__redblacktree__leaves(cause, all_left_redblacktree);
+  return f2__redblacktree__leaves(cause, all_left_redblacktree);
 }
 
 f2ptr raw__interval_tree__intervals(f2ptr cause, f2ptr this) {
@@ -327,7 +327,7 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
     f2ptr element__left_value    = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,  f2list1__new(cause, element)));
     f2ptr element__right_value   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, element)));
     {
-      f2ptr redblacktree_node = raw__redblacktree__minimum_not_less_than__node(cause, all_left_redblacktree, element__left_value);
+      f2ptr redblacktree_node = f2__redblacktree__minimum_not_less_than__node(cause, all_left_redblacktree, element__left_value);
       while (redblacktree_node != nil) {
 	f2ptr redblacktree_node__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
 	f2ptr redblacktree_node__element             = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
@@ -347,11 +347,11 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
 	} else {
 	  break;
 	}
-	redblacktree_node = raw__redblacktree_node__next(cause, redblacktree_node);
+	redblacktree_node = f2__redblacktree_node__next(cause, redblacktree_node);
       }
     }
     {
-      f2ptr redblacktree_node = raw__redblacktree__minimum_not_less_than__node(cause, all_right_redblacktree, element__left_value);
+      f2ptr redblacktree_node = f2__redblacktree__minimum_not_less_than__node(cause, all_right_redblacktree, element__left_value);
       while (redblacktree_node != nil) {
 	f2ptr redblacktree_node__count_key_ptypehash  = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
 	f2ptr redblacktree_node__element              = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
@@ -371,7 +371,7 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
 	} else {
 	  break;
 	}
-	redblacktree_node = raw__redblacktree_node__next(cause, redblacktree_node);
+	redblacktree_node = f2__redblacktree_node__next(cause, redblacktree_node);
       }
     }
     f2ptr value_center_funk     = f2__interval_tree__value_center_funk(cause, this);
@@ -501,7 +501,7 @@ f2ptr f2__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 
 boolean_t raw__interval_tree_node__is_empty(f2ptr cause, f2ptr this) {
   f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
-  return raw__redblacktree__is_empty(cause, overlapping_left_redblacktree);
+  return f2__redblacktree__is_empty(cause, overlapping_left_redblacktree);
 }
 
 
@@ -1225,7 +1225,7 @@ f2ptr raw__interval_tree_node__overlapping_elements(f2ptr cause, f2ptr this) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
-  return raw__redblacktree__leaves(cause, overlapping_left_redblacktree);
+  return f2__redblacktree__leaves(cause, overlapping_left_redblacktree);
 }
 
 f2ptr f2__interval_tree_node__overlapping_elements(f2ptr cause, f2ptr this) {

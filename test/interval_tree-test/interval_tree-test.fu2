@@ -48,7 +48,7 @@
 			     [have element_set remove element]]]]]]]]]
     interval_tree]]
 
-[defunk redblacktree-add_remove_test []
+[defunk rbt-add_remove_test []
   [let [[redblacktree [new redblacktree
 			   [funk [x] [car x]]
 			   [funk [x y] [< x y]]
@@ -56,7 +56,7 @@
 	[element_set   [new set]]]
     [let [[count 100]]
       [dotimes [i count]
-	[let [[choice [random 10]]]
+	[let [[choice [random 5]]]
 	  [cond [[== choice 0]
 		 [let [[x [get [random 3] as-double]]]
 		   [let [[element [cons x nil]]]

@@ -1062,6 +1062,11 @@ f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this) {
   }
 }
 
+f2ptr f2__redblacktree_node__next(f2ptr cause, f2ptr this) {
+  assert_argument_type(redblacktree_node, this);
+  return raw__redblacktree_node__next(cause, this);
+}
+
 
 f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this) {
   if (f2__redblacktree_node__left(cause, this) != nil) {
@@ -1079,6 +1084,11 @@ f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this) {
       return nil;
     }
   }
+}
+
+f2ptr f2__redblacktree_node__prev(f2ptr cause, f2ptr this) {
+  assert_argument_type(redblacktree_node, this);
+  return raw__redblacktree_node__prev(cause, this);
 }
 
 

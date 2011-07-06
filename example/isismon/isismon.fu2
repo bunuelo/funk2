@@ -127,11 +127,11 @@
        [have open_dialog show_all]]]
 
 
-[deframe isismon_preferences [frame] [isis_world_server_hostname
-				      project_directory
-				      agent_directory
-				      movie_export_directory
-				      cameras_enabled]
+[deframe isismon_preferences [frame] [[isis_world_server_hostname `uninitialized]
+				      [project_directory          `uninitialized]
+				      [agent_directory            `uninitialized]
+				      [movie_export_directory     `uninitialized]
+				      [cameras_enabled            `uninitialized]]
   [new []
        [have this create_default_directories]
        [have this fix_invalid_with_defaults]]]
@@ -143,11 +143,11 @@
   [shelter [mkdir [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]]
 
 [deftypefunk isismon_preferences execute fix_invalid_with_defaults []
-  [if [not [get this contains `isis_world_server_hostname]] [have this add `isis_world_server_hostname 'localhost']]
-  [if [not [get this contains `project_directory]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
-  [if [not [get this contains `agent_directory]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
-  [if [not [get this contains `movie_export_directory]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
-  [if [not [get this contains `cameras_enabled]]            [have this add `cameras_enabled            t]]]
+  [if [or [not [get this contains `isis_world_server_hostname]] [eq `uninitialized [have this lookup `isis_world_server_hostname]]] [have this add `isis_world_server_hostname 'localhost']]
+  [if [or [not [get this contains `project_directory]]          [eq `uninitialized [have this lookup `project_directory]]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'IsisMon Data/Projects']]]
+  [if [or [not [get this contains `agent_directory]]            [eq `uninitialized [have this lookup `agent_directory]]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'IsisMon Data/Agents']]]
+  [if [or [not [get this contains `movie_export_directory]]     [eq `uninitialized [have this lookup `movie_export_directory]]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'IsisMon Data/Movies']]]
+  [if [or [not [get this contains `cameras_enabled]]            [eq `uninitialized [have this lookup `cameras_enabled]]]            [have this add `cameras_enabled            t]]]
 
 
 [deftypefunk isismon_preferences execute save [filename]

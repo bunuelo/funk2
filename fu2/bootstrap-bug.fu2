@@ -29,7 +29,7 @@
 				     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
 				 [print_bug subbug]
 				 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-				   [= bug_index [+ bug_index 1]]
+				   [= bug_index [bytecode:add bug_index 1]]
 				   [if print_terminal
 				       [terminal_format print_terminal '\n  ']]
 				   [if define_name_prefix
@@ -47,7 +47,7 @@
 				     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
 				 [print_bug subbug]
 				 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-				   [= bug_index [+ bug_index 1]]
+				   [= bug_index [bytecode:add bug_index 1]]
 				   [if print_terminal
 				       [terminal_format print_terminal '\n  ']]
 				   [if define_name_prefix
@@ -63,7 +63,7 @@
 				     [source_line_number [have [get bug frame] lookup `source_line_number]]
 				     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
 				 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-				   [= bug_index [+ bug_index 1]]
+				   [= bug_index [bytecode:add bug_index 1]]
 				   [if print_terminal
 				       [terminal_format print_terminal '\n  ']]
 				   [if define_name_prefix
@@ -75,7 +75,7 @@
 				   ]]]
 			      [t
 			       [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-				 [= bug_index [+ bug_index 1]]
+				 [= bug_index [bytecode:add bug_index 1]]
 				 [if print_terminal
 				     [terminal_format print_terminal '\n  ']]
 				 [if define_name_prefix

@@ -1124,7 +1124,11 @@ f2ptr raw__redblacktree__minimum_not_less_than__node(f2ptr cause, f2ptr this, f2
   }
   f2ptr value_funk            = f2__redblacktree__value_funk(           cause, this);
   f2ptr value_comparison_funk = f2__redblacktree__value_comparison_funk(cause, this);
-  return raw__redblacktree_node__minimum_not_less_than__node(cause, head, value_funk, value_comparison_funk, value);
+  return catch_value(raw__redblacktree_node__minimum_not_less_than__node(cause, head, value_funk, value_comparison_funk, value),
+		     f2list6__new(cause,
+				  new__symbol(cause, "bug_name"), new__symbol(cause, "error_finding_minimum_node_not_less_than"),
+				  new__symbol(cause, "this"),     this,
+				  new__symbol(cause, "value"),    value));
 }
 
 f2ptr f2__redblacktree__minimum_not_less_than__node(f2ptr cause, f2ptr this, f2ptr value) {

@@ -1152,7 +1152,7 @@ f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr va
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),        new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
 				     new__symbol(cause, "this"),            this,
-				     new__symbol(cause, "less_than_value"), less_than_value));
+				     new__symbol(cause, "less_than_value"), value));
     }
   }
   return key;

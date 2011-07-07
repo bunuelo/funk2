@@ -902,7 +902,7 @@ f2ptr raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
     }
   }
   
-  if (raw__redblacktree__contains_node(this, node)) {
+  if (raw__redblacktree__contains_node(cause, this, node)) {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "redblacktree_still_contains_node_after_removal"),
 				   new__symbol(cause, "this"),     this,

@@ -126,6 +126,8 @@ f2ptr     raw__redblacktree__new                                       (f2ptr ca
 f2ptr      f2__redblacktree__new                                       (f2ptr cause, f2ptr value_funk, f2ptr value_comparison_funk);
 f2ptr     raw__redblacktree__insert                                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__redblacktree__insert                                    (f2ptr cause, f2ptr this, f2ptr key);
+boolean_t raw__redblacktree__contains_node                             (f2ptr cause, f2ptr this, f2ptr node);
+f2ptr      f2__redblacktree__contains_node                             (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr     raw__redblacktree__remove                                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__redblacktree__remove                                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__redblacktree__minimum_node                              (f2ptr cause, f2ptr this);
@@ -159,10 +161,12 @@ declare_primobject_5_slot(redblacktree_node, parent, left, right, color, count_k
 
 f2ptr f2redblacktree_node__primobject_type__new(f2ptr cause);
 
-f2ptr raw__redblacktree_node__next(f2ptr cause, f2ptr this);
-f2ptr  f2__redblacktree_node__next(f2ptr cause, f2ptr this);
-f2ptr raw__redblacktree_node__prev(f2ptr cause, f2ptr this);
-f2ptr  f2__redblacktree_node__prev(f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree_node__next         (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree_node__next         (f2ptr cause, f2ptr this);
+f2ptr     raw__redblacktree_node__prev         (f2ptr cause, f2ptr this);
+f2ptr      f2__redblacktree_node__prev         (f2ptr cause, f2ptr this);
+boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node);
+f2ptr      f2__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node);
 
 f2ptr f2redblacktree_node__primobject_type__new_aux(f2ptr cause);
 

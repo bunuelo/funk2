@@ -891,6 +891,32 @@ f2ptr raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 }
 
 
+boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  if (this == nil) {
+    return boolean__false;
+  }
+  f2ptr iter = node;
+  while((iter != nil) && (! raw__eq(cause, this, iter))) {
+    f2ptr parent        = f2__redblacktree_node__parent_node(cause, iter);
+    f2ptr parent__left  = f2__redblacktree_node__left_node(  cause, parent);
+    f2ptr parent__right = f2__redblacktree_node__right_node( cause, parent);
+    if ((parent == nil) || ((! raw__eq(cause, parent__left, iter)) && (! raw__eq(cause, parent__right, iter)))) {
+      iter = nil;
+    }
+  }
+  if (raw__eq(cause, this, iter)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  assert_argument_type(redblacktree_node, this);
+  assert_argument_type(redblacktree_node, node);
+  return raw__redblacktree_node__contains_node(cause, this, node);
+}
+
+
 f2ptr raw__redblacktree_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -923,31 +949,16 @@ f2ptr f2redblacktree_node__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
-  if (this == nil) {
-    return boolean__false;
-  }
-  f2ptr iter = node;
-  while((iter != nil) && (! raw__eq(cause, this, iter))) {
-    f2ptr parent        = f2__redblacktree_node__parent_node(cause, iter);
-    f2ptr parent__left  = f2__redblacktree_node__left_node(  cause, parent);
-    f2ptr parent__right = f2__redblacktree_node__right_node( cause, parent);
-    if ((parent == nil) || ((! raw__eq(cause, parent__left, iter)) && (! raw__eq(cause, parent__right, iter)))) {
-      iter = nil;
-    }
-  }
-  if (raw__eq(cause, this, iter)) {
-    return boolean__true;
-  }
-  return boolean__false;
+boolean_t raw__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  f2ptr head = f2__redblacktree__head(cause, this);
+  return raw__redblacktree_node__contains_node(cause, head, node);
 }
 
-f2ptr f2__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
-  assert_argument_type(redblacktree_node, this);
+f2ptr f2__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  assert_argument_type(redblacktree,      this);
   assert_argument_type(redblacktree_node, node);
-  return raw__redblacktree_node__contains_node(cause, this, node);
+  return raw__redblacktree__contains_node(cause, this, node);
 }
-
 
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   assert_value(key);

@@ -897,9 +897,9 @@ boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr n
   }
   f2ptr iter = node;
   while((iter != nil) && (! raw__eq(cause, this, iter))) {
-    f2ptr parent        = f2__redblacktree_node__parent_node(cause, iter);
-    f2ptr parent__left  = f2__redblacktree_node__left_node(  cause, parent);
-    f2ptr parent__right = f2__redblacktree_node__right_node( cause, parent);
+    f2ptr parent        = f2__redblacktree_node__parent(cause, iter);
+    f2ptr parent__left  = f2__redblacktree_node__left(  cause, parent);
+    f2ptr parent__right = f2__redblacktree_node__right( cause, parent);
     if ((parent == nil) || ((! raw__eq(cause, parent__left, iter)) && (! raw__eq(cause, parent__right, iter)))) {
       iter = nil;
     }

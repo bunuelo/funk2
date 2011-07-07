@@ -877,7 +877,7 @@ void raw__redblacktree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
 #endif
 }
 
-void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
+f2ptr raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (f2__redblacktree_node__left(cause, node) == nil || f2__redblacktree_node__right(cause, node) == nil) { 
     raw__redblacktree__remove_node_with_at_most_one_child(cause, this, node);
   } else {
@@ -902,9 +902,13 @@ void raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
     }
   }
   
-#ifdef DEBUG_REDBLACKTREE
-  debug__assert(! raw__redblacktree__contains_node(this, node), nil, "raw__redblacktree__remove_node failed: tree still contains node.");
-#endif
+  if (raw__redblacktree__contains_node(this, node)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "redblacktree_still_contains_node_after_removal"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "node"),     node));
+  }
+  return nil;
 }
 
 
@@ -940,6 +944,32 @@ f2ptr f2redblacktree_node__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  if (this == nil) {
+    return boolean__false;
+  }
+  f2ptr iter = node;
+  while((iter != nil) && (! raw__eq(cause, this, iter))) {
+    f2ptr parent        = f2__redblacktree_node__parent_node(cause, iter);
+    f2ptr parent__left  = f2__redblacktree_node__left_node(  cause, parent);
+    f2ptr parent__right = f2__redblacktree_node__right_node( cause, parent);
+    if ((parent == nil) || ((! raw__eq(cause, parent__left, iter)) && (! raw__eq(cause, parent__right, iter)))) {
+      iter = nil;
+    }
+  }
+  if (raw__eq(cause, this, iter)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+f2ptr f2__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
+  assert_argument_type(redblacktree_node, this);
+  assert_argument_type(redblacktree_node, node);
+  return raw__redblacktree_node__contains_node(cause, this, node);
+}
+
+
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
   assert_value(key);
   f2ptr node = assert_value(raw__redblacktree__lookup_node_with_key(cause, this, key));
@@ -961,7 +991,7 @@ f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr ke
   if (old_count__i == 1) {
     assert_value(raw__ptypehash__remove(cause, node__count_key_ptypehash, key));
     if (raw__ptypehash__is_empty(cause, node__count_key_ptypehash)) {
-      raw__redblacktree__remove_node(cause, this, node);
+      assert_value(raw__redblacktree__remove_node(cause, this, node));
     }
   } else {
     raw__ptypehash__add(cause, node__count_key_ptypehash, key, f2integer__new(cause, old_count__i - 1));

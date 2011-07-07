@@ -400,27 +400,6 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(f2ptr c
 }
 
 
-boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
-  if (this == nil) {
-    return boolean__false;
-  }
-  f2ptr iter = node;
-  while(iter && this != iter) {
-    f2ptr parent = f2__redblacktree_node__parent(cause, iter);
-    if (!parent || (f2__redblacktree_node__left(cause, parent) != iter && f2__redblacktree_node__right(cause, parent) != iter)) {
-      iter = nil;
-    }
-  }
-  if (this == iter) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
-
-boolean_t raw__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
-  return raw__redblacktree_node__contains_node(cause, f2__redblacktree__head(cause, this), node);
-}
-
 f2ptr raw__redblacktree_node__simple_binary_insert_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {
 #ifdef DEBUG_REDBLACKTREE
   debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");

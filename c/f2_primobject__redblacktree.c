@@ -892,22 +892,27 @@ f2ptr raw__redblacktree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 
 
 boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
-  if (this == nil) {
-    return boolean__false;
-  }
-  f2ptr iter = node;
-  while((iter != nil) && (! raw__eq(cause, this, iter))) {
-    f2ptr parent        = f2__redblacktree_node__parent(cause, iter);
-    f2ptr parent__left  = f2__redblacktree_node__left(  cause, parent);
-    f2ptr parent__right = f2__redblacktree_node__right( cause, parent);
-    if ((parent == nil) || ((! raw__eq(cause, parent__left, iter)) && (! raw__eq(cause, parent__right, iter)))) {
-      iter = nil;
+  boolean_t this_does_contain_node = boolean__false;
+  if (this != nil) {
+    f2ptr iter = node;
+    while(iter != nil) {
+      f2ptr parent = f2__redblacktree_node__parent(cause, iter);
+      if (parent == nil) {
+	break;
+      }
+      f2ptr parent__left  = f2__redblacktree_node__left(  cause, parent);
+      f2ptr parent__right = f2__redblacktree_node__right( cause, parent);
+      if ((! raw__eq(cause, parent__left, iter)) && (! raw__eq(cause, parent__right, iter))) {
+	break;
+      }
+      if (raw__eq(cause, this, iter)) {
+	this_does_contain_node = boolean__true;
+	break;
+      }
+      iter = parent;
     }
   }
-  if (raw__eq(cause, this, iter)) {
-    return boolean__true;
-  }
-  return boolean__false;
+  return this_does_contain_node;
 }
 
 f2ptr f2__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {

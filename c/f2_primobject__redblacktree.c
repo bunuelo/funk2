@@ -1126,9 +1126,9 @@ f2ptr raw__redblacktree__minimum_not_less_than__node(f2ptr cause, f2ptr this, f2
   f2ptr value_comparison_funk = f2__redblacktree__value_comparison_funk(cause, this);
   return catch_value(raw__redblacktree_node__minimum_not_less_than__node(cause, head, value_funk, value_comparison_funk, value),
 		     f2list6__new(cause,
-				  new__symbol(cause, "bug_name"), new__symbol(cause, "error_finding_minimum_node_not_less_than"),
-				  new__symbol(cause, "this"),     this,
-				  new__symbol(cause, "value"),    value));
+				  new__symbol(cause, "bug_name"),        new__symbol(cause, "error_finding_minimum_node_not_less_than"),
+				  new__symbol(cause, "this"),            this,
+				  new__symbol(cause, "less_than_value"), value));
 }
 
 f2ptr f2__redblacktree__minimum_not_less_than__node(f2ptr cause, f2ptr this, f2ptr value) {
@@ -1150,9 +1150,9 @@ f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr va
   if (key == nil) {
     if (raw__ptypehash__is_empty(cause, count_key_ptypehash)) {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"), new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
-				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "value"),    value));
+				     new__symbol(cause, "bug_name"),        new__symbol(cause, "unexpected_empty_count_key_ptypehash"),
+				     new__symbol(cause, "this"),            this,
+				     new__symbol(cause, "less_than_value"), less_than_value));
     }
   }
   return key;

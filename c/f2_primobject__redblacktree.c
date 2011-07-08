@@ -1014,7 +1014,8 @@ f2ptr raw__redblacktree__minimum_node(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__minimum_node(cause, f2__redblacktree__head(cause, this));
 }
 
-f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
+
+f2ptr raw__redblacktree__minimum__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr minimum_node = raw__redblacktree__minimum_node(cause, this);
   if (minimum_node == nil) {
     return nil;
@@ -1031,6 +1032,14 @@ f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
   return key;
 }
 
+f2ptr raw__redblacktree__minimum(f2ptr cause, f2ptr this) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__minimum__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
+}
+
 f2ptr f2__redblacktree__minimum(f2ptr cause, f2ptr this) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__minimum(cause, this);
@@ -1043,7 +1052,8 @@ f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
   return raw__redblacktree_node__maximum_node(cause, f2__redblacktree__head(cause, this));
 }
 
-f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
+
+f2ptr raw__redblacktree__maximum__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr maximum_node = raw__redblacktree__maximum_node(cause, this);
   if (maximum_node == nil) {
     return nil;
@@ -1058,6 +1068,14 @@ f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
     }
   }
   return key;
+}
+
+f2ptr raw__redblacktree__maximum(f2ptr cause, f2ptr this) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__maximum__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__maximum(f2ptr cause, f2ptr this) {
@@ -1140,7 +1158,7 @@ def_pcfunk2(redblacktree__minimum_not_less_than__node, this, value,
 	    return f2__redblacktree__minimum_not_less_than__node(this_cause, this, value));
 
 
-f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr raw__redblacktree__minimum_not_less_than__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr node = assert_value(raw__redblacktree__minimum_not_less_than__node(cause, this, value));
   if (node == nil) {
     return nil;
@@ -1156,6 +1174,14 @@ f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr va
     }
   }
   return key;
+}
+
+f2ptr raw__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__minimum_not_less_than__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__minimum_not_less_than(f2ptr cause, f2ptr this, f2ptr value) {
@@ -1186,7 +1212,7 @@ def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to__node, this, valu
 	    return f2__redblacktree__maximum_not_greater_than_or_equal_to__node(this_cause, this, value));
 
 
-f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr this, f2ptr value) {
+f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr node = assert_value(raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, value));
   if (node == nil) {
     return nil;
@@ -1204,6 +1230,14 @@ f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr
   return key;
 }
 
+f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__maximum_not_greater_than_or_equal_to__thread_unsafe(cause, this, value);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
+}
+
 f2ptr f2__redblacktree__maximum_not_greater_than_or_equal_to(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(redblacktree, this);
   return raw__redblacktree__maximum_not_greater_than_or_equal_to(cause, this, value);
@@ -1213,12 +1247,20 @@ def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to, this, value,
 	    return f2__redblacktree__maximum_not_greater_than_or_equal_to(this_cause, this, value));
 
 
-f2ptr raw__redblacktree__leaves(f2ptr cause, f2ptr this) {
+f2ptr raw__redblacktree__leaves__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr leaves = nil;
   redblacktree__iteration_backward(cause, this, key,
 				   leaves = f2cons__new(cause, key, leaves);
 				   );
   return leaves;
+}
+
+f2ptr raw__redblacktree__leaves(f2ptr cause, f2ptr this) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__leaves__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__leaves(f2ptr cause, f2ptr this) {
@@ -1243,7 +1285,7 @@ def_pcfunk1(redblacktree__is_empty, this,
 	    return f2__redblacktree__is_empty(this_cause, this));
 
 
-u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
+u64 raw__redblacktree__size__thread_unsafe(f2ptr cause, f2ptr this) {
   u64 size = 0;
   f2ptr iter = raw__redblacktree__minimum_node(cause, this);
   while (iter) {
@@ -1251,6 +1293,14 @@ u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
     iter = raw__redblacktree_node__next(cause, iter);
   }
   return size;
+}
+
+u64 raw__redblacktree__size(f2ptr cause, f2ptr this) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  u64 result = raw__redblacktree__size__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__size(f2ptr cause, f2ptr this) {
@@ -1262,7 +1312,7 @@ def_pcfunk1(redblacktree__size, this,
 	    return f2__redblacktree__size(this_cause, this));
 
 
-f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
+f2ptr raw__redblacktree__leaves_within_range__thread_unsafe(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
   f2ptr     maximum_node = assert_value(raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, maximum));
   f2ptr     minimum_node = assert_value(raw__redblacktree__minimum_not_less_than__node(cause, this, minimum));
   f2ptr     sequence     = nil;
@@ -1288,6 +1338,14 @@ f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr mini
     }
   }
   return sequence;
+}
+
+f2ptr raw__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {
+  f2ptr mutate_mutex = f2redblacktree__mutate_mutex(this, cause);
+  raw__cmutex__lock(cause, mutate_mutex);
+  f2ptr result = raw__redblacktree__leaves_within_range__thread_unsafe(cause, this, minimum, maximum);
+  raw__cmutex__unlock(cause, mutate_mutex);
+  return result;
 }
 
 f2ptr f2__redblacktree__leaves_within_range(f2ptr cause, f2ptr this, f2ptr minimum, f2ptr maximum) {

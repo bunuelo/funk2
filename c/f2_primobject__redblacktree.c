@@ -487,16 +487,11 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
 				     new__symbol(cause, "key"),      key));
     }
   }
-  f2ptr     fiber                     = f2__this__fiber(cause);
-  f2ptr     key__value                = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key)));
-  f2ptr     this__key__value          = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key)));
-  f2ptr     comparison_result         = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, this__key__value)));
-  f2ptr     comparison_result2        = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, this__key__value, key__value)));
-  boolean_t equality_result           = (! comparison_result) && (! comparison_result2);
-  if (equality_result) {
-    return this;
-  }
-  if (comparison_result != nil) {
+  f2ptr fiber                          = f2__this__fiber(cause);
+  f2ptr key__value                     = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, key)));
+  f2ptr this__key__value               = assert_value(f2__force_funk_apply(cause, fiber, value_funk, f2list1__new(cause, this__key)));
+  f2ptr key_this_key_comparison_result = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, key__value, this__key__value)));
+  if (key_this_key_comparison_result != nil) {
     f2ptr this__left = f2__redblacktree_node__left(cause, this);
     if (this__left == nil) {
       return nil;
@@ -504,11 +499,16 @@ f2ptr raw__redblacktree_node__lookup_node_with_key(f2ptr cause, f2ptr this, f2pt
       return raw__redblacktree_node__lookup_node_with_key(cause, this__left, key, value_funk, value_comparison_funk);
     }
   } else {
-    f2ptr this__right = f2__redblacktree_node__right(cause, this);
-    if (this__right == nil) {
-      return nil;
+    f2ptr this_key_key_comparison_result = assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, this__key__value, key__value)));
+    if (this_key_key_comparison_result != nil) {
+      f2ptr this__right = f2__redblacktree_node__right(cause, this);
+      if (this__right == nil) {
+	return nil;
+      } else {
+	return raw__redblacktree_node__lookup_node_with_key(cause, this__right, key, value_funk, value_comparison_funk);
+      }
     } else {
-      return raw__redblacktree_node__lookup_node_with_key(cause, this__right, key, value_funk, value_comparison_funk);
+      return this;
     }
   }
 }

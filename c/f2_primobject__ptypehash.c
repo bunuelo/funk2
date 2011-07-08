@@ -240,7 +240,7 @@ def_pcfunk2(ptypehash__lookup, this, slot_name,
 
 boolean_t raw__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, this, key);
-  if (keyvalue_pair) {
+  if (keyvalue_pair != nil) {
     return boolean__true;
   }
   return boolean__false;
@@ -248,10 +248,10 @@ boolean_t raw__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
 
 f2ptr f2__ptypehash__contains(f2ptr cause, f2ptr this, f2ptr key) {
   assert_argument_type(ptypehash, this);
-  return raw__ptypehash__contains(cause, this, key);
+  return f2bool__new(raw__ptypehash__contains(cause, this, key));
 }
 def_pcfunk2(ptypehash__contains, this, key,
-	    "Returns boolean true [t] if the ptypehash contains the key., "primobject_type funktion (defined in f2_primobjects.c)"",
+	    "Returns boolean true [t] if the ptypehash contains the key., \"primobject_type funktion (defined in f2_primobjects.c)\"",
 	    return f2__ptypehash__contains(this_cause, this, key));
 
 

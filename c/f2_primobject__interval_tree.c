@@ -1200,18 +1200,16 @@ f2ptr raw__interval_tree_node__an_arbitrary_interval_containing_value(f2ptr caus
 #endif
     f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
     redblacktree__iteration_forward(cause, overlapping_left_redblacktree, element,
-				    if (! raw__set__contains(cause, set_found_in_right_overlapping, element)) {
-				      f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
-				      f2ptr left_value_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, left_value, value)));
-				      f2ptr left_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, value)));
-				      if ((left_value_equality   != nil) ||
-					  (left_value_comparison != nil)) {
-					// left_value of element is less than the value
-					return element;
-				      } else {
-					// left_value of element is greater than the value, so stop looping.
-					goto raw__interval_tree_node__an_arbitrary_interval_containing_value____overlapping_left_redblacktree__done_with_redblacktree_iteration;
-				      }
+				    f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
+				    f2ptr left_value_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, left_value, value)));
+				    f2ptr left_value_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, left_value, value)));
+				    if ((left_value_equality   != nil) ||
+					(left_value_comparison != nil)) {
+				      // left_value of element is less than the value
+				      return element;
+				    } else {
+				      // left_value of element is greater than the value, so stop looping.
+				      goto raw__interval_tree_node__an_arbitrary_interval_containing_value____overlapping_left_redblacktree__done_with_redblacktree_iteration;
 				    }
 				    );
   raw__interval_tree_node__an_arbitrary_interval_containing_value____overlapping_left_redblacktree__done_with_redblacktree_iteration:

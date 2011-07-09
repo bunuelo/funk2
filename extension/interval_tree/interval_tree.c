@@ -703,7 +703,7 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   f2__interval_tree_node__parent_node__set(cause, this,       right_node);
   // end rotate.
   
-  assure_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, right_node, this));
+  assert_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, right_node, this));
   
   return nil;
 }
@@ -739,7 +739,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   f2__interval_tree_node__parent_node__set(cause, this,      left_node);
   // end rotate.
   
-  assure_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, left_node, this));
+  assert_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, left_node, this));
   
   return nil;
 }

@@ -18,7 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_event_tree
-  :packages   [semantic_event]
+  :packages   [interval_tree
+	       semantic_event]
    :sources   ['semantic_event_tree-core.fu2']
     :binaries ['.libs/libf2e_semantic_event_tree.so']]
 

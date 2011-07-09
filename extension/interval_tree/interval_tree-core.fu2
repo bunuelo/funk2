@@ -17,7 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk interval_tree-new_from_rgb_data           interval_tree interval_tree__new_from_rgb_data]
 [defcorefunk interval_tree-core_extension-ping         interval_tree interval_tree__core_extension__ping]
 [defcorefunk interval_tree-core_extension-define_types interval_tree interval_tree__core_extension__define_types]
 [defcorefunk interval_tree-core_extension-initialize   interval_tree interval_tree__core_extension__initialize]

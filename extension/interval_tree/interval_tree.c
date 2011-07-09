@@ -21,17 +21,21 @@
 
 #include "interval_tree.h"
 
-def_ceframe1(interval_tree, interval_tree, width);
+def_ceframe9(interval_tree, interval_tree, mutate_cmutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 
-f2ptr raw__interval_tree__new(f2ptr cause) {
-  f2ptr width = f2integer__new(cause, 1);
-  return f2interval_tree__new(cause, width);
+f2ptr raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+  f2ptr mutate_cmutex          = f2__cmutex__new(cause);
+  f2ptr all_left_redblacktree  = f2__redblacktree__new(cause, left_value_funk,  value_comparison_funk);
+  f2ptr all_right_redblacktree = f2__redblacktree__new(cause, right_value_funk, value_comparison_funk);
+  return f2interval_tree__new(cause, mutate_cmutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 }
 
-f2ptr f2__interval_tree__new(f2ptr cause) {
-  return raw__interval_tree__new(cause);
+f2ptr f2__interval_tree__new(f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+  f2ptr head = nil;
+  return raw__interval_tree__new(cause, head, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 }
-export_cefunk0(interval_tree__new, 0, "Returns a new interval_tree object.");
+export_cefunk5(interval_tree__new, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk, 0,
+	       "Returns a new interval_tree object.");
 
 
 f2ptr f2__interval_tree_type__new_aux(f2ptr cause) {

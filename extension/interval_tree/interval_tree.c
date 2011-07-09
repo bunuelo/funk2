@@ -92,7 +92,7 @@ f2ptr f2__interval_tree__insert(f2ptr cause, f2ptr this, f2ptr element) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__insert(cause, this, element);
 }
-def_cefunk2(interval_tree__insert, this, element, 0,
+export_cefunk2(interval_tree__insert, this, element, 0,
 	    "Inserts a new interval element into this interval_tree.");
 
 
@@ -129,7 +129,7 @@ f2ptr f2__interval_tree__remove(f2ptr cause, f2ptr this, f2ptr element) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__remove(cause, this, element);
 }
-def_cefunk2(interval_tree__remove, this, element, 0,
+export_cefunk2(interval_tree__remove, this, element, 0,
 	    "Removes an interval element from this interval_tree.");
 
 
@@ -245,7 +245,7 @@ f2ptr raw__interval_tree__intervals(f2ptr cause, f2ptr this) {
 f2ptr f2__interval_tree__intervals(f2ptr cause, f2ptr this) {
   return raw__interval_tree__intervals(cause, this);
 }
-def_cefunk1(interval_tree__intervals, this, 0,
+export_cefunk1(interval_tree__intervals, this, 0,
 	    "Returns all of the intervals in this interval_tree.");
 
 
@@ -274,7 +274,7 @@ f2ptr f2__interval_tree__add_intervals_containing_value_to_list(f2ptr cause, f2p
   assert_argument_type(set,           list);
   return raw__interval_tree__add_intervals_containing_value_to_list(cause, this, value, list);
 }
-def_cefunk3(interval_tree__add_intervals_containing_value_to_list, this, value, list, 0,
+export_cefunk3(interval_tree__add_intervals_containing_value_to_list, this, value, list, 0,
 	    "Adds intervals from this interval_tree that contain the given value to the given list.");
 
 
@@ -296,7 +296,7 @@ f2ptr f2__interval_tree__intervals_containing_value(f2ptr cause, f2ptr this, f2p
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__intervals_containing_value(cause, this, value);
 }
-def_cefunk2(interval_tree__intervals_containing_value, this, value, 0,
+export_cefunk2(interval_tree__intervals_containing_value, this, value, 0,
 	    "Returns a new set that contains the intervals in this interval_tree that contain the given value.");
 
 
@@ -378,7 +378,7 @@ f2ptr f2__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this,
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__intervals_overlapping_interval(cause, this, element);
 }
-def_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
+export_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
 	    "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
 
 
@@ -399,7 +399,7 @@ f2ptr f2__interval_tree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__interval_tree__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_cefunk2(interval_tree__terminal_print_with_frame, this, terminal_print_frame, 0,
+export_cefunk2(interval_tree__terminal_print_with_frame, this, terminal_print_frame, 0,
 	    "");
 
 
@@ -440,7 +440,7 @@ f2ptr raw__interval_tree_node__new(f2ptr cause, f2ptr color, f2ptr center_value,
 f2ptr f2__interval_tree_node__new(f2ptr cause, f2ptr color, f2ptr center_value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
   return raw__interval_tree_node__new(cause, color, center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 }
-def_cefunk6(interval_tree_node__new, color, center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
+export_cefunk6(interval_tree_node__new, color, center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
 	    "Returns a new interval_tree_node object.");
 
 
@@ -541,7 +541,7 @@ f2ptr f2__interval_tree_node__simple_insert(f2ptr cause, f2ptr this, f2ptr eleme
   assert_argument_type(interval_tree_node, this);
   return raw__interval_tree_node__simple_insert(cause, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 }
-def_cefunk7(interval_tree_node__simple_insert, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk, 0,
+export_cefunk7(interval_tree_node__simple_insert, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk, 0,
 	    "Inserts a new interval element into this interval_tree.");
 
 
@@ -606,7 +606,7 @@ f2ptr f2__interval_tree_node__simple_remove(f2ptr cause, f2ptr this, f2ptr eleme
   assert_argument_type(interval_tree_node, this);
   return raw__interval_tree_node__simple_remove(cause, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 }
-def_cefunk6(interval_tree_node__simple_remove, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
+export_cefunk6(interval_tree_node__simple_remove, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
 	    "Inserts a new interval element into this interval_tree.");
 
 
@@ -925,7 +925,7 @@ f2ptr f2__interval_tree_node__insert(f2ptr cause, f2ptr this, f2ptr element, f2p
   assert_argument_type(interval_tree_node, this);
   return raw__interval_tree_node__insert(cause, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 }
-def_cefunk7(interval_tree_node__insert, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk, 0,
+export_cefunk7(interval_tree_node__insert, this, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk, 0,
 	    "Inserts a new interval element into this interval_tree.");
 
 
@@ -1313,7 +1313,7 @@ f2ptr f2__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause
   assert_argument_type(funkable,           value_comparison_funk);
   return raw__interval_tree_node__add_intervals_containing_value_to_list(cause, this, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 }
-def_cefunk7(interval_tree_node__add_intervals_containing_value_to_list, this, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
+export_cefunk7(interval_tree_node__add_intervals_containing_value_to_list, this, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
 	    "Adds intervals from this interval_tree_node that contain the given value to the given list.");
 
 
@@ -1359,7 +1359,7 @@ f2ptr f2__interval_tree_node__terminal_print_with_frame(f2ptr cause, f2ptr this,
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__interval_tree_node__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_cefunk2(interval_tree_node__terminal_print_with_frame, this, terminal_print_frame, 0,
+export_cefunk2(interval_tree_node__terminal_print_with_frame, this, terminal_print_frame, 0,
 	    "");
 
 

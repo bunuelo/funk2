@@ -662,7 +662,7 @@ f2ptr raw__interval_tree_node__insert_list_of_intervals(f2ptr cause, f2ptr this,
   // now fix overlapping sets.
   {
     f2ptr upper_node = this;
-    list__iteration(cause, move_up_element_list, element,
+    list__iteration(cause, list, element,
 		    assert_value(f2__interval_tree_node__simple_insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
 		    );
   }

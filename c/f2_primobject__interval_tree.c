@@ -1184,7 +1184,7 @@ f2ptr raw__interval_tree_node__an_arbitrary_interval_containing_value(f2ptr caus
       {
 	f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
 	if (right_node != nil) {
-	  f2ptr interval = assert_value(raw__interval_tree_node__an_arbitrary_interval_containing_value(cause, right_node, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+	  f2ptr interval = assert_value(raw__interval_tree_node__an_arbitrary_interval_containing_value(cause, right_node, value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
 	  if (interval != nil) {
 	    return interval;
 	  }

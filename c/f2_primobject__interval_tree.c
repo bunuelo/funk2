@@ -1233,11 +1233,11 @@ f2ptr raw__interval_tree_node__an_arbitrary_interval_containing_value(f2ptr caus
 }
 
 f2ptr f2__interval_tree_node__an_arbitrary_interval_containing_value(f2ptr cause, f2ptr this, f2ptr value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk) {
-  assure_argument_value(interval_tree_node, this);
-  assure_argument_value(funkable,           left_value_funk);
-  assure_argument_value(funkable,           right_value_funk);
-  assure_argument_value(funkable,           value_equality_funk);
-  assure_argument_value(funkable,           value_comparison_funk);
+  assert_argument_type(interval_tree_node, this);
+  assert_argument_type(funkable,           left_value_funk);
+  assert_argument_type(funkable,           right_value_funk);
+  assert_argument_type(funkable,           value_equality_funk);
+  assert_argument_type(funkable,           value_comparison_funk);
   return raw__interval_tree_node__an_arbitrary_interval_containing_value(cause, this, value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 }
 

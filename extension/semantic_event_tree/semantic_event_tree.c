@@ -245,6 +245,7 @@ f2ptr f2__semantic_event_tree__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_event_tree__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_event_tree__core_extension__initialize(f2ptr cause) {
+  core_extension__ping(semantic_event_tree, interval_tree);
   core_extension__ping(semantic_event_tree, semantic_event);
   status("semantic_event_tree initialized.");
   return nil;

@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_EVENT_TREE__H
 
 #include "../../c/funk2.h"
+#include "../interval_tree/interval_tree.h"
 #include "../semantic_event/semantic_event.h"
 
 def_header_ceframe1(semantic_event_tree, interval_tree);

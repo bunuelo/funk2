@@ -121,6 +121,7 @@
 						     'extension/graph_isomorphism/'
 						     'extension/image/'
 						     'extension/image_sequence/'
+						     'extension/interval_tree/'
 						     'extension/lick/'
 						     'extension/mentality/'
 						     'extension/meta_semantic_knowledge_base/'

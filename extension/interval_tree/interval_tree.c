@@ -637,19 +637,12 @@ f2ptr raw__interval_tree_node__grandparent_node(f2ptr cause, f2ptr this) {
   return f2__interval_tree_node__parent_node(cause, parent_node);
 }
 
-f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
-  //    this                 right    //
-  //        \       =>      /         //
-  //         right      this          //
-  
-  f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
-  f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
-  
-  // before node rotation, we remove elements that will need to be moved up.
+f2ptr raw__interval_tree_node__pull_overlapping_intervals_up(f2ptr cause, f2ptr this, f2ptr child_node) {
+  // remove elements that will need to be moved up.
   f2ptr move_up_element_list = f2__list__new(cause, nil);
   {
-    f2ptr upper_node               = right_node;
-    f2ptr lower_node               = this;
+    f2ptr upper_node               = this;
+    f2ptr lower_node               = child_node;
     f2ptr upper_node__center_value = f2__interval_tree_node__center_value(cause, upper_node);
     {
       f2ptr overlapping_interval = assert_value(f2__interval_tree_node__an_arbitrary_interval_containing_value(cause, lower_node, upper_node__center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
@@ -666,6 +659,26 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
       }
     }
   }
+  
+  // now fix overlapping sets.
+  {
+    f2ptr upper_node = this;
+    list__iteration(cause, move_up_element_list, element,
+		    assert_value(f2__interval_tree_node__simple_insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
+		    );
+  }
+  
+  return nil;
+}
+
+
+f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+  //    this                 right    //
+  //        \       =>      /         //
+  //         right      this          //
+  
+  f2ptr right_node            = f2__interval_tree_node__right_node(cause, this);
+  f2ptr right_node__left_node = f2__interval_tree_node__left_node(cause, right_node);
   
   // begin rotate.
   f2__interval_tree_node__right_node__set(cause, this, right_node__left_node);
@@ -690,13 +703,8 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   f2__interval_tree_node__parent_node__set(cause, this,       right_node);
   // end rotate.
   
-  // node rotation is done, so now fix overlapping sets.
-  {
-    f2ptr upper_node = right_node;
-    list__iteration(cause, move_up_element_list, element,
-		    assert_value(f2__interval_tree_node__simple_insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
-		    );
-  }
+  assure_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, right_node, this));
+  
   return nil;
 }
 
@@ -707,28 +715,6 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   
   f2ptr left_node             = f2__interval_tree_node__left_node( cause, this);
   f2ptr left_node__right_node = f2__interval_tree_node__right_node(cause, left_node);
-  
-  // before node rotation, we remove elements that will need to be moved up.
-  f2ptr move_up_element_list = f2__list__new(cause, nil);
-  {
-    f2ptr upper_node               = left_node;
-    f2ptr lower_node               = this;
-    f2ptr upper_node__center_value = f2__interval_tree_node__center_value(cause, upper_node);
-    {
-      f2ptr overlapping_interval = assert_value(f2__interval_tree_node__an_arbitrary_interval_containing_value(cause, lower_node, upper_node__center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
-      while (overlapping_interval != nil) {
-	catch_value(raw__interval_tree_node__simple_remove(cause, lower_node, overlapping_interval, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk),
-		    f2list10__new(cause,
-				  new__symbol(cause, "bug_name"),             new__symbol(cause, "bad_value_returned_by_add_intervals_containing_value_could_not_be_found_in_simple_remove"),
-				  new__symbol(cause, "move_up_element_list"), move_up_element_list,
-				  new__symbol(cause, "center_value"),         upper_node__center_value,
-				  new__symbol(cause, "left_node"),            left_node,
-				  new__symbol(cause, "this"),                 this));
-	raw__list__add(cause, move_up_element_list, overlapping_interval);
-	overlapping_interval = assert_value(f2__interval_tree_node__an_arbitrary_interval_containing_value(cause, lower_node, upper_node__center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
-      }
-    }
-  }
   
   // begin rotate.
   f2__interval_tree_node__left_node__set(cause, this, left_node__right_node);
@@ -753,13 +739,8 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   f2__interval_tree_node__parent_node__set(cause, this,      left_node);
   // end rotate.
   
-  // node rotation is done, so now fix overlapping sets.
-  {
-    f2ptr upper_node = left_node;
-    list__iteration(cause, move_up_element_list, element,
-		    assert_value(f2__interval_tree_node__simple_insert(cause, upper_node, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
-		    );
-  }
+  assure_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, left_node, this));
+  
   return nil;
 }
 

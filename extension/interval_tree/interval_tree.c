@@ -637,7 +637,7 @@ f2ptr raw__interval_tree_node__grandparent_node(f2ptr cause, f2ptr this) {
   return f2__interval_tree_node__parent_node(cause, parent_node);
 }
 
-f2ptr raw__interval_tree_node__pull_overlapping_intervals_up(f2ptr cause, f2ptr this, f2ptr child_node) {
+f2ptr raw__interval_tree_node__pull_overlapping_intervals_up(f2ptr cause, f2ptr this, f2ptr child_node, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
   // remove elements that will need to be moved up.
   f2ptr move_up_element_list = f2__list__new(cause, nil);
   {
@@ -703,7 +703,7 @@ f2ptr raw__interval_tree_node__rotate_left(f2ptr cause, f2ptr this, f2ptr left_v
   f2__interval_tree_node__parent_node__set(cause, this,       right_node);
   // end rotate.
   
-  assert_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, right_node, this));
+  assert_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, right_node, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   
   return nil;
 }
@@ -739,7 +739,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   f2__interval_tree_node__parent_node__set(cause, this,      left_node);
   // end rotate.
   
-  assert_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, left_node, this));
+  assert_value(raw__interval_tree_node__pull_overlapping_intervals_up(cause, left_node, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   
   return nil;
 }

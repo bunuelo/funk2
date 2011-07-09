@@ -742,7 +742,7 @@ f2ptr raw__interval_tree_node__rotate_right(f2ptr cause, f2ptr this, f2ptr left_
   f2__interval_tree_node__parent_node__set(cause, this,      left_node);
   // end rotate.
   
-  assert_value(raw__interval_tree_node__insert_list_of_intervals(cause, right_node, move_up_interval_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
+  assert_value(raw__interval_tree_node__insert_list_of_intervals(cause, left_node, move_up_interval_list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
   
   return nil;
 }

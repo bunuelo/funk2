@@ -652,8 +652,8 @@ f2ptr raw__interval_tree_node__pull_overlapping_intervals_up(f2ptr cause, f2ptr 
 				  new__symbol(cause, "bug_name"),             new__symbol(cause, "bad_value_returned_by_add_intervals_containing_value_could_not_be_found_in_simple_remove"),
 				  new__symbol(cause, "move_up_element_list"), move_up_element_list,
 				  new__symbol(cause, "center_value"),         upper_node__center_value,
-				  new__symbol(cause, "right_node"),           right_node,
-				  new__symbol(cause, "this"),                 this));
+				  new__symbol(cause, "upper_node"),           upper_node,
+				  new__symbol(cause, "lower_node"),           lower_node));
 	raw__list__add(cause, move_up_element_list, overlapping_interval);
 	overlapping_interval = assert_value(f2__interval_tree_node__an_arbitrary_interval_containing_value(cause, lower_node, upper_node__center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
       }

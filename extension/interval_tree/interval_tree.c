@@ -1135,19 +1135,19 @@ f2ptr raw__interval_tree_node__find_and_remove_an_arbitrary_interval_containing_
 				       // value is less than the right_value of element
 				       f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
 				       catch_value(f2__redblacktree__remove(cause, overlapping_right_redblacktree, element),
-						   f2list6__new(cause,
-								new__symbol(cause, "bug_name"),                       new__symbol(cause, "element_is_not_in_overlapping_right_redblacktree"),
-								new__symbol(cause, "this"),                           this,
-								new__symbol(cause, "center_value"),                   value,
-								new__symbol(cause, "element"),                        element,
-								new__symbol(cause, "overlapping_right_redblacktree"), overlapping_right_redblacktree));
+						   f2list10__new(cause,
+								 new__symbol(cause, "bug_name"),                       new__symbol(cause, "element_is_not_in_overlapping_right_redblacktree"),
+								 new__symbol(cause, "this"),                           this,
+								 new__symbol(cause, "center_value"),                   value,
+								 new__symbol(cause, "element"),                        element,
+								 new__symbol(cause, "overlapping_right_redblacktree"), overlapping_right_redblacktree));
 				       catch_value(f2__redblacktree__remove(cause, overlapping_left_redblacktree, element),
-						   f2list6__new(cause,
-								new__symbol(cause, "bug_name"),                      new__symbol(cause, "element_is_not_in_overlapping_left_redblacktree"),
-								new__symbol(cause, "this"),                          this,
-								new__symbol(cause, "center_value"),                  value,
-								new__symbol(cause, "element"),                       element,
-								new__symbol(cause, "overlapping_left_redblacktree"), overlapping_left_redblacktree));
+						   f2list10__new(cause,
+								 new__symbol(cause, "bug_name"),                      new__symbol(cause, "element_is_not_in_overlapping_left_redblacktree"),
+								 new__symbol(cause, "this"),                          this,
+								 new__symbol(cause, "center_value"),                  value,
+								 new__symbol(cause, "element"),                       element,
+								 new__symbol(cause, "overlapping_left_redblacktree"), overlapping_left_redblacktree));
 				       return element;
 				     } else {
 				       // value is greater than right_value of element, so stop looping.
@@ -1187,19 +1187,19 @@ f2ptr raw__interval_tree_node__find_and_remove_an_arbitrary_interval_containing_
 				      // left_value of element is less than the value
 				      f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
 				      catch_value(f2__redblacktree__remove(cause, overlapping_left_redblacktree, element),
-						  f2list6__new(cause,
-							       new__symbol(cause, "bug_name"),                      new__symbol(cause, "element_is_not_in_overlapping_left_redblacktree"),
-							       new__symbol(cause, "this"),                          this,
-							       new__symbol(cause, "center_value"),                  value,
-							       new__symbol(cause, "element"),                       element,
-							       new__symbol(cause, "overlapping_left_redblacktree"), overlapping_left_redblacktree));
+						  f2list10__new(cause,
+								new__symbol(cause, "bug_name"),                      new__symbol(cause, "element_is_not_in_overlapping_left_redblacktree"),
+								new__symbol(cause, "this"),                          this,
+								new__symbol(cause, "center_value"),                  value,
+								new__symbol(cause, "element"),                       element,
+								new__symbol(cause, "overlapping_left_redblacktree"), overlapping_left_redblacktree));
 				      catch_value(f2__redblacktree__remove(cause, overlapping_right_redblacktree, element),
-						  f2list6__new(cause,
-							       new__symbol(cause, "bug_name"),                       new__symbol(cause, "element_is_not_in_overlapping_right_redblacktree"),
-							       new__symbol(cause, "this"),                           this,
-							       new__symbol(cause, "center_value"),                   value,
-							       new__symbol(cause, "element"),                        element,
-							       new__symbol(cause, "overlapping_right_redblacktree"), overlapping_right_redblacktree));
+						  f2list10__new(cause,
+								new__symbol(cause, "bug_name"),                       new__symbol(cause, "element_is_not_in_overlapping_right_redblacktree"),
+								new__symbol(cause, "this"),                           this,
+								new__symbol(cause, "center_value"),                   value,
+								new__symbol(cause, "element"),                        element,
+								new__symbol(cause, "overlapping_right_redblacktree"), overlapping_right_redblacktree));
 				      return element;
 				    } else {
 				      // left_value of element is greater than the value, so stop looping.

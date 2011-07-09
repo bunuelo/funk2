@@ -226,6 +226,7 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/graph_isomorphism/libf2e_graph_isomorphism.la \
                       extension/image/libf2e_image.la \
                       extension/image_sequence/libf2e_image_sequence.la \
+                      extension/interval_tree/libf2e_interval_tree.la \
                       extension/lick/libf2e_lick.la \
                       extension/mentality/libf2e_mentality.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
@@ -421,6 +422,7 @@ extension_frame_ball_libf2e_frame_ball_la_SOURCES                               
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                           = extension/graph_isomorphism/graph_isomorphism.c
 extension_image_libf2e_image_la_SOURCES                                                                   = extension/image/image.c
 extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                 = extension/image_sequence/image_sequence.c
+extension_interval_tree_libf2e_interval_tree_la_SOURCES                                                   = extension/interval_tree/interval_tree.c
 extension_lick_libf2e_lick_la_SOURCES                                                                     = extension/lick/lick.c
 extension_mentality_libf2e_mentality_la_SOURCES                                                           = extension/mentality/mentality.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                     = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
@@ -540,6 +542,9 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2
 
 extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_interval_tree_libf2e_interval_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_interval_tree_libf2e_interval_tree_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_lick_libf2e_lick_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

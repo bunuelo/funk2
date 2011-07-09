@@ -644,7 +644,7 @@ f2ptr raw__interval_tree_node__list_of_found_and_removed_overlapping_intervals(f
     f2ptr upper_node               = this;
     f2ptr upper_node__center_value = f2__interval_tree_node__center_value(cause, upper_node);
     {
-      f2ptr overlapping_interval = assert_value(f2__interval_tree_node__find_and_remove_arbitrary_interval_containing_value(cause, lower_node, upper_node__center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
+      f2ptr overlapping_interval = assert_value(f2__interval_tree_node__find_and_remove_an_arbitrary_interval_containing_value(cause, lower_node, upper_node__center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
       while (overlapping_interval != nil) {
 	//catch_value(raw__interval_tree_node__simple_remove(cause, lower_node, overlapping_interval, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk),
 	//	    f2list10__new(cause,

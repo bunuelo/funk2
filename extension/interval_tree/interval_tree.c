@@ -68,7 +68,11 @@ f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
     head = f2__interval_tree_node__new(cause, nil, center_value, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
     f2__interval_tree__head__set(cause, this, head);
   }
-  assert_value(raw__interval_tree_node__insert(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
+  catch_value(raw__interval_tree_node__insert(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk),
+	      f2list6__new(cause,
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_failed_to_insert_element"),
+			   new__symbol(cause, "this"),     this,
+			   new__symbol(cause, "element"),  element));
   do {
     f2ptr head__parent_node = f2__interval_tree_node__parent_node(cause, head);
     if (head__parent_node == nil) {
@@ -273,7 +277,7 @@ f2ptr raw__interval_tree__add_intervals_containing_value_to_list(f2ptr cause, f2
 
 f2ptr f2__interval_tree__add_intervals_containing_value_to_list(f2ptr cause, f2ptr this, f2ptr value, f2ptr list) {
   assert_argument_type(interval_tree, this);
-  assert_argument_type(set,           list);
+  assert_argument_type(list,          list);
   return raw__interval_tree__add_intervals_containing_value_to_list(cause, this, value, list);
 }
 export_cefunk3(interval_tree__add_intervals_containing_value_to_list, this, value, list, 0,
@@ -381,7 +385,7 @@ f2ptr f2__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this,
   return raw__interval_tree__intervals_overlapping_interval(cause, this, element);
 }
 export_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
-	    "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
+	       "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
 
 
 f2ptr raw__interval_tree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -402,7 +406,7 @@ f2ptr f2__interval_tree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
   return raw__interval_tree__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(interval_tree__terminal_print_with_frame, this, terminal_print_frame, 0,
-	    "");
+	       "");
 
 
 f2ptr f2__interval_tree_type__new_aux(f2ptr cause) {

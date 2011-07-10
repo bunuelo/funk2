@@ -243,13 +243,19 @@ f2ptr raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr 
   return nil;
 }
 
+f2ptr f2__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr this, f2ptr node) {
+  assert_argument_type(interval_tree,      this);
+  assert_argument_type(interval_tree_node, node);
+  return raw__interval_tree__remove_node_with_at_most_one_child(cause, this, node);
+}
+
 f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   status("INTERVAL_TREE DEBUG enter %s " f2ptr__fstr, __FUNCTION__, this);
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   assert_value(f2__interval_tree__assert_valid(cause, this));
 #endif
   if (f2__interval_tree_node__left_node(cause, node) == nil || f2__interval_tree_node__right_node(cause, node) == nil) { 
-    assert_value(raw__interval_tree__remove_node_with_at_most_one_child(cause, this, node));
+    assert_value(f2__interval_tree__remove_node_with_at_most_one_child(cause, this, node));
   } else {
     f2ptr node__left__max = f2__interval_tree_node__maximum_node(cause, f2__interval_tree_node__left_node(cause, node));
     

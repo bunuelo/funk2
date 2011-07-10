@@ -467,7 +467,7 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 							  new__symbol(cause, "this"),     this));
 			 }
 			 );
-    ptypehash__iteration(cause, right_element_set, element, count,
+    ptypehash__iteration(cause, right_element_ptypehash, element, count,
 			 f2ptr left__count = raw__ptypehash__lookup(cause, left_element_ptypehash, element);
 			 if ((! raw__ptypehash__contains(cause, left_element_ptypehash, element)) ||
 			     (! raw__eq(cause, count, left__count))) {

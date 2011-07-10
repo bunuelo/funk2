@@ -46,7 +46,7 @@ export_cefunk1(semantic_event_tree__semantic_event__right_value, this, 0, "Retur
 
 
 f2ptr raw__semantic_event_tree__semantic_event__value_equality(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_time__is_numerically_equal_to(cause, this, that);
+  return f2__semantic_time__is_numerically_equal_to(cause, this, that);
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_equality(f2ptr cause, f2ptr this, f2ptr that) {
@@ -58,7 +58,7 @@ export_cefunk2(semantic_event_tree__semantic_event__value_equality, this, that, 
 
 
 f2ptr raw__semantic_event_tree__semantic_event__value_comparison(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_time__is_less_than(cause, this, that);
+  return f2__semantic_time__is_less_than(cause, this, that);
 }
 
 f2ptr f2__semantic_event_tree__semantic_event__value_comparison(f2ptr cause, f2ptr this, f2ptr that) {

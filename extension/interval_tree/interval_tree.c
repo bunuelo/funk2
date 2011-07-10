@@ -1173,6 +1173,17 @@ f2ptr raw__interval_tree_node__delete_case_1(f2ptr cause, f2ptr this, f2ptr left
   return nil;
 }
 
+f2ptr f2__interval_tree_node__delete_case_1(f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+  assert_argument_type(interval_tree_node, this);
+  assert_argument_type(funkable,           left_value_funk);
+  assert_argument_type(funkable,           right_value_funk);
+  assert_argument_type(funkable,           value_equality_funk);
+  assert_argument_type(funkable,           value_comparison_funk);
+  assert_argument_type(funkable,           value_center_funk);
+  return raw__interval_tree_node__delete_case_1(cause, this, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+}
+
+
 void raw__interval_tree_node__replace_node(f2ptr cause, f2ptr dest, f2ptr src) {
   f2ptr src__parent = f2__interval_tree_node__parent_node(cause, src);
   f2ptr src__left   = f2__interval_tree_node__left_node(  cause, src);

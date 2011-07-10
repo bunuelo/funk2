@@ -95,6 +95,7 @@ f2ptr     raw__interval_tree_node__delete_case_4                                
 f2ptr     raw__interval_tree_node__delete_case_3                                         (f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr     raw__interval_tree_node__delete_case_2                                         (f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr     raw__interval_tree_node__delete_case_1                                         (f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
+f2ptr      f2__interval_tree_node__delete_case_1                                         (f2ptr cause, f2ptr this, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 void      raw__interval_tree_node__replace_node                                          (f2ptr cause, f2ptr dest, f2ptr src);
 void      raw__interval_tree_node__swap_nodes                                            (f2ptr cause, f2ptr node1, f2ptr node2);
 f2ptr     raw__interval_tree_node__find_and_remove_an_arbitrary_interval_containing_value(f2ptr cause, f2ptr this, f2ptr value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);

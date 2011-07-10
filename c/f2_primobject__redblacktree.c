@@ -1491,6 +1491,9 @@ void f2__primobject__redblacktree__initialize() {
   {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__remove, this, key, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk = never_gc(cfunk);}
   
+  {char* symbol_str = "lookup_key_count"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.lookup_key_count__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__lookup_key_count, this, key, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.lookup_key_count__funk = never_gc(cfunk);}
+  
   {char* symbol_str = "minimum"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(redblacktree__minimum, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk = never_gc(cfunk);}
   

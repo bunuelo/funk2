@@ -141,8 +141,8 @@ f2ptr f2__interval_tree__insert(f2ptr cause, f2ptr this, f2ptr element) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__insert(cause, this, element);
 }
-export_cefunk2(interval_tree__insert, this, element, 0,
-	    "Inserts a new interval element into this interval_tree.");
+export_cefunk1(interval_tree__insert, this, 0,
+	       "Inserts a new interval element into this interval_tree.");
 
 
 f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {

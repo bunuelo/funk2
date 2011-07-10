@@ -81,6 +81,7 @@ f2ptr     raw__interval_tree_node__rotate_right                                 
 f2ptr     raw__interval_tree_node__uncle_node                                            (f2ptr cause, f2ptr this);
 f2ptr     raw__interval_tree_node__sibling_node                                          (f2ptr cause, f2ptr node);
 f2ptr     raw__interval_tree_node__head                                                  (f2ptr cause, f2ptr this);
+f2ptr      f2__interval_tree_node__head                                                  (f2ptr cause, f2ptr this);
 f2ptr     raw__interval_tree_node__minimum_node                                          (f2ptr cause, f2ptr this);
 f2ptr      f2__interval_tree_node__minimum_node                                          (f2ptr cause, f2ptr this);
 f2ptr     raw__interval_tree_node__maximum_node                                          (f2ptr cause, f2ptr this);

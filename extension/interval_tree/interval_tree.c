@@ -957,6 +957,11 @@ f2ptr raw__interval_tree_node__head(f2ptr cause, f2ptr this) {
   return iter;
 }
 
+f2ptr f2__interval_tree_node__head(f2ptr cause, f2ptr this) {
+  assert_argument_type_or_nil(interval_tree_node, this);
+  return raw__interval_tree_node__head(cause, this);
+}
+
 
 f2ptr raw__interval_tree_node__minimum_node(f2ptr cause, f2ptr this) {
   if (this == nil) {

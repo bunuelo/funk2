@@ -29,7 +29,7 @@
     [let [[count 100]]
       [dotimes [i count]
 	[print i]
-	[let [[choice [random 10]]]
+	[let [[choice [random 2]]]
 	  [cond [[== choice 0]
 		 [print 'add']
 		 [let [[x [get [random 3] as-double]]

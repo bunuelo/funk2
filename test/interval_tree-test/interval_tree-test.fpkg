@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage interval_tree-test
-  :packages []
+  :packages [interval_tree]
    :sources ['interval_tree-test.fu2']]
 

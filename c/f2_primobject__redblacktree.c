@@ -1121,7 +1121,11 @@ def_pcfunk1(redblacktree__minimum, this,
 	    return f2__redblacktree__minimum(this_cause, this));
 
 f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
-  return raw__redblacktree_node__maximum_node(cause, f2__redblacktree__head(cause, this));
+  f2ptr head = f2__redblacktree__head(cause, this);
+  if (head == nil) {
+    return nil;
+  }
+  return raw__redblacktree_node__maximum_node(cause, head);
 }
 
 

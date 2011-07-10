@@ -965,6 +965,11 @@ f2ptr raw__interval_tree_node__minimum_node(f2ptr cause, f2ptr this) {
   return iter;
 }
 
+f2ptr f2__interval_tree_node__minimum_node(f2ptr cause, f2ptr this) {
+  assert_argument_type(interval_tree_node, this);
+  return raw__interval_tree_node__minimum_node(cause, this);
+}
+
 
 f2ptr raw__interval_tree_node__maximum_node(f2ptr cause, f2ptr this) {
   if (this == nil) {
@@ -977,6 +982,11 @@ f2ptr raw__interval_tree_node__maximum_node(f2ptr cause, f2ptr this) {
     right_node = f2__interval_tree_node__right_node(cause, iter);
   }
   return iter;
+}
+
+f2ptr f2__interval_tree_node__maximum_node(f2ptr cause, f2ptr this) {
+  assert_argument_type(interval_tree_node, this);
+  return raw__interval_tree_node__maximum_node(cause, this);
 }
 
 

@@ -130,6 +130,8 @@ f2ptr     raw__redblacktree__insert                                    (f2ptr ca
 f2ptr      f2__redblacktree__insert                                    (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__redblacktree__contains_node                             (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr      f2__redblacktree__contains_node                             (f2ptr cause, f2ptr this, f2ptr node);
+f2ptr     raw__redblacktree__lookup_key_count                          (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__redblacktree__lookup_key_count                          (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__redblacktree__remove                                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__redblacktree__remove                                    (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__redblacktree__minimum_node                              (f2ptr cause, f2ptr this);

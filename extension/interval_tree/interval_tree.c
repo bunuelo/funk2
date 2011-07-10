@@ -40,7 +40,7 @@ export_cefunk5(interval_tree__new, left_value_funk, right_value_funk, value_equa
 	       "Returns a new interval_tree object.");
 
 
-f2ptr raw__interval_tree__assert_valid(f2ptr cause, f2ptr this) {
+f2ptr raw__interval_tree__assert_valid__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr head = f2__interval_tree__head(cause, this);
   if (head != nil) {
     assert_value(f2__interval_tree_node__assert_valid_recursively(cause, head));
@@ -48,16 +48,35 @@ f2ptr raw__interval_tree__assert_valid(f2ptr cause, f2ptr this) {
   return nil;
 }
 
+f2ptr f2__interval_tree__assert_valid__thread_unsafe(f2ptr cause, f2ptr this) {
+  assert_argument_type(interval_tree, this);
+  return raw__interval_tree__assert_valid__thread_unsafe(cause, this);
+}
+
+
+f2ptr raw__interval_tree__assert_valid(f2ptr cause, f2ptr this) {
+  f2ptr mutate_cmutex = f2__interval_tree__mutate_cmutex(cause, this);
+  raw__cmutex__lock(cause, mutate_cmutex);
+  f2ptr result = raw__interval_tree__assert_valid__thread_unsafe(cause, this);
+  raw__cmutex__unlock(cause, mutate_cmutex);
+  return result;
+}
+
 f2ptr f2__interval_tree__assert_valid(f2ptr cause, f2ptr this) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__assert_valid(cause, this);
 }
+export_cefunk1(interval_tree__assert_valid, 0,
+	       "Asserts the validity of this interval_tree object.");
+
+
+
 
 
 f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr head                   = f2__interval_tree__head(cause, this);
@@ -104,7 +123,7 @@ f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
   
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return nil;
@@ -129,7 +148,7 @@ export_cefunk2(interval_tree__insert, this, element, 0,
 f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
@@ -152,9 +171,14 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
     }
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
+  {
+    s64 index;
+    for (index = 0; index < 100; index ++) {
+      status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
+      assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
+      status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
+    }
+  }
 #endif
   return nil;
 }
@@ -180,7 +204,7 @@ export_cefunk2(interval_tree__remove, this, element, 0,
 f2ptr raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr this, f2ptr node) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr node__child  = (f2__interval_tree_node__left_node(cause, node) != nil) ? f2__interval_tree_node__left_node(cause, node) : f2__interval_tree_node__right_node(cause, node);
@@ -243,7 +267,7 @@ f2ptr raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr 
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
 #endif
   return nil;
@@ -258,7 +282,7 @@ f2ptr f2__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr t
 f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   if (f2__interval_tree_node__left_node(cause, node) == nil || f2__interval_tree_node__right_node(cause, node) == nil) { 
@@ -290,7 +314,7 @@ f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   //#endif
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return nil;
@@ -302,14 +326,14 @@ f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 f2ptr raw__interval_tree__intervals__thread_unsafe(f2ptr cause, f2ptr this) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
   f2ptr return_value = f2__redblacktree__leaves(cause, all_left_redblacktree);
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return return_value;
@@ -333,7 +357,7 @@ export_cefunk1(interval_tree__intervals, this, 0,
 f2ptr raw__interval_tree__add_intervals_containing_value_to_list__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value, f2ptr list) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr head = f2__interval_tree__head(cause, this);
@@ -346,7 +370,7 @@ f2ptr raw__interval_tree__add_intervals_containing_value_to_list__thread_unsafe(
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return nil;
@@ -372,14 +396,14 @@ export_cefunk3(interval_tree__add_intervals_containing_value_to_list, this, valu
 f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr list = f2__list__new(cause, nil);
   assert_value(raw__interval_tree__add_intervals_containing_value_to_list(cause, this, value, list));
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return list;
@@ -404,7 +428,7 @@ export_cefunk2(interval_tree__intervals_containing_value, this, value, 0,
 f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr list = f2__list__new(cause, nil);
@@ -471,7 +495,7 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid(cause, this));
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return list;
@@ -516,6 +540,7 @@ export_cefunk2(interval_tree__terminal_print_with_frame, this, terminal_print_fr
 
 f2ptr f2__interval_tree_type__new_aux(f2ptr cause) {
   f2ptr this = f2__interval_tree_type__new(cause);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "assert_valid"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__assert_valid")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__insert")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__remove")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "intervals"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals")));

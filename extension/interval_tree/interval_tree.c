@@ -1222,7 +1222,7 @@ void raw__interval_tree_node__replace_node(f2ptr cause, f2ptr dest, f2ptr src) {
   //#endif
 }
 
-void raw__interval_tree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
+f2ptr raw__interval_tree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
   f2ptr node1__parent       = f2__interval_tree_node__parent_node(cause, node1);
   f2ptr node1__parent__left = f2__interval_tree_node__parent_node(cause, node1) ? f2__interval_tree_node__left_node(cause, f2__interval_tree_node__parent_node(cause, node1)) : nil;
   f2ptr node1__left         = f2__interval_tree_node__left_node(  cause, node1);
@@ -1305,6 +1305,13 @@ void raw__interval_tree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) 
   //debug__assert(raw__interval_tree_node__is_valid(cause, node1), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node1).");
   //debug__assert(raw__interval_tree_node__is_valid(cause, node2), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node2).");
   //#endif
+  return nil;
+}
+
+f2ptr f2__interval_tree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
+  assert_argument_type(interval_tree_node, node1);
+  assert_argument_type(interval_tree_node, node2);
+  return raw__interval_tree_node__swap_nodes(cause, node1, node2);
 }
 
 ///^^^^^

@@ -67,6 +67,7 @@ f2ptr      f2__interval_tree_node__assert_valid                                 
 f2ptr     raw__interval_tree_node__assert_valid_recursively                              (f2ptr cause, f2ptr this);
 f2ptr      f2__interval_tree_node__assert_valid_recursively                              (f2ptr cause, f2ptr this);
 boolean_t raw__interval_tree_node__is_empty                                              (f2ptr cause, f2ptr this);
+f2ptr      f2__interval_tree_node__is_empty                                              (f2ptr cause, f2ptr this);
 f2ptr     raw__interval_tree_node__simple_insert                                         (f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr      f2__interval_tree_node__simple_insert                                         (f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr     raw__interval_tree_node__simple_remove                                         (f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);

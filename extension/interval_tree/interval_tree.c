@@ -448,8 +448,8 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
   { // make sure overlapping_left_redblacktree and overlapping_right_redblacktree have the same elements.
     f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
-    f2ptr left_element_ptypehash  = f2__set__new(cause);
-    f2ptr right_element_ptypehash = f2__set__new(cause);
+    f2ptr left_element_ptypehash  = f2__ptypehash__new(cause);
+    f2ptr right_element_ptypehash = f2__ptypehash__new(cause);
     redblacktree__iteration(cause, overlapping_left_redblacktree, element,
 			    f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_left_redblacktree, element);
 			    raw__ptypehash__add(cause, left_element_ptypehash, element, count);

@@ -629,8 +629,8 @@ f2ptr raw__redblacktree__insert_key(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr new_node = assert_value(raw__redblacktree__simple_binary_insert_key(cause, this, key));
   if (new_node != nil) {
     raw__redblacktree_node__insert_case1(cause, new_node);
+    f2__redblacktree__head__set(cause, this, raw__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
   }
-  f2__redblacktree__head__set(cause, this, raw__redblacktree_node__head(cause, f2__redblacktree__head(cause, this)));
   return nil;
 }
 
@@ -983,7 +983,7 @@ boolean_t raw__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr n
 f2ptr f2__redblacktree_node__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   assert_argument_type(redblacktree_node, this);
   assert_argument_type(redblacktree_node, node);
-  return raw__redblacktree_node__contains_node(cause, this, node);
+  return f2bool__new(raw__redblacktree_node__contains_node(cause, this, node));
 }
 
 
@@ -1021,13 +1021,16 @@ f2ptr f2redblacktree_node__primobject_type__new_aux(f2ptr cause) {
 
 boolean_t raw__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   f2ptr head = f2__redblacktree__head(cause, this);
+  if (head == nil) {
+    return boolean__false;
+  }
   return raw__redblacktree_node__contains_node(cause, head, node);
 }
 
 f2ptr f2__redblacktree__contains_node(f2ptr cause, f2ptr this, f2ptr node) {
   assert_argument_type(redblacktree,      this);
   assert_argument_type(redblacktree_node, node);
-  return raw__redblacktree__contains_node(cause, this, node);
+  return f2bool__new(raw__redblacktree__contains_node(cause, this, node));
 }
 
 f2ptr raw__redblacktree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
@@ -1076,7 +1079,11 @@ def_pcfunk2(redblacktree__remove, this, key,
 	    return f2__redblacktree__remove(this_cause, this, key));
 
 f2ptr raw__redblacktree__minimum_node(f2ptr cause, f2ptr this) {
-  return raw__redblacktree_node__minimum_node(cause, f2__redblacktree__head(cause, this));
+  f2ptr head = f2__redblacktree__head(cause, this);
+  if (head == nil) {
+    return nil;
+  }
+  return raw__redblacktree_node__minimum_node(cause, head);
 }
 
 

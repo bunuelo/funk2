@@ -542,7 +542,7 @@ f2ptr raw__redblacktree_node__lookup_key_count(f2ptr cause, f2ptr this, f2ptr ke
   if (key_this_key_comparison_result != nil) {
     f2ptr this__left = f2__redblacktree_node__left(cause, this);
     if (this__left == nil) {
-      return nil;
+      return f2integer__new(cause, 0);
     } else {
       return raw__redblacktree_node__lookup_key_count(cause, this__left, key, value_funk, value_comparison_funk);
     }
@@ -551,7 +551,7 @@ f2ptr raw__redblacktree_node__lookup_key_count(f2ptr cause, f2ptr this, f2ptr ke
     if (this_key_key_comparison_result != nil) {
       f2ptr this__right = f2__redblacktree_node__right(cause, this);
       if (this__right == nil) {
-	return nil;
+	return f2integer__new(cause, 0);
       } else {
 	return raw__redblacktree_node__lookup_key_count(cause, this__right, key, value_funk, value_comparison_funk);
       }

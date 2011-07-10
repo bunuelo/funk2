@@ -28,6 +28,8 @@ def_header_ceframe9(interval_tree, mutate_cmutex, head, all_left_redblacktree, a
 
 f2ptr raw__interval_tree__new                                                  (f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr  f2__interval_tree__new                                                  (f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
+f2ptr raw__interval_tree__assert_valid                                         (f2ptr cause, f2ptr this);
+f2ptr  f2__interval_tree__assert_valid                                         (f2ptr cause, f2ptr this);
 f2ptr raw__interval_tree__insert__thread_unsafe                                (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr raw__interval_tree__insert                                               (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr  f2__interval_tree__insert                                               (f2ptr cause, f2ptr this, f2ptr element);
@@ -62,6 +64,8 @@ f2ptr     raw__interval_tree_node__new                                          
 f2ptr      f2__interval_tree_node__new                                                   (f2ptr cause, f2ptr color, f2ptr center_value, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk);
 f2ptr     raw__interval_tree_node__assert_valid                                          (f2ptr cause, f2ptr this);
 f2ptr      f2__interval_tree_node__assert_valid                                          (f2ptr cause, f2ptr this);
+f2ptr     raw__interval_tree_node__assert_valid_recursively                              (f2ptr cause, f2ptr this);
+f2ptr      f2__interval_tree_node__assert_valid_recursively                              (f2ptr cause, f2ptr this);
 boolean_t raw__interval_tree_node__is_empty                                              (f2ptr cause, f2ptr this);
 f2ptr     raw__interval_tree_node__simple_insert                                         (f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr      f2__interval_tree_node__simple_insert                                         (f2ptr cause, f2ptr this, f2ptr element, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);

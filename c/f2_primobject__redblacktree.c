@@ -568,7 +568,7 @@ f2ptr raw__redblacktree_node__lookup_key_count(f2ptr cause, f2ptr this, f2ptr ke
 f2ptr raw__redblacktree__lookup_key_count(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr this__head = f2__redblacktree__head(cause, this);
   if (this__head == nil) {
-    return nil;
+    return f2integer__new(cause, 0);
   }
   f2ptr value_funk            = f2__redblacktree__value_funk(           cause, this);
   f2ptr value_comparison_funk = f2__redblacktree__value_comparison_funk(cause, this);

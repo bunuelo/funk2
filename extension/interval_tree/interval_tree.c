@@ -335,19 +335,8 @@ f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 
 
 f2ptr raw__interval_tree__intervals__thread_unsafe(f2ptr cause, f2ptr this) {
-#if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
-#endif
   f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
-  f2ptr return_value = f2__redblacktree__leaves(cause, all_left_redblacktree);
-#if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
-#endif
-  return return_value;
+  return assert_value(f2__redblacktree__leaves(cause, all_left_redblacktree));
 }
 
 f2ptr raw__interval_tree__intervals(f2ptr cause, f2ptr this) {
@@ -1654,9 +1643,6 @@ def_pcfunk1(interval_tree_node__overlapping_elements, this,
 f2ptr raw__interval_tree_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
-#if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
-    assert_value(f2__interval_tree_node__assert_valid(cause, this));
-#endif
   if (frame == nil) {
     frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"),              new__symbol(cause, "interval_tree_node"));

@@ -143,8 +143,10 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
   f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
   // we could check the returned removed_from_node from the simple_remove command, and do the red-black tree deletion cases here.
   f2ptr remove_node = assert_value(raw__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
-  if (raw__interval_tree_node__is_empty(cause, remove_node)) {
-    assert_value(raw__interval_tree__remove_node(cause, this, remove_node));
+  if (remove_node != nil) {
+    if (raw__interval_tree_node__is_empty(cause, remove_node)) {
+      assert_value(raw__interval_tree__remove_node(cause, this, remove_node));
+    }
   }
   status("INTERVAL_TREE DEBUG exit %s " f2ptr__fstr, __FUNCTION__, this);
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)

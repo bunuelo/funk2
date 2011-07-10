@@ -452,11 +452,11 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
     f2ptr right_element_ptypehash = f2__set__new(cause);
     redblacktree__iteration(cause, overlapping_left_redblacktree, element,
 			    f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_left_redblacktree, element);
-			    raw__ptypehash__add(cause, left_element_set, element, count);
+			    raw__ptypehash__add(cause, left_element_ptypehash, element, count);
 			    );
     redblacktree__iteration(cause, overlapping_right_redblacktree, element,
 			    f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_right_redblacktree, element);
-			    raw__ptypehash__add(cause, right_element_set, element, count);
+			    raw__ptypehash__add(cause, right_element_ptypehash, element, count);
 			    );
     ptypehash__iteration(cause, left_element_ptypehash, element, count,
 			 f2ptr right__count = raw__ptypehash__lookup(cause, right_element_ptypehash, element);

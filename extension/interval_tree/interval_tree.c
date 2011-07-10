@@ -561,8 +561,12 @@ f2ptr raw__interval_tree_node__assert_valid_recursively(f2ptr cause, f2ptr this)
   assert_value(raw__interval_tree_node__assert_valid(cause, this));
   f2ptr left_node  = f2__interval_tree_node__left_node( cause, this);
   f2ptr right_node = f2__interval_tree_node__right_node(cause, this);
-  assert_value(raw__interval_tree_node__assert_valid(cause, left_node));
-  assert_value(raw__interval_tree_node__assert_valid(cause, right_node));
+  if (left_node != nil) {
+    assert_value(raw__interval_tree_node__assert_valid(cause, left_node));
+  }
+  if (right_node != nil) {
+    assert_value(raw__interval_tree_node__assert_valid(cause, right_node));
+  }
   return nil;
 }
 

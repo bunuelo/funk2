@@ -561,14 +561,28 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
     f2ptr left_element_ptypehash  = f2__ptypehash__new(cause);
     f2ptr right_element_ptypehash = f2__ptypehash__new(cause);
-    redblacktree__iteration(cause, overlapping_left_redblacktree, element,
-			    f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_left_redblacktree, element);
-			    raw__ptypehash__add(cause, left_element_ptypehash, element, count);
-			    );
-    redblacktree__iteration(cause, overlapping_right_redblacktree, element,
-			    f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_right_redblacktree, element);
-			    raw__ptypehash__add(cause, right_element_ptypehash, element, count);
-			    );
+    {
+      f2ptr leaf_iter = assert_value(f2__redblacktree__leaves(cause, overlapping_left_redblacktree));
+      while (leaf_iter != nil) {
+	f2ptr element = f2__cons__car(cause, leaf_iter);
+	{
+	  f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_left_redblacktree, element);
+	  raw__ptypehash__add(cause, left_element_ptypehash, element, count);
+	}
+	leaf_iter = f2__cons__cdr(cause, leaf_iter);
+      }
+    }
+    {
+      f2ptr leaf_iter = assert_value(f2__redblacktree__leaves(cause, overlapping_right_redblacktree));
+      while (leaf_iter != nil) {
+	f2ptr element = f2__cons__car(cause, leaf_iter);
+	{
+	  f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_right_redblacktree, element);
+	  raw__ptypehash__add(cause, right_element_ptypehash, element, count);
+	}
+	leaf_iter = f2__cons__cdr(cause, leaf_iter);
+      }
+    }
     ptypehash__iteration(cause, left_element_ptypehash, element, count,
 			 f2ptr right__count = raw__ptypehash__lookup(cause, right_element_ptypehash, element);
 			 if ((! raw__ptypehash__contains(cause, right_element_ptypehash, element)) ||

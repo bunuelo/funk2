@@ -167,18 +167,13 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
   f2ptr remove_node = assert_value(f2__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk));
   if (remove_node != nil) {
     if (f2__interval_tree_node__is_empty(cause, remove_node) != nil) {
-      assert_value(raw__interval_tree__remove_node(cause, this, remove_node));
+      //assert_value(raw__interval_tree__remove_node(cause, this, remove_node));
     }
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
-  {
-    s64 index;
-    for (index = 0; index < 100; index ++) {
-      status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
-      assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
-      status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
-    }
-  }
+  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
+  assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
+  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return nil;
 }
@@ -285,7 +280,7 @@ f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
   assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
-  if (f2__interval_tree_node__left_node(cause, node) == nil || f2__interval_tree_node__right_node(cause, node) == nil) { 
+  if ((f2__interval_tree_node__left_node(cause, node) == nil) || (f2__interval_tree_node__right_node(cause, node) == nil)) { 
     assert_value(f2__interval_tree__remove_node_with_at_most_one_child(cause, this, node));
   } else {
     f2ptr node__left__max = f2__interval_tree_node__maximum_node(cause, f2__interval_tree_node__left_node(cause, node));

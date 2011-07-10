@@ -66,7 +66,7 @@ f2ptr f2__interval_tree__assert_valid(f2ptr cause, f2ptr this) {
   assert_argument_type(interval_tree, this);
   return raw__interval_tree__assert_valid(cause, this);
 }
-export_cefunk1(interval_tree__assert_valid, 0,
+export_cefunk1(interval_tree__assert_valid, this, 0,
 	       "Asserts the validity of this interval_tree object.");
 
 

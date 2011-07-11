@@ -1,0 +1,118 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'reflective_event_knowledge_agency'
+
+[deframe reflective_event_knowledge_agency [agency] []
+  [new []
+       [construct agency `reflective_event_knowledge]
+       
+       [have this add_resource [new translate_reflective_knowledge_to_reflective_event_knowledge_resource]]
+       
+       nil]]
+
+
+[deftypefunk reflective_event_knowledge_agency execute create_knowledge []
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]
+  ]
+
+[deftypefunk reflective_event_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `reflective_knowledge `reflective_knowledge->reflective_event_knowledge]
+  ]
+
+
+'translate_reflective_knowledge_to_reflective_event_knowledge_resource'
+
+[deframe translate_reflective_knowledge_to_reflective_event_knowledge_resource [traced_resource] [[existence_phenomenal_name_ptypehash         [new ptypehash]]
+												  [existence_reflective_relationship_ptypehash [new ptypehash]]]
+  [new []
+       [construct traced_resource `translate_reflective_knowledge_to_reflective_event_knowledge
+		  [funk []
+			[have this execute_resource_raw_funk]
+			]]
+       [= vital t]
+       nil]]
+
+[deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource get phenomenal_name_existence [phenomenal_name]
+  [let [[existence_event [have existence_phenomenal_name_ptypehash lookup phenomenal_name]]]
+    [if [null existence_event]
+	[prog [= existence_event [new semantic_know_of_existence_event [get [get this mind] semantic_realm] phenomenal_name]]
+	      [have existence_phenomenal_name_ptypehash add phenomenal_name existence_event]
+	      [have [get [get this mind] semantic_knowledge_base `reflective_event_knowledge] add_semantic_frame existence_event]]]
+    existence_event]]
+
+[deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource get reflective_relationship_existence [reflective_relationship]
+  [let [[relationship_event [have existence_reflective_relationship_ptypehash lookup reflective_relationship]]]
+    [if [null relationship_event]
+	[prog [= relationship_event [new semantic_know_of_relationship_event [get [get this mind] semantic_realm] reflective_relationship]]
+	      [have existence_reflective_relationship_ptypehash add reflective_relationship relationship_event]
+	      [have [get [get this mind] semantic_knowledge_base `reflective_event_knowledge] add_semantic_frame relationship_event]]]
+    relationship_event]]
+
+[deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource execute reflective_relationship_existence-remove [reflective_relationship]
+  [have existence_reflective_relationship_ptypehash remove reflective_relationship]]
+
+[deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource execute execute_resource_raw_funk []
+  [let [[reflective_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `reflective_knowledge->reflective_event_knowledge]]]
+    [while t
+      [let [[event [have reflective_knowledge_iterator wait_for_current]]]
+	[if [not [null event]]
+	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate reflective->reflective_event event: ' event]]
+		  [let [[event_type [get event event_type]]]
+		    [cond [[and [is-type `semantic_knowledge_base_event event]
+				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
+										 [let [[phenomenal_name [get semantic_frame phenomenal_name]]]
+										   [let [[existence_event [get this phenomenal_name_existence phenomenal_name]]]
+										     [set existence_event absolute_start_time [new semantic_time [get event time]]]
+										     ]]]]
+			  [[and [is-type `semantic_frame_event event]
+				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
+										     [event-key_type       [get event key_type]]
+										     [event-key            [get event key]]
+										     [event-value          [get event value]]]
+										 `[cond [[and [is-type `semantic_physical_object event-semantic_frame]
+											      [is-type `semantic_physical_object event-value]]
+											 [let [[physical_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+															    event-semantic_frame event-key_type event-key event-value]]]
+											   [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
+											     [set relationship_event absolute_start_time [new semantic_time [get event time]]]
+											     ]]]
+											]
+										 ]]
+			  [[and [is-type `semantic_frame_event event]
+				[eq event_type `remove]]                       [let [[event-semantic_frame [get event semantic_frame]]
+										     [event-key_type       [get event key_type]]
+										     [event-key            [get event key]]
+										     [event-value          [get event value]]]
+										 `[cond [[and [is-type `semantic_physical_object event-semantic_frame]
+											      [is-type `semantic_physical_object event-value]]
+											 [let [[physical_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+															    event-semantic_frame event-key_type event-key event-value]]]
+											   [let [[relationship_event [get this physical_relationship_existence physical_relationship]]]
+											     [set relationship_event absolute_end_time [new semantic_time [get event time]]]
+											     [have this physical_relationship_existence-remove physical_relationship]
+											     ]]]
+											]
+										 ]]
+			  ]]]]
+	[have reflective_knowledge_iterator increment]]]]]
+
+
+

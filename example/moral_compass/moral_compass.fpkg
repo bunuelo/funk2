@@ -175,7 +175,7 @@
 	     ]
    :sources ['reflective_layer.fu2']]
 
-`[defpackage reflective_event_knowledge_agency
+[defpackage reflective_event_knowledge_agency
   :packages [semantic_resource_action_sequence
 	     traced_mind]
    :sources ['reflective_event_knowledge_agency.fu2']]

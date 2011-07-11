@@ -584,6 +584,43 @@ def_pcfunk2(redblacktree__lookup_key_count, this, key,
 	    return f2__redblacktree__lookup_key_count(this_cause, this, key));
 
 
+f2ptr raw__redblacktree_node__contains(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {
+  f2ptr count    = assert_value(raw__redblacktree_node__lookup_key_count(cause, this, key, value_funk, value_comparison_funk));
+  s64   count__i = f2integer__i(count, cause);
+  if (count__i != 0) {
+    return f2bool__new(boolean__true);
+  }
+  return f2bool__new(boolean__false);
+}
+
+f2ptr f2__redblacktree_node__contains(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {
+  assert_argument_type(redblacktree_node, this);
+  assert_argument_type(funkable,          value_funk);
+  assert_argument_type(funkable,          value_comparison_funk);
+  return raw__redblacktree_node__contains(cause, this, key, value_funk, value_comparison_funk);
+}
+
+
+f2ptr raw__redblacktree__contains(f2ptr cause, f2ptr this, f2ptr key) {
+  f2ptr this__head = f2__redblacktree__head(cause, this);
+  if (this__head == nil) {
+    return f2bool__new(boolean__false);
+  }
+  f2ptr value_funk            = f2__redblacktree__value_funk(           cause, this);
+  f2ptr value_comparison_funk = f2__redblacktree__value_comparison_funk(cause, this);
+  return raw__redblacktree_node__contains(cause, this__head, key, value_funk, value_comparison_funk);
+}
+
+f2ptr f2__redblacktree__contains(f2ptr cause, f2ptr this, f2ptr key) {
+  assert_argument_type(redblacktree, this);
+  return raw__redblacktree__contains(cause, this, key);
+}
+def_pcfunk2(redblacktree__contains, this, key,
+	    "Returns the whether or not the given key exists within this redblacktree.",
+	    return f2__redblacktree__contains(this_cause, this, key));
+
+
+
 //void rbt_node__print(rbt_node_t* node) {
 //  if (node == NULL) {
 //    printf("nil");
@@ -1460,6 +1497,7 @@ f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "insert";                                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__funk);}
   {char* slot_name = "remove";                                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk);}
   {char* slot_name = "lookup_key_count";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.lookup_key_count__funk);}
+  {char* slot_name = "contains";                                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.contains__funk);}
   {char* slot_name = "minimum";                                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk);}
   {char* slot_name = "maximum";                                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__funk);}
   {char* slot_name = "minimum_not_less_than-node";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__funk);}

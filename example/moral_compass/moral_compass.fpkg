@@ -170,6 +170,7 @@
 
 [defpackage reflective_layer
   :packages [traced_mind
+	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language
 	     ]

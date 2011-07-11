@@ -334,6 +334,36 @@ f2ptr raw__interval_tree__remove_node(f2ptr cause, f2ptr this, f2ptr node) {
 ///^^^^
 
 
+f2ptr raw__interval_tree__lookup_key_count(f2ptr cause, f2ptr this, f2ptr element) {
+  f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
+  return assert_value(f2__redblacktree__lookup_key_count(cause, all_left_redblacktree, element));
+}
+
+f2ptr f2__interval_tree__lookup_key_count(f2ptr cause, f2ptr this, f2ptr element) {
+  assert_argument_type(interval_tree, this);
+  return raw__interval_tree__lookup_key_count(cause, this, element);
+}
+export_cefunk2(interval_tree__lookup_key_count, this, element, 0,
+	       "Returns the number of times the given element exists with this interval_tree.");
+
+
+f2ptr raw__interval_tree__contains(f2ptr cause, f2ptr this, f2ptr element) {
+  f2ptr count    = assert_value(raw__interval_tree__lookup_key_count(cause, this, element));
+  s64   count__i = f2integer__i(count, cause);
+  if (count__i == 0) {
+    return f2bool__new(boolean__false);
+  }
+  return f2bool__new(boolean__true);
+}
+
+f2ptr f2__interval_tree__contains(f2ptr cause, f2ptr this, f2ptr element) {
+  assert_argument_type(interval_tree, this);
+  return raw__interval_tree__contains(cause, this, element);
+}
+export_cefunk2(interval_tree__contains, this, element, 0,
+	       "Returns whether or not the given element exists with this interval_tree.");
+
+
 f2ptr raw__interval_tree__intervals__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr all_left_redblacktree = f2__interval_tree__all_left_redblacktree(cause, this);
   return assert_value(f2__redblacktree__leaves(cause, all_left_redblacktree));
@@ -543,6 +573,8 @@ f2ptr f2__interval_tree_type__new_aux(f2ptr cause) {
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "assert_valid"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__assert_valid")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__insert")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__remove")));
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lookup_key_count"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__lookup_key_count")));
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "contains"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__contains")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "intervals"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_intervals_containing_value_to_list"), f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__add_intervals_containing_value_to_list")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_containing_value"),             f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals_containing_value")));
@@ -1671,7 +1703,7 @@ f2ptr f2__interval_tree_node__terminal_print_with_frame(f2ptr cause, f2ptr this,
   return raw__interval_tree_node__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(interval_tree_node__terminal_print_with_frame, this, terminal_print_frame, 0,
-	    "");
+	       "");
 
 
 f2ptr f2__interval_tree_node_type__new_aux(f2ptr cause) {

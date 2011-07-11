@@ -39,6 +39,10 @@ f2ptr  f2__interval_tree__remove                                               (
 f2ptr raw__interval_tree__remove_node_with_at_most_one_child                   (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr  f2__interval_tree__remove_node_with_at_most_one_child                   (f2ptr cause, f2ptr this, f2ptr node);
 f2ptr raw__interval_tree__remove_node                                          (f2ptr cause, f2ptr this, f2ptr node);
+f2ptr raw__interval_tree__lookup_key_count                                     (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__interval_tree__lookup_key_count                                     (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr raw__interval_tree__contains                                             (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr  f2__interval_tree__contains                                             (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr raw__interval_tree__intervals__thread_unsafe                             (f2ptr cause, f2ptr this);
 f2ptr raw__interval_tree__intervals                                            (f2ptr cause, f2ptr this);
 f2ptr  f2__interval_tree__intervals                                            (f2ptr cause, f2ptr this);

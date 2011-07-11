@@ -634,6 +634,8 @@ f2ptr f2__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
   assert_argument_type(interval_tree_node, this);
   return raw__interval_tree_node__assert_valid(cause, this);
 }
+export_cefunk1(interval_tree_node__assert_valid, this, 0,
+	       "Asserts the validity of this interval_tree_node object.");
 
 
 f2ptr raw__interval_tree_node__assert_valid_recursively(f2ptr cause, f2ptr this) {
@@ -1668,6 +1670,7 @@ export_cefunk2(interval_tree_node__terminal_print_with_frame, this, terminal_pri
 
 f2ptr f2__interval_tree_node_type__new_aux(f2ptr cause) {
   f2ptr this = f2__interval_tree_node_type__new(cause);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "assert_valid"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree_node__assert_valid")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "simple_insert"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree_node__simple_insert")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "simple_remove"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree_node__simple_remove")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                                 f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree_node__insert")));

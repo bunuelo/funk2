@@ -32,6 +32,8 @@ declare_object_type_4_slot(redblacktree, mutate_mutex, head, value_funk, value_c
 			   f2ptr remove__funk;
 			   f2ptr lookup_key_count__symbol;
 			   f2ptr lookup_key_count__funk;
+			   f2ptr contains__symbol;
+			   f2ptr contains__funk;
 			   f2ptr minimum__symbol;
 			   f2ptr minimum__funk;
 			   f2ptr maximum__symbol;

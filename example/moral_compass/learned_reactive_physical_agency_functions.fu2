@@ -975,16 +975,19 @@ ideas: look carefully for - move to a different place in order to see
 							  [lookup_visual_object [get [get this agency] visual_objects] object]]
 						     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]]
 						[have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]
-					   [let [[prep_object [car [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]]]
-					     [if prep_object
-						 [= object prep_object]]]]
+					   [let [[prep_objects [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]]
+					     [if prep_objects
+						 [let [[prep_object [car prep_objects]]]
+						   [if prep_object
+						       [= object prep_object]]]]]]
 				       [if [and [and [and [get [get this agency] visual_objects]
 							  [lookup_visual_object [get [get this agency] visual_objects] object]]
 						     [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame]]
 						[have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `in]]
-					   [let [[prep_object [car [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `on]]]]
-					     [if prep_object
-						 [= object prep_object]]]]
+					   [let [[prep_objects [have [have [lookup_visual_object [get [get this agency] visual_objects] object] lookup `preposition_frame] lookup `on]]]
+					     [let [[prep_object [car prep_objects]]]
+					       [if prep_object
+						   [= object prep_object]]]]]
 				       
 				       [mind-wait_to_call mind learned_reactive physical center_body_horizontally_on object]
 				       [= init_orientation            [get [get this agency] object_orientation  object]]

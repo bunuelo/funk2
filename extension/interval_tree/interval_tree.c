@@ -584,14 +584,14 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
   { // make sure overlapping_left_redblacktree and overlapping_right_redblacktree have the same elements.
     f2ptr overlapping_left_redblacktree  = f2__interval_tree_node__overlapping_left_redblacktree( cause, this);
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
-    f2ptr left_element_ptypehash  = f2__ptypehash__new(cause);
-    f2ptr right_element_ptypehash = f2__ptypehash__new(cause);
+    f2ptr left_element_ptypehash         = f2__ptypehash__new(cause);
+    f2ptr right_element_ptypehash        = f2__ptypehash__new(cause);
     {
       f2ptr leaf_iter = assert_value(f2__redblacktree__leaves(cause, overlapping_left_redblacktree));
       while (leaf_iter != nil) {
 	f2ptr element = f2__cons__car(cause, leaf_iter);
 	{
-	  f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_left_redblacktree, element);
+	  f2ptr count = assert_value(f2__redblacktree__lookup_key_count(cause, overlapping_left_redblacktree, element));
 	  raw__ptypehash__add(cause, left_element_ptypehash, element, count);
 	}
 	leaf_iter = f2__cons__cdr(cause, leaf_iter);
@@ -602,7 +602,7 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
       while (leaf_iter != nil) {
 	f2ptr element = f2__cons__car(cause, leaf_iter);
 	{
-	  f2ptr count = f2__redblacktree__lookup_key_count(cause, overlapping_right_redblacktree, element);
+	  f2ptr count = assert_value(f2__redblacktree__lookup_key_count(cause, overlapping_right_redblacktree, element));
 	  raw__ptypehash__add(cause, right_element_ptypehash, element, count);
 	}
 	leaf_iter = f2__cons__cdr(cause, leaf_iter);
@@ -612,18 +612,22 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 			 f2ptr right__count = raw__ptypehash__lookup(cause, right_element_ptypehash, element);
 			 if ((! raw__ptypehash__contains(cause, right_element_ptypehash, element)) ||
 			     (! raw__eq(cause, count, right__count))) {
-			   return new__error(f2list4__new(cause,
-							  new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-							  new__symbol(cause, "this"),     this));
+			   return new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"),     new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+							  new__symbol(cause, "this"),         this,
+							  new__symbol(cause, "count"),        count,
+							  new__symbol(cause, "right__count"), right__count));
 			 }
 			 );
     ptypehash__iteration(cause, right_element_ptypehash, element, count,
 			 f2ptr left__count = raw__ptypehash__lookup(cause, left_element_ptypehash, element);
 			 if ((! raw__ptypehash__contains(cause, left_element_ptypehash, element)) ||
 			     (! raw__eq(cause, count, left__count))) {
-			   return new__error(f2list4__new(cause,
-							  new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-							  new__symbol(cause, "this"),     this));
+			   return new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"),    new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+							  new__symbol(cause, "this"),        this,
+							  new__symbol(cause, "count"),       count,
+							  new__symbol(cause, "left__count"), left__count));
 			 }
 			 );
   }

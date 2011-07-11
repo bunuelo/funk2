@@ -200,6 +200,19 @@ f2ptr f2__semantic_event_tree__remove(f2ptr cause, f2ptr this, f2ptr semantic_ev
 export_cefunk2(semantic_event_tree__remove, this, semantic_event, 0, "Removes a semantic_event from this semantic_event_tree.");
 
 
+f2ptr raw__semantic_event_tree__contains(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+  f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
+  return f2__interval_tree__contains(cause, interval_tree, semantic_event);
+}
+
+f2ptr f2__semantic_event_tree__contains(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+  assert_argument_type(semantic_event_tree, this);
+  assert_argument_type(semantic_event,      semantic_event);
+  return raw__semantic_event_tree__contains(cause, this, semantic_event);
+}
+export_cefunk2(semantic_event_tree__contains, this, semantic_event, 0, "Returns whether or not the given semantic_event exists within this semantic_event_tree.");
+
+
 f2ptr raw__semantic_event_tree__events_containing_time(f2ptr cause, f2ptr this, f2ptr time) {
   f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
   return f2__interval_tree__intervals_containing_value(cause, interval_tree, time);

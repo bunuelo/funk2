@@ -200,3 +200,5 @@ f2ptr f2__semantic_object__core_extension__destroy(f2ptr cause) {
 export_cefunk0(semantic_object__core_extension__destroy, 0, "");
 
 
+
+

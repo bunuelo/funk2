@@ -23,7 +23,6 @@
 #define F2__EXTENSION__SEMANTIC_RESOURCE__H
 
 #include "../semantic_object/semantic_object.h"
-#include "../semantic_event_sequence/semantic_event_sequence.h"
 
 // semantic_resource
 
@@ -45,9 +44,10 @@ f2ptr f2__semantic_resource_type__new(f2ptr cause);
 
 // **
 
-f2ptr f2__semantic_resource__core_extension__ping      (f2ptr cause);
-f2ptr f2__semantic_resource__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_resource__core_extension__destroy   (f2ptr cause);
+f2ptr f2__semantic_resource__core_extension__ping        (f2ptr cause);
+f2ptr f2__semantic_resource__core_extension__initialize  (f2ptr cause);
+f2ptr f2__semantic_resource__core_extension__define_types(f2ptr cause);
+f2ptr f2__semantic_resource__core_extension__destroy     (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_RESOURCE__H
 

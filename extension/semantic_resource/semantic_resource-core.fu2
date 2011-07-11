@@ -17,11 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_resource 'extension/semantic_resource/.libs/libf2e_semantic_resource.so']
+[defcorefunk semantic_resource-core_extension-ping         semantic_resource semantic_resource__core_extension__ping]
+[defcorefunk semantic_resource-core_extension-initialize   semantic_resource semantic_resource__core_extension__initialize]
+[defcorefunk semantic_resource-core_extension-define_types semantic_resource semantic_resource__core_extension__define_types]
 
-[defcorefunk semantic_resource-core_extension-ping       semantic_resource semantic_resource__core_extension__ping]
-[defcorefunk semantic_resource-core_extension-initialize semantic_resource semantic_resource__core_extension__initialize]
+[semantic_resource-core_extension-define_types]
 
-
-[semantic_resource-core_extension-ping]
 

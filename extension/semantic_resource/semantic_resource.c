@@ -247,7 +247,7 @@ export_cefunk2(semantic_resource__waiting_for_to_finish__remove, this, that, 0, 
 
 
 f2ptr f2__semantic_resource_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_frame")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__type")));}
@@ -269,6 +269,7 @@ f2ptr f2__semantic_resource_type__new(f2ptr cause) {
 }
 
 
+/*
 // **
 
 f2ptr f2__semantic_resource__core_extension__ping(f2ptr cause) {
@@ -286,6 +287,35 @@ f2ptr f2__semantic_resource__core_extension__initialize(f2ptr cause) {
   return nil;
 }
 export_cefunk0(semantic_resource__core_extension__initialize, 0, "");
+
+f2ptr f2__semantic_resource__core_extension__destroy(f2ptr cause) {
+  status("semantic_resource destroyed.");
+  return nil;
+}
+export_cefunk0(semantic_resource__core_extension__destroy, 0, "");
+*/
+
+
+// **
+
+f2ptr f2__semantic_resource__core_extension__ping(f2ptr cause) {
+  return nil;
+}
+export_cefunk0(semantic_resource__core_extension__ping, 0, "");
+
+f2ptr f2__semantic_resource__core_extension__initialize(f2ptr cause) {
+  core_extension__ping(semantic_resource, semantic_object);
+  status("semantic_resource initialized.");
+  return nil;
+}
+export_cefunk0(semantic_resource__core_extension__initialize, 0, "");
+
+f2ptr f2__semantic_resource__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "semantic_resource"), f2__semantic_resource_type__new(cause));
+  status("semantic_resource define types.");
+  return nil;
+}
+export_cefunk0(semantic_resource__core_extension__define_types, 0, "");
 
 f2ptr f2__semantic_resource__core_extension__destroy(f2ptr cause) {
   status("semantic_resource destroyed.");

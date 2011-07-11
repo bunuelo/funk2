@@ -484,7 +484,7 @@
 		    [have this add_isismon_knowledge `other_agents_knowledge]
 		    [have this add_isismon_knowledge `goal_event_knowledge]
 		    [have this add_isismon_knowledge `goal_knowledge]
-		    `[have this add_isismon_knowledge `reflective_event_knowledge]
+		    [have this add_isismon_knowledge `reflective_event_knowledge]
 		    [have this add_isismon_knowledge `reflective_knowledge]
 		    [have this add_isismon_knowledge `physical_type_event_knowledge]
 		    [have this add_isismon_knowledge `physical_type_knowledge]

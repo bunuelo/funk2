@@ -34,6 +34,8 @@ f2ptr raw__semantic_event_tree__insert                  (f2ptr cause, f2ptr this
 f2ptr  f2__semantic_event_tree__insert                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
 f2ptr raw__semantic_event_tree__remove                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
 f2ptr  f2__semantic_event_tree__remove                  (f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr raw__semantic_event_tree__contains                (f2ptr cause, f2ptr this, f2ptr semantic_event);
+f2ptr  f2__semantic_event_tree__contains                (f2ptr cause, f2ptr this, f2ptr semantic_event);
 f2ptr raw__semantic_event_tree__events_containing_time  (f2ptr cause, f2ptr this, f2ptr time);
 f2ptr  f2__semantic_event_tree__events_containing_time  (f2ptr cause, f2ptr this, f2ptr time);
 f2ptr raw__semantic_event_tree__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event);

@@ -612,22 +612,24 @@ f2ptr raw__interval_tree_node__assert_valid(f2ptr cause, f2ptr this) {
 			 f2ptr right__count = raw__ptypehash__lookup(cause, right_element_ptypehash, element);
 			 if ((! raw__ptypehash__contains(cause, right_element_ptypehash, element)) ||
 			     (! raw__eq(cause, count, right__count))) {
-			   return new__error(f2list8__new(cause,
-							  new__symbol(cause, "bug_name"),     new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-							  new__symbol(cause, "this"),         this,
-							  new__symbol(cause, "count"),        count,
-							  new__symbol(cause, "right__count"), right__count));
+			   return new__error(f2list10__new(cause,
+							   new__symbol(cause, "bug_name"),     new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+							   new__symbol(cause, "this"),         this,
+							   new__symbol(cause, "count"),        count,
+							   new__symbol(cause, "right__count"), right__count,
+							   new__symbol(cause, "element"),      element));
 			 }
 			 );
     ptypehash__iteration(cause, right_element_ptypehash, element, count,
 			 f2ptr left__count = raw__ptypehash__lookup(cause, left_element_ptypehash, element);
 			 if ((! raw__ptypehash__contains(cause, left_element_ptypehash, element)) ||
 			     (! raw__eq(cause, count, left__count))) {
-			   return new__error(f2list8__new(cause,
-							  new__symbol(cause, "bug_name"),    new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
-							  new__symbol(cause, "this"),        this,
-							  new__symbol(cause, "count"),       count,
-							  new__symbol(cause, "left__count"), left__count));
+			   return new__error(f2list10__new(cause,
+							   new__symbol(cause, "bug_name"),    new__symbol(cause, "interval_tree_node_failed_validity_assertion"),
+							   new__symbol(cause, "this"),        this,
+							   new__symbol(cause, "count"),       count,
+							   new__symbol(cause, "left__count"), left__count,
+							   new__symbol(cause, "element"),     element));
 			 }
 			 );
   }

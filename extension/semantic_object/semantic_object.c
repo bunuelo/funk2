@@ -28,12 +28,7 @@ f2ptr raw__semantic_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_object"));
   }
-  {
-    f2ptr result = raw__semantic_frame__type_create(cause, this, semantic_realm);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_frame__type_create(cause, this, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), nil);
@@ -42,23 +37,13 @@ f2ptr raw__semantic_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_
 }
 
 f2ptr raw__semantic_object__new(f2ptr cause, f2ptr semantic_realm) {
-  f2ptr this = f2__frame__new(cause, nil);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  {
-    f2ptr result = raw__semantic_object__type_create(cause, this, semantic_realm);
-     if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   return this;
 }
 
 f2ptr f2__semantic_object__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_object__new(cause, semantic_realm);
 }
 export_cefunk1(semantic_object__new, semantic_realm, 0, "Returns a new semantic_object object.");
@@ -91,9 +76,7 @@ f2ptr raw__semantic_object__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_object__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__type(cause, this);
 }
 export_cefunk1(semantic_object__type, thing, 0, "Returns the specific type of object that this semantic_object is.");
@@ -104,9 +87,7 @@ f2ptr raw__semantic_object__phenomenal_name(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_object__phenomenal_name(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__phenomenal_name(cause, this);
 }
 export_cefunk1(semantic_object__phenomenal_name, this, 0, "");
@@ -117,9 +98,7 @@ f2ptr raw__semantic_object__phenomenal_name__set(f2ptr cause, f2ptr this, f2ptr 
 }
 
 f2ptr f2__semantic_object__phenomenal_name__set(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__phenomenal_name__set(cause, this, that);
 }
 export_cefunk2(semantic_object__phenomenal_name__set, this, that, 0, "");
@@ -130,9 +109,7 @@ f2ptr raw__semantic_object__noun__add(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__semantic_object__noun__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__noun__add(cause, this, that);
 }
 export_cefunk2(semantic_object__noun__add, this, that, 0, "");
@@ -143,9 +120,7 @@ f2ptr raw__semantic_object__noun__remove(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__semantic_object__noun__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__noun__remove(cause, this, that);
 }
 export_cefunk2(semantic_object__noun__remove, this, that, 0, "");
@@ -156,9 +131,7 @@ f2ptr raw__semantic_object__classifier__add(f2ptr cause, f2ptr this, f2ptr that)
 }
 
 f2ptr f2__semantic_object__classifier__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__classifier__add(cause, this, that);
 }
 export_cefunk2(semantic_object__classifier__add, this, that, 0, "");
@@ -169,9 +142,7 @@ f2ptr raw__semantic_object__classifier__remove(f2ptr cause, f2ptr this, f2ptr th
 }
 
 f2ptr f2__semantic_object__classifier__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_object, this);
   return raw__semantic_object__classifier__remove(cause, this, that);
 }
 export_cefunk2(semantic_object__classifier__remove, this, that, 0, "");

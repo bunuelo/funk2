@@ -166,18 +166,19 @@
 
 'reflective_layer'
 
+`reflective_event_knowledge_agency
+
 [defpackage reflective_layer
   :packages [traced_mind
-	     old_reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language
 	     ]
    :sources ['reflective_layer.fu2']]
 
-[defpackage old_reflective_event_knowledge_agency
+`[defpackage reflective_event_knowledge_agency
   :packages [semantic_resource_action_sequence
 	     traced_mind]
-   :sources ['old_reflective_event_knowledge_agency.fu2']]
+   :sources ['reflective_event_knowledge_agency.fu2']]
 
 [defpackage reflective_credit_assignment_agency
   :packages [traced_mind

@@ -59,9 +59,9 @@
 
 [deftypefunk traced_resource get resource_semantic_frame []
   [let [[resource_semantic_frame [type-get resource this resource_semantic_frame]]]
-    [let [[old_reflective_knowledge [get [get this mind] semantic_knowledge_base `old_reflective_knowledge]]]
-      [if [not [get old_reflective_knowledge contains_semantic_frame resource_semantic_frame]]
-	  [have old_reflective_knowledge add_semantic_frame resource_semantic_frame]]]
+    [let [[reflective_knowledge [get [get this mind] semantic_knowledge_base `reflective_knowledge]]]
+      [if [not [get reflective_knowledge contains_semantic_frame resource_semantic_frame]]
+	  [have reflective_knowledge add_semantic_frame resource_semantic_frame]]]
     resource_semantic_frame]]
 
 [deftypefunk traced_resource execute activate [:rest args]

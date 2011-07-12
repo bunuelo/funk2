@@ -72,6 +72,9 @@
   [have existence_reflective_relationship_ptypehash remove reflective_relationship]]
 
 
+[deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource get action_sequence-exists [resource]
+  [get action_sequence_resource_ptypehash contains resource]]
+
 [deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource get action_sequence [resource]
   [let [[action_sequence [have action_sequence_resource_ptypehash lookup resource]]]
     [if [null action_sequence]
@@ -104,11 +107,16 @@
 										     [event-value          [get event value]]]
 										 [cond [[and [is-type `semantic_resource event-semantic_frame]
 											     [is-type `semantic_resource event-value]]
-											[let [[reflective_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
-															     event-semantic_frame event-key_type event-key event-value]]]
-											  [let [[relationship_event [get this reflective_relationship_existence reflective_relationship]]]
-											    [set relationship_event absolute_start_time [new semantic_time [get event time]]]
-											    ]]]
+											[let [[agent  event-semantic_frame]
+											      [target event-value]]
+											  [let [[reflective_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+															       agent event-key_type event-key target]]]
+											    [let [[relationship_event [get this reflective_relationship_existence reflective_relationship]]]
+											      [set relationship_event absolute_start_time [new semantic_time [get event time]]]
+											      [if [get this action_sequence-exists agent]
+												  [prog [have action_sequence add_to_end relationship_event]
+													]]
+											      ]]]]
 										       [[and [is-type `semantic_resource event-semantic_frame]
 											     [eq event-key_type `property] [eq event-key `active]]
 											[let [[resource event-semantic_frame]

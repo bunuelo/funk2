@@ -29,35 +29,20 @@ f2ptr raw__semantic_event_sequence__type_create(f2ptr cause, f2ptr this, f2ptr s
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_sequence"));
   }
-  {
-    f2ptr result = raw__semantic_event__type_create(cause, this, semantic_realm, action_name);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"), nil);
-  raw__semantic_frame__add( cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "last_event"),  nil);
+  assert_value(raw__semantic_event__type_create(cause, this, semantic_realm, action_name));
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "first_event"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "last_event"),  nil);
   return this;
 }
 
 f2ptr raw__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
-  f2ptr this = f2__frame__new(cause, nil);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  {
-    f2ptr result = raw__semantic_event_sequence__type_create(cause, this, semantic_realm, action_name);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_event_sequence__type_create(cause, this, semantic_realm, action_name));
   return this;
 }
 
 f2ptr f2__semantic_event_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_event_sequence__new(cause, semantic_realm, action_name);
 }
 export_cefunk2(semantic_event_sequence__new, semantic_realm, action_name, 0, "Returns a new semantic_event_sequence object.");
@@ -90,9 +75,7 @@ f2ptr raw__semantic_event_sequence__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_event_sequence__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event_sequence__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
   return raw__semantic_event_sequence__type(cause, this);
 }
 export_cefunk1(semantic_event_sequence__type, thing, 0, "Returns the specific type of object that this semantic_event_sequence is.");
@@ -103,9 +86,7 @@ f2ptr raw__semantic_event_sequence__first_event__lookup_set(f2ptr cause, f2ptr t
 }
 
 f2ptr f2__semantic_event_sequence__first_event__lookup_set(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event_sequence__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
   return raw__semantic_event_sequence__first_event__lookup_set(cause, this);
 }
 export_cefunk1(semantic_event_sequence__first_event__lookup_set, this, 0, "");
@@ -116,10 +97,8 @@ f2ptr raw__semantic_event_sequence__first_event__add(f2ptr cause, f2ptr this, f2
 }
 
 f2ptr f2__semantic_event_sequence__first_event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          that);
   return raw__semantic_event_sequence__first_event__add(cause, this, that);
 }
 export_cefunk2(semantic_event_sequence__first_event__add, this, that, 0, "");
@@ -130,10 +109,8 @@ f2ptr raw__semantic_event_sequence__first_event__remove(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__semantic_event_sequence__first_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          that);
   return raw__semantic_event_sequence__first_event__remove(cause, this, that);
 }
 export_cefunk2(semantic_event_sequence__first_event__remove, this, that, 0, "");
@@ -144,9 +121,7 @@ f2ptr raw__semantic_event_sequence__last_event__lookup_set(f2ptr cause, f2ptr th
 }
 
 f2ptr f2__semantic_event_sequence__last_event__lookup_set(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_event_sequence__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
   return raw__semantic_event_sequence__last_event__lookup_set(cause, this);
 }
 export_cefunk1(semantic_event_sequence__last_event__lookup_set, this, 0, "");
@@ -157,10 +132,8 @@ f2ptr raw__semantic_event_sequence__last_event__add(f2ptr cause, f2ptr this, f2p
 }
 
 f2ptr f2__semantic_event_sequence__last_event__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          that);
   return raw__semantic_event_sequence__last_event__add(cause, this, that);
 }
 export_cefunk2(semantic_event_sequence__last_event__add, this, that, 0, "");
@@ -171,20 +144,15 @@ f2ptr raw__semantic_event_sequence__last_event__remove(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_event_sequence__last_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          that);
   return raw__semantic_event_sequence__last_event__remove(cause, this, that);
 }
 export_cefunk2(semantic_event_sequence__last_event__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  f2ptr last_event_set = raw__semantic_event_sequence__last_event__lookup_set(cause, this);
-  if (raw__larva__is_type(cause, last_event_set)) {
-    return last_event_set;
-  }
+  f2ptr last_event_set = assert_value(raw__semantic_event_sequence__last_event__lookup_set(cause, this));
   if (! raw__set__is_type(cause, last_event_set)) {
     return f2larva__new(cause, 31, nil);
   }
@@ -208,20 +176,13 @@ f2ptr raw__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr se
     raw__semantic_event_sequence__last_event__add(cause, this, semantic_event);
   }
   raw__semantic_temporal_object__contains__add(cause, this, semantic_event);
-  {
-    f2ptr result = raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event));
   return nil;
 }
 
 f2ptr f2__semantic_event_sequence__add_to_end(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, semantic_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          semantic_event);
   return raw__semantic_event_sequence__add_to_end(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_sequence__add_to_end, this, semantic_event, 0, "");
@@ -249,20 +210,13 @@ f2ptr raw__semantic_event_sequence__add_to_beginning(f2ptr cause, f2ptr this, f2
     raw__semantic_event_sequence__first_event__add(cause, this, semantic_event);
   }
   raw__semantic_temporal_object__contains__add(cause, this, semantic_event);
-  {
-    f2ptr result = raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_event__update_parent_container_start_and_end_times_with_child_event(cause, this, semantic_event));
   return nil;
 }
 
 f2ptr f2__semantic_event_sequence__add_to_beginning(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  if ((! raw__semantic_event_sequence__is_type(cause, this)) ||
-      (! raw__semantic_event__is_type(cause, semantic_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_sequence, this);
+  assert_argument_type(semantic_event,          semantic_event);
   return raw__semantic_event_sequence__add_to_beginning(cause, this, semantic_event);
 }
 export_cefunk2(semantic_event_sequence__add_to_beginning, this, semantic_event, 0, "");
@@ -294,10 +248,7 @@ f2ptr f2__semantic_event_sequence__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_event_sequence__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_event_sequence__core_extension__initialize(f2ptr cause) {
-  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
+  assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event"), new__symbol(cause, "semantic_event__core_extension__ping")), nil));
   f2__add_type(cause, new__symbol(cause, "semantic_event_sequence"), f2__semantic_event_sequence_type__new(cause));
   status("semantic_event_sequence initialized.");
   return nil;

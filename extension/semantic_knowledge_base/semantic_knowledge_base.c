@@ -988,13 +988,13 @@ f2ptr raw__semantic_knowledge_base__lick_chunk__unlick_with_notes(f2ptr cause, f
   f2ptr trace_event_stream__lick_note          = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 24));
   f2ptr trace_add_semantic_frame__lick_note    = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 32));
   f2ptr trace_remove_semantic_frame__lick_note = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 40));
-  f2ptr semantic_knowledge_base = raw__semantic_knowledge_base__new(cause,
-								    name__lick_note,
-								    semantic_realm__lick_note,
-								    semantic_frame_set__lick_note,
-								    trace_event_stream__lick_note,
-								    trace_add_semantic_frame__lick_note,
-								    trace_remove_semantic_frame__lick_note);
+  f2ptr semantic_knowledge_base = raw__semantic_knowledge_base__new_with_details(cause,
+										 name__lick_note,
+										 semantic_realm__lick_note,
+										 semantic_frame_set__lick_note,
+										 trace_event_stream__lick_note,
+										 trace_add_semantic_frame__lick_note,
+										 trace_remove_semantic_frame__lick_note);
   return semantic_knowledge_base;
 }
 

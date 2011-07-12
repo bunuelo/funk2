@@ -36,7 +36,7 @@ f2ptr raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2pt
   return this;
 }
 
-f2ptr raw__semantic_resource_event_knowledge_base__new(f2ptr cause, f2tr name, f2ptr semantic_realm) {
+f2ptr raw__semantic_resource_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
   assert_value(raw__semantic_resource_event_knowledge_base__type_create(cause, this, name, semantic_realm));
   return this;

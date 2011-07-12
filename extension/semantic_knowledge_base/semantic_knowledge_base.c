@@ -216,7 +216,7 @@ f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_
 
 f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame);
+  return raw__semantic_knowledge_base__new(cause, name, semantic_realm);
 }
 export_cefunk2(semantic_knowledge_base__new, name, semantic_realm, 0, "Takes a name nad a semantic_realm and returns a new semantic_knowledge_base object.");
 

@@ -89,7 +89,7 @@
 
 [deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource execute execute_resource_raw_funk []
   [let [[mind_pseudo_semantic_resource [new semantic_resource [get [get this mind] semantic_realm]]]]
-    [set resource_semantic_frame phenomenal_name `mind_pseudo_resource]
+    [set mind_pseudo_semantic_resource phenomenal_name `mind_pseudo_resource]
     [let [[mind_action_sequence [get this action_sequence mind_pseudo_semantic_resource]]]
       [set mind_action_sequence absolute_start_time [new semantic_time [get event time]]]
       [let [[reflective_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `reflective_knowledge->reflective_event_knowledge]]]

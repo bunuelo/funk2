@@ -169,7 +169,7 @@ export_cefunk2(semantic_knowledge_base__new, name, semantic_realm, 0, "Takes a n
 
 
 
-f2ptr raw__semantic_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
+f2ptr raw__semantic_knowledge_base__type_create_with_details(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_knowledge_base"));
   }
@@ -186,14 +186,10 @@ f2ptr raw__semantic_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr n
   return this;
 }
 
-f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
-  f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_knowledge_base__type_create(cause, this, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame));
-  return this;
-}
-
-f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
-  assert_argument_type(semantic_realm, semantic_realm);
+f2ptr raw__semantic_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_knowledge_base"));
+  }
   f2ptr semantic_frame_set          = f2__set__new(cause);
   f2ptr trace_event_stream          = f2__forgetful_event_stream__new(cause);
   f2ptr trace_add_semantic_frame    = nil;
@@ -202,6 +198,24 @@ f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_r
     trace_add_semantic_frame    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
     trace_remove_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_remove_semantic_frame"));
   }
+  assert_value(raw__semantic_knowledge_base__type_create_with_details(cause, this, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame));
+  return this;
+}
+
+f2ptr raw__semantic_knowledge_base__new_with_details(f2ptr cause, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_knowledge_base__type_create_with_details(cause, this, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame));
+  return this;
+}
+
+f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_knowledge_base__type_create(cause, this, name, semantic_realm));
+  return this;
+}
+
+f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame);
 }
 export_cefunk2(semantic_knowledge_base__new, name, semantic_realm, 0, "Takes a name nad a semantic_realm and returns a new semantic_knowledge_base object.");

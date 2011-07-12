@@ -128,26 +128,14 @@ f2ptr raw__semantic_resource_action_event__cairo_render_frame(f2ptr cause, f2ptr
     f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "action_name"), action_name);
   }
   {
-    f2ptr agent      = f2__semantic_action_event__agent(cause, this);
-    f2ptr agent_name = nil;
-    if (raw__semantic_resource__is_type(cause, agent)) {
-      f2ptr name_set = f2__semantic_resource__name__lookup_set(cause, agent);
-      if (name_set != nil) {
-	agent_name = f2__set__an_arbitrary_element(cause, name_set);
-      }
-    }
-    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "agent"), agent_name);
+    f2ptr agent                  = f2__semantic_action_event__agent(cause, this);
+    f2ptr agent__phenomenal_name = f2__semantic_object__phenomenal_name(cause, agent);
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "agent"), agent__phenomenal_name);
   }
   {
-    f2ptr target      = f2__semantic_directed_action_event__target(cause, this);
-    f2ptr target_name = nil;
-    if (raw__semantic_resource__is_type(cause, target)) {
-      f2ptr name_set = f2__semantic_resource__name__lookup_set(cause, target);
-      if (name_set != nil) {
-	target_name = f2__set__an_arbitrary_element(cause, name_set);
-      }
-    }
-    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "target"), target_name);
+    f2ptr target                  = f2__semantic_directed_action_event__target(cause, this);
+    f2ptr target__phenomenal_name = f2__semantic_object__phenomenal_name(cause, target);
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "target"), target__phenomenal_name);
   }
   return render_frame;
 }

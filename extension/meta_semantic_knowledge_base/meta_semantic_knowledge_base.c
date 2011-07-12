@@ -147,6 +147,7 @@ f2ptr f2__meta_semantic_object_type__new(f2ptr cause) {
 
 // meta_semantic_knowledge_base
 
+/*
 f2ptr raw__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
   f2ptr this = f2__semantic_knowledge_base__new(cause, name, semantic_realm);
   if (raw__larva__is_type(cause, this)) {
@@ -163,6 +164,32 @@ f2ptr f2__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr seman
   return raw__meta_semantic_knowledge_base__new(cause, name, semantic_realm);
 }
 export_cefunk2(meta_semantic_knowledge_base__new, name, semantic_realm, 0, "Given a name and a semantic_realm, returns a new meta_semantic_knowledge_base object.");
+*/
+
+
+
+f2ptr raw__meta_semantic_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "meta_semantic_knowledge_base"));
+  }
+  assert_value(raw__semantic_knowledge_base__type_create(cause, this, name, semantic_realm));
+  return this;
+}
+
+f2ptr raw__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__meta_semantic_knowledge_base__type_create(cause, this, name, semantic_realm));
+  return this;
+}
+
+f2ptr f2__meta_semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
+  assert_argument_type(semantic_realm, semantic_realm);
+  return raw__meta_semantic_knowledge_base__new(cause, name, semantic_realm);
+}
+export_cefunk2(meta_semantic_knowledge_base__new, name, semantic_realm, 0, "Given a name and a semantic_realm, returns a new meta_semantic_knowledge_base object.");
+
+
+
 
 
 boolean_t raw__meta_semantic_knowledge_base__is_type(f2ptr cause, f2ptr thing) {

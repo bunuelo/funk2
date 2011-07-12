@@ -120,7 +120,7 @@ f2ptr raw__semantic_know_of_existence_event__cairo_render_frame(f2ptr cause, f2p
   f2ptr render_frame = f2__frame__new(cause, f2list2__new(cause,
 							  new__symbol(cause, "cairo_render_type"), f2__object__type(cause, this)));
   f2ptr object_phenomenal_name = f2__semantic_know_of_existence_event__object_phenomenal_name(cause, this);
-  f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "object_phenomenal_name"), object_phenomenal_name);
+  f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "object"), object_phenomenal_name);
   return render_frame;
 }
 

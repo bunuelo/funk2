@@ -29,40 +29,20 @@ f2ptr raw__semantic_resource_action_sequence__type_create(f2ptr cause, f2ptr thi
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource_action_sequence"));
   }
-  {
-    f2ptr result = raw__semantic_action_event__type_create(cause, this, semantic_realm, action_name, agent);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
-  {
-    f2ptr result = raw__semantic_event_sequence__type_create(cause, this, semantic_realm, action_name);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_action_event__type_create(cause, this, semantic_realm, action_name, agent));
+  assert_value(raw__semantic_event_sequence__type_create(cause, this, semantic_realm, action_name));
   return this;
 }
 
 f2ptr raw__semantic_resource_action_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent) {
-  f2ptr this = f2__frame__new(cause, nil);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  {
-    f2ptr result = raw__semantic_resource_action_sequence__type_create(cause, this, semantic_realm, action_name, agent);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_resource_action_sequence__type_create(cause, this, semantic_realm, action_name, agent));
   return this;
 }
 
 f2ptr f2__semantic_resource_action_sequence__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name, f2ptr agent) {
-  if ((! raw__semantic_realm__is_type(cause, semantic_realm)) ||
-      (! raw__semantic_resource__is_type(cause, agent))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm,    semantic_realm);
+  assert_argument_type(semantic_resource, agent);
   return raw__semantic_resource_action_sequence__new(cause, semantic_realm, action_name, agent);
 }
 export_cefunk3(semantic_resource_action_sequence__new, semantic_realm, action_name, agent, 0, "Given a semantic_resource, returns a new semantic_resource_action_sequence object.");
@@ -95,9 +75,7 @@ f2ptr raw__semantic_resource_action_sequence__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_resource_action_sequence__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_resource_action_sequence__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_resource_action_sequence, this);
   return raw__semantic_resource_action_sequence__type(cause, this);
 }
 export_cefunk1(semantic_resource_action_sequence__type, thing, 0, "Returns the specific type of object that this semantic_resource_action_sequence is.");
@@ -111,23 +89,15 @@ f2ptr raw__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2
     f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "action_name"), action_name);
   }
   {
-    f2ptr agent      = f2__semantic_action_event__agent(cause, this);
-    f2ptr agent_name = nil;
-    if (raw__semantic_resource__is_type(cause, agent)) {
-      f2ptr name_set = f2__semantic_resource__name__lookup_set(cause, agent);
-      if (name_set != nil) {
-	agent_name = f2__set__an_arbitrary_element(cause, name_set);
-      }
-    }
-    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "agent"), agent_name);
+    f2ptr agent                  = f2__semantic_action_event__agent(cause, this);
+    f2ptr agent__phenomenal_name = f2__semantic_object__phenomenal_name(cause, agent);
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "agent"), agent__phenomenal_name);
   }
   return render_frame;
 }
 
 f2ptr f2__semantic_resource_action_sequence__cairo_render_frame(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_resource_action_sequence__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_resource_action_sequence, this);
   return raw__semantic_resource_action_sequence__cairo_render_frame(cause, this);
 }
 export_cefunk1(semantic_resource_action_sequence__cairo_render_frame, this, 0, "Generates a cairo_render_frame for this event.");

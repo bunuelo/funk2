@@ -174,7 +174,6 @@ f2ptr raw__semantic_knowledge_base__type_create_with_details(f2ptr cause, f2ptr 
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_knowledge_base"));
   }
   f2ptr trace_callback_funks_frame = f2__frame__new(cause, nil);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),                        new__symbol(cause, "semantic_knowledge_base"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "name"),                        name);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"),              semantic_realm);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_frame_set"),          semantic_frame_set);
@@ -182,7 +181,7 @@ f2ptr raw__semantic_knowledge_base__type_create_with_details(f2ptr cause, f2ptr 
   f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_add_semantic_frame"),    trace_add_semantic_frame);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove_semantic_frame"), trace_remove_semantic_frame);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_callback_funks_frame"),  trace_callback_funks_frame);
-  f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this);
+  assert_value(f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this));
   return this;
 }
 

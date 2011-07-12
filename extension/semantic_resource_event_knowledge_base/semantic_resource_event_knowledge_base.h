@@ -27,9 +27,9 @@
 
 // semantic_resource_event_knowledge_base
 
-f2ptr     raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_resource_event_knowledge_base__new        (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_resource_event_knowledge_base__new        (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm);
+f2ptr     raw__semantic_resource_event_knowledge_base__new        (f2ptr cause, f2ptr name, f2ptr semantic_realm);
+f2ptr      f2__semantic_resource_event_knowledge_base__new        (f2ptr cause, f2ptr name, f2ptr semantic_realm);
 boolean_t raw__semantic_resource_event_knowledge_base__is_type    (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_resource_event_knowledge_base__is_type    (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_resource_event_knowledge_base__type       (f2ptr cause, f2ptr this);

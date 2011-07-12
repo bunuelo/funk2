@@ -24,11 +24,11 @@
 
 // semantic_resource_event_knowledge_base
 
-f2ptr raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource_event_knowledge_base"));
   }
-  assert_value(raw__semantic_event_knowledge_base__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_event_knowledge_base__type_create(cause, this, name, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), nil);
@@ -36,17 +36,17 @@ f2ptr raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2pt
   return this;
 }
 
-f2ptr raw__semantic_resource_event_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_resource_event_knowledge_base__new(f2ptr cause, f2tr name, f2ptr semantic_realm) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_resource_event_knowledge_base__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_resource_event_knowledge_base__type_create(cause, this, name, semantic_realm));
   return this;
 }
 
-f2ptr f2__semantic_resource_event_knowledge_base__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_resource_event_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_resource_event_knowledge_base__new(cause, semantic_realm);
+  return raw__semantic_resource_event_knowledge_base__new(cause, name, semantic_realm);
 }
-export_cefunk1(semantic_resource_event_knowledge_base__new, semantic_realm, 0, "Returns a new semantic_resource_event_knowledge_base object.");
+export_cefunk2(semantic_resource_event_knowledge_base__new, name, semantic_realm, 0, "Returns a new semantic_resource_event_knowledge_base object.");
 
 
 boolean_t raw__semantic_resource_event_knowledge_base__is_type(f2ptr cause, f2ptr thing) {

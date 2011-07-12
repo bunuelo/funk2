@@ -21,7 +21,7 @@
 
 #include "interval_tree.h"
 
-#define F2__DEBUG__INTERVAL_TREE_NODE 1
+//#define F2__DEBUG__INTERVAL_TREE_NODE 1
 
 def_ceframe9(interval_tree, interval_tree, mutate_cmutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
 

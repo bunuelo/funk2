@@ -266,6 +266,7 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/semantic_resource/libf2e_semantic_resource.la \
                       extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
                       extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la \
+                      extension/semantic_resource_event_knowledge_base/libf2e_semantic_resource_event_knowledge_base.la \
                       extension/semantic_self/libf2e_semantic_self.la \
                       extension/semantic_situation/libf2e_semantic_situation.la \
                       extension/semantic_situation_category/libf2e_semantic_situation_category.la \
@@ -462,6 +463,7 @@ extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES 
 extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                           = extension/semantic_resource/semantic_resource.c
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES                 = extension/semantic_resource_action_event/semantic_resource_action_event.c
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES           = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
+extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_SOURCES = extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.c
 extension_semantic_self_libf2e_semantic_self_la_SOURCES                                                   = extension/semantic_self/semantic_self.c
 extension_semantic_situation_libf2e_semantic_situation_la_SOURCES                                         = extension/semantic_situation/semantic_situation.c
 extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                       = extension/semantic_situation_category/semantic_situation_category.c
@@ -656,6 +658,9 @@ extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_l
 
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_self_libf2e_semantic_self_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_self_libf2e_semantic_self_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

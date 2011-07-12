@@ -160,6 +160,7 @@
 						     'extension/semantic_resource/'
 						     'extension/semantic_resource_action_event/'
 						     'extension/semantic_resource_action_sequence/'
+						     'extension/semantic_resource_event_knowledge_base/'
 						     'extension/semantic_self/'
 						     'extension/semantic_situation/'
 						     'extension/semantic_situation_category/'

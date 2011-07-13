@@ -430,7 +430,7 @@ f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause,
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
   f2ptr list = f2__list__new(cause, nil);
-  assert_value(raw__interval_tree__add_intervals_containing_value_to_list(cause, this, value, list));
+  assert_value(raw__interval_tree__add_intervals_containing_value_to_list__thread_unsafe(cause, this, value, list));
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
   assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));

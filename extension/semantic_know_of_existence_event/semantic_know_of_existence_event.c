@@ -28,7 +28,7 @@ f2ptr raw__semantic_know_of_existence_event__type_create(f2ptr cause, f2ptr this
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_know_of_existence_event"));
   }
-  assert_value(raw__semantic_event__type_create(cause, this, semantic_realm, new__symbol(cause, "know_of_existence")));
+  assert_value(raw__semantic_causal_event__type_create(cause, this, semantic_realm, new__symbol(cause, "know_of_existence")));
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "object_phenomenal_name")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "object_phenomenal_name"), object_phenomenal_name);
@@ -135,7 +135,7 @@ export_cefunk1(semantic_know_of_existence_event__cairo_render_frame, this, 0, "G
 
 
 f2ptr f2__semantic_know_of_existence_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_event")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_causal_event")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_existence_event"), new__symbol(cause, "semantic_know_of_existence_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_existence_event"), new__symbol(cause, "semantic_know_of_existence_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_existence_event"), new__symbol(cause, "semantic_know_of_existence_event__type")));}
@@ -156,7 +156,7 @@ f2ptr f2__semantic_know_of_existence_event__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_know_of_existence_event__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_know_of_existence_event__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(semantic_know_of_existence_event, semantic_event);
+  core_extension__ping(semantic_know_of_existence_event, semantic_causal_event);
   //core_extension__ping(semantic_know_of_existence_event, semantic_knowledge_base);
   status("semantic_know_of_existence_event initialized.");
   return nil;

@@ -441,9 +441,12 @@ f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause,
 }
 
 f2ptr raw__interval_tree__intervals_containing_value(f2ptr cause, f2ptr this, f2ptr value) {
+  status("interval_tree__intervals_containing_value debug.");
   f2ptr mutate_cmutex = f2__interval_tree__mutate_cmutex(cause, this);
   raw__cmutex__lock(cause, mutate_cmutex);
+  status("interval_tree__intervals_containing_value debug.");
   f2ptr result = raw__interval_tree__intervals_containing_value__thread_unsafe(cause, this, value);
+  status("interval_tree__intervals_containing_value debug.");
   raw__cmutex__unlock(cause, mutate_cmutex);
   return result;
 }

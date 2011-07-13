@@ -82,9 +82,11 @@ export_cefunk1(semantic_resource_event_knowledge_base__type, thing, 0,
 f2ptr raw__semantic_resource_event_knowledge_base__resource_targeting_events_containing_time(f2ptr cause, f2ptr this, f2ptr semantic_resource, f2ptr semantic_time) {
   f2ptr events_containing_time    = assert_value(f2__semantic_event_knowledge_base__events_containing_time(cause, this, semantic_time));
   f2ptr resource_targeting_events = nil;
+  status("semantic_resource_event_knowledge_base__resource_targeting_events_containing_time debug.");
   {
     f2ptr iter = events_containing_time;
     while (iter != nil) {
+      status("semantic_resource_event_knowledge_base__resource_targeting_events_containing_time debug.");
       f2ptr event_containing_time = assert_value(f2__cons__car(cause, iter));
       {
 	if (raw__semantic_know_of_relationship_event__is_type(cause, event_containing_time)) {

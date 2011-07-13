@@ -1564,7 +1564,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
-
+  status("interval_tree_node__add_intervals_containing_value_to_list debug.");
   f2ptr center_value                   = f2__interval_tree_node__center_value(cause, this);
   f2ptr center_value_comparison        = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, center_value, value)));
   f2ptr value_center_comparison        = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value,        center_value)));
@@ -1576,8 +1576,10 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
+    status("interval_tree_node__add_intervals_containing_value_to_list debug.");
     f2ptr overlapping_right_redblacktree = f2__interval_tree_node__overlapping_right_redblacktree(cause, this);
     redblacktree__iteration_backward(cause, overlapping_right_redblacktree, element,
+				     status("interval_tree_node__add_intervals_containing_value_to_list debug.");
 				     f2ptr right_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,      f2list1__new(cause, element)));
 				     f2ptr value_right_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, value, right_value)));
 				     f2ptr value_right_comparison = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value, right_value)));
@@ -1593,6 +1595,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 				     }
 				     );
   raw__interval_tree_node__add_intervals_containing_value_to_list____overlapping_right_redblacktree__done_with_redblacktree_iteration:
+    status("interval_tree_node__add_intervals_containing_value_to_list debug.");
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
@@ -1606,14 +1609,17 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
       }
       //}
   }
+  status("interval_tree_node__add_intervals_containing_value_to_list debug.");
   if ((value_center_comparison != nil) ||
       (center_value_equality   != nil)) {
     // value is to the left of center_value
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
+    status("interval_tree_node__add_intervals_containing_value_to_list debug.");
     f2ptr overlapping_left_redblacktree = f2__interval_tree_node__overlapping_left_redblacktree(cause, this);
     redblacktree__iteration_forward(cause, overlapping_left_redblacktree, element,
+				    status("interval_tree_node__add_intervals_containing_value_to_list debug.");
 				    if (! raw__set__contains(cause, set_found_in_right_overlapping, element)) {
 				      f2ptr left_value            = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, element)));
 				      f2ptr left_value_equality   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, left_value, value)));
@@ -1633,6 +1639,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
     assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
+    status("interval_tree_node__add_intervals_containing_value_to_list debug.");
     //if (center_value_equality == nil) {
       // descend left branch of tree
       {
@@ -1647,6 +1654,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   assert_value(f2__interval_tree_node__assert_valid(cause, this));
 #endif
+  status("interval_tree_node__add_intervals_containing_value_to_list debug.");
   return nil;
 }
 

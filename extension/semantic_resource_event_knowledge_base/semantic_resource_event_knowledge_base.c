@@ -136,6 +136,7 @@ export_cefunk0(semantic_resource_event_knowledge_base__core_extension__ping, 0, 
 f2ptr f2__semantic_resource_event_knowledge_base__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_resource_event_knowledge_base, semantic_event_knowledge_base);
   core_extension__ping(semantic_resource_event_knowledge_base, semantic_know_of_relationship_event);
+  core_extension__ping(semantic_resource_event_knowledge_base, semantic_resource);
   return nil;
 }
 export_cefunk0(semantic_resource_event_knowledge_base__core_extension__initialize, 0, "");

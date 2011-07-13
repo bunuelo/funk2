@@ -25,6 +25,7 @@
 #include "../../c/funk2.h"
 #include "../semantic_event_knowledge_base/semantic_event_knowledge_base.h"
 #include "../semantic_know_of_relationship_event/semantic_know_of_relationship_event.h"
+#include "../semantic_resource/semantic_resource.h"
 
 // semantic_resource_event_knowledge_base
 

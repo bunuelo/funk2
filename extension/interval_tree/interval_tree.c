@@ -436,7 +436,8 @@ f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause,
   assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
-  return list;
+  f2ptr list__cons_cells = f2__list__cons_cells(cause, list);
+  return list__cons_cells;
 }
 
 f2ptr raw__interval_tree__intervals_containing_value(f2ptr cause, f2ptr this, f2ptr value) {

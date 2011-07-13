@@ -94,72 +94,53 @@ f2ptr f2__semantic_know_of_relationship_event__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_know_of_relationship_event__type, thing, 0, "Returns the specific type of object that this semantic_know_of_relationship_event is.");
 
 
-f2ptr raw__semantic_know_of_relationship_event__meta_relationship__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "meta_relationship"));
+f2ptr raw__semantic_know_of_relationship_event__meta_relationship(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "meta_relationship"));
 }
 
-f2ptr f2__semantic_know_of_relationship_event__meta_relationship__lookup_set(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_know_of_relationship_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_know_of_relationship_event__meta_relationship__lookup_set(cause, this);
+f2ptr f2__semantic_know_of_relationship_event__meta_relationship(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_know_of_relationship_event, this);
+  return raw__semantic_know_of_relationship_event__meta_relationship(cause, this);
 }
-export_cefunk1(semantic_know_of_relationship_event__meta_relationship__lookup_set, this, 0, "");
+export_cefunk1(semantic_know_of_relationship_event__meta_relationship, this, 0, "");
 
 
-f2ptr raw__semantic_know_of_relationship_event__meta_relationship__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "meta_relationship"), that);
+f2ptr raw__semantic_know_of_relationship_event__meta_relationship__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "meta_relationship"), that);
 }
 
-f2ptr f2__semantic_know_of_relationship_event__meta_relationship__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_know_of_relationship_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_know_of_relationship_event__meta_relationship__add(cause, this, that);
+f2ptr f2__semantic_know_of_relationship_event__meta_relationship__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_know_of_relationship_event,                   this);
+  assert_argument_type(relationship_meta_semantic_know_of_relationship_event, that);
+  return raw__semantic_know_of_relationship_event__meta_relationship__set(cause, this, that);
 }
-export_cefunk2(semantic_know_of_relationship_event__meta_relationship__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_know_of_relationship_event__meta_relationship__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "meta_relationship"), that);
-}
-
-f2ptr f2__semantic_know_of_relationship_event__meta_relationship__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_know_of_relationship_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_know_of_relationship_event__meta_relationship__remove(cause, this, that);
-}
-export_cefunk2(semantic_know_of_relationship_event__meta_relationship__remove, this, that, 0, "");
+export_cefunk2(semantic_know_of_relationship_event__meta_relationship__set, this, that, 0, "");
 
 
 
 f2ptr raw__semantic_know_of_relationship_event__cairo_render_frame(f2ptr cause, f2ptr this) {
   f2ptr render_frame = f2__frame__new(cause, f2list2__new(cause,
 							  new__symbol(cause, "cairo_render_type"), f2__object__type(cause, this)));
-  f2ptr meta_relationship_set = f2__semantic_know_of_relationship_event__meta_relationship__lookup_set(cause, this);
-  if (meta_relationship_set != nil) {
-    f2ptr meta_relationship = f2__set__an_arbitrary_element(cause, meta_relationship_set);
-    if (! raw__relationship_meta_semantic_object__is_type(cause, meta_relationship)) {
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "meta_relationship"), meta_relationship);
-    } else {
-      f2ptr cairo_source = raw__relationship_meta_semantic_object__source(  cause, meta_relationship);
-      if (raw__semantic_object__is_type(cause, cairo_source)) {
-	cairo_source = f2__semantic_object__phenomenal_name(cause, cairo_source);
-      } else if (raw__semantic_frame__is_type(cause, cairo_source)) {
-	cairo_source = new__symbol(cause, "<semantic_frame>");
-      }
-      f2ptr cairo_target = raw__relationship_meta_semantic_object__target(  cause, meta_relationship);
-      if (raw__semantic_object__is_type(cause, cairo_target)) {
-	cairo_target = f2__semantic_object__phenomenal_name(cause, cairo_target);
-      } else if (raw__semantic_frame__is_type(cause, cairo_target)) {
-	cairo_target = new__symbol(cause, "<semantic_frame>");
-      }
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "source"),   cairo_source);
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "key"),      raw__relationship_meta_semantic_object__key(     cause, meta_relationship));
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "key_type"), raw__relationship_meta_semantic_object__key_type(cause, meta_relationship));
-      f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "target"),   cairo_target);
+  f2ptr meta_relationship = f2__semantic_know_of_relationship_event__meta_relationship(cause, this);
+  if (! raw__relationship_meta_semantic_object__is_type(cause, meta_relationship)) {
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "meta_relationship"), meta_relationship);
+  } else {
+    f2ptr cairo_source = raw__relationship_meta_semantic_object__source(  cause, meta_relationship);
+    if (raw__semantic_object__is_type(cause, cairo_source)) {
+      cairo_source = f2__semantic_object__phenomenal_name(cause, cairo_source);
+    } else if (raw__semantic_frame__is_type(cause, cairo_source)) {
+      cairo_source = new__symbol(cause, "<semantic_frame>");
     }
+    f2ptr cairo_target = raw__relationship_meta_semantic_object__target(  cause, meta_relationship);
+    if (raw__semantic_object__is_type(cause, cairo_target)) {
+      cairo_target = f2__semantic_object__phenomenal_name(cause, cairo_target);
+    } else if (raw__semantic_frame__is_type(cause, cairo_target)) {
+      cairo_target = new__symbol(cause, "<semantic_frame>");
+    }
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "source"),   cairo_source);
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "key"),      raw__relationship_meta_semantic_object__key(     cause, meta_relationship));
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "key_type"), raw__relationship_meta_semantic_object__key_type(cause, meta_relationship));
+    f2__frame__add_var_value(cause, render_frame, new__symbol(cause, "target"),   cairo_target);
   }
   return render_frame;
 }
@@ -176,13 +157,12 @@ export_cefunk1(semantic_know_of_relationship_event__cairo_render_frame, this, 0,
 
 f2ptr f2__semantic_know_of_relationship_event_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_know_of_existence_event")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "meta_relationship"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__meta_relationship__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "meta_relationship"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__meta_relationship__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "meta_relationship"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__meta_relationship__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "cairo_render_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__cairo_render_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "meta_relationship"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__meta_relationship")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "meta_relationship"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__meta_relationship__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "cairo_render_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_know_of_relationship_event"), new__symbol(cause, "semantic_know_of_relationship_event__cairo_render_frame")));}
   return this;
 }
 

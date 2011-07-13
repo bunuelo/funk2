@@ -110,8 +110,8 @@ f2ptr raw__semantic_know_of_relationship_event__meta_relationship__set(f2ptr cau
 }
 
 f2ptr f2__semantic_know_of_relationship_event__meta_relationship__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_know_of_relationship_event,                   this);
-  assert_argument_type(relationship_meta_semantic_know_of_relationship_event, that);
+  assert_argument_type(semantic_know_of_relationship_event, this);
+  assert_argument_type(relationship_meta_semantic_object,   that);
   return raw__semantic_know_of_relationship_event__meta_relationship__set(cause, this, that);
 }
 export_cefunk2(semantic_know_of_relationship_event__meta_relationship__set, this, that, 0, "");

@@ -223,6 +223,23 @@ void raw__cairo_context__render_text(f2ptr cause, f2ptr this, double x0, double 
   raw__cairo_context__fill(           cause, this);
 }
 
+void raw__cairo_context__render_text_scaled(f2ptr cause, f2ptr this, double x0, double y0, double font_size, double x_scale, double y_scale, char* text, double red, double green, double blue, double alpha) {
+  boolean_t need_scale = ((x_scale != 1.0) ||
+			  (y_scale != 1.0));
+  raw__cairo_context__move_to(      cause, this, x0, y0 + (font_size * 0.75));
+  raw__cairo_context__set_font_size(cause, this, font_size);
+  if (need_scale) {
+    raw__cairo_context__save( cause, cairo_context);
+    raw__cairo_context__scale(cause, cairo_context, x_scale, y_scale);
+  }
+  raw__cairo_context__text_path(      cause, this, text);
+  raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
+  raw__cairo_context__fill(           cause, this);
+  if (need_scale) {
+    raw__cairo_context__restore(cause, cairo_context);
+  }
+}
+
 double raw__cairo_context__text_width(f2ptr cause, f2ptr this, double font_size, char* text) {
   raw__cairo_context__set_font_size(cause, this, font_size);
   f2ptr text_extents = raw__cairo_context__text_extents(cause, this, text);
@@ -262,7 +279,9 @@ f2ptr raw__cairo_context__render_centered_text(f2ptr cause, f2ptr this, double c
   return nil;
 }
 
-f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this, double cx, double cy, double font_size, f2ptr frame, double outline_width, double red, double green, double blue, double alpha, double outline_red, double outline_green, double outline_blue, double outline_alpha) {
+f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this, double cx, double cy, double font_size, f2ptr frame, double outline_width,
+							 double red, double green, double blue, double alpha,
+							 double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   s64 frame__key_count = 0;
   frame__var__iteration(cause, frame, key, value,
 			key   = nil;
@@ -339,14 +358,16 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_string_array[cairo_type_index]));
       f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
       double text_extents__width__d = f2double__d(text_extents__width, cause);
+      double squish_factor          = 1.0;
       double y0                     = cy - (title_font_size * frame__key_count / 2);
-      double x0                     = cx - (text_extents__width__d / 2);
-      raw__cairo_context__render_text(cause, this, x0, y0, title_font_size, (char*)value_string_array[cairo_type_index], red, green, blue, alpha);
+      double x0                     = cx - ((text_extents__width__d / 2) * squish_factor);
+      raw__cairo_context__render_text_scaled(cause, this, x0, y0, title_font_size, squish_factor, 1.0, (char*)value_string_array[cairo_type_index], red, green, blue, alpha);
     }
     double space_between_key_and_value = 1.0;
     {
       raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
       raw__cairo_context__set_font_size(cause, this, font_size);
+      double squish_factor = 1.0;
       s64 y_index = 0;
       if (has_cairo_type) {
 	y_index ++;
@@ -358,14 +379,14 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2);
-	    raw__cairo_context__render_text(cause, this, x0, y0, font_size, (char*)key_string_array[index], red, green, blue, alpha);
+	    double x0 = cx - (((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) * squish_factor);
+	    raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)key_string_array[index], red, green, blue, alpha);
 	  }
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    double x0 = cx - ((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value;
-	    raw__cairo_context__render_text(cause, this, x0, y0, font_size, (char*)value_string_array[index], red, green, blue, alpha);
+	    double x0 = cx - ((((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value) * squish_factor);
+	    raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)value_string_array[index], red, green, blue, alpha);
 	  }
 	  y_index ++;
 	}
@@ -509,9 +530,9 @@ f2ptr raw__timeline_event__render_extents(f2ptr cause, f2ptr this, f2ptr timelin
     if (total_nanoseconds == 0) {
       return f2larva__new(cause, 4444, nil);
     }
-    double timeline__left_border   = f2double__d(raw__timeline__left_border(  cause, timeline), cause);
-    double timeline__right_border  = f2double__d(raw__timeline__right_border( cause, timeline), cause);
-    double timeline__x_width       = f2double__d(raw__timeline__x_width(      cause, timeline), cause);
+    double timeline__left_border   = f2double__d(raw__timeline__left_border( cause, timeline), cause);
+    double timeline__right_border  = f2double__d(raw__timeline__right_border(cause, timeline), cause);
+    double timeline__x_width       = f2double__d(raw__timeline__x_width(     cause, timeline), cause);
     double content_width           = timeline__x_width - timeline__left_border - timeline__right_border;
     if (start_position != NULL) {
       *start_position                              = start_nanoseconds * content_width / total_nanoseconds;

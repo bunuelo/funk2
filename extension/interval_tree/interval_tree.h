@@ -55,6 +55,9 @@ f2ptr  f2__interval_tree__intervals_containing_value                           (
 f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe        (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr raw__interval_tree__intervals_overlapping_interval                       (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr  f2__interval_tree__intervals_overlapping_interval                       (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe        (f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value);
+f2ptr raw__interval_tree__most_recent_filtered_intervals                       (f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value);
+f2ptr  f2__interval_tree__most_recent_filtered_intervals                       (f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value);
 f2ptr raw__interval_tree__terminal_print_with_frame                            (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr  f2__interval_tree__terminal_print_with_frame                            (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

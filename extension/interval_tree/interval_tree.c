@@ -548,7 +548,7 @@ export_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
 	       "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
 
 
-f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value) {
   printf("\nyeah!"); fflush(stdout);
   return nil;
 }

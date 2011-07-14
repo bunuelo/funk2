@@ -138,7 +138,7 @@
 															[semantic-add action_sequence is_caused_by causing_event]]
 														  causing_events]
 													  [let [[most_recent_causing_events [get [get [get this mind] semantic_knowledge_base `reflective_event_knowledge]
-																		 most_recent_resource_targeting_events resource semantic_start_time]]]
+																		 most_recent_targeting_events resource semantic_start_time]]]
 													    [mapc [funk [causing_event]
 															[semantic-add action_sequence is_caused_by causing_event]]
 														  most_recent_causing_events]

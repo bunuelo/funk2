@@ -229,8 +229,8 @@ void raw__cairo_context__render_text_scaled(f2ptr cause, f2ptr this, double x0, 
   raw__cairo_context__move_to(      cause, this, x0, y0 + (font_size * 0.75));
   raw__cairo_context__set_font_size(cause, this, font_size);
   if (need_scale) {
-    raw__cairo_context__save( cause, cairo_context);
-    raw__cairo_context__scale(cause, cairo_context, x_scale, y_scale);
+    raw__cairo_context__save( cause, this);
+    raw__cairo_context__scale(cause, this, x_scale, y_scale);
   }
   raw__cairo_context__text_path(      cause, this, text);
   raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);

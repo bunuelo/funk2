@@ -251,7 +251,7 @@ f2ptr f2__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr th
   assert_argument_type(semantic_time,       semantic_time);
   return raw__semantic_event_tree__most_recent_filtered_events(cause, this, filter_funk, semantic_time);
 }
-export_cefunk2(semantic_event_tree__most_recent_filtered_events, this, filter_funk, semantic_time, 0,
+export_cefunk3(semantic_event_tree__most_recent_filtered_events, this, filter_funk, semantic_time, 0,
 	       "Returns the most recent semantic_events that occur at or before the given semantic_time and which the given filter_funk returns true.");
 
 

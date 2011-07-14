@@ -118,8 +118,8 @@ f2ptr raw__semantic_resource_event_knowledge_base__most_recent_targeting_events_
   if (raw__semantic_know_of_relationship_event__is_type(cause, semantic_event)) {
     f2ptr meta_relationship = f2__semantic_know_of_relationship_event__meta_relationship(cause, semantic_event);
     if (raw__relationship_meta_semantic_object__is_type(cause, meta_relationship)) {
-      f2ptr target = f2__relationship_meta_semantic_object__target(cause, meta_relationship);
-      if (raw__eq(cause, target, semantic_resource)) {
+      f2ptr meta_relationship__target = f2__relationship_meta_semantic_object__target(cause, meta_relationship);
+      if (raw__eq(cause, meta_relationship__target, target_resource)) {
 	return f2bool__new(boolean__true);
       }
     }

@@ -118,7 +118,7 @@ f2ptr raw__semantic_resource_event_knowledge_base__most_recent_targeting_events_
   return nil;
 }
 
-f2ptr f2__semantic_resource_event_knowledge_base__most_recent_targeting_events__filter_funk(f2ptr cause, f2ptr this, f2ptr target_resource, f2ptr semantic_event) {
+f2ptr f2__semantic_resource_event_knowledge_base__most_recent_targeting_events__filter_funk(f2ptr cause, f2ptr target_resource, f2ptr semantic_event) {
   assert_argument_type(semantic_resource, target_resource);
   assert_argument_type(semantic_event,    semantic_event);
   return raw__semantic_resource_event_knowledge_base__most_recent_targeting_events__filter_funk(cause, target_resource, semantic_event);

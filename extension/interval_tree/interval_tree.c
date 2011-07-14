@@ -558,9 +558,7 @@ f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr ca
     {
       f2ptr redblacktree_node = f2__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, all_right_redblacktree, maximum_value);
       while (redblacktree_node != nil) {
-	f2ptr redblacktree_node__count_key_ptypehash  = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
-	f2ptr redblacktree_node__element              = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
-	f2ptr redblacktree_node__element__right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, redblacktree_node__element)));
+	f2ptr redblacktree_node__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
 	ptypehash__key__iteration(cause, redblacktree_node__count_key_ptypehash, element_iter,
 				  f2ptr filter_success = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), filter_funk, f2list2__new(cause, user_filter_data, element_iter)));
 				  if (filter_success != nil) {

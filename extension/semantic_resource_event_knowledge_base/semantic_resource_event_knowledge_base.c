@@ -115,7 +115,16 @@ export_cefunk3(semantic_resource_event_knowledge_base__resource_targeting_events
 
 
 f2ptr raw__semantic_resource_event_knowledge_base__most_recent_targeting_events__filter_funk(f2ptr cause, f2ptr target_resource, f2ptr semantic_event) {
-  return nil;
+  if (raw__semantic_know_of_relationship_event__is_type(cause, semantic_event)) {
+    f2ptr meta_relationship = f2__semantic_know_of_relationship_event__meta_relationship(cause, semantic_event);
+    if (raw__relationship_meta_semantic_object__is_type(cause, meta_relationship)) {
+      f2ptr target = f2__relationship_meta_semantic_object__target(cause, meta_relationship);
+      if (raw__eq(cause, target, semantic_resource)) {
+	return f2bool__new(boolean__true);
+      }
+    }
+  }
+  return f2bool__new(boolean__false);
 }
 
 f2ptr f2__semantic_resource_event_knowledge_base__most_recent_targeting_events__filter_funk(f2ptr cause, f2ptr target_resource, f2ptr semantic_event) {
@@ -127,18 +136,18 @@ export_cefunk2(semantic_resource_event_knowledge_base__most_recent_targeting_eve
 	       "Returns whether or not the given semantic_event targets the given target_resource.");
 
 
-f2ptr raw__semantic_resource_event_knowledge_base__most_recent_targeting_events(f2ptr cause, f2ptr this, f2ptr semantic_resource, f2ptr semantic_time) {
+f2ptr raw__semantic_resource_event_knowledge_base__most_recent_targeting_events(f2ptr cause, f2ptr this, f2ptr target_resource, f2ptr semantic_time) {
   f2ptr filter_funk = f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_event_knowledge_base"), new__symbol(cause, "semantic_resource_event_knowledge_base__most_recent_targeting_events__filter_funk"));
-  return f2__semantic_event_knowledge_base__most_recent_filtered_events(cause, this, filter_funk, semantic_time);
+  return f2__semantic_event_knowledge_base__most_recent_filtered_events(cause, this, filter_funk, target_resource, semantic_time);
 }
 
-f2ptr f2__semantic_resource_event_knowledge_base__most_recent_targeting_events(f2ptr cause, f2ptr this, f2ptr semantic_resource, f2ptr semantic_time) {
+f2ptr f2__semantic_resource_event_knowledge_base__most_recent_targeting_events(f2ptr cause, f2ptr this, f2ptr target_resource, f2ptr semantic_time) {
   assert_argument_type(semantic_resource_event_knowledge_base, this);
-  assert_argument_type(semantic_resource,                      semantic_resource);
+  assert_argument_type(semantic_resource,                      target_resource);
   assert_argument_type(semantic_time,                          semantic_time);
-  return raw__semantic_resource_event_knowledge_base__most_recent_targeting_events(cause, this, semantic_resource, semantic_time);
+  return raw__semantic_resource_event_knowledge_base__most_recent_targeting_events(cause, this, target_resource, semantic_time);
 }
-export_cefunk3(semantic_resource_event_knowledge_base__most_recent_targeting_events, this, semantic_resource, semantic_time, 0,
+export_cefunk3(semantic_resource_event_knowledge_base__most_recent_targeting_events, this, target_resource, semantic_time, 0,
 	       "Returns all of semantic_know_of_relationship_events containing the given semantic_time and targeting the given semantic_resource.");
 
 

@@ -548,25 +548,49 @@ export_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
 	       "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
 
 
-f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value) {
-  printf("\nyeah!"); fflush(stdout);
-  return nil;
+f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr maximum_value) {
+  f2ptr return_intervals = nil;
+  {
+    f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
+    f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
+    f2ptr value_equality_funk    = f2__interval_tree__value_equality_funk(   cause, this);
+    f2ptr value_comparison_funk  = f2__interval_tree__value_comparison_funk( cause, this);
+    {
+      f2ptr redblacktree_node = f2__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, all_right_redblacktree, maximum_value);
+      while (redblacktree_node != nil) {
+	f2ptr redblacktree_node__count_key_ptypehash  = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
+	f2ptr redblacktree_node__element              = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
+	f2ptr redblacktree_node__element__right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, redblacktree_node__element)));
+	ptypehash__key__iteration(cause, redblacktree_node__count_key_ptypehash, element_iter,
+				  f2ptr filter_success = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), filter_funk, f2list2__new(cause, user_filter_data, redblacktree_node__element)));
+				  if (filter_success != nil) {
+				    return_intervals = f2cons__new(cause, redblacktree_node__element, return_intervals);
+				  }
+				  );
+	if (return_intervals != nil) {
+	  break;
+	}
+	redblacktree_node = f2__redblacktree_node__prev(cause, redblacktree_node);
+      }
+    }
+  }
+  return return_intervals;
 }
 
-f2ptr raw__interval_tree__most_recent_filtered_intervals(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value) {
+f2ptr raw__interval_tree__most_recent_filtered_intervals(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr maximum_value) {
   f2ptr mutate_cmutex = f2__interval_tree__mutate_cmutex(cause, this);
   raw__cmutex__lock(cause, mutate_cmutex);
-  f2ptr result = raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(cause, this, filter_funk, maximum_value);
+  f2ptr result = raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(cause, this, filter_funk, user_filter_data, maximum_value);
   raw__cmutex__unlock(cause, mutate_cmutex);
   return result;
 }
 
-f2ptr f2__interval_tree__most_recent_filtered_intervals(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value) {
+f2ptr f2__interval_tree__most_recent_filtered_intervals(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr maximum_value) {
   assert_argument_type(interval_tree, this);
   assert_argument_type(funkable,      filter_funk);
-  return assert_value(raw__interval_tree__most_recent_filtered_intervals(cause, this, filter_funk, maximum_value));
+  return assert_value(raw__interval_tree__most_recent_filtered_intervals(cause, this, filter_funk, user_filter_data, maximum_value));
 }
-export_cefunk3(interval_tree__most_recent_filtered_intervals, this, filter_funk, maximum_value, 0,
+export_cefunk4(interval_tree__most_recent_filtered_intervals, this, filter_funk, user_filter_data, maximum_value, 0,
 	       "Returns the maximum intervals that overlap with or are less than the given maximum_value and for which the given filter_funk also returns true.");
 
 

@@ -240,18 +240,18 @@ export_cefunk2(semantic_event_tree__events_overlapping_event, this, semantic_eve
 	       "Returns a new set of events in this semantic_event_tree that overlap the given event.");
 
 
-f2ptr raw__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+f2ptr raw__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time) {
   f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
-  return assert_value(f2__interval_tree__most_recent_filtered_intervals(cause, interval_tree, filter_funk, semantic_time));
+  return assert_value(f2__interval_tree__most_recent_filtered_intervals(cause, interval_tree, filter_funk, user_filter_data, semantic_time));
 }
 
-f2ptr f2__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+f2ptr f2__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time) {
   assert_argument_type(semantic_event_tree, this);
   assert_argument_type(funkable,            filter_funk);
   assert_argument_type(semantic_time,       semantic_time);
-  return raw__semantic_event_tree__most_recent_filtered_events(cause, this, filter_funk, semantic_time);
+  return raw__semantic_event_tree__most_recent_filtered_events(cause, this, filter_funk, user_filter_data, semantic_time);
 }
-export_cefunk3(semantic_event_tree__most_recent_filtered_events, this, filter_funk, semantic_time, 0,
+export_cefunk4(semantic_event_tree__most_recent_filtered_events, this, filter_funk, user_filter_data, semantic_time, 0,
 	       "Returns the most recent semantic_events that occur at or before the given semantic_time and which the given filter_funk returns true.");
 
 

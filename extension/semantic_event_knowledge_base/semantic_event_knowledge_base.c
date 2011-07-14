@@ -173,18 +173,18 @@ export_cefunk2(semantic_event_knowledge_base__events_containing_time, this, sema
 	       "Returns the semantic_events from this semantic_event_knowledge_base that contain the given time.");
 
 
-f2ptr raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+f2ptr raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time) {
   f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
-  return assert_value(f2__semantic_event_tree__most_recent_filtered_events(cause, semantic_event_tree, filter_funk, semantic_time));
+  return assert_value(f2__semantic_event_tree__most_recent_filtered_events(cause, semantic_event_tree, filter_funk, user_filter_data, semantic_time));
 }
 
-f2ptr f2__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+f2ptr f2__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time) {
   assert_argument_type(semantic_event_knowledge_base, this);
   assert_argument_type(funkable,                      filter_funk);
   assert_argument_type(semantic_time,                 semantic_time);
-  return raw__semantic_event_knowledge_base__most_recent_filtered_events(cause, this, filter_funk, semantic_time);
+  return raw__semantic_event_knowledge_base__most_recent_filtered_events(cause, this, filter_funk, user_filter_data, semantic_time);
 }
-export_cefunk3(semantic_event_knowledge_base__most_recent_filtered_events, this, filter_funk, semantic_time, 0,
+export_cefunk4(semantic_event_knowledge_base__most_recent_filtered_events, this, filter_funk, user_filter_data, semantic_time, 0,
 	       "Returns the most recent semantic_events that occur at or before the given semantic_time and also for which the filter_funk returns true.");
 
 

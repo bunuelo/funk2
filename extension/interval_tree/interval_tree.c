@@ -562,9 +562,9 @@ f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr ca
 	f2ptr redblacktree_node__element              = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
 	f2ptr redblacktree_node__element__right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, redblacktree_node__element)));
 	ptypehash__key__iteration(cause, redblacktree_node__count_key_ptypehash, element_iter,
-				  f2ptr filter_success = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), filter_funk, f2list2__new(cause, user_filter_data, redblacktree_node__element)));
+				  f2ptr filter_success = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), filter_funk, f2list2__new(cause, user_filter_data, element_iter)));
 				  if (filter_success != nil) {
-				    return_intervals = f2cons__new(cause, redblacktree_node__element, return_intervals);
+				    return_intervals = f2cons__new(cause, element_iter, return_intervals);
 				  }
 				  );
 	if (return_intervals != nil) {

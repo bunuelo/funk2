@@ -178,6 +178,7 @@
 
 [defpackage reflective_event_knowledge_agency
   :packages [semantic_resource_action_sequence
+	     semantic_know_of_relationship_event
 	     semantic_resource_event_knowledge_base
 	     traced_mind]
    :sources ['reflective_event_knowledge_agency.fu2']]

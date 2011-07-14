@@ -41,8 +41,8 @@ f2ptr     raw__semantic_event_knowledge_base__semantic_event_tree        (f2ptr 
 f2ptr      f2__semantic_event_knowledge_base__semantic_event_tree        (f2ptr cause, f2ptr this);
 f2ptr     raw__semantic_event_knowledge_base__events_containing_time     (f2ptr cause, f2ptr this, f2ptr semantic_time);
 f2ptr      f2__semantic_event_knowledge_base__events_containing_time     (f2ptr cause, f2ptr this, f2ptr semantic_time);
-f2ptr     raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time);
-f2ptr      f2__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time);
+f2ptr     raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time);
+f2ptr      f2__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time);
 
 f2ptr f2__semantic_event_knowledge_base_type__new(f2ptr cause);
 

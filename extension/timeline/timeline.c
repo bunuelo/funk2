@@ -236,7 +236,7 @@ void raw__cairo_context__render_text_scaled(f2ptr cause, f2ptr this, double x0, 
   raw__cairo_context__set_source_rgba(cause, this, red, green, blue, alpha);
   raw__cairo_context__fill(           cause, this);
   if (need_scale) {
-    raw__cairo_context__restore(cause, cairo_context);
+    raw__cairo_context__restore(cause, this);
   }
 }
 

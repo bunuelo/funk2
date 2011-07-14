@@ -552,9 +552,6 @@ f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr ca
   f2ptr return_intervals = nil;
   {
     f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
-    f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
-    f2ptr value_equality_funk    = f2__interval_tree__value_equality_funk(   cause, this);
-    f2ptr value_comparison_funk  = f2__interval_tree__value_comparison_funk( cause, this);
     {
       f2ptr redblacktree_node = f2__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, all_right_redblacktree, maximum_value);
       while (redblacktree_node != nil) {

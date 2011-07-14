@@ -279,7 +279,7 @@ f2ptr raw__cairo_context__render_centered_text(f2ptr cause, f2ptr this, double c
   return nil;
 }
 
-f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this, double cx, double cy, double font_size, f2ptr frame, double outline_width,
+f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this, double cx, double cy, double font_size, f2ptr frame, double outline_width, double maximum_width,
 							 double red, double green, double blue, double alpha,
 							 double outline_red, double outline_green, double outline_blue, double outline_alpha) {
   s64 frame__key_count = 0;
@@ -427,7 +427,10 @@ f2ptr raw__cairo_context__render_frame_text_box(f2ptr cause, f2ptr this, f2ptr l
       raw__cairo_context__render_outlined_box_with_broken_left_and_right(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
     }
   }
-  assert_value(raw__cairo_context__render_centered_outlined_frame(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, frame, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha));
+  double maximum_width = dx - (outline_width * 2);
+  if (maximum_width > 0.0) {
+    assert_value(raw__cairo_context__render_centered_outlined_frame(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, frame, outline_width, maximum_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha));
+  }
   return nil;
 }
 

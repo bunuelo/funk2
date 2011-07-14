@@ -362,9 +362,11 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       if (text_extents__width__d > maximum_width) {
 	squish_factor = (maximum_width / text_extents__width__d);
       }
-      double y0 = cy - (title_font_size * frame__key_count / 2);
-      double x0 = cx - ((text_extents__width__d / 2) * squish_factor);
-      raw__cairo_context__render_text_scaled(cause, this, x0, y0, title_font_size, squish_factor, 1.0, (char*)value_string_array[cairo_type_index], red, green, blue, alpha);
+      if (squish_factor > 0.25) {
+	double y0 = cy - (title_font_size * frame__key_count / 2);
+	double x0 = cx - ((text_extents__width__d / 2) * squish_factor);
+	raw__cairo_context__render_text_scaled(cause, this, x0, y0, title_font_size, squish_factor, 1.0, (char*)value_string_array[cairo_type_index], red, green, blue, alpha);
+      }
     }
     double space_between_key_and_value = 1.0;
     {
@@ -374,27 +376,29 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       if ((max_key_text_width + space_between_key_and_value + max_value_text_width) > maximum_width) {
 	squish_factor = (maximum_width / (max_key_text_width + space_between_key_and_value + max_value_text_width));
       }
-      s64 y_index = 0;
-      if (has_cairo_type) {
-	y_index ++;
-      }
-      s64 index;
-      for (index = 0; index < frame__key_count; index ++) {
-	if ((! has_cairo_type) || (index != cairo_type_index)) {
-	  double y0 = cy - (font_size * frame__key_count / 2) + (y_index * font_size);
-	  {
-	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
-	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    double x0 = cx - (((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) * squish_factor);
-	    raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)key_string_array[index], red, green, blue, alpha);
-	  }
-	  {
-	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
-	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    double x0 = cx - ((((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value) * squish_factor);
-	    raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)value_string_array[index], red, green, blue, alpha);
-	  }
+      if (squish_factor > 0.25) {
+	s64 y_index = 0;
+	if (has_cairo_type) {
 	  y_index ++;
+	}
+	s64 index;
+	for (index = 0; index < frame__key_count; index ++) {
+	  if ((! has_cairo_type) || (index != cairo_type_index)) {
+	    double y0 = cy - (font_size * frame__key_count / 2) + (y_index * font_size);
+	    {
+	      raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
+	      raw__cairo_context__set_font_size(cause, this, font_size);
+	      double x0 = cx + ((-(max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) * squish_factor);
+	      raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)key_string_array[index], red, green, blue, alpha);
+	    }
+	    {
+	      raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
+	      raw__cairo_context__set_font_size(cause, this, font_size);
+	      double x0 = cx + ((-((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value) * squish_factor);
+	      raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)value_string_array[index], red, green, blue, alpha);
+	    }
+	    y_index ++;
+	  }
 	}
       }
     }

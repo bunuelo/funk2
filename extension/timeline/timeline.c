@@ -284,20 +284,14 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			      cairo_type_index = index;
 			    }
 			    {
-			      f2ptr key__string = f2__exp__as__string(cause, key);
-			      if (raw__larva__is_type(cause, key__string)) {
-				return key__string;
-			      }
+			      f2ptr key__string = assert_value(f2__exp__as__string(cause, key));
 			      key_length_array[index] = raw__string__length(cause, key__string);
 			      key_string_array[index] = (u8*)from_ptr(f2__malloc(key_length_array[index] + 1));
 			      raw__string__str_copy(cause, key__string, key_string_array[index]);
 			      key_string_array[index][key_length_array[index]] = 0;
 			    }
 			    {
-			      f2ptr value__string = f2__exp__as__string(cause, value);
-			      if (raw__larva__is_type(cause, value__string)) {
-				return value__string;
-			      }
+			      f2ptr value__string = assert_value(f2__exp__as__string(cause, value));
 			      value_length_array[index] = raw__string__length(cause, value__string);
 			      value_string_array[index] = (u8*)from_ptr(f2__malloc(value_length_array[index] + 1));
 			      raw__string__str_copy(cause, value__string, value_string_array[index]);
@@ -318,10 +312,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)key_string_array[index]);
-	    if (raw__larva__is_type(cause, text_extents)) {
-	      return text_extents;
-	    }
+	    f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)key_string_array[index]));
 	    f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
 	    double text_extents__width__d = f2double__d(text_extents__width, cause);
 	    if (text_extents__width__d > max_key_text_width) {
@@ -331,10 +322,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)value_string_array[index]);
-	    if (raw__larva__is_type(cause, text_extents)) {
-	      return text_extents;
-	    }
+	    f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_string_array[index]));
 	    f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
 	    double text_extents__width__d = f2double__d(text_extents__width, cause);
 	    if (text_extents__width__d > max_value_text_width) {
@@ -348,10 +336,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       double title_font_size = font_size * 1.05;
       raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
       raw__cairo_context__set_font_size(cause, this, title_font_size);
-      f2ptr text_extents = raw__cairo_context__text_extents(cause, this, (char*)value_string_array[cairo_type_index]);
-      if (raw__larva__is_type(cause, text_extents)) {
-	return text_extents;
-      }
+      f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_string_array[cairo_type_index]));
       f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
       double text_extents__width__d = f2double__d(text_extents__width, cause);
       double y0                     = cy - (title_font_size * frame__key_count / 2);
@@ -421,12 +406,7 @@ f2ptr raw__cairo_context__render_frame_text_box(f2ptr cause, f2ptr this, f2ptr l
       raw__cairo_context__render_outlined_box_with_broken_left_and_right(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
     }
   }
-  {
-    f2ptr result = raw__cairo_context__render_centered_outlined_frame(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, frame, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__cairo_context__render_centered_outlined_frame(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, frame, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha));
   return nil;
 }
 
@@ -441,12 +421,7 @@ f2ptr raw__cairo_context__render_rounded_text_box(f2ptr cause, f2ptr this,
 						  double box_outline_red, double box_outline_green, double box_outline_blue, double box_outline_alpha,
 						  double text_outline_red, double text_outline_green, double text_outline_blue, double text_outline_alpha) {
   raw__cairo_context__render_outlined_rounded_box(cause, this, x0, y0, dx, dy, maximum_corner_radius, outline_width, box_outline_red, box_outline_green, box_outline_blue, box_outline_alpha,  background_red, background_green, background_blue, background_alpha);
-  {
-    f2ptr result = raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__cairo_context__render_centered_outlined_text(cause, this, x0 + (dx / 2), y0 + (dy / 2), font_size, text, outline_width,  text_red, text_green, text_blue, text_alpha,  text_outline_red, text_outline_green, text_outline_blue, text_outline_alpha));
   return nil;
 }
 
@@ -480,15 +455,10 @@ f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr 
 }
 
 f2ptr f2__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
-  if (((start_time != nil) && (! raw__time__is_type(cause, start_time))) ||
-      ((end_time  != nil)  && (! raw__time__is_type(cause, end_time)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type_or_nil(time, start_time);
+  assert_argument_type_or_nil(time, end_time);
   if ((start_time != nil) && (end_time != nil)) {
-    f2ptr is_greater_than = f2__is_greater_than(cause, start_time, end_time);
-    if (raw__larva__is_type(cause, is_greater_than)) {
-      return is_greater_than;
-    }
+    f2ptr is_greater_than = assert_value(f2__is_greater_than(cause, start_time, end_time));
     if (is_greater_than != nil) {
       return f2larva__new(cause, 1351, nil);
     }
@@ -572,12 +542,7 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
   double end_position    = 0.0;
   double top_position    = 0.0;
   double bottom_position = 0.0;
-  {
-    f2ptr result = raw__timeline_event__render_extents(cause, this, timeline, &start_position, &end_position, &top_position, &bottom_position);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__timeline_event__render_extents(cause, this, timeline, &start_position, &end_position, &top_position, &bottom_position));
   f2ptr render_frame = raw__timeline_event__cairo_render_frame(cause, this);
   raw__cairo_context__save(cause, cairo_context);
   {
@@ -593,33 +558,26 @@ f2ptr raw__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_con
     } else {
       right_edge_type = new__symbol(cause, "broken");
     }
-    {
-      f2ptr result = raw__cairo_context__render_frame_text_box(cause, cairo_context, left_edge_type, right_edge_type,
-							       start_position, top_position,                                  // x0, y0
-							       end_position - start_position, bottom_position - top_position, // dx, dy
-							       1,                                                             // font size
-							       render_frame,                                                  // frame
-							       0.5,                                                           // maximum corner radius
-							       142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
-							       0.2,                                                           // outline width
-							       0, 0, 0, 1,                                                    // text rgba
-							       0, 0, 0, 1,                                                    // box outline rgba
-							       142 / 255.0, 200 / 255.0, 255 / 255.0, 1);                     // text outline rgba
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
-    }
+    assert_value(raw__cairo_context__render_frame_text_box(cause, cairo_context, left_edge_type, right_edge_type,
+							   start_position, top_position,                                  // x0, y0
+							   end_position - start_position, bottom_position - top_position, // dx, dy
+							   1,                                                             // font size
+							   render_frame,                                                  // frame
+							   0.5,                                                           // maximum corner radius
+							   142 / 255.0, 200 / 255.0, 255 / 255.0, 1,                      // background rgba
+							   0.2,                                                           // outline width
+							   0, 0, 0, 1,                                                    // text rgba
+							   0, 0, 0, 1,                                                    // box outline rgba
+							   142 / 255.0, 200 / 255.0, 255 / 255.0, 1));                     // text outline rgba
   }
   raw__cairo_context__restore(cause, cairo_context);
   return nil;
 }
 
 f2ptr f2__timeline_event__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context, f2ptr timeline) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__cairo_context__is_type(cause, cairo_context)) ||
-      (! raw__timeline__is_type(cause, timeline))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(cairo_context,  cairo_context);
+  assert_argument_type(timeline,       timeline);
   return raw__timeline_event__cairo_render(cause, this, cairo_context, timeline);
 }
 export_cefunk3(timeline_event__cairo_render, this, cairo_context, timeline, 0, "Renders this timeline_event in the given cairo_context.");
@@ -638,10 +596,8 @@ void raw__timeline_event__add_contains(f2ptr cause, f2ptr this, f2ptr event) {
 }
 
 f2ptr f2__timeline_event__add_contains(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(timeline_event, event);
   raw__timeline_event__add_contains(cause, this, event);
   return nil;
 }
@@ -653,10 +609,8 @@ void raw__timeline_event__add_is_contained_by(f2ptr cause, f2ptr this, f2ptr eve
 }
 
 f2ptr f2__timeline_event__add_is_contained_by(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(timeline_event, event);
   raw__timeline_event__add_is_contained_by(cause, this, event);
   return nil;
 }
@@ -671,10 +625,8 @@ void raw__timeline_event__add_next(f2ptr cause, f2ptr this, f2ptr event) {
 }
 
 f2ptr f2__timeline_event__add_next(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(timeline_event, event);
   raw__timeline_event__add_next(cause, this, event);
   return nil;
 }
@@ -686,10 +638,8 @@ void raw__timeline_event__add_previous(f2ptr cause, f2ptr this, f2ptr event) {
 }
 
 f2ptr f2__timeline_event__add_previous(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(timeline_event, event);
   raw__timeline_event__add_previous(cause, this, event);
   return nil;
 }
@@ -704,10 +654,8 @@ void raw__timeline_event__add_causes(f2ptr cause, f2ptr this, f2ptr event) {
 }
 
 f2ptr f2__timeline_event__add_causes(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(timeline_event, event);
   raw__timeline_event__add_causes(cause, this, event);
   return nil;
 }
@@ -719,10 +667,8 @@ void raw__timeline_event__add_is_caused_by(f2ptr cause, f2ptr this, f2ptr event)
 }
 
 f2ptr f2__timeline_event__add_is_caused_by(f2ptr cause, f2ptr this, f2ptr event) {
-  if ((! raw__timeline_event__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
+  assert_argument_type(timeline_event, event);
   raw__timeline_event__add_is_caused_by(cause, this, event);
   return nil;
 }
@@ -741,9 +687,7 @@ f2ptr raw__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2
 }
 
 f2ptr f2__timeline_event__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__timeline_event__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline_event, this);
   return raw__timeline_event__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(timeline_event__terminal_print_with_frame, this, terminal_print_frame, 0, "");
@@ -846,21 +790,19 @@ export_cefunk0(timeline__new, 0, "Returns a new timeline object.");
 f2ptr raw__timeline__add_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
   f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
   if (raw__set__contains(cause, timeline_event_set, timeline_event)) {
-    return f2larva__new(cause, 1235, f2__bug__new(cause, f2integer__new(cause, 1235), f2__frame__new(cause, f2list8__new(cause,
-															 new__symbol(cause, "bug_type"),       new__symbol(cause, "timeline_already_contains_timeline_event"),
-															 new__symbol(cause, "funkname"),       new__symbol(cause, "timeline-add_timeline_event"),
-															 new__symbol(cause, "this"),           this,
-															 new__symbol(cause, "timeline_event"), timeline_event))));
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),       new__symbol(cause, "timeline_already_contains_timeline_event"),
+				   new__symbol(cause, "funkname"),       new__symbol(cause, "timeline-add_timeline_event"),
+				   new__symbol(cause, "this"),           this,
+				   new__symbol(cause, "timeline_event"), timeline_event));
   }
   raw__set__add(cause, timeline_event_set, timeline_event);
   return nil;
 }
 
 f2ptr f2__timeline__add_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
-  if ((! raw__timeline__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, timeline_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline,       this);
+  assert_argument_type(timeline_event, timeline_event);
   return raw__timeline__add_timeline_event(cause, this, timeline_event);
 }
 export_cefunk2(timeline__add_timeline_event, this, timeline_event, 0, "Adds a timeline_event to a timeline.");
@@ -869,21 +811,19 @@ export_cefunk2(timeline__add_timeline_event, this, timeline_event, 0, "Adds a ti
 f2ptr raw__timeline__remove_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
   f2ptr timeline_event_set = raw__timeline__timeline_event_set(cause, this);
   if (! raw__set__contains(cause, timeline_event_set, timeline_event)) {
-    return f2larva__new(cause, 1236, f2__bug__new(cause, f2integer__new(cause, 1236), f2__frame__new(cause, f2list8__new(cause,
-															 new__symbol(cause, "bug_type"),       new__symbol(cause, "timeline_does_not_contain_timeline_event"),
-															 new__symbol(cause, "funkname"),       new__symbol(cause, "timeline-remove_timeline_event"),
-															 new__symbol(cause, "this"),           this,
-															 new__symbol(cause, "timeline_event"), timeline_event))));
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),       new__symbol(cause, "timeline_does_not_contain_timeline_event"),
+				   new__symbol(cause, "funkname"),       new__symbol(cause, "timeline-remove_timeline_event"),
+				   new__symbol(cause, "this"),           this,
+				   new__symbol(cause, "timeline_event"), timeline_event));
   }
   raw__set__remove(cause, timeline_event_set, timeline_event);
   return nil;
 }
 
 f2ptr f2__timeline__remove_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
-  if ((! raw__timeline__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, timeline_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline,       this);
+  assert_argument_type(timeline_event, timeline_event);
   return raw__timeline__remove_timeline_event(cause, this, timeline_event);
 }
 export_cefunk2(timeline__remove_timeline_event, this, timeline_event, 0, "Removes a timeline_event from a timeline.");
@@ -895,10 +835,8 @@ boolean_t raw__timeline__contains_timeline_event(f2ptr cause, f2ptr this, f2ptr 
 }
 
 f2ptr f2__timeline__contains_timeline_event(f2ptr cause, f2ptr this, f2ptr timeline_event) {
-  if ((! raw__timeline__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, timeline_event))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline,       this);
+  assert_argument_type(timeline_event, timeline_event);
   return raw__timeline__contains_timeline_event(cause, this, timeline_event);
 }
 export_cefunk2(timeline__contains_timeline_event, this, timeline_event, 0, "Returns whether or not a timeline contains a timeline_event.");
@@ -910,9 +848,7 @@ f2ptr raw__timeline__timeline_events(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__timeline__timeline_events(f2ptr cause, f2ptr this) {
-  if (! raw__timeline__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline, this);
   return raw__timeline__timeline_events(cause, this);
 }
 export_cefunk1(timeline__timeline_events, this, 0, "Returns a new list of the timeline_events contained within this timeline.");
@@ -1201,9 +1137,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__timeline__calculate_positions(f2ptr cause, f2ptr this) {
-  if (! raw__timeline__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline, this);
   return raw__timeline__calculate_positions(cause, this);
 }
 export_cefunk1(timeline__calculate_positions, this, 0, "Prepares the timeline for rendering.");
@@ -1213,10 +1147,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
   {
     f2ptr positions_have_been_calculated = raw__timeline__positions_have_been_calculated(cause, this);
     if (positions_have_been_calculated == nil) {
-      f2ptr result = raw__timeline__calculate_positions(cause, this);
-      if (raw__larva__is_type(cause, result)) {
-	return result;
-      }
+      assert_value(raw__timeline__calculate_positions(cause, this));
     }
   }
   
@@ -1279,12 +1210,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		    double end_position;
 		    double top_position;
 		    double bottom_position;
-		    {
-		      f2ptr result = raw__timeline_event__render_extents(cause, event, this, &start_position, &end_position, &top_position, &bottom_position);
-		      if (raw__larva__is_type(cause, result)) {
-			return result;
-		      }
-		    }
+		    assert_value(raw__timeline_event__render_extents(cause, event, this, &start_position, &end_position, &top_position, &bottom_position));
 		    {
 		      f2ptr next_set = raw__timeline_event__next_set(cause, event);
 		      if (next_set != nil) {
@@ -1293,12 +1219,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       double next_event__end_position;
 				       double next_event__top_position;
 				       double next_event__bottom_position;
-				       {
-					 f2ptr result = raw__timeline_event__render_extents(cause, next_event, this, &next_event__start_position, &next_event__end_position, &next_event__top_position, &next_event__bottom_position);
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
-				       }
+				       assert_value(raw__timeline_event__render_extents(cause, next_event, this, &next_event__start_position, &next_event__end_position, &next_event__top_position, &next_event__bottom_position));
 				       {
 					 double x0 = end_position;
 					 double y0 = (top_position + bottom_position) / 2.0;
@@ -1334,12 +1255,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       double contains_event__end_position;
 				       double contains_event__top_position;
 				       double contains_event__bottom_position;
-				       {
-					 f2ptr result = raw__timeline_event__render_extents(cause, contains_event, this, &contains_event__start_position, &contains_event__end_position, &contains_event__top_position, &contains_event__bottom_position);
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
-				       }
+				       assert_value(raw__timeline_event__render_extents(cause, contains_event, this, &contains_event__start_position, &contains_event__end_position, &contains_event__top_position, &contains_event__bottom_position));
 				       {
 					 double x0 = (start_position + end_position) / 2.0;
 					 double y0 = bottom_position;
@@ -1375,12 +1291,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       double causes_event__end_position;
 				       double causes_event__top_position;
 				       double causes_event__bottom_position;
-				       {
-					 f2ptr result = raw__timeline_event__render_extents(cause, causes_event, this, &causes_event__start_position, &causes_event__end_position, &causes_event__top_position, &causes_event__bottom_position);
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
-				       }
+				       assert_value(raw__timeline_event__render_extents(cause, causes_event, this, &causes_event__start_position, &causes_event__end_position, &causes_event__top_position, &causes_event__bottom_position));
 				       {
 					 double x0 = (start_position + end_position) / 2.0;
 					 double y0 = bottom_position;
@@ -1440,12 +1351,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		    double end_position;
 		    double top_position;
 		    double bottom_position;
-		    {
-		      f2ptr result = raw__timeline_event__render_extents(cause, event, this, &start_position, &end_position, &top_position, &bottom_position);
-		      if (raw__larva__is_type(cause, result)) {
-			return result;
-		      }
-		    }
+		    assert_value(raw__timeline_event__render_extents(cause, event, this, &start_position, &end_position, &top_position, &bottom_position));
 		    {
 		      f2ptr next_set = raw__timeline_event__next_set(cause, event);
 		      if (next_set != nil) {
@@ -1454,12 +1360,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       double next_event__end_position;
 				       double next_event__top_position;
 				       double next_event__bottom_position;
-				       {
-					 f2ptr result = raw__timeline_event__render_extents(cause, next_event, this, &next_event__start_position, &next_event__end_position, &next_event__top_position, &next_event__bottom_position);
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
-				       }
+				       assert_value(raw__timeline_event__render_extents(cause, next_event, this, &next_event__start_position, &next_event__end_position, &next_event__top_position, &next_event__bottom_position));
 				       {
 					 double font_size  = 0.75;
 					 char*  label_str  = "next";
@@ -1468,16 +1369,13 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 					 double height     = 1.0;
 					 double x0         = ((end_position + next_event__start_position - width) / 2.0);
 					 double y0         = (((top_position + bottom_position + next_event__top_position + next_event__bottom_position) / 2.0) - height) / 2.0;
-					 f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
-												    0.5,                 // maximum_corner_radius
-												    1.0, 1.0, 1.0, 1.0,  // background_rgba
-												    0.1,
-												    0.0, 0.0, 0.0, 1.0,  // text_rgba
-												    0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
-												    1.0, 1.0, 1.0, 1.0); // text_outline_rgba
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
+					 assert_value(raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
+												  0.5,                 // maximum_corner_radius
+												  1.0, 1.0, 1.0, 1.0,  // background_rgba
+												  0.1,
+												  0.0, 0.0, 0.0, 1.0,  // text_rgba
+												  0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
+												  1.0, 1.0, 1.0, 1.0)); // text_outline_rgba
 				       }
 				       );
 		      }
@@ -1490,12 +1388,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       double contains_event__end_position;
 				       double contains_event__top_position;
 				       double contains_event__bottom_position;
-				       {
-					 f2ptr result = raw__timeline_event__render_extents(cause, contains_event, this, &contains_event__start_position, &contains_event__end_position, &contains_event__top_position, &contains_event__bottom_position);
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
-				       }
+				       assert_value(raw__timeline_event__render_extents(cause, contains_event, this, &contains_event__start_position, &contains_event__end_position, &contains_event__top_position, &contains_event__bottom_position));
 				       {
 					 double font_size  = 0.75;
 					 char*  label_str  = "contains";
@@ -1504,16 +1397,13 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 					 double height     = 1.0;
 					 double x0         = (((start_position + end_position + contains_event__start_position + contains_event__end_position) / 2.0) - width) / 2.0;
 					 double y0         = ((bottom_position + contains_event__top_position - height) / 2.0);
-					 f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
-												    0.5,                 // maximum_corner_radius
-												    1.0, 1.0, 1.0, 1.0,  // background_rgba
-												    0.1,
-												    0.0, 0.0, 0.0, 1.0,  // text_rgba
-												    0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
-												    1.0, 1.0, 1.0, 1.0); // text_outline_rgba
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
+					 assert_value(raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
+												  0.5,                 // maximum_corner_radius
+												  1.0, 1.0, 1.0, 1.0,  // background_rgba
+												  0.1,
+												  0.0, 0.0, 0.0, 1.0,  // text_rgba
+												  0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
+												  1.0, 1.0, 1.0, 1.0)); // text_outline_rgba
 				       }
 				       );
 		      }
@@ -1526,12 +1416,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 				       double causes_event__end_position;
 				       double causes_event__top_position;
 				       double causes_event__bottom_position;
-				       {
-					 f2ptr result = raw__timeline_event__render_extents(cause, causes_event, this, &causes_event__start_position, &causes_event__end_position, &causes_event__top_position, &causes_event__bottom_position);
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
-				       }
+				       assert_value(raw__timeline_event__render_extents(cause, causes_event, this, &causes_event__start_position, &causes_event__end_position, &causes_event__top_position, &causes_event__bottom_position));
 				       {
 					 double font_size  = 0.75;
 					 char*  label_str  = "causes";
@@ -1540,16 +1425,13 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 					 double height     = 1.0;
 					 double x0         = (((start_position + end_position + causes_event__start_position + causes_event__end_position) / 2.0) - width) / 2.0;
 					 double y0         = ((bottom_position + causes_event__top_position - height) / 2.0);
-					 f2ptr result = raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
-												    0.5,                 // maximum_corner_radius
-												    1.0, 1.0, 1.0, 1.0,  // background_rgba
-												    0.1,
-												    0.0, 0.0, 0.0, 1.0,  // text_rgba
-												    0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
-												    1.0, 1.0, 1.0, 1.0); // text_outline_rgba
-					 if (raw__larva__is_type(cause, result)) {
-					   return result;
-					 }
+					 assert_value(raw__cairo_context__render_rounded_text_box(cause, cairo_context, x0, y0, width, height, font_size, label_str,
+												  0.5,                 // maximum_corner_radius
+												  1.0, 1.0, 1.0, 1.0,  // background_rgba
+												  0.1,
+												  0.0, 0.0, 0.0, 1.0,  // text_rgba
+												  0.0, 0.0, 0.0, 1.0,  // box_outline_rgba
+												  1.0, 1.0, 1.0, 1.0)); // text_outline_rgba
 				       }
 				       );
 		      }
@@ -1580,10 +1462,7 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 		f2ptr event = raw__array__elt(cause, event_array, index);
 		raw__cairo_context__save(cause, cairo_context);
 		raw__cairo_context__translate(cause, cairo_context, timeline__left_border, timeline__right_border + y_position);
-		f2ptr result = raw__timeline_event__cairo_render(cause, event, cairo_context, this);
-		if (raw__larva__is_type(cause, result)) {
-		  return result;
-		}
+		assert_value(raw__timeline_event__cairo_render(cause, event, cairo_context, this));
 		raw__cairo_context__restore(cause, cairo_context);
 	      }
 	    }
@@ -1597,10 +1476,8 @@ f2ptr raw__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) 
 }
 
 f2ptr f2__timeline__cairo_render(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  if ((! raw__timeline__is_type(cause, this)) ||
-      (! raw__cairo_context__is_type(cause, cairo_context))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline,      this);
+  assert_argument_type(cairo_context, cairo_context);
   return raw__timeline__cairo_render(cause, this, cairo_context);
 }
 export_cefunk2(timeline__cairo_render, this, cairo_context, 0, "Renders this timeline within the given cairo_context.");
@@ -1643,11 +1520,9 @@ boolean_t raw__timeline__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr f2__timeline__timeline_event__overlaps(f2ptr cause, f2ptr this, f2ptr event_a, f2ptr event_b) {
-  if ((! raw__timeline__is_type(cause, this)) ||
-      (! raw__timeline_event__is_type(cause, event_a)) ||
-      (! raw__timeline_event__is_type(cause, event_b))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline,       this);
+  assert_argument_type(timeline_event, event_a);
+  assert_argument_type(timeline_event, event_b);
   return f2bool__new(raw__timeline__timeline_event__overlaps(cause, this, event_a, event_b));
 }
 export_cefunk3(timeline__timeline_event__overlaps, this, event_a, event_b, 0, "");
@@ -1666,9 +1541,7 @@ f2ptr raw__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
 }
 
 f2ptr f2__timeline__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  if (! raw__timeline__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(timeline, this);
   return raw__timeline__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
 export_cefunk2(timeline__terminal_print_with_frame, this, terminal_print_frame, 0, "");

@@ -173,13 +173,29 @@ export_cefunk2(semantic_event_knowledge_base__events_containing_time, this, sema
 	       "Returns the semantic_events from this semantic_event_knowledge_base that contain the given time.");
 
 
+f2ptr raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+  f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
+  return assert_value(f2__semantic_event_tree__most_recent_filtered_events(cause, semantic_event_tree, filter_funk, semantic_time));
+}
+
+f2ptr f2__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+  assert_argument_type(semantic_event_knowledge_base, this);
+  assert_argument_type(funkable,                      filter_funk);
+  assert_argument_type(semantic_time,                 semantic_time);
+  return raw__semantic_event_knowledge_base__most_recent_filtered_events(cause, this, filter_funk, semantic_time);
+}
+export_cefunk3(semantic_event_knowledge_base__most_recent_filtered_events, this, filter_funk, semantic_time, 0,
+	       "Returns the most recent semantic_events that occur at or before the given semantic_time and also for which the filter_funk returns true.");
+
+
 f2ptr f2__semantic_event_knowledge_base_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "meta_semantic_knowledge_base")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "semantic_event_tree"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__semantic_event_tree")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_containing_time"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events_containing_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "semantic_event_tree"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__semantic_event_tree")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_containing_time"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events_containing_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_events"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__most_recent_filtered_events")));}
   return this;
 }
 

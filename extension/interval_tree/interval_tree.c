@@ -548,6 +548,28 @@ export_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
 	       "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
 
 
+f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time) {
+  printf("\nyeah!"); fflush(stdout);
+  return nil;
+}
+
+f2ptr raw__interval_tree__most_recent_filtered_intervals(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value) {
+  f2ptr mutate_cmutex = f2__interval_tree__mutate_cmutex(cause, this);
+  raw__cmutex__lock(cause, mutate_cmutex);
+  f2ptr result = raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(cause, this, filter_funk, maximum_value);
+  raw__cmutex__unlock(cause, mutate_cmutex);
+  return result;
+}
+
+f2ptr f2__interval_tree__most_recent_filtered_intervals(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr maximum_value) {
+  assert_argument_type(interval_tree, this);
+  assert_argument_type(funkable,      filter_funk);
+  return assert_value(raw__interval_tree__most_recent_filtered_intervals(cause, this, filter_funk, maximum_value));
+}
+export_cefunk3(interval_tree__most_recent_filtered_intervals, this, filter_funk, maximum_value, 0,
+	       "Returns the maximum intervals that overlap with or are less than the given maximum_value and for which the given filter_funk also returns true.");
+
+
 f2ptr raw__interval_tree__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -580,6 +602,7 @@ f2ptr f2__interval_tree_type__new_aux(f2ptr cause) {
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_intervals_containing_value_to_list"), f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__add_intervals_containing_value_to_list")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_containing_value"),             f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals_containing_value")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_overlapping_interval"),         f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals_overlapping_interval")));
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_intervals"),         f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__most_recent_filtered_intervals")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),              f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__terminal_print_with_frame")));
   return this;
 }

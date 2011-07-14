@@ -30,17 +30,19 @@
 
 // semantic_event_knowledge_base
 
-f2ptr     raw__semantic_event_knowledge_base__type_create           (f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm);
-f2ptr     raw__semantic_event_knowledge_base__new                   (f2ptr cause, f2ptr name, f2ptr semantic_realm);
-f2ptr      f2__semantic_event_knowledge_base__new                   (f2ptr cause, f2ptr name, f2ptr semantic_realm);
-boolean_t raw__semantic_event_knowledge_base__is_type               (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_event_knowledge_base__is_type               (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_event_knowledge_base__type                  (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event_knowledge_base__type                  (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event_knowledge_base__semantic_event_tree   (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event_knowledge_base__semantic_event_tree   (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event_knowledge_base__events_containing_time(f2ptr cause, f2ptr this, f2ptr semantic_time);
-f2ptr      f2__semantic_event_knowledge_base__events_containing_time(f2ptr cause, f2ptr this, f2ptr semantic_time);
+f2ptr     raw__semantic_event_knowledge_base__type_create                (f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm);
+f2ptr     raw__semantic_event_knowledge_base__new                        (f2ptr cause, f2ptr name, f2ptr semantic_realm);
+f2ptr      f2__semantic_event_knowledge_base__new                        (f2ptr cause, f2ptr name, f2ptr semantic_realm);
+boolean_t raw__semantic_event_knowledge_base__is_type                    (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_event_knowledge_base__is_type                    (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_event_knowledge_base__type                       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event_knowledge_base__type                       (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event_knowledge_base__semantic_event_tree        (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event_knowledge_base__semantic_event_tree        (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event_knowledge_base__events_containing_time     (f2ptr cause, f2ptr this, f2ptr semantic_time);
+f2ptr      f2__semantic_event_knowledge_base__events_containing_time     (f2ptr cause, f2ptr this, f2ptr semantic_time);
+f2ptr     raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time);
+f2ptr      f2__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr semantic_time);
 
 f2ptr f2__semantic_event_knowledge_base_type__new(f2ptr cause);
 

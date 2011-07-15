@@ -191,42 +191,11 @@ Because agent processes can only directly act on and perceive the
 environment, all communication between agent processes must occur
 through the environment process.  We assume that agents can
 communicate some form of symbolic knowledge structure in the absence
-of noise.
-
-\section{Serial Process Representation}
-
-\begin{table}
-  \myfloatalign
-  \begin{tabularx}{\textwidth}{XllllX}
-    & [prog & [pick-up & `red   & `cube]    & \\
-    &       & [put-on  & `blue  & `cube]    & \\
-    &       & [pick-up & `green & `pyramid] & \\
-    &       & [put-on  & `red   & `cube]]   & \\
-  \end{tabularx}
-  \caption[Representation of a serial process]{Representation of a serial process.}
-  \label{tab:serial_process_representation}
-\end{table}
-
-A representation of a serial process is shown in
-Table~\ref{tab:serial_process_representation}.  This representation is
-an ordered tree symbolic representation, which is capable of
-representing any Lisp-like expression in our language interpretter.
-
-\section{Representation for Parallel Processes}
-
-\begin{table}
-  \myfloatalign
-  \begin{tabularx}{\textwidth}{XlllllX}
-    & [prog & [parog & [use-left-hand-to-pick-up  & `red   & `cube]    & \\
-    &       &        & [use-right-hand-to-pick-up & `green & `pyramid] & \\
-    &       & [parog & [use-left-hand-to-put-on   & `blue  & `cube]]   & \\
-    &       &        & [use-right-hand-to-put-on  & `red   & `cube]]]  & \\
-  \end{tabularx}
-  \caption[Representation of two serial parallel processes.]{Representation of two serial parallel processes.}
-  \label{tab:parallel_process_representation}
-\end{table}
-
-See Table~\ref{tab:parallel_process_representation}.
+of noise.  These representations are used to communicate processes
+from one agent to another.  Specific examples of such a process
+representation that we have used in our experiments are described in
+more detail in
+Sections~\ref{sec:serial_process_representation}--\ref{sec:parallel_process_representation}.
 
 \section{Agent Speech Acts}
 

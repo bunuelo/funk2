@@ -213,3 +213,42 @@ tracing component.  There is a new proposal by McCarthy to build a new
 programming language that remembers everything that it does; it is
 called Elephant 2000 \citep{mccarthy:1994}.
 
+
+
+\section{A Serial Process Representation}
+\label{sec:serial_process_representation}
+
+\begin{table}
+  \myfloatalign
+  \begin{tabularx}{\textwidth}{XllllX}
+    & [prog & [pick-up & `red   & `cube]    & \\
+    &       & [put-on  & `blue  & `cube]    & \\
+    &       & [pick-up & `green & `pyramid] & \\
+    &       & [put-on  & `red   & `cube]]   & \\
+  \end{tabularx}
+  \caption[Representation of a serial process]{Representation of a serial process.}
+  \label{tab:serial_process_representation}
+\end{table}
+
+A representation of a serial process is shown in
+Table~\ref{tab:serial_process_representation}.  This representation is
+an ordered tree symbolic representation, which is capable of
+representing any Lisp-like expression in our language interpretter.
+
+\section{A Parallel Process Representation}
+\label{sec:parallel_process_representation}
+
+\begin{table}
+  \myfloatalign
+  \begin{tabularx}{\textwidth}{XlllllX}
+    & [prog & [parog & [use-left-hand-to-pick-up  & `red   & `cube]    & \\
+    &       &        & [use-right-hand-to-pick-up & `green & `pyramid] & \\
+    &       & [parog & [use-left-hand-to-put-on   & `blue  & `cube]]   & \\
+    &       &        & [use-right-hand-to-put-on  & `red   & `cube]]]  & \\
+  \end{tabularx}
+  \caption[Representation of two serial parallel processes.]{Representation of two serial parallel processes.}
+  \label{tab:parallel_process_representation}
+\end{table}
+
+See Table~\ref{tab:parallel_process_representation}.
+

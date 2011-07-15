@@ -185,14 +185,15 @@ environment model shown in
 Figure~\ref{fig:multiple_agent_environment}.
 
 
-\section{Agent Communication}
+\section{Agent Process Communication}
 
 Because agent processes can only directly act on and perceive the
 environment, all communication between agent processes must occur
 through the environment process.  We assume that agents can
 communicate some form of symbolic knowledge structure in the absence
-of noise.  An example representation of a process is shown in
+of noise.
 
+\section{Serial Process Representation}
 
 \begin{table}
   \myfloatalign
@@ -203,8 +204,15 @@ of noise.  An example representation of a process is shown in
     &       & [put-on  & red   & cube]]   & \\
   \end{tabularx}
   \caption[Representation of a serial process]{Representation of a serial process.}
-  \label{tab:agent_communication}
+  \label{tab:serial_process_representation}
 \end{table}
+
+A representation of a serial process is shown in
+Table~\ref{tab:serial_process_representation}.  This representation is
+an ordered tree symbolic representation, which is capable of
+representing any Lisp-like expression in our language interpretter.
+
+\section{Representation for Parallel Processes}
 
 \begin{table}
   \myfloatalign
@@ -214,7 +222,16 @@ of noise.  An example representation of a process is shown in
     &        & [prog & [use-right-hand-to-pick-up & green & pyramid] & \\
     &        &       & [use-right-hand-to-put-on  & red   & cube]]]  & \\
   \end{tabularx}
-  \caption[Representation of a serial process]{Representation of a serial process.}
-  \label{tab:agent_communication}
+  \caption[Representation of two parallel serial processes.]{Representation of two parallel serial processes.}
+  \label{tab:parallel_process_representation}
 \end{table}
+
+See Table~\ref{tab:parallel_process_representation}.
+
+\section{Agent Speech Acts}
+
+At any given point in time, each agent is pursuing a different variety
+of goals.  Each agent executes actions in order to accomplish
+collections of these goals.  We treat language communication as an
+additional physical action that the agent can choose to perform.
 

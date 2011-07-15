@@ -49,33 +49,25 @@ See Figure~\ref{fig:physical_perception}.
 
 \section{Debugging Plans by Reflectively Tracing the Provenance of Knowledge}
 
-The thesis is focusing on provenance of knowledge.  From perception to
-other knowledge representations, through planning and failed steps.
-Normally, when plans fail, rule learning (or other learning method) is
-used to update beginning and ending conditions for actions.  Very
-complex planning methods exist that all assume that the current world
-model is perfect (in either a deterministic or probabilistic
-representation of the world).  Currently, plans are called policies
-that handle all possible contingencies, in which the agent may find
-itself.  When these plans fail, it is often unclear which part of the
-plan was responsible for the failure.  In the simplest cases, a
+We trace the procenance of knowledge from perceptual knowledge as it
+is manipulated into other knowledge representations, driven by a
+goal-oriented learning algorithm.  Normally, when plans fail, rule
+learning is used to update beginning and ending condition transition
+function hypotheses for actions relative to various knowledge bases.
+
+In many systems, when these plans fail, it is often unclear which part
+of the plan was responsible for the failure.  In the simplest cases, a
 specific low-level action may have been executing, which implies that
 precondition categories were incorrectly mapped to postconditions or
 the range of postconditions was not broad enough.  In the worst cases,
 it is impossible to tell what part of the plan failed because the plan
 is such a complicated tangle of compiled numbers that the only
-recourse is to nudge a few of these numbers in a hill-climbing sense.
-Rethinking this problem with my new approach that maintains provenance
-for knowledge used in creating plans allows debugging the complex web
-of knowledge and processes involved in creating that
-knowledge---rather than simply updating the rules related to a single
-action.
-
-The planner that I've built in my system is not as complicated as
-state of the art planners that currently exist in the field, but my
-planner allows a reflective process to debug the failure of plans
-created by our planner by tracing the provenance of the knowledge in
-the plan representation itself.
+recourse is to nudge a few of these numbers using hill-climbing toward
+an average of a universal goal.  Rethinking this problem with my new
+approach that maintains provenance for knowledge used in creating
+plans allows debugging the complex web of goal-oriented knowledge, and
+reflectively, also manipulating the processes involved in creating
+that knowledge.
 
 \section{System Overview}
 
@@ -89,37 +81,7 @@ learning everything from scratch from the physical world.  We see the
 problem as requiring a combination of many different types of
 representations and reasoning processes.
 
-We worked with Pushpinder Singh from 1999 to 2006 on the first version
-of the Emotion Machine architecture, EM1 \citep{singh:2005}.  During
-that period, we discussed that one weakness in the EM1 system is its
-reliance on tracing only the declarative prolog statements, among
-other necessary but untraced procedural code.  Although EM1 contained
-a large amount of procedural knowledge, none of the effects of this
-procedural knowledge could be debugged reflectively.  Toward solving
-this problem, we have based our approach on a memory layer that can
-trace the provenance of select memory events.
 
-Because the Emotion Machine theory of mind requires a variety of many
-reasoning processes to be controlled, we have built an operating
-system on top of this traceable memory layer.
-
-Further, the Emotion Machine is organized into layers of different
-representations, so we have built a lisp-like language on top this
-operating system.  The benefit of having a lisp-like language is the
-language's ability to efficiently represent and simulate new
-programming languages.
-
-Within our lisp-like language we have written an implementation of a
-layered reflective cognitive architecture, inspired by EM1.
-
-Finally, we demonstrate our cognitive architecture in a rigid-body
-physical environment, where multiple agents demonstrate learning from
-both being told solutions to problems as well as learning from the
-environment in which situations these solutions succeed or fail.  We
-show how our procedurally traced memory can be used to assign credit
-to those deliberative processes that are responsible for the failure,
-facilitating learning how to better plan for these types of problems
-in the future.
 
 \section{Reflectively Traced Frame Memory}
 

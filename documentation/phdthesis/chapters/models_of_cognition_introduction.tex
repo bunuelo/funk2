@@ -153,6 +153,39 @@ perception of the agent.
 \end{figure}
 
 
+\section{Reflective Knowledge}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=12cm]{gfx/reflective_event_representation}
+  \caption[A reflective event representation]{A reflective event representation shows the changes in a labeled graph.}
+  \label{fig:reflective_event_representation}
+\end{figure}
+
+
+While the term meta-knowledge is used to describe the very general
+idea of knowledge about knowledge, we use the term reflective
+knowledge to refer to the specific type of meta-knowledge that refers
+to knowledge about the changes to a knowledge structure.  If we keep
+track of the changes to a knowledge structure, we can later integrate
+these changes in order to obtain an equivalent form of that knowledge
+structure as it was at any point in the past.
+
+
+\section{Reflective Tracing}
+\label{sec:reflective_tracing}
+
+There are serious efficiency problems that must be carefully
+sidestepped when one is dealing with reflective knowledge.  For
+example, infinite reflection loops result in an infinite processor and
+memory consumption pattern, after only a single change to a knowledge
+representation.  The solution to this problem is to have various means
+of controlling the reflective tracing focus.  We will discuss the
+various methods for controlling the tracing focus of the reflective
+memory that we have found useful in the development of our system in
+Section~\ref{sec:methods_for_focusing_reflective_tracing}.
+
+
 \section{Perceptual Support of Physical Knowledge}
 
 \begin{figure}[bth]
@@ -225,7 +258,6 @@ options.
 \end{figure}
 
 
-
 \section{The Multiple Agent Environment Model}
 
 \begin{figure}[bth]
@@ -242,35 +274,4 @@ of the multiple agent environment model is that any communication
 between any two agent processes must occur through the environment
 process.
 
-
-\section{Reflective Knowledge}
-
-\begin{figure}[bth]
-  \center
-  \includegraphics[width=12cm]{gfx/reflective_event_representation}
-  \caption[A reflective event representation]{A reflective event representation shows the changes in a labeled graph.}
-  \label{fig:reflective_event_representation}
-\end{figure}
-
-
-While the term meta-knowledge is used to describe the very general
-idea of knowledge about knowledge, we use the term reflective
-knowledge to refer to the specific type of meta-knowledge that refers
-to knowledge about the changes to a knowledge structure.  If we keep
-track of the changes to a knowledge structure, we can later integrate
-these changes in order to obtain an equivalent form of that knowledge
-structure as it was at any point in the past.
-
-
-\section{Reflective Tracing}
-\label{sec:reflective_tracing}
-
-There are serious efficiency problems that must be carefully
-sidestepped when one is dealing with reflective knowledge.  For
-example, infinite reflection loops result in an infinite processor and
-memory consumption pattern, after only a single change to a knowledge
-representation.  The solution to this problem is to have various means
-of controlling the reflective tracing focus.  We will discuss the
-various methods for controlling the tracing focus of the reflective
-memory that we have found useful in the development of our system in Section~\ref{sec:methods_for_focusing_reflective_tracing}.
 

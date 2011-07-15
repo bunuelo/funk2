@@ -198,10 +198,10 @@ of noise.
 \begin{table}
   \myfloatalign
   \begin{tabularx}{\textwidth}{XllllX}
-    & [prog & [pick-up & red   & cube]    & \\
-    &       & [put-on  & blue  & cube]    & \\
-    &       & [pick-up & green & pyramid] & \\
-    &       & [put-on  & red   & cube]]   & \\
+    & [prog & [pick-up & `red   & `cube]    & \\
+    &       & [put-on  & `blue  & `cube]    & \\
+    &       & [pick-up & `green & `pyramid] & \\
+    &       & [put-on  & `red   & `cube]]   & \\
   \end{tabularx}
   \caption[Representation of a serial process]{Representation of a serial process.}
   \label{tab:serial_process_representation}
@@ -217,10 +217,10 @@ representing any Lisp-like expression in our language interpretter.
 \begin{table}
   \myfloatalign
   \begin{tabularx}{\textwidth}{XlllllX}
-    & [prog & [parog & [use-left-hand-to-pick-up  & red   & cube]    & \\
-    &       &        & [use-right-hand-to-pick-up & green & pyramid] & \\
-    &       & [parog & [use-left-hand-to-put-on   & blue  & cube]]   & \\
-    &       &        & [use-right-hand-to-put-on  & red   & cube]]]  & \\
+    & [prog & [parog & [use-left-hand-to-pick-up  & `red   & `cube]    & \\
+    &       &        & [use-right-hand-to-pick-up & `green & `pyramid] & \\
+    &       & [parog & [use-left-hand-to-put-on   & `blue  & `cube]]   & \\
+    &       &        & [use-right-hand-to-put-on  & `red   & `cube]]]  & \\
   \end{tabularx}
   \caption[Representation of two serial parallel processes.]{Representation of two serial parallel processes.}
   \label{tab:parallel_process_representation}

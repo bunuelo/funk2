@@ -195,13 +195,26 @@ of noise.  An example representation of a process is shown in
 
 
 \begin{table}
-    \myfloatalign
+  \myfloatalign
   \begin{tabularx}{\textwidth}{XllllX}
     & [prog & [pick-up & red   & cube]    & \\
     &       & [put-on  & blue  & cube]    & \\
     &       & [pick-up & green & pyramid] & \\
     &       & [put-on  & red   & cube]]   & \\
   \end{tabularx}
-  \caption[Agent communication]{Agent communication.}
+  \caption[Representation of a serial process]{Representation of a serial process.}
   \label{tab:agent_communication}
 \end{table}
+
+\begin{table}
+  \myfloatalign
+  \begin{tabularx}{\textwidth}{XlllllX}
+    & [parog & [prog & [use-left-hand-to-pick-up  & red   & cube]    & \\
+    &        &       & [use-left-hand-to-put-on   & blue  & cube]]   & \\
+    &        & [prog & [use-right-hand-to-pick-up & green & pyramid] & \\
+    &        &       & [use-right-hand-to-put-on  & red   & cube]]]  & \\
+  \end{tabularx}
+  \caption[Representation of a serial process]{Representation of a serial process.}
+  \label{tab:agent_communication}
+\end{table}
+

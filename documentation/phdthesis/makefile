@@ -45,7 +45,8 @@ phdthesis.pdf: \
   gfx/goal_state.pdf \
   gfx/reflective_event_representation.pdf \
   gfx/communication_theory.pdf \
-  gfx/learning_to_plan.pdf
+  gfx/learning_to_plan.pdf \
+  gfx/transframe.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

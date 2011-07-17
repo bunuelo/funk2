@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe blocks_world [frame]
+[deframe blocks_world [frame] []
   [new []
        ]]
 

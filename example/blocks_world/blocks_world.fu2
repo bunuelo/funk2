@@ -17,8 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe blocks_world [frame] []
+[deframe blocks_world [frame] [gtk_window]
   [new []
+       [= gtk_window [gtk-window-new]]
+       [set gtk_window title 'Blocks World']
        ]]
 
 

@@ -21,6 +21,11 @@
   [new []
        [= gtk_window [gtk-window-new]]
        [set gtk_window title 'Blocks World']
+       [have gtk_window show_all]
        ]]
+
+[defmetro blocks_world []
+  `[prog [new blocks_world]
+	 nil]]
 
 

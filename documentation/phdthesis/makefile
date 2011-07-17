@@ -46,7 +46,8 @@ phdthesis.pdf: \
   gfx/reflective_event_representation.pdf \
   gfx/communication_theory.pdf \
   gfx/learning_to_plan.pdf \
-  gfx/transframe.pdf
+  gfx/transframe.pdf \
+  gfx/serial_and_parallel_plan.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

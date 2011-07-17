@@ -47,7 +47,8 @@ phdthesis.pdf: \
   gfx/communication_theory.pdf \
   gfx/learning_to_plan.pdf \
   gfx/transframe.pdf \
-  gfx/serial_and_parallel_plan.pdf
+  gfx/serial_and_parallel_plan.pdf \
+  gfx/imagine_executing_plan.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

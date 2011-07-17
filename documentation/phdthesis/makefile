@@ -49,7 +49,8 @@ phdthesis.pdf: \
   gfx/transframe.pdf \
   gfx/serial_and_parallel_plan.pdf \
   gfx/infer_plan_effects.pdf \
-  gfx/planning_machine_operations.pdf
+  gfx/planning_machine_operations.pdf \
+  gfx/planning_machine_reflective_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

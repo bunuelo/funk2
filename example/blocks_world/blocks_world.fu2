@@ -17,12 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe blocks_world [frame] [gtk_window gtk_image]
+[deframe blocks_world [frame] [gtk_window
+			       gtk_image
+			       cairo_image_surface
+			       cairo_context]
   [new []
        [= gtk_window [gtk-window-new]]
        [set gtk_window title 'Blocks World']
        
-       [= gtk_image [gtk-image-new_from_image [new image 640 480]]]
+       [= cairo_image_surface [new cairo_image_surface `ARGB32 640 480]]
+       [= cairo_context       [new cairo_context cairo_image_surface]]
+       
+       [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
        [have gtk_window add gtk_image]
        
        [have gtk_window show_all]

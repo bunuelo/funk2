@@ -17,10 +17,50 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'blocks_world_block'
+
+[deframe blocks_world_block [frame] [x y width height color]
+  [new [initial-x
+	initial-y
+	initial-width
+	initial-height
+	initial-color]
+       [= x      initial-x]
+       [= y      initial-y]
+       [= width  initial-width]
+       [= height initial-height]
+       [= color  initial-color]
+       ]]
+
+[deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
+  
+  ]
+
+'blocks_world_physics'
+
+[deframe blocks_world_physics [blocks]
+  [new []
+       ]]
+
+[deftypefunk blocks_world_physics execute add_block [block]
+  [= blocks [cons block blocks]]]
+
+[deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
+  [mapc [funk [block]
+	      [have block render_to_cairo cairo_context]]]
+  ]
+
+
+'blocks_world'
+
 [deframe blocks_world [frame] [gtk_window
+			       gtk_image_mutex
 			       gtk_image
 			       cairo_image_surface
-			       cairo_context]
+			       cairo_context
+			       blocks_world_physics
+			       fiber]
   [new []
        [= gtk_window [gtk-window-new]]
        [set gtk_window title 'Blocks World']
@@ -28,11 +68,44 @@
        [= cairo_image_surface [new cairo_image_surface `ARGB32 640 480]]
        [= cairo_context       [new cairo_context cairo_image_surface]]
        
+       [= gtk_image_mutex [new mutex]]
        [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
        [have gtk_window add gtk_image]
        
        [have gtk_window show_all]
+       
+       [= blocks_world_physics [new blocks_world_physics]]
+       
+       [= fiber [fiber [funk []
+			     [have this handle_redraw]]
+		       nil]]
+       
+       [have this setup_default_scenario]
        ]]
+
+[deftypefunk blocks_world execute redraw_cairo_surface []
+  [have blocks_world_physics render_to_cairo cairo_context]
+  ]
+
+[deftypefunk blocks_world execute regenerate_gtk_image []
+  [have gtk_image_mutex lock]
+  [let [[old_gtk_image gtk_image]]
+    [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
+    [have gtk_window remove old_gtk_image]
+    [have gtk_window add    gtk_image]
+    [have gtk_image         show_all]]
+  [have gtk_image_mutex unlock]]
+
+[deftypefunk blocks_world execute handle_redraw []
+  [have this redraw_cairo_surface]
+  [have this regenerate_gtk_image]
+  ]
+
+[deftypefunk blocks_world execute setup_default_scenario []
+  
+  ]
+
+
 
 [defmetro blocks_world []
   `[prog [new blocks_world]

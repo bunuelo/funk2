@@ -73,7 +73,7 @@
   
   [have cairo_context save]
   [have cairo_context move_to 32.0 32.0]
-  [have cairo_context scale 32.0 32.0]
+  [have cairo_context scale 128.0 128.0]
   
   [mapc [funk [block]
 	      [have block render_to_cairo cairo_context]]

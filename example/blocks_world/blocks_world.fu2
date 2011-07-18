@@ -201,7 +201,7 @@
        [have controller_hbox pack_start controller_step_size_label nil nil 0]
        [have controller_hbox pack_start controller_step_size_entry nil nil 0]
        
-       [have vbox pack_start processor_hbox nil nil 0]
+       [have vbox pack_start controller_hbox nil nil 0]
        
        [have gtk_window add vbox]
        

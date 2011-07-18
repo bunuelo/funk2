@@ -48,7 +48,8 @@
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
   [mapc [funk [block]
-	      [have block render_to_cairo cairo_context]]]
+	      [have block render_to_cairo cairo_context]]
+	blocks]
   ]
 
 

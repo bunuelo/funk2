@@ -43,7 +43,7 @@
   [have cairo_context rel_line_to width     0.0]
   [have cairo_context rel_line_to 0.0       height]
   [have cairo_context rel_line_to [- width] 0.0]
-  [have cairo_context close_path]
+  [have cairo_context rel_line_to 0.0       [- height]]
   [have cairo_context stroke]
   [have cairo_context restore]
   

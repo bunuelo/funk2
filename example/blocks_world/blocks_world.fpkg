@@ -22,7 +22,7 @@
    :sources ['blocks_world_block.fu2']]
 
 [defpackage blocks_world_physics
-  :packages []
+  :packages [blocks_world_block]
    :sources ['blocks_world_block.fu2']]
 
 [defpackage blocks_world_window
@@ -30,6 +30,7 @@
    :sources ['blocks_world_window.fu2']]
 
 [defpackage blocks_world
-  :packages [blocks_world_window]
+  :packages [blocks_world_window
+	     blocks_world_physics]
    :sources ['blocks_world.fu2']]
 

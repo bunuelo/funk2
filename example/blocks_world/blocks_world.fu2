@@ -28,39 +28,29 @@
 	initial-x
 	initial-y]
        [= name   initial-name]
-       [= width  initial-width]
-       [= height initial-height]
+       [= width  [get initial-width  as-double]]
+       [= height [get initial-height as-double]]
        [= color  initial-color]
-       [= x      initial-x]
-       [= y      initial-y]
+       [= x      [get initial-x as-double]]
+       [= y      [get initial-y as-double]]
        ]]
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
-  [have cairo_context move_to [get x as-double] [get y as-double]]
-  [have cairo_context save]
-  
-  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
-  [have cairo_context arc 36.0 36.0 35.0 0.0 [/ [* 360.0 pi] 180.0]]
-  [have cairo_context stroke]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
   [have cairo_context set_line_cap `square]
-  [have cairo_context move_to 36.0 36.0]
-  [have cairo_context set_line_cap `round]
-  [have cairo_context rel_line_to 34.0 0.0]
+  [have cairo_context move_to     x         y]
+  [have cairo_context rel_line_to width     0.0]
+  [have cairo_context rel_line_to 0.0       height]
+  [have cairo_context rel_line_to [- width] 0.0]
+  [have cairo_context close_path]
   [have cairo_context stroke]
 
-  [have cairo_context set_source_rgba 0.0 0.0 1.0 0.5]
-  [have cairo_context move_to 0.0 0.0]
-  [have cairo_context curve_to 36.0 0.0  36.0 72.0  72.0 72.0]
-  [have cairo_context stroke]
-  
-  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
-  [have cairo_context move_to 36.0 35.0]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context move_to x y]
   [have cairo_context select_font_face 'Courier' `normal `normal]
   [have cairo_context set_font_size 1.0]
-  [have cairo_context text_path 'cairo funk']
+  [have cairo_context text_path [get name as-string]]
   [have cairo_context fill]
-  
-  [have cairo_context restore]
   ]
 
 'blocks_world_physics'
@@ -73,7 +63,7 @@
   [= blocks [cons block blocks]]]
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
-  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
   [have cairo_context paint]
   
   [mapc [funk [block]

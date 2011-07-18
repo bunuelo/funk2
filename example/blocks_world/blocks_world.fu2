@@ -20,21 +20,45 @@
 
 'blocks_world_block'
 
-[deframe blocks_world_block [frame] [x y width height color]
-  [new [initial-x
-	initial-y
-	initial-width
+[deframe blocks_world_block [frame] [width height color x y]
+  [new [initial-width
 	initial-height
-	initial-color]
-       [= x      initial-x]
-       [= y      initial-y]
+	initial-color
+	initial-x
+	initial-y]
        [= width  initial-width]
        [= height initial-height]
        [= color  initial-color]
+       [= x      initial-x]
+       [= y      initial-y]
        ]]
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
+  [have cairo_context move_to x y]
+  [have cairo_context save]
   
+  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
+  [have cairo_context arc 36.0 36.0 35.0 0.0 [/ [* 360.0 pi] 180.0]]
+  [have cairo_context stroke]
+  [have cairo_context set_line_cap `square]
+  [have cairo_context move_to 36.0 36.0]
+  [have cairo_context set_line_cap `round]
+  [have cairo_context rel_line_to 34.0 0.0]
+  [have cairo_context stroke]
+
+  [have cairo_context set_source_rgba 0.0 0.0 1.0 0.5]
+  [have cairo_context move_to 0.0 0.0]
+  [have cairo_context curve_to 36.0 0.0  36.0 72.0  72.0 72.0]
+  [have cairo_context stroke]
+  
+  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
+  [have cairo_context move_to 36.0 35.0]
+  [have cairo_context select_font_face 'Courier' `normal `normal]
+  [have cairo_context set_font_size 1.0]
+  [have cairo_context text_path 'cairo funk']
+  [have cairo_context fill]
+  
+  [have cairo_context restore]
   ]
 
 'blocks_world_physics'
@@ -47,6 +71,9 @@
   [= blocks [cons block blocks]]]
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context paint]
+  
   [mapc [funk [block]
 	      [have block render_to_cairo cairo_context]]
 	blocks]
@@ -115,8 +142,13 @@
   ]
 
 [deftypefunk blocks_world execute setup_default_scenario []
-  
-  ]
+  [let [[block-1 [new blocks_world_block `Block-1 16.0 16.0 `red   16.0 16.0]]
+	[block-2 [new blocks_world_block `Block-2 16.0 16.0 `blue  64.0 16.0]]
+	[table-1 [new blocks_world_block `Table-1 64.0  2.0 `white 16.0 32.0]]]
+    [have blocks_world_physics add_block block-1]
+    [have blocks_world_physics add_block block-2]
+    [have blocks_world_physics add_block table-1]
+    ]]
 
 
 

@@ -39,7 +39,7 @@
 
 'blocks_world_physics'
 
-[deframe blocks_world_physics [blocks]
+[deframe blocks_world_physics [frame] [blocks]
   [new []
        ]]
 

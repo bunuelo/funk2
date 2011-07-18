@@ -28,7 +28,7 @@
 				     x
 				     y
 				     
-				     [velocity_y 0.0]
+				     [y_velocity 0.0]
 				     ]
   [new [initial-name
 	initial-width
@@ -262,7 +262,7 @@
   [have gtk_window          destroy]]
 
 [deftypefunk blocks_world execute step []
-  [have blocks_world_physics step] time_step]
+  [have blocks_world_physics step time_step]]
 
 [deftypefunk blocks_world execute cycle []
   [if [not [get gtk_window visible]]

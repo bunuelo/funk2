@@ -36,21 +36,25 @@
        ]]
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
+  [have cairo_context save]
   [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
   [have cairo_context set_line_cap `square]
-  [have cairo_context move_to     x         y]
+  [have cairo_context rel_move_to x         y]
   [have cairo_context rel_line_to width     0.0]
   [have cairo_context rel_line_to 0.0       height]
   [have cairo_context rel_line_to [- width] 0.0]
   [have cairo_context close_path]
   [have cairo_context stroke]
-
+  [have cairo_context restore]
+  
+  [have cairo_context save]
   [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context move_to x y]
+  [have cairo_context rel_move_to x y]
   [have cairo_context select_font_face 'Courier' `normal `normal]
   [have cairo_context set_font_size 32.0]
   [have cairo_context text_path [get name as-string]]
   [have cairo_context fill]
+  [have cairo_context restore]
   ]
 
 'blocks_world_physics'
@@ -66,9 +70,15 @@
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
   [have cairo_context paint]
   
+  [have cairo_context save]
+  [have cairo_context move_to 32 32]
+  [have cairo_context scale 32.0 32.0]
+  
   [mapc [funk [block]
 	      [have block render_to_cairo cairo_context]]
 	blocks]
+  
+  [have cairo_context restore]
   ]
 
 
@@ -134,9 +144,9 @@
   ]
 
 [deftypefunk blocks_world execute setup_default_scenario []
-  [let [[block-1 [new blocks_world_block `Block-1 16.0 16.0 `red   16.0 16.0]]
-	[block-2 [new blocks_world_block `Block-2 16.0 16.0 `blue  64.0 16.0]]
-	[table-1 [new blocks_world_block `Table-1 64.0  2.0 `white 16.0 32.0]]]
+  [let [[block-1 [new blocks_world_block `Block-1 1 1    `red   1 1]]
+	[block-2 [new blocks_world_block `Block-2 1 1    `blue  4 1]]
+	[table-1 [new blocks_world_block `Table-1 4 0.25 `white 1 2]]]
     [have blocks_world_physics add_block block-1]
     [have blocks_world_physics add_block block-2]
     [have blocks_world_physics add_block table-1]

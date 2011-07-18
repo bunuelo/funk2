@@ -92,6 +92,13 @@
 	
 	]]
 
+[deftypefunk blocks_world_block get render_shape_text_height []
+  [cond [[eq `cube    shape] 0.0]
+	[[eq `pyramid shape] 0.0]
+	[[eq `gripper shape] [/ height 3.0]]
+	]]
+
+
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
   [have cairo_context save]
   [cond [[eq `red   color] [have cairo_context set_source_rgba 1.0  0.75 0.75 1.0]]
@@ -120,7 +127,7 @@
   [let [[text_extents [have cairo_context text_extents [get name as-string]]]]
     [have cairo_context move_to
 	  [+ x [/ [- width [get text_extents width]] 2]]
-	  [+ [- y 0.05] height]]]
+	  [- [+ [- y 0.05] height] [get this render_shape_text_height]]]]
   [have cairo_context text_path [get name as-string]]
   [have cairo_context fill]
   [have cairo_context restore]

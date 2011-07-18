@@ -48,7 +48,7 @@
   [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
   [have cairo_context move_to x y]
   [have cairo_context select_font_face 'Courier' `normal `normal]
-  [have cairo_context set_font_size 1.0]
+  [have cairo_context set_font_size 32.0]
   [have cairo_context text_path [get name as-string]]
   [have cairo_context fill]
   ]

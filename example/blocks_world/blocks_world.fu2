@@ -20,20 +20,41 @@
 
 'blocks_world_block'
 
-[deframe blocks_world_block [frame] [name width height color x y]
+[deframe blocks_world_block [frame] [name width height color shape x y]
   [new [initial-name
 	initial-width
 	initial-height
 	initial-color
+	initial-shape
 	initial-x
 	initial-y]
        [= name   initial-name]
        [= width  [get initial-width  as-double]]
        [= height [get initial-height as-double]]
        [= color  initial-color]
+       [= shape  initial-shape]
        [= x      [get initial-x as-double]]
        [= y      [get initial-y as-double]]
        ]]
+
+[deftypefunk blocks_world_block execute render_shape_path_to_cairo [cairo_context]
+  [cond [[eq `cube shape]
+	 
+	 [have cairo_context move_to     x         y]
+	 [have cairo_context rel_line_to width     0.0]
+	 [have cairo_context rel_line_to 0.0       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
+	[[eq `pyramid shape]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [/ width 2]       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
+	]]
+
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
   [have cairo_context save]
@@ -43,11 +64,7 @@
 	[[eq `blue  color] [have cairo_context set_source_rgba 0.5 0.75 1.0  1.0]]
 	[[eq `white color] [have cairo_context set_source_rgba 0.9 0.9  0.9  1.0]]]
   [have cairo_context set_line_width 0.0]
-  [have cairo_context move_to     x         y]
-  [have cairo_context rel_line_to width     0.0]
-  [have cairo_context rel_line_to 0.0       height]
-  [have cairo_context rel_line_to [- width] 0.0]
-  [have cairo_context close_path]
+  [have this render_shape_path_to_cairo cairo_context]
   [have cairo_context fill]
   [have cairo_context restore]
   
@@ -55,11 +72,7 @@
   [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
   [have cairo_context set_line_cap `square]
   [have cairo_context set_line_width 0.02]
-  [have cairo_context move_to     x         y]
-  [have cairo_context rel_line_to width     0.0]
-  [have cairo_context rel_line_to 0.0       height]
-  [have cairo_context rel_line_to [- width] 0.0]
-  [have cairo_context close_path]
+  [have this render_shape_path_to_cairo cairo_context]
   [have cairo_context stroke]
   [have cairo_context restore]
   
@@ -164,10 +177,10 @@
   ]
 
 [deftypefunk blocks_world execute setup_default_scenario []
-  [let [[block-1 [new blocks_world_block `Block-1 1 1    `red   1 3]]
-	[block-2 [new blocks_world_block `Block-2 1 1    `blue  4 3]]
-	[block-3 [new blocks_world_block `Block-3 1 1    `brown 4 2]]
-	[table-1 [new blocks_world_block `Table-1 6 0.25 `white 0 4]]]
+  [let [[block-1 [new blocks_world_block `Block-1 1 1    `brown `cube    1 3]]
+	[block-2 [new blocks_world_block `Block-2 1 1    `blue  `cube    4 3]]
+	[block-3 [new blocks_world_block `Block-3 1 1    `green `pyramid 4 2]]
+	[table-1 [new blocks_world_block `Table-1 6 0.25 `white `cube    0 4]]]
     [have blocks_world_physics add_block block-1]
     [have blocks_world_physics add_block block-2]
     [have blocks_world_physics add_block block-3]

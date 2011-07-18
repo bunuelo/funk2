@@ -161,9 +161,9 @@
   ]
 
 [deftypefunk blocks_world execute setup_default_scenario []
-  [let [[block-1 [new blocks_world_block `Block-1 2 2    `red   1 4]]
-	[block-2 [new blocks_world_block `Block-2 2 2    `blue  4 4]]
-	[table-1 [new blocks_world_block `Table-1 8 0.25 `white 1 6]]]
+  [let [[block-1 [new blocks_world_block `Block-1 1 1    `red   1 3]]
+	[block-2 [new blocks_world_block `Block-2 1 1    `blue  4 3]]
+	[table-1 [new blocks_world_block `Table-1 6 0.25 `white 1 4]]]
     [have blocks_world_physics add_block block-1]
     [have blocks_world_physics add_block block-2]
     [have blocks_world_physics add_block table-1]

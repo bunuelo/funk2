@@ -256,7 +256,9 @@
 [deftypefunk blocks_world execute cycle []
   [if [not [get gtk_window visible]]
       [= done t]
-    [have this handle_redraw]]]
+    [prog [if playing
+	      [have this step]]
+	  [have this handle_redraw]]]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]

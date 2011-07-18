@@ -83,6 +83,7 @@
 [globalize-funk gtk-pixbuf-get_rgb_pixel_data                     &primfunk:gtk__pixbuf__get_rgb_pixel_data]
 [globalize-funk gtk-container-add                                 &primfunk:gtk__container__add]
 [globalize-funk gtk-container-remove                              &primfunk:gtk__container__remove]
+[globalize-funk gtk-container-replace                             &primfunk:gtk__container__replace]
 [globalize-funk gtk-box-pack_start                                &primfunk:gtk__box__pack_start]
 [globalize-funk gtk-signal_connect                                &primfunk:gtk__signal_connect]
 [globalize-funk gtk-pop_callback_event                            &primfunk:gtk__pop_callback_event]

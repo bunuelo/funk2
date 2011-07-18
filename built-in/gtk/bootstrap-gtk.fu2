@@ -51,8 +51,9 @@
 [deftypefunk gtk_widget set alignment [xalign yalign] [gtk-misc-set_alignment [get this widget] xalign yalign]]
 
 'GtkContainer'
-[deftypefunk gtk_widget execute add    [that] [gtk-container-add    [get this widget] [get that widget]]]
-[deftypefunk gtk_widget execute remove [that] [gtk-container-remove [get this widget] [get that widget]]]
+[deftypefunk gtk_widget execute add     [that]           [gtk-container-add     [get this widget] [get that widget]]]
+[deftypefunk gtk_widget execute remove  [that]           [gtk-container-remove  [get this widget] [get that widget]]]
+[deftypefunk gtk_widget execute replace [that with_this] [gtk-container-replace [get this widget] [get that widget] [get with_this widget]]]
 
 'GtkScrolledWindow'
 [deftypefunk gtk_widget execute add_with_viewport [that]                                     [gtk-scrolled_window-add_with_viewport [get this widget] [get that widget]]]

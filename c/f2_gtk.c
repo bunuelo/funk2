@@ -1204,6 +1204,15 @@ void funk2_gtk__container__remove(funk2_gtk_t* this, GtkWidget* widget, GtkWidge
   }
 }
 
+void funk2_gtk__container__replace(funk2_gtk_t* this, GtkWidget* widget, GtkWidget* remove_widget, GtkWidget* add_widget) {
+  {
+    gdk_threads_enter();
+    gtk_container_remove(GTK_CONTAINER(widget), GTK_WIDGET(remove_widget));
+    gtk_container_add(   GTK_CONTAINER(widget), GTK_WIDGET(add_widget));
+    gdk_threads_leave();
+  }
+}
+
 
 // box
 
@@ -2697,6 +2706,39 @@ f2ptr f2__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget)
 def_pcfunk2(gtk__container__remove, widget, remove_widget,
 	    "Removes a widget from a container.",
 	    return f2__gtk__container__remove(this_cause, widget, remove_widget));
+
+
+
+f2ptr raw__gtk__container__replace(f2ptr cause, f2ptr widget, f2ptr remove_widget, f2ptr add_widget) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    GtkWidget* gtk_widget        = raw__gtk_widget__as__GtkWidget(cause, widget);
+    GtkWidget* remove_gtk_widget = raw__gtk_widget__as__GtkWidget(cause, remove_widget);
+    GtkWidget* add_gtk_widget    = raw__gtk_widget__as__GtkWidget(cause, add_widget);
+    
+    assert_g_type(GTK_TYPE_CONTAINER, gtk_widget);
+    assert_g_type(GTK_TYPE_WIDGET,    remove_gtk_widget);
+    assert_g_type(GTK_TYPE_WIDGET,    add_gtk_widget);
+    
+    funk2_gtk__container__replace(&(__funk2.gtk), gtk_widget, remove_gtk_widget, add_gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__container__replace(f2ptr cause, f2ptr widget, f2ptr remove_widget, f2ptr add_widget) {
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(gtk_widget, remove_widget);
+  assert_argument_type(gtk_widget, add_widget);
+  return raw__gtk__container__replace(cause, widget, remove_widget, add_widget);
+}
+def_pcfunk3(gtk__container__replace, widget, remove_widget, add_widget,
+	    "Atomically removes one and then adds another widget to a container.",
+	    return f2__gtk__container__replace(this_cause, widget, remove_widget, add_widget));
 
 
 // expose_event
@@ -5914,6 +5956,7 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__2(gtk__container__add,                       widget, add_widget);
   f2__primcfunk__init__2(gtk__container__remove,                    widget, remove_widget);
+  f2__primcfunk__init__3(gtk__container__replace,                   widget, remove_widget, add_widget);
   f2__primcfunk__init__5(gtk__box__pack_start,                      widget, child_widget, expand, fill, padding);
   f2__primcfunk__init__4(gtk__signal_connect,                       widget, signal_name, funk, args);
   f2__primcfunk__init__0(gtk__pop_callback_event);

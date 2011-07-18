@@ -80,7 +80,7 @@
        
        [= fiber [fiber [funk []
 			     [while [not done]
-			       [sleep 1]
+			       [millisleep 100]
 			       [have this cycle]]
 			     [have this destroy]]
 		       nil]]
@@ -105,9 +105,8 @@
   [have gtk_image_mutex lock]
   [let [[old_gtk_image gtk_image]]
     [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
-    [have gtk_window remove old_gtk_image]
-    [have gtk_window add    gtk_image]
-    [have gtk_image         show_all]]
+    [have gtk_window replace old_gtk_image gtk_image]
+    [have gtk_image  show_all]]
   [have gtk_image_mutex unlock]]
 
 [deftypefunk blocks_world execute handle_redraw []

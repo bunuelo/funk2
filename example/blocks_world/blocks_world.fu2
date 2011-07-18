@@ -80,6 +80,7 @@
        
        [= fiber [fiber [funk []
 			     [while [not done]
+			       [sleep 1]
 			       [have this cycle]]
 			     [have this destroy]]
 		       nil]]

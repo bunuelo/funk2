@@ -86,8 +86,10 @@
   [have cairo_context paint]
   
   [have cairo_context save]
-  [have cairo_context move_to 32.0 32.0]
-  [have cairo_context scale 64.0 64.0]
+  [have cairo_context move_to 16.0 16.0]
+  [have cairo_context scale
+	[/ [- 640.0 [* 2 16.0]] 6.0]
+	[/ [- 640.0 [* 2 16.0]] 6.0]]
   
   [mapc [funk [block]
 	      [have block render_to_cairo cairo_context]]

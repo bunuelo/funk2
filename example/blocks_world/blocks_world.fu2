@@ -78,9 +78,12 @@
   
   [have cairo_context save]
   [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context move_to [+ x 0.05] [+ [- y 0.05] height]]
   [have cairo_context select_font_face 'Times New Roman' `normal `normal]
   [have cairo_context set_font_size 0.2]
+  [let [[text_extents [have cairo_context text_extents [get name as-string]]]]
+    [have cairo_context move_to
+	  [+ [+ x 0.05] [/ [- width [get text_extents width]] 2] ]
+	  [+ [- y 0.05] height]]]
   [have cairo_context text_path [get name as-string]]
   [have cairo_context fill]
   [have cairo_context restore]

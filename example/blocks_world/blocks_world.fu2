@@ -74,10 +74,14 @@
 	 [have cairo_context move_to     [+ x [/ width 2]] y]
 	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
 	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
+	 [have cairo_context close_path]
 	 
 	 [have cairo_context move_to     [+ x [/ width 2]] y]
 	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
 	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
+	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
+	 [have cairo_context close_path]
 	 
 	 [have cairo_context move_to     [+ x [/ width 2]]     y]
 	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]

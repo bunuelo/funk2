@@ -186,7 +186,7 @@
        
        [have image_hbox add gtk_image]
        
-       [have vbox pack_start image_hbox nil nil]
+       [have vbox pack_start image_hbox nil nil 0]
        
        [= controller_hbox            [gtk-hbox-new 0]]
        [= controller_play_button     [gtk-button-new_with_label 'Play']]
@@ -195,13 +195,13 @@
        [= controller_step_size_label [gtk-label-new 'Step Size: ']]
        [= controller_step_size_entry [gtk-entry-new]]
        
-       [have controller_hbox pack_start controller_play_button     nil nil]
-       [have controller_hbox pack_start controller_stop_button     nil nil]
-       [have controller_hbox pack_start controller_step_button     nil nil]
-       [have controller_hbox pack_start controller_step_size_label nil nil]
-       [have controller_hbox pack_start controller_step_size_entry nil nil]
+       [have controller_hbox pack_start controller_play_button     nil nil 0]
+       [have controller_hbox pack_start controller_stop_button     nil nil 0]
+       [have controller_hbox pack_start controller_step_button     nil nil 0]
+       [have controller_hbox pack_start controller_step_size_label nil nil 0]
+       [have controller_hbox pack_start controller_step_size_entry nil nil 0]
        
-       [have vbox pack_start processor_hbox nil nil]
+       [have vbox pack_start processor_hbox nil nil 0]
        
        [have gtk_window add vbox]
        

@@ -95,7 +95,7 @@
 [deftypefunk blocks_world_block get render_shape_text_height []
   [cond [[eq `cube    shape] 0.05]
 	[[eq `pyramid shape] 0.05]
-	[[eq `gripper shape] [+ [/ height 3.0] 0.2]]
+	[[eq `gripper shape] [- [/ height 3.0] 0.1]]
 	]]
 
 

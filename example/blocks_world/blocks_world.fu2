@@ -107,7 +107,7 @@
 [deftypefunk blocks_world_physics execute add_block [block]
   [= blocks [cons block blocks]]]
 
-[deftypefunk blocks_world_physics execute step [time_step]
+[deftypefunk blocks_world_physics execute step []
   [mapc [funk [block]
 	      [let [[obstacle_below_y nil]]
 		[mapc [funk [other_block]
@@ -119,10 +119,9 @@
 				    [= obstacle_below_y [get block y]]]]]
 		      blocks]
 		[if [not [null obstacle_below_y]]
-		    [set block y [- obstacle_below_y [get block height]]]]]]
+		    [set block y [+ obstacle_below_y [get block height]]]]]]
 	blocks]
   ]
-
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
@@ -186,7 +185,8 @@
 [deftypefunk blocks_world execute cycle []
   [if [not [get gtk_window visible]]
       [= done t]
-    [have this handle_redraw]]]
+    [prog [have blocks_world_physics step]
+	  [have this handle_redraw]]]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]

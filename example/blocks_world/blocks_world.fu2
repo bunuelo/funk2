@@ -150,11 +150,23 @@
 'blocks_world'
 
 [deframe blocks_world [frame] [gtk_window
+			       
+			       vbox
+			       
+			       image_hbox
 			       gtk_image_mutex
 			       gtk_image
 			       cairo_image_surface
 			       cairo_context
 			       blocks_world_physics
+			       
+			       controller_hbox
+			       controller_play_button
+			       controller_stop_button
+			       controller_step_button
+			       controller_step_size_label
+			       controller_step_size_entry
+			       
 			       fiber
 			       done]
   [new []
@@ -162,12 +174,36 @@
        [set gtk_window title 'Blocks World']
        [have gtk_window connect_hide_on_delete]
        
+       [= vbox [gtk-vbox-new 0]]
+       
+       [= image_hbox [gtk-hbox-new 0]]
+       
        [= cairo_image_surface [new cairo_image_surface `ARGB32 640 480]]
        [= cairo_context       [new cairo_context cairo_image_surface]]
        
        [= gtk_image_mutex [new mutex]]
        [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
-       [have gtk_window add gtk_image]
+       
+       [have image_hbox add gtk_image]
+       
+       [have vbox pack_start image_hbox nil nil]
+       
+       [= controller_hbox            [gtk-hbox-new 0]]
+       [= controller_play_button     [gtk-button-new_with_label 'Play']]
+       [= controller_stop_button     [gtk-button-new_with_label 'Stop']]
+       [= controller_step_button     [gtk-button-new_with_label 'Step']]
+       [= controller_step_size_label [gtk-label-new 'Step Size: ']]
+       [= controller_step_size_entry [gtk-entry-new]]
+       
+       [have controller_hbox pack_start controller_play_button     nil nil]
+       [have controller_hbox pack_start controller_stop_button     nil nil]
+       [have controller_hbox pack_start controller_step_button     nil nil]
+       [have controller_hbox pack_start controller_step_size_label nil nil]
+       [have controller_hbox pack_start controller_step_size_entry nil nil]
+       
+       [have vbox pack_start processor_hbox nil nil]
+       
+       [have gtk_window add vbox]
        
        [have gtk_window show_all]
        
@@ -203,7 +239,7 @@
   [let [[old_gtk_image gtk_image]]
     [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
     [have gtk_image  show_all]
-    [have gtk_window replace old_gtk_image gtk_image]]
+    [have image_hbox replace old_gtk_image gtk_image]]
   [have gtk_image_mutex unlock]]
 
 [deftypefunk blocks_world execute handle_redraw []

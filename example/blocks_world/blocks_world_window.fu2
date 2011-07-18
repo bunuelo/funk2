@@ -1,0 +1,156 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'blocks_world_window'
+
+[deframe blocks_world_window [frame] [blocks_world
+				      
+				      gtk_window
+				      
+				      vbox
+				      
+				      image_hbox
+				      gtk_image_mutex
+				      gtk_image
+				      
+				      controller_hbox
+				      controller_play_button
+				      controller_stop_button
+				      controller_step_button
+				      controller_step_size_label
+				      controller_step_size_entry
+				      
+				      [step_size 0.1]
+				      
+				      fiber
+				      [done    nil]
+				      [playing nil]]
+  [new [initial-blocks_world]
+       [= blocks_world initial-blocks_world]
+       
+       [= gtk_window [gtk-window-new]]
+       [set gtk_window title 'Blocks World']
+       [have gtk_window connect_hide_on_delete]
+       
+       [= vbox [gtk-vbox-new 0]]
+       
+       [= image_hbox [gtk-hbox-new 0]]
+       
+       [= gtk_image_mutex [new mutex]]
+       [= gtk_image [gtk-image-new_from_image [get blocks_world as-image]]]
+       
+       [have image_hbox add gtk_image]
+       
+       [have vbox pack_start image_hbox nil nil 0]
+       
+       [= controller_hbox            [gtk-hbox-new 0]]
+       [= controller_play_button     [gtk-button-new_with_label 'Play']]
+       [= controller_stop_button     [gtk-button-new_with_label 'Stop']]
+       [= controller_step_button     [gtk-button-new_with_label 'Step']]
+       [= controller_step_size_label [gtk-label-new 'Step Size: ']]
+       [= controller_step_size_entry [gtk-entry-new]]
+       [set controller_step_size_entry text [get step_size as-string]]
+       
+       [have controller_hbox pack_start controller_play_button     nil nil 0]
+       [have controller_hbox pack_start controller_stop_button     nil nil 0]
+       [have controller_hbox pack_start controller_step_button     nil nil 0]
+       [have controller_hbox pack_start controller_step_size_label nil nil 0]
+       [have controller_hbox pack_start controller_step_size_entry nil nil 0]
+       
+       [have controller_play_button signal_connect 'clicked'
+	     [funk []
+		   [if playing
+		       [terminal_format standard-terminal '\nBlocks World: Already playing.']
+		     [prog [terminal_format standard-terminal '\nBlocks World: Play.']
+			   [= playing t]]]]
+	     nil]
+       
+       [have controller_stop_button signal_connect 'clicked'
+	     [funk []
+		   [if [not playing]
+		       [terminal_format standard-terminal '\nBlocks World: Already stopping.']
+		     [prog [terminal_format standard-terminal '\nBlocks World: Stop.']
+			   [= playing nil]]]]
+	     nil]
+       
+       [have controller_step_button signal_connect 'clicked'
+	     [funk []
+		   [if playing
+		       [terminal_format standard-terminal '\nBlocks World: Cannot step while already playing.']
+		     [prog [terminal_format standard-terminal '\nBlocks World: Step.']
+			   [have this step]]]]
+	     nil]
+       
+       [have controller_step_size_entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     `[terminal_format standard-terminal '\nkey event: ' key_event]
+		     [if [eq keyval GDK_Return]
+			 [prog `[print 'Return!']
+			       [let [[text-as-double [shelter [get [have [get controller_step_size_entry text] read] as-double]]]]
+				 [if [is-type `bug text-as-double]
+				     [prog [terminal_format standard-terminal '\nBlocks World: Could not read new step_size.']
+					   [set controller_step_size_entry text [get step_size as-string]]]
+				   [prog [terminal_format standard-terminal '\nBlocks World: Setting new step_size to ' text-as-double '.']
+					 [= step_size text-as-double]]]
+				 ]]]]]
+	     nil]
+       
+       [have vbox pack_start controller_hbox nil nil 0]
+       
+       [have gtk_window add vbox]
+       
+       [have gtk_window show_all]
+       
+       [= fiber [fiber [funk []
+			     [while [not done]
+			       [millisleep 100]
+			       [have this cycle]]
+			     [have this destroy]]
+		       nil]]
+       
+       ]]
+
+[deftypefunk blocks_world_window execute destroy []
+  [have blocks_world destroy]
+  [have gtk_window   destroy]]
+
+[deftypefunk blocks_world_window execute step []
+  [have blocks_world step step_size]]
+
+[deftypefunk blocks_world_window execute cycle []
+  [if [not [get gtk_window visible]]
+      [= done t]
+    [prog [if playing
+	      [have this step]]
+	  [have this handle_redraw]]]]
+
+[deftypefunk blocks_world_window execute regenerate_gtk_image []
+  [have gtk_image_mutex lock]
+  [let [[old_gtk_image gtk_image]]
+    [= gtk_image [gtk-image-new_from_image [get blocks_world as-image]]]
+    [have gtk_image  show_all]
+    [have image_hbox replace old_gtk_image gtk_image]]
+  [have gtk_image_mutex unlock]]
+
+[deftypefunk blocks_world_window execute handle_redraw []
+  [have this regenerate_gtk_image]
+  ]
+

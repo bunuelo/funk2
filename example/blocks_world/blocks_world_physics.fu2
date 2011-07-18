@@ -1,0 +1,81 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'blocks_world_physics'
+
+[deframe blocks_world_physics [frame] [blocks
+				       grippers]
+  [new []
+       ]]
+
+[deftypefunk blocks_world_physics execute add_block [block]
+  [= blocks [cons block blocks]]]
+
+[deftypefunk blocks_world_physics execute add_gripper [gripper]
+  [= grippers [cons gripper grippers]]]
+
+[deftypefunk blocks_world_physics execute step [step_size]
+  [mapc [funk [block]
+	      [let [[obstacle_below_y nil]
+		    [obstacle_block   nil]]
+		[mapc [funk [other_block]
+			    [if [not [eq block other_block]]
+				[if [and [get block overlaps_horizontally other_block]
+					 [< [get block y] [get other_block y]]
+					 [or [null obstacle_below_y]
+					     [< [get other_block y] obstacle_below_y]]]
+				    [prog [= obstacle_below_y [get other_block y]]
+					  [= obstacle_block   other_block]]]]]
+		      blocks]
+		[if [not [null obstacle_below_y]]
+		    [prog `[terminal_format standard-terminal '\n' `[,[get block name] on ,[get obstacle_block name]]]
+			  [let [[maximum_block_y [- obstacle_below_y [get block height]]]]
+			    [let [[next_y_velocity [+ [get block y_velocity] [* step_size 9.8]]]]
+			      [let [[next_block_y [+ [get block y] [* step_size [get block y_velocity]]]]]
+				[if [< maximum_block_y next_block_y]
+				    [prog [set block y          maximum_block_y]
+					  [set block y_velocity 0.0]]
+				  [prog [set block y          next_block_y]
+					[set block y_velocity next_y_velocity]]]]]]]]]]
+	blocks]
+  ]
+
+[deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
+  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
+  [have cairo_context paint]
+  
+  [have cairo_context save]
+  [have cairo_context translate 16.0 16.0]
+  [have cairo_context scale
+	[/ [- 640.0 [* 2 16.0]] 6.0]
+	[/ [- 640.0 [* 2 16.0]] 6.0]]
+  
+  [mapc [funk [gripper]
+	      [have gripper render_to_cairo cairo_context]]
+	grippers]
+  
+  [mapc [funk [block]
+	      [have block render_to_cairo cairo_context]]
+	blocks]
+  
+  [have cairo_context restore]
+  ]
+
+

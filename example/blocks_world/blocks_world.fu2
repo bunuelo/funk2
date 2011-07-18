@@ -18,356 +18,37 @@
  rights to redistribute these changes.'
 
 
-'blocks_world_block'
+'blocks_world_window'
 
-[deframe blocks_world_block [frame] [name
-				     width
-				     height
-				     color
-				     shape
-				     x
-				     y
-				     
-				     [in_gripper nil]
-				     [y_velocity 0.0]
-				     ]
-  [new [initial-name
-	initial-width
-	initial-height
-	initial-color
-	initial-shape
-	initial-x
-	initial-y]
-       [= name   initial-name]
-       [= width  [get initial-width  as-double]]
-       [= height [get initial-height as-double]]
-       [= color  initial-color]
-       [= shape  initial-shape]
-       [= x      [get initial-x as-double]]
-       [= y      [get initial-y as-double]]
-       [= x      [get initial-x as-double]]
-       [= y      [get initial-y as-double]]
-       ]]
-
-[deftypefunk blocks_world_block get overlaps_horizontally [block]
-  [not [or [< [+ x width] [get block x]]
-	   [> x           [+ [get block x] [get block width]]]]]]
-
-[deftypefunk blocks_world_block execute render_shape_path_to_cairo [cairo_context]
-  [cond [[eq `cube shape]
-	 
-	 [have cairo_context move_to     x         y]
-	 [have cairo_context rel_line_to width     0.0]
-	 [have cairo_context rel_line_to 0.0       height]
-	 [have cairo_context rel_line_to [- width] 0.0]
-	 [have cairo_context close_path]]
-	
-	[[eq `pyramid shape]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [/ width 2]       height]
-	 [have cairo_context rel_line_to [- width] 0.0]
-	 [have cairo_context close_path]]
-	
-	[[eq `gripper shape]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] 0]
-	 [have cairo_context rel_line_to 0                 y]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
-	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
-	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
-	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
-	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]]     y]
-	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]
-	 [have cairo_context rel_line_to [- [/ [* width 4] 6]] 0.0]
-	 [have cairo_context close_path]
-	 
-	 ]
-	
-	]]
-
-[deftypefunk blocks_world_block get render_shape_text_height []
-  [cond [[eq `cube    shape] 0.05]
-	[[eq `pyramid shape] 0.05]
-	[[eq `gripper shape] [- [/ height 3.0] 0.05]]
-	]]
-
-
-[deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
-  [have cairo_context save]
-  [cond [[eq `red   color] [have cairo_context set_source_rgba 1.0  0.75 0.75 1.0]]
-	[[eq `brown color] [have cairo_context set_source_rgba 1.0  0.75 0.5  1.0]]
-	[[eq `green color] [have cairo_context set_source_rgba 0.5  1.0  0.75 1.0]]
-	[[eq `blue  color] [have cairo_context set_source_rgba 0.5  0.75 1.0  1.0]]
-	[[eq `black color] [have cairo_context set_source_rgba 0.75 0.75 0.75 1.0]]
-	[[eq `white color] [have cairo_context set_source_rgba 0.9  0.9  0.9  1.0]]]
-  [have cairo_context set_line_width 0.0]
-  [have this render_shape_path_to_cairo cairo_context]
-  [have cairo_context fill]
-  [have cairo_context restore]
-  
-  [have cairo_context save]
-  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context set_line_cap `square]
-  [have cairo_context set_line_width 0.02]
-  [have this render_shape_path_to_cairo cairo_context]
-  [have cairo_context stroke]
-  [have cairo_context restore]
-  
-  [have cairo_context save]
-  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context select_font_face 'Times New Roman' `normal `normal]
-  [have cairo_context set_font_size 0.2]
-  [let [[text_extents [have cairo_context text_extents [get name as-string]]]]
-    [have cairo_context move_to
-	  [+ x [/ [- width [get text_extents width]] 2]]
-	  [- [+ y height] [get this render_shape_text_height]]]]
-  [have cairo_context text_path [get name as-string]]
-  [have cairo_context fill]
-  [have cairo_context restore]
-  ]
-
-
-'blocks_world_gripper'
-
-[deframe blocks_world_gripper [blocks_world_block] []
-  [new [initial-name
-	initial-width
-	initial-height
-	initial-color
-	initial-shape
-	initial-x
-	initial-y]
-       [construct blocks_world_block
-		  initial-name
-		  initial-width
-		  initial-height
-		  initial-color
-		  initial-shape
-		  initial-x
-		  initial-y]
-       ]]
-
-
-'blocks_world_physics'
-
-[deframe blocks_world_physics [frame] [blocks
-				       grippers]
-  [new []
-       ]]
-
-[deftypefunk blocks_world_physics execute add_block [block]
-  [= blocks [cons block blocks]]]
-
-[deftypefunk blocks_world_physics execute add_gripper [gripper]
-  [= grippers [cons gripper grippers]]]
-
-[deftypefunk blocks_world_physics execute step [step_size]
-  [mapc [funk [block]
-	      [let [[obstacle_below_y nil]
-		    [obstacle_block   nil]]
-		[mapc [funk [other_block]
-			    [if [not [eq block other_block]]
-				[if [and [get block overlaps_horizontally other_block]
-					 [< [get block y] [get other_block y]]
-					 [or [null obstacle_below_y]
-					     [< [get other_block y] obstacle_below_y]]]
-				    [prog [= obstacle_below_y [get other_block y]]
-					  [= obstacle_block   other_block]]]]]
-		      blocks]
-		[if [not [null obstacle_below_y]]
-		    [prog `[terminal_format standard-terminal '\n' `[,[get block name] on ,[get obstacle_block name]]]
-			  [let [[maximum_block_y [- obstacle_below_y [get block height]]]]
-			    [let [[next_y_velocity [+ [get block y_velocity] [* step_size 9.8]]]]
-			      [let [[next_block_y [+ [get block y] [* step_size [get block y_velocity]]]]]
-				[if [< maximum_block_y next_block_y]
-				    [prog [set block y          maximum_block_y]
-					  [set block y_velocity 0.0]]
-				  [prog [set block y          next_block_y]
-					[set block y_velocity next_y_velocity]]]]]]]]]]
-	blocks]
-  ]
-
-[deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
-  [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
-  [have cairo_context paint]
-  
-  [have cairo_context save]
-  [have cairo_context translate 16.0 16.0]
-  [have cairo_context scale
-	[/ [- 640.0 [* 2 16.0]] 6.0]
-	[/ [- 640.0 [* 2 16.0]] 6.0]]
-  
-  [mapc [funk [gripper]
-	      [have gripper render_to_cairo cairo_context]]
-	grippers]
-  
-  [mapc [funk [block]
-	      [have block render_to_cairo cairo_context]]
-	blocks]
-  
-  [have cairo_context restore]
-  ]
-
-
-'blocks_world'
-
-[deframe blocks_world [frame] [gtk_window
-			       
-			       vbox
-			       
-			       image_hbox
-			       gtk_image_mutex
-			       gtk_image
-			       cairo_image_surface
+[deframe blocks_world [frame] [cairo_image_surface
 			       cairo_context
-			       blocks_world_physics
-			       
-			       controller_hbox
-			       controller_play_button
-			       controller_stop_button
-			       controller_step_button
-			       controller_step_size_label
-			       controller_step_size_entry
-			       
-			       [step_size 0.1]
-			       
-			       fiber
-			       [done    nil]
-			       [playing nil]]
+			       blocks_world_physics]
   [new []
-       [= gtk_window [gtk-window-new]]
-       [set gtk_window title 'Blocks World']
-       [have gtk_window connect_hide_on_delete]
-       
-       [= vbox [gtk-vbox-new 0]]
-       
-       [= image_hbox [gtk-hbox-new 0]]
        
        [= cairo_image_surface [new cairo_image_surface `ARGB32 640 480]]
        [= cairo_context       [new cairo_context cairo_image_surface]]
        
-       [= gtk_image_mutex [new mutex]]
-       [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
-       
-       [have image_hbox add gtk_image]
-       
-       [have vbox pack_start image_hbox nil nil 0]
-       
-       [= controller_hbox            [gtk-hbox-new 0]]
-       [= controller_play_button     [gtk-button-new_with_label 'Play']]
-       [= controller_stop_button     [gtk-button-new_with_label 'Stop']]
-       [= controller_step_button     [gtk-button-new_with_label 'Step']]
-       [= controller_step_size_label [gtk-label-new 'Step Size: ']]
-       [= controller_step_size_entry [gtk-entry-new]]
-       [set controller_step_size_entry text [get step_size as-string]]
-       
-       [have controller_hbox pack_start controller_play_button     nil nil 0]
-       [have controller_hbox pack_start controller_stop_button     nil nil 0]
-       [have controller_hbox pack_start controller_step_button     nil nil 0]
-       [have controller_hbox pack_start controller_step_size_label nil nil 0]
-       [have controller_hbox pack_start controller_step_size_entry nil nil 0]
-       
-       [have controller_play_button signal_connect 'clicked'
-	     [funk []
-		   [if playing
-		       [terminal_format standard-terminal '\nBlocks World: Already playing.']
-		     [prog [terminal_format standard-terminal '\nBlocks World: Play.']
-			   [= playing t]]]]
-	     nil]
-       
-       [have controller_stop_button signal_connect 'clicked'
-	     [funk []
-		   [if [not playing]
-		       [terminal_format standard-terminal '\nBlocks World: Already stopping.']
-		     [prog [terminal_format standard-terminal '\nBlocks World: Stop.']
-			   [= playing nil]]]]
-	     nil]
-       
-       [have controller_step_button signal_connect 'clicked'
-	     [funk []
-		   [if playing
-		       [terminal_format standard-terminal '\nBlocks World: Cannot step while already playing.']
-		     [prog [terminal_format standard-terminal '\nBlocks World: Step.']
-			   [have this step]]]]
-	     nil]
-       
-       [have controller_step_size_entry key_press_event-signal_connect
-	     [funk [key_event]
-		   [let [[keyval [have key_event lookup `keyval]]]
-		     `[terminal_format standard-terminal '\nkey event: ' key_event]
-		     [if [eq keyval GDK_Return]
-			 [prog `[print 'Return!']
-			       [let [[text-as-double [shelter [get [have [get controller_step_size_entry text] read] as-double]]]]
-				 [if [is-type `bug text-as-double]
-				     [prog [terminal_format standard-terminal '\nBlocks World: Could not read new step_size.']
-					   [set controller_step_size_entry text [get step_size as-string]]]
-				   [prog [terminal_format standard-terminal '\nBlocks World: Setting new step_size to ' text-as-double '.']
-					 [= step_size text-as-double]]]
-				 ]]]]]
-	     nil]
-       
-       [have vbox pack_start controller_hbox nil nil 0]
-       
-       [have gtk_window add vbox]
-       
-       [have gtk_window show_all]
-       
        [= blocks_world_physics [new blocks_world_physics]]
-       
-       [= fiber [fiber [funk []
-			     [while [not done]
-			       [millisleep 100]
-			       [have this cycle]]
-			     [have this destroy]]
-		       nil]]
        
        [have this setup_default_scenario]
        ]]
 
 [deftypefunk blocks_world execute destroy []
   [have cairo_image_surface destroy]
-  [have cairo_context       destroy]
-  [have gtk_window          destroy]]
+  [have cairo_context       destroy]]
 
-[deftypefunk blocks_world execute step []
+[deftypefunk blocks_world execute step [step_size]
   [have blocks_world_physics step step_size]]
-
-[deftypefunk blocks_world execute cycle []
-  [if [not [get gtk_window visible]]
-      [= done t]
-    [prog [if playing
-	      [have this step]]
-	  [have this handle_redraw]]]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]
   ]
 
-[deftypefunk blocks_world execute regenerate_gtk_image []
-  [have gtk_image_mutex lock]
-  [let [[old_gtk_image gtk_image]]
-    [= gtk_image [gtk-image-new_from_image [get cairo_image_surface as-image]]]
-    [have gtk_image  show_all]
-    [have image_hbox replace old_gtk_image gtk_image]]
-  [have gtk_image_mutex unlock]]
-
-[deftypefunk blocks_world execute handle_redraw []
+[deftypefunk blocks_world get as-image []
   [have this redraw_cairo_surface]
-  [have this regenerate_gtk_image]
-  ]
+  [get cairo_image_surface as-image]]
 
-[deftypefunk blocks_world execute setup_default_scenario []
+[deftypefunk blocks_world_window execute setup_default_scenario []
   [let [[gripper-1 [new blocks_world_gripper `Gripper-1 1 1    `black `gripper 0 0.5]]
 	[block-1   [new blocks_world_block   `Block-1   1 1    `brown `cube    1 3]]
 	[block-2   [new blocks_world_block   `Block-2   1 1    `blue  `cube    4 3]]
@@ -383,7 +64,7 @@
 
 
 [defmetro blocks_world []
-  `[prog [new blocks_world]
+  `[prog [new blocks_world_window [new blocks_world]]
 	 nil]]
 
 

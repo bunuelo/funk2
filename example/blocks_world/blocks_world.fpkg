@@ -17,8 +17,19 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defpackage blocks_world_block
+  :packages [cairo]
+   :sources ['blocks_world_block.fu2']]
+
+[defpackage blocks_world_physics
+  :packages []
+   :sources ['blocks_world_block.fu2']]
+
+[defpackage blocks_world_window
+  :packages [gtk]
+   :sources ['blocks_world_window.fu2']]
+
 [defpackage blocks_world
-  :packages [gtk
-	     cairo]
+  :packages [blocks_world_window]
    :sources ['blocks_world.fu2']]
 

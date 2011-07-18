@@ -168,7 +168,8 @@
 			       controller_step_size_entry
 			       
 			       fiber
-			       done]
+			       [done    nil]
+			       [playing nil]]
   [new []
        [= gtk_window [gtk-window-new]]
        [set gtk_window title 'Blocks World']
@@ -194,12 +195,37 @@
        [= controller_step_button     [gtk-button-new_with_label 'Step']]
        [= controller_step_size_label [gtk-label-new 'Step Size: ']]
        [= controller_step_size_entry [gtk-entry-new]]
+       [set controller_step_size_entry text '1.0']
        
        [have controller_hbox pack_start controller_play_button     nil nil 0]
        [have controller_hbox pack_start controller_stop_button     nil nil 0]
        [have controller_hbox pack_start controller_step_button     nil nil 0]
        [have controller_hbox pack_start controller_step_size_label nil nil 0]
        [have controller_hbox pack_start controller_step_size_entry nil nil 0]
+       
+       [have controller_play_button signal_connect 'clicked'
+	     [funk []
+		   [if playing
+		       [terminal_format standard-terminal '\nBlocks World: Already playing.']
+		     [prog [terminal_format standard-terminal '\nBlocks World: Play.']
+			   [= playing t]]]]
+	     nil]
+       
+       [have controller_stop_button signal_connect 'clicked'
+	     [funk []
+		   [if [not playing]
+		       [terminal_format standard-terminal '\nBlocks World: Already stopping.']
+		     [prog [terminal_format standard-terminal '\nBlocks World: Stop.']
+			   [= playing nil]]]]
+	     nil]
+       
+       [have controller_step_button signal_connect 'clicked'
+	     [funk []
+		   [if playing
+		       [terminal_format standard-terminal '\nBlocks World: Cannot step while already playing.']
+		     [prog [terminal_format standard-terminal '\nBlocks World: Step.']
+			   [have this step]]]]
+	     nil]
        
        [have vbox pack_start controller_hbox nil nil 0]
        
@@ -224,11 +250,13 @@
   [have cairo_context       destroy]
   [have gtk_window          destroy]]
 
+[deftypefunk blocks_world execute step []
+  [have blocks_world_physics step]]
+
 [deftypefunk blocks_world execute cycle []
   [if [not [get gtk_window visible]]
       [= done t]
-    [prog [have blocks_world_physics step]
-	  [have this handle_redraw]]]]
+    [have this handle_redraw]]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]

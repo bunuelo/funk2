@@ -244,10 +244,12 @@ f2ptr  f2__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget);
 
 // container
 
-f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget);
-f2ptr  f2__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget);
-f2ptr raw__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget);
-f2ptr  f2__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget);
+f2ptr raw__gtk__container__add    (f2ptr cause, f2ptr widget, f2ptr add_widget);
+f2ptr  f2__gtk__container__add    (f2ptr cause, f2ptr widget, f2ptr add_widget);
+f2ptr raw__gtk__container__remove (f2ptr cause, f2ptr widget, f2ptr remove_widget);
+f2ptr  f2__gtk__container__remove (f2ptr cause, f2ptr widget, f2ptr remove_widget);
+f2ptr raw__gtk__container__replace(f2ptr cause, f2ptr widget, f2ptr remove_widget, f2ptr add_widget);
+f2ptr  f2__gtk__container__replace(f2ptr cause, f2ptr widget, f2ptr remove_widget, f2ptr add_widget);
 
 
 // expose_event

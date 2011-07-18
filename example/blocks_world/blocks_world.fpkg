@@ -23,7 +23,7 @@
 
 [defpackage blocks_world_physics
   :packages [blocks_world_block]
-   :sources ['blocks_world_block.fu2']]
+   :sources ['blocks_world_physics.fu2']]
 
 [defpackage blocks_world_window
   :packages [gtk]

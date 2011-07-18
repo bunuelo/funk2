@@ -20,7 +20,14 @@
 
 'blocks_world_block'
 
-[deframe blocks_world_block [frame] [name width height color shape x y]
+[deframe blocks_world_block [frame] [name
+				     width
+				     height
+				     color
+				     shape
+				     x
+				     y
+				     ]
   [new [initial-name
 	initial-width
 	initial-height
@@ -33,6 +40,8 @@
        [= height [get initial-height as-double]]
        [= color  initial-color]
        [= shape  initial-shape]
+       [= x      [get initial-x as-double]]
+       [= y      [get initial-y as-double]]
        [= x      [get initial-x as-double]]
        [= y      [get initial-y as-double]]
        ]]
@@ -97,6 +106,23 @@
 
 [deftypefunk blocks_world_physics execute add_block [block]
   [= blocks [cons block blocks]]]
+
+[deftypefunk blocks_world_physics execute step [time_step]
+  [mapc [funk [block]
+	      [let [[obstacle_below_y nil]]
+		[mapc [funk [other_block]
+			    [if [not [eq block other_block]]
+				[if [and [get block overlaps_horizontally other_block]
+					 [< [get block y] [get other_block y]]
+					 [or [null obstacle_below_y]
+					     [< [get block y] obstacle_below_y]]]
+				    [= obstacle_below_y [get block y]]]]]
+		      blocks]
+		[if [not [null obstacle_below_y]]
+		    [set block y [- obstacle_below_y [get block height]]]]]]
+	blocks]
+  ]
+
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]

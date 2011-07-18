@@ -61,7 +61,8 @@
 			       cairo_image_surface
 			       cairo_context
 			       blocks_world_physics
-			       fiber]
+			       fiber
+			       done]
   [new []
        [= gtk_window [gtk-window-new]]
        [set gtk_window title 'Blocks World']
@@ -78,11 +79,22 @@
        [= blocks_world_physics [new blocks_world_physics]]
        
        [= fiber [fiber [funk []
-			     [have this handle_redraw]]
+			     [while [not done]
+			       [have this cycle]]
+			     [have this destroy]]
 		       nil]]
        
        [have this setup_default_scenario]
        ]]
+
+[deftypefunk blocks_world execute destroy []
+  [have cairo_image_surface destroy]
+  [have cairo_context       destroy]]
+
+[deftypefunk blocks_world execute cycle []
+  [if [not [get gtk_window visible]]
+      [= done t]
+    [have this handle_redraw]]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]

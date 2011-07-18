@@ -20,12 +20,17 @@
 
 'blocks_world_window'
 
-[deframe blocks_world [frame] [cairo_image_surface
+[deframe blocks_world [frame] [width
+			       height
+			       
+			       cairo_image_surface
 			       cairo_context
 			       blocks_world_physics]
-  [new []
+  [new [initial-width initial-height]
+       [= width  initial-width]
+       [= height initial-height]
        
-       [= cairo_image_surface [new cairo_image_surface `ARGB32 640 480]]
+       [= cairo_image_surface [new cairo_image_surface `ARGB32 width height]]
        [= cairo_context       [new cairo_context cairo_image_surface]]
        
        [= blocks_world_physics [new blocks_world_physics]]
@@ -53,6 +58,7 @@
 
 [deftypefunk blocks_world execute setup_default_scenario []
   [let [[gripper-1 [new blocks_world_gripper `Gripper-1 1 1    `black `gripper 0 0.5]]
+	[gripper-2 [new blocks_world_gripper `Gripper-2 1 1    `red   `gripper 3 0.5]]
 	[block-1   [new blocks_world_block   `Block-1   1 1    `brown `cube    1 3]]
 	[block-2   [new blocks_world_block   `Block-2   1 1    `blue  `cube    4 3]]
 	[block-3   [new blocks_world_block   `Block-3   1 1    `green `pyramid 4 1]]
@@ -67,7 +73,7 @@
 
 
 [defmetro blocks_world []
-  `[prog [new blocks_world_window [new blocks_world]]
+  `[prog [new blocks_world_window [new blocks_world 640 480]]
 	 nil]]
 
 

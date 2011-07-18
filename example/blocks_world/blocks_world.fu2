@@ -20,12 +20,14 @@
 
 'blocks_world_block'
 
-[deframe blocks_world_block [frame] [width height color x y]
-  [new [initial-width
+[deframe blocks_world_block [frame] [name width height color x y]
+  [new [initial-name
+	initial-width
 	initial-height
 	initial-color
 	initial-x
 	initial-y]
+       [= name   initial-name]
        [= width  initial-width]
        [= height initial-height]
        [= color  initial-color]
@@ -34,7 +36,7 @@
        ]]
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
-  `[have cairo_context move_to x y]
+  [have cairo_context move_to [get x as-double] [get y as-double]]
   [have cairo_context save]
   
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]

@@ -238,6 +238,21 @@
 			   [have this step]]]]
 	     nil]
        
+       [have controller_step_size_entry key_press_event-signal_connect
+	     [funk [key_event]
+		   [let [[keyval [have key_event lookup `keyval]]]
+		     `[terminal_format standard-terminal '\nkey event: ' key_event]
+		     [if [eq keyval GDK_Return]
+			 [prog `[print 'Return!']
+			       [let [[text-as-double [shelter [get [have [get controller_step_size_entry text] read] as-double]]]]
+				 [if [is-type `bug text-as-double]
+				     [prog [terminal_format standard-terminal '\nBlocks World: Could not read new step_size.']
+					   [set controller_step_size_entry text [get step_size as-string]]]
+				   [prog [terminal_format standard-terminal '\nBlocks World: Setting new step_size to ' text-as-double '.']
+					 [= step_size text-as-double]]]
+				 ]]]]]
+	     nil]
+       
        [have vbox pack_start controller_hbox nil nil 0]
        
        [have gtk_window add vbox]

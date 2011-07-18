@@ -170,6 +170,7 @@
 	[table-1 [new blocks_world_block `Table-1 6 0.25 `white 0 4]]]
     [have blocks_world_physics add_block block-1]
     [have blocks_world_physics add_block block-2]
+    [have blocks_world_physics add_block block-3]
     [have blocks_world_physics add_block table-1]
     ]]
 

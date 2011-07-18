@@ -27,6 +27,8 @@
 				     shape
 				     x
 				     y
+				     
+				     [velocity_y 0.0]
 				     ]
   [new [initial-name
 	initial-width
@@ -110,7 +112,7 @@
 [deftypefunk blocks_world_physics execute add_block [block]
   [= blocks [cons block blocks]]]
 
-[deftypefunk blocks_world_physics execute step []
+[deftypefunk blocks_world_physics execute step [time_step]
   [mapc [funk [block]
 	      [let [[obstacle_below_y nil]
 		    [obstacle_block   nil]]
@@ -125,7 +127,14 @@
 		      blocks]
 		[if [not [null obstacle_below_y]]
 		    [prog `[terminal_format standard-terminal '\n' `[,[get block name] on ,[get obstacle_block name]]]
-			  [set block y [- obstacle_below_y [get block height]]]]]]]
+			  [let [[maximum_block_y [- obstacle_below_y [get block height]]]]
+			    [let [[next_y_velocity [+ [get block y_velocity] [* time_step 9.8]]]]
+			      [let [[next_block_y [+ [get block y] [* time_step [get block y_velocity]]]]]
+				[if [< maximum_block_y next_block_y]
+				    [prog [set block y          maximum_block_y]
+					  [set block y_velocity 0.0]]
+				  [prog [set block y          next_block_y]
+					[set block y_velocity next_y_velocity]]]]]]]]]]
 	blocks]
   ]
 

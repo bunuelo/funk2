@@ -1969,6 +1969,7 @@ f2ptr f2__cairo__core_extension__define_types(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "cairo_svg_surface"),   f2__cairo_svg_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_pdf_surface"),   f2__cairo_pdf_surface_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "cairo_ps_surface"),    f2__cairo_ps_surface_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "cairo_text_extents"),  f2__cairo_text_extents_type__new(cause));
   status("cairo types defined.");
   return nil;
 }

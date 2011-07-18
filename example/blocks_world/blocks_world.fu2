@@ -50,7 +50,7 @@
   
   [have cairo_context save]
   [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context move_to [+ x 0.1] [+ y 0.3]]
+  [have cairo_context move_to [+ x 0.05] [+ y 0.2]]
   [have cairo_context select_font_face 'Times New Roman' `normal `normal]
   [have cairo_context set_font_size 0.2]
   [have cairo_context text_path [get name as-string]]

@@ -176,7 +176,7 @@
 			       controller_step_size_label
 			       controller_step_size_entry
 			       
-			       [time_step 1.0]
+			       [time_step 0.1]
 			       
 			       fiber
 			       [done    nil]

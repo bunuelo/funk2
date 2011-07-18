@@ -46,6 +46,12 @@
        [= y      [get initial-y as-double]]
        ]]
 
+[deftypefunk blocks_world_block get overlaps_horizontally [block]
+  [not [or [< [+ x width]  [get block x]]
+	   [< [+ y height] [get block y]]
+	   [> x            [+ [get block x] [get block width]]]
+	   [> y            [+ [get block y] [get block height]]]]]]
+
 [deftypefunk blocks_world_block execute render_shape_path_to_cairo [cairo_context]
   [cond [[eq `cube shape]
 	 
@@ -63,7 +69,6 @@
 	 [have cairo_context close_path]]
 	
 	]]
-
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
   [have cairo_context save]

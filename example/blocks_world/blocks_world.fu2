@@ -34,7 +34,7 @@
        ]]
 
 [deftypefunk blocks_world_block execute render_to_cairo [cairo_context]
-  [have cairo_context move_to x y]
+  `[have cairo_context move_to x y]
   [have cairo_context save]
   
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]

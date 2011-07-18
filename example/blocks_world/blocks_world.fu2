@@ -112,7 +112,7 @@
 [deftypefunk blocks_world_physics execute add_block [block]
   [= blocks [cons block blocks]]]
 
-[deftypefunk blocks_world_physics execute step [time_step]
+[deftypefunk blocks_world_physics execute step [step_size]
   [mapc [funk [block]
 	      [let [[obstacle_below_y nil]
 		    [obstacle_block   nil]]
@@ -128,8 +128,8 @@
 		[if [not [null obstacle_below_y]]
 		    [prog `[terminal_format standard-terminal '\n' `[,[get block name] on ,[get obstacle_block name]]]
 			  [let [[maximum_block_y [- obstacle_below_y [get block height]]]]
-			    [let [[next_y_velocity [+ [get block y_velocity] [* time_step 9.8]]]]
-			      [let [[next_block_y [+ [get block y] [* time_step [get block y_velocity]]]]]
+			    [let [[next_y_velocity [+ [get block y_velocity] [* step_size 9.8]]]]
+			      [let [[next_block_y [+ [get block y] [* step_size [get block y_velocity]]]]]
 				[if [< maximum_block_y next_block_y]
 				    [prog [set block y          maximum_block_y]
 					  [set block y_velocity 0.0]]
@@ -176,7 +176,7 @@
 			       controller_step_size_label
 			       controller_step_size_entry
 			       
-			       [time_step 0.1]
+			       [step_size 0.1]
 			       
 			       fiber
 			       [done    nil]
@@ -206,7 +206,7 @@
        [= controller_step_button     [gtk-button-new_with_label 'Step']]
        [= controller_step_size_label [gtk-label-new 'Step Size: ']]
        [= controller_step_size_entry [gtk-entry-new]]
-       [set controller_step_size_entry text [get time_step as-string]]
+       [set controller_step_size_entry text [get step_size as-string]]
        
        [have controller_hbox pack_start controller_play_button     nil nil 0]
        [have controller_hbox pack_start controller_stop_button     nil nil 0]
@@ -277,7 +277,7 @@
   [have gtk_window          destroy]]
 
 [deftypefunk blocks_world execute step []
-  [have blocks_world_physics step time_step]]
+  [have blocks_world_physics step step_size]]
 
 [deftypefunk blocks_world execute cycle []
   [if [not [get gtk_window visible]]

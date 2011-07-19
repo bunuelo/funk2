@@ -23,7 +23,7 @@
 [deframe blocks_world_gripper [blocks_world_block] [movement_command
 						    [perception_list_mutex [new mutex]]
 						    [perception_list       nil]
-						    [gripper_speed 1.0]]
+						    [gripper_speed         1.0]]
   [new [initial-name
 	initial-width
 	initial-height
@@ -63,13 +63,13 @@
     [= y next_y]]]
 
 [deftypefunk blocks_world_gripper get perceptions []
-  [have percetion_list_mutex lock]
+  [have perception_list_mutex lock]
   [let [[perceptions perception_list]]
-    [have percetion_list_mutex unlock]
+    [have perception_list_mutex unlock]
     perceptions]]
 
 [deftypefunk blocks_world_gripper execute calculate_perceptions []
-  [have percetion_list_mutex lock]
+  [have perception_list_mutex lock]
   [= perception_list nil]
   [mapc [funk [block]
 	      [if [get block on_block]
@@ -77,7 +77,7 @@
 					   perception_list]]]
 	      ]
 	[get blocks_world_physics blocks]]
-  [have percetion_list_mutex unlock]]
+  [have perception_list_mutex unlock]]
 
 [deftypefunk blocks_world_gripper set movement_command-left []
   [= movement_command `left]]

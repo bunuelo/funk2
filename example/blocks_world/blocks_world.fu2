@@ -61,7 +61,7 @@
 	[gripper-2 [new blocks_world_gripper `Gripper-2 1 1    `red   `gripper 3 0.5]]
 	[block-1   [new blocks_world_block   `Block-1   1 1    `brown `cube    1 3]]
 	[block-2   [new blocks_world_block   `Block-2   1 1    `blue  `cube    4 3]]
-	[block-3   [new blocks_world_block   `Block-3   1 1    `green `pyramid 4 1]]
+	[block-3   [new blocks_world_block   `Block-3   1 1    `green `pyramid 4 2]]
 	[table-1   [new blocks_world_block   `Table-1   6 0.25 `white `cube    0 4]]]
     [have blocks_world_physics add_gripper gripper-1]
     [have blocks_world_physics add_gripper gripper-2]

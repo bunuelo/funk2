@@ -17,30 +17,35 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage blocks_world_block
-  :packages [cairo]
-   :sources ['blocks_world_block.fu2']]
 
-[defpackage blocks_world_gripper
-  :packages [blocks_world_block]
-   :sources ['blocks_world_gripper.fu2']]
+'blocks_world_gripper'
 
-[defpackage blocks_world_physics
-  :packages [blocks_world_block
-	     blocks_world_gripper]
-   :sources ['blocks_world_physics.fu2']]
+[deframe blocks_world_gripper [blocks_world_block] [movement_command
+						    perceptions]
+  [new [initial-name
+	initial-width
+	initial-height
+	initial-color
+	initial-shape
+	initial-x
+	initial-y]
+       [construct blocks_world_block
+		  initial-name
+		  initial-width
+		  initial-height
+		  initial-color
+		  initial-shape
+		  initial-x
+		  initial-y]
+       ]]
 
-[defpackage blocks_world_gripper_controller
-  :packages [blocks_world_physics]
-   :sources ['blocks_world_gripper_controller.fu2']]
+[deftypefunk blocks_world_gripper set movement_command-left []
+  [= movement_command `left]]
 
-[defpackage blocks_world_window
-  :packages [gtk
-	     blocks_world_gripper_controller]
-   :sources ['blocks_world_window.fu2']]
+[deftypefunk blocks_world_gripper set movement_command-right []
+  [= movement_command `right]]
 
-[defpackage blocks_world
-  :packages [blocks_world_window
-	     blocks_world_physics]
-   :sources ['blocks_world.fu2']]
+[deftypefunk blocks_world_gripper set movement_command-stop []
+  [= movement_command nil]]
+
 

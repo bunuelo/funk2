@@ -44,7 +44,7 @@
 	     gripper  gripper]]
   [have grippers_mutex lock]
   [set gripper blocks_world_physics this]
-  [= gripper [cons gripper grippers]]
+  [= grippers [cons gripper grippers]]
   [have grippers_mutex unlock]]
 
 [deftypefunk blocks_world_physics execute handle_movement [step_size]

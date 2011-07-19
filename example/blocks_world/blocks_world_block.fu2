@@ -25,6 +25,7 @@
 						   [in_gripper nil]
 						   [x_velocity 0.0]
 						   [y_velocity 0.0]
+						   [on_block   nil]
 						   ]
   [new [initial-name
 	initial-width
@@ -62,6 +63,7 @@
 			[prog [= obstacle_below_y [get block y]]
 			      [= obstacle_block   block]]]]]
 	  [get blocks_world_physics blocks]]
+    [= on_block nil]
     [if [not [null obstacle_below_y]]
 	[prog `[terminal_format standard-terminal '\n' `[,name on ,[get block name]]]
 	      [let [[maximum_block_y [- obstacle_below_y height]]]
@@ -69,7 +71,8 @@
 		  [if [< maximum_block_y next_block_y]
 		      [prog [= y          maximum_block_y]
 			    [= y_velocity 0.0]]
-		    [= y next_block_y]]]]]]
+		    [prog [= on_block obstacle_block]
+			  [= y next_block_y]]]]]]]
     ]]
 
 

@@ -21,8 +21,7 @@
 'blocks_world_gripper'
 
 [deframe blocks_world_gripper [blocks_world_block] [movement_commands_mutex
-						    movement_commands
-						    current_movement_command
+						    movement_command
 						    perceptions
 						    [gripper_speed 1.0]]
   [new [initial-name

@@ -84,13 +84,27 @@
 		  [have this __add_perception `[,name over ,[get block name]]]]
 	      
 	      [if [get block on_block]
-		  [have this __add_perception `[,[get block name] on ,[get [get block on_block] name]]]]
+		  [have this __add_perception `[,[get block name] on ,[get block name]]]]
 	      
-	      [have this __add_perception `[,[get block name] color ,[get [get block on_block] color]]]
-	      [have this __add_perception `[,[get block name] shape ,[get [get block on_block] shape]]]
+	      [have this __add_perception `[,[get block name] is-a block]]
+	      [have this __add_perception `[,[get block name] color ,[get block color]]]
+	      [have this __add_perception `[,[get block name] shape ,[get block shape]]]
 	      
 	      ]
 	[get blocks_world_physics blocks]]
+  [mapc [funk [gripper]
+	      [if [eq this gripper]
+		  [have this __add_perception `[,[get gripper name] is me]]]
+	      [if [> [get gripper x] x]
+		  [have this __add_perception `[,[get gripper name] right-of ,name]]]
+	      [if [< [get gripper x] x]
+		  [have this __add_perception `[,[get gripper name] left-of ,name]]]
+	      
+	      [have this __add_perception `[,[get gripper name] is-a gripper]]
+	      [have this __add_perception `[,[get gripper name] color ,[get gripper color]]]
+	      
+	      ]
+	[get blocks_world_physics grippers]]
   [have perception_list_mutex unlock]]
 
 [deftypefunk blocks_world_gripper set movement_command-left []

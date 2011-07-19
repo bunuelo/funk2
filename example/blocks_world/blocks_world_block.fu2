@@ -69,10 +69,10 @@
 	      [let [[maximum_block_y [- obstacle_below_y height]]]
 		[let [[next_block_y [+ y [* step_size y_velocity]]]]
 		  [if [< maximum_block_y next_block_y]
-		      [prog [= y          maximum_block_y]
+		      [prog [= on_block   obstacle_block]
+			    [= y          maximum_block_y]
 			    [= y_velocity 0.0]]
-		    [prog [= on_block obstacle_block]
-			  [= y next_block_y]]]]]]]
+		    [= y next_block_y]]]]]]
     ]]
 
 

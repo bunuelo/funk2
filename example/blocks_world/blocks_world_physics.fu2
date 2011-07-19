@@ -63,6 +63,11 @@
 	      [have gripper step step_size]]
 	grippers]]
 
+[deftypefunk blocks_world_physics execute calculate_perceptions []
+  [mapc [funk [gripper]
+	      [have gripper calculate_perceptions]]
+	grippers]]
+
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
   [have cairo_context paint]

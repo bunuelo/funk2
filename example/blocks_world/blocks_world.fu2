@@ -44,7 +44,8 @@
 
 [deftypefunk blocks_world execute step [step_size]
   [have blocks_world_physics handle_movement step_size]
-  [have blocks_world_physics step            step_size]]
+  [have blocks_world_physics step            step_size]
+  [have blocks_world_physics calculate_perceptions]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]]

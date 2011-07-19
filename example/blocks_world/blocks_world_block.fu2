@@ -56,7 +56,7 @@
 	   [> x           [+ [get block x] [get block width]]]]]]
 
 [deftypefunk blocks_world_block execute handle_movement []
-  [= y_velocity [+ y_velocity [* step_size 9.8]]]
+  [= y_velocity [+ y_velocity [* step_size 9.8]]]]
 
 [deftypefunk blocks_world_block execute step [step_size]
   [let [[obstacle_below_y nil]

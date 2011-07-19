@@ -141,7 +141,8 @@
 
 'blocks_world_gripper'
 
-[deframe blocks_world_gripper [blocks_world_block] [movement_command]
+[deframe blocks_world_gripper [blocks_world_block] [movement_command
+						    perceptions]
   [new [initial-name
 	initial-width
 	initial-height

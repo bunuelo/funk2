@@ -124,7 +124,7 @@
        [mapc [funk [gripper]
 		   [let [[gripper_controller [new blocks_world_gripper_controller blocks_world gripper]]]
 		     [have gripper_controller show_all]
-		     [have gripper_controller_hbox pack_start gripper_controller nil nil 0]
+		     [have gripper_controller_hbox pack_start gripper_controller t t 0]
 		     [have gripper_controller_ptypehash add gripper gripper_controller]
 		     ]]
 	     [get blocks_world grippers]]

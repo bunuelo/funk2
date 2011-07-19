@@ -28,6 +28,8 @@
 				     x
 				     y
 				     
+				     blocks_world_physics
+				     
 				     [in_gripper nil]
 				     [y_velocity 0.0]
 				     ]
@@ -52,6 +54,32 @@
 [deftypefunk blocks_world_block get overlaps_horizontally [block]
   [not [or [< [+ x width] [get block x]]
 	   [> x           [+ [get block x] [get block width]]]]]]
+
+[deftypefunk blocks_world_block execute handle_movement []
+  [= y_velocity [+ y_velocity [* step_size 9.8]]]
+
+[deftypefunk blocks_world_block execute step [step_size]
+  [let [[obstacle_below_y nil]
+	[obstacle_block   nil]]
+    [mapc [funk [block]
+		[if [not [eq this block]]
+		    [if [and [get this overlaps_horizontally block]
+			     [< y [get block y]]
+			     [or [null obstacle_below_y]
+				 [< [get other_block y] obstacle_below_y]]]
+			[prog [= obstacle_below_y [get block y]]
+			      [= obstacle_block   block]]]]]
+	  [get blocks_world_physics blocks]]
+    [if [not [null obstacle_below_y]]
+	[prog `[terminal_format standard-terminal '\n' `[,name on ,[get block name]]]
+	      [let [[maximum_block_y [- obstacle_below_y height]]]
+		[let [[next_block_y [+ y [* step_size y_velocity]]]]
+		  [if [< maximum_block_y next_block_y]
+		      [prog [= y          maximum_block_y]
+			    [= y_velocity 0.0]]
+		    [= y next_block_y]]]]]]
+    ]]
+
 
 [deftypefunk blocks_world_block execute render_shape_path_to_cairo [cairo_context]
   [cond [[eq `cube shape]

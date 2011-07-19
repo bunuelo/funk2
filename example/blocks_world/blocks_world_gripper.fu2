@@ -20,8 +20,13 @@
 
 'blocks_world_gripper'
 
-[deframe blocks_world_gripper [blocks_world_block] [movement_command
-						    perceptions]
+[deframe blocks_world_gripper [blocks_world_block] [movement_commands_mutex
+						    movement_commands
+						    current_movement_command
+						    perceptions
+						    [speed      1.0]
+						    [x_velocity 0.0]
+						    [y_velocity 0.0]]
   [new [initial-name
 	initial-width
 	initial-height
@@ -38,6 +43,24 @@
 		  initial-x
 		  initial-y]
        ]]
+
+[deftypefunk blocks_world_gripper execute handle_movement []
+  [cond [[eq `left movement_command]
+	 [= vx [- speed]]]
+	[[eq `right movement_command]
+	 [= vx speed]]
+	]
+  ]
+
+[deftypefunk blocks_world_gripper execute step [step_size]
+  [let [[next_x [+ x [* step_size x_velocity]]]
+	[next_y [+ y [* step_size y_velocity]]]]
+    [if [< next_x 0.0]
+	[= next_x 0.0]]
+    [if [> next_x 5.0]
+	[= next_x 5.0]]
+    [= x next_x]
+    [= y next_y]]]
 
 [deftypefunk blocks_world_gripper set movement_command-left []
   [= movement_command `left]]

@@ -53,8 +53,8 @@
   [have this redraw_cairo_surface]
   [get cairo_image_surface as-image]]
 
-[deftypefunk blocks_world get perceptions []
-  [get blocks_world_physics perceptions]]
+[deftypefunk blocks_world get grippers []
+  [get blocks_world_physics grippers]]
 
 [deftypefunk blocks_world execute setup_default_scenario []
   [let [[gripper-1 [new blocks_world_gripper `Gripper-1 1 1    `black `gripper 0 0.5]]

@@ -25,8 +25,13 @@
   :packages [blocks_world_block]
    :sources ['blocks_world_physics.fu2']]
 
+[defpackage blocks_world_gripper_controller
+  :packages [blocks_world_physics]
+   :sources ['blocks_world_gripper_controller.fu2']]
+
 [defpackage blocks_world_window
-  :packages [gtk]
+  :packages [gtk
+	     blocks_world_gripper_controller]
    :sources ['blocks_world_window.fu2']]
 
 [defpackage blocks_world

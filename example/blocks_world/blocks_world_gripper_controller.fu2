@@ -92,5 +92,5 @@
   [set gripper movement_command-stop]]
 
 [deftypefunk blocks_world_gripper_controller execute update []
-  [set [get text_view buffer] text [format nil [get gripper perceptions]]]]
+  [set [get gtk_text_view buffer] text [format nil [get gripper perceptions]]]]
 

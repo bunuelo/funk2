@@ -149,7 +149,8 @@
   [have gtk_window   destroy]]
 
 [deftypefunk blocks_world_window execute step []
-  [have blocks_world step step_size]]
+  [have blocks_world step step_size]
+  ]
 
 [deftypefunk blocks_world_window execute cycle []
   [if [not [get gtk_window visible]]
@@ -168,5 +169,7 @@
 
 [deftypefunk blocks_world_window execute handle_redraw []
   [have this regenerate_gtk_image]
-  ]
+  [mapc [funk [gripper_controller]
+	      [have gripper_controller update]]
+	[get gripper_controller_ptypehash values]]]
 

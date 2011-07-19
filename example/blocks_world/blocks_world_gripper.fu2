@@ -97,12 +97,12 @@
 		  [have this __add_perception `[,[get block name] on ,[get block name]]]]
 	      
 	      [if [> [get block x] x]
-		  [have this __add_perception `[[get block name], right-of ,name]]]
+		  [have this __add_perception `[,[get block name] right-of ,name]]]
 	      [if [< [get block x] x]
-		  [have this __add_perception `[[get block name], left-of ,name]]]
+		  [have this __add_perception `[,[get block name] left-of ,name]]]
 	      [if [and [> x [- [get block x] 0.25]]
 		       [< x [+ [get block x] 0.25]]]
-		  [have this __add_perception `[[get block name], below ,name]]]
+		  [have this __add_perception `[,[get block name] below ,name]]]
 	      
 	      ]
 	[get blocks_world_physics blocks]]

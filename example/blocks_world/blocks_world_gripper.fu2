@@ -96,7 +96,9 @@
   [mapc [funk [gripper]
 	      [if [eq this gripper]
 		  [prog [have this __add_perception `[,[get gripper name] is me]]
-			[have this __add_perception `[,[get gripper name] movement_command ,[get gripper movement_command]]]
+			[have this __add_perception `[,[get gripper name] movement_command ,[if [get gripper movement_command]
+												[get gripper_movement_command]
+											      `nil]]]
 			]]
 	      
 	      [have this __add_perception `[,[get gripper name] is-a gripper]]

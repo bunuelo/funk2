@@ -44,6 +44,24 @@
        [have gtk_hbox pack_start gtk_stop_button nil nil 0]
        [have gtk_hbox pack_start gtk_right_button nil nil 0]
        
+       [have gtk_left_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command left.']
+		   [set this movement_command-left]]
+	     nil]
+       
+       [have gtk_stop_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command stop.']
+		   [set this movement_command-stop]]
+	     nil]
+       
+       [have gtk_right_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command right.']
+		   [set this movement_command-right]]
+	     nil]
+       
        [have gtk_frame add gtk_hbox]
        
        ]]
@@ -53,4 +71,13 @@
 
 [deftypefunk blocks_world_gripper_controller execute show_all []
   [have gtk_frame show_all]]
+
+[deftypefunk blockss_world_gripper_controller set movement_command-right []
+  [set gripper movement_command-right]]
+
+[deftypefunk blockss_world_gripper_controller set movement_command-left []
+  [set gripper movement_command-left]]
+
+[deftypefunk blockss_world_gripper_controller set movement_command-stop []
+  [set gripper movement_command-stop]]
 

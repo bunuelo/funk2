@@ -141,7 +141,7 @@
 
 'blocks_world_gripper'
 
-[deframe blocks_world_gripper [blocks_world_block] []
+[deframe blocks_world_gripper [blocks_world_block] [movement_command]
   [new [initial-name
 	initial-width
 	initial-height
@@ -158,5 +158,14 @@
 		  initial-x
 		  initial-y]
        ]]
+
+[deftypefunk blocks_world_gripper set movement_command-left []
+  [= movement_command `left]]
+
+[deftypefunk blocks_world_gripper set movement_command-right []
+  [= movement_command `right]]
+
+[deftypefunk blocks_world_gripper set movement_command-stop []
+  [= movement_command nil]]
 
 

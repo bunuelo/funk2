@@ -23,6 +23,7 @@
 [deframe blocks_world_gripper_controller [frame] [blocks_world
 						  gripper
 						  
+						  gtk_frame
 						  gtk_hbox
 						  gtk_left_button
 						  gtk_stop_button

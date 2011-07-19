@@ -64,6 +64,7 @@
 	[block-3   [new blocks_world_block   `Block-3   1 1    `green `pyramid 4 1]]
 	[table-1   [new blocks_world_block   `Table-1   6 0.25 `white `cube    0 4]]]
     [have blocks_world_physics add_gripper gripper-1]
+    [have blocks_world_physics add_gripper gripper-2]
     [have blocks_world_physics add_block   block-1]
     [have blocks_world_physics add_block   block-2]
     [have blocks_world_physics add_block   block-3]

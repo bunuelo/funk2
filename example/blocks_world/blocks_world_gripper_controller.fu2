@@ -72,12 +72,12 @@
 [deftypefunk blocks_world_gripper_controller execute show_all []
   [have gtk_frame show_all]]
 
-[deftypefunk blockss_world_gripper_controller set movement_command-right []
+[deftypefunk blocks_world_gripper_controller set movement_command-right []
   [set gripper movement_command-right]]
 
-[deftypefunk blockss_world_gripper_controller set movement_command-left []
+[deftypefunk blocks_world_gripper_controller set movement_command-left []
   [set gripper movement_command-left]]
 
-[deftypefunk blockss_world_gripper_controller set movement_command-stop []
+[deftypefunk blocks_world_gripper_controller set movement_command-stop []
   [set gripper movement_command-stop]]
 

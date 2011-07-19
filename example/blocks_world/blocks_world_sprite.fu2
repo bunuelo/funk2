@@ -1,0 +1,135 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'blocks_world_sprite'
+
+[deframe blocks_world_sprite [frame] [name
+				      width
+				      height
+				      color
+				      shape
+				      x
+				      y]
+  [new [initial-name
+	initial-width
+	initial-height
+	initial-color
+	initial-shape
+	initial-x
+	initial-y]
+       [= name   initial-name]
+       [= width  [get initial-width  as-double]]
+       [= height [get initial-height as-double]]
+       [= color  initial-color]
+       [= shape  initial-shape]
+       [= x      [get initial-x as-double]]
+       [= y      [get initial-y as-double]]
+       ]]
+
+[deftypefunk blocks_world_sprite get overlaps_horizontally [sprite]
+  [not [or [< [+ x width] [get sprite x]]
+	   [> x           [+ [get sprite x] [get sprite width]]]]]]
+
+[deftypefunk blocks_world_sprite execute render_shape_path_to_cairo [cairo_context]
+  [cond [[eq `cube shape]
+	 
+	 [have cairo_context move_to     x         y]
+	 [have cairo_context rel_line_to width     0.0]
+	 [have cairo_context rel_line_to 0.0       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
+	[[eq `pyramid shape]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [/ width 2]       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
+	[[eq `gripper shape]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] 0.0]
+	 [have cairo_context rel_line_to 0.0               y]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
+	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
+	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]]     y]
+	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]
+	 [have cairo_context rel_line_to [- [/ [* width 4] 6]] 0.0]
+	 [have cairo_context close_path]
+	 
+	 ]
+	
+	]]
+
+[deftypefunk blocks_world_sprite get render_shape_text_height []
+  [cond [[eq `cube    shape] 0.05]
+	[[eq `pyramid shape] 0.05]
+	[[eq `gripper shape] [- [/ height 3.0] 0.05]]
+	]]
+
+
+[deftypefunk blocks_world_sprite execute render_to_cairo [cairo_context]
+  [have cairo_context save]
+  [cond [[eq `red   color] [have cairo_context set_source_rgba 1.0  0.75 0.75 1.0]]
+	[[eq `brown color] [have cairo_context set_source_rgba 1.0  0.75 0.5  1.0]]
+	[[eq `green color] [have cairo_context set_source_rgba 0.5  1.0  0.75 1.0]]
+	[[eq `blue  color] [have cairo_context set_source_rgba 0.5  0.75 1.0  1.0]]
+	[[eq `black color] [have cairo_context set_source_rgba 0.75 0.75 0.75 1.0]]
+	[[eq `white color] [have cairo_context set_source_rgba 0.9  0.9  0.9  1.0]]]
+  [have cairo_context set_line_width 0.0]
+  [have this render_shape_path_to_cairo cairo_context]
+  [have cairo_context fill]
+  [have cairo_context restore]
+  
+  [have cairo_context save]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context set_line_cap `square]
+  [have cairo_context set_line_width 0.02]
+  [have this render_shape_path_to_cairo cairo_context]
+  [have cairo_context stroke]
+  [have cairo_context restore]
+  
+  [have cairo_context save]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context select_font_face 'Times New Roman' `normal `normal]
+  [have cairo_context set_font_size 0.2]
+  [let [[text_extents [have cairo_context text_extents [get name as-string]]]]
+    [have cairo_context move_to
+	  [+ x [/ [- width [get text_extents width]] 2]]
+	  [- [+ y height] [get this render_shape_text_height]]]]
+  [have cairo_context text_path [get name as-string]]
+  [have cairo_context fill]
+  [have cairo_context restore]
+  
+  ]
+
+

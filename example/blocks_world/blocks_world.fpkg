@@ -17,8 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage blocks_world_block
+[defpackage blocks_world_sprite
   :packages [cairo]
+   :sources ['blocks_world_sprite.fu2']]
+
+[defpackage blocks_world_block
+  :packages [blocks_world_sprite]
    :sources ['blocks_world_block.fu2']]
 
 [defpackage blocks_world_gripper

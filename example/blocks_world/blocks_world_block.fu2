@@ -31,6 +31,7 @@
 				     blocks_world_physics
 				     
 				     [in_gripper nil]
+				     [x_velocity 0.0]
 				     [y_velocity 0.0]
 				     ]
   [new [initial-name

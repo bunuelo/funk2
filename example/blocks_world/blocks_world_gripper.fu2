@@ -24,9 +24,7 @@
 						    movement_commands
 						    current_movement_command
 						    perceptions
-						    [speed      1.0]
-						    [x_velocity 0.0]
-						    [y_velocity 0.0]]
+						    [gripper_speed 1.0]]
   [new [initial-name
 	initial-width
 	initial-height
@@ -46,9 +44,9 @@
 
 [deftypefunk blocks_world_gripper execute handle_movement [step_size]
   [cond [[eq movement_command `left]
-	 [= x_velocity [- speed]]]
+	 [= x_velocity [- gripper_speed]]]
 	[[eq movement_command `right]
-	 [= x_velocity speed]]
+	 [= x_velocity gripper_speed]]
 	]
   ]
 

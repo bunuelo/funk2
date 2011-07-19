@@ -47,12 +47,12 @@
   [= gripper [cons gripper grippers]]
   [have grippers_mutex unlock]]
 
-[deftypefunk blocks_world_physics execute handle_movement []
+[deftypefunk blocks_world_physics execute handle_movement [step_size]
   [mapc [funk [block]
-	      [have block handle_movement]]
+	      [have block handle_movement step_size]]
 	blocks]
   [mapc [funk [gripper]
-	      [have gripper handle_movement]]
+	      [have gripper handle_movement step_size]]
 	grippers]]
 
 [deftypefunk blocks_world_physics execute step [step_size]

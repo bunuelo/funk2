@@ -44,7 +44,7 @@
 		  initial-y]
        ]]
 
-[deftypefunk blocks_world_gripper execute handle_movement []
+[deftypefunk blocks_world_gripper execute handle_movement [step_size]
   [cond [[eq `left movement_command]
 	 [= vx [- speed]]]
 	[[eq `right movement_command]

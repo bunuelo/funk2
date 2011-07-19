@@ -43,8 +43,8 @@
   [have cairo_context       destroy]]
 
 [deftypefunk blocks_world execute step [step_size]
-  [have blocks_world_physics handle_movement]
-  [have blocks_world_physics step step_size]]
+  [have blocks_world_physics handle_movement step_size]
+  [have blocks_world_physics step            step_size]]
 
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]]

@@ -201,7 +201,11 @@ f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable_type"), type);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "undefined_variable"),      variable);
     u64 larva_type = f2larva__larva_type(value, cause);
-    return f2larva__new(cause, larva_type, f2__bug__new(cause, f2integer__new(cause, larva_type), bug_frame));
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),      new__symbol(cause, "variable_does_not_exist_for_this_fiber"),
+				   new__symbol(cause, "this"),          fiber,
+				   new__symbol(cause, "variable_type"), type,
+				   new__symbol(cause, "variable_name"), variable));
   }
   return value;
 }

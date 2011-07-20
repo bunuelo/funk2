@@ -22,8 +22,7 @@
 	     gtk
 	     image
 	     image_sequence
-	     movie
-	     mindmon]]
+	     movie]]
 
 [defpackage isismon_knowledge
   :packages [isismon_core

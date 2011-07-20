@@ -31,6 +31,10 @@
        [= height [get initial-height as-double]]
        ]]
 
+[deftypefunk blocks_world_physics set size [new-width new-height]
+  [= width  [get new-width  as-double]]
+  [= height [get new-height as-double]]]
+
 [deftypefunk blocks_world_physics get blocks []
   [have blocks_mutex lock]
   [let [[result [if [null blocks]

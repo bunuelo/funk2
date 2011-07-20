@@ -50,6 +50,13 @@
 [deftypefunk blocks_world execute redraw_cairo_surface []
   [have blocks_world_physics render_to_cairo cairo_context]]
 
+[deftypefunk blocks_world execute export_pdf_file [filename]
+  [let [[pdf_surface [new cairo_pdf_surface filename [get width as-double] [get height as-double]]]]
+    [let [[pdf_cairo_context [new cairo_context pdf_surface]]]
+      [have blocks_world_physics render_to_cairo pdf_cairo_context]
+      [have pdf_surface       destroy]
+      [have pdf_cairo_context destroy]]]]
+
 [deftypefunk blocks_world get as-image []
   [have this redraw_cairo_surface]
   [get cairo_image_surface as-image]]

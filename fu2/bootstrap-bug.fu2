@@ -101,7 +101,7 @@
 					     [eval `[globalize ,bug_variable ,bug]]]]
 				   [if print_terminal
 				       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string] ' bug_name=' [get bug_name as-string]]
-					     `[let [[unknown_keys nil]]
+					     [let [[unknown_keys nil]]
 					       [labels [[add_unknown_key [key]
 									 [if [not [or [eq `bug_name           key]
 										      [eq `source_filename    key]

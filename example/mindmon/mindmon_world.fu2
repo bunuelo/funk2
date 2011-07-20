@@ -25,3 +25,7 @@
        [have mindmon_world-current_active_frame add name this]
        ]]
 
+[deftypefunk mindmon_world set all_cameras_enabled [all_cameras_enabled]
+  [terminal_format standard-terminal '\nmindmon_world-set-all_cameras_enabled not implemented in ' [type this] ' interface.']
+  ]
+

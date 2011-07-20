@@ -474,14 +474,20 @@
   [himicha drink]]
 
 
-[deftypefunk mindmon_project execute create_new_mindmon_world []
+[deftypefunk mindmon_project execute create_new_mindmon_isis_world []
   [terminal_format standard-terminal '\nMindMon Project creating new MindMon world.']
-  `[let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
-     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
-     [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
-       [set isis_world all_cameras_enabled cameras_enabled]
-       [have [get this cycle_trigger] trigger]]]
-  [error bug_name `not_yet_implemented]]
+  [let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
+    [= mindmon_world [new mindmon_isis_world [new isis_world_client isis_world_server_hostname]]]
+    [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
+      [set mindmon_world all_cameras_enabled cameras_enabled]
+      [have [get this cycle_trigger] trigger]]]]
+
+[deftypefunk mindmon_project execute create_new_mindmon_blocks_world []
+  [terminal_format standard-terminal '\nMindMon Project creating new MindMon world.']
+  [= mindmon_world [new mindmon_blocks_world 640 480]]
+  [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
+    [set mindmon_world all_cameras_enabled cameras_enabled]
+    [have [get this cycle_trigger] trigger]]]
 
 [defunk mindmon_project-new_from_file [mindmon filename]
   [terminal_format standard-terminal '\nMindMon Project: Loading ' filename '.']

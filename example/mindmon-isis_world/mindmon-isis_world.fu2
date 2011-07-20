@@ -20,8 +20,13 @@
 [deframe mindmon_isis_world [mindmon_world] [isis_world]
   [new [isis_world_server_hostname]
        [construct mindmon_world [gensym 'mindmon_isis_world']]
-       [= isis_world [new isis_world [new xmlrpc_client 'http://' isis_world_server_hostname ':8001/RPC2']]]
+       [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
        ]]
 
 [new mindmon_isis_world 'localhost']
+[new mindmon_isis_world 'imprimer.media.mit.edu']
+[new mindmon_isis_world 'simonetti.media.mit.edu']
+[new mindmon_isis_world 'resource.media.mit.edu']
+[new mindmon_isis_world 'psuche.media.mit.edu']
+[new mindmon_isis_world 'rct.media.mit.edu']
 

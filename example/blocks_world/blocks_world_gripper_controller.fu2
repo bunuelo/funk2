@@ -30,6 +30,7 @@
 						  gtk_stop_button
 						  gtk_right_button
 						  gtk_grab_button
+						  gtk_drop_button
 						  gtk_text_view
 						  
 						  ]
@@ -52,6 +53,7 @@
        [have gtk_hbox pack_start gtk_stop_button  nil nil 0]
        [have gtk_hbox pack_start gtk_right_button nil nil 0]
        [have gtk_hbox pack_start gtk_grab_button  nil nil 0]
+       [have gtk_hbox pack_start gtk_drop_button  nil nil 0]
        
        [have gtk_left_button signal_connect 'clicked'
 	     [funk []

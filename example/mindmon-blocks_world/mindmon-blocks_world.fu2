@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize mindmon_world-current_active_frame [frame]]
-
-[deframe mindmon_world [frame] [name]
-  [new [initial-name]
-       [= name initial-name]
-       [have mindmon_world-current_active_frame add name this]
+[deframe mindmon_blocks_world [mindmon_world] [blocks_world]
+  [new []
+       [construct mindmon_world [gensym 'mindmon_blocks_world']]
+       [= blocks_world [new blocks_world [gensym 'blocks_world'] 640 480]]
        ]]
+
+[new blocks_world_mindmon_world]
 

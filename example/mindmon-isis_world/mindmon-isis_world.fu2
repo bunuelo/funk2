@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize mindmon_world-current_active_frame [frame]]
-
-[deframe mindmon_world [frame] [name]
-  [new [initial-name]
-       [= name initial-name]
-       [have mindmon_world-current_active_frame add name this]
+[deframe mindmon_isis_world [mindmon_world] [isis_world]
+  [new [isis_world_server_hostname]
+       [construct mindmon_world [gensym 'mindmon_isis_world']]
+       [= isis_world [new isis_world [new xmlrpc_client 'http://' isis_world_server_hostname ':8001/RPC2']]]
        ]]
+
+[new mindmon_isis_world 'localhost']
 

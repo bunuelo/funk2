@@ -17,11 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize mindmon_world-current_active_frame [frame]]
-
-[deframe mindmon_world [frame] [name]
-  [new [initial-name]
-       [= name initial-name]
-       [have mindmon_world-current_active_frame add name this]
-       ]]
+[defpackage mindmon-blocks_world
+  :packages [mindmon blocks_world]
+   :sources ['mindmon-blocks_world.fu2']]
 

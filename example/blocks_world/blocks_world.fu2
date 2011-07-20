@@ -26,6 +26,7 @@
 			       image_width
 			       image_height
 			       
+			       step_mutex
 			       blocks_world_physics]
   [new [initial-name initial-image_width initial-image_height]
        [= name         initial-name]
@@ -40,13 +41,15 @@
        ]]
 
 [deftypefunk blocks_world execute destroy []
-  [have blocks_world-current_active_frame remove name]
+  `[have blocks_world-current_active_frame remove name]
   ]
 
 [deftypefunk blocks_world execute step [step_size]
+  [have step_mutex lock]
   [have blocks_world_physics handle_movement step_size]
   [have blocks_world_physics step            step_size]
-  [have blocks_world_physics calculate_perceptions]]
+  [have blocks_world_physics calculate_perceptions]
+  [have step_mutex unlock]]
 
 [deftypefunk blocks_world execute export_pdf_file [filename]
   [let [[pdf_surface [new cairo_pdf_surface filename [get image_width as-double] [get image_height as-double]]]]
@@ -56,8 +59,8 @@
       [have pdf_cairo_context destroy]]]]
 
 [deftypefunk blocks_world get as-image []
-  [let [[cairo_image_surface [new cairo_image_surface `ARGB32 image_width image_height]]
-	[cairo_context       [new cairo_context cairo_image_surface]]]
+  [let* [[cairo_image_surface [new cairo_image_surface `ARGB32 image_width image_height]]
+	 [cairo_context       [new cairo_context cairo_image_surface]]]
     [have blocks_world_physics render_to_cairo cairo_context image_width image_height]
     [let [[image [get cairo_image_surface as-image]]]
       [have cairo_image_surface destroy]

@@ -230,7 +230,6 @@ all_core_extensions = extension/causality/libf2e_causality.la \
                       extension/lick/libf2e_lick.la \
                       extension/mentality/libf2e_mentality.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
-                      extension/mindmon/libf2e_mindmon.la \
                       extension/movie/libf2e_movie.la \
                       extension/propogator/libf2e_propogator.la \
                       extension/semantic_action_event/libf2e_semantic_action_event.la \
@@ -427,7 +426,6 @@ extension_interval_tree_libf2e_interval_tree_la_SOURCES                         
 extension_lick_libf2e_lick_la_SOURCES                                                                     = extension/lick/lick.c
 extension_mentality_libf2e_mentality_la_SOURCES                                                           = extension/mentality/mentality.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                     = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
-extension_mindmon_libf2e_mindmon_la_SOURCES                                                               = extension/mindmon/mindmon.c
 extension_movie_libf2e_movie_la_SOURCES                                                                   = extension/movie/movie.c
 extension_propogator_libf2e_propogator_la_SOURCES                                                         = extension/propogator/propogator.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                   = extension/semantic_action_event/semantic_action_event.c
@@ -556,9 +554,6 @@ extension_mentality_libf2e_mentality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_mindmon_libf2e_mindmon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_mindmon_libf2e_mindmon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

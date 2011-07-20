@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [deframe mindmon_blocks_world [mindmon_world] [blocks_world]
-  [new []
+  [new [width height]
        [construct mindmon_world [gensym 'mindmon_blocks_world']]
-       [= blocks_world [new blocks_world [gensym 'blocks_world'] 640 480]]
+       [= blocks_world [new blocks_world [gensym 'blocks_world'] width height]]
        ]]
 
-[new blocks_world_mindmon_world]
+[new mindmon_blocks_world 640 480]
 

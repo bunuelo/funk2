@@ -34,7 +34,23 @@
   [terminal_format standard-terminal '\nmindmon_world-set-all_cameras_enabled not implemented in ' [type this] ' interface.']
   ]
 
+[deftypefunk mindmon_world execute initialize_simulation []
+  [terminal_format standard-terminal '\nmindmon_world-execute-initialize_simulation not implemented in ' [type this] ' interface.']
+  ]
+
+[deftypefunk mindmon_world get initialize_events []
+  [terminal_format standard-terminal '\nmindmon_world-get-initialize_events not implemented in ' [type this] ' interface.']
+  ]
+
+[deftypefunk mindmon_world get all_objects_summary []
+  [terminal_format standard-terminal '\nmindmon_world-get-all_objects_summary not implemented in ' [type this] ' interface.']
+  ]
+
 [deftypefunk mindmon_world execute step_simulation [step_size]
   [terminal_format standard-terminal '\nmindmon_world-execute-step_simulation not implemented in ' [type this] ' interface.']
+  ]
+
+[deftypefunk mindmon_world execute raw_step_simulation [step_size]
+  [terminal_format standard-terminal '\nmindmon_world-execute-raw_step_simulation not implemented in ' [type this] ' interface.']
   ]
 

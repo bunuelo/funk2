@@ -244,7 +244,11 @@ f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2p
 	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),      new__symbol(cause, "undefined_var_value"));
 	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable_type"), type);
 	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "variable"),      var);
-	value = f2larva__new(cause, 23, f2__bug__new(cause, f2integer__new(cause, 23), bug_frame));
+	value = new__error(f2list8__new(cause,
+					new__symbol(cause, "bug_name"),      new__symbol(cause, "type_var_does_not_exist_in_cause"),
+					new__symbol(cause, "this"),          this,
+					new__symbol(cause, "variable_type"), type,
+					new__symbol(cause, "variable_name"), var));
       }
     }
   } while (keep_looping);

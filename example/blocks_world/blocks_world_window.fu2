@@ -223,6 +223,7 @@
   [new blocks_world_export_pdf_dialog this]]
 
 [deftypefunk blocks_world_window execute export_pdf_file [filename]
-  [terminal_format standard-terminal '\nBlocks World: exporting pdf, ' filename '.']
-  [have blocks_world export_pdf_file filename]]
+  [terminal_format standard-terminal '\nBlocks World: exporting pdf ' filename '.']
+  [have blocks_world export_pdf_file filename]
+  [terminal_format standard-terminal '\nBlocks World: exporting pdf ' filename ' done.']]
 

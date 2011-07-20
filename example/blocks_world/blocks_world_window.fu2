@@ -182,6 +182,7 @@
        [have gtk_window show_all]
        
        [= fiber [fiber [funk []
+			     [cause-define cause-name `blocks_world]
 			     [while [not done]
 			       [millisleep 100]
 			       [have this cycle]]

@@ -17,33 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage mindmon_core
-  :packages [gtk
-	     image
-	     image_sequence
-	     movie]]
-
-[defpackage mindmon_knowledge
-  :packages [mindmon_core
-	     gtk_timeline]
-   :sources ['mindmon_knowledge.fu2']]
-
-[defpackage mindmon_activator
-  :packages [mindmon_core]
-   :sources ['mindmon_activator.fu2']]
-
-[defpackage mindmon_agent
-  :packages [mindmon_core
-	     mindmon_activator
-	     mindmon_knowledge]
-   :sources ['mindmon_agent.fu2']]
-
-[defpackage mindmon_world
-  :packages []
-   :sources ['mindmon_world.fu2']]
-
-[defpackage mindmon
-  :packages [mindmon_agent
-	     mindmon_world]
-   :sources ['mindmon.fu2']]
+[deframe mindmon_world [frame] []
+  [new []
+       
+       ]]
 

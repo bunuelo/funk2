@@ -194,14 +194,11 @@ f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type
   f2ptr env   = f2fiber__env(fiber, cause);
   f2ptr value = f2__environment__lookup_type_var_value(cause, env, type, variable);
   if (raw__larva__is_type(cause, value)) {
-    value = f2__cause__lookup_type_var_value(cause, cause, type, variable);
-  }
-  if (raw__larva__is_type(cause, value)) {
-    return new__error(f2list8__new(cause,
-				   new__symbol(cause, "bug_name"),      new__symbol(cause, "variable_does_not_exist_for_this_fiber"),
-				   new__symbol(cause, "this"),          fiber,
-				   new__symbol(cause, "variable_type"), type,
-				   new__symbol(cause, "variable_name"), variable));
+    value = catch_value(f2__cause__lookup_type_var_value(cause, cause, type, variable),
+			f2list8__new(cause, new__symbol(cause, "bug_name"),      new__symbol(cause, "variable_does_not_exist_for_this_fiber"),
+				     new__symbol(cause, "this"),          fiber,
+				     new__symbol(cause, "variable_type"), type,
+				     new__symbol(cause, "variable_name"), variable));
   }
   return value;
 }

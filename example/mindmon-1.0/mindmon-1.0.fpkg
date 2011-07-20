@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage mindmon
+[defpackage mindmon-1.0
   :packages [mind gtk]
-   :sources ['mindmon.fu2']]
+   :sources ['mindmon-1.0.fu2']]
 

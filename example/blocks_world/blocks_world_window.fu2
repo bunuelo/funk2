@@ -24,7 +24,7 @@
 						 save_dialog]
   [new [initial-blocks_world_window]
        [= blocks_world_window initial-blocks_world_window]
-       [= save_dialog         [gtk-file_chooser_dialog-new_for_file_save [get blocks_world_window window]]]
+       [= save_dialog         [gtk-file_chooser_dialog-new_for_file_save [get blocks_world_window gtk_window]]]
        
        [have save_dialog add_file_filter_pattern 'Public Document Format (*.pdf)' '*.pdf']
        [have save_dialog add_file_filter_pattern 'All Files (*.*)'                '*.*']

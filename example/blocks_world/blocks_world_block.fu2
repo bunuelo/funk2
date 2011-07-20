@@ -73,6 +73,12 @@
 			    [= y          maximum_block_y]
 			    [= y_velocity 0.0]]
 		    [= y next_block_y]]]]]]
-    ]]
+    ]
+  [mapc [funk [gripper]
+	      [if [eq this [get gripper is_holding]]
+		  [prog [= y [+ [get gripper y] [get gripper height]]]
+			[= y_velocity 0.0]]]]
+	[get blocks_world_physics grippers]]
+  ]
 
 

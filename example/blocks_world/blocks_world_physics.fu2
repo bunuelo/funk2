@@ -27,6 +27,24 @@
   [new []
        ]]
 
+[deftypefunk blocks_world_physics get blocks []
+  [have blocks_mutex lock]
+  [let [[result [if [null blocks]
+		    nil
+		  [have blocks sort [funk [x y] [< [get [get block name] as-string]
+						   [get [get block name] as-string]]]]]]]
+    [have blocks_mutex unlock]
+    result]]
+
+[deftypefunk blocks_world_physics get grippers []
+  [have grippers_mutex lock]
+  [let [[result [if [null grippers]
+		    nil
+		  [have grippers sort [funk [x y] [< [get [get gripper name] as-string]
+						     [get [get gripper name] as-string]]]]]]]
+    [have grippers_mutex unlock]
+    result]]
+
 [deftypefunk blocks_world_physics execute add_block [block]
   [if [get block blocks_world_physics]
       [error bug_name `block_world_block_already_blongs_to_a_blocks_world_phyics

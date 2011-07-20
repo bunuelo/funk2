@@ -18,37 +18,35 @@
  rights to redistribute these changes.'
 
 
-'blocks_world_window'
+[globalize blocks_world-current_active_frame [frame]]
 
-[deframe blocks_world [frame] [image_width
+'blocks_world'
+
+[deframe blocks_world [frame] [name
+			       image_width
 			       image_height
 			       
-			       cairo_image_surface
-			       cairo_context
 			       blocks_world_physics]
-  [new [initial-image_width initial-image_height]
+  [new [initial-name initial-image_width initial-image_height]
+       [= name         initial-name]
        [= image_width  initial-image_width]
        [= image_height initial-image_height]
-       
-       [= cairo_image_surface [new cairo_image_surface `ARGB32 image_width image_height]]
-       [= cairo_context       [new cairo_context cairo_image_surface]]
        
        [= blocks_world_physics [new blocks_world_physics 8 5.5]]
        
        [have this setup_default_scenario]
+       
+       [have blocks_world-current_active_frame add name this]
        ]]
 
 [deftypefunk blocks_world execute destroy []
-  [have cairo_image_surface destroy]
-  [have cairo_context       destroy]]
+  [have blocks_world-current_active_frame remove name]
+  ]
 
 [deftypefunk blocks_world execute step [step_size]
   [have blocks_world_physics handle_movement step_size]
   [have blocks_world_physics step            step_size]
   [have blocks_world_physics calculate_perceptions]]
-
-[deftypefunk blocks_world execute redraw_cairo_surface []
-  [have blocks_world_physics render_to_cairo cairo_context image_width image_height]]
 
 [deftypefunk blocks_world execute export_pdf_file [filename]
   [let [[pdf_surface [new cairo_pdf_surface filename [get image_width as-double] [get image_height as-double]]]]
@@ -58,8 +56,13 @@
       [have pdf_cairo_context destroy]]]]
 
 [deftypefunk blocks_world get as-image []
-  [have this redraw_cairo_surface]
-  [get cairo_image_surface as-image]]
+  [let [[cairo_image_surface [new cairo_image_surface `ARGB32 image_width image_height]]
+	[cairo_context       [new cairo_context cairo_image_surface]]]
+    [have blocks_world_physics render_to_cairo cairo_context image_width image_height]
+    [let [[image [get cairo_image_surface as-image]]]
+      [have cairo_image_surface destroy]
+      [have cairo_context       destroy]
+      image]]]
 
 [deftypefunk blocks_world get grippers []
   [get blocks_world_physics grippers]]
@@ -83,7 +86,7 @@
 
 
 [defmetro blocks_world []
-  `[prog [new blocks_world_window [new blocks_world 640 480]]
+  `[prog [new blocks_world_window [new blocks_world [gensym 'blocks_world'] 640 480]]
 	 nil]]
 
 

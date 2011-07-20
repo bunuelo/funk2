@@ -19,13 +19,22 @@
 
 [globalize mindmon_world-current_active_frame [frame]]
 
-[deframe mindmon_world [frame] [name]
+[deframe mindmon_world [frame] [name
+				[overview_image_sequence [new image_sequence nil]]]
   [new [initial-name]
        [= name initial-name]
        [have mindmon_world-current_active_frame add name this]
        ]]
 
+[deftypefunk mindmon_world execute destroy []
+  [terminal_format standard-terminal '\nmindmon_world-execute-destroy not implemented in ' [type this] ' interface.']
+  ]
+
 [deftypefunk mindmon_world set all_cameras_enabled [all_cameras_enabled]
   [terminal_format standard-terminal '\nmindmon_world-set-all_cameras_enabled not implemented in ' [type this] ' interface.']
+  ]
+
+[deftypefunk mindmon_world execute step_simulation [step_size]
+  [terminal_format standard-terminal '\nmindmon_world-execute-step_simulation not implemented in ' [type this] ' interface.']
   ]
 

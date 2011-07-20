@@ -477,7 +477,7 @@
 [deftypefunk mindmon_project execute create_new_mindmon_isis_world []
   [terminal_format standard-terminal '\nMindMon Project creating new MindMon world.']
   [let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
-    [= mindmon_world [new mindmon_isis_world [new isis_world_client isis_world_server_hostname]]]
+    [= mindmon_world [new mindmon_isis_world isis_world_server_hostname]]
     [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
       [set mindmon_world all_cameras_enabled cameras_enabled]
       [have [get this cycle_trigger] trigger]]]]

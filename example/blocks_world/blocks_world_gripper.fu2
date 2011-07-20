@@ -23,7 +23,8 @@
 [deframe blocks_world_gripper [blocks_world_block] [movement_command
 						    [perception_list_mutex [new mutex]]
 						    [perception_list       nil]
-						    [gripper_speed         1.0]]
+						    [gripper_speed         1.0]
+						    [is_holding            nil]]
   [new [initial-name
 	initial-width
 	initial-height
@@ -93,12 +94,14 @@
       [if [not [null obstacle_below_y]]
 	  [prog `[terminal_format standard-terminal '\n' `[,name on ,[get block name]]]
 		[let [[maximum_block_y [- obstacle_below_y height]]]
-		  [let [[next_block_y [+ y [* step_size y_velocity]]]]
-		    [if [< maximum_block_y next_block_y]
-			[prog [= on_block   obstacle_block]
-			      [= y          maximum_block_y]
-			      [= y_velocity 0.0]]
-		      [= y next_block_y]]]]]]
+		  [if [< maximum_block_y next_y]
+		      [prog [= on_block   obstacle_block]
+			    [= next_y     maximum_block_y]
+			    [= y_velocity 0.0]
+			    [if [eq `grab movement_command]
+				[prog [= movement_command `recoil]
+				      [= is_holding       obstacle_block]
+				      ]]]]]]]
       ]
     
     [= x next_x]
@@ -122,6 +125,9 @@
 			[have this __add_perception `[,[get gripper name] movement_command ,[if [get gripper movement_command]
 												[get gripper movement_command]
 											      `nil]]]
+			[have this __add_perception `[,[get gripper name] is-holding ,[if [get gripper is_holding]
+											  [get [get gripper is_holding] name]
+											`nil]]]
 			]]
 	      
 	      [have this __add_perception `[,[get gripper name] is-a gripper]]

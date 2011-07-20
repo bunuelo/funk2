@@ -45,7 +45,7 @@
        [= mindmon initial-mindmon]
        [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get mindmon window]]]
        
-       [have save_dialog add_file_filter_pattern 'Mindmon Project Files (*.mmp)' '*.mmp']
+       [have save_dialog add_file_filter_pattern 'MindMon Project Files (*.mmp)' '*.mmp']
        [have save_dialog add_file_filter_pattern 'All Files (*.*)'               '*.*']
        [set  save_dialog current_name 'Untitled Project.mmp']
        [set  save_dialog current_folder [get [get mindmon preferences] project_directory]]
@@ -69,7 +69,7 @@
        [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get mindmon window]]]
        [= preview_label [gtk-label-new '']]
        
-       [have open_dialog add_file_filter_pattern 'Mindmon Project Files (*.mmp)' '*.mmp']
+       [have open_dialog add_file_filter_pattern 'MindMon Project Files (*.mmp)' '*.mmp']
        [have open_dialog add_file_filter_pattern 'All Files (*.*)'               '*.*']
        [set  open_dialog current_folder [get [get mindmon preferences] project_directory]]
        [set  open_dialog preview_widget preview_label]
@@ -102,7 +102,7 @@
        [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get mindmon window]]]
        [= preview_label [gtk-label-new '']]
        
-       [have open_dialog add_file_filter_pattern 'Mindmon Agent Files (*.mmp-agent)' '*.mmp-agent']
+       [have open_dialog add_file_filter_pattern 'MindMon Agent Files (*.mmp-agent)' '*.mmp-agent']
        [have open_dialog add_file_filter_pattern 'All Files (*.*)'                   '*.*']
        [set  open_dialog current_folder [get [get mindmon preferences] agent_directory]]
        [set  open_dialog preview_widget preview_label]
@@ -137,16 +137,16 @@
        [have this fix_invalid_with_defaults]]]
 
 [deftypefunk mindmon_preferences execute create_default_directories []
-  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data']]]
-  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data/Projects']]]
-  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data/Agents']]]
-  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data/Movies']]]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'MindMon Data']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'MindMon Data/Projects']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'MindMon Data/Agents']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'MindMon Data/Movies']]]]
 
 [deftypefunk mindmon_preferences execute fix_invalid_with_defaults []
   [if [or [not [get this contains `isis_world_server_hostname]] [eq `uninitialized [have this lookup `isis_world_server_hostname]]] [have this add `isis_world_server_hostname 'localhost']]
-  [if [or [not [get this contains `project_directory]]          [eq `uninitialized [have this lookup `project_directory]]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'Mindmon Data/Projects']]]
-  [if [or [not [get this contains `agent_directory]]            [eq `uninitialized [have this lookup `agent_directory]]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'Mindmon Data/Agents']]]
-  [if [or [not [get this contains `movie_export_directory]]     [eq `uninitialized [have this lookup `movie_export_directory]]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'Mindmon Data/Movies']]]
+  [if [or [not [get this contains `project_directory]]          [eq `uninitialized [have this lookup `project_directory]]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'MindMon Data/Projects']]]
+  [if [or [not [get this contains `agent_directory]]            [eq `uninitialized [have this lookup `agent_directory]]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'MindMon Data/Agents']]]
+  [if [or [not [get this contains `movie_export_directory]]     [eq `uninitialized [have this lookup `movie_export_directory]]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'MindMon Data/Movies']]]
   [if [or [not [get this contains `cameras_enabled]]            [eq `uninitialized [have this lookup `cameras_enabled]]]            [have this add `cameras_enabled            t]]]
 
 
@@ -201,7 +201,7 @@
        
        [= window [gtk-window-new]]
        [have window connect_hide_on_delete]
-       [set window title 'Mindmon - Edit Preferences']
+       [set window title 'MindMon - Edit Preferences']
        [= vbox [gtk-vbox-new 0]]
        
        [let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
@@ -395,20 +395,20 @@
        
        [have play_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\nMindmon: Playing.']
+		   [terminal_format standard-terminal '\nMindMon: Playing.']
 		   [= simulation_playing t]
 		   [have [get this cycle_trigger] trigger]]
 	     nil]
        [have stop_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\nMindmon: Stopped.']
+		   [terminal_format standard-terminal '\nMindMon: Stopped.']
 		   [= simulation_playing nil]
 		   [have [get this cycle_trigger] trigger]]
 	     nil]
        [have step_button signal_connect 'clicked'
 	     [funk []
 		   [let [[seconds 1.0]]
-		     [terminal_format standard-terminal '\nMindmon: Stepping ' seconds ' seconds.']
+		     [terminal_format standard-terminal '\nMindMon: Stepping ' seconds ' seconds.']
 		     [have mindmon_world raw_step_simulation seconds]
 		     [have [get this cycle_trigger] trigger]]]
 	     nil]
@@ -420,7 +420,7 @@
        [have cameras_enabled_check_button signal_connect 'toggled'
 	     [funk []
 		   [let [[cameras_enabled [get cameras_enabled_check_button active]]]
-		     [terminal_format standard-terminal '\nMindmon: Cameras ' [if cameras_enabled 'Enabled' 'Disabled'] '.']
+		     [terminal_format standard-terminal '\nMindMon: Cameras ' [if cameras_enabled 'Enabled' 'Disabled'] '.']
 		     [set mindmon_world all_cameras_enabled cameras_enabled]]]
 	     nil]
        
@@ -475,7 +475,7 @@
 
 
 [deftypefunk mindmon_project execute create_new_mindmon_world []
-  [terminal_format standard-terminal '\nMindmon Project creating new MindMon world.']
+  [terminal_format standard-terminal '\nMindMon Project creating new MindMon world.']
   `[let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
      [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
      [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
@@ -484,7 +484,7 @@
   [error bug_name `not_yet_implemented]]
 
 [defunk mindmon_project-new_from_file [mindmon filename]
-  [terminal_format standard-terminal '\nMindmon Project: Loading ' filename '.']
+  [terminal_format standard-terminal '\nMindMon Project: Loading ' filename '.']
   `[let [[isis_world [isis_world-new_from_chunk [get [chunk-load filename] inflated]]]]
      [let [[this [new mindmon_project mindmon]]]
        [have [get this execute_mutex] lock]
@@ -502,10 +502,10 @@
   [error bug_name `not_yet_implemented]]
 
 [deftypefunk mindmon_project execute save [filename]
-  [terminal_format standard-terminal '\nMindmon Project: Saving ' filename '.']
+  [terminal_format standard-terminal '\nMindMon Project: Saving ' filename '.']
   [error bug_name `not_yet_implemented]
   `[have [get [get mindmon_world as-chunk] deflated] save filename]
-  [terminal_format standard-terminal '\nMindmon Project: Save project complete.']]
+  [terminal_format standard-terminal '\nMindMon Project: Save project complete.']]
 
 [deftypefunk mindmon_project get cycle_trigger []
   [get mindmon cycle_trigger]]
@@ -556,7 +556,7 @@
 	    [let [[step_size [have [get step_size_entry text] read]]]
 	      [let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
 		[if [null as_double_funk]
-		    [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing Mindmon and ignoring step command.']
+		    [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing MindMon and ignoring step command.']
 			  [= simulation_playing nil]]
 		  [prog [terminal_format standard-terminal '\nStepping simulation by ' [get step_size as-double] ' seconds.']
 			[have mindmon_world step_simulation [get step_size as-double]]
@@ -639,22 +639,22 @@
 	  new_movie]]]]]
 
 [deftypefunk mindmon_project execute initialize_simulation []
-  [terminal_format standard-terminal '\nMindmon: Running simulation initialization sequence.']
+  [terminal_format standard-terminal '\nMindMon: Running simulation initialization sequence.']
   [have mindmon_world initialize_simulation]]
 
 [deftypefunk mindmon_project execute view_initialization_events []
-  [terminal_format standard-terminal '\nMindmon ' `mindmon_world-initialize ' events in temporal order:']
+  [terminal_format standard-terminal '\nMindMon ' `mindmon_world-initialize ' events in temporal order:']
   [mapc [funk [event]
 	      [terminal_format standard-terminal '\n  ' event]]
 	[get [get mindmon_world initialize_events] leaves]]]
 
 [deftypefunk mindmon_project execute view_all_objects []
-  [terminal_format standard-terminal '\nMindmon objects: ' [get mindmon_world all_objects_summary]]]
+  [terminal_format standard-terminal '\nMindMon objects: ' [get mindmon_world all_objects_summary]]]
 
 [deftypefunk mindmon_project execute close []
   [have execute_mutex lock]
   [if initialized
-      [prog [terminal_format standard-terminal '\nMindmon Project Closing.']
+      [prog [terminal_format standard-terminal '\nMindMon Project Closing.']
 	    [have mindmon_world destroy]
 	    [= initialized nil]]]
   [have execute_mutex unlock]]
@@ -706,7 +706,7 @@
 			     
 			     [=    window          [gtk-window-new]]
 			     [have window connect_hide_on_delete]
-			     [set  window title    [format nil 'Mindmon']]
+			     [set  window title    [format nil 'MindMon']]
 			     [=    vbox            [gtk-vbox-new 0]]
 			     [have window add vbox]
 			     
@@ -773,7 +773,7 @@
 			     
 			     [have edit_preferences_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nMindmon: edit preferences.']
+					 [terminal_format standard-terminal '\nMindMon: edit preferences.']
 					 [new mindmon_preference_editor this]]
 				   nil]
 			     
@@ -879,12 +879,12 @@
 [deftypefunk mindmon execute load_preferences []
   [let [[home_dir [getenv 'HOME']]]
     [if [null home_dir]
-	[prog [terminal_format standard-terminal '\nMindmon Warning: Could not load preferences because HOME is not a defined environment variable.']
+	[prog [terminal_format standard-terminal '\nMindMon Warning: Could not load preferences because HOME is not a defined environment variable.']
 	      [= preferences [new mindmon_preferences]]]
       [let [[preferences_filename [pathname-concat home_dir '.mindmon']]]
 	[let [[loaded_preferences [mindmon_preferences-load preferences_filename]]]
 	  [if [null loaded_preferences]
-	      [prog [terminal_format standard-terminal '\nMindmon Warning: Could not load preferences from ' preferences_filename '.  Creating new default preferences file.']
+	      [prog [terminal_format standard-terminal '\nMindMon Warning: Could not load preferences from ' preferences_filename '.  Creating new default preferences file.']
 		    [= preferences [new mindmon_preferences]]
 		    [have this save_preferences]]
 	    [= preferences loaded_preferences]]]]]]]
@@ -892,23 +892,23 @@
 [deftypefunk mindmon execute save_preferences []
   [let [[home_dir [getenv 'HOME']]]
     [if [null home_dir]
-	[terminal_format standard-terminal '\nMindmon Warning: Could not save preferences because HOME is not a defined environment variable.']
+	[terminal_format standard-terminal '\nMindMon Warning: Could not save preferences because HOME is not a defined environment variable.']
       [let [[preferences_filename [pathname-concat home_dir '.mindmon']]]
 	[have preferences save preferences_filename]]]]]
 
 [deftypefunk mindmon execute create_new_agent [name]
-  [terminal_format standard-terminal '\nMindmon: project new ' name ' agent.']
+  [terminal_format standard-terminal '\nMindMon: project new ' name ' agent.']
   [have mindmon_project add_agent [mindmon_agent-new_from_name mindmon_project name]]
-  [terminal_format standard-terminal '\nMindmon: new ' name ' agent created successfully.']]
+  [terminal_format standard-terminal '\nMindMon: new ' name ' agent created successfully.']]
 
 [deftypefunk mindmon execute export_movie [filename]
-  [terminal_format standard-terminal '\nMindmon Export Movie: Saving MPEG to file: ' filename]
+  [terminal_format standard-terminal '\nMindMon Export Movie: Saving MPEG to file: ' filename]
   [have [get mindmon_project new_movie] save filename]
-  [terminal_format standard-terminal '\nMindmon Export Movie: Completed saving MPEG to file: ' filename]]
+  [terminal_format standard-terminal '\nMindMon Export Movie: Completed saving MPEG to file: ' filename]]
 
 [deftypefunk mindmon execute start_new_project []
   [have this close_project]
-  [terminal_format standard-terminal '\nMindmon New Project']
+  [terminal_format standard-terminal '\nMindMon New Project']
   [let [[new_mindmon_project [new mindmon_project this]]]
     [have new_mindmon_project create_new_mindmon_world]
     [have project_vbox remove project_vbox__contained_widget]
@@ -920,7 +920,7 @@
 
 [deftypefunk mindmon execute open_project [filename]
   [have this close_project]
-  [terminal_format standard-terminal '\nMindmon Open Project: ' filename]
+  [terminal_format standard-terminal '\nMindMon Open Project: ' filename]
   [let [[new_mindmon_project [mindmon_project-new_from_file this filename]]]
     [if new_mindmon_project
 	[prog [have project_vbox remove project_vbox__contained_widget]
@@ -929,7 +929,7 @@
 	      [= project_vbox__contained_widget [get new_mindmon_project widget]]
 	      [= mindmon_project new_mindmon_project]
 	      [have this enable_project_commands]]
-      [terminal_format standard-terminal '\nMindmon Failed to Open Project: ' filename]]]]
+      [terminal_format standard-terminal '\nMindMon Failed to Open Project: ' filename]]]]
 
 [deftypefunk mindmon execute enable_project_commands []
   [set file_close_project_menu_item                     sensitive t]
@@ -962,23 +962,23 @@
 	    [= mindmon_project nil]]]
   [if project_vbox__contained_widget
       [have project_vbox remove project_vbox__contained_widget]]
-  [let [[no_project_widget [gtk-label-new 'Welcome to Mindmon']]]
+  [let [[no_project_widget [gtk-label-new 'Welcome to MindMon']]]
     [have project_vbox pack_start no_project_widget t t 0]
     [= project_vbox__contained_widget no_project_widget]
     [have no_project_widget show_all]]
   ]
 
 [deftypefunk mindmon execute save_project [filename]
-  [terminal_format standard-terminal '\nMindmon Save Project: ' filename]
+  [terminal_format standard-terminal '\nMindMon Save Project: ' filename]
   [have mindmon_project save filename]]
 
 
 [deftypefunk mindmon execute open_agent [filename]
-  [terminal_format standard-terminal '\nMindmon Open Agent: ' filename]
+  [terminal_format standard-terminal '\nMindMon Open Agent: ' filename]
   [let [[new_mindmon_agent [mindmon_agent-new_from_file mindmon_project filename]]]
     [if new_mindmon_agent
 	[have mindmon_project add_agent new_mindmon_agent]
-      [terminal_format standard-terminal '\nMindmon Failed to Open Agent: ' filename]]]]
+      [terminal_format standard-terminal '\nMindMon Failed to Open Agent: ' filename]]]]
 
 
 [defmetro mindmon [:rest args]

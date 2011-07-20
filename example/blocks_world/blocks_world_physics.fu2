@@ -31,8 +31,8 @@
   [have blocks_mutex lock]
   [let [[result [if [null blocks]
 		    nil
-		  [have blocks sort [funk [x y] [< [get [get block name] as-string]
-						   [get [get block name] as-string]]]]]]]
+		  [have blocks sort [funk [x y] [< [get [get x name] as-string]
+						   [get [get y name] as-string]]]]]]]
     [have blocks_mutex unlock]
     result]]
 
@@ -40,8 +40,8 @@
   [have grippers_mutex lock]
   [let [[result [if [null grippers]
 		    nil
-		  [have grippers sort [funk [x y] [< [get [get gripper name] as-string]
-						     [get [get gripper name] as-string]]]]]]]
+		  [have grippers sort [funk [x y] [< [get [get x name] as-string]
+						     [get [get y name] as-string]]]]]]]
     [have grippers_mutex unlock]
     result]]
 

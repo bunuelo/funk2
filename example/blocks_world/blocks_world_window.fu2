@@ -70,7 +70,7 @@
 				      gripper_controller_hbox
 				      [gripper_controller_ptypehash [new ptypehash]]
 				      
-				      [step_size 0.1]
+				      [step_size 0.25]
 				      
 				      fiber
 				      [done    nil]

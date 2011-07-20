@@ -20,11 +20,15 @@
 
 'blocks_world_physics'
 
-[deframe blocks_world_physics [frame] [[blocks_mutex   [new mutex]]
+[deframe blocks_world_physics [frame] [width
+				       height
+				       [blocks_mutex   [new mutex]]
 				       [blocks         nil]
 				       [grippers_mutex [new mutex]]
 				       [grippers       nil]]
-  [new []
+  [new [initial-width initial-height]
+       [= width  [get initial-width  as-double]]
+       [= height [get initial-height as-double]]
        ]]
 
 [deftypefunk blocks_world_physics get blocks []
@@ -86,15 +90,15 @@
 	      [have gripper calculate_perceptions]]
 	grippers]]
 
-[deftypefunk blocks_world_physics execute render_to_cairo [cairo_context]
+[deftypefunk blocks_world_physics execute render_to_cairo [cairo_context image_width image_height]
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
   [have cairo_context paint]
   
   [have cairo_context save]
   [have cairo_context translate 16.0 16.0]
   [have cairo_context scale
-	[/ [- 640.0 [* 2 16.0]] 6.0]
-	[/ [- 640.0 [* 2 16.0]] 6.0]]
+	[/ [- [get image_width as-double] [* 2 16.0]] width]
+	[/ [- [get image_width as-double] [* 2 16.0]] width]]
   
   [mapc [funk [gripper]
 	      [have gripper render_to_cairo cairo_context]]

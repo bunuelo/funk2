@@ -80,8 +80,8 @@
 	[next_y [+ y [* step_size y_velocity]]]]
     [if [< next_x 0.0]
 	[= next_x 0.0]]
-    [if [> next_x 5.0]
-	[= next_x 5.0]]
+    [if [> next_x [- [get blocks_world_physics width] 1]]
+	[= next_x [- [get blocks_world_physics width] 1]]]
     
     [let [[obstacle_below_y nil]
 	  [obstacle_block   nil]]

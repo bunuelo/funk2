@@ -1,0 +1,44 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defpackage mindmon_core
+  :packages [gtk
+	     image
+	     image_sequence
+	     movie]]
+
+[defpackage mindmon_knowledge
+  :packages [mindmon_core
+	     gtk_timeline]
+   :sources ['mindmon_knowledge.fu2']]
+
+[defpackage mindmon_activator
+  :packages [mindmon_core]
+   :sources ['mindmon_activator.fu2']]
+
+[defpackage mindmon_agent
+  :packages [mindmon_core
+	     mindmon_activator
+	     mindmon_knowledge]
+   :sources ['mindmon_agent.fu2']]
+
+[defpackage mindmon
+  :packages [mindmon_agent]
+   :sources ['mindmon.fu2']]
+

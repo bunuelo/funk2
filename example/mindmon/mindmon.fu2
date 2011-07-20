@@ -1,0 +1,1009 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe mindmon_export_movie_dialog [frame] [mindmon
+					      save_dialog]
+  [new [initial-mindmon]
+       [= mindmon initial-mindmon]
+       [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get mindmon window]]]
+       
+       [have save_dialog add_file_filter_pattern 'Moving Picture Experts Group Files (*.mpeg)' '*.mpeg']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                             '*.*']
+       [set  save_dialog current_name 'Untitled Movie.mpeg']
+       [set  save_dialog current_folder [get [get mindmon preferences] movie_export_directory]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have mindmon export_movie filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
+
+[deframe mindmon_save_project_dialog [frame] [mindmon
+					      save_dialog]
+  [new [initial-mindmon]
+       [= mindmon initial-mindmon]
+       [= save_dialog [gtk-file_chooser_dialog-new_for_file_save [get mindmon window]]]
+       
+       [have save_dialog add_file_filter_pattern 'Mindmon Project Files (*.mmp)' '*.mmp']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'               '*.*']
+       [set  save_dialog current_name 'Untitled Project.mmp']
+       [set  save_dialog current_folder [get [get mindmon preferences] project_directory]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have mindmon save_project filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
+
+[deframe mindmon_open_project_dialog [frame] [mindmon
+					      open_dialog
+					      preview_label]
+  [new [initial-mindmon]
+       [= mindmon initial-mindmon]
+       [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get mindmon window]]]
+       [= preview_label [gtk-label-new '']]
+       
+       [have open_dialog add_file_filter_pattern 'Mindmon Project Files (*.mmp)' '*.mmp']
+       [have open_dialog add_file_filter_pattern 'All Files (*.*)'               '*.*']
+       [set  open_dialog current_folder [get [get mindmon preferences] project_directory]]
+       [set  open_dialog preview_widget preview_label]
+       
+       [have open_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get open_dialog filename]]]
+			   [have open_dialog destroy]
+			   [have mindmon open_project filename]]
+		       [have open_dialog destroy]]]]
+	     nil]
+       
+       [have open_dialog update_preview_event-signal_connect
+	     [funk []
+		   [let [[preview_filename [get open_dialog preview_filename]]]
+		     [set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
+		     [set open_dialog preview_widget_active t]]]
+	     nil]
+       
+       [have open_dialog show_all]]]
+
+
+[deframe mindmon_open_agent_dialog [frame] [mindmon
+					    open_dialog
+					    preview_label]
+  [new [initial-mindmon]
+       [= mindmon initial-mindmon]
+       [= open_dialog   [gtk-file_chooser_dialog-new_for_file_open [get mindmon window]]]
+       [= preview_label [gtk-label-new '']]
+       
+       [have open_dialog add_file_filter_pattern 'Mindmon Agent Files (*.mmp-agent)' '*.mmp-agent']
+       [have open_dialog add_file_filter_pattern 'All Files (*.*)'                   '*.*']
+       [set  open_dialog current_folder [get [get mindmon preferences] agent_directory]]
+       [set  open_dialog preview_widget preview_label]
+       
+       [have open_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get open_dialog filename]]]
+			   [have open_dialog destroy]
+			   [have mindmon open_agent filename]]
+		       [have open_dialog destroy]]]]
+	     nil]
+       
+       [have open_dialog update_preview_event-signal_connect
+	     [funk []
+		   [let [[preview_filename [get open_dialog preview_filename]]]
+		     [set preview_label text [stringlist-intersperse [have [format nil preview_filename] split '/'] '\n']]
+		     [set open_dialog preview_widget_active t]]]
+	     nil]
+       
+       [have open_dialog show_all]]]
+
+
+[deframe mindmon_preferences [frame] [[isis_world_server_hostname `uninitialized]
+				      [project_directory          `uninitialized]
+				      [agent_directory            `uninitialized]
+				      [movie_export_directory     `uninitialized]
+				      [cameras_enabled            `uninitialized]]
+  [new []
+       [have this create_default_directories]
+       [have this fix_invalid_with_defaults]]]
+
+[deftypefunk mindmon_preferences execute create_default_directories []
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data/Projects']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data/Agents']]]
+  [shelter [mkdir [pathname-concat [getenv 'HOME'] 'Mindmon Data/Movies']]]]
+
+[deftypefunk mindmon_preferences execute fix_invalid_with_defaults []
+  [if [or [not [get this contains `isis_world_server_hostname]] [eq `uninitialized [have this lookup `isis_world_server_hostname]]] [have this add `isis_world_server_hostname 'localhost']]
+  [if [or [not [get this contains `project_directory]]          [eq `uninitialized [have this lookup `project_directory]]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'Mindmon Data/Projects']]]
+  [if [or [not [get this contains `agent_directory]]            [eq `uninitialized [have this lookup `agent_directory]]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'Mindmon Data/Agents']]]
+  [if [or [not [get this contains `movie_export_directory]]     [eq `uninitialized [have this lookup `movie_export_directory]]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'Mindmon Data/Movies']]]
+  [if [or [not [get this contains `cameras_enabled]]            [eq `uninitialized [have this lookup `cameras_enabled]]]            [have this add `cameras_enabled            t]]]
+
+
+[deftypefunk mindmon_preferences execute save [filename]
+  [lick-to-file this filename]]
+
+[defunk mindmon_preferences-load [filename]
+  [let [[result [shelter [unlick-from-file filename]]]]
+    [if [is-type `bug result]
+	nil
+      [prog [have result fix_invalid_with_defaults]
+	    result]]]]
+
+[deframe mindmon_preference_editor [frame] [mindmon
+					    
+					    window
+					    vbox
+					    menu_bar
+					    file_menu_item
+					    file_menu
+					    file_exit_menu_item
+					    
+					    isis_world_server_hostname__hbox
+					    isis_world_server_hostname__title_label
+					    isis_world_server_hostname__data_entry
+					    
+					    cameras_enabled__check_button
+					    
+					    project_directory
+					    project_directory__hbox
+					    project_directory__title_label
+					    project_directory__select_button
+					    project_directory__data_label
+					    
+					    agent_directory
+					    agent_directory__hbox
+					    agent_directory__title_label
+					    agent_directory__select_button
+					    agent_directory__data_label
+					    
+					    movie_export_directory
+					    movie_export_directory__hbox
+					    movie_export_directory__title_label
+					    movie_export_directory__select_button
+					    movie_export_directory__data_label
+					    
+					    button__hbox
+					    cancel_button
+					    ok_button]
+  [new [initial-mindmon]
+       [= mindmon initial-mindmon]
+       
+       [= window [gtk-window-new]]
+       [have window connect_hide_on_delete]
+       [set window title 'Mindmon - Edit Preferences']
+       [= vbox [gtk-vbox-new 0]]
+       
+       [let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
+	 [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
+	 [= isis_world_server_hostname__title_label [gtk-label-new 'IsisWorld Server Hostname: ']]
+	 [= isis_world_server_hostname__data_entry  [gtk-entry-new]]
+	 [set isis_world_server_hostname__data_entry text isis_world_server_hostname]
+	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
+	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_entry    nil nil 0]
+	 [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]]
+       
+       [= cameras_enabled__check_button [gtk-check_button-new 'Cameras Enabled by Default in New Projects']]
+       [have vbox pack_start cameras_enabled__check_button nil nil 0]
+       [set cameras_enabled__check_button active [get [get mindmon preferences] cameras_enabled]]
+       
+       [= project_directory [get [get mindmon preferences] project_directory]]
+       [= project_directory__hbox [gtk-hbox-new 0]]
+       [= project_directory__title_label   [gtk-label-new             'Project Directory: ']]
+       [= project_directory__select_button [gtk-button-new_with_label '...']]
+       [= project_directory__data_label    [gtk-label-new             project_directory]]
+       [have project_directory__hbox pack_start project_directory__title_label   nil nil 0]
+       [have project_directory__hbox pack_start project_directory__select_button nil nil 0]
+       [have project_directory__hbox pack_start project_directory__data_label    nil nil 0]
+       [have vbox pack_start project_directory__hbox nil nil 0]
+       
+       [have project_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder project_directory]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= project_directory [get select_dialog filename]]
+					     [set project_directory__data_label text project_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
+       
+       [= agent_directory [get [get mindmon preferences] agent_directory]]
+       [= agent_directory__hbox [gtk-hbox-new 0]]
+       [= agent_directory__title_label   [gtk-label-new             'Agent Directory: ']]
+       [= agent_directory__select_button [gtk-button-new_with_label '...']]
+       [= agent_directory__data_label    [gtk-label-new             agent_directory]]
+       [have agent_directory__hbox pack_start agent_directory__title_label   nil nil 0]
+       [have agent_directory__hbox pack_start agent_directory__select_button nil nil 0]
+       [have agent_directory__hbox pack_start agent_directory__data_label    nil nil 0]
+       [have vbox pack_start agent_directory__hbox nil nil 0]
+       
+       [have agent_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder agent_directory]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= agent_directory [get select_dialog filename]]
+					     [set agent_directory__data_label text agent_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
+       
+       [= movie_export_directory [get [get mindmon preferences] movie_export_directory]]
+       [= movie_export_directory__hbox [gtk-hbox-new 0]]
+       [= movie_export_directory__title_label   [gtk-label-new             'Movie Export Directory: ']]
+       [= movie_export_directory__select_button [gtk-button-new_with_label '...']]
+       [= movie_export_directory__data_label    [gtk-label-new             movie_export_directory]]
+       [have movie_export_directory__hbox pack_start movie_export_directory__title_label   nil nil 0]
+       [have movie_export_directory__hbox pack_start movie_export_directory__select_button nil nil 0]
+       [have movie_export_directory__hbox pack_start movie_export_directory__data_label    nil nil 0]
+       [have vbox pack_start movie_export_directory__hbox nil nil 0]
+       
+       [have movie_export_directory__select_button signal_connect 'clicked'
+	     [funk []
+		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
+		     [set select_dialog current_folder movie_export_directory]
+		     [have select_dialog response_event-signal_connect
+			   [funk [event_frame]
+				 [let [[response_id [have event_frame lookup `response_id]]]
+				   [if [eq response_id GTK_RESPONSE_ACCEPT]
+				       [prog [= movie_export_directory [get select_dialog filename]]
+					     [set movie_export_directory__data_label text movie_export_directory]
+					     ]]]
+				 [have select_dialog destroy]]
+			   nil]
+		     [have select_dialog show_all]
+		     ]]
+	     nil]
+       
+       [= button__hbox [gtk-hbox-new 0]]
+       [= cancel_button [gtk-button-new_with_label 'Cancel']]
+       [= ok_button     [gtk-button-new_with_label 'OK']]
+       [have button__hbox pack_start cancel_button nil nil 0]
+       [have button__hbox pack_start ok_button t t 0]
+       [have vbox pack_start button__hbox nil nil 0]
+       
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       
+       [have ok_button signal_connect 'clicked'
+	     [funk []
+		   [let [[preferences [new mindmon_preferences]]]
+		     [set preferences isis_world_server_hostname [get isis_world_server_hostname__data_entry text]]
+		     [set preferences project_directory          project_directory]
+		     [set preferences agent_directory            agent_directory]
+		     [set preferences movie_export_directory     movie_export_directory]
+		     [set preferences cameras_enabled            [get cameras_enabled__check_button active]]
+		     [set mindmon preferences preferences]
+		     [have mindmon save_preferences]]
+		   [have window destroy]]
+	     nil]
+       
+       [have window add vbox]
+       
+       [have window show_all]]]
+
+
+[deframe mindmon_project [frame] [mindmon
+				  
+				  initialized
+				  execute_mutex
+				  
+				  mindmon_world
+				  
+				  vbox
+				  controller_frame
+				  controller_vbox
+				  controller_button_hbox
+				  
+				  entry_hbox
+				  step_size_label
+				  step_size_entry
+				  step_delay_label
+				  step_delay_entry
+				  
+				  play_button
+				  stop_button
+				  step_button
+				  update_button
+				  cameras_enabled_check_button
+				  
+				  movie_gtk_image
+				  scale
+				  agent_hbox
+				  
+				  [agent_frame [frame]]
+				  
+				  [simulation_playing           nil]
+				  [last_stepped_simulation_time nil]
+				  [need_update                  nil]
+				  ]
+  [new [initial-mindmon]
+       [= mindmon initial-mindmon]
+       
+       [= execute_mutex [new mutex]]
+       [have execute_mutex lock]
+       
+       [= mindmon_world nil]
+       
+       'main mindmon_project widget'
+       [= vbox [gtk-vbox-new 0]]
+       
+       'simulator controller'
+       
+       [= controller_frame [gtk-frame-new [format nil 'mindmon_world']]]
+       [= controller_vbox  [gtk-vbox-new 2]]
+       
+       [= controller_button_hbox [gtk-hbox-new 2]]
+       [= play_button                  [gtk-button-new_with_label 'Play']]
+       [= stop_button                  [gtk-button-new_with_label 'Stop']]
+       [= step_button                  [gtk-button-new_with_label 'Step 1 Second']]
+       [= update_button                [gtk-button-new_with_label 'Update']]
+       [= cameras_enabled_check_button [gtk-check_button-new      'Cameras Enabled']]
+       [have controller_button_hbox pack_start play_button                  nil nil 0]
+       [have controller_button_hbox pack_start stop_button                  nil nil 0]
+       [have controller_button_hbox pack_start step_button                  nil nil 0]
+       [have controller_button_hbox pack_start update_button                nil nil 0]
+       [have controller_button_hbox pack_start cameras_enabled_check_button nil nil 0]
+       [have controller_vbox pack_start controller_button_hbox nil nil 0]
+       
+       [set cameras_enabled_check_button active [get [get mindmon preferences] cameras_enabled]]
+       
+       [have play_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nMindmon: Playing.']
+		   [= simulation_playing t]
+		   [have [get this cycle_trigger] trigger]]
+	     nil]
+       [have stop_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nMindmon: Stopped.']
+		   [= simulation_playing nil]
+		   [have [get this cycle_trigger] trigger]]
+	     nil]
+       [have step_button signal_connect 'clicked'
+	     [funk []
+		   [let [[seconds 1.0]]
+		     [terminal_format standard-terminal '\nMindmon: Stepping ' seconds ' seconds.']
+		     [have mindmon_world raw_step_simulation seconds]
+		     [have [get this cycle_trigger] trigger]]]
+	     nil]
+       [have update_button signal_connect 'clicked'
+	     [funk []
+		   [= need_update t]
+		   [have [get this cycle_trigger] trigger]]
+	     nil]
+       [have cameras_enabled_check_button signal_connect 'toggled'
+	     [funk []
+		   [let [[cameras_enabled [get cameras_enabled_check_button active]]]
+		     [terminal_format standard-terminal '\nMindmon: Cameras ' [if cameras_enabled 'Enabled' 'Disabled'] '.']
+		     [set mindmon_world all_cameras_enabled cameras_enabled]]]
+	     nil]
+       
+       [= entry_hbox [gtk-hbox-new 2]]
+       [have controller_vbox pack_start entry_hbox nil nil 0]
+       
+       [= step_size_label [gtk-label-new 'Step Size: ']]
+       [= step_size_entry [gtk-entry-new]]
+       [have entry_hbox pack_start step_size_label nil nil 0]
+       [have entry_hbox pack_start step_size_entry t t 0]
+       [set step_size_entry text '0.1']
+       
+       [= step_delay_label [gtk-label-new 'Step Delay: ']]
+       [= step_delay_entry [gtk-entry-new]]
+       [have entry_hbox pack_start step_delay_label nil nil 0]
+       [have entry_hbox pack_start step_delay_entry t t 0]
+       [set step_delay_entry text '5.0']
+       
+       [have controller_frame add controller_vbox nil nil 0]
+       
+       [have vbox pack_start controller_frame nil nil 0]       
+       
+       'movie image'
+       
+       [= movie_gtk_image [gtk-image-new_from_image [new image [+ 640 320] 480 nil]]]
+       [have vbox pack_start movie_gtk_image nil nil 0]
+       
+       [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
+       [set scale digits 0]
+       [have vbox pack_start scale t t 0]
+       [let [[movie_length [get this movie_length]]]
+	 [if [> movie_length 1]
+	     [prog [set scale range 0.0 [- movie_length 1]]
+		   [set scale value [- movie_length 1]]]]]
+       
+       
+       'agents'
+       
+       [= agent_hbox [gtk-hbox-new 2]]
+       [have vbox pack_start agent_hbox nil nil 0]
+       
+       [= initialized t]
+       [have execute_mutex unlock]
+       
+       [have [get this cycle_trigger] trigger]
+       ]]
+
+`[[small burrito
+	 bean and rice guacamole, lettuce, no cheese]
+  [chips and salsa]
+  [himicha drink]]
+
+
+[deftypefunk mindmon_project execute create_new_mindmon_world []
+  [terminal_format standard-terminal '\nMindmon Project creating new MindMon world.']
+  `[let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
+     [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
+     [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
+       [set isis_world all_cameras_enabled cameras_enabled]
+       [have [get this cycle_trigger] trigger]]]
+  [error bug_name `not_yet_implemented]]
+
+[defunk mindmon_project-new_from_file [mindmon filename]
+  [terminal_format standard-terminal '\nMindmon Project: Loading ' filename '.']
+  `[let [[isis_world [isis_world-new_from_chunk [get [chunk-load filename] inflated]]]]
+     [let [[this [new mindmon_project mindmon]]]
+       [have [get this execute_mutex] lock]
+       [set this isis_world isis_world]
+       [mapc [funk [agent_body]
+		   [terminal_format standard-terminal '\n                 Initializing agent, ' [get agent_body name] '.']
+		   [let [[moral_compass [get agent_body mind]]]
+		     [have moral_compass activate_vital_resources]]
+		   [have this add_agent [new mindmon_agent this agent_body]]]
+	     [get isis_world agent_bodies]]
+       [have [get this execute_mutex] unlock]
+       [terminal_format standard-terminal '\n                 Load project complete.']
+       [have [get this cycle_trigger] trigger]
+       this]]
+  [error bug_name `not_yet_implemented]]
+
+[deftypefunk mindmon_project execute save [filename]
+  [terminal_format standard-terminal '\nMindmon Project: Saving ' filename '.']
+  [error bug_name `not_yet_implemented]
+  `[have [get [get mindmon_world as-chunk] deflated] save filename]
+  [terminal_format standard-terminal '\nMindmon Project: Save project complete.']]
+
+[deftypefunk mindmon_project get cycle_trigger []
+  [get mindmon cycle_trigger]]
+
+[deftypefunk mindmon_project get widget []
+  vbox]
+
+[deftypefunk mindmon_project get window []
+  [get mindmon window]]
+
+[deftypefunk mindmon_project execute add_agent [mindmon_agent]
+  [have agent_frame add [get mindmon_agent name] mindmon_agent]
+  [have [get mindmon_agent widget] show_all]
+  [have agent_hbox pack_start mindmon_agent t t 0]
+  [let [[cameras_enabled [get cameras_enabled_check_button active]]]
+    [set mindmon_world all_cameras_enabled cameras_enabled]]
+  [have [get this cycle_trigger] trigger]]
+
+[deftypefunk mindmon_project execute update_agents []
+  [mapc [funk [agent]
+	      [have agent update]]
+	[get agent_frame values]]]
+
+[deftypefunk mindmon_project execute update []
+  [= need_update nil]
+  [let [[movie_length [get this movie_length]]]
+    [if [> movie_length 1]
+	[set scale range 0.0 [- movie_length 1]]]
+    [let [[image_index [get [get scale value] as-integer]]]
+      [if [< image_index movie_length]
+	  [set movie_gtk_image image [get this movie_image image_index]]]]]
+  [have this update_agents]
+  [have mindmon shrink_window]]
+
+[deftypefunk mindmon_project get step_delay_time []
+  [let [[step_delay_value [shelter [get [have [get step_delay_entry text] read] as-double]]]]
+    [if [not [is-type `double step_delay_value]]
+	[prog [set step_delay_entry '0.0']
+	      [= step_delay_value 0.0]]]
+    step_delay_value]]
+
+[deftypefunk mindmon_project execute cycle []
+  [have execute_mutex lock]
+  [if initialized
+      [let [[time_to_wait_for_thinking [get this step_delay_time]]]
+	[if [and simulation_playing [or [null last_stepped_simulation_time]
+					[> [/ [- [get [time] nanoseconds_since_1970] [get last_stepped_simulation_time nanoseconds_since_1970]] 1000000000.0] time_to_wait_for_thinking]]]
+	    [let [[step_size [have [get step_size_entry text] read]]]
+	      [let [[as_double_funk [get [lookup_type [type step_size]] type_var_value `get `as-double nil]]]
+		[if [null as_double_funk]
+		    [prog [terminal_format standard-terminal '\nStep size, \'' [get step_size_entry text] '\', cannot be recognized as a number.  Pausing Mindmon and ignoring step command.']
+			  [= simulation_playing nil]]
+		  [prog [terminal_format standard-terminal '\nStepping simulation by ' [get step_size as-double] ' seconds.']
+			[have mindmon_world step_simulation [get step_size as-double]]
+			[have this update]
+			[let [[movie_length [get this movie_length]]]
+			  [if [> movie_length 1]
+			      [set scale value [- movie_length 1]]]]
+			[= last_stepped_simulation_time [time]]]]]]]
+	[if need_update
+	    [have this update]
+	  [sleep 1]]]]
+  [have execute_mutex unlock]]
+
+[deftypefunk mindmon_project get overview_image_sequence []
+  [if mindmon_world
+      [get mindmon_world overview_image_sequence]]]
+
+[deftypefunk mindmon_project get movie_length []
+  [let [[overview_image_sequence [get this overview_image_sequence]]]
+    [if overview_image_sequence
+	[get overview_image_sequence length]
+      0]]]
+
+[deftypefunk mindmon_project get movie_image [index]
+  [let [[agent_names    [get agent_frame keys]]
+	[image_sequence [new image_sequence nil]]]
+    [let [[agent_count [if [null agent_names]
+			   0
+			 [length agent_names]]]]
+      [let [[max_retina_image_width  0]
+	    [max_retina_image_height 0]]
+	[mapc [funk [agent_name]
+		    [let [[mindmon_agent [have agent_frame lookup agent_name]]]
+		      [let [[retina_image_sequence [get mindmon_agent retina_image_sequence]]]
+			[if [< index [get retina_image_sequence length]]
+			    [let [[retina_image [get retina_image_sequence elt index]]]
+			      [let [[retina_image_width  [get retina_image width]]
+				    [retina_image_height [get retina_image height]]]
+				[if [> retina_image_width max_retina_image_width]
+				    [= max_retina_image_width retina_image_width]]
+				[if [> retina_image_height max_retina_image_height]
+				    [= max_retina_image_height retina_image_height]]]]]]]]
+	      agent_names]
+	[let [[image_width [+ 1 640 1 max_retina_image_width 1]]
+	      [image_height [+ 1 [if [> [* agent_count [+ max_retina_image_height 1]] [+ 480 1]]
+				     [* agent_count [+ max_retina_image_height 1]]
+				   [+ 480 1]]]]]
+	  [if [!= [* [/ image_width 2] 2]
+		  image_width]
+	      [= image_width [+ image_width 1]]]
+	  [if [!= [* [/ image_height 2] 2]
+		image_height]
+	      [= image_height [+ image_height 1]]]
+	  [let [[image [new image image_width image_height nil]]]
+	    [have image clear 0 0 0 255]
+	    [let [[overview_image_sequence [get this overview_image_sequence]]]
+	      [let [[overview_image [get overview_image_sequence elt index]]]
+		[have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
+	    [let [[agent_index 0]]
+	      [mapc [funk [agent_name]
+			  [let [[mindmon_agent [have agent_frame lookup agent_name]]]
+			    [let [[retina_image_sequence [get mindmon_agent retina_image_sequence]]]
+			      [if [< index [get retina_image_sequence length]]
+				  [let [[retina_image [get retina_image_sequence elt index]]]
+				    [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ max_retina_image_height 1]]] [get retina_image width] [get retina_image height]]]]]]
+			  [= agent_index [+ agent_index 1]]]
+		    agent_names]]
+	    image]]]]]]
+
+[deftypefunk mindmon_project get new_movie []
+  [let [[movie_length   [get this movie_length]]
+	[image_sequence [new image_sequence nil]]]
+    [dotimes [index movie_length]
+      [have image_sequence add_image_to_end [get this movie_image index]]]
+    [let [[bit_rate   5000000]
+	  [frame_rate 30]]
+      [let [[movie_context [new movie_context [get image_sequence width] [get image_sequence height] bit_rate frame_rate]]]
+	[let [[new_movie [movie-new_from_image_sequence movie_context [get image_sequence new_by_time_stretch 3.0]]]]
+	  [have movie_context destroy]
+	  new_movie]]]]]
+
+[deftypefunk mindmon_project execute initialize_simulation []
+  [terminal_format standard-terminal '\nMindmon: Running simulation initialization sequence.']
+  [have mindmon_world initialize_simulation]]
+
+[deftypefunk mindmon_project execute view_initialization_events []
+  [terminal_format standard-terminal '\nMindmon ' `mindmon_world-initialize ' events in temporal order:']
+  [mapc [funk [event]
+	      [terminal_format standard-terminal '\n  ' event]]
+	[get [get mindmon_world initialize_events] leaves]]]
+
+[deftypefunk mindmon_project execute view_all_objects []
+  [terminal_format standard-terminal '\nMindmon objects: ' [get mindmon_world all_objects_summary]]]
+
+[deftypefunk mindmon_project execute close []
+  [have execute_mutex lock]
+  [if initialized
+      [prog [terminal_format standard-terminal '\nMindmon Project Closing.']
+	    [have mindmon_world destroy]
+	    [= initialized nil]]]
+  [have execute_mutex unlock]]
+
+
+[deframe mindmon [frame] [[initialize_mutex [new mutex]]
+			  [done             nil]
+			  fiber
+			  
+			  window
+			  vbox
+			  
+			  menu_bar
+			  file_menu_item
+			  file_menu
+			  file_new_project_menu_item
+			  file_open_project_menu_item
+			  file_close_project_menu_item
+			  file_save_project_menu_item
+			  file_export_movie_menu_item
+			  file_exit_menu_item
+			  edit_menu_item
+			  edit_menu
+			  edit_preferences_menu_item
+			  project_menu_item
+			  project_menu
+			  project_new_ralph_agent_menu_item
+			  project_new_lauren_agent_menu_item
+			  project_new_macy_agent_menu_item
+			  project_open_agent_menu_item
+			  simulation_menu_item
+			  simulation_menu
+			  simulation_run_initialization_sequence_menu_item
+			  simulation_view_initialization_events_menu_item
+			  simulation_view_all_objects_menu_item
+			  
+			  project_vbox
+			  project_vbox__contained_widget
+			  mindmon_project
+			  
+			  preferences
+			  
+			  [cycle_trigger [new fiber_trigger]]
+			  ]
+  [new []
+       [have initialize_mutex lock]
+       [= fiber [fiber [funk []
+			     [have this load_preferences]
+			     
+			     [=    window          [gtk-window-new]]
+			     [have window connect_hide_on_delete]
+			     [set  window title    [format nil 'Mindmon']]
+			     [=    vbox            [gtk-vbox-new 0]]
+			     [have window add vbox]
+			     
+			     
+			     'window menu'
+			     
+			     [=    menu_bar        [gtk-menu_bar-new]]
+			     [have vbox pack_start menu_bar nil nil 0]
+			     
+			     [=    file_menu_item               [gtk-menu_item-new 'File']]
+			     [=    file_menu                    [gtk-menu-new]]
+			     [=    file_new_project_menu_item   [gtk-menu_item-new 'New Project']]
+			     [=    file_open_project_menu_item  [gtk-menu_item-new 'Open Project...']]
+			     [=    file_close_project_menu_item [gtk-menu_item-new 'Close Project']]
+			     [=    file_save_project_menu_item  [gtk-menu_item-new 'Save Project...']]
+			     [=    file_export_movie_menu_item  [gtk-menu_item-new 'Export Movie...']]
+			     [=    file_exit_menu_item          [gtk-menu_item-new 'Exit']]
+			     [have menu_bar       append        file_menu_item]
+			     [set  file_menu_item submenu       file_menu]
+			     [have file_menu      append        file_new_project_menu_item]
+			     [have file_menu      append        file_open_project_menu_item]
+			     [have file_menu      append        file_close_project_menu_item]
+			     [have file_menu      append        file_save_project_menu_item]
+			     [have file_menu      append        file_export_movie_menu_item]
+			     [have file_menu      append        file_exit_menu_item]
+			     
+			     [have file_new_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this start_new_project]]
+				   nil]
+			     
+			     [have file_open_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [new mindmon_open_project_dialog this]]
+				   nil]
+			     
+			     [have file_close_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this close_project]]
+				   nil]
+			     
+			     [have file_save_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [new mindmon_save_project_dialog this]]
+				   nil]
+			     
+			     [have file_export_movie_menu_item signal_connect 'activate'
+				   [funk []
+					 [new mindmon_export_movie_dialog this]]
+				   nil]
+			     
+			     [have file_exit_menu_item signal_connect 'activate'
+				   [funk []
+					 [have [get this cycle_trigger] trigger]
+					 [= done t]]
+				   nil]
+			     
+			     [= edit_menu_item             [gtk-menu_item-new 'Edit']]
+			     [= edit_menu                  [gtk-menu-new]]
+			     [= edit_preferences_menu_item [gtk-menu_item-new 'Preferences...']]
+			     [have menu_bar       append  edit_menu_item]
+			     [set  edit_menu_item submenu edit_menu]
+			     [have edit_menu      append  edit_preferences_menu_item]
+			     
+			     [have edit_preferences_menu_item signal_connect 'activate'
+				   [funk []
+					 [terminal_format standard-terminal '\nMindmon: edit preferences.']
+					 [new mindmon_preference_editor this]]
+				   nil]
+			     
+			     [= project_menu_item                  [gtk-menu_item-new 'Project']]
+			     [= project_menu                       [gtk-menu-new]]
+			     [= project_new_ralph_agent_menu_item  [gtk-menu_item-new 'New Ralph Agent']]
+			     [= project_new_lauren_agent_menu_item [gtk-menu_item-new 'New Lauren Agent']]
+			     [= project_new_macy_agent_menu_item   [gtk-menu_item-new 'New Macy Agent']]
+			     [= project_open_agent_menu_item       [gtk-menu_item-new 'Open Agent...']]
+			     [have menu_bar          append  project_menu_item]
+			     [set  project_menu_item submenu project_menu]
+			     [have project_menu      append  project_new_ralph_agent_menu_item]
+			     [have project_menu      append  project_new_lauren_agent_menu_item]
+			     [have project_menu      append  project_new_macy_agent_menu_item]
+			     [have project_menu      append  project_open_agent_menu_item]
+			     
+			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this create_new_agent `Ralph]
+					 [have [get this cycle_trigger] trigger]]
+				   nil]
+			     
+			     [have project_new_lauren_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this create_new_agent `Lauren]
+					 [have [get this cycle_trigger] trigger]]
+				   nil]
+			     
+			     [have project_new_macy_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this create_new_agent `Macy]
+					 [have [get this cycle_trigger] trigger]]
+				   nil]
+			     
+			     [have project_open_agent_menu_item signal_connect 'activate'
+				   [funk []
+					 [new mindmon_open_agent_dialog this]
+					 [have [get this cycle_trigger] trigger]]
+				   nil]
+			     
+			     [= simulation_menu_item                             [gtk-menu_item-new 'Simulation']]
+			     [= simulation_menu                                  [gtk-menu-new]]
+			     [= simulation_run_initialization_sequence_menu_item [gtk-menu_item-new 'Run Initialization Sequence']]
+			     [= simulation_view_initialization_events_menu_item  [gtk-menu_item-new 'View Initialization Events']]
+			     [= simulation_view_all_objects_menu_item            [gtk-menu_item-new 'View All Objects']]
+			     [have menu_bar             append  simulation_menu_item]
+			     [set  simulation_menu_item submenu simulation_menu]
+			     [have simulation_menu      append  simulation_run_initialization_sequence_menu_item]
+			     [have simulation_menu      append  simulation_view_initialization_events_menu_item]
+			     [have simulation_menu      append  simulation_view_all_objects_menu_item]
+			     
+			     [have simulation_run_initialization_sequence_menu_item signal_connect 'activate'
+				   [funk []
+					 [have mindmon_project initialize_simulation]
+					 [have [get this cycle_trigger] trigger]]
+				   nil]
+			     
+			     [have simulation_view_initialization_events_menu_item signal_connect 'activate'
+				   [funk []
+					 [have mindmon_project view_initialization_events]]
+				   nil]
+			     
+			     [have simulation_view_all_objects_menu_item signal_connect 'activate'
+				   [funk []
+					 [have mindmon_project view_all_objects]]
+				   nil]
+			     
+			     
+			     [= project_vbox [gtk-vbox-new 0]]
+			     [have vbox pack_start project_vbox nil nil 0]
+			     
+			     [= mindmon_project nil]
+			     [have this close_project]
+			     
+			     [set window default_size [+ 640 320] [+ [* 240 2] 128]]
+			     
+			     [have window show_all]
+			     
+			     [have initialize_mutex unlock]
+			     
+			     [while [not done]
+			       [if [get this should_wait_before_next_cycle]
+				   [wait-for-trigger cycle_trigger]]
+			       [have this cycle]]
+			     [have window destroy]]
+		       nil]]
+       [have initialize_mutex lock]
+       nil]]
+
+[deftypefunk mindmon get should_wait_before_next_cycle []
+  [or [not mindmon_project]
+      [not [get mindmon_project simulation_playing]]]]
+
+[deftypefunk mindmon execute cycle []
+  [if [not [get window visible]]
+      [= done t]]
+  [if mindmon_project
+      [have mindmon_project cycle]]]
+
+[deftypefunk mindmon execute shrink_window []
+  [set window size 1 1]]
+
+[deftypefunk mindmon execute load_preferences []
+  [let [[home_dir [getenv 'HOME']]]
+    [if [null home_dir]
+	[prog [terminal_format standard-terminal '\nMindmon Warning: Could not load preferences because HOME is not a defined environment variable.']
+	      [= preferences [new mindmon_preferences]]]
+      [let [[preferences_filename [pathname-concat home_dir '.mindmon']]]
+	[let [[loaded_preferences [mindmon_preferences-load preferences_filename]]]
+	  [if [null loaded_preferences]
+	      [prog [terminal_format standard-terminal '\nMindmon Warning: Could not load preferences from ' preferences_filename '.  Creating new default preferences file.']
+		    [= preferences [new mindmon_preferences]]
+		    [have this save_preferences]]
+	    [= preferences loaded_preferences]]]]]]]
+
+[deftypefunk mindmon execute save_preferences []
+  [let [[home_dir [getenv 'HOME']]]
+    [if [null home_dir]
+	[terminal_format standard-terminal '\nMindmon Warning: Could not save preferences because HOME is not a defined environment variable.']
+      [let [[preferences_filename [pathname-concat home_dir '.mindmon']]]
+	[have preferences save preferences_filename]]]]]
+
+[deftypefunk mindmon execute create_new_agent [name]
+  [terminal_format standard-terminal '\nMindmon: project new ' name ' agent.']
+  [have mindmon_project add_agent [mindmon_agent-new_from_name mindmon_project name]]
+  [terminal_format standard-terminal '\nMindmon: new ' name ' agent created successfully.']]
+
+[deftypefunk mindmon execute export_movie [filename]
+  [terminal_format standard-terminal '\nMindmon Export Movie: Saving MPEG to file: ' filename]
+  [have [get mindmon_project new_movie] save filename]
+  [terminal_format standard-terminal '\nMindmon Export Movie: Completed saving MPEG to file: ' filename]]
+
+[deftypefunk mindmon execute start_new_project []
+  [have this close_project]
+  [terminal_format standard-terminal '\nMindmon New Project']
+  [let [[new_mindmon_project [new mindmon_project this]]]
+    [have new_mindmon_project create_new_mindmon_world]
+    [have project_vbox remove project_vbox__contained_widget]
+    [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+    [have [get new_mindmon_project widget] show_all]
+    [= project_vbox__contained_widget [get new_mindmon_project widget]]
+    [= mindmon_project new_mindmon_project]]
+  [have this enable_project_commands]]
+
+[deftypefunk mindmon execute open_project [filename]
+  [have this close_project]
+  [terminal_format standard-terminal '\nMindmon Open Project: ' filename]
+  [let [[new_mindmon_project [mindmon_project-new_from_file this filename]]]
+    [if new_mindmon_project
+	[prog [have project_vbox remove project_vbox__contained_widget]
+	      [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+	      [have [get new_mindmon_project widget] show_all]
+	      [= project_vbox__contained_widget [get new_mindmon_project widget]]
+	      [= mindmon_project new_mindmon_project]
+	      [have this enable_project_commands]]
+      [terminal_format standard-terminal '\nMindmon Failed to Open Project: ' filename]]]]
+
+[deftypefunk mindmon execute enable_project_commands []
+  [set file_close_project_menu_item                     sensitive t]
+  [set file_save_project_menu_item                      sensitive t]
+  [set file_export_movie_menu_item                      sensitive t]
+  [set simulation_run_initialization_sequence_menu_item sensitive t]
+  [set simulation_view_initialization_events_menu_item  sensitive t]
+  [set simulation_view_all_objects_menu_item            sensitive t]
+  [set project_new_ralph_agent_menu_item                sensitive t]
+  [set project_new_lauren_agent_menu_item               sensitive t]
+  [set project_new_macy_agent_menu_item                 sensitive t]
+  [set project_open_agent_menu_item                     sensitive t]]
+
+[deftypefunk mindmon execute disable_project_commands []
+  [set file_close_project_menu_item                     sensitive nil]
+  [set file_save_project_menu_item                      sensitive nil]
+  [set file_export_movie_menu_item                      sensitive nil]
+  [set simulation_run_initialization_sequence_menu_item sensitive nil]
+  [set simulation_view_initialization_events_menu_item  sensitive nil]
+  [set simulation_view_all_objects_menu_item            sensitive nil]
+  [set project_new_ralph_agent_menu_item                sensitive nil]
+  [set project_new_lauren_agent_menu_item               sensitive nil]
+  [set project_new_macy_agent_menu_item                 sensitive nil]
+  [set project_open_agent_menu_item                     sensitive nil]]
+
+[deftypefunk mindmon execute close_project []
+  [have this disable_project_commands]
+  [if mindmon_project
+      [prog [have mindmon_project close]
+	    [= mindmon_project nil]]]
+  [if project_vbox__contained_widget
+      [have project_vbox remove project_vbox__contained_widget]]
+  [let [[no_project_widget [gtk-label-new 'Welcome to Mindmon']]]
+    [have project_vbox pack_start no_project_widget t t 0]
+    [= project_vbox__contained_widget no_project_widget]
+    [have no_project_widget show_all]]
+  ]
+
+[deftypefunk mindmon execute save_project [filename]
+  [terminal_format standard-terminal '\nMindmon Save Project: ' filename]
+  [have mindmon_project save filename]]
+
+
+[deftypefunk mindmon execute open_agent [filename]
+  [terminal_format standard-terminal '\nMindmon Open Agent: ' filename]
+  [let [[new_mindmon_agent [mindmon_agent-new_from_file mindmon_project filename]]]
+    [if new_mindmon_agent
+	[have mindmon_project add_agent new_mindmon_agent]
+      [terminal_format standard-terminal '\nMindmon Failed to Open Agent: ' filename]]]]
+
+
+[defmetro mindmon [:rest args]
+  [let [[print_usage_message_and_exit nil]]
+    [if args
+	[let [[iter args]]
+	  [while iter
+	    [let [[arg [first iter]]]
+	      [cond [[or [eq arg `-h]
+			 [eq arg `help]] [prog [= print_usage_message_and_exit t]]]
+		    [t                   [prog [terminal_format standard-terminal '\nmindmon: unknown command line argument, ' arg '.\n']
+					       [= print_usage_message_and_exit t]]]]]
+	    [= iter [next iter]]]]]
+    [if print_usage_message_and_exit
+	[terminal_format standard-terminal 'MINDMON(1)'
+			 '\n'   'NAME'
+			 '\n'   '       mindmon - monitor and control a mind experiment.'
+			 '\n'   ''
+			 '\n'   'SYNOPSIS'
+			 '\n'   '       mindmon -h <mindmon_world>'
+			 '\n'   ''
+			 '\n'   'DESCRIPTION'
+			 '\n'   '       The mindmon program provides dynamic real-time monitoring of a mind experiment.'
+			 '\n'   '']
+      `[prog [new mindmon]
+	     nil]]]]
+
+

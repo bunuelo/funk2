@@ -44,6 +44,8 @@
 
 [defpackage mindmon
   :packages [mindmon_agent
-	     mindmon_world]
+	     mindmon_world
+	     mindmon-blocks_world
+	     mindmon-isis_world]
    :sources ['mindmon.fu2']]
 

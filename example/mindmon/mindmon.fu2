@@ -676,7 +676,8 @@
 			  menu_bar
 			  file_menu_item
 			  file_menu
-			  file_new_project_menu_item
+			  file_new_blocks_world_project_menu_item
+			  file_new_isis_world_project_menu_item
 			  file_open_project_menu_item
 			  file_close_project_menu_item
 			  file_save_project_menu_item
@@ -722,26 +723,33 @@
 			     [=    menu_bar        [gtk-menu_bar-new]]
 			     [have vbox pack_start menu_bar nil nil 0]
 			     
-			     [=    file_menu_item               [gtk-menu_item-new 'File']]
-			     [=    file_menu                    [gtk-menu-new]]
-			     [=    file_new_project_menu_item   [gtk-menu_item-new 'New Project']]
-			     [=    file_open_project_menu_item  [gtk-menu_item-new 'Open Project...']]
-			     [=    file_close_project_menu_item [gtk-menu_item-new 'Close Project']]
-			     [=    file_save_project_menu_item  [gtk-menu_item-new 'Save Project...']]
-			     [=    file_export_movie_menu_item  [gtk-menu_item-new 'Export Movie...']]
-			     [=    file_exit_menu_item          [gtk-menu_item-new 'Exit']]
-			     [have menu_bar       append        file_menu_item]
-			     [set  file_menu_item submenu       file_menu]
-			     [have file_menu      append        file_new_project_menu_item]
-			     [have file_menu      append        file_open_project_menu_item]
-			     [have file_menu      append        file_close_project_menu_item]
-			     [have file_menu      append        file_save_project_menu_item]
-			     [have file_menu      append        file_export_movie_menu_item]
-			     [have file_menu      append        file_exit_menu_item]
+			     [=    file_menu_item                          [gtk-menu_item-new 'File']]
+			     [=    file_menu                               [gtk-menu-new]]
+			     [=    file_new_blocks_world_project_menu_item [gtk-menu_item-new 'New Blocks World Project']]
+			     [=    file_new_isis_world_project_menu_item   [gtk-menu_item-new 'New IsisWorld Project']]
+			     [=    file_open_project_menu_item             [gtk-menu_item-new 'Open Project...']]
+			     [=    file_close_project_menu_item            [gtk-menu_item-new 'Close Project']]
+			     [=    file_save_project_menu_item             [gtk-menu_item-new 'Save Project...']]
+			     [=    file_export_movie_menu_item             [gtk-menu_item-new 'Export Movie...']]
+			     [=    file_exit_menu_item                     [gtk-menu_item-new 'Exit']]
+			     [have menu_bar       append                   file_menu_item]
+			     [set  file_menu_item submenu                  file_menu]
+			     [have file_menu      append                   file_new_blocks_world_project_menu_item]
+			     [have file_menu      append                   file_new_isis_world_project_menu_item]
+			     [have file_menu      append                   file_open_project_menu_item]
+			     [have file_menu      append                   file_close_project_menu_item]
+			     [have file_menu      append                   file_save_project_menu_item]
+			     [have file_menu      append                   file_export_movie_menu_item]
+			     [have file_menu      append                   file_exit_menu_item]
 			     
-			     [have file_new_project_menu_item signal_connect 'activate'
+			     [have file_new_blocks_world_project_menu_item signal_connect 'activate'
 				   [funk []
-					 [have this start_new_project]]
+					 [have this start_new_blocks_world_project]]
+				   nil]
+			     
+			     [have file_new_isis_world_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [have this start_new_isis_world_project]]
 				   nil]
 			     
 			     [have file_open_project_menu_item signal_connect 'activate'
@@ -912,11 +920,23 @@
   [have [get mindmon_project new_movie] save filename]
   [terminal_format standard-terminal '\nMindMon Export Movie: Completed saving MPEG to file: ' filename]]
 
-[deftypefunk mindmon execute start_new_project []
+[deftypefunk mindmon execute start_new_blocks_world_project []
   [have this close_project]
-  [terminal_format standard-terminal '\nMindMon New Project']
+  [terminal_format standard-terminal '\nMindMon New Blocks World Project']
   [let [[new_mindmon_project [new mindmon_project this]]]
-    [have new_mindmon_project create_new_mindmon_world]
+    [have new_mindmon_project create_new_mindmon_blocks_world]
+    [have project_vbox remove project_vbox__contained_widget]
+    [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+    [have [get new_mindmon_project widget] show_all]
+    [= project_vbox__contained_widget [get new_mindmon_project widget]]
+    [= mindmon_project new_mindmon_project]]
+  [have this enable_project_commands]]
+
+[deftypefunk mindmon execute start_new_isis_world_project []
+  [have this close_project]
+  [terminal_format standard-terminal '\nMindMon New IsisWorld Project']
+  [let [[new_mindmon_project [new mindmon_project this]]]
+    [have new_mindmon_project create_new_mindmon_isis_world]
     [have project_vbox remove project_vbox__contained_widget]
     [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
     [have [get new_mindmon_project widget] show_all]

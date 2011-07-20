@@ -125,13 +125,13 @@
 			[have this __add_perception `[,[get gripper name] movement_command ,[if [get gripper movement_command]
 												[get gripper movement_command]
 											      `nil]]]
-			[have this __add_perception `[,[get gripper name] is-holding ,[if [get gripper is_holding]
-											  [get [get gripper is_holding] name]
-											`nil]]]
 			]]
 	      
 	      [have this __add_perception `[,[get gripper name] is-a gripper]]
 	      [have this __add_perception `[,[get gripper name] color ,[get gripper color]]]
+	      [have this __add_perception `[,[get gripper name] is-holding ,[if [get gripper is_holding]
+										[get [get gripper is_holding] name]
+									      `nil]]]
 	      
 	      [if [> [get gripper x] x]
 		  [have this __add_perception `[,[get gripper name] right-of ,name]]]

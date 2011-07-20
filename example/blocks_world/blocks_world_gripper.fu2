@@ -21,10 +21,11 @@
 'blocks_world_gripper'
 
 [deframe blocks_world_gripper [blocks_world_block] [movement_command
-						    [perception_list_mutex [new mutex]]
-						    [perception_list       nil]
-						    [gripper_speed         1.0]
-						    [is_holding            nil]]
+						    [perception_list_mutex  [new mutex]]
+						    [perception_list        nil]
+						    [gripper_movement_speed 1.0]
+						    [gripper_grab_speed     4.0]
+						    [is_holding             nil]]
   [new [initial-name
 	initial-width
 	initial-height
@@ -62,13 +63,13 @@
 	 [= x_velocity 0]
 	 [= y_velocity 0]]
 	[[eq movement_command `left]
-	 [= x_velocity [- gripper_speed]]]
+	 [= x_velocity [- gripper_movement_speed]]]
 	[[eq movement_command `right]
-	 [= x_velocity gripper_speed]]
+	 [= x_velocity gripper_movement_speed]]
 	[[eq movement_command `grab]
-	 [= y_velocity gripper_speed]]
+	 [= y_velocity gripper_grab_speed]]
 	[[eq movement_command `recoil]
-	 [= y_velocity [- gripper_speed]]]
+	 [= y_velocity [- gripper_grab_speed]]]
 	]]
 
 [deftypefunk blocks_world_gripper execute step [step_size]
@@ -103,6 +104,11 @@
 				      [= is_holding       obstacle_block]
 				      ]]]]]]]
       ]
+    
+    [if [< next_y 0.5]
+	[prog [= next_y 0.5]
+	      [if [eq `recoil movement_command]
+		  [= movement_command nil]]]]
     
     [= x next_x]
     [= y next_y]]]

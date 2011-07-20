@@ -33,7 +33,7 @@
        [= cairo_image_surface [new cairo_image_surface `ARGB32 image_width image_height]]
        [= cairo_context       [new cairo_context cairo_image_surface]]
        
-       [= blocks_world_physics [new blocks_world_physics 8 6.5]]
+       [= blocks_world_physics [new blocks_world_physics 8 5.5]]
        
        [have this setup_default_scenario]
        ]]

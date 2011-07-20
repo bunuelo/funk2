@@ -18,6 +18,31 @@
  rights to redistribute these changes.'
 
 
+'blocks_world_export_pdf_dialog'
+
+[deframe blocks_world_export_pdf_dialog [frame] [blocks_world_window
+						 save_dialog]
+  [new [initial-blocks_world_window]
+       [= blocks_world_window initial-blocks_world_window]
+       [= save_dialog         [gtk-file_chooser_dialog-new_for_file_save [get blocks_world_window window]]]
+       
+       [have save_dialog add_file_filter_pattern 'Public Document Format (*.pdf)' '*.pdf']
+       [have save_dialog add_file_filter_pattern 'All Files (*.*)'                '*.*']
+       [set  save_dialog current_name [let [[now [time]]]
+					[format nil [get now years] '_' [get now months] '_' [get now days] '-blocks_world_screenshot.pdf']]]
+       [have save_dialog response_event-signal_connect
+	     [funk [event_frame]
+		   [let [[response_id [have event_frame lookup `response_id]]]
+		     [if [eq response_id GTK_RESPONSE_ACCEPT]
+			 [let [[filename [get save_dialog filename]]]
+			   [have save_dialog destroy]
+			   [have blocks_world_window export_pdf_file filename]]
+		       [have save_dialog destroy]]]]
+	     nil]
+       [have save_dialog show_all]]]
+
+
+
 'blocks_world_window'
 
 [deframe blocks_world_window [frame] [blocks_world
@@ -25,6 +50,11 @@
 				      gtk_window
 				      
 				      vbox
+				      
+				      menu_bar
+				      file_menu_item
+				      file_menu
+				      file_export_pdf_menu_item
 				      
 				      image_hbox
 				      gtk_image_mutex
@@ -53,6 +83,22 @@
        [have gtk_window connect_hide_on_delete]
        
        [= vbox [gtk-vbox-new 0]]
+       
+       [= menu_bar [gtk-menu_bar-new]]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       [= file_menu_item            [gtk-menu_item-new 'File']]
+       [= file_menu                 [gtk-menu-new]]
+       [= file_export_pdf_menu_item [gtk-menu_item-new 'Export PDF']]
+       
+       [have menu_bar       append  file_menu_item]
+       [set  file_menu_item submenu file_menu]
+       [have file_menu      append  file_export_pdf_menu_item]
+       
+       [have file_export_pdf_menu_item signal_connect 'activate'
+	     [funk []
+		   [have this export_pdf]]
+	     nil]
        
        [= image_hbox [gtk-hbox-new 0]]
        
@@ -172,4 +218,11 @@
   [mapc [funk [gripper_controller]
 	      [have gripper_controller update]]
 	[get gripper_controller_ptypehash values]]]
+
+[deftypefunk blocks_world_window execute export_pdf []
+  [new blocks_world_export_pdf_dialog this]]
+
+[deftypefunk blocks_world_window execute export_pdf_file [filename]
+  [terminal_format standard-terminal '\nBlocks World: exporting pdf, ' filename '.']
+  ]
 

@@ -25,7 +25,8 @@
 						    [perception_list        nil]
 						    [gripper_movement_speed 1.0]
 						    [gripper_grab_speed     2.0]
-						    [is_holding             nil]]
+						    [is_holding             nil]
+						    [is_holding_relative_x  nil]]
   [new [initial-name
 	initial-width
 	initial-height
@@ -70,6 +71,8 @@
 	 [= y_velocity gripper_grab_speed]]
 	[[eq movement_command `recoil]
 	 [= y_velocity [- gripper_grab_speed]]]
+	[[eq movement_command `drop]
+	 ]
 	]]
 
 [deftypefunk blocks_world_gripper execute step [step_size]
@@ -100,8 +103,9 @@
 			    [= next_y     maximum_block_y]
 			    [= y_velocity 0.0]
 			    [if [eq `grab movement_command]
-				[prog [= movement_command `recoil]
-				      [= is_holding       obstacle_block]
+				[prog [= movement_command      `recoil]
+				      [= is_holding            obstacle_block]
+				      [= is_holding_relative_x [- [get obstacle_block x] x]]
 				      ]]]]]]]
       ]
     
@@ -109,6 +113,11 @@
 	[prog [= next_y 0.5]
 	      [if [eq `recoil movement_command]
 		  [= movement_command nil]]]]
+    
+    [if [eq `drop movement_command]
+	[prog [= movement_command      nil]
+	      [= is_holding            nil]
+	      [= is_holding_relative_x nil]]]
     
     [= x next_x]
     [= y next_y]]]
@@ -178,5 +187,8 @@
 
 [deftypefunk blocks_world_gripper set movement_command-grab []
   [have this pursue_movement_command `grab]]
+
+[deftypefunk blocks_world_gripper set movement_command-drop []
+  [have this pursue_movement_command `drop]]
 
 

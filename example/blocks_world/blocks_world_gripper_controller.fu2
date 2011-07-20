@@ -45,6 +45,7 @@
        [= gtk_stop_button  [gtk-button-new_with_label 'Stop']]
        [= gtk_right_button [gtk-button-new_with_label 'Right']]
        [= gtk_grab_button  [gtk-button-new_with_label 'Grab']]
+       [= gtk_drop_button  [gtk-button-new_with_label 'Drop']]
        [= gtk_text_view    [gtk-text_view-new]]
        
        [have gtk_hbox pack_start gtk_left_button  nil nil 0]
@@ -76,6 +77,12 @@
 		   [set this movement_command-grab]]
 	     nil]
        
+       [have gtk_drop_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command drop.']
+		   [set this movement_command-drop]]
+	     nil]
+       
        [have gtk_vbox pack_start gtk_hbox nil nil 0]
        [have gtk_vbox pack_start gtk_text_view t t 0]
        
@@ -102,6 +109,9 @@
 
 [deftypefunk blocks_world_gripper_controller set movement_command-grab []
   [set gripper movement_command-grab]]
+
+[deftypefunk blocks_world_gripper_controller set movement_command-drop []
+  [set gripper movement_command-drop]]
 
 [deftypefunk blocks_world_gripper_controller execute update []
   [set [get gtk_text_view buffer] text [stringlist-intersperse [mapcar [funk [perception]

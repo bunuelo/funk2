@@ -86,7 +86,7 @@
 							 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
 						       nil]]]]]
 				   ]]]
-			      [[eq [get bug bug_type] 13]
+			      `[[eq [get bug bug_type] 13]
 			       [let [[bug_name           [have [get bug frame] lookup `bug_name]]
 				     [source_filename    [have [get bug frame] lookup `source_filename]]
 				     [source_line_number [have [get bug frame] lookup `source_line_number]]

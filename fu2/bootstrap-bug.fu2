@@ -33,7 +33,12 @@
 
 [defmetro new-crawl_through_backtrace-bug_type_response [bug_type :rest codes]
   `[bug-crawl_through_backtrace-add_bug_type_response ,bug_type
-						      [funk [print_bug_continuation_funk bug print_terminal define_name_prefix]
+						      [funk [print_bug_continuation_funk
+							     get_bug_index_funk
+							     set_bug_index_funk
+							     bug
+							     print_terminal
+							     define_name_prefix]
 							    [define-funk print_bug     print_bug_continuation_funk]
 							    [define-funk get_bug_index get_bug_index_funk]
 							    [define-funk set_bug_index set_bug_index_funk]
@@ -44,15 +49,21 @@
 					   set_bug_index_funk
 					   print_terminal
 					   define_name_prefix]
-  [let [[known_bug_response_funk [bug-crawl_through_backtrace-lookup_bug_type_response [get bug bug_type]]]]
+  [let [[known_bug_response_funk [bug-crawl_through_backtrace-lookup_bug_type_response [get this bug_type]]]]
     [if [null known_bug_response_funk]
 	[= known_bug_response_funk [bug-crawl_through_backtrace-lookup_bug_type_response `unknown]]]
     [if known_bug_response_funk
-	[let [[result [shelter [funkall known_bug_response_funk print_bug_continuation_funk bug print_terminal define_name_prefix]]]]
+	[let [[result [shelter [funkall known_bug_response_funk
+					print_bug_continuation_funk
+					get_bug_index_funk
+					set_bug_index_funk
+					this
+					print_terminal
+					define_name_prefix]]]]
 	  [if [is-type `bug result]
 	      [if print_terminal
-		  [prog [terminal_format print_terminal '\nbug occurred while executing backtrace response, removing buggy bug_type, ' [get bug bug_type] ', response.']
-			[bug-crawl_through_backtrace-remove_bug_type_response [get bug bug_type]]
+		  [prog [terminal_format print_terminal '\nbug occurred while executing backtrace response, removing buggy bug_type, ' [get this bug_type] ', response.']
+			[bug-crawl_through_backtrace-remove_bug_type_response [get this bug_type]]
 			[= known_bug_response_funk nil]]]]]]
     [if [null known_bug_response_funk]
 	[let [[bug_variable [get [format nil define_name_prefix [funkall get_bug_index_funk]] as-symbol]]]
@@ -62,22 +73,21 @@
 	  [if define_name_prefix
 	      [prog [if print_terminal
 			[terminal_format print_terminal 'defining ' bug_variable ': ']]
-		    [eval `[globalize ,bug_variable ,bug]]]]
+		    [eval `[globalize ,bug_variable ,this]]]]
 	  [if print_terminal
-	      [terminal_format print_terminal 'bug_type ' [get bug bug_type] '.']]]]
+	      [terminal_format print_terminal 'bug_type ' [get this bug_type] '.']]]]
     ]]
 
 [deftypefunk bug execute crawl_through_backtrace [print_terminal define_name_prefix]
   [let [[bug_index 1]]
-    [labels [[get_bug_index [] bug_index]
+    [labels [[get_bug_index []              bug_index]
 	     [set_bug_index [new_bug_index] [= bug_index new_bug_index]]
-	     [print_bug     [bug]
-			    [have bug bug_index execute_response
-				  &print_bug
-				  &get_bug_index
-				  &set_bug_index
-				  print_terminal
-				  define_name_prefix]]]
+	     [print_bug     [bug]           [have bug bug_index execute_response
+						  &print_bug
+						  &get_bug_index
+						  &set_bug_index
+						  print_terminal
+						  define_name_prefix]]]
 	    [print_bug this]]]]
 
 [deftypefunk bug execute print_backtrace []

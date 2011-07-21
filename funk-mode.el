@@ -85,7 +85,7 @@
            'font-lock-keyword-face)
      (cons (regexp-opt
             '("!=" "<=" ">=" "==" ">>" "<<" "+" "-" "*" "/" "=" "<" ">"
-	      "action" "actor" "act" "and"
+	      "action" "actor" "act" "and" "assert-type"
 	      "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk" "cond" "construct"
               "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "defpackage" "defcore" "defcorefunk" "dotimes"
 	      "elt" "error" "execute"

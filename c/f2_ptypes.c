@@ -405,7 +405,10 @@ f2ptr f2__integer__multiplied_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__multiplied_by(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 12462, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_multiply_an_integer_by_an_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__multiplied_by, this, that,
 	    "",
@@ -424,7 +427,10 @@ f2ptr f2__integer__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__divide(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 1246, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_divide_an_integer_by_an_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__divided_by, this, that,
 	    "",
@@ -448,7 +454,10 @@ f2ptr f2__integer__plus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__add(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 126423, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_add_integer_to_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__plus, this, that,
 	    "",
@@ -472,7 +481,10 @@ f2ptr f2__integer__minus(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__subtract(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 264251, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_minus_an_integer_with_an_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__minus, this, that,
 	    "",
@@ -491,7 +503,10 @@ f2ptr f2__integer__is_greater_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__greater_than(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 123243, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_ask_is_greater_than_with_an_integer_and_an_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__is_greater_than, this, that,
 	    "",
@@ -510,7 +525,10 @@ f2ptr f2__integer__is_less_than(f2ptr cause, f2ptr this, f2ptr number) {
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__less_than(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 26341, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_ask_is_less_than_with_an_integer_and_an_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__is_less_than, this, that,
 	    "",
@@ -529,7 +547,10 @@ f2ptr f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number
   } else if (raw__largeinteger__is_type(cause, number)) {
     return f2__largeinteger__equals(cause, raw__largeinteger__new_from_s64(cause, value), number);
   }
-  return f2larva__new(cause, 123532, nil);
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "tried_to_ask_is_numerically_equal_to_with_an_integer_and_an_unknown_type"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "number"),   number));
 }
 def_pcfunk2(integer__is_numerically_equal_to, this, that,
 	    "",

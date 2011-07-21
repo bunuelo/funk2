@@ -20,18 +20,63 @@
 [globalize mindmon_world-current_active_frame [frame]]
 
 [deframe mindmon_world [frame] [name
-				[overview_image_sequence [new image_sequence nil]]]
+				[step_mutex                      [new mutex]]
+				[overview_image_sequence_enabled nil]
+				[overview_image_sequence         [new image_sequence nil]]]
   [new [initial-name]
        [= name initial-name]
        [have mindmon_world-current_active_frame add name this]
        ]]
 
-[deftypefunk mindmon_world execute destroy []
-  [terminal_format standard-terminal '\nmindmon_world-execute-destroy not implemented in ' [type this] ' interface.']
+[deftypefunk isis_world execute update_overview_image_sequence []
+  [let [[image [get this screenshot]]]
+    [have overview_image_sequence add_image_to_end image]]]
+
+[deftypefunk isis_world execute update_overview_image_sequence []
+  [let [[image [get this screenshot]]]
+    [have overview_image_sequence add_image_to_end image]]]
+
+[deftypefunk isis_world execute update_after_step_simulation []
+  [if overview_image_sequence_enabled
+      [have this update_overview_image_sequence]]
+  [mapc [funk [agent_name]
+	      [let [[agent_body [get this agent_body agent_name]]]
+		[have agent_body update_after_step_simulation]]]
+	[get this agent_names]]]
+
+[deftypefunk isis_world execute step_simulation [seconds]
+  [have step_mutex lock]
+  [let [[maximum_tick_size 0.025]]
+    [let [[tick [if [> seconds maximum_tick_size]
+		    maximum_tick_size
+		  seconds]]]
+      [let [[subseconds 0.0]]
+	[while [< subseconds seconds]
+	  [have this raw_step_simulation tick]
+	  [have this update_after_step_simulation]
+	  [= subseconds [+ subseconds tick]]]]]]
+  [have this step_physical_world]
+  [have step_mutex unlock]]
+
+[deftypefunk isis_world get simulator_is_stepping []
+  [get step_mutex is_locked]]
+
+[deftypefunk isis_world set all_cameras_enabled [enabled]
+  [= overview_image_sequence_enabled enabled]
+  [mapc [funk [agent_name]
+	      [let [[agent_body [get this agent_body agent_name]]]
+		[set agent_body all_cameras_enabled enabled]]]
+	[get this agent_names]]]
+
+
+'The following interface must be implemented by children of the mindmon_world object type.'
+
+[deftypefunk mindmon_world execute raw_step_simulation [step_size]
+  [terminal_format standard-terminal '\nmindmon_world-execute-raw_step_simulation not implemented in ' [type this] ' interface.']
   ]
 
-[deftypefunk mindmon_world set all_cameras_enabled [all_cameras_enabled]
-  [terminal_format standard-terminal '\nmindmon_world-set-all_cameras_enabled not implemented in ' [type this] ' interface.']
+[deftypefunk mindmon_world execute destroy []
+  [terminal_format standard-terminal '\nmindmon_world-execute-destroy not implemented in ' [type this] ' interface.']
   ]
 
 [deftypefunk mindmon_world execute initialize_simulation []
@@ -42,15 +87,11 @@
   [terminal_format standard-terminal '\nmindmon_world-get-initialize_events not implemented in ' [type this] ' interface.']
   ]
 
+[deftypefunk mindmon_world get screenshot []
+  [terminal_format standard-terminal '\nmindmon_world-get-screenshot not implemented in ' [type this] ' interface.']
+  ]
+
 [deftypefunk mindmon_world get all_objects_summary []
   [terminal_format standard-terminal '\nmindmon_world-get-all_objects_summary not implemented in ' [type this] ' interface.']
-  ]
-
-[deftypefunk mindmon_world execute step_simulation [step_size]
-  [terminal_format standard-terminal '\nmindmon_world-execute-step_simulation not implemented in ' [type this] ' interface.']
-  ]
-
-[deftypefunk mindmon_world execute raw_step_simulation [step_size]
-  [terminal_format standard-terminal '\nmindmon_world-execute-raw_step_simulation not implemented in ' [type this] ' interface.']
   ]
 

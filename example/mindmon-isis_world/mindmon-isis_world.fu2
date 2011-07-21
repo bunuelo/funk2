@@ -23,6 +23,26 @@
        [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
        ]]
 
+[deftypefunk mindmon_isis_world execute raw_step_simulation [step_size]
+  [have isis_world raw_step_simulation step_size]]
+
+[deftypefunk mindmon_isis_world execute destroy []
+  [have isis_world destroy]]
+
+[deftypefunk mindmon_isis_world execute initialize_simulation []
+  [have isis_world initialize_simulation]]
+
+[deftypefunk mindmon_isis_world get initialize_events []
+  [get isis_world initialize_events]]
+
+[deftypefunk mindmon_isis_world get screenshot []
+  [get isis_world screenshot]] 
+
+[deftypefunk mindmon_isis_world get all_objects_summary []
+  [get isis_world all_objects_summary]]
+
+
+
 [new mindmon_isis_world 'localhost']
 [new mindmon_isis_world 'imprimer.media.mit.edu']
 [new mindmon_isis_world 'simonetti.media.mit.edu']

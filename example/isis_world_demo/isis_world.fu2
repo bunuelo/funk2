@@ -18,12 +18,9 @@
  rights to redistribute these changes.'
 
 
-[deframe isis_world [physical_world] [[initialize_events               [new redblacktree [funk [event] [have event lookup `time]] &<]]
-				      [step_mutex                      [new mutex]]
+[deframe isis_world [physical_world] [[initialize_events [new redblacktree [funk [event] [have event lookup `time]] &<]]
 				      client
-				      sense_agent_frame
-				      [overview_image_sequence_enabled nil]
-				      [overview_image_sequence         [new image_sequence nil]]]
+				      sense_agent_frame]
   [new [client]
        [construct physical_world]
        [set this client client]
@@ -88,11 +85,11 @@
 			    [have actual_image write_reduction_image_part reduced_image reduction_factor x_offset y_offset]]]]]]]
 	      actual_image]]]]]]]
 
-[deftypefunk isis_world execute update_overview_image_sequence []
+`[deftypefunk isis_world execute update_overview_image_sequence []
   [let [[image [get this screenshot]]]
     [have overview_image_sequence add_image_to_end image]]]
 
-[deftypefunk isis_world execute update_after_step_simulation []
+`[deftypefunk isis_world execute update_after_step_simulation []
   [if overview_image_sequence_enabled
       [have this update_overview_image_sequence]]
   [mapc [funk [agent_name]
@@ -105,7 +102,7 @@
   [while [!= [isis-call [get this client] meta_physics_active] 0]
     [millisleep 100]]]
 
-[deftypefunk isis_world execute step_simulation [seconds]
+`[deftypefunk isis_world execute step_simulation [seconds]
   [have step_mutex lock]
   [let [[maximum_tick_size 0.025]]
     [let [[tick [if [> seconds maximum_tick_size]
@@ -119,10 +116,10 @@
   [have this step_physical_world]
   [have step_mutex unlock]]
 
-[deftypefunk isis_world get simulator_is_stepping []
+`[deftypefunk isis_world get simulator_is_stepping []
   [get step_mutex is_locked]]
 
-[deftypefunk isis_world set all_cameras_enabled [enabled]
+`[deftypefunk isis_world set all_cameras_enabled [enabled]
   [= overview_image_sequence_enabled enabled]
   [mapc [funk [agent_name]
 	      [let [[agent_body [get this agent_body agent_name]]]
@@ -170,7 +167,6 @@
 
 [deftypefunk isis_world get as-lickable_frame []
   [frame client                     client
-	 overview_image_sequence    overview_image_sequence
 	 agent_body_lickable_frames [mapcar [funk [agent_body]
 						  [get agent_body as-lickable_frame]]
 					    [get this agent_bodies]]
@@ -181,7 +177,6 @@
 
 [defunk isis_world-new_from_lickable_frame [lickable_frame]
   [let [[this [new isis_world [have lickable_frame lookup `client]]]]
-    [set this overview_image_sequence [have lickable_frame lookup `overview_image_sequence]]
     [mapc [funk [agent_body_lickable_frame]
 		[have this add_agent_body [isis_agent_body-new_from_lickable_frame this agent_body_lickable_frame]]]
 	  [have lickable_frame lookup `agent_body_lickable_frames]]

@@ -82,7 +82,7 @@
   [let [[result [shelter [let [[bug_index 1]]
 			   [labels [[get_bug_index []              bug_index]
 				    [set_bug_index [new_bug_index] [= bug_index new_bug_index]]
-				    [print_bug     [bug]           [have bug bug_index execute_response
+				    [print_bug     [bug]           [have bug execute_response
 									 &print_bug
 									 &get_bug_index
 									 &set_bug_index
@@ -91,7 +91,8 @@
 				   [print_bug this]]]]]]
     [if [is-type `bug result]
 	[prog [terminal_format standard-terminal '\nbug-execute-crawl_through_backtrace has fatal errors.']
-	      [shelter [terminal_format standard-terminal '  ' this]]
+	      [shelter [terminal_format standard-terminal '\n  original bug: ' this]]
+	      [shelter [terminal_format standard-terminal '\n  backtrace printing bug: ' result]]
 	      nil]
       result]]]
 

@@ -26,7 +26,7 @@
 			       image_width
 			       image_height
 			       
-			       step_mutex
+			       [step_mutex [new mutex]]
 			       blocks_world_physics]
   [new [initial-name initial-image_width initial-image_height]
        [= name         initial-name]

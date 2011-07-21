@@ -52,11 +52,11 @@
   [have step_mutex unlock]]
 
 [deftypefunk blocks_world execute export_pdf_file [filename]
-  [let [[pdf_surface [new cairo_pdf_surface filename [get image_width as-double] [get image_height as-double]]]]
-    [let [[pdf_cairo_context [new cairo_context pdf_surface]]]
-      [have blocks_world_physics render_to_cairo pdf_cairo_context]
-      [have pdf_surface       destroy]
-      [have pdf_cairo_context destroy]]]]
+  [let* [[pdf_surface       [new cairo_pdf_surface filename [get image_width as-double] [get image_height as-double]]]
+	 [pdf_cairo_context [new cairo_context pdf_surface]]]
+    [have blocks_world_physics render_to_cairo pdf_cairo_context]
+    [have pdf_surface       destroy]
+    [have pdf_cairo_context destroy]]]
 
 [deftypefunk blocks_world get as-image []
   [let* [[cairo_image_surface [new cairo_image_surface `ARGB32 image_width image_height]]

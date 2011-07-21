@@ -38,15 +38,15 @@
 #include "../config_bit_num.h"
 #include "../config_compile_time_id.h"
 
-typedef __uint64_t ptr; //                        0 to 18.446744073709551615e18
-typedef __uint64_t u64; //                        0 to 18.446744073709551615e18
-typedef  __int64_t s64; // -9.223372036854775808e18 to 9.223372036854775807e18
-typedef __uint32_t u32; //                        0 to 4.294967295e9
-typedef  __int32_t s32; //           -2.147483648e9 to 2.147483647e9
-typedef __uint16_t u16; //                        0 to 65535
-typedef  __int16_t s16; //                   -32768 to 32767
-typedef  __uint8_t  u8; //                        0 to 255
-typedef       char  s8; //                     -128 to 127
+typedef uint64_t ptr; //                        0 to 18.446744073709551615e18
+typedef uint64_t u64; //                        0 to 18.446744073709551615e18
+typedef  int64_t s64; // -9.223372036854775808e18 to 9.223372036854775807e18
+typedef uint32_t u32; //                        0 to 4.294967295e9
+typedef  int32_t s32; //           -2.147483648e9 to 2.147483647e9
+typedef uint16_t u16; //                        0 to 65535
+typedef  int16_t s16; //                   -32768 to 32767
+typedef  uint8_t  u8; //                        0 to 255
+typedef     char  s8; //                     -128 to 127
 
 #if int__bit_num == pointer__bit_num
 #  define   to_ptr(value)        ((ptr)(unsigned int)(value))

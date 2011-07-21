@@ -33,6 +33,7 @@
 #endif
 
 #include <sys/types.h>
+#include <stdint.h>
 
 #include "../config.h"
 #include "../config_bit_num.h"

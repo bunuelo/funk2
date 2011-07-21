@@ -31,10 +31,16 @@
 [defmetro new-crawl_through_backtrace-bug_type_response [bug_type :rest codes]
   `[bug-crawl_through_backtrace-add_bug_type_response ,bug_type
 						      [funk [print_bug_continuation_funk bug print_terminal define_name_prefix]
-							    [define-funk print_bug print_bug_continuation_funk]
+							    [define-funk print_bug     print_bug_continuation_funk]
+							    [define-funk get_bug_index get_bug_index_funk]
+							    [define-funk set_bug_index set_bug_index_funk]
 							    @codes]]]
 
-[deftypefunk bug execute execute_response [print_bug_continuation_funk print_terminal define_name_prefix]
+[deftypefunk bug execute execute_response [print_bug_continuation_funk
+					   get_bug_index_funk
+					   set_bug_index_funk
+					   print_terminal
+					   define_name_prefix]
   [let [[known_bug_response_funk [bug-crawl_through_backtrace-lookup_bug_type_response [get bug bug_type]]]]
     [if [null known_bug_response_funk]
 	[= known_bug_response_funk [bug-crawl_through_backtrace-lookup_bug_type_response `unknown]]]
@@ -45,8 +51,8 @@
 		  [prog [terminal_format print_terminal '\nbug occurred while executing backtrace response, removing buggy bug_type, ' [get bug bug_type] ', response.']
 			[= known_bug_response_funk nil]]]]]]
     [if [null known_bug_response_funk]
-	[let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-	  [= bug_index [bytecode:add bug_index 1]]
+	[let [[bug_variable [get [format nil define_name_prefix [funkall get_bug_index_funk]] as-symbol]]]
+	  [funkall set_bug_index_funk [bytecode:add [funkall get_bug_index_funk] 1]]
 	  [if print_terminal
 	      [terminal_format print_terminal '\n  ']]
 	  [if define_name_prefix
@@ -59,8 +65,15 @@
 
 [deftypefunk bug execute crawl_through_backtrace [print_terminal define_name_prefix]
   [let [[bug_index 1]]
-    [labels [[print_bug [bug]
-			[have bug execute_response &print_bug print_terminal define_name_prefix]]]
+    [labels [[get_bug_index [] bug_index]
+	     [set_bug_index [new_bug_index] [= bug_index new_bug_index]]
+	     [print_bug     [bug]
+			    [have bug bug_index execute_response
+				  &print_bug
+				  &get_bug_index
+				  &set_bug_index
+				  print_terminal
+				  define_name_prefix]]]
 	    [print_bug this]]]]
 
 [deftypefunk bug execute print_backtrace []

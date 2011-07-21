@@ -19,8 +19,8 @@
 
 
 [new-crawl_through_backtrace-bug_type_response `unknown
-					       [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-						 [= bug_index [bytecode:add bug_index 1]]
+					       [let [[bug_variable [get [format nil define_name_prefix [get_bug_index]] as-symbol]]]
+						 [set_bug_index [bytecode:add [get_bug_index] 1]]
 						 [if print_terminal
 						     [terminal_format print_terminal '\n  ']]
 						 [if define_name_prefix
@@ -47,8 +47,8 @@
 						     [source_line_number [have [get bug frame] lookup `source_line_number]]
 						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
 						 [print_bug subbug]
-						 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-						   [= bug_index [bytecode:add bug_index 1]]
+						 [let [[bug_variable [get [format nil define_name_prefix [get_bug_index]] as-symbol]]]
+						   [set_bug_index [bytecode:add [get_bug_index] 1]]
 						   [if print_terminal
 						       [terminal_format print_terminal '\n  ']]
 						   [if define_name_prefix
@@ -80,8 +80,8 @@
 						     [source_line_number [have [get bug frame] lookup `source_line_number]]
 						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
 						 [print_bug subbug]
-						 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-						   [= bug_index [bytecode:add bug_index 1]]
+						 [let [[bug_variable [get [format nil define_name_prefix [get_bug_index]] as-symbol]]]
+						   [set_bug_index [bytecode:add [get_bug_index] 1]]
 						   [if print_terminal
 						       [terminal_format print_terminal '\n  ']]
 						   [if define_name_prefix
@@ -112,8 +112,8 @@
 						     [source_filename    [have [get bug frame] lookup `source_filename]]
 						     [source_line_number [have [get bug frame] lookup `source_line_number]]
 						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
-						 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
-						   [= bug_index [bytecode:add bug_index 1]]
+						 [let [[bug_variable [get [format nil define_name_prefix [get_bug_index]] as-symbol]]]
+						   [set_bug_index [bytecode:add [get_bug_index] 1]]
 						   [if print_terminal
 						       [terminal_format print_terminal '\n  ']]
 						   [if define_name_prefix

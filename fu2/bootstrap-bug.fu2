@@ -27,6 +27,9 @@
 [defunk bug-crawl_through_backtrace-lookup_bug_type_response [bug_type]
   [have bug-crawl_through_backtrace-known_bug_response_frame lookup bug_type]]
 
+[defunk bug-crawl_through_backtrace-remove_bug_type_response [bug_type]
+  [have bug-crawl_through_backtrace-known_bug_response_frame remove bug_type]]
+
 
 [defmetro new-crawl_through_backtrace-bug_type_response [bug_type :rest codes]
   `[bug-crawl_through_backtrace-add_bug_type_response ,bug_type
@@ -49,6 +52,7 @@
 	  [if [is-type `bug result]
 	      [if print_terminal
 		  [prog [terminal_format print_terminal '\nbug occurred while executing backtrace response, removing buggy bug_type, ' [get bug bug_type] ', response.']
+			[bug-crawl_through_backtrace-remove_bug_type_response [get bug bug_type]]
 			[= known_bug_response_funk nil]]]]]]
     [if [null known_bug_response_funk]
 	[let [[bug_variable [get [format nil define_name_prefix [funkall get_bug_index_funk]] as-symbol]]]

@@ -97,6 +97,7 @@
 
 [set [global_package_handler] package_search_paths `['built-in/alien/'
 						     'built-in/ansi/'
+						     'built-in/basic_bug_responses/'
 						     'built-in/utilities/'
 						     'built-in/perception_lattice/'
 						     'built-in/object_lattice/'

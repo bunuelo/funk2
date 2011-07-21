@@ -53,7 +53,8 @@
   [eval `[prog [require number
 			ansi
 			mutex
-			math]
+			math
+			basic_bug_responses]
 	       
 	       [defunk backup_repl []
 		 [let* [[trigger [new fiber_trigger]]

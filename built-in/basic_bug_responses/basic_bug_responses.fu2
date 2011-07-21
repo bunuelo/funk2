@@ -1,0 +1,140 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[new-crawl_through_backtrace-bug_type_response `unknown
+					       [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
+						 [= bug_index [bytecode:add bug_index 1]]
+						 [if print_terminal
+						     [terminal_format print_terminal '\n  ']]
+						 [if define_name_prefix
+						     [prog [if print_terminal
+							       [terminal_format print_terminal 'defining ' bug_variable ': ']]
+							   [eval `[globalize ,bug_variable ,bug]]]]
+						 [if print_terminal
+						     [prog [terminal_format print_terminal 'bug_type ' [get bug bug_type] '.']
+							   [let [[unknown_keys nil]]
+							     [labels [[add_unknown_key [key]
+										       [if [not [or]]
+											   [= unknown_keys [cons key unknown_keys]]]]]
+								     [mapc &add_unknown_key
+									   [get [get bug frame] keys]]]
+							     [mapc [funk [key]
+									 [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+								   [if unknown_keys
+								       [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+								     nil]]]]]]]
+
+[new-crawl_through_backtrace-bug_type_response 7
+					       [let [[subbug             [have [get bug frame] lookup `value]]
+						     [source_filename    [have [get bug frame] lookup `source_filename]]
+						     [source_line_number [have [get bug frame] lookup `source_line_number]]
+						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
+						 [print_bug subbug]
+						 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
+						   [= bug_index [bytecode:add bug_index 1]]
+						   [if print_terminal
+						       [terminal_format print_terminal '\n  ']]
+						   [if define_name_prefix
+						       [prog [if print_terminal
+								 [terminal_format print_terminal 'defining ' bug_variable ': ']]
+							     [eval `[globalize ,bug_variable ,bug]]]]
+						   [if print_terminal
+						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string]]
+							     [let [[unknown_keys nil]]
+							       [labels [[add_unknown_key [key]
+											 [if [not [or [eq `value              key]
+												      [eq `source_filename    key]
+												      [eq `source_line_number key]
+												      [eq `funktion_name      key]]]
+											     [= unknown_keys [cons key unknown_keys]]]]]
+								       [mapc &add_unknown_key
+									     [get [get bug frame] keys]]]
+							       [mapc [funk [key]
+									   [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+								     [if unknown_keys
+									 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+								       nil]]]]]
+						   ]]]
+
+[new-crawl_through_backtrace-bug_type_response 8
+					       [let [[bug_name           [have [get bug frame] lookup `bug_name]]
+						     [subbug             [have [get bug frame] lookup `value]]
+						     [source_filename    [have [get bug frame] lookup `source_filename]]
+						     [source_line_number [have [get bug frame] lookup `source_line_number]]
+						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
+						 [print_bug subbug]
+						 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
+						   [= bug_index [bytecode:add bug_index 1]]
+						   [if print_terminal
+						       [terminal_format print_terminal '\n  ']]
+						   [if define_name_prefix
+						       [prog [if print_terminal
+								 [terminal_format print_terminal 'defining ' bug_variable ': ']]
+							     [eval `[globalize ,bug_variable ,bug]]]]
+						   [if print_terminal
+						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string] ' bug_name=' [get bug_name as-string]]
+							     [let [[unknown_keys nil]]
+							       [labels [[add_unknown_key [key]
+											 [if [not [or [eq `bug_name           key]
+												      [eq `value              key]
+												      [eq `source_filename    key]
+												      [eq `source_line_number key]
+												      [eq `funktion_name      key]]]
+											     [= unknown_keys [cons key unknown_keys]]]]]
+								       [mapc &add_unknown_key
+									     [get [get bug frame] keys]]]
+							       [mapc [funk [key]
+									   [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+								     [if unknown_keys
+									 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+								       nil]]]]]
+						   ]]]
+
+[new-crawl_through_backtrace-bug_type_response 13
+					       [let [[bug_name           [have [get bug frame] lookup `bug_name]]
+						     [source_filename    [have [get bug frame] lookup `source_filename]]
+						     [source_line_number [have [get bug frame] lookup `source_line_number]]
+						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
+						 [let [[bug_variable [get [format nil define_name_prefix bug_index] as-symbol]]]
+						   [= bug_index [bytecode:add bug_index 1]]
+						   [if print_terminal
+						       [terminal_format print_terminal '\n  ']]
+						   [if define_name_prefix
+						       [prog [if print_terminal
+								 [terminal_format print_terminal 'defining ' bug_variable ': ']]
+							     [eval `[globalize ,bug_variable ,bug]]]]
+						   [if print_terminal
+						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string] ' bug_name=' [get bug_name as-string]]
+							     [let [[unknown_keys nil]]
+							       [labels [[add_unknown_key [key]
+											 [if [not [or [eq `bug_name           key]
+												      [eq `source_filename    key]
+												      [eq `source_line_number key]
+												      [eq `funktion_name      key]]]
+											     [= unknown_keys [cons key unknown_keys]]]]]
+								       [mapc &add_unknown_key
+									     [get [get bug frame] keys]]]
+							       [mapc [funk [key]
+									   [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+								     [if unknown_keys
+									 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+								       nil]]]]]
+						   ]]]
+

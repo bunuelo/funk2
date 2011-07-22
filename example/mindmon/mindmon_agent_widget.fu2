@@ -509,10 +509,7 @@
   [have mindmon_knowledge_mutex unlock]]
 
 [defunk mindmon_agent_widget-new_from_name [mindmon_project name]
-  [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name: debug 0.']
   [let [[mindmon_agent [have [get mindmon_project mindmon_world] create_agent name]]]
-    [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name: debug 1.']
-    [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name: debug 2.']
     [let [[this [new mindmon_agent_widget mindmon_project mindmon_agent]]]
       [have [get mindmon_agent mind] activate_vital_resources]
       this]]]

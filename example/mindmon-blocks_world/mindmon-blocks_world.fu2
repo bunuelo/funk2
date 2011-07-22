@@ -23,7 +23,7 @@
        [= blocks_world [new blocks_world [gensym 'blocks_world'] width height]]
        ]]
 
-[deftypefunk mindmon_blocks_world get compatible_mind_types []
+[deftypefunk mindmon_blocks_world get compatible_agent_types []
   `[mindmon_blocks_world_agent]]
 
 

@@ -27,7 +27,7 @@
        [= moral_compass [new moral_compass]]]]
 
 [deftypefunk mindmon_isis_world_agent get mind []
-  moral_comass]
+  moral_compass]
 
 
 'mindmon_isis_world'

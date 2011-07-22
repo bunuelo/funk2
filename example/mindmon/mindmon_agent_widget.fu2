@@ -510,7 +510,7 @@
 
 [defunk mindmon_agent_widget-new_from_name [mindmon_project name]
   [let [[mindmon_agent [have [get mindmon_project mindmon_world] create_agent name]]]
-    [have mindmon_agent activate_vital_resources]
+    [have [get mindmon_agent mind] activate_vital_resources]
     [new mindmon_agent_widget mindmon_project mindmon_agent]]]
 
 `[

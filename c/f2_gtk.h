@@ -74,6 +74,8 @@ struct funk2_gtk_s {
   funk2_processor_mutex_t          callback_events__mutex;
   funk2_gtk_callback_event_cons_t* callback_events;
   funk2_gtk_callback_event_cons_t* callback_events__last_cons;
+  
+  f2ptr                            session_symbol;
 };
 
 #endif // F2__GTK__TYPES__H

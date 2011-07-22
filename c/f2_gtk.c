@@ -21,14 +21,12 @@
 
 #include "funk2.h"
 
-f2ptr __gtk__session_symbol = nil;
-
 // g_object
 
 def_frame_object__global__2_slot(g_object, gtk_session, pointer);
 
 f2ptr f2__g_object__new(f2ptr cause, f2ptr pointer) {
-  return f2g_object__new(cause, __gtk__session_symbol, pointer);
+  return f2g_object__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -38,7 +36,7 @@ GObject* raw__g_object__as__GObject(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__g_object__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__g_object__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__g_object__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -49,7 +47,7 @@ boolean_t raw__g_object__is_from_this_session(f2ptr cause, f2ptr this) {
 def_frame_object__global__2_slot(gtk_widget, gtk_session, pointer);
 
 f2ptr f2__gtk_widget__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_widget__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_widget__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -59,7 +57,7 @@ GtkWidget* raw__gtk_widget__as__GtkWidget(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_widget__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_widget__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_widget__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -78,7 +76,7 @@ f2ptr f2gtk_widget__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_box, gtk_session, pointer);
 
 f2ptr f2__gtk_box__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_box__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_box__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -88,7 +86,7 @@ GtkBox* raw__gtk_box__as__GtkBox(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_box__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_box__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_box__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -107,7 +105,7 @@ f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_text_buffer, gtk_session, pointer);
 
 f2ptr f2__gtk_text_buffer__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_text_buffer__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_text_buffer__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -117,7 +115,7 @@ GtkTextBuffer* raw__gtk_text_buffer__as__GtkTextBuffer(f2ptr cause, f2ptr this) 
 }
 
 boolean_t raw__gtk_text_buffer__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_text_buffer__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_text_buffer__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -135,7 +133,7 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_label, gtk_session, pointer);
 
 f2ptr f2__gtk_label__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_label__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_label__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -145,7 +143,7 @@ GtkLabel* raw__gtk_label__as__GtkLabel(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_label__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_label__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_label__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -163,7 +161,7 @@ f2ptr f2gtk_label__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_scale, gtk_session, pointer);
 
 f2ptr f2__gtk_scale__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_scale__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_scale__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -173,7 +171,7 @@ GtkScale* raw__gtk_scale__as__GtkScale(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_scale__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_scale__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_scale__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -192,7 +190,7 @@ f2ptr f2gtk_scale__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_entry, gtk_session, pointer);
 
 f2ptr f2__gtk_entry__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_entry__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_entry__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -202,7 +200,7 @@ GtkEntry* raw__gtk_entry__as__GtkEntry(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_entry__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_entry__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_entry__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -221,7 +219,7 @@ f2ptr f2gtk_entry__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_image, gtk_session, pointer);
 
 f2ptr f2__gtk_image__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_image__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_image__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -231,7 +229,7 @@ GtkImage* raw__gtk_image__as__GtkImage(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_image__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_image__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_image__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -248,7 +246,7 @@ f2ptr f2gtk_image__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_text_iter, gtk_session, chunk);
 
 f2ptr f2__gtk_text_iter__new(f2ptr cause, f2ptr chunk) {
-  return f2gtk_text_iter__new(cause, __gtk__session_symbol, chunk);
+  return f2gtk_text_iter__new(cause, __funk2.gtk.session_symbol, chunk);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -259,7 +257,7 @@ void raw__gtk_text_iter__as__GtkTextIter(f2ptr cause, f2ptr this, GtkTextIter* t
 }
 
 boolean_t raw__gtk_text_iter__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_text_iter__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_text_iter__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -351,7 +349,7 @@ def_pcfunk3(gdk__rgb_color__new, red, green, blue,
 def_frame_object__global__2_slot(gdk_pixbuf, gtk_session, pointer);
 
 f2ptr f2__gdk_pixbuf__new(f2ptr cause, f2ptr pointer) {
-  return f2gdk_pixbuf__new(cause, __gtk__session_symbol, pointer);
+  return f2gdk_pixbuf__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -361,7 +359,7 @@ GdkPixbuf* raw__gdk_pixbuf__as__GdkPixbuf(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gdk_pixbuf__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gdk_pixbuf__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gdk_pixbuf__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -378,7 +376,7 @@ f2ptr f2gdk_pixbuf__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_text_mark, gtk_session, pointer);
 
 f2ptr f2__gtk_text_mark__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_text_mark__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_text_mark__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -388,7 +386,7 @@ GtkTextMark* raw__gtk_text_mark__as__GtkTextMark(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_text_mark__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_text_mark__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_text_mark__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -417,7 +415,7 @@ f2ptr f2__gtk_text_range__new(f2ptr cause, f2ptr start, f2ptr end) {
 def_frame_object__global__2_slot(gtk_progress_bar, gtk_session, pointer);
 
 f2ptr f2__gtk_progress_bar__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_progress_bar__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_progress_bar__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -427,7 +425,7 @@ GtkProgressBar* raw__gtk_progress_bar__as__GtkProgressBar(f2ptr cause, f2ptr thi
 }
 
 boolean_t raw__gtk_progress_bar__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_progress_bar__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_progress_bar__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -444,7 +442,7 @@ f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_menu, gtk_session, pointer);
 
 f2ptr f2__gtk_menu__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_menu__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_menu__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -454,7 +452,7 @@ GtkMenu* raw__gtk_menu__as__GtkMenu(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_menu__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_menu__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_menu__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -471,7 +469,7 @@ f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_menu_bar, gtk_session, pointer);
 
 f2ptr f2__gtk_menu_bar__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_menu_bar__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_menu_bar__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -481,7 +479,7 @@ GtkMenuBar* raw__gtk_menu_bar__as__GtkMenuBar(f2ptr cause, f2ptr this) {
 }
 
 boolean_t raw__gtk_menu_bar__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_menu_bar__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_menu_bar__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -498,7 +496,7 @@ f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_check_button, gtk_session, pointer);
 
 f2ptr f2__gtk_check_button__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_check_button__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_check_button__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -508,7 +506,7 @@ GtkCheckButton* raw__gtk_check_button__as__GtkCheckButton(f2ptr cause, f2ptr thi
 }
 
 boolean_t raw__gtk_check_button__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_check_button__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_check_button__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -525,7 +523,7 @@ f2ptr f2gtk_check_button__primobject_type__new_aux(f2ptr cause) {
 def_frame_object__global__2_slot(gtk_file_chooser_dialog, gtk_session, pointer);
 
 f2ptr f2__gtk_file_chooser_dialog__new(f2ptr cause, f2ptr pointer) {
-  return f2gtk_file_chooser_dialog__new(cause, __gtk__session_symbol, pointer);
+  return f2gtk_file_chooser_dialog__new(cause, __funk2.gtk.session_symbol, pointer);
 }
 
 #if defined(F2__GTK__SUPPORTED)
@@ -535,7 +533,7 @@ GtkFileChooserDialog* raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(f2p
 }
 
 boolean_t raw__gtk_file_chooser_dialog__is_from_this_session(f2ptr cause, f2ptr this) {
-  return raw__eq(cause, __gtk__session_symbol, f2__gtk_file_chooser_dialog__gtk_session(cause, this));
+  return raw__eq(cause, __funk2.gtk.session_symbol, f2__gtk_file_chooser_dialog__gtk_session(cause, this));
 }
 
 #endif // F2__GTK__SUPPORTED
@@ -606,6 +604,8 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
     funk2_processor_mutex__init(&(this->callback_events__mutex));
     this->callback_events            = NULL;
     this->callback_events__last_cons = NULL;
+    
+    this->session_symbol = f2__gensym(cause, new__string(cause, "gtk_session"));
     
     // keeps gtk_main from starting until we unlock this mutex.
     funk2_processor_mutex__lock(&(this->main_thread__mutex));

@@ -302,42 +302,42 @@
        [have save_dialog show_all]]]
 
 
-[deframe mindmon_agent_widget [frame] [isis_agent
-				
-				mindmon_project
-				
-				frame
-				vbox
-				
-				menu_bar
-				file_menu_item
-				file_menu
-				file_save_agent_menu_item
-				tools_menu
-				tools_menu_item
-				tools_builtin_reactive_physical_activator_menu_item
-				tools_learned_reactive_physical_activator_menu_item
-				tools_deliberative_goal_activator_menu_item
-				view_menu
-				view_menu_item
-				view_sense_menu_item
-				view_perception_menu_item
-				view_visual_objects_menu_item
-				view_proprioceptual_frame_menu_item
-				view_visualization_menu_item
-				mindmon_agent_widget_mind_menu
-				
-				entry
-				
-				[mindmon_knowledge_mutex     [new mutex]]
-				[mindmon_knowledge_ptypehash [new ptypehash]]
-				
-				]
-  [new [initial_mindmon_project initial_isis_agent]
+[deframe mindmon_agent_widget [frame] [mindmon_agent
+				       
+				       mindmon_project
+				       
+				       frame
+				       vbox
+				       
+				       menu_bar
+				       file_menu_item
+				       file_menu
+				       file_save_agent_menu_item
+				       tools_menu
+				       tools_menu_item
+				       tools_builtin_reactive_physical_activator_menu_item
+				       tools_learned_reactive_physical_activator_menu_item
+				       tools_deliberative_goal_activator_menu_item
+				       view_menu
+				       view_menu_item
+				       view_sense_menu_item
+				       view_perception_menu_item
+				       view_visual_objects_menu_item
+				       view_proprioceptual_frame_menu_item
+				       view_visualization_menu_item
+				       mindmon_agent_widget_mind_menu
+				       
+				       entry
+				       
+				       [mindmon_knowledge_mutex     [new mutex]]
+				       [mindmon_knowledge_ptypehash [new ptypehash]]
+				       
+				       ]
+  [new [initial_mindmon_project initial_mindmon_agent]
        [= mindmon_project initial_mindmon_project]
-       [= isis_agent      initial_isis_agent]
+       [= mindmon_agent   initial_mindmon_agent]
        
-       [= frame [gtk-frame-new [format nil 'isis_agent - ' [get isis_agent name]]]]
+       [= frame [gtk-frame-new [format nil 'mindmon_agent - ' [get mindmon_agent name]]]]
        [= vbox  [gtk-vbox-new 0]]
        
        [= menu_bar        [gtk-menu_bar-new]]
@@ -394,26 +394,26 @@
 	     [funk []
 		   [terminal_format stadard-terminal
 				    '\n' [get this name] '\'s sensory information:'
-				    '\n  ' [have isis_agent sense_world]]]
+				    '\n  ' [have mindmon_agent sense_world]]]
 	     nil]
        [have view_menu append view_sense_menu_item]
        
        [= view_perception_menu_item [gtk-menu_item-new 'Perception']]
        [have view_perception_menu_item signal_connect 'activate'
 	     [funk []
-		   [let [[perception [get [get isis_agent mind] perception]]]
+		   [let [[perception [get [get mindmon_agent mind] perception]]]
 		     [if [null perception]
 			 [terminal_format standard-terminal '\n' [get this name] ' has no perception']
 		       [terminal_format standard-terminal
 					'\n' [get this name] '\'s perception:'
-					'\n  ' [get [get isis_agent mind] perception]]]]]
+					'\n  ' [get [get mindmon_agent mind] perception]]]]]
 	     nil]
        [have view_menu append view_perception_menu_item]
        
        [= view_visual_objects_menu_item [gtk-menu_item-new 'Visual Objects']]
        [have view_visual_objects_menu_item signal_connect 'activate'
 	     [funk []
-		   [let [[perception [get [get isis_agent mind] perception]]]
+		   [let [[perception [get [get mindmon_agent mind] perception]]]
 		     [if [null perception]
 			 [terminal_format standard-terminal '\n' [get this name] ' has no perception']
 		       [terminal_format standard-terminal
@@ -425,12 +425,12 @@
        [= view_proprioceptual_frame_menu_item [gtk-menu_item-new 'Proprioceptual Frame']]
        [have view_proprioceptual_frame_menu_item signal_connect 'activate'
 	     [funk []
-		   [let [[perception [get [get isis_agent mind] perception]]]
+		   [let [[perception [get [get mindmon_agent mind] perception]]]
 		     [if [null perception]
 			 [terminal_format standard-terminal '\n' [get this name] ' has no perception']
 		       [terminal_format standard-terminal
 					'\n' [get this name] '\'s proprioceptual frame:'
-					'\n  ' [have [get [get isis_agent mind] perception] lookup `proprioceptual_frame]]]]]
+					'\n  ' [have [get [get mindmon_agent mind] perception] lookup `proprioceptual_frame]]]]]
 	     nil]
        [have view_menu append view_proprioceptual_frame_menu_item]
        
@@ -462,8 +462,8 @@
 					       [= reverse_symbols [cons [get string as-symbol] reverse_symbols]]]]
 				     strings]
 			       [let [[symbols [reverse reverse_symbols]]]
-				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get isis_agent name] '\'s neural plug.']
-				 [let [[activate_resource [get [get isis_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
+				 [terminal_format standard-terminal '\nSending symbols, ' symbols ', through ' [get mindmon_agent name] '\'s neural plug.']
+				 [let [[activate_resource [get [get mindmon_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
 				   [have activate_resource command `learned_reactive `language `speak_language [append `[I hear] symbols `[from nil]]]
 				   [have activate_resource command `learned_reactive `language `hear_language_from_agent nil symbols]
 				   ]]]]]]]]
@@ -487,9 +487,9 @@
 				[let [[name [get semantic_knowledge_base name]]]
 				  [if [not [get mindmon_knowledge_ptypehash contains name]]
 				      [have this add_mindmon_knowledge name]]]]
-			  [get [get isis_agent mind] semantic_knowledge_bases]]
+			  [get [get mindmon_agent mind] semantic_knowledge_bases]]
 		    
-		    [have [get isis_agent mind] add_semantic_knowledge_base_add_event_callback_funk [funk [semantic_knowledge_base]
+		    [have [get mindmon_agent mind] add_semantic_knowledge_base_add_event_callback_funk [funk [semantic_knowledge_base]
 													  [let [[name [get semantic_knowledge_base name]]]
 													    [have this add_mindmon_knowledge name]]]]
 		    
@@ -512,9 +512,10 @@
   [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name: debug 0.']
   [let [[mindmon_agent [have [get mindmon_project mindmon_world] create_agent name]]]
     [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name: debug 1.']
-    [have [get mindmon_agent mind] activate_vital_resources]
     [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name: debug 2.']
-    [new mindmon_agent_widget mindmon_project mindmon_agent]]]
+    [let [[this [new mindmon_agent_widget mindmon_project mindmon_agent]]]
+      [have [get mindmon_agent mind] activate_vital_resources]
+      this]]]
 
 `[
   [error bug_name `not_yet_implemented]
@@ -528,7 +529,7 @@
 
 
 [deftypefunk mindmon_agent_widget get name []
-  [get isis_agent name]]
+  [get mindmon_agent name]]
 
 [deftypefunk mindmon_agent_widget get widget []
   frame]
@@ -537,7 +538,7 @@
   [get mindmon_project window]]
 
 [deftypefunk mindmon_agent_widget execute update_entry []
-  [let [[look_for_resource [get [get isis_agent mind] resource `learned_reactive `physical `look_for]]]
+  [let [[look_for_resource [get [get mindmon_agent mind] resource `learned_reactive `physical `look_for]]]
     [set entry text [terminal_format standard-terminal 'look_for-current_object: \t' [have look_for_resource lookup `my_current_object]]]
     ]]
 
@@ -548,11 +549,11 @@
   nil]
 
 [deftypefunk mindmon_agent_widget get retina_image_sequence []
-  [get isis_agent retina_image_sequence]]
+  [get mindmon_agent retina_image_sequence]]
 
 [deftypefunk mindmon_agent_widget execute save [filename]
   [terminal_format standard-terminal '\nMindMon Agent: Saving ' filename '.']
-  [have [get [get isis_agent as-chunk] deflated] save filename]
+  [have [get [get mindmon_agent as-chunk] deflated] save filename]
   [terminal_format standard-terminal '\nMindMon Agent: Save agent complete.']]
 
 [defunk mindmon_agent_widget-new_from_file [mindmon_project filename]

@@ -206,7 +206,7 @@
        
        [let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
 	 [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
-	 [= isis_world_server_hostname__title_label [gtk-label-new 'IsisWorld Server Hostname: ']]
+	 [= isis_world_server_hostname__title_label [gtk-label-new 'Isis World Server Hostname: ']]
 	 [= isis_world_server_hostname__data_entry  [gtk-entry-new]]
 	 [set isis_world_server_hostname__data_entry text isis_world_server_hostname]
 	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
@@ -727,7 +727,7 @@
 			     [=    file_menu_item                          [gtk-menu_item-new 'File']]
 			     [=    file_menu                               [gtk-menu-new]]
 			     [=    file_new_blocks_world_project_menu_item [gtk-menu_item-new 'New Blocks World Project']]
-			     [=    file_new_isis_world_project_menu_item   [gtk-menu_item-new 'New IsisWorld Project']]
+			     [=    file_new_isis_world_project_menu_item   [gtk-menu_item-new 'New Isis World Project']]
 			     [=    file_open_project_menu_item             [gtk-menu_item-new 'Open Project...']]
 			     [=    file_close_project_menu_item            [gtk-menu_item-new 'Close Project']]
 			     [=    file_save_project_menu_item             [gtk-menu_item-new 'Save Project...']]
@@ -935,7 +935,7 @@
 
 [deftypefunk mindmon execute start_new_isis_world_project []
   [have this close_project]
-  [terminal_format standard-terminal '\nMindMon New IsisWorld Project']
+  [terminal_format standard-terminal '\nMindMon New Isis World Project']
   [let [[new_mindmon_project [new mindmon_project this]]]
     [have new_mindmon_project create_new_mindmon_isis_world]
     [have project_vbox remove project_vbox__contained_widget]

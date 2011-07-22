@@ -20,14 +20,20 @@
 
 'mindmon_isis_world_agent'
 
-[deframe mindmon_isis_world_agent [mindmon_agent] [moral_compass]
+[deframe mindmon_isis_world_agent [mindmon_agent] [moral_compass
+						   isis_agent_body]
   [new [initial-mindmon_world
 	initial-name]
        [construct mindmon_agent initial-mindmon_world initial-name]
-       [= moral_compass [new moral_compass]]]]
+       [= moral_compass [new moral_compass]]
+       [= isis_agent_body [new isis_agent_body [get mindmon_world isis_world] moral_compass name]]
+       nil]]
 
 [deftypefunk mindmon_isis_world_agent get mind []
   moral_compass]
+
+[deftypefunk mindmon_isis_world_agent get body []
+  isis_agent_body]
 
 
 'mindmon_isis_world'

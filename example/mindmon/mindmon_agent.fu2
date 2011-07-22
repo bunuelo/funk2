@@ -31,4 +31,8 @@
   [terminal_format standard-terminal '\nmindmon_agent-execute-activate_vital_resources not implemented in ' [type this] ' interface.']
   nil]
 
+[deftypefunk mindmon_agent get mind []
+  [terminal_format standard-terminal '\nmindmon_agent-get-mind not implemented in ' [type this] ' interface.']
+  nil]
+
 

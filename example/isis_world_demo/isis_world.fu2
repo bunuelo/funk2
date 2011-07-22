@@ -100,7 +100,8 @@
 [deftypefunk isis_world execute raw_step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]
   [while [!= [isis-call [get this client] meta_physics_active] 0]
-    [millisleep 100]]]
+    [millisleep 100]]
+  [have this step_physical_world]]
 
 `[deftypefunk isis_world execute step_simulation [seconds]
   [have step_mutex lock]

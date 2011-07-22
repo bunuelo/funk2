@@ -24,7 +24,7 @@
        [= mindmon_world initial-mindmon_world]
        [= name          initial-name]
        
-       [have mindmon_world __add_agent this]
+       [have mindmon_world __add_agent name this]
        ]]
 
 [deftypefunk mindmon_agent execute activate_vital_resources []

@@ -260,7 +260,7 @@
 				  [= mindmon_layer_menus [cons mindmon_layer_menu mindmon_layer_menus]]
 				  [have [get mindmon_layer_menu widget] show_all]
 				  [have mind_menu append mindmon_layer_menu]]]
-			  [have [get [get [get mindmon_agent_widget isis_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
+			  [have [get [get [get mindmon_agent_widget mindmon_agent] mind] layers] sort [funk [x y] [< [get x index] [get y index]]]]]
 		    [have mind_menu_item show_all]
 		    ]
 	      nil]

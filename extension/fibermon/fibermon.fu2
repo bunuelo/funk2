@@ -334,6 +334,12 @@
   [fibermon_processor-recompute_statistics_fast this]
   nil]
 
+[deftypefunk fibermon_processor get fibers []
+  [get fibermon_fiber_hash keys]]
+
+[deftypefunk fibermon_processor get fibermon_fibers []
+  [get fibermon_fiber_hash values]]
+
 [deftypefunk fibermon_processor execute add_fiber [fibermon_fiber]
   [if [not [is-type `fibermon_fiber fibermon_fiber]]
       [error bug_type `attempted_to_add_fiber_that_is_not_a_fibermon_fiber]]
@@ -362,13 +368,17 @@
 'fibermon'
 
 [deframe fibermon [frame] [[win                     [gtk-window-new]]
-			   [vbox                    [gtk-vbox-new 2]]
+			   [vbox                    [gtk-vbox-new 0]]
 			   [menu_bar                [gtk-menu_bar-new]]
 			   [fibermon_menu_item      [gtk-menu_item-new 'Fibermon']]
 			   [fibermon_menu           [gtk-menu-new]]
 			   [fibermon_exit_menu_item [gtk-menu_item-new 'Exit']]
+			   [hbox                    [gtk-hbox-new 0]]
+			   [hbox-quit_button        [gtk-button-new_with_label 'Quit All']]
+			   [hbox-quit_label         [gtk-label-new 'quit all cause filter:']]
+			   [hbox-quit_entry         [gtk-entry-new]]
 			   [scrolled_window         [gtk-scrolled_window-new]]
-			   [processor_hbox          [gtk-hbox-new 2]]
+			   [processor_hbox          [gtk-hbox-new 0]]
 			   [processor_array         [new array 8]]
 			   [done                    nil]
 			   [fiber                   nil]
@@ -392,7 +402,30 @@
        [dotimes [index processor_count]
 	 [have processor_hbox pack_start [get processor_array elt index] t t 0]]
        [have scrolled_window add_with_viewport processor_hbox]
+       
+       [have hbox pack_start hbox-quit_button nil nil 0]
+       [have hbox pack_start hbox-quit_label  nil nil 0]
+       [have hbox pack_start hbox-quit_entry  nil nil 0]
+       
+       [have hbox-quit_button signal_connect 'clicked'
+	     [funk []
+		   [let [[cause_name [shelter [have [get hbox-quit_entry text] read]]]]
+		     [if [is-type `bug cause_name]
+			 [terminal_format standard-terminal '\nfibermon: error reading cause-name.\n']
+		       [prog [terminal_format standard-terminal '\nfibermon: quitting all fibers matching cause-name, ' cause_name '.\n']
+			     [mapc [funk [fiber]
+					 [let [[cause_reg [get fiber cause_reg]]]
+					   [if [not [null cause_reg]]
+					       [let [[fiber-cause_name [have cause_reg lookup `cause-name]]]
+						 [if [eq fiber-cause_name cause_name]
+						     [prog [terminal_format standard-terminal '\nfibermon: commanding fiber with cause-name=' cause_name ' to quit.\n']
+							   [have fiber quit]]]]]]]
+				   [global_scheduler-active_fibers]]
+			     ]]]]
+	     nil]
+       
        [have vbox pack_start menu_bar        nil nil 0]
+       [have vbox pack_start hbox            nil nil 0]
        [have vbox pack_start scrolled_window t t 0]
        [have win add vbox]
        [= fiber [fiber [funk []
@@ -446,6 +479,12 @@
   [dotimes [index processor_count]
     [have [get processor_array elt index] recompute_statistics]]
   nil]
+
+[deftypefunk fibermon get fibers []
+  [let [[result nil]]
+    [dotimes [index processor_count]
+      [= result [append result [get [get processor_array elt index] fibers]]]]
+    result]]
 
 [defunk fibermon-command_line [:rest args]
   [let [[print_usage_message_and_exit nil]]

@@ -20,6 +20,7 @@
 [globalize mindmon_world-current_active_frame [frame]]
 
 [deframe mindmon_world [frame] [name
+				[agent_frame                     [frame]]
 				[step_mutex                      [new mutex]]
 				[overview_image_sequence_enabled nil]
 				[overview_image_sequence         [new image_sequence nil]]]
@@ -64,8 +65,29 @@
 		 [set agent_body all_cameras_enabled enabled]]]
 	 [get this agent_names]]]
 
+[deftypefunk mindmon_world execute add_agent [name agent]
+  [if [get agent_frame contains name]
+      [error bug_name   agent_already_part_of_this_mindmon_world
+	     agent_name name
+	     agent      agent]
+    [have agent_frame add name agent]]]
+
+[deftypefunk mindmon_world execute create_agent_type [type name]
+  [if [not [get [get this compatible_mind_types] contains type]]
+      [error bug_name  `mind_type_is_not_in_compatible_mind_types
+	     mind_type type
+	     mind_name name]
+    [let [[new_agent [object_type-new type name]]]
+      [have this add_agent name new_agent]
+      new_agent]]]
+
+
 
 'The following interface must be implemented by children of the mindmon_world object type.'
+
+[deftypefunk mindmon_world get compatible_mind_types []
+  [terminal_format standard-terminal '\nmindmon_world-get-compatible_mind_types not implemented in ' [type this] ' interface.']
+  nil]
 
 [deftypefunk mindmon_world execute raw_step_simulation [step_size]
   [terminal_format standard-terminal '\nmindmon_world-execute-raw_step_simulation not implemented in ' [type this] ' interface.']

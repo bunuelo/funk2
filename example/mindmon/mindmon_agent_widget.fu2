@@ -509,6 +509,7 @@
   [have mindmon_knowledge_mutex unlock]]
 
 [defunk mindmon_agent_widget-new_from_name [mindmon_project name]
+  
   [error bug_name `not_yet_implemented]
   `[let [[moral_compass [new moral_compass]]]
      [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name creating isis_agent_body.']

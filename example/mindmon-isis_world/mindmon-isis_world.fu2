@@ -17,6 +17,17 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'mindmon_isis_world_agent'
+
+[deframe mindmon_isis_world_agent [mindmon_agent] [moral_compass]
+  [new []
+       [construct mindmon_agent]
+       [= moral_compass [new moral_compass]]]]
+
+
+'mindmon_isis_world'
+
 [deframe mindmon_isis_world [mindmon_world] [isis_world]
   [new [isis_world_server_hostname]
        [construct mindmon_world [gensym 'mindmon_isis_world']]
@@ -38,9 +49,11 @@
 [deftypefunk mindmon_isis_world get screenshot []
   [get isis_world screenshot]] 
 
+[deftypefunk mindmon_world get compatible_mind_types []
+  `[mindmon_moral_compass_agent]]
+
 [deftypefunk mindmon_isis_world get all_objects_summary []
   [get isis_world all_objects_summary]]
-
 
 
 [new mindmon_isis_world 'localhost']

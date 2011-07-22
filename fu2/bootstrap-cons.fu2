@@ -23,3 +23,15 @@
 [deftypefunk cons execute as-conslist []                this]
 [deftypefunk cons execute sort        [comparison_funk] [conslist-sort this comparison_funk]]
 
+[deftypefunk cons get contains [element]
+  [define result       nil]
+  [define iter         this]
+  [define this-element nil]
+  [while iter
+    [= this-element [car iter]]
+    [if [eq this-element element]
+	[prog [= result t]
+	      [= iter   nil]]
+      [= iter [cdr iter]]]]
+  result]
+

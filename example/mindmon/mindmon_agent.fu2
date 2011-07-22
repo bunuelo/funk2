@@ -18,11 +18,17 @@
  rights to redistribute these changes.'
 
 
-[deframe mindmon_agent [frame] [name
-				mindmon_world_name]
-  [new [initial-name
-	initial-mindmon_world_name]
-       [= name               initial-name]
-       [= mindmon_world_name initial-mindmon_world_name]
+[deframe mindmon_agent [frame] [mindmon_world
+				name]
+  [new [initial-mindmon_world initial-name]
+       [= mindmon_world initial-mindmon_world]
+       [= name          initial-name]
+       
+       [have mindmon_world __add_agent this]
        ]]
+
+[deftypefunk mindmon_agent execute activate_vital_resources []
+  [terminal_format standard-terminal '\nmindmon_agent-execute-activate_vital_resources not implemented in ' [type this] ' interface.']
+  nil]
+
 

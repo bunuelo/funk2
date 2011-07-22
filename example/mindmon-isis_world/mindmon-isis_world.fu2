@@ -21,8 +21,9 @@
 'mindmon_isis_world_agent'
 
 [deframe mindmon_isis_world_agent [mindmon_agent] [moral_compass]
-  [new []
-       [construct mindmon_agent]
+  [new [initial-mindmon_world
+	initial-name]
+       [construct mindmon_agent initial-mindmon_world initial-name]
        [= moral_compass [new moral_compass]]]]
 
 
@@ -33,6 +34,9 @@
        [construct mindmon_world [gensym 'mindmon_isis_world']]
        [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
        ]]
+
+[deftypefunk mindmon_world get compatible_mind_types []
+  `[mindmon_isis_world_agent]]
 
 [deftypefunk mindmon_isis_world execute raw_step_simulation [step_size]
   [have isis_world raw_step_simulation step_size]]
@@ -48,9 +52,6 @@
 
 [deftypefunk mindmon_isis_world get screenshot []
   [get isis_world screenshot]] 
-
-[deftypefunk mindmon_world get compatible_mind_types []
-  `[mindmon_moral_compass_agent]]
 
 [deftypefunk mindmon_isis_world get all_objects_summary []
   [get isis_world all_objects_summary]]

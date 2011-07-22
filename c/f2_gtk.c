@@ -2077,9 +2077,9 @@ def_pcfunk0(gtk__window__new,
 #define assert_gtk_object_is_from_this_session(object_type, object) ({	\
       f2ptr assert_gtk_object_is_from_this_session__temp_object = (object); \
       if (! raw__##object_type##__is_from_this_session(cause, assert_gtk_object_is_from_this_session__temp_object)) { \
-	return new__error(f2list6__new(cause,				\
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, #object_type "_is_not_from_this_session"), \
-				       new__symbol(cause, #object_type), assert_gtk_object_is_from_this_session__temp_object)); \
+	return new__error(f2list4__new(cause,				\
+				       new__symbol(cause, "bug_name"),            new__symbol(cause, #object_type "_is_not_from_this_session"), \
+				       new__symbol(cause, #object_type "-value"), assert_gtk_object_is_from_this_session__temp_object)); \
       }									\
       assert_gtk_object_is_from_this_session__temp_object;		\
     })

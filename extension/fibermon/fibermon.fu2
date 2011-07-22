@@ -444,6 +444,7 @@
 		   [mapc [funk [fiber]
 			       [if [get fiber is_zombie]
 				   [prog [terminal_format standard-terminal '\nfibermon: commanding zombie fiber to quit.']
+					 [set fiber keep_undead nil]
 					 [have fiber quit]]]]
 			 [global_scheduler-active_fibers]]]
 	     nil]

@@ -210,7 +210,8 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   xmlrpc_type type = xmlrpc_value_type(value);
   switch(type) {
   case XMLRPC_TYPE_DEAD:    // not a value
-    return f2larva__new(cause, 352521, nil);
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "got_XMLRPC_TYPE_DEAD_type")));
   case XMLRPC_TYPE_NIL:     // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
@@ -271,10 +272,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
       for (index = 0; index < array__size; index ++) {
 	xmlrpc_value* subexp;
 	xmlrpc_array_read_item(env, value, index, &subexp);
-	f2ptr new_subexp = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, subexp);
-	if (raw__larva__is_type(cause, new_subexp)) {
-	  return new_subexp;
-	}
+	f2ptr new_subexp = assert_value(funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, subexp));
 	raw__array__elt__set(cause, new_array, index, new_subexp);
       }
     }
@@ -289,14 +287,8 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 	xmlrpc_value* member_key;
 	xmlrpc_value* member_value;
 	xmlrpc_struct_read_member(env, value, index, &member_key, &member_value);
-	f2ptr new_key = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key);
-	if (raw__larva__is_type(cause, new_key)) {
-	  return new_key;
-	}
-	f2ptr new_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_value);
-	if (raw__larva__is_type(cause, new_value)) {
-	  return new_value;
-	}
+	f2ptr new_key   = assert_value(funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_key));
+	f2ptr new_value = assert_value(funk2_xmlrpc__new_exp_from_xmlrpc_value(env, cause, member_value));
 	if (raw__string__is_type(cause, new_key)) {
 	  new_key = raw__string__as__symbol(cause, new_key);
 	}
@@ -306,9 +298,11 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     return new_frame;
   }
   case XMLRPC_TYPE_C_PTR:
-    return f2larva__new(cause, 12, nil);
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "got_XMLRPC_TYPE_C_PTR")));
   }
-  return f2larva__new(cause, 153261, nil);
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "got_unknown_xmlrpc_type")));
 }
 
 boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrpc_value* arguments, xmlrpc_value** result, char** fault_string, int* fault_code) {
@@ -434,17 +428,14 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
 	  if (new_exp == NULL) {
 	    call_successful_so_far = boolean__false;
 	    status("f2_xmlrpc.c: error interpretting arguments.");
-	    {
-	      f2ptr bug_frame = f2__frame__new(cause, nil);
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_interpretting_arguments"));
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "argument"),     exp);
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), ((__funk2.xmlrpc.xmlrpc_environment.fault_string != NULL) ? new__string(cause, __funk2.xmlrpc.xmlrpc_environment.fault_string) : nil));
-	      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, __funk2.xmlrpc.xmlrpc_environment.fault_code));
-	      return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
-	    }
+	    return new__error(f2list14__new(cause,
+					    new__symbol(cause, "bug_name"),     new__symbol(cause, "xmlrpc_error_interpretting_arguments"),
+					    new__symbol(cause, "url"),          url,
+					    new__symbol(cause, "funkname"),     funkname,
+					    new__symbol(cause, "arguments"),    arguments,
+					    new__symbol(cause, "argument"),     exp,
+					    new__symbol(cause, "fault_string"), ((__funk2.xmlrpc.xmlrpc_environment.fault_string != NULL) ? new__string(cause, __funk2.xmlrpc.xmlrpc_environment.fault_string) : nil),
+					    new__symbol(cause, "fault_code"),   f2integer__new(cause, __funk2.xmlrpc.xmlrpc_environment.fault_code)));
 	  } else {
 	    xmlrpc_array_append_item(&(__funk2.xmlrpc.xmlrpc_environment), argument_array, new_exp);
 	    xmlrpc_DECREF(new_exp);
@@ -459,19 +450,16 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
       call_successful_so_far = funk2_xmlrpc__apply(&(__funk2.xmlrpc), url__str, funkname__str, argument_array, &resultP, &fault_string, &fault_code);
       if (! call_successful_so_far) {
 	status("f2_xmlrpc.c: error making call.");
-	{
-	  f2ptr bug_frame = f2__frame__new(cause, nil);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_making_call"));
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),          url);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),     funkname);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),    arguments);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_string"), new__string(cause, fault_string ? fault_string : ""));
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fault_code"),   f2integer__new(cause, fault_code));
-	  return_value = f2larva__new(cause, 5533, f2__bug__new(cause, f2integer__new(cause, 5533), bug_frame));
-	}
-	if (fault_string != NULL) {
-	  f2__free(to_ptr(fault_string));
-	}
+	return new__error(f2list12__new(cause,
+					new__symbol(cause, "bug_type"),     new__symbol(cause, "xmlrpc_error_making_call"),
+					new__symbol(cause, "url"),          url,
+					new__symbol(cause, "funkname"),     funkname,
+					new__symbol(cause, "arguments"),    arguments,
+					new__symbol(cause, "fault_string"), new__string(cause, fault_string ? fault_string : ""),
+					new__symbol(cause, "fault_code"),   f2integer__new(cause, fault_code)));
+      }
+      if (fault_string != NULL) {
+	f2__free(to_ptr(fault_string));
       }
     }
     xmlrpc_DECREF(argument_array);
@@ -587,18 +575,21 @@ f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments)
   assert_argument_type(string, url);
   if ((! raw__string__is_type(cause, funkname)) &&
       (! raw__symbol__is_type(cause, funkname))) {
-    return f2larva__new(cause, 124626, nil);
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),  new__symbol(cause, "funkname_must_be_either_string_or_symbol"),
+				   new__symbol(cause, "funkname"),  funkname,
+				   new__symbol(cause, "url"),       url,
+				   new__symbol(cause, "arguments"), arguments));
   }
 #if defined(F2__XMLRPC_SUPPORTED)
   return raw__xmlrpc__apply(cause, url, funkname, arguments);
 #else
-  f2ptr bug_frame = f2__frame__new(cause, nil);
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),        new__symbol(cause, "xmlrpc_not_supported"));
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),        new__symbol(cause, "xmlrpc-apply"));
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "url"),             url);
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "remote_funkname"), funkname);
-  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "arguments"),       arguments);
-  return f2larva__new(cause, 435, f2__bug__new(cause, f2integer__new(cause, 435), bug_frame));
+  return new__error(f2list10__new(cause,
+				  new__symbol(cause, "bug_name"),        new__symbol(cause, "xmlrpc_not_supported"),
+				  new__symbol(cause, "funkname"),        new__symbol(cause, "xmlrpc-apply"),
+				  new__symbol(cause, "url"),             url,
+				  new__symbol(cause, "remote_funkname"), funkname,
+				  new__symbol(cause, "arguments"),       arguments));
 #endif // F2__XMLRPC_SUPPORTED
 }
 def_pcfunk3(xmlrpc__apply, url, funkname, arguments,

@@ -709,6 +709,7 @@
   [new []
        [have initialize_mutex lock]
        [= fiber [fiber [funk []
+			     [cause-define cause-name `mindmon]
 			     [have this load_preferences]
 			     
 			     [=    window          [gtk-window-new]]

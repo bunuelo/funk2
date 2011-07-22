@@ -23,27 +23,33 @@
 	     image_sequence
 	     movie]]
 
-[defpackage mindmon_knowledge
-  :packages [mindmon_core
-	     gtk_timeline]
-   :sources ['mindmon_knowledge.fu2']]
-
 [defpackage mindmon_activator
   :packages [mindmon_core]
    :sources ['mindmon_activator.fu2']]
 
 [defpackage mindmon_agent
-  :packages [mindmon_core
-	     mindmon_activator
-	     mindmon_knowledge]
+  :packages [mindmon_core]
    :sources ['mindmon_agent.fu2']]
 
 [defpackage mindmon_world
-  :packages []
+  :packages [mindmon_core]
    :sources ['mindmon_world.fu2']]
 
+[defpackage mindmon_knowledge
+  :packages [mindmon_core
+	     gtk_timeline]
+   :sources ['mindmon_knowledge.fu2']]
+
+[defpackage mindmon_agent_widget
+  :packages [mindmon_core
+	     mindmon_activator
+	     mindmon_knowledge
+	     mindmon_agent]
+   :sources ['mindmon_agent_widget.fu2']]
+
 [defpackage mindmon
-  :packages [mindmon_agent
+  :packages [mindmon_core
+	     mindmon_agent_widget
 	     mindmon_world]
    :sources ['mindmon.fu2']]
 

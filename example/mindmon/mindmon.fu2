@@ -499,7 +499,7 @@
 		   [terminal_format standard-terminal '\n                 Initializing agent, ' [get agent_body name] '.']
 		   [let [[moral_compass [get agent_body mind]]]
 		     [have moral_compass activate_vital_resources]]
-		   [have this add_agent [new mindmon_agent this agent_body]]]
+		   [have this add_agent [new mindmon_agent_widget this agent_body]]]
 	     [get isis_world agent_bodies]]
        [have [get this execute_mutex] unlock]
        [terminal_format standard-terminal '\n                 Load project complete.']
@@ -522,10 +522,10 @@
 [deftypefunk mindmon_project get window []
   [get mindmon window]]
 
-[deftypefunk mindmon_project execute add_agent [mindmon_agent]
-  [have agent_frame add [get mindmon_agent name] mindmon_agent]
-  [have [get mindmon_agent widget] show_all]
-  [have agent_hbox pack_start mindmon_agent t t 0]
+[deftypefunk mindmon_project execute add_agent [mindmon_agent_widget]
+  [have agent_frame add [get mindmon_agent_widget name] mindmon_agent_widget]
+  [have [get mindmon_agent_widget widget] show_all]
+  [have agent_hbox pack_start mindmon_agent_widget t t 0]
   [let [[cameras_enabled [get cameras_enabled_check_button active]]]
     [set mindmon_world all_cameras_enabled cameras_enabled]]
   [have [get this cycle_trigger] trigger]]
@@ -595,8 +595,8 @@
       [let [[max_retina_image_width  0]
 	    [max_retina_image_height 0]]
 	[mapc [funk [agent_name]
-		    [let [[mindmon_agent [have agent_frame lookup agent_name]]]
-		      [let [[retina_image_sequence [get mindmon_agent retina_image_sequence]]]
+		    [let [[mindmon_agent_widget [have agent_frame lookup agent_name]]]
+		      [let [[retina_image_sequence [get mindmon_agent_widget retina_image_sequence]]]
 			[if [< index [get retina_image_sequence length]]
 			    [let [[retina_image [get retina_image_sequence elt index]]]
 			      [let [[retina_image_width  [get retina_image width]]
@@ -623,8 +623,8 @@
 		[have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
 	    [let [[agent_index 0]]
 	      [mapc [funk [agent_name]
-			  [let [[mindmon_agent [have agent_frame lookup agent_name]]]
-			    [let [[retina_image_sequence [get mindmon_agent retina_image_sequence]]]
+			  [let [[mindmon_agent_widget [have agent_frame lookup agent_name]]]
+			    [let [[retina_image_sequence [get mindmon_agent_widget retina_image_sequence]]]
 			      [if [< index [get retina_image_sequence length]]
 				  [let [[retina_image [get retina_image_sequence elt index]]]
 				    [have retina_image copy_rectangle_to 0 0 image [+ 1 640 1] [+ 1 [* agent_index [+ max_retina_image_height 1]]] [get retina_image width] [get retina_image height]]]]]]
@@ -912,7 +912,7 @@
 
 [deftypefunk mindmon execute create_new_agent [name]
   [terminal_format standard-terminal '\nMindMon: project new ' name ' agent.']
-  [have mindmon_project add_agent [mindmon_agent-new_from_name mindmon_project name]]
+  [have mindmon_project add_agent [mindmon_agent_widget-new_from_name mindmon_project name]]
   [terminal_format standard-terminal '\nMindMon: new ' name ' agent created successfully.']]
 
 [deftypefunk mindmon execute export_movie [filename]
@@ -1001,9 +1001,9 @@
 
 [deftypefunk mindmon execute open_agent [filename]
   [terminal_format standard-terminal '\nMindMon Open Agent: ' filename]
-  [let [[new_mindmon_agent [mindmon_agent-new_from_file mindmon_project filename]]]
-    [if new_mindmon_agent
-	[have mindmon_project add_agent new_mindmon_agent]
+  [let [[new_mindmon_agent_widget [mindmon_agent_widget-new_from_file mindmon_project filename]]]
+    [if new_mindmon_agent_widget
+	[have mindmon_project add_agent new_mindmon_agent_widget]
       [terminal_format standard-terminal '\nMindMon Failed to Open Agent: ' filename]]]]
 
 

@@ -605,7 +605,7 @@ void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
     this->callback_events            = NULL;
     this->callback_events__last_cons = NULL;
     
-    this->session_symbol = f2__gensym(cause, new__string(cause, "gtk_session"));
+    this->session_symbol = f2__gensym(nil, new__string(cause, "gtk_session"));
     
     // keeps gtk_main from starting until we unlock this mutex.
     funk2_processor_mutex__lock(&(this->main_thread__mutex));

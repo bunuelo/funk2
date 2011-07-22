@@ -91,13 +91,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "nil_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "nil_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -117,13 +116,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "integer_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "integer_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -137,13 +135,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "double_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "double_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -157,13 +154,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "float_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "float_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -177,13 +173,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "pointer_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "pointer_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -197,13 +192,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "gfunkptr_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "gfunkptr_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -217,13 +211,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "scheduler_cmutex_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "scheduler_cmutex_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -237,13 +230,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "cmutex_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "cmutex_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -257,13 +249,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "char_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "char_type_does_not_have_funktion"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				      new__symbol(cause, "this"),      this,
+				      new__symbol(cause, "slot_type"), slot_type,
+				      new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -277,13 +268,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "string_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "string_type_does_not_have_funktion"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				      new__symbol(cause, "this"),      this,
+				      new__symbol(cause, "slot_type"), slot_type,
+				      new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -297,13 +287,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "symbol_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "symbol_type_does_not_have_funktion"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				      new__symbol(cause, "this"),      this,
+				      new__symbol(cause, "slot_type"), slot_type,
+				      new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -317,13 +306,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "chunk_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_type_does_not_have_funktion"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				      new__symbol(cause, "this"),      this,
+				      new__symbol(cause, "slot_type"), slot_type,
+				      new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }
@@ -339,26 +327,24 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
       f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, primobject_type_name);
       if (primobject_type == nil) {
-	f2ptr bug_frame = f2__frame__new(cause, nil);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "could_not_determine_primobject_type"));
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-	return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+	return new__error(f2list10__new(cause,
+					new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_determine_primobject_type"),
+					new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+					new__symbol(cause, "this"),      this,
+					new__symbol(cause, "slot_type"), slot_type,
+					new__symbol(cause, "slot_name"), slot_name));
       }
       f2ptr result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
       if (! result) {
 	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
       }
       if (! result) {
-	f2ptr bug_frame = f2__frame__new(cause, nil);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "primobject_type_does_not_have_funktion"));
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-	return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+	return new__error(f2list10__new(cause,
+					new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
+					new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+					new__symbol(cause, "this"),      this,
+					new__symbol(cause, "slot_type"), slot_type,
+					new__symbol(cause, "slot_name"), slot_name));
       }
       return result;
     } else {
@@ -369,13 +355,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 	  result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
 	}
 	if (! result) {
-	  f2ptr bug_frame = f2__frame__new(cause, nil);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "primobject_type_does_not_have_funktion"));
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-	  return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+	  return new__error(f2list10__new(cause,
+					  new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
+					  new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+					  new__symbol(cause, "this"),      this,
+					  new__symbol(cause, "slot_type"), slot_type,
+					  new__symbol(cause, "slot_name"), slot_name));
 	}
 	return result;
       } else if (ptype == ptype_traced_array) {
@@ -388,25 +373,21 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 	  }
 	}
 	if (! result) {
-	  f2ptr bug_frame = f2__frame__new(cause, nil);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "primobject_type_does_not_have_funktion"));
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-	  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-	  return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+	  return new__error(f2list10__new(cause,
+					  new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
+					  new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+					  new__symbol(cause, "this"),      this,
+					  new__symbol(cause, "slot_type"), slot_type,
+					  new__symbol(cause, "slot_name"), slot_name));
 	}
 	return result;
       }
-      {
-	f2ptr bug_frame = f2__frame__new(cause, nil);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "we_should_not_get_here"));
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-	f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-	return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
-      }
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "we_should_not_get_here"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				      new__symbol(cause, "this"),      this,
+				      new__symbol(cause, "slot_type"), slot_type,
+				      new__symbol(cause, "slot_name"), slot_name));
     }
   }
   case ptype_larva: {
@@ -419,13 +400,12 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
       }
     }
     if (! result) {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "larva_type_does_not_have_funktion"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "object-slot-type_funk"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),      this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_type"), slot_type);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "slot_name"), slot_name);
-      return f2larva__new(cause, 634, f2__bug__new(cause, f2integer__new(cause, 634), bug_frame));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "larva_type_does_not_have_funktion"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				      new__symbol(cause, "this"),      this,
+				      new__symbol(cause, "slot_type"), slot_type,
+				      new__symbol(cause, "slot_name"), slot_name));
     }
     return result;
   }

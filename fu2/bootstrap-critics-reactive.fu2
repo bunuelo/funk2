@@ -37,8 +37,14 @@
 	  `[print [get fiber cause_reg]]
 	  `[print [get fiber cause]]
 	  [cause-define cause-bug bug]
-	  [ansi-stream-foreground [get standard-terminal stream] terminal_repl-prompt_color] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-reset [get standard-terminal stream]]
-	  [terminal_format standard-terminal bug]]
+	  `[ansi-stream-foreground [get standard-terminal stream] terminal_repl-prompt_color] [terminal_format standard-terminal '\nbug-> '] [ansi-stream-reset [get standard-terminal stream]]
+	  `[terminal_format standard-terminal bug]
+	  [ansi-stream-foreground [get standard-terminal stream] 7]
+	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
+	    [if bug-fiber
+		[prog [terminal_format standard-terminal '\n\nBug Fiber Stack Trace:']
+		      [have bug print_backtrace]
+		      [mapc [funk [x] [terminal_format standard-terminal '\n  ' x]] [get [get bug-fiber stack_trace] blocks]]]]]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
     [ansi-stream-reset [get standard-terminal stream]]]]
 

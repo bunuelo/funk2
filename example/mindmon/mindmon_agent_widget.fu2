@@ -542,9 +542,12 @@
   [get mindmon_agent retina_image_sequence]]
 
 [deftypefunk mindmon_agent_widget execute save [filename]
-  [terminal_format standard-terminal '\nMindMon Agent: Saving ' filename '.']
-  [have [get [get mindmon_agent as-chunk] deflated] save filename]
-  [terminal_format standard-terminal '\nMindMon Agent: Save agent complete.']]
+  [let [[chunk [shelter [get mindmon_agent as-chunk]]]]
+    [if [is-type `bug chunk]
+	[terminal_format standard-terminal '\nMindMon Agent: Saving broken in ' [type mindmon_agent] ' mindmon_agent.']
+      [prog [terminal_format standard-terminal '\nMindMon Agent: Saving ' filename '.']
+	    [have [get chunk deflated] save filename]
+	    [terminal_format standard-terminal '\nMindMon Agent: Save agent complete.']]]]]
 
 [defunk mindmon_agent_widget-new_from_file [mindmon_project filename]
   [terminal_format standard-terminal '\nMindMon Agent: Loading ' filename '.']

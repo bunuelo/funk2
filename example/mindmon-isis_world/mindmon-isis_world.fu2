@@ -50,6 +50,9 @@
 [deftypefunk mindmon_isis_world_agent execute sense_world []
   [have isis_agent_body sense_world]]
 
+[deftypefunk mindmon_isis_world_agent get as-chunk []
+  [get moral_compass as-chunk]]
+
 
 'mindmon_isis_world'
 

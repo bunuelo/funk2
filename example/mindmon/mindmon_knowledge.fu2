@@ -98,7 +98,7 @@
   knowledge_name]
 
 [deftypefunk mindmon_knowledge get semantic_knowledge_base []
-  [get [get [get mindmon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]  
+  [get [get [get mindmon_agent mindmon_agent] mind] semantic_knowledge_base knowledge_name]]  
 
 [deftypefunk mindmon_knowledge execute update_knowledge_graph_image []
   [if knowledge_graph_expanded
@@ -125,7 +125,7 @@
   [terminal_format standard-terminal '\nMindmon generating and displaying graph of ' [get mindmon_agent name] '\'s ' knowledge_name ' semantic knowledge.']
   [let [[dot_code [graphviz-digraph [stringlist-intersperse [mapcar [funk [knowledge_base]
 									  [get knowledge_base as-digraph_dot_code]]
-								    [conslist [get [get [get mindmon_agent isis_agent] mind] semantic_knowledge_base knowledge_name]]]
+								    [conslist [get [get [get mindmon_agent mindmon_agent] mind] semantic_knowledge_base knowledge_name]]]
 							    '\n']]]]
     [fiber [funk [] [dot_code-gview dot_code]] nil]]]
 

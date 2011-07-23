@@ -60,8 +60,8 @@
       [let [[subseconds 0.0]]
 	[while [< subseconds seconds]
 	  [have this raw_step_simulation tick]
-	  [have this update_after_step_simulation]
 	  [= subseconds [+ subseconds tick]]]]]]
+  [have this update_after_step_simulation]
   [have step_mutex unlock]]
 
 [deftypefunk mindmon_world get simulator_is_stepping []

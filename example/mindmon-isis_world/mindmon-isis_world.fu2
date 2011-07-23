@@ -35,6 +35,18 @@
 [deftypefunk mindmon_isis_world_agent get body []
   isis_agent_body]
 
+[deftypefunk mindmon_isis_world_agent get knowledge_base_names []
+  `[other_agents_knowledge
+    goal_event_knowledge
+    goal_knowledge
+    reflective_event_knowledge
+    reflective_knowledge
+    physical_type_event_knowledge
+    physical_type_knowledge
+    physical_event_knowledge
+    physical_knowledge
+    visual_knowledge]]
+
 
 'mindmon_isis_world'
 
@@ -50,6 +62,9 @@
 [deftypefunk mindmon_isis_world execute raw_step_simulation [step_size]
   [have isis_world raw_step_simulation step_size]]
 
+[deftypefunk isis_world execute step_physical_world []
+  [have isis_world step_physical_world]]
+
 [deftypefunk mindmon_isis_world execute destroy []
   [have isis_world destroy]]
 
@@ -64,18 +79,6 @@
 
 [deftypefunk mindmon_isis_world get all_objects_summary []
   [get isis_world all_objects_summary]]
-
-[deftypefunk mindmon_isis_world get knowledge_base_names []
-  `[other_agents_knowledge
-    goal_event_knowledge
-    goal_knowledge
-    reflective_event_knowledge
-    reflective_knowledge
-    physical_type_event_knowledge
-    physical_type_knowledge
-    physical_event_knowledge
-    physical_knowledge
-    visual_knowledge]]
 
 [new mindmon_isis_world 'localhost']
 [new mindmon_isis_world 'imprimer.media.mit.edu']

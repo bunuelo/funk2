@@ -49,7 +49,8 @@
   [mapc [funk [agent_name]
 	      [let [[mindmon_agent [get this agent agent_name]]]
 		[have mindmon_agent update_after_step_simulation]]]
-	[get this agent_names]]]
+	[get this agent_names]]
+  [have this step_physical_world]]
 
 [deftypefunk mindmon_world execute step_simulation [seconds]
   [have step_mutex lock]
@@ -105,6 +106,10 @@
   [terminal_format standard-terminal '\nmindmon_world-execute-raw_step_simulation not implemented in ' [type this] ' interface.']
   nil]
 
+[deftypefunk mindmon_world execute step_physical_world []
+  [terminal_format standard-terminal '\nmindmon_world-get-all_objects_summary not implemented in ' [type this] ' interface.']
+  nil]
+
 [deftypefunk mindmon_world execute destroy []
   [terminal_format standard-terminal '\nmindmon_world-execute-destroy not implemented in ' [type this] ' interface.']
   nil]
@@ -124,4 +129,5 @@
 [deftypefunk mindmon_world get all_objects_summary []
   [terminal_format standard-terminal '\nmindmon_world-get-all_objects_summary not implemented in ' [type this] ' interface.']
   nil]
+
 

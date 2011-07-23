@@ -85,47 +85,10 @@
 			    [have actual_image write_reduction_image_part reduced_image reduction_factor x_offset y_offset]]]]]]]
 	      actual_image]]]]]]]
 
-`[deftypefunk isis_world execute update_overview_image_sequence []
-  [let [[image [get this screenshot]]]
-    [have overview_image_sequence add_image_to_end image]]]
-
-`[deftypefunk isis_world execute update_after_step_simulation []
-  [if overview_image_sequence_enabled
-      [have this update_overview_image_sequence]]
-  [mapc [funk [agent_name]
-	      [let [[agent_body [get this agent_body agent_name]]]
-		[have agent_body update_after_step_simulation]]]
-	[get this agent_names]]]
-
 [deftypefunk isis_world execute raw_step_simulation [seconds]
   [isis-call [get this client] meta_step seconds seconds]
   [while [!= [isis-call [get this client] meta_physics_active] 0]
-    [millisleep 100]]
-  [have this step_physical_world]]
-
-`[deftypefunk isis_world execute step_simulation [seconds]
-  [have step_mutex lock]
-  [let [[maximum_tick_size 0.025]]
-    [let [[tick [if [> seconds maximum_tick_size]
-		    maximum_tick_size
-		  seconds]]]
-      [let [[subseconds 0.0]]
-	[while [< subseconds seconds]
-	  [have this raw_step_simulation tick]
-	  [have this update_after_step_simulation]
-	  [= subseconds [+ subseconds tick]]]]]]
-  [have this step_physical_world]
-  [have step_mutex unlock]]
-
-`[deftypefunk isis_world get simulator_is_stepping []
-  [get step_mutex is_locked]]
-
-`[deftypefunk isis_world set all_cameras_enabled [enabled]
-  [= overview_image_sequence_enabled enabled]
-  [mapc [funk [agent_name]
-	      [let [[agent_body [get this agent_body agent_name]]]
-		[set agent_body all_cameras_enabled enabled]]]
-	[get this agent_names]]]
+    [millisleep 100]]]
 
 [deftypefunk isis_world execute normal_step []
   [have this step_simulation 0.15]]

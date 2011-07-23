@@ -44,6 +44,12 @@
 							    [define-funk set_bug_index set_bug_index_funk]
 							    @codes]]]
 
+[defunk bug-get-object-as-short_string [object]
+  [let [[string [get object as-string]]]
+    [if [< [get string length] 40]
+	string
+      [format nil '<' [type object] '>']]]]
+
 [deftypefunk bug execute execute_response [print_bug_continuation_funk
 					   get_bug_index_funk
 					   set_bug_index_funk

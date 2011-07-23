@@ -36,9 +36,9 @@
 								     [mapc &add_unknown_key
 									   [get [get bug frame] keys]]]
 							     [mapc [funk [key]
-									 [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+									 [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
 								   [if unknown_keys
-								       [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+								       [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								     nil]]]]]]]
 
 [new-crawl_through_backtrace-bug_type_response 7
@@ -56,7 +56,7 @@
 								 [terminal_format print_terminal 'defining ' bug_variable ': ']]
 							     [eval `[globalize ,bug_variable ,bug]]]]
 						   [if print_terminal
-						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string]]
+						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [bug-get-object-as-short_string funktion_name] ' from ' source_filename ':' [bug-get-object-as-short_string source_line_number]]
 							     [let [[unknown_keys nil]]
 							       [labels [[add_unknown_key [key]
 											 [if [not [or [eq `value              key]
@@ -67,9 +67,9 @@
 								       [mapc &add_unknown_key
 									     [get [get bug frame] keys]]]
 							       [mapc [funk [key]
-									   [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
 								     [if unknown_keys
-									 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+									 [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								       nil]]]]]
 						   ]]]
 
@@ -89,7 +89,7 @@
 								 [terminal_format print_terminal 'defining ' bug_variable ': ']]
 							     [eval `[globalize ,bug_variable ,bug]]]]
 						   [if print_terminal
-						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string] ' bug_name=' [get bug_name as-string]]
+						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [bug-get-object-as-short_string funktion_name] ' from ' source_filename ':' [bug-get-object-as-short_string source_line_number] ' bug_name=' [bug-get-object-as-short_string bug_name]]
 							     [let [[unknown_keys nil]]
 							       [labels [[add_unknown_key [key]
 											 [if [not [or [eq `bug_name           key]
@@ -101,9 +101,9 @@
 								       [mapc &add_unknown_key
 									     [get [get bug frame] keys]]]
 							       [mapc [funk [key]
-									   [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
 								     [if unknown_keys
-									 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+									 [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								       nil]]]]]
 						   ]]]
 
@@ -121,7 +121,7 @@
 								 [terminal_format print_terminal 'defining ' bug_variable ': ']]
 							     [eval `[globalize ,bug_variable ,bug]]]]
 						   [if print_terminal
-						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [get funktion_name as-string] ' from ' source_filename ':' [get source_line_number as-string] ' bug_name=' [get bug_name as-string]]
+						       [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' in ' [bug-get-object-as-short_string funktion_name] ' from ' source_filename ':' [bug-get-object-as-short_string source_line_number] ' bug_name=' [bug-get-object-as-short_string bug_name]]
 							     [let [[unknown_keys nil]]
 							       [labels [[add_unknown_key [key]
 											 [if [not [or [eq `bug_name           key]
@@ -132,9 +132,9 @@
 								       [mapc &add_unknown_key
 									     [get [get bug frame] keys]]]
 							       [mapc [funk [key]
-									   [terminal_format print_terminal '\n    ' [get key as-string] ' = ' [get [have [get bug frame] lookup key] as-string]]]
+									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
 								     [if unknown_keys
-									 [reverse [have unknown_keys sort [funk [x y] [< [get x as-string] [get y as-string]]]]]
+									 [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								       nil]]]]]
 						   ]]]
 

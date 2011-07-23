@@ -31,7 +31,6 @@
   [let [[action_name `cause_being_active]
 	[agent       [get [if active_cause_resource active_cause_resource this] resource_semantic_frame]]
 	[target      [get this                                                  resource_semantic_frame]]]
-    [print 'traced_resource-execute-begin_wrapped_active_funk: here.']
     [set target active t]
     [let [[semantic_resource_action_event [new semantic_resource_action_event
 					       [get [get this mind] semantic_realm]

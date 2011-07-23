@@ -135,7 +135,7 @@ f2ptr f2__frame__remove_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var)
   assert_argument_type(frame, this);
   return raw__frame__remove_type_var(cause, this, type, var);
 }
-def_pcfunk4(frame__remove_type_var, this, type, var,
+def_pcfunk3(frame__remove_type_var, this, type, var,
 	    "",
 	    return f2__frame__remove_type_var(this_cause, this, type, var));
 

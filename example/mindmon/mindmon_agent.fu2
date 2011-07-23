@@ -29,14 +29,14 @@
        [have mindmon_world __add_agent name this]
        ]]
 
-[deftypefunk isis_agent_body set all_cameras_enabled [enabled]
+[deftypefunk mindmon_agent set all_cameras_enabled [enabled]
   [= retina_image_sequence_enabled enabled]]
 
-[deftypefunk isis_agent_body execute update_retina_image_sequence []
+[deftypefunk mindmon_agent execute update_retina_image_sequence []
   [let [[image [have [get this body] raw_sense_retina_image]]]
     [have retina_image_sequence add_image_to_end image]]]
 
-[deftypefunk isis_agent_body execute update_after_step_simulation []
+[deftypefunk mindmon_agent execute update_after_step_simulation []
   [if retina_image_sequence_enabled
       [have this update_retina_image_sequence]]
   [= sense_frame [have [get this body] raw_sense_world]]]

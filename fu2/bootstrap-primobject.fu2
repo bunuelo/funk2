@@ -206,7 +206,7 @@
 	     valid_slot_types `[get set execute]
 	     slot_type        slot_type]]
   [print `[undeftypefunk ,type_name ,slot_type ,slot_name]]
-  `[prog [if [object_type-type-funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]
-	     [terminal_format standard-terminal '\nundeftypefunk-warning: not defined, so not undefining ' [quote ,type_name] ' ' [quote ,slot_type] ' ' [quote ,slot_name] '.']]
-	 [remove_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]]]
+  `[if [not [object_type-type-funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]]
+       [terminal_format standard-terminal '\nundeftypefunk-warning: not defined, so not undefining ' [quote ,type_name] ' ' [quote ,slot_type] ' ' [quote ,slot_name] '.']
+     [remove_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]]]
 

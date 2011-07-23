@@ -49,7 +49,6 @@
 			[have this execute_resource_raw_funk]
 			]]
        [= vital t]
-       [= debug t]
        nil]]
 
 [deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource get phenomenal_name_existence [phenomenal_name]
@@ -97,7 +96,8 @@
 	[while t
 	  [let [[event [have reflective_knowledge_iterator wait_for_current]]]
 	    [if [not [null event]]
-		[prog [if [get this debug] [terminal_format standard-terminal '\n  translate reflective->reflective_event event: ' event]]
+		[prog [if [get this debug]
+			  [terminal_format standard-terminal '\n  translate reflective->reflective_event event: ' event]]
 		      [let [[event_type [get event event_type]]]
 			[cond [[and [is-type `semantic_knowledge_base_event event]
 				    [eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
@@ -127,7 +127,8 @@
 												 [eq event-key_type `property] [eq event-key `active]]
 											    [let* [[resource event-semantic_frame]
 												   [active   [get resource active]]]
-											      [terminal_format standard-terminal '\nadd active: ' active]
+											      [if [get this debug]
+												  [terminal_format standard-terminal '\nadd active: ' active]]
 											      [if active
 												  [let [[action_sequence [get this action_sequence resource]]]
 												    [let [[semantic_start_time [new semantic_time [get event time]]]]

@@ -63,9 +63,9 @@
     [let [[width    [have retina_image_frame lookup `width]]
 	  [height   [have retina_image_frame lookup `height]]
 	  [rgb_data [have retina_image_frame lookup `rgb_data]]]
-      [let [[image [image-new_from_rgb_data width height rgb_data]]]
-	[= last_retina_image image]
-	image]]]]
+      [let [[retina_image [image-new_from_rgb_data width height rgb_data]]]
+	[= last_retina_image retina_image]
+	retina_image]]]]
 
 [deftypefunk isis_agent_body get as-lickable_frame []
   [frame name                         name

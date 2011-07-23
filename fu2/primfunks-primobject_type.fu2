@@ -21,6 +21,7 @@
 
 [globalize-funk primobject_type-new                   &primfunk:primobject_type__new]
 [globalize-funk primobject_type-add_slot_type         &primfunk:primobject_type__add_slot_type]
+[globalize-funk primobject_type-remove_slot_type      &primfunk:primobject_type__remove_slot_type]
 [globalize-funk primobject_type-lookup_slot_type_funk &primfunk:primobject_type__lookup_slot_type_funk]
 [globalize-funk primobject_type-type_funk-keys        &primfunk:primobject_type__type_funk__keys]
 [globalize-funk primobject_type-has_parent_type       &primfunk:primobject_type__has_parent_type]

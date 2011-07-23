@@ -33,17 +33,29 @@ def_pcfunk1(primobject_type__new, parents,
 	    "create a new Funk2 object type.",
 	    return f2__primobject_type__new(this_cause, parents));
 
+
 f2ptr f2__primobject_type__add_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name, f2ptr funkable) {
   assert_argument_type(frame,    this);
   assert_argument_type(symbol,   slot_type);
   assert_argument_type(symbol,   slot_name);
   assert_argument_type(funkable, funkable);
-  f2__frame__add_type_var_value(cause, this, slot_type, slot_name, funkable);
-  return nil;
+  return f2__frame__add_type_var_value(cause, this, slot_type, slot_name, funkable);
 }
 def_pcfunk4(primobject_type__add_slot_type, this, slot_type, slot_name, funkable,
 	    "adds new type of slot funktion for an object type.",
 	    return f2__primobject_type__add_slot_type(this_cause, this, slot_type, slot_name, funkable));
+
+
+f2ptr f2__primobject_type__remove_slot_type(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
+  assert_argument_type(frame,  this);
+  assert_argument_type(symbol, slot_type);
+  assert_argument_type(symbol, slot_name);
+  return f2__frame__remove_type_var(cause, this, slot_type, slot_name);
+}
+def_pcfunk3(primobject_type__remove_slot_type, this, slot_type, slot_name,
+	    "removes current type of slot funktion for an object type.",
+	    return f2__primobject_type__remove_slot_type(this_cause, this, slot_type, slot_name));
+
 
 // lookup slot type
 
@@ -135,6 +147,7 @@ void f2__primobject_type__initialize() {
   
   f2__primcfunk__init__1(primobject_type__new,                   parents);
   f2__primcfunk__init__4(primobject_type__add_slot_type,         this, slot_type, slot_name, funkable);
+  f2__primcfunk__init__3(primobject_type__remove_slot_type,      this, slot_type, slot_name);
   f2__primcfunk__init__3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name);
   f2__primcfunk__init__2(primobject_type__type_funk__keys,       this, slot_type);
   f2__primcfunk__init__2(primobject_type__has_parent_type,       this, type_name);

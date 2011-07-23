@@ -153,6 +153,13 @@
 	       object_type type_name]
       [primobject_type-add_slot_type primobject_type slot_type slot_name funk]]]]
 
+[defunk remove_type_funk [type_name slot_type slot_name]
+  [let [[primobject_type [lookup_type type_name]]]
+    [if [null primobject_type]
+	[error bug_type    `object_type_does_not_exist
+	       object_type type_name]
+      [primobject_type-remove_slot_type primobject_type slot_type slot_name]]]]
+
 [defmetro deftypefunk [type_name slot_type slot_name args :rest body]
   [if [and [not [eq slot_type `get]]
 	   [not [eq slot_type `set]]
@@ -190,4 +197,16 @@
 									     arg_pairs]]
 								@body]]]
 						   `[prog @body]]]]]]]]
+
+[defmetro undeftypefunk [type_name slot_type slot_name]
+  [if [and [not [eq slot_type `get]]
+	   [not [eq slot_type `set]]
+	   [not [eq slot_type `execute]]]
+      [error bug_type         `undeftypefunk_invalid_slot_type
+	     valid_slot_types `[get set execute]
+	     slot_type        slot_type]]
+  [print `[undeftypefunk ,type_name ,slot_type ,slot_name]]
+  `[prog [if [object_type-type-funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]
+	     [terminal_format standard-terminal '\nundeftypefunk-warning: not defined, so not undefining ' [quote ,type_name] ' ' [quote ,slot_type] ' ' [quote ,slot_name] '.']]
+	 [remove_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]]]
 

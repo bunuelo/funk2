@@ -53,14 +53,7 @@
 
 [deftypefunk mindmon_world execute step_simulation [seconds]
   [have step_mutex lock]
-  [let [[maximum_tick_size 0.025]]
-    [let [[tick [if [> seconds maximum_tick_size]
-		    maximum_tick_size
-		  seconds]]]
-      [let [[subseconds 0.0]]
-	[while [< subseconds seconds]
-	  [have this raw_step_simulation tick]
-	  [= subseconds [+ subseconds tick]]]]]]
+  [have this raw_step_simulation seconds]
   [have this update_after_step_simulation]
   [have step_mutex unlock]]
 

@@ -47,8 +47,8 @@
   [if overview_image_sequence_enabled
       [have this update_overview_image_sequence]]
   [mapc [funk [agent_name]
-	      [let [[agent_body [get [get this agent agent_name] body]]]
-		[have agent_body update_after_step_simulation]]]
+	      [let [[mindmon_agent [get this agent agent_name]]]
+		[have mindmon_agent update_after_step_simulation]]]
 	[get this agent_names]]]
 
 [deftypefunk mindmon_world execute step_simulation [seconds]
@@ -70,8 +70,8 @@
 [deftypefunk mindmon_world set all_cameras_enabled [enabled]
   [= overview_image_sequence_enabled enabled]
   [mapc [funk [agent_name]
-	      [let [[agent_body [get [get this agent agent_name] body]]]
-		[set agent_body all_cameras_enabled enabled]]]
+	      [let [[mindmon_agent [get this agent agent_name]]]
+		[set mindmon_agent all_cameras_enabled enabled]]]
 	[get this agent_names]]]
 
 [deftypefunk mindmon_world execute __add_agent [name agent]

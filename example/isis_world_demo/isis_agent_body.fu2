@@ -18,10 +18,9 @@
  rights to redistribute these changes.'
 
 [deframe isis_agent_body [moral_agent_body] [says
-					     [arm_length                    3]
+					     [arm_length 3]
 					     sense_frame
-					     [retina_image_sequence_enabled nil]
-					     [retina_image_sequence         [new image_sequence nil]]]
+					     last_retina_image]
   [new [physical_world moral_compass name]
        [construct moral_agent_body physical_world moral_compass name]
        this]]
@@ -59,19 +58,20 @@
 [deftypefunk isis_agent_body execute open_fridge             []                   [have [get this physical_world] open_fridge             [get this name]]]
 [deftypefunk isis_agent_body execute say                     [message]            [have [get this physical_world] say                     [get this name] message]]
 
-[deftypefunk isis_agent_body execute sense_funk2_retina_image []
+[deftypefunk isis_agent_body execute raw_sense_retina_image []
   [let [[retina_image_frame [have this sense_retina_image]]]
     [let [[width    [have retina_image_frame lookup `width]]
 	  [height   [have retina_image_frame lookup `height]]
 	  [rgb_data [have retina_image_frame lookup `rgb_data]]]
-      [image-new_from_rgb_data width height rgb_data]]]]
+      [let [[image [image-new_from_rgb_data width height rgb_data]]]
+	[= last_retina_image image]
+	image]]]]
 
 [deftypefunk isis_agent_body get as-lickable_frame []
   [frame name                         name
 	 says                         says
 	 arm_length                   arm_length
 	 sense_frame                  sense_frame
-	 retina_image_sequence        retina_image_sequence
 	 moral_compass_lickable_frame [get mind as-lickable_frame]
 	 ]]
 
@@ -85,7 +85,6 @@
 	[set this says                  [have lickable_frame lookup `says]]
 	[set this arm_length            [have lickable_frame lookup `arm_length]]
 	[set this sense_frame           [have lickable_frame lookup `sense_frame]]
-	[set this retina_image_sequence [have lickable_frame lookup `retina_image_sequence]]
 	this]]]]
 
 [defunk isis_agent_body-new_from_chunk [physical_world chunk]
@@ -100,18 +99,6 @@
 
 [deftypefunk isis_agent_body get previous_time []
   [get [get this physical_world] previous_time]]
-
-[deftypefunk isis_agent_body execute update_retina_image_sequence []
-  [let [[image [have this sense_funk2_retina_image]]]
-    [have retina_image_sequence add_image_to_end image]]]
-
-[deftypefunk isis_agent_body execute update_after_step_simulation []
-  [if retina_image_sequence_enabled
-      [have this update_retina_image_sequence]]
-  [= sense_frame [have this raw_sense_world]]]
-
-[deftypefunk isis_agent_body set all_cameras_enabled [enabled]
-  [= retina_image_sequence_enabled enabled]]
 
 [deftypefunk isis_agent_body get objects []
   [print 'This funktion is deprecated.']
@@ -155,12 +142,6 @@
 					     nil
 					   [car [get left_hand_object_name_frame slots]]]]]
 	      left_hand_object_name]]]]]]
-
-[deftypefunk isis_agent_body get retina_image []
-  [let [[retina_image_sequence-length [get retina_image_sequence length]]]
-    [if [> retina_image_sequence-length 0]
-	[get retina_image_sequence elt [- retina_image_sequence-length 1]]
-      nil]]]
 
 [deftypefunk isis_agent_body execute sense_proprioceptual_frame []
   [let [[isis_sense_frame [have this sense_world]]]
@@ -211,6 +192,9 @@
 					[get neck_xyzhpr elt 4]
 					[get neck_xyzhpr elt 5]]]
 		   ]]]]]]
+
+[deftypefunk isis_agent_body get retina_image []
+  last_retina_image]
 
 [deftypefunk isis_agent_body execute sense_perception []
   [let [[begin_time             [get  this previous_time]]

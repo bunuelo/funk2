@@ -32,7 +32,7 @@
 			    [have this think_to_self 'starting perception.']
 			    [= perception [have body sense_perception]]
 			    [if [null perception]
-				[terminal_format standard-terminal '\ncontinuous_sensing_resssource: perception is nil.']
+				[terminal_format standard-terminal '\ncontinuous_sensing_resource: perception is nil.']
 			      [prog [have this think_to_self 'finished perception.']
 				    [have perception_trigger trigger]]]
 			    ]]]]

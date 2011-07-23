@@ -44,7 +44,7 @@
        [= isis_world [new isis_world [new isis_world_client isis_world_server_hostname]]]
        ]]
 
-[deftypefunk mindmon_world get compatible_agent_types []
+[deftypefunk mindmon_isis_world get compatible_agent_types []
   `[mindmon_isis_world_agent]]
 
 [deftypefunk mindmon_isis_world execute raw_step_simulation [step_size]

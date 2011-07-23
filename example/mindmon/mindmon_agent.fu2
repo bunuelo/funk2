@@ -19,13 +19,31 @@
 
 
 [deframe mindmon_agent [frame] [mindmon_world
-				name]
+				name
+				[retina_image_sequence_enabled nil]
+				[retina_image_sequence         [new image_sequence nil]]]
   [new [initial-mindmon_world initial-name]
        [= mindmon_world initial-mindmon_world]
        [= name          initial-name]
        
        [have mindmon_world __add_agent name this]
        ]]
+
+[deftypefunk isis_agent_body set all_cameras_enabled [enabled]
+  [= retina_image_sequence_enabled enabled]]
+
+[deftypefunk isis_agent_body execute update_retina_image_sequence []
+  [let [[image [have [get this body] raw_sense_retina_image]]]
+    [have retina_image_sequence add_image_to_end image]]]
+
+[deftypefunk isis_agent_body execute update_after_step_simulation []
+  [if retina_image_sequence_enabled
+      [have this update_retina_image_sequence]]
+  [= sense_frame [have [get this body] raw_sense_world]]]
+
+
+
+'children of mindmon_agent must implement the interface below.'
 
 [deftypefunk mindmon_agent get mind []
   [terminal_format standard-terminal '\nmindmon_agent-get-mind not implemented in ' [type this] ' interface.']
@@ -34,5 +52,4 @@
 [deftypefunk mindmon_agent get body []
   [terminal_format standard-terminal '\nmindmon_agent-get-body not implemented in ' [type this] ' interface.']
   nil]
-
 

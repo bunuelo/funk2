@@ -490,8 +490,8 @@
 			  [get [get mindmon_agent mind] semantic_knowledge_bases]]
 		    
 		    [have [get mindmon_agent mind] add_semantic_knowledge_base_add_event_callback_funk [funk [semantic_knowledge_base]
-													  [let [[name [get semantic_knowledge_base name]]]
-													    [have this add_mindmon_knowledge name]]]]
+													     [let [[name [get semantic_knowledge_base name]]]
+													       [have this add_mindmon_knowledge name]]]]
 		    
 		    [have [get this widget] show_all]
 		    [have this update]

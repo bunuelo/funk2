@@ -468,10 +468,11 @@
        [have [get this cycle_trigger] trigger]
        ]]
 
-`[[small burrito
-	 bean and rice guacamole, lettuce, no cheese]
-  [chips and salsa]
-  [himicha drink]]
+`[rhett_order
+  [[small burrito
+	  bean and rice guacamole, lettuce, no cheese]
+   [chips and salsa]
+   [himicha drink]]]
 
 
 [deftypefunk mindmon_project execute create_new_mindmon_isis_world []

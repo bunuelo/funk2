@@ -28,6 +28,8 @@ typedef struct funk2_object_type__frame__slot_s funk2_object_type__frame__slot_t
 declare_object_type_2_slot(frame, new_type_cmutex, type_ptypehash,
 			   f2ptr add_type_var_value__symbol;
 			   f2ptr add_type_var_value__funk;
+			   f2ptr remove_type_var__symbol;
+			   f2ptr remove_type_var__funk;
 			   f2ptr lookup_type_var_assignment_cons__symbol;
 			   f2ptr lookup_type_var_assignment_cons__funk;
 			   f2ptr lookup_type_var_value__symbol;

@@ -34,13 +34,22 @@
   [let [[image [get this screenshot]]]
     [have overview_image_sequence add_image_to_end image]]]
 
+[deftypefunk mindmon_world get agent_names []
+  [get agent_frame keys]]
+
+[deftypefunk mindmon_world get agents []
+  [get agent_frame values]]
+
+[deftypefunk mindmon_world get agent [agent_name]
+  [have agent_frame lookup agent_name]]
+
 [deftypefunk mindmon_world execute update_after_step_simulation []
   [if overview_image_sequence_enabled
       [have this update_overview_image_sequence]]
-  `[mapc [funk [agent_name]
-	       [let [[agent_body [get this agent_body agent_name]]]
-		 [have agent_body update_after_step_simulation]]]
-	 [get this agent_names]]]
+  [mapc [funk [agent_name]
+	      [let [[agent_body [get [get this agent agent_name] body]]]
+		[have agent_body update_after_step_simulation]]]
+	[get this agent_names]]]
 
 [deftypefunk mindmon_world execute step_simulation [seconds]
   [have step_mutex lock]
@@ -60,10 +69,10 @@
 
 [deftypefunk mindmon_world set all_cameras_enabled [enabled]
   [= overview_image_sequence_enabled enabled]
-  `[mapc [funk [agent_name]
-	       [let [[agent_body [get this agent_body agent_name]]]
-		 [set agent_body all_cameras_enabled enabled]]]
-	 [get this agent_names]]]
+  [mapc [funk [agent_name]
+	      [let [[agent_body [get [get this agent agent_name] body]]]
+		[set agent_body all_cameras_enabled enabled]]]
+	[get this agent_names]]]
 
 [deftypefunk mindmon_world execute __add_agent [name agent]
   [if [get agent_frame contains name]

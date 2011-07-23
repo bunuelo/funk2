@@ -392,7 +392,7 @@
        [= view_sense_menu_item [gtk-menu_item-new 'Sense']]
        [have view_sense_menu_item signal_connect 'activate'
 	     [funk []
-		   [terminal_format stadard-terminal
+		   [terminal_format standard-terminal
 				    '\n' [get this name] '\'s sensory information:'
 				    '\n  ' [have mindmon_agent sense_world]]]
 	     nil]

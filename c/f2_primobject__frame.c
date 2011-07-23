@@ -83,7 +83,7 @@ def_pcfunk0_and_rest(frame__new, slot_value_pairs,
 
 f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
   f2ptr frame__type_ptypehash = f2frame__type_ptypehash(this, cause);
-  release__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
+  debug__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
   f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
   if (! type__ptypehash) {
     f2cmutex__lock(f2frame__new_type_cmutex(this, cause), cause);
@@ -94,7 +94,7 @@ f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
     }
     f2cmutex__unlock(f2frame__new_type_cmutex(this, cause), cause);
   }
-  release__assert(raw__ptypehash__is_type(cause, type__ptypehash), nil, "type__ptypehash is not ptypehash.");
+  debug__assert(raw__ptypehash__is_type(cause, type__ptypehash), nil, "type__ptypehash is not ptypehash.");
   f2__ptypehash__add(cause, type__ptypehash, var, value);
   return nil;
 }
@@ -106,6 +106,39 @@ f2ptr f2__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr v
 def_pcfunk4(frame__add_type_var_value, this, type, var, value,
 	    "",
 	    return f2__frame__add_type_var_value(this_cause, this, type, var, value));
+
+
+f2ptr raw__frame__remove_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr frame__type_ptypehash = f2frame__type_ptypehash(this, cause);
+  debug__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
+  f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
+  if (! type__ptypehash) {
+    type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
+    if (! type__ptypehash) {
+      return new__error(f2list8__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "frame_does_not_contain_type_var"),
+				     new__symbol(cause, "this"),          this,
+				     new__symbol(cause, "variable_type"), type,
+				     new__symbol(cause, "variable_name"), var));
+    }
+    catch_value(f2__ptypehash__remove(cause, type__ptypehash, var),
+		f2list8__new(cause,
+			     new__symbol(cause, "bug_name"),      new__symbol(cause, "frame_does_not_contain_type_var"),
+			     new__symbol(cause, "this"),          this,
+			     new__symbol(cause, "variable_type"), type,
+			     new__symbol(cause, "variable_name"), var));
+  }
+  return nil;
+}
+
+f2ptr f2__frame__remove_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  assert_argument_type(frame, this);
+  return raw__frame__remove_type_var(cause, this, type, var);
+}
+def_pcfunk4(frame__remove_type_var, this, type, var,
+	    "",
+	    return f2__frame__remove_type_var(this_cause, this, type, var));
+
 
 f2ptr f2__frame__lookup_type_var_assignment_cons(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value) {
   f2ptr type__keyvalue_pair = f2__ptypehash__lookup_keyvalue_pair(cause, f2frame__type_ptypehash(this, cause), type);

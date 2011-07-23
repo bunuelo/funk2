@@ -91,6 +91,9 @@
   [let [[lickable_frame [have [get chunk as-lick] unlick]]]
     [isis_agent_body-new_from_lickable_frame physical_world lickable_frame]]]
 
+[deftypefunk isis_agent_body execute update_after_step_simulation []
+  [= sense_frame [have this raw_sense_world]]]
+
 [deftypefunk isis_agent_body execute sense_world []
   sense_frame]
 

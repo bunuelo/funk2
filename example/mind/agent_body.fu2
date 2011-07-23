@@ -20,7 +20,10 @@
 
 'agent_body'
 
-[deframe agent_body [frame] [physical_world_reference name mind]
+[deframe agent_body [frame] [physical_world_reference
+			     name
+			     mind
+			     sense_frame]
   [new [physical_world name mind]
        [= physical_world_reference physical_world]
        [prog [if [get mind body]
@@ -42,6 +45,5 @@
 
 [deftypefunk agent_body get time_step_trigger []
   [get physical_world_reference time_step_trigger]]
-
 
 

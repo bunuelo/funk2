@@ -39,7 +39,7 @@
 [deftypefunk mindmon_agent execute update_after_step_simulation []
   [if retina_image_sequence_enabled
       [have this update_retina_image_sequence]]
-  [= sense_frame [have [get this body] raw_sense_world]]]
+  [have [get this body] update_after_step_simulation]]
 
 
 

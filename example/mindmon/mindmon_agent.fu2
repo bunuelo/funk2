@@ -53,3 +53,7 @@
   [terminal_format standard-terminal '\nmindmon_agent-get-body not implemented in ' [type this] ' interface.']
   nil]
 
+[deftypefunk mindmon_agent get knowledge_base_names []
+  [terminal_format standard-terminal '\nmindmon_agent-get-knowledge_base_names not implemented in ' [type this] ' interface.']
+  nil]
+

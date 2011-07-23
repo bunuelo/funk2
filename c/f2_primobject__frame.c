@@ -114,19 +114,21 @@ f2ptr raw__frame__remove_type_var(f2ptr cause, f2ptr this, f2ptr type, f2ptr var
   f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
   if (! type__ptypehash) {
     type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
-    if (! type__ptypehash) {
+    if (type__ptypehash == nil) {
       return new__error(f2list8__new(cause,
 				     new__symbol(cause, "bug_name"),      new__symbol(cause, "frame_does_not_contain_type_var"),
 				     new__symbol(cause, "this"),          this,
 				     new__symbol(cause, "variable_type"), type,
 				     new__symbol(cause, "variable_name"), var));
     }
-    catch_value(f2__ptypehash__remove(cause, type__ptypehash, var),
-		f2list8__new(cause,
-			     new__symbol(cause, "bug_name"),      new__symbol(cause, "frame_does_not_contain_type_var"),
-			     new__symbol(cause, "this"),          this,
-			     new__symbol(cause, "variable_type"), type,
-			     new__symbol(cause, "variable_name"), var));
+    f2ptr key_was_removed = f2__ptypehash__remove(cause, type__ptypehash, var);
+    if (key_was_removed == nil) {
+      return new__error(f2list8__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "frame_does_not_contain_type_var"),
+				     new__symbol(cause, "this"),          this,
+				     new__symbol(cause, "variable_type"), type,
+				     new__symbol(cause, "variable_name"), var));
+    }
   }
   return nil;
 }

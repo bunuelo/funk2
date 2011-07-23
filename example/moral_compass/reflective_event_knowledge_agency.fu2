@@ -127,7 +127,7 @@
 												 [eq event-key_type `property] [eq event-key `active]]
 											    [let [[resource event-semantic_frame]
 												  [active   event-value]]
-											      `[terminal_format standard-terminal '\nadd active: ' active]
+											      [terminal_format standard-terminal '\nadd active: ' active]
 											      [if active
 												  [let [[action_sequence [get this action_sequence resource]]]
 												    [let [[semantic_start_time [new semantic_time [get event time]]]]

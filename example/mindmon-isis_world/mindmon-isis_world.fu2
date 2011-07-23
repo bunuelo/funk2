@@ -62,7 +62,7 @@
 [deftypefunk mindmon_isis_world execute raw_step_simulation [step_size]
   [have isis_world raw_step_simulation step_size]]
 
-[deftypefunk isis_world execute step_physical_world []
+[deftypefunk mindmon_isis_world execute step_physical_world []
   [have isis_world step_physical_world]]
 
 [deftypefunk mindmon_isis_world execute destroy []

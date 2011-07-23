@@ -46,7 +46,7 @@
 
 [defunk bug-get-object-as-short_string [object]
   [let [[string [get object as-string]]]
-    [if [bytecode:less_than [get string length] 40]
+    [if [bytecode:less_than [get string length] 180]
 	string
       [format nil '<' [type object] '>']]]]
 

@@ -70,9 +70,10 @@ phdthesis.pdf: \
 %.pdf: %.png makefile
 	pngtopnm $< > $<.pnm
 	pnmtops $<.pnm > $<.ps
-	rm -f $<.pnm
-	ps2pdf $<.ps $@
-	rm -f $<.ps
+	pstopdf --resolution=print --convert $<.ps
+	mv -f $<.pdf $@
+#	rm -f $<.pnm
+#	rm -f $<.ps
 
 clean:
 	rm -f phdthesis.pdf

@@ -22,6 +22,7 @@
 
 [deframe blocks_world_gripper_controller [frame] [blocks_world
 						  gripper
+						  previous_perceptions
 						  
 						  gtk_frame
 						  gtk_vbox
@@ -116,9 +117,20 @@
   [set gripper movement_command-drop]]
 
 [deftypefunk blocks_world_gripper_controller execute update []
-  [set [get gtk_text_view buffer] text [stringlist-intersperse [mapcar [funk [perception]
-									     [format nil perception]]
-								       [get gripper perceptions]]
-							       '\n']]]
+  [let [[perceptions [get gripper perceptions]]]
+    [if [not [eq perceptions previous_perceptions]]
+	[prog [set [get gtk_text_view buffer] text [stringlist-intersperse [mapcar [funk [perception]
+											 [format nil perception]]
+										   perceptions]
+									   '\n']]
+	      [= previous_perceptions perceptions]]]
+    
+    ]]
 
+
+
+
+
+
+	      
 

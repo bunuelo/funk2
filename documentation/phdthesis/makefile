@@ -51,7 +51,8 @@ phdthesis.pdf: \
   gfx/infer_plan_effects.pdf \
   gfx/planning_machine_operations.pdf \
   gfx/planning_machine_reflective_knowledge.pdf \
-  gfx/blocks_world_screenshot-1.pdf
+  gfx/blocks_world_screenshot-1.pdf \
+  gfx/mindmon-isis_world-screenshot-1.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis
@@ -65,6 +66,13 @@ phdthesis.pdf: \
 	pdflatex temp.tex
 	rm -f temp.tex
 	mv -f temp.pdf $@
+
+%.pdf: %.png makefile
+	pngtopnm $< > $<.pnm
+	pnmtops $<.pnm > $<.ps
+	rm -f $<.pnm
+	ps2pdf $<.ps $@
+	rm -f $<.ps
 
 clean:
 	rm -f phdthesis.pdf

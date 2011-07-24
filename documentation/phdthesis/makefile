@@ -14,7 +14,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/models_of_cognition_introduction.tex \
+  chapters/a_theory_of_reflective_learning.tex \
   chapters/problems_to_solve.tex \
   chapters/theory_and_alternatives.tex \
   chapters/a_system.tex \

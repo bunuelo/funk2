@@ -26,11 +26,11 @@
 
 'children of mindmon_agent_tool must implement the interface below.'
 
-[deftypefunk mindmon_agent_tool get title []
-  [terminal_format standard-terminal '\nmindmon_agent-get-title not implemented in ' [type this] ' interface.']
+[deftypefunk mindmon_agent_tool get mindmon_agent_tool-title []
+  [terminal_format standard-terminal '\nmindmon_agent_tool-get-title not implemented in ' [type this] ' interface.']
   nil]
 
-[deftypefunk mindmon_agent_tool get start_funk []
-  [terminal_format standard-terminal '\nmindmon_agent-get-start_funk not implemented in ' [type this] ' interface.']
+[deftypefunk mindmon_agent_tool get mindmon_agent_tool-start []
+  [terminal_format standard-terminal '\nmindmon_agent_tool-get-start not implemented in ' [type this] ' interface.']
   nil]
 

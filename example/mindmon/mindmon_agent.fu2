@@ -57,6 +57,10 @@
   [terminal_format standard-terminal '\nmindmon_agent-get-knowledge_base_names not implemented in ' [type this] ' interface.']
   nil]
 
+[deftypefunk mindmon_agent get tool_names []
+  [terminal_format standard-terminal '\nmindmon_agent-get-tool_names not implemented in ' [type this] ' interface.']
+  nil]
+
 [deftypefunk mindmon_agent execute sense_world []
   [terminal_format standard-terminal '\nmindmon_agent-execute-sense_world not implemented in ' [type this] ' interface.']
   nil]

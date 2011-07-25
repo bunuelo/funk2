@@ -28,7 +28,8 @@
    :sources ['mindmon_agent_tool.fu2']]
 
 [defpackage mindmon_agent
-  :packages [mindmon_core]
+  :packages [mindmon_core
+	     mindmon_agent_tool]
    :sources ['mindmon_agent.fu2']]
 
 [defpackage mindmon_world
@@ -42,7 +43,6 @@
 
 [defpackage mindmon_agent_widget
   :packages [mindmon_core
-	     mindmon_activator
 	     mindmon_knowledge
 	     mindmon_agent]
    :sources ['mindmon_agent_widget.fu2']]

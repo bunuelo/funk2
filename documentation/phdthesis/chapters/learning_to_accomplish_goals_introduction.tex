@@ -24,12 +24,12 @@
 \end{flushright}
 
 In this introductory chapter I will give an overview of the problem of
-reflectively learning to accomplish goals.  First, we will develop the
-assumption that any process that we choose in our system can be
+reflectively learning to accomplish goals.  First, I will develop the
+assumption that any process that I choose in my system can be
 reflectively monitored and useful information, e.g. beginning and
-ending times, will be temporarily stored.  In other words, we assume
-that our system natively supports procedural reflection for all
-processes.  Given this assumption, we show in this chapter that the
+ending times, will be temporarily stored.  In other words, I assume
+that my system natively supports procedural reflection for all
+processes.  Given this assumption, I show in this chapter that the
 problem of building a system that learns to accomplish goals in its
 environment becomes a simple loop-less causal structure involving at
 least four different types of learning that together, through time,
@@ -40,8 +40,8 @@ causal roots for all other knowledge.
 
 In later chapters I will introduce experiments I have performed in
 different physical problem simulations.  The first is a simple
-proof-of-concept demonstration of our reflective learning algorithm in
-a blocks world problem domain.  Also, we show our reflective
+proof-of-concept demonstration of my reflective learning algorithm in
+a blocks world problem domain.  Also, I show my reflective
 architecture extended to a larger physical reasoning domain, including
 multiple agents learning to cook together in a kitchen environment.
 In this larger problem space, agents can communicate high-level
@@ -59,11 +59,11 @@ agents.
 \end{figure}
 
 Figure~\ref{fig:agent_environment} shows the basic agent environment
-model.  In this model, we make a distinction between the environment
+model.  In this model, I make a distinction between the environment
 and the agent.  At any given time, the agent and the environment are
 each represented as a specific static form of data.  Further, these
 representations change over time, according to a given transfer
-function.  We will treat this system as a deterministic system,
+function.  I will treat this system as a deterministic system,
 although one could imagine adding random variables to the transfer
 function: the basic theory is the same.  It is easier to add
 randomness to a deterministic theory than the opposite.  There are
@@ -86,7 +86,7 @@ channel from the environment to the agent.
   \label{fig:state_action}
 \end{figure}
 
-The agent is in an environment, which is in a specific state.  Our
+The agent is in an environment, which is in a specific state.  My
 agent performs an action, which can affect the state of the
 environment.  Figure~\ref{fig:state_action} shows a simple \ac{FSM}
 state-action model, which has two states for the environment and two
@@ -107,13 +107,13 @@ See Figure~\ref{fig:frame_representation}.
 
 \section{Introducing Reflection Early in the Process}
 
-Now, we have introduced our problem as being divided into two
-processes, the agent and the environment.  Further, we have introduced
+Now, I have introduced my problem as being divided into two
+processes, the agent and the environment.  Further, I have introduced
 how a basic process may be thought of as an \ac{FSM}.  At this point,
-we introduce a model for keeping track of the changes in a
-computational process: reflective knowledge.  We purposefully make
-this assumption before we define the details of the agent model
-process because, in our approach, we would like to reflectively reason
+I introduce a model for keeping track of the changes in a
+computational process: reflective knowledge.  I purposefully make
+this assumption before I define the details of the agent model
+process because, in my approach, I would like to reflectively reason
 about potentially any aspect of this agent process.
 
 \section{Reflective Knowledge}
@@ -127,15 +127,15 @@ about potentially any aspect of this agent process.
 
 
 While the term meta-knowledge is used to describe the very general
-idea of knowledge about knowledge, we use the term reflective
+idea of knowledge about knowledge, I use the term reflective
 knowledge to refer to the specific type of meta-knowledge that refers
-to knowledge about the changes to a knowledge structure.  If we keep
-track of the changes to a knowledge structure, we can later integrate
+to knowledge about the changes to a knowledge structure.  If I keep
+track of the changes to a knowledge structure, I can later integrate
 these changes in order to obtain an equivalent form of that knowledge
 structure as it was at any point in the past.
 
 While this relatively simple definition of how to reflective over a
-computational process fulfills our purpose of an introductory
+computational process fulfills my purpose of an introductory
 explanation, see Section~\ref{sec:what_is_a_computer} for a discussion
 about approaching more realistic models of computation that include
 more of the engineering details of efficiently controlling modern
@@ -246,7 +246,7 @@ is a fundamentally goal-driven process.
 \end{figure}
 
 See Figure~\ref{fig:transframe}.  Also, trans-frames of trans-frames
-can be thought of as a form of analogical transfer, which we further
+can be thought of as a form of analogical transfer, which I further
 discuss in
 Section~\ref{sec:learning_analogies_as_differences_of_differences}.
 
@@ -283,7 +283,7 @@ The planning process requires an inference algorithm to infer future
 and past states based on cause-effect relationships between reflective
 knowledge and physical knowledge.  Figure~\ref{fig:infer_plan_effects}
 shows a possible inference for a given plan.  There are many ways to
-plan and the specific planning system that we have implemented for our
+plan and the specific planning system that I have implemented for my
 experiments is discussed further in
 Section~\ref{sec:details_of_inferring_the_effects_of_a_plan}.
 

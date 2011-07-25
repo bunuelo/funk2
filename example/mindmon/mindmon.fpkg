@@ -23,9 +23,9 @@
 	     image_sequence
 	     movie]]
 
-[defpackage mindmon_activator
+[defpackage mindmon_agent_tool
   :packages [mindmon_core]
-   :sources ['mindmon_activator.fu2']]
+   :sources ['mindmon_agent_tool.fu2']]
 
 [defpackage mindmon_agent
   :packages [mindmon_core]

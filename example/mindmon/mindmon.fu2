@@ -961,9 +961,6 @@
   [set simulation_run_initialization_sequence_menu_item sensitive t]
   [set simulation_view_initialization_events_menu_item  sensitive t]
   [set simulation_view_all_objects_menu_item            sensitive t]
-  [set project_new_ralph_agent_menu_item                sensitive t]
-  [set project_new_lauren_agent_menu_item               sensitive t]
-  [set project_new_macy_agent_menu_item                 sensitive t]
   [set project_open_agent_menu_item                     sensitive t]]
 
 [deftypefunk mindmon execute disable_project_commands []
@@ -973,9 +970,6 @@
   [set simulation_run_initialization_sequence_menu_item sensitive nil]
   [set simulation_view_initialization_events_menu_item  sensitive nil]
   [set simulation_view_all_objects_menu_item            sensitive nil]
-  [set project_new_ralph_agent_menu_item                sensitive nil]
-  [set project_new_lauren_agent_menu_item               sensitive nil]
-  [set project_new_macy_agent_menu_item                 sensitive nil]
   [set project_open_agent_menu_item                     sensitive nil]]
 
 [deftypefunk mindmon execute close_project []

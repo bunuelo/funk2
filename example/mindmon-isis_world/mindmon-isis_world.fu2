@@ -115,6 +115,11 @@
 [deftypefunk mindmon_isis_world get compatible_agent_types []
   `[mindmon_isis_world_agent]]
 
+[deftypefunk mindmon_isis_world get agent_names []
+  `[Ralph
+    Lauren
+    Macy]]
+
 [deftypefunk mindmon_isis_world execute raw_step_simulation [step_size]
   [have isis_world raw_step_simulation step_size]]
 

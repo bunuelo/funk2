@@ -481,6 +481,9 @@
     [= mindmon_world [new mindmon_isis_world isis_world_server_hostname]]
     [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
       [set mindmon_world all_cameras_enabled cameras_enabled]
+      [mapc [funk [agent_name]
+		  [have mindmon add_agent_name_to_project_menu agent_name]]
+	    [get mindmon_world agent_names]]
       [have [get this cycle_trigger] trigger]]]]
 
 [deftypefunk mindmon_project execute create_new_mindmon_blocks_world []
@@ -488,6 +491,9 @@
   [= mindmon_world [new mindmon_blocks_world 640 480]]
   [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
     [set mindmon_world all_cameras_enabled cameras_enabled]
+    [mapc [funk [agent_name]
+		[have mindmon add_agent_name_to_project_menu agent_name]]
+	  [get mindmon_world agent_names]]
     [have [get this cycle_trigger] trigger]]]
 
 [defunk mindmon_project-new_from_file [mindmon filename]
@@ -695,9 +701,6 @@
 			  edit_preferences_menu_item
 			  project_menu_item
 			  project_menu
-			  project_new_ralph_agent_menu_item
-			  project_new_lauren_agent_menu_item
-			  project_new_macy_agent_menu_item
 			  project_open_agent_menu_item
 			  simulation_menu_item
 			  simulation_menu
@@ -799,36 +802,12 @@
 					 [new mindmon_preference_editor this]]
 				   nil]
 			     
-			     [= project_menu_item                  [gtk-menu_item-new 'Project']]
-			     [= project_menu                       [gtk-menu-new]]
-			     [= project_new_ralph_agent_menu_item  [gtk-menu_item-new 'New Ralph Agent']]
-			     [= project_new_lauren_agent_menu_item [gtk-menu_item-new 'New Lauren Agent']]
-			     [= project_new_macy_agent_menu_item   [gtk-menu_item-new 'New Macy Agent']]
-			     [= project_open_agent_menu_item       [gtk-menu_item-new 'Open Agent...']]
-			     [have menu_bar          append  project_menu_item]
+			     [= project_menu_item            [gtk-menu_item-new 'Project']]
+			     [= project_menu                 [gtk-menu-new]]
+			     [= project_open_agent_menu_item [gtk-menu_item-new 'Open Agent...']]
+			     [have menu_bar append project_menu_item]
 			     [set  project_menu_item submenu project_menu]
-			     [have project_menu      append  project_new_ralph_agent_menu_item]
-			     [have project_menu      append  project_new_lauren_agent_menu_item]
-			     [have project_menu      append  project_new_macy_agent_menu_item]
-			     [have project_menu      append  project_open_agent_menu_item]
-			     
-			     [have project_new_ralph_agent_menu_item signal_connect 'activate'
-				   [funk []
-					 [have this create_new_agent `Ralph]
-					 [have [get this cycle_trigger] trigger]]
-				   nil]
-			     
-			     [have project_new_lauren_agent_menu_item signal_connect 'activate'
-				   [funk []
-					 [have this create_new_agent `Lauren]
-					 [have [get this cycle_trigger] trigger]]
-				   nil]
-			     
-			     [have project_new_macy_agent_menu_item signal_connect 'activate'
-				   [funk []
-					 [have this create_new_agent `Macy]
-					 [have [get this cycle_trigger] trigger]]
-				   nil]
+			     [have project_menu append project_open_agent_menu_item]
 			     
 			     [have project_open_agent_menu_item signal_connect 'activate'
 				   [funk []
@@ -884,6 +863,16 @@
 		       nil]]
        [have initialize_mutex lock]
        nil]]
+
+[deftypefunk mindmon execute add_agent_name_to_project_menu [agent_name]
+  [let [[project_new_agent_menu_item [gtk-menu_item-new [format nil 'New ' agent_name ' Agent']]]]
+    [have project_menu append project_new_agent_menu_item]
+    [have project_new_agent_menu_item signal_connect 'activate'
+	  [let [[agent_name-reference agent_name]]
+	    [funk []
+		  [have this create_new_agent agent_name-reference]
+		  [have [get this cycle_trigger] trigger]]]
+	  nil]]]
 
 [deftypefunk mindmon get should_wait_before_next_cycle []
   [or [not mindmon_project]

@@ -879,6 +879,7 @@
 [deftypefunk mindmon execute add_agent_name_to_project_menu [agent_name]
   [let [[project_new_agent_menu_item [gtk-menu_item-new [format nil 'New ' agent_name ' Agent']]]]
     [have project_menu append project_new_agent_menu_item]
+    [have project_new_agent_menu_item show_all]
     [have project_new_agent_menu_item signal_connect 'activate'
 	  [funk []
 		[have this create_new_agent agent_name]

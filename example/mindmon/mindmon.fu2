@@ -421,7 +421,9 @@
 	     [funk []
 		   [let [[cameras_enabled [get cameras_enabled_check_button active]]]
 		     [terminal_format standard-terminal '\nMindMon: Cameras ' [if cameras_enabled 'Enabled' 'Disabled'] '.']
-		     [set mindmon_world all_cameras_enabled cameras_enabled]]]
+		     [if [null mindmon_world]
+			 [terminal_format standard-terminal '\nMindMon internal warning: mindmon_world is nil.']
+		       [set mindmon_world all_cameras_enabled cameras_enabled]]]]
 	     nil]
        
        [= entry_hbox [gtk-hbox-new 2]]
@@ -536,6 +538,8 @@
   [get agent_widget_frame keys]]
 
 [deftypefunk mindmon_project execute add_agent_widget [mindmon_agent_widget]
+  [if [null mindmon_world]
+      [error bug_name mindmon_project_error-mindmon_world_is_nil]]
   [have agent_widget_frame add [get mindmon_agent_widget name] mindmon_agent_widget]
   [have [get mindmon_agent_widget widget] show_all]
   [have agent_hbox pack_start mindmon_agent_widget t t 0]
@@ -868,10 +872,9 @@
   [let [[project_new_agent_menu_item [gtk-menu_item-new [format nil 'New ' agent_name ' Agent']]]]
     [have project_menu append project_new_agent_menu_item]
     [have project_new_agent_menu_item signal_connect 'activate'
-	  [let [[agent_name-reference agent_name]]
-	    [funk []
-		  [have this create_new_agent agent_name-reference]
-		  [have [get this cycle_trigger] trigger]]]
+	  [funk []
+		[have this create_new_agent agent_name]
+		[have [get this cycle_trigger] trigger]]
 	  nil]]]
 
 [deftypefunk mindmon get should_wait_before_next_cycle []

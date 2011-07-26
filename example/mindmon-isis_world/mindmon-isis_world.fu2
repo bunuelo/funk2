@@ -115,7 +115,7 @@
 [deftypefunk mindmon_isis_world get compatible_agent_types []
   `[mindmon_isis_world_agent]]
 
-[deftypefunk mindmon_isis_world get agent_names []
+[deftypefunk mindmon_isis_world get possible_agent_names []
   `[Ralph
     Lauren
     Macy]]

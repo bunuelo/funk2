@@ -488,7 +488,7 @@
       [mapc [funk [agent_name]
 		  [terminal_format standard-terminal '\nMindMon Project: adding ' agent_name ' agent to project menu.']
 		  [have mindmon add_agent_name_to_project_menu agent_name]]
-	    [get mindmon_world agent_names]]
+	    [get mindmon_world possible_agent_names]]
       [terminal_format standard-terminal '\nMindMon Project: done creating MindMon world.']
       [have [get this cycle_trigger] trigger]]]]
 
@@ -502,7 +502,7 @@
     [mapc [funk [agent_name]
 		[terminal_format standard-terminal '\nMindMon Project: adding ' agent_name ' agent to project menu.']
 		[have mindmon add_agent_name_to_project_menu agent_name]]
-	  [get mindmon_world agent_names]]
+	  [get mindmon_world possible_agent_names]]
     [terminal_format standard-terminal '\nMindMon Project: done creating MindMon world.']
     [have [get this cycle_trigger] trigger]]]
 

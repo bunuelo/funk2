@@ -24,7 +24,7 @@
   [new [initial-mindmon_agent_tool]
        [= mindmon_agent_tool initial-mindmon_agent_tool]
        
-       [= menu_item [gtk-menu_item [get mindmon_agent_tool title]]]
+       [= menu_item [gtk-menu_item [get mindmon_agent_tool mindmon_agent_tool-title]]]
        
        [have menu_item signal_connect 'activate'
 	     [funk []

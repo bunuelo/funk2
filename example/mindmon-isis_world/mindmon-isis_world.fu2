@@ -21,14 +21,14 @@
 'mindmon_isis_world_agent_builtin_reactive_activator'
 
 [deframe mindmon_isis_world_agent_builtin_reactive_activator [mindmon_agent_tool] []
-  [new [mindmon]
-       [construct mindmon_agent_tool mindmon]
+  [new [initial-mindmon_agent]
+       [construct mindmon_agent_tool initial-mindmon_agent]
        ]]
 
 [deftypefunk mindmon_isis_world_agent_builtin_reactive_activator get mindmon_agent_tool-title []
   'Builtin-Reactive Activator']
 
-[deftypefunk mindmon_isis_world_agent_builtin_reactive_activator get mindmon_agent_tool-start []
+[deftypefunk mindmon_isis_world_agent_builtin_reactive_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_isis_world_agent_builtin_reactive_activator: here.']
   ]
 
@@ -36,14 +36,14 @@
 'mindmon_isis_world_agent_learned_reactive_activator'
 
 [deframe mindmon_isis_world_agent_learned_reactive_activator [mindmon_agent_tool] []
-  [new [mindmon]
-       [construct mindmon_agent_tool mindmon]
+  [new [initial-mindmon_agent]
+       [construct mindmon_agent_tool initial-mindmon_agent]
        ]]
 
 [deftypefunk mindmon_isis_world_agent_learned_reactive_activator get mindmon_agent_tool-title []
   'Learned-Reactive Activator']
 
-[deftypefunk mindmon_isis_world_agent_learned_reactive_activator get mindmon_agent_tool-start []
+[deftypefunk mindmon_isis_world_agent_learned_reactive_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_isis_world_agent_learned_reactive_activator: here.']
   ]
 
@@ -51,14 +51,14 @@
 'mindmon_isis_world_agent_deliberative_activator'
 
 [deframe mindmon_isis_world_agent_deliberative_activator [mindmon_agent_tool] []
-  [new [mindmon]
-       [construct mindmon_agent_tool mindmon]
+  [new [initial-mindmon_agent]
+       [construct mindmon_agent_tool initial-mindmon_agent]
        ]]
 
 [deftypefunk mindmon_isis_world_agent_deliberative_activator get mindmon_agent_tool-title []
   'Deliberative Activator']
 
-[deftypefunk mindmon_isis_world_agent_deliberative_activator get mindmon_agent_tool-start []
+[deftypefunk mindmon_isis_world_agent_deliberative_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_isis_world_agent_deliberative_activator: here.']
   ]
 

@@ -315,9 +315,7 @@
 				       file_save_agent_menu_item
 				       tools_menu
 				       tools_menu_item
-				       tools_builtin_reactive_physical_activator_menu_item
-				       tools_learned_reactive_physical_activator_menu_item
-				       tools_deliberative_goal_activator_menu_item
+				       [tool_menu_item_frame [frame]]
 				       view_menu
 				       view_menu_item
 				       view_sense_menu_item
@@ -360,29 +358,37 @@
        [set tools_menu_item submenu tools_menu]
        [have menu_bar append tools_menu_item]
        
-       [= tools_builtin_reactive_physical_activator_menu_item [gtk-menu_item-new 'Built-in Reactive Physical Activator']]
-       [have tools_builtin_reactive_physical_activator_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
-		   [new mindmon_agent_builtin_reactive_physical_resource_activator this]]
-	     nil]
-       [have tools_menu append tools_builtin_reactive_physical_activator_menu_item]
+       [mapc [funk [tool_name]
+		   [let [[mindmon_agent_tool [object_type-new tool_name this]]]
+		     [let [[mindmon_agent_tool_widget [new mindmon_agent_tool_widget mindmon_agent_tool]]]
+		       [have tools_menu append mindmon_agent_tool_widget]]]]
+	     [get mindmon_agent tool_names]]
        
-       [= tools_learned_reactive_physical_activator_menu_item [gtk-menu_item-new 'Learned Reactive Physical Activator']]
-       [have tools_learned_reactive_physical_activator_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
-		   [new mindmon_agent_learned_reactive_physical_resource_activator this]]
-	     nil]
-       [have tools_menu append tools_learned_reactive_physical_activator_menu_item]
-       
-       [= tools_deliberative_goal_activator_menu_item [gtk-menu_item-new 'Deliberative Goal Activator']]
-       [have tools_deliberative_goal_activator_menu_item signal_connect 'activate'
-	     [funk []
-		   [terminal_format standard-terminal '\nLaunching deliberative goal activator for agent ' [get this name] '.']
-		   [new mindmon_agent_deliberative_goal_resource_activator this]]
-	     nil]
-       [have tools_menu append tools_deliberative_goal_activator_menu_item]
+       `[
+	 [= tools_builtin_reactive_physical_activator_menu_item [gtk-menu_item-new 'Built-in Reactive Physical Activator']]
+	 [have tools_builtin_reactive_physical_activator_menu_item signal_connect 'activate'
+	       [funk []
+		     [terminal_format standard-terminal '\nLaunching built-in reactive physical activator for agent ' [get this name] '.']
+		     [new mindmon_agent_builtin_reactive_physical_resource_activator this]]
+	       nil]
+	 [have tools_menu append tools_builtin_reactive_physical_activator_menu_item]
+	 
+	 [= tools_learned_reactive_physical_activator_menu_item [gtk-menu_item-new 'Learned Reactive Physical Activator']]
+	 [have tools_learned_reactive_physical_activator_menu_item signal_connect 'activate'
+	       [funk []
+		     [terminal_format standard-terminal '\nLaunching learned reactive physical activator for agent ' [get this name] '.']
+		     [new mindmon_agent_learned_reactive_physical_resource_activator this]]
+	       nil]
+	 [have tools_menu append tools_learned_reactive_physical_activator_menu_item]
+	 
+	 [= tools_deliberative_goal_activator_menu_item [gtk-menu_item-new 'Deliberative Goal Activator']]
+	 [have tools_deliberative_goal_activator_menu_item signal_connect 'activate'
+	       [funk []
+		     [terminal_format standard-terminal '\nLaunching deliberative goal activator for agent ' [get this name] '.']
+		     [new mindmon_agent_deliberative_goal_resource_activator this]]
+	       nil]
+	 [have tools_menu append tools_deliberative_goal_activator_menu_item]
+	 ]
        
        [= view_menu      [gtk-menu-new]]
        [= view_menu_item [gtk-menu_item-new 'View']]

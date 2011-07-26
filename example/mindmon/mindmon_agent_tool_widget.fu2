@@ -28,15 +28,12 @@
        
        [have menu_item signal_connect 'activate'
 	     [funk []
-		   [have this __start_tool]]
+		   [have mindmon_agent_tool mindmon_agent_tool-start]]
 	     nil]
        ]]
 
 [deftypefunk mindmon_agent_tool_widget get widget []
   menu_item]
-
-[deftypefunk mindmon_agent_tool_widget execute __start_tool []
-  [funkall [get mindmon_agent_tool start_funk] mindmon_agent_tool]]
 
 
 

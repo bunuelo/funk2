@@ -41,10 +41,16 @@
 	     gtk_timeline]
    :sources ['mindmon_knowledge.fu2']]
 
+[defpackage mindmon_agent_tool_widget
+  :packages [mindmon_core
+	     mindmon_agent_tool]
+   :sources ['mindmon_agent_tool_widget.fu2']]
+
 [defpackage mindmon_agent_widget
   :packages [mindmon_core
 	     mindmon_knowledge
-	     mindmon_agent]
+	     mindmon_agent
+	     mindmon_agent_tool_widget]
    :sources ['mindmon_agent_widget.fu2']]
 
 [defpackage mindmon

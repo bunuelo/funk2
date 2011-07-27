@@ -902,7 +902,7 @@
   [mapc [funk [agent_name]
 	      [let [[project_new_agent_menu_item [have project_new_agent_menu_item_frame lookup agent_name]]]
 		[have project_menu remove project_new_agent_menu_item]
-		[have project_new_agent_menu_item_frame remove agent_name]
+		[have project_new_agent_menu_item remove agent_name]
 		]]
 	[get project_new_agent_menu_item_frame keys]]]
 

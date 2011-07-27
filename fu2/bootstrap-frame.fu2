@@ -22,6 +22,9 @@
 [deftypefunk frame execute add [slot_name value]
   [have this add_type_var_value `variable slot_name value]]
 
+[deftypefunk frame execute remove [slot_name]
+  [have this remove_type_var `variable slot_name]]
+
 [deftypefunk frame execute lookup [slot_name]
   [get this type_var_value `variable slot_name nil]]
 

@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 
-[deframe mindmon_agent_tool [frame] [mindmon_agent_widget]
-  [new [initial-mindmon_agent_widget]
-       [= mindmon_agent_widget initial-mindmon_agent_widget]
+[deframe mindmon_agent_tool [frame] [mindmon_agent]
+  [new [initial-mindmon_agent]
+       [= mindmon_agent initial-mindmon_agent]
        
        ]]
 

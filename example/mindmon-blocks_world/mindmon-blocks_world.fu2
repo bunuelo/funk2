@@ -17,10 +17,15 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe mindmon_blocks_world [mindmon_world] [blocks_world]
+
+'mindmon_blocks_world'
+
+[deframe mindmon_blocks_world [mindmon_world] [blocks_world
+					       physical_world]
   [new [width height]
        [construct mindmon_world [gensym 'mindmon_blocks_world']]
-       [= blocks_world [new blocks_world [gensym 'blocks_world'] width height]]
+       [= blocks_world   [new blocks_world [gensym 'blocks_world'] width height]]
+       [= physical_world [new physical_world]]
        ]]
 
 [deftypefunk mindmon_blocks_world get compatible_agent_types []
@@ -30,8 +35,7 @@
   [have blocks_world step step_size]]
 
 [deftypefunk mindmon_world execute step_physical_world []
-  [terminal_format standard-terminal '\nmindmon-world warning: step_physical_world not yet implemented.']
-  ]
+  [have physical_world step_physical_world]]
 
 [deftypefunk mindmon_world execute destroy []
   [have blocks_world destroy]]

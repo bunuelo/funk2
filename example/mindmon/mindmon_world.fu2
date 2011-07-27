@@ -152,4 +152,15 @@
 	 interface_name        `mindmon_world
 	 problematic_type_name [type this]]]
 
+[deftypefunk mindmon_world get default_step_delay []
+  [terminal_format standard-terminal '\nmindmon_world-get-default_step_delay not implemented in ' [type this] ' interface.']
+  [error bug_name              `interface_not_implemented
+	 interface_name        `mindmon_world
+	 problematic_type_name [type this]]]
+
+[deftypefunk mindmon_world get default_step_size []
+  [terminal_format standard-terminal '\nmindmon_world-get-default_step_size not implemented in ' [type this] ' interface.']
+  [error bug_name              `interface_not_implemented
+	 interface_name        `mindmon_world
+	 problematic_type_name [type this]]]
 

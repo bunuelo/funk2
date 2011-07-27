@@ -31,25 +31,25 @@
 [deftypefunk mindmon_blocks_world get compatible_agent_types []
   `[mindmon_blocks_world_agent]]
 
-[deftypefunk mindmon_world execute raw_step_simulation [step_size]
-  [have blocks_world step step_size]]
+[deftypefunk mindmon_blocks_world execute raw_step_simulation [step_size]
+  [have blocks_world step [get step_size as-double]]]
 
-[deftypefunk mindmon_world execute step_physical_world []
+[deftypefunk mindmon_blocks_world execute step_physical_world []
   [have physical_world step_physical_world]]
 
-[deftypefunk mindmon_world execute destroy []
+[deftypefunk mindmon_blocks_world execute destroy []
   [have blocks_world destroy]]
 
-[deftypefunk mindmon_world execute initialize_simulation []
+[deftypefunk mindmon_blocks_world execute initialize_simulation []
   [have blocks_world initialize]]
 
-[deftypefunk mindmon_world get initialize_events []
+[deftypefunk mindmon_blocks_world get initialize_events []
   nil]
 
-[deftypefunk mindmon_world get screenshot []
+[deftypefunk mindmon_blocks_world get screenshot []
   [get blocks_world as-image]]
 
-[deftypefunk mindmon_world get all_objects_summary []
+[deftypefunk mindmon_blocks_world get all_objects_summary []
   [let [[object_frame [frame]]]
     [mapc [funk [block]
 		[let [[block_frame [frame]]]
@@ -63,10 +63,16 @@
 	  [get blocks_world grippers]]
     object_frame]]
 
-[deftypefunk mindmon_world get possible_agent_names []
+[deftypefunk mindmon_blocks_world get possible_agent_names []
   [mapcar [funk [gripper]
 		[get gripper name]]
 	  [get blocks_world grippers]]]
+
+[deftypefunk mindmon_blocks_world get default_step_delay []
+  0.0]
+
+[deftypefunk mindmon_blocks_world get default_step_size []
+  0.25]
 
 
 

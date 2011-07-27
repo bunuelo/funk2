@@ -143,6 +143,13 @@
 [deftypefunk mindmon_isis_world get all_objects_summary []
   [get isis_world all_objects_summary]]
 
+[deftypefunk mindmon_isis_world get default_step_delay []
+  5.0]
+
+[deftypefunk mindmon_isis_world get default_step_size []
+  0.1]
+
+
 [new mindmon_isis_world 'localhost']
 [new mindmon_isis_world 'imprimer.media.mit.edu']
 [new mindmon_isis_world 'simonetti.media.mit.edu']

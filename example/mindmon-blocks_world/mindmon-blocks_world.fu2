@@ -26,6 +26,50 @@
 [deftypefunk mindmon_blocks_world get compatible_agent_types []
   `[mindmon_blocks_world_agent]]
 
+[deftypefunk mindmon_world execute raw_step_simulation [step_size]
+  ]
+
+[deftypefunk mindmon_world execute step_physical_world []
+  ]
+
+[deftypefunk mindmon_world execute destroy []
+  ]
+
+[deftypefunk mindmon_world execute initialize_simulation []
+  ]
+
+[deftypefunk mindmon_world get initialize_events []
+  ]
+
+[deftypefunk mindmon_world get screenshot []
+  [get blocks_world as-image]]
+
+[deftypefunk mindmon_world get all_objects_summary []
+  [let [[object_frame [frame]]]
+    [mapc [funk [block]
+		[let [[block_frame [frame]]]
+		  [have block_frame add `is-a `block]
+		  [have object_frame add [get block name] block_frame]]]
+	  [get blocks_world blocks]]
+    [mapc [funk [gripper]
+		[let [[gripper_frame [frame]]]
+		  [have block_frame add `is-a `gripper]
+		  [have object_frame add [get gripper name] block_frame]]]
+	  [get blocks_world grippers]]
+    object_frame]]
+
+[deftypefunk mindmon_world get possible_agent_names []
+  [mapc [funk [gripper]
+	      [get gripper name]]
+	[get blocks_world grippers]]]
+
+
+
+
+
+
+
+
 
 [new mindmon_blocks_world 640 480]
 

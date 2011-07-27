@@ -29,7 +29,7 @@
   'Builtin-Reactive Activator']
 
 [deftypefunk mindmon_isis_world_agent_builtin_reactive_activator execute mindmon_agent_tool-start []
-  [terminal_format standard-terminal '\nmindmon_isis_world_agent_builtin_reactive_activator: here.']
+  [terminal_format standard-terminal '\nmindmon_isis_world_agent_builtin_reactive_activator: starting.']
   [new isismon_agent_builtin_reactive_physical_resource_activator [get this mindmon_agent]]]
 
 
@@ -44,7 +44,7 @@
   'Learned-Reactive Activator']
 
 [deftypefunk mindmon_isis_world_agent_learned_reactive_activator execute mindmon_agent_tool-start []
-  [terminal_format standard-terminal '\nmindmon_isis_world_agent_learned_reactive_activator: here.']
+  [terminal_format standard-terminal '\nmindmon_isis_world_agent_learned_reactive_activator: starting.']
   [new isismon_agent_learned_reactive_physical_resource_activator [get this mindmon_agent]]]
 
 

@@ -18,6 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage mindmon-isis_world
-  :packages [mindmon isis_world]
+  :packages [mindmon
+	     isis_world
+	     isismon_builtin_reactive_physical_activator
+	     isismon_learned_reactive_physical_activator
+	     isismon_deliberative_goal_activator]
    :sources ['mindmon-isis_world.fu2']]
 

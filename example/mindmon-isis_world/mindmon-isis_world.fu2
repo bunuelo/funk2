@@ -30,7 +30,7 @@
 
 [deftypefunk mindmon_isis_world_agent_builtin_reactive_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_isis_world_agent_builtin_reactive_activator: starting.']
-  [new isismon_agent_builtin_reactive_physical_resource_activator [get this mindmon_agent]]]
+  [new builtin_reactive_physical_activator [get this mindmon_agent]]]
 
 
 'mindmon_isis_world_agent_learned_reactive_activator'
@@ -45,7 +45,7 @@
 
 [deftypefunk mindmon_isis_world_agent_learned_reactive_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_isis_world_agent_learned_reactive_activator: starting.']
-  [new isismon_agent_learned_reactive_physical_resource_activator [get this mindmon_agent]]]
+  [new learned_reactive_physical_activator [get this mindmon_agent]]]
 
 
 'mindmon_isis_world_agent_deliberative_activator'
@@ -60,7 +60,7 @@
 
 [deftypefunk mindmon_isis_world_agent_deliberative_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_isis_world_agent_deliberative_activator: starting.']
-  [new isismon_agent_deliberative_goal_resource_activator [get this mindmon_agent]]]
+  [new deliberative_goal_activator [get this mindmon_agent]]]
 
 
 'mindmon_isis_world_agent'

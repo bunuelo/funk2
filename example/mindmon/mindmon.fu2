@@ -490,6 +490,8 @@
     
     [set mindmon_world all_cameras_enabled cameras_enabled]
     
+    [terminal_format standard-terminal '\nMindMon Project: removing agent names from project menu.']
+    [have mindmon remove_agent_names_from_project_menu]
     [mapc [funk [agent_name]
 		[terminal_format standard-terminal '\nMindMon Project: adding ' agent_name ' agent to project menu.']
 		[have mindmon add_agent_name_to_project_menu agent_name]]
@@ -720,6 +722,9 @@
 			  project_menu_item
 			  project_menu
 			  project_open_agent_menu_item
+			  
+			  [project_new_agent_menu_item_frame [frame]]
+			  
 			  simulation_menu_item
 			  simulation_menu
 			  simulation_run_initialization_sequence_menu_item
@@ -884,6 +889,7 @@
 
 [deftypefunk mindmon execute add_agent_name_to_project_menu [agent_name]
   [let [[project_new_agent_menu_item [gtk-menu_item-new [format nil 'New ' agent_name ' Agent']]]]
+    [have project_new_agent_menu_item_frame add agent_name project_new_agent_menu_item]
     [have project_menu append project_new_agent_menu_item]
     [have project_new_agent_menu_item show_all]
     [have project_new_agent_menu_item signal_connect 'activate'
@@ -891,6 +897,14 @@
 		[have this create_new_agent agent_name]
 		[have [get this cycle_trigger] trigger]]
 	  nil]]]
+
+[deftypefunk mindmon execute remove_agent_names_from_project_menu []
+  [mapc [funk [agent_name]
+	      [let [[project_new_agent_menu_item [have project_new_agent_menu_item_frame lookup agent_name]]]
+		[have project_menu remove project_new_agent_menu_item]
+		[have project_new_agent_menu_item_frame remove agent_name]
+		]]
+	[get project_new_agent_menu_item_frame keys]]]
 
 [deftypefunk mindmon get should_wait_before_next_cycle []
   [or [not mindmon_project]

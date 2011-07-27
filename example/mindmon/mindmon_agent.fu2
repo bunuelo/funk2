@@ -20,9 +20,12 @@
 
 [deframe mindmon_agent [frame] [mindmon_world
 				name
+				mindmon_agent_widget
+				
 				[retina_image_sequence_enabled nil]
 				[retina_image_sequence         [new image_sequence nil]]]
-  [new [initial-mindmon_world initial-name]
+  [new [initial-mindmon_world
+	initial-name]
        [= mindmon_world initial-mindmon_world]
        [= name          initial-name]
        

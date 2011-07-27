@@ -69,8 +69,10 @@
 						   isis_agent_body]
   [new [initial-mindmon_world
 	initial-name]
-       [construct mindmon_agent initial-mindmon_world initial-name]
-       [= moral_compass [new moral_compass]]
+       [construct mindmon_agent
+		  initial-mindmon_world
+		  initial-name]
+       [= moral_compass   [new moral_compass]]
        [= isis_agent_body [new isis_agent_body [get mindmon_world isis_world] moral_compass name]]
        nil]]
 

@@ -108,7 +108,7 @@
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]
        [set window title [format nil 'MindMon - Agent Built-In Reactive Activator - ' [get mindmon_agent name]]]
-       [set window transient_for [get mindmon_agent window]]
+       [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
        [set window destroy_with_parent t]
        [= vbox [gtk-vbox-new 2]]
 

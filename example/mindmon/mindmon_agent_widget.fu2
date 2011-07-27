@@ -315,7 +315,6 @@
 				       file_save_agent_menu_item
 				       tools_menu
 				       tools_menu_item
-				       [tool_menu_item_frame [frame]]
 				       view_menu
 				       view_menu_item
 				       view_sense_menu_item
@@ -359,7 +358,7 @@
        [have menu_bar append tools_menu_item]
        
        [mapc [funk [tool_name]
-		   [let [[mindmon_agent_tool [object_type-new tool_name this]]]
+		   [let [[mindmon_agent_tool [object_type-new tool_name mindmon_agent]]]
 		     [let [[mindmon_agent_tool_widget [new mindmon_agent_tool_widget mindmon_agent_tool]]]
 		       [have tools_menu append mindmon_agent_tool_widget]]]]
 	     [get mindmon_agent tool_names]]
@@ -510,6 +509,7 @@
 [defunk mindmon_agent_widget-new_from_name [mindmon_project name]
   [let [[mindmon_agent [have [get mindmon_project mindmon_world] create_agent name]]]
     [let [[this [new mindmon_agent_widget mindmon_project mindmon_agent]]]
+      [set mindmon_agent mindmon_agent_widget this]
       [have [get mindmon_agent mind] activate_vital_resources]
       this]]]
 

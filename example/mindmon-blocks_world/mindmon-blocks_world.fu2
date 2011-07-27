@@ -27,19 +27,20 @@
   `[mindmon_blocks_world_agent]]
 
 [deftypefunk mindmon_world execute raw_step_simulation [step_size]
-  ]
+  [have blocks_world step step_size]]
 
 [deftypefunk mindmon_world execute step_physical_world []
+  [terminal_format standard-terminal '\nmindmon-world warning: step_physical_world not yet implemented.']
   ]
 
 [deftypefunk mindmon_world execute destroy []
-  ]
+  [have blocks_world destroy]]
 
 [deftypefunk mindmon_world execute initialize_simulation []
-  ]
+  [have blocks_world initialize]]
 
 [deftypefunk mindmon_world get initialize_events []
-  ]
+  nil]
 
 [deftypefunk mindmon_world get screenshot []
   [get blocks_world as-image]]
@@ -59,9 +60,9 @@
     object_frame]]
 
 [deftypefunk mindmon_world get possible_agent_names []
-  [mapc [funk [gripper]
-	      [get gripper name]]
-	[get blocks_world grippers]]]
+  [mapcar [funk [gripper]
+		[get gripper name]]
+	  [get blocks_world grippers]]]
 
 
 

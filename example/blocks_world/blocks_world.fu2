@@ -33,12 +33,14 @@
        [= image_width  initial-image_width]
        [= image_height initial-image_height]
        
-       [= blocks_world_physics [new blocks_world_physics 8 5.5]]
-       
-       [have this setup_default_scenario]
+       [have this initialize]
        
        [have blocks_world-current_active_frame add name this]
        ]]
+
+[deftypefunk blocks_world execute initialize []
+  [= blocks_world_physics [new blocks_world_physics 8 5.5]]
+  [have this setup_default_scenario]]
 
 [deftypefunk blocks_world execute destroy []
   `[have blocks_world-current_active_frame remove name]

@@ -18,6 +18,41 @@
  rights to redistribute these changes.'
 
 
+'mindmon_blocks_world_agent'
+
+[deframe mindmon_blocks_world_agent [mindmon_agent] []
+  [new [initial-mindmon_world
+	initial-name]
+       [construct mindmon_agent initial-mindmon_worlld initial-name]
+       
+       ]]
+
+[deftypefunk mindmon_blocks_world_agent get mind []
+  
+  nil]
+
+[deftypefunk mindmon_blocks_world_agent get body []
+  
+  nil]
+
+[deftypefunk mindmon_blocks_world_agent get knowledge_base_names []
+  
+  nil]
+
+[deftypefunk mindmon_blocks_world_agent get tool_names []
+  
+  nil]
+
+[deftypefunk mindmon_blocks_world_agent execute sense_world []
+  
+  nil]
+
+[deftypefunk mindmon_blocks_world_agent get as-chunk []
+  
+  nil]
+
+
+
 'mindmon_blocks_world'
 
 [deframe mindmon_blocks_world [mindmon_world] [blocks_world

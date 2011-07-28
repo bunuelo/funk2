@@ -19,7 +19,8 @@
 
 [defpackage mindmon-isis_world-core
   :packages [mindmon
-	     isis_world]]
+	     isis_world
+	     moral_compass-isis_world]]
 
 [defpackage mindmon-isis_world-builtin_reactive_physical_activator
   :packages [mindmon-isis_world-core]

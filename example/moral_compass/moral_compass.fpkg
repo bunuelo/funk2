@@ -21,7 +21,8 @@
 'moral_compass: a reflective, self-reflective, and self-conscious cognitive architecture'
 
 [defpackage moral_agent_body
-  :packages [traced_mind moral_compass]
+  :packages [traced_mind
+	     moral_compass]
    :sources ['moral_agent_body.fu2']]
 
 [defpackage moral_compass

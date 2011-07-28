@@ -17,9 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage mindmon-blocks_world
-  :packages [mindmon
-	     blocks_world
-	     moral_compass-blocks_world]
-   :sources ['mindmon-blocks_world.fu2']]
+
+[deframe isis_world_moral_compass [moral_compass] []
+  [new []
+       [construct isis_world_moral_compass]
+       
+       ]]
 

@@ -62,7 +62,9 @@
 			 [if [eq `on edge_name]
 			     [let [[node_one_visual_object [have visual_object_frame lookup node_one_name]]
 				   [node_two_visual_object [have visual_object_frame lookup node_two_name]]]
-			       [have [get node_one_visual_object preposition_frame] add `on [get node_two_visual_object phenomenal_name]]]]
+			       [let [[node_one_visual_object-preposition_frame [get node_one_visual_object preposition_frame]]]
+				 [have node_one_visual_object-preposition_frame add `on [cons [get node_two_visual_object phenomenal_name]
+											      [have node_one_visual_object-preposition_frame lookup `on]]]]]]
 			 ]]
 		 perceptions]
 	   

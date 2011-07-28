@@ -28,7 +28,7 @@
        
        [= blocks_world_moral_compass [new blocks_world_moral_compass]]
        [= agent_body                 [new agent_body
-					  [get mindmon_world blocks_world]
+					  [get mindmon_world physical_world]
 					  name
 					  blocks_world_moral_compass]]
        ]]

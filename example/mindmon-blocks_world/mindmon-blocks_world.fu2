@@ -29,8 +29,8 @@
        [= blocks_world_moral_compass [new blocks_world_moral_compass]]
        [= agent_body                 [new agent_body
 					  [get mindmon_world blocks_world]
-					  blocks_world_moral_compass
-					  name]]
+					  name
+					  blocks_world_moral_compass]]
        ]]
 
 [deftypefunk mindmon_blocks_world_agent get mind []

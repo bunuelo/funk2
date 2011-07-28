@@ -20,35 +20,35 @@
 
 'mindmon_blocks_world_agent'
 
-[deframe mindmon_blocks_world_agent [mindmon_agent] []
+[deframe mindmon_blocks_world_agent [mindmon_agent] [blocks_world_moral_compass
+						     agent_body]
   [new [initial-mindmon_world
 	initial-name]
        [construct mindmon_agent initial-mindmon_worlld initial-name]
        
+       [= blocks_world_moral_compass [new blocks_world_moral_compass]]
+       [= agent_body                 [new agent_body
+					  [get mindmon_world blocks_world]
+					  blocks_world_moral_compass
+					  name]]
        ]]
 
 [deftypefunk mindmon_blocks_world_agent get mind []
-  
-  nil]
+  blocks_world_moral_compass]
 
 [deftypefunk mindmon_blocks_world_agent get body []
-  
-  nil]
+  agent_body]
 
 [deftypefunk mindmon_blocks_world_agent get knowledge_base_names []
-  
   nil]
 
 [deftypefunk mindmon_blocks_world_agent get tool_names []
-  
   nil]
 
 [deftypefunk mindmon_blocks_world_agent execute sense_world []
-  
   nil]
 
 [deftypefunk mindmon_blocks_world_agent get as-chunk []
-  
   nil]
 
 

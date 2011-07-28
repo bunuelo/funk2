@@ -55,6 +55,16 @@
 				 [= visual_objects [cons visual_object visual_objects]]]]]]]
 		 perceptions]
 	   
+	   [mapc [funk [perception]
+		       [let [[node_one_name [first perception]]
+			     [edge_name     [second perception]]
+			     [node_two_name [third perception]]]
+			 [if [eq `on edge_name]
+			     [let [[node_one_visual_object [have visual_object_frame lookup node_one_name]]
+				   [node_two_visual_object [have visual_object_frame lookup node_two_name]]]
+			       [have [get node_one_visual_object preposition_frame] add `on [get node_two_visual_object phenomenal_name]]]]
+			 ]]
+		 perceptions]
 	   
 	   [construct moral_compass_perception
 		      initial-begin_time

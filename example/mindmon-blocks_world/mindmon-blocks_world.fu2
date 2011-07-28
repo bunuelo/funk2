@@ -24,7 +24,7 @@
 						     agent_body]
   [new [initial-mindmon_world
 	initial-name]
-       [construct mindmon_agent initial-mindmon_worlld initial-name]
+       [construct mindmon_agent initial-mindmon_world initial-name]
        
        [= blocks_world_moral_compass [new blocks_world_moral_compass]]
        [= agent_body                 [new agent_body

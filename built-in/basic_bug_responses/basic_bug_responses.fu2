@@ -138,3 +138,45 @@
 								       nil]]]]]
 						   ]]]
 
+[new-crawl_through_backtrace-bug_type_response 34
+					       [let [[bug_name          [have [get bug frame] lookup `bug_name]]
+						     [source_filename   [have [get bug frame] lookup `source_filename]]
+						     [source_expression [have [get bug frame] lookup `source_expression]]
+						     [subbug            [have [get bug frame] lookup `subbug]]]
+						 [if subbug
+						     [print_bug subbug]]
+						 [let [[first_line   nil]
+						       [last_line    nil]
+						       [first_column nil]
+						       [last_column  nil]]
+						   [if source_expression
+						       [prog [= first_line   [get source_expression first_line]]
+							     [= last_line    [get source_expression last_line]]
+							     [= first_column [get source_expression first_column]]
+							     [= last_column  [get source_expression last_column]]]]
+						   [let [[bug_variable [get [format nil define_name_prefix [get_bug_index]] as-symbol]]]
+						     [set_bug_index [bytecode:add [get_bug_index] 1]]
+						     [if print_terminal
+							 [terminal_format print_terminal '\n  ']]
+						     [if define_name_prefix
+							 [prog [if print_terminal
+								   [terminal_format print_terminal 'defining ' bug_variable ': ']]
+							       [eval `[globalize ,bug_variable ,bug]]]]
+						     [if print_terminal
+							 [prog [terminal_format print_terminal 'bug type ' [get bug bug_type] ' from ' source_filename ':' [bug-get-object-as-short_string first_line] '--' [bug-get-object-as-short_string last_line] ' bug_name=' [bug-get-object-as-short_string bug_name]]
+							       [let [[unknown_keys nil]]
+								 [labels [[add_unknown_key [key]
+											   [if [not [or [eq `bug_name          key]
+													[eq `source_filename   key]
+													[eq `source_expression key]
+													[eq `subbug            key]]]
+											       [= unknown_keys [cons key unknown_keys]]]]]
+									 [mapc &add_unknown_key
+									       [get [get bug frame] keys]]]
+								 [mapc [funk [key]
+									     [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
+								       [if unknown_keys
+									   [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
+									 nil]]]]]
+						     ]]]]
+

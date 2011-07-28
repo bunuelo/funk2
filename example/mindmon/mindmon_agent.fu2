@@ -36,8 +36,9 @@
   [= retina_image_sequence_enabled enabled]]
 
 [deftypefunk mindmon_agent execute update_retina_image_sequence []
-  [let [[image [have [get this body] raw_sense_retina_image]]]
-    [have retina_image_sequence add_image_to_end image]]]
+  [let [[image [have this raw_sense_retina_image]]]
+    [if image
+	[have retina_image_sequence add_image_to_end image]]]]
 
 [deftypefunk mindmon_agent execute update_after_step_simulation []
   [if retina_image_sequence_enabled
@@ -66,6 +67,10 @@
 
 [deftypefunk mindmon_agent execute sense_world []
   [terminal_format standard-terminal '\nmindmon_agent-execute-sense_world not implemented in ' [type this] ' interface.']
+  nil]
+
+[deftypefunk mindmon_agent execute sense_retina_image []
+  [terminal_format standard-terminal '\nmindmon_agent-execute-sense_retina_image not implemented in ' [type this] ' interface.']
   nil]
 
 [deftypefunk mindmon_agent get as-chunk []

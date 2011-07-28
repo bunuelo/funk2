@@ -21,10 +21,10 @@
 'blocks_world_perception'
 
 [deframe blocks_world_perception [moral_compass_perception] []
-  [new [perceptions]
-       [let [[initial-begin_time             nil]
-	     [initial-end_time               nil]
-	     [initial-retina_image           nil]
+  [new [perceptions
+	initial-begin_time
+	initial-end_time]
+       [let [[initial-retina_image           nil]
 	     [initial-visual_objects         nil]
 	     [initial-left_hand_object_name  nil]
 	     [initial-right_hand_object_name nil]
@@ -43,7 +43,9 @@
 'mindmon_blocks_world_agent_body'
 
 [deframe mindmon_blocks_world_agent_body [agent_body] [mindmon_blocks_world_agent
-						       perceptions]
+						       perceptions
+						       [last_time    nil]
+						       [current_time nil]]
   [new [initial-mindmon_blocks_world_agent]
        [= mindmon_blocks_world_agent initial-mindmon_blocks_world_agent]
        
@@ -58,10 +60,14 @@
        ]]
 
 [deftypefunk mindmon_blocks_world_agent_body execute update_after_step_simulation []
-  [= perceptions nil]]
+  [= perceptions  [have mindmon_blocks_world_agent sense_world]]
+  [= last_time    current_time]
+  [= current_time [time]]]
 
 [deftypefunk mindmon_blocks_world_agent_body execute sense_perception []
-  [new blocks_world_perception perceptions]]
+  [let [[begin_time last_time]
+	[end_time   current_time]]
+    [new blocks_world_perception perceptions begin_time end_time]]]
 
 
 

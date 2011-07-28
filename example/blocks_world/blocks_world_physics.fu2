@@ -53,6 +53,23 @@
     [have grippers_mutex unlock]
     result]]
 
+[deftypefunk blocks_world_physics get gripper [name]
+  [have grippers_mutex lock]
+  [let [[gripper nil]]
+    [let [[iter grippers]]
+      [while iter
+	[let [[iter-gripper [car iter]]]
+	  [if [eq name [get iter-gripper name]]
+	      [prog [= gripper iter-gripper]
+		    [= iter    nil]]
+	    [= iter [cdr iter]]]]]]
+    [have grippers_mutex unlock]
+    [if [null gripper]
+	[error bug_name     gripper_not_found_by_name
+	       gripper_name name
+	       this         this]]
+    gripper]]
+
 [deftypefunk blocks_world_physics execute add_block [block]
   [if [get block blocks_world_physics]
       [error bug_name `block_world_block_already_blongs_to_a_blocks_world_phyics

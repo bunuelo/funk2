@@ -69,6 +69,9 @@
       [have cairo_context       destroy]
       image]]]
 
+[deftypefunk blocks_world get gripper [name]
+  [get blocks_world_physics gripper name]]
+
 [deftypefunk blocks_world get grippers []
   [get blocks_world_physics grippers]]
 

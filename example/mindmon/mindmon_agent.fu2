@@ -36,7 +36,7 @@
   [= retina_image_sequence_enabled enabled]]
 
 [deftypefunk mindmon_agent execute update_retina_image_sequence []
-  [let [[image [have this raw_sense_retina_image]]]
+  [let [[image [have this sense_retina_image]]]
     [if image
 	[have retina_image_sequence add_image_to_end image]]]]
 

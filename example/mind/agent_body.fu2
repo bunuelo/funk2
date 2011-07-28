@@ -47,3 +47,16 @@
   [get physical_world_reference time_step_trigger]]
 
 
+'update_after_step_simulation can be overloaded by children.'
+
+[deftypefunk agent_body execute update_after_step_simulation []
+  [terminal_format standard-terminal '\nagent_body-execute-update_after_step_simulation not implemented in ' [type this] ' interface.']
+  nil]
+
+[deftypefunk agent_body execute sense_perception []
+  [terminal_format standard-terminal '\nagent_body-execute-sense_perception not implemented in ' [type this] ' interface.']
+  nil]
+
+
+
+

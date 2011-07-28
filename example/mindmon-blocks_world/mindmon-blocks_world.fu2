@@ -18,9 +18,32 @@
  rights to redistribute these changes.'
 
 
+'blocks_world_perception'
+
+[deframe blocks_world_perception [moral_compass_perception] []
+  [new [perceptions]
+       [let [[initial-begin_time             nil]
+	     [initial-end_time               nil]
+	     [initial-retina_image           nil]
+	     [initial-visual_objects         nil]
+	     [initial-left_hand_object_name  nil]
+	     [initial-right_hand_object_name nil]
+	     [initial-proprioceptual_frame   nil]]
+	 [construct moral_compass_perception
+		    initial-begin_time
+		    initial-end_time
+		    initial-retina_image
+		    initial-visual_objects
+		    initial-left_hand_object_name
+		    initial-right_hand_object_name
+		    initial-proprioceptual_frame]
+	 ]]]
+
+
 'mindmon_blocks_world_agent_body'
 
-[deframe mindmon_blocks_world_agent_body [agent_body] [mindmon_blocks_world_agent]
+[deframe mindmon_blocks_world_agent_body [agent_body] [mindmon_blocks_world_agent
+						       perceptions]
   [new [initial-mindmon_blocks_world_agent]
        [= mindmon_blocks_world_agent initial-mindmon_blocks_world_agent]
        
@@ -35,25 +58,10 @@
        ]]
 
 [deftypefunk mindmon_blocks_world_agent_body execute update_after_step_simulation []
-  nil]
+  [= perceptions nil]]
 
 [deftypefunk mindmon_blocks_world_agent_body execute sense_perception []
-  [let [[initial-begin_time             nil]
-	[initial-end_time               nil]
-	[initial-retina_image           nil]
-	[initial-visual_objects         nil]
-	[initial-left_hand_object_name  nil]
-	[initial-right_hand_object_name nil]
-	[initial-proprioceptual_frame   nil]]
-    [let [[perception [new moral_compass_perception
-			   initial-begin_time
-			   initial-end_time
-			   initial-retina_image
-			   initial-visual_objects
-			   initial-left_hand_object_name
-			   initial-right_hand_object_name
-			   initial-proprioceptual_frame]]]
-      perception]]]
+  [new blocks_world_perception perceptions]]
 
 
 

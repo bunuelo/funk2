@@ -20,7 +20,7 @@
 
 [deframe isis_world_moral_compass [moral_compass] []
   [new []
-       [construct isis_world_moral_compass]
+       [construct moral_compass]
        
        ]]
 

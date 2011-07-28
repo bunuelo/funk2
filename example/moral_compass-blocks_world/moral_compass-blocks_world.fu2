@@ -20,7 +20,7 @@
 
 [deframe blocks_world_moral_compass [moral_compass] []
   [new []
-       [construct blocks_world_moral_compass]
+       [construct moral_compass]
        
        ]]
 

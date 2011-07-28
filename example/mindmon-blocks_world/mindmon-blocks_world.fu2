@@ -24,20 +24,46 @@
   [new [perceptions
 	initial-begin_time
 	initial-end_time]
-       [let [[initial-retina_image           nil]
-	     [initial-visual_objects         nil]
-	     [initial-left_hand_object_name  nil]
-	     [initial-right_hand_object_name nil]
-	     [initial-proprioceptual_frame   nil]]
-	 [construct moral_compass_perception
-		    initial-begin_time
-		    initial-end_time
-		    initial-retina_image
-		    initial-visual_objects
-		    initial-left_hand_object_name
-		    initial-right_hand_object_name
-		    initial-proprioceptual_frame]
-	 ]]]
+       [let [[retina_image           nil]
+	     [visual_objects         nil]
+	     [left_hand_object_name  nil]
+	     [right_hand_object_name nil]
+	     [proprioceptual_frame   nil]]
+	 
+	 [let [[visual_object_frame [frame]]]
+	   [mapc [funk [perception]
+		       [let [[node_one_name [first perception]]
+			     [edge_name     [second perception]]
+			     [node_two_name [third perception]]]
+			 [if [eq `is-a edge_name]
+			     [let [[physical_object_type node_two_name]
+				   [phenomenal_name      node_one_name]
+				   [retina_position_horizontal nil]
+				   [retina_position_vertical   nil]
+				   [distance                   nil]
+				   [orientation                nil]
+				   [preposition_frame          [frame]]]
+			       [let [[visual_object [new moral_compass_visual_object
+							 physical_object_type
+							 phenomenal_name
+							 retina_position_horizontal
+							 retina_position_vertical
+							 distance
+							 orientation
+							 preposition_frame]]]
+				 [have visual_object_frame add phenomenal_name visual_object]
+				 [= visual_objects [cons visual_object visual_objects]]]]]]]
+		 perceptions]
+	   
+	   
+	   [construct moral_compass_perception
+		      initial-begin_time
+		      initial-end_time
+		      retina_image
+		      visual_objects
+		      left_hand_object_name
+		      right_hand_object_name
+		      proprioceptual_frame]]]]]
 
 
 'mindmon_blocks_world_agent_body'

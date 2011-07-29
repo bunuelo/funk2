@@ -34,6 +34,7 @@
 	initial-distance
 	initial-orientation
 	initial-preposition_frame
+	initial-property_frame
 	initial-actions]
        [construct moral_compass_visual_object
 		  initial-physical_object_type
@@ -42,7 +43,8 @@
 		  initial-retina_position_vertical
 		  initial-distance
 		  initial-orientation
-		  initial-preposition_frame]
+		  initial-preposition_frame
+		  initial-property_frame]
        [= actions initial-actions]
        ]]
 

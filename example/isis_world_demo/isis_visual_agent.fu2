@@ -42,6 +42,7 @@
 	       [initial-distance                   [have isis_agent_frame lookup `distance]]
 	       [initial-orientation                [have isis_agent_frame lookup `orientation]]
 	       [initial-preposition_frame          [new frame]]
+	       [initial-property_frame             [new frame]]
 	       [initial-actions                    [if isis_agent_action_frames
 						       [mapcar [funk [isis_agent_action_frame]
 								     [new isis_visual_agent_action isis_agent_action_frame]]
@@ -55,6 +56,7 @@
 		      initial-distance
 		      initial-orientation
 		      initial-preposition_frame
+		      initial-property_frame
 		      initial-actions]
 	   ]]]]
 

@@ -42,7 +42,8 @@
 				   [retina_position_vertical   nil]
 				   [distance                   nil]
 				   [orientation                nil]
-				   [preposition_frame          [frame]]]
+				   [preposition_frame          [new frame]]
+				   [property_frame             [new frame]]]
 			       [let [[visual_object [new moral_compass_visual_object
 							 physical_object_type
 							 phenomenal_name
@@ -50,7 +51,8 @@
 							 retina_position_vertical
 							 distance
 							 orientation
-							 preposition_frame]]]
+							 preposition_frame
+							 property_frame]]]
 				 [have visual_object_frame add phenomenal_name visual_object]
 				 [= visual_objects [cons visual_object visual_objects]]]]]]]
 		 perceptions]

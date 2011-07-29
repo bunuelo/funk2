@@ -58,9 +58,9 @@
 		 perceptions]
 	   
 	   [mapc [funk [perception]
-		       [let [[node_one_name [first perception]]
+		       [let [[node_one_name [first  perception]]
 			     [edge_name     [second perception]]
-			     [node_two_name [third perception]]]
+			     [node_two_name [third  perception]]]
 			 [cond [[eq `on edge_name]
 				[let [[node_one_visual_object [have visual_object_frame lookup node_one_name]]
 				      [node_two_visual_object [have visual_object_frame lookup node_two_name]]]
@@ -79,6 +79,12 @@
 				  [let [[node_visual_object-property_frame [get node_visual_object property_frame]]]
 				    [have node_visual_object-property_frame add `shape [cons node_shape
 											     [have node_visual_object-property_frame lookup `shape]]]]]]
+			       [[eq `movement_command edge_name]
+				[let [[node_visual_object [have visual_object_frame lookup node_one_name]]
+				      [node_movement_command node_two_name]]
+				  [let [[node_visual_object-property_frame [get node_visual_object property_frame]]]
+				    [have node_visual_object-property_frame add `movement_command [cons node_movement_command
+													[have node_visual_object-property_frame lookup `movement_command]]]]]]
 			       [[eq `is edge_name]
 				[cond [[eq `me node_two_name]
 				       [let [[node_visual_object [have visual_object_frame lookup node_one_name]]]

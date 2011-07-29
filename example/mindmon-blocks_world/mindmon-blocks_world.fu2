@@ -70,21 +70,21 @@
 			       [[eq `color edge_name]
 				[let [[node_visual_object [have visual_object_frame lookup node_one_name]]
 				      [node_color         node_two_name]]
-				  [let [[node_one_visual_object-property_frame [get node_one_visual_object property_frame]]]
-				    [have node_one_visual_object-property_frame add `color [cons node_color
-												 [have node_one_visual_object-property_frame lookup `color]]]]]]
+				  [let [[node_visual_object-property_frame [get node_visual_object property_frame]]]
+				    [have node_visual_object-property_frame add `color [cons node_color
+											     [have node_visual_object-property_frame lookup `color]]]]]]
 			       [[eq `shape edge_name]
 				[let [[node_visual_object [have visual_object_frame lookup node_one_name]]
 				      [node_shape         node_two_name]]
-				  [let [[node_one_visual_object-property_frame [get node_one_visual_object property_frame]]]
-				    [have node_one_visual_object-property_frame add `shape [cons node_shape
-												 [have node_one_visual_object-property_frame lookup `shape]]]]]]
+				  [let [[node_visual_object-property_frame [get node_visual_object property_frame]]]
+				    [have node_visual_object-property_frame add `shape [cons node_shape
+											     [have node_visual_object-property_frame lookup `shape]]]]]]
 			       [[eq `is edge_name]
 				[cond [[eq `me node_two_name]
 				       [let [[node_visual_object [have visual_object_frame lookup node_one_name]]]
-					 [let [[node_one_visual_object-property_frame [get node_one_visual_object property_frame]]]
-					   [have node_one_visual_object-property_frame add `is-me [cons t
-													[have node_one_visual_object-property_frame lookup `shape]]]]]]
+					 [let [[node_visual_object-property_frame [get node_visual_object property_frame]]]
+					   [have node_visual_object-property_frame add `is-me [cons t
+												    [have node_visual_object-property_frame lookup `shape]]]]]]
 				      ]]
 			       ]]]
 		 perceptions]

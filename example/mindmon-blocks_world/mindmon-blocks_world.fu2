@@ -30,7 +30,7 @@
 	     [right_hand_object_name nil]
 	     [proprioceptual_frame   nil]]
 	 
-	 [let [[visual_object_frame [frame]]]
+	 [let [[visual_object_frame [new frame]]]
 	   [mapc [funk [perception]
 		       [let [[node_one_name [first perception]]
 			     [edge_name     [second perception]]

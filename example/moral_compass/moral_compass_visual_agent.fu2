@@ -44,7 +44,7 @@
 		  initial-distance
 		  initial-orientation
 		  initial-preposition_frame
-		  initial-property_frame]
+		  initial-property_frame
        [= actions initial-actions]
        ]]
 

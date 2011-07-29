@@ -33,8 +33,8 @@
 	initial-distance
 	initial-orientation
 	initial-preposition_frame
-	initial-property_frame
-	]
+	initial-property_frame]
+       
        [= physical_object_type       initial-physical_object_type]
        [= phenomenal_name            initial-phenomenal_name]
        [= retina_position_horizontal initial-retina_position_horizontal]

@@ -21,7 +21,8 @@
   :packages [gtk
 	     image
 	     image_sequence
-	     movie]]
+	     movie
+	     graphviz]]
 
 [defpackage mindmon_agent_tool
   :packages [mindmon_core]

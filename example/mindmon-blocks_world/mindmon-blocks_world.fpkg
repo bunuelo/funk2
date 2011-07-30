@@ -20,6 +20,6 @@
 [defpackage mindmon-blocks_world
   :packages [mindmon
 	     blocks_world
-	     moral_compass-blocks_world]
+	     reflective_mind-blocks_world]
    :sources ['mindmon-blocks_world.fu2']]
 

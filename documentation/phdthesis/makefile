@@ -19,6 +19,7 @@ phdthesis.pdf: \
   chapters/theory_and_alternatives.tex \
   chapters/a_system.tex \
   chapters/experiments.tex \
+  chapters/results.tex \
   chapters/discussion.tex \
   chapters/future.tex \
   chapters/appendix_philosophy.tex \

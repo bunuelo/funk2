@@ -163,14 +163,14 @@
 
 'mindmon_blocks_world_agent'
 
-[deframe mindmon_blocks_world_agent [mindmon_agent] [blocks_world_moral_compass
+[deframe mindmon_blocks_world_agent [mindmon_agent] [blocks_world_reflective_mind
 						     agent_body]
   [new [initial-mindmon_world
 	initial-name]
        [construct mindmon_agent initial-mindmon_world initial-name]
        
-       [= blocks_world_moral_compass [new blocks_world_moral_compass]]
-       [= agent_body                 [new mindmon_blocks_world_agent_body this]]
+       [= blocks_world_reflective_mind [new blocks_world_reflective_mind]]
+       [= agent_body                   [new mindmon_blocks_world_agent_body this]]
        ]]
 
 [deftypefunk mindmon_blocks_world_agent get gripper []
@@ -179,7 +179,7 @@
 'interface functions'
 
 [deftypefunk mindmon_blocks_world_agent get mind []
-  blocks_world_moral_compass]
+  blocks_world_reflective_mind]
 
 [deftypefunk mindmon_blocks_world_agent get body []
   agent_body]

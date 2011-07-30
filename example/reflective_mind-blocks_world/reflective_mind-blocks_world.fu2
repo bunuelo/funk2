@@ -18,7 +18,17 @@
  rights to redistribute these changes.'
 
 
-[defpackage moral_compass-blocks_world
-  :packages [moral_compass]
-   :sources ['moral_compass-blocks_world.fu2']]
+[deframe blocks_world_reflective_mind [reflective_mind] []
+  [new []
+       [construct reflective_mind]
+       
+       [type-have blocks_world_reflective_mind this create_builtin_goals]
+       ]]
+
+[deftypefunk blocks_world_reflective_mind execute create_builtin_goals []
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
+  
+  [have this create_physical_relationship_goal `gripper `preposition `is-holding `block]
+  
+  nil]
 

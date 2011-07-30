@@ -18,21 +18,21 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_proprioceptual_position [frame] [x y z]
+[deframe reflective_mind_proprioceptual_position [frame] [x y z]
   [new [initial-x initial-y initial-z]
        [= x initial-x]
        [= y initial-y]
        [= z initial-z]]]
 
-[deframe moral_compass_proprioceptual_orientation [frame] [heading pitch roll]
+[deframe reflective_mind_proprioceptual_orientation [frame] [heading pitch roll]
   [new [initial-heading initial-pitch initial-roll]
        [= heading initial-heading]
        [= pitch   initial-pitch]
        [= roll    initial-roll]]]
 
-[deframe moral_compass_proprioceptual_object [frame] [physical_object_type
-						      position
-						      orientation]
+[deframe reflective_mind_proprioceptual_object [frame] [physical_object_type
+							position
+							orientation]
   [new [initial-physical_object_type
 	initial-position
 	initial-orientation]
@@ -41,7 +41,7 @@
        [= orientation          initial-orientation]
        ]]
 
-[deftypefunk moral_compass_proprioceptual_object get as-semantic_frame [semantic_realm]
+[deftypefunk reflective_mind_proprioceptual_object get as-semantic_frame [semantic_realm]
   [new semantic_proprioceptual_object semantic_realm
        physical_object_type
        [new semantic_proprioceptual_position semantic_realm

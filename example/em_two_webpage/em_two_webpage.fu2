@@ -635,7 +635,7 @@
     traced_resource
     mental_layer
     self_conscious_layer
-    moral_compass_perception
+    reflective_mind_perception
     semantic_causal_object
     semantic_knowledge_base
     graph_isomorphism
@@ -666,8 +666,8 @@
     moral_agent_body
     moral_compass
     timeline
-    moral_compass_visual_agent
-    moral_compass_visual_object
+    reflective_mind_visual_agent
+    reflective_mind_visual_object
     reflective_credit_assignment_agency
     semantic_packable_object
     reflective_event_knowledge_agency
@@ -678,7 +678,7 @@
     mindmon
     semantic_physical_object
     traced_mind
-    moral_compass_proprioceptual_object
+    reflective_mind_proprioceptual_object
     agency
     builtin_reactive_physical_agency
     semantic_event

@@ -18,14 +18,14 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_visual_object [frame] [physical_object_type
-					      phenomenal_name
-					      retina_position_horizontal
-					      retina_position_vertical
-					      distance
-					      orientation
-					      preposition_frame
-					      property_frame]
+[deframe reflective_mind_visual_object [frame] [physical_object_type
+						phenomenal_name
+						retina_position_horizontal
+						retina_position_vertical
+						distance
+						orientation
+						preposition_frame
+						property_frame]
   [new [initial-physical_object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal

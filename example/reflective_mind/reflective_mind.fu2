@@ -1,0 +1,55 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe reflective_mind [traced_mind] []
+  [new []
+       [terminal_format standard-terminal '\nreflective_mind: creating new mind.']
+       [construct traced_mind]
+       
+       [parog [have this add_layer [new builtin_reactive_layer]]
+	      [have this add_layer [new learned_reactive_layer]]
+	      [have this add_layer [new deliberative_layer]]
+	      [have this add_layer [new reflective_layer]]]
+       [type-have reflective_mind this create_knowledge]
+       [type-have reflective_mind this connect_knowledge_reflection]
+       this]]
+
+[deftypefunk reflective_mind execute create_knowledge []
+  [terminal_format standard-terminal '\nreflective_mind: creating knowledge.']
+  [have [get this layer `builtin_reactive] create_knowledge]
+  [have [get this layer `learned_reactive] create_knowledge]
+  [have [get this layer `deliberative]     create_knowledge]
+  [have [get this layer `reflective]       create_knowledge]]
+
+[deftypefunk reflective_mind execute connect_knowledge_reflection []
+  [terminal_format standard-terminal '\nreflective_mind: connecting knowledge reflection.']
+  [have [get this layer `builtin_reactive] connect_knowledge_reflection]
+  [have [get this layer `learned_reactive] connect_knowledge_reflection]
+  [have [get this layer `deliberative]     connect_knowledge_reflection]
+  [have [get this layer `reflective]       connect_knowledge_reflection]]
+
+[deftypefunk reflective_mind execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+  [have [get this layer `deliberative] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
+
+'pre-knowledge perception functions'
+
+[deftypefunk reflective_mind get perception []
+  [get [get this layer `builtin_reactive] perception]]
+

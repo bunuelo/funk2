@@ -22,6 +22,7 @@
   [new []
        [construct moral_compass]
        
+       [type-have blocks_world_moral_compass this create_builtin_goals]
        ]]
 
 [deftypefunk blocks_world_moral_compass execute create_builtin_goals []

@@ -1,0 +1,196 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'reflective_mind: a basic reflective mind'
+
+
+
+'reflective_mind_core'
+
+[defpackage reflective_mind_core
+  :packages [traced_mind]]
+
+
+'reflective_mind'
+
+[defpackage reflective_mind
+  :packages [reflective_mind_core
+	     builtin_reactive_layer
+	     learned_reactive_layer
+	     deliberative_layer
+	     reflective_layer]
+   :sources ['reflective_mind.fu2']]
+
+
+'builtin_reactive_layer'
+
+[defpackage builtin_reactive_layer
+  :packages [reflective_mind_core
+	     builtin_reactive_neural_plug_agency
+	     builtin_reactive_sensory_agency
+	     builtin_reactive_physical_agency]
+   :sources ['builtin_reactive_layer.fu2']]
+
+[defpackage builtin_reactive_neural_plug_agency
+  :packages [reflective_mind_core]
+   :sources ['builtin_reactive_neural_plug_agency.fu2']]
+
+[defpackage builtin_reactive_sensory_agency
+  :packages [reflective_mind_core
+	     semantic_visual_object
+	     semantic_agent
+	     semantic_event
+	     semantic_action_event
+	     reflective_mind_proprioceptual_object
+	     semantic_proprioception
+	     semantic_somatosensation]
+   :sources ['builtin_reactive_sensory_agency.fu2']]
+
+[defpackage builtin_reactive_physical_agency
+  :packages [reflective_mind_core]
+   :sources ['builtin_reactive_physical_agency.fu2']]
+
+
+
+'learned_reactive_layer'
+
+[defpackage learned_reactive_layer
+  :packages [reflective_mind_core
+	     learned_reactive_physical_agency
+	     learned_reactive_sensory_agency
+	     learned_reactive_language_agency
+	     learned_reactive_physical_knowledge_agency
+	     english_language]
+   :sources ['learned_reactive_layer.fu2']]
+
+[defpackage learned_reactive_physical_agency
+  :packages [reflective_mind_core]
+   :sources ['learned_reactive_physical_agency.fu2'
+	     'learned_reactive_physical_agency_functions.fu2']]
+
+[defpackage reflective_mind_proprioceptual_object
+  :packages [reflective_mind_core
+	     semantic_proprioception]
+   :sources ['reflective_mind_proprioceptual_object.fu2']]
+
+[defpackage reflective_mind_visual_object
+  :packages [reflective_mind_core]
+   :sources ['reflective_mind_visual_object.fu2']]
+
+[defpackage reflective_mind_visual_agent
+  :packages [reflective_mind_core
+	     reflective_mind_visual_object]
+   :sources ['reflective_mind_visual_agent.fu2']]
+
+[defpackage reflective_mind_perception
+  :packages [reflective_mind_core
+	     reflective_mind_proprioceptual_object
+	     reflective_mind_visual_object
+	     reflective_mind_visual_agent]
+   :sources ['reflective_mind_perception.fu2']]
+
+[defpackage learned_reactive_sensory_agency
+  :packages [reflective_mind_core
+	     reflective_mind_perception
+	     semantic_object_type
+	     semantic_physical_object_type
+	     semantic_physical_object_type_relation]
+   :sources ['learned_reactive_sensory_agency.fu2']]
+
+[defpackage learned_reactive_language_agency
+  :packages [reflective_mind_core]
+   :sources ['learned_reactive_language_agency.fu2']]
+
+[defpackage learned_reactive_physical_knowledge_agency
+  :packages [reflective_mind_core]
+   :sources ['learned_reactive_physical_knowledge_agency.fu2']]
+
+
+'deliberative_layer'
+
+[defpackage deliberative_layer
+  :packages [reflective_mind_core
+	     deliberative_physical_event_knowledge_agency
+	     deliberative_goal_knowledge_agency
+	     deliberative_goal_event_knowledge_agency
+	     deliberative_goal_creation_agency
+	     deliberative_execution_agency
+	     deliberative_forward_planner_agency
+	     english_language]
+   :sources ['deliberative_layer.fu2']]
+
+[defpackage deliberative_physical_event_knowledge_agency
+  :packages [reflective_mind_core
+	     semantic_know_of_existence_event
+	     semantic_know_of_relationship_event]
+   :sources ['deliberative_physical_event_knowledge_agency.fu2']]
+
+[defpackage deliberative_goal_knowledge_agency
+  :packages [reflective_mind_core
+	     semantic_goal]
+   :sources ['deliberative_goal_knowledge_agency.fu2']]
+
+[defpackage deliberative_goal_event_knowledge_agency
+  :packages [reflective_mind_core
+	     semantic_goal]
+   :sources ['deliberative_goal_event_knowledge_agency.fu2']]
+
+[defpackage deliberative_goal_creation_agency
+  :packages [reflective_mind_core
+	     semantic_goal]
+   :sources ['deliberative_goal_creation_agency.fu2']]
+
+[defpackage deliberative_execution_agency
+  :packages [reflective_mind_core]
+   :sources ['deliberative_execution_agency.fu2']]
+
+[defpackage deliberative_forward_planner_agency
+  :packages [reflective_mind_core]
+   :sources ['deliberative_forward_planner_agency.fu2']]
+
+
+
+'reflective_layer'
+
+`reflective_event_knowledge_agency
+
+[defpackage reflective_layer
+  :packages [reflective_mind_core
+	     reflective_event_knowledge_agency
+	     reflective_credit_assignment_agency
+	     english_language
+	     ]
+   :sources ['reflective_layer.fu2']]
+
+[defpackage reflective_event_knowledge_agency
+  :packages [semantic_resource_action_sequence
+	     semantic_know_of_relationship_event
+	     semantic_resource_event_knowledge_base
+	     reflective_mind_core]
+   :sources ['reflective_event_knowledge_agency.fu2']]
+
+[defpackage reflective_credit_assignment_agency
+  :packages [reflective_mind_core
+	     semantic_category
+	     semantic_situation]
+   :sources ['reflective_credit_assignment_agency.fu2']]
+
+
+

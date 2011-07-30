@@ -17,68 +17,27 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe moral_compass [traced_mind] []
+[deframe moral_compass [reflective_mind] []
   [new []
        [terminal_format standard-terminal '\nmoral_compass: creating new mind.']
-       [construct traced_mind]
+       [construct reflective_mind]
        [parog [have this add_layer [new builtin_reactive_layer]]
 	      [have this add_layer [new learned_reactive_layer]]
 	      [have this add_layer [new deliberative_layer]]
 	      [have this add_layer [new reflective_layer]]
 	      [have this add_layer [new self_reflective_layer]]
 	      [have this add_layer [new self_conscious_layer]]]
-       [have this create_knowledge]
-       [have this connect_knowledge_reflection]
-       [have this create_builtin_goals]
+       [type-have reflective_mind this create_knowledge]
+       [type-have reflective_mind this connect_knowledge_reflection]
        this]]
 
 [deftypefunk moral_compass execute create_knowledge []
   [terminal_format standard-terminal '\nmoral_compass: creating knowledge.']
-  [have [get this layer `builtin_reactive] create_knowledge]
-  [have [get this layer `learned_reactive] create_knowledge]
-  [have [get this layer `deliberative]     create_knowledge]
-  [have [get this layer `reflective]       create_knowledge]
-  [have [get this layer `self_reflective]  create_knowledge]
-  [have [get this layer `self_conscious]   create_knowledge]]
+  [have [get this layer `self_reflective] create_knowledge]
+  [have [get this layer `self_conscious]  create_knowledge]]
 
 [deftypefunk moral_compass execute connect_knowledge_reflection []
   [terminal_format standard-terminal '\nmoral_compass: connecting knowledge reflection.']
-  [have [get this layer `builtin_reactive] connect_knowledge_reflection]
-  [have [get this layer `learned_reactive] connect_knowledge_reflection]
-  [have [get this layer `deliberative]     connect_knowledge_reflection]
-  [have [get this layer `reflective]       connect_knowledge_reflection]
-  [have [get this layer `self_reflective]  connect_knowledge_reflection]
-  [have [get this layer `self_conscious]   connect_knowledge_reflection]]
-
-[deftypefunk moral_compass execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
-  [have [get this layer `deliberative] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
-
-[deftypefunk moral_compass execute create_builtin_goals []
-  [terminal_format standard-terminal '\nmoral_compass: creating built-in goals.']
-  
-  nil]
-
-[deftypefunk moral_compass get as-lickable_frame []
-  [frame semantic_realm                        [get this semantic_realm]
-	 knowledge_event_stream_iterator_frame [get this knowledge_event_stream_iterator_frame]
-	 ]]
-
-[deftypefunk moral_compass get as-chunk []
-  [get [lick-new_from_object [get this as-lickable_frame]] as-chunk]]
-
-[defunk moral_compass-new_from_lickable_frame [lickable_frame]
-  [let [[this [new moral_compass]]]
-    [set this semantic_realm                        [have lickable_frame lookup `semantic_realm]]
-    [set this knowledge_event_stream_iterator_frame [have lickable_frame lookup `knowledge_event_stream_iterator_frame]]
-    [have this connect_knowledge_reflection]
-    this]]
-
-[defunk moral_compass-new_from_chunk [chunk]
-  [let [[lickable_frame [have [get chunk as-lick] unlick]]]
-    [moral_compass-new_from_lickable_frame lickable_frame]]]
-
-'pre-knowledge perception functions'
-
-[deftypefunk moral_compass get perception []
-  [get [get this layer `builtin_reactive] perception]]
+  [have [get this layer `self_reflective] connect_knowledge_reflection]
+  [have [get this layer `self_conscious]  connect_knowledge_reflection]]
 

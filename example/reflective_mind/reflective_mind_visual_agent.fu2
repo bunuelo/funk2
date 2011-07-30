@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_visual_agent_action [frame] [start_time action_name argument_frame result]
+[deframe reflective_mind_visual_agent_action [frame] [start_time action_name argument_frame result]
   [new [initial-start_time initial-action_name initial-argument_frame initial-result]
        [= start_time     initial-start_time]
        [= action_name    initial-action_name]
@@ -26,7 +26,7 @@
        [= result         initial-result]]]
 
 
-[deframe moral_compass_visual_agent [moral_compass_visual_object] [actions]
+[deframe reflective_mind_visual_agent [reflective_mind_visual_object] [actions]
   [new [initial-physical_object_type
 	initial-phenomenal_name
 	initial-retina_position_horizontal
@@ -36,7 +36,7 @@
 	initial-preposition_frame
 	initial-property_frame
 	initial-actions]
-       [construct moral_compass_visual_object
+       [construct reflective_mind_visual_object
 		  initial-physical_object_type
 		  initial-phenomenal_name
 		  initial-retina_position_horizontal

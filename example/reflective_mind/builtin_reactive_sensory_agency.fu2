@@ -182,9 +182,9 @@
 					  all_prepositional_object_names]]]
 			    all_preposition_keys]
 		      
-		      [if [is-type `moral_compass_visual_agent visual_object]
+		      [if [is-type `reflective_mind_visual_agent visual_object]
 			  [let [[agent_name [get visual_object phenomenal_name]]]
-			    [have this think_to_self '\nmoral_compass_visual_agent: ' agent_name]
+			    [have this think_to_self '\nreflective_mind_visual_agent: ' agent_name]
 			    [let [[semantic_agent [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame `[agent ,agent_name]]]]
 			      [if [null semantic_agent]
 				  [prog [= semantic_agent [new semantic_agent [get [get this mind] semantic_realm]]]

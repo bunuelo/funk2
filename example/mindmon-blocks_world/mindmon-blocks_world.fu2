@@ -20,7 +20,7 @@
 
 'blocks_world_perception'
 
-[deframe blocks_world_perception [moral_compass_perception] []
+[deframe blocks_world_perception [reflective_mind_perception] []
   [new [perceptions
 	initial-begin_time
 	initial-end_time]
@@ -44,7 +44,7 @@
 				   [orientation                nil]
 				   [preposition_frame          [new frame]]
 				   [property_frame             [new frame]]]
-			       [let [[visual_object [new moral_compass_visual_object
+			       [let [[visual_object [new reflective_mind_visual_object
 							 physical_object_type
 							 phenomenal_name
 							 retina_position_horizontal
@@ -120,7 +120,7 @@
 			       ]]]
 		 perceptions]
 	   
-	   [construct moral_compass_perception
+	   [construct reflective_mind_perception
 		      initial-begin_time
 		      initial-end_time
 		      retina_image

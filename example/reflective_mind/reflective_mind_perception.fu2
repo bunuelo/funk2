@@ -18,13 +18,13 @@
  rights to redistribute these changes.'
 
 
-[deframe moral_compass_perception [frame] [begin_time
-					   end_time
-					   retina_image
-					   visual_objects
-					   left_hand_object_name
-					   right_hand_object_name
-					   proprioceptual_frame]
+[deframe reflective_mind_perception [frame] [begin_time
+					     end_time
+					     retina_image
+					     visual_objects
+					     left_hand_object_name
+					     right_hand_object_name
+					     proprioceptual_frame]
   [new [initial-begin_time
 	initial-end_time
 	initial-retina_image

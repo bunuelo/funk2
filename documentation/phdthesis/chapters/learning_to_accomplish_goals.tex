@@ -74,6 +74,7 @@ The two processes communicate information along two channels: (1) an
 action channel from the agent to the environment, and (2) a perception
 channel from the environment to the agent.
 
+
 \section{The State-Action Model}
 \label{sec:state_action_model}
 
@@ -93,6 +94,34 @@ state-action model, which has two states for the environment and two
 actions for the agent to perform in each of these states.  The
 state-action model is a simple model for how actions map to changes in
 the state of the environment.
+
+
+\section{A Multiple Agent-Environment Model}
+
+\begin{figure}[bth]
+  \center
+  \includegraphics[height=5cm]{gfx/multiple_agent_environment}
+  \caption[The multiple agent environment model]{The multiple agent environment model.}
+  \label{fig:multiple_agent_environment}
+\end{figure}
+
+In order to model social intelligence, we introduce the multiple agent
+environment model shown in
+Figure~\ref{fig:multiple_agent_environment}.
+
+
+\section{Agent Process Communication}
+
+Because agent processes can only directly act on and perceive the
+environment, all communication between agent processes must occur
+through the environment process.  We assume that agents can
+communicate some form of symbolic knowledge structure in the absence
+of noise.  These representations are used to communicate processes
+from one agent to another.  Specific examples of such a process
+representation that we have used in our experiments are described in
+more detail in
+Sections~\ref{sec:serial_process_representation}--\ref{sec:parallel_process_representation}.
+
 
 \section{A Relational State Representation}
 
@@ -198,20 +227,6 @@ See Figure~\ref{fig:partial_frame_perception}.
 \end{figure}
 
 See Figure~\ref{fig:environment_perception_physical}.
-
-
-\section{A Multiple Agent-Environment Model}
-
-\begin{figure}[bth]
-  \center
-  \includegraphics[height=5cm]{gfx/multiple_agent_environment}
-  \caption[The multiple agent environment model]{The multiple agent environment model.}
-  \label{fig:multiple_agent_environment}
-\end{figure}
-
-In order to model social intelligence, we introduce the multiple agent
-environment model shown in
-Figure~\ref{fig:multiple_agent_environment}.
 
 
 \section{A Physical Goal Representation}

@@ -54,7 +54,8 @@ phdthesis.pdf: \
   gfx/planning_machine_operations.pdf \
   gfx/planning_machine_reflective_knowledge.pdf \
   gfx/blocks_world_screenshot-1.pdf \
-  gfx/mindmon-isis_world-screenshot-1.pdf
+  gfx/mindmon-isis_world-screenshot-1.pdf \
+  gfx/ladder_state_machine.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

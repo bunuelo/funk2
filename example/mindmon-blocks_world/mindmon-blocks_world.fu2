@@ -111,13 +111,12 @@
 				    [have node_one_visual_object-preposition_frame add `below [cons [get node_two_visual_object phenomenal_name]
 												    [have node_one_visual_object-preposition_frame lookup `below]]]]]]
 			       [[eq `is-holding edge_name]
-				[let [[node_one_visual_object [have visual_object_frame lookup node_one_name]]
-				      [node_two_visual_object [have visual_object_frame lookup node_two_name]]]
-				  [let [[node_one_visual_object-preposition_frame [get node_one_visual_object preposition_frame]]]
-				    [have node_one_visual_object-preposition_frame add `is-holding [cons [if node_two_visual_object
-													     [get node_two_visual_object phenomenal_name]
-													   nil]
-													 [have node_one_visual_object-preposition_frame lookup `is-holding]]]]]]
+				[if node_two_name
+				    [let [[node_one_visual_object [have visual_object_frame lookup node_one_name]]
+					  [node_two_visual_object [have visual_object_frame lookup node_two_name]]]
+				      [let [[node_one_visual_object-preposition_frame [get node_one_visual_object preposition_frame]]]
+					[have node_one_visual_object-preposition_frame add `is-holding [cons [get node_two_visual_object phenomenal_name]
+													     [have node_one_visual_object-preposition_frame lookup `is-holding]]]]]]]
 			       ]]]
 		 perceptions]
 	   

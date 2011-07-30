@@ -260,7 +260,34 @@ See Figure~\ref{fig:goal_state}.
 A system without a goal has no reason to learn the effects of its
 actions.  Figure~\ref{fig:learning_to_plan} shows how the process of
 learning causal models relating reflective states to physical states
-is a fundamentally goal-driven process.
+is a fundamentally goal-driven process.  We show how this goal
+prediction process leads to at least a four step causal chain of
+knowledge learning.  It is important to point out that although the
+learning process is a cycle over time, this ends up creating a causal
+structure for knowledge dependency without loops---a critical property
+in general to maintain for any causal representation.
+
+These four goal-oriented cyclical learning steps build four of the
+major types of knowledge that my goal-oriented inference and planning
+system uses.  These four types of knowledge are, briefly:
+
+\begin{enumerate}
+
+\item{Goal-action physical causal hypotheses: focuses and constrains
+  the initial action learning search.}
+
+\item{Action physical precondition goal occurrence hypotheses: allows
+  predicting whether or not an action will accomplish the given goal
+  under the current physical state.}
+
+\item{Action physical precondition trans-frame hypotheses: allows for
+  physically simulating the given action in a given physical state.}
+
+\item{Physical hypotheses for predicting goal occurrence: allows for
+  predicting if a given physical state implies that the goal would be
+  occurring.}
+
+\end{enumerate}
 
 \marginpar{\emph{learning goal}: focusing learning on a subset of the state space.}
 

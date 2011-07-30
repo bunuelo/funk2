@@ -24,3 +24,10 @@
        
        ]]
 
+[deftypefunk blocks_world_moral_compass execute create_builtin_goals []
+  [terminal_format standard-terminal '\nblocks_world_moral_compass: creating built-in goals.']
+  
+  [have this create_physical_relationship_goal `gripper `preposition `is-holding `block]
+  
+  nil]
+

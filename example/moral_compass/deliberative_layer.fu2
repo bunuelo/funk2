@@ -45,8 +45,10 @@
   [have [get this agency `goal_creation]            connect_knowledge_reflection]
   nil]
 
-[deftypefunk deliberative_layer execute create_builtin_goals []
-  [have [get this agency `goal_creation] create_builtin_goals]]
+[deftypefunk deliberative_layer execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+  [have [get this agency `goal_creation] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
+
+
 
 
 

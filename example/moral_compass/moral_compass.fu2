@@ -50,9 +50,13 @@
   [have [get this layer `self_reflective]  connect_knowledge_reflection]
   [have [get this layer `self_conscious]   connect_knowledge_reflection]]
 
+[deftypefunk moral_compass execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+  [have [get this layer `deliberative] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
+
 [deftypefunk moral_compass execute create_builtin_goals []
   [terminal_format standard-terminal '\nmoral_compass: creating built-in goals.']
-  [have [get this layer `deliberative] create_builtin_goals]]
+  
+  nil]
 
 [deftypefunk moral_compass get as-lickable_frame []
   [frame semantic_realm                        [get this semantic_realm]

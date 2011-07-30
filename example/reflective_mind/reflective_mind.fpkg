@@ -82,8 +82,7 @@
 
 [defpackage learned_reactive_physical_agency
   :packages [reflective_mind_core]
-   :sources ['learned_reactive_physical_agency.fu2'
-	     'learned_reactive_physical_agency_functions.fu2']]
+   :sources ['learned_reactive_physical_agency.fu2']]
 
 [defpackage reflective_mind_proprioceptual_object
   :packages [reflective_mind_core

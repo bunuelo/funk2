@@ -31,7 +31,8 @@
 
 [defpackage moral_compass-isis_world-learned_reactive_physical_agency_resources
   :packages [moral_compass-isis_world-core]
-   :sources ['moral_compass-isis_world-learned_reactive_physical_agency_resources.fu2']]
+   :sources ['moral_compass-isis_world-learned_reactive_physical_agency_resources.fu2'
+	     'moral_compass-isis_world-learned_reactive_physical_agency_resources-functions.fu2']]
 
 
 [defpackage moral_compass-isis_world-core

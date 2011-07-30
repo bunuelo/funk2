@@ -19,6 +19,20 @@
 
 
 [defpackage moral_compass-isis_world
-  :packages [moral_compass]
+  :packages [moral_compass-isis_world-core
+	     moral_compass-isis_world-builtin_reactive_physical_agency_resources]
    :sources ['moral_compass-isis_world.fu2']]
 
+
+[defpackage moral_compass-isis_world-builtin_reactive_physical_agency_resources
+  :packages [moral_compass-isis_world-core]
+   :sources ['moral_compass-isis_world-builtin_reactive_physical_agency_resources.fu2']]
+
+
+[defpackage moral_compass-isis_world-learned_reactive_physical_agency_resources
+  :packages [moral_compass-isis_world-core]
+   :sources ['moral_compass-isis_world-learned_reactive_physical_agency_resources.fu2']]
+
+
+[defpackage moral_compass-isis_world-core
+  :packages [moral_compass]]

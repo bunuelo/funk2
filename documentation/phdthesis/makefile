@@ -59,7 +59,8 @@ phdthesis.pdf: \
   gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf \
   gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf \
   gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf \
-  gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf
+  gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf \
+  gfx/learning_to_plan-four_step_cycle.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

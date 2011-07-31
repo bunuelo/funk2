@@ -172,22 +172,33 @@ architectures to the one that I have built.
 
 \subsection{The EM-ONE Cognitive Architecture}
 
-We worked with Pushpinder Singh from 1999 to 2006 on the first version
+I worked with Pushpinder Singh from 1999 to 2006 on the first version
 of the Emotion Machine architecture, EM-ONE \citep{singh:2005}.
 During that period, we discussed that one weakness in the EM-ONE
 system is its reliance on tracing only the declarative prolog
 statements, among other necessary but untraced procedural code.
 Although EM-ONE contained a large amount of procedural knowledge, none
 of the effects of this procedural knowledge could be debugged
-reflectively.  Toward solving this problem, we have based our approach
+reflectively.  Toward solving this problem, I have based my approach
 on a memory layer that can trace the provenance of select memory
 events.
 
 
 \subsection{Icarus}
 
-Goal-directed analogy enables far transfer in a cognitive
-system.\citep{konik:2009}
+Icarus is a cognitive architecture that supports a form of far
+transfer learning \citep{konik:2009}.  The Icarus system allows for a
+goal-directed structure mapping learning process.  These structure
+mappings that are learned in this goal-directed way, can be useful
+forms of analogy that enables ``far'' transfer in a cognitive system.
+The Icarus work builds upon a previous model for analogical transfer
+learning between symbolic relational structures \cite{gentner:1983}.
+
+Because my knowledge representation is relational and symbolic, I
+see Icarus' approaches to far transfer learning as highly compatible
+with my architecture's ability to support multiple knowledge domains
+for a single goal-oriented problem solving agent.
+
 
 \subsection{Computational Models of Cognition about Cognition}
 
@@ -225,7 +236,7 @@ simpler reinforcement learning approach.
 Now that we have discussed the basic model of learning from experience
 what good goal states may be from rewards, let us consider the
 representations for the state space of the perceptions and actions of
-our model.  Control theory has given us many useful models for agents
+my model.  Control theory has given us many useful models for agents
 that control continuous environments.  For example,
 Figure~\ref{fig:feedback_control} shows a simple difference feedback
 control circuit that is used in simple linear control systems.  The
@@ -279,7 +290,7 @@ given problem.  This theoretical solution, or plan, may be executed
 and may fail or succeed, in accordance with the initial intentions for
 executing the plan, the initial intentions for imagining the plan, or
 any other intentions.  If the plan fails, then we may find something
-to be modified in our knowledge in order to help us in avoiding this
+to be modified in my knowledge in order to help us in avoiding this
 failure next time.  The planning process is a small part of the
 complete closed-loop learning algorithm that learns to plan from
 experience with the environment and other agents.
@@ -306,7 +317,7 @@ systems that can accomplish goals.
 For example, a Markov Decision Process contains a transfer function,
 which is basically a combinational device.
 
-Of course, this combinational device would get more complicated if we added probability.
+Of course, this combinational device would get more complicated if I added probability.
 
 
 
@@ -370,5 +381,4 @@ A representation called \ac{RMDP} has been proposed
 larger relational problem domains, but this method only focuses on an
 object-oriented reward that does not have any global feedback about
 the overall value of the situation.
-
 

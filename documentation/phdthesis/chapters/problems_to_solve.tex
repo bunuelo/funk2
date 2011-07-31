@@ -53,8 +53,15 @@ solver.  Because of this, a programming language with a run-time
 compiler is very useful for building these types of adaptive systems
 that learn to debug and re-program their own subprograms.  For purely
 the reason of developing problem solving learning algorithms, it is
-critical that a reflective substrate has the ability to treat its own
-programs as data.
+critical for a reflective substrate to be able to treat its own
+programs as data.  A compiler is a simple example of a program that
+must treat a program as data.  The planning process is a more general
+type of compiling problem that also requires learning the effects of
+primitive actions.  So, a system that is planning or learning how to
+plan, must have some sort of representation of processes that it is
+interpretting as plans.  Compiling simply makes this interpretation
+step in the planner more efficient, but this is a very convenient
+efficiency when building practically useful learning systems.
 
 
 \section{Layered Reflective Problem Solving}

@@ -11,6 +11,11 @@ in our knowledge representation can be traced and compiled into other
 representations, such as the reflective event representations used in
 learning to accomplish goals.
 
+\subsection{Automatic Collection of Audit Trails for All Processes}
+
+
+
+
 \subsection{General Parallelism and Concurrency}
 
 \begin{figure}[bth]
@@ -20,11 +25,17 @@ learning to accomplish goals.
   \label{fig:concurrent_parallel_reflection_efficiency}
 \end{figure}
 
-See Figure~\ref{fig:concurrent_parallel_reflection_efficiency}.
+Because the procedurally reflective programming paradigm focuses on
+event streams of changes to memory, there is an inherent ability to
+express procedurally reflective algorithms in a streaming parallel
+language.
 
-
-
-\subsection{Automatic Collection of Audit Trails for All Processes}
+Figure~\ref{fig:concurrent_parallel_reflection_efficiency} shows how a
+simple process can be reflectively monitored without slowing down the
+fundamental process by more than the constant time factor necessaary
+for generating the event stream.  Many different parallel reflective
+processes can be reflectively processing concurrently without any
+additional slowdown in the primary problem solving process.
 
 \subsection{Program as Data}
 

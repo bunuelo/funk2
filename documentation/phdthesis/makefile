@@ -60,7 +60,8 @@ phdthesis.pdf: \
   gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf \
   gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf \
   gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf \
-  gfx/learning_to_plan-four_step_cycle.pdf
+  gfx/learning_to_plan-four_step_cycle.pdf \
+  gfx/concurrent_parallel_reflection_efficiency.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

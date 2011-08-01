@@ -47,14 +47,15 @@ to create a model, which is necessarily not real, but which is still
 useful for predicting reality? Well, I currently see many approaches
 to studying different aspects of moral reasoning, such as how moral
 judgements are dependent on the causal structure of how a person
-understands social coersion [1]. I also see evidence that engaging
-emotions such as ``pride'', ``embarrassment'', and ``regret'' has been shown
-to be correlated to specific fMRI BOLD patterns [2]. Further, lines
-have been drawn between mere chauvinism for one's own social group and
-the more complicating aspects of virtuous behavior that maximizes
-social utility [3]. This gives us initial evidence and philosophical
-guidance to pursue better models for what I mean by virtuous
-behavior.
+understands social coersion \citep{young:2011}. I also see evidence
+that engaging emotions such as ``pride'', ``embarrassment'', and
+``regret'' has been shown to be correlated to specific fMRI BOLD
+patterns \citep{moll:2005}. Further, lines have been drawn between
+mere chauvinism for one's own social group and the more complicating
+aspects of virtuous behavior that maximizes social utility
+\citep{casebeer:2003}. This gives us initial evidence and
+philosophical guidance to pursue better models for what I mean by
+virtuous behavior.
 
 \subsection{Current Models}
 
@@ -63,16 +64,17 @@ behavior that use a numerical utility function in order to quantify
 whether or not a given goal has been accomplished. These models are
 proving useful for finding the beginning of an explanation for how
 models of the world are learned and what the function of specific
-neurotransmitters may be in the neocortex [4]. The problem with these
-simple propositional goal-oriented models is that they cannot handle
-the large state spaces involved in modelling social relationships and
-social goals, so I need something slightly more complicated. A
-popular tool for modelling situations involving people thinking about
-the goals of other people is the tool of relational representations,
-e.g., the modal logics of morality [5]. Augmenting goal-oriented
-reinforcement learning models with the abilities of relational
-representations is a being done by a relatively young field [6] that
-is proving to be maturing very quickly.
+neurotransmitters may be in the neocortex \citep{yu:2003}. The problem
+with these simple propositional goal-oriented models is that they
+cannot handle the large state spaces involved in modelling social
+relationships and social goals, so I need something slightly more
+complicated. A popular tool for modelling situations involving people
+thinking about the goals of other people is the tool of relational
+representations, e.g., the modal logics of morality
+\citep{horty:1994}. Augmenting goal-oriented reinforcement learning
+models with the abilities of relational representations is a being
+done by a relatively young field \citep{dzeroski:2001} that is proving
+to be maturing very quickly.
 
 \subsection{The Development of Social Goals}
 
@@ -82,39 +84,39 @@ thought processes that would constitute working toward or against
 other people? It has been shown that the neural circuits that are
 involved in how someone thinks about what someone else knows are
 largely distinct from the circuits involved in perceptual capabilities
-[7]. There have also been distinctions shown between the neural
-circuits involved in how someone thinks about what someone else knows
-and executive control of actions [8]. There is good reason to believe
-that the learning of social behavior is bootstrapped from learning
-causal physical models [9].
+\citep{bedny:2009}. There have also been distinctions shown between
+the neural circuits involved in how someone thinks about what someone
+else knows and executive control of actions \citep{saxe:2006}. There
+is good reason to believe that the learning of social behavior is
+bootstrapped from learning causal physical models \citep{perner:1991}.
 
 \section{My Ongoing Research}
 
 \subsubsection{A Reflective Parallel Programming Language}
 
-I have written a programming language, called Funk2, [10] that allows
-us to easily build and monitor the execution of my model. My
-language allows describing systems that reflectively trace changes to
-collections of knowledge by many different parallel mental
-processes. Procedural reflection is a computational technique that I
-have built into this language that is useful for organizing models
-that monitor and control their own execution [11]. I have chosen to
-write my own language because most other programming languages
-emphasize the idea of abstraction barriers, which allows writing
-optimized code, but which does not allow a user to access the details
-of an execution environment. My language allows itself to access many
-of the details of its own process execution by emphasizing ``execution
-simplicity'' over ``speed optimization'' in many cases. Most programming
-languages are optimized for speed at the expense of the resulting
-complexity of the optimized processes and also the lack of traces of
-reflectively useful execution events. My language is useful for
-building models of processes that monitor, control, and change other
-concurrently executing processes. I see this as a very useful tool
-for modelling the complex types of interactions between learning
-processes that are described in the cognitive sciences. In other
-words, the form of procedural reflection enabled by my language gives
-us a powerful method for organizing models of parallel learning
-processes.
+I have written a programming language, called Funk2,
+\citep{morgan:2009} that allows us to easily build and monitor the
+execution of my model. My language allows describing systems that
+reflectively trace changes to collections of knowledge by many
+different parallel mental processes. Procedural reflection is a
+computational technique that I have built into this language that is
+useful for organizing models that monitor and control their own
+execution \citep{maes:1987}. I have chosen to write my own language
+because most other programming languages emphasize the idea of
+abstraction barriers, which allows writing optimized code, but which
+does not allow a user to access the details of an execution
+environment. My language allows itself to access many of the details
+of its own process execution by emphasizing ``execution simplicity''
+over ``speed optimization'' in many cases. Most programming languages
+are optimized for speed at the expense of the resulting complexity of
+the optimized processes and also the lack of traces of reflectively
+useful execution events. My language is useful for building models of
+processes that monitor, control, and change other concurrently
+executing processes. I see this as a very useful tool for modelling
+the complex types of interactions between learning processes that are
+described in the cognitive sciences. In other words, the form of
+procedural reflection enabled by my language gives us a powerful
+method for organizing models of parallel learning processes.
 
 \subsubsection{A Physically Grounded Social Problem Domain}
 
@@ -273,15 +275,15 @@ of self-conscious learning feedback.
 
 Figure 3: A layered reflective model of mind inspired by Marvin
 Minsky's Model-6 Emotion Machine theory of how humans perform
-commonsense human thinking [12].  In summary, the control structure in
-my model can be thought of simply as being roughly organized into six
-layers of control, which is shown in Figure 3. The bottom layer
-represents the physical reactive interface to the physical world. Both
-perception and action are inputs and outputs from this layer,
-respectively. Then, at each subsequently higher layer information from
-below and above are processed as I have described in the previous
-sections, leading to changes in self-reflective processes caused by
-self-conscious learning as my highest level example.
+commonsense human thinking \citep{minsky:2006}.  In summary, the
+control structure in my model can be thought of simply as being
+roughly organized into six layers of control, which is shown in Figure
+3. The bottom layer represents the physical reactive interface to the
+physical world. Both perception and action are inputs and outputs from
+this layer, respectively. Then, at each subsequently higher layer
+information from below and above are processed as I have described in
+the previous sections, leading to changes in self-reflective processes
+caused by self-conscious learning as my highest level example.
 
 
 

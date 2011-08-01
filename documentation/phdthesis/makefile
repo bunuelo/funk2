@@ -11,6 +11,7 @@ phdthesis.pdf: \
   frontbackmatter/contents.tex \
   frontbackmatter/declaration.tex \
   frontbackmatter/dedication.tex \
+  frontbackmatter/dirtytitlepage.tex \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \

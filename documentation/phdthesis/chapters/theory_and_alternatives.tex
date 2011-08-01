@@ -477,7 +477,7 @@ goals are good or bad for the child to pursue.
 \section{The Layered ``Model-6'' Theory for Organizing Reflective Models}
 
 Because the many fields of human cognitive modelling are so disparate it is difficult to see them as a whole.  
-We are inspired by a layered organizational scheme first presented in \\cite{minsky2006em-ch5}.
+We are inspired by a layered organizational scheme first presented in \cite{minsky2006em-ch5}.
 The six layers in this ``Model-6'' organizational scheme are named as follows:
 
 \begin{enumerate}
@@ -515,8 +515,8 @@ The omission problem is then handled in a more abstract layer of the algorithm t
 Crash problems can be dealt in different ways for different algorithms, the simplest being the consensus algorithm.
 This gives us a basic vocabulary of the most fundamental and basic distributed process problems.
 
-\cite{1102980} discuss a basic model for distributed dynamic programming that is organized around a distributed iterative approximation algorithm that computes a function mapping from states to values, $J(x){\\in}\\Re$.
-His model divides the world into sets of states, $S_1 \\cup S_2 \\cup \\cdots S_n = S$, that depend on neighboring sets of states in order to compute the approximation, $J^t$, of the optimal value function, $J^*$.
+\cite{1102980} discuss a basic model for distributed dynamic programming that is organized around a distributed iterative approximation algorithm that computes a function mapping from states to values, $J(x){\in}\Re$.
+His model divides the world into sets of states, $S_1 \cup S_2 \cup \cdots S_n = S$, that depend on neighboring sets of states in order to compute the approximation, $J^t$, of the optimal value function, $J^*$.
 This fits with our abstract notion that commonsense knowledge in an artificial intelligence program should be organized according to what goals it is important to solve.
 Having a basic optimal control theory of why this is a fundamentally sound organization principle is encouraging: perhaps organizing our knowledge by the values of goal states could also apply in the context of abstract reinforcement learning.
 Note that the information theoretic organizational approaches such as the inductive logic approach used by relational reinforcement learning do not organize their knowledge according to which goal values are important for calculating which other goal values.
@@ -540,7 +540,7 @@ In order for our algorithm to intelligently accomplish goals, we need to deliber
 \subsubsection{Models of Computational Reflection}
 
 \cite{maes1987cecr} gives a great overview of ``computational reflection,'' which is basically keeping track of information about the execution of a program, so that other processes can use that information to better control the program.
-Our approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \\cite{minsky1975frk} and first implemented in \cite{roberts1977fpms}.
+Our approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \cite{minsky1975frk} and first implemented in \cite{roberts1977fpms}.
 \cite{maes1987cecr} describe the primary benefits of the frame-based approach as the following:
 
 \begin{itemize}
@@ -593,9 +593,9 @@ Reinforcement learning is an online type of learning problem as opposed to super
 The reinforcement learning problem is defined as
 
 \begin{itemize}
-\item{a set of states, $\\mathcal{S}$,}
-\item{a set of actions, $\\mathcal{A}$, and}
-\item{a set of scalar reinforcement signals, typically $\\{0,1\\}$ or $\\Re$.}
+\item{a set of states, $\mathcal{S}$,}
+\item{a set of actions, $\mathcal{A}$, and}
+\item{a set of scalar reinforcement signals, typically $\{0,1\}$ or $\Re$.}
 \end{itemize}
 
 It is interesting to consider how the well developed idea of ``exploration versus exploitation'' as discussed in \cite{kaelbling1996rls} as a model for deciding when to sequentially meta-reason.
@@ -605,9 +605,9 @@ subsubsection{Models of Optimal Behavior}
 \cite{kaelbling1996rls} discuss three primary models of optimal behavior:
 
 \begin{enumerate}
-\item{the \emph{finite horizon} model in which an agent performs receding horizon control, such that total reward is $E(\\sum_{t=0}^{h}{r_t})$,}
-\item{the \emph{infinite discounted} model in which an agent uses future rewards discounted by a constant factor, $\\gamma$, such that total reward is $E(\\sum_{t=0}^{\\infty}{\\gamma^t r_t})$, and}
-\item{the \emph{average reward} model which is the infinite limit of the finite horizon model, such that total reward is $\\lim_{h{\\rightarrow}\\infty}{E(\\frac{1}{h}\\sum_{t=0}^{h}{r_t})}$.}
+\item{the \emph{finite horizon} model in which an agent performs receding horizon control, such that total reward is $E(\sum_{t=0}^{h}{r_t})$,}
+\item{the \emph{infinite discounted} model in which an agent uses future rewards discounted by a constant factor, $\gamma$, such that total reward is $E(\sum_{t=0}^{\infty}{\gamma^t r_t})$, and}
+\item{the \emph{average reward} model which is the infinite limit of the finite horizon model, such that total reward is $\lim_{h{\rightarrow}\infty}{E(\frac{1}{h}\sum_{t=0}^{h}{r_t})}$.}
 \end{enumerate}
 
 Since we are dealing with modelling very large and complex systems, we see these optimality criteria as only applicable to small isolated aspects of the entire system.
@@ -625,10 +625,10 @@ A simple formulation of the reinforcement learning problem can be formulated in 
 An MDP is defined as
 
 \begin{itemize}
-\item{a set of states, $\\mathcal{S}$,}
-\item{a set of actions, $\\mathcal{A}$,}
-\item{a reward function $\\mathcal{R}:\\mathcal{S}\\times\\mathcal{A}\\rightarrow\\Re$, and}
-\item{a state transition function, $\\mathcal{T}:\\mathcal{S}\\times\\mathcal{A}\\rightarrow\\Pi{(\\mathcal{S})}$.}
+\item{a set of states, $\mathcal{S}$,}
+\item{a set of actions, $\mathcal{A}$,}
+\item{a reward function $\mathcal{R}:\mathcal{S}\times\mathcal{A}\rightarrow\Re$, and}
+\item{a state transition function, $\mathcal{T}:\mathcal{S}\times\mathcal{A}\rightarrow\Pi{(\mathcal{S})}$.}
 \end{itemize}
 
 \subsubsection{Category Learning to Accomplish Goals}
@@ -673,16 +673,16 @@ The process of creative storytelling is handled very similarly to mechanical goa
 \subsubsection{Models of Learning by Credit Assignment through Temporal State Tracing}
 
 \emph{Eligibility traces} are a simple reinforcement learning tool for temporal credit assignment for an agent entering positive and negative reward states.
-For example, the \emph{backward} view of eligibility tracing as applied to the temporal difference, $\\text{TD}(\\lambda)$, learning method simply augments the basic learning algorithm with an additional eligibitity factor, $e_t(s)$, for each state.
+For example, the \emph{backward} view of eligibility tracing as applied to the temporal difference, $\text{TD}(\lambda)$, learning method simply augments the basic learning algorithm with an additional eligibitity factor, $e_t(s)$, for each state.
 Only non-zero values of the eligibility factor are remembered in tractible (approximate) implementations; this amounts to keeping a list of $n$ recently visited states.
-In the algorithm, the current state's eligibility factor, $e_t(s_t)$, is set to $1$ and all other states are discounted by a constant eligibility discount factor, $\\gamma$.
-Credit assignment for rewards that are found in the world are assigned not only to the previous state, as in the basic one-step $\\text{TD}(\\lambda)$ algorithm but also assigned to the value functions in a discounted sense to the previous $n$ states in our eligibility trace.
+In the algorithm, the current state's eligibility factor, $e_t(s_t)$, is set to $1$ and all other states are discounted by a constant eligibility discount factor, $\gamma$.
+Credit assignment for rewards that are found in the world are assigned not only to the previous state, as in the basic one-step $\text{TD}(\lambda)$ algorithm but also assigned to the value functions in a discounted sense to the previous $n$ states in our eligibility trace.
 We call this form of credit assignment ``Temporal State Tracing'' because it simply assigns credit to those states temporally local to the current state, i.e. there is no explicit consideration of causality involved in the assignment.
 
 \subsubsection{Models of Learning by Credit Assignment through Causal Tracing of Failure}
 
 We do not know of any reinforcement learning algorithms that reflectively learn how to plan through causal tracing of failures.
-Our method of learning in this way is disussed in Section~\\ref{causal_tracing_of_failure-section}.
+Our method of learning in this way is disussed in Section~\ref{causal_tracing_of_failure-section}.
 
 \subsubsection{Models of Learning by Explaining Failures}
 
@@ -804,7 +804,7 @@ These 18 dimensions are listed in the following table for reference:
   \emph{21.} & \emph{envious}     & ~
 \end{table}	      
 
-\cite{winter2005wasjm} discuss the difference between \\emph{dispositional} inferences and \emph{situational} inferences.
+\cite{winter2005wasjm} discuss the difference between \emph{dispositional} inferences and \emph{situational} inferences.
 A dispositional statement is a statement about the relationship between person models, such as ``kind person'' or ``she helped the man'', whereas a situational statement is a statement that does not refer to such a model of a social relationship between person models, such as ``she dropped the groceries''.
 Here is the list of 18 dispositional properties that they discovered in their research interviewing college students for word associations:
 
@@ -910,7 +910,7 @@ There are many forms of reflective thought, and we choose to use the term ``self
 
 \subsection{Visual Programming Languages for Psycological Study of Complex Models}
 
-\cite{cooper2002mhl} and \\cite{cooper1998cvd} discuss how to model high-level cognitive processes in an empirical and scientific way.
+\cite{cooper2002mhl} and \cite{cooper1998cvd} discuss how to model high-level cognitive processes in an empirical and scientific way.
 Much of their work is presented in terms of their COGENT cognitive architecture that includes a visual programming language for cognitive scientists to quickly build and evaluate varieties of complex hypotheses.
 	      
 \cite{cooper1995too} discuss an object-oriented language for cognitive modeling
@@ -925,7 +925,7 @@ Much of their work is presented in terms of their COGENT cognitive architecture 
 \section{Models of the Large-scale Integration of Multiple Models of Cognition}
 
 \cite{langley2008car} gives a good overview of the current state of the field of cognitive architectural design in terms of what exists and what needs to still be designed and built.
-Among the features that are not much explored are the types reflective processes that control deliberative processes, which \\cite{sloman2001vaa} refers to as meta-management.
+Among the features that are not much explored are the types reflective processes that control deliberative processes, which \cite{sloman2001vaa} refers to as meta-management.
 We see building layers of these reflective management processes in the top three layers of the Emotion Machine theory as our basic inspiration for higher orders of reflective control beyond meta-management.
 
 \subsection{The EM-ONE Model}

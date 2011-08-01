@@ -78,7 +78,7 @@ from the web \citep{matuszek:2005}.  The OpenMind project
 approximately correct commonsense knowledge from people online.  The
 OpenMind knowledge has been turned into many inference systems that
 can compare and generate new commonsense knowledge \citep{liu:2004a,
-  liu:2004b, speer:2008}.
+  liu:2004b, speer:2009}.
 
 \subsection{The Common Sense Reasoning Problem Domain}
 
@@ -511,14 +511,14 @@ We see medical applications, such as categorizing spectrum mental disorders, as 
 
 \subsubsection{Models of Failure in Distributed Systems}
 
-\cite{attiya2004dcf} discuss algorithms for tolerating a few types of failures in distributed systems, ranging from silent crashes to arbitrary Byzantine failures, where parts of an algorithm perform in completely uncontrolled and unpredictable ways.
+\cite{attiya:2004} discuss algorithms for tolerating a few types of failures in distributed systems, ranging from silent crashes to arbitrary Byzantine failures, where parts of an algorithm perform in completely uncontrolled and unpredictable ways.
 An algorithm for Byzantine tolerance is presented that is based upon building layers of first abstracting controllers that turn the Byzantine problem into a simpler \emph{identical Byzantine} problem.
 The identical Byzantine problem is then abstracted to the simpler \emph{omission} problem, where a processor simply omits some messages from being transmitted.
 The omission problem is then handled in a more abstract layer of the algorithm that when detecting an omission, crashes itself, resulting in a \emph{crash} problem.
 Crash problems can be dealt in different ways for different algorithms, the simplest being the consensus algorithm.
 This gives us a basic vocabulary of the most fundamental and basic distributed process problems.
 
-\cite{1102980} discuss a basic model for distributed dynamic programming that is organized around a distributed iterative approximation algorithm that computes a function mapping from states to values, $J(x){\in}\Re$.
+\cite{bertsekas:1982} discuss a basic model for distributed dynamic programming that is organized around a distributed iterative approximation algorithm that computes a function mapping from states to values, $J(x){\in}\Re$.
 His model divides the world into sets of states, $S_1 \cup S_2 \cup \cdots S_n = S$, that depend on neighboring sets of states in order to compute the approximation, $J^t$, of the optimal value function, $J^*$.
 This fits with our abstract notion that commonsense knowledge in an artificial intelligence program should be organized according to what goals it is important to solve.
 Having a basic optimal control theory of why this is a fundamentally sound organization principle is encouraging: perhaps organizing our knowledge by the values of goal states could also apply in the context of abstract reinforcement learning.
@@ -528,9 +528,9 @@ Note that the information theoretic organizational approaches such as the induct
 Recently, statistical propositional logic has become popular along with graph-based inference techniques for calculating both the most likely propositional state as well as the probability of any single propositional variable.
 Statistical models are often represented in graphical form that can be easily distributed and computed by sparse matrix multiplication algorithms.
 Given a statistical model, it is common to use the MAXENT algorithm to approximate the most likely state of such a model.
-\cite{jaynes1982maxent} discuss when this may or may not be appropriate.
-\cite{murphy1999lbp} discuss Pearl's ``loopy'' belief propagation algorithm which is an unreliable but efficient inference tool.
-\cite{yedidia2005feagbp} generalizes this distributed form of statistical inference to more powerful forms of hierarchical methods, explaining in the process that the forward-backward algorithm for hidden markov models, the Viterbi algorithm, Gallager's sum-product algorithm, the ``turbo-decoding'' algorithm, Pearl's ``belief propagation'' algorithm for inference on Bayesian networks, the ``Kalman filter'' for signal processing, and the ``transfer matrix'' approach in statistical mechanics are all of the same generalized form of statistical inference.
+\cite{jaynes:1982} discuss when this may or may not be appropriate.
+\cite{murphy:1999} discuss Pearl's ``loopy'' belief propagation algorithm which is an unreliable but efficient inference tool.
+\cite{yedidia:2005} generalizes this distributed form of statistical inference to more powerful forms of hierarchical methods, explaining in the process that the forward-backward algorithm for hidden markov models, the Viterbi algorithm, Gallager's sum-product algorithm, the ``turbo-decoding'' algorithm, Pearl's ``belief propagation'' algorithm for inference on Bayesian networks, the ``Kalman filter'' for signal processing, and the ``transfer matrix'' approach in statistical mechanics are all of the same generalized form of statistical inference.
 
 These statistical tools are the basic inference tools that claim nothing about their own applicability, and have no recourse for response for their own failures.
 These statistical inference tools also know nothing about the goals which they are supposed to help solve.
@@ -538,13 +538,13 @@ In order for our algorithm to intelligently accomplish goals, we need to deliber
 
 \subsubsection{Models of Distributed Intelligence}
 
-\cite{maes1990lcb} discuss learning to coordinate behavior, an argument for robust robot control using multiple ways of reasoning in a layered architecture.
+\cite{maes:1990} discuss learning to coordinate behavior, an argument for robust robot control using multiple ways of reasoning in a layered architecture.
 
 \subsubsection{Models of Computational Reflection}
 
-\cite{maes1987cecr} gives a great overview of ``computational reflection,'' which is basically keeping track of information about the execution of a program, so that other processes can use that information to better control the program.
-Our approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \cite{minsky1975frk} and first implemented in \cite{roberts1977fpms}.
-\cite{maes1987cecr} describe the primary benefits of the frame-based approach as the following:
+\cite{maes:1987} gives a great overview of ``computational reflection,'' which is basically keeping track of information about the execution of a program, so that other processes can use that information to better control the program.
+Our approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \cite{minsky:1975} and first implemented in \cite{roberts:1977}.
+\cite{maes:1987} describe the primary benefits of the frame-based approach as the following:
 
 \begin{itemize}
 \item{it helps the user cope with the complexity of a large system by providing documentation, history, and explanation facilities,}
@@ -553,27 +553,27 @@ Our approach to computational reflection is what they categorize as a ``frame-ba
 \item{it guards the status and behavior of the data-item and activates procedures when specific events happen (e.g. the value becomes instantiated or changed).}
 \end{itemize}
 
-\cite{sobel96anintroduction} discuss an introduction to reflection-oriented programming.
-\cite{matsuoka1992ocr} discuss object-oriented concurrent reflective architectures.
-\cite{oliva1998rag} discuss the reflective architecture called ``Guaraná.''
-\cite{watanabe1989rcoocsa} discuss reflective computation in object-oriented concurrent systems.
-\cite{yonezawa1990roo} discuss a reflective object oriented concurrent language called ``ABCL/R.''
-\cite{ancona1998cr} discuss channel reification, which is a reflective model for distributed computation.
-\cite{cazzola1998eoo} discuss evaluation of object-oriented reflective models.
+\cite{sobel:1996} discuss an introduction to reflection-oriented programming.
+\cite{matsuoka:1992} discuss object-oriented concurrent reflective architectures.
+\cite{oliva:1998} discuss the reflective architecture called ``Guaraná.''
+\cite{watanabe:1989} discuss reflective computation in object-oriented concurrent systems.
+\cite{yonezawa:1990} discuss a reflective object oriented concurrent language called ``ABCL/R.''
+\cite{ancona:1998} discuss channel reification, which is a reflective model for distributed computation.
+\cite{cazzola:1998} discuss evaluation of object-oriented reflective models.
 
 \subsection{Learned Reactions---Models of Learning Reactions}
 
 \subsubsection{Models of Planning to Perceive}
 
-\cite{pryorcollins1995ptp} discuss how planning is used in perceptual processes.
+\cite{pryorcollins:1995} discuss how planning is used in perceptual processes.
 
 \subsubsection{Models of Commonsense Reasoning}
 
-There are many domains of quaitative commonsense reasoning, e.g. physics \cite[]{forbus1994qpt}, natural language \cite[]{liu2004cra}, story narratives \cite[]{williams2005cas}, event planning \cite[]{smith2006mar}, and psychology \cite[]{gordon2008asm}.
+There are many domains of quaitative commonsense reasoning, e.g. physics \cite[]{forbus:1994}, natural language \cite[]{liu:2004a}, story narratives \cite[]{williams:2005}, event planning \cite[]{smith:2006}, and psychology \cite[]{gordon:2008}.
 
 \subsubsection{Models of Reactive Commonsense Knowledge}
 
-There are also a few large knowledge bses of commonsense knowledge, e.g. ConceptNet \cite[]{liu2004cpc}, FrameNet \cite[]{980860}, Cyc \cite[]{79176}, AnalogySpace \cite[]{1502672}, and WordNet \cite[]{fellbaum1998wel}.
+There are also a few large knowledge bses of commonsense knowledge, e.g. ConceptNet \cite[]{liu:2004b}, FrameNet \cite[]{baker:1998}, Cyc \cite[]{lenat:1990}, AnalogySpace \cite[]{speer:2009}, and WordNet \cite[]{fellbaum:1998}.
 Although these knowledge bases have a broad range of reasoning algorithms from linear algebraic semantic analogies in AnalogySpace to intricate microtheoretic logical deduction in Cyc, none of these knowledge bases are able to causal reflectively control the complexity of their algorithms.
 Because commonsense knowledge is often represented in a declarative form, logical reasoning algorithms are often applied, but undirected logical reasoning methods often cannot handle large amounts of knowledge.
 We hope that our causal reflective tools available in the Funk2 architecture will help in learning to reflectively control these explosive logical reasoning algorithms.
@@ -584,15 +584,15 @@ We hope that our focus on goal-oriented learning in our reflective architecture 
 
 Artificial intelligence systems that use multi-step deliberation (or planning) in order to imagine hypothetical (counterfactual) sets of actions before executing these scripts (or plans) are implementing what is referred to as Layer 3 in the Emotion Machine theory of mind.
 
-\cite{thagard1995ibp} discuss using a coherence theory of decision in order to perform inference to the best plan.
-\cite{michalski1995lgdi} discuss learning as goal-driven inference.
+\cite{thagard:1995} discuss using a coherence theory of decision in order to perform inference to the best plan.
+\cite{michalski:1995} discuss learning as goal-driven inference.
 
 \subsubsection{Reinforcement Learning}
 
-According to \cite{sutton1998rli}, the field of reinforcement learning deals with the problem of ``learning what to do---how to map situations to actions---so as to maximize a numerical reward signal.''
+According to \cite{sutton:1998}, the field of reinforcement learning deals with the problem of ``learning what to do---how to map situations to actions---so as to maximize a numerical reward signal.''
 Reinforcement learning is an online type of learning problem as opposed to supervised or unsupervised types of learning problems.
 
-\cite{kaelbling1996rls} gives a good overview of historical reinforcement learning.
+\cite{kaelbling:1996} gives a good overview of historical reinforcement learning.
 The reinforcement learning problem is defined as
 
 \begin{itemize}
@@ -601,11 +601,11 @@ The reinforcement learning problem is defined as
 \item{a set of scalar reinforcement signals, typically $\{0,1\}$ or $\Re$.}
 \end{itemize}
 
-It is interesting to consider how the well developed idea of ``exploration versus exploitation'' as discussed in \cite{kaelbling1996rls} as a model for deciding when to sequentially meta-reason.
+It is interesting to consider how the well developed idea of ``exploration versus exploitation'' as discussed in \cite{kaelbling:1996} as a model for deciding when to sequentially meta-reason.
 
 subsubsection{Models of Optimal Behavior}
 
-\cite{kaelbling1996rls} discuss three primary models of optimal behavior:
+\cite{kaelbling:1996} discuss three primary models of optimal behavior:
 
 \begin{enumerate}
 \item{the \emph{finite horizon} model in which an agent performs receding horizon control, such that total reward is $E(\sum_{t=0}^{h}{r_t})$,}
@@ -619,8 +619,8 @@ Homeostasis monitors and continual ``heartbeat'' controllers could be implemente
 
 \subsubsection{Dynamic Programming and Optimal Control}
 
-\cite{bertsekas2001dpa} describe techniques for finding optimal and approximate \emph{functional} (\emph{memoizable}) solutions to reinforcement learning control problems, using recursive formulas of flat state spaces that can be optimized very easily by using memoized functions.
-While this approach does not handle abstract models of the agent's world, there are exciting options of combining a dynamic programming approach with an abstract form of reinforcement learning, such as the use of inductive logic described in \cite{dvzeroski2001rrl}.
+\cite{bertsekas:1995} describe techniques for finding optimal and approximate \emph{functional} (\emph{memoizable}) solutions to reinforcement learning control problems, using recursive formulas of flat state spaces that can be optimized very easily by using memoized functions.
+While this approach does not handle abstract models of the agent's world, there are exciting options of combining a dynamic programming approach with an abstract form of reinforcement learning, such as the use of inductive logic described in \cite{dvzeroski:2001}.
 
 \subsubsection{A Theoretical World Model}
 
@@ -636,11 +636,11 @@ An MDP is defined as
 
 \subsubsection{Category Learning to Accomplish Goals}
 
-Category learning in the context of goal-oriented problem-solving is an idea that is discussed by \cite{barsalou1995dcag}.
+Category learning in the context of goal-oriented problem-solving is an idea that is discussed by \cite{barsalou:1995}.
 
 \subsubsection{Models of Learning by Positive or Negative Reward in the context of Relational Knowledge}
 
-\cite{dvzeroski2001rrl} describe an interesting combination of inductive logic programming (ILP) \cite[]{muggleton1992ilp} and reinforcement learning.
+\cite{dvzeroski:2001} describe an interesting combination of inductive logic programming (ILP) \cite[]{muggleton:1992} and reinforcement learning.
 The benefit of using abstract logical representations of propositional states, actions, and state values makes the basic reinforcement learning algorithm able to deal with relational state spaces, such as the blocks world toy problem and the other problem representations that we are focusing on in this PhD.
 This form of learning abstractions takes a flat mental space and maps it to a hierarchical relational abstraction.
 
@@ -648,21 +648,21 @@ This form of learning abstractions takes a flat mental space and maps it to a hi
 
 \subsubsection{Models of Commonsense Psychology}
 
-Understanding human psychology in commonsense terms is an initiative described in \cite{gordon2004fcp}.
+Understanding human psychology in commonsense terms is an initiative described in \cite{gordon:2004}.
 We see our work as building upon this development of a commonsense language for discussing the types of mental processes that humans have.
-Also, \cite{gordon2008asm} further develops this commonsense psychological language approach to describe the processes of self-reflection, which is even more relevant to our work.
+Also, \cite{gordon:2008} further develops this commonsense psychological language approach to describe the processes of self-reflection, which is even more relevant to our work.
 The difference between our approach and the commonsense psychology approach is that our work simulates these mental processes in a computer, using the Funk2 causally reflective procedural programming language.
 Previous approaches have represented psychological reasoning processes in a declarative logical form, but these logical forms cannot handle the large knowledge bases that are involved in general commonsense reasoning.
 
-\cite{wilson1977tmt} discuss verbal reports on mental processes.
-\cite{schank1972pcu} discuss primitive concepts underlying verbs of thought.
+\cite{wilson:1977} discuss verbal reports on mental processes.
+\cite{schank:1972} discuss primitive concepts underlying verbs of thought.
 
 \subsubsection{Models of Unsticking Deliberation by Creative Analogical Thinking}
 
-\cite{buchanan2001cma} discuss creativity at the metalevel.
-\cite{mueller1990dha} discuss daydreamer
+\cite{buchanan:1977} discuss creativity at the metalevel.
+\cite{mueller:1990} discuss daydreamer.
 
-A storytelling system that is called MINSTREL is discussed in \cite{turner1994cpc}; it is guided by creativity goals in order to develop good narratives.
+A storytelling system that is called MINSTREL is discussed in \cite{turner:1994}; it is guided by creativity goals in order to develop good narratives.
 The process of creative storytelling is handled very similarly to mechanical goal-oriented problem solving in this way.
 
 \subsubsection{Models of Learning to Plan to Learn}

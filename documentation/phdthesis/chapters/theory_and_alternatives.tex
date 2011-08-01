@@ -327,7 +327,7 @@ systems that can accomplish goals.
 For example, a Markov Decision Process contains a transfer function,
 which is basically a combinational device.
 
-Of course, this combinational device would get more complicated if I added probability.
+Of course, this combinational device would get complicated if I added probability.
 
 
 
@@ -469,7 +469,7 @@ goals are good or bad for the child to pursue.
 \section{The Layered ``Model-6'' Theory for Organizing Reflective Models}
 
 Because the many fields of human cognitive modelling are so disparate
-it is difficult to see them as a whole.  We are inspired by a layered
+it is difficult to see them as a whole.  I am inspired by a layered
 organizational scheme first presented in \cite{minsky:2006}.  The
 six layers in this ``Model-6'' organizational scheme are named as
 follows:
@@ -483,10 +483,9 @@ follows:
 \item{Self-Conscious Reflection}
 \end{enumerate}
 
-We hope that the reader will see that this is a useful way of organizing the massive amount of work that has gone into the computational modelling of abstract human thought processes since the conception of the field of artificial intelligence in 1956.
-We are not claiming any biological correlations for these layers, but we are very excited by this unexplored possibility!
-First, we must build such a model before any such statistical correlations could be found!
-We see medical applications, such as categorizing spectrum mental disorders, as the highest-level goal in our work.
+I hope that the reader will see that this is a useful way of
+organizing the massive amount of work that has gone into the
+computational modelling of abstract human thought processes.
 
 \subsection{Instinctive Reactions---Models of Insulation and Interaction}
 
@@ -512,7 +511,7 @@ This gives us a basic vocabulary of the most fundamental and basic distributed p
 
 \cite{bertsekas:1982} discuss a basic model for distributed dynamic programming that is organized around a distributed iterative approximation algorithm that computes a function mapping from states to values, $J(x){\in}\Re$.
 His model divides the world into sets of states, $S_1 \cup S_2 \cup \cdots S_n = S$, that depend on neighboring sets of states in order to compute the approximation, $J^t$, of the optimal value function, $J^*$.
-This fits with our abstract notion that commonsense knowledge in an artificial intelligence program should be organized according to what goals it is important to solve.
+This fits with the idea that commonsense knowledge in an artificial intelligence program should be organized according to what goals it is important to solve.
 Having a basic optimal control theory of why this is a fundamentally sound organization principle is encouraging: perhaps organizing our knowledge by the values of goal states could also apply in the context of abstract reinforcement learning.
 Note that the information theoretic organizational approaches such as the inductive logic approach used by relational reinforcement learning do not organize their knowledge according to which goal values are important for calculating which other goal values.
 
@@ -522,11 +521,11 @@ Statistical models are often represented in graphical form that can be easily di
 Given a statistical model, it is common to use the MAXENT algorithm to approximate the most likely state of such a model.
 \cite{jaynes:1982} discuss when this may or may not be appropriate.
 \cite{murphy:1999} discuss Pearl's ``loopy'' belief propagation algorithm which is an unreliable but efficient inference tool.
-\cite{yedidia:2005} generalizes this distributed form of statistical inference to more powerful forms of hierarchical methods, explaining in the process that the forward-backward algorithm for hidden markov models, the Viterbi algorithm, Gallager's sum-product algorithm, the ``turbo-decoding'' algorithm, Pearl's ``belief propagation'' algorithm for inference on Bayesian networks, the ``Kalman filter'' for signal processing, and the ``transfer matrix'' approach in statistical mechanics are all of the same generalized form of statistical inference.
+\cite{yedidia:2005} generalizes this distributed form of statistical inference to hierarchical methods, explaining in the process that the forward-backward algorithm for hidden markov models, the Viterbi algorithm, Gallager's sum-product algorithm, the ``turbo-decoding'' algorithm, Pearl's ``belief propagation'' algorithm for inference on Bayesian networks, the ``Kalman filter'' for signal processing, and the ``transfer matrix'' approach in statistical mechanics are all of the same generalized form of statistical inference.
 
 These statistical tools are the basic inference tools that claim nothing about their own applicability, and have no recourse for response for their own failures.
 These statistical inference tools also know nothing about the goals which they are supposed to help solve.
-In order for our algorithm to intelligently accomplish goals, we need to deliberate or plan our usage of these most basic tools.
+In order for an algorithm to intelligently accomplish goals, it needs to deliberate or plan its usage of these most basic tools.
 
 \subsubsection{Models of Distributed Intelligence}
 
@@ -535,7 +534,7 @@ In order for our algorithm to intelligently accomplish goals, we need to deliber
 \subsubsection{Models of Computational Reflection}
 
 \cite{maes:1987} gives a great overview of ``computational reflection,'' which is basically keeping track of information about the execution of a program, so that other processes can use that information to better control the program.
-Our approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \cite{minsky:1975} and first implemented in \cite{roberts:1977}.
+My approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \cite{minsky:1975} and first implemented in \cite{roberts:1977}.
 \cite{maes:1987} describe the primary benefits of the frame-based approach as the following:
 
 \begin{itemize}
@@ -568,9 +567,7 @@ There are many domains of quaitative commonsense reasoning, e.g. physics \cite[]
 There are also a few large knowledge bses of commonsense knowledge, e.g. ConceptNet \cite[]{liu:2004a}, FrameNet \cite[]{baker:1998}, Cyc \cite[]{lenat:1990}, AnalogySpace \cite[]{speer:2009}, and WordNet \cite[]{fellbaum:1998}.
 Although these knowledge bases have a broad range of reasoning algorithms from linear algebraic semantic analogies in AnalogySpace to intricate microtheoretic logical deduction in Cyc, none of these knowledge bases are able to causal reflectively control the complexity of their algorithms.
 Because commonsense knowledge is often represented in a declarative form, logical reasoning algorithms are often applied, but undirected logical reasoning methods often cannot handle large amounts of knowledge.
-We hope that our causal reflective tools available in the Funk2 architecture will help in learning to reflectively control these explosive logical reasoning algorithms.
-Another aspect that is critically important for organizing massive commonsense knowledge bases are goals; the knowledge should be indexed by types of goals.
-We hope that our focus on goal-oriented learning in our reflective architecture will provide means of organizing learned knowledge in terms of the goals it is relevant for thinking about.
+I see that reflective tools available in the Funk2 architecture could help with learning to reflectively control these explosive logical reasoning algorithms.
 
 \subsection{Deliberative Thinking---Models of Learning to Compile Plans}
 
@@ -605,8 +602,8 @@ subsubsection{Models of Optimal Behavior}
 \item{the \emph{average reward} model which is the infinite limit of the finite horizon model, such that total reward is $\lim_{h{\rightarrow}\infty}{E(\frac{1}{h}\sum_{t=0}^{h}{r_t})}$.}
 \end{enumerate}
 
-Since we are dealing with modelling very large and complex systems, we see these optimality criteria as only applicable to small isolated aspects of the entire system.
-Nonetheless, we hypothesize that useful approximations of optimal systems that can be derived from overlapping subsystems with constraining optimality criteria can be derived from these three basic types of optimality.
+These exact optimality criteria are only applicable to relatively small problem domains.
+Nonetheless, I hypothesize that useful approximations of optimal systems that can be derived from overlapping subsystems with constraining optimality criteria can be derived from these three basic types of optimality.
 Homeostasis monitors and continual ``heartbeat'' controllers could be implemented with infinite or average optimality models, while short-term goal-oriented controllers would necessitate the complexities of the full $N$-step finite horizon model of optimality.
 
 \subsubsection{Dynamic Programming and Optimal Control}
@@ -633,7 +630,7 @@ Category learning in the context of goal-oriented problem-solving is an idea tha
 \subsubsection{Models of Learning by Positive or Negative Reward in the context of Relational Knowledge}
 
 \cite{dvzeroski:2001} describe an interesting combination of inductive logic programming (ILP) \cite[]{muggleton:1992} and reinforcement learning.
-The benefit of using abstract logical representations of propositional states, actions, and state values makes the basic reinforcement learning algorithm able to deal with relational state spaces, such as the blocks world toy problem and the other problem representations that we are focusing on in this PhD.
+The benefit of using abstract logical representations of propositional states, actions, and state values makes the basic reinforcement learning algorithm able to deal with relational state spaces, such as the blocks world toy problem and the other problem representations that I am focusing on in this PhD.
 This form of learning abstractions takes a flat mental space and maps it to a hierarchical relational abstraction.
 
 \subsection{Reflective Thinking---Models of Learning to Control Deliberation}
@@ -641,9 +638,9 @@ This form of learning abstractions takes a flat mental space and maps it to a hi
 \subsubsection{Models of Commonsense Psychology}
 
 Understanding human psychology in commonsense terms is an initiative described in \cite{gordon:2004}.
-We see our work as building upon this development of a commonsense language for discussing the types of mental processes that humans have.
-Also, \cite{gordon:2008} further develops this commonsense psychological language approach to describe the processes of self-reflection, which is even more relevant to our work.
-The difference between our approach and the commonsense psychology approach is that our work simulates these mental processes in a computer, using the Funk2 causally reflective procedural programming language.
+I see my work as building upon this development of a commonsense language for discussing the types of mental processes that humans have.
+Also, \cite{gordon:2008} further develops this commonsense psychological language approach to describe the processes of self-reflection, which is relevant to my work.
+The difference between my approach and the commonsense psychology approach is that my work simulates these mental processes in a computer, using the Funk2 causally reflective procedural programming language.
 Previous approaches have represented psychological reasoning processes in a declarative logical form, but these logical forms cannot handle the large knowledge bases that are involved in general commonsense reasoning.
 
 \cite{wilson:1977} discuss verbal reports on mental processes.
@@ -671,13 +668,13 @@ The process of creative storytelling is handled very similarly to mechanical goa
 For example, the \emph{backward} view of eligibility tracing as applied to the temporal difference, $\text{TD}(\lambda)$, learning method simply augments the basic learning algorithm with an additional eligibitity factor, $e_t(s)$, for each state.
 Only non-zero values of the eligibility factor are remembered in tractible (approximate) implementations; this amounts to keeping a list of $n$ recently visited states.
 In the algorithm, the current state's eligibility factor, $e_t(s_t)$, is set to $1$ and all other states are discounted by a constant eligibility discount factor, $\gamma$.
-Credit assignment for rewards that are found in the world are assigned not only to the previous state, as in the basic one-step $\text{TD}(\lambda)$ algorithm but also assigned to the value functions in a discounted sense to the previous $n$ states in our eligibility trace.
-We call this form of credit assignment ``Temporal State Tracing'' because it simply assigns credit to those states temporally local to the current state, i.e. there is no explicit consideration of causality involved in the assignment.
+Credit assignment for rewards that are found in the world are assigned not only to the previous state, as in the basic one-step $\text{TD}(\lambda)$ algorithm but also assigned to the value functions in a discounted sense to the previous $n$ states in its eligibility trace.
+I call this form of credit assignment ``Temporal State Tracing'' because it simply assigns credit to those states temporally local to the current state, i.e. there is no explicit consideration of causality involved in the assignment.
 
 \subsubsection{Models of Learning by Credit Assignment through Causal Tracing of Failure}
 
-We do not know of any reinforcement learning algorithms that reflectively learn how to plan through causal tracing of failures.
-Our method of learning in this way is disussed in Section~\ref{causal_tracing_of_failure-section}.
+I do not know of any reinforcement learning algorithms that reflectively learns how to plan through causal tracing of failures.
+My method of learning in this way is disussed in Section~\ref{causal_tracing_of_failure-section}.
 
 \subsubsection{Models of Learning by Explaining Failures}
 
@@ -733,7 +730,7 @@ Models of multiple intelligent agents that work together to solve problems have 
 Many popular surveys of the field exist \cite[]{wei:1995} \cite[]{sen:1999} \cite[]{stone:2000} \cite[]{shoham:2004} \cite[]{yang:2004} \cite[]{panait:2005}.
 
 \cite{boutilier:1996} discuss a specific type of $n$-person cooperative game theory, in which agents share common goals, or in other words, a joint value function.
-\cite{rapoport:2001} discuss $n$-person game theory in more detail.
+\cite{rapoport:2001} discuss $n$-person game theory in detail.
 
 \cite{bowling:2000} describe an analysis of stochastic game theory for multiagent reinforcement learning.
 \cite{claus:1998} describe the dynamics of reinforcement learning in cooperative multiagent systems.
@@ -840,11 +837,11 @@ See Table~\ref{tab:winter_dispositional_properties} for the list of 18 dispositi
 
 \subsubsection{Empirical Models of Self and Other Social Models}
 
-This section discusses much research that often uses words that we often do not see used precisely.
+This section discusses much research that often uses words that I often do not see used precisely.
 For example, the phrase ``self-awareness'' is often used to describe a sort of mental process that monitors another mental process.
-In this document, we try to be consistent by using the word ``self'' to only refer to models of self versus other in terms of agents thinking about personalities or properties of agents.
+In this document, I try to be consistent by using the word ``self'' to only refer to models of self versus other in terms of agents thinking about personalities or properties of agents.
 Other common uses of the terms ``self-awareness'' and ``self-consciousness'' are often less clear and refer to any kind of reflective process perceiving the execution of another process within the mind.
-There are many forms of reflective thought, and we choose to use the term ``self-reflection'' to refer to those reflective processes that deal with self and other personality models of inter-agent relationships.
+There are many forms of reflective thought, and I choose to use the term ``self-reflection'' to refer to those reflective processes that deal with self and other personality models of inter-agent relationships.
 
 \cite{goverover:2007} discuss treatment to improve self-awareness in persons with acquired brain injury.
 \cite{baumeister:1993} discuss when ego threats lead to self-regulation failure: negative consequences of high self-esteem.
@@ -936,27 +933,27 @@ Much of their work is presented in terms of their COGENT cognitive architecture 
 
 \cite{langley:2008} gives a good overview of the current state of the field of cognitive architectural design in terms of what exists and what needs to still be designed and built.
 Among the features that are not much explored are the types reflective processes that control deliberative processes, which \cite{sloman:2001} refers to as meta-management.
-We see building layers of these reflective management processes in the top three layers of the Emotion Machine theory as our basic inspiration for higher orders of reflective control beyond meta-management.
+I see building layers of these reflective management processes in the top three layers of the Emotion Machine theory as my basic inspiration for higher orders of reflective control beyond meta-management.
 
 \subsection{The EM-ONE Model}
 
 \cite{singh:2005} describe the first cognitive architecture based on the Emotion Machine theory of mind, developed in \cite{minsky:2006}.
 This architecture includes the ability to control reasoning using a relational list commonsense narrative representation.
 In terms of types of representations, the Emotion Machine theory proposes that self models exist in the self-reflective layer and imprimer models exist in the self-conscious layer.
-Our purpose is to elaborate on this example model in a much larger and more powerful causally reflective programming language.
-Our Funk2 architecture is based on procedural forms of run-time reflection that is built into the underlying programming language, whereas the previous work was based on declarative forms that used an assortment of programming languages, including Lisp and Prolog.
+My purpose is to elaborate on this example model in a larger and causally reflective programming language.
+My Funk2 architecture is based on procedural forms of run-time reflection that is built into the underlying programming language, whereas the previous work was based on declarative forms that used an assortment of programming languages, including Lisp and Prolog.
 
 \subsection{The Icarus Model}
 
 \cite{langley:2005} describe an architecture that uses meta-knowledge of knowledge.
 They refer to skill planning as planning toward long-term goals in the abstract meta-knowledge plan space.
 They refer to short-term planning as planning over instances of the skill plans.
-We see our approach as complimentary to this plan abstraction approach because we are focused on adaptive learning due to failures of conflicting plans, so we expect our approach to be adaptable to this form of meta-planning as well.
+I see my approach as complimentary to this plan abstraction approach because I am focused on adaptive learning due to failures of conflicting plans, so I expect my approach to be adaptable to this form of meta-planning as well.
 
 \subsection{The ACT-r Model}
 
 \cite{anderson:2004} describe a model that is inspiring to us because it is the largest cognitive architecture that is actively being correlated to human neurological and psychological data.
-We see our work as heading in this direction, but first we must complete a working model of our theory so that such similar scientific work may proceed in terms of understanding reflective, self-reflective, and self-conscious thought processes!
+I see my work as heading in this direction, but first I must complete a working model of my theory so that such similar scientific work may proceed in terms of understanding reflective, self-reflective, and self-conscious thought processes.
 
 \subsection{The SOAR Model}
 
@@ -966,7 +963,7 @@ We see our work as heading in this direction, but first we must complete a worki
 \subsection{The PolyScheme Model}
 
 \cite{cassimatis:2004} and \cite{cassimatis:2006} describe a cognitive architecture that combines multiple representations and reasoning methods for implementing human level intelligence.
-We see the problem of having multiple representations and concurrent reasoning processes as exactly the problem that we are designing the Funk2 causally reflective architecture: in order to control and learn from conflicts in such a mental model.
+I see the problem of having multiple representations and concurrent reasoning processes as exactly the problem that I am designing the Funk2 causally reflective architecture: in order to control and learn from conflicts in such a mental model.
 
 \subsection{The GLAIR Model}
 
@@ -980,7 +977,7 @@ This architecture is not reflective over it's deliberation, but Funk2 is designe
 \subsection{The CogAff Model}
 
 \cite{sloman:2001} describe a three-layer cognitive architecture that is very similar to the bottom three layers of the Emotion Machine theory's bottom three layers, i.e. reactive, deliberative, and meta-management or reflective layers.
-The CogAff architecture does not make any representational commitments and higher layers of reflection are referred to as more complex forms of meta-management.
+The CogAff architecture does not make any representational commitments and higher layers of reflection are referred to as complex forms of meta-management.
 
 \subsection{The Three Layers Model}
 

@@ -22,7 +22,6 @@ phdthesis.pdf: \
   chapters/results.tex \
   chapters/discussion.tex \
   chapters/future.tex \
-  chapters/appendix_philosophy.tex \
   chapters/appendix_psychology.tex \
   chapters/appendix_neuroscience.tex \
   chapters/appendix_artificial_intelligence.tex \

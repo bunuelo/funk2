@@ -464,3 +464,586 @@ goals are good or bad for the child to pursue.
 
 
 
+
+
+
+
+
+
+
+\chapter{Other Informative Models of Human Intelligence and Learning}
+\label{other_models-chapter}
+	      
+\section{The Layered ``Model-6'' Theory for Organizing Reflective Models}
+
+Because the many fields of human cognitive modelling are so disparate it is difficult to see them as a whole.  
+We are inspired by a layered organizational scheme first presented in \\cite{minsky2006em-ch5}.
+The six layers in this ``Model-6'' organizational scheme are named as follows:
+
+\begin{enumerate}
+\item{Instinctive Reactions}
+\item{Learned Reactions}
+\item{Deliberative Thinking}
+\item{Reflective Thinking}
+\item{Self-Reflective Thinking}
+\item{Self-Conscious Reflection}
+\end{enumerate}
+
+We hope that the reader will see that this is a useful way of organizing the massive amount of work that has gone into the computational modelling of abstract human thought processes since the conception of the field of artificial intelligence in 1956.
+We are not claiming any biological correlations for these layers, but we are very excited by this unexplored possibility!
+First, we must build such a model before any such statistical correlations could be found!
+We see medical applications, such as categorizing spectrum mental disorders, as the highest-level goal in our work.
+
+\subsection{Instinctive Reactions---Models of Insulation and Interaction}
+
+\begin{quotation}
+\emph{We usually like to think in positive terms about how various parts of systems interact.}
+\emph{But to do that, we must first have good ideas about which aspects of a system do \emph{not} interact---since otherwise there would be too many possibilities to consider.}
+\emph{In other words, we have to understand \emph{insulations} before we can comprehend interactions.}
+\emph{To put this in a stronger form: \emph{No complicated society would actually work if it really depended on interactions among most of its parts}.}
+\emph{This is because any such system would be disabled by virtually any distortion, injury, or environmental fluctuation.}
+\emph{Nor could any such society evolve in the first place.}
+
+\flushright{--- \cite{minsky1988som-iai}}
+
+\subsubsection{Models of Failure in Distributed Systems}
+
+\cite{attiya2004dcf} discuss algorithms for tolerating a few types of failures in distributed systems, ranging from silent crashes to arbitrary Byzantine failures, where parts of an algorithm perform in completely uncontrolled and unpredictable ways.
+An algorithm for Byzantine tolerance is presented that is based upon building layers of first abstracting controllers that turn the Byzantine problem into a simpler \emph{identical Byzantine} problem.
+The identical Byzantine problem is then abstracted to the simpler \emph{omission} problem, where a processor simply omits some messages from being transmitted.
+The omission problem is then handled in a more abstract layer of the algorithm that when detecting an omission, crashes itself, resulting in a \emph{crash} problem.
+Crash problems can be dealt in different ways for different algorithms, the simplest being the consensus algorithm.
+This gives us a basic vocabulary of the most fundamental and basic distributed process problems.
+
+\cite{1102980} discuss a basic model for distributed dynamic programming that is organized around a distributed iterative approximation algorithm that computes a function mapping from states to values, $J(x){\\in}\\Re$.
+His model divides the world into sets of states, $S_1 \\cup S_2 \\cup \\cdots S_n = S$, that depend on neighboring sets of states in order to compute the approximation, $J^t$, of the optimal value function, $J^*$.
+This fits with our abstract notion that commonsense knowledge in an artificial intelligence program should be organized according to what goals it is important to solve.
+Having a basic optimal control theory of why this is a fundamentally sound organization principle is encouraging: perhaps organizing our knowledge by the values of goal states could also apply in the context of abstract reinforcement learning.
+Note that the information theoretic organizational approaches such as the inductive logic approach used by relational reinforcement learning do not organize their knowledge according to which goal values are important for calculating which other goal values.
+
+\subsubsection{Models of Uncontrolled Distributed Statistical Inference}
+Recently, statistical propositional logic has become popular along with graph-based inference techniques for calculating both the most likely propositional state as well as the probability of any single propositional variable.
+Statistical models are often represented in graphical form that can be easily distributed and computed by sparse matrix multiplication algorithms.
+Given a statistical model, it is common to use the MAXENT algorithm to approximate the most likely state of such a model.
+\cite{jaynes1982maxent} discuss when this may or may not be appropriate.
+\cite{murphy1999lbp} discuss Pearl's ``loopy'' belief propagation algorithm which is an unreliable but efficient inference tool.
+\cite{yedidia2005feagbp} generalizes this distributed form of statistical inference to more powerful forms of hierarchical methods, explaining in the process that the forward-backward algorithm for hidden markov models, the Viterbi algorithm, Gallager's sum-product algorithm, the ``turbo-decoding'' algorithm, Pearl's ``belief propagation'' algorithm for inference on Bayesian networks, the ``Kalman filter'' for signal processing, and the ``transfer matrix'' approach in statistical mechanics are all of the same generalized form of statistical inference.
+
+These statistical tools are the basic inference tools that claim nothing about their own applicability, and have no recourse for response for their own failures.
+These statistical inference tools also know nothing about the goals which they are supposed to help solve.
+In order for our algorithm to intelligently accomplish goals, we need to deliberate or plan our usage of these most basic tools.
+
+\subsubsection{Models of Distributed Intelligence}
+
+\cite{maes1990lcb} discuss learning to coordinate behavior, an argument for robust robot control using multiple ways of reasoning in a layered architecture.
+
+\subsubsection{Models of Computational Reflection}
+
+\cite{maes1987cecr} gives a great overview of ``computational reflection,'' which is basically keeping track of information about the execution of a program, so that other processes can use that information to better control the program.
+Our approach to computational reflection is what they categorize as a ``frame-based'' approach, described first in \\cite{minsky1975frk} and first implemented in \cite{roberts1977fpms}.
+\cite{maes1987cecr} describe the primary benefits of the frame-based approach as the following:
+
+\begin{itemize}
+\item{it helps the user cope with the complexity of a large system by providing documentation, history, and explanation facilities,}
+\item{it keeps track of relations among representations, such as consistencies, dependencies and constraints,}
+\item{it encapsulates the value of the data-item with a default-value, a form to compute it, etc.,}
+\item{it guards the status and behavior of the data-item and activates procedures when specific events happen (e.g. the value becomes instantiated or changed).}
+\end{itemize}
+	      
+\cite{sobel96anintroduction} discuss an introduction to reflection-oriented programming.
+\cite{matsuoka1992ocr} discuss object-oriented concurrent reflective architectures.
+\cite{oliva1998rag} discuss the reflective architecture called ``Guaraná.''
+\cite{watanabe1989rcoocsa} discuss reflective computation in object-oriented concurrent systems.
+\cite{yonezawa1990roo} discuss a reflective object oriented concurrent language called ``ABCL/R.''
+\cite{ancona1998cr} discuss channel reification, which is a reflective model for distributed computation.
+\cite{cazzola1998eoo} discuss evaluation of object-oriented reflective models.
+
+\subsection{Learned Reactions---Models of Learning Reactions}
+
+\subsubsection{Models of Planning to Perceive}
+
+\cite{pryorcollins1995ptp} discuss how planning is used in perceptual processes.
+	      
+\subsubsection{Models of Commonsense Reasoning}
+
+There are many domains of quaitative commonsense reasoning, e.g. physics \cite[]{forbus1994qpt}, natural language \cite[]{liu2004cra}, story narratives \cite[]{williams2005cas}, event planning \cite[]{smith2006mar}, and psychology \cite[]{gordon2008asm}.
+
+\subsubsection{Models of Reactive Commonsense Knowledge}
+
+There are also a few large knowledge bses of commonsense knowledge, e.g. ConceptNet \cite[]{liu2004cpc}, FrameNet \cite[]{980860}, Cyc \cite[]{79176}, AnalogySpace \cite[]{1502672}, and WordNet \cite[]{fellbaum1998wel}.
+Although these knowledge bases have a broad range of reasoning algorithms from linear algebraic semantic analogies in AnalogySpace to intricate microtheoretic logical deduction in Cyc, none of these knowledge bases are able to causal reflectively control the complexity of their algorithms.
+Because commonsense knowledge is often represented in a declarative form, logical reasoning algorithms are often applied, but undirected logical reasoning methods often cannot handle large amounts of knowledge.
+We hope that our causal reflective tools available in the Funk2 architecture will help in learning to reflectively control these explosive logical reasoning algorithms.
+Another aspect that is critically important for organizing massive commonsense knowledge bases are goals; the knowledge should be indexed by types of goals.
+We hope that our focus on goal-oriented learning in our reflective architecture will provide means of organizing learned knowledge in terms of the goals it is relevant for thinking about.
+
+\subsection{Deliberative Thinking---Models of Learning to Compile Plans}
+
+Artificial intelligence systems that use multi-step deliberation (or planning) in order to imagine hypothetical (counterfactual) sets of actions before executing these scripts (or plans) are implementing what is referred to as Layer 3 in the Emotion Machine theory of mind.
+
+\cite{thagard1995ibp} discuss using a coherence theory of decision in order to perform inference to the best plan.
+\cite{michalski1995lgdi} discuss learning as goal-driven inference.
+
+\subsubsection{Reinforcement Learning}
+
+According to \cite{sutton1998rli}, the field of reinforcement learning deals with the problem of ``learning what to do---how to map situations to actions---so as to maximize a numerical reward signal.''
+Reinforcement learning is an online type of learning problem as opposed to supervised or unsupervised types of learning problems.
+
+\cite{kaelbling1996rls} gives a good overview of historical reinforcement learning.
+The reinforcement learning problem is defined as
+
+\begin{itemize}
+\item{a set of states, $\\mathcal{S}$,}
+\item{a set of actions, $\\mathcal{A}$, and}
+\item{a set of scalar reinforcement signals, typically $\\{0,1\\}$ or $\\Re$.}
+\end{itemize}
+
+It is interesting to consider how the well developed idea of ``exploration versus exploitation'' as discussed in \cite{kaelbling1996rls} as a model for deciding when to sequentially meta-reason.
+
+subsubsection{Models of Optimal Behavior}
+
+\cite{kaelbling1996rls} discuss three primary models of optimal behavior:
+
+\begin{enumerate}
+\item{the \emph{finite horizon} model in which an agent performs receding horizon control, such that total reward is $E(\\sum_{t=0}^{h}{r_t})$,}
+\item{the \emph{infinite discounted} model in which an agent uses future rewards discounted by a constant factor, $\\gamma$, such that total reward is $E(\\sum_{t=0}^{\\infty}{\\gamma^t r_t})$, and}
+\item{the \emph{average reward} model which is the infinite limit of the finite horizon model, such that total reward is $\\lim_{h{\\rightarrow}\\infty}{E(\\frac{1}{h}\\sum_{t=0}^{h}{r_t})}$.}
+\end{enumerate}
+
+Since we are dealing with modelling very large and complex systems, we see these optimality criteria as only applicable to small isolated aspects of the entire system.
+Nonetheless, we hypothesize that useful approximations of optimal systems that can be derived from overlapping subsystems with constraining optimality criteria can be derived from these three basic types of optimality.
+Homeostasis monitors and continual ``heartbeat'' controllers could be implemented with infinite or average optimality models, while short-term goal-oriented controllers would necessitate the complexities of the full $N$-step finite horizon model of optimality.
+
+\subsubsection{Dynamic Programming and Optimal Control}
+
+\cite{bertsekas2001dpa} describe techniques for finding optimal and approximate \emph{functional} (\emph{memoizable}) solutions to reinforcement learning control problems, using recursive formulas of flat state spaces that can be optimized very easily by using memoized functions.
+While this approach does not handle abstract models of the agent's world, there are exciting options of combining a dynamic programming approach with an abstract form of reinforcement learning, such as the use of inductive logic described in \cite{dvzeroski2001rrl}.
+
+\subsubsection{A Theoretical World Model}
+
+A simple formulation of the reinforcement learning problem can be formulated in terms of Markov Decision Process (MDP) environments.
+An MDP is defined as
+
+\begin{itemize}
+\item{a set of states, $\\mathcal{S}$,}
+\item{a set of actions, $\\mathcal{A}$,}
+\item{a reward function $\\mathcal{R}:\\mathcal{S}\\times\\mathcal{A}\\rightarrow\\Re$, and}
+\item{a state transition function, $\\mathcal{T}:\\mathcal{S}\\times\\mathcal{A}\\rightarrow\\Pi{(\\mathcal{S})}$.}
+\end{itemize}
+
+\subsubsection{Category Learning to Accomplish Goals}
+
+Category learning in the context of goal-oriented problem-solving is an idea that is discussed by \cite{barsalou1995dcag}.
+
+\subsubsection{Models of Learning by Positive or Negative Reward in the context of Relational Knowledge}
+
+\cite{dvzeroski2001rrl} describe an interesting combination of inductive logic programming (ILP) \cite[]{muggleton1992ilp} and reinforcement learning.
+The benefit of using abstract logical representations of propositional states, actions, and state values makes the basic reinforcement learning algorithm able to deal with relational state spaces, such as the blocks world toy problem and the other problem representations that we are focusing on in this PhD.
+This form of learning abstractions takes a flat mental space and maps it to a hierarchical relational abstraction.
+
+\subsection{Reflective Thinking---Models of Learning to Control Deliberation}
+
+\subsubsection{Models of Commonsense Psychology}
+
+Understanding human psychology in commonsense terms is an initiative described in \cite{gordon2004fcp}.
+We see our work as building upon this development of a commonsense language for discussing the types of mental processes that humans have.
+Also, \cite{gordon2008asm} further develops this commonsense psychological language approach to describe the processes of self-reflection, which is even more relevant to our work.
+The difference between our approach and the commonsense psychology approach is that our work simulates these mental processes in a computer, using the Funk2 causally reflective procedural programming language.
+Previous approaches have represented psychological reasoning processes in a declarative logical form, but these logical forms cannot handle the large knowledge bases that are involved in general commonsense reasoning.
+
+\cite{wilson1977tmt} discuss verbal reports on mental processes.
+\cite{schank1972pcu} discuss primitive concepts underlying verbs of thought.
+
+\subsubsection{Models of Unsticking Deliberation by Creative Analogical Thinking}
+
+\cite{buchanan2001cma} discuss creativity at the metalevel.
+\cite{mueller1990dha} discuss daydreamer
+
+A storytelling system that is called MINSTREL is discussed in \cite{turner1994cpc}; it is guided by creativity goals in order to develop good narratives.
+The process of creative storytelling is handled very similarly to mechanical goal-oriented problem solving in this way.
+
+\subsubsection{Models of Learning to Plan to Learn}
+
+\cite{ram1995ptl} discuss planning to learn.
+\cite{desjardins1995gdl} discuss a decision-theoretic model for deciding what to learn next for accomplishing goals.
+\cite{ram1995gdlmrls} discuss goal-driven learning in multistrategy reasoning and learning systems.
+\cite{ram1995lga} discuss learning, goals, and learning goals.
+\cite{cox1999iml} discuss the construction of learning strategies in introspective multistrategy learning.
+
+\subsubsection{Models of Learning by Credit Assignment through Temporal State Tracing}
+
+\emph{Eligibility traces} are a simple reinforcement learning tool for temporal credit assignment for an agent entering positive and negative reward states.
+For example, the \emph{backward} view of eligibility tracing as applied to the temporal difference, $\\text{TD}(\\lambda)$, learning method simply augments the basic learning algorithm with an additional eligibitity factor, $e_t(s)$, for each state.
+Only non-zero values of the eligibility factor are remembered in tractible (approximate) implementations; this amounts to keeping a list of $n$ recently visited states.
+In the algorithm, the current state's eligibility factor, $e_t(s_t)$, is set to $1$ and all other states are discounted by a constant eligibility discount factor, $\\gamma$.
+Credit assignment for rewards that are found in the world are assigned not only to the previous state, as in the basic one-step $\\text{TD}(\\lambda)$ algorithm but also assigned to the value functions in a discounted sense to the previous $n$ states in our eligibility trace.
+We call this form of credit assignment ``Temporal State Tracing'' because it simply assigns credit to those states temporally local to the current state, i.e. there is no explicit consideration of causality involved in the assignment.
+
+\subsubsection{Models of Learning by Credit Assignment through Causal Tracing of Failure}
+
+We do not know of any reinforcement learning algorithms that reflectively learn how to plan through causal tracing of failures.
+Our method of learning in this way is disussed in Section~\\ref{causal_tracing_of_failure-section}.
+
+\subsubsection{Models of Learning by Explaining Failures}
+
+\cite{hammond1990ear} discuss explaining and repairing plans that fail.
+\cite{vanlehn1992mse} discuss a model of the self-explanation effect.
+\cite{ramcox1995irmeml} discuss introspective reasoning using meta-explanations for multistrategy learning.
+\cite{leake1995gbee} discuss goal-based explanation evaluation.
+\cite{leake1995tgdiea} discuss toward goal-driven integration of explanation and action.
+\cite{dominowski1998vap} discuss verbalization and problem solving.
+
+\subsubsection{Models of Learning by Repairing Failed Plans and Inference Knowledge}
+
+\cite{DBLP:journals/jetai/Leake96} discuss learning to refine the case-based reasoning process through experience, introspection and expertise.
+\cite{levin2004tss} discuss how to span the difference between metacognitive failure and success in thinking about seeing.
+\cite{cox1996iml} discuss how to construct a learning strategy under reasoning failure in the terms of introspective multistrategy learning.
+
+\subsubsection{The Difference between Metareasoning, Computational Reflection, and Causal Reflection}
+
+\cite{hansen2001mac} discuss a dynamic programming approach to monitoring and control of anytime algorithms.
+\cite{cox2007mma} discuss metareasoning, monitoring, and self-explanation.
+\cite{cox2005mcs} present a selected research review of metacognition in computation.
+\cite{anderson2007rrr} present a review of recent research in metareasoning and metalearning.
+\cite{cox2007psa} discuss perpetual self-aware cognitive agents.
+\cite{cox:mm} present a manifesto on metareasoning.
+\cite{davis1980mrr} discuss reasoning about control in terms of meta-rules.
+\cite{DBLP:journals/jetai/FoxL01} discuss introspective reasoning for index refinement in case-based reasoning.
+\cite{maes1988icr} discuss issues in computational reflection.
+\cite{minsky1968mmam} discuss matter, mind, and models.
+\cite{DBLP:journals/ai/Newell82} discuss the knowledge level.
+
+\subsubsection{Empirical Models of Reflective Thought}
+
+
+\cite{baumeister2007esb} discuss How emotion shapes behavior: Feedback, anticipation, and reflection, rather than direct causation.
+\cite{vince2002or} discuss Organizing reflection.
+\cite{mirvis2008edt} discuss Executive Development Through Consciousness-Raising Experiences.
+\cite{michalsky2007dsm} discuss Developing Students' Metacognitive Awareness in Asynchronous Learning Networks in Comparison to Face-to-Face Discussion Groups.
+\cite{bivona2008efa} discuss Executive function and metacognitive self-awareness after Severe Traumatic Brain Injury.
+\cite{irannejad2001bmc} discuss The brain-mind cycle of reflection.
+\cite{phillips2005saa} discuss Self-awareness and the emotional consequences of self-discrepancies.
+\cite{silvia2006eca} discuss Emotion concepts and self-focused attention: Exploring parallel effects of emotional states and emotional knowledge.
+\cite{lynn2008eif3} discuss The eq interview: finding employees with high emotional intelligence.
+
+
+\subsection{Self-Reflective Thinking---Models of Control using Self and Other Models}
+
+\cite{anderson2005lsa} discuss the metacognitive loop and the problem of brittleness in terms of logic, self-awareness and self-improvement.
+\cite{schubert2005skr} discuss some knowledge representation and reasoning requirements for self-awareness.
+
+\subsubsection{Models Involving Multiple Agents}
+
+Models of multiple intelligent agents that work together to solve problems have become popular in the field of machine learning called ``multi-agent reinforcement learning.''
+Many popular surveys of the field exist \cite[]{wei1995aal} \cite[]{sen1999lms} \cite[]{stone2000mss} \cite[]{shoham2004mar} \cite[]{yang2004mrl} \cite[]{panait2005cma}.
+
+\cite{boutilier1996pla} discuss a specific type of $n$-person cooperative game theory, in which agents share common goals, or in other words, a joint value function.
+\cite{rapoport2001npg} discuss $n$-person game theory in more detail.
+	      
+\cite{bowling2000asg} describe an analysis of stochastic game theory for multiagent reinforcement learning.
+\cite{claus1998drl} describe the dynamics of reinforcement learning in cooperative multiagent systems.
+\cite{crites1998egc} describe elevator group control using multiple reinforcement learning agents.
+\cite{ghavamzadeh2006hma} describe hierarchical multi-agent reinforcement learning.
+\cite{guestrin2002crl} describe coordinated reinforcement learning.
+\cite{hu1998mrl} describe a theoretical framework and an algorithm for multiagent reinforcement learning.
+\cite{kapetanakis2002rlc} describe reinforcement learning of coordination in cooperative multi-agent systems.
+\cite{mataric1997rlm} describe reinforcement learning in the multi-robot domain.
+\cite{park2001mql} describe modular $Q$-learning based multi-agent cooperation for robot soccer.
+\cite{sandholm1996mrl} describe multiagent reinforcement learning in the iterated prisoner's dilemma.
+\cite{tan1997mar} describe independent versus cooperative agents in multi-agent reinforcement learning.
+\cite{wang2003rlp} describe reinforcement learning to play an optimal Nash equilibrium in team Markov games.
+
+\subsubsubsection{Multiagent Reinforcement Learning with Layered Models}
+\cite{stone1997llm} describe layered Learning in multiagent Systems.
+
+\subsubsection{Multiagent Reinforcement Learning with Communication}
+
+\cite{drogoul1994mas} describe an application to social differentiation in ant colonies using a multi-agent simulation as a tool for modeling societies.
+\cite{fischer2004hrl} describe hierarchical reinforcement learning in communication-mediated multiagent coordination.
+\cite{price1999iim} describe implicit imitation in multiagent reinforcement learning.
+\cite{sen1998ilc} describe individual learning of coordination knowledge.
+
+\subsubsection{Multiagent Reinforcement Learning with Self- and Other- Models}
+
+\cite{matari1997lsb} describe learning social behavior.
+\cite{nagayuki2000mar} describe an approach based on the otheragent's internal model in multi-agent reinforcement learning.
+\cite{noble2004slm} describe social learning in a multi-agent system.
+\cite{nowe2001sap} describe social agents playing a periodical policy.
+
+\subsubsection{Models of Parent and Child Social Functions}
+\cite{castelfranchi2001tsf} describe the challenges for computational social science and multi-agent learning in a theory of social functions.
+
+
+\subsubsection{Empirical Models of Inferring Person Traits}
+
+\cite{asch2005fiop} discuss how impressions of personalities are formed.
+They break personality down into $18$ two-part models, or dimensions (not necessarily independent).
+These 18 dimensions are listed in the following table for reference:
+
+\begin{table}{rll}
+  1.         & generous           & ungenerous \\
+  2.         & wise               & shrewd \\
+  3.         & happy              & unhappy \\
+  4.         & good-natured       & irritable \\
+  5.         & humorous           & humorless \\
+  6.         & sociable           & unsociable \\
+  7.         & popular            & unpopular \\
+  8.         & reliable           & unreliable \\
+  9.         & important          & insignificant \\
+  10.        & humane             & ruthless \\
+  11.        & good-looking       & unattractive \\
+  12.        & persistent         & unstable \\
+  13.        & serious            & frivolous \\
+  14.        & restrained         & talkative \\
+  15.        & altruistic         & self-centered \\
+  16.        & imaginative        & hard-headed \\
+  17.        & strong             & weak \\
+  18.        & honest             & dishonest \\
+  \emph{19.} & \emph{warm}        & \emph{cold} \\
+  \emph{20.} & \emph{intelligent} & ~ \\
+  \emph{21.} & \emph{envious}     & ~
+\end{table}	      
+
+\cite{winter2005wasjm} discuss the difference between \\emph{dispositional} inferences and \emph{situational} inferences.
+A dispositional statement is a statement about the relationship between person models, such as ``kind person'' or ``she helped the man'', whereas a situational statement is a statement that does not refer to such a model of a social relationship between person models, such as ``she dropped the groceries''.
+Here is the list of 18 dispositional properties that they discovered in their research interviewing college students for word associations:
+
+\begin{table}{rl}
+  1. & generous          \\
+  2. & rude              \\
+  3. & good worker       \\
+  4. & helpful           \\
+  5. & ill-mannered      \\
+  6. & thrifty           \\
+  7. & talented          \\
+  8. & bigot             \\
+  9. & friendly          \\
+ 10. & concerned citizen \\
+ 11. & absent-minded     \\
+ 12. & kindhearted       \\
+ 13. & cheap             \\
+ 14. & clever            \\
+ 15. & inconsiderate     \\
+ 16. & willpower         \\
+ 17. & considerate       \\
+ 18. & clumsy
+\end{table}
+
+\subsubsection{Empirical Models of Self and Other Social Models}
+
+This section discusses much research that often uses words that we often do not see used precisely.
+For example, the phrase ``self-awareness'' is often used to describe a sort of mental process that monitors another mental process.
+In this document, we try to be consistent by using the word ``self'' to only refer to models of self versus other in terms of agents thinking about personalities or properties of agents.
+Other common uses of the terms ``self-awareness'' and ``self-consciousness'' are often less clear and refer to any kind of reflective process perceiving the execution of another process within the mind.
+There are many forms of reflective thought, and we choose to use the term ``self-reflection'' to refer to those reflective processes that deal with self and other personality models of inter-agent relationships.
+
+\cite{goverover2007tis} discuss treatment to improve self-awareness in persons with acquired brain injury.
+\cite{baumeister1993etl} discuss when ego threats lead to self-regulation failure: negative consequences of high self-esteem.
+\cite{gilbert2005ocb} discuss perceptions of people.
+\cite{ross2005bispc} discuss social roles, social control, and biases in social-perception processes.
+\cite{hobson2006sad} discuss self-awareness in developmental perspective.
+\cite{hutchinson2007saa} discuss relationships among adaption-innovation, self-monitoring, and self-consciousness.
+\cite{keenan2007crr} discuss the selective causal role of the right hemisphere in self-awareness.
+\cite{morin2004lca} discuss a comparison and integration of various views of the levels of consciousness and self-awareness.
+\cite{silverman2008osr} discuss self-reflection.
+\cite{smith2007sap} discuss self-awareness, perspective-taking, and self-face recognition.
+\cite{soeiro2008svtsf} discuss state versus trait self-focus: comparing self-awareness to self-consciousness.
+\cite{uhlmann2008vsc} discuss varieties of social cognition.
+\cite{burns1998scc} discuss individual selves, self-awareness, and reflectivity in the social construction of consciousness.
+\cite{duval2002sap} discuss self-awareness, probability of improvement, and the self-serving bias.
+\cite{focquaert2008ecn} discuss an evolutionary cognitive neuroscience perspective on human self-awareness and theory of mind.
+\cite{whitehead2001sma} discuss social mirrors and shared experiential worlds.
+
+\subsubsubsection{Empirical Models of Person Groups}
+
+\cite{menon2005cacoa} discuss the attribution to individual versus group dispositions in culture and the construal of agency.
+
+\subsection{Self-Conscious Reflection---Models of Learning by Imprimer Reflection on Self and Other Models}
+
+\subsubsection{Empirical Models of Imprimers}
+
+\cite{hinton2008rlsa} discuss The Role of Leader Self-Awareness in Building Trust and Improving Student Learning.
+\cite{taylor2007cfetla} discuss A Conceptual Framework and Empirical Test for Leader Attunement: Toward a Theory of Leader Self-Awareness.
+\cite{hare1993wc} describe Without Conscience: The Disturbing World of the Psychopaths Among Us.
+
+\subsubsection{Moral Decisions and Values}
+
+\cite{harsanyi1980rur} discuss rule utilitarianism, rights, obligations and the theory of rational behavior.
+\cite{duval1999osa} discuss how changing self or changing standards of correctness also changes objective self-awareness and causal attributions for self-standard discrepancies.
+
+
+\section{Natural Language in Problem-Solving}
+
+\cite{bobrow1968nlicpss} discuss Natural Language Input for a Computer Problem-Solving System
+
+
+
+\section{Models of Story and Language Understanding}
+
+
+\cite{rammoorman1999toru} discuss understanding language understanding in terms of Toward a Theory of Reading and Understandin.
+\cite{rapaport1999caf} discuss understanding language understanding in terms of Cognition and Fiction.
+\cite{mahesh1999spiu} discuss understanding language understanding in terms of Sentence Processing in Understanding: Interaction and Integration of Knowledge Sources.
+\cite{domeshek1999ctccn} discuss understanding language understanding in terms of Capturing the Contents of Complex Narratives.
+\cite{ram1999toqqa} discuss understanding language understanding in terms of A Theory of Questions and Question Asking.
+\cite{peterson1999sct} discuss understanding language understanding in terms of Semantic Correspondence Theory.
+\cite{moorman1999crunc} discuss understanding language understanding in terms of Creativity in Reading: Understanding Novel Concepts.
+\cite{coxram1999sual} discuss understanding language understanding in terms of On the Intersection of Story Understanding and Learning.
+\cite{gerrig1999tpanw} discuss understanding language understanding in terms of Text Processing and Narrative Worlds.
+
+\section{Evaluating Models of Complex Learning}
+
+
+\subsection{Evaluating Models of Learning Skill Knowledge}
+\cite{anderson1993alps} describe a model of complex learning about Acquisition of LISP Programming Skill.
+\cite{ohlsson1993ibkpacs} describe a model of complex learning about The Interaction Between Knowledge and Practice in the Acquisition of Cognitive Skills.
+
+\subsection{Evaluating Models of Learning by Self-Explanation}
+\cite{vanlehn1993lbeeo} describe a model of complex learning about Learning by Explaining Examples to Oneself: A Computational Model.
+\cite{kieras1993lsepe} describe a model of complex learning about Learning Schemas from Explanations in Practical Electronics.
+\cite{rosenbloom1993bpebl} describe a model of complex learning about Bias in Planning and Explanation-Based Learning.
+
+\subsection{Evaluating Models of Learning Declarative Relational Knowledge}
+\cite{huffman1993cidt} describe a model of complex learning about Correcting Imperfect Domain Theories: A Knowledge-Level Analysis.
+\cite{hammond1993csacbp} describe a model of complex learning about A Cognitive Science Approach to Case-Based Planning.
+\cite{wilensky1993kanlp} describe a model of complex learning about Knowledge Acquisition and Natural Language Processing.
+
+\subsection{Visual Programming Languages for Psycological Study of Complex Models}
+
+\cite{cooper2002mhl} and \\cite{cooper1998cvd} discuss how to model high-level cognitive processes in an empirical and scientific way.
+Much of their work is presented in terms of their COGENT cognitive architecture that includes a visual programming language for cognitive scientists to quickly build and evaluate varieties of complex hypotheses.
+	      
+\cite{cooper1995too} discuss an object-oriented language for cognitive modeling
+\cite{cooper1996smc} discuss A systematic methodology for cognitive modelling
+\cite{cooper1998ced} discuss COGENT: An environment for the development of cognitive models
+\cite{councill2003esa} discuss Explaining Soar: Analysis of existing tools and user information requirements
+\cite{mulholland1998hfc} discuss Hank: A friendly cognitive modelling language for psychology students
+\cite{mulholland1999pph} discuss Programming with a purpose: Hank, gardening and schema theory
+\cite{mulholland2000lbv} discuss Learning by building: A visual modelling language for psychology students
+\cite{yule2001ttc} discuss Towards a technology for computational experimentation
+
+\section{Models of the Large-scale Integration of Multiple Models of Cognition}
+
+\cite{langley2008car} gives a good overview of the current state of the field of cognitive architectural design in terms of what exists and what needs to still be designed and built.
+Among the features that are not much explored are the types reflective processes that control deliberative processes, which \\cite{sloman2001vaa} refers to as meta-management.
+We see building layers of these reflective management processes in the top three layers of the Emotion Machine theory as our basic inspiration for higher orders of reflective control beyond meta-management.
+
+\subsection{The EM-ONE Model}
+
+\cite{singh2005one} describe the first cognitive architecture based on the Emotion Machine theory of mind, developed in \cite{minsky2006em}.
+This architecture includes the ability to control reasoning using a relational list commonsense narrative representation.
+In terms of types of representations, the Emotion Machine theory proposes that self models exist in the self-reflective layer and imprimer models exist in the self-conscious layer.
+Our purpose is to elaborate on this example model in a much larger and more powerful causally reflective programming language.
+Our Funk2 architecture is based on procedural forms of run-time reflection that is built into the underlying programming language, whereas the previous work was based on declarative forms that used an assortment of programming languages, including Lisp and Prolog.
+
+\subsection{The Icarus Model}
+
+\cite{langley2005aap} describe an architecture that uses meta-knowledge of knowledge.
+They refer to skill planning as planning toward long-term goals in the abstract meta-knowledge plan space.
+They refer to short-term planning as planning over instances of the skill plans.
+We see our approach as complimentary to this plan abstraction approach because we are focused on adaptive learning due to failures of conflicting plans, so we expect our approach to be adaptable to this form of meta-planning as well.
+
+\subsection{The ACT-r Model}
+
+\cite{anderson2004itm} describe a model that is inspiring to us because it is the largest cognitive architecture that is actively being correlated to human neurological and psychological data.
+We see our work as heading in this direction, but first we must complete a working model of our theory so that such similar scientific work may proceed in terms of understanding reflective, self-reflective, and self-conscious thought processes!
+
+\subsection{The SOAR Model}
+
+\cite{laird1987sag} describe SOAR: An architecture for general intelligence.
+\cite{marinier2009cuc} describe a recent use of SOAR: A computational unification of cognitive behavior and emotion.
+
+\subsection{The PolyScheme Model}
+
+\cite{cassimatis2004icp} and \cite{cassimatis2006csa} describe a cognitive architecture that combines multiple representations and reasoning methods for implementing human level intelligence.
+We see the problem of having multiple representations and concurrent reasoning processes as exactly the problem that we are designing the Funk2 causally reflective architecture: in order to control and learn from conflicts in such a mental model.
+
+\subsection{The GLAIR Model}
+
+\cite{shapiro2003agl} describe an architecture that performs a form of belief revision.
+
+\subsection{The CIRCA Model}
+
+\cite{musliner2001irt} describe an architecture with plan execution processes that operate in real-time concurrently with deliberative planning processes.
+This architecture is not reflective over it's deliberation, but Funk2 is designed with this concurrency and real-time behavior in mind as well.
+
+\subsection{The CogAff Model}
+
+\cite{sloman2001vaa} describe a three-layer cognitive architecture that is very similar to the bottom three layers of the Emotion Machine theory's bottom three layers, i.e. reactive, deliberative, and meta-management or reflective layers.
+The CogAff architecture does not make any representational commitments and higher layers of reflection are referred to as more complex forms of meta-management.
+
+\subsection{The Three Layers Model}
+
+\cite{ngbereiter1995tlgol} discuss three levels of goal orientation in learning.
+
+\subsection{The AIS Model}
+
+In \cite{hayesroth1995aai}, a reflective architecture is described that operates on cycles.
+On each cycle, a meta-cognitive controller selects among a set of deliberative controllers.
+
+\subsection{The Prodigy Model}
+
+\cite{carbonell1991pia} describe an architecture that learns to plan through self-explanation and using what they refer to as causal traces of execution histories.
+These causal traces are similar to what can be derived from the causal tracing functionality inherent in the Funk2 programming language.
+
+\cite{carbonell1995palp} discuss planning and learning in PRODIGY, an integrated architecture.
+
+\subsection{The Daydreamer Model}
+
+\cite{mueller1990dha}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

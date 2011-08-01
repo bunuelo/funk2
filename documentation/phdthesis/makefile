@@ -22,7 +22,6 @@ phdthesis.pdf: \
   chapters/results.tex \
   chapters/discussion.tex \
   chapters/future.tex \
-  chapters/appendix_computer_science.tex \
   chapters/appendix_mental_health.tex \
   chapters/appendix_education.tex \
   chapters/appendix_the_code.tex \

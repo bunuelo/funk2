@@ -32,7 +32,7 @@
   
   nil]
 
-[deftypefunk isis_world_moral_compass execute create_resources []
+[deftypefunk blocks_world_reflective_mind execute create_resources []
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating resources.']
   
   'blocks_world agent specific physical commands'

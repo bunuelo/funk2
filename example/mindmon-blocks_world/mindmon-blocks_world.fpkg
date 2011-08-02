@@ -17,9 +17,17 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage mindmon-blocks_world
+[defpackage mindmon-blocks_world-core
   :packages [mindmon
 	     blocks_world
-	     reflective_mind-blocks_world]
+	     reflective_mind-blocks_world]]
+
+[defpackage mindmon-blocks_world-builtin_reactive_activator
+  :packages [mindmon-blocks_world-core]
+   :sources ['mindmon-blocks_world-builtin_reactive_activator.fu2']]
+
+[defpackage mindmon-blocks_world
+  :packages [mindmon-blocks_world-core
+	     mindmon-blocks_world-builtin_reactive_activator]
    :sources ['mindmon-blocks_world.fu2']]
 

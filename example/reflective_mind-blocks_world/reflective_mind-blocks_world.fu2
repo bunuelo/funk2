@@ -22,15 +22,9 @@
   [new []
        [construct reflective_mind]
        
+       [type-have blocks_world_reflective_mind this create_resources]
        [type-have blocks_world_reflective_mind this create_builtin_goals]
        ]]
-
-[deftypefunk blocks_world_reflective_mind execute create_builtin_goals []
-  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
-  
-  [have this create_physical_relationship_goal `gripper `preposition `is-holding `block]
-  
-  nil]
 
 [deftypefunk blocks_world_reflective_mind execute create_resources []
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating resources.']
@@ -38,8 +32,15 @@
   'blocks_world agent specific physical commands'
   [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_left_resource]]
   [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_right_resource]]
-  [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_grab_resource]]
-  [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_drop_resource]]
+  [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-grab_resource]]
+  [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]
+  
+  nil]
+
+[deftypefunk blocks_world_reflective_mind execute create_builtin_goals []
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
+  
+  [have this create_physical_relationship_goal `gripper `preposition `is-holding `block]
   
   nil]
 

@@ -182,13 +182,13 @@
 [deftypefunk blocks_world_gripper set movement_command-right []
   [have this pursue_movement_command `right]]
 
-[deftypefunk blocks_world_gripper set movement_command-stop []
-  [have this pursue_movement_command nil]]
-
 [deftypefunk blocks_world_gripper set movement_command-grab []
   [have this pursue_movement_command `grab]]
 
 [deftypefunk blocks_world_gripper set movement_command-drop []
   [have this pursue_movement_command `drop]]
+
+[deftypefunk blocks_world_gripper set movement_command-stop []
+  [have this pursue_movement_command nil]]
 
 

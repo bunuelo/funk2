@@ -115,6 +115,6 @@
 
 [deftypefunk mindmon_blocks_world_builtin_reactive_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_blocks_world_builtin_reactive_activator: starting.']
-  [new mindmon_blocks_world_builtin_reactive_physical_activator_window [get this mindmon_agent]]]
+  [new mindmon_blocks_world_builtin_reactive_activator_window [get this mindmon_agent]]]
 
 

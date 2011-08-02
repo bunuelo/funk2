@@ -18,15 +18,8 @@
  rights to redistribute these changes.'
 
 
-[defpackage reflective_mind-blocks_world
-  :packages [reflective_mind-blocks_world-core
-	     reflective_mind-blocks_world-builtin_reactive_physical_agency_resources]
-   :sources ['reflective_mind-blocks_world.fu2']]
-
-[defpackage reflective_mind-blocks_world-builtin_reactive_physical_agency_resources
-  :packages [reflective_mind-blocks_world-core]
-   :sources ['reflective_mind-blocks_world-builtin_reactive_physical_agency_resources.fu2']]
-
-[defpackage reflective_mind-blocks_world-core
-  :packages [reflective_mind]]
+[deframe reflective_mind-blocks_world-move_left_resource  [traced_resource] [] [new [] [construct traced_resource `more_left  [funk [] [have [get this body] move_left]]]]]
+[deframe reflective_mind-blocks_world-move_right_resource [traced_resource] [] [new [] [construct traced_resource `more_right [funk [] [have [get this body] move_right]]]]]
+[deframe reflective_mind-blocks_world-grab_resource       [traced_resource] [] [new [] [construct traced_resource `grab       [funk [] [have [get this body] grab]]]]]
+[deframe reflective_mind-blocks_world-drop_resource       [traced_resource] [] [new [] [construct traced_resource `drop       [funk [] [have [get this body] drop]]]]]
 

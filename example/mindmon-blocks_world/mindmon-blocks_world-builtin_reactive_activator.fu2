@@ -18,24 +18,24 @@
  rights to redistribute these changes.'
 
 
-[deframe mindmon_blocks_world_builtin_reactive_activator [frame] [mindmon_agent
-								  
-								  window
-								  vbox
-								  menu_bar
-								  file_menu_item
-								  file_menu
-								  file_exit_menu_item
-								  
-								  move_left_resource__hbox
-								  move_left_resource__button
-								  move_right_resource__hbox
-								  move_right_resource__button
-								  grab_resource__hbox
-								  grab_resource__button
-								  drop_resource__hbox
-								  drop_resource__button
-								  ]
+[deframe mindmon_blocks_world_builtin_reactive_activator_window [frame] [mindmon_agent
+									 
+									 window
+									 vbox
+									 menu_bar
+									 file_menu_item
+									 file_menu
+									 file_exit_menu_item
+									 
+									 move_left_resource__hbox
+									 move_left_resource__button
+									 move_right_resource__hbox
+									 move_right_resource__button
+									 grab_resource__hbox
+									 grab_resource__button
+									 drop_resource__hbox
+									 drop_resource__button
+									 ]
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]
@@ -97,9 +97,24 @@
        [have window show_all]]]
 
 
-[deftypefunk mindmon_blocks_world_builtin_reactive_activator execute activate_resource [layer_name agency_name resource_name :rest args]
+[deftypefunk mindmon_blocks_world_builtin_reactive_activator_window execute activate_resource [layer_name agency_name resource_name :rest args]
   [let [[activate_resource [get [get mindmon_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
     [have-apply activate_resource command `[,layer_name ,agency_name ,resource_name @args]]]]
 
+
+
+'mindmon_blocks_world_builtin_reactive_activator'
+
+[deframe mindmon_blocks_world_builtin_reactive_activator [mindmon_agent_tool] []
+  [new [initial-mindmon_agent]
+       [construct mindmon_agent_tool initial-mindmon_agent]
+       ]]
+
+[deftypefunk mindmon_blocks_world_builtin_reactive_activator get mindmon_agent_tool-title []
+  'Builtin-Reactive Activator']
+
+[deftypefunk mindmon_blocks_world_builtin_reactive_activator execute mindmon_agent_tool-start []
+  [terminal_format standard-terminal '\nmindmon_blocks_world_builtin_reactive_activator: starting.']
+  [new mindmon_blocks_world_builtin_reactive_physical_activator_window [get this mindmon_agent]]]
 
 

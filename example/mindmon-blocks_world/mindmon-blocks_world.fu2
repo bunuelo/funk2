@@ -197,7 +197,7 @@
     visual_knowledge]]
 
 [deftypefunk mindmon_blocks_world_agent get tool_names []
-  nil]
+  `[mindmon_blocks_world_builtin_reactive_activator]]
 
 [deftypefunk mindmon_blocks_world_agent execute sense_world []
   [get [get this gripper] perceptions]]

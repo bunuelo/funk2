@@ -198,7 +198,7 @@ double raw__blocks_world_sprite__render_shape_text_height(f2ptr cause, f2ptr thi
   [have cairo_context restore]
 */
 
-f2ptr raw__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   
   return nil;
 }

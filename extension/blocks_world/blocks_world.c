@@ -76,10 +76,10 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   assert_argument_type(double,               image_width);
   assert_argument_type(double,               image_height);
   
-  f2ptr this__width = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width")));
+  f2ptr this__width = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil));
   assert_argument_type(double, this__width);
-  f2ptr this__grippers = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "grippers")));
-  f2ptr this__blocks   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks")));
+  f2ptr this__grippers = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "grippers"), nil));
+  f2ptr this__blocks   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks"),   nil));
   
   double this__width__d  = f2double__d(this__width, cause);
   double image_width__d  = f2double__d(image_width, cause);

@@ -301,6 +301,8 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   assert_argument_type(double,               image_width);
   assert_argument_type(double,               image_height);
   
+  printf("\nhere."); fflush(stdout);
+  
   f2ptr this__width = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil));
   assert_argument_type(double, this__width);
   f2ptr this__grippers = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "grippers"), nil));

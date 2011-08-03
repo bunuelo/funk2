@@ -26,7 +26,7 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this) {
   
   return nil;
 }
-export_cefunk3(blocks_world_physics__render_to_cairo, 0, "Renders blocks_world_physics object to cairo_context.");
+export_cefunk1(blocks_world_physics__render_to_cairo, this, 0, "Renders blocks_world_physics object to cairo_context.");
 
 
 

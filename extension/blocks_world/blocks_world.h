@@ -23,6 +23,7 @@
 #define F2__EXTENSION__BLOCKS_WORLD__H
 
 #include "../../c/funk2.h"
+#include "../cairo/cairo.h"
 
 
 // **

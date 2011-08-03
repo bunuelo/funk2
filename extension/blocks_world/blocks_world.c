@@ -21,42 +21,187 @@
 
 #include "blocks_world.h"
 
-/*
-  `[prog [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
-	 [have cairo_context paint]
-	 
-	 [have cairo_context save]
-	 [have cairo_context translate 16.0 16.0]
-	 [have cairo_context scale
-	       [/ [- [get image_width as-double] [* 2 16.0]] width]
-	       [/ [- [get image_width as-double] [* 2 16.0]] width]]
-	 
-	 [mapc [funk [gripper]
-		     [have gripper render_to_cairo cairo_context]]
-	       grippers]
-	 
-	 [mapc [funk [block]
-		     [have block render_to_cairo cairo_context]]
-	       blocks]
-	 
-	 [have cairo_context restore]
-	 ]
-*/
-
 // blocks_world_sprite
 
 boolean_t raw__blocks_world_sprite__is_type(f2ptr cause, f2ptr object) {
   return raw__object__inherits_from(cause, object, new__symbol(cause, "blocks_world_sprite"));
 }
 
-f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+/*
+  [cond [[eq `cube shape]
+	 
+	 [have cairo_context move_to     x         y]
+	 [have cairo_context rel_line_to width     0.0]
+	 [have cairo_context rel_line_to 0.0       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
+	[[eq `pyramid shape]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [/ width 2]       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
+	[[eq `gripper shape]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] 0.0]
+	 [have cairo_context rel_line_to 0.0               y]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
+	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
+	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]]     y]
+	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]
+	 [have cairo_context rel_line_to [- [/ [* width 4] 6]] 0.0]
+	 [have cairo_context close_path]
+	 
+	 ]
+	
+*/
+
+f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   assert_argument_type(blocks_world_sprite, this);
   assert_argument_type(cairo_context,       cairo_context);
+  
+  f2ptr this__shape  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
+  f2ptr this__x      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+  f2ptr this__y      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil));
+  f2ptr this__width  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+  f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil));
+
+  assert_argument_type(double, this__x);
+  assert_argument_type(double, this__y);
+  assert_argument_type(double, this__width);
+  assert_argument_type(double, this__height);
+  
+  double this__x__d      = f2double__d(this__x,      cause);
+  double this__y__d      = f2double__d(this__y,      cause);
+  double this__width__d  = f2double__d(this__width,  cause);
+  double this__height__d = f2double__d(this__height, cause);
+  
+  if (raw__eq(cause, new__symbol(cause, "cube"), this__shape)) {
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d,      this__y__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d,  0.0);
+    raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,             this__height__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, -this__width__d, 0.0);
+    raw__cairo_context__close_path( cause, cairo_context);
+  } else if (raw__eq(cause, new__symbol(cause, "pyramid"), this__shape)) {
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), this__y__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 2.0, this__height__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, -this__width__d, 0.0);
+    raw__cairo_context__close_path( cause, cairo_context);
+  } else if (raw__eq(cause, new__symbol(cause, "gripper"), this__shape)) {
+    /*
+	 [have cairo_context move_to     [+ x [/ width 2]] 0.0]
+	 [have cairo_context rel_line_to 0.0               y]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
+	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]] y]
+	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
+	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
+	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
+	 [have cairo_context close_path]
+	 
+	 [have cairo_context move_to     [+ x [/ width 2]]     y]
+	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]
+	 [have cairo_context rel_line_to [- [/ [* width 4] 6]] 0.0]
+	 [have cairo_context close_path]
+    */
+    
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), 0.0);
+    raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,                                 this__height__d);
+    raw__cairo_context__close_path( cause, cairo_context);
+    
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), this__y__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, -(this__width__d / 2.0),             ((this__height__d * 2.0) / 3.0));
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 3.0,                this__height__d / 3.0);
+    raw__cairo_context__rel_line_to(cause, cairo_context, -(this__width__d / 3.0),             -(this__height__d / 3.0));
+    raw__cairo_context__close_path( cause, cairo_context);
+    
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), this__y__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 2.0,                ((this__height__d * 2.0) / 3.0));
+    raw__cairo_context__rel_line_to(cause, cairo_context, -(this__width__d / 3.0),             this__height__d / 3.0);
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 3.0,                -(this__height__d / 3.0));
+    raw__cairo_context__close_path( cause, cairo_context);
+    
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), this__y__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 3.0,                (this__height__d * 4.0) / 9.0);
+    raw__cairo_context__rel_line_to(cause, cairo_context, -((this__width__d * 4.0) / 6.0),     0.0);
+    raw__cairo_context__close_path( cause, cairo_context);
+  }
   return nil;
 }
 
+double raw__blocks_world_sprite__render_shape_text_height(f2ptr cause, f2ptr this) {
+  f2ptr this__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
+  if (raw__eq(cause, new__symbol(cause, "cube"), this__shape)) {
+    return 0.05;
+  } else if (raw__eq(cause, new__symbol(cause, "pyramid"), this__shape)) {
+    return 0.05;
+  } else if (raw__eq(cause, new__symbol(cause, "gripper"), this__shape)) {
+    f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
+    assert_argument_type(double, this__height);
+    double this__height__d  = f2double__d(this__height, cause);
+    return ((this__height__d / 3.0) - 0.05);
+  }
+  return 0.0;
+}
 
+/*
+  [have cairo_context save]
+  [cond [[eq `red   color] [have cairo_context set_source_rgba 1.0  0.75 0.75 1.0]]
+	[[eq `brown color] [have cairo_context set_source_rgba 1.0  0.75 0.5  1.0]]
+	[[eq `green color] [have cairo_context set_source_rgba 0.5  1.0  0.75 1.0]]
+	[[eq `blue  color] [have cairo_context set_source_rgba 0.5  0.75 1.0  1.0]]
+	[[eq `black color] [have cairo_context set_source_rgba 0.75 0.75 0.75 1.0]]
+	[[eq `white color] [have cairo_context set_source_rgba 0.9  0.9  0.9  1.0]]]
+  [have cairo_context set_line_width 0.0]
+  [have this render_shape_path_to_cairo cairo_context]
+  [have cairo_context fill]
+  [have cairo_context restore]
+  
+  [have cairo_context save]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context set_line_cap `square]
+  [have cairo_context set_line_width 0.02]
+  [have this render_shape_path_to_cairo cairo_context]
+  [have cairo_context stroke]
+  [have cairo_context restore]
+  
+  [have cairo_context save]
+  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
+  [have cairo_context select_font_face 'Times New Roman' `normal `normal]
+  [have cairo_context set_font_size 0.2]
+  [let [[text_extents [have cairo_context text_extents [get name as-string]]]]
+    [have cairo_context move_to
+	  [+ x [/ [- width [get text_extents width]] 2]]
+	  [- [+ y height] [get this render_shape_text_height]]]]
+  [have cairo_context text_path [get name as-string]]
+  [have cairo_context fill]
+  [have cairo_context restore]
+*/
 
+f2ptr raw__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  
+  return nil;
+}
 
 
 // blocks_world_gripper

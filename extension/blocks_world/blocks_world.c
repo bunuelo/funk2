@@ -89,7 +89,7 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__translate(cause, cairo_context, 16.0, 16.0);
   raw__cairo_context__scale(cause, cairo_context,
-			    ((image_width__d  - (2 * 16.0)) / this__width__d)
+			    ((image_width__d  - (2 * 16.0)) / this__width__d),
 			    ((image_height__d - (2 * 16.0)) / this__width__d));
   
   {

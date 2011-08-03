@@ -126,7 +126,7 @@ f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr thi
     */
     
     raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), 0.0);
-    raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,                                 this__height__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,                                 this__y__d);
     raw__cairo_context__close_path( cause, cairo_context);
     
     raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), this__y__d);

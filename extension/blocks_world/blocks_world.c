@@ -202,7 +202,7 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
   assert_argument_type(blocks_world_sprite, this);
   assert_argument_type(cairo_context,       cairo_context);
   
-  f2ptr this__shape  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"),  nil));
+  f2ptr this__color  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "color"),  nil));
   f2ptr this__name   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "name"),   nil));
   f2ptr this__x      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"),      nil));
   f2ptr this__y      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"),      nil));
@@ -224,12 +224,12 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
   double render_shape_text_height = raw__blocks_world_sprite__render_shape_text_height(cause, this);
   
   raw__cairo_context__save(cause, cairo_context);
-  if      (raw__eq(cause, new__symbol(cause, "red"),   this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 1.0,  1.0);}
-  else if (raw__eq(cause, new__symbol(cause, "brown"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 0.5,  1.0);}
-  else if (raw__eq(cause, new__symbol(cause, "green"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  1.0,  0.75, 1.0);}
-  else if (raw__eq(cause, new__symbol(cause, "blue"),  this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  0.75, 1.0,  1.0);}
-  else if (raw__eq(cause, new__symbol(cause, "black"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.75, 0.75, 0.75, 1.0);}
-  else if (raw__eq(cause, new__symbol(cause, "white"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.9,  0.9,  0.9,  1.0);}
+  if      (raw__eq(cause, new__symbol(cause, "red"),   this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 1.0,  1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "brown"), this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 0.5,  1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "green"), this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  1.0,  0.75, 1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "blue"),  this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  0.75, 1.0,  1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "black"), this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.75, 0.75, 0.75, 1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "white"), this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.9,  0.9,  0.9,  1.0);}
   raw__cairo_context__set_line_width(cause, cairo_context, 0.0);
   assert_value(f2__blocks_world_sprite__render_shape_path_to_cairo(cause, this, cairo_context));
   raw__cairo_context__fill(cause, cairo_context);
@@ -308,7 +308,7 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   
   double this__width__d  = f2double__d(this__width, cause);
   double image_width__d  = f2double__d(image_width, cause);
-  double image_height__d = f2double__d(image_height, cause);
+  //double image_height__d = f2double__d(image_height, cause);
   
   raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0, 1.0, 1.0, 1.0);
   raw__cairo_context__paint(cause, cairo_context);

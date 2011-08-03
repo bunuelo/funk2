@@ -314,6 +314,7 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   printf("\nimage_width  = %f", image_width__d);
   printf("\nimage_height = %f", image_height__d);
   
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0, 1.0, 1.0, 1.0);
   raw__cairo_context__paint(cause, cairo_context);
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__translate(cause, cairo_context, 16.0, 16.0);

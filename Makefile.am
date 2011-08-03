@@ -213,7 +213,8 @@ ACLOCAL_AMFLAGS = -I m4
 
 
 
-all_core_extensions = extension/causality/libf2e_causality.la \
+all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
+                      extension/causality/libf2e_causality.la \
                       extension/cairo/libf2e_cairo.la \
                       extension/concept_version_space/libf2e_concept_version_space.la \
                       extension/conceptnet/libf2e_conceptnet.la \
@@ -409,6 +410,7 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
+extension_blocks_world_libf2e_blocks_world_la_SOURCES                                                     = extension/blocks_world/blocks_world.c
 extension_causality_libf2e_causality_la_SOURCES                                                           = extension/causality/causality.c
 extension_cairo_libf2e_cairo_la_SOURCES                                                                   = extension/cairo/cairo.c
 extension_concept_version_space_libf2e_concept_version_space_la_SOURCES                                   = extension/concept_version_space/concept_version_space.c
@@ -515,6 +517,9 @@ extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_blocks_world_libf2e_blocks_world_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_causality_libf2e_causality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

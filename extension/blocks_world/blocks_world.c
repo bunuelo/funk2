@@ -310,7 +310,7 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   double image_width__d  = f2double__d(image_width, cause);
   double image_height__d = f2double__d(image_height, cause);
   
-  printf("\nthis__width  = %f", this_width__d);
+  printf("\nthis__width  = %f", this__width__d);
   printf("\nimage_width  = %f", image_width__d);
   printf("\nimage_height = %f", image_height__d);
   

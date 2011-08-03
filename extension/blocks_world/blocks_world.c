@@ -74,11 +74,11 @@ f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr thi
   assert_argument_type(blocks_world_sprite, this);
   assert_argument_type(cairo_context,       cairo_context);
   
-  f2ptr this__shape  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
-  f2ptr this__x      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
-  f2ptr this__y      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil));
-  f2ptr this__width  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
-  f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil));
+  f2ptr this__shape  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"),  nil));
+  f2ptr this__x      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"),      nil));
+  f2ptr this__y      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"),      nil));
+  f2ptr this__width  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"),  nil));
+  f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
 
   assert_argument_type(double, this__x);
   assert_argument_type(double, this__y);
@@ -202,8 +202,26 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
   assert_argument_type(blocks_world_sprite, this);
   assert_argument_type(cairo_context,       cairo_context);
   
-  f2ptr this__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
-  f2ptr this__name  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "name"), nil));
+  f2ptr this__shape  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"),  nil));
+  f2ptr this__name   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "name"),   nil));
+  f2ptr this__x      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"),      nil));
+  f2ptr this__y      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"),      nil));
+  f2ptr this__width  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"),  nil));
+  f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
+  
+  assert_argument_type(double, this__x);
+  assert_argument_type(double, this__y);
+  assert_argument_type(double, this__width);
+  assert_argument_type(double, this__height);
+  
+  double this__x__d      = f2double__d(this__x,      cause);
+  double this__y__d      = f2double__d(this__y,      cause);
+  double this__width__d  = f2double__d(this__width,  cause);
+  double this__height__d = f2double__d(this__height, cause);
+  
+  f2ptr this__name__as__string = assert_value(f2__exp__as__string(cause, this__name));
+  
+  double render_shape_text_height = raw__blocks_world_sprite__render_shape_text_height(cause, this);
   
   raw__cairo_context__save(cause, cairo_context);
   if      (raw__eq(cause, new__symbol(cause, "red"),   this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 1.0,  1.0);}
@@ -229,10 +247,19 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0.0, 0.0, 0.0, 1.0);
   raw__cairo_context__select_font_face(cause, cairo_context, new__string(cause, "Times New Roman"), new__symbol(cause, "normal"), new__symbol(cause, "normal"));
   raw__cairo_context__set_font_size(cause, cairo_context, 0.2);
-  raw__cairo_context__text_extents(cause, cairo_context, 
+  f2ptr text_extents = assert_value(f2__cairo_context__text_extents(cause, cairo_context, this__name__as__string));
   
-  raw__cairo_context__restore(cause, cairo_context);
+  f2ptr text_extents__width = assert_value(f2__frame__lookup_var_value(cause, text_extents, new__symbol(cause, "width"), nil));
+  assert_argument_type(double, text_extents__width);
+  double text_extents__width__d = f2double__d(text_extents__width, cause);
   
+  raw__cairo_context__move_to(cause, cairo_context, 
+			      this__x__d + ((this__width__d - text_extents__width__d) / 2.0),
+			      (this__y__d + this__height__d) - render_shape_text_height);
+  
+  raw__cairo_context__text_path(cause, cairo_context, this__name__as__string);
+  raw__cairo_context__fill(     cause, cairo_context);
+  raw__cairo_context__restore(  cause, cairo_context);
   return nil;
 }
 

@@ -43,6 +43,22 @@
 	 ]
 */
 
+// blocks_world_sprite
+
+boolean_t raw__blocks_world_sprite__is_type(f2ptr cause, f2ptr object) {
+  return raw__object__inherits_from(cause, object, new__symbol(cause, "blocks_world_sprite"));
+}
+
+f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  assert_argument_type(blocks_world_sprite, this);
+  assert_argument_type(cairo_context,       cairo_context);
+  return nil;
+}
+
+
+
+
+
 // blocks_world_gripper
 
 boolean_t raw__blocks_world_gripper__is_type(f2ptr cause, f2ptr object) {
@@ -50,7 +66,9 @@ boolean_t raw__blocks_world_gripper__is_type(f2ptr cause, f2ptr object) {
 }
 
 f2ptr f2__blocks_world_gripper__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  return nil;
+  assert_argument_type(blocks_world_gripper, this);
+  assert_argument_type(cairo_context,        cairo_context);
+  return f2__blocks_world_sprite__render_to_cairo(cause, this, cairo_context);
 }
 
 
@@ -61,7 +79,9 @@ boolean_t raw__blocks_world_block__is_type(f2ptr cause, f2ptr object) {
 }
 
 f2ptr f2__blocks_world_block__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
-  return nil;
+  assert_argument_type(blocks_world_block, this);
+  assert_argument_type(cairo_context,      cairo_context);
+  return f2__blocks_world_sprite__render_to_cairo(cause, this, cairo_context);
 }
 
 // blocks_world_physics

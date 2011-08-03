@@ -46,7 +46,7 @@
 // blocks_world_gripper
 
 boolean_t raw__blocks_world_gripper__is_type(f2ptr cause, f2ptr object) {
-  return raw__object__inherits_from(cause, this, new__symbol(cause, "blocks_world_gripper"));
+  return raw__object__inherits_from(cause, object, new__symbol(cause, "blocks_world_gripper"));
 }
 
 f2ptr f2__blocks_world_gripper__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
@@ -57,7 +57,7 @@ f2ptr f2__blocks_world_gripper__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
 // blocks_world_block
 
 boolean_t raw__blocks_world_block__is_type(f2ptr cause, f2ptr object) {
-  return raw__object__inherits_from(cause, this, new__symbol(cause, "blocks_world_block"));
+  return raw__object__inherits_from(cause, object, new__symbol(cause, "blocks_world_block"));
 }
 
 f2ptr f2__blocks_world_gripper__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {

@@ -199,6 +199,39 @@ double raw__blocks_world_sprite__render_shape_text_height(f2ptr cause, f2ptr thi
 */
 
 f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
+  assert_argument_type(blocks_world_sprite, this);
+  assert_argument_type(cairo_context,       cairo_context);
+  
+  f2ptr this__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
+  f2ptr this__name  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "name"), nil));
+  
+  raw__cairo_context__save(cause, cairo_context);
+  if      (raw__eq(cause, new__symbol(cause, "red"),   this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 1.0,  1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "brown"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 0.5,  1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "green"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  1.0,  0.75, 1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "blue"),  this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  0.75, 1.0,  1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "black"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.75, 0.75, 0.75, 1.0);}
+  else if (raw__eq(cause, new__symbol(cause, "white"), this__shape)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.9,  0.9,  0.9,  1.0);}
+  raw__cairo_context__set_line_width(cause, cairo_context, 0.0);
+  assert_value(f2__blocks_world_sprite__render_shape_path_to_cairo(cause, this, cairo_context));
+  raw__cairo_context__fill(cause, cairo_context);
+  raw__cairo_context__restore(cause, cairo_context);
+  
+  raw__cairo_context__save(cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 0.0, 0.0, 0.0, 1.0);
+  raw__cairo_context__set_line_cap(cause, cairo_context, new__symbol(cause, "square"));
+  raw__cairo_context__set_line_width(cause, cairo_context, 0.02);
+  assert_value(f2__blocks_world_sprite__render_shape_path_to_cairo(cause, this, cairo_context));
+  raw__cairo_context__stroke(cause, cairo_context);
+  raw__cairo_context__restore(cause, cairo_context);
+  
+  raw__cairo_context__save(cause, cairo_context);
+  raw__cairo_context__set_source_rgba(cause, cairo_context, 0.0, 0.0, 0.0, 1.0);
+  raw__cairo_context__select_font_face(cause, cairo_context, new__string(cause, "Times New Roman"), new__symbol(cause, "normal"), new__symbol(cause, "normal"));
+  raw__cairo_context__set_font_size(cause, cairo_context, 0.2);
+  raw__cairo_context__text_extents(cause, cairo_context, 
+  
+  raw__cairo_context__restore(cause, cairo_context);
   
   return nil;
 }

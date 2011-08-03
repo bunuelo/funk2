@@ -112,6 +112,7 @@
 	grippers]]
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context image_width image_height]
+  `[blocks_world_physics-render_to_cairo]
   [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
   [have cairo_context paint]
   

@@ -45,8 +45,8 @@
        ]]
 
 [deftypefunk blocks_world_block get overlaps_horizontally [block]
-  [not [or [< [+ x width] [get block x]]
-	   [> x           [+ [get block x] [get block width]]]]]]
+  [not [or [<= [+ x width] [get block x]]
+	   [>= x           [+ [get block x] [get block width]]]]]]
 
 [deftypefunk blocks_world_block execute handle_movement [step_size]
   [= y_velocity [+ y_velocity [* step_size 9.8]]]]

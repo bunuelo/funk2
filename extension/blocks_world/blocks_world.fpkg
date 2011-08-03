@@ -46,5 +46,9 @@
 [defpackage blocks_world
   :packages [blocks_world_window
 	     blocks_world_physics]
-   :sources ['blocks_world.fu2']]
+   :sources ['blocks_world-core.fu2'
+	     'blocks_world.fu2']
+    :binaries ['.libs/libf2e_blocks_world.so']]
+
+[defcore blocks_world 'extension/blocks_world/.libs/libf2e_blocks_world.so']
 

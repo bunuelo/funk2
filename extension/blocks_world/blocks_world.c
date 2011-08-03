@@ -67,7 +67,7 @@ f2ptr f2__blocks_world_block__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cai
 // blocks_world_physics
 
 boolean_t raw__blocks_world_physics__is_type(f2ptr cause, f2ptr object) {
-  return raw__object__inherits_from(cause, this, new__symbol(cause, "blocks_world_physics"));
+  return raw__object__inherits_from(cause, object, new__symbol(cause, "blocks_world_physics"));
 }
 
 f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context, f2ptr image_width, f2ptr image_height) {

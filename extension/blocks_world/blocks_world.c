@@ -224,7 +224,7 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
   double render_shape_text_height = raw__blocks_world_sprite__render_shape_text_height(cause, this);
   
   raw__cairo_context__save(cause, cairo_context);
-  if      (raw__eq(cause, new__symbol(cause, "red"),   this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 1.0,  1.0);}
+  if      (raw__eq(cause, new__symbol(cause, "red"),   this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 0.75, 1.0);}
   else if (raw__eq(cause, new__symbol(cause, "brown"), this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0,  0.75, 0.5,  1.0);}
   else if (raw__eq(cause, new__symbol(cause, "green"), this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  1.0,  0.75, 1.0);}
   else if (raw__eq(cause, new__symbol(cause, "blue"),  this__color)) {raw__cairo_context__set_source_rgba(cause, cairo_context, 0.5,  0.75, 1.0,  1.0);}

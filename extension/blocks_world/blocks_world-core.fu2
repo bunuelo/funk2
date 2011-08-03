@@ -17,7 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk blocks_world_physics-render_to_cairo blocks_world blocks_world_physics__render_to_cairo]
+[defcorefunk blocks_world-core_extension-ping         blocks_world blocks_world__core_extension__ping]
+[defcorefunk blocks_world-core_extension-define_types blocks_world blocks_world__core_extension__define_types]
+[defcorefunk blocks_world-core_extension-initialize   blocks_world blocks_world__core_extension__initialize]
 
 [blocks_world-core_extension-define_types]
+
+
+[defcorefunk blocks_world_physics-render_to_cairo blocks_world blocks_world_physics__render_to_cairo]
+
+
 

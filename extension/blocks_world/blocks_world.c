@@ -245,7 +245,7 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
   
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__set_source_rgba(cause, cairo_context, 0.0, 0.0, 0.0, 1.0);
-  raw__cairo_context__select_font_face(cause, cairo_context, new__string(cause, "Times New Roman"), new__symbol(cause, "normal"), new__symbol(cause, "normal"));
+  raw__cairo_context__select_font_face(cause, cairo_context, "Times New Roman", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
   raw__cairo_context__set_font_size(cause, cairo_context, 0.2);
   f2ptr text_extents = assert_value(f2__cairo_context__text_extents(cause, cairo_context, this__name__as__string));
   

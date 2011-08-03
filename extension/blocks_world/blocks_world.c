@@ -310,17 +310,13 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   double image_width__d  = f2double__d(image_width, cause);
   double image_height__d = f2double__d(image_height, cause);
   
-  printf("\nthis__width  = %f", this__width__d);
-  printf("\nimage_width  = %f", image_width__d);
-  printf("\nimage_height = %f", image_height__d);
-  
   raw__cairo_context__set_source_rgba(cause, cairo_context, 1.0, 1.0, 1.0, 1.0);
   raw__cairo_context__paint(cause, cairo_context);
   raw__cairo_context__save(cause, cairo_context);
   raw__cairo_context__translate(cause, cairo_context, 16.0, 16.0);
   raw__cairo_context__scale(cause, cairo_context,
-			    ((image_width__d  - (2 * 16.0)) / this__width__d),
-			    ((image_height__d - (2 * 16.0)) / this__width__d));
+			    ((image_width__d - (2 * 16.0)) / this__width__d),
+			    ((image_width__d - (2 * 16.0)) / this__width__d));
   
   {
     f2ptr iter = this__grippers;

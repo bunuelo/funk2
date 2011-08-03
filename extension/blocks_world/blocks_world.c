@@ -257,7 +257,7 @@ f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr ca
 			      this__x__d + ((this__width__d - text_extents__width__d) / 2.0),
 			      (this__y__d + this__height__d) - render_shape_text_height);
   
-  raw__cairo_context__text_path(cause, cairo_context, this__name__as__string);
+  assert_value(f2__cairo_context__text_path(cause, cairo_context, this__name__as__string));
   raw__cairo_context__fill(     cause, cairo_context);
   raw__cairo_context__restore(  cause, cairo_context);
   return nil;

@@ -46,11 +46,21 @@
   `[have blocks_world-current_active_frame remove name]
   ]
 
+[deftypefunk blocks_world execute calculate_perceptions []
+  [have blocks_world_physics calculate_perceptions]]
+
 [deftypefunk blocks_world execute step [step_size]
   [have step_mutex lock]
   [have blocks_world_physics handle_movement step_size]
   [have blocks_world_physics step            step_size]
-  [have blocks_world_physics calculate_perceptions]
+  [have this calculate_perceptions]
+  [have step_mutex unlock]]
+
+
+[deftypefunk blocks_world execute raw_step [step_size]
+  [have step_mutex lock]
+  [have blocks_world_physics handle_movement step_size]
+  [have blocks_world_physics step            step_size]
   [have step_mutex unlock]]
 
 [deftypefunk blocks_world execute export_pdf_file [filename]

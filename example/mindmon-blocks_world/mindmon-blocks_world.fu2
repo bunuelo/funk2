@@ -239,7 +239,8 @@
   `[mindmon_blocks_world_agent]]
 
 [deftypefunk mindmon_blocks_world execute raw_step_simulation [step_size]
-  [have blocks_world step [get step_size as-double]]]
+  [have blocks_world raw_step [get step_size as-double]]
+  [have blocks_world calculate_perceptions]]
 
 [deftypefunk mindmon_blocks_world execute step_physical_world []
   [have physical_world step_physical_world]]

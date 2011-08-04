@@ -485,6 +485,16 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
 }
 
 
+f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double step_size) {
+  assert_argument_type(blocks_world_gripper, this);
+  
+  
+  
+  return nil;
+}
+
+
+
 // blocks_world_block
 
 boolean_t raw__blocks_world_block__is_type(f2ptr cause, f2ptr object) {
@@ -689,6 +699,15 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
 }
 
 
+f2ptr raw__blocks_world_block__handle_movement(f2ptr cause, f2ptr this, double step_size) {
+  assert_argument_type(blocks_world_block, this);
+  
+  
+  
+  return nil;
+}
+
+
 // blocks_world_physics
 
 boolean_t raw__blocks_world_physics__is_type(f2ptr cause, f2ptr object) {
@@ -780,6 +799,37 @@ f2ptr f2__blocks_world_physics__step(f2ptr cause, f2ptr this, f2ptr step_size) {
   return nil;
 }
 export_cefunk2(blocks_world_physics__step, this, step_size, 0, "Steps blocks_world_physics object.");
+
+
+f2ptr f2__blocks_world_physics__handle_movement(f2ptr cause, f2ptr this, f2ptr step_size) {
+  assert_argument_type(blocks_world_physics, this);
+  assert_argument_type(double,               step_size);
+  double step_size__d = f2double__d(step_size, cause);
+  
+  f2ptr this__grippers = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "grippers"), nil));
+  f2ptr this__blocks   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks"),   nil));
+  
+  {
+    f2ptr iter = this__grippers;
+    while (iter != nil) {
+      f2ptr gripper = assert_value(f2__cons__car(cause, iter));
+      assert_value(raw__blocks_world_gripper__handle_movement(cause, gripper, step_size__d));
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
+  }
+  
+  {
+    f2ptr iter = this__blocks;
+    while (iter != nil) {
+      f2ptr block = assert_value(f2__cons__car(cause, iter));
+      assert_value(raw__blocks_world_block__handle_movement(cause, block, step_size__d));
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
+  }
+  
+  return nil;
+}
+export_cefunk2(blocks_world_physics__handle_movement, this, step_size, 0, "Handles movement for blocks_world_physics object.");
 
 
 

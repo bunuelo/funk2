@@ -406,7 +406,7 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
     double maximum_block_y = obstacle_below_y - this__height__d;
     double next_block_y    = this__y__d + (step_size * this__y_velocity__d);
     if (maximum_block_y < next_block_y) {
-      on_block = obstacle_block;
+      assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "on_block"), obstacle_block));
       {
 	this__y__d = maximum_block_y;
 	this__y    = f2double__new(cause, this__y__d);

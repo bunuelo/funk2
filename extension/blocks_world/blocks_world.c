@@ -570,7 +570,7 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   
   return nil;
 }
-export_cefunk1(blocks_world_gripper__calculate_perceptions, this, step_size, 0, "Calculates perceptions for this blocks_world_gripper.");
+export_cefunk1(blocks_world_gripper__calculate_perceptions, this, 0, "Calculates perceptions for this blocks_world_gripper.");
 
 
 // blocks_world_block

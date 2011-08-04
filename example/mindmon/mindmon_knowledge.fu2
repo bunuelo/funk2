@@ -35,9 +35,9 @@
 				    
 				    knowledge_image_hbox
 				    knowledge_graph_image
-				    knowledge_graph_image__visible
 				    knowledge_timeline_image
-				    knowledge_timeline_image__visible
+				    [knowledge_graph_image__visible    t]
+				    [knowledge_timeline_image__visible t]
 				    ]
   [new [initial-mindmon_agent
 	initial-knowledge_name]

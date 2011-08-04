@@ -56,7 +56,6 @@
   [have this calculate_perceptions]
   [have step_mutex unlock]]
 
-
 [deftypefunk blocks_world execute raw_step [step_size]
   [have step_mutex lock]
   [have blocks_world_physics handle_movement step_size]

@@ -49,14 +49,18 @@
   [mapc [funk [agent_name]
 	      [let [[mindmon_agent [get this agent agent_name]]]
 		[have mindmon_agent update_after_step_simulation]]]
-	[get this agent_names]]
-  [have this step_physical_world]]
+	[get this agent_names]]]
 
 [deftypefunk mindmon_world execute step_simulation [seconds]
   [have step_mutex lock]
   [have this raw_step_simulation seconds]
   [have this update_after_step_simulation]
+  [have this step_physical_world]
   [have step_mutex unlock]]
+
+[deftypefunk mindmon_world execute step_physical_world []
+  [have this raw_update_after_step_simulation]
+  [have this raw_step_physical_world]]
 
 [deftypefunk mindmon_world get simulator_is_stepping []
   [get step_mutex is_locked]]
@@ -110,8 +114,14 @@
 	 interface_name        `mindmon_world
 	 problematic_type_name [type this]]]
 
-[deftypefunk mindmon_world execute step_physical_world []
-  [terminal_format standard-terminal '\nmindmon_world-get-step_physical_world not implemented in ' [type this] ' interface.']
+[deftypefunk mindmon_world execute raw_update_after_step_simulation []
+  [terminal_format standard-terminal '\nmindmon_world-execute-raw_update_after_step_simulation not implemented in ' [type this] ' interface.']
+  [error bug_name              `interface_not_implemented
+	 interface_name        `mindmon_world
+	 problematic_type_name [type this]]]
+
+[deftypefunk mindmon_world execute raw_step_physical_world []
+  [terminal_format standard-terminal '\nmindmon_world-get-raw_step_physical_world not implemented in ' [type this] ' interface.']
   [error bug_name              `interface_not_implemented
 	 interface_name        `mindmon_world
 	 problematic_type_name [type this]]]

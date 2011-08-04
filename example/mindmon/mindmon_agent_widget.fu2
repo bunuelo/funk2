@@ -513,17 +513,6 @@
       [have [get mindmon_agent mind] activate_vital_resources]
       this]]]
 
-`[
-  [error bug_name `not_yet_implemented]
-  `[let [[moral_compass [new moral_compass]]]
-     [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name creating isis_agent_body.']
-     [let [[isis_agent [new isis_agent_body [get mindmon_project isis_world] moral_compass name]]]
-       [terminal_format standard-terminal '\nmindmon_agent_widget-new_from_name added mind to body.']
-       [have moral_compass activate_vital_resources]
-       [new mindmon_agent_widget mindmon_project isis_agent]]]
-  ]
-
-
 [deftypefunk mindmon_agent_widget get name []
   [get mindmon_agent name]]
 

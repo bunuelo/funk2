@@ -564,9 +564,150 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
   return nil;
 }
 
+/*
+  `[prog [= perception_list nil]
+	 [mapc [funk [gripper]
+		     [if [eq this gripper]
+			 [prog [have this __add_perception `[,[get gripper name] is me]]
+			       [have this __add_perception `[,[get gripper name] movement_command ,[if [get gripper movement_command]
+												       [get gripper movement_command]
+												     `nil]]]
+			       ]]
+		     
+		     [have this __add_perception `[,[get gripper name] is-a gripper]]
+		     [have this __add_perception `[,[get gripper name] color ,[get gripper color]]]
+		     [have this __add_perception `[,[get gripper name] is-holding ,[if [get gripper is_holding]
+										       [get [get gripper is_holding] name]
+										     `nil]]]
+		     
+		     [if [> [get gripper x] x]
+			 [have this __add_perception `[,[get gripper name] right-of ,name]]]
+		     [if [< [get gripper x] x]
+			 [have this __add_perception `[,[get gripper name] left-of ,name]]]
+		     
+		     ]
+	       [get blocks_world_physics grippers]]
+	 [mapc [funk [block]
+		     [have this __add_perception `[,[get block name] is-a block]]
+		     [have this __add_perception `[,[get block name] color ,[get block color]]]
+		     [have this __add_perception `[,[get block name] shape ,[get block shape]]]
+		     
+		     [if [get block on_block]
+			 [have this __add_perception `[,[get block name] on ,[get [get block on_block] name]]]]
+		     
+		     [if [> [get block x] x]
+			 [have this __add_perception `[,[get block name] right-of ,name]]]
+		     [if [< [get block x] x]
+			 [have this __add_perception `[,[get block name] left-of ,name]]]
+		     [if [and [> x [- [get block x] 0.25]]
+			      [< x [+ [get block x] 0.25]]]
+			 [have this __add_perception `[,[get block name] below ,name]]]
+		     
+		     ]
+	       [get blocks_world_physics blocks]]
+	 [= perception_list [reverse perception_list]]]
+*/
+
+f2ptr raw__blocks_world_gripper__add_perception(f2ptr cause, f2ptr this, f2ptr perception) {
+  f2ptr perceptions = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "perceptions"), nil));
+  perceptions = f2cons__new(cause, perception, perceptions);
+  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "perceptions"), perceptions));
+  return nil;
+}
 
 f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   assert_argument_type(blocks_world_gripper, this);
+  
+  f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
+  assert_argument_type(double, this__x_velocity);
+  
+  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "perception_list"), nil));
+  
+  f2ptr this__name = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "name"), nil));
+  
+  f2ptr this__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+  assert_argument_type(double, this__x);
+  double this__x__d = f2double__d(this__x, cause);
+  
+  f2ptr this__blocks_world_physics__grippers = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "grippers"), nil));
+  f2ptr this__blocks_world_physics__blocks   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
+  
+  {
+    f2ptr iter = this__blocks_world_physics__grippers;
+    while (iter != nil) {
+      f2ptr gripper = assert_value(f2__cons__car(cause, iter));
+      {
+	f2ptr gripper__name = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "name"), nil));
+	if (raw__eq(cause, this, gripper)) {
+	  f2ptr gripper__movement_command = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "movement_command"), nil));
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "is"),               new__symbol(cause, "me")));
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "movement_command"), gripper__movement_command));
+	}
+	f2ptr gripper__color            = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "color"),      nil));
+	f2ptr gripper__is_holding       = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "is_holding"), nil));
+	f2ptr gripper__is_holding__name = nil;
+	if (gripper__is_holding != nil) {
+	  gripper__is_holding__name = assert_value(f2__frame__lookup_var_value(cause, gripper__is_holding, new__symbol(cause, "name"), nil));
+	}
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "is-a"),       new__symbol(cause, "gripper")));
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "color"),      gripper__color));
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "is-holding"), gripper__is_holding__name));
+	
+	f2ptr gripper__x = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "x"), nil));
+	assert_argument_type(double, gripper__x);
+	double gripper__x__d = f2double__d(gripper__x, cause);
+	
+	if (gripper__x__d > this__x__d) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "right-of"), this__name));
+	}
+	if (gripper__x__d < this__x__d) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, gripper__name, new__symbol(cause, "left-of"), this__name));
+	}
+	
+      }
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
+  }
+
+  {
+    f2ptr iter = this__blocks_world_physics__blocks;
+    while (iter != nil) {
+      f2ptr block = assert_value(f2__cons__car(cause, iter));
+      {
+	f2ptr block__name     = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "name"),     nil));
+	f2ptr block__color    = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "color"),    nil));
+	f2ptr block__shape    = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "shape"),    nil));
+	f2ptr block__on_block = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "on_block"), nil));
+	
+	f2ptr block__on_block__name = nil;
+	if (block__on_block != nil) {
+	  block__on_block__name = assert_value(f2__frame__lookup_var_value(cause, block__on_block, new__symbol(cause, "name"), nil));
+	}
+	
+	f2ptr block__x = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "x"), nil));
+	assert_argument_type(double, block__x);
+	double block__x__d = f2double__d(block__x, cause);
+	
+	
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "is-a"),  new__symbol(cause, "block")));
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "color"), block__color));
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "shape"), block__shape));
+	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "on"),    block__on_block__name));
+	
+	if (block__x__d > this__x__d) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "right-of"), this__name));
+	}
+	if (block__x__d < this__x__d) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "left-of"), this__name));
+	}
+	if ((this__x__d > (block__x__d - 0.25)) &&
+	    (this__x__d < (block__x__d + 0.25))) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below"), this__name));
+	}
+      }
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
+  }
   
   return nil;
 }

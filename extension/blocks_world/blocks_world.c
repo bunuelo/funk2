@@ -609,16 +609,14 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
 */
 
 f2ptr raw__blocks_world_gripper__add_perception(f2ptr cause, f2ptr this, f2ptr perception) {
-  f2ptr perceptions = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "perceptions"), nil));
-  perceptions = f2cons__new(cause, perception, perceptions);
-  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "perceptions"), perceptions));
+  f2ptr perception_list = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "perception_list"), nil));
+  perception_list = f2cons__new(cause, perception, perception_list);
+  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "perception_list"), perception_list));
   return nil;
 }
 
 f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   assert_argument_type(blocks_world_gripper, this);
-  
-  printf("\nhere."); fflush(stdout);
   
   f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
   assert_argument_type(blocks_world_physics, this__blocks_world_physics);

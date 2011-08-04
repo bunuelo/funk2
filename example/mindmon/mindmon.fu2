@@ -872,7 +872,7 @@
 			     [= mindmon_project nil]
 			     [have this close_project]
 			     
-			     [set window default_size [+ 640 320] [+ [* 240 2] 128]]
+			     [set window default_size 640 [+ [* 240 2] 128]]
 			     
 			     [have window show_all]
 			     
@@ -912,9 +912,9 @@
 
 [deftypefunk mindmon execute cycle []
   [if [not [get window visible]]
-      [= done t]]
-  [if mindmon_project
-      [have mindmon_project cycle]]]
+      [= done t]
+    [if mindmon_project
+	[have mindmon_project cycle]]]]
 
 [deftypefunk mindmon execute shrink_window []
   [set window size 1 1]]

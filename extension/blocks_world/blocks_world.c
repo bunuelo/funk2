@@ -335,10 +335,6 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
   assert_argument_type(double, this__y);
   double this__y__d = f2double__d(this__y, cause);
   
-  f2ptr this__width = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil));
-  assert_argument_type(double, this__width);
-  double this__width__d = f2double__d(this__width, cause);
-  
   f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
   assert_argument_type(double, this__height);
   double this__height__d = f2double__d(this__height, cause);
@@ -363,8 +359,7 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
   assert_argument_type(double, this__blocks_world_physics__width);
   double this__blocks_world_physics__width__d = f2double__d(this__blocks_world_physics__width, cause);
   
-  f2ptr this__blocks_world_physics__grippers = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "grippers"), nil));
-  f2ptr this__blocks_world_physics__blocks   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
+  f2ptr this__blocks_world_physics__blocks = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
   
   if (next_x < 0.0) {
     next_x = 0.0;

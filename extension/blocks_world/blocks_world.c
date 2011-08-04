@@ -618,6 +618,8 @@ f2ptr raw__blocks_world_gripper__add_perception(f2ptr cause, f2ptr this, f2ptr p
 f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   assert_argument_type(blocks_world_gripper, this);
   
+  printf("\nhere."); fflush(stdout);
+  
   f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
   assert_argument_type(blocks_world_physics, this__blocks_world_physics);
   

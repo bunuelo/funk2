@@ -59,7 +59,7 @@
     [prog [= movement_command desired_movement_command]
 	  nil]]]
 
-[deftypefunk blocks_world_gripper execute handle_movement [step_size]
+`[deftypefunk blocks_world_gripper execute handle_movement [step_size]
   [cond [[null movement_command]
 	 [= x_velocity 0.0]
 	 [= y_velocity 0.0]]

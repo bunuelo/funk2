@@ -361,6 +361,10 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
   assert_argument_type(blocks_world_physics, this__blocks_world_physics);
   
+  f2ptr this__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+  assert_argument_type(double, this__x);
+  double this__x__d = f2double__d(this__x, cause);
+  
   f2ptr this__y = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil));
   assert_argument_type(double, this__y);
   double this__y__d = f2double__d(this__y, cause);

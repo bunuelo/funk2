@@ -25,6 +25,12 @@
 #include "../../c/funk2.h"
 #include "../cairo/cairo.h"
 
+// blocks_world_block
+
+boolean_t raw__blocks_world_block__is_type              (f2ptr cause, f2ptr object);
+f2ptr      f2__blocks_world_block__render_to_cairo      (f2ptr cause, f2ptr this, f2ptr cairo_context);
+boolean_t raw__blocks_world_block__overlaps_horizontally(f2ptr cause, f2ptr this, f2ptr block);
+
 // blocks_world_physics
 
 boolean_t raw__blocks_world_physics__is_type(f2ptr cause, f2ptr object);

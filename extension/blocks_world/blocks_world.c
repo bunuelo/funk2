@@ -356,8 +356,6 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
   double next_x = this__x__d + (step_size * this__x_velocity__d);
   double next_y = this__y__d + (step_size * this__y_velocity__d);
   
-  f2ptr this__movement_command = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "movement_command"), nil));
-  
   f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
   assert_argument_type(blocks_world_physics, this__blocks_world_physics);
   

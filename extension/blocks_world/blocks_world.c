@@ -316,8 +316,8 @@ boolean_t raw__blocks_world_block__overlaps_horizontally(f2ptr cause, f2ptr this
              [>= this__x__d                    [+ [get block x] [get block width]]]]]]
   */
   
-  return (! (((x + width) <= block__x__d)                       ||
-	     (x           >= (block__x__d + block__width__d))));
+  return (! (((this__x__d + this__width__d) <= block__x__d)                       ||
+	     (this__x__d                    >= (block__x__d + block__width__d))));
 }
 
 /*

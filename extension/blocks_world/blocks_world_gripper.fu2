@@ -128,7 +128,7 @@
     [have perception_list_mutex unlock]
     perceptions]]
 
-[deftypefunk blocks_world_gripper execute __add_perception [perception]
+`[deftypefunk blocks_world_gripper execute __add_perception [perception]
   [= perception_list [cons perception perception_list]]]
 
 [deftypefunk blocks_world_gripper execute calculate_perceptions []

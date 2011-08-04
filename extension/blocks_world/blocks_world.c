@@ -448,6 +448,10 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
 	  f2ptr gripper__x = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "x"), nil));
 	  assert_argument_type(double, gripper__x);
 	  double gripper__x__d = f2double__d(gripper__x, cause);
+
+	  f2ptr gripper__y = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "y"), nil));
+	  assert_argument_type(double, gripper__y);
+	  double gripper__y__d = f2double__d(gripper__y, cause);
 	  
 	  f2ptr gripper__is_holding_relative_x = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "is_holding_relative_x"), nil));
 	  assert_argument_type(double, gripper__is_holding_relative_x);

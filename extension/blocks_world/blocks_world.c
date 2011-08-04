@@ -565,6 +565,13 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
 }
 
 
+f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
+  assert_argument_type(blocks_world_gripper, this);
+  
+  return nil;
+}
+export_cefunk1(blocks_world_gripper__calculate_perceptions, this, step_size, 0, "Calculates perceptions for this blocks_world_gripper.");
+
 
 // blocks_world_block
 

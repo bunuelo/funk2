@@ -35,7 +35,7 @@
   [= width  [get new-width  as-double]]
   [= height [get new-height as-double]]]
 
-[deftypefunk blocks_world_physics get blocks []
+[deftypefunk blocks_world_physics get _blocks []
   [have blocks_mutex lock]
   [let [[result [if [null blocks]
 		    nil
@@ -44,7 +44,7 @@
     [have blocks_mutex unlock]
     result]]
 
-[deftypefunk blocks_world_physics get grippers []
+[deftypefunk blocks_world_physics get _grippers []
   [have grippers_mutex lock]
   [let [[result [if [null grippers]
 		    nil
@@ -91,22 +91,10 @@
   [have grippers_mutex unlock]]
 
 [deftypefunk blocks_world_physics execute handle_movement [step_size]
-  [blocks_world_physics-handle_movement this step_size]
-  `[prog [mapc [funk [gripper]
-		     [have gripper handle_movement step_size]]
-	       grippers]
-	 [mapc [funk [block]
-		     [have block handle_movement step_size]]
-	       blocks]]]
+  [blocks_world_physics-handle_movement this step_size]]
 
 [deftypefunk blocks_world_physics execute step [step_size]
-  [blocks_world_physics-step this [get step_size as-double]]
-  `[prog [mapc [funk [gripper]
-		     [have gripper step step_size]]
-	       grippers]
-	 [mapc [funk [block]
-		     [have block step step_size]]
-	       blocks]]]
+  [blocks_world_physics-step this [get step_size as-double]]]
 
 [deftypefunk blocks_world_physics execute calculate_perceptions []
   [mapc [funk [gripper]
@@ -114,26 +102,6 @@
 	grippers]]
 
 [deftypefunk blocks_world_physics execute render_to_cairo [cairo_context image_width image_height]
-  [blocks_world_physics-render_to_cairo this cairo_context [get image_width as-double] [get image_height as-double]]
-  `[prog [have cairo_context set_source_rgba 1.0 1.0 1.0 1.0]
-	 [have cairo_context paint]
-	 
-	 [have cairo_context save]
-	 [have cairo_context translate 16.0 16.0]
-	 [have cairo_context scale
-	       [/ [- [get image_width as-double] [* 2 16.0]] width]
-	       [/ [- [get image_width as-double] [* 2 16.0]] width]]
-	 
-	 [mapc [funk [gripper]
-		     [have gripper render_to_cairo cairo_context]]
-	       grippers]
-	 
-	 [mapc [funk [block]
-		     [have block render_to_cairo cairo_context]]
-	       blocks]
-	 
-	 [have cairo_context restore]
-	 ]
-  ]
+  [blocks_world_physics-render_to_cairo this cairo_context [get image_width as-double] [get image_height as-double]]]
 
 

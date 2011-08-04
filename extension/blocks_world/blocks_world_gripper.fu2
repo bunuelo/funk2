@@ -61,8 +61,8 @@
 
 [deftypefunk blocks_world_gripper execute handle_movement [step_size]
   [cond [[null movement_command]
-	 [= x_velocity 0]
-	 [= y_velocity 0]]
+	 [= x_velocity 0.0]
+	 [= y_velocity 0.0]]
 	[[eq movement_command `left]
 	 [= x_velocity [- gripper_movement_speed]]]
 	[[eq movement_command `right]

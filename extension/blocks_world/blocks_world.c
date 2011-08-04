@@ -466,6 +466,7 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
       this__movement_command = nil;
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "movement_command"), this__movement_command));
     }
+    assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "is_holding"),            nil));
     assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "is_holding_relative_x"), nil));
   }
   

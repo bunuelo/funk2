@@ -75,7 +75,7 @@
 	 ]
 	]]
 
-[deftypefunk blocks_world_gripper execute step [step_size]
+`[deftypefunk blocks_world_gripper execute step [step_size]
   [let [[next_x [+ x [* step_size x_velocity]]]
 	[next_y [+ y [* step_size y_velocity]]]]
     [if [< next_x 0.0]

@@ -276,8 +276,216 @@ f2ptr f2__blocks_world_gripper__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   return f2__blocks_world_sprite__render_to_cairo(cause, this, cairo_context);
 }
 
+/*
+  [let [[next_x [+ x [* step_size x_velocity]]]
+	[next_y [+ y [* step_size y_velocity]]]]
+    [if [< next_x 0.0]
+	[= next_x 0.0]]
+    [if [> next_x [- [get blocks_world_physics width] 1]]
+	[= next_x [- [get blocks_world_physics width] 1]]]
+    
+    [let [[obstacle_below_y nil]
+	  [obstacle_block   nil]]
+      [mapc [funk [block]
+		  [if [not [eq this block]]
+		      [if [and [get this overlaps_horizontally block]
+			       [< y [get block y]]
+			       [or [null obstacle_below_y]
+				   [< [get block y] obstacle_below_y]]]
+			  [prog [= obstacle_below_y [get block y]]
+				[= obstacle_block   block]]]]]
+	    [get blocks_world_physics blocks]]
+      [= on_block nil]
+      [if [not [null obstacle_below_y]]
+	  [prog `[terminal_format standard-terminal '\n' `[,name on ,[get block name]]]
+		[let [[maximum_block_y [- obstacle_below_y height]]]
+		  [if [< maximum_block_y next_y]
+		      [prog [= on_block   obstacle_block]
+			    [= next_y     maximum_block_y]
+			    [= y_velocity 0.0]
+			    [if [eq `grab movement_command]
+				[prog [= movement_command      `recoil]
+				      [= is_holding            obstacle_block]
+				      [= is_holding_relative_x [- [get obstacle_block x] x]]
+				      ]]]]]]]
+      ]
+    
+    [if [< next_y 0.5]
+	[prog [= next_y 0.5]
+	      [if [eq `recoil movement_command]
+		  [= movement_command nil]]]]
+    
+    [if [eq `drop movement_command]
+	[prog [= movement_command      nil]
+	      [= is_holding            nil]
+	      [= is_holding_relative_x nil]]]
+    
+    [= x next_x]
+    [= y next_y]]]
+*/
+
 f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(blocks_world_gripper, this);
+  
+  f2ptr this__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+  assert_argument_type(double, this__x);
+  double this__x__d = f2double__d(this__x, cause);
+  
+  f2ptr this__y = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"), nil));
+  assert_argument_type(double, this__y);
+  double this__y__d = f2double__d(this__y, cause);
+  
+  f2ptr this__width = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"), nil));
+  assert_argument_type(double, this__width);
+  double this__width__d = f2double__d(this__width, cause);
+  
+  f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
+  assert_argument_type(double, this__height);
+  double this__height__d = f2double__d(this__height, cause);
+  
+  f2ptr this__x_velocity = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x_velocity"), nil));
+  assert_argument_type(double, this__x_velocity);
+  double this__x_velocity__d = f2double__d(this__x_velocity, cause);
+  
+  f2ptr this__y_velocity = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y_velocity"), nil));
+  assert_argument_type(double, this__y_velocity);
+  double this__y_velocity__d = f2double__d(this__y_velocity, cause);
+  
+  f2ptr this__movement_command = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "movement_command"), nil));
+  
+  double next_x = this__x__d + (step_size * this__x_velocity__d);
+  double next_y = this__y__d + (step_size * this__y_velocity__d);
+  
+  f2ptr this__movement_command = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "movement_command"), nil));
+  
+  f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
+  assert_argument_type(blocks_world_physics, this__blocks_world_physics);
+  
+  f2ptr this__blocks_world_physics__width = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "width"), nil));
+  assert_argument_type(double, this__blocks_world_physics__width);
+  double this__blocks_world_physics__width__d = f2double__d(this__blocks_world_physics__width, cause);
+  
+  f2ptr this__blocks_world_physics__grippers = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "grippers"), nil));
+  f2ptr this__blocks_world_physics__blocks   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
+  
+  if (next_x < 0.0) {
+    next_x = 0.0;
+  }
+  if (next_x > (this__blocks_world_physics__width__d - 1.0)) {
+    next_x = this__blocks_world_physics__width__d - 1.0;
+  }
+  
+  double obstacle_below_y = 0.0;
+  f2ptr  obstacle_block   = nil;
+  
+  {
+    f2ptr iter = this__blocks_world_physics__blocks;
+    while (iter != nil) {
+      f2ptr block = assert_value(f2__cons__car(cause, iter));
+      {
+	if (! raw__eq(cause, this, block)) {
+	  if (raw__blocks_world_block__overlaps_horizontally(cause, this, block)) {
+	    f2ptr block__y = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "y"), nil));
+	    assert_argument_type(double, block__y);
+	    double block__y__d = f2double__d(block__y, cause);
+	    if (this__y__d < block__y__d) {
+	      if ((obstacle_block == nil) ||
+		  (block__y__d < obstacle_below_y)) {
+		obstacle_block   = block;
+		obstacle_below_y = block__y__d;
+	      }
+	    }
+	  }
+	}
+      }
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
+  }
+  
+  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "on_block"), nil));
+  
+  if (obstacle_block != nil) {
+    
+    double maximum_block_y = obstacle_below_y - this__height__d;
+    double next_block_y    = this__y__d + (step_size * this__y_velocity__d);
+    if (maximum_block_y < next_block_y) {
+      /*      
+		      [prog [= on_block   obstacle_block]
+			    [= next_y     maximum_block_y]
+			    [= y_velocity 0.0]
+			    [if [eq `grab movement_command]
+				[prog [= movement_command      `recoil]
+				      [= is_holding            obstacle_block]
+				      [= is_holding_relative_x [- [get obstacle_block x] x]]
+				      ]]]]]]]
+      */
+      assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "on_block"), obstacle_block));
+      next_y = maximum_block_y;
+      {
+	this__y_velocity__d = 0.0;
+	this__y_velocity    = f2double__new(cause, this__y_velocity__d);
+	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "y_velocity"), this__y_velocity));
+      }
+      if (raw__eq(cause, new__symbol(cause, "grab"), this__movement_command)) {
+	f2ptr obstacle_block__x = assert_value(f2__frame__lookup_var_value(cause, obstacle_block, new__symbol(cause, "x"), nil));
+	assert_argument_type(double, obstacle_block__x);
+	double obstacle_block__x__d = f2double__d(obstacle_block__x, cause);
+	
+	{
+	  this__movement_command = new__symbol(cause, "recoil");
+	  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "movement_command"), this__movement_command));
+	}
+	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "is_holding"),            obstacle_block));
+	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "is_holding_relative_x"), f2double__new(cause, obstacle_block__x__d - this__x__d)));
+	
+      }
+    }
+    
+  }
+  
+  /*
+    [if [< next_y 0.5]
+	[prog [= next_y 0.5]
+	      [if [eq `recoil movement_command]
+		  [= movement_command nil]]]]
+    
+    [if [eq `drop movement_command]
+	[prog [= movement_command      nil]
+	      [= is_holding            nil]
+	      [= is_holding_relative_x nil]]]
+    
+    [= x next_x]
+    [= y next_y]]]
+  */
+  
+  if (next_y < 0.5) {
+    next_y = 0.5;
+    if (raw__eq(cause, new__symbol(cause, "recoil"), this__movement_command)) {
+      {
+	this__movement_command = nil;
+	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "movement_command"), this__movement_command));
+      }
+    }
+  }
+  
+  if (raw__eq(cause, new__symbol(cause, "drop"), this__movement_command)) {
+    {
+      this__movement_command = nil;
+      assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "movement_command"), this__movement_command));
+    }
+    assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "is_holding_relative_x"), nil));
+  }
+  
+  {
+    this__x__d = next_x;
+    this__x    = f2double__new(cause, this__x__d);
+    assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "x"), this__x));
+  }
+  {
+    this__y__d = next_y;
+    this__y    = f2double__new(cause, this__y__d);
+    assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "y"), this__y));
+  }
   
   return nil;
 }
@@ -404,6 +612,8 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
       iter = assert_value(f2__cons__cdr(cause, iter));
     }
   }
+  
+  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "on_block"), nil));
   
   if (obstacle_block != nil) {
     

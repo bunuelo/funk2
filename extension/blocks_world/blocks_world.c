@@ -619,7 +619,6 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   assert_argument_type(blocks_world_gripper, this);
   
   f2ptr this__blocks_world_physics = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "blocks_world_physics"), nil));
-  assert_argument_type(double, this__x_velocity);
   
   assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "perception_list"), nil));
   

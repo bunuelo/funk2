@@ -388,7 +388,7 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
 	    assert_argument_type(double, block__y);
 	    double block__y__d = f2double__d(block__y, cause);
 	    if (this__y__d < block__y__d) {
-	      if ((obstable_block == nil) ||
+	      if ((obstacle_block == nil) ||
 		  (block__y__d < obstacle_below_y)) {
 		obstacle_block   = block;
 		obstacle_below_y = block__y__d;

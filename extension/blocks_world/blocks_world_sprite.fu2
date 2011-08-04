@@ -47,7 +47,7 @@
   [not [or [< [+ x width] [get sprite x]]
 	   [> x           [+ [get sprite x] [get sprite width]]]]]]
 
-[deftypefunk blocks_world_sprite execute render_shape_path_to_cairo [cairo_context]
+`[deftypefunk blocks_world_sprite execute render_shape_path_to_cairo [cairo_context]
   [cond [[eq `cube shape]
 	 
 	 [have cairo_context move_to     x         y]
@@ -90,14 +90,14 @@
 	
 	]]
 
-[deftypefunk blocks_world_sprite get render_shape_text_height []
+`[deftypefunk blocks_world_sprite get render_shape_text_height []
   [cond [[eq `cube    shape] 0.05]
 	[[eq `pyramid shape] 0.05]
 	[[eq `gripper shape] [- [/ height 3.0] 0.05]]
 	]]
 
 
-[deftypefunk blocks_world_sprite execute render_to_cairo [cairo_context]
+`[deftypefunk blocks_world_sprite execute render_to_cairo [cairo_context]
   [have cairo_context save]
   [cond [[eq `red   color] [have cairo_context set_source_rgba 1.0  0.75 0.75 1.0]]
 	[[eq `brown color] [have cairo_context set_source_rgba 1.0  0.75 0.5  1.0]]

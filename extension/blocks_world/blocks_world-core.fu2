@@ -25,6 +25,7 @@
 
 
 [defcorefunk blocks_world_physics-render_to_cairo blocks_world blocks_world_physics__render_to_cairo]
+[defcorefunk blocks_world_physics-step            blocks_world blocks_world_physics__step]
 
 
 

@@ -692,7 +692,9 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
 	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "is-a"),  new__symbol(cause, "block")));
 	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "color"), block__color));
 	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "shape"), block__shape));
-	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "on"),    block__on_block__name));
+	if (block__on_block) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "on"), block__on_block__name));
+	}
 	
 	if (block__x__d > this__x__d) {
 	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "right-of"), this__name));

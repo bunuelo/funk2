@@ -25,6 +25,9 @@
 #include "../../c/funk2.h"
 #include "../cairo/cairo.h"
 
+// blocks_world_physics
+
+boolean_t raw__blocks_world_physics__is_type(f2ptr cause, f2ptr object);
 
 // **
 

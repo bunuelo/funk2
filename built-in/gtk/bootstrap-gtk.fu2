@@ -33,7 +33,9 @@
 [deftypefunk g_object execute unref    [] [g-object-unref [get this g_object]]]
 
 'GtkWidget'
+[deftypefunk gtk_widget execute show                   []                                      [gtk-widget-show                   [get this widget]]]
 [deftypefunk gtk_widget execute show_all               []                                      [gtk-widget-show_all               [get this widget]]]
+[deftypefunk gtk_widget execute hide                   []                                      [gtk-widget-hide                   [get this widget]]]
 [deftypefunk gtk_widget execute hide_all               []                                      [gtk-widget-hide_all               [get this widget]]]
 [deftypefunk gtk_widget execute request_size           [width height]                          [gtk-widget-set_size_request       [get this widget] width height]]
 [deftypefunk gtk_widget execute queue_draw_area        [x y width height]                      [gtk-widget-queue_draw_area        [get this widget] x y width height]]
@@ -43,6 +45,7 @@
 [deftypefunk gtk_widget execute modify_fg              [state color]                           [gtk-widget-modify_fg              [get this widget] state color]]
 [deftypefunk gtk_widget execute modify_bg              [state color]                           [gtk-widget-modify_bg              [get this widget] state color]]
 [deftypefunk gtk_widget set     sensitive              [sensitive]                             [gtk-widget-set_sensitive          [get this widget] sensitive]]
+[deftypefunk gtk_widget set     no_show_all            [no_show_all]                           [gtk-widget-set_no_show_all        [get this widget] no_show_all]]
 [deftypefunk gtk_widget execute draw_arc               [filled x y width height angle1 angle2] [gtk-widget-draw_arc               [get this widget] filled x y width height angle1 angle2]]
 [deftypefunk gtk_widget execute draw_rectangle         [filled x y width height]               [gtk-widget-draw_rectangle         [get this widget] filled x y width height]]
 

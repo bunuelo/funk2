@@ -813,11 +813,27 @@ void funk2_g__object__unref(funk2_gtk_t* this, GObject* object) {
 
 
 // widget
+ 
+void funk2_gtk__widget__show(funk2_gtk_t* this, GtkWidget* widget) {
+  {
+    gdk_threads_enter();
+    gtk_widget_show(GTK_WIDGET(widget));
+    gdk_threads_leave();
+  }
+}
 
 void funk2_gtk__widget__show_all(funk2_gtk_t* this, GtkWidget* widget) {
   {
     gdk_threads_enter();
     gtk_widget_show_all(GTK_WIDGET(widget));
+    gdk_threads_leave();
+  }
+}
+ 
+void funk2_gtk__widget__hide(funk2_gtk_t* this, GtkWidget* widget) {
+  {
+    gdk_threads_enter();
+    gtk_widget_hide(GTK_WIDGET(widget));
     gdk_threads_leave();
   }
 }
@@ -892,6 +908,14 @@ void funk2_gtk__widget__set_sensitive(funk2_gtk_t* this, GtkWidget* widget, bool
   {
     gdk_threads_enter();
     gtk_widget_set_sensitive(GTK_WIDGET(widget), sensitive ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+ 
+void funk2_gtk__widget__set_no_show_all(funk2_gtk_t* this, GtkWidget* widget, boolean_t no_show_all) {
+  {
+    gdk_threads_enter();
+    gtk_widget_set_no_show_all(GTK_WIDGET(widget), no_show_all ? TRUE : FALSE);
     gdk_threads_leave();
   }
 }
@@ -3067,6 +3091,33 @@ def_pcfunk1(g__object__unref, this,
 
 // widget
 
+f2ptr raw__gtk__widget__show(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, widget);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    assert_g_type(GTK_TYPE_WIDGET, gtk_widget);
+    
+    funk2_gtk__widget__show(&(__funk2.gtk), gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__show(f2ptr cause, f2ptr widget) {
+  assert_argument_type(gtk_widget, widget);
+  return raw__gtk__widget__show(cause, widget);
+}
+def_pcfunk1(gtk__widget__show, widget,
+	    "Shows the widget and all children.",
+	    return f2__gtk__widget__show(this_cause, widget));
+
+
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
@@ -3092,6 +3143,33 @@ f2ptr f2__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 def_pcfunk1(gtk__widget__show_all, widget,
 	    "Shows the widget and all children.",
 	    return f2__gtk__widget__show_all(this_cause, widget));
+
+
+f2ptr raw__gtk__widget__hide(f2ptr cause, f2ptr widget) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, widget);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    assert_g_type(GTK_TYPE_WIDGET, gtk_widget);
+    
+    funk2_gtk__widget__hide(&(__funk2.gtk), gtk_widget);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__hide(f2ptr cause, f2ptr widget) {
+  assert_argument_type(gtk_widget, widget);
+  return raw__gtk__widget__hide(cause, widget);
+}
+def_pcfunk1(gtk__widget__hide, widget,
+	    "Hides the widget and all children.",
+	    return f2__gtk__widget__hide(this_cause, widget));
 
 
 f2ptr raw__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
@@ -3348,6 +3426,33 @@ f2ptr f2__gtk__widget__set_sensitive(f2ptr cause, f2ptr widget, f2ptr sensitive)
 def_pcfunk2(gtk__widget__set_sensitive, widget, sensitive,
 	    "Sets the sensitivity of a widget.  Insensitive widgets are greyed out.",
 	    return f2__gtk__widget__set_sensitive(this_cause, widget, sensitive));
+
+
+f2ptr raw__gtk__widget__set_no_show_all(f2ptr cause, f2ptr widget, f2ptr no_show_all) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, widget);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    assert_g_type(GTK_TYPE_WIDGET, gtk_widget);
+    
+    funk2_gtk__widget__set_no_show_all(&(__funk2.gtk), gtk_widget, (no_show_all != nil));
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__widget__set_no_show_all(f2ptr cause, f2ptr widget, f2ptr no_show_all) {
+  assert_argument_type(gtk_widget, widget);
+  return raw__gtk__widget__set_no_show_all(cause, widget, no_show_all);
+}
+def_pcfunk2(gtk__widget__set_no_show_all, widget, no_show_all,
+	    "Sets whether this widget is affected by show_all or hide_all events.",
+	    return f2__gtk__widget__set_no_show_all(this_cause, widget, no_show_all));
 
 
 // beginning of GtkWidget drawing fuctions, which are not really GtkWidget functions in the GTK library.
@@ -6088,7 +6193,9 @@ void f2__gtk__initialize() {
   
   // widget
   
+  f2__primcfunk__init__1(gtk__widget__show,                         widget);
   f2__primcfunk__init__1(gtk__widget__show_all,                     widget);
+  f2__primcfunk__init__1(gtk__widget__hide,                         widget);
   f2__primcfunk__init__1(gtk__widget__hide_all,                     widget);
   f2__primcfunk__init__3(gtk__widget__set_size_request,             widget, width, height);
   f2__primcfunk__init__5(gtk__widget__queue_draw_area,              widget, x, y, width, height);
@@ -6098,6 +6205,7 @@ void f2__gtk__initialize() {
   f2__primcfunk__init__3(gtk__widget__modify_fg,                    widget, state, color);
   f2__primcfunk__init__3(gtk__widget__modify_bg,                    widget, state, color);
   f2__primcfunk__init__2(gtk__widget__set_sensitive,                widget, sensitive);
+  f2__primcfunk__init__2(gtk__widget__set_no_show_all,              widget, no_show_all);
   // widget draw funks
   f2__primcfunk__init__8(gtk__widget__draw_arc,                     widget, filled, x, y, width, height, angle1, angle2);
   f2__primcfunk__init__6(gtk__widget__draw_rectangle,               widget, filled, x, y, width, height);

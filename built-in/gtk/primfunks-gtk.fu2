@@ -42,7 +42,9 @@
 
 'widget'
 
+[globalize-funk gtk-widget-show                                   &primfunk:gtk__widget__show]
 [globalize-funk gtk-widget-show_all                               &primfunk:gtk__widget__show_all]
+[globalize-funk gtk-widget-hide                                   &primfunk:gtk__widget__hide]
 [globalize-funk gtk-widget-hide_all                               &primfunk:gtk__widget__hide_all]
 [globalize-funk gtk-widget-set_size_request                       &primfunk:gtk__widget__set_size_request]
 [globalize-funk gtk-widget-queue_draw_area                        &primfunk:gtk__widget__queue_draw_area]
@@ -52,6 +54,7 @@
 [globalize-funk gtk-widget-modify_fg                              &primfunk:gtk__widget__modify_fg]
 [globalize-funk gtk-widget-modify_bg                              &primfunk:gtk__widget__modify_bg]
 [globalize-funk gtk-widget-set_sensitive                          &primfunk:gtk__widget__set_sensitive]
+[globalize-funk gtk-widget-set_no_show_all                        &primfunk:gtk__widget__set_no_show_all]
 [globalize-funk gtk-widget-draw_arc                               &primfunk:gtk__widget__draw_arc]
 [globalize-funk gtk-widget-draw_rectangle                         &primfunk:gtk__widget__draw_rectangle]
 [globalize-funk gtk-misc-set_alignment                            &primfunk:gtk__misc__set_alignment]

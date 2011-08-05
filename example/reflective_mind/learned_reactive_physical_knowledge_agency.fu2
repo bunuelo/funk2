@@ -181,6 +181,10 @@
 	      ]]
     semantic_physical_object_type]]
 
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_type_with_property_type [phenomenal_name property_key property property_value]
+  [let [[object_type_with_propety_phenomenal_name [get [format nil phenomenal_name '_' property_key '_' property '_' property_value] as-symbol]]]
+    [get this semantic_physical_object_type object_type_with_propety_phenomenal_name]]]
+
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]]
     [while t
@@ -196,6 +200,15 @@
 										 [cond [[and [eq event-key_type `property] [eq event-key `physical_object_type]]
 											'create semantic_physical_object_type.'
 											[get this semantic_physical_object_type event-value]
+											[let* [[event-semantic_frame-frame [get event-semantic_frame frame]]
+											       [event-semantic_frame-frame-type_ptypehash [get event-semantic_frame-frame type_ptypehash]]]
+											  [mapc [funk [property_key]
+												      [mapc [funk [property]
+														  [let [[property_value [have event-semantic_frame-frame lookup_type_var_value property_key property]]]
+														    [if [is-type `symbol property_value]
+															[get this semantic_physical_object_type_with_property_type event-value property_key property property_value]]]]
+													    [get [have event-semantic_frame-frame-type_ptypehash lookup property_key] keys]]]
+												[get event-semantic_frame-frame-type_ptypehash keys]]]
 											]
 										       [[and [is-type `semantic_physical_object event-semantic_frame]
 											     [is-type `semantic_physical_object event-value]]

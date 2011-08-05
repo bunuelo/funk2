@@ -58,7 +58,7 @@
 										      key
 										      target_physical_object_type
 										      target_physical_object_type_property]
-  [have [get this layer `deliberative] create_physical_type_relationship_goal
+  [have [get this layer `deliberative] create_physical_type_property_relationship_goal
 	source_physical_object_type
 	source_physical_object_type_property
 	key_type

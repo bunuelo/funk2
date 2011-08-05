@@ -46,5 +46,12 @@
   [have this create_physical_type_relationship_goal `block   `preposition `left-of    `gripper]
   [have this create_physical_type_relationship_goal `block   `preposition `right-of   `gripper]
   
+  [have this create_physical_type_property_relationship_goal `block `red    `preposition `below  `gripper `?]
+  [have this create_physical_type_property_relationship_goal `block `green  `preposition `below  `gripper `?]
+  [have this create_physical_type_property_relationship_goal `block `blue   `preposition `below  `gripper `?]
+  [have this create_physical_type_property_relationship_goal `block `brown  `preposition `below  `gripper `?]
+  [have this create_physical_type_property_relationship_goal `block `white  `preposition `below  `gripper `?]
+  [have this create_physical_type_property_relationship_goal `block `black  `preposition `below  `gripper `?]
+  
   nil]
 

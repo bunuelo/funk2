@@ -25,6 +25,7 @@
 				    knowledge_graph_expanded
 				    knowledge_timeline_expanded
 				    
+				    [widget_is_visible nil]
 				    knowledge_vbox
 				    knowledge_button_label_hbox
 				    knowledge_graph_expansion_button
@@ -127,6 +128,9 @@
 
 
 [deftypefunk mindmon_knowledge execute update []
+  [if [not widget_is_visible]
+      [prog [= widget_is_visible t]
+	    [have knowledge_vbox show_all]]]
   [have this update_knowledge_graph_image]
   [have this update_knowledge_timeline_image]]
 

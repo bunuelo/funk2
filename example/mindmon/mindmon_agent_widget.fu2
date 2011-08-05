@@ -478,6 +478,8 @@
        
        [have frame add vbox]
        
+       [have [get this widget] show_all]
+       
        [mapc [funk [knowledge_base_name]
 		   [have this add_mindmon_knowledge knowledge_base_name]]
 	     [get mindmon_agent knowledge_base_names]]
@@ -492,7 +494,6 @@
 												[let [[name [get semantic_knowledge_base name]]]
 												  [have this add_mindmon_knowledge name]]]]
        
-       [have [get this widget] show_all]
        [have this update]
        
        nil]]

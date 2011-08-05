@@ -37,8 +37,6 @@
 				    knowledge_image_hbox
 				    knowledge_graph_image
 				    knowledge_timeline_image
-				    [knowledge_graph_image__visible    t]
-				    [knowledge_timeline_image__visible t]
 				    ]
   [new [initial-mindmon_agent
 	initial-knowledge_name]
@@ -110,21 +108,17 @@
 													       [conslist [get this semantic_knowledge_base]]]
 												       '\n']]]]
 					       [dot_code-as-image dot_code 320 240]]]
-	    [have knowledge_graph_image show_all]
-	    [= knowledge_graph_image__visible t]]
-    [if knowledge_graph_image__visible
-	[prog [have knowledge_graph_image hide_all]
-	      [= knowledge_graph_image__visible nil]]]]]
+	    [have knowledge_graph_image show_all]]
+    [if [get knowledge_graph_image visible]
+	[have knowledge_graph_image hide_all]]]]
 
 [deftypefunk mindmon_knowledge execute update_knowledge_timeline_image []
   [if knowledge_timeline_expanded
       [prog [set knowledge_timeline_image image [let [[timeline [get [get this semantic_knowledge_base] as-timeline]]]
 						  [get timeline as-constrained_image 320 240]]]
-	    [have knowledge_timeline_image show_all]
-	    [= knowledge_timeline_image__visible t]]
-    [if knowledge_timeline_image__visible
-	[prog [have knowledge_timeline_image hide_all]
-	      [= knowledge_timeline_image__visible nil]]]]]
+	    [have knowledge_timeline_image show_all]]
+    [if [get knowledge_timeline_image visible]
+	[have knowledge_timeline_image hide_all]]]]
 
 
 [deftypefunk mindmon_knowledge execute update []

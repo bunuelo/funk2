@@ -75,7 +75,7 @@
 				      
 				      gtk_timeline
 				      [timeline_width 100]
-				      [timeline_scale 4]
+				      [timeline_scale 10]
 				      ]
   [new [initial-timeline]
        [= timeline initial-timeline]

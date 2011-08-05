@@ -204,7 +204,7 @@
 											       [event-semantic_frame-frame-type_ptypehash [get event-semantic_frame-frame type_ptypehash]]]
 											  [mapc [funk [property_key]
 												      [mapc [funk [property]
-														  [let [[property_value [have event-semantic_frame-frame lookup_type_var_value property_key property]]]
+														  [let [[property_value [get event-semantic_frame-frame type_var_value property_key property]]]
 														    [if [is-type `symbol property_value]
 															[get this semantic_physical_object_type_with_property_type event-value property_key property property_value]]]]
 													    [get [have event-semantic_frame-frame-type_ptypehash lookup property_key] keys]]]

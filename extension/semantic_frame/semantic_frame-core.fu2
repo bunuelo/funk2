@@ -38,6 +38,9 @@
 [defmetro semantic-remove           [this slot_name :rest args] `[object-semantic-remove           ,this [quote ,slot_name] @args]]
 [defmetro semantic-remove-apply     [this slot_name       args] `[object-semantic-remove-apply     ,this [quote ,slot_name] ,args]]
 
-`[defmetro semantic-is-type [type_name object]
-   `[get ,object is_semantic_type ,type_name]]
+[deftypefunk semantic_frame execute map_type_key_values [type_key_value_funk]
+  [have frame map_type_key_values [funk [type key value_set]
+					[mapc [funk [value]
+						    [funkall type_key_value_funk type key value]]
+					      [get value_set elements]]]]]
 

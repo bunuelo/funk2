@@ -23,7 +23,7 @@
 [deframe deliberative_goal_creation_agency [agency] []
   [new []
        [construct agency `goal_creation]
-       [have this add_resource [new create_physical_relationship_goal_resource]]
+       [have this add_resource [new create_physical_type_relationship_goal_resource]]
        nil]]
 
 [deftypefunk deliberative_goal_creation_agency execute create_knowledge []
@@ -34,7 +34,7 @@
   `[have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->goal_creation]
   ]
 
-[deftypefunk deliberative_goal_creation_agency execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+[deftypefunk deliberative_goal_creation_agency execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [let [[goal_resource_name            [get [string-concat [get source_physical_object_type as-string] '_'
 							   [get key_type           as-string] '_'
 							   [get key                as-string] '_'
@@ -66,18 +66,18 @@
 	[set goal_resource vital t]
 	nil]]]]
 
-'create_physical_relationship_goal_resource'
+'create_physical_type_relationship_goal_resource'
 
-[deframe create_physical_relationship_goal_resource [traced_resource] []
+[deframe create_physical_type_relationship_goal_resource [traced_resource] []
   [new []
-       [construct traced_resource `create_physical_relationship_goal
+       [construct traced_resource `create_physical_type_relationship_goal
 		  [funk [source_physical_object_type key_type key target_physical_object_type]
 			[have this execute_resource_raw_funk source_physical_object_type key_type key target_physical_object_type]
 			]]
        nil]]
 
-[deftypefunk create_physical_relationship_goal_resource execute execute_resource_raw_funk [source_physical_object_type key_type key target_physical_object_type]
-  [have [get this agency] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
+[deftypefunk create_physical_type_relationship_goal_resource execute execute_resource_raw_funk [source_physical_object_type key_type key target_physical_object_type]
+  [have [get this agency] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
 
 

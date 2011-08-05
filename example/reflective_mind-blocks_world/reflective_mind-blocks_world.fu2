@@ -41,6 +41,10 @@
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
   
   [have this create_physical_relationship_goal `gripper `preposition `is-holding `block]
+  [have this create_physical_relationship_goal `block   `preposition `below      `gripper]
+  [have this create_physical_relationship_goal `block   `preposition `on         `block]
+  [have this create_physical_relationship_goal `block   `preposition `left-of    `gripper]
+  [have this create_physical_relationship_goal `block   `preposition `right-of   `gripper]
   
   nil]
 

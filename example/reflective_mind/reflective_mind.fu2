@@ -49,8 +49,8 @@
   [have [get this layer `deliberative]     connect_knowledge_reflection]
   [have [get this layer `reflective]       connect_knowledge_reflection]]
 
-[deftypefunk reflective_mind execute create_physical_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
-  [have [get this layer `deliberative] create_physical_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
+[deftypefunk reflective_mind execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+  [have [get this layer `deliberative] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
 'pre-knowledge perception functions'
 

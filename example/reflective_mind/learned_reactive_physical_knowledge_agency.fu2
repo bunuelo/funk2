@@ -197,7 +197,8 @@
 											'create semantic_physical_object_type.'
 											[get this semantic_physical_object_type event-value]
 											]
-										       [t
+										       [[and [is-type `semantic_physical_object event-semantic_frame]
+											     [is-type `semantic_physical_object event-value]]
 											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [let [[event-semantic_frame-physical_object_type [get event-semantic_frame physical_object_type]]
 												[event-value-physical_object_type          [get event-value          physical_object_type]]]
@@ -226,7 +227,8 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [t
+										 [cond [[and [is-type `semantic_physical_object event-semantic_frame]
+											     [is-type `semantic_physical_object event-value]]
 											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [let [[event-semantic_frame-physical_object_type [get event-semantic_frame physical_object_type]]
 												[event-value-physical_object_type          [get event-value          physical_object_type]]]

@@ -436,18 +436,21 @@
        [have entry_hbox pack_start step_size_label nil nil 0]
        [have entry_hbox pack_start step_size_entry t t 0]
        [set this step_size 0.1]
+       [have step_size_entry request_size 40 1]
        
        [= movie_resolution_label [gtk-label-new 'Movie Resolution: ']]
        [= movie_resolution_entry [gtk-entry-new]]
        [have entry_hbox pack_start movie_resolution_label nil nil 0]
        [have entry_hbox pack_start movie_resolution_entry t t 0]
        [set this movie_resolution 1]
+       [have movie_resolution_entry request_size 40 1]
        
        [= step_delay_label [gtk-label-new 'Step Delay: ']]
        [= step_delay_entry [gtk-entry-new]]
        [have entry_hbox pack_start step_delay_label nil nil 0]
        [have entry_hbox pack_start step_delay_entry t t 0]
        [set this step_delay 5.0]
+       [have step_delay_entry request_size 40 1]
        
        [have controller_frame add controller_vbox nil nil 0]
        

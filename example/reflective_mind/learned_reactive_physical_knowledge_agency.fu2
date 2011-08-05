@@ -197,7 +197,7 @@
 											'create semantic_physical_object_type.'
 											[get this semantic_physical_object_type event-value]
 											]
-										       [[eq event-key_type `preposition]
+										       [t
 											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [let [[event-semantic_frame-physical_object_type [get event-semantic_frame physical_object_type]]
 												[event-value-physical_object_type          [get event-value          physical_object_type]]]
@@ -226,7 +226,7 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [[eq event-key_type `preposition]
+										 [cond [t
 											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [let [[event-semantic_frame-physical_object_type [get event-semantic_frame physical_object_type]]
 												[event-value-physical_object_type          [get event-value          physical_object_type]]]

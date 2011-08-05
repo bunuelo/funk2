@@ -101,13 +101,13 @@
 [deftypefunk isis_world_moral_compass execute create_builtin_goals []
   [terminal_format standard-terminal '\nisis_world_moral_compass: creating built-in goals.']
   
-  [have this create_physical_relationship_goal `knife  `preposition `on `table]
-  [have this create_physical_relationship_goal `butter `preposition `on `table]
-  [have this create_physical_relationship_goal `loaf   `preposition `on `table]
+  [have this create_physical_type_relationship_goal `knife  `preposition `on `table]
+  [have this create_physical_type_relationship_goal `butter `preposition `on `table]
+  [have this create_physical_type_relationship_goal `loaf   `preposition `on `table]
   
-  [have this create_physical_relationship_goal `knife  `preposition `in `fridge]
-  [have this create_physical_relationship_goal `butter `preposition `in `fridge]
-  [have this create_physical_relationship_goal `loaf   `preposition `in `fridge]
+  [have this create_physical_type_relationship_goal `knife  `preposition `in `fridge]
+  [have this create_physical_type_relationship_goal `butter `preposition `in `fridge]
+  [have this create_physical_type_relationship_goal `loaf   `preposition `in `fridge]
   
   nil]
 

@@ -25,12 +25,17 @@
   :packages [blocks_world_sprite]
    :sources ['blocks_world_block.fu2']]
 
+[defpackage blocks_world_table
+  :packages [blocks_world_block]
+   :sources ['blocks_world_table.fu2']]
+
 [defpackage blocks_world_gripper
   :packages [blocks_world_block]
    :sources ['blocks_world_gripper.fu2']]
 
 [defpackage blocks_world_physics
   :packages [blocks_world_block
+	     blocks_world_table
 	     blocks_world_gripper]
    :sources ['blocks_world_physics.fu2']]
 

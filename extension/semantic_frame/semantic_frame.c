@@ -241,6 +241,7 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
     f2__frame__add_var_value(cause, this, new__symbol(cause, "read_count"),                  read_count);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "write_in_progress"),           write_in_progress);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "reverse_frame"),               reverse_frame);
   }
   return this;
 }

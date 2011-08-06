@@ -249,7 +249,7 @@
 																						    '_physical_object_type_relation']
 																				     as-symbol]]
 																  [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
-																  [have event-semantic_frame-semantic_physical_object_type add compound_key event-value-physical_object_type relation]]
+																  [have event-semantic_frame-semantic_physical_object_type add compound_key [get event-value-semantic_physical_object_type phenomenal_name] relation]]
 															  [prog [= relation [get relation_set an_arbitrary_element]]
 																[set relation count [+ [get relation count] 1]]]]]]
 														event-value-semantic_physical_object_types]]

@@ -631,7 +631,6 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   
   f2ptr this__blocks_world_physics__grippers = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "grippers"), nil));
   f2ptr this__blocks_world_physics__blocks   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
-  f2ptr this__blocks_world_physics__tables   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "tables"),   nil));
   
   {
     f2ptr iter = this__blocks_world_physics__grippers;

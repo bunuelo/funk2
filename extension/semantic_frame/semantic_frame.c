@@ -296,15 +296,26 @@ f2ptr raw__semantic_frame__add__handle_before_callbacks(f2ptr cause, f2ptr this,
 
 f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
-  f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
   f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
-  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
-  if (value_set == nil) {
-    value_set = f2__set__new(cause);
-    raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
+  {
+    f2ptr frame     = raw__semantic_frame__frame(cause, this);
+    f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+    if (value_set == nil) {
+      value_set = f2__set__new(cause);
+      raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
+    }
+    raw__set__add(cause, value_set, value);
   }
-  raw__set__add(cause, value_set, value);
+  if (raw__semantic_frame__is_type(cause, value)) {
+    f2ptr reverse_frame     = raw__semantic_frame__reverse_frame(cause, value);
+    f2ptr reverse_value_set = raw__frame__lookup_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, nil);
+    if (reverse_value_set == nil) {
+      reverse_value_set = f2__set__new(cause);
+      raw__frame__add_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, reverse_value_set);
+    }
+    raw__set__add(cause, reverse_value_set, this);
+  }
   return nil;
 }
 
@@ -358,18 +369,33 @@ f2ptr raw__semantic_frame__remove__handle_before_callbacks(f2ptr cause, f2ptr th
 
 f2ptr raw__semantic_frame__remove__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
-  f2ptr frame                = raw__semantic_frame__frame(cause, this);
   f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
   f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
-  f2ptr value_set            = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
-  if ((value_set == nil) || (! raw__set__remove(cause, value_set, value))) {
-    return f2larva__new(cause, 53, f2__bug__new(cause, f2integer__new(cause, 53), f2__frame__new(cause, f2list12__new(cause,
-														      new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame"),
-														      new__symbol(cause, "funktion_name"), new__symbol(cause, "semantic_frame-remove"),
-														      new__symbol(cause, "this"),          this,
-														      new__symbol(cause, "key_type"),      key_type,
-														      new__symbol(cause, "key"),           key,
-														      new__symbol(cause, "value"),         value))));
+  {
+    f2ptr frame     = raw__semantic_frame__frame(cause, this);
+    f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
+    if ((value_set == nil) || (! raw__set__remove(cause, value_set, value))) {
+      return f2larva__new(cause, 53, f2__bug__new(cause, f2integer__new(cause, 53), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame"),
+															new__symbol(cause, "funktion_name"), new__symbol(cause, "semantic_frame-remove"),
+															new__symbol(cause, "this"),          this,
+															new__symbol(cause, "key_type"),      key_type,
+															new__symbol(cause, "key"),           key,
+															new__symbol(cause, "value"),         value))));
+    }
+  }
+  if (raw__semantic_frame__is_type(cause, value)) {
+    f2ptr reverse_frame     = raw__semantic_frame__reverse_frame(cause, value);
+    f2ptr reverse_value_set = raw__frame__lookup_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, nil);
+    if ((reverse_value_set == nil) || (! raw__set__remove(cause, reverse_value_set, this))) {
+      return f2larva__new(cause, 54, f2__bug__new(cause, f2integer__new(cause, 54), f2__frame__new(cause, f2list12__new(cause,
+															new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame_reverse_frame"),
+															new__symbol(cause, "funktion_name"), new__symbol(cause, "semantic_frame-remove"),
+															new__symbol(cause, "this"),          this,
+															new__symbol(cause, "key_type"),      key_type,
+															new__symbol(cause, "key"),           key,
+															new__symbol(cause, "value"),         value))));
+    }
   }
   return nil;
 }

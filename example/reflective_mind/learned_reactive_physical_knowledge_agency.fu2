@@ -205,20 +205,26 @@
 												    [if [is-type `symbol slot_value]
 													[get this semantic_physical_object_type_with_property_type event-value slot_type slot_key slot_value]]]]
 											]
-										       [[and [is-type `semantic_physical_object event-semantic_frame]
-											     [is-type `symbol                   event-value]]
-											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
-											  
-											  ]]
-										       [[and [is-type `semantic_physical_object event-semantic_frame]
-											     [is-type `semantic_physical_object event-value]]
+										       [[is-type `semantic_physical_object event-semantic_frame]
 											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [let [[event-semantic_frame-semantic_physical_object_types nil]
 												[event-value-semantic_physical_object_types          nil]]
 											    [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get event-semantic_frame physical_object_type]]
 																			 event-semantic_frame-semantic_physical_object_types]]
-											    [= event-value-semantic_physical_object_types          [cons [get this semantic_physical_object_type [get event-value          physical_object_type]]
-																			 event-value-semantic_physical_object_types]]
+											    [if [is-type `semantic_physical_object event-value]
+												[prog [= event-value-semantic_physical_object_types          [cons [get this semantic_physical_object_type [get event-value          physical_object_type]]
+																				   event-value-semantic_physical_object_types]]
+												      [have event-value map_type_key_values
+													    [funk [slot_type slot_key slot_value]
+														  [terminal_format standard-terminal '\n---> ' slot_type ' ' slot_key ' ' slot_value]
+														  [if [and [not [and [eq `property slot_type] [eq `physical_object_type slot_key]]]
+															   [is-type `symbol slot_value]]
+														      [= event-value-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																					       [get event-value physical_object_type]
+																					       slot_type
+																					       slot_key
+																					       slot_value]
+																					  event-value-semantic_physical_object_types]]]]]]]
 											    [if [is-type `symbol event-value]
 												[= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
 																				  [get event-semantic_frame physical_object_type]
@@ -226,18 +232,6 @@
 																				  event-key
 																				  event-value]
 																			     event-semantic_frame-semantic_physical_object_types]]]
-											    [if [is-type `semantic_physical_object event-value]
-												[have event-value map_type_key_values
-												      [funk [slot_type slot_key slot_value]
-													    [terminal_format standard-terminal '\n---> ' slot_type ' ' slot_key ' ' slot_value]
-													    [if [and [not [and [eq `property slot_type] [eq `physical_object_type slot_key]]]
-														     [is-type `symbol slot_value]]
-														[= event-value-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
-																					 [get event-value physical_object_type]
-																					 slot_type
-																					 slot_key
-																					 slot_value]
-																				    event-value-semantic_physical_object_types]]]]]]
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]
@@ -264,15 +258,25 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [[and [is-type `semantic_physical_object event-semantic_frame]
-											     [is-type `semantic_physical_object event-value]]
+										 [cond [[is-type `semantic_physical_object event-semantic_frame]
 											[let [[compound_key [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [let [[event-semantic_frame-semantic_physical_object_types nil]
 												[event-value-semantic_physical_object_types          nil]]
 											    [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get event-semantic_frame physical_object_type]]
 																			 event-semantic_frame-semantic_physical_object_types]]
-											    [= event-value-semantic_physical_object_types          [cons [get this semantic_physical_object_type [get event-value          physical_object_type]]
-																			 event-value-semantic_physical_object_types]]
+											    [if [is-type `semantic_physical_object event-value]
+												[prog [= event-value-semantic_physical_object_types          [cons [get this semantic_physical_object_type [get event-value          physical_object_type]]
+																				   event-value-semantic_physical_object_types]]
+												      [have event-value map_type_key_values
+													    [funk [slot_type slot_key slot_value]
+														  [if [and [not [and [eq `property slot_type] [eq `physical_object_type slot_key]]]
+															   [is-type `symbol slot_value]]
+														      [= event-value-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																					       [get event-value physical_object_type]
+																					       slot_type
+																					       slot_key
+																					       slot_value]
+																					  event-value-semantic_physical_object_types]]]]]]]
 											    [if [is-type `symbol event-value]
 												[= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
 																				  [get event-semantic_frame physical_object_type]
@@ -280,17 +284,6 @@
 																				  event-key
 																				  event-value]
 																			     event-semantic_frame-semantic_physical_object_types]]]
-											    [if [is-type `semantic_physical_object event-value]
-												[have event-value map_type_key_values
-												      [funk [slot_type slot_key slot_value]
-													    [if [and [not [and [eq `property slot_type] [eq `physical_object_type slot_key]]]
-														     [is-type `symbol slot_value]]
-														[= event-value-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
-																					 [get event-value physical_object_type]
-																					 slot_type
-																					 slot_key
-																					 slot_value]
-																				    event-value-semantic_physical_object_types]]]]]]
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]

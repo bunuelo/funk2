@@ -237,7 +237,7 @@
 																				      event-value-semantic_physical_object_types]]]]]]
 											      [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													  [mapc [funk [event-value-semantic_physical_object_type]
-														      [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key event-value-physical_object_type]]
+														      [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]
 															    [relation     nil]]
 															[if [or [null relation_set] [get relation_set is_empty]]
 															    [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-value-semantic_physical_object_type]]

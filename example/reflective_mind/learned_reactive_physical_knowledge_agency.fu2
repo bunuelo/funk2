@@ -62,6 +62,7 @@
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]
+    [semantic_physical_object_type_relation-core_extension-ping]
     [while t
       `[print 'translate_visual_knowledge_to_physical_knowledge_resource waiting for visual_knowledge_iterator.']
       [let [[event [have visual_knowledge_iterator wait_for_current]]]

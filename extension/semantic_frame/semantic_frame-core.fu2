@@ -44,3 +44,9 @@
 						    [funkall type_key_value_funk type key value]]
 					      [get value_set elements]]]]]
 
+[deftypefunk semantic_frame execute map_reverse_type_key_values [type_key_value_funk]
+  [have reverse_frame map_type_key_values [funk [type key value_set]
+						[mapc [funk [value]
+							    [funkall type_key_value_funk type key value]]
+						      [get value_set elements]]]]]
+

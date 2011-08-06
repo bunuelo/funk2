@@ -210,7 +210,7 @@ f2ptr f2__semantic_frame_event_type__new(f2ptr cause) {
 
 // semantic_frame
 
-def_ceframe10(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame_mutate_cmutex, frame_read_mutate_cmutex, read_count, write_in_progress, frame);
+def_ceframe11(semantic_frame, semantic_frame, semantic_realm, trace_add, trace_remove, trace_event_stream, semantic_knowledge_base_set, frame_mutate_cmutex, frame_read_mutate_cmutex, read_count, write_in_progress, frame, reverse_frame);
 
 f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
@@ -224,6 +224,7 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
     f2ptr trace_remove                = nil;
     f2ptr semantic_knowledge_base_set = f2__set__new(cause);
     f2ptr frame                       = f2__frame__new(cause, nil);
+    f2ptr reverse_frame               = f2__frame__new(cause, nil);
     if (cause != nil) {
       trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
       trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
@@ -236,7 +237,7 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
-    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_read_mutate_cmutex"),         frame_read_mutate_cmutex);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_read_mutate_cmutex"),    frame_read_mutate_cmutex);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "read_count"),                  read_count);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "write_in_progress"),           write_in_progress);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"),                       frame);

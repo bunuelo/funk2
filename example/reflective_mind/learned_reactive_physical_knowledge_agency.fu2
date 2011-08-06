@@ -188,7 +188,7 @@
 											    
 											    [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get event-semantic_frame physical_object_type]]
 																			 event-semantic_frame-semantic_physical_object_types]]
-											    [have event-value map_reverse_type_key_values
+											    [have event-semantic_frame map_reverse_type_key_values
 												  [funk [slot_type slot_key slot_value]
 													[if [is-type `semantic_physical_object slot_value]
 													    [prog [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get slot_value physical_object_type]]
@@ -254,7 +254,7 @@
 												[event-value-semantic_physical_object_types                  nil]]
 											    [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get event-semantic_frame physical_object_type]]
 																			 event-semantic_frame-semantic_physical_object_types]]
-											    [have event-value map_reverse_type_key_values
+											    [have event-semantic_frame map_reverse_type_key_values
 												  [funk [slot_type slot_key slot_value]
 													[if [is-type `semantic_physical_object slot_value]
 													    [prog [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get slot_value physical_object_type]]

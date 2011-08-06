@@ -631,6 +631,7 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   
   f2ptr this__blocks_world_physics__grippers = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "grippers"), nil));
   f2ptr this__blocks_world_physics__blocks   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
+  f2ptr this__blocks_world_physics__tables   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "tables"),   nil));
   
   {
     f2ptr iter = this__blocks_world_physics__grippers;
@@ -688,8 +689,15 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
 	assert_argument_type(double, block__x);
 	double block__x__d = f2double__d(block__x, cause);
 	
+	f2ptr block__width = assert_value(f2__frame__lookup_var_value(cause, block, new__symbol(cause, "width"), nil));
+	assert_argument_type(double, block__width);
+	double block__width__d = f2double__d(block__width, cause);
 	
-	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "is-a"),  new__symbol(cause, "block")));
+	if (raw__eq(cause, new__symbol(cause, "blocks_world_table"), f2__object__type(cause, block))) {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "is-a"),  new__symbol(cause, "table")));
+	} else {
+	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "is-a"),  new__symbol(cause, "block")));
+	}
 	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "color"), block__color));
 	raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "shape"), block__shape));
 	if (block__on_block) {
@@ -702,8 +710,8 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
 	if (block__x__d < this__x__d) {
 	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "left-of"), this__name));
 	}
-	if ((this__x__d > (block__x__d - 0.25)) &&
-	    (this__x__d < (block__x__d + 0.25))) {
+	if ((this__x__d > ((block__x__d - (block__width__d / 2.0)) - 0.25)) &&
+	    (this__x__d < ((block__x__d + (block__width__d / 2.0)) + 0.25))) {
 	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below"), this__name));
 	}
       }

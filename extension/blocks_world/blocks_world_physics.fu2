@@ -35,24 +35,6 @@
   [= width  [get new-width  as-double]]
   [= height [get new-height as-double]]]
 
-[deftypefunk blocks_world_physics get _blocks []
-  [have blocks_mutex lock]
-  [let [[result [if [null blocks]
-		    nil
-		  [reverse [have blocks sort [funk [x y] [< [get [get x name] as-string]
-							    [get [get y name] as-string]]]]]]]]
-    [have blocks_mutex unlock]
-    result]]
-
-[deftypefunk blocks_world_physics get _grippers []
-  [have grippers_mutex lock]
-  [let [[result [if [null grippers]
-		    nil
-		  [reverse [have grippers sort [funk [x y] [< [get [get x name] as-string]
-							      [get [get y name] as-string]]]]]]]]
-    [have grippers_mutex unlock]
-    result]]
-
 [deftypefunk blocks_world_physics get gripper [name]
   [have grippers_mutex lock]
   [let [[gripper nil]]

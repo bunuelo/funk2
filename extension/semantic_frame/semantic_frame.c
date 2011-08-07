@@ -542,7 +542,7 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
   {
     f2ptr current_value = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
     if (raw__larva__is_type(cause, current_value)) {
-      result = new__error(f2list12__new(cause,
+      result = new__error(f2list10__new(cause,
 					new__symbol(cause, "bug_name"), new__symbol(cause, "error_encountered_while_getting_current_value"),
 					new__symbol(cause, "this"),     this,
 					new__symbol(cause, "key_type"), key_type,

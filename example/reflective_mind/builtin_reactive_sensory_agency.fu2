@@ -104,7 +104,8 @@
 		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
 		      [cond [[and [null [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]
 				  [      have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]] [prog [have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]
-																								   [if [not [eq semantic_key `phenomenal_name]]
+																								   [if [not [or [eq semantic_key `phenomenal_name]
+																										[eq semantic_key `physical_object_type]]]
 																								       [let [[visual_object-property_frame-contains_value nil]]
 																									 [if visual_object-property_frame
 																									     [let [[property_values [have visual_object-property_frame lookup semantic_key]]]

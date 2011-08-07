@@ -64,7 +64,7 @@
 
 [deftypefunk frame execute map [key_value_funk]
   [have this map_keys [funk [key]
-			    [apply key_value_funk [conslist key [have this lookup key]]]]]]
+			    [funkall key_value_funk key [have this lookup key]]]]]
 
 [defmetro frame [:rest slot_value_pairs]
   `[new frame @[let [[iter          slot_value_pairs]

@@ -42,7 +42,7 @@
 
 'translate_visual_knowledge_to_physical_knowledge_resource'
 
-[deframe translate_visual_knowledge_to_physical_knowledge_resource [traced_resource] []
+[deframe translate_visual_knowledge_to_physical_knowledge_resource [traced_resource] [[semantic_physical_object_mutex [new mutex]]]
   [new []
        [construct traced_resource `translate_visual_knowledge_to_physical_knowledge
 		  [funk []
@@ -52,13 +52,16 @@
        nil]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get semantic_physical_object [phenomenal_name physical_object_type]
-  [let [[semantic_physical_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]]
+  [let [[semantic_physical_object nil]]
+    [have semantic_physical_object_mutex lock]
+    [= semantic_physical_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
     [if [null semantic_physical_object]
 	[prog [= semantic_physical_object [new semantic_physical_object [get [get this mind] semantic_realm]]]
 	      [set semantic_physical_object phenomenal_name      phenomenal_name]
 	      [set semantic_physical_object physical_object_type physical_object_type]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object]
 	      ]]
+    [have semantic_physical_object_mutex unlock]
     semantic_physical_object]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
@@ -138,7 +141,8 @@
 
 'translate_physical_knowledge_to_physical_type_knowledge_resource'
 
-[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [traced_resource] []
+[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [traced_resource] [[semantic_physical_object_type_mutex [new mutex]]
+											     [semantic_physical_object_copy_mutex [new mutex]]]
   [new []
        [construct traced_resource `translate_physical_knowledge_to_physical_type_knowledge
 		  [funk []
@@ -148,8 +152,10 @@
        nil]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_copy [phenomenal_name physical_object_type]
-  [let [[copy_phenomenal_name [get [format nil 'physical_type_copy_of_' phenomenal_name] as-symbol]]]
-    [let [[semantic_physical_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]]
+  [let [[semantic_physical_object nil]]
+    [have semantic_physical_object_type_mutex lock]
+    [let [[copy_phenomenal_name [get [format nil 'physical_type_copy_of_' phenomenal_name] as-symbol]]]
+      [= semantic_physical_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]
       [if [null semantic_physical_object]
 	  [prog [= semantic_physical_object [new semantic_physical_object [get [get this mind] semantic_realm]]]
 		[set semantic_physical_object phenomenal_name      phenomenal_name]
@@ -157,16 +163,20 @@
 		[have [get [get this mind] semantic_knowledge_base `type_copy_of_physical_knowledge] add_semantic_frame semantic_physical_object]
 		[have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame copy_phenomenal_name semantic_physical_object]
 		]]
+      [have semantic_physical_object_type_mutex unlock]
       semantic_physical_object]]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_type [phenomenal_name]
-  [let [[semantic_physical_object_type [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]]
+  [let [[semantic_physical_object_type nil]]
+    [have semantic_physical_object_copy_mutex lock]
+    [= semantic_physical_object_type [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
     [if [null semantic_physical_object_type]
 	[prog [= semantic_physical_object_type [new semantic_physical_object_type [get [get this mind] semantic_realm]]]
 	      [set semantic_physical_object_type phenomenal_name phenomenal_name]
 	      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame semantic_physical_object_type]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object_type]
 	      ]]
+    [have semantic_physical_object_copy_mutex unlock]
     semantic_physical_object_type]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_type_with_property_type [phenomenal_name property_key property property_value]

@@ -104,8 +104,8 @@
 		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
 		      [if visual_object-property_frame
 			  [have visual_object-property_frame map [funk [property_key property_values]
-								       [terminal_format standard-terminal '\nadding ' property_key ' ' property_value]
 								       [mapc [funk [property_value]
+										   [terminal_format standard-terminal '\nadding ' property_key ' ' property_value]
 										   [have semantic_visual_object assure_exists `property property_key property_value]]
 									     property_values]]]]
 		      [have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]

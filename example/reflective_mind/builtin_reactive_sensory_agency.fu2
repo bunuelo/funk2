@@ -111,9 +111,12 @@
 																										       [if [eq property_value semantic_value]
 																											   [= visual_object-property_frame-contains_value t]]]
 																										 property_values]]]
-																								     [if visual_object-property_frame-contains_value
-																									 [have semantic_visual_object assure_exists `property property_key property_value]
-																								       [have semantic_visual_object assure_not_exists `property property_key property_value]]]]]
+																								     [if [not visual_object-property_frame-contains_value]
+																									 [have semantic_visual_object assure_not_exists `property semantic_key semantic_value]]]]]
+																       [if visual_object-property_frame
+																	   [have visual_object-property_frame map_key_values `property [funk [property_key property_value]
+																									     [if [not [get semantic_visual_object lookup_set_contains `property property_key property_value]]
+																										 [have semantic_visual_object assure_exists `property property_key property_value]]]]]
 																       [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame semantic_visual_object]]]
 			    [[and [      have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]
 				  [null [have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]] [have [get [get this mind] semantic_knowledge_base `visual_knowledge] remove_semantic_frame semantic_visual_object]]

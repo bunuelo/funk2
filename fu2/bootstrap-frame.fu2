@@ -53,7 +53,7 @@
   [mapc [funk [key]
 	      [let [[value [get this type_var_value key_type key `does_not_contain_key]]]
 		[if [not [eq `does_not_contain_key value]]
-		    [funkall type_key_value_funk key_type key value]]]]
+		    [funkall type_key_value_funk key value]]]]
 	[get this type_var-keys key_type]]]
 
 [deftypefunk frame execute map_keys [key_funk]

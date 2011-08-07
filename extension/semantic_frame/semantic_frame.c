@@ -639,6 +639,25 @@ f2ptr f2__semantic_frame__assure_exists(f2ptr cause, f2ptr this, f2ptr key_type,
 export_cefunk4(semantic_frame__assure_exists, this, key_type, key, value, 0, "Adds the semantic relationship if it does not already exist in this semantic_frame.");
 
 
+f2ptr raw__semantic_frame__assure_not_exists(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr contains = assert_value(raw__semantic_frame__lookup_set_contains(cause, this, key_type, key, value));
+  if (contains != nil) {
+    f2ptr result = raw__semantic_frame__remove(cause, this, key_type, key, value);
+    if (raw__larva__is_type(cause, result)) {
+      return result;
+    }
+    return f2bool__new(boolean__true);
+  }
+  return f2bool__new(boolean__false);
+}
+
+f2ptr f2__semantic_frame__assure_not_exists(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  assert_argument_type(semantic_frame, this);
+  return raw__semantic_frame__assure_not_exists(cause, this, key_type, key, value);
+}
+export_cefunk4(semantic_frame__assure_not_exists, this, key_type, key, value, 0, "Adds the semantic relationship if it does not already exist in this semantic_frame.");
+
+
 f2ptr raw__semantic_frame__remove_all(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr frame                = raw__semantic_frame__frame(cause, this);
@@ -862,6 +881,7 @@ f2ptr f2__semantic_frame_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "replace_type_var_value"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__replace_type_var_value")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "lookup_set_contains"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__lookup_set_contains")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "assure_exists"),                                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__assure_exists")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "assure_not_exists"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__assure_not_exists")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "remove_all"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__remove_all")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "replace_all"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__replace_all")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "know_of_addition_to_semantic_knowledge_base"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__know_of_addition_to_semantic_knowledge_base")));}

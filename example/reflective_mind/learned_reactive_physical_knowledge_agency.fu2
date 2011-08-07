@@ -330,9 +330,13 @@
 													[mapc [funk [event-value-semantic_physical_object_type]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]
 															  [relation     nil]]
+														      [terminal_format standard-terminal
+																       '\nremoving ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name] ' '
+																       compound_key ' '
+																       [get event-value-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.']
 														      [if [or [null relation_set] [get relation_set is_empty]]
 															  [prog [terminal_format standard-terminal
-																		 '\nwarning: got remove ' compound_key ' ' [get event-value-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.'
+																		 '\nwarning: got remove ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name] ' ' compound_key ' ' [get event-value-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.'
 																		 '\n         ' event-semantic_frame-semantic_physical_object_type]
 																]
 															[prog [= relation [get relation_set an_arbitrary_element]]

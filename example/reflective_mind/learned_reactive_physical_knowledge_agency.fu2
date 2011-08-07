@@ -285,7 +285,7 @@
 															     [get this semantic_physical_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
 															   event-value]]
 											      [compound_key              [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
-											  [have event-semantic_frame-copy remove event-key_type event-key event-value-copy]
+											  `[have event-semantic_frame-copy remove event-key_type event-key event-value-copy]
 											  'should use copy after this point'
 											  [let [[event-semantic_frame-semantic_physical_object_types nil]
 												[event-value-semantic_physical_object_types          nil]]

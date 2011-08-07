@@ -147,7 +147,7 @@
        [= vital t]
        nil]]
 
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get semantic_physical_object_copy [phenomenal_name]
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_copy [phenomenal_name]
   [let [[copy_phenomenal_name [get [format nil 'physical_type_copy_of_' phenomenal_name] as-symbol]]]
     [let [[semantic_physical_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]]
       [if [null semantic_physical_object]

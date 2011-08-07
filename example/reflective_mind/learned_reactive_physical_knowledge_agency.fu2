@@ -333,7 +333,7 @@
 														      [terminal_format standard-terminal
 																       '\nremoving ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name] ' '
 																       compound_key ' '
-																       [get event-value-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.']
+																       [get event-value-semantic_physical_object_type phenomenal_name] ' relation.']
 														      [if [or [null relation_set] [get relation_set is_empty]]
 															  [prog [terminal_format standard-terminal
 																		 '\nwarning: got remove ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name] ' ' compound_key ' ' [get event-value-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.'

@@ -105,7 +105,7 @@
 		      [if visual_object-property_frame
 			  [have visual_object-property_frame map [funk [property_key property_values]
 								       [mapc [funk [property_value]
-										   [terminal_format standard-terminal '\nadding ' property_key ' ' property_value]
+										   `[terminal_format standard-terminal '\nadding ' property_key ' ' property_value]
 										   [have semantic_visual_object assure_exists `property property_key property_value]]
 									     property_values]]]]
 		      [have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]
@@ -119,7 +119,7 @@
 													      [= visual_object-property_frame-contains_value t]]]
 												    property_values]]]
 											[if [not visual_object-property_frame-contains_value]
-											    [prog [terminal_format standard-terminal '\nremoving ' semantic_key ' ' semantic_value]
+											    [prog `[terminal_format standard-terminal '\nremoving ' semantic_key ' ' semantic_value]
 												  [have semantic_visual_object assure_not_exists `property semantic_key semantic_value]]]]]]]
 		      [cond [[and [null [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]
 				  [      have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]  [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame    semantic_visual_object]]

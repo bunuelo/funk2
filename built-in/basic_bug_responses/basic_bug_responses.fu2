@@ -111,7 +111,10 @@
 					       [let [[bug_name           [have [get bug frame] lookup `bug_name]]
 						     [source_filename    [have [get bug frame] lookup `source_filename]]
 						     [source_line_number [have [get bug frame] lookup `source_line_number]]
-						     [funktion_name      [have [get bug frame] lookup `funktion_name]]]
+						     [funktion_name      [have [get bug frame] lookup `funktion_name]]
+						     [subbug             [have [get bug frame] lookup `subbug]]]
+						 [if subbug
+						     [print_bug subbug]]
 						 [let [[bug_variable [get [format nil define_name_prefix [get_bug_index]] as-symbol]]]
 						   [set_bug_index [bytecode:add [get_bug_index] 1]]
 						   [if print_terminal

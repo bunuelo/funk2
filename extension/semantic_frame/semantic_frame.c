@@ -542,13 +542,12 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
   {
     f2ptr current_value = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
     if (raw__larva__is_type(cause, current_value)) {
-      result = f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list12__new(cause,
-																new__symbol(cause, "bug_type"), new__symbol(cause, "error_encountered_while_getting_current_value"),
-																new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-replace_type_var_value"),
-																new__symbol(cause, "this"),     this,
-																new__symbol(cause, "key_type"), key_type,
-																new__symbol(cause, "key"),      key,
-																new__symbol(cause, "suberror"), current_value))));
+      result = new__error(f2list12__new(cause,
+					new__symbol(cause, "bug_name"), new__symbol(cause, "error_encountered_while_getting_current_value"),
+					new__symbol(cause, "this"),     this,
+					new__symbol(cause, "key_type"), key_type,
+					new__symbol(cause, "key"),      key,
+					new__symbol(cause, "subbug"),   f2__bug__new_from_larva(cause, current_value)));
     } else {
       if (raw__eq(cause, current_value, value)) {
 	result = nil;

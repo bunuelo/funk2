@@ -255,7 +255,8 @@
 															  ]]]]]]]
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
-														    [terminal_format '\nadding ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
+														    [terminal_format standard-terminal
+																     '\nadding ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
 																     ' '         compound_key
 																     ' '         [get event-value-semantic_physical_object_type phenomenal_name]]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]
@@ -331,7 +332,8 @@
 															  ]]]]]]]
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
-														    [terminal_format '\nremoving ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
+														    [terminal_format standard-terminal
+																     '\nremoving ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
 																     ' '           compound_key
 																     ' '           [get event-value-semantic_physical_object_type phenomenal_name]]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]

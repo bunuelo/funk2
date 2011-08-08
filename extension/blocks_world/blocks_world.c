@@ -455,7 +455,7 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
     next_y = 0.5;
     if (raw__eq(cause, new__symbol(cause, "recoil"), this__movement_command)) {
       {
-	this__movement_command = nil;
+	this__movement_command = new__symbol(cause, "stop");
 	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "movement_command"), this__movement_command));
       }
     }
@@ -463,7 +463,7 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
   
   if (raw__eq(cause, new__symbol(cause, "drop"), this__movement_command)) {
     {
-      this__movement_command = nil;
+      this__movement_command = new__symbol(cause, "stop");
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "movement_command"), this__movement_command));
     }
     assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "is_holding"),            nil));
@@ -523,7 +523,7 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
   
   f2ptr this__movement_command = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "movement_command"), nil));
   
-  if (this__movement_command == nil) {
+  if (raw__eq(cause, new__symbol(cause, "stop"), this__movement_command)) {
     {
       this__x_velocity__d = 0.0;
       this__x_velocity    = f2double__new(cause, this__x_velocity__d);

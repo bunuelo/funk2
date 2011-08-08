@@ -20,7 +20,7 @@
 
 'blocks_world_gripper'
 
-[deframe blocks_world_gripper [blocks_world_block] [movement_command
+[deframe blocks_world_gripper [blocks_world_block] [[movement_command       `stop]
 						    [perception_list_mutex  [new mutex]]
 						    [perception_list        nil]
 						    [gripper_movement_speed 1.0]
@@ -45,7 +45,7 @@
        ]]
 
 [deftypefunk blocks_world_gripper execute pursue_movement_command [desired_movement_command]
-  [cond [[null movement_command]
+  [cond [[eq movement_command `stop]
 	 ]
 	[[eq movement_command `left]
 	 [= x_velocity 0.0]
@@ -54,13 +54,13 @@
 	 [= x_velocity 0.0]
 	 [= movement_command nil]]
 	]
-  [if [not [null movement_command]]
+  [if [not [eq movement_command `stop]]
       `busy
     [prog [= movement_command desired_movement_command]
 	  nil]]]
 
 `[deftypefunk blocks_world_gripper execute handle_movement [step_size]
-  [cond [[null movement_command]
+  [cond [[eq movement_command `stop]
 	 [= x_velocity 0.0]
 	 [= y_velocity 0.0]]
 	[[eq movement_command `left]
@@ -112,10 +112,10 @@
     [if [< next_y 0.5]
 	[prog [= next_y 0.5]
 	      [if [eq `recoil movement_command]
-		  [= movement_command nil]]]]
+		  [= movement_command `stop]]]]
     
     [if [eq `drop movement_command]
-	[prog [= movement_command      nil]
+	[prog [= movement_command      `stop]
 	      [= is_holding            nil]
 	      [= is_holding_relative_x nil]]]
     
@@ -146,6 +146,6 @@
   [have this pursue_movement_command `drop]]
 
 [deftypefunk blocks_world_gripper set movement_command-stop []
-  [have this pursue_movement_command nil]]
+  [have this pursue_movement_command `stop]]
 
 

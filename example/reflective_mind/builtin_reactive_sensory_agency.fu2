@@ -108,7 +108,7 @@
 			  [have visual_object-property_frame map [funk [property_key property_values]
 								       [mapc [funk [property_value]
 										   `[terminal_format standard-terminal '\nadding ' property_key ' ' property_value]
-										   [have add_property_frame add property_key property_value]
+										   [have add_property_frame add property_key property_value]]
 									     property_values]]]]
 		      [have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]
 										  [if [not [or [eq semantic_key `phenomenal_name]

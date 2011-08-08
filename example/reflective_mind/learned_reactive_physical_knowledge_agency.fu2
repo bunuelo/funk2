@@ -209,11 +209,11 @@
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
 	  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] semantic_physical_object_type_target]]
-		[set relation phenomenal_name [get [string-concat [get [get event-semantic_frame-semantic_physical_object_type phenomenal_name] as-string]
+		[set relation phenomenal_name [get [string-concat [get [get semantic_physical_object_type_source phenomenal_name] as-string]
 								  '_'
 								  [get compound_key as-string]
 								  '_'
-								  [get [get event-value-semantic_physical_object_type phenomenal_name] as-string]
+								  [get [get semantic_physical_object_type_target phenomenal_name] as-string]
 								  '_physical_object_type_relation']
 						   as-symbol]]
 		[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]

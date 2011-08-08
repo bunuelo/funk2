@@ -301,6 +301,16 @@
 												[event-value-semantic_physical_object_types          nil]]
 											    [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get event-semantic_frame-copy physical_object_type]]
 																			 event-semantic_frame-semantic_physical_object_types]]
+											    [have event-semantic_frame-copy map_type_key_values
+												  [funk [slot_type slot_key slot_value]
+													[if [and [not [and [eq `property slot_type] [eq `physical_object_type slot_key]]]
+														 [is-type `symbol slot_value]]
+													    [= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																					      [get event-semantic_frame-copy physical_object_type]
+																					      slot_type
+																					      slot_key
+																					      slot_value]
+																					 event-semantic_frame-semantic_physical_object_types]]]]]
 											    [if [is-type `semantic_physical_object event-value]
 												[prog [= event-value-semantic_physical_object_types [cons [get this semantic_physical_object_type [get event-value-copy physical_object_type]]
 																			  event-value-semantic_physical_object_types]]

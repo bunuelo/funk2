@@ -263,12 +263,17 @@
 														    [prog [= event-reverse_semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get slot_value physical_object_type]]
 																							       event-reverse_semantic_frame-semantic_physical_object_types]]
 															  `[terminal_format standard-terminal '\n<--- ' slot_type ' ' slot_key ' ' slot_value]
-															  [= event-reverse_semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
-																								    [get slot_value physical_object_type]
-																								    slot_type
-																								    slot_key
-																								    event-semantic_frame-copy]
-																							       event-reverse_semantic_frame-semantic_physical_object_types]]
+															  [have slot_value map_type_key_values
+																[funk [reverse_slot_type reverse_slot_key reverse_slot_value]
+																      `[terminal_format standard-terminal '\n<--- ' reverse_slot_type ' ' reverse_slot_key ' ' reverse_slot_value]
+																      [if [and [not [and [eq `property reverse_slot_type] [eq `physical_object_type reverse_slot_key]]]
+																	       [is-type `symbol reverse_slot_value]]
+																	  [= event-reverse_semantic-frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																										    [get slot_value physical_object_type]
+																										    reverse_slot_type
+																										    reverse_slot_key
+																										    reverse_slot_value]
+																									       event-reverse_semantic_frame-semantic_physical_object_types]]]]]
 															  [mapc [funk [event-reverse_semantic_frame-semantic_physical_object_type]
 																      [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 																		  [terminal_format standard-terminal
@@ -373,12 +378,16 @@
 														[if [is-type `semantic_physical_object slot_value]
 														    [prog [= event-reverse_semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type [get slot_value physical_object_type]]
 																							       event-reverse_semantic_frame-semantic_physical_object_types]]
-															  [= event-reverse_semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
-																								    [get slot_value physical_object_type]
-																								    slot_type
-																								    slot_key
-																								    event-semantic_frame-copy]
-																							       event-reverse_semantic_frame-semantic_physical_object_types]]
+															  [have slot_value map_type_key_values
+																[funk [reverse_slot_type reverse_slot_key reverse_slot_value]
+																      [if [and [not [and [eq `property reverse_slot_type] [eq `physical_object_type reverse_slot_key]]]
+																	       [is-type `symbol reverse_slot_value]]
+																	  [= event-reverse_semantic-frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																										    [get slot_value physical_object_type]
+																										    reverse_slot_type
+																										    reverse_slot_key
+																										    reverse_slot_value]
+																									       event-reverse_semantic_frame-semantic_physical_object_types]]]]]
 															  [mapc [funk [event-reverse_semantic_frame-semantic_physical_object_type]
 																      [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 																		  [terminal_format standard-terminal

@@ -128,7 +128,7 @@
 														    [= visual_object-property_frame-contains_value t]]]
 													  property_values]]]
 											      [if [not visual_object-property_frame-contains_value]
-												  [prog [terminal_format standard-terminal '\nvisual knowledge removing ' semantic_key ' ' semantic_value]
+												  [prog `[terminal_format standard-terminal '\nvisual knowledge removing ' semantic_key ' ' semantic_value]
 													[have remove_property_frame add semantic_key semantic_value]]]]]]]
 			    [have remove_property_frame map [funk [property_key property_value] [have semantic_visual_object remove `property property_key property_value]]]
 			    [have add_property_frame    map [funk [property_key property_value] [have semantic_visual_object add    `property property_key property_value]]]]]

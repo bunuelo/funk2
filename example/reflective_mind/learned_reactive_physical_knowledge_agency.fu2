@@ -183,6 +183,26 @@
   [let [[object_type_with_propety_phenomenal_name [get [format nil phenomenal_name '_' property_key '_' property '_' property_value] as-symbol]]]
     [get this semantic_physical_object_type object_type_with_propety_phenomenal_name]]]
 
+[defunk translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property [source key_type key target]
+  [and [is-type `semantic_physical_object source]
+       [not [and [eq `property key_type] [eq `physical_object_type key]]]
+       [or [null target] [is-type `symbol target]]]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get all_semantic_physical_object_types [semantic_physical_object]
+  [let [[semantic_physical_object_types nil]]
+    [= semantic_physical_object_types [cons [get this semantic_physical_object_type [get semantic_physical_object physical_object_type]]
+					    semantic_physical_object_types]]
+    [have semantic_physical_object map_type_key_values
+	  [funk [slot_type slot_key slot_value]
+		[if [translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property semantic_physical_object slot_type slot_key slot_value]
+		    [= semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+								 [get semantic_physical_object physical_object_type]
+								 slot_type
+								 slot_key
+								 slot_value]
+							    semantic_physical_object_types]]]]]
+    semantic_physical_object_types]]
+
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]]
     [while t
@@ -218,7 +238,7 @@
 																       event-value-copy]]
 											  [have event-semantic_frame-copy add event-key_type event-key event-value-copy]
 											  'should use copy after this point'
-											  [let [[event-semantic_frame-semantic_physical_object_types nil]
+											  `[let [[event-semantic_frame-semantic_physical_object_types nil]
 												[event-value-semantic_physical_object_types          nil]]
 											    
 											    [if [is-type `symbol event-value-copy]
@@ -368,7 +388,7 @@
 															   event-value]]
 											      [compound_key              [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  'should use copy after this point'
-											  [let [[event-semantic_frame-semantic_physical_object_types nil]
+											  `[let [[event-semantic_frame-semantic_physical_object_types nil]
 												[event-value-semantic_physical_object_types          nil]]
 											    [if [is-type `symbol event-value-copy]
 												[= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type

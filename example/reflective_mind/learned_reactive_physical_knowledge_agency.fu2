@@ -210,12 +210,12 @@
 															   event-value]]
 											      [compound_key              [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
 											  [terminal_format standard-terminal
-													   '\nadding ' [get event-semantic_frame-copy phenomenal_name]
-													   ' '         event-key_type
-													   ' '         event-key
-													   ' '         [if [is-type `semantic_physical_object event-value-copy]
-															   [get event-value-copy phenomenal_name]
-															 event-value-copy]]
+													   '\nadding physical type ' [get event-semantic_frame-copy phenomenal_name]
+													   ' '                       event-key_type
+													   ' '                       event-key
+													   ' '                       [if [is-type `semantic_physical_object event-value-copy]
+																	 [get event-value-copy phenomenal_name]
+																       event-value-copy]]
 											  [have event-semantic_frame-copy add event-key_type event-key event-value-copy]
 											  'should use copy after this point'
 											  [let [[event-semantic_frame-semantic_physical_object_types nil]
@@ -380,12 +380,12 @@
 												  event-semantic_frame-semantic_physical_object_types]]
 											  'remove from event-semantic_frame-copy'
 											  [terminal_format standard-terminal
-													   '\nremoving ' [get event-semantic_frame-copy phenomenal_name]
-													   ' '           event-key_type
-													   ' '           event-key
-													   ' '           [if [is-type `semantic_physical_object event-value-copy]
-															     [get event-value-copy phenomenal_name]
-															   event-value-copy]]
+													   '\nremoving physical type ' [get event-semantic_frame-copy phenomenal_name]
+													   ' '                         event-key_type
+													   ' '                         event-key
+													   ' '                         [if [is-type `semantic_physical_object event-value-copy]
+																	   [get event-value-copy phenomenal_name]
+																	 event-value-copy]]
 											  [have event-semantic_frame-copy remove event-key_type event-key event-value-copy]
 											  ]]
 										       ]

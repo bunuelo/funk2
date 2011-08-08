@@ -268,7 +268,7 @@
 																      `[terminal_format standard-terminal '\n<--- ' reverse_slot_type ' ' reverse_slot_key ' ' reverse_slot_value]
 																      [if [and [not [and [eq `property reverse_slot_type] [eq `physical_object_type reverse_slot_key]]]
 																	       [is-type `symbol reverse_slot_value]]
-																	  [= event-reverse_semantic-frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																	  [= event-reverse_semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
 																										    [get slot_value physical_object_type]
 																										    reverse_slot_type
 																										    reverse_slot_key
@@ -382,7 +382,7 @@
 																[funk [reverse_slot_type reverse_slot_key reverse_slot_value]
 																      [if [and [not [and [eq `property reverse_slot_type] [eq `physical_object_type reverse_slot_key]]]
 																	       [is-type `symbol reverse_slot_value]]
-																	  [= event-reverse_semantic-frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
+																	  [= event-reverse_semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
 																										    [get slot_value physical_object_type]
 																										    reverse_slot_type
 																										    reverse_slot_key

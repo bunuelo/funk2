@@ -247,7 +247,7 @@
 																					       slot_key
 																					       slot_value]
 																					  event-value-semantic_physical_object_types]]]]]]]
-											    [if [is-type `symbol event-value-copy]
+											    `[if [is-type `symbol event-value-copy]
 												[= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
 																				  [get event-semantic_frame-copy physical_object_type]
 																				  event-key_type
@@ -363,7 +363,7 @@
 																					       slot_key
 																					       slot_value]
 																					  event-value-semantic_physical_object_types]]]]]]]
-											    [if [is-type `symbol event-value-copy]
+											    `[if [is-type `symbol event-value-copy]
 												[= event-semantic_frame-semantic_physical_object_types [cons [get this semantic_physical_object_type_with_property_type
 																				  [get event-semantic_frame-copy physical_object_type]
 																				  event-key_type

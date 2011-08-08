@@ -209,6 +209,13 @@
 															     [get this semantic_physical_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
 															   event-value]]
 											      [compound_key              [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
+											  [terminal_format standard-terminal
+													   '\nadding ' [get event-semantic_frame-copy phenomenal_name]
+													   ' '         event-key_type
+													   ' '         event-key
+													   ' '         [if [is-type `semantic_physical_object event-value-copy]
+															   [get event-value-copy phenomenal_name]
+															 event-value-copy]]
 											  [have event-semantic_frame-copy add event-key_type event-key event-value-copy]
 											  'should use copy after this point'
 											  [let [[event-semantic_frame-semantic_physical_object_types nil]
@@ -256,9 +263,9 @@
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
 														    [terminal_format standard-terminal
-																     '\nadding ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
-																     ' '         compound_key
-																     ' '         [get event-value-semantic_physical_object_type phenomenal_name]]
+																     '\nadding relation ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
+																     ' '                  compound_key
+																     ' '                  [get event-value-semantic_physical_object_type phenomenal_name]]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]
 															  [relation     nil]]
 														      [if [or [null relation_set] [get relation_set is_empty]]
@@ -332,9 +339,9 @@
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
 														    [terminal_format standard-terminal
-																     '\nremoving ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
-																     ' '           compound_key
-																     ' '           [get event-value-semantic_physical_object_type phenomenal_name]]
+																     '\nremoving relation ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name]
+																     ' '                    compound_key
+																     ' '                    [get event-value-semantic_physical_object_type phenomenal_name]]
 														    [let [[relation_set [have event-semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-value-semantic_physical_object_type phenomenal_name]]]
 															  [relation     nil]]
 														      [if [or [null relation_set] [get relation_set is_empty]]
@@ -352,6 +359,13 @@
 													      event-value-semantic_physical_object_types]]
 												  event-semantic_frame-semantic_physical_object_types]]
 											  'remove from event-semantic_frame-copy'
+											  [terminal_format standard-terminal
+													   '\nremoving ' [get event-semantic_frame-copy phenomenal_name]
+													   ' '           event-key_type
+													   ' '           event-key
+													   ' '           [if [is-type `semantic_physical_object event-value-copy]
+															     [get event-value-copy phenomenal_name]
+															   event-value-copy]]
 											  [have event-semantic_frame-copy remove event-key_type event-key event-value-copy]
 											  ]]
 										       ]

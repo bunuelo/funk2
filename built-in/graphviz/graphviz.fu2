@@ -19,17 +19,17 @@
 
 [defunk safe-system [command]
   [if [!= 0 [system command]]
-      [error `system [frame command command]]]]
+      [error system [frame command command]]]]
 
 [defunk system-dot [output_format output_width output_height dot_filename ps_filename]
   [let [[command [string-concat 'dot -Gsize=' [exp-as-string output_width] ',' [exp-as-string output_height] ' -T' output_format ' -o' ps_filename ' ' dot_filename]]]
     [if [!= 0 [system command]]
-	[error `runtime `[dot-command: ,command]]]]]
+	[error runtime `[dot-command: ,command]]]]]
 
 [defunk system-gv [ps_filename]
   [let [[command [string-concat 'gv ' ps_filename]]]
     [if [!= 0 [system command]]
-	[error `runtime `[gv-command: ,command]]]]]
+	[error runtime `[gv-command: ,command]]]]]
 
 
 [defunk dot_code-gview [this]

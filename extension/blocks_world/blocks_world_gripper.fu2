@@ -49,10 +49,10 @@
 	 ]
 	[[eq movement_command `left]
 	 [= x_velocity 0.0]
-	 [= movement_command nil]]
+	 [= movement_command `stop]]
 	[[eq movement_command `right]
 	 [= x_velocity 0.0]
-	 [= movement_command nil]]
+	 [= movement_command `stop]]
 	]
   [if [not [eq movement_command `stop]]
       `busy

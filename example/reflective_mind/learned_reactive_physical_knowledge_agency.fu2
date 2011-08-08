@@ -269,6 +269,29 @@
 																								    slot_key
 																								    event-semantic_frame-copy]
 																							       event-reverse_semantic_frame-semantic_physical_object_types]]
+															  [mapc [funk [event-reverse_semantic_frame-semantic_physical_object_type]
+																      [mapc [funk [event-semantic_frame-semantic_physical_object_type]
+																		  [terminal_format standard-terminal
+																				   '\nadding relation ' [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name]
+																				   ' '                  reverse_compound_key
+																				   ' '                  [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]
+																		  [let [[relation_set [have event-reverse_semantic_frame-semantic_physical_object_type lookup_set reverse_compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]]
+																			[relation     nil]]
+																		    [if [or [null relation_set] [get relation_set is_empty]]
+																			[prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-semantic_frame-semantic_physical_object_type]]
+																			      [set relation phenomenal_name [get [string-concat [get [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name] as-string]
+																										'_'
+																										[get reverse_compound_key as-string]
+																										'_'
+																										[get [get event-semantic_frame-semantic_physical_object_type phenomenal_name] as-string]
+																										'_physical_object_type_relation']
+																								 as-symbol]]
+																			      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
+																			      [have event-reverse_semantic_frame-semantic_physical_object_type add reverse_compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name] relation]]
+																		      [prog [= relation [get relation_set an_arbitrary_element]]
+																			    [set relation count [+ [get relation count] 1]]]]]]
+																	    event-semantic_frame-semantic_physical_object_types]]
+																event-reverse_semantic_frame-semantic_physical_object_types]
 															  ]]]]]]]
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
@@ -293,29 +316,6 @@
 															      [set relation count [+ [get relation count] 1]]]]]]
 													      event-value-semantic_physical_object_types]]
 												  event-semantic_frame-semantic_physical_object_types]
-											    [mapc [funk [event-reverse_semantic_frame-semantic_physical_object_type]
-													[mapc [funk [event-semantic_frame-semantic_physical_object_type]
-														    [terminal_format standard-terminal
-																     '\nadding relation ' [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name]
-																     ' '                  compound_key
-																     ' '                  [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]
-														    [let [[relation_set [have event-reverse_semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]]
-															  [relation     nil]]
-														      [if [or [null relation_set] [get relation_set is_empty]]
-															  [prog [= relation [new semantic_physical_object_type_relation [get [get this mind] semantic_realm] event-semantic_frame-semantic_physical_object_type]]
-																[set relation phenomenal_name [get [string-concat [get [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name] as-string]
-																						  '_'
-																						  [get compound_key as-string]
-																						  '_'
-																						  [get [get event-semantic_frame-semantic_physical_object_type phenomenal_name] as-string]
-																						  '_physical_object_type_relation']
-																				   as-symbol]]
-																[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
-																[have event-reverse_semantic_frame-semantic_physical_object_type add compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name] relation]]
-															[prog [= relation [get relation_set an_arbitrary_element]]
-															      [set relation count [+ [get relation count] 1]]]]]]
-													      event-semantic_frame-semantic_physical_object_types]]
-												  event-reverse_semantic_frame-semantic_physical_object_types]
 											    ]]]
 										       ]
 										 ]]
@@ -379,6 +379,28 @@
 																								    slot_key
 																								    event-semantic_frame-copy]
 																							       event-reverse_semantic_frame-semantic_physical_object_types]]
+															  [mapc [funk [event-reverse_semantic_frame-semantic_physical_object_type]
+																      [mapc [funk [event-semantic_frame-semantic_physical_object_type]
+																		  [terminal_format standard-terminal
+																				   '\nremoving relation ' [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name]
+																				   ' '                    reverse_compound_key
+																				   ' '                    [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]
+																		  [let [[relation_set [have event-reverse_semantic_frame-semantic_physical_object_type lookup_set reverse_compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]]
+																			[relation     nil]]
+																		    [if [or [null relation_set] [get relation_set is_empty]]
+																			[prog [terminal_format standard-terminal
+																					       '\nwarning: got remove ' [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name] ' ' reverse_compound_key ' ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.'
+																					       '\n         ' event-reverse_semantic_frame-semantic_physical_object_type]
+																			      ]
+																		      [prog [= relation [get relation_set an_arbitrary_element]]
+																			    [let [[relation-count [get relation count]]]
+																			      [if [> relation-count 1]
+																				  [set relation count [- relation-count 1]]
+																				[prog [have event-reverse_semantic_frame-semantic_physical_object_type remove reverse_compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name] relation]
+																				      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_semantic_frame relation]
+																				      ]]]]]]]
+																	    event-semantic_frame-semantic_physical_object_types]]
+																event-reverse_semantic_frame-semantic_physical_object_types]
 															  ]]]]]]]
 											    [mapc [funk [event-semantic_frame-semantic_physical_object_type]
 													[mapc [funk [event-value-semantic_physical_object_type]
@@ -402,28 +424,6 @@
 																	]]]]]]]
 													      event-value-semantic_physical_object_types]]
 												  event-semantic_frame-semantic_physical_object_types]
-											    [mapc [funk [event-reverse_semantic_frame-semantic_physical_object_type]
-													[mapc [funk [event-semantic_frame-semantic_physical_object_type]
-														    [terminal_format standard-terminal
-																     '\nremoving relation ' [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name]
-																     ' '                    compound_key
-																     ' '                    [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]
-														    [let [[relation_set [have event-reverse_semantic_frame-semantic_physical_object_type lookup_set compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name]]]
-															  [relation     nil]]
-														      [if [or [null relation_set] [get relation_set is_empty]]
-															  [prog [terminal_format standard-terminal
-																		 '\nwarning: got remove ' [get event-reverse_semantic_frame-semantic_physical_object_type phenomenal_name] ' ' compound_key ' ' [get event-semantic_frame-semantic_physical_object_type phenomenal_name] ' relation, but no relation found.'
-																		 '\n         ' event-reverse_semantic_frame-semantic_physical_object_type]
-																]
-															[prog [= relation [get relation_set an_arbitrary_element]]
-															      [let [[relation-count [get relation count]]]
-																[if [> relation-count 1]
-																    [set relation count [- relation-count 1]]
-																  [prog [have event-reverse_semantic_frame-semantic_physical_object_type remove compound_key [get event-semantic_frame-semantic_physical_object_type phenomenal_name] relation]
-																	[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_semantic_frame relation]
-																	]]]]]]]
-													      event-semantic_frame-semantic_physical_object_types]]
-												  event-reverse_semantic_frame-semantic_physical_object_types]
 											    ]
 											  'remove from event-semantic_frame-copy'
 											  [terminal_format standard-terminal

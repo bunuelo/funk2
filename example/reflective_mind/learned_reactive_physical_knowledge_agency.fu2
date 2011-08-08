@@ -244,7 +244,7 @@
 																				  event-key
 																				  event-value-copy]
 																			     event-semantic_frame-semantic_physical_object_types]]]
-											    `[if [is-type `symbol event-value-copy]
+											    [if [is-type `symbol event-value-copy]
 												[have event-semantic_frame-copy map_reverse_type_key_values
 												      [funk [slot_type slot_key slot_value]
 													    [let [[reverse_compound_key [get [format nil [get slot_type as-string] '_' [get slot_key as-string]] as-symbol]]]
@@ -321,7 +321,7 @@
 																				  event-key
 																				  event-value-copy]
 																			     event-semantic_frame-semantic_physical_object_types]]]
-											    `[if [is-type `symbol event-value-copy]
+											    [if [is-type `symbol event-value-copy]
 												[have event-semantic_frame-copy map_reverse_type_key_values
 												      [funk [slot_type slot_key slot_value]
 													    [let [[reverse_compound_key [get [format nil [get slot_type as-string] '_' [get slot_key as-string]] as-symbol]]]

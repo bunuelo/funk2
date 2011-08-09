@@ -29,7 +29,7 @@ f2ptr raw__semantic_physical_object_type_event__type_create(f2ptr cause, f2ptr t
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_physical_object_type_event"));
   }
   {
-    f2ptr result = raw__semantic_object_type__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_object_type_event__type_create(cause, this, semantic_realm);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -164,7 +164,7 @@ export_cefunk2(semantic_physical_object_type_event__preposition__on__remove, thi
 
 
 f2ptr f2__semantic_physical_object_type_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object_type")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object_type_event")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_event"), new__symbol(cause, "semantic_physical_object_type_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_event"), new__symbol(cause, "semantic_physical_object_type_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_event"), new__symbol(cause, "semantic_physical_object_type_event__type")));}
@@ -187,7 +187,7 @@ f2ptr f2__semantic_physical_object_type_event__core_extension__ping(f2ptr cause)
 export_cefunk0(semantic_physical_object_type_event__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_physical_object_type_event__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(semantic_physical_object_type_event, semantic_object_type);
+  core_extension__ping(semantic_physical_object_type_event, semantic_object_type_event);
   status("semantic_physical_object_type_event initialized.");
   return nil;
 }

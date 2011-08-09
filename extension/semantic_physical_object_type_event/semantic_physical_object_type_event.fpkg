@@ -19,7 +19,7 @@
 
 [defpackage semantic_physical_object_type_event
   :documentation 'Basic knowledge for dealing with physical object types.'
-   :packages     [semantic_object_type]
+   :packages     [semantic_object_type_event]
     :sources     ['semantic_physical_object_type_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_physical_object_type_event.so']]
 

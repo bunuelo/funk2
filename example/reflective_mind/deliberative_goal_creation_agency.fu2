@@ -45,8 +45,8 @@
     `[terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
     [set semantic_goal phenomenal_name goal_resource_name]
     [let [[is_occurring_funk [funk []
-				   [let [[semantic_source_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type source_physical_object_type]]
-					 [semantic_target_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type target_physical_object_type]]]
+				   [let [[semantic_source_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type_event source_physical_object_type]]
+					 [semantic_target_type [get [get [get this mind] resource `learned_reactive `physical_knowledge `translate_physical_knowledge_to_physical_type_knowledge] semantic_physical_object_type_event target_physical_object_type]]]
 				     [let [[relation_symbolic_name [get [string-concat [get key_type as-string]
 										       '_'
 										       [get key as-string]]

@@ -223,7 +223,7 @@
 	      [set relation count [+ [get relation count] 1]]]]]]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_relation [semantic_physical_object_type_source key_type key semantic_physical_object_type_target]
-  [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_physical_object_type_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_physical_object_type_target phenomenal_name]]
+  [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_physical_object_type_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_physical_object_type_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_physical_object_type_source lookup_set compound_key [get semantic_physical_object_type_target phenomenal_name]]]
 	  [relation     nil]]

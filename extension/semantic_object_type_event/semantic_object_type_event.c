@@ -29,7 +29,7 @@ f2ptr raw__semantic_object_type_event__type_create(f2ptr cause, f2ptr this, f2pt
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_object_type_event"));
   }
   {
-    f2ptr result = raw__semantic_event__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_event__type_create(cause, this, semantic_realm, nil);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

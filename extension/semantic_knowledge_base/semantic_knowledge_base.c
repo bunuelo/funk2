@@ -240,7 +240,7 @@ f2ptr f2__semantic_knowledge_base__as__graph(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_knowledge_base__as__graph, this, 0, "Converts the semantic_knowledge_base to a graph.");
 
 
-f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+f2ptr raw__semantic_knowledge_base__add_semantic_frame__with_time(f2ptr cause, f2ptr this, f2ptr time, f2ptr semantic_frame) {
   // tell the semantic frame that it belongs to this semantic_knowledge_base (so we can receive change events)
   raw__semantic_frame__know_of_addition_to_semantic_knowledge_base(cause, semantic_frame, this);
   {
@@ -292,6 +292,11 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
 			    assert_value(raw__semantic_knowledge_base__add_trace_event(cause, this, semantic_frame_event));
 			    );
   return nil;
+}
+
+f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+  f2ptr time = f2__time(cause);
+  return raw__semantic_knowledge_base__add_semantic_frame__with_time(cause, this, time, semantic_frame);
 }
 
 f2ptr f2__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {

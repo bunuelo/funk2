@@ -256,7 +256,7 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, 
     }
   }
   semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
-			    assert_value(raw__semantic_knowledge_base__know_before_semantic_frame_value_addition(cause, this, semantic_frame, key_type, key, value));
+			    assert_value(raw__semantic_knowledge_base__know_before_semantic_frame_value_addition(cause, this, time, semantic_frame, key_type, key, value));
 			    );
   // add the semantic frame to this knowledge base
   {

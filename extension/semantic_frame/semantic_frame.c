@@ -294,10 +294,6 @@ f2ptr raw__semantic_frame__add__handle_before_callbacks__with_time(f2ptr cause, 
   return nil;
 }
 
-f2ptr raw__semantic_frame__add__handle_before_callbacks__with_time(f2ptr cause, f2ptr this, f2ptr time, f2ptr key_type, f2ptr key, f2ptr value) {
-  return raw__semantic_frame__add__handle_before_callbacks__with_time(cause, this, time, key_type, key, value);
-}
-
 f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));

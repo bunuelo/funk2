@@ -237,8 +237,8 @@
 		[if [> relation-count 1]
 		    [set relation count [- relation-count 1]]
 		  [prog [have semantic_physical_object_type_event_source remove compound_key [get semantic_physical_object_type_event_target phenomenal_name] relation]
-			[set relation absolute_end_time [new semantic_time event_time]]
 			[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_semantic_frame relation]
+			[set relation absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []

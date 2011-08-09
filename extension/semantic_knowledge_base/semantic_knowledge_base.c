@@ -307,7 +307,7 @@ f2ptr f2__semantic_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f
 export_cefunk2(semantic_knowledge_base__add_semantic_frame, this, semantic_frame, 0, "Adds a semantic_frame to this semantic_knowledge_base.");
 
 
-f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+f2ptr raw__semantic_knowledge_base__remove_semantic_frame__with_time(f2ptr cause, f2ptr this, f2ptr time, f2ptr semantic_frame) {
   f2ptr semantic_frame_set = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
   if (! raw__set__contains(cause, semantic_frame_set, semantic_frame)) {
     return f2larva__new(cause, 8923, f2__bug__new(cause, f2integer__new(cause, 8923), f2__frame__new(cause, f2list8__new(cause,
@@ -317,7 +317,7 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
 															 new__symbol(cause, "this"),           this))));
   }
   semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
-			    assert_value(raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value));
+			    assert_value(raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(cause, this, time, semantic_frame, key_type, key, value));
 			    );
   // tell the semantic frame that it does not belong to this semantic_knowledge_base anymore (so we do not continue to receive change events)
   raw__semantic_frame__know_of_removal_from_semantic_knowledge_base(cause, semantic_frame, this);
@@ -347,11 +347,16 @@ f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr thi
     }
   }
   semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
-			    assert_value(raw__semantic_knowledge_base__know_after_semantic_frame_value_removal(cause, this, semantic_frame, key_type, key, value));
-			    f2ptr semantic_frame_event = raw__semantic_frame__remove_event__new(cause, semantic_frame, key_type, key, value);
+			    assert_value(raw__semantic_knowledge_base__know_after_semantic_frame_value_removal(cause, this, time, semantic_frame, key_type, key, value));
+			    f2ptr semantic_frame_event = raw__semantic_frame__remove_event__new(cause, time, semantic_frame, key_type, key, value);
 			    assert_value(raw__semantic_knowledge_base__add_trace_event(cause, this, semantic_frame_event));
 			    );
   return nil;
+}
+
+f2ptr raw__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+  f2ptr time = f2__time(cause);
+  return raw__semantic_knowledge_base__remove_semantic_frame__with_time(cause, this, time, semantic_frame);
 }
 
 f2ptr f2__semantic_knowledge_base__remove_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {

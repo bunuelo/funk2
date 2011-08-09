@@ -29,9 +29,9 @@
 
 
 [deftypefunk learned_reactive_physical_knowledge_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_knowledge              [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_physical_knowledge [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_knowledge         [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_knowledge               [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_physical_knowledge  [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_knowledge          [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk learned_reactive_physical_knowledge_agency execute connect_knowledge_reflection []
@@ -264,8 +264,7 @@
 											[let [[event-semantic_frame-copy [get this semantic_physical_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]
 											      [event-value-copy          [if [is-type `semantic_physical_object event-value]
 															     [get this semantic_physical_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
-															   event-value]]
-											      [compound_key              [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
+															   event-value]]]
 											  [if debug [terminal_format standard-terminal
 														     '\nadding physical type ' [get event-semantic_frame-copy phenomenal_name]
 														     ' '                       event-key_type
@@ -319,8 +318,7 @@
 											[let [[event-semantic_frame-copy [get this semantic_physical_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]
 											      [event-value-copy          [if [is-type `semantic_physical_object event-value]
 															     [get this semantic_physical_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
-															   event-value]]
-											      [compound_key              [get [format nil [get event-key_type as-string] '_' [get event-key as-string]] as-symbol]]]
+															   event-value]]]
 											  'should use copy after this point'
 
 											  [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]

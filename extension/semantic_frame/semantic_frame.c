@@ -555,7 +555,7 @@ f2ptr f2__semantic_frame__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr k
 export_cefunk3(semantic_frame__lookup_type_var_value, this, key_type, key, 0, "Returns the one value associated with the key_type and key.");
 
 
-f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_frame__replace_type_var_value__with_time(f2ptr cause, f2ptr this, f2ptr time, f2ptr key_type, f2ptr key, f2ptr value) {
   assert_argument_type(semantic_frame, this);
   f2ptr result              = nil;
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
@@ -573,8 +573,8 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
       if (raw__eq(cause, current_value, value)) {
 	result = nil;
       } else {
-	assert_value(raw__semantic_frame__remove__handle_before_callbacks(cause, this, key_type, key, current_value));
-	assert_value(raw__semantic_frame__add__handle_before_callbacks(   cause, this, key_type, key, value));
+	assert_value(raw__semantic_frame__remove__handle_before_callbacks__with_time(cause, this, key_type, key, current_value));
+	assert_value(raw__semantic_frame__add__handle_before_callbacks__with_time(   cause, this, key_type, key, value));
 	{
 	  f2ptr frame_read_mutate_cmutex = raw__semantic_frame__frame_read_mutate_cmutex(cause, this);
 	  {
@@ -609,13 +609,18 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
 	    f2__cmutex__unlock(cause, frame_read_mutate_cmutex);
 	  }
 	}
-	assert_value(raw__semantic_frame__remove__handle_after_callbacks(cause, this, key_type, key, current_value));
-	assert_value(raw__semantic_frame__add__handle_after_callbacks(   cause, this, key_type, key, value));
+	assert_value(raw__semantic_frame__remove__handle_after_callbacks__with_time(cause, this, time, key_type, key, current_value));
+	assert_value(raw__semantic_frame__add__handle_after_callbacks__with_time(   cause, this, time, key_type, key, value));
       }
     }
   }
   f2__cmutex__unlock(cause, frame_mutate_cmutex);
   return result;
+}
+
+f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr time, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr tiem = f2__time(cause);
+  return raw__semantic_frame__replace_type_var_value__with_time(cause, this, time, key_type, key, value);
 }
 
 f2ptr f2__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {

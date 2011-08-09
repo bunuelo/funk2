@@ -441,6 +441,11 @@ f2ptr f2__semantic_frame__remove__with_time(f2ptr cause, f2ptr this, f2ptr time,
 export_cefunk5(semantic_frame__remove__with_time, this, time, key_type, key, value, 0, "With the specified reflective time, removes the value from the key_type and key set of values.");
 
 
+f2ptr raw__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr time = f2__time(cause);
+  return raw__semantic_frame__remove__with_time(cause, this, time, key_type, key, value);
+}
+
 f2ptr f2__semantic_frame__remove(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   assert_argument_type(semantic_frame, this);
   return raw__semantic_frame__remove(cause, this, key_type, key, value);

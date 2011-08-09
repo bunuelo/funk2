@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_object_type
+[defpackage semantic_object_type_event
   :documentation 'Basic knowledge for dealing with specific object of different and equivalent types.'
    :packages     [semantic_object]
-    :sources     ['semantic_object_type-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_object_type.so']]
+    :sources     ['semantic_object_type_event-core.fu2']
+     :binaries   ['.libs/libf2e_semantic_object_type_event.so']]
 
-[defcore semantic_object_type 'extension/semantic_object_type/.libs/libf2e_semantic_object_type.so']
+[defcore semantic_object_type_event 'extension/semantic_object_type_event/.libs/libf2e_semantic_object_type_event.so']
 

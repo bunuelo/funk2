@@ -1133,6 +1133,10 @@ void funk2_gtk__pixbuf__destroy_notify_function(guchar *pixels, gpointer data) {
 }
 
 GdkPixbuf* funk2_gtk__pixbuf__new(funk2_gtk_t* this, u64 width, u64 height, u8* rgb_data) {
+  if ((width  > XLIB_IMAGE_SIDE_SIZE_LIMIT) ||
+      (height > XLIB_IMAGE_SIDE_SIZE_LIMIT)) {
+    return NULL;
+  }
   GdkPixbuf* pixbuf;
   {
     gdk_threads_enter();
@@ -2526,6 +2530,14 @@ f2ptr raw__gtk__pixbuf__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height
     s64 height__i = f2integer__i(height, cause);
     if (width__i <= 0 || height__i <= 0) {
       return f2larva__new(cause, 2, nil);
+    }
+    if ((width__i  > XLIB_IMAGE_SIDE_SIZE_LIMIT) ||
+	(height__i > XLIB_IMAGE_SIDE_SIZE_LIMIT)) {
+      return new__error(f2list8__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "gdk_pixbuf_larger_than_XLIB_IMAGE_SIDE_SIZE_LIMIT"),
+				     new__symbol(cause, "width"),    width,
+				     new__symbol(cause, "height"),   height,
+				     new__symbol(cause, "rgb_data"), rgb_data));
     }
     s64 chunk__length = f2chunk__length(rgb_data, cause);
     if (chunk__length != (width__i * height__i * 3)) {

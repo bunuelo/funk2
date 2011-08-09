@@ -573,8 +573,8 @@ f2ptr raw__semantic_frame__replace_type_var_value__with_time(f2ptr cause, f2ptr 
       if (raw__eq(cause, current_value, value)) {
 	result = nil;
       } else {
-	assert_value(raw__semantic_frame__remove__handle_before_callbacks__with_time(cause, this, key_type, key, current_value));
-	assert_value(raw__semantic_frame__add__handle_before_callbacks__with_time(   cause, this, key_type, key, value));
+	assert_value(raw__semantic_frame__remove__handle_before_callbacks__with_time(cause, this, time, key_type, key, current_value));
+	assert_value(raw__semantic_frame__add__handle_before_callbacks__with_time(   cause, this, time, key_type, key, value));
 	{
 	  f2ptr frame_read_mutate_cmutex = raw__semantic_frame__frame_read_mutate_cmutex(cause, this);
 	  {

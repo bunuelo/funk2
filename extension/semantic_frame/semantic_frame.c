@@ -25,10 +25,7 @@
 // semantic_frame_event
 
 f2ptr raw__semantic_frame_event__new(f2ptr cause, f2ptr time, f2ptr event_type, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr this = f2__event_stream_event__new(cause, time);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
+  f2ptr this = assert_value(f2__event_stream_event__new(cause, time));
   raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),           new__symbol(cause, "semantic_frame_event"));
   raw__frame__add_var_value(cause, this, new__symbol(cause, "event_type"),     event_type);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "semantic_frame"), semantic_frame);

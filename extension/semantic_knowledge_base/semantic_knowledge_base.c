@@ -549,6 +549,7 @@ f2ptr f2__semantic_knowledge_base__know_after_semantic_frame_value_addition(f2pt
 export_cefunk6(semantic_knowledge_base__know_after_semantic_frame_value_addition, this, time, semantic_frame, key_type, key, value, 0, "Usually called by a semantic_frame that belongs to this knowledge base when a value is added to the frame.");
 
 
+
 f2ptr raw__semantic_knowledge_base__know_before_semantic_frame_value_removal(f2ptr cause, f2ptr this, f2ptr time, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr trace_callback_funks_frame                     = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr remove_semantic_frame_value__before__callbacks = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, new__symbol(cause, "remove_semantic_frame_value-before"), nil);

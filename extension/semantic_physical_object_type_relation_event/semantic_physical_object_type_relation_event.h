@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT_TYPE_RELATION_EVENT__H
 #define F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT_TYPE_RELATION_EVENT__H
 
-#include "../semantic_object/semantic_event.h"
+#include "../semantic_event/semantic_event.h"
 #include "../semantic_object_type_event/semantic_object_type_event.h"
 
 

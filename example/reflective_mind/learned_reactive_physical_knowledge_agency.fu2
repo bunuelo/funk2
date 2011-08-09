@@ -149,6 +149,7 @@
 			[have this execute_resource_raw_funk]
 			]]
        [= vital t]
+       [= debug t]
        nil]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_copy [phenomenal_name physical_object_type]
@@ -228,9 +229,8 @@
     [let [[relation_set [have semantic_physical_object_type_source lookup_set compound_key [get semantic_physical_object_type_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
-	  [prog [if debug
-		    [terminal_format standard-terminal
-				     '\nwarning: got remove ' [get semantic_physical_object_type_source phenomenal_name] ' ' compound_key ' ' [get semantic_physical_object_type_target phenomenal_name] ' relation, but no relation found.']]
+	  [prog [terminal_format standard-terminal
+				 '\nwarning: got remove ' [get semantic_physical_object_type_source phenomenal_name] ' ' compound_key ' ' [get semantic_physical_object_type_target phenomenal_name] ' relation, but no relation found.']
 		]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [let [[relation-count [get relation count]]]
@@ -245,7 +245,7 @@
     [while t
       [let [[event [have physical_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
-	    [prog [if debug [terminal_format standard-terminal '\n  translate physical->physical_type event: ' event]]
+	    [prog [if debug `[terminal_format standard-terminal '\n  translate physical->physical_type event: ' event]]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]

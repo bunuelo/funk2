@@ -83,7 +83,7 @@ f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
 			   new__symbol(cause, "element"),  element));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
-  f2ptr head                   = f2__interval_tree__head(cause, this);
+  f2ptr head                   = f2__interval_tree__head(                  cause, this);
   f2ptr left_value_funk        = f2__interval_tree__left_value_funk(       cause, this);
   f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
   f2ptr value_equality_funk    = f2__interval_tree__value_equality_funk(   cause, this);
@@ -126,13 +126,13 @@ f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
   f2__interval_tree__head__set(cause, this, head);
   
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
+  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit before.", __FUNCTION__, this);
   catch_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this),
 	      f2list6__new(cause,
 			   new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree_failed_validity_assertion"),
 			   new__symbol(cause, "this"),     this,
 			   new__symbol(cause, "element"),  element));
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
+  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit after.", __FUNCTION__, this);
 #endif
   return nil;
 }

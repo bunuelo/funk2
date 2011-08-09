@@ -288,7 +288,7 @@ f2ptr raw__semantic_knowledge_base__add_semantic_frame__with_time(f2ptr cause, f
   }
   semantic_frame__iteration(cause, semantic_frame, key_type, key, value,
 			    assert_value(raw__semantic_knowledge_base__know_after_semantic_frame_value_addition(cause, this, time, semantic_frame, key_type, key, value));
-			    f2ptr semantic_frame_event = raw__semantic_frame__add_event__new(cause, semantic_frame, key_type, key, value);
+			    f2ptr semantic_frame_event = raw__semantic_frame__add_event__new(cause, time, semantic_frame, key_type, key, value);
 			    assert_value(raw__semantic_knowledge_base__add_trace_event(cause, this, semantic_frame_event));
 			    );
   return nil;

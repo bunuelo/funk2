@@ -618,8 +618,8 @@ f2ptr raw__semantic_frame__replace_type_var_value__with_time(f2ptr cause, f2ptr 
   return result;
 }
 
-f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr time, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr tiem = f2__time(cause);
+f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr time = f2__time(cause);
   return raw__semantic_frame__replace_type_var_value__with_time(cause, this, time, key_type, key, value);
 }
 

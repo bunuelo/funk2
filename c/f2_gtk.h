@@ -24,6 +24,9 @@
 
 #include "f2_processor_thread.h"
 
+#ifndef XLIB_IMAGE_SIDE_SIZE_LIMIT
+#define XLIB_IMAGE_SIDE_SIZE_LIMIT ((s64)(0xffffull))
+#endif // XLIB_IMAGE_SIDE_SIZE_LIMIT
 
 typedef enum   funk2_gtk_callback_args_type_e  funk2_gtk_callback_args_type_t;
 typedef struct funk2_gtk_callback_s            funk2_gtk_callback_t;

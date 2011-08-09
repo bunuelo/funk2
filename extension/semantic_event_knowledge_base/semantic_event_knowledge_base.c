@@ -36,8 +36,8 @@ f2ptr raw__semantic_event_knowledge_base__know_of_remove__before_callback(f2ptr 
 
 f2ptr f2__semantic_event_knowledge_base__know_of_remove__before_callback(f2ptr cause, f2ptr this, f2ptr time, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   assert_argument_type(semantic_event_knowledge_base, this);
-  assert_argument_type(semantic_frame,                semantic_frame);
   assert_argument_type(time,                          time);
+  assert_argument_type(semantic_frame,                semantic_frame);
   return raw__semantic_event_knowledge_base__know_of_remove__before_callback(cause, this, time, semantic_frame, key_type, key, value);
 }
 export_cefunk6(semantic_event_knowledge_base__know_of_remove__before_callback, this, time, semantic_frame, key_type, key, value, 0, "Callback for semantic_event_knowledge_base to update internal semantic_event_tree.");

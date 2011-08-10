@@ -37,7 +37,6 @@
 	initial-target_type
 	initial-target_property
 	initial-target_property_value]
-       [terminal_format standard-terminal '\ndebug 0.']
        [= source_type           initial-source_type]
        [= source_property       initial-source_property]
        [= source_property_value initial-source_property_value]
@@ -49,7 +48,6 @@
        ]]
 
 [deftypefunk physical_type_property_relation_goal get as-string []
-  [terminal_format standard-terminal '\ndebug 1.']
   [format nil 'a ' source_property_value ' ' source_property ' ' source_type ' is ' key ' a ' target_property_value ' ' target_property ' ' target_type]]
 
 [deftypefunk physical_type_property_relation_goal execute add_type_event [event_time
@@ -90,25 +88,24 @@
 [deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   ]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_property_relationship_goal [source_physical_object_type
-														    source_physical_object_type_property
+[deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_property_relationship_goal [source_type
+														    source_type_property
+														    source_type_property_value
 														    key_type
 														    key
-														    target_physical_object_type
-														    target_physical_object_type_property]
-  [terminal_format standard-terminal '\ndebug 2.']
+														    target_type
+														    target_type_property
+														    target_type_property_value]
   [let [[resource [get this resource `translate_physical_knowledge_to_physical_type_knowledge]]]
-    [terminal_format standard-terminal '\ndebug 2.2.']
     [let [[goal [new physical_type_property_relation_goal
-		     source_physical_object_type
-		     `property
-		     source_physical_object_type_property
+		     source_type
+		     source_type_property
+		     source_type_property_value
 		     key_type
 		     key
-		     target_physical_object_type
-		     `property
-		     target_physical_object_type_property]]]
-      [terminal_format standard-terminal '\ndebug 2.3.']
+		     target_type
+		     target_type_property
+		     target_type_property_value]]]
       [have resource add_goal goal]]]]
 
 

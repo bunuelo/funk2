@@ -36,19 +36,23 @@
 [deftypefunk deliberative_layer execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [have [get this agency `physical_object_type_goal] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
-[deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_physical_object_type
-											 source_physical_object_type_property
+[deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_type
+											 source_type_property
+											 source_type_property_value
 											 key_type
 											 key
-											 target_physical_object_type
-											 target_physical_object_type_property]
+											 target_type
+											 target_type_property
+											 target_type_property_value]
   [have [get this agency `physical_object_type_goal] create_physical_type_property_relationship_goal
-	source_physical_object_type
-	source_physical_object_type_property
+	source_type
+	source_type_property
+	source_type_property_value
 	key_type
 	key
-	target_physical_object_type
-	target_physical_object_type_property]]
+	target_type
+	target_type_property
+	target_type_property_value]]
 
 
 

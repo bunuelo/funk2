@@ -52,9 +52,9 @@
        ]]
 
 [defunk physical_type_property_relation_goal-object_phrase [object_type object_property object_property_value]
-  [if [eq this-object_property_value t]
-      [format nil 'a ' this-object_type ' that ' this-object_property]
-    [format nil 'a ' this-object_property_value ' ' this-object_property ' ' this-object_type]]]
+  [if [eq object_property_value t]
+      [format nil 'a ' object_type ' that ' object_property]
+    [format nil 'a ' object_property_value ' ' object_property ' ' object_type]]]
 
 [deftypefunk physical_type_property_relation_goal get as-string []
   [format nil

@@ -22,7 +22,7 @@
 'physical_type_property_relation_goal'
 
 [deframe physical_type_property_relation_goal [frame] [source_type
-						       source_property
+	 					       source_property
 						       source_property_value
 						       key_type
 						       key
@@ -100,12 +100,14 @@
   [let [[resource [get this resource `translate_physical_knowledge_to_physical_type_knowledge]]]
     [terminal_format standard-terminal '\ndebug 2.2.']
     [let [[goal [new physical_type_property_relation_goal
-	       source_physical_object_type
-	       source_physical_object_type_property
-	       key_type
-	       key
-	       target_physical_object_type
-	       target_physical_object_type_property]]]
+		     source_physical_object_type
+		     `property
+		     source_physical_object_type_property
+		     key_type
+		     key
+		     target_physical_object_type
+		     `property
+		     target_physical_object_type_property]]]
       [terminal_format standard-terminal '\ndebug 2.3.']
       [have resource add_goal goal]]]]
 

@@ -26,9 +26,9 @@
 #include "../semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.h"
 
 
-f2ptr     raw__semantic_physical_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name);
-f2ptr     raw__semantic_physical_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name);
-f2ptr      f2__semantic_physical_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name);
+f2ptr     raw__semantic_physical_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
+f2ptr     raw__semantic_physical_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
+f2ptr      f2__semantic_physical_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
 boolean_t raw__semantic_physical_object_type_event__is_type            (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_physical_object_type_event__is_type            (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_physical_object_type_event__type               (f2ptr cause, f2ptr this);

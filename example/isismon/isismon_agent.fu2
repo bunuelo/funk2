@@ -472,17 +472,6 @@
        [have vbox pack_start entry nil nil 0]
        
        [fiber [funk []
-		    [have this add_isismon_knowledge `other_agents_knowledge]
-		    [have this add_isismon_knowledge `goal_event_knowledge]
-		    [have this add_isismon_knowledge `goal_knowledge]
-		    [have this add_isismon_knowledge `reflective_event_knowledge]
-		    [have this add_isismon_knowledge `reflective_knowledge]
-		    [have this add_isismon_knowledge `physical_type_event_knowledge]
-		    [have this add_isismon_knowledge `physical_type_knowledge]
-		    [have this add_isismon_knowledge `physical_event_knowledge]
-		    [have this add_isismon_knowledge `physical_knowledge]
-		    [have this add_isismon_knowledge `visual_knowledge]
-		    
 		    [mapc [funk [semantic_knowledge_base]
 				[let [[name [get semantic_knowledge_base name]]]
 				  [if [not [get isismon_knowledge_ptypehash contains name]]

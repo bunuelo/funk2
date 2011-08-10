@@ -24,12 +24,12 @@
 
 // semantic_physical_object_type_event
 
-f2ptr raw__semantic_physical_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_physical_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_physical_object_type_event"));
   }
   {
-    f2ptr result = raw__semantic_object_type_event__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -37,13 +37,13 @@ f2ptr raw__semantic_physical_object_type_event__type_create(f2ptr cause, f2ptr t
   return this;
 }
 
-f2ptr raw__semantic_physical_object_type_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_physical_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_physical_object_type_event__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_physical_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -51,11 +51,11 @@ f2ptr raw__semantic_physical_object_type_event__new(f2ptr cause, f2ptr semantic_
   return this;
 }
 
-f2ptr f2__semantic_physical_object_type_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_physical_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_physical_object_type_event__new(cause, semantic_realm);
+  return raw__semantic_physical_object_type_event__new(cause, semantic_realm, phenomenal_name);
 }
 export_cefunk1(semantic_physical_object_type_event__new, semantic_realm, 0, "Returns a new semantic_physical_object_type_event object.");
 

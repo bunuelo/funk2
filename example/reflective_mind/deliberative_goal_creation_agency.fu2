@@ -84,7 +84,9 @@
     `[terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
     [set semantic_goal phenomenal_name goal_resource_name]
     [let [[is_occurring_funk [funk []
-				   nil]]]
+				   [let [[physical_object_type_knowledge [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
+				     
+				     nil]]]]
       [let [[goal_resource [new goal_knowledge_resource
 				goal_resource_name
 				semantic_goal

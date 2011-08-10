@@ -216,10 +216,10 @@
 								'_physical_object_type_relation']
 						 as-symbol]]
 		[relation-meta_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
-						  [get semantic_physical_object_type_event_source phenomenal_name]
+						  semantic_physical_object_type_event_source
 						  key_type
 						  key
-						  [get semantic_physical_object_type_event_target phenomenal_name]]]]
+						  semantic_physical_object_type_event_target]]]
 	    [= relation [new semantic_physical_object_type_relation_event [get [get this mind] semantic_realm]
 			     relation-phenomenal_name
 			     relation-meta_relationship

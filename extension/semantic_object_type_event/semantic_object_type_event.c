@@ -24,28 +24,29 @@
 
 // semantic_object_type_event
 
-f2ptr raw__semantic_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name) {
+f2ptr raw__semantic_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_object_type_event"));
   }
-  assert_value(raw__semantic_know_of_existence_event__type_create(cause, this, semantic_realm, phenomenal_name));
+  assert_value(raw__semantic_know_of_existence_event__type_create(cause, this, semantic_realm, object_phenomenal_name));
+  raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   return this;
 }
 
-f2ptr raw__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name) {
+f2ptr raw__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  assert_value(raw__semantic_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name));
+  assert_value(raw__semantic_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name, object_phenomenal_name));
   return this;
 }
 
-f2ptr f2__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name) {
+f2ptr f2__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_object_type_event__new(cause, semantic_realm, phenomenal_name);
+  return raw__semantic_object_type_event__new(cause, semantic_realm, phenomenal_name, object_phenomenal_name);
 }
-export_cefunk2(semantic_object_type_event__new, phenomenal_name, semantic_realm, 0, "Returns a new semantic_object_type_event object.");
+export_cefunk3(semantic_object_type_event__new, semantic_realm, phenomenal_name, object_phenomenal_name, 0, "Returns a new semantic_object_type_event object.");
 
 
 boolean_t raw__semantic_object_type_event__is_type(f2ptr cause, f2ptr thing) {

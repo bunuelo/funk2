@@ -25,9 +25,9 @@
 #include "../semantic_know_of_existence_event/semantic_know_of_existence_event.h"
 
 
-f2ptr     raw__semantic_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_object_type_event__new                (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_object_type_event__new                (f2ptr cause, f2ptr semantic_realm);
+f2ptr     raw__semantic_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name);
+f2ptr     raw__semantic_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name);
+f2ptr      f2__semantic_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name);
 boolean_t raw__semantic_object_type_event__is_type            (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_object_type_event__is_type            (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_object_type_event__type               (f2ptr cause, f2ptr this);

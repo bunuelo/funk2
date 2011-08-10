@@ -132,6 +132,7 @@
 	     deliberative_goal_creation_agency
 	     deliberative_execution_agency
 	     deliberative_forward_planner_agency
+	     delibarative_physical_object_type_goal_agency
 	     english_language]
    :sources ['deliberative_layer.fu2']]
 
@@ -164,6 +165,9 @@
   :packages [reflective_mind_core]
    :sources ['deliberative_forward_planner_agency.fu2']]
 
+[defpackage delibarative_physical_object_type_goal_agency
+  :packages [reflective_mind_core]
+   :sources ['delibarative_physical_object_type_goal_agency.fu2']]
 
 
 'reflective_layer'

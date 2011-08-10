@@ -19,6 +19,56 @@
 
 
 
+'physical_type_property_relation_goal'
+
+[deframe physical_type_property_relation_goal [frame] [source_type
+						       source_property
+						       source_property_value
+						       key_type
+						       key
+						       target_type
+						       target_property
+						       target_property_value]
+  [new [initial-source_type
+	initial-source_property
+	initial-source_property_value
+	initial-key_type
+	initial-key
+	initial-target_type
+	initial-target_property
+	initial-target_property_value]
+       [terminal_format standard-terminal '\ndebug 0.']
+       [= source_type           initial-source_type]
+       [= source_property       initial-source_property]
+       [= source_property_value initial-source_property_value]
+       [= key_type              initial-key_type]
+       [= key                   initial-key]
+       [= target_type           initial-target_type]
+       [= target_property       initial-target_property]
+       [= target_property_value initial-target_property_value]
+       ]]
+
+[deftypefunk physical_type_property_relation_goal get as-string []
+  [terminal_format standard-terminal '\ndebug 1.']
+  [format nil 'a ' source_property_value ' ' source_property ' ' source_type ' is ' key ' a ' target_property_value ' ' target_property ' ' target_type]]
+
+[deftypefunk physical_type_property_relation_goal execute add_type_event [event_time
+									  semantic_physical_object_type_event_source
+									  key_type
+									  key
+									  semantic_physical_object_type_event_target]
+  
+  ]
+
+[deftypefunk physical_type_property_relation_goal execute remove_type_event [event_time
+									     semantic_physical_object_type_event_source
+									     key_type
+									     key
+									     semantic_physical_object_type_event_target]
+  ]
+
+
+
 'deliberative_physical_object_type_goal_agency'
 
 [deframe deliberative_physical_object_type_goal_agency [agency] []
@@ -46,6 +96,7 @@
 														    key
 														    target_physical_object_type
 														    target_physical_object_type_property]
+  [terminal_format standard-terminal '\ndebug 2.']
   [have [get this resource `translate_physical_knowledge_to_physical_type_knowledge] add_goal
 	[new physical_type_property_relation_goal
 	     source_physical_object_type
@@ -54,54 +105,6 @@
 	     key
 	     target_physical_object_type
 	     target_physical_object_type_property]]]
-
-
-
-'physical_type_property_relation_goal'
-
-[deframe physical_type_property_relation_goal [frame] [source_type
-						       source_property
-						       source_property_value
-						       key_type
-						       key
-						       target_type
-						       target_property
-						       target_property_value]
-  [new [initial-source_type
-	initial-source_property
-	initial-source_property_value
-	initial-key_type
-	initial-key
-	initial-target_type
-	initial-target_property
-	initial-target_property_value]
-       [= source_type           initial-source_type]
-       [= source_property       initial-source_property]
-       [= source_property_value initial-source_property_value]
-       [= key_type              initial-key_type]
-       [= key                   initial-key]
-       [= target_type           initial-target_type]
-       [= target_property       initial-target_property]
-       [= target_property_value initial-target_property_value]
-       ]]
-
-[deftypefunk physical_type_property_relation_goal get as-string []
-  [format nil 'a ' source_property_value ' ' source_property ' ' source_type ' is ' key ' a ' target_property_value ' ' target_property ' ' target_type]]
-
-[deftypefunk physical_type_property_relation_goal execute add_type_event [event_time
-									  semantic_physical_object_type_event_source
-									  key_type
-									  key
-									  semantic_physical_object_type_event_target]
-  
-  ]
-
-[deftypefunk physical_type_property_relation_goal execute remove_type_event [event_time
-									     semantic_physical_object_type_event_source
-									     key_type
-									     key
-									     semantic_physical_object_type_event_target]
-  ]
 
 
 
@@ -119,6 +122,7 @@
        nil]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_goal [goal]
+  [terminal_format standard-terminal '\ndebug 3.']
   [terminal_format standard-terminal '\ndeliberative_layer: adding goal, "' [get goal as-string] '."']
   [= goals [cons goal goals]]]
 

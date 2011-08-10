@@ -18,6 +18,9 @@
  rights to redistribute these changes.'
 
 
+
+'deliberative_physical_object_type_goal_agency'
+
 [deframe deliberative_physical_object_type_goal_agency [agency] []
   [new []
        [construct agency `physical_object_type_goal]
@@ -27,6 +30,7 @@
 [deftypefunk deliberative_physical_object_type_goal_agency execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_physical_knowledge  [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_knowledge          [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_goal_knowledge          [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk deliberative_physical_object_type_goal_agency execute connect_knowledge_reflection []
@@ -42,13 +46,70 @@
 														    key
 														    target_physical_object_type
 														    target_physical_object_type_property]
+  [have [get this resource `translate_physical_knowledge_to_physical_type_knowledge] add_goal
+	[new physical_type_property_relation_goal
+	     source_physical_object_type
+	     source_physical_object_type_property
+	     key_type
+	     key
+	     target_physical_object_type
+	     target_physical_object_type_property]]]
+
+
+
+'physical_type_property_relation_goal'
+
+[deframe physical_type_property_relation_goal [frame] [source_type
+						       source_property
+						       source_property_value
+						       key_type
+						       key
+						       target_type
+						       target_property
+						       target_property_value]
+  [new [initial-source_type
+	initial-source_property
+	initial-source_property_value
+	initial-key_type
+	initial-key
+	initial-target_type
+	initial-target_property
+	initial-target_property_value]
+       [= source_type           initial-source_type]
+       [= source_property       initial-source_property]
+       [= source_property_value initial-source_property_value]
+       [= key_type              initial-key_type]
+       [= key                   initial-key]
+       [= target_type           initial-target_type]
+       [= target_property       initial-target_property]
+       [= target_property_value initial-target_property_value]
+       ]]
+
+[deftypefunk physical_type_property_relation_goal get as-string []
+  [format nil 'a ' source_property_value ' ' source_property ' ' source_type ' is ' key ' a ' target_property_value ' ' target_property ' ' target_type]]
+
+[deftypefunk physical_type_property_relation_goal execute add_type_event [event_time
+									  semantic_physical_object_type_event_source
+									  key_type
+									  key
+									  semantic_physical_object_type_event_target]
+  
   ]
+
+[deftypefunk physical_type_property_relation_goal execute remove_type_event [event_time
+									     semantic_physical_object_type_event_source
+									     key_type
+									     key
+									     semantic_physical_object_type_event_target]
+  ]
+
 
 
 'translate_physical_knowledge_to_physical_type_knowledge_resource'
 
 [deframe translate_physical_knowledge_to_physical_type_knowledge_resource [traced_resource] [[semantic_physical_object_type_event_mutex [new mutex]]
-											     [semantic_physical_object_copy_mutex [new mutex]]]
+											     [semantic_physical_object_copy_mutex       [new mutex]]
+											     [goals                                     nil]]
   [new []
        [construct traced_resource `translate_physical_knowledge_to_physical_type_knowledge
 		  [funk []
@@ -56,6 +117,38 @@
 			]]
        [= vital t]
        nil]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_goal [goal]
+  [terminal_format standard-terminal '\ndeliberative_layer: adding goal, "' [get goal as-string] '."']
+  [= goals [cons goal goals]]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_to_goal_states [event_time
+													       semantic_physical_object_type_event_source
+													       key_type
+													       key
+													       semantic_physical_object_type_event_target]
+  [mapc [funk [goal]
+	      [have goal add_type_event
+		    event_time
+		    semantic_physical_object_type_event_source
+		    key_type
+		    key
+		    semantic_physical_object_type_event_target]]
+	goals]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_from_goal_states [event_time
+														    semantic_physical_object_type_event_source
+														    key_type
+														    key
+														    semantic_physical_object_type_event_target]
+  [mapc [funk [goal]
+	      [have goal remove_type_event
+		    event_time
+		    semantic_physical_object_type_event_source
+		    key_type
+		    key
+		    semantic_physical_object_type_event_target]]
+	goals]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_copy [phenomenal_name physical_object_type]
   [let [[semantic_physical_object nil]]
@@ -134,7 +227,8 @@
 			     semantic_physical_object_type_event_target]]
 	    [set relation absolute_start_time [new semantic_time event_time]]
 	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
-	    [have semantic_physical_object_type_event_source add compound_key [get semantic_physical_object_type_event_target phenomenal_name] relation]]
+	    [have semantic_physical_object_type_event_source add compound_key [get semantic_physical_object_type_event_target phenomenal_name] relation]
+	    [have this add_type_to_goal_states event_time semantic_physical_object_type_event_source key_type key semantic_physical_object_type_event_target]]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
 

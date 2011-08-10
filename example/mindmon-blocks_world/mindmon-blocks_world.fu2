@@ -202,6 +202,7 @@
 [deftypefunk mindmon_blocks_world_agent get knowledge_base_names []
   `[reflective_event_knowledge
     reflective_knowledge
+    physical_goal_knowledge
     physical_type_knowledge
     type_copy_of_physical_knowledge
     physical_event_knowledge

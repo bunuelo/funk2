@@ -79,7 +79,7 @@
 							   [get target_physical_object_type          as-string] '_'
 							   [get target_physical_object_type_property as-string] '_goal_knowledge'] as-symbol]]
 	[semantic_goal                 [new semantic_goal [get [get this mind] semantic_realm]]]
-	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_event_knowledge `translate_physical_type_knowledge_to_physical_type_event_knowledge]
+	[evaluate_is_occurring_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_type_knowledge_to_physical_type_event_knowledge]
 					    end_of_physical_type_event_changes_trigger]]]
     `[terminal_format standard-terminal '\ncreating ' goal_resource_name ' physical relationship goal resource.']
     [set semantic_goal phenomenal_name goal_resource_name]

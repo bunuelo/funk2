@@ -23,33 +23,18 @@
 [deframe deliberative_layer [mental_layer] []
   [new []
        [construct mental_layer 2 `deliberative]
-       [parog [have this add_agency [new deliberative_physical_event_knowledge_agency]]
-	      [have this add_agency [new deliberative_goal_knowledge_agency]]
-	      [have this add_agency [new deliberative_goal_event_knowledge_agency]]
-	      [have this add_agency [new deliberative_goal_creation_agency]]
-	      [have this add_agency [new deliberative_execution_agency]]
-	      [have this add_agency [new deliberative_forward_planner_agency]]
+       [parog [have this add_agency [new deliberative_execution_agency]]
 	      [have this add_agency [new deliberative_physical_object_type_goal_agency]]]
        this]]
 
 [deftypefunk deliberative_layer execute create_knowledge []
-  [have [get this agency `physical_event_knowledge]  create_knowledge]
-  [have [get this agency `goal_knowledge]            create_knowledge]
-  [have [get this agency `goal_event_knowledge]      create_knowledge]
-  [have [get this agency `goal_creation]             create_knowledge]
-  [have [get this agency `physical_object_type_goal] create_knowledge]
-  nil]
+  [have [get this agency `physical_object_type_goal] create_knowledge]]
 
 [deftypefunk deliberative_layer execute connect_knowledge_reflection []
-  [have [get this agency `physical_event_knowledge]  connect_knowledge_reflection]
-  [have [get this agency `goal_knowledge]            connect_knowledge_reflection]
-  [have [get this agency `goal_event_knowledge]      connect_knowledge_reflection]
-  [have [get this agency `goal_creation]             connect_knowledge_reflection]
-  [have [get this agency `physical_object_type_goal] connect_knowledge_reflection]
-  nil]
+  [have [get this agency `physical_object_type_goal] connect_knowledge_reflection]]
 
 [deftypefunk deliberative_layer execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
-  [have [get this agency `goal_creation] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
+  [have [get this agency `physical_object_type_goal] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
 [deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_physical_object_type
 											 source_physical_object_type_property
@@ -57,7 +42,7 @@
 											 key
 											 target_physical_object_type
 											 target_physical_object_type_property]
-  [have [get this agency `goal_creation] create_physical_type_property_relationship_goal
+  [have [get this agency `physical_object_type_goal] create_physical_type_property_relationship_goal
 	source_physical_object_type
 	source_physical_object_type_property
 	key_type

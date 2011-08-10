@@ -33,6 +33,17 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_type_knowledge]
   ]
 
+[deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
+  ]
+
+[deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_property_relationship_goal [source_physical_object_type
+														    source_physical_object_type_property
+														    key_type
+														    key
+														    target_physical_object_type
+														    target_physical_object_type_property]
+  ]
+
 
 'translate_physical_knowledge_to_physical_type_knowledge_resource'
 

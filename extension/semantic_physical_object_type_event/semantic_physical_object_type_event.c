@@ -57,7 +57,7 @@ f2ptr f2__semantic_physical_object_type_event__new(f2ptr cause, f2ptr semantic_r
   }
   return raw__semantic_physical_object_type_event__new(cause, semantic_realm, phenomenal_name);
 }
-export_cefunk1(semantic_physical_object_type_event__new, semantic_realm, 0, "Returns a new semantic_physical_object_type_event object.");
+export_cefunk2(semantic_physical_object_type_event__new, semantic_realm, phenomenal_name, 0, "Returns a new semantic_physical_object_type_event object.");
 
 
 boolean_t raw__semantic_physical_object_type_event__is_type(f2ptr cause, f2ptr thing) {

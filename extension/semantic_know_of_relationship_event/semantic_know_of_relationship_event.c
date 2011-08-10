@@ -41,19 +41,13 @@ f2ptr raw__semantic_know_of_relationship_event__new(f2ptr cause, f2ptr semantic_
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  {
-    f2ptr result = raw__semantic_know_of_relationship_event__type_create(cause, this, semantic_realm, meta_relationship);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_know_of_relationship_event__type_create(cause, this, semantic_realm, meta_relationship));
   return this;
 }
 
 f2ptr f2__semantic_know_of_relationship_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr meta_relationship) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm,                    semantic_realm);
+  assert_argument_type(relationship_meta_semantic_object, meta_relationship);
   return raw__semantic_know_of_relationship_event__new(cause, semantic_realm, meta_relationship);
 }
 export_cefunk2(semantic_know_of_relationship_event__new, semantic_realm, meta_relationship, 0, "Returns a new semantic_know_of_relationship_event object.");

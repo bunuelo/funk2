@@ -24,12 +24,13 @@
 
 // semantic_physical_object_type_relation_event
 
-f2ptr raw__semantic_physical_object_type_relation_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr target_object_type) {
+f2ptr raw__semantic_physical_object_type_relation_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type) {
   assert_argument_type(semantic_object_type_event, target_object_type);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_physical_object_type_relation_event"));
   }
-  assert_value(raw__semantic_know_of_relationship_event__type_create(cause, this, semantic_realm, phenomenal_name));
+  assert_value(raw__semantic_know_of_relationship_event__type_create(cause, this, semantic_realm, meta_relationship));
+  raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type"), target_object_type);
@@ -38,26 +39,19 @@ f2ptr raw__semantic_physical_object_type_relation_event__type_create(f2ptr cause
   return this;
 }
 
-f2ptr raw__semantic_physical_object_type_relation_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr target_object_type) {
-  f2ptr this = f2__frame__new(cause, nil);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  {
-    f2ptr result = raw__semantic_physical_object_type_relation_event__type_create(cause, this, semantic_realm, phenomenal_name, target_object_type);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+f2ptr raw__semantic_physical_object_type_relation_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type) {
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_physical_object_type_relation_event__type_create(cause, this, semantic_realm, phenomenal_name, meta_relationship, target_object_type));
   return this;
 }
 
-f2ptr f2__semantic_physical_object_type_relation_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr target_object_type) {
-  assert_argument_type(semantic_realm,       semantic_realm);
-  assert_argument_type(semantic_object_type_event, target_object_type);
-  return raw__semantic_physical_object_type_relation_event__new(cause, semantic_realm, phenomenal_name, target_object_type);
+f2ptr f2__semantic_physical_object_type_relation_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type) {
+  assert_argument_type(semantic_realm,                    semantic_realm);
+  assert_argument_type(semantic_object_type_event,        target_object_type);
+  assert_argument_type(relationship_meta_semantic_object, meta_relationship);
+  return raw__semantic_physical_object_type_relation_event__new(cause, semantic_realm, phenomenal_name, meta_relationship, target_object_type);
 }
-export_cefunk3(semantic_physical_object_type_relation_event__new, semantic_realm, phenomenal_name, target_object_type, 0, "Given a semantic_object_type_event, returns a new semantic_physical_object_type_relation_event object.");
+export_cefunk4(semantic_physical_object_type_relation_event__new, semantic_realm, phenomenal_name, meta_relationship, target_object_type, 0, "Given a semantic_object_type_event, returns a new semantic_physical_object_type_relation_event object.");
 
 
 boolean_t raw__semantic_physical_object_type_relation_event__is_type(f2ptr cause, f2ptr thing) {

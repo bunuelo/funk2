@@ -26,9 +26,9 @@
 #include "../semantic_object_type_event/semantic_object_type_event.h"
 
 
-f2ptr     raw__semantic_physical_object_type_relation_event__type_create               (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr target_object_type);
-f2ptr     raw__semantic_physical_object_type_relation_event__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr target_object_type);
-f2ptr      f2__semantic_physical_object_type_relation_event__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr target_object_type);
+f2ptr     raw__semantic_physical_object_type_relation_event__type_create               (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type);
+f2ptr     raw__semantic_physical_object_type_relation_event__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type);
+f2ptr      f2__semantic_physical_object_type_relation_event__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type);
 boolean_t raw__semantic_physical_object_type_relation_event__is_type                   (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_physical_object_type_relation_event__is_type                   (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_physical_object_type_relation_event__type                      (f2ptr cause, f2ptr this);

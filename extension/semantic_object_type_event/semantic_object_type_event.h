@@ -23,7 +23,6 @@
 #define F2__EXTENSION__SEMANTIC_OBJECT_TYPE_EVENT__H
 
 #include "../semantic_know_of_existence_event/semantic_know_of_existence_event.h"
-#include "../semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.h"
 
 
 f2ptr     raw__semantic_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name);

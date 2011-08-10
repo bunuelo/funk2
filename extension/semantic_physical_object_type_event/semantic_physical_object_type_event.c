@@ -110,7 +110,7 @@ f2ptr raw__semantic_physical_object_type_event__preposition__in__add(f2ptr cause
 
 f2ptr f2__semantic_physical_object_type_event__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_physical_object_type_event,          this);
-  assert_argument_type(semantic_physical_object_type_event_relation, that);
+  assert_argument_type(semantic_physical_object_type_relation_event, that);
   return raw__semantic_physical_object_type_event__preposition__in__add(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type_event__preposition__in__add, this, that, 0, "");
@@ -122,7 +122,7 @@ f2ptr raw__semantic_physical_object_type_event__preposition__in__remove(f2ptr ca
 
 f2ptr f2__semantic_physical_object_type_event__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_physical_object_type_event,          this);
-  assert_argument_type(semantic_physical_object_type_event_relation, that);
+  assert_argument_type(semantic_physical_object_type_relation_event, that);
   return raw__semantic_physical_object_type_event__preposition__in__remove(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type_event__preposition__in__remove, this, that, 0, "");
@@ -145,7 +145,7 @@ f2ptr raw__semantic_physical_object_type_event__preposition__on__add(f2ptr cause
 
 f2ptr f2__semantic_physical_object_type_event__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_physical_object_type_event,          this);
-  assert_argument_type(semantic_physical_object_type_event_relation, that);
+  assert_argument_type(semantic_physical_object_type_relation_event, that);
   return raw__semantic_physical_object_type_event__preposition__on__add(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type_event__preposition__on__add, this, that, 0, "");
@@ -157,7 +157,7 @@ f2ptr raw__semantic_physical_object_type_event__preposition__on__remove(f2ptr ca
 
 f2ptr f2__semantic_physical_object_type_event__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_physical_object_type_event,          this);
-  assert_argument_type(semantic_physical_object_type_event_relation, that);
+  assert_argument_type(semantic_physical_object_type_relation_event, that);
   return raw__semantic_physical_object_type_event__preposition__on__remove(cause, this, that);
 }
 export_cefunk2(semantic_physical_object_type_event__preposition__on__remove, this, that, 0, "");

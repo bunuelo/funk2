@@ -171,8 +171,7 @@
     [have semantic_physical_object_copy_mutex lock]
     [= semantic_physical_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
     [if [null semantic_physical_object_type_event]
-	[prog [= semantic_physical_object_type_event [new semantic_physical_object_type_event [get [get this mind] semantic_realm]]]
-	      [set semantic_physical_object_type_event phenomenal_name phenomenal_name]
+	[prog [= semantic_physical_object_type_event [new semantic_physical_object_type_event [get [get this mind] semantic_realm] phenomenal_name]]
 	      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame semantic_physical_object_type_event]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object_type_event]
 	      ]]
@@ -209,17 +208,17 @@
     [let [[relation_set [have semantic_physical_object_type_event_source lookup_set compound_key [get semantic_physical_object_type_event_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
-	  [prog [= relation [new semantic_physical_object_type_relation_event [get [get this mind] semantic_realm] semantic_physical_object_type_event_target]]
-		[set relation absolute_start_time [new semantic_time event_time]]
-		[set relation phenomenal_name [get [string-concat [get [get semantic_physical_object_type_event_source phenomenal_name] as-string]
-								  '_'
-								  [get compound_key as-string]
-								  '_'
-								  [get [get semantic_physical_object_type_event_target phenomenal_name] as-string]
-								  '_physical_object_type_relation']
-						   as-symbol]]
-		[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
-		[have semantic_physical_object_type_event_source add compound_key [get semantic_physical_object_type_event_target phenomenal_name] relation]]
+	  [let [[relation-phenomenal_name [get [string-concat [get [get semantic_physical_object_type_event_source phenomenal_name] as-string]
+							      '_'
+							      [get compound_key as-string]
+							      '_'
+							      [get [get semantic_physical_object_type_event_target phenomenal_name] as-string]
+							      '_physical_object_type_relation']
+					       as-symbol]]]
+	    [= relation [new semantic_physical_object_type_relation_event [get [get this mind] semantic_realm] relation-phenomenal_name semantic_physical_object_type_event_target]]
+	    [set relation absolute_start_time [new semantic_time event_time]]
+	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
+	    [have semantic_physical_object_type_event_source add compound_key [get semantic_physical_object_type_event_target phenomenal_name] relation]]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
 

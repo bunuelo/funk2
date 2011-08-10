@@ -24,28 +24,28 @@
 
 // semantic_object_type_event
 
-f2ptr raw__semantic_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_object_type_event"));
   }
-  assert_value(raw__semantic_event__type_create(cause, this, semantic_realm, nil));
+  assert_value(raw__semantic_know_of_existence_event__type_create(cause, this, semantic_realm, phenomenal_name));
   return this;
 }
 
-f2ptr raw__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  assert_value(raw__semantic_object_type_event__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name));
   return this;
 }
 
-f2ptr f2__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_object_type_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_object_type_event__new(cause, semantic_realm);
+  return raw__semantic_object_type_event__new(cause, semantic_realm, phenomenal_name);
 }
-export_cefunk1(semantic_object_type_event__new, semantic_realm, 0, "Returns a new semantic_object_type_event object.");
+export_cefunk2(semantic_object_type_event__new, phenomenal_name, semantic_realm, 0, "Returns a new semantic_object_type_event object.");
 
 
 boolean_t raw__semantic_object_type_event__is_type(f2ptr cause, f2ptr thing) {
@@ -117,7 +117,7 @@ export_cefunk2(semantic_object_type_event__example__remove, this, that, 0, "");
 
 
 f2ptr f2__semantic_object_type_event_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_event")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_know_of_existence_event")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type_event"), new__symbol(cause, "semantic_object_type_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type_event"), new__symbol(cause, "semantic_object_type_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object_type_event"), new__symbol(cause, "semantic_object_type_event__type")));}
@@ -137,7 +137,7 @@ f2ptr f2__semantic_object_type_event__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_object_type_event__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_object_type_event__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(semantic_object_type_event, semantic_event);
+  core_extension__ping(semantic_object_type_event, semantic_know_of_existence_event);
   status("semantic_object_type_event initialized.");
   return nil;
 }

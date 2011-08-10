@@ -126,44 +126,13 @@
 
 [defpackage deliberative_layer
   :packages [reflective_mind_core
-	     deliberative_physical_event_knowledge_agency
-	     deliberative_goal_knowledge_agency
-	     deliberative_goal_event_knowledge_agency
-	     deliberative_goal_creation_agency
 	     deliberative_execution_agency
-	     deliberative_forward_planner_agency
-	     deliberative_physical_object_type_goal_agency
-	     english_language]
+	     deliberative_physical_object_type_goal_agency]
    :sources ['deliberative_layer.fu2']]
-
-[defpackage deliberative_physical_event_knowledge_agency
-  :packages [reflective_mind_core
-	     semantic_know_of_existence_event
-	     semantic_know_of_relationship_event]
-   :sources ['deliberative_physical_event_knowledge_agency.fu2']]
-
-[defpackage deliberative_goal_knowledge_agency
-  :packages [reflective_mind_core
-	     semantic_goal]
-   :sources ['deliberative_goal_knowledge_agency.fu2']]
-
-[defpackage deliberative_goal_event_knowledge_agency
-  :packages [reflective_mind_core
-	     semantic_goal]
-   :sources ['deliberative_goal_event_knowledge_agency.fu2']]
-
-[defpackage deliberative_goal_creation_agency
-  :packages [reflective_mind_core
-	     semantic_goal]
-   :sources ['deliberative_goal_creation_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [reflective_mind_core]
    :sources ['deliberative_execution_agency.fu2']]
-
-[defpackage deliberative_forward_planner_agency
-  :packages [reflective_mind_core]
-   :sources ['deliberative_forward_planner_agency.fu2']]
 
 [defpackage deliberative_physical_object_type_goal_agency
   :packages [reflective_mind_core]

@@ -18,18 +18,18 @@
  rights to redistribute these changes.'
 
 
-[deframe delibarative_physical_object_type_goal_agency [agency] []
+[deframe deliberative_physical_object_type_goal_agency [agency] []
   [new []
        [construct agency `physical_object_type_goal]
        [have this add_resource [new translate_physical_knowledge_to_physical_type_knowledge_resource]]
        ]]
 
-[deftypefunk delibarative_physical_object_type_goal_agency execute create_knowledge []
+[deftypefunk deliberative_physical_object_type_goal_agency execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_physical_knowledge  [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_knowledge          [get [get this mind] semantic_realm]]]
   ]
 
-[deftypefunk delibarative_physical_object_type_goal_agency execute connect_knowledge_reflection []
+[deftypefunk deliberative_physical_object_type_goal_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_type_knowledge]
   ]
 

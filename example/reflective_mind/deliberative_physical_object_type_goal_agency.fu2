@@ -58,19 +58,20 @@
 
 [deftypefunk physical_type_property_relation_goal get as-string []
   [format nil
+	  'I want '
 	  [physical_type_property_relation_goal-object_phrase this-source_type this-source_property this-source_property_value]
-	  ' is ' key ' '
+	  ' to be ' this-key ' '
 	  [physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]]]
 
-[deftypefunk physical_type_property_relation_goal execute matches_type_event [event_time
-									      semantic_physical_object_type_event_source
-									      key_type
-									      key
-									      semantic_physical_object_type_event_target]
+[deftypefunk physical_type_property_relation_goal get matches_type_event [event_time
+									  semantic_physical_object_type_event_source
+									  key_type
+									  key
+									  semantic_physical_object_type_event_target]
   [let [[matches t]]
     [if [not [eq this-source_type `?]]
-	[let [[semantic_physical_object_type_event_source-physical_object_type [get semantic_physical_object_type_event_source physical_object_type]]]
-	  [if [not [eq this-source_type semantic_physical_object_type_event_source-physical_object_type]]
+	[let [[semantic_physical_object_type_event_source-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]]]
+	  [if [not [eq this-source_type semantic_physical_object_type_event_source-phenomenal_name]]
 	      [= matches nil]]]]
     [if matches
 	[prog [if [not [eq this-source_property `?]]
@@ -87,8 +88,8 @@
 					  [= matches nil]]]
 				  [if matches
 				      [prog [if [not [eq this-target_type `?]]
-						[let [[semantic_physical_object_type_event_target-physical_object_type [get semantic_physical_object_type_event_target physical_object_type]]]
-						  [if [not [eq this-target_type semantic_physical_object_type_event_target-physical_object_type]]
+						[let [[semantic_physical_object_type_event_target-phenomenal_name [get semantic_physical_object_type_event_target phenomenal_name]]]
+						  [if [not [eq this-target_type semantic_physical_object_type_event_target-phenomenal_name]]
 						      [= matches nil]]]]
 					    [if matches
 						[prog [if [not [eq this-target_property `?]]

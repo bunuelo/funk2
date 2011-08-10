@@ -173,8 +173,8 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [[and [is-type `semantic_physical_object_type          event-semantic_frame]
-											     [is-type `semantic_physical_object_type_relation event-value]]
+										 [cond [[and [is-type `semantic_physical_object_type_event          event-semantic_frame]
+											     [is-type `semantic_physical_object_type_relation_event event-value]]
 											[let [[physical_type_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 																event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this physical_type_relationship_existence physical_type_relationship]]]
@@ -187,8 +187,8 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [cond [[and [is-type `semantic_physical_object_type          event-semantic_frame]
-											     [is-type `semantic_physical_object_type_relation event-value]]
+										 [cond [[and [is-type `semantic_physical_object_type_event          event-semantic_frame]
+											     [is-type `semantic_physical_object_type_relation_event event-value]]
 											[let [[physical_type_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 																event-semantic_frame event-key_type event-key event-value]]]
 											  [let [[relationship_event [get this physical_type_relationship_existence physical_type_relationship]]]

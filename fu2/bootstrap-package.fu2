@@ -137,6 +137,7 @@
 						     'extension/semantic_event/'
 						     'extension/semantic_event_knowledge_base/'
 						     'extension/semantic_goal/'
+						     'extension/semantic_goal_event/'
 						     'extension/semantic_goal_action_causal_hypothesis/'
 						     'extension/semantic_causal_event/'
 						     'extension/semantic_causal_object/'

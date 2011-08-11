@@ -20,8 +20,8 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[physical_action_english_conslist_hash [hash]]
-					    [physical_plans                        nil]]
+[deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash [new ptypehash]]
+					    [physical_plans                           nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -57,10 +57,10 @@
 
 [deftypefunk deliberative_layer execute add_physical_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
-  [have physical_action_english_conslist_hash add [get action as-english_conslist] action]]
+  [have physical_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
 
 [deftypefunk deliberative_layer execute lookup_physical_action [english_conslist]
-  [have physical_action_english_conslist_hash lookup english_conslist]]
+  [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
 [deftypefunk deliberative_layer execute add_physical_plan [plan]
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get plan as-string] '."']

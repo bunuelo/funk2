@@ -41,7 +41,14 @@
 [deftypefunk deliberative_action get as-english_conslist []
   [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist]]
 
-[deftypefunk deliberative_action get as-string []
+[deftypefunk deliberative_action get as-english_string []
   [get [get [get this mind] resource layer_name agency_name resource_name] as-string]]
+
+[deftypefunk deliberative_action get as-english_symbol []
+  [get [get this as-english_string] as-symbol]]
+
+[deftypefunk deliberative_action get as-string []
+  [get this as-english_string]]
+
 
 

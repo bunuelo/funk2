@@ -283,6 +283,9 @@
 		'-' ' '] replace_all
 		'_' ' ']]]
 
+[defunk conslist-as-english_symbol [this]
+  [get [conslist-as-english_string this] as-symbol]]
+
 [deftypefunk resource get as-string []
   [conslist-as-english_string [get this as-english_conslist]]]
 

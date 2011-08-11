@@ -22,10 +22,12 @@
 'deliberative_plan'
 
 [deframe deliberative_plan [frame] [mind
-				    expression]
+				    expression
+				    compiled_funk]
   [new [initial-mind initial-expression]
-       [= mind       initial-mind]
-       [= expression initial-expression]
+       [= mind          initial-mind]
+       [= expression    initial-expression]
+       [= compiled_funk [get this __compiled_funk]]
        ]]
 
 [defunk flatten_constree [expression]
@@ -86,4 +88,53 @@
 
 [deftypefunk deliberative_plan get as-string []
   [get this as-english_string]]
+
+[defunk deliberative_plan-expression-compile [expression]
+  [cond [[is-type `cons expression] [let [[command   [car expression]]
+					  [arguments [cdr expression]]]
+				      [let [[arguments-length [length arguments]]]
+					[cond [[eq `prog                  command] [eval `[funk [this]
+												@[mapcar [funk [argument]
+													       `[apply ,[deliberative_plan-expression-compile argument]]]
+													 arguments]]]]
+					      [[eq `wait-to-activate      command] [let [[action_name [elt arguments 0]]]
+										     [eval `[funk [this]
+												  [print `[wait-to-activate ,,action_name]]]]]]
+					      [[eq `wait-for-property     command] [if [not [eq 4 arguments-length]]
+										       `[error punctuation-colon ,[flatten_constree expression]]
+										     [let [[source_type [elt arguments 0]]
+											   [key_type    [elt arguments 1]]
+											   [key         [elt arguments 2]]
+											   [value       [elt arguments 3]]]
+										       [eval `[funk [this]
+												    [print `[wait-for-property ,,source_type ,,key_type ,,key ,,value]]
+												    ]]]]]
+					      [[eq `wait-for-relationship command] [if [not [eq 8 arguments-length]]
+										       `[error punctuation-colon ,[flatten_constree expression]]
+										     [let [[source_type           [elt arguments 0]]
+											   [source_property       [elt arguments 1]]
+											   [source_property_value [elt arguments 2]]
+											   [key_type              [elt arguments 3]]
+											   [key                   [elt arguments 4]]
+											   [target_type           [elt arguments 5]]
+											   [target_property       [elt arguments 6]]
+											   [target_property_value [elt arguments 7]]]
+										       [eval `[funk [this]
+												    [print `[wait-for-relationship ,,source_type
+																   ,,source_property
+																   ,,source_property_value
+																   ,,key_type
+																   ,,key
+																   ,,target_type
+																   ,,target_property
+																   ,,target_property_value]]
+												    ]]]]]
+					      [t                                   [error bug_name `deliberative_plan_compile_error]]]]]]
+	[t                          [error bug_name `deliberative_plan_compile_error]]]]
+
+[deftypefunk deliberative_plan get __compiled_funk []
+  [deliberative_plan-expression-compile expression]]
+
+[deftypefunk deliberative_plan execute eval []
+  [funkall [get this compiled_funk] this]]
 

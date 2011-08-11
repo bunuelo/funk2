@@ -2551,7 +2551,7 @@ f2ptr raw__gtk__text_view__set_wrap_mode(f2ptr cause, f2ptr widget, f2ptr wrap_m
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),  new__symbol(cause, "unknown_word_wrap_mode"),
 				     new__symbol(cause, "this"),      widget,
-				     new__symbol(cause, "word_wrap"), word_wrap));
+				     new__symbol(cause, "wrap_mode"), wrap_mode));
     }
     
     funk2_gtk__text_view__set_wrap_mode(&(__funk2.gtk), gtk_widget, gtk_wrap_mode);

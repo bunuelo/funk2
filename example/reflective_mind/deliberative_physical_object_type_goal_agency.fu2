@@ -85,7 +85,7 @@
 	      [terminal_format standard-terminal '\n  this-source_property_value=' this-source_property_value]
 	      [if [not [eq this-source_property `?]]
 		  [if [not [eq this-source_property_value `?]]
-		      [if [not [have semantic_physical_object_type_event_source lookup_set_contains `property this-source_property this-source_property_value]]
+		      [if [not [get semantic_physical_object_type_event_source lookup_set_contains `property this-source_property this-source_property_value]]
 			  [= matches nil]]]]
 	      [if matches
 		  [prog [terminal_format standard-terminal '\n  this-key_type=' this-key_type]
@@ -110,7 +110,7 @@
 						      [terminal_format standard-terminal '\n  semantic_physical_object_type_event_target-phenomenal_name='    semantic_physical_object_type_event_target-phenomenal_name]
 						      [if [not [eq this-target_property `?]]
 							  [if [not [eq this-target_property_value `?]]
-							      [if [not [have semantic_physical_object_type_event_target lookup_set_contains `property this-target_property this-target_property_value]]
+							      [if [not [get semantic_physical_object_type_event_target lookup_set_contains `property this-target_property this-target_property_value]]
 								  [= matches nil]]]]]]]]]]]]]]
     [terminal_format standard-terminal '\n  matches=' matches]
     matches]]

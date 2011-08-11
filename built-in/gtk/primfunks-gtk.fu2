@@ -77,6 +77,7 @@
 [globalize-funk gtk-scrolled_window-set_policy                    &primfunk:gtk__scrolled_window__set_policy]
 [globalize-funk gtk-text_view-new                                 &primfunk:gtk__text_view__new]
 [globalize-funk gtk-text_view-get_buffer                          &primfunk:gtk__text_view__get_buffer]
+[globalize-funk gtk-text_view-set_wrap_mode                       &primfunk:gtk__text_view__set_wrap_mode]
 [globalize-funk gtk-pixbuf-new_from_rgb_data                      &primfunk:gtk__pixbuf__new_from_rgb_data]
 [globalize-funk gtk-pixbuf-new_from_rgba_data                     &primfunk:gtk__pixbuf__new_from_rgba_data]
 [globalize-funk gtk-pixbuf-new_from_file                          &primfunk:gtk__pixbuf__new_from_file]

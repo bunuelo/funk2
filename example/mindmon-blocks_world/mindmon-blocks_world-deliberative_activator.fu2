@@ -21,27 +21,34 @@
 [deframe mindmon_blocks_world_deliberative_activator_plan [frame] [mindmon_blocks_world_deliberative_activator_window
 								   plan
 								   
+								   plan_frame
 								   vbox
 								   button_hbox
 								   execute_button
-								   description_label]
+								   description_text_view]
   [new [initial-mindmon_blocks_world_deliberative_activator_window initial-plan]
        [= mindmon_blocks_world_deliberative_activator_window initial-mindmon_blocks_world_deliberative_activator_window]
        [= plan                                               initial-plan]
        
+       [= plan_frame  [gtk-frame-new 'Physical Plan']]
        [= vbox        [gtk-vbox-new 0]]
+       [have plan_frame add vbox]
+       
+       [= description_text_view [gtk-text_view-new]]
+       [set description_text_view wrap_mode `word_char]
+       [set [get description_text_view buffer] text [get plan as-string]]
+       [have vbox pack_start description_text_view t t 0]
+       
        [= button_hbox [gtk-hbox-new 0]]
        [have vbox pack_start button_hbox nil nil 0]
        
        [= execute_button    [gtk-button-new_with_label 'Execute']]
-       [have hbox pack_start execute_button nil nil 0]
+       [have button_hbox pack_start execute_button nil nil 0]
        
-       [= description_label [gtk-label-new [get plan as-string]]]
-       [have vbox pack_start description_label nil nil 0]
        ]]
 
 [deftypefunk mindmon_blocks_world_deliberative_activator_plan get widget []
-  vbox]
+  plan_frame]
 
 
 [deframe mindmon_blocks_world_deliberative_activator_window [frame] [mindmon_agent

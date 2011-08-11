@@ -1115,6 +1115,14 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
   return buffer;
 }
 
+void funk2_gtk__text_view__set_wrap_mode(funk2_gtk_t* this, GtkWrapMode* wrap_mode) {
+  {
+    gdk_threads_enter();
+    buffer = gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), wrap_mode);
+    gdk_threads_leave();
+  }
+}
+
 
 // gdk_pixbuf
 
@@ -2519,6 +2527,51 @@ f2ptr f2__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
 def_pcfunk1(gtk__text_view__get_buffer, widget,
 	    "Returns the buffer widget of a text_view widget.",
 	    return f2__gtk__text_view__get_buffer(this_cause, widget));
+
+
+f2ptr raw__gtk__text_view__set_wrap_mode(f2ptr cause, f2ptr widget, f2ptr wrap_mode) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2.gtk.initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, widget);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    assert_g_type(GTK_TYPE_TEXT_VIEW, gtk_widget);
+
+    GtkWrapMode gtk_wrap_mode = GTK_WRAP_NONE;
+    if ((wrap_mode == nil) ||
+	raw__eq(cause, new__symbol(cause, "none"), wrap_mode)) {
+      gtk_wrap_mode = GTK_WRAP_NONE;
+    } else if (raw__eq(cause, new__symbol(cause, "char"), wrap_mode)) {
+      gtk_wrap_mode = GTK_WRAP_CHAR;
+    } else if (raw__eq(cause, new__symbol(cause, "word"), wrap_mode)) {
+      gtk_wrap_mode = GTK_WRAP_WORD;
+    } else if (raw__eq(cause, new__symbol(cause, "word_char"), wrap_mode)) {
+      gtk_wrap_mode = GTK_WRAP_WORD_CHAR;
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),  new__symbol(cause, "unknown_word_wrap_mode"),
+				     new__symbol(cause, "this"),      widget,
+				     new__symbol(cause, "word_wrap"), word_wrap));
+    }
+    
+    funk2_gtk__text_view__set_wrap_mode(&(__funk2.gtk), gtk_widget, gtk_wrap_mode);
+    
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__text_view__set_wrap_mode(f2ptr cause, f2ptr widget, f2ptr wrap_mode) {
+  assert_argument_type(gtk_widget, widget);
+  return raw__gtk__text_view__set_wrap_mode(cause, widget, wrap_mode);
+}
+def_pcfunk2(gtk__text_view__set_wrap_mode, widget, wrap_mode,
+	    "Sets the wrap mode of this text_view widget.",
+	    return f2__gtk__text_view__set_wrap_mode(this_cause, widget, wrap_mode));
 
 
 // gdk_pixbuf
@@ -6253,6 +6306,7 @@ void f2__gtk__initialize() {
   
   f2__primcfunk__init__0(gtk__text_view__new);
   f2__primcfunk__init__1(gtk__text_view__get_buffer,                text_view);
+  f2__primcfunk__init__2(gtk__text_view__set_wrap_mode,             text_view, wrap_mode);
   
   // gdk_pixbuf
   

@@ -68,7 +68,8 @@
 [deftypefunk gtk_widget set     position [position]            [gtk-paned-set_position [get this widget] position]]
 
 'GtkTextView'
-[deftypefunk gtk_widget get buffer [] [gtk-text_view-get_buffer [get this widget]]]
+[deftypefunk gtk_widget get buffer    []          [gtk-text_view-get_buffer    [get this widget]]]
+[deftypefunk gtk_widget set wrap_mode [wrap_mode] [gtk-text_view-set_wrap_mode [get this widget] wrap_mode]]
 
 'GtkProgressBar'
 [deftypefunk gtk_progress_bar set     fraction    [fraction]    [gtk-progress_bar-set_fraction    [get this widget] fraction]]

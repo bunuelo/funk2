@@ -25,6 +25,7 @@
 [deftypefunk double get degree_arcsine    []      [get  [get [get this radian_arcsine]    multiplied_by 180.0] divided_by pi]]
 [deftypefunk double get degree_arccosine  []      [get  [get [get this radian_arccosine]  multiplied_by 180.0] divided_by pi]]
 [deftypefunk double get degree_arctangent []      [get  [get [get this radian_arctangent] multiplied_by 180.0] divided_by pi]]
+[deftypefunk double get as-symbol         [] [get [get this as-string] as-symbol]]
 
 
 'integer'
@@ -35,8 +36,8 @@
 [deftypefunk integer get degree_arcsine    []    [get [get this as-double] degree_arcsine]]
 [deftypefunk integer get degree_arccosine  []    [get [get this as-double] degree_arccosine]]
 [deftypefunk integer get degree_arctangent []    [get [get this as-double] degree_arctangent]]
-[deftypefunk integer get power             [exp] [get [get this as-double] power             [get exp as-double]]]
-
+[deftypefunk integer get power             [exp] [get [get this as-double] power [get exp as-double]]]
+[deftypefunk integer get as-symbol         []    [get [get this as-string] as-symbol]]
 
 'cmutex'
 

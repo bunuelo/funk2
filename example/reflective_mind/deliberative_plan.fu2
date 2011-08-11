@@ -29,7 +29,7 @@
        [terminal_format standard-terminal '\ndeliberative_plan: ' expression]
        ]]
 
-[defunk deliberative_plan-expression-flat_english_conslist [expression]
+[defunk flatten_constree [expression]
   [let [[result nil]]
     [labels [[visit_leaves [exp]
 			   [if [is-type `cons exp]
@@ -40,8 +40,25 @@
 	    [visit_leaves expression]]
     [reverse result]]]
 
+[defunk deliberative_plan-expression-as_english_conslist [expression]
+  [cond [[is-type `cons expression]
+	 [let [[command   [car expression]]
+	       [arguments [cdr expression]]]
+	   [cond [[eq `prog command] [apply &append
+					    [append `[,result]
+						    `[[do the following in serial :]]
+						    [let [[step_number 1]]
+						      [mapcar [funk [argument]
+								    [let [[argument-result [append `[,[get step_number as-symbol] .]
+												   [deliberative_plan-expression-as_english_conslist argument]]]]
+								      [++ step_number]
+								      argument-result]]
+							      arguments]]]]]
+		 [t [flatten_constree expression]]]]]
+	[t [flatten_constree expression]]]]
+
 [deftypefunk deliberative_plan get as-english_conslist []
-  [deliberative_plan-expression-flat_english_conslist expression]]
+  [deliberative_plan-expression-as_english_conslist expression]]
 
 [deftypefunk deliberative_plan get as-english_string []
   [conslist-as-english_string [get this as-english_conslist]]]

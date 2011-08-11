@@ -97,6 +97,9 @@
 	  `[,key]
 	  [physical_type_property_relation_goal-english_conslist target_type target_property target_property_value]]]
 
+[defunk physical_type_property_relation_goal-declarative_english_string [source_type source_property source_property_value key_type key target_type target_property target_property_value]
+  [conslist-as-english_string [physical_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value key_type key target_type target_property target_property_value]]]
+
 [deftypefunk physical_type_property_relation_goal get as-declarative_english_conslist []
   [physical_type_property_relation_goal-declarative_english_conslist this-source_type this-source_property this-source_property_value this-key_type this-key this-target_type this-target_property this-target_property_value]]
 

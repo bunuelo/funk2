@@ -102,7 +102,7 @@
   [conslist-as-english_string [get this as-english_conslist]]]
 
 [deftypefunk physical_type_property_relation_goal get as-declarative_english_conslist []
-  [append [physical_type_property_relation_goal-english_conlist this-source_type this-source_property this-source_property_value]
+  [append [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
 	  `[is]
 	  `[,this-key]
 	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]

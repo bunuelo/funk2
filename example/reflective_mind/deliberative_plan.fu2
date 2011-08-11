@@ -28,7 +28,7 @@
        [= mind          initial-mind]
        [= expression    initial-expression]
        [= compiled_funk [get this __compiled_funk]]
-       [have this eval]
+       `[have this eval]
        ]]
 
 [defunk flatten_constree [expression]

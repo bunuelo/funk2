@@ -36,7 +36,7 @@
        
        [= description_text_view [gtk-text_view-new]]
        [set description_text_view wrap_mode `word_char]
-       [set [get description_text_view buffer] text [get plan as-string]]
+       [set [get description_text_view buffer] text [format nil [get plan as-string] '.']]
        [have vbox pack_start description_text_view t t 0]
        
        [= button_hbox [gtk-hbox-new 0]]
@@ -44,6 +44,7 @@
        
        [= execute_button    [gtk-button-new_with_label 'Execute']]
        [have button_hbox pack_start execute_button nil nil 0]
+       [have button_hbox request_size 320 24]
        
        ]]
 

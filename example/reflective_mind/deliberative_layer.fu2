@@ -56,14 +56,14 @@
 	target_type_property_value]]
 
 [deftypefunk deliberative_layer execute add_physical_action [action]
-  [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
+  `[terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
   [have physical_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
 
 [deftypefunk deliberative_layer execute lookup_physical_action [english_conslist]
   [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
 [deftypefunk deliberative_layer execute add_physical_plan [plan]
-  [terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get plan as-string] '."']
+  `[terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get plan as-string] '."']
   [= physical_plans [cons plan physical_plans]]]
 
 [deftypefunk deliberative_layer get physical_plans []

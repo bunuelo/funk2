@@ -72,6 +72,18 @@
 	  ' to be ' this-key ' '
 	  [physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]]]
 
+[deftypefunk physical_type_property_relation_goal get as-declarative_string []
+  [format nil
+	  [physical_type_property_relation_goal-object_phrase this-source_type this-source_property this-source_property_value]
+	  ' is ' this-key ' '
+	  [physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]]]
+
+[deftypefunk physical_type_property_relation_goal get as-negative_declarative_string []
+  [format nil
+	  [physical_type_property_relation_goal-object_phrase this-source_type this-source_property this-source_property_value]
+	  ' is not ' this-key ' '
+	  [physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]]]
+
 [defunk physical_object_type_event-phenomenal_name [physical_object-phenomenal_name]
   [get [format nil physical_object-phenomenal_name '_type_event'] as-symbol]]
 
@@ -135,7 +147,7 @@
 	   key_type
 	   key
 	   semantic_physical_object_type_event_target]
-      [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-string] '.']
+      [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_string] '.']
 	    
 	    `[get [get this mind] semantic_knowledge_base `physical_goal_knowledge]
 	    
@@ -152,7 +164,7 @@
 	   key_type
 	   key
 	   semantic_physical_object_type_event_target]
-      [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-string] '.']
+      [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declaractive_string] '.']
 	    
 	    `[get [get this mind] semantic_knowledge_base `physical_goal_knowledge]
 	    

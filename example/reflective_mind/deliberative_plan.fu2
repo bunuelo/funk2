@@ -1,0 +1,50 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+
+'deliberative_plan'
+
+[deframe deliberative_plan [frame] [mind
+				    phenomenal_name
+				    knowledge_base_name
+				    
+				    ]
+  [new [initial-mind initial-phenomenal_name]
+       [= mind                initial-mind]
+       [= phenomenal_name     initial-phenomenal_name]
+       [= knowledge_base_name [get this __knowledge_base_name]]
+       ]]
+
+[deftypefunk deliberative_plan get __knowledge_base_name []
+  [get [format nil phenomenal_name '_knowledge_base'] as-symbol]]
+
+[deftypefunk deliberative_plan get knowledge_base []
+  [get [get this mind] knowledge_base knowledge_base_name]]
+
+[deftypefunk deliberative_plan execute add_expression-cons [expression]
+  [let [[expression-car [car expression]]
+	[expression-cdr [cdr expression]]]
+    [
+
+[deftypefunk deliberative_plan execute add_expression [expression]
+  [cond [[is-type `cons   expression] [have this add_expression-cons   expression]]
+	[t                            [error bug_name        could_recognize_expression_type
+					     expression-type [type expression]
+					     expression      expression]]]]

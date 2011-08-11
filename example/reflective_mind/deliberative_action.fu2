@@ -19,24 +19,29 @@
 
 
 
-'deliberative_execution_agency'
+'deliberative_action'
 
-[deframe deliberative_execution_agency [agency] []
-  [new []
-       [construct agency `execution]
-       
-       [have this add_resource [new deliberative_execute_plan_resource]]
-       
-       this]]
+[deframe deliberative_action [frame] [mind
+				      phenomenal_name
+				      layer_name
+				      agency_name
+				      resource_name
+				      resource_arguments]
+  [new [initial-mind
+	initial-phenomenal_name
+	initial-layer_name
+	initial-agency_name
+	initial-resource_name
+	initial-resource_arguments]
+       [= mind               initial-mind]
+       [= phenomenal_name    initial-phenomenal_name]
+       [= layer_name         initial-layer_name]
+       [= agency_name        initial-agency_name]
+       [= resource_name      initial-resource_name]
+       [= resource_arguments initial-resource_arguments]
+       ]]
 
 
-[deframe deliberative_execute_plan_resource [traced_resource] []
-  [new []
-       [construct traced_resource [type this]
-		  [funk [plan]
-			[terminal_format standard-terminal 'deliberative_layer: executing plan.']
-			
-			nil]]
-       nil]]
+
 
 

@@ -130,8 +130,18 @@
 	     deliberative_physical_object_type_goal_agency]
    :sources ['deliberative_layer.fu2']]
 
-[defpackage deliberative_execution_agency
+[defpackage deliberative_action
   :packages [reflective_mind_core]
+   :sources ['deliberative_action.fu2']]
+
+[defpackage deliberative_plan
+  :packages [reflective_mind_core
+	     deliberative_action]
+   :sources ['deliberative_plan.fu2']]
+
+[defpackage deliberative_execution_agency
+  :packages [reflective_mind_core
+	     deliberative_plan]
    :sources ['deliberative_execution_agency.fu2']]
 
 [defpackage physical_type_property_relation_goal

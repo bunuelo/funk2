@@ -63,41 +63,56 @@
 	  ' to be ' this-key ' '
 	  [physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]]]
 
+[defunk physical_object_type_event-phenomenal_name [physical_object-phenomenal_name]
+  [get [format nil physical_object-phenomenal_name '_type_event'] as-symbol]]
+
 [deftypefunk physical_type_property_relation_goal get matches_type_event [event_time
 									  semantic_physical_object_type_event_source
 									  key_type
 									  key
 									  semantic_physical_object_type_event_target]
+  [terminal_format standard-terminal '\nchecking physical_type_property_relation_goal']
+  [terminal_format standard-terminal '\n  this-source_type=' this-source_type]
   [let [[matches t]]
-    [terminal_format standard-terminal '\nthis-source_type=' this-source_type]
     [if [not [eq this-source_type `?]]
 	[let [[semantic_physical_object_type_event_source-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]]]
-	  [terminal_format standard-terminal '\nsemantic_physical_object_type_event_source-phenomenal_name=' semantic_physical_object_type_event_source-phenomenal_name]
-	  [if [not [eq this-source_type semantic_physical_object_type_event_source-phenomenal_name]]
+	  [terminal_format standard-terminal '\n  [physical_object_type_event-phenomenal_name this-source_type]=' [physical_object_type_event-phenomenal_name this-source_type]]
+	  [terminal_format standard-terminal '\n  semantic_physical_object_type_event_source-phenomenal_name='    semantic_physical_object_type_event_source-phenomenal_name]
+	  [if [not [eq [physical_object_type_event-phenomenal_name this-source_type] semantic_physical_object_type_event_source-phenomenal_name]]
 	      [= matches nil]]]]
     [if matches
-	[prog [if [not [eq this-source_property `?]]
+	[prog [terminal_format standard-terminal '\n  this-source_property='       this-source_property]
+	      [terminal_format standard-terminal '\n  this-source_property_value=' this-source_property_value]
+	      [if [not [eq this-source_property `?]]
 		  [if [not [eq this-source_property_value `?]]
 		      [if [not [have semantic_physical_object_type_event_source lookup_set_contains `property this-source_property this-source_property_value]]
 			  [= matches nil]]]]
 	      [if matches
-		  [prog [if [not [eq this-key_type `?]]
+		  [prog [terminal_format standard-terminal '\n  this-key_type=' this-key_type]
+			[terminal_format standard-terminal '\n  key_type='      key_type]
+			[if [not [eq this-key_type `?]]
 			    [if [not [eq this-key_type key_type]]
 				[= matches nil]]]
 			[if matches
-			    [prog [if [not [eq this-key `?]]
+			    [prog [terminal_format standard-terminal '\n  this-key=' this-key]
+				  [terminal_format standard-terminal '\n  key='      key]
+				  [if [not [eq this-key `?]]
 				      [if [not [eq this-key key]]
 					  [= matches nil]]]
 				  [if matches
-				      [prog [if [not [eq this-target_type `?]]
+				      [prog [terminal_format standard-terminal '\n  this-target_type=' this-target_type]
+					    [if [not [eq this-target_type `?]]
 						[let [[semantic_physical_object_type_event_target-phenomenal_name [get semantic_physical_object_type_event_target phenomenal_name]]]
-						  [if [not [eq this-target_type semantic_physical_object_type_event_target-phenomenal_name]]
+						  [if [not [eq [physical_object_type_event-phenomenal_name this-target_type] semantic_physical_object_type_event_target-phenomenal_name]]
 						      [= matches nil]]]]
 					    [if matches
-						[prog [if [not [eq this-target_property `?]]
+						[prog [terminal_format standard-terminal '\n  [physical_object_type_event-phenomenal_name this-target_type]=' [physical_object_type_event-phenomenal_name this-target_type]]
+						      [terminal_format standard-terminal '\n  semantic_physical_object_type_event_target-phenomenal_name='    semantic_physical_object_type_event_target-phenomenal_name]
+						      [if [not [eq this-target_property `?]]
 							  [if [not [eq this-target_property_value `?]]
 							      [if [not [have semantic_physical_object_type_event_target lookup_set_contains `property this-target_property this-target_property_value]]
 								  [= matches nil]]]]]]]]]]]]]]
+    [terminal_format standard-terminal '\n  matches=' matches]
     matches]]
 
 
@@ -250,7 +265,7 @@
     [= semantic_physical_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
     [if [null semantic_physical_object_type_event]
 	[prog [= semantic_physical_object_type_event [new semantic_physical_object_type_event [get [get this mind] semantic_realm]
-							  [get [format nil phenomenal_name '_type_event'] as-symbol]
+							  [physical_object_type_event-phenomenal_name phenomenal_name]
 							  phenomenal_name]]
 	      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame semantic_physical_object_type_event]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object_type_event]

@@ -37,7 +37,8 @@
 						       this-source_type_event_phenomenal_name
 						       this-target_type_event_phenomenal_name
 						       
-						       phenomenal_name]
+						       phenomenal_name
+						       event_phenomenal_name]
   [new [initial-mind
 	initial-source_type
 	initial-source_property
@@ -61,10 +62,14 @@
        [= this-source_type_event_phenomenal_name [get this __source_type_event_phenomenal_name]]
        [= this-target_type_event_phenomenal_name [get this __target_type_event_phenomenal_name]]
        [= phenomenal_name                        [get this __phenomenal_name]]
+       [= event_phenomenal_name                  [get this __event_phenomenal_name]]
        ]]
 
 [deftypefunk physical_type_property_relation_goal get __phenomenal_name []
-  [get [format nil [have [get this as-declarative_string] replace_all ' ' '_'] '_goal_event'] as-symbol]]
+  [get [format nil [have [get this as-declarative_string] replace_all ' ' '_'] '_goal'] as-symbol]]
+
+[deftypefunk physical_type_property_relation_goal get __event_phenomenal_name []
+  [get [format nil [get this __phenomenal_name] '_event'] as-symbol]]
 
 [defunk physical_type_property_relation_goal-object_phrase [object_type object_property object_property_value]
   [if [eq object_property_value t]
@@ -144,7 +149,7 @@
 	   key
 	   semantic_physical_object_type_event_target]
       [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_string] '.']
-	    [let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] phenomenal_name nil]]]
+	    [let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
 	      [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
 	      [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] add_semantic_frame semantic_goal_event]
 	      ]]]]

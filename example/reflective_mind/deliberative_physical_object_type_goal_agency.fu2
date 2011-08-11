@@ -69,8 +69,10 @@
 									  key
 									  semantic_physical_object_type_event_target]
   [let [[matches t]]
+    [terminal_format standard-terminal '\nthis-source_type=' this-source_type]
     [if [not [eq this-source_type `?]]
 	[let [[semantic_physical_object_type_event_source-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]]]
+	  [terminal_format standard-terminal '\nsemantic_physical_object_type_event_source-phenomenal_name=' semantic_physical_object_type_event_source-phenomenal_name]
 	  [if [not [eq this-source_type semantic_physical_object_type_event_source-phenomenal_name]]
 	      [= matches nil]]]]
     [if matches

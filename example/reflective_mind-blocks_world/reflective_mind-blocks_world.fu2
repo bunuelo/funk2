@@ -77,11 +77,11 @@
   
   'create blocks_world agent specific plans'
   
-  [have-apply this create_physical_plan `[prog [wait-to-activate move_right]
-					       [wait-until block color red preposition below gripper is-me t]
-					       [wait-to-activate grab]
-					       [wait-until gripper is-me t preposition movement_command stop]
-					       ]]
+  [have this create_physical_plan `[prog [wait-to-activate move_right]
+					 [wait-until block color red preposition below gripper is-me t]
+					 [wait-to-activate grab]
+					 [wait-until gripper is-me t preposition movement_command stop]
+					 ]]
   
   nil]
 

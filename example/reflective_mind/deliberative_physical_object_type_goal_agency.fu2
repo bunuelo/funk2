@@ -73,29 +73,34 @@
 [deftypefunk physical_type_property_relation_goal get __event_phenomenal_name []
   [get [format nil [get this __phenomenal_name] '_event'] as-symbol]]
 
-[defunk physical_type_property_relation_goal-object_phrase [object_type object_property object_property_value]
+[defunk physical_type_property_relation_goal-english_conslist [object_type object_property object_property_value]
   [if [eq object_property_value t]
-      [format nil 'a ' object_type ' that ' object_property]
-    [format nil 'a ' object_property_value ' ' object_property ' ' object_type]]]
+      `[a ,object_type that ,object_property]
+    `[a ,object_property_value ,object_property ,object_type]]]
+
+[deftypefunk physical_type_property_relation_goal get as-english_conslist []
+  [append `[I want]
+	  [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  `[to be]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
 
 [deftypefunk physical_type_property_relation_goal get as-string []
-  [have [format nil
-		'I want '
-		[physical_type_property_relation_goal-object_phrase this-source_type this-source_property this-source_property_value]
-		' to be ' this-key ' '
-		[physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]] replace_all '-' ' ']]
+  [have [have [get [get this as-english_conslist] as-string] replace_all
+	      '-' ' '] replace_all
+	      '_' ' ']]
 
-[deftypefunk physical_type_property_relation_goal get as-declarative_string []
-  [have [format nil
-		[physical_type_property_relation_goal-object_phrase this-source_type this-source_property this-source_property_value]
-		' is ' this-key ' '
-		[physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]] replace_all '-' ' ']]
+[deftypefunk physical_type_property_relation_goal get as-declarative_english_conslist []
+  [append [physical_type_property_relation_goal-english_conlist this-source_type this-source_property this-source_property_value]
+	  `[is]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
 
-[deftypefunk physical_type_property_relation_goal get as-negative_declarative_string []
-  [have [format nil
-		[physical_type_property_relation_goal-object_phrase this-source_type this-source_property this-source_property_value]
-		' is not ' this-key ' '
-		[physical_type_property_relation_goal-object_phrase this-target_type this-target_property this-target_property_value]] replace_all '-' ' ']]
+[deftypefunk physical_type_property_relation_goal get as-negative_declarative_english_conslist []
+  [append [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  `[is not]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
 
 [defunk physical_object_type_event-phenomenal_name [physical_object-phenomenal_name]
   [get [format nil physical_object-phenomenal_name '_type_event'] as-symbol]]
@@ -151,7 +156,7 @@
 	       key_type
 	       key
 	       semantic_physical_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_string] '.']
+	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_english_conslist]]
 		[let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
 		  [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
 		  [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] add_semantic_frame semantic_goal_event]
@@ -170,7 +175,7 @@
 	       key_type
 	       key
 	       semantic_physical_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declarative_string] '.']
+	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declarative_english_conslist]]
 		[let [[semantic_goal_event current_goal_event]]
 		  [set semantic_goal_event absolute_end_time [new semantic_time event_time]]
 		  [= current_goal_event nil]

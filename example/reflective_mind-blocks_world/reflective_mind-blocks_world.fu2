@@ -41,18 +41,18 @@
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
   
   'create blocks_world agent specific learning goals in parallel'
-  [have this create_physical_type_relationship_goal `gripper `preposition `is-holding `block]
-  [have this create_physical_type_relationship_goal `block   `preposition `below      `gripper]
-  [have this create_physical_type_relationship_goal `block   `preposition `on         `block]
-  [have this create_physical_type_relationship_goal `block   `preposition `left-of    `gripper]
-  [have this create_physical_type_relationship_goal `block   `preposition `right-of   `gripper]
-  
-  [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition below gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color green preposition below gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition below gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color brown preposition below gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color white preposition below gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color black preposition below gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition below    gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition right-of gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition left-of  gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color green preposition below    gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color green preposition right-of gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color green preposition left-of  gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition below    gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition right-of gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition left-of  gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color brown preposition below    gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color brown preposition right-of gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color brown preposition left-of  gripper is-me t]]
   
   nil]
 

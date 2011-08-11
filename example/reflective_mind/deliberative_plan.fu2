@@ -130,12 +130,15 @@
 																   ,,target_property
 																   ,,target_property_value]]
 												    ]]]]]
-					      [t                                   [error bug_name `deliberative_plan_compile_error]]]]]]
+					      [t                                   [let []
+										     [print `[action ,command ,:args ,arguments]]
+										     ]]]]]]
 	[t                          [error bug_name `deliberative_plan_compile_error]]]]
 
 [deftypefunk deliberative_plan get __compiled_funk []
   [deliberative_plan-expression-compile expression]]
 
 [deftypefunk deliberative_plan execute eval []
+  [terminal_format standard-terminal '\ncompiled_funk-body: ' [get [get this compiled_funk] body]]
   [funkall [get this compiled_funk] this]]
 

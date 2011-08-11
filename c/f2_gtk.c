@@ -1115,7 +1115,7 @@ GtkTextBuffer* funk2_gtk__text_view__get_buffer(funk2_gtk_t* this, GtkWidget* te
   return buffer;
 }
 
-void funk2_gtk__text_view__set_wrap_mode(funk2_gtk_t* this, GtkWidget* text_view, GtkWrapMode* wrap_mode) {
+void funk2_gtk__text_view__set_wrap_mode(funk2_gtk_t* this, GtkWidget* text_view, GtkWrapMode wrap_mode) {
   {
     gdk_threads_enter();
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), wrap_mode);

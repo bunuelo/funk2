@@ -83,5 +83,23 @@
 					 [wait-for-property gripper property movement_command stop]
 					 ]]
   
+  [have this create_physical_plan `[prog [wait-to-activate move_left]
+					 [wait-for-relationship block color red preposition below gripper is-me t]
+					 [wait-to-activate grab]
+					 [wait-for-property gripper property movement_command stop]
+					 ]]
+  
+  [have this create_physical_plan `[prog [wait-to-activate move_right]
+					 [wait-for-relationship block color blue preposition below gripper is-me t]
+					 [wait-to-activate drop]
+					 [wait-for-property gripper property movement_command stop]
+					 ]]
+  
+  [have this create_physical_plan `[prog [wait-to-activate move_left]
+					 [wait-for-relationship block color blue preposition below gripper is-me t]
+					 [wait-to-activate drop]
+					 [wait-for-property gripper property movement_command stop]
+					 ]]
+  
   nil]
 

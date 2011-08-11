@@ -270,8 +270,14 @@
     [mapc [funk [exp]
 		[if first_time
 		    [= first_time nil]
-		  [= string [string-concat string ' ']]]
-		[= string [string-concat string [get exp as-string]]]]
+		  [if [not [or [eq `punctuation-period exp]
+			       [eq `punctuation-comma  exp]
+			       [eq `punctuation-colon  exp]]]
+		      [= string [string-concat string ' ']]]]
+		[= string [string-concat string [cond [[eq `punctuation-period exp] '.']
+						      [[eq `punctuation-comma  exp] ',']
+						      [[eq `punctuation-colon  exp] ':']
+						      [t                            [get exp as-string]]]]]]
 	  this]
     [have [have string replace_all
 		'-' ' '] replace_all

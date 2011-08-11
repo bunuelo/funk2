@@ -67,19 +67,6 @@
        [= event_phenomenal_name                  [get this __event_phenomenal_name]]
        ]]
 
-[defunk conslist-as-english_string [this]
-  [let [[string     '']
-	[first_time t]]
-    [mapc [funk [exp]
-		[if first_time
-		    [= first_time nil]
-		  [= string [string-concat string ' ']]]
-		[= string [string-concat string [get exp as-string]]]]
-	  this]
-    [have [have string replace_all
-		'-' ' '] replace_all
-		'_' ' ']]]
-
 [deftypefunk physical_type_property_relation_goal get __phenomenal_name []
   [get [format nil [have [get this as-declarative_string] replace_all ' ' '_'] '_goal'] as-symbol]]
 

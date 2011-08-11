@@ -264,6 +264,19 @@
 [deftypefunk resource get as-english_conslist []
   `[,name]]
 
+[defunk conslist-as-english_string [this]
+  [let [[string     '']
+	[first_time t]]
+    [mapc [funk [exp]
+		[if first_time
+		    [= first_time nil]
+		  [= string [string-concat string ' ']]]
+		[= string [string-concat string [get exp as-string]]]]
+	  this]
+    [have [have string replace_all
+		'-' ' '] replace_all
+		'_' ' ']]]
+
 [deftypefunk resource get as-string []
   [conslist-as-english_string [get this as-english_conslist]]]
 

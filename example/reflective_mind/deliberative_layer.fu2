@@ -20,7 +20,7 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[deliberative_actions nil]]
+[deframe deliberative_layer [mental_layer] [[physical_actions nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -54,9 +54,9 @@
 	target_type_property
 	target_type_property_value]]
 
-[deftypefunk deliberative_layer execute add_deliberative_action [action]
-  [terminal_format standard-terminal '\ndeliberative_layer adding deliberative action: ' [get action as-string] '.']
-  [= deliberative_actions [cons action deliberative_actions]]]
+[deftypefunk deliberative_layer execute add_physical_action [action]
+  [terminal_format standard-terminal '\ndeliberative_layer adding physical action: ' [get action as-string] '.']
+  [= physical_actions [cons action physical_actions]]]
 
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
@@ -65,7 +65,7 @@
 		     agency_name
 		     resource_name
 		     resource_arguments]]]
-    [have this add_deliberative_action action]]]
+    [have this add_physical_action action]]]
 
 
   

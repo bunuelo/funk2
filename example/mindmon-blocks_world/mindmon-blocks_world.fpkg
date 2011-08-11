@@ -26,8 +26,13 @@
   :packages [mindmon-blocks_world-core]
    :sources ['mindmon-blocks_world-builtin_reactive_activator.fu2']]
 
+[defpackage mindmon-blocks_world-deliberative_activator
+  :packages [mindmon-blocks_world-core]
+   :sources ['mindmon-blocks_world-deliberative_activator.fu2']]
+
 [defpackage mindmon-blocks_world
   :packages [mindmon-blocks_world-core
-	     mindmon-blocks_world-builtin_reactive_activator]
+	     mindmon-blocks_world-builtin_reactive_activator
+	     mindmon-blocks_world-deliberative_activator]
    :sources ['mindmon-blocks_world.fu2']]
 

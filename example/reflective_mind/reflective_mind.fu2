@@ -76,6 +76,10 @@
 [deftypefunk reflective_mind execute create_physical_plan [expression]
   [have [get this layer `deliberative] create_physical_plan expression]]
 
+[deftypefunk reflective_mind get physical_plans []
+  [get [get this layer `deliberative] physical_plans]]
+
+
 'pre-knowledge perception functions'
 
 [deftypefunk reflective_mind get perception []

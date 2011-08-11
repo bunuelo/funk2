@@ -66,6 +66,9 @@
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get plan as-string] '."']
   [= physical_plans [cons plan physical_plans]]]
 
+[deftypefunk deliberative_layer get physical_plans []
+  physical_plans]
+
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]
@@ -81,8 +84,6 @@
 		   expression]]]
     [have this add_physical_plan plan]]]
 
-
-  
 
 
 

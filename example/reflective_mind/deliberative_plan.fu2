@@ -28,6 +28,7 @@
        [= mind          initial-mind]
        [= expression    initial-expression]
        [= compiled_funk [get this __compiled_funk]]
+       [have this eval]
        ]]
 
 [defunk flatten_constree [expression]
@@ -95,7 +96,7 @@
 				      [let [[arguments-length [length arguments]]]
 					[cond [[eq `prog                  command] [eval `[funk [this]
 												@[mapcar [funk [argument]
-													       `[apply ,[deliberative_plan-expression-compile argument]]]
+													       `[funkall ,[deliberative_plan-expression-compile argument] this]]
 													 arguments]]]]
 					      [[eq `wait-to-activate      command] [let [[action_name [elt arguments 0]]]
 										     [eval `[funk [this]

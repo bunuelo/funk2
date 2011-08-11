@@ -134,9 +134,14 @@
   :packages [reflective_mind_core]
    :sources ['deliberative_execution_agency.fu2']]
 
+[defpackage physical_type_property_relation_goal
+  :packages [reflective_mind-core]
+   :sources ['physical_type_property_relation_goal.fu2']]
+
 [defpackage deliberative_physical_object_type_goal_agency
   :packages [reflective_mind_core
-	     semantic_goal_event]
+	     semantic_goal_event
+	     physical_type_property_relation_goal]
    :sources ['deliberative_physical_object_type_goal_agency.fu2']]
 
 

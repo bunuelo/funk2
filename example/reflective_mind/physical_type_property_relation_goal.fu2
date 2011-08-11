@@ -1,0 +1,201 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+
+'physical_type_property_relation_goal'
+
+[deframe physical_type_property_relation_goal [frame] [mind
+						       
+						       this-source_type
+	 					       this-source_property
+						       this-source_property_value
+						       this-key_type
+						       this-key
+						       this-target_type
+						       this-target_property
+						       this-target_property_value
+						       
+						       this-source_phenomenal_name
+						       this-target_phenomenal_name
+						       this-source_type_event_phenomenal_name
+						       this-target_type_event_phenomenal_name
+						       
+						       phenomenal_name
+						       event_phenomenal_name
+						       
+						       [current_goal_event nil]]
+  [new [initial-mind
+	initial-source_type
+	initial-source_property
+	initial-source_property_value
+	initial-key_type
+	initial-key
+	initial-target_type
+	initial-target_property
+	initial-target_property_value]
+       [= mind                                   initial-mind]
+       [= this-source_type                       initial-source_type]
+       [= this-source_property                   initial-source_property]
+       [= this-source_property_value             initial-source_property_value]
+       [= this-key_type                          initial-key_type]
+       [= this-key                               initial-key]
+       [= this-target_type                       initial-target_type]
+       [= this-target_property                   initial-target_property]
+       [= this-target_property_value             initial-target_property_value]
+       [= this-source_phenomenal_name            [get this __source_phenomenal_name]]
+       [= this-target_phenomenal_name            [get this __target_phenomenal_name]]
+       [= this-source_type_event_phenomenal_name [get this __source_type_event_phenomenal_name]]
+       [= this-target_type_event_phenomenal_name [get this __target_type_event_phenomenal_name]]
+       [= phenomenal_name                        [get this __phenomenal_name]]
+       [= event_phenomenal_name                  [get this __event_phenomenal_name]]
+       ]]
+
+[defunk conslist-as-english_string [this]
+  [let [[string     '']
+	[first_time t]]
+    [mapc [funk [exp]
+		[if first_time
+		    [= first_time nil]
+		  [= string [string-concat string ' ']]]
+		[= string [string-concat string [get exp as-string]]]]
+	  this]
+    [have [have string replace_all
+		'-' ' '] replace_all
+		'_' ' ']]]
+
+[deftypefunk physical_type_property_relation_goal get __phenomenal_name []
+  [get [format nil [have [get this as-declarative_string] replace_all ' ' '_'] '_goal'] as-symbol]]
+
+[deftypefunk physical_type_property_relation_goal get __event_phenomenal_name []
+  [get [format nil [get this __phenomenal_name] '_event'] as-symbol]]
+
+[defunk physical_type_property_relation_goal-english_conslist [object_type object_property object_property_value]
+  [if [eq object_property_value t]
+      `[a ,object_type that ,object_property]
+    `[a ,object_property_value ,object_property ,object_type]]]
+
+[deftypefunk physical_type_property_relation_goal get as-english_conslist []
+  [append `[I want]
+	  [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  `[to be]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+
+[deftypefunk physical_type_property_relation_goal get as-string []
+  [conslist-as-english_string [get this as-english_conslist]]]
+
+[deftypefunk physical_type_property_relation_goal get as-declarative_english_conslist []
+  [append [physical_type_property_relation_goal-english_conlist this-source_type this-source_property this-source_property_value]
+	  `[is]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+
+[deftypefunk physical_type_property_relation_goal get as-declarative_string []
+  [conslist-as-english_string [get this as-declarative_english_conslist]]]
+
+[deftypefunk physical_type_property_relation_goal get as-negative_declarative_english_conslist []
+  [append [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  `[is not]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+
+[deftypefunk physical_type_property_relation_goal get as-negative_declarative_string []
+  [conslist-as-english_string [get this as-negative_declarative_english_conslist]]]
+
+[defunk physical_object_type_event-phenomenal_name [physical_object-phenomenal_name]
+  [get [format nil physical_object-phenomenal_name '_type_event'] as-symbol]]
+
+[deftypefunk physical_type_property_relation_goal get __source_phenomenal_name []
+  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
+
+[deftypefunk physical_type_property_relation_goal get __target_phenomenal_name []
+  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
+
+[deftypefunk physical_type_property_relation_goal get __source_type_event_phenomenal_name []
+  [physical_object_type_event-phenomenal_name [get this __source_phenomenal_name]]]
+
+[deftypefunk physical_type_property_relation_goal get __target_type_event_phenomenal_name []
+  [physical_object_type_event-phenomenal_name [get this __target_phenomenal_name]]]
+
+[deftypefunk physical_type_property_relation_goal get matches_type_event [event_time
+									  semantic_physical_object_type_event_source
+									  key_type
+									  key
+									  semantic_physical_object_type_event_target]
+  [let [[matches t]]
+    [if [not [eq this-source_type `?]]
+	[let [[semantic_physical_object_type_event_source-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]]]
+	  [if [not [eq this-source_type_event_phenomenal_name semantic_physical_object_type_event_source-phenomenal_name]]
+	      [= matches nil]]]]
+    [if matches
+	[prog [if [not [eq this-key_type `?]]
+		  [if [not [eq this-key_type key_type]]
+		      [= matches nil]]]
+	      [if matches
+		  [prog [if [not [eq this-key `?]]
+			    [if [not [eq this-key key]]
+				[= matches nil]]]
+			[if matches
+			    [prog [if [not [eq this-target_type `?]]
+				      [let [[semantic_physical_object_type_event_target-phenomenal_name [get semantic_physical_object_type_event_target phenomenal_name]]]
+					[if [not [eq this-target_type_event_phenomenal_name semantic_physical_object_type_event_target-phenomenal_name]]
+					    [= matches nil]]]]]]]]]]
+    matches]]
+
+
+[deftypefunk physical_type_property_relation_goal execute add_type_event [event_time
+									  semantic_physical_object_type_event_source
+									  key_type
+									  key
+									  semantic_physical_object_type_event_target]
+  
+  [if [null current_goal_event]
+      [if [get this matches_type_event
+	       event_time
+	       semantic_physical_object_type_event_source
+	       key_type
+	       key
+	       semantic_physical_object_type_event_target]
+	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_english_conslist]]
+		[let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
+		  [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
+		  [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] add_semantic_frame semantic_goal_event]
+		  [= current_goal_event semantic_goal_event]
+		  ]]]]]
+
+[deftypefunk physical_type_property_relation_goal execute remove_type_event [event_time
+									     semantic_physical_object_type_event_source
+									     key_type
+									     key
+									     semantic_physical_object_type_event_target]
+  [if [not [null current_goal_event]]
+      [if [get this matches_type_event
+	       event_time
+	       semantic_physical_object_type_event_source
+	       key_type
+	       key
+	       semantic_physical_object_type_event_target]
+	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declarative_english_conslist]]
+		[let [[semantic_goal_event current_goal_event]]
+		  [set semantic_goal_event absolute_end_time [new semantic_time event_time]]
+		  [= current_goal_event nil]
+		  ]]]]]
+
+

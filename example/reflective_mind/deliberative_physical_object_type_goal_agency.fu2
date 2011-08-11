@@ -77,8 +77,7 @@
 									  key_type
 									  key
 									  semantic_physical_object_type_event_target]
-  [let [[matches                     t]
-	[this-source_phenomenal_name ]]
+  [let [[matches t]]
     [terminal_format standard-terminal '\nchecking physical_type_property_relation_goal']
     [if [not [eq this-source_type `?]]
 	[let [[semantic_physical_object_type_event_source-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]]]

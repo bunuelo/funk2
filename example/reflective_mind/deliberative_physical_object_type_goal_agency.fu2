@@ -38,7 +38,9 @@
 						       this-target_type_event_phenomenal_name
 						       
 						       phenomenal_name
-						       event_phenomenal_name]
+						       event_phenomenal_name
+						       
+						       [current_goal_event nil]]
   [new [initial-mind
 	initial-source_type
 	initial-source_property
@@ -142,34 +144,38 @@
 									  key
 									  semantic_physical_object_type_event_target]
   
-  [if [get this matches_type_event
-	   event_time
-	   semantic_physical_object_type_event_source
-	   key_type
-	   key
-	   semantic_physical_object_type_event_target]
-      [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_string] '.']
-	    [let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
-	      [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
-	      [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] add_semantic_frame semantic_goal_event]
-	      ]]]]
+  [if [null current_goal_event]
+      [if [get this matches_type_event
+	       event_time
+	       semantic_physical_object_type_event_source
+	       key_type
+	       key
+	       semantic_physical_object_type_event_target]
+	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_string] '.']
+		[let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
+		  [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
+		  [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] add_semantic_frame semantic_goal_event]
+		  [= current_goal_event semantic_goal_event]
+		  ]]]]]
 
 [deftypefunk physical_type_property_relation_goal execute remove_type_event [event_time
 									     semantic_physical_object_type_event_source
 									     key_type
 									     key
 									     semantic_physical_object_type_event_target]
-  [if [get this matches_type_event
-	   event_time
-	   semantic_physical_object_type_event_source
-	   key_type
-	   key
-	   semantic_physical_object_type_event_target]
-      [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declarative_string] '.']
-	    
-	    `[get [get this mind] semantic_knowledge_base `physical_goal_knowledge]
-	    
-	    ]]]
+  [if [not [null current_goal_event]]
+      [if [get this matches_type_event
+	       event_time
+	       semantic_physical_object_type_event_source
+	       key_type
+	       key
+	       semantic_physical_object_type_event_target]
+	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declarative_string] '.']
+		[let [[semantic_goal_event current_goal_event]]
+		  [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] remove_semantic_frame semantic_goal_event]
+		  [set semantic_goal_event absolute_end_time [new semantic_time event_time]]
+		  [= current_goal_event nil]
+		  ]]]]]
 
 
 'deliberative_physical_object_type_goal_agency'

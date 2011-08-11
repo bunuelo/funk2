@@ -80,7 +80,7 @@
   [get [format nil phenomenal_name '_' property_key '_' property '_' property_value] as-symbol]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_goal [goal]
-  [terminal_format standard-terminal '\ndeliberative_layer: adding goal, "' [get goal as-string] '."']
+  [terminal_format standard-terminal '\ndeliberative_layer: adding physical goal, "' [get goal as-string] '."']
   [= goals [cons goal goals]]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_to_goal_states [event_time

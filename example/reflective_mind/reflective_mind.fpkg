@@ -135,7 +135,8 @@
    :sources ['deliberative_execution_agency.fu2']]
 
 [defpackage deliberative_physical_object_type_goal_agency
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     semantic_goal_event]
    :sources ['deliberative_physical_object_type_goal_agency.fu2']]
 
 

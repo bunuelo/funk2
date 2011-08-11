@@ -26,7 +26,6 @@
   [new [initial-mind initial-expression]
        [= mind       initial-mind]
        [= expression initial-expression]
-       [terminal_format standard-terminal '\ndeliberative_plan: ' expression]
        ]]
 
 [defunk flatten_constree [expression]

@@ -73,7 +73,6 @@
     [have this add_physical_action action]]]
 
 [deftypefunk deliberative_layer execute create_physical_plan [expression]
-  [terminal_format standard-terminal '\ndeliberative_layer: ' expression]
   [let [[plan [new deliberative_plan 
 		   [get this mind]
 		   expression]]]

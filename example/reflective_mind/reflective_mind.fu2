@@ -74,7 +74,6 @@
   [have-apply [get this layer `deliberative] create_physical_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
 [deftypefunk reflective_mind execute create_physical_plan [expression]
-  [terminal_format standard-terminal '\nreflective_mind: ' expression]
   [have [get this layer `deliberative] create_physical_plan expression]]
 
 'pre-knowledge perception functions'

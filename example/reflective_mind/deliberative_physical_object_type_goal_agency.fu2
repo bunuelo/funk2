@@ -67,10 +67,10 @@
   [get [format nil physical_object-phenomenal_name '_type_event'] as-symbol]]
 
 [deftypefunk physical_type_property_relation_goal get source_phenomenal_name []
-  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name this-source-type `property this-source_property_value]]
+  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
 
 [deftypefunk physical_type_property_relation_goal get target_phenomenal_name []
-  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name this-source-type `property this-source_property_value]]
+  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
 
 [deftypefunk physical_type_property_relation_goal get matches_type_event [event_time
 									  semantic_physical_object_type_event_source

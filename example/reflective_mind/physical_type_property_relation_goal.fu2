@@ -78,6 +78,9 @@
       `[a ,object_type that ,object_property]
     `[a ,object_property_value ,object_property ,object_type]]]
 
+[defunk physical_type_property_relation_goal-english_string [object_type object_property object_property_value]
+  [conslist-as-english_string [physical_type_property_relation_goal-english_conslist object_type object_property object_property_value]]]
+
 [deftypefunk physical_type_property_relation_goal get as-english_conslist []
   [append `[I want]
 	  [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]

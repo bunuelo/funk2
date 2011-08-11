@@ -68,8 +68,7 @@
   [have-apply this create_physical_action `[builtin_reactive physical move_right]]
   [have-apply this create_physical_action `[builtin_reactive physical grab]]
   [have-apply this create_physical_action `[builtin_reactive physical drop]]
-  [have-apply this create_physical_action `[builtin_reactive physical stop]]
-  
+  [have-apply this create_physical_action `[builtin_reactive physical stop]] 
   nil]
 
 [deftypefunk blocks_world_reflective_mind execute create_builtin_plans []
@@ -77,27 +76,27 @@
   
   'create blocks_world agent specific plans'
   
-  [have this create_physical_plan `[prog [wait-to-activate move_right]
-					 [wait-for-relationship block color red preposition below gripper is-me t]
-					 [wait-to-activate grab]
-					 [wait-for-property gripper property movement_command stop]
+  [have this create_physical_plan `[prog [wait-to-call move_right]
+					 [wait-for-relationship block color red below gripper is-me t]
+					 [wait-to-call grab]
+					 [wait-for-property gripper movement_command stop]
 					 ]]
   
-  [have this create_physical_plan `[prog [wait-to-activate move_left]
-					 [wait-for-relationship block color red preposition below gripper is-me t]
-					 [wait-to-activate grab]
-					 [wait-for-property gripper property movement_command stop]
+  [have this create_physical_plan `[prog [wait-to-call move_left]
+					 [wait-for-relationship block color red below gripper is-me t]
+					 [wait-to-call grab]
+					 [wait-for-property gripper movement_command stop]
 					 ]]
   
-  [have this create_physical_plan `[prog [wait-to-activate move_right]
-					 [wait-for-relationship block color blue preposition below gripper is-me t]
-					 [wait-to-activate drop]
-					 [wait-for-property gripper property movement_command stop]
+  [have this create_physical_plan `[prog [wait-to-call move_right]
+					 [wait-for-relationship block color blue below gripper is-me t]
+					 [wait-to-call drop]
+					 [wait-for-property gripper movement_command stop]
 					 ]]
   
-  [have this create_physical_plan `[prog [wait-to-activate move_left]
-					 [wait-for-relationship block color blue preposition below gripper is-me t]
-					 [wait-to-activate drop]
+  [have this create_physical_plan `[prog [wait-to-call move_left]
+					 [wait-for-relationship block color blue below gripper is-me t]
+					 [wait-to-call drop]
 					 [wait-for-property gripper property movement_command stop]
 					 ]]
   

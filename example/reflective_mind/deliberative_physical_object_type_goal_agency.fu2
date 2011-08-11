@@ -105,33 +105,23 @@
 									  key
 									  semantic_physical_object_type_event_target]
   [let [[matches t]]
-    `[terminal_format standard-terminal '\nchecking physical_type_property_relation_goal']
     [if [not [eq this-source_type `?]]
 	[let [[semantic_physical_object_type_event_source-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]]]
-	  `[terminal_format standard-terminal '\n  this-source_type_event_phenomenal_name='                     this-source_type_event_phenomenal_name]
-	  `[terminal_format standard-terminal '\n  semantic_physical_object_type_event_source-phenomenal_name=' semantic_physical_object_type_event_source-phenomenal_name]
 	  [if [not [eq this-source_type_event_phenomenal_name semantic_physical_object_type_event_source-phenomenal_name]]
 	      [= matches nil]]]]
     [if matches
-	[prog `[terminal_format standard-terminal '\n  this-key_type=' this-key_type]
-	      `[terminal_format standard-terminal '\n  key_type='      key_type]
-	      [if [not [eq this-key_type `?]]
+	[prog [if [not [eq this-key_type `?]]
 		  [if [not [eq this-key_type key_type]]
 		      [= matches nil]]]
 	      [if matches
-		  [prog `[terminal_format standard-terminal '\n  this-key=' this-key]
-			`[terminal_format standard-terminal '\n  key='      key]
-			[if [not [eq this-key `?]]
+		  [prog [if [not [eq this-key `?]]
 			    [if [not [eq this-key key]]
 				[= matches nil]]]
 			[if matches
-			    [prog `[terminal_format standard-terminal '\n  this-target_type_event_phenomenal_name='                     this-target_type_event_phenomenal_name]
-				  `[terminal_format standard-terminal '\n  semantic_physical_object_type_event_target-phenomenal_name=' semantic_physical_object_type_event_target-phenomenal_name]
-				  [if [not [eq this-target_type `?]]
+			    [prog [if [not [eq this-target_type `?]]
 				      [let [[semantic_physical_object_type_event_target-phenomenal_name [get semantic_physical_object_type_event_target phenomenal_name]]]
 					[if [not [eq this-target_type_event_phenomenal_name semantic_physical_object_type_event_target-phenomenal_name]]
 					    [= matches nil]]]]]]]]]]
-    `[terminal_format standard-terminal '\n  matches=' matches]
     matches]]
 
 

@@ -20,7 +20,8 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[physical_actions nil]]
+[deframe deliberative_layer [mental_layer] [[physical_actions nil]
+					    [physical_plans   nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -58,6 +59,10 @@
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
   [= physical_actions [cons action physical_actions]]]
 
+[deftypefunk deliberative_layer execute add_physical_plan [plan]
+  [terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get plan as-string] '."']
+  [= physical_plans [cons action physical_plans]]]
+
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]
@@ -66,6 +71,12 @@
 		     resource_name
 		     resource_arguments]]]
     [have this add_physical_action action]]]
+
+[deftypefunk deliberative_layer execute create_physical_plan [expression]
+  [let [[action [new deliberative_plan 
+		     [get this mind]
+		     expression]]]
+    [have this add_physical_plan plan]]]
 
 
   

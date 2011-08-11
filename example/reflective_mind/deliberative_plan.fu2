@@ -22,29 +22,29 @@
 'deliberative_plan'
 
 [deframe deliberative_plan [frame] [mind
-				    phenomenal_name
-				    knowledge_base_name
-				    
-				    ]
-  [new [initial-mind initial-phenomenal_name]
-       [= mind                initial-mind]
-       [= phenomenal_name     initial-phenomenal_name]
-       [= knowledge_base_name [get this __knowledge_base_name]]
+				    expression]
+  [new [initial-mind initial-expression]
+       [= mind       initial-mind]
+       [= expression initial-expression]
        ]]
 
-[deftypefunk deliberative_plan get __knowledge_base_name []
-  [get [format nil phenomenal_name '_knowledge_base'] as-symbol]]
+[defunk deliberative_plan-expression-flat_english_conslist [expression]
+  [let [[result nil]]
+    [labels [[visit_leaves [exp]
+			   [if [is-type `cons exp]
+			       [mapc [funk [subexp]
+					   [visit_leaves subexp]]
+				     exp]
+			     [= result [cons exp result]]]]]
+	    [visit_leaves expression]]
+    [reverse result]]]
 
-[deftypefunk deliberative_plan get knowledge_base []
-  [get [get this mind] knowledge_base knowledge_base_name]]
+[deftypefunk deliberative_plan get as-english_conslist []
+  [deliberative_plan-expression-flat_english_conslist expression]]
 
-[deftypefunk deliberative_plan execute add_expression-cons [expression]
-  [let [[expression-car [car expression]]
-	[expression-cdr [cdr expression]]]
-    [
+[deftypefunk deliberative_plan get as-english_string []
+  [conslist-as-english_string [get this as-english_conslist]]]
 
-[deftypefunk deliberative_plan execute add_expression [expression]
-  [cond [[is-type `cons   expression] [have this add_expression-cons   expression]]
-	[t                            [error bug_name        could_recognize_expression_type
-					     expression-type [type expression]
-					     expression      expression]]]]
+[deftypefunk deliberative_plan get as-string []
+  [get this as-english_string]]
+

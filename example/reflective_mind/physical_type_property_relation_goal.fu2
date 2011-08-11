@@ -119,6 +119,24 @@
 [deftypefunk physical_type_property_relation_goal get as-negative_declarative_string []
   [conslist-as-english_string [get this as-negative_declarative_english_conslist]]]
 
+[deftypefunk physical_type_property_relation_goal get as-now_true_english_conslist []
+  [append [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  `[is now]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+
+[deftypefunk physical_type_property_relation_goal get as-now_true_string []
+  [conslist-as-english_string [get this as-now_true_english_conslist]]]
+
+[deftypefunk physical_type_property_relation_goal get as-no_longer_true_english_conslist []
+  [append [physical_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  `[is no longer]
+	  `[,this-key]
+	  [physical_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+
+[deftypefunk physical_type_property_relation_goal get as-no_longer_true_string []
+  [conslist-as-english_string [get this as-no_longer_true_english_conslist]]]
+
 [defunk physical_object_type_event-phenomenal_name [physical_object-phenomenal_name]
   [get [format nil physical_object-phenomenal_name '_type_event'] as-symbol]]
 
@@ -173,7 +191,7 @@
 	       key_type
 	       key
 	       semantic_physical_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-declarative_english_conslist]]
+	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-now_true_string]]
 		[let [[semantic_goal_event [new semantic_goal_event [get semantic_physical_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
 		  [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
 		  [have [get [get this mind] semantic_knowledge_base `physical_goal_knowledge] add_semantic_frame semantic_goal_event]
@@ -192,7 +210,7 @@
 	       key_type
 	       key
 	       semantic_physical_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-negative_declarative_english_conslist]]
+	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-no_longer_true_string]]
 		[let [[semantic_goal_event current_goal_event]]
 		  [set semantic_goal_event absolute_end_time [new semantic_time event_time]]
 		  [= current_goal_event nil]

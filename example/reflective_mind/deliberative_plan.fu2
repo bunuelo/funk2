@@ -102,7 +102,7 @@
 					      [[eq `wait-to-activate      command] [let [[action_name [elt arguments 0]]]
 										     [eval `[funk [this]
 												  [print [quote ,expression]]
-												  [print `[wait-to-activate ,,action_name]]]]]]
+												  [print [cons `wait-to-activate [cons [quote ,action_name] nil]]]]]]]
 					      [[eq `wait-for-property     command] [if [not [eq 4 arguments-length]]
 										       `[error punctuation-colon ,[flatten_constree expression]]
 										     [let [[source_type [elt arguments 0]]
@@ -111,7 +111,7 @@
 											   [value       [elt arguments 3]]]
 										       [eval `[funk [this]
 												    [print [quote ,expression]]
-												    [print `[wait-for-property ,,source_type ,,key_type ,,key ,,value]]
+												    [print [cons `wait-for-property [cons [quote ,source_type] [cons [quote ,key_type] [cons [quote ,key] [cons [quote ,value]]]]]]]
 												    ]]]]]
 					      [[eq `wait-for-relationship command] [if [not [eq 8 arguments-length]]
 										       `[error punctuation-colon ,[flatten_constree expression]]
@@ -125,14 +125,14 @@
 											   [target_property_value [elt arguments 7]]]
 										       [eval `[funk [this]
 												    [print [quote ,expression]]
-												    [print `[wait-for-relationship ,,source_type
-																   ,,source_property
-																   ,,source_property_value
-																   ,,key_type
-																   ,,key
-																   ,,target_type
-																   ,,target_property
-																   ,,target_property_value]]
+												    [print `[cons `wait-for-relationship [cons [quote ,source_type]
+																	       [cons [quote ,source_property]
+																		     [cons [quote ,source_property_value]
+																			   [cons [quote ,key_type]
+																				 [cons [quote ,key]
+																				       [cons [quote ,target_type]
+																					     [cons [quote ,target_property]
+																						   [cons [quote ,target_property_value]]]]]]]]]]]
 												    ]]]]]
 					      [t                                   [let []
 										     [eval `[funk [this]

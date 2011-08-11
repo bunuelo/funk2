@@ -97,7 +97,7 @@
   [have this create_physical_plan `[prog [wait-to-call move_left]
 					 [wait-for-relationship block color blue below gripper is-me t]
 					 [wait-to-call drop]
-					 [wait-for-property gripper property movement_command stop]
+					 [wait-for-property gripper movement_command stop]
 					 ]]
   
   nil]

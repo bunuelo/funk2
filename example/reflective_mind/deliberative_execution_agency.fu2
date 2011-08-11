@@ -17,14 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe monitor_execution_of_current_plan [traced_resource] []
-  [new []
-       [construct traced_resource [type this]
-		  [funk []
-			[have this-resource think_to_self 'Monitoring execution of current plan.']
-			nil]]
-       nil]]
 
+
+'deliberative_execution_agency'
 
 [deframe deliberative_execution_agency [agency] []
   [new []
@@ -33,5 +28,14 @@
        [have this add_resource [new monitor_execution_of_current_plan]]
        
        this]]
+
+
+[deframe monitor_execution_of_current_plan [traced_resource] []
+  [new []
+       [construct traced_resource [type this]
+		  [funk []
+			[have this-resource think_to_self 'Monitoring execution of current plan.']
+			nil]]
+       nil]]
 
 

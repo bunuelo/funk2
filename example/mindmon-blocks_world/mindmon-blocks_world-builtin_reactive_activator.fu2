@@ -35,6 +35,8 @@
 									 grab_resource__button
 									 drop_resource__hbox
 									 drop_resource__button
+									 stop_resource__hbox
+									 stop_resource__button
 									 ]
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
@@ -91,6 +93,15 @@
        [have drop_resource__button signal_connect 'clicked'
 	     [funk []
 		   [have this activate_resource `builtin_reactive `physical `drop]]
+	     nil]
+       
+       [= stop_resource__hbox [gtk-hbox-new 2]]
+       [= stop_resource__button [gtk-button-new_with_label 'Stop']]
+       [have stop_resource__hbox pack_start stop_resource__button nil nil 0]
+       [have vbox pack_start stop_resource__hbox nil nil 0]
+       [have stop_resource__button signal_connect 'clicked'
+	     [funk []
+		   [have this activate_resource `builtin_reactive `physical `stop]]
 	     nil]
        
        [have window add vbox]

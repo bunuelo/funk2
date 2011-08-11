@@ -33,7 +33,8 @@
   [parog [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_left_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_right_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-grab_resource]]
-	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]]
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]]
   
   nil]
 

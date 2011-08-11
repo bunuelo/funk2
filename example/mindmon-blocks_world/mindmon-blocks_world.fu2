@@ -175,6 +175,10 @@
   [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: drop.']
   [set [get mindmon_blocks_world_agent gripper] movement_command-drop]]
 
+[deftypefunk mindmon_blocks_world_agent_body execute stop []
+  [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: stop.']
+  [set [get mindmon_blocks_world_agent gripper] movement_command-stop]]
+
 
 'mindmon_blocks_world_agent'
 

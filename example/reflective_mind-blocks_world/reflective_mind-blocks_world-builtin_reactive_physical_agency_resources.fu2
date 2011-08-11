@@ -18,9 +18,62 @@
  rights to redistribute these changes.'
 
 
-[deframe reflective_mind-blocks_world-move_left_resource  [traced_resource] [] [new [] [construct traced_resource `move_left  [funk [] [have [get this body] move_left]]]]]
-[deframe reflective_mind-blocks_world-move_right_resource [traced_resource] [] [new [] [construct traced_resource `move_right [funk [] [have [get this body] move_right]]]]]
-[deframe reflective_mind-blocks_world-grab_resource       [traced_resource] [] [new [] [construct traced_resource `grab       [funk [] [have [get this body] grab]]]]]
-[deframe reflective_mind-blocks_world-drop_resource       [traced_resource] [] [new [] [construct traced_resource `drop       [funk [] [have [get this body] drop]]]]]
-[deframe reflective_mind-blocks_world-stop_resource       [traced_resource] [] [new [] [construct traced_resource `stop       [funk [] [have [get this body] stop]]]]]
+'reflective_mind-blocks_world-move_left_resource'
+
+[deframe reflective_mind-blocks_world-move_left_resource [traced_resource] []
+  [new []
+       [construct traced_resource `move_left
+		  [funk []
+			[have [get this body] move_left]]]]]
+
+[deftypefunk reflective_mind-blocks_world-move_left_resource get as-english_conslist []
+  `[move left]]
+
+
+'reflective_mind-blocks_world-move_right_resource'
+
+[deframe reflective_mind-blocks_world-move_right_resource [traced_resource] []
+  [new []
+       [construct traced_resource `move_right
+		  [funk []
+			[have [get this body] move_right]]]]]
+
+[deftypefunk reflective_mind-blocks_world-move_right_resource get as-english_conslist []
+  `[move right]]
+
+
+'reflective_mind-blocks_world-grab_resource'
+
+[deframe reflective_mind-blocks_world-grab_resource [traced_resource] []
+  [new [] [construct traced_resource `grab
+		     [funk []
+			   [have [get this body] grab]]]]]
+
+[deftypefunk reflective_mind-blocks_world-grab_resource get as-english_conslist []
+  `[grab]]
+
+
+'reflective_mind-blocks_world-drop_resource'
+
+[deframe reflective_mind-blocks_world-drop_resource [traced_resource] []
+  [new [] [construct traced_resource `drop
+		     [funk []
+			   [have [get this body] drop]]]]]
+
+[deftypefunk reflective_mind-blocks_world-drop_resource get as-english_conslist []
+  `[drop]]
+
+
+'reflective_mind-blocks_world-stop_resource'
+
+[deframe reflective_mind-blocks_world-stop_resource [traced_resource] []
+  [new []
+       [construct traced_resource `stop
+		  [funk []
+			[have [get this body] stop]]]]]
+
+[deftypefunk reflective_mind-blocks_world-stop_resource get as-english_conslist []
+  `[stop]]
+
+
 

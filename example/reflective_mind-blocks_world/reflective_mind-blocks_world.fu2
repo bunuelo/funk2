@@ -24,6 +24,7 @@
        
        [type-have blocks_world_reflective_mind this create_resources]
        [type-have blocks_world_reflective_mind this create_builtin_goals]
+       [type-have blocks_world_reflective_mind this create_builtin_actions]
        ]]
 
 [deftypefunk blocks_world_reflective_mind execute create_resources []
@@ -41,7 +42,7 @@
 [deftypefunk blocks_world_reflective_mind execute create_builtin_goals []
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
   
-  'create blocks_world agent specific learning goals in parallel'
+  'create blocks_world agent specific learning goals'
   [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition below    gripper is-me t]]
   [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition right-of gripper is-me t]]
   [have-apply this create_physical_type_property_relationship_goal `[block color red   preposition left-of  gripper is-me t]]
@@ -57,3 +58,15 @@
   
   nil]
 
+[deftypefunk blocks_world_reflective_mind execute create_builtin_actions []
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in actions.']
+  
+  'create blocks_world agent specific actions'
+  
+  [have-apply this create_physical_action `[builtin_reactive physical move_left]]
+  [have-apply this create_physical_action `[builtin_reactive physical move_right]]
+  [have-apply this create_physical_action `[builtin_reactive physical grab]]
+  [have-apply this create_physical_action `[builtin_reactive physical drop]]
+  [have-apply this create_physical_action `[builtin_reactive physical stop]]
+  
+  nil]

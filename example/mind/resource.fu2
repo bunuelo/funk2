@@ -261,4 +261,10 @@
 	      [set resource_semantic_frame phenomenal_name [get this name]]]]
     resource_semantic_frame]]
 
+[deftypefunk resource get as-english_conslist []
+  `[,name]]
+
+[deftypefunk resource get as-string []
+  [conslist-as-english_string [get this as-english_conslist]]]
+
 

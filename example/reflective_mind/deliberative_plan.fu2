@@ -101,7 +101,7 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [sleep 5]]]]]]
+	    [sleep 30]]]]]]
 
 [deftypefunk deliberative_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [let [[looking_for_event-phenomenal_name [translate_physical_knowledge_to_physical_type_knowledge_resource-type_property_relation-phenomenal_name source_type
@@ -125,7 +125,7 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [sleep 5]]]]]]
+	    [sleep 30]]]]]]
 
 [defunk deliberative_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]

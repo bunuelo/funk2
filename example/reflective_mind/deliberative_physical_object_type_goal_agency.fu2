@@ -164,19 +164,50 @@
 							    semantic_physical_object_type_events]]]]]
     semantic_physical_object_type_events]]
 
+[defunk translate_physical_knowledge_to_physical_type_knowledge_resource-type_relation-phenomenal_name [source_type_event-phenomenal_name key_type key target_type_event-phenomenal_name]
+  [get [string-concat [get source_type_event-phenomenal_name as-string]
+		      '_'
+		      [get key_type as-string]
+		      '_'
+		      [get key as-string]
+		      '_'
+		      [get target_type_event-phenomenal_name as-string]
+		      '_physical_object_type_relation']
+       as-symbol]]
+
+[defunk translate_physical_knowledge_to_physical_type_knowledge_resource-type_property_relation-phenomenal_name [source_phenomenal_name
+														 source_property_key
+														 source_property
+														 source_property_value
+														 key_type
+														 key
+														 target_phenomenal_name
+														 target_property_key
+														 target_property
+														 target_property_value]
+  
+  [translate_physical_knowledge_to_physical_type_knowledge_resource-type_relation-phenomenal_name [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name source_phenomenal_name
+																											source_property_key
+																											source_property
+																											source_property_value]
+												  key_type
+												  key
+												  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name target_phenomenal_name
+																											target_property_key
+																											target_property
+																											target_property_value]]]
+
+
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_relation [event_time semantic_physical_object_type_event_source key_type key semantic_physical_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nadd_type_relation ' [get semantic_physical_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_physical_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_physical_object_type_event_source lookup_set compound_key [get semantic_physical_object_type_event_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
-	  [let [[relation-phenomenal_name   [get [string-concat [get [get semantic_physical_object_type_event_source phenomenal_name] as-string]
-								'_'
-								[get compound_key as-string]
-								'_'
-								[get [get semantic_physical_object_type_event_target phenomenal_name] as-string]
-								'_physical_object_type_relation']
-						 as-symbol]]
+	  [let [[relation-phenomenal_name   [translate_physical_knowledge_to_physical_type_knowledge_resource-type_relation-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]
+																	    key_type
+																	    key
+																	    [get semantic_physical_object_type_event_target phenomenal_name]]]
 		[relation-meta_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 						  semantic_physical_object_type_event_source
 						  key_type

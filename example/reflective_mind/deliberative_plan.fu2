@@ -89,18 +89,43 @@
   [get this as-english_string]]
 
 [deftypefunk deliberative_plan execute wait_for_property [source_type key value]
-  [let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
-    [mapc [funk [current_event]
-		[terminal_format standard-terminal 'wait_for_property: current_event, ' current_event '.']]
-	  current_events]
-    ]]
+  [let [[looking_for_event-phenomenal_name [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name source_type `property key value]]]
+    [terminal_format standard-terminal '\nwaiting for property: looking for event, ' looking_for_event-phenomenal_name '.']
+    [let [[done nil]]
+      [while [not done]
+	[let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
+	  [mapc [funk [current_event]
+		      [terminal_format standard-terminal '\nwaiting for property: current_event, ' [get current_event phenomenal_name] '.']
+		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
+			  [prog [terminal_format standard-terminal '\nwait_for_property: done waiting!']
+				[= done t]]]]
+		current_events]]
+	[if [not done]
+	    [sleep 1]]]]]]
 
 [deftypefunk deliberative_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
-  [let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
-    [mapc [funk [current_event]
-		[terminal_format standard-terminal 'wait_for_relationship: current_event, ' current_event '.']]
-	  current_events]
-    ]]
+  [let [[looking_for_event-phenomenal_name [translate_physical_knowledge_to_physical_type_knowledge_resource-type_property_relation-phenomenal_name source_type
+																		    `property
+																		    source_property
+																		    source_property_value
+																		    key_type
+																		    key
+																		    target_type
+																		    `property
+																		    target_property
+																		    target_property_value]]]
+    [terminal_format standard-terminal '\nwaiting for relationship: looking for event, ' looking_for_event-phenomenal_name '.']
+    [let [[done nil]]
+      [while [not done]
+	[let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
+	  [mapc [funk [current_event]
+		      [terminal_format standard-terminal '\nwaiting for relationship: current_event, ' [get current_event phenomenal_name] '.']
+		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
+			  [prog [terminal_format standard-terminal '\nwait_for_relationship: done waiting!']
+				[= done t]]]]
+		current_events]]
+	[if [not done]
+	    [sleep 1]]]]]]
 
 [defunk deliberative_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]

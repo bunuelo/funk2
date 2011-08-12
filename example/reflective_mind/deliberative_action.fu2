@@ -51,7 +51,7 @@
   [get this as-english_string]]
 
 [deftypefunk deliberative_action execute wait_to_call []
-  [have-apply [get this mind] wait_to_call layer_name agency_name resource_name resource_arguments]]
+  [have-apply [get this mind] wait_to_call `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
 
 

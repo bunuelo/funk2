@@ -48,7 +48,7 @@
        [have file_menu append file_exit_menu_item]
        [set file_menu_item submenu file_menu]
        [have vbox pack_start menu_bar nil nil 0]
-        
+       
        [mapc [funk [action]
 		   [let [[action__hbox   [gtk-hbox-new 2]]
 			 [action__button [gtk-button-new_with_label [get action as-string]]]]

@@ -30,11 +30,11 @@
        this]]
 
 [deftypefunk deliberative_layer execute create_knowledge []
-  [have [get this agency `execution]                 create_knowledge]
+  [have [get this agency `plan]                      create_knowledge]
   [have [get this agency `physical_object_type_goal] create_knowledge]]
 
 [deftypefunk deliberative_layer execute connect_knowledge_reflection []
-  [have [get this agency `execution]                 connect_knowledge_reflection]
+  [have [get this agency `plan]                      connect_knowledge_reflection]
   [have [get this agency `physical_object_type_goal] connect_knowledge_reflection]]
 
 [deftypefunk deliberative_layer execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]

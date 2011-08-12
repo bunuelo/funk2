@@ -30,7 +30,7 @@
        [= mindmon_blocks_world_deliberative_plan_activator_window initial-mindmon_blocks_world_deliberative_plan_activator_window]
        [= semantic_plan                                           initial-semantic_plan]
        
-       [= plan_frame  [gtk-frame-new 'Physical Plan']]
+       [= plan_frame  [gtk-frame-new 'Deliberative Plan']]
        [= vbox        [gtk-vbox-new 0]]
        [have plan_frame add vbox]
        

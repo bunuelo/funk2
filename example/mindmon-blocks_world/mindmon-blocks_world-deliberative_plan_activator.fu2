@@ -19,16 +19,16 @@
 
 
 [deframe mindmon_blocks_world_deliberative_plan_activator_plan [frame] [mindmon_blocks_world_deliberative_plan_activator_window
-								   semantic_plan
-								   
-								   plan_frame
-								   vbox
-								   button_hbox
-								   execute_button
-								   description_text_view]
+									semantic_plan
+									
+									plan_frame
+									vbox
+									button_hbox
+									execute_button
+									description_text_view]
   [new [initial-mindmon_blocks_world_deliberative_plan_activator_window initial-semantic_plan]
        [= mindmon_blocks_world_deliberative_plan_activator_window initial-mindmon_blocks_world_deliberative_plan_activator_window]
-       [= semantic_plan                                      initial-semantic_plan]
+       [= semantic_plan                                           initial-semantic_plan]
        
        [= plan_frame  [gtk-frame-new 'Physical Plan']]
        [= vbox        [gtk-vbox-new 0]]
@@ -60,15 +60,15 @@
 
 
 [deframe mindmon_blocks_world_deliberative_plan_activator_window [frame] [mindmon_agent
-								     
-								     window
-								     vbox
-								     menu_bar
-								     file_menu_item
-								     file_menu
-								     file_exit_menu_item
-								     
-								     ]
+									  
+									  window
+									  vbox
+									  menu_bar
+									  file_menu_item
+									  file_menu
+									  file_exit_menu_item
+									  
+									  ]
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]

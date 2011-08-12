@@ -42,9 +42,16 @@
        [= button_hbox [gtk-hbox-new 0]]
        [have vbox pack_start button_hbox nil nil 0]
        
-       [= execute_button    [gtk-button-new_with_label 'Execute']]
+       [= execute_button [gtk-button-new_with_label 'Execute']]
        [have button_hbox pack_start execute_button nil nil 0]
        [have button_hbox request_size 320 24]
+       
+       [have execute_button signal_connect 'clicked'
+	     [funk []
+		   [fiber [funk [] [terminal_format standard-terminal '\nmindmon_blocks_world_deliberative_activator_plan: executing "' [get plan as-string] '."']] nil]
+		   [have [get [get mindmon_blocks_world_deliberative_activator_window mindmon_agent] mind] activate `deliberative `execution `execute_plan plan]
+		   ]
+	     nil]
        
        ]]
 

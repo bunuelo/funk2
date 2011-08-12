@@ -32,7 +32,7 @@
 
 [deframe deliberative_execute_plan_resource [traced_resource] []
   [new []
-       [construct traced_resource [type this]
+       [construct traced_resource `execute_plan
 		  [funk [plan]
 			[terminal_format standard-terminal 'deliberative_layer: executing plan.']
 			

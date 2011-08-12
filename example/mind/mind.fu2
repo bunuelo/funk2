@@ -26,7 +26,9 @@
 		       knowledge_event_stream_iterator_frame
 		       global_semantic_realm
 		       semantic_knowledge_base_ptypehash
-		       semantic_knowledge_base_add_event_callback_funks]
+		       semantic_knowledge_base_add_event_callback_funks
+		       [index_name_type_mutex     [new mutex]]
+		       [index_name_type_ptypehash [new ptypehash]]]
   [new []
        [terminal_format standard-terminal '\ncreating mind.']
        [cause-define semantic_frame-trace_add                            t]
@@ -38,6 +40,24 @@
        [= semantic_knowledge_base_ptypehash                [new ptypehash]]
        [= semantic_knowledge_base_add_event_callback_funks nil]
        this]]
+
+[deftypefunk mind get name_type_index [name_type]
+  [let [[result [have index_name_type_ptypehash lookup name_type]]]
+    [if [null result]
+	[prog [= result 1]
+	      [have index_name_type_ptypehash add name_type result]]]
+    result]]
+
+[deftypefunk mind set name_type_index [name_type index]
+  [have index_name_type_ptypehash add name_type index]]
+
+[deftypefunk mind get new-name [name_type]
+  [have index_name_type_mutex lock]
+  [let [[index [get this name_type_index name_type]]]
+    [set this name_type_index name_type [+ 1 index]]
+    [have index_name_type_mutex unlock]
+    [get [string-concat [get name_type as-string] '-' [get index as-string]] as-symbol]]]
+
 
 [deftypefunk mind get name []
   [if [not [null body]]

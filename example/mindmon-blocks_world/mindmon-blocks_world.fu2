@@ -204,7 +204,8 @@
   agent_body]
 
 [deftypefunk mindmon_blocks_world_agent get knowledge_base_names []
-  `[reflective_event_knowledge
+  `[plan_knowledge
+    reflective_event_knowledge
     reflective_knowledge
     physical_goal_knowledge
     physical_type_knowledge

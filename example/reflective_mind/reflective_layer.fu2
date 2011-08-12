@@ -23,15 +23,18 @@
 [deframe reflective_layer [mental_layer] []
   [new []
        [construct mental_layer 3 `reflective]
-       [parog [have this add_agency [new reflective_event_knowledge_agency]]
+       [parog [have this add_agency [new reflective_plan_object_type_goal_agency]]
+	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]]
        this]]
 
 [deftypefunk reflective_layer execute create_knowledge []
-  [have [get this agency `reflective_event_knowledge] create_knowledge]
+  [have [get this agency `reflective_plan_object_type_goal] create_knowledge]
+  [have [get this agency `reflective_event_knowledge]       create_knowledge]
   nil]
 
 [deftypefunk reflective_layer execute connect_knowledge_reflection []
-  [have [get this agency `reflective_event_knowledge] connect_knowledge_reflection]
+  [have [get this agency `reflective_plan_object_type_goal] connect_knowledge_reflection]
+  [have [get this agency `reflective_event_knowledge]       connect_knowledge_reflection]
   nil]
 

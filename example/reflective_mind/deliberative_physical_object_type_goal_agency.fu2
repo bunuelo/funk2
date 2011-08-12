@@ -49,7 +49,7 @@
 														    target_type_property
 														    target_type_property_value]
   [let [[resource [get this resource `translate_physical_knowledge_to_physical_type_knowledge]]]
-    [let [[goal [new physical_type_property_relation_goal
+    [let [[goal [new type_property_relation_goal
 		     [get this mind]
 		     source_type
 		     source_type_property

@@ -24,16 +24,12 @@
 
 // semantic_plan_object
 
-f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr deliberative_plan) {
+f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr deliberative_plan) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_plan_object"));
   }
-  {
-    f2ptr result = raw__semantic_object__type_create(cause, this, semantic_realm);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
+  raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"),  nil);
@@ -42,27 +38,19 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
   return this;
 }
 
-f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr deliberative_plan) {
-  f2ptr this = f2__frame__new(cause, nil);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  {
-    f2ptr result = raw__semantic_plan_object__type_create(cause, this, semantic_realm, deliberative_plan);
-     if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr deliberative_plan) {
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_plan_object__type_create(cause, this, semantic_realm, deliberative_plan));
   return this;
 }
 
-f2ptr f2__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr deliberative_plan) {
+f2ptr f2__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr deliberative_plan) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_plan_object__new(cause, semantic_realm, deliberative_plan);
+  return raw__semantic_plan_object__new(cause, semantic_realm, phenomenal_name, deliberative_plan);
 }
-export_cefunk2(semantic_plan_object__new, semantic_realm, deliberative_plan, 0, "Returns a new semantic_plan_object object.");
+export_cefunk3(semantic_plan_object__new, semantic_realm, phenomenal_name, deliberative_plan, 0, "Returns a new semantic_plan_object object.");
 
 
 boolean_t raw__semantic_plan_object__is_type(f2ptr cause, f2ptr thing) {

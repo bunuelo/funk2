@@ -167,6 +167,7 @@
 
 [defpackage reflective_layer
   :packages [reflective_mind_core
+	     reflective_plan_object_type_goal_agency
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language

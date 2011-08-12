@@ -206,6 +206,7 @@
 [deftypefunk mindmon_blocks_world_agent get knowledge_base_names []
   `[reflective_event_knowledge
     reflective_knowledge
+    plan_plan_knowledge
     plan_goal_knowledge
     plan_type_knowledge
     type_copy_of_plan_knowledge

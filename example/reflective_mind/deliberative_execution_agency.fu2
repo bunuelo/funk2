@@ -35,9 +35,8 @@
        [construct traced_resource `execute_plan
 		  [funk [plan]
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']
-			
-			
-			
+			[with-new-cause [cause-define cause-name `plan]
+					[have plan eval]]
 			nil]]
        nil]]
 

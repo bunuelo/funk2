@@ -35,9 +35,9 @@
        [have this add_resource [new deliberative_focus_plan_add_after_resource]]
        [have this add_resource [new deliberative_focus_plan_add_before_resource]]
        [have this add_resource [new deliberative_focus_plan_add_in_parallel_resource]]
-       [have this add_resource [new deliberative_create_and_consider_new_plan_for_goal_resource]]
-       [have this add_resource [new deliberative_create_and_consider_new_plan_from_reflective_memory_for_goal_resource]]
-       [have this add_resource [new deliberative_create_and_consider_new_plan_from_social_advice_for_goal_resource]]
+       [have this add_resource [new deliberative_remember_plan_for_goal_resource]]
+       [have this add_resource [new deliberative_remember_plan_from_reflective_memory_for_goal_resource]]
+       [have this add_resource [new deliberative_remember_plan_from_social_advice_for_goal_resource]]
        
        this]]
 
@@ -52,17 +52,17 @@
   ]
 
 [deftypefunk deliberative_plan_agency execute create_builtin_actions []
-  [have-apply this create_plan_action `[deliberative plan focus_on_plan]]
-  [have-apply this create_plan_action `[deliberative plan consider_plan]]
-  [have-apply this create_plan_action `[deliberative plan consider_another_plan]]
-  [have-apply this create_plan_action `[deliberative plan focus_on_consider_plan]]
-  [have-apply this create_plan_action `[deliberative plan focus_on_other_consider_plan]]
-  [have-apply this create_plan_action `[deliberative plan focus_plan_add_after]]
-  [have-apply this create_plan_action `[deliberative plan focus_plan_add_before]]
-  [have-apply this create_plan_action `[deliberative plan focus_plan_add_in_parallel]]
-  [have-apply this create_plan_action `[deliberative plan create_and_consider_new_plan_for_goal]]
-  [have-apply this create_plan_action `[deliberative plan create_and_consider_new_plan_from_reflective_memory_for_goal]]
-  [have-apply this create_plan_action `[deliberative plan create_and_consider_new_plan_from_social_advice_for_goal]]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan consider_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan consider_another_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_consider_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_other_consider_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_after]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_before]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_in_parallel]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan remember_plan_for_goal]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan remember_plan_from_reflective_memory_for_goal]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan remember_plan_from_social_advice_for_goal]]]
 
 'deliberative_focus_on_plan_resource'
 
@@ -189,45 +189,45 @@
 
 
 
-'deliberative_create_and_consider_new_plan_for_goal_resource'
+'deliberative_remember_plan_for_goal_resource'
 
-[deframe deliberative_create_and_consider_new_plan_for_goal_resource [traced_resource] []
+[deframe deliberative_remember_plan_for_goal_resource [traced_resource] []
   [new []
-       [construct traced_resource `create_and_consider_new_plan_for_goal
+       [construct traced_resource `remember_plan_for_goal
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			]]]]
 
-[deftypefunk deliberative_create_and_consider_new_plan_for_goal_resource get as-english_conslist []
-  `[create and consider new plan for goal]]
+[deftypefunk deliberative_remember_plan_for_goal_resource get as-english_conslist []
+  `[remember plan for goal]]
 
 
 
-'deliberative_create_and_consider_new_plan_from_reflective_memory_for_goal_resource'
+'deliberative_remember_plan_from_reflective_memory_for_goal_resource'
 
-[deframe deliberative_create_and_consider_new_plan_from_reflective_memory_for_goal_resource [traced_resource] []
+[deframe deliberative_remember_plan_from_reflective_memory_for_goal_resource [traced_resource] []
   [new []
-       [construct traced_resource `create_and_consider_new_plan_from_reflective_memory_for_goal
+       [construct traced_resource `remember_plan_from_reflective_memory_for_goal
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			]]]]
 
-[deftypefunk deliberative_create_and_consider_new_plan_from_reflective_memory_for_goal_resource get as-english_conslist []
-  `[create and consider new plan from reflective memory for goal]]
+[deftypefunk deliberative_remember_plan_from_reflective_memory_for_goal_resource get as-english_conslist []
+  `[remember plan from reflective memory for goal]]
 
 
 
-'deliberative_create_and_consider_new_plan_from_social_advice_for_goal_resource'
+'deliberative_remember_plan_from_social_advice_for_goal_resource'
 
-[deframe deliberative_create_and_consider_new_plan_from_social_advice_for_goal_resource [traced_resource] []
+[deframe deliberative_remember_plan_from_social_advice_for_goal_resource [traced_resource] []
   [new []
-       [construct traced_resource `create_and_consider_new_plan_from_social_advice_for_goal
+       [construct traced_resource `remember_plan_from_social_advice_for_goal
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			]]]]
 
-[deftypefunk deliberative_create_and_consider_new_plan_from_social_advice_for_goal_resource get as-english_conslist []
-  `[create and consider new plan from social advice for goal]]
+[deftypefunk deliberative_remember_plan_from_social_advice_for_goal_resource get as-english_conslist []
+  `[remember plan from social advice for goal]]
 
 
 

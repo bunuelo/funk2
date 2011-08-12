@@ -26,6 +26,7 @@
        [type-have reflective_mind this create_resources]
        [type-have reflective_mind this create_knowledge]
        [type-have reflective_mind this connect_knowledge_reflection]
+       [type-have reflective_mind this create_builtin_actions]
        this]]
 
 [deftypefunk reflective_mind execute create_resources []
@@ -48,6 +49,10 @@
   [have [get this layer `learned_reactive] connect_knowledge_reflection]
   [have [get this layer `deliberative]     connect_knowledge_reflection]
   [have [get this layer `reflective]       connect_knowledge_reflection]]
+
+[deftypefunk reflective_mind execute create_builtin_actions []
+  [terminal_format standard-terminal '\nreflective_mind: creating built-in actions.']
+  [have [get this layer `deliberative] create_builtin_actions]]
 
 [deftypefunk reflective_mind execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [have [get this layer `deliberative] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
@@ -78,6 +83,17 @@
 
 [deftypefunk reflective_mind get physical_semantic_plans []
   [get [get this layer `deliberative] physical_semantic_plans]]
+
+
+[deftypefunk reflective_mind execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
+  [have-apply [get this layer `deliberative] create_plan_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
+
+[deftypefunk reflective_mind execute create_plan_semantic_plan [expression]
+  [have [get this layer `deliberative] create_plan_semantic_plan expression]]
+
+[deftypefunk reflective_mind get plan_semantic_plans []
+  [get [get this layer `deliberative] plan_semantic_plans]]
+
 
 
 'pre-knowledge perception functions'

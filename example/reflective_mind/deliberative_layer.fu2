@@ -21,7 +21,9 @@
 'deliberative_layer'
 
 [deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash [new ptypehash]]
-					    [physical_semantic_plans                  nil]]
+					    [physical_semantic_plans                  nil]
+					    [plan_action_english_symbol_ptypehash     [new ptypehash]]
+					    [plan_semantic_plans                      nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -36,6 +38,9 @@
 [deftypefunk deliberative_layer execute connect_knowledge_reflection []
   [have [get this agency `plan]                      connect_knowledge_reflection]
   [have [get this agency `physical_object_type_goal] connect_knowledge_reflection]]
+
+[deftypefunk deliberative_layer execute create_builtin_actions []
+  [have [get this agency `plan] create_builtin_actions]]
 
 [deftypefunk deliberative_layer execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [have [get this agency `physical_object_type_goal] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
@@ -89,6 +94,43 @@
     [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
       [set semantic_plan plan_object_type `physical]
       [have this add_physical_semantic_plan semantic_plan]]]]
+
+
+
+
+
+[deftypefunk deliberative_layer execute add_plan_action [action]
+  `[terminal_format standard-terminal '\ndeliberative_layer: adding plan action, "' [get action as-string] '."']
+  [have plan_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
+
+[deftypefunk deliberative_layer execute lookup_plan_action [english_conslist]
+  [have plan_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
+
+[deftypefunk deliberative_layer execute add_plan_semantic_plan [semantic_plan]
+  `[terminal_format standard-terminal '\ndeliberative_layer: adding plan plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
+  [have [get [get this mind] semantic_knowledge_base `plan_plan_knowledge] add_semantic_frame semantic_plan]
+  [= plan_semantic_plans [cons semantic_plan plan_semantic_plans]]]
+
+[deftypefunk deliberative_layer get plan_semantic_plans []
+  plan_semantic_plans]
+
+[deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
+  [let [[action [new deliberative_action 
+		     [get this mind]
+		     layer_name
+		     agency_name
+		     resource_name
+		     resource_arguments]]]
+    [have this add_plan_action action]]]
+
+[deftypefunk deliberative_layer execute create_plan_semantic_plan [expression]
+  [let [[plan [new deliberative_plan 
+		   [get this mind]
+		   expression]]]
+    [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
+      [set semantic_plan plan_object_type `plan]
+      [have this add_plan_semantic_plan semantic_plan]]]]
+
 
 
 

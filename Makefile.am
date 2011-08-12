@@ -252,6 +252,9 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_object/libf2e_semantic_object.la \
                       extension/semantic_packable_object/libf2e_semantic_packable_object.la \
                       extension/semantic_physical_object/libf2e_semantic_physical_object.la \
+                      extension/semantic_plan_object/libf2e_semantic_plan_object.la \
+                      extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.la \
+                      extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.la \
                       extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.la \
                       extension/semantic_goal/libf2e_semantic_goal.la \
                       extension/semantic_goal_event/libf2e_semantic_goal_event.la \
@@ -456,6 +459,9 @@ extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES   
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES                                         = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_SOURCES                   = extension/semantic_physical_object_type_event/semantic_physical_object_type_event.c
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_SOURCES = extension/semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.c
+extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                 = extension/semantic_plan_object/semantic_plan_object.c
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                           = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES         = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                                           = extension/semantic_proprioception/semantic_proprioception.c
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                             = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
 extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_SOURCES                   = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
@@ -636,6 +642,15 @@ extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_ty
 
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_plan_object_libf2e_semantic_plan_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

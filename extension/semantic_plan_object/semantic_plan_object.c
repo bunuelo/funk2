@@ -36,8 +36,8 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
   }
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"), nil);
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "deliberative_plan"),    deliberative_plan);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"),  nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "deliberative_plan"), deliberative_plan);
   }
   return this;
 }

@@ -87,6 +87,7 @@
 		   [get this mind]
 		   expression]]]
     [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] plan]]]
+      [set semantic_plan plan_object_type `physical]
       [have this add_physical_semantic_plan semantic_plan]]]]
 
 

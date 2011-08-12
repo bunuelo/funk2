@@ -111,13 +111,13 @@
 		    semantic_plan_object_type_event_target]]
 	goals]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get semantic_plan_object_copy [phenomenal_name plan_object_type]
+[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get semantic_plan_object_copy [phenomenal_name plan_object_type deliberative_plan]
   [let [[semantic_plan_object nil]]
     [have semantic_plan_object_type_event_mutex lock]
     [let [[copy_phenomenal_name [get [format nil 'plan_type_copy_of_' phenomenal_name] as-symbol]]]
       [= semantic_plan_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]
       [if [null semantic_plan_object]
-	  [prog [= semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm]]]
+	  [prog [= semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] deliberative_plan]]
 		[set semantic_plan_object phenomenal_name      phenomenal_name]
 		[set semantic_plan_object plan_object_type plan_object_type]
 		[have [get [get this mind] semantic_knowledge_base `type_copy_of_plan_knowledge] add_semantic_frame semantic_plan_object]
@@ -265,10 +265,10 @@
 													[get this semantic_plan_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
 											]
 										       [[is-type `semantic_plan_object event-semantic_frame]
-											[let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame plan_object_type]]]
-											      [event-value-copy          [if [is-type `semantic_plan_object event-value]
-															     [get this semantic_plan_object_copy [get event-value phenomenal_name] [get event-value plan_object_type]]
-															   event-value]]]
+											[let [[event-semantic_frame-copy              [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame plan_object_type] [get event-semantic_frame deliberative_plan]]]
+											      [event-value-copy                       [if [is-type `semantic_plan_object event-value]
+																	  [get this semantic_plan_object_copy [get event-value phenomenal_name] [get event-value plan_object_type] [get event-value deliberative_plan]]
+																	event-value]]]
 											  [if debug [terminal_format standard-terminal
 														     '\nadding plan type ' [get event-semantic_frame-copy phenomenal_name]
 														     ' '                       event-key_type
@@ -320,9 +320,9 @@
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
 										 [cond [[is-type `semantic_plan_object event-semantic_frame]
-											[let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame plan_object_type]]]
+											[let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame plan_object_type] [get event-semantic_frame deliberative_plan]]]
 											      [event-value-copy          [if [is-type `semantic_plan_object event-value]
-															     [get this semantic_plan_object_copy [get event-value phenomenal_name] [get event-value plan_object_type]]
+															     [get this semantic_plan_object_copy [get event-value phenomenal_name] [get event-value plan_object_type] [get event-value deliberative_plan]]
 															   event-value]]]
 											  'should use copy after this point'
 

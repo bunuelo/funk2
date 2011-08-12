@@ -49,19 +49,19 @@
        [set file_menu_item submenu file_menu]
        [have vbox pack_start menu_bar nil nil 0]
         
-       [mapc [action]
-	     [let [[action__hbox   [gtk-hbox-new 2]]
-		   [action__button [gtk-button-new_with_label [get action as-string]]]]
-	       
-	       [have action__hbox pack_start action__button nil nil 0]
-	       [have vbox pack_start action__hbox nil nil 0]
-	       [have action__button signal_connect 'clicked'
-		     [funk []
-			   [fiber [funk []
-					[terminal_format standard-terminal '\nreactive action activator: waiting to call ' [get action as-string]]
-					[have this action wait_to_call]]
-				  nil]]
-		     nil]]
+       [mapc [funk [action]
+		   [let [[action__hbox   [gtk-hbox-new 2]]
+			 [action__button [gtk-button-new_with_label [get action as-string]]]]
+		     
+		     [have action__hbox pack_start action__button nil nil 0]
+		     [have vbox pack_start action__hbox nil nil 0]
+		     [have action__button signal_connect 'clicked'
+			   [funk []
+				 [fiber [funk []
+					      [terminal_format standard-terminal '\nreactive action activator: waiting to call ' [get action as-string]]
+					      [have action wait_to_call]]
+					nil]]
+			   nil]]]
 	     [get [get mindmon_agent mind] plan_actions]]
        
        [have window add vbox]

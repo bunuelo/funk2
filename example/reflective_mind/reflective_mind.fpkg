@@ -126,6 +126,7 @@
 
 [defpackage deliberative_layer
   :packages [reflective_mind_core
+	     deliberative_plan_agency
 	     deliberative_execution_agency
 	     deliberative_physical_object_type_goal_agency]
    :sources ['deliberative_layer.fu2']]

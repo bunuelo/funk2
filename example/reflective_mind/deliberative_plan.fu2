@@ -88,6 +88,20 @@
 [deftypefunk deliberative_plan get as-string []
   [get this as-english_string]]
 
+[deftypefunk deliberative_plan execute wait_for_property [source_type key value]
+  [let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
+    [mapc [funk [current_event]
+		[terminal_format standard-terminal 'wait_for_property: current_event, ' current_event '.']]
+	  current_events]
+    ]]
+
+[deftypefunk deliberative_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+  [let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
+    [mapc [funk [current_event]
+		[terminal_format standard-terminal 'wait_for_relationship: current_event, ' current_event '.']]
+	  current_events]
+    ]]
+
 [defunk deliberative_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
@@ -114,6 +128,7 @@
 											   [value       [elt arguments 2]]]
 										       [eval `[funk [this]
 												    [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[physical_type_property_relation_goal-english_string source_type key value] '."']
+												    [have this wait_for_property source_type key value]
 												    ]]]]]
 					      [[eq `wait-for-relationship command] [if [not [eq 7 arguments-length]]
 										       [error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -129,6 +144,7 @@
 										       [eval `[funk [this]
 												    [terminal_format standard-terminal '\nplan waiting for relationship to exist: "'
 														     ,[physical_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
+												    [have this wait_for_relationship source_type source_property source_property_value key target_type target_property target_property_value]
 												    ]]]]]
 					      [t                                   [error bug_name `deliberative_plan_compile_error]]]]]]
 	[t                          [error bug_name `deliberative_plan_compile_error]]]]

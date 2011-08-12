@@ -40,7 +40,7 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
 
 f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr deliberative_plan) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_plan_object__type_create(cause, this, semantic_realm, deliberative_plan));
+  assert_value(raw__semantic_plan_object__type_create(cause, this, semantic_realm, phenomenal_name, deliberative_plan));
   return this;
 }
 

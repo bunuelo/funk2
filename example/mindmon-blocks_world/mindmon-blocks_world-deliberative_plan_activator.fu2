@@ -1,0 +1,121 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe mindmon_blocks_world_deliberative_plan_activator_plan [frame] [mindmon_blocks_world_deliberative_plan_activator_window
+								   semantic_plan
+								   
+								   plan_frame
+								   vbox
+								   button_hbox
+								   execute_button
+								   description_text_view]
+  [new [initial-mindmon_blocks_world_deliberative_plan_activator_window initial-semantic_plan]
+       [= mindmon_blocks_world_deliberative_plan_activator_window initial-mindmon_blocks_world_deliberative_plan_activator_window]
+       [= semantic_plan                                      initial-semantic_plan]
+       
+       [= plan_frame  [gtk-frame-new 'Physical Plan']]
+       [= vbox        [gtk-vbox-new 0]]
+       [have plan_frame add vbox]
+       
+       [= description_text_view [gtk-text_view-new]]
+       [set description_text_view wrap_mode `word_char]
+       [set [get description_text_view buffer] text [format nil [get [get semantic_plan deliberative_plan] as-string] '.']]
+       [have vbox pack_start description_text_view t t 0]
+       
+       [= button_hbox [gtk-hbox-new 0]]
+       [have vbox pack_start button_hbox nil nil 0]
+       
+       [= execute_button [gtk-button-new_with_label 'Execute']]
+       [have button_hbox pack_start execute_button nil nil 0]
+       [have button_hbox request_size 320 24]
+       
+       [have execute_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nmindmon_blocks_world_deliberative_plan_activator_plan: executing "' [get [get semantic_plan deliberative_plan] as-string] '."']
+		   [have [get [get mindmon_blocks_world_deliberative_plan_activator_window mindmon_agent] mind] activate `deliberative `execution `execute_plan [get semantic_plan deliberative_plan]]
+		   ]
+	     nil]
+       
+       ]]
+
+[deftypefunk mindmon_blocks_world_deliberative_plan_activator_plan get widget []
+  plan_frame]
+
+
+[deframe mindmon_blocks_world_deliberative_plan_activator_window [frame] [mindmon_agent
+								     
+								     window
+								     vbox
+								     menu_bar
+								     file_menu_item
+								     file_menu
+								     file_exit_menu_item
+								     
+								     ]
+  [new [initial-mindmon_agent]
+       [= mindmon_agent initial-mindmon_agent]
+       [= window [gtk-window-new]]
+       [set window title [format nil [get mindmon_agent name] ' - Deliberative Plan Activator']]
+       [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
+       [set window destroy_with_parent t]
+       [= vbox [gtk-vbox-new 0]]
+
+       [= menu_bar            [gtk-menu_bar-new]]
+       [= file_menu_item      [gtk-menu_item-new 'File']]
+       [= file_menu           [gtk-menu-new]]
+       [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
+       [have file_exit_menu_item signal_connect 'activate'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       [have menu_bar append  file_menu_item]
+       [have file_menu append file_exit_menu_item]
+       [set file_menu_item submenu file_menu]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       [mapc [funk [semantic_plan]
+		   [let [[plan_activator [new mindmon_blocks_world_deliberative_plan_activator_plan this semantic_plan]]]
+		     [have vbox pack_start plan_activator nil nil 0]]]
+	     [get [get mindmon_agent mind] plan_semantic_plans]]
+       
+       [have window add vbox]
+       [have window show_all]]]
+
+
+[deftypefunk mindmon_blocks_world_deliberative_plan_activator_window execute activate_resource [layer_name agency_name resource_name :rest args]
+  [let [[activate_resource [get [get mindmon_agent mind] resource `deliberative `neural_plug `activate_resource]]]
+    [have-apply activate_resource command `[,layer_name ,agency_name ,resource_name @args]]]]
+
+
+
+'mindmon_blocks_world_deliberative_plan_activator'
+
+[deframe mindmon_blocks_world_deliberative_plan_activator [mindmon_agent_tool] []
+  [new [initial-mindmon_agent]
+       [construct mindmon_agent_tool initial-mindmon_agent]
+       ]]
+
+[deftypefunk mindmon_blocks_world_deliberative_plan_activator get mindmon_agent_tool-title []
+  'Deliberative Plan Activator']
+
+[deftypefunk mindmon_blocks_world_deliberative_plan_activator execute mindmon_agent_tool-start []
+  [terminal_format standard-terminal '\nmindmon_blocks_world_deliberative_plan_activator: starting.']
+  [new mindmon_blocks_world_deliberative_plan_activator_window [get this mindmon_agent]]]
+

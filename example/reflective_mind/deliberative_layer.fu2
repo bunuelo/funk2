@@ -67,6 +67,9 @@
   `[terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
   [have physical_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
 
+[deftypefunk deliberative_layer get physical_actions []
+  [get physical_action_english_symbol_ptypehash values]]
+
 [deftypefunk deliberative_layer execute lookup_physical_action [english_conslist]
   [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
@@ -102,6 +105,9 @@
 [deftypefunk deliberative_layer execute add_plan_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding plan action, "' [get action as-string] '."']
   [have plan_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
+
+[deftypefunk deliberative_layer get plan_actions []
+  [get plan_action_english_symbol_ptypehash values]]
 
 [deftypefunk deliberative_layer execute lookup_plan_action [english_conslist]
   [have plan_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]

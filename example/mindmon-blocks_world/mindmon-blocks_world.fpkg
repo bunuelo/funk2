@@ -22,17 +22,27 @@
 	     blocks_world
 	     reflective_mind-blocks_world]]
 
-[defpackage mindmon-blocks_world-builtin_reactive_activator
+[defpackage mindmon-blocks_world-reactive_action_activator
   :packages [mindmon-blocks_world-core]
-   :sources ['mindmon-blocks_world-builtin_reactive_activator.fu2']]
+   :sources ['mindmon-blocks_world-reactive_action_activator.fu2']]
 
-[defpackage mindmon-blocks_world-deliberative_activator
+[defpackage mindmon-blocks_world-reactive_plan_activator
   :packages [mindmon-blocks_world-core]
-   :sources ['mindmon-blocks_world-deliberative_activator.fu2']]
+   :sources ['mindmon-blocks_world-reactive_plan_activator.fu2']]
+
+[defpackage mindmon-blocks_world-deliberative_plan_activator
+  :packages [mindmon-blocks_world-core]
+   :sources ['mindmon-blocks_world-deliberative_plan_activator.fu2']]
+
+[defpackage mindmon-blocks_world-deliberative_action_activator
+  :packages [mindmon-blocks_world-core]
+   :sources ['mindmon-blocks_world-deliberative_action_activator.fu2']]
 
 [defpackage mindmon-blocks_world
   :packages [mindmon-blocks_world-core
-	     mindmon-blocks_world-builtin_reactive_activator
-	     mindmon-blocks_world-deliberative_activator]
+	     mindmon-blocks_world-reactive_action_activator
+	     mindmon-blocks_world-reactive_plan_activator
+	     mindmon-blocks_world-deliberative_action_activator
+	     mindmon-blocks_world-deliberative_plan_activator]
    :sources ['mindmon-blocks_world.fu2']]
 

@@ -27,11 +27,11 @@
   [new []
        [construct agency `plan]
        
-       [have this add_resource [new deliberative_focus_on_plan]]
-       [have this add_resource [new deliberative_consider_plan]]
-       [have this add_resource [new deliberative_consider_another_plan]]
-       [have this add_resource [new deliberative_focus_on_consider_plan]]
-       [have this add_resource [new deliberative_focus_on_other_consider_plan]]
+       [have this add_resource [new deliberative_focus_on_plan_resource]]
+       [have this add_resource [new deliberative_consider_plan_resource]]
+       [have this add_resource [new deliberative_consider_another_plan_resource]]
+       [have this add_resource [new deliberative_focus_on_consider_plan_resource]]
+       [have this add_resource [new deliberative_focus_on_other_consider_plan_resource]]
        [have this add_resource [new deliberative_plan_add_after_resource]]
        [have this add_resource [new deliberative_plan_add_before_resource]]
        [have this add_resource [new deliberative_plan_add_in_parallel_resource]]
@@ -51,7 +51,7 @@
 
 
 
-'deliberative_focus_on_plan'
+'deliberative_focus_on_plan_resource'
 
 [deframe deliberative_focus_on_plan_resource [traced_resource] []
   [new []
@@ -67,7 +67,7 @@
 
 
 
-'deliberative_consider_plan'
+'deliberative_consider_plan_resource'
 
 [deframe deliberative_consider_plan_resource [traced_resource] []
   [new []
@@ -83,7 +83,7 @@
 
 
 
-'deliberative_consider_another_plan'
+'deliberative_consider_another_plan_resource'
 
 [deframe deliberative_consider_another_plan_resource [traced_resource] []
   [new []
@@ -99,7 +99,7 @@
 
 
 
-'deliberative_focus_on_consider_plan'
+'deliberative_focus_on_consider_plan_resource'
 
 [deframe deliberative_focus_on_consider_plan_resource [traced_resource] []
   [new []
@@ -115,7 +115,7 @@
 
 
 
-'deliberative_focus_on_other_consider_plan'
+'deliberative_focus_on_other_consider_plan_resource'
 
 [deframe deliberative_focus_on_other_consider_plan_resource [traced_resource] []
   [new []

@@ -195,10 +195,10 @@
 		  ]]]]]
 
 [deftypefunk plan_type_property_relation_goal execute remove_type_event [event_time
-									     semantic_plan_object_type_event_source
-									     key_type
-									     key
-									     semantic_plan_object_type_event_target]
+									 semantic_plan_object_type_event_source
+									 key_type
+									 key
+									 semantic_plan_object_type_event_target]
   [if [not [null current_goal_event]]
       [if [get this matches_type_event
 	       event_time

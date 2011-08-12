@@ -177,7 +177,7 @@
 [defpackage reflective_plan_object_type_goal_agency
   :packages [reflective_mind_core
 	     semantic_goal_event
-	     plan_type_property_relation_goal]
+	     type_property_relation_goal]
    :sources ['reflective_plan_object_type_goal_agency.fu2']]
 
 [defpackage reflective_event_knowledge_agency

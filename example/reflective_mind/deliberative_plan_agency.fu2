@@ -21,9 +21,23 @@
 
 'deliberative_plan_agency'
 
-[deframe deliberative_plan_agency [agency] []
+[deframe deliberative_plan_agency [agency] [[focus_semantic_plan_phenomenal_name          nil]
+					    [consider_semantic_plan_phenomenal_name       nil]
+					    [other_consider_semantic_plan_phenomenal_name nil]]
   [new []
        [construct agency `plan]
+       
+       [have this add_resource [new deliberative_focus_on_plan]]
+       [have this add_resource [new deliberative_consider_plan]]
+       [have this add_resource [new deliberative_consider_another_plan]]
+       [have this add_resource [new deliberative_focus_on_consider_plan]]
+       [have this add_resource [new deliberative_focus_on_other_consider_plan]]
+       [have this add_resource [new deliberative_plan_add_after_resource]]
+       [have this add_resource [new deliberative_plan_add_before_resource]]
+       [have this add_resource [new deliberative_plan_add_in_parallel_resource]]
+       [have this add_resource [new deliberative_create_plan_for_goal_resource]]
+       [have this add_resource [new deliberative_create_plan_from_reflective_memory_for_goal_resource]]
+       [have this add_resource [new deliberative_create_plan_from_social_advice_for_goal_resource]]
        
        this]]
 
@@ -34,4 +48,173 @@
 [deftypefunk deliberative_plan_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `plan_knowledge `plan_knowledge->plan_type_knowledge]
   ]
+
+
+
+'deliberative_focus_on_plan'
+
+[deframe deliberative_focus_on_plan_resource [traced_resource] []
+  [new []
+       [construct traced_resource `focus_on_plan
+		  [funk [semantic_plan_phenomenal_name]
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			[= focus_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
+			]]]]
+
+[deftypefunk deliberative_focus_on_plan_resource get as-english_conslist []
+  `[focus on a plan]]
+
+
+
+'deliberative_consider_plan'
+
+[deframe deliberative_consider_plan_resource [traced_resource] []
+  [new []
+       [construct traced_resource `consider_plan
+		  [funk [semantic_plan_phenomenal_name]
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			[= consider_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
+			]]]]
+
+[deftypefunk deliberative_consider_plan_resource get as-english_conslist []
+  `[consider a plan]]
+
+
+
+'deliberative_consider_another_plan'
+
+[deframe deliberative_consider_another_plan_resource [traced_resource] []
+  [new []
+       [construct traced_resource `consider_another_plan
+		  [funk [semantic_plan_phenomenal_name]
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			[= other_consider_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
+			]]]]
+
+[deftypefunk deliberative_consider_another_plan_resource get as-english_conslist []
+  `[consider another plan]]
+
+
+
+'deliberative_focus_on_consider_plan'
+
+[deframe deliberative_focus_on_consider_plan_resource [traced_resource] []
+  [new []
+       [construct traced_resource `focus_on_consider_plan
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			[= focus_semantic_plan_phenomenal_name consider_semantic_plan_phenomenal_name]
+			]]]]
+
+[deftypefunk deliberative_focus_on_consider_plan_resource get as-english_conslist []
+  `[focus on plan I am considering]]
+
+
+
+'deliberative_focus_on_other_consider_plan'
+
+[deframe deliberative_focus_on_other_consider_plan_resource [traced_resource] []
+  [new []
+       [construct traced_resource `focus_on_other_consider_plan
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			[= focus_semantic_plan_phenomenal_name other_consider_semantic_plan_phenomenal_name]
+			]]]]
+
+[deftypefunk deliberative_focus_on_other_consider_plan_resource get as-english_conslist []
+  `[focus on other plan I am considering]]
+
+
+
+'deliberative_plan_add_after_resource'
+
+[deframe deliberative_plan_add_after_resource [traced_resource] []
+  [new []
+       [construct traced_resource `plan_add_after
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			]]]]
+
+[deftypefunk deliberative_plan_add_after_resource get as-english_conslist []
+  `[add a plan after the end of this plan]]
+
+
+
+'deliberative_plan_add_before_resource'
+
+[deframe deliberative_plan_add_before_resource [traced_resource] []
+  [new []
+       [construct traced_resource `plan_add_before
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			]]]]
+
+[deftypefunk deliberative_plan_add_before_resource get as-english_conslist []
+  `[add a plan before the beginning of this plan]]
+
+
+
+'deliberative_plan_add_in_parallel_resource'
+
+[deframe deliberative_plan_add_in_parallel_resource [traced_resource] []
+  [new []
+       [construct traced_resource `plan_add_in_parallel
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			]]]]
+
+[deftypefunk deliberative_plan_add_in_parallel_resource get as-english_conslist []
+  `[add a plan in parallel to this plan]]
+
+
+
+'deliberative_create_plan_for_goal_resource'
+
+[deframe deliberative_create_plan_for_goal_resource [traced_resource] []
+  [new []
+       [construct traced_resource `create_plan_for_goal
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			]]]]
+
+[deftypefunk deliberative_create_plan_for_goal_resource get as-english_conslist []
+  `[create plan for goal]]
+
+
+
+'deliberative_create_plan_from_reflective_memory_for_goal_resource'
+
+[deframe deliberative_create_plan_from_reflective_memory_for_goal_resource [traced_resource] []
+  [new []
+       [construct traced_resource `create_plan_from_reflective_memory_for_goal
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			]]]]
+
+[deftypefunk deliberative_create_plan_from_reflective_memory_for_goal_resource get as-english_conslist []
+  `[create plan from reflective memory for goal]]
+
+
+
+'deliberative_create_plan_from_social_advice_for_goal_resource'
+
+[deframe deliberative_create_plan_from_social_advice_for_goal_resource [traced_resource] []
+  [new []
+       [construct traced_resource `create_plan_from_social_advice_for_goal
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			]]]]
+
+[deftypefunk deliberative_create_plan_from_social_advice_for_goal_resource get as-english_conslist []
+  `[create plan from social advice for goal]]
+
+
 

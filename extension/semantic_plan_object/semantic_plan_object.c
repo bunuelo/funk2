@@ -24,7 +24,7 @@
 
 // semantic_plan_object
 
-f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr deliberative_plan) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_plan_object"));
   }
@@ -35,19 +35,20 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
     }
   }
   // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"), nil);
+  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type")) == nil) {
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"), nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "deliberative_plan"),    deliberative_plan);
   }
   return this;
 }
 
-f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr deliberative_plan) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
   {
-    f2ptr result = raw__semantic_plan_object__type_create(cause, this, semantic_realm);
+    f2ptr result = raw__semantic_plan_object__type_create(cause, this, semantic_realm, deliberative_plan);
      if (raw__larva__is_type(cause, result)) {
       return result;
     }
@@ -55,13 +56,13 @@ f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm) {
   return this;
 }
 
-f2ptr f2__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr deliberative_plan) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_plan_object__new(cause, semantic_realm);
+  return raw__semantic_plan_object__new(cause, semantic_realm, deliberative_plan);
 }
-export_cefunk1(semantic_plan_object__new, semantic_realm, 0, "Returns a new semantic_plan_object object.");
+export_cefunk2(semantic_plan_object__new, semantic_realm, deliberative_plan, 0, "Returns a new semantic_plan_object object.");
 
 
 boolean_t raw__semantic_plan_object__is_type(f2ptr cause, f2ptr thing) {
@@ -99,99 +100,39 @@ f2ptr f2__semantic_plan_object__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_plan_object__type, thing, 0, "Returns the specific type of object that this semantic_plan_object is.");
 
 
-f2ptr raw__semantic_plan_object__physical_object_type(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"));
+f2ptr raw__semantic_plan_object__plan_object_type(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"));
 }
 
-f2ptr f2__semantic_plan_object__physical_object_type(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_plan_object__plan_object_type(f2ptr cause, f2ptr this) {
   if (! raw__semantic_plan_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_plan_object__physical_object_type(cause, this);
+  return raw__semantic_plan_object__plan_object_type(cause, this);
 }
-export_cefunk1(semantic_plan_object__physical_object_type, this, 0, "");
+export_cefunk1(semantic_plan_object__plan_object_type, this, 0, "");
 
 
-f2ptr raw__semantic_plan_object__physical_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"), that);
+f2ptr raw__semantic_plan_object__plan_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"), that);
 }
 
-f2ptr f2__semantic_plan_object__physical_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_plan_object__plan_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__semantic_plan_object__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_plan_object__physical_object_type__set(cause, this, that);
+  return raw__semantic_plan_object__plan_object_type__set(cause, this, that);
 }
-export_cefunk2(semantic_plan_object__physical_object_type__set, this, that, 0, "");
-
-
-f2ptr raw__semantic_plan_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
-}
-
-f2ptr f2__semantic_plan_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_plan_object__preposition__on__add(cause, this, that);
-}
-export_cefunk2(semantic_plan_object__preposition__on__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_plan_object__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
-}
-
-f2ptr f2__semantic_plan_object__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_plan_object__preposition__on__remove(cause, this, that);
-}
-export_cefunk2(semantic_plan_object__preposition__on__remove, this, that, 0, "");
-
-
-f2ptr raw__semantic_plan_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_plan_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_plan_object__preposition__in__add(cause, this, that);
-}
-export_cefunk2(semantic_plan_object__preposition__in__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_plan_object__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_plan_object__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_plan_object__preposition__in__remove(cause, this, that);
-}
-export_cefunk2(semantic_plan_object__preposition__in__remove, this, that, 0, "");
+export_cefunk2(semantic_plan_object__plan_object_type__set, this, that, 0, "");
 
 
 f2ptr f2__semantic_plan_object__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__physical_object_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__physical_object_type__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__preposition__in__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__preposition__in__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__preposition__on__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__preposition__on__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "plan_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__plan_object_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "plan_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__plan_object_type__set")));}
   return this;
 }
 

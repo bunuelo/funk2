@@ -21,7 +21,7 @@
 'deliberative_layer'
 
 [deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash [new ptypehash]]
-					    [physical_plans                           nil]]
+					    [physical_semantic_plans                  nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -65,12 +65,13 @@
 [deftypefunk deliberative_layer execute lookup_physical_action [english_conslist]
   [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
-[deftypefunk deliberative_layer execute add_physical_plan [plan]
-  `[terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get plan as-string] '."']
-  [= physical_plans [cons plan physical_plans]]]
+[deftypefunk deliberative_layer execute add_physical_semantic_plan [semantic_plan]
+  `[terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
+  [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_plan]
+  [= physical_semantic_plans [cons semantic_plan physical_semantic_plans]]]
 
-[deftypefunk deliberative_layer get physical_plans []
-  physical_plans]
+[deftypefunk deliberative_layer get physical_semantic_plans []
+  physical_semantic_plans]
 
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
@@ -81,11 +82,12 @@
 		     resource_arguments]]]
     [have this add_physical_action action]]]
 
-[deftypefunk deliberative_layer execute create_physical_plan [expression]
+[deftypefunk deliberative_layer execute create_physical_semantic_plan [expression]
   [let [[plan [new deliberative_plan 
 		   [get this mind]
 		   expression]]]
-    [have this add_physical_plan plan]]]
+    [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] plan]]]
+      [have this add_physical_semantic_plan semantic_plan]]]]
 
 
 

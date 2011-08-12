@@ -37,6 +37,7 @@
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']
 			[with-new-cause [cause-define cause-name `plan]
 					[have plan eval]]
+			[terminal_format standard-terminal '\ndeliberative_layer: done executing plan.']
 			nil]]
        nil]]
 

@@ -79,7 +79,7 @@
        [construct traced_resource `focus_on_plan
 		  [funk [semantic_plan]
 			[terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan '.']
-			[= focus_semantic_plan semantic_plan]
+			
 			]]]]
 
 [deftypefunk deliberative_focus_on_plan_resource get as-english_conslist []
@@ -125,7 +125,6 @@
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
-			[= register_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
 			]]]]
 
 [deftypefunk deliberative_register_a_plan_from_focus_resource get as-english_conslist []
@@ -141,7 +140,6 @@
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
-			[= other_register_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
 			]]]]
 
 [deftypefunk deliberative_register_b_plan_from_focus_resource get as-english_conslist []
@@ -157,7 +155,6 @@
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
-			[= focus_semantic_plan_phenomenal_name register_semantic_plan_phenomenal_name]
 			]]]]
 
 [deftypefunk deliberative_focus_on_register_a_plan_resource get as-english_conslist []
@@ -173,7 +170,6 @@
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
-			[= focus_semantic_plan_phenomenal_name other_register_semantic_plan_phenomenal_name]
 			]]]]
 
 [deftypefunk deliberative_focus_on_register_b_plan_resource get as-english_conslist []

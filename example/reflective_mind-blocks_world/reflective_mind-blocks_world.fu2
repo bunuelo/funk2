@@ -92,7 +92,7 @@
 						  [wait-to-call grab]
 						  [wait-for-time 17]
 						  [wait-to-call move_left]
-						  [wait-for-time 4]
+						  [wait-for-time 2]
 						  [wait-to-call drop]
 						  ]]
   

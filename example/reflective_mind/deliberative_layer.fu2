@@ -20,10 +20,10 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash [new ptypehash]]
-					    [physical_semantic_plans                  nil]
-					    [plan_action_english_symbol_ptypehash     [new ptypehash]]
-					    [plan_semantic_plan_phenomenal_name_frame nil]]
+[deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash     [new ptypehash]]
+					    [physical_semantic_plan_phenomenal_name_frame [new frame]]
+					    [plan_action_english_symbol_ptypehash         [new ptypehash]]
+					    [plan_semantic_plan_phenomenal_name_frame     [new frame]]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -76,11 +76,18 @@
 [deftypefunk deliberative_layer execute add_physical_semantic_plan [semantic_plan]
   `[terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
   [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_plan]
-  [= physical_semantic_plans [cons semantic_plan physical_semantic_plans]]
+  [have physical_semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get this agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
 
+[deftypefunk deliberative_layer get physical_semantic_plan [phenomenal_name]
+  [let [[physical_semantic_plan [have physical_semantic_plan_phenomenal_name_frame lookup phenomenal_name]]]
+    [if [null physical_semantic_plan]
+	[error bug_type             deliberative_layer-physical_semantic_plan-not_found
+	       plan_phenomenal_name phenomenal_name]]
+    physical_semantic_plan]]
+
 [deftypefunk deliberative_layer get physical_semantic_plans []
-  physical_semantic_plans]
+  [get physical_semantic_plan_phenomenal_name_frame values]]
 
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 

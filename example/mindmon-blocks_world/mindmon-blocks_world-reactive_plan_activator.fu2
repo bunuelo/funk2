@@ -93,7 +93,10 @@
        [mapc [funk [semantic_plan]
 		   [let [[plan_activator [new mindmon_blocks_world_reactive_plan_activator_plan this semantic_plan]]]
 		     [have vbox pack_start plan_activator nil nil 0]]]
-	     [get [get mindmon_agent mind] physical_semantic_plans]]
+	     [have [get [get mindmon_agent mind] physical_semantic_plans]
+		   sort [funk [x y]
+			      [> [get [get x deliberative_plan] as-string]
+				 [get [get y deliberative_plan] as-string]]]]]
        
        [have window add vbox]
        [have window show_all]]]

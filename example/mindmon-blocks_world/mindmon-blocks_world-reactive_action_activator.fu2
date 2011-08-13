@@ -62,7 +62,10 @@
 					      [have action wait_to_call]]
 					nil]]
 			   nil]]]
-	     [get [get mindmon_agent mind] physical_actions]]
+	     [have [get [get mindmon_agent mind] physical_actions]
+		   sort [funk [x y]
+			      [> [get x as-string]
+				 [get y as-string]]]]]
        
        [have window add vbox]
        [have window show_all]]]

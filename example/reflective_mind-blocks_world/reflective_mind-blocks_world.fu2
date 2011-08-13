@@ -84,7 +84,7 @@
 						  [wait-to-call grab]
 						  [wait-for-time 17]
 						  [wait-to-call move_right]
-						  [wait-for-time 5]
+						  [wait-for-time 4]
 						  [wait-to-call drop]
 						  [wait-for-time 1]
 						  [wait-to-call move_right]
@@ -92,7 +92,7 @@
 						  [wait-to-call grab]
 						  [wait-for-time 17]
 						  [wait-to-call move_left]
-						  [wait-for-time 5]
+						  [wait-for-time 3]
 						  [wait-to-call drop]
 						  ]]
   

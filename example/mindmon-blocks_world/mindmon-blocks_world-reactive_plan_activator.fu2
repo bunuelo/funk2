@@ -95,8 +95,8 @@
 		     [have vbox pack_start plan_activator nil nil 0]]]
 	     [have [get [get mindmon_agent mind] physical_semantic_plans]
 		   sort [funk [x y]
-			      [> [get [get x deliberative_plan] as-string]
-				 [get [get y deliberative_plan] as-string]]]]]
+			      [> [get [get x phenomenal_name] as-string]
+				 [get [get y phenomenal_name] as-string]]]]]
        
        [have window add vbox]
        [have window show_all]]]

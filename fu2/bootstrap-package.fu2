@@ -287,7 +287,7 @@
 			    cause-object_types_defined]]
       [set package loaded_all_dependencies_time [time]]]]]
 
-[defunk package-load_if_modified_before [name before_time checked_package_hash]
+[defunk package-load_if_modified_before [name before_time checked_package_hash dependencies_are_sticky]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
   [if [not [get checked_package_hash contains name]]
@@ -317,13 +317,13 @@
 				[get package binary_dependencies]]
 			  [with-new-cause [cause-define cause-object_types_defined nil]
 					  [mapc [funk [source_dependency]
-					    [let [[filename [pathname-concat [get package pathname] source_dependency]]]
-					      [if loaded_a_dependency
-						  [prog [package_filename-load filename]
-							[= package_was_loaded t]]
-						[let [[a_file_was_loaded [load-if-modified filename]]]
-						  [if a_file_was_loaded
-						      [= package_was_loaded t]]]]]]
+						      [let [[filename [pathname-concat [get package pathname] source_dependency]]]
+							[if [and dependencies_are_sticky loaded_a_dependency]
+							    [prog [package_filename-load filename]
+								  [= package_was_loaded t]]
+							  [let [[a_file_was_loaded [load-if-modified filename]]]
+							    [if a_file_was_loaded
+								[= package_was_loaded t]]]]]]
 						[get package source_dependencies]]
 					  [mapc [funk [object_type_defined]
 						      [have [get package object_types_defined_set] add object_type_defined]]
@@ -333,7 +333,7 @@
 		  package_was_loaded]]]]]
 
 
-[defunk packages-load_if_modified_before [names before_time checked_package_hash]
+[defunk packages-load_if_modified_before [names before_time checked_package_hash dependencies_are_sticky]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
   [let* [[loaded_a_dependency nil]
@@ -349,7 +349,7 @@
 							     [if [null load_fiber]
 								 [prog [set package load_fiber [this-fiber]]
 								       [have [get package load_cmutex] unlock]
-								       [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
+								       [let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash dependencies_are_sticky]]]
 									 [if dependency_loaded
 									     [= loaded_a_dependency t]]]
 								       [while [have [get package load_cmutex] trylock]
@@ -364,45 +364,25 @@
     [apply &join load_fibers]
     loaded_a_dependency]]
 
-[defunk packages-load_if_modified_before-old [names before_time checked_package_hash]
-  [if [null checked_package_hash]
-      [= checked_package_hash [new ptypehash]]]
-  [let [[loaded_a_dependency nil]]
-    [mapc [funk [name]
-		[let [[package [lookup-package name]]]
-		  [if [null package]
-		      [error bug_type      `tried_to_load_package_that_does_not_exist
-			     package_name  name
-			     package_names [package_names]]
-		    [while [have [get package load_cmutex] trylock]
-		      [millisleep 100]]
-		    [let [[load_fiber [get package load_fiber]]]
-		      [if [null load_fiber]
-			  [prog [set package load_fiber [this-fiber]]
-				[have [get package load_cmutex] unlock]
-				[let [[dependency_loaded [package-load_if_modified_before name before_time checked_package_hash]]]
-				  [if dependency_loaded
-				      [= loaded_a_dependency t]]]
-				[while [have [get package load_cmutex] trylock]
-				  [millisleep 100]]
-				[set package load_fiber nil]
-				[have [get package load_cmutex] unlock]]
-			[prog [have [get package load_cmutex] unlock]
-			      [join load_fiber]]]]
-		    ]]]
-	  names]
-    loaded_a_dependency]]
 
+[defmetro load-package [name]
+  `[package-load [quote ,name]]]
 
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
     [global_core_extension_handler-unload_changed]
     [global_dlfcn_dynamic_library-unload_changed]
-    [packages-load_if_modified_before names load_if_modified_before_time nil]]]
+    [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
 
 [defmetro require [:rest names]
   `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]
 
-[defmetro load-package [name]
-  `[package-load [quote ,name]]]
+[defunk reload-package [:rest names]
+  [let [[load_if_modified_before_time [time]]]
+    [global_core_extension_handler-unload_changed]
+    [global_dlfcn_dynamic_library-unload_changed]
+    [packages-load_if_modified_before names load_if_modified_before_time nil nil]]]
+
+[defmetro reload [:rest names]
+  `[reload-package @[mapcar [funk [name] `[quote ,name]] names]]]
 

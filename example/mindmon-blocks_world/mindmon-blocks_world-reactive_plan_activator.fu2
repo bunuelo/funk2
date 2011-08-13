@@ -60,15 +60,15 @@
 
 
 [deframe mindmon_blocks_world_reactive_plan_activator_window [frame] [mindmon_agent
-								     
-								     window
-								     vbox
-								     menu_bar
-								     file_menu_item
-								     file_menu
-								     file_exit_menu_item
-								     
-								     ]
+								      
+								      window
+								      vbox
+								      menu_bar
+								      file_menu_item
+								      file_menu
+								      file_exit_menu_item
+								      
+								      ]
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]

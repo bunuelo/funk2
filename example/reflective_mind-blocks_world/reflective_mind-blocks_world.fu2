@@ -36,7 +36,9 @@
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_right_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-grab_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]
-	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]]
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]
+	 
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-stack_blocks_resource]]]
   
   nil]
 
@@ -69,6 +71,9 @@
   [have-apply this create_physical_action `[builtin_reactive physical grab]]
   [have-apply this create_physical_action `[builtin_reactive physical drop]]
   [have-apply this create_physical_action `[builtin_reactive physical stop]] 
+  
+  [have-apply this create_physical_action `[learned_reactive physical stack_blocks]] 
+  
   nil]
 
 [deftypefunk blocks_world_reflective_mind execute create_builtin_plans []

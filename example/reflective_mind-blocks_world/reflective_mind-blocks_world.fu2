@@ -26,6 +26,8 @@
        [type-have blocks_world_reflective_mind this create_builtin_goals]
        [type-have blocks_world_reflective_mind this create_builtin_actions]
        [type-have blocks_world_reflective_mind this create_builtin_plans]
+       
+       [terminal_format standard-terminal '\nblocks_world_reflective_mind: created.']
        ]]
 
 [deftypefunk blocks_world_reflective_mind execute create_resources []
@@ -80,9 +82,17 @@
   [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
 						  [wait-for-time 3]
 						  [wait-to-call grab]
-						  [wait-for-time 16]
+						  [wait-for-time 17]
 						  [wait-to-call move_right]
-						  [wait-for-time 4]
+						  [wait-for-time 5]
+						  [wait-to-call drop]
+						  [wait-for-time 1]
+						  [wait-to-call move_right]
+						  [wait-for-time 5]
+						  [wait-to-call grab]
+						  [wait-for-time 17]
+						  [wait-to-call move_left]
+						  [wait-for-time 5]
 						  [wait-to-call drop]
 						  ]]
   

@@ -143,6 +143,7 @@
 
 [defpackage deliberative_plan_agency
   :packages [reflective_mind_core
+	     semantic_planner
 	     deliberative_plan]
    :sources ['deliberative_plan_agency.fu2']]
 

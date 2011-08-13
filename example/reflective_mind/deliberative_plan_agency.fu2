@@ -21,9 +21,7 @@
 
 'deliberative_plan_agency'
 
-[deframe deliberative_plan_agency [agency] [[focus_semantic_plan_phenomenal_name          nil]
-					    [register_semantic_plan_phenomenal_name       nil]
-					    [other_register_semantic_plan_phenomenal_name nil]]
+[deframe deliberative_plan_agency [agency] [[internal-semantic_planner nil]]
   [new []
        [construct agency `plan]
        
@@ -70,6 +68,12 @@
 [deftypefunk deliberative_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_plan ,semantic_plan_phenomenal_name]]
   ]
+
+[deftypefunk deliberative_plan_agency get semantic_planner []
+  [if [null internal-semantic_planner]
+      [prog [= internal-semantic_planner [new semantic_planner [get [get this mind] semantic_realm]]]
+	    [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame internal-semantic_planner]]]
+  internal-semantic_planner]
 
 
 'deliberative_focus_on_plan_resource'

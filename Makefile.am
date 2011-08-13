@@ -261,6 +261,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.la \
                       extension/semantic_physical_object_type_event/libf2e_semantic_physical_object_type_event.la \
                       extension/semantic_physical_object_type_relation_event/libf2e_semantic_physical_object_type_relation_event.la \
+                      extension/semantic_planner/libf2e_semantic_planner.la \
                       extension/semantic_proprioception/libf2e_semantic_proprioception.la \
                       extension/semantic_proprioceptual_object/libf2e_semantic_proprioceptual_object.la \
                       extension/semantic_proprioceptual_orientation/libf2e_semantic_proprioceptual_orientation.la \
@@ -462,6 +463,7 @@ extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                 = extension/semantic_plan_object/semantic_plan_object.c
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                           = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES         = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
+extension_semantic_planner_libf2e_semantic_planner_la_SOURCES                                                         = extension/semantic_planner/semantic_planner.c
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                                           = extension/semantic_proprioception/semantic_proprioception.c
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                             = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
 extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_SOURCES                   = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
@@ -651,6 +653,9 @@ extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event
 
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_planner_libf2e_semantic_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_planner_libf2e_semantic_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

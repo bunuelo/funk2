@@ -277,7 +277,7 @@
 [defunk package-load [name]
   [let [[load_if_modified_before_time [time]]]
     [let [[package [lookup-package name]]]
-      [packages-load_if_modified_before [get package package_dependencies] load_if_modified_before_time nil]
+      [packages-load_if_modified_before [get package package_dependencies] load_if_modified_before_time nil t]
       [with-new-cause [cause-define cause-object_types_defined nil]
 		      [mapc [funk [source_dependency]
 				  [package_filename-load [pathname-concat [get package pathname] source_dependency]]]
@@ -303,7 +303,7 @@
 		[if [or [null loaded_all_dependencies_time]
 			[bytecode:less_than loaded_all_dependencies_time before_time]]
 		    [prog [terminal_format standard-terminal '\nchecking ' name ' for updated dependencies.']
-			  [let [[dependency_was_loaded [packages-load_if_modified_before [get package package_dependencies] before_time checked_package_hash]]]
+			  [let [[dependency_was_loaded [packages-load_if_modified_before [get package package_dependencies] before_time checked_package_hash dependencies_are_sticky]]]
 			    [if dependency_was_loaded
 				[= loaded_a_dependency t]]]
 			  [mapc [funk [binary_dependency]
@@ -364,9 +364,9 @@
     [apply &join load_fibers]
     loaded_a_dependency]]
 
-
 [defmetro load-package [name]
   `[package-load [quote ,name]]]
+
 
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
@@ -376,6 +376,7 @@
 
 [defmetro require [:rest names]
   `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]
+
 
 [defunk reload-package [:rest names]
   [let [[load_if_modified_before_time [time]]]

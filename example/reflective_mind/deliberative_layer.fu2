@@ -23,7 +23,7 @@
 [deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash [new ptypehash]]
 					    [physical_semantic_plans                  nil]
 					    [plan_action_english_symbol_ptypehash     [new ptypehash]]
-					    [plan_semantic_plans                      nil]]
+					    [plan_semantic_plan_phenomenal_name_frame nil]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -116,10 +116,17 @@
 [deftypefunk deliberative_layer execute add_plan_semantic_plan [semantic_plan]
   `[terminal_format standard-terminal '\ndeliberative_layer: adding plan plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
   [have [get [get this mind] semantic_knowledge_base `plan_plan_knowledge] add_semantic_frame semantic_plan]
-  [= plan_semantic_plans [cons semantic_plan plan_semantic_plans]]]
+  [have plan_semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]]
+
+[deftypefunk deliberative_layer get plan_semantic_plan [phenomenal_name]
+  [let [[plan_semantic_plan [get plan_semantic_plan_phenomenal_name_frame lookup phenomenal_name]]]
+    [if [null plan_semantic_plan]
+	[error bug_type             deliberative_layer-plan_semantic_plan-not_found
+	       plan_phenomenal_name phenomenal_name]]
+    plan_semantic_plan]]
 
 [deftypefunk deliberative_layer get plan_semantic_plans []
-  plan_semantic_plans]
+  [get plan_semantic_plan_phenomenal_name_frame values]]
 
 [deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 

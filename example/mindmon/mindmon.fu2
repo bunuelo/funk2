@@ -702,7 +702,7 @@
     [let [[bit_rate   5000000]
 	  [frame_rate 30]]
       [let [[movie_context [new movie_context [get image_sequence width] [get image_sequence height] bit_rate frame_rate]]]
-	[let [[new_movie [movie-new_from_image_sequence movie_context [get image_sequence new_by_time_stretch 3.0]]]]
+	[let [[new_movie [movie-new_from_image_sequence movie_context [get image_sequence new_by_time_stretch 1.0]]]]
 	  [have movie_context destroy]
 	  new_movie]]]]]
 

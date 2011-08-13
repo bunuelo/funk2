@@ -39,10 +39,15 @@
        ]]
 
 [deftypefunk deliberative_action get as-english_conslist []
-  [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist]]
+  [let [[resource-english_conslist [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist]]]
+    [if resource_arguments
+	[append resource-english_conslist
+		`[punctuation-comma]
+		resource_arguments]
+      resource-english_conslist]]]
 
 [deftypefunk deliberative_action get as-english_string []
-  [get [get [get this mind] resource layer_name agency_name resource_name] as-string]]
+  [conslist-as-english_string [get this as-english_conslist]]]
 
 [deftypefunk deliberative_action get as-english_symbol []
   [get [get this as-english_string] as-symbol]]

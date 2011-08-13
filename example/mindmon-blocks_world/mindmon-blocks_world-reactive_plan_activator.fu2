@@ -30,7 +30,7 @@
        [= mindmon_blocks_world_reactive_plan_activator_window initial-mindmon_blocks_world_reactive_plan_activator_window]
        [= semantic_plan                                      initial-semantic_plan]
        
-       [= plan_frame  [gtk-frame-new 'Reactive Plan']]
+       [= plan_frame  [gtk-frame-new 'Reactive Plan - ' [get [get semantic_plan phenomenal_name] as-string]]]
        [= vbox        [gtk-vbox-new 0]]
        [have plan_frame add vbox]
        

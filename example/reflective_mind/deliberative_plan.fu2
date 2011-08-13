@@ -24,12 +24,12 @@
 [deframe deliberative_plan [frame] [mind
 				    unique_name
 				    expression
-				    compiled_funk]
+				    internal-compiled_funk]
   [new [initial-mind initial-expression]
-       [= mind          initial-mind]
-       [= unique_name   [get mind new-name `plan]]
-       [= expression    initial-expression]
-       [= compiled_funk [get this __compiled_funk]]
+       [= mind                   initial-mind]
+       [= unique_name            [get mind new-name `plan]]
+       [= expression             initial-expression]
+       [= internal-compiled_funk nil]
        `[have this eval]
        ]]
 
@@ -150,7 +150,7 @@
 										     [eval `[funk [this]
 												  [let [[time_to_wait ,time_to_wait]]
 												    [dotimes [i time_to_wait]
-												      [terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
+												      `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
 												      [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
 												    ]]]]]
 					      [[eq `wait-to-call          command] [let [[action_name [elt arguments 0]]]
@@ -193,6 +193,11 @@
 
 [deftypefunk deliberative_plan get __compiled_funk []
   [deliberative_plan-expression-compile expression]]
+
+[deftypefunk deliberative_plan get compiled_funk []
+  [if [null internal-compiled_funk]
+      [= internal-compiled_funk [get this __compiled_funk]]]
+  internal-compiled_funk]
 
 [deftypefunk deliberative_plan execute eval []
   [funkall [get this compiled_funk] this]]

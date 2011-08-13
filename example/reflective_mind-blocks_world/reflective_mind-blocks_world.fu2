@@ -78,11 +78,11 @@
   'create blocks_world agent specific plans'
   
   [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
-						  [wait-for-time 5]
+						  [wait-for-time 3]
 						  [wait-to-call grab]
-						  [wait-for-time 9]
+						  [wait-for-time 16]
 						  [wait-to-call move_right]
-						  [wait-for-time 5]
+						  [wait-for-time 4]
 						  [wait-to-call drop]
 						  ]]
   

@@ -36,9 +36,7 @@
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_right_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-grab_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]
-	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]
-	 
-	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-stack_blocks_resource]]]
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]]
   
   nil]
 
@@ -72,14 +70,21 @@
   [have-apply this create_physical_action `[builtin_reactive physical drop]]
   [have-apply this create_physical_action `[builtin_reactive physical stop]] 
   
-  [have-apply this create_physical_action `[learned_reactive physical stack_blocks]] 
-  
   nil]
 
 [deftypefunk blocks_world_reflective_mind execute create_builtin_plans []
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in plans.']
   
   'create blocks_world agent specific plans'
+  
+  [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
+						  [wait-for-time 4]
+						  [wait-to-call grab]
+						  [wait-for-time 8]
+						  [wait-to-call move_right]
+						  [wait-for-time 4]
+						  [wait-to-call drop]
+						  ]]
   
   [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
 						  [wait-for-relationship block color red below gripper is-me t]

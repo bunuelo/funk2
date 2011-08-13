@@ -28,10 +28,12 @@
        [construct agency `plan]
        
        [have this add_resource [new deliberative_focus_on_plan_resource]]
-       [have this add_resource [new deliberative_register_plan_resource]]
-       [have this add_resource [new deliberative_register_another_plan_resource]]
-       [have this add_resource [new deliberative_focus_on_register_plan_from_focus_resource]]
-       [have this add_resource [new deliberative_focus_on_register_another_plan_from_focus_resource]]
+       [have this add_resource [new deliberative_execute_plan_in_focus_resource]]
+       [have this add_resource [new deliberative_focus_on_execute_plan_resource]]
+       [have this add_resource [new deliberative_register_a_plan_from_focus_resource]]
+       [have this add_resource [new deliberative_register_b_plan_from_focus_resource]]
+       [have this add_resource [new deliberative_focus_on_register_a_plan_resource]]
+       [have this add_resource [new deliberative_focus_on_register_b_plan_resource]]
        [have this add_resource [new deliberative_focus_plan_add_after_resource]]
        [have this add_resource [new deliberative_focus_plan_add_before_resource]]
        [have this add_resource [new deliberative_focus_plan_add_in_parallel_resource]]
@@ -53,11 +55,11 @@
 
 [deftypefunk deliberative_plan_agency execute create_builtin_actions []
   [have-apply [get this mind] create_plan_action `[deliberative plan execute_plan_in_focus]]
-  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_execute_plan_focus]]
-  [have-apply [get this mind] create_plan_action `[deliberative plan register_plan_from_focus]]
-  [have-apply [get this mind] create_plan_action `[deliberative plan register_another_plan_from_focus]]
-  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_register_plan]]
-  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_register_another_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_execute_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan register_a_plan_from_focus]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan register_b_plan_from_focus]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_register_a_plan]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_register_b_plan]]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_after]]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_before]]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_in_parallel]]
@@ -115,66 +117,66 @@
 
 
 
-'deliberative_register_plan_from_focus_resource'
+'deliberative_register_a_plan_from_focus_resource'
 
-[deframe deliberative_register_plan_from_focus_resource [traced_resource] []
+[deframe deliberative_register_a_plan_from_focus_resource [traced_resource] []
   [new []
-       [construct traced_resource `register_plan_from_focus
+       [construct traced_resource `register_a_plan_from_focus
 		  [funk [semantic_plan_phenomenal_name]
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			[= register_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
 			]]]]
 
-[deftypefunk deliberative_register_plan_from_focus_resource get as-english_conslist []
+[deftypefunk deliberative_register_a_plan_from_focus_resource get as-english_conslist []
   `[register plan currently in focus]]
 
 
 
-'deliberative_register_another_plan_resource'
+'deliberative_register_b_plan_from_focus_resource'
 
-[deframe deliberative_register_another_plan_resource [traced_resource] []
+[deframe deliberative_register_b_plan_from_focus_resource [traced_resource] []
   [new []
-       [construct traced_resource `register_another_plan
+       [construct traced_resource `register_b_plan_from_focus
 		  [funk [semantic_plan_phenomenal_name]
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			[= other_register_semantic_plan_phenomenal_name semantic_plan_phenomenal_name]
 			]]]]
 
-[deftypefunk deliberative_register_another_plan_resource get as-english_conslist []
+[deftypefunk deliberative_register_b_plan_from_focus_resource get as-english_conslist []
   `[register another plan currently in focus]]
 
 
 
-'deliberative_focus_on_register_plan_resource'
+'deliberative_focus_on_register_a_plan_resource'
 
-[deframe deliberative_focus_on_register_plan_resource [traced_resource] []
+[deframe deliberative_focus_on_register_a_plan_resource [traced_resource] []
   [new []
-       [construct traced_resource `focus_on_register_plan
+       [construct traced_resource `focus_on_register_a_plan
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			[= focus_semantic_plan_phenomenal_name register_semantic_plan_phenomenal_name]
 			]]]]
 
-[deftypefunk deliberative_focus_on_register_plan_resource get as-english_conslist []
+[deftypefunk deliberative_focus_on_register_a_plan_resource get as-english_conslist []
   `[focus on plan I am registering]]
 
 
 
-'deliberative_focus_on_register_another_plan_resource'
+'deliberative_focus_on_register_b_plan_resource'
 
-[deframe deliberative_focus_on_register_another_plan_resource [traced_resource] []
+[deframe deliberative_focus_on_register_b_plan_resource [traced_resource] []
   [new []
-       [construct traced_resource `focus_on_register_another_plan
+       [construct traced_resource `focus_on_register_b_plan
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			[= focus_semantic_plan_phenomenal_name other_register_semantic_plan_phenomenal_name]
 			]]]]
 
-[deftypefunk deliberative_focus_on_register_another_plan_resource get as-english_conslist []
+[deftypefunk deliberative_focus_on_register_b_plan_resource get as-english_conslist []
   `[focus on other plan I am registering]]
 
 

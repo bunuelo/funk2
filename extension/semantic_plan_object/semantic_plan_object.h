@@ -24,6 +24,7 @@
 
 #include "../semantic_object/semantic_object.h"
 
+f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr deliberative_plan);
 
 // **
 

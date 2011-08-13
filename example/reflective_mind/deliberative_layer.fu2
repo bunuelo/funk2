@@ -76,7 +76,8 @@
 [deftypefunk deliberative_layer execute add_physical_semantic_plan [semantic_plan]
   `[terminal_format standard-terminal '\ndeliberative_layer: adding physical plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
   [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_plan]
-  [= physical_semantic_plans [cons semantic_plan physical_semantic_plans]]]
+  [= physical_semantic_plans [cons semantic_plan physical_semantic_plans]]
+  [have [get this agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
 
 [deftypefunk deliberative_layer get physical_semantic_plans []
   physical_semantic_plans]

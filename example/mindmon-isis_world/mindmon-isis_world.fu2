@@ -86,16 +86,27 @@
   isis_agent_body]
 
 [deftypefunk mindmon_isis_world_agent get knowledge_base_names []
-  `[other_agents_knowledge
-    goal_event_knowledge
-    goal_knowledge
-    reflective_event_knowledge
+  `[reflective_event_knowledge
     reflective_knowledge
-    physical_type_event_knowledge
+    
+    other_agents_knowledge
+    
+    plan_plan_knowledge
+    plan_goal_knowledge
+    plan_type_knowledge
+    type_copy_of_plan_knowledge
+    plan_knowledge
+    
+    physical_goal_knowledge
     physical_type_knowledge
+    type_copy_of_physical_knowledge
     physical_event_knowledge
     physical_knowledge
-    visual_knowledge]]
+    
+    visual_knowledge
+    ]]
+
+
 
 [deftypefunk mindmon_isis_world_agent get tool_names []
   `[mindmon_isis_world_agent_builtin_reactive_activator

@@ -35,7 +35,7 @@
 [deframe deliberative_execute_plan_resource [traced_resource] []
   [new []
        [construct traced_resource `execute_plan
-		  [funk [semantic_plan_object]
+		  [funk [semantic_plan]
 			[assert-type semantic_plan_object semantic_plan]
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']
 			[set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan semantic_plan]

@@ -51,7 +51,7 @@
 					[cond [[eq `eval                  command] [if [not [eq 1 arguments-length]]
 										       `[error punctuation-colon ,[flatten_constree expression]]
 										     [let [[eval-expression [elt arguments 0]]]
-										       `[do some stuff]]]]
+										       `[check preconditions]]]]
 					      [[eq `prog                  command] [apply &append
 											  [append `[[do the following in serial punctuation-colon]]
 												  [let [[step_number 1]]

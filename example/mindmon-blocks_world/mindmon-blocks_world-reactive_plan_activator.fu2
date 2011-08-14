@@ -48,7 +48,7 @@
        
        [have execute_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\nmindmon_blocks_world_reactive_plan_activator_plan: executing "' [get [get semantic_plan deliberative_plan] as-string] '."']
+		   [terminal_format standard-terminal '\nuser: reactive plan activator executing "' [get [get semantic_plan deliberative_plan] as-string] '."']
 		   [have [get [get mindmon_blocks_world_reactive_plan_activator_window mindmon_agent] mind] activate `deliberative `execution `execute_plan semantic_plan]]
 	     nil]
        

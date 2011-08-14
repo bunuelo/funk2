@@ -58,7 +58,7 @@
 		     [have action__button signal_connect 'clicked'
 			   [funk []
 				 [fiber [funk []
-					      [terminal_format standard-terminal '\ndeliberative action activator: waiting to call ' [get action as-string]]
+					      [terminal_format standard-terminal '\nuser: deliberative action activator waiting to call "' [get action as-string] '."']
 					      [have action wait_to_call]]
 					nil]]
 			   nil]]]

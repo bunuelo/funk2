@@ -100,7 +100,7 @@
 						  [wait-for-time 4]
 						  [wait-to-call grab]
 						  [wait-for-time 17]
-						  [eval `[error bug_name `expected_precondition_does_not_exist]]
+						  [eval [error bug_name `expected_precondition_does_not_exist]]
 						  ]]
   
   [have this create_physical_semantic_plan `[prog [wait-to-call move_right]

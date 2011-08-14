@@ -44,7 +44,7 @@
 			  [if [is-type `bug result]
 			      [prog [terminal_format standard-terminal '\ndeliberative_layer: executing plan has a bug.']
 				    [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan nil]
-				    [have [get this mind] activate `reflective `plan_bug_response `initial_response semantic_plan result]]
+				    [have [get this mind] activate `reflective `plan_bug_response `initial_plan_bug_response semantic_plan result]]
 			    [prog [terminal_format standard-terminal '\ndeliberative_layer: successfully completed executing plan.']
 				  [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan nil]]]]
 			nil]]

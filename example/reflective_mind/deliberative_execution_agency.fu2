@@ -29,11 +29,14 @@
        
        this]]
 
+[defmetro assert-type 
+
 
 [deframe deliberative_execute_plan_resource [traced_resource] []
   [new []
        [construct traced_resource `execute_plan
-		  [funk [semantic_plan]
+		  [funk [semantic_plan_object]
+			[assert-type semantic_plan_object semantic_plan]
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']
 			[set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan semantic_plan]
 			[let [[result [shelter [cause-define cause-name `plan]

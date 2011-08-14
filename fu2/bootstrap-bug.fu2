@@ -112,10 +112,11 @@
 [defmetro assert-type [correct_type value]
   `[let [[assert_value ,value]]
      [if [not [is-type [quote ,correct_type] assert_value]]
-	 [error bug_name `value_failed_type_assertion
-		correct_type [quote ,correct_type]
-		value_name   [quote ,value]
-		assert_value assert_value]
+	 [error bug_name      `value_failed_type_assertion
+		expected_type [quote ,correct_type]
+		actual_type   [type assert_value]
+		value_name    [quote ,value]
+		assert_value  assert_value]
        assert_value]]]
 
 

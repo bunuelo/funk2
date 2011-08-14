@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_PLANNER__H
 #define F2__EXTENSION__SEMANTIC_PLANNER__H
 
-#include "../semantic_plan_object/semantic_plan_object.h"
+#include "../semantic_object/semantic_object.h"
 
 
 // **

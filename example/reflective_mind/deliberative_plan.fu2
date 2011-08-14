@@ -24,15 +24,13 @@
 [deframe deliberative_plan [frame] [mind
 				    unique_name
 				    expression
-				    internal-compiled_funk]
+				    [internal-compiled_funk    nil]
+				    [internal-english_conslist `uninitialized]
+				    [internal-english_string   nil]]
   [new [initial-mind initial-expression]
        [= mind                      initial-mind]
        [= unique_name               [get mind new-name `plan]]
        [= expression                initial-expression]
-       [= internal-compiled_funk    nil]
-       [= internal-english_conslist `uninitialized]
-       [= internal-english_string   nil]
-       `[have this eval]
        ]]
 
 [defunk flatten_constree [expression]

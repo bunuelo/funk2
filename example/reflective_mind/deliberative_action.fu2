@@ -25,7 +25,9 @@
 				      layer_name
 				      agency_name
 				      resource_name
-				      resource_arguments]
+				      resource_arguments
+				      [internal-english_conslist `uninitialized]
+				      [internal-english_string   nil]]
   [new [initial-mind
 	initial-layer_name
 	initial-agency_name
@@ -39,15 +41,19 @@
        ]]
 
 [deftypefunk deliberative_action get as-english_conslist []
-  [let [[resource-english_conslist [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist]]]
-    [if resource_arguments
-	[append resource-english_conslist
-		`[punctuation-comma]
-		resource_arguments]
-      resource-english_conslist]]]
+  [if [null internal-english_conslist]
+      [= internal-english_conslist [let [[resource-english_conslist [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist]]]
+				     [if resource_arguments
+					 [append resource-english_conslist
+						 `[punctuation-comma]
+						 resource_arguments]
+				       resource-english_conslist]]]]
+  internal-english_conslist]
 
 [deftypefunk deliberative_action get as-english_string []
-  [conslist-as-english_string [get this as-english_conslist]]]
+  [if [null internal-english_string]
+      [= internal-english_string [conslist-as-english_string [get this as-english_conslist]]]]
+  internal-english_string]
 
 [deftypefunk deliberative_action get as-english_symbol []
   [get [get this as-english_string] as-symbol]]

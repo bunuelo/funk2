@@ -26,10 +26,12 @@
 				    expression
 				    internal-compiled_funk]
   [new [initial-mind initial-expression]
-       [= mind                   initial-mind]
-       [= unique_name            [get mind new-name `plan]]
-       [= expression             initial-expression]
-       [= internal-compiled_funk nil]
+       [= mind                      initial-mind]
+       [= unique_name               [get mind new-name `plan]]
+       [= expression                initial-expression]
+       [= internal-compiled_funk    nil]
+       [= internal-english_conslist `uninitialized]
+       [= internal-english_string   nil]
        `[have this eval]
        ]]
 
@@ -87,10 +89,14 @@
 	[t                          `[error punctuation-colon ,[flatten_constree expression]]]]]
 
 [deftypefunk deliberative_plan get as-english_conslist []
-  [deliberative_plan-expression-as_english_conslist expression]]
+  [if [eq `uninitialized internal-english_conslist]
+      [= internal-english_conslist [deliberative_plan-expression-as_english_conslist expression]]]
+  internal-english_conslist]
 
 [deftypefunk deliberative_plan get as-english_string []
-  [conslist-as-english_string [get this as-english_conslist]]]
+  [if [null internal-english_string]
+      [= internal-english_string [conslist-as-english_string [get this as-english_conslist]]]]
+  internal-english_string]
 
 [deftypefunk deliberative_plan get as-string []
   [get this as-english_string]]

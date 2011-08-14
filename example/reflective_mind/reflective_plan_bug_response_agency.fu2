@@ -26,6 +26,7 @@
        [construct agency `plan_bug_response]
        
        [have this add_resource [new initial_plan_bug_response_resource]]
+       [have this add_resource [new assign_plan_execution_failure_blame_resource]]
        [have this add_resource [new expected_precondition_does_not_exist_response_resource]]
        [have this add_resource [new unknown_bug_name_response_resource]]
        
@@ -57,16 +58,26 @@
        nil]]
 
 
+'assign_plan_execution_failure_blame_resource'
+
+[deframe assign_plan_execution_failure_blame_resource [traced_resource] []
+  [new []
+       [construct traced_resource `assign_plan_execution_failure_blame
+		  [funk [semantic_plan bug]
+			[terminal_format standard-terminal '\nreflective_layer: assigning plan execution failure blame here.']
+			
+			]]
+       nil]]
+
+
 'expected_precondition_does_not_exist_response_resource'
 
 [deframe expected_precondition_does_not_exist_response_resource [traced_resource] []
   [new []
        [construct traced_resource `expected_precondition_does_not_exist_response
 		  [funk [semantic_plan bug]
-			[terminal_format standard-terminal
-					 '\nreflective_layer: expected precondition does not exist response here.'
-					 '\n                  buggy plan = "' [get [get semantic_plan deliberative_plan] as-string] '."'
-					 '\n                         bug = "' [get bug as-string] '."']
+			[terminal_format standard-terminal '\nreflective_layer: expected precondition does not exist response here.']
+			[have [get this mind] wait_to_call `reflective `plan_bug_response `assign_plan_execution_failure_blame semantic_plan bug]
 			]]
        nil]]
 

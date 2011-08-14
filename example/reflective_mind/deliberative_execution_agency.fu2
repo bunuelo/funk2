@@ -35,9 +35,14 @@
        [construct traced_resource `execute_plan
 		  [funk [plan]
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']
-			[with-new-cause [cause-define cause-name `plan]
-					[have plan eval]]
-			[terminal_format standard-terminal '\ndeliberative_layer: done executing plan.']
+			[set [get [get this agency] semantic_planner] execute_plan focus_plan]
+			[let [[result [shelter [cause-define cause-name `plan]
+					       [have plan eval]]]]
+			  [if [is-type `bug result]
+			      [prog [terminal_format standard-terminal '\ndeliberative_layer: executing plan has a bug.']
+				    [set [get [get this agency] semantic_planner] execute_plan nil]]
+			    [prog [terminal_format standard-terminal '\ndeliberative_layer: successfully completed executing plan.']
+				  [set [get [get this agency] semantic_planner] execute_plan nil]]]]
 			nil]]
        nil]]
 

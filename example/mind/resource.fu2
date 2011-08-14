@@ -264,28 +264,6 @@
 [deftypefunk resource get as-english_conslist []
   `[,name]]
 
-[defunk conslist-as-english_string [this]
-  [let [[string     '']
-	[first_time t]]
-    [mapc [funk [exp]
-		[if first_time
-		    [= first_time nil]
-		  [if [not [or [eq `punctuation-period exp]
-			       [eq `punctuation-comma  exp]
-			       [eq `punctuation-colon  exp]]]
-		      [= string [string-concat string ' ']]]]
-		[= string [string-concat string [cond [[eq `punctuation-period exp] '.']
-						      [[eq `punctuation-comma  exp] ',']
-						      [[eq `punctuation-colon  exp] ':']
-						      [t                            [get exp as-string]]]]]]
-	  this]
-    [have [have string replace_all
-		'-' ' '] replace_all
-		'_' ' ']]]
-
-[defunk conslist-as-english_symbol [this]
-  [get [conslist-as-english_string this] as-symbol]]
-
 [deftypefunk resource get as-string []
   [conslist-as-english_string [get this as-english_conslist]]]
 

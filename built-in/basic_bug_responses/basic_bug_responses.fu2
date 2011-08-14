@@ -183,3 +183,45 @@
 									 nil]]]]]
 						     ]]]]
 
+
+
+
+[defunk conslist-as-english_string [this]
+  [let [[string     '']
+	[first_time t]]
+    [mapc [funk [exp]
+		[if first_time
+		    [= first_time nil]
+		  [if [not [or [eq `punctuation-period exp]
+			       [eq `punctuation-comma  exp]
+			       [eq `punctuation-colon  exp]]]
+		      [= string [string-concat string ' ']]]]
+		[= string [string-concat string [cond [[eq `punctuation-period exp] '.']
+						      [[eq `punctuation-comma  exp] ',']
+						      [[eq `punctuation-colon  exp] ':']
+						      [t                            [get exp as-string]]]]]]
+	  this]
+    [have [have string replace_all
+		'-' ' '] replace_all
+		'_' ' ']]]
+
+[defunk conslist-as-english_symbol [this]
+  [get [conslist-as-english_string this] as-symbol]]
+
+
+
+[deftypefunk bug get as-english_conslist []
+  [let [[bug_english_conslist [have [get this frame] lookup `english_conslist]]]
+    [if bug_english_conslist
+	bug_english_conslist
+      [let [[bug_name [have [get this frame] lookup `bug_name]]]
+	[if bug_name
+	    `[,bug_name]
+	  `[bug]]]]]]
+
+[deftypefunk bug get as-english_string []
+  [conslist-as-english_string [get this as-english_conslist]]]
+
+[deftypefunk bug get as-string []
+  [get this as-english_string]]
+

@@ -50,24 +50,24 @@ different physical problem simulations.  The first is a simple
 proof-of-concept demonstration of my reflective learning algorithm in
 a blocks world problem domain.  Also, I show my reflective
 architecture extended to a larger physical reasoning domain, including
-multiple agents learning to cook together in a kitchen environment.
-In this larger problem space, agents can communicate high-level
+multiple AIs learning to cook together in a kitchen environment.
+In this larger problem space, AIs can communicate high-level
 procedures specified in a simple programming language that is shared
-by the agents, and refers to both mental and physical actions of the
-agents.
+by the AIs, and refers to both mental and physical actions of the
+AIs.
 
-\section{The Agent-Environment Model}
+\section{The AI-Environment Model}
 
 \begin{figure}[bth]
   \center
   \includegraphics[height=5cm]{gfx/agent_environment}
-  \caption[The agent-environment model]{The agent-environment model.}
+  \caption[The AI-environment model]{The AI-environment model.}
   \label{fig:agent_environment}
 \end{figure}
 
-Figure~\ref{fig:agent_environment} shows the basic agent-environment
+Figure~\ref{fig:agent_environment} shows the basic AI-environment
 model.  In this model, I make a distinction between the environment
-and the agent.  At any given time, the agent and the environment are
+and the AI.  At any given time, the AI and the environment are
 each represented as a specific static form of data.  Further, these
 representations change over time, according to a given transfer
 function.  I will treat this system as a deterministic system,
@@ -78,8 +78,8 @@ also many benefits to developing a deterministic model with perhaps a
 pseudorandom aspect because this allows for the repeatability of
 scientific experiments, for which the model may be used as a metric.
 The two processes communicate information along two channels: (1) an
-action channel from the agent to the environment, and (2) a perception
-channel from the environment to the agent.
+action channel from the AI to the environment, and (2) a perception
+channel from the environment to the AI.
 
 
 \subsection{The State-Action Model}
@@ -94,37 +94,37 @@ channel from the environment to the agent.
   \label{fig:state_action}
 \end{figure}
 
-The agent is in an environment, which is in a specific state.  My
-agent performs an action, which can affect the state of the
+The AI is in an environment, which is in a specific state.  My
+AI performs an action, which can affect the state of the
 environment.  Figure~\ref{fig:state_action} shows a simple \ac{FSM}
 state-action model, which has two states for the environment and two
-actions for the agent to perform in each of these states.  The
+actions for the AI to perform in each of these states.  The
 state-action model is a simple model for how actions map to changes in
 the state of the environment.
 
 
-\subsection{A Multiple Agent-Environment Model}
+\subsection{A Multiple AI-Environment Model}
 
 \begin{figure}[bth]
   \center
   \includegraphics[height=5cm]{gfx/multiple_agent_environment}
-  \caption[The multiple agent environment model]{The multiple agent environment model.}
+  \caption[The multiple AI environment model]{The multiple AI environment model.}
   \label{fig:multiple_agent_environment}
 \end{figure}
 
-In order to model social intelligence, we introduce the multiple agent
+In order to model social intelligence, we introduce the multiple AI
 environment model shown in
 Figure~\ref{fig:multiple_agent_environment}.
 
 
-\subsection{Agent Process Communication}
+\subsection{AI Process Communication}
 
-Because agent processes can only directly act on and perceive the
-environment, all communication between agent processes must occur
-through the environment process.  We assume that agents can
+Because AI processes can only directly act on and perceive the
+environment, all communication between AI processes must occur
+through the environment process.  We assume that AIs can
 communicate some form of symbolic knowledge structure in the absence
 of noise.  These representations are used to communicate processes
-from one agent to another.  Specific examples of such a process
+from one AI to another.  Specific examples of such a process
 representation that we have used in our experiments are described in
 more detail in
 Sections~\ref{sec:serial_process_representation}--\ref{sec:parallel_process_representation}.
@@ -145,13 +145,13 @@ See Figure~\ref{fig:frame_representation}.
 \label{sec:introducing_reflection_early_in_the_process}
 
 Now, I have introduced my problem as being divided into at least two
-processes, at least one agent process and an environment process.
+processes, at least one AI process and an environment process.
 Further, I have introduced how a basic process may be thought of as an
 \ac{FSM}.  At this point, I introduce a model for keeping track of the
 changes in a computational process: reflective knowledge.  I
 purposefully make this assumption before I define the details of the
-agent model process because, in my approach, I would like to
-reflectively reason about potentially any aspect of this agent
+AI model process because, in my approach, I would like to
+reflectively reason about potentially any aspect of this AI
 process.
 
 
@@ -182,7 +182,7 @@ structure as it was at any point in the past.\footnote{See
 \begin{figure}[bth]
   \center
   \includegraphics[height=5cm]{gfx/frame_perception}
-  \caption[Collections of frames used as perceptual input to agent]{Collections of frames used as perceptual input to agent.}
+  \caption[Collections of frames used as perceptual input to AI]{Collections of frames used as perceptual input to AI.}
   \label{fig:frame_perception}
 \end{figure}
 
@@ -207,24 +207,24 @@ See Figure~\ref{fig:frame_perception}.
   \label{fig:partial_frame_perception}
 \end{figure}
 
-The agent process does not have complete access to the state of its
-environment.  The agent's perceptual stream of information depends on
+The AI process does not have complete access to the state of its
+environment.  The AI's perceptual stream of information depends on
 the state of the environment, but it is a function of the environment
 and not the actual state of the environment.  In other words, the
 perceptual state that is communicated from the environment to the
-agent is an injective function mapping the environment to the
-perception of the agent.  See
+AI is an injective function mapping the environment to the
+perception of the AI.  See
 Figures~\ref{fig:partially_observable}~and~\ref{fig:partial_frame_perception}
 for two examples of partially observable environments.
 
 
-\subsection{Agent Abstract Physical Model}
+\subsection{AI Abstract Physical Model}
 
 \begin{figure}[bth]
   \center
   \includegraphics[width=8cm]{gfx/environment_perception_physical}
-  \caption[The agent has an abstract physical model of the
-    environment]{The agent has an abstract physical model of the
+  \caption[The AI has an abstract physical model of the
+    environment]{The AI has an abstract physical model of the
     environment.}
   \label{fig:environment_perception_physical}
 \end{figure}
@@ -251,7 +251,7 @@ See Figure~\ref{fig:goal_state}.
 I have now introduced the definitions for my relational state space,
 along with how reflective tracing, given certain assumptions, allows
 the creation of reflective event representations of the action
-resources within the agent's mind.
+resources within the AI's mind.
 
 In this section, I will describe how these representations and
 reflective event representations can be used to reflectively learn the

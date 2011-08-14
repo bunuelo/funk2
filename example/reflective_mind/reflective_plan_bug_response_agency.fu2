@@ -65,15 +65,20 @@
        [construct traced_resource `assign_plan_execution_failure_blame
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal '\nreflective_layer: assigning plan execution failure blame here.']
-			[mapc [funk [semantic_hypothesis]
-				    [terminal_format standard-terminal '\nreflective_layer: assigning failure blame to hypothesis.']
-				    
+			[let [[hypotheses [let [[hypothesis_set [semantic-lookup_set semantic_plan hypothesis]]]
+					    [if hypothesis_set
+						[get hypothesis_set elements]
+					      nil]]]]
+			  [if [null hypotheses]
+			      [prog [terminal_format standard-terminal '\nreflective_layer: no hypothesis assumptions to blame.']
 				    ]
-			      [let [[hypothesis_set [semantic-lookup_set semantic_plan hypothesis]]]
-				[if hypothesis_set
-				    [get hypothesis_set elements]
-				  nil]]]
-			]]
+			    [prog [terminal_format standard-terminal '\nreflective_layer: assigning failure blame to hypothesis assumptions.']
+				  [mapc [funk [semantic_hypothesis]
+					      [terminal_format standard-terminal '\nreflective_layer: assigning failure blame to hypothesis assumptions.']
+					      
+					      ]
+					hypotheses]]]
+			  ]]]
        nil]]
 
 

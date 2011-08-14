@@ -59,11 +59,11 @@ approaches can be used as solutions.
 There have been many approaches to modelling complex forms of
 reasoning by collecting large amounts of knowledge that describes
 correct or acceptable behavior in a domain.  For example, there are
-examples of complex multi-agent commonsense simulation environments
+examples of complex multi-AI commonsense simulation environments
 collects thousands of examples of users interacting in a complicated
 object-oriented social simulation \citep{orkin:2009},
 \citep{orkin:2010}.  These systems have complicated domains, but these
-projects do not attempt to build agents that attempt to accomplish
+projects do not attempt to build AIs that attempt to accomplish
 goals.  Instead, these systems are inference systems that simply try
 to reproduce typical behavior, rather than goal-directed behavior.
 
@@ -200,7 +200,7 @@ learning between symbolic relational structures \citep{gentner:1983}.
 Because my knowledge representation is relational and symbolic, I see
 Icarus' approaches to far transfer learning as highly compatible with
 my architecture's ability to support multiple knowledge domains for a
-single goal-oriented problem solving agent.  I am also interested in a
+single goal-oriented problem solving AI.  I am also interested in a
 technique of using differences of differences \citep{winston:1970} as
 an alternative to the structure mapping form of analogical transfer.
 
@@ -246,7 +246,7 @@ simpler reinforcement learning approach.
 Now that we have discussed the basic model of learning from experience
 what good goal states may be from rewards, let us consider the
 representations for the state space of the perceptions and actions of
-my model.  Control theory has given us many useful models for agents
+my model.  Control theory has given us many useful models for AIs
 that control continuous environments.  For example,
 Figure~\ref{fig:feedback_control} shows a simple difference feedback
 control circuit that is used in simple linear control systems.  The
@@ -254,7 +254,7 @@ system is given a desired state, there is a difference device that
 calculates the difference between the actual perceived value from the
 environment, and the control system then executes an action based on
 that difference, which affects the environment.  The result in such a
-negative feedback loop is that the agent's perception of the
+negative feedback loop is that the AI's perception of the
 environment is closer to the desired state.
 
 \subsection{Means-End Analysis}
@@ -263,7 +263,7 @@ In 1959, Newell, Shaw, and Simon published a report on a means-end
 analysis model that was designed to solve any symbolically represented
 problem \citep{newell:1959}.  Their system was called the \ac{GPS},
 and worked by being able to work with relational representations of
-current and desired states.  The agent had a catalogue of differences
+current and desired states.  The AI had a catalogue of differences
 between states that it knew how to minimize.  The system worked by
 finding the largest difference and executing the associated method for
 reducing this difference.  This work has grown into the Soar model
@@ -321,7 +321,7 @@ any other intentions.  If the plan fails, then we may find something
 to be modified in my knowledge in order to help us in avoiding this
 failure next time.  The planning process is a small part of the
 complete closed-loop learning algorithm that learns to plan from
-experience with the environment and other agents.
+experience with the environment and other AIs.
 
 
 
@@ -363,10 +363,10 @@ Of course, this combinational device would get complicated if I added probabilit
 \end{figure}
 
 Figure~\ref{fig:reinforcement_learning} shows the basic reinforcement
-learning model.  This model is an agent environment model, but there
-is an extra information channel from the environment to the agent,
+learning model.  This model is an AI environment model, but there
+is an extra information channel from the environment to the AI,
 which communicates a numerical reward signal.  We can now say that the
-agent has a learning problem.  The agent must learn what actions to
+AI has a learning problem.  The AI must learn what actions to
 execute in order to gather the most reward.
 
 \begin{figure}[bth]
@@ -388,7 +388,7 @@ plotted.
 
 Learning an approximation of what parts of a state space are good or
 bad, based on reward, is not all that is needed to determine what
-actions the agent should perform.  The agent wants to gather the most
+actions the AI should perform.  The AI wants to gather the most
 rewards over time.  A simple way to formalize this problem is to learn
 a policy that determines what action should be executed for every part
 of the state space, based on some sort of summation of rewards over
@@ -619,8 +619,8 @@ subsubsection{Models of Optimal Behavior}
 \cite{kaelbling:1996} discuss three primary models of optimal behavior:
 
 \begin{enumerate}
-\item{the \emph{finite horizon} model in which an agent performs receding horizon control, such that total reward is $E(\sum_{t=0}^{h}{r_t})$,}
-\item{the \emph{infinite discounted} model in which an agent uses future rewards discounted by a constant factor, $\gamma$, such that total reward is $E(\sum_{t=0}^{\infty}{\gamma^t r_t})$, and}
+\item{the \emph{finite horizon} model in which an AI performs receding horizon control, such that total reward is $E(\sum_{t=0}^{h}{r_t})$,}
+\item{the \emph{infinite discounted} model in which an AI uses future rewards discounted by a constant factor, $\gamma$, such that total reward is $E(\sum_{t=0}^{\infty}{\gamma^t r_t})$, and}
 \item{the \emph{average reward} model which is the infinite limit of the finite horizon model, such that total reward is $\lim_{h{\rightarrow}\infty}{E(\frac{1}{h}\sum_{t=0}^{h}{r_t})}$.}
 \end{enumerate}
 
@@ -631,7 +631,7 @@ Homeostasis monitors and continual ``heartbeat'' controllers could be implemente
 \subsubsection{Dynamic Programming and Optimal Control}
 
 \cite{bertsekas:1995} describe techniques for finding optimal and approximate \emph{functional} (\emph{memoizable}) solutions to reinforcement learning control problems, using recursive formulas of flat state spaces that can be optimized very easily by using memoized functions.
-While this approach does not handle abstract models of the agent's world, there are exciting options of combining a dynamic programming approach with an abstract form of reinforcement learning, such as the use of inductive logic described in \cite{dvzeroski:2001}.
+While this approach does not handle abstract models of the AI's world, there are exciting options of combining a dynamic programming approach with an abstract form of reinforcement learning, such as the use of inductive logic described in \cite{dvzeroski:2001}.
 
 \subsubsection{A Theoretical World Model}
 
@@ -686,7 +686,7 @@ The process of creative storytelling is handled very similarly to mechanical goa
 
 \subsubsection{Models of Learning by Credit Assignment through Temporal State Tracing}
 
-\emph{Eligibility traces} are a simple reinforcement learning tool for temporal credit assignment for an agent entering positive and negative reward states.
+\emph{Eligibility traces} are a simple reinforcement learning tool for temporal credit assignment for an AI entering positive and negative reward states.
 For example, the \emph{backward} view of eligibility tracing as applied to the temporal difference, $\text{TD}(\lambda)$, learning method simply augments the basic learning algorithm with an additional eligibitity factor, $e_t(s)$, for each state.
 Only non-zero values of the eligibility factor are remembered in tractible (approximate) implementations; this amounts to keeping a list of $n$ recently visited states.
 In the algorithm, the current state's eligibility factor, $e_t(s_t)$, is set to $1$ and all other states are discounted by a constant eligibility discount factor, $\gamma$.
@@ -719,7 +719,7 @@ My method of learning in this way is disussed in Section~\ref{causal_tracing_of_
 \cite{cox:2007a} discuss metareasoning, monitoring, and self-explanation.
 \cite{cox:2005} present a selected research review of metacognition in computation.
 \cite{anderson:2007} present a review of recent research in metareasoning and metalearning.
-\cite{cox:2007b} discuss perpetual self-aware cognitive agents.
+\cite{cox:2007b} discuss perpetual self-aware cognitive AIs.
 \cite{cox:2008} present a manifesto on metareasoning.
 \cite{davis:1980} discuss reasoning about control in terms of meta-rules.
 \cite{fox:2001} discuss introspective reasoning for index refinement in case-based reasoning.
@@ -746,46 +746,46 @@ My method of learning in this way is disussed in Section~\ref{causal_tracing_of_
 \cite{anderson:2005} discuss the metacognitive loop and the problem of brittleness in terms of logic, self-awareness and self-improvement.
 \cite{schubert:2005} discuss some knowledge representation and reasoning requirements for self-awareness.
 
-\subsubsection{Models Involving Multiple Agents}
+\subsubsection{Models Involving Multiple AIs}
 
-Models of multiple intelligent agents that work together to solve problems have become popular in the field of machine learning called ``multi-agent reinforcement learning.''
+Models of multiple intelligent AIs that work together to solve problems have become popular in the field of machine learning called ``multi-AI reinforcement learning.''
 Many popular surveys of the field exist \cite[]{wei:1995} \cite[]{sen:1999} \cite[]{stone:2000} \cite[]{shoham:2004} \cite[]{yang:2004} \cite[]{panait:2005}.
 
-\cite{boutilier:1996} discuss a specific type of $n$-person cooperative game theory, in which agents share common goals, or in other words, a joint value function.
+\cite{boutilier:1996} discuss a specific type of $n$-person cooperative game theory, in which AIs share common goals, or in other words, a joint value function.
 \cite{rapoport:2001} discuss $n$-person game theory in detail.
 
-\cite{bowling:2000} describe an analysis of stochastic game theory for multiagent reinforcement learning.
-\cite{claus:1998} describe the dynamics of reinforcement learning in cooperative multiagent systems.
-\cite{crites:1998} describe elevator group control using multiple reinforcement learning agents.
-\cite{ghavamzadeh:2006} describe hierarchical multi-agent reinforcement learning.
+\cite{bowling:2000} describe an analysis of stochastic game theory for multiAI reinforcement learning.
+\cite{claus:1998} describe the dynamics of reinforcement learning in cooperative multiAI systems.
+\cite{crites:1998} describe elevator group control using multiple reinforcement learning AIs.
+\cite{ghavamzadeh:2006} describe hierarchical multi-AI reinforcement learning.
 \cite{guestrin:2002} describe coordinated reinforcement learning.
-\cite{hu:1998} describe a theoretical framework and an algorithm for multiagent reinforcement learning.
-\cite{kapetanakis:2002} describe reinforcement learning of coordination in cooperative multi-agent systems.
+\cite{hu:1998} describe a theoretical framework and an algorithm for multiAI reinforcement learning.
+\cite{kapetanakis:2002} describe reinforcement learning of coordination in cooperative multi-AI systems.
 \cite{mataric:1997a} describe reinforcement learning in the multi-robot domain.
-\cite{park:2001} describe modular $Q$-learning based multi-agent cooperation for robot soccer.
-\cite{sandholm:1996} describe multiagent reinforcement learning in the iterated prisoner's dilemma.
-\cite{tan:1997} describe independent versus cooperative agents in multi-agent reinforcement learning.
+\cite{park:2001} describe modular $Q$-learning based multi-AI cooperation for robot soccer.
+\cite{sandholm:1996} describe multiAI reinforcement learning in the iterated prisoner's dilemma.
+\cite{tan:1997} describe independent versus cooperative AIs in multi-AI reinforcement learning.
 \cite{wang:2003} describe reinforcement learning to play an optimal Nash equilibrium in team Markov games.
 
-\subsubsection{Multiagent Reinforcement Learning with Layered Models}
-\cite{stone:1997} describe layered Learning in multiagent Systems.
+\subsubsection{MultiAI Reinforcement Learning with Layered Models}
+\cite{stone:1997} describe layered Learning in multiAI Systems.
 
-\subsubsection{Multiagent Reinforcement Learning with Communication}
+\subsubsection{MultiAI Reinforcement Learning with Communication}
 
-\cite{drogoul:1994} describe an application to social differentiation in ant colonies using a multi-agent simulation as a tool for modeling societies.
-\cite{fischer:2004} describe hierarchical reinforcement learning in communication-mediated multiagent coordination.
-\cite{price:1999} describe implicit imitation in multiagent reinforcement learning.
+\cite{drogoul:1994} describe an application to social differentiation in ant colonies using a multi-AI simulation as a tool for modeling societies.
+\cite{fischer:2004} describe hierarchical reinforcement learning in communication-mediated multiAI coordination.
+\cite{price:1999} describe implicit imitation in multiAI reinforcement learning.
 \cite{sen:1998} describe individual learning of coordination knowledge.
 
-\subsubsection{Multiagent Reinforcement Learning with Self- and Other- Models}
+\subsubsection{MultiAI Reinforcement Learning with Self- and Other- Models}
 
 \cite{mataric:1997b} describe learning social behavior.
-\cite{nagayuki:2000} describe an approach based on the otheragent's internal model in multi-agent reinforcement learning.
-\cite{noble:2004} describe social learning in a multi-agent system.
-\cite{nowe:2001} describe social agents playing a periodical policy.
+\cite{nagayuki:2000} describe an approach based on the otherAI's internal model in multi-AI reinforcement learning.
+\cite{noble:2004} describe social learning in a multi-AI system.
+\cite{nowe:2001} describe social AIs playing a periodical policy.
 
 \subsubsection{Models of Parent and Child Social Functions}
-\cite{castelfranchi:2001} describe the challenges for computational social science and multi-agent learning in a theory of social functions.
+\cite{castelfranchi:2001} describe the challenges for computational social science and multi-AI learning in a theory of social functions.
 
 
 \subsubsection{Empirical Models of Inferring Person Traits}
@@ -861,9 +861,9 @@ See Table~\ref{tab:winter_dispositional_properties} for the list of 18 dispositi
 
 This section discusses much research that often uses words that I often do not see used precisely.
 For example, the phrase ``self-awareness'' is often used to describe a sort of mental process that monitors another mental process.
-In this document, I try to be consistent by using the word ``self'' to only refer to models of self versus other in terms of agents thinking about personalities or properties of agents.
+In this document, I try to be consistent by using the word ``self'' to only refer to models of self versus other in terms of AIs thinking about personalities or properties of AIs.
 Other common uses of the terms ``self-awareness'' and ``self-consciousness'' are often less clear and refer to any kind of reflective process perceiving the execution of another process within the mind.
-There are many forms of reflective thought, and I choose to use the term ``self-reflection'' to refer to those reflective processes that deal with self and other personality models of inter-agent relationships.
+There are many forms of reflective thought, and I choose to use the term ``self-reflection'' to refer to those reflective processes that deal with self and other personality models of inter-AI relationships.
 
 \cite{goverover:2007} discuss treatment to improve self-awareness in persons with acquired brain injury.
 \cite{baumeister:1993} discuss when ego threats lead to self-regulation failure: negative consequences of high self-esteem.

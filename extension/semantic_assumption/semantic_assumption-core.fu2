@@ -24,3 +24,8 @@
 
 [semantic_assumption-core_extension-ping]
 
+[deftypefunk semantic_assumption execute assign_failure_blame [semantic_plan bug]
+  [terminal_format standard-terminal '\nassumption: assigning failure blame to action trans-frame to be reflectively refined.']
+  
+  ]
+

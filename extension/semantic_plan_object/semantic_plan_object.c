@@ -80,9 +80,7 @@ f2ptr raw__semantic_plan_object__type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_plan_object__type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_plan_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__type(cause, this);
 }
 export_cefunk1(semantic_plan_object__type, thing, 0, "Returns the specific type of object that this semantic_plan_object is.");
@@ -93,9 +91,7 @@ f2ptr raw__semantic_plan_object__plan_object_type(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_plan_object__plan_object_type(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_plan_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__plan_object_type(cause, this);
 }
 export_cefunk1(semantic_plan_object__plan_object_type, this, 0, "");
@@ -106,9 +102,7 @@ f2ptr raw__semantic_plan_object__plan_object_type__set(f2ptr cause, f2ptr this, 
 }
 
 f2ptr f2__semantic_plan_object__plan_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_plan_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__plan_object_type__set(cause, this, that);
 }
 export_cefunk2(semantic_plan_object__plan_object_type__set, this, that, 0, "");
@@ -119,9 +113,7 @@ f2ptr raw__semantic_plan_object__deliberative_plan(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__semantic_plan_object__deliberative_plan(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_plan_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__deliberative_plan(cause, this);
 }
 export_cefunk1(semantic_plan_object__deliberative_plan, this, 0, "");
@@ -132,9 +124,7 @@ f2ptr raw__semantic_plan_object__deliberative_plan__set(f2ptr cause, f2ptr this,
 }
 
 f2ptr f2__semantic_plan_object__deliberative_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_plan_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__deliberative_plan__set(cause, this, that);
 }
 export_cefunk2(semantic_plan_object__deliberative_plan__set, this, that, 0, "");
@@ -142,7 +132,7 @@ export_cefunk2(semantic_plan_object__deliberative_plan__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_plan_object__hypothesis__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"));
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"));
 }
 
 f2ptr f2__semantic_plan_object__hypothesis__lookup_set(f2ptr cause, f2ptr this) {
@@ -153,7 +143,7 @@ export_cefunk1(semantic_plan_object__hypothesis__lookup_set, this, 0, "Returns t
 
 
 f2ptr raw__semantic_plan_object__hypothesis__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"), that);
 }
 
 f2ptr f2__semantic_plan_object__hypothesis__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -164,14 +154,11 @@ export_cefunk2(semantic_plan_object__hypothesis__add, this, that, 0, "Adds the g
 
 
 f2ptr raw__semantic_plan_object__hypothesis__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"), that);
 }
 
 f2ptr f2__semantic_plan_object__hypothesis__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__hypothesis__remove(cause, this, that);
 }
 export_cefunk2(semantic_plan_object__hypothesis__remove, this, that, 0, "Removes the given that to no longer happen after this that.");

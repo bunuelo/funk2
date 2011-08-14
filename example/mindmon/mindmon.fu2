@@ -594,7 +594,7 @@
   [= need_update nil]
   [have this update_movie_display]
   [have this update_agent_widgets]
-  [have mindmon shrink_window]]
+  `[have mindmon shrink_window]]
 
 [deftypefunk mindmon_project get step_delay_time []
   [let [[step_delay_value [shelter [get [have [get step_delay_entry text] read] as-double]]]]

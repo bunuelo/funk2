@@ -142,44 +142,39 @@ export_cefunk2(semantic_plan_object__deliberative_plan__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_plan_object__hypothesis__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_ordered_object__ordered__hypothesis__lookup_set(cause, this, new__symbol(cause, "temporal"));
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"));
 }
 
 f2ptr f2__semantic_plan_object__hypothesis__lookup_set(f2ptr cause, f2ptr this) {
-  if (! raw__semantic_plan_object__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_plan_object, this);
   return raw__semantic_plan_object__hypothesis__lookup_set(cause, this);
 }
 export_cefunk1(semantic_plan_object__hypothesis__lookup_set, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
 
 
-f2ptr raw__semantic_plan_object__hypothesis__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
-  return raw__semantic_ordered_object__ordered__hypothesis__add(cause, this, new__symbol(cause, "temporal"), temporal_object);
+f2ptr raw__semantic_plan_object__hypothesis__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"), that);
 }
 
-f2ptr f2__semantic_plan_object__hypothesis__add(f2ptr cause, f2ptr this, f2ptr temporal_object) {
+f2ptr f2__semantic_plan_object__hypothesis__add(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_plan_object, this);
+  return raw__semantic_plan_object__hypothesis__add(cause, this, that);
+}
+export_cefunk2(semantic_plan_object__hypothesis__add, this, that, 0, "Adds the given that to happen after this ordered_object.");
+
+
+f2ptr raw__semantic_plan_object__hypothesis__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove_type_var_value(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "hypothesis"), that);
+}
+
+f2ptr f2__semantic_plan_object__hypothesis__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, temporal_object))) {
+      (! raw__semantic_plan_object__is_type(cause, that))) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_plan_object__hypothesis__add(cause, this, temporal_object);
+  return raw__semantic_plan_object__hypothesis__remove(cause, this, that);
 }
-export_cefunk2(semantic_plan_object__hypothesis__add, this, temporal_object, 0, "Adds the given temporal_object to happen after this ordered_object.");
-
-
-f2ptr raw__semantic_plan_object__hypothesis__remove(f2ptr cause, f2ptr this, f2ptr temporal_object) {
-  return raw__semantic_ordered_object__ordered__hypothesis__remove(cause, this, new__symbol(cause, "temporal"), temporal_object);
-}
-
-f2ptr f2__semantic_plan_object__hypothesis__remove(f2ptr cause, f2ptr this, f2ptr temporal_object) {
-  if ((! raw__semantic_plan_object__is_type(cause, this)) ||
-      (! raw__semantic_plan_object__is_type(cause, temporal_object))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_plan_object__hypothesis__remove(cause, this, temporal_object);
-}
-export_cefunk2(semantic_plan_object__hypothesis__remove, this, temporal_object, 0, "Removes the given temporal_object to no longer happen after this temporal_object.");
+export_cefunk2(semantic_plan_object__hypothesis__remove, this, that, 0, "Removes the given that to no longer happen after this that.");
 
 
 

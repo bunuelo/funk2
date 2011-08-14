@@ -97,6 +97,13 @@
 						  ]]
   
   [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
+						  [wait-for-time 4]
+						  [wait-to-call grab]
+						  [wait-for-time 17]
+						  [eval `[error bug_name `expected_precondition_does_not_exist]]
+						  ]]
+  
+  [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
 						  [wait-for-relationship block color red below gripper is-me t]
 						  [wait-to-call grab]
 						  [wait-for-property gripper movement_command stop]

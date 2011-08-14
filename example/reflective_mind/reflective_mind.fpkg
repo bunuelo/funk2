@@ -172,12 +172,17 @@
 
 [defpackage reflective_layer
   :packages [reflective_mind_core
+	     reflective_plan_bug_response_agency
 	     reflective_plan_object_type_goal_agency
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     english_language
 	     ]
    :sources ['reflective_layer.fu2']]
+
+[defpackage reflective_plan_bug_response_agency
+  :packages [reflective_mind_core]
+   :sources ['reflective_plan_bug_response_agency.fu2']]
 
 [defpackage plan_type_property_relation_goal
   :packages [reflective_mind_core]

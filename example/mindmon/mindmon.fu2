@@ -760,6 +760,7 @@
 			  simulation_view_initialization_events_menu_item
 			  simulation_view_all_objects_menu_item
 			  
+			  project_scrolled_window
 			  project_vbox
 			  project_vbox__contained_widget
 			  mindmon_project
@@ -895,8 +896,10 @@
 				   nil]
 			     
 			     
-			     [= project_vbox [gtk-vbox-new 0]]
-			     [have vbox pack_start project_vbox nil nil 0]
+			     [= project_vbox            [gtk-vbox-new 0]]
+			     [= project_scrolled_window [gtk-scrolled_window-new_with_viewport project_vbox]]
+			     [have vbox pack_start project_scrolled_window nil nil 0]
+			     
 			     
 			     [= mindmon_project nil]
 			     [have this close_project]

@@ -899,7 +899,7 @@
 			     [= project_vbox            [gtk-vbox-new 0]]
 			     [= project_scrolled_window [gtk-scrolled_window-new]]
 			     [have project_scrolled_window add_with_viewport project_vbox]
-			     [have vbox pack_start project_scrolled_window nil nil 0]
+			     [have vbox pack_start project_scrolled_window t t 0]
 			     
 			     
 			     [= mindmon_project nil]

@@ -29,9 +29,6 @@
        
        this]]
 
-[defmetro assert-type 
-
-
 [deframe deliberative_execute_plan_resource [traced_resource] []
   [new []
        [construct traced_resource `execute_plan
@@ -44,7 +41,9 @@
 			  [if [is-type `bug result]
 			      [prog [terminal_format standard-terminal '\ndeliberative_layer: executing plan has a bug.']
 				    [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan nil]
-				    [have [get this mind] activate `reflective `plan_bug_response `initial_plan_bug_response semantic_plan result]]
+				    [terminal_format standard-terminal '\ndeliberative_layer: waiting to call reflective initial plan bug response.']
+				    [have [get this mind] wait_to_call `reflective `plan_bug_response `initial_plan_bug_response semantic_plan result]
+				    [terminal_format standard-terminal '\ndeliberative_layer: returning from reflective bug response.']]
 			    [prog [terminal_format standard-terminal '\ndeliberative_layer: successfully completed executing plan.']
 				  [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan nil]]]]
 			nil]]

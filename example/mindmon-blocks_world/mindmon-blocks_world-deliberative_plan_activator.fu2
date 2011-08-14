@@ -49,8 +49,7 @@
        [have execute_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\nmindmon_blocks_world_deliberative_plan_activator_plan: executing "' [get [get semantic_plan deliberative_plan] as-string] '."']
-		   [have [get [get mindmon_blocks_world_deliberative_plan_activator_window mindmon_agent] mind] activate `deliberative `execution `execute_plan [get semantic_plan deliberative_plan]]
-		   ]
+		   [have [get [get mindmon_blocks_world_deliberative_plan_activator_window mindmon_agent] mind] activate `deliberative `execution `execute_plan semantic_plan]]
 	     nil]
        
        ]]

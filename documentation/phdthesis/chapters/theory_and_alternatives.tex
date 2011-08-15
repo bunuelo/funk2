@@ -12,10 +12,10 @@ h_j~&{{\geq}_g}~h_k \\
 \section{Temporal Difference Learning}
 
 \begin{align}
-V^{\pi}(s)&=E_{\pi}\{R_t|s_t=s\} \\
-         &=E_{\pi}\left\{\sum_{k=0}^{\infty}{\gamma}^kr_{t+k+1}{\arrowvert}s_t=s\right\} \\
-         &=E_{\pi}\{R_{t+t}+{\gamma}\sum_{k=0}^{\infty}{\gamma}^kr_{t+k+2}|s_t=s\} \\
-         &=E_{\pi}\{R_{t+t}+{\gamma}V^{\pi}(s_{t+1})|s_t=s\} \\
+\overline{V^{\pi}(s)}&=E_{\pi}\{R_t|s_t=s\} \\
+                    &=E_{\pi}\left\{\sum_{k=0}^{\infty}{\gamma}^kr_{t+k+1}{\arrowvert}s_t=s\right\} \\
+                    &=E_{\pi}\left\{R_{t+t}+{\gamma}\sum_{k=0}^{\infty}{\gamma}^kr_{t+k+2}|s_t=s\right\} \\
+                    &=E_{\pi}\left\{R_{t+t}+{\gamma}V^{\pi}(s_{t+1})|s_t=s\right\} \\
 \end{align}
 
 \section{Two Popular Approaches to Modelling Intelligence}

@@ -24,35 +24,16 @@
 
 #include "f2_global.h"
 
-typedef struct funk2_xmlrpc_server_s {
-  u64                       port_num;
-#if defined(F2__XMLRPC_SUPPORTED)
-  TServer                   abyssServer;
-  xmlrpc_registry*          registryP;
-  xmlrpc_env                env;
-#endif // F2__XMLRPC_SUPPORTED
-  int                       termination_requested; // a boolean value
-  funk2_processor_thread_t* processor_thread;
-} funk2_xmlrpc_server_t;
-
-typedef struct funk2_xmlrpc_server_list_s {
-  funk2_xmlrpc_server_t              server;
-  struct funk2_xmlrpc_server_list_s* next;
-} funk2_xmlrpc_server_list_t;
-
-
 // funk2_xmlrpc
 
 typedef struct funk2_xmlrpc_s {
 #if defined(F2__XMLRPC_SUPPORTED)
-  xmlrpc_env                  xmlrpc_environment;
+  xmlrpc_env xmlrpc_environment;
 #endif // F2__XMLRPC_SUPPORTED
-  funk2_xmlrpc_server_list_t* servers;
 } funk2_xmlrpc_t;
 
 void funk2_xmlrpc__init(   funk2_xmlrpc_t* this);
 void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this);
-void funk2_xmlrpc__handle( funk2_xmlrpc_t* this);
 
 // **
 

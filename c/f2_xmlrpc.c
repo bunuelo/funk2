@@ -24,97 +24,6 @@
 #if defined(F2__XMLRPC_SUPPORTED)
 
 
-xmlrpc_value* xmlrpc__sample_add(xmlrpc_env* envP, xmlrpc_value* paramArrayP, void* userData) {
-  xmlrpc_int x, y, z;
-  
-  // Parse our argument array.
-  xmlrpc_decompose_value(envP, paramArrayP, "(ii)", &x, &y);
-  if (envP->fault_occurred) {
-    return NULL;
-  }
-  
-  // Add our two numbers.
-  z = x + y;
-  
-  // Return our result.
-  return xmlrpc_build_value(envP, "i", z);
-}
-
-xmlrpc_server_shutdown_fn xmlrpc__request_shutdown;
-void                      xmlrpc__request_shutdown(xmlrpc_env* const envP, void* const context, const char* const comment) {
-  // You make this run by executing the system method
-  // 'system.shutdown'.  This function is registered in the method
-  // registry as the thing to call for that.
-  int* terminationRequestedP = context;
-  
-  xmlrpc_env_init(envP);
-  
-  status("Abyss XMLRPC server termination requested: %s\n", comment);
-  
-  *terminationRequestedP = 1;
-}
-
-boolean_t funk2_xmlrpc_server__init(funk2_xmlrpc_server_t* this, int port_num) {
-  this->port_num         = port_num;
-  this->processor_thread = NULL;
-  
-  xmlrpc_env_init(&(this->env));
-  
-  this->registryP = xmlrpc_registry_new(&(this->env));
-  
-  xmlrpc_registry_add_method(&(this->env), (this->registryP), NULL, "sample.add", &xmlrpc__sample_add, NULL);
-  
-  xmlrpc_registry_set_shutdown(this->registryP, &xmlrpc__request_shutdown, &(this->termination_requested));
-  
-  if (! ServerCreate(&(this->abyssServer), "XmlRpcServer", this->port_num, NULL, NULL)) {
-    return boolean__true; // failure
-  }
-  
-  xmlrpc_server_abyss_set_handlers(&(this->abyssServer), this->registryP);
-  
-  // DANGER: ServerInit calls exit(1) on failure to open a port.  This exits the entire process.  (We may need to include our own hacked abyss server if we want to avoid this behavior.)
-  ServerInit(&(this->abyssServer));
-  
-  this->termination_requested = 0;
-  
-  return boolean__false; // success
-}
-
-void funk2_xmlrpc_server__destroy(funk2_xmlrpc_server_t* this) {
-  ServerFree(&(this->abyssServer));
-}
-
-void funk2_xmlrpc_server__handle(funk2_xmlrpc_server_t* this) {
-  // This waits for the next connection, accepts it, reads the
-  // HTTP POST request, executes the indicated RPC, and closes
-  // the connection.
-  ServerRunOnce(&(this->abyssServer));
-}
-
-boolean_t funk2_xmlrpc_server__termination_requested(funk2_xmlrpc_server_t* this) {
-  return (this->termination_requested != 0);
-}
-
-void funk2_xmlrpc_server__handler_loop(funk2_xmlrpc_server_t* this) {
-  while (! funk2_xmlrpc_server__termination_requested(this)) {
-    status("Waiting for next RPC...\n");
-    funk2_xmlrpc_server__handle(this);
-  }
-}
-
-void* funk2_xmlrpc_server__start_handler_thread__helper(void* ptr) {
-  funk2_xmlrpc_server_t* this = (funk2_xmlrpc_server_t*)ptr;
-  status("Calling XMLRPC server handler loop in new thread.");
-  funk2_xmlrpc_server__handler_loop(this);
-  status("Finished XMLRPC server handler loop thread.");
-  this->processor_thread = NULL;
-  return NULL;
-}
-
-void funk2_xmlrpc_server__start_handler_thread(funk2_xmlrpc_server_t* this) {
-  this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), &funk2_xmlrpc_server__start_handler_thread__helper, (void*)this);
-}
-
 void xmlrpc_print_fault_status(xmlrpc_env* env) {
   status("xmlrpc error: %s (%d)", env->fault_string, env->fault_code);
 }
@@ -212,6 +121,9 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   case XMLRPC_TYPE_DEAD:    // not a value
     return new__error(f2list2__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "got_XMLRPC_TYPE_DEAD_type")));
+  case XMLRPC_TYPE_I8:      // not yet supported
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "got_XMLRPC_TYPE_I8_not_yet_supported_type")));
   case XMLRPC_TYPE_NIL:     // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data
@@ -486,22 +398,11 @@ void funk2_xmlrpc__init(funk2_xmlrpc_t* this) {
   
   xmlrpc_client_setup_global_const(&(this->xmlrpc_environment));
 #endif // F2__XMLRPC_SUPPORTED
-  
-  this->servers = NULL;
 }
 
 void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
   // no servers could have been created without xmlrpc support.
 #if defined(F2__XMLRPC_SUPPORTED)
-  funk2_xmlrpc_server_list_t* next;
-  funk2_xmlrpc_server_list_t* iter = this->servers;
-  while (iter) {
-    next = iter->next;
-    funk2_xmlrpc_server_t* server = &(iter->server);
-    funk2_xmlrpc_server__destroy(server);
-    f2__free(to_ptr(iter));
-    iter = next;
-  }
   
   // Clean up our error-handling environment.
   xmlrpc_env_clean(&(this->xmlrpc_environment));
@@ -509,67 +410,6 @@ void funk2_xmlrpc__destroy(funk2_xmlrpc_t* this) {
   xmlrpc_client_teardown_global_const();
 #endif
 }
-
-void funk2_xmlrpc__handle_destroying_dead_servers(funk2_xmlrpc_t* this) {
-  // no servers could have been created without xmlrpc support.
-#if defined(F2__XMLRPC_SUPPORTED)
-  funk2_xmlrpc_server_list_t* prev = NULL;
-  funk2_xmlrpc_server_list_t* next;
-  funk2_xmlrpc_server_list_t* iter = this->servers;
-  while (iter) {
-    next = iter->next;
-    funk2_xmlrpc_server_t* server = &(iter->server);
-    if (server->processor_thread == NULL) {
-      status("Destroying dead XMLRPC server on port " u64__fstr ".", server->port_num);
-      funk2_xmlrpc_server__destroy(server);
-      f2__free(to_ptr(iter));
-      if (prev) {
-	prev->next    = next;
-      } else {
-	this->servers = next;
-      }
-    }
-    prev = iter;
-    iter = next;
-  }
-#endif
-}
-
-void funk2_xmlrpc__handle(funk2_xmlrpc_t* this) {
-  funk2_xmlrpc__handle_destroying_dead_servers(this);
-}
-
-funk2_xmlrpc_server_t* funk2_xmlrpc__create_new_server(funk2_xmlrpc_t* this, int port_num) {
-#if defined(F2__XMLRPC_SUPPORTED)
-  funk2_xmlrpc_server_list_t* new_server_node = (funk2_xmlrpc_server_list_t*)from_ptr(f2__malloc(sizeof(funk2_xmlrpc_server_list_t)));
-  boolean_t server_initialization_failure = funk2_xmlrpc_server__init(&(new_server_node->server), port_num);
-  if (server_initialization_failure) {
-    return NULL; // failure
-  }
-  funk2_xmlrpc_server__start_handler_thread(&(new_server_node->server));
-  new_server_node->next = this->servers;
-  this->servers = new_server_node;
-  return &(new_server_node->server); // success
-#else
-  status(  "funk2 warning: XMLRPC support is not compiled in this install of funk2.");
-  printf("\nfunk2 warning: XMLRPC support is not compiled in this install of funk2."); fflush(stdout);
-  return NULL; // failure
-#endif // F2__XMLRPC_SUPPORTED
-}
-
-boolean_t raw__xmlrpc__create_new_server(u64 port_num) {
-  return (funk2_xmlrpc__create_new_server(&(__funk2.xmlrpc), port_num) != NULL);
-}
-
-f2ptr f2__xmlrpc__create_new_server(f2ptr cause, f2ptr port_num) {
-  assert_argument_type(integer, port_num);
-  u64 port_num__i = f2integer__i(port_num, cause);
-  return f2bool__new(raw__xmlrpc__create_new_server(port_num__i));
-}
-def_pcfunk1(xmlrpc__create_new_server, port_num,
-	    "creates a test xmlrpc server with a sample.",
-	    return f2__xmlrpc__create_new_server(this_cause, port_num));
-
 
 f2ptr f2__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
   assert_argument_type(string, url);
@@ -611,7 +451,6 @@ void f2__xmlrpc__initialize() {
   
   f2__xmlrpc__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(xmlrpc__create_new_server, port_num);
-  f2__primcfunk__init__3(xmlrpc__apply,             url, funkname, arguments);
+  f2__primcfunk__init__3(xmlrpc__apply, url, funkname, arguments);
 }
 

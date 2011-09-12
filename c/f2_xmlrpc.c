@@ -121,9 +121,11 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
   case XMLRPC_TYPE_DEAD:    // not a value
     return new__error(f2list2__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "got_XMLRPC_TYPE_DEAD_type")));
+#if defined(XMLRPC_HAVE_I8)
   case XMLRPC_TYPE_I8:      // not yet supported
     return new__error(f2list2__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "got_XMLRPC_TYPE_I8_not_yet_supported_type")));
+#endif // XMLRPC_HAVE_I8
   case XMLRPC_TYPE_NIL:     // empty value, eg NULL
     return nil;
   case XMLRPC_TYPE_BASE64: { // base64 value, eg binary data

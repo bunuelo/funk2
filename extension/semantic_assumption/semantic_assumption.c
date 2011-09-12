@@ -36,19 +36,17 @@ f2ptr raw__semantic_assumption__type_create(f2ptr cause, f2ptr this, f2ptr seman
   return this;
 }
 
-f2ptr raw__semantic_assumption__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_assumption__new(f2ptr cause, f2ptr semantic_realm, f2ptr semantic_action_transframe) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_assumption__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_assumption__type_create(cause, this, semantic_realm, semantic_action_transframe));
   return this;
 }
 
-f2ptr f2__semantic_assumption__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  return raw__semantic_assumption__new(cause, semantic_realm);
+f2ptr f2__semantic_assumption__new(f2ptr cause, f2ptr semantic_realm, f2ptr semantic_action_transframe) {
+  assert_argument_type(semantic_realm, semantic_realm);
+  return raw__semantic_assumption__new(cause, semantic_realm, semantic_action_transframe);
 }
-export_cefunk1(semantic_assumption__new, semantic_realm, 0, "Returns a new semantic_assumption object.");
+export_cefunk2(semantic_assumption__new, semantic_realm, semantic_action_transframe, 0, "Returns a new semantic_assumption object.");
 
 
 boolean_t raw__semantic_assumption__is_type(f2ptr cause, f2ptr thing) {

@@ -1184,6 +1184,8 @@ f2ptr raw__cairo_format_t__as__cairo_format(f2ptr cause, cairo_format_t cairo_fo
     return new__symbol(cause, "A1");
   case CAIRO_FORMAT_RGB16_565:
     return new__symbol(cause, "RGB16_565");
+  default:
+    return nil;
   }
   return new__symbol(cause, "unknown_cairo_format");
 }

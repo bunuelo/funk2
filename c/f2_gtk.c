@@ -23,10 +23,14 @@
 
 
 f2ptr f2__gtk__session_symbol(f2ptr cause) {
+#if defined(F2__GTK__SUPPORTED)
   if (__funk2.gtk.session_symbol == nil) {
     __funk2.gtk.session_symbol = f2__gensym(cause, new__string(cause, "gtk_session"));
   }
   return __funk2.gtk.session_symbol;
+#else
+  return nil;
+#endif // F2__GTK__SUPPORTED
 }
 
 // g_object

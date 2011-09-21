@@ -36,6 +36,120 @@ See Figure~\ref{fig:blocks_world_screenshot-1} for a screenshot of my blocks wor
 
 See Table~\ref{tab:blocks_world_agent_perceptions} for an example set of perceptual input that corresponds with the physical situation shown in Figure~\ref{fig:blocks_world_screenshot-1}.
 
+\section{A Concrete Plan}
+
+
+%Feedback from Committee:
+%
+%  Needed by Wednesday:
+%
+%    -- A plan that says what I'll do.
+%    -- What tests I will run and how I intend to interpret the results.
+%    -- Preferably: A revised outline of the thesis.
+%
+%    For the Implementation:
+%
+%      -- Show dense reflective traceback.
+%
+%        -- For example, I need to show the traceback working when the
+%           system encounters a realistic bug.
+%
+%        -- I should also show how this traceback data would be used to
+%           revise execution.
+%
+%    For the Thesis:
+%
+%      -- Make the thesis clear in the document from the outset, and
+%         stick to these ideas throughout.
+%
+%MY ADVICE IS TO DEVELOP A SIMPLE AND CLEAR NARRATIVE RUNNING FROM YOUR CONTRIBUTIONS TO YOUR IMPLEMENTATION THROUGH YOUR THEORY. YOU START VERY SIMPLE AND DEVELOP IT BY ADDING TECHNICAL DETAIL AS YOU PROCEED. TO DO THIS, IT IS IMPORTANT TO DETERMINE WHAT YOU WILL *NOT* SAY AS MUCH AS WHAT YOU WILL SAY. 
+%
+%        -- Use the defense material for focus.
+%
+%        -- Make clear what has been implemented.
+%
+
+\subsection{Credit Assignment Metric}
+
+  First, I will develop a metric by which I can measure the
+  performance of my credit assignment algorithm versus other
+  algorithms.  At one extreme, we have the brute force approach to
+  learning, in which all possible concepts are re-learned at every
+  opportunity (e.g. at every step in a Markov stepped system, or at
+  every knowledge event in my real-time event driven system).  At the
+  other extreme, we re-learn only those concepts whose fundamental
+  training knowledge has changed (instances, hypothesis space, or
+  features).  My approach to tracing the provenance of deliberative
+  knowledge through the reactive plan execution agencies will be
+  somewhere between these two extremes of efficiency.
+
+
+  -- Evaluation Metrics
+
+     -- credit assignment: the process of choosing a subset from the
+                           total possible set of concepts that should
+                           be focused on as being responsible for the
+                           occurrence of a given event.
+
+EXACTLY WHAT IS THE METRIC HERE? HOW WILL IT BE MEASURED? YOU HINT AT SPEED BELOW, AND IF THIS IS TRUE, WILL IT BE MEASURED IN DECISION-CYCLE TIME? DEFINE AND OPERATIONALIZE YOUR METRIC.
+
+       The credit assignment process can be more or less efficient in
+       focusing the learning resources toward concepts that can be
+       re-learned.
+
+\subsection{Temporal Credit Assignment}
+
+       I can measure the performance of my causal credit assignment
+       algorithm versus a typical temporal credit assignment
+       algorithm, such as an adaptation of the Temporal Difference
+       (TD) learning algorithm commonly used in the field of
+       reinforcement learning.
+
+HAVE YOU ALREADY IMPLEMENTED THIS ALGORITHM? WILL YOU USE AN EXISTING IMPLEMENTATION?
+
+\subsection{Causal Credit Assignment}
+
+        The goal of these tests are to show that learning by
+        provenance speeds the standard temporal credit assignment
+        method, which assigns credit to the sequence of immediately
+        previous states and actions.
+
+ABOVE YOU MENTION YOUR CREDIT ASSIGNMENT *VERSUS* A STANDARD ALGORITHM. HERE YOU STATE THAT YOUR VERSION WILL ACCELERATE THE STANDARD ALGORITHM. DO YOU MEAN THAT YOURS IS FASTER THAT THE STANDARD IN THE LIMIT? OR DO YOU INTEND TO COMBINE THEM TO SPEED UP THE TEMPORAL ALGORITHM? 
+
+     -- I will focus on re-learning category concepts given new
+        training instances that would change those concepts.
+
+  -- Now, given the above metric for what I will actually be measuring
+     as a performance metric, here are two specific deliberative
+     learning tasks where my causal learning will be superior to a
+     temporal credit assignment method.  This is primarily due to the
+     delayed time between deliberation about knowledge and the
+     execution of that knowledge, resulting in a precondition check
+     form of failure.  Specifically, the precondition check could
+     simply be what would be Removed by a trans-frame, but doesn't
+     necessarily exist in the physical knowledge at the time of
+     execution.  The following are two examples of scenarios:
+
+\subsection{The Social Knowledge Trust Task}
+
+        Some plans can be learned through a social communication
+        language.  Physical plans are added to the deliberative
+        knowledge with the added relationship with the appropriate
+        social provenance markers, e.g. Gripper-1 may represent that a
+        given plan is told to it by The-User (or another social
+        source).
+
+        The Decision to use a plan that accomplishes a given goal from
+        one knowledge source or another can be learned, but the
+        learning of this type of action is difficult because of the
+        often indirect temporal connection between this deliberative
+        Decision involved in choosing or creating a plan and the
+        actual execution failure, resulting from executing a plan that
+        has derived from that deliberative decision.
+
+THIS LONG RUN-ON SENTENCE IS TYPICAL OF YOUR WRITING AND PLACES THE BURDEN OF UNDERSTANDING UPON THE READER. WHAT IS LEARNED? A DECISION OR AN ACTION? FURTHERMORE, YOU PREVIOUSLY DISCUSSED LEARNING CONCEPTS. IMPLEMENT A SINGLE LEARNING ALGORITHM AND USE IT TO ILLUSTRATE YOUR THEORY. AGAIN, DECIDE WHAT YOU WILL NOT SAY.
+
+
 \subsection{Working in a World of Building Blocks}
 
 In his PhD thesis, Terry Winograd worked in the world of building

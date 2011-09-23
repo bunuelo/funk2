@@ -17,6 +17,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk xmlrpc-create_new_server &primfunk:xmlrpc__create_new_server]
-[globalize-funk xmlrpc-apply             &primfunk:xmlrpc__apply]
+[globalize-funk xmlrpc-apply &primfunk:xmlrpc__apply]
 

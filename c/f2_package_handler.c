@@ -41,6 +41,12 @@ def_pcfunk0(package_handler__new,
 f2ptr raw__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name) {
   f2ptr package_frame = f2__package_handler__package_frame(cause, this);
   f2ptr package       = f2__frame__lookup_var_value(cause, package_frame, name, nil);
+  if (package == nil) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),     new__symbol(cause, "package_handler_does_not_contain_package"),
+				   new__symbol(cause, "this"),         this,
+				   new__symbol(cause, "package_name"), name));
+  }
   return package;
 }
 

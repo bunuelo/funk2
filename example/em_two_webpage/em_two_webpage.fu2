@@ -627,9 +627,8 @@
     builtin_reactive_neural_plug_agency
     forgetful_event_stream
     semantic_resource_action_event
-    isis_world_demo
-    isismon_knowledge
-    semantic_object_type
+    mindmon_knowledge
+    semantic_object_type_event
     semantic_temporal_object
     isis_world_client
     traced_resource

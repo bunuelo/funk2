@@ -18,6 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage em_two_webpage
-  :packages [funk2-htmldoc]
+  :packages [funk2-htmldoc
+	     mindmon
+	     moral_compass]
    :sources ['em_two_webpage.fu2']]
 

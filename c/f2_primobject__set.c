@@ -320,6 +320,31 @@ def_pcfunk1(set__is_empty, this,
 	    return f2__set__is_empty(this_cause, this));
 
 
+f2ptr raw__set__union(f2ptr cause, f2ptr rest) {
+  f2ptr set = f2__set__new(cause);
+  {
+    f2ptr iter = rest;
+    while (iter != nil) {
+      f2ptr iter__set = f2__cons__car(cause, iter);
+      assert_argument_type(set, iter__set);
+      {
+	set__iteration(cause, iter__set, element,
+		       f2__set__add(cause, set, element);
+		       );
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return set;
+}
+
+f2ptr f2__set__union(f2ptr cause, f2ptr rest) {
+  assert_argument_type(conslist, rest);
+  return raw__set__union(cause, rest);
+}
+def_pcfunk0_and_rest(set__union, rest, return f2__set__union(this_cause, rest));
+
+
 f2ptr raw__set__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);

@@ -342,7 +342,9 @@ f2ptr f2__set__union(f2ptr cause, f2ptr rest) {
   assert_argument_type(conslist, rest);
   return raw__set__union(cause, rest);
 }
-def_pcfunk0_and_rest(set__union, rest, return f2__set__union(this_cause, rest));
+def_pcfunk0_and_rest(set__union, rest,
+		     "Returns a new set that represents the union of the given sets.",
+		     return f2__set__union(this_cause, rest));
 
 
 f2ptr raw__set__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

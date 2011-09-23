@@ -45,6 +45,8 @@ declare_object_type_4_slot(set, write_cmutex, key_count, bin_num_power, bin_arra
 			   f2ptr is_empty__funk;
 			   f2ptr union__symbol;
 			   f2ptr union__funk;
+			   f2ptr intersection__symbol;
+			   f2ptr intersection__funk;
 			   f2ptr an_arbitrary_element__symbol;
 			   f2ptr an_arbitrary_element__funk;
 			   f2ptr terminal_print_with_frame__symbol;
@@ -85,6 +87,8 @@ boolean_t raw__set__is_empty            (f2ptr cause, f2ptr this);
 f2ptr      f2__set__is_empty            (f2ptr cause, f2ptr this);
 f2ptr     raw__set__union               (f2ptr cause, f2ptr rest);
 f2ptr      f2__set__union               (f2ptr cause, f2ptr rest);
+f2ptr     raw__set__intersection        (f2ptr cause, f2ptr rest);
+f2ptr      f2__set__intersection        (f2ptr cause, f2ptr rest);
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 

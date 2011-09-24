@@ -621,87 +621,15 @@
   `[]]
 
 [defunk em_two-documentation-all_packages []
-  `[movie
-    isis_visual_object
-    deliberative_execution_agency
-    builtin_reactive_neural_plug_agency
-    forgetful_event_stream
-    semantic_resource_action_event
-    mindmon_knowledge
-    semantic_object_type_event
-    semantic_temporal_object
-    isis_world_client
-    traced_resource
-    mental_layer
-    self_conscious_layer
-    reflective_mind_perception
-    semantic_causal_object
-    semantic_knowledge_base
-    graph_isomorphism
-    semantic_action_event
-    image_sequence
-    meta_semantic_knowledge_base
-    semantic_event_knowledge_base
-    deliberative_layer
-    conceptnet
-    mind
-    self_conscious_imprimer_agency
-    image
-    agent_body
-    graph_match_error_correcting
-    divisi2
-    isismon_learned_reactive_physical_activator
-    semantic_ordered_object
-    graph_cluster 
-    learned_reactive_physical_knowledge_agency
-    semantic_resource
-    semantic_resource_action_sequence
-    graph_match
-    learned_reactive_language_agency
-    learned_reactive_physical_agency
-    isismon
-    semantic_event_sequence
-    self_reflective_layer
-    moral_agent_body
-    moral_compass
-    timeline
-    reflective_mind_visual_agent
-    reflective_mind_visual_object
-    reflective_credit_assignment_agency
-    semantic_packable_object
-    reflective_event_knowledge_agency
-    isis_visual_agent
-    event_stream
-    isismon_agent
-    isismon_core
-    mindmon
-    semantic_physical_object
-    traced_mind
-    reflective_mind_proprioceptual_object
-    agency
-    builtin_reactive_physical_agency
-    semantic_event
-    semantic_agent
-    semantic_frame
-    semantic_object
-    semantic_realm
-    reflective_layer
-    deliberative_physical_event_knowledge_agency
-    semantic_containment_object 
-    semantic_relationship_key
-    builtin_reactive_sensory_agency
-    semantic_visual_object
-    resource
-    semantic_directed_action_event
-    semantic_causal_event
-    self_reflective_other_agents_knowledge_agency
-    learned_reactive_layer 
-    isismon_builtin_reactive_physical_activator
-    learned_reactive_sensory_agency
-    builtin_reactive_layer
-    physical_world
-    propogator]]
-
+  [let [[top_packages     `[moral_compass
+			    mindmon]]
+	[package_name_set [new set]]]
+    [mapc [funk [package_name]
+		[mapc [funk [node]
+			    [have package_name_set add [get node label]]]
+		      [append [get [get [lookup-package package_name] dependency_graph] node_set]]]]
+	  top_packages]
+    [get package_name_set elements]]]
 
 [defunk compile_em_two_css [context]
   [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]

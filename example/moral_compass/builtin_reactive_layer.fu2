@@ -1,0 +1,50 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'builtin_reactive_layer'
+
+[deframe builtin_reactive_layer [mental_layer] []
+  [new []
+       [construct mental_layer 0 `builtin_reactive]
+       [parog [have this add_agency [new builtin_reactive_neural_plug_agency]]
+	      [have this add_agency [new builtin_reactive_sensory_agency]]
+	      [have this add_agency [new builtin_reactive_physical_agency]]]
+       this]]
+
+[deftypefunk builtin_reactive_layer execute know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
+  ]
+
+[deftypefunk builtin_reactive_layer execute know_of_removal_of_semantic_frame_value [semantic_frame key_type key value]
+  ]
+
+[deftypefunk builtin_reactive_layer execute create_knowledge []
+  [have [get this agency `sensory] create_knowledge]
+  ]
+
+[deftypefunk builtin_reactive_layer execute connect_knowledge_reflection []
+  [have [get this agency `sensory] connect_knowledge_reflection]
+  ]
+
+[deftypefunk builtin_reactive_layer get perception []
+  [get [get this agency `sensory] perception]]
+
+[deftypefunk builtin_reactive_layer get visual_objects []
+  [get [get this agency `sensory] visual_objects]]
+

@@ -1,0 +1,101 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'learned_reactive_layer'
+
+[deframe learned_reactive_layer [mental_layer] [[semantic_visual_object_name_hash [new ptypehash]]
+						[natural_language_command_frame   nil]]
+  [new []
+       [construct mental_layer 1 `learned_reactive]
+       [parog [have this add_agency [new learned_reactive_sensory_agency]]
+	      [have this add_agency [new learned_reactive_physical_agency]]
+	      [have this add_agency [new learned_reactive_language_agency]]
+	      [have this add_agency [new learned_reactive_physical_knowledge_agency]]]
+       [= natural_language_command_frame [new natural_language_command_frame]]
+       [have natural_language_command_frame add_command `[pick up] `[direct_object] nil
+	     [funk [direct_object]
+		   [terminal_format standard-terminal '\nPicking up ' [get direct_object leaf_symbols] '.']
+		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+		     [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame language_command_frame]
+		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
+		     [have language_command_frame add `interpretation `possibility [frame command `[pick up] direct_object direct_object]]]]]
+       [have natural_language_command_frame add_command `[look down] `[] nil
+	     [funk [direct_object]
+		   [terminal_format standard-terminal '\nLooking down.']
+		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+		     [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame language_command_frame]
+		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
+		     [have language_command_frame add `interpretation `possibility [frame command `[look down]]]]]]
+       [have natural_language_command_frame add_command `[look up] `[] nil
+	     [funk [direct_object]
+		   [terminal_format standard-terminal '\nLooking up.']
+		   [let [[language_command_frame [new semantic_frame [get [get this mind] semantic_realm]]]]
+		     [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame language_command_frame]
+		     [have language_command_frame add `interpretation `cause-of    semantic_cause_of_language_command]
+		     [have language_command_frame add `interpretation `possibility [frame command `[look up]]]]]]
+       this]]
+
+[deftypefunk learned_reactive_layer get semantic_visual_object [visual_object_name]
+  [let [[semantic_visual_object [have semantic_visual_object_name_hash lookup visual_object_name]]]
+    [if [null semantic_visual_object]
+	[let [[new_semantic_visual_object [new semantic_frame [get [get this mind] semantic_realm]]]]
+	  [have new_semantic_visual_object add `property `category `visual_object]
+	  [have semantic_visual_object_name_hash add visual_object_name new_semantic_visual_object]
+	  [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame new_semantic_visual_object]
+	  [= semantic_visual_object new_semantic_visual_object]]]
+    semantic_visual_object]]
+
+[deftypefunk learned_reactive_layer execute reflectively_know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
+  [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
+    [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame relationship]
+    [print [conslist key_type key]]
+    [cond [[and [eq key_type `property] [cond [[eq key `visual_object_name] [let [[visual_object_name value]]
+									      [let [[semantic_visual_object [get this semantic_visual_object visual_object_name]]]
+										[have semantic_visual_object replace_all `category `most_recent_example relationship]
+										[have semantic_visual_object add         `category `example             relationship]]]]
+					      ]]]
+	  [[and [eq key_type `language] [cond [[eq key `symbols] [let [[symbols value]]
+								   [let [[parse_trees [get english_dictionary parse_trees symbols]]]
+								     [if parse_trees
+									 [prog [mapc [funk [parse_tree]
+											   [have this-resource think_to_self 'I parse ' [get parse_tree serialized]]
+											   [cause-define semantic_cause_of_language_command relationship]
+											   [have natural_language_command_frame execute_parse_tree parse_tree]]
+										     parse_trees]
+									       ]
+								       [have this-resource think_to_self 'I cannot parse.']]]]]]]]
+	  [[and [eq key_type `language] [cond [[eq key `command] nil]]]]
+	  ]
+    ]]
+
+
+[deftypefunk learned_reactive_layer execute reflectively_know_of_removal_of_semantic_frame_value [semantic_frame key_type key value]
+  [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
+    [have relationship add `instant_event `removed_at_time [time]]
+    [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame added_relationship]]]
+
+[deftypefunk learned_reactive_layer execute create_knowledge []
+  [have [get this agency `physical_knowledge] create_knowledge]
+  ]
+
+[deftypefunk learned_reactive_layer execute connect_knowledge_reflection []
+  [have [get this agency `physical_knowledge] connect_knowledge_reflection]
+  ]
+

@@ -1,0 +1,70 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'goal_knowledge_resource'
+
+[deframe goal_knowledge_resource [traced_resource] [semantic_goal
+						    is_occurring_funk
+						    evaluate_is_occurring_trigger]
+  [new [initial-name
+	initial-semantic_goal
+	initial-is_occurring_funk
+	initial-evaluate_is_occurring_trigger]
+       [construct traced_resource initial-name
+		  [funk []
+			[have this execute_resource_raw_funk]
+			]]
+       [= semantic_goal                 initial-semantic_goal]
+       [= is_occurring_funk             initial-is_occurring_funk]
+       [= evaluate_is_occurring_trigger initial-evaluate_is_occurring_trigger]
+       nil]]
+
+[deftypefunk goal_knowledge_resource execute execute_resource_raw_funk []
+  `[terminal_format standard-terminal '\n' [get this name] ' resource activated.']
+  [while t
+    [wait-for-trigger evaluate_is_occurring_trigger]
+    `[terminal_format standard-terminal '\n' [get this name] ' resource triggered.']
+    [if [not [get [get [get this mind] semantic_knowledge_base `goal_knowledge] contains_semantic_frame semantic_goal]]
+	[have [get [get this mind] semantic_knowledge_base `goal_knowledge] add_semantic_frame semantic_goal]]
+    [let [[is_occurring [apply is_occurring_funk nil]]]
+      [set semantic_goal is_occurring is_occurring]]]]
+
+
+'deliberative_goal_knowledge_agency'
+
+[deframe deliberative_goal_knowledge_agency [agency] []
+  [new []
+       [construct agency `goal_knowledge]
+       
+       nil]]
+
+[deftypefunk deliberative_goal_knowledge_agency execute create_knowledge []
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `goal_knowledge [get [get this mind] semantic_realm]]]]
+
+[deftypefunk deliberative_goal_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->goal_knowledge]]
+
+
+[deftypefunk deliberative_goal_knowledge_agency execute add_physical_object_class_relationship_goal [left_object_class relationship_key_type relationship_key right_object_class]
+  'need to add object classes to visual knowledge and physical knowledge before writing this.'
+  ]
+
+
+

@@ -1,0 +1,64 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe activate_resource [traced_resource] [[command_mutex         [new mutex]]
+					      [command_ready         nil]
+					      [command_done          t]
+					      [command_layer_name    nil]
+					      [command_agency_name   nil]
+					      [command_resource_name nil]
+					      [command_args          nil]
+					      [command_ready_trigger [new fiber_trigger]]]
+  [new []
+       [construct traced_resource [type this]
+		  [funk []
+			[have this think_to_self 'Neural plug activate_resource ready.']
+			[while t
+			  [wait-for-trigger command_ready_trigger]
+			  [have command_mutex lock]
+			  [if command_ready
+			      [prog [have this think_to_self 'Neural plug is activating the ' command_resource_name ' resource in the ' command_agency_name ' agency in the ' command_layer_name ' layer with args=' command_args]
+				    [have-apply [get this mind] wait_to_activate `[,command_layer_name ,command_agency_name ,command_resource_name @command_args]]
+				    [= command_ready nil]
+				    [= command_done  t]]]
+			  [have command_mutex unlock]]]]
+       [= vital t]
+       nil]]
+
+[deftypefunk activate_resource execute command [layer_name agency_name resource_name :rest args]
+  [let [[success nil]]
+    [while [not success]
+      [have command_mutex lock]
+      [if command_done
+	  [prog [= command_layer_name    layer_name]
+		[= command_agency_name   agency_name]
+		[= command_resource_name resource_name]
+		[= command_args          args]
+		[= command_ready         t]
+		[= command_done          nil]
+		[= success               t]]]
+      [have command_mutex unlock]]]
+  [have command_ready_trigger trigger]]
+
+[deframe builtin_reactive_neural_plug_agency [agency] []
+  [new []
+       [construct agency `neural_plug]
+       [have this add_resource [new activate_resource]]
+       this]]
+

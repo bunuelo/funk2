@@ -1,0 +1,124 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'deliberative_goal_event_knowledge_agency'
+
+[deframe deliberative_goal_event_knowledge_agency [agency] []
+  [new []
+       [construct agency `goal_event_knowledge]
+       
+       [have this add_resource [new translate_goal_knowledge_to_goal_event_knowledge_resource]]
+       
+       nil]]
+
+
+[deftypefunk deliberative_goal_event_knowledge_agency execute create_knowledge []
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `goal_event_knowledge [get [get this mind] semantic_realm]]]
+  ]
+
+[deftypefunk deliberative_goal_event_knowledge_agency execute connect_knowledge_reflection []
+  [have [get this mind] create_knowledge_event_stream_iterator `goal_knowledge `goal_knowledge->goal_event_knowledge]
+  ]
+
+
+'translate_goal_knowledge_to_goal_event_knowledge_resource'
+
+[deframe translate_goal_knowledge_to_goal_event_knowledge_resource [traced_resource] [[existence_goal_phenomenon_hash        [hash]]
+										      [existence_goal_relationship_ptypehash [new ptypehash]]
+										      [end_of_goal_event_changes_trigger     [new fiber_trigger]]]
+  [new []
+       [construct traced_resource `translate_goal_knowledge_to_goal_event_knowledge
+		  [funk []
+			[have this execute_resource_raw_funk]
+			]]
+       [= vital t]
+       nil]]
+
+[deftypefunk translate_goal_knowledge_to_goal_event_knowledge_resource get goal_phenomenon_existence [goal_phenomenon]
+  [let [[existence_event [have existence_goal_phenomenon_hash lookup goal_phenomenon]]]
+    [if [null existence_event]
+	[prog [= existence_event [new semantic_know_of_existence_event [get [get this mind] semantic_realm] goal_phenomenon]]
+	      [have existence_goal_phenomenon_hash add goal_phenomenon existence_event]
+	      [have [get [get this mind] semantic_knowledge_base `goal_event_knowledge] add_semantic_frame existence_event]]]
+    existence_event]]
+
+[deftypefunk translate_goal_knowledge_to_goal_event_knowledge_resource get goal_relationship_existence [goal_relationship]
+  [let [[relationship_event [have existence_goal_relationship_ptypehash lookup goal_relationship]]]
+    [if [null relationship_event]
+	[prog [= relationship_event [new semantic_know_of_relationship_event [get [get this mind] semantic_realm] goal_relationship]]
+	      [have existence_goal_relationship_ptypehash add goal_relationship relationship_event]
+	      [have [get [get this mind] semantic_knowledge_base `goal_event_knowledge] add_semantic_frame relationship_event]]]
+    relationship_event]]
+
+[deftypefunk translate_goal_knowledge_to_goal_event_knowledge_resource execute goal_relationship_existence-remove [goal_relationship]
+  [have existence_goal_relationship_ptypehash remove goal_relationship]]
+
+[deftypefunk translate_goal_knowledge_to_goal_event_knowledge_resource execute execute_resource_raw_funk []
+  [let [[goal_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `goal_knowledge->goal_event_knowledge]]]
+    [while t
+      [let [[event [have goal_knowledge_iterator wait_for_current]]]
+	[if [not [null event]]
+	    [prog [if [get this debug] [terminal_format standard-terminal '\n  translate goal->goal_event event: ' event]]
+		  [let [[event_type [get event event_type]]]
+		    [cond [[and [is-type `semantic_knowledge_base_event event]
+				[eq event_type `add_semantic_frame]]           [let [[semantic_frame [get event semantic_frame]]]
+										 [let [[goal_phenomenon [get semantic_frame phenomenal_name]]]
+										   [let [[existence_event [get this goal_phenomenon_existence goal_phenomenon]]]
+										     [set existence_event absolute_start_time [new semantic_time [get event time]]]
+										     ]]]]
+			  [[and [is-type `semantic_frame_event event]
+				[eq event_type `add]]                          [let [[event-semantic_frame [get event semantic_frame]]
+										     [event-key_type       [get event key_type]]
+										     [event-key            [get event key]]
+										     [event-value          [get event value]]]
+										 [cond [[and [is-type `semantic_goal event-semantic_frame]
+											     [eq      `property      event-key_type]
+											     [eq      `is_occurring  event-key]]
+											[prog [if event-value
+												  [prog [terminal_format standard-terminal '\ngoal state, ' [get event-semantic_frame phenomenal_name] ', has begun to occur.']
+													]]
+											      [let [[goal_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+															     event-semantic_frame event-key_type event-key event-value]]]
+												[let [[relationship_event [get this goal_relationship_existence goal_relationship]]]
+												  [set relationship_event absolute_start_time [new semantic_time [get event time]]]
+												  ]]]]
+										       ]
+										 ]]
+			  [[and [is-type `semantic_frame_event event]
+				[eq event_type `remove]]                       [let [[event-semantic_frame [get event semantic_frame]]
+										     [event-key_type       [get event key_type]]
+										     [event-key            [get event key]]
+										     [event-value          [get event value]]]
+										 [cond [[and [is-type `semantic_goal event-semantic_frame]
+											     [eq      `property      event-key_type]
+											     [eq      `is_occurring  event-key]]
+											[let [[goal_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+														       event-semantic_frame event-key_type event-key event-value]]]
+											  [let [[relationship_event [get this goal_relationship_existence goal_relationship]]]
+											    [set relationship_event absolute_end_time [new semantic_time [get event time]]]
+											    [have this goal_relationship_existence-remove goal_relationship]
+											    ]]]
+										       ]
+										 ]]
+			  ]]]]
+	[have goal_knowledge_iterator increment]]]]]
+
+
+

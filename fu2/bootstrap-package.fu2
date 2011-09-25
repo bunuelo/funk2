@@ -99,8 +99,6 @@
 						     'built-in/ansi/'
 						     'built-in/basic_bug_responses/'
 						     'built-in/utilities/'
-						     'built-in/perception_lattice/'
-						     'built-in/object_lattice/'
 						     'built-in/number/'
 						     'built-in/math/'
 						     'built-in/mutex/'

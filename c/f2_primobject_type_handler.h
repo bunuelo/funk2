@@ -38,7 +38,6 @@
 #include "f2_agent.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
-#include "f2_perception_lattice.h"
 #include "f2_primobject__largeinteger.h"
 #include "f2_primobject__redblacktree.h"
 #include "f2_package.h"

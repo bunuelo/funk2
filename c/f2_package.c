@@ -149,18 +149,8 @@ f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph
       while (iter != nil) {
 	f2ptr package_dependency = f2__cons__car(cause, iter);
 	{
-	  f2ptr package_dependency__package = f2__global_package_handler__lookup_package(cause, package_dependency);
-	  if (package_dependency__package == nil) {
-	    return f2larva__new(cause, 2452511, f2__bug__new(cause, f2integer__new(cause, 2452511), f2__frame__new(cause, f2list4__new(cause,
-																       new__symbol(cause, "bug_type"),     new__symbol(cause, "package_does_not_exist"),
-																       new__symbol(cause, "package_name"), package_dependency))));
-	  }
-	  {
-	    f2ptr result = f2__package__add_to_dependency_graph(cause, package_dependency__package, graph);
-	    if (raw__larva__is_type(cause, result)) {
-	      return result;
-	    }
-	  }
+	  f2ptr package_dependency__package = assert_value(f2__global_package_handler__lookup_package(cause, package_dependency));
+	  assert_value(f2__package__add_to_dependency_graph(cause, package_dependency__package, graph));
 	}
 	iter = f2__cons__cdr(cause, iter);
       }
@@ -197,12 +187,7 @@ f2ptr f2__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph)
 
 f2ptr raw__package__dependency_graph(f2ptr cause, f2ptr this) {
   f2ptr graph = f2__graph__new(cause);
-  {
-    f2ptr result = raw__package__add_to_dependency_graph(cause, this, graph);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__package__add_to_dependency_graph(cause, this, graph));
   return graph;
 }
 
@@ -464,10 +449,7 @@ def_pcfunk1(pathname__scan_for_filenames, pathname,
 f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
   assert_argument_type(string, pathname);
   assert_argument_type(string, extension);
-  f2ptr filenames = f2__pathname__scan_for_filenames(cause, pathname);
-  if (raw__larva__is_type(cause, filenames)) {
-    return filenames;
-  }
+  f2ptr filenames = assert_value(f2__pathname__scan_for_filenames(cause, pathname));
   
   u64 extension__length = raw__string__length(cause, extension);
   u8* extension__str    = (u8*)from_ptr(f2__malloc(extension__length + 1));

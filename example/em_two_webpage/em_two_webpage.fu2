@@ -627,7 +627,7 @@
     [mapc [funk [package_name]
 		[mapc [funk [node]
 			    [have package_name_set add [get node label]]]
-		      [append [get [get [lookup-package package_name] dependency_graph] node_set]]]]
+		      [get [get [get [lookup-package package_name] dependency_graph] node_set] elements]]]
 	  top_packages]
     [get package_name_set elements]]]
 

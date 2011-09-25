@@ -79,7 +79,6 @@
 #include "f2_packet.h"
 #include "f2_partial_order.h"
 #include "f2_peer_command_server.h"
-#include "f2_perception_lattice.h"
 #include "f2_ptype.h"
 #include "f2_ptypes.h"
 #include "f2_ptypes_memory.h"

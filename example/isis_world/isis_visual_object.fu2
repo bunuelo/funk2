@@ -1,0 +1,57 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defunk isis_sensory_frame-add_prepositions_to_object_proposition_frame [isis_sensory_frame object_name preposition_frame]
+  [let [[spatial_relations_array [have isis_sensory_frame lookup `spatial_relations]]]
+    [dotimes [index [get spatial_relations_array length]]
+      [let [[spatial_relation [get spatial_relations_array elt index]]]
+	[let [[relation_type       [get spatial_relation elt 0]]
+	      [relation_object_one [get spatial_relation elt 1]]
+	      [relation_object_two [get spatial_relation elt 2]]]
+	  [if [eq object_name [get relation_object_two as-symbol]]
+	      [cond [[equals relation_type 'in'] [have preposition_frame add `in [cons [get relation_object_one as-symbol] [have preposition_frame lookup `in]]]]
+		    [[equals relation_type 'on'] [have preposition_frame add `on [cons [get relation_object_one as-symbol] [have preposition_frame lookup `on]]]]
+		    [t                           [terminal_format standard-terminal '\nisis_visual_object warning: unrecognized relation type, \'' relation_type '\'.']]]]]]]]]
+
+[deframe isis_visual_object [moral_compass_visual_object] []
+  [new [isis_name isis_sensory_frame isis_object_frame]
+       [let [[isis_object_class [have isis_object_frame lookup `class]]]
+	 [let [[initial-object_type                [if [null isis_object_class]
+						       nil
+						     [get isis_object_class as-symbol]]]
+	       [initial-phenomenal_name            isis_name]
+	       [initial-retina_position_horizontal [have isis_object_frame lookup `x_pos]]
+	       [initial-retina_position_vertical   [have isis_object_frame lookup `y_pos]]
+	       [initial-distance                   [have isis_object_frame lookup `distance]]
+	       [initial-orientation                [have isis_object_frame lookup `orientation]]
+	       [initial-preposition_frame          [new frame]]
+	       [initial-property_frame             [new frame]]]
+	   
+	   [isis_sensory_frame-add_prepositions_to_object_proposition_frame isis_sensory_frame isis_name initial-preposition_frame]
+	   [construct moral_compass_visual_object
+		      initial-object_type
+		      initial-phenomenal_name
+		      initial-retina_position_horizontal
+		      initial-retina_position_vertical
+		      initial-distance
+		      initial-orientation
+		      initial-preposition_frame
+		      initial-property_frame]
+	   ]]]]
+

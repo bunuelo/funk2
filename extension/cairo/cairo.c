@@ -197,7 +197,7 @@ f2ptr raw__cairo_text_extents__new(f2ptr cause) {
 }
 
 f2ptr f2__cairo_text_extents__new(f2ptr cause) {
-  return raw__cairo_test_extents__new(cause);
+  return raw__cairo_text_extents__new(cause);
 }
 export_cefunk0(cairo_text_extents__new, 0, "Returns an error because new cairo_text_extents objects cannot be created by user.");
 

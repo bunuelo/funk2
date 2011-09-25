@@ -33,16 +33,3 @@
   :packages [isis_agent_body]
    :sources ['isis_world.fu2']]
 
-[defpackage isis_agent_demo
-  :packages [isis_world]
-   :sources ['isis_agent_demo.fu2']]
-
-[defpackage isis_world_demo
-  :packages [moral_compass moral_agent_body isis_world_client isis_visual_object isis_visual_agent graphviz image image_sequence]
-   :sources ['isis_agent_body.fu2'
-	     'isis_world_demo.fu2']]
-
-[defpackage jj
-  :packages [isis_world_demo]
-   :sources ['jj.fu2']]
-

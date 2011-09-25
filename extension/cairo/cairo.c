@@ -191,6 +191,17 @@ def_ceframe6(cairo, cairo_text_extents,
 	     x_advance,
 	     y_advance);
 
+f2ptr raw__cairo_text_extents__new(f2ptr cause) {
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "type_not_meant_to_be_created_by_user")));
+}
+
+f2ptr f2__cairo_text_extents__new(f2ptr cause) {
+  return raw__cairo_test_extents__new(cause);
+}
+export_cefunk0(cairo_text_extents__new, 0, "Returns an error because new cairo_text_extents objects cannot be created by user.");
+
+
 
 
 // cairo_context

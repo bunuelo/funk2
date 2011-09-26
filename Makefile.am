@@ -229,7 +229,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/image_sequence/libf2e_image_sequence.la \
                       extension/interval_tree/libf2e_interval_tree.la \
                       extension/lick/libf2e_lick.la \
-                      extension/mentality/libf2e_mentality.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                       extension/movie/libf2e_movie.la \
                       extension/propogator/libf2e_propogator.la \
@@ -432,7 +431,6 @@ extension_image_libf2e_image_la_SOURCES                                         
 extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                             = extension/image_sequence/image_sequence.c
 extension_interval_tree_libf2e_interval_tree_la_SOURCES                                                               = extension/interval_tree/interval_tree.c
 extension_lick_libf2e_lick_la_SOURCES                                                                                 = extension/lick/lick.c
-extension_mentality_libf2e_mentality_la_SOURCES                                                                       = extension/mentality/mentality.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                 = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_movie_libf2e_movie_la_SOURCES                                                                               = extension/movie/movie.c
 extension_propogator_libf2e_propogator_la_SOURCES                                                                     = extension/propogator/propogator.c
@@ -566,9 +564,6 @@ extension_interval_tree_libf2e_interval_tree_la_CFLAGS  = $(lib_libfunk2_la_CFLA
 
 extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_lick_libf2e_lick_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_mentality_libf2e_mentality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_mentality_libf2e_mentality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

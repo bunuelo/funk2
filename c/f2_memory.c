@@ -266,8 +266,8 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   }
   rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
-  block->used = 1;
-  ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
+  block->used  = 1;
+  block->ptype = ptype_newly_allocated;
   funk2_memory__debug_memory_test(this, 3);
 #ifdef DEBUG_MEMORY
   {
@@ -552,7 +552,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	rbt_node_t* iter = rbt_tree__minimum(&(this->pool[pool_index].used_memory_tree));
 	while(iter) {
 	  ptype_block_t* block = (ptype_block_t*)iter;
-	  switch(block->ptype) {
+	  switch(block->block.ptype) {
 	  case ptype_symbol: {
 	    f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 	    funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);

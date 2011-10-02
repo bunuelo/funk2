@@ -615,7 +615,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, cause);
     }
   }
-  switch(block->ptype) {
+  switch(block->block.ptype) {
   case ptype_free_memory: error(nil, "block of type free_memory in garbage collector.");
   case ptype_integer:          return;
   case ptype_double:           return;
@@ -653,7 +653,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   default:
     {
       char str[1024];
-      sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->ptype));
+      sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->block.ptype));
       error(nil, str);
     }
   }

@@ -46,7 +46,7 @@ struct funk2_memblock_s {
 
 // funk2_memblock
 
-void      funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used);
+void      funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, ptype_t ptype);
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory);
 boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this);
 void      funk2_memblock__decrement_reference_count(funk2_memblock_t* this, f2ptr this_f2ptr, funk2_garbage_collector_t* garbage_collector);

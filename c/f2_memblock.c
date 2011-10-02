@@ -23,11 +23,11 @@
 
 // funk2_memblock
 
-void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used) {
+void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, ptype_t ptype) {
   funk2_memblock__byte_num(block) = byte_num;
   funk2_garbage_collector_block_header__init(&(block->gc));
   atomic_set(&(block->reference_count), 0);
-  block->used                     = used;
+  block->ptype = ptype;
 }
 
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory) {
@@ -35,7 +35,7 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     return boolean__false;
   }
   
-  if (this->used) {
+  if (this->ptype != ptype_free_memory) {
     ptype_block_t* block = (ptype_block_t*)this;
     switch(block->block.ptype) {
     case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
@@ -91,7 +91,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
   if (! this) {
     return boolean__true;
   }
-  if (this->used) {
+  if (this->ptype != ptype_free_memory) {
     ptype_block_t* ptype_block = (ptype_block_t*)this;
     switch(ptype_block->block.ptype) {
     case ptype_free_memory:

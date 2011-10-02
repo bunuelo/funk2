@@ -473,13 +473,13 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
 
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  debug__assert(block->used, nil, "funk2_garbage_collector_pool__add_memblock error: block is not used.");
+  debug__assert(block->ptype != ptype_free_memory, nil, "funk2_garbage_collector_pool__add_memblock error: block is not used.");
   funk2_tricolor_set__add_element(&(this->tricolor_set), exp, block->gc.tricolor);
 }
 
 void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
-  debug__assert(! block->used, nil, "funk2_garbage_collector_pool__remove_memblock error: block is used.");
+  debug__assert(! (block->ptype != ptype_free_memory), nil, "funk2_garbage_collector_pool__remove_memblock error: block is used.");
   funk2_tricolor_set__remove_element(&(this->tricolor_set), exp, block->gc.tricolor);
 }
 
@@ -495,7 +495,7 @@ void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_colle
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(pool->dynamic_memory.ptr));
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(pool->dynamic_memory.ptr)) + pool->total_global_memory);
   while(iter < end_of_blocks) {
-    if (iter->used) {
+    if (iter->ptype != ptype_free_memory) {
       f2ptr exp = ptr_to_f2ptr(pool_index, to_ptr(iter));
       funk2_garbage_collector_pool__add_used_exp(this, exp);
     }

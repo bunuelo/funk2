@@ -99,7 +99,7 @@ boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(funk2_memory
     return boolean__true;
   }
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
-  if (! block->used) {
+  if (! (block->ptype != ptype_free_memory)) {
     error(nil, "found unused memory block.");
     return boolean__false;
   }
@@ -111,7 +111,7 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
     return boolean__true;
   }
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
-  if (! block->used) {
+  if (! (block->ptype != ptype_free_memory)) {
     error(nil, "found unused memory block.");
     return boolean__false;
   }
@@ -187,7 +187,7 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
 #endif
   if (p) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(p);
-    if(! block->used) {
+    if(! (block->ptype != ptype_free_memory)) {
       debug__found_unused_memory_block(block);
       //error(nil, "used_f2ptr_to_ptr__debug error: referenced unused memory block.");
     }
@@ -252,7 +252,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   if (funk2_memblock__byte_num(block) > byte_num + sizeof(funk2_memblock_t)) {
     funk2_memblock_t* new_block           = (funk2_memblock_t*)(((u8*)(block)) + byte_num);
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
-    funk2_memblock__init(new_block, new_block__byte_num, 0);
+    funk2_memblock__init(new_block, new_block__byte_num, ptype_free_memory);
     
     funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), new_block);
     
@@ -266,7 +266,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   }
   rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
-  block->used  = 1;
+  //block->.used  = 1;
   block->ptype = ptype_newly_allocated;
   funk2_memory__debug_memory_test(this, 3);
 #ifdef DEBUG_MEMORY

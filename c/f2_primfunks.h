@@ -1425,6 +1425,7 @@ f2ptr f2__deref_pointer(f2ptr cause, f2ptr x);
 f2ptr f2__memblock__set_init_render_xyz(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
 f2ptr f2__memblock__set_init_render_on(f2ptr cause, f2ptr render_on);
 f2ptr f2__memblock__set_init_render_noise(f2ptr cause, f2ptr render_noise);
+f2ptr f2__memblock__creation_nanoseconds_since_1970(f2ptr cause, f2ptr x);
 
 // ptype
 

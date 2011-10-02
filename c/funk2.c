@@ -156,8 +156,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("**** booting up funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
   status("****************************************************************");
   status("");
-  status("  sizeof(funk2_memblock_t) = " u64__fstr, (u64)(sizeof(funk2_memblock_t)));
-  status("");
   
   funk2_system_processor__print_status(&(__funk2.system_processor));
   funk2_command_line__init(&(this->command_line), argc, argv);

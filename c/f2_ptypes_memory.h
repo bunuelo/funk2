@@ -35,18 +35,24 @@
 
 // memblock
 
+#ifdef MEMORY_OPTION__FUNK2_MEMBLOCK__MICROSECOND_TIMESTAMP
+#  define __pure__funk2_memblock__creation_nanoseconds_since_1970(this) (((funk2_memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_nanoseconds_since_1970)
+#endif // MEMORY_OPTION__FUNK2_MEMBLOCK__MICROSECOND_TIMESTAMP
+
 
 // ptype
 
 struct ptype_block_s {
   funk2_memblock_t block;
+  ptype_t          ptype;
   f2ptr            cause;
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;
 
-#define __pure__f2ptype__raw(this)               (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.ptype)
-#define __pure__f2ptype__cause(this)             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
-#define __pure__f2ptype__cause__set(this, value) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
+#define __pure__f2ptype__raw(this)                             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ptype)
+#define __pure__f2ptype__cause(this)                           (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
+#define __pure__f2ptype__cause__set(this, value)               (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
+#define __pure__f2ptype__creation_nanoseconds_since_1970(this) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.creation_nanoseconds_since_1970)
 
 
 // integer

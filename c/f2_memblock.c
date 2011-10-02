@@ -23,11 +23,12 @@
 
 // funk2_memblock
 
-void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, ptype_t ptype) {
-  funk2_memblock__byte_num(block) = byte_num;
+void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used) {
+  funk2_memblock__byte_num(block)        = byte_num;
   funk2_garbage_collector_block_header__init(&(block->gc));
   atomic_set(&(block->reference_count), 0);
-  block->ptype = ptype;
+  block->used                            = used;
+  block->creation_nanoseconds_since_1970 = 0; // this is set in f2_memory.c when a new block is allocated (otherwise, we'd play with times unnecessarily for free blocks here as well).
 }
 
 boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblock_t* this, funk2_memory_t* memory) {
@@ -35,9 +36,9 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     return boolean__false;
   }
   
-  if (this->ptype != ptype_free_memory) {
+  if (this->used) {
     ptype_block_t* block = (ptype_block_t*)this;
-    switch(block->block.ptype) {
+    switch(block->ptype) {
     case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
     case ptype_integer:         return boolean__false;
     case ptype_double:          return boolean__false;
@@ -79,7 +80,7 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     default:
       {
 	char str[1024];
-	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->block.ptype));
+	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->ptype));
 	error(nil, str);
       }
     }
@@ -91,9 +92,9 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
   if (! this) {
     return boolean__true;
   }
-  if (this->ptype != ptype_free_memory) {
+  if (this->used) {
     ptype_block_t* ptype_block = (ptype_block_t*)this;
-    switch(ptype_block->block.ptype) {
+    switch(ptype_block->ptype) {
     case ptype_free_memory:
     case ptype_newly_allocated:
     case ptype_integer:
@@ -112,7 +113,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_larva:
       break;
     default: {
-      status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->block.ptype), (long)ptype_block);
+      status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->ptype), (long)ptype_block);
       return boolean__false;
     } break;
     }

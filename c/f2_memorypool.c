@@ -36,7 +36,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   
   this->global_f2ptr_offset = to_ptr(this->dynamic_memory.ptr - 1);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
-  funk2_memblock__init(block, this->total_global_memory, ptype_free_memory);
+  funk2_memblock__init(block, this->total_global_memory, 0);
   
   rbt_tree__init(&(this->free_memory_tree), NULL, this->global_f2ptr_offset);
   rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
@@ -280,10 +280,10 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
       last = iter;
       iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
     }
-    if (last->ptype != ptype_free_memory) {
+    if (last->used) {
       release__assert(byte_num > old_total_global_memory, nil, "(byte_num > old_total_global_memory) because defragment was just called and there is still used memory at end.");
       funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
-      iter->ptype = ptype_free_memory;
+      iter->used = 0;
       status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
       rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)iter);
       release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
@@ -298,7 +298,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     if (byte_num > old_total_global_memory) {
       funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
       funk2_memblock__byte_num(block) = (byte_num - old_total_global_memory);
-      block->ptype = ptype_free_memory;
+      block->used = 0;
       rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
       release__assert(funk2_memblock__byte_num(block) > 0, nil, "(funk2_memblock__byte_num(block) > 0) should be enough free space to reduce memory block.");
     } else {
@@ -352,7 +352,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	  largest_free_block_size = byte_num;
 	}
 	funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)node) + byte_num);
-	if ((next_block < end_of_blocks) && (! (next_block->ptype != ptype_free_memory))) {
+	if ((next_block < end_of_blocks) && (! (next_block->used))) {
 	  funk2_hash__add(&blocks_to_defragment, (u64)to_ptr(node), (u64)0);
 	}
 	node = rbt_node__next(node);
@@ -368,7 +368,7 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 	while (bin_node) {
 	  funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(from_ptr(bin_node->keyvalue_pair.key));
 	  funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
-	  while ((iter < end_of_blocks) && (! (iter->ptype != ptype_free_memory))) {
+	  while ((iter < end_of_blocks) && (! (iter->used))) {
 	    if (funk2_memblock__byte_num(iter) == 0) {
 	      status(nil, "funk2_memorypool__defragment_free_memory_blocks_in_place MEMORY BUG: memblock__byte_num = 0.");
 	      printf( "\n\nfunk2_memorypool__defragment_free_memory_blocks_in_place MEMORY BUG: memblock__byte_num = 0.\n\n");
@@ -406,8 +406,8 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   // remove from used list
   rbt_tree__remove(&(this->used_memory_tree), (rbt_node_t*)block);
   // set to free
-  debug__assert(block->ptype != ptype_free_memory, nil, "attempting to free a block that is already free.");
-  block->ptype = ptype_free_memory;
+  debug__assert(block->used, nil, "attempting to free a block that is already free.");
+  block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
   // add to free list
   funk2_memorypool__free_memory_tree__insert(this, block);
@@ -420,7 +420,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       funk2_memblock_t* cause_block = (funk2_memblock_t*)from_ptr(cause_ptr);
       funk2_memblock__decrement_reference_count(cause_block, cause, &(__funk2.garbage_collector));
     }
-    switch(ptype_block->block.ptype) {
+    switch(ptype_block->ptype) {
     case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
     case ptype_integer:          break;
     case ptype_double:           break;
@@ -459,7 +459,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     default:
       {
 	char str[1024];
-	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(ptype_block->block.ptype));
+	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(ptype_block->ptype));
 	error(nil, str);
       }
     }
@@ -473,7 +473,7 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
   funk2_memblock_t* perfect_size_block = (funk2_memblock_t*)rbt_tree__minimum_not_less_than(&(this->free_memory_tree), byte_num);
   if (perfect_size_block && funk2_memblock__byte_num(perfect_size_block) >= byte_num) {
     rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)perfect_size_block);
-    perfect_size_block->ptype = ptype_newly_allocated;
+    perfect_size_block->used = 1;
   } else {
     if (! perfect_size_block) {
       status("there are no free memory blocks left that are at least " u64__fstr " bytes.", (u64)byte_num);

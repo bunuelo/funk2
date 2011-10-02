@@ -28,8 +28,7 @@
 
 typedef enum funk2_tricolor_e funk2_tricolor_t;
 enum funk2_tricolor_e {
-  funk2_tricolor__none = 0,
-  funk2_tricolor__black,
+  funk2_tricolor__black = 1,
   funk2_tricolor__grey,
   funk2_tricolor__white
 };

@@ -65,6 +65,8 @@ f2ptr pfunk2__system__environment(f2ptr cause);
 
 // memblock
 
+u64 pfunk2__memblock__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
+
 // ptype
 
 boolean_t    raw__ptype__is_type(f2ptr cause, f2ptr thing);
@@ -74,6 +76,10 @@ f2ptr         f2__ptype__type(   f2ptr cause, f2ptr this);
 ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
+u64     pfunk2__f2ptype__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause);
+u64          raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
+f2ptr         f2__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this);
+f2ptr         f2__ptype__creation_time(f2ptr cause, f2ptr this);
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause);
 
@@ -1106,6 +1112,10 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr cause__funk;
   f2ptr cause__set__symbol;
   f2ptr cause__set__funk;
+  f2ptr creation_nanoseconds_since_1970__symbol;
+  f2ptr creation_nanoseconds_since_1970__funk;
+  f2ptr creation_time__symbol;
+  f2ptr creation_time__funk;
   funk2_object_type__integer__slot_t         ptype_integer;
   funk2_object_type__double__slot_t          ptype_double;
   funk2_object_type__float__slot_t           ptype_float;

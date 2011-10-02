@@ -44,7 +44,7 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 // garbage_collector_block_header
 
 struct funk2_garbage_collector_block_header_s {
-  funk2_tricolor_t tricolor;
+  funk2_tricolor_t tricolor : 2;
 } __attribute__((__packed__));
 
 void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this);

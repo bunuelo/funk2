@@ -22,7 +22,6 @@
 #ifndef F2__PTYPE__H
 #define F2__PTYPE__H
 
-//#define ptype__total_num 14
 #define ptype__min_bits   5
 
 extern u8 __ptype__str[][128];

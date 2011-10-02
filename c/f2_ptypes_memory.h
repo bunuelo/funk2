@@ -40,7 +40,7 @@
 
 struct ptype_block_s {
   funk2_memblock_t block;
-  ptype_t          ptype;
+  ptype_t          ptype : ptype__min_bits;
   f2ptr            cause;
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;

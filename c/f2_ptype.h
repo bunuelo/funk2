@@ -22,28 +22,28 @@
 #ifndef F2__PTYPE__H
 #define F2__PTYPE__H
 
-#define ptype__total_num 14
+//#define ptype__total_num 14
 #define ptype__min_bits   5
 
 extern u8 __ptype__str[][128];
 
 typedef enum ptype_e {
-  ptype_free_memory      = 0x40 + 0x0,
-  ptype_newly_allocated  = 0x40 + 0x1,
-  ptype_integer          = 0x40 + 0x2,
-  ptype_double           = 0x40 + 0x3,
-  ptype_float            = 0x40 + 0x4,
-  ptype_pointer          = 0x40 + 0x5,
-  ptype_gfunkptr         = 0x40 + 0x6,
-  ptype_scheduler_cmutex = 0x40 + 0x7,
-  ptype_cmutex           = 0x40 + 0x8,
-  ptype_char             = 0x40 + 0x9,
-  ptype_string           = 0x40 + 0xA,
-  ptype_symbol           = 0x40 + 0xB,
-  ptype_chunk            = 0x40 + 0xC,
-  ptype_simple_array     = 0x40 + 0xD,
-  ptype_traced_array     = 0x40 + 0xE,
-  ptype_larva            = 0x40 + 0xF,
+  ptype_free_memory      = 16,
+  ptype_newly_allocated  = 17,
+  ptype_integer          = 18,
+  ptype_double           = 19,
+  ptype_float            = 20,
+  ptype_pointer          = 21,
+  ptype_gfunkptr         = 22,
+  ptype_scheduler_cmutex = 23,
+  ptype_cmutex           = 24,
+  ptype_char             = 25,
+  ptype_string           = 26,
+  ptype_symbol           = 27,
+  ptype_chunk            = 28,
+  ptype_simple_array     = 29,
+  ptype_traced_array     = 30,
+  ptype_larva            = 31,
 } ptype_t;
 
 #endif // F2__PTYPE__H

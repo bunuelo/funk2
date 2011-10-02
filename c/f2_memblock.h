@@ -38,7 +38,6 @@ struct funk2_memblock_s {
   funk2_garbage_collector_block_header_t gc;
   atomic_t                               reference_count;
   u8                                     used      : 1;
-  u64                                    creation_nanoseconds_since_1970;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));
 

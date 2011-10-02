@@ -211,36 +211,13 @@ def_pcfunk2(ptype__cause__set, x, value,
 	    "",
 	    return f2__ptype__cause__set(this_cause, x, value));
 
-u64 pfunk2__f2ptype__creation_nanoseconds_since_1970(f2ptr this, f2ptr cause) {
-  return __pure__f2ptype__creation_nanoseconds_since_1970(this);
-}
-
-u64 raw__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this) {
-  return pfunk2__f2ptype__creation_nanoseconds_since_1970(this, cause);
-}
-f2ptr f2__ptype__creation_nanoseconds_since_1970(f2ptr cause, f2ptr this) {
-  return f2integer__new(cause, raw__ptype__creation_nanoseconds_since_1970(cause, this));
-}
-def_pcfunk1(ptype__creation_nanoseconds_since_1970, this,
-	    "",
-	    return f2__ptype__creation_nanoseconds_since_1970(this_cause, this));
-
-f2ptr f2__ptype__creation_time(f2ptr cause, f2ptr this) {
-  return f2__time__new(cause, f2__ptype__creation_nanoseconds_since_1970(cause, this));
-}
-def_pcfunk1(ptype__creation_time, this,
-	    "",
-	    return f2__ptype__creation_time(this_cause, this));
-
 f2ptr f2ptype__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);
-  {char* slot_name = "is_type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.is_type__funk);}
-  {char* slot_name = "type";                            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.type__funk);}
-  {char* slot_name = "raw";                             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.raw__funk);}
-  {char* slot_name = "cause";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.cause__funk);}
-  {char* slot_name = "cause";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.cause__set__funk);}
-  {char* slot_name = "creation_nanoseconds_since_1970"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.creation_nanoseconds_since_1970__funk);}
-  {char* slot_name = "creation_time";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.creation_time__funk);}
+  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.is_type__funk);}
+  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.type__funk);}
+  {char* slot_name = "raw";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.raw__funk);}
+  {char* slot_name = "cause";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.cause__funk);}
+  {char* slot_name = "cause";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.ptype.cause__set__funk);}
   return this;
 }
 
@@ -5695,10 +5672,6 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__cause, this, cfunk); __funk2.globalenv.object_type.ptype.cause__funk = never_gc(cfunk);}
   {char* str = "cause-set"; __funk2.globalenv.object_type.ptype.cause__set__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptype__cause__set, this, value, cfunk); __funk2.globalenv.object_type.ptype.cause__set__funk = never_gc(cfunk);}
-  {char* str = "creation_nanoseconds_since_1970"; __funk2.globalenv.object_type.ptype.creation_nanoseconds_since_1970__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__creation_nanoseconds_since_1970, this, cfunk); __funk2.globalenv.object_type.ptype.creation_nanoseconds_since_1970__funk = never_gc(cfunk);}
-  {char* str = "creation_time"; __funk2.globalenv.object_type.ptype.creation_time__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__creation_time, this, cfunk); __funk2.globalenv.object_type.ptype.creation_time__funk = never_gc(cfunk);}
   
   // integer
   

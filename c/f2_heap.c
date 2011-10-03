@@ -35,7 +35,8 @@ void funk2_heap__init(funk2_heap_t* this, u64 element_array_size) {
   this->element_array_size     = element_array_size;
   this->element_array_used_num = 0;
   this->element_array          = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (element_array_size + 1)));
-  this->element_array[0]       = funk2_heap__maximum_key;
+  this->element_array[0]       = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
+  this->element_array[0]->key  = funk2_heap__maximum_key;
 }
 
 

@@ -324,6 +324,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_graphviz.c \
   c/f2_gtk.c \
   c/f2_hash.c \
+  c/f2_heap.c \
   c/f2_html.c \
   c/f2_knowledge.c \
   c/f2_larva.c \

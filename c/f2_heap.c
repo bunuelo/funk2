@@ -21,6 +21,8 @@
 
 #include "funk2.h"
 
+#define F2__DEBUG_HEAP 1
+
 #define funk2_heap__minimum_size (10)
 #define funk2_heap__maximum_key  (((u64)1ull)<<63)
 
@@ -114,5 +116,18 @@ funk2_heap_node_t* funk2_heap__maximum_node(funk2_heap_t* this) {
     error(nil, "funk2_heap error: attempted to find maximum value in empty heap.");
   }
   return this->element_array[1];
+}
+
+
+void heap__tests() {
+  printf("\nheap__tests note: here."); fflush(stdout);
+  printf("\n"); fflush(stdout);
+}
+
+
+void f2__heap__initialize() {
+#if defined(F2__DEBUG_HEAP)
+  heap__tests();
+#endif // F2__DEBUG_HEAP
 }
 

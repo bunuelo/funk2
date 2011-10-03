@@ -45,5 +45,9 @@ void               funk2_heap__insert(        funk2_heap_t* this, funk2_heap_nod
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this);
 funk2_heap_node_t* funk2_heap__maximum_node(  funk2_heap_t* this);
 
+// **
+
+void f2__heap__initialize();
+
 #endif // F2__HEAP__H
 

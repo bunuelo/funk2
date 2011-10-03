@@ -22,12 +22,12 @@
 #ifndef F2__HEAP__H
 #define F2__HEAP__H
 
-typedef funk2_heap_node_s funk2_heap_node_t;
+typedef struct funk2_heap_node_s funk2_heap_node_t;
 struct funk2_heap_node_s {
   u64 key;
 };
 
-typedef funk2_heap_s funk2_heap_t;
+typedef struct funk2_heap_s funk2_heap_t;
 struct funk2_heap_s {
   u64                 element_array_size;
   u64                 element_array_used_num;

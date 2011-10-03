@@ -71,7 +71,7 @@ void funk2_heap__insert(funk2_heap_t* this, funk2_heap_node_t* node) {
   this->element_array_used_num ++;
   
   for(index = this->element_array_used_num; this->element_array[index >> 1]->key < node->key; index >>= 1) {
-    this->element_array[index] = this->element_array[i >> 1];
+    this->element_array[index] = this->element_array[index >> 1];
   }
   this->element_array[index] = node;
 }

@@ -120,6 +120,11 @@ funk2_heap_node_t* funk2_heap__maximum_node(funk2_heap_t* this) {
 }
 
 
+u64 funk2_heap__size(funk2_heap_t* this) {
+  return this->node_array_used_num;
+}
+
+
 void funk2_heap__print(funk2_heap_t* this) {
   printf("<funk2_heap " ptr__fstr "> = [", (ptr)(this)); fflush(stdout);
   {

@@ -262,15 +262,6 @@ extension_lick_libf2e_lick_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(extension_lick_libf2e_lick_la_CFLAGS) $(CFLAGS) \
 	$(extension_lick_libf2e_lick_la_LDFLAGS) $(LDFLAGS) -o $@
-extension_mentality_libf2e_mentality_la_LIBADD =
-am_extension_mentality_libf2e_mentality_la_OBJECTS = extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo
-extension_mentality_libf2e_mentality_la_OBJECTS =  \
-	$(am_extension_mentality_libf2e_mentality_la_OBJECTS)
-extension_mentality_libf2e_mentality_la_LINK = $(LIBTOOL) $(AM_V_lt) \
-	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
-	$(CCLD) $(extension_mentality_libf2e_mentality_la_CFLAGS) \
-	$(CFLAGS) $(extension_mentality_libf2e_mentality_la_LDFLAGS) \
-	$(LDFLAGS) -o $@
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LIBADD =
 am_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS = extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS = $(am_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_OBJECTS)
@@ -839,8 +830,8 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_graph_cluster.lo \
 	c/lib_libfunk2_la-f2_graph_match_error_correcting.lo \
 	c/lib_libfunk2_la-f2_graphviz.lo c/lib_libfunk2_la-f2_gtk.lo \
-	c/lib_libfunk2_la-f2_hash.lo c/lib_libfunk2_la-f2_html.lo \
-	c/lib_libfunk2_la-f2_knowledge.lo \
+	c/lib_libfunk2_la-f2_hash.lo c/lib_libfunk2_la-f2_heap.lo \
+	c/lib_libfunk2_la-f2_html.lo c/lib_libfunk2_la-f2_knowledge.lo \
 	c/lib_libfunk2_la-f2_larva.lo c/lib_libfunk2_la-f2_load.lo \
 	c/lib_libfunk2_la-f2_malloc.lo \
 	c/lib_libfunk2_la-f2_management_thread.lo \
@@ -858,7 +849,6 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_packet.lo \
 	c/lib_libfunk2_la-f2_partial_order.lo \
 	c/lib_libfunk2_la-f2_peer_command_server.lo \
-	c/lib_libfunk2_la-f2_perception_lattice.lo \
 	c/lib_libfunk2_la-f2_primes.lo \
 	c/lib_libfunk2_la-f2_primobjects.lo \
 	c/lib_libfunk2_la-f2_primobject__boolean.lo \
@@ -967,7 +957,6 @@ SOURCES = $(extension_blocks_world_libf2e_blocks_world_la_SOURCES) \
 	$(extension_image_sequence_libf2e_image_sequence_la_SOURCES) \
 	$(extension_interval_tree_libf2e_interval_tree_la_SOURCES) \
 	$(extension_lick_libf2e_lick_la_SOURCES) \
-	$(extension_mentality_libf2e_mentality_la_SOURCES) \
 	$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_propogator_libf2e_propogator_la_SOURCES) \
@@ -1040,7 +1029,6 @@ DIST_SOURCES =  \
 	$(extension_image_sequence_libf2e_image_sequence_la_SOURCES) \
 	$(extension_interval_tree_libf2e_interval_tree_la_SOURCES) \
 	$(extension_lick_libf2e_lick_la_SOURCES) \
-	$(extension_mentality_libf2e_mentality_la_SOURCES) \
 	$(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES) \
 	$(extension_movie_libf2e_movie_la_SOURCES) \
 	$(extension_propogator_libf2e_propogator_la_SOURCES) \
@@ -1383,7 +1371,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/image_sequence/libf2e_image_sequence.la \
                       extension/interval_tree/libf2e_interval_tree.la \
                       extension/lick/libf2e_lick.la \
-                      extension/mentality/libf2e_mentality.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                       extension/movie/libf2e_movie.la \
                       extension/propogator/libf2e_propogator.la \
@@ -1478,6 +1465,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_graphviz.c \
   c/f2_gtk.c \
   c/f2_hash.c \
+  c/f2_heap.c \
   c/f2_html.c \
   c/f2_knowledge.c \
   c/f2_larva.c \
@@ -1500,7 +1488,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_packet.c \
   c/f2_partial_order.c \
   c/f2_peer_command_server.c \
-  c/f2_perception_lattice.c \
   c/f2_primes.c \
   c/f2_primobjects.c \
   c/f2_primobject__boolean.c \
@@ -1586,7 +1573,6 @@ extension_image_libf2e_image_la_SOURCES = extension/image/image.c
 extension_image_sequence_libf2e_image_sequence_la_SOURCES = extension/image_sequence/image_sequence.c
 extension_interval_tree_libf2e_interval_tree_la_SOURCES = extension/interval_tree/interval_tree.c
 extension_lick_libf2e_lick_la_SOURCES = extension/lick/lick.c
-extension_mentality_libf2e_mentality_la_SOURCES = extension/mentality/mentality.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_movie_libf2e_movie_la_SOURCES = extension/movie/movie.c
 extension_propogator_libf2e_propogator_la_SOURCES = extension/propogator/propogator.c
@@ -1698,8 +1684,6 @@ extension_interval_tree_libf2e_interval_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFL
 extension_interval_tree_libf2e_interval_tree_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_lick_libf2e_lick_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
-extension_mentality_libf2e_mentality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_mentality_libf2e_mentality_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -2070,17 +2054,6 @@ extension/lick/extension_lick_libf2e_lick_la-lick.lo:  \
 	extension/lick/$(DEPDIR)/$(am__dirstamp)
 extension/lick/libf2e_lick.la: $(extension_lick_libf2e_lick_la_OBJECTS) $(extension_lick_libf2e_lick_la_DEPENDENCIES) extension/lick/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_lick_libf2e_lick_la_LINK) -rpath $(libdir) $(extension_lick_libf2e_lick_la_OBJECTS) $(extension_lick_libf2e_lick_la_LIBADD) $(LIBS)
-extension/mentality/$(am__dirstamp):
-	@$(MKDIR_P) extension/mentality
-	@: > extension/mentality/$(am__dirstamp)
-extension/mentality/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) extension/mentality/$(DEPDIR)
-	@: > extension/mentality/$(DEPDIR)/$(am__dirstamp)
-extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo:  \
-	extension/mentality/$(am__dirstamp) \
-	extension/mentality/$(DEPDIR)/$(am__dirstamp)
-extension/mentality/libf2e_mentality.la: $(extension_mentality_libf2e_mentality_la_OBJECTS) $(extension_mentality_libf2e_mentality_la_DEPENDENCIES) extension/mentality/$(am__dirstamp)
-	$(AM_V_CCLD)$(extension_mentality_libf2e_mentality_la_LINK) -rpath $(libdir) $(extension_mentality_libf2e_mentality_la_OBJECTS) $(extension_mentality_libf2e_mentality_la_LIBADD) $(LIBS)
 extension/meta_semantic_knowledge_base/$(am__dirstamp):
 	@$(MKDIR_P) extension/meta_semantic_knowledge_base
 	@: > extension/meta_semantic_knowledge_base/$(am__dirstamp)
@@ -2747,6 +2720,8 @@ c/lib_libfunk2_la-f2_gtk.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_hash.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_heap.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_html.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_knowledge.lo: c/$(am__dirstamp) \
@@ -2790,8 +2765,6 @@ c/lib_libfunk2_la-f2_packet.lo: c/$(am__dirstamp) \
 c/lib_libfunk2_la-f2_partial_order.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_peer_command_server.lo: c/$(am__dirstamp) \
-	c/$(DEPDIR)/$(am__dirstamp)
-c/lib_libfunk2_la-f2_perception_lattice.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_primes.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
@@ -3005,6 +2978,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_gtk.lo
 	-rm -f c/lib_libfunk2_la-f2_hash.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_hash.lo
+	-rm -f c/lib_libfunk2_la-f2_heap.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_heap.lo
 	-rm -f c/lib_libfunk2_la-f2_html.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_html.lo
 	-rm -f c/lib_libfunk2_la-f2_knowledge.$(OBJEXT)
@@ -3049,8 +3024,6 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_partial_order.lo
 	-rm -f c/lib_libfunk2_la-f2_peer_command_server.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_peer_command_server.lo
-	-rm -f c/lib_libfunk2_la-f2_perception_lattice.$(OBJEXT)
-	-rm -f c/lib_libfunk2_la-f2_perception_lattice.lo
 	-rm -f c/lib_libfunk2_la-f2_primes.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_primes.lo
 	-rm -f c/lib_libfunk2_la-f2_primfunks.$(OBJEXT)
@@ -3217,8 +3190,6 @@ mostlyclean-compile:
 	-rm -f extension/interval_tree/extension_interval_tree_libf2e_interval_tree_la-interval_tree.lo
 	-rm -f extension/lick/extension_lick_libf2e_lick_la-lick.$(OBJEXT)
 	-rm -f extension/lick/extension_lick_libf2e_lick_la-lick.lo
-	-rm -f extension/mentality/extension_mentality_libf2e_mentality_la-mentality.$(OBJEXT)
-	-rm -f extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo
 	-rm -f extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.$(OBJEXT)
 	-rm -f extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo
 	-rm -f extension/movie/extension_movie_libf2e_movie_la-movie.$(OBJEXT)
@@ -3366,6 +3337,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_graphviz.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_gtk.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_hash.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_heap.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_html.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_knowledge.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_larva.Plo@am__quote@
@@ -3388,7 +3360,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_packet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_partial_order.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_peer_command_server.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_perception_lattice.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primes.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primfunks.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_primfunks__errno.Plo@am__quote@
@@ -3472,7 +3443,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/image_sequence/$(DEPDIR)/extension_image_sequence_libf2e_image_sequence_la-image_sequence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/interval_tree/$(DEPDIR)/extension_interval_tree_libf2e_interval_tree_la-interval_tree.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/lick/$(DEPDIR)/extension_lick_libf2e_lick_la-lick.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@extension/mentality/$(DEPDIR)/extension_mentality_libf2e_mentality_la-mentality.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/meta_semantic_knowledge_base/$(DEPDIR)/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/movie/$(DEPDIR)/extension_movie_libf2e_movie_la-movie.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/propogator/$(DEPDIR)/extension_propogator_libf2e_propogator_la-propogator.Plo@am__quote@
@@ -3682,14 +3652,6 @@ extension/lick/extension_lick_libf2e_lick_la-lick.lo: extension/lick/lick.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/lick/lick.c' object='extension/lick/extension_lick_libf2e_lick_la-lick.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_lick_libf2e_lick_la_CFLAGS) $(CFLAGS) -c -o extension/lick/extension_lick_libf2e_lick_la-lick.lo `test -f 'extension/lick/lick.c' || echo '$(srcdir)/'`extension/lick/lick.c
-
-extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo: extension/mentality/mentality.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mentality_libf2e_mentality_la_CFLAGS) $(CFLAGS) -MT extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo -MD -MP -MF extension/mentality/$(DEPDIR)/extension_mentality_libf2e_mentality_la-mentality.Tpo -c -o extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo `test -f 'extension/mentality/mentality.c' || echo '$(srcdir)/'`extension/mentality/mentality.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/mentality/$(DEPDIR)/extension_mentality_libf2e_mentality_la-mentality.Tpo extension/mentality/$(DEPDIR)/extension_mentality_libf2e_mentality_la-mentality.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/mentality/mentality.c' object='extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_mentality_libf2e_mentality_la_CFLAGS) $(CFLAGS) -c -o extension/mentality/extension_mentality_libf2e_mentality_la-mentality.lo `test -f 'extension/mentality/mentality.c' || echo '$(srcdir)/'`extension/mentality/mentality.c
 
 extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo: extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS) $(CFLAGS) -MT extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo -MD -MP -MF extension/meta_semantic_knowledge_base/$(DEPDIR)/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.Tpo -c -o extension/meta_semantic_knowledge_base/extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la-meta_semantic_knowledge_base.lo `test -f 'extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c' || echo '$(srcdir)/'`extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
@@ -4403,6 +4365,14 @@ c/lib_libfunk2_la-f2_hash.lo: c/f2_hash.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_hash.lo `test -f 'c/f2_hash.c' || echo '$(srcdir)/'`c/f2_hash.c
 
+c/lib_libfunk2_la-f2_heap.lo: c/f2_heap.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_heap.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_heap.Tpo -c -o c/lib_libfunk2_la-f2_heap.lo `test -f 'c/f2_heap.c' || echo '$(srcdir)/'`c/f2_heap.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_heap.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_heap.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_heap.c' object='c/lib_libfunk2_la-f2_heap.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_heap.lo `test -f 'c/f2_heap.c' || echo '$(srcdir)/'`c/f2_heap.c
+
 c/lib_libfunk2_la-f2_html.lo: c/f2_html.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_html.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_html.Tpo -c -o c/lib_libfunk2_la-f2_html.lo `test -f 'c/f2_html.c' || echo '$(srcdir)/'`c/f2_html.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_html.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_html.Plo
@@ -4578,14 +4548,6 @@ c/lib_libfunk2_la-f2_peer_command_server.lo: c/f2_peer_command_server.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_peer_command_server.c' object='c/lib_libfunk2_la-f2_peer_command_server.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_peer_command_server.lo `test -f 'c/f2_peer_command_server.c' || echo '$(srcdir)/'`c/f2_peer_command_server.c
-
-c/lib_libfunk2_la-f2_perception_lattice.lo: c/f2_perception_lattice.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_perception_lattice.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_perception_lattice.Tpo -c -o c/lib_libfunk2_la-f2_perception_lattice.lo `test -f 'c/f2_perception_lattice.c' || echo '$(srcdir)/'`c/f2_perception_lattice.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_perception_lattice.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_perception_lattice.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='c/f2_perception_lattice.c' object='c/lib_libfunk2_la-f2_perception_lattice.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_perception_lattice.lo `test -f 'c/f2_perception_lattice.c' || echo '$(srcdir)/'`c/f2_perception_lattice.c
 
 c/lib_libfunk2_la-f2_primes.lo: c/f2_primes.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_primes.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_primes.Tpo -c -o c/lib_libfunk2_la-f2_primes.lo `test -f 'c/f2_primes.c' || echo '$(srcdir)/'`c/f2_primes.c
@@ -5145,7 +5107,6 @@ clean-libtool:
 	-rm -rf extension/image_sequence/.libs extension/image_sequence/_libs
 	-rm -rf extension/interval_tree/.libs extension/interval_tree/_libs
 	-rm -rf extension/lick/.libs extension/lick/_libs
-	-rm -rf extension/mentality/.libs extension/mentality/_libs
 	-rm -rf extension/meta_semantic_knowledge_base/.libs extension/meta_semantic_knowledge_base/_libs
 	-rm -rf extension/movie/.libs extension/movie/_libs
 	-rm -rf extension/propogator/.libs extension/propogator/_libs
@@ -5465,8 +5426,6 @@ distclean-generic:
 	-rm -f extension/interval_tree/$(am__dirstamp)
 	-rm -f extension/lick/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/lick/$(am__dirstamp)
-	-rm -f extension/mentality/$(DEPDIR)/$(am__dirstamp)
-	-rm -f extension/mentality/$(am__dirstamp)
 	-rm -f extension/meta_semantic_knowledge_base/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/meta_semantic_knowledge_base/$(am__dirstamp)
 	-rm -f extension/movie/$(DEPDIR)/$(am__dirstamp)
@@ -5585,7 +5544,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -5633,7 +5592,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/mentality/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

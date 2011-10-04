@@ -38,9 +38,15 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0);
   
-  rbt_tree__init(&(this->free_memory_tree), NULL, this->global_f2ptr_offset);
-  rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
-  rbt_tree__init(&(this->used_memory_tree), NULL, this->global_f2ptr_offset);
+  // HEAPEDIT-TODO
+  //rbt_tree__init(&(this->free_memory_tree), NULL, this->global_f2ptr_offset);
+  //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
+  //rbt_tree__init(&(this->used_memory_tree), NULL, this->global_f2ptr_offset);
+  
+  funk2_heap__init(&(this->free_memory_heap), 10 * 1024 * 1024);
+  funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
+  
+  funk2_set__init(&(this->used_memory_set));
   
   funk2_memorypool__debug_memory_test(this, 1);
 }
@@ -51,22 +57,22 @@ void funk2_memorypool__destroy(funk2_memorypool_t* this) {
 
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
   f2size_t used_memory_count = 0;
-  rbt_node_t* node = rbt_tree__minimum(&(this->used_memory_tree));
-  while(node) {
-    used_memory_count += funk2_memblock__byte_num((funk2_memblock_t*)node);
-    node = rbt_node__next(node);
-  }
+  // HEAPEDIT
+  funk2_set__iteration(&(this->used_memory_set), element,
+		       funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(element);
+		       used_memory_count += funk2_memblock__byte_num(block);
+		       );
   //printf("\ntotal used memory = %d", used_memory_count); fflush(stdout);
   return used_memory_count;
 }
 
 f2size_t funk2_memorypool__total_free_memory(funk2_memorypool_t* this) {
   f2size_t free_memory_count = 0;
-  rbt_node_t* node = rbt_tree__minimum(&(this->free_memory_tree));
-  while(node) {
-    free_memory_count += funk2_memblock__byte_num((funk2_memblock_t*)node);
-    node = rbt_node__next(node);
-  }
+  // HEAPEDIT
+  funk2_heap__iteration(&(this->free_memory_heap), node,
+			funk2_memblock_t* block = (funk2_memblock_t*)node;
+			free_memory_count += funk2_memblock__byte_num(block);
+			);
   //printf("\ntotal free memory = %d", free_memory_count); fflush(stdout);
   return free_memory_count;
 }
@@ -116,13 +122,17 @@ void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
   funk2_memorypool__memory_test__dynamic_memory(this);
   funk2_memorypool__memory_test__byte_num_zero(this);
   funk2_memorypool__memory_test__all_known_types(this);
-  {
-    rbt_node_t* free_iter = rbt_tree__minimum(&(this->free_memory_tree));
-    // this should lock up if there is a loop in free list.
-    while (free_iter) {
-      free_iter = rbt_node__next(free_iter);
-    }
-  }
+  // HEAPEDIT
+  //{
+  //  rbt_node_t* free_iter = rbt_tree__minimum(&(this->free_memory_tree));
+  //  // this should lock up if there is a loop in free list.
+  //  while (free_iter) {
+  //    free_iter = rbt_node__next(free_iter);
+  //  }
+  //}
+  
+  // funk2_heap note: no need for a loop check when using a heap.
+  
 }
 
 f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
@@ -264,8 +274,9 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {
     // need to fix pointers (globals, funk2_memblock__next(block))
     s64 byte_diff = (s64)(this->dynamic_memory.ptr - old_dynamic_memory.ptr);
-    if (this->used_memory_tree.head) {this->used_memory_tree.head = (rbt_node_t*)(((u8*)this->used_memory_tree.head) + byte_diff);}
-    if (this->free_memory_tree.head) {this->free_memory_tree.head = (rbt_node_t*)(((u8*)this->free_memory_tree.head) + byte_diff);}
+    // HEAPEDIT
+    //if (this->used_memory_tree.head) {this->used_memory_tree.head = (rbt_node_t*)(((u8*)this->used_memory_tree.head) + byte_diff);}
+    //if (this->free_memory_tree.head) {this->free_memory_tree.head = (rbt_node_t*)(((u8*)this->free_memory_tree.head) + byte_diff);}
     if (__funk2.memory.global_environment_ptr >= old_dynamic_memory.ptr &&
 	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
@@ -274,32 +285,37 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
     funk2_memblock_t* last          = NULL;
     while(iter < end_of_blocks) {
-      if (iter->rbt_node.parent) {iter->rbt_node.parent = (rbt_node_t*)(((u8*)(iter->rbt_node.parent) + byte_diff));}
-      if (iter->rbt_node.left)   {iter->rbt_node.left   = (rbt_node_t*)(((u8*)(iter->rbt_node.left)   + byte_diff));}
-      if (iter->rbt_node.right)  {iter->rbt_node.right  = (rbt_node_t*)(((u8*)(iter->rbt_node.right)  + byte_diff));}
+      // HEAPEDIT
+      //if (iter->rbt_node.parent) {iter->rbt_node.parent = (rbt_node_t*)(((u8*)(iter->rbt_node.parent) + byte_diff));}
+      //if (iter->rbt_node.left)   {iter->rbt_node.left   = (rbt_node_t*)(((u8*)(iter->rbt_node.left)   + byte_diff));}
+      //if (iter->rbt_node.right)  {iter->rbt_node.right  = (rbt_node_t*)(((u8*)(iter->rbt_node.right)  + byte_diff));}
       last = iter;
       iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
     }
-    if (last->used) {
-      release__assert(byte_num > old_total_global_memory, nil, "(byte_num > old_total_global_memory) because defragment was just called and there is still used memory at end.");
-      funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
-      iter->used = 0;
-      status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
-      rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)iter);
-      release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
-    } else {
-      rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)last);
-      funk2_memblock__byte_num(last) += (byte_num - old_total_global_memory);
-      rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)last);
-      status("funk2_memorypool__change_total_memory_available: increased last block size to funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(last));
-      release__assert(funk2_memblock__byte_num(last) > 0, nil, "(funk2_memblock__byte_num(last) >= 0) should be enough free space to reduce memory block.");
-    }
+    // HEAPEDIT
+    //if (last->used) {
+    //release__assert(byte_num > old_total_global_memory, nil, "(byte_num > old_total_global_memory) because defragment was just called and there is still used memory at end.");
+    funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
+    iter->used = 0;
+    status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
+    //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)iter);
+    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)iter);
+    release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
+    //} else {
+    //rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)last);
+    //funk2_memblock__byte_num(last) += (byte_num - old_total_global_memory);
+    //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)last);
+    //status("funk2_memorypool__change_total_memory_available: increased last block size to funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(last));
+    //release__assert(funk2_memblock__byte_num(last) > 0, nil, "(funk2_memblock__byte_num(last) >= 0) should be enough free space to reduce memory block.");
+    //}
   } else {
     if (byte_num > old_total_global_memory) {
       funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
       funk2_memblock__byte_num(block) = (byte_num - old_total_global_memory);
       block->used = 0;
-      rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
+      // HEAPEDIT
+      //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
+      funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
       release__assert(funk2_memblock__byte_num(block) > 0, nil, "(funk2_memblock__byte_num(block) > 0) should be enough free space to reduce memory block.");
     } else {
       release__assert(0, nil, "funk2_memorypool__change_total_memory_available error: not implemented yet.");
@@ -309,12 +325,16 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   funk2_memorypool__debug_memory_test(this, 2);
 }
 
-void funk2_memorypool__used_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
-  rbt_tree__insert(&(this->used_memory_tree), (rbt_node_t*)block);
+void funk2_memorypool__used_memory_set__add(funk2_memorypool_t* this, funk2_memblock_t* block) {
+  // HEAPEDIT
+  //rbt_tree__insert(&(this->used_memory_tree), (rbt_node_t*)block);
+  funk2_set__add(&(this->used_memory_set), (funk2_set_element_t)to_ptr(block));
 }
 
-void funk2_memorypool__free_memory_tree__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
-  rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
+void funk2_memorypool__free_memory_heap__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
+  // HEAPEDIT
+  //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
+  funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
 }
 
 u64 u64__log2(u64 this) {
@@ -332,79 +352,15 @@ u64 u64__log2(u64 this) {
 
 u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* this) {
   u8 did_something = 0;
-  status("skipping defragmentation of funk2_memorypool.");
+  status("defragmentation of funk2_memorypool not yet implemented.");
   return did_something;
-  {// this block is (not --^) skipped because there is a bug that occurs with a zero byte_num block of memory.
-    funk2_memorypool__debug_memory_test(this, 2);
-    status("defragmenting funk2_memorypool");
-    u64               largest_free_block_size       = 0;
-    funk2_memblock_t* end_of_blocks                 = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
-    u64               free_memory_tree__size        = rbt_tree__size(&(this->free_memory_tree));
-    u64               free_memory_tree__size__power = u64__log2(free_memory_tree__size);
-    funk2_hash_t      blocks_to_defragment;
-    funk2_hash__init(&blocks_to_defragment, free_memory_tree__size__power + 1);
-    status("  free_memory_tree__size=" u64__fstr, free_memory_tree__size);
-    {
-      rbt_node_t* node = rbt_tree__minimum(&(this->free_memory_tree));
-      while(node) {
-	u64               byte_num   = funk2_memblock__byte_num(((funk2_memblock_t*)node));
-	if (largest_free_block_size < byte_num) {
-	  largest_free_block_size = byte_num;
-	}
-	funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)node) + byte_num);
-	if ((next_block < end_of_blocks) && (! (next_block->used))) {
-	  funk2_hash__add(&blocks_to_defragment, (u64)to_ptr(node), (u64)0);
-	}
-	node = rbt_node__next(node);
-      }
-    }
-    status("  blocks_to_defragment.key_count=" u64__fstr, (u64)(blocks_to_defragment.key_count));
-    status("  before defragment largest_free_block_size=" u64__fstr, (u64)(largest_free_block_size));
-    u64 bin_count = funk2_hash__bin_count(&blocks_to_defragment);
-    {
-      u64 index;
-      for (index = 0; index < bin_count; index ++) {
-	funk2_hash_bin_node_t* bin_node = blocks_to_defragment.bin_array[index];
-	while (bin_node) {
-	  funk2_memblock_t* segment_first_free_block = (funk2_memblock_t*)(from_ptr(bin_node->keyvalue_pair.key));
-	  funk2_memblock_t* iter                     = (funk2_memblock_t*)(((u8*)segment_first_free_block) + funk2_memblock__byte_num(((funk2_memblock_t*)segment_first_free_block)));
-	  while ((iter < end_of_blocks) && (! (iter->used))) {
-	    if (funk2_memblock__byte_num(iter) == 0) {
-	      status(nil, "funk2_memorypool__defragment_free_memory_blocks_in_place MEMORY BUG: memblock__byte_num = 0.");
-	      printf( "\n\nfunk2_memorypool__defragment_free_memory_blocks_in_place MEMORY BUG: memblock__byte_num = 0.\n\n");
-	      break;
-	    }
-	    funk2_memblock_t* next = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-	    if (funk2_hash__contains(&blocks_to_defragment, (u64)to_ptr(iter))) {
-	      funk2_hash__remove(&blocks_to_defragment, (u64)to_ptr(iter));
-	    }
-	    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)iter);
-	    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
-	    u64 byte_num = funk2_memblock__byte_num(segment_first_free_block) + funk2_memblock__byte_num(iter);
-	    if (largest_free_block_size < byte_num) {
-	      largest_free_block_size = byte_num;
-	    }
-	    funk2_memblock__byte_num(segment_first_free_block) = byte_num;
-	    rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)segment_first_free_block);
-	    iter = next;
-	    did_something = 1;
-	  }
-	  funk2_hash__remove(&blocks_to_defragment, (u64)to_ptr(segment_first_free_block));
-	  bin_node = blocks_to_defragment.bin_array[index];
-	}
-      }
-    }
-    funk2_hash__destroy(&blocks_to_defragment);
-    status("  after defragment largest_free_block_size=" u64__fstr, (u64)(largest_free_block_size));
-    funk2_memorypool__debug_memory_test(this, 2);
-    return did_something;
-  }
 }
 
 
 void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_t* block) {
   // remove from used list
-  rbt_tree__remove(&(this->used_memory_tree), (rbt_node_t*)block);
+  // HEAPEDIT
+  funk2_set__remove(&(this->used_memory_set), (funk2_set_element_t)to_ptr(block));
   // set to free
   debug__assert(block->used, nil, "attempting to free a block that is already free.");
   block->used = 0;
@@ -469,21 +425,36 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 // look for memory block that is not used and is big enough for us to split up
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_memorypool_t* this, f2size_t byte_num) {
   funk2_memorypool__debug_memory_test(this, 4);
-  //funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
-  funk2_memblock_t* perfect_size_block = (funk2_memblock_t*)rbt_tree__minimum_not_less_than(&(this->free_memory_tree), byte_num);
-  if (perfect_size_block && funk2_memblock__byte_num(perfect_size_block) >= byte_num) {
-    rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)perfect_size_block);
-    perfect_size_block->used = 1;
+  // HEAPEDIT
+  ////funk2_memblock_t* max_size_block = (funk2_memblock_t*)rbt_tree__maximum(&(this->free_memory_tree));
+  //funk2_memblock_t* perfect_size_block = (funk2_memblock_t*)rbt_tree__minimum_not_less_than(&(this->free_memory_tree), byte_num);
+  //if (perfect_size_block && funk2_memblock__byte_num(perfect_size_block) >= byte_num) {
+  //  rbt_tree__remove(&(this->free_memory_tree), (rbt_node_t*)perfect_size_block);
+  //  perfect_size_block->used = 1;
+  //} else {
+  //  if (! perfect_size_block) {
+  //    status("there are no free memory blocks left that are at least " u64__fstr " bytes.", (u64)byte_num);
+  //  } else {
+  //    status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(perfect_size_block));
+  //  }
+  //  perfect_size_block = NULL; // largest free memory block is not large enough.  fail.
+  //}
+  //funk2_memorypool__debug_memory_test(this, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
+  //return perfect_size_block;
+  funk2_memblock_t* maximum_block = (funk2_memblock_t*)funk2_heap__remove_maximum(&(this->free_memory_heap));
+  if (maximum_block && funk2_memblock__byte_num(maximum_block) >= byte_num) {
+    maximum_block->used = 1;
   } else {
-    if (! perfect_size_block) {
+    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)maximum_block);
+    if (! maximum_block) {
       status("there are no free memory blocks left that are at least " u64__fstr " bytes.", (u64)byte_num);
     } else {
-      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(perfect_size_block));
+      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(maximum_block));
     }
-    perfect_size_block = NULL; // largest free memory block is not large enough.  fail.
+    maximum_block = NULL; // largest free memory block is not large enough.  fail.
   }
   funk2_memorypool__debug_memory_test(this, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
-  return perfect_size_block;
+  return maximum_block;
 }
 
 boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {
@@ -547,13 +518,36 @@ void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int 
     
     f2__free(to_ptr(compressed_data));
   }
+  // HEAPEDIT
+  //{
+  //  this->used_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
+  //  rbt_tree__save_to_stream(&(this->used_memory_tree), fd);
+  //}
+  //{
+  //  this->free_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
+  //  rbt_tree__save_to_stream(&(this->free_memory_tree), fd);
+  //}
   {
-    this->used_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
-    rbt_tree__save_to_stream(&(this->used_memory_tree), fd);
+    f2size_t size_i = this->global_f2ptr_offset;
+    safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
   }
   {
-    this->free_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
-    rbt_tree__save_to_stream(&(this->free_memory_tree), fd);
+    {
+      f2size_t size_i = this->used_memory_tree.element_count;
+      safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    }
+    funk2_set__iteration(&(this->used_memory_set), element,
+			 safe_write(fd, to_ptr(&element), sizeof(funk2_set_element_t));
+			 );
+  }
+  {
+    {
+      f2size_t size_i = funk2_heap__size(&(this->free_memory_heap));
+      safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
+    }
+    funk2_heap__iteration(&(this->free_memory_heap), node,
+			  safe_write(fd, to_ptr(&node), sizeof(&node));
+			  );
   }
 }
 

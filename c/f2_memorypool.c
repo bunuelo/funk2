@@ -551,55 +551,6 @@ void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int 
   }
 }
 
-/*
-void funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd) {
-  // save compressed memory image
-  {
-    status("funk2_memorypool__save_to_stream: compressing memorypool.");
-    u64 compressed_length = 0;
-    u8* compressed_data;
-    {
-      u8*       uncompressed_data   = (u8*)from_ptr(this->dynamic_memory.ptr);
-      u64       uncompressed_length = this->total_global_memory;
-      compressed_length             = 0;
-      boolean_t failure             = zlib__deflate_length(uncompressed_data, uncompressed_length, &compressed_length);
-      if (failure) {
-	error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
-      }
-      compressed_data               = (u8*)from_ptr(f2__malloc(compressed_length));
-      failure                       = zlib__deflate(compressed_data, &compressed_length, uncompressed_data, uncompressed_length);
-      if (failure) {
-	error(nil, "funk2_memorypool__save_to_stream error: failed to deflate image using zlib.");
-      }
-    }
-    f2size_t size_i;
-    size_i = compressed_length;          safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-    size_i = this->total_global_memory;  safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-    size_i = this->total_free_memory;    safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-    size_i = this->next_unique_block_id; safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-    
-    status("funk2_memorypool__save_to_stream: dynamic_memory.ptr=0x" X64__fstr " " u64__fstr " total_global_memory=" u64__fstr " compressed_length=" u64__fstr "  (writing compressed image to disk now)",
-	   this->dynamic_memory.ptr, this->dynamic_memory.ptr,
-	   this->total_global_memory,
-	   (u64)compressed_length);
-    
-    safe_write(fd, to_ptr(compressed_data), compressed_length);
-    
-    status("funk2_memorypool__save_to_stream: done writing memorypool image to disk.");
-    
-    f2__free(to_ptr(compressed_data));
-  }
-  {
-    this->used_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
-    rbt_tree__save_to_stream(&(this->used_memory_tree), fd);
-  }
-  {
-    this->free_memory_tree.memorypool_beginning = this->global_f2ptr_offset;
-    rbt_tree__save_to_stream(&(this->free_memory_tree), fd);
-  }
-}
-*/
-
 void funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_memorypool_t* this) {
   status("funk2_memorypool__load_from_stream: decompressing memorypool image.");
   {
@@ -620,8 +571,9 @@ void funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_mem
 }
 
 void funk2_memorypool__rebuild_memory_trees_from_image(funk2_memorypool_t* this) {
-  rbt_tree__reinit(&(this->free_memory_tree), this->global_f2ptr_offset);
-  rbt_tree__reinit(&(this->used_memory_tree), this->global_f2ptr_offset);
+  // HEAPEDIT
+  //rbt_tree__reinit(&(this->free_memory_tree), this->global_f2ptr_offset);
+  //rbt_tree__reinit(&(this->used_memory_tree), this->global_f2ptr_offset);
 }
 
 void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
@@ -654,7 +606,31 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     
     //funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);
   }
-  rbt_tree__load_from_stream(&(this->used_memory_tree), fd);
-  rbt_tree__load_from_stream(&(this->free_memory_tree), fd);
+  // HEAPEDIT
+  //rbt_tree__load_from_stream(&(this->used_memory_tree), fd);
+  //rbt_tree__load_from_stream(&(this->free_memory_tree), fd);
+  ptr old_global_f2ptr_offset; {
+    f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
+    old_global_f2ptr_offset = size_i;
+  }
+  s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)old_global_f2ptr_offset));
+  {
+    u64 element_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); element_count = size_i;}
+    u64 index;
+    for (index = 0; index < element_count; index ++) {
+      funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
+      element += global_f2ptr_difference;
+      funk2_set__add(&(this->used_memory_set), element);
+    }
+  }
+  {
+    u64 node_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); node_count = size_i;}
+    u64 index;
+    for (index = 0; index < node_count; index ++) {
+      funk2_heap_node_t node; safe_read(fd, to_ptr(&node), sizeof(funk2_heap_node_t*));
+      node = ((funk2_heap_node_t*)(((u8*)node) + global_f2ptr_difference));
+      funk2_heap__insert(&(this->free_memory_heap), node);
+    }
+  }
 }
 

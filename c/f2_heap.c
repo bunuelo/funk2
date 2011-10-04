@@ -121,7 +121,7 @@ funk2_heap_node_t* funk2_heap__maximum_node(funk2_heap_t* this) {
 
 
 void funk2_heap__print(funk2_heap_t* this) {
-  printf("\n<funk2_heap " ptr__fstr "> = [", (ptr)(this)); fflush(stdout);
+  printf("<funk2_heap " ptr__fstr "> = [", (ptr)(this)); fflush(stdout);
   {
     u64 index = 1;
     while (index <= this->element_array_used_num) {
@@ -156,13 +156,14 @@ void heap__tests() {
       }
     }
     
-    funk2_heap__print(heap); printf("\n"); fflush(stdout);
+    printf("\n"); funk2_heap__print(heap); fflush(stdout);
+    printf("\n"); fflush(stdout);
     
     {
       s64 i;
       for (i = 0; i < 5; i ++) {
 	funk2_heap__insert(heap, node_array[i]);
-	funk2_heap__print(heap); printf("\n"); fflush(stdout);
+	printf("\n  "); fflush(stdout); funk2_heap__print(heap); printf("\n"); fflush(stdout);
       }
     }
     

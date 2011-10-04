@@ -648,6 +648,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   }
   s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)old_global_f2ptr_offset));
   
+  status("funk2_memorypool__load_from_stream: loading used_memory_set from disk.");
   funk2_set__destroy(&(this->used_memory_set));
   funk2_set__init(&(this->used_memory_set));
   {
@@ -660,6 +661,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     }
   }
   
+  status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk.");
   funk2_heap__destroy(&(this->free_memory_heap));
   funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
   {
@@ -671,5 +673,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
       funk2_heap__insert(&(this->free_memory_heap), node);
     }
   }
+  
+  status("funk2_memorypool__load_from_stream: done.");
 }
 

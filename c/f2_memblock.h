@@ -29,6 +29,7 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 #ifndef F2__MEMBLOCK__H
 #define F2__MEMBLOCK__H
 
+#include "f2_heap.h"
 #include "f2_ptype.h"
 #include "f2_garbage_collector.h"
 #include "f2_atomic.h"

@@ -120,6 +120,14 @@ funk2_heap_node_t* funk2_heap__maximum_node(funk2_heap_t* this) {
 }
 
 
+void funk2_heap__print(funk2_heap_t* this) {
+  printf("\n<funk2_heap " ptr__fstr "> = {", (ptr)(this)); fflush(stdout);
+  u64 index = 0;
+  
+  printf("\n}"); fflush(stdout);
+}
+
+
 void heap__tests() {
   printf("\nheap__tests note: here."); fflush(stdout);
   printf("\n"); fflush(stdout);
@@ -128,7 +136,7 @@ void heap__tests() {
     funk2_heap_t* heap = (funk2_heap_t*)from_ptr(f2__malloc(sizeof(funk2_heap_t)));
     funk2_heap__init(heap, 100);
     
-    
+    funk2_heap__print(heap);
     
     funk2_heap__destroy(heap);
     f2__free(to_ptr(heap));

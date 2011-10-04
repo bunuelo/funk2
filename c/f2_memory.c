@@ -254,7 +254,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     int               new_block__byte_num = funk2_memblock__byte_num(block) - byte_num;
     funk2_memblock__init(new_block, new_block__byte_num, 0);
     
-    funk2_memorypool__free_memory_tree__insert(&(this->pool[pool_index]), new_block);
+    funk2_memorypool__free_memory_heap__insert(&(this->pool[pool_index]), new_block);
     
     funk2_memblock__byte_num(block) = byte_num;
   }

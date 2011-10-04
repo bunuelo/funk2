@@ -45,6 +45,21 @@ void               funk2_heap__insert(        funk2_heap_t* this, funk2_heap_nod
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this);
 funk2_heap_node_t* funk2_heap__maximum_node(  funk2_heap_t* this);
 
+
+#define funk2_heap__iteration(this, node, body) {			\
+    funk2_heap_t*      funk2_heap__iteration__this = this;		\
+    funk2_heap_node_t* node;						\
+    s64                funk2_heap__iteration__index;			\
+    for (funk2_heap__iteration__index = 1; funk2_heap__iteration__index <= funk2_heap__iteration__this->node_array_used_name; funk2_heap__iteration__index ++) { \
+      node = funk2_heap__iteration__this->node_array[funk2_heap__iteration__index]; \
+      {									\
+	body;								\
+      }									\
+    }									\
+  }
+
+
+
 // **
 
 void f2__heap__initialize();

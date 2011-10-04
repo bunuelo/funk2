@@ -35,15 +35,14 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 #include "f2_atomic.h"
 
 struct funk2_memblock_s {
-  //rbt_node_t                             rbt_node;
-  funk2_heap_node_t                      heap_node;
+  rbt_node_t                             rbt_node;
   funk2_garbage_collector_block_header_t gc;
   atomic_t                               reference_count;
   u8                                     used      : 1;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));
 
-#define funk2_memblock__byte_num(this) ((this)->heap_node.key)
+#define funk2_memblock__byte_num(this) ((this)->rbt_node.key)
 
 // funk2_memblock
 

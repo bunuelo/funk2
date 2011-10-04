@@ -45,11 +45,8 @@ struct funk2_memorypool_s {
   f2size_t                       total_global_memory;
   f2size_t                       total_free_memory;
   f2dynamicmemory_t              dynamic_memory;
-  // HEAPEDIT
-  //rbt_tree_t                     used_memory_tree;
-  //rbt_tree_t                     free_memory_tree; // free memory does grow on trees!
-  funk2_heap_t                   used_memory_heap;
-  funk2_heap_t                   free_memory_heap;
+  rbt_tree_t                     used_memory_tree;
+  rbt_tree_t                     free_memory_tree; // free memory does grow on trees!
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   u64                            next_unique_block_id;

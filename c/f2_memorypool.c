@@ -627,7 +627,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     u64 node_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); node_count = size_i;}
     u64 index;
     for (index = 0; index < node_count; index ++) {
-      funk2_heap_node_t node; safe_read(fd, to_ptr(&node), sizeof(funk2_heap_node_t*));
+      funk2_heap_node_t* node; safe_read(fd, to_ptr(&node), sizeof(funk2_heap_node_t*));
       node = ((funk2_heap_node_t*)(((u8*)node) + global_f2ptr_difference));
       funk2_heap__insert(&(this->free_memory_heap), node);
     }

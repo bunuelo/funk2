@@ -28,87 +28,87 @@
 
 // funk2_heap
 
-void funk2_heap__init(funk2_heap_t* this, u64 element_array_size) {
-  if (element_array_size < funk2_heap__minimum_size) {
-    error(nil, "funk2_heap__init error: element_array_size is less than funk2_heap__minimum_size.");
+void funk2_heap__init(funk2_heap_t* this, u64 node_array_size) {
+  if (node_array_size < funk2_heap__minimum_size) {
+    error(nil, "funk2_heap__init error: node_array_size is less than funk2_heap__minimum_size.");
   }
-  this->element_array_size     = element_array_size;
-  this->element_array_used_num = 0;
-  this->element_array          = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (element_array_size + 1)));
-  this->element_array[0]       = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
-  this->element_array[0]->key  = funk2_heap__maximum_key;
+  this->node_array_size     = node_array_size;
+  this->node_array_used_num = 0;
+  this->node_array          = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (node_array_size + 1)));
+  this->node_array[0]       = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
+  this->node_array[0]->key  = funk2_heap__maximum_key;
 }
 
 
 void funk2_heap__destroy(funk2_heap_t* this) {
-  f2__free(to_ptr(this->element_array));
+  f2__free(to_ptr(this->node_array));
 }
 
 
 void funk2_heap__make_empty(funk2_heap_t* this) {
-  this->element_array_used_num = 0;
+  this->node_array_used_num = 0;
 }
 
 
 boolean_t funk2_heap__is_empty(funk2_heap_t* this) {
-  return ((this->element_array_used_num == 0));
+  return ((this->node_array_used_num == 0));
 }
 
 
 boolean_t funk2_heap__is_full(funk2_heap_t* this) {
-  return ((this->element_array_used_num == (this->element_array_size)));
+  return ((this->node_array_used_num == (this->node_array_size)));
 }
 
 
-// this->element_array[0] is a sentinel
+// this->node_array[0] is a sentinel
 void funk2_heap__insert(funk2_heap_t* this, funk2_heap_node_t* node) {
   s64 index;
   
   if(funk2_heap__is_full(this)) {
-    error(nil, "funk2_heap error: attempted to insert element into full heap.");
+    error(nil, "funk2_heap error: attempted to insert node into full heap.");
   }
   
-  this->element_array_used_num ++;
+  this->node_array_used_num ++;
   
-  for(index = this->element_array_used_num; this->element_array[index >> 1]->key < node->key; index >>= 1) {
-    this->element_array[index] = this->element_array[index >> 1];
+  for(index = this->node_array_used_num; this->node_array[index >> 1]->key < node->key; index >>= 1) {
+    this->node_array[index] = this->node_array[index >> 1];
   }
-  this->element_array[index] = node;
+  this->node_array[index] = node;
 }
 
 
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
   s64                index;
   s64                child_index;
-  funk2_heap_node_t* maximum_element;
-  funk2_heap_node_t* last_element;
+  funk2_heap_node_t* maximum_node;
+  funk2_heap_node_t* last_node;
   
   if (funk2_heap__is_empty(this)) {
-    error(nil, "funk2_heap error: attempt to remove element from empty heap.");
+    error(nil, "funk2_heap error: attempt to remove node from empty heap.");
   }
   
-  maximum_element = this->element_array[1];
-  last_element    = this->element_array[this->element_array_used_num];
+  maximum_node = this->node_array[1];
+  last_node    = this->node_array[this->node_array_used_num];
   
-  this->element_array_used_num --;
+  this->node_array_used_num --;
   
-  for(index = 1; (index << 1) <= this->element_array_used_num; index = child_index) {
-    // find smaller child
+  for(index = 1; (index << 1) <= this->node_array_used_num; index = child_index) {
+    // find larger child
     child_index = index << 1;
-    if ((child_index != this->element_array_used_num) &&
-	(this->element_array[child_index + 1] < this->element_array[child_index])) {
+    if ((child_index != this->node_array_used_num) &&
+	(this->node_array[child_index + 1]->key < this->node_array[child_index]->key)) {
       child_index ++;
     }
     
     // percolate one level
-    if( last_element > this->element_array[child_index]) {
-      this->element_array[index] = this->element_array[child_index];
+    if( last_node->key > this->node_array[child_index]->key) {
+      this->node_array[index] = this->node_array[child_index];
     } else {
       break;
     }
   }
-  this->element_array[index] = last_element;
-  return maximum_element;
+  this->node_array[index] = last_node;
+  return maximum_node;
 }
 
 
@@ -116,7 +116,7 @@ funk2_heap_node_t* funk2_heap__maximum_node(funk2_heap_t* this) {
   if (funk2_heap__is_empty(this)) {
     error(nil, "funk2_heap error: attempted to find maximum value in empty heap.");
   }
-  return this->element_array[1];
+  return this->node_array[1];
 }
 
 
@@ -124,8 +124,8 @@ void funk2_heap__print(funk2_heap_t* this) {
   printf("<funk2_heap " ptr__fstr "> = [", (ptr)(this)); fflush(stdout);
   {
     u64 index = 1;
-    while (index <= this->element_array_used_num) {
-      funk2_heap_node_t* node = this->element_array[index];
+    while (index <= this->node_array_used_num) {
+      funk2_heap_node_t* node = this->node_array[index];
       if (index != 1) {
 	printf(" "); fflush(stdout);
       }

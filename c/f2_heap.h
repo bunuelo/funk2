@@ -29,14 +29,14 @@ struct funk2_heap_node_s {
 
 typedef struct funk2_heap_s funk2_heap_t;
 struct funk2_heap_s {
-  u64                 element_array_size;
-  u64                 element_array_used_num;
-  funk2_heap_node_t** element_array;
+  u64                 node_array_size;
+  u64                 node_array_used_num;
+  funk2_heap_node_t** node_array;
 };
 
 // funk2_heap
 
-void               funk2_heap__init(          funk2_heap_t* this, u64 element_array_size);
+void               funk2_heap__init(          funk2_heap_t* this, u64 node_array_size);
 void               funk2_heap__destroy(       funk2_heap_t* this);
 void               funk2_heap__make_empty(    funk2_heap_t* this);
 boolean_t          funk2_heap__is_empty(      funk2_heap_t* this);

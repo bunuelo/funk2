@@ -127,6 +127,7 @@ void funk2_heap__print(funk2_heap_t* this) {
     while (index <= this->element_array_used_num) {
       funk2_heap_node_t* node = this->element_array[index];
       printf(" " u64__fstr, (u64)(node->key)); fflush(stdout);
+      index ++;
     }
   }
   printf("]"); fflush(stdout);

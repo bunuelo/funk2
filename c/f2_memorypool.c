@@ -53,6 +53,9 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
+  // HEAPEDIT
+  funk2_heap__destroy(&(this->free_memory_heap));
+  funk2_set__destroy(&(this->used_memory_set));
 }
 
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
@@ -293,6 +296,32 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
       iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
     }
     // HEAPEDIT
+    {
+      s64 index;
+      for (index = 1; index <= this->free_memory_heap.node_array_used_num; index ++) {
+	this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
+      }
+    }
+    {
+      funk2_set_element_t* set_element_array = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * this->used_memory_set.element_count));
+      {
+	s64 index;
+	set__iteration(&(this->used_memory_set), element,
+		       set_element_array[index] = element;
+		       index ++;
+		       );
+      }
+      funk2_set__destroy(&(this->used_memory_set));
+      funk2_set__init(&(this->used_memory_set));
+      {
+	s64 index;
+	for (index = 0; index < this->used_memory_set.element_count; index ++) {
+	  funk2_set_element_t element = set_element_array[index];
+	  element += byte_diff;
+	  funk2_set__add(&(this->used_memory_set), element);
+	}
+      }
+    }
     //if (last->used) {
     //release__assert(byte_num > old_total_global_memory, nil, "(byte_num > old_total_global_memory) because defragment was just called and there is still used memory at end.");
     funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);

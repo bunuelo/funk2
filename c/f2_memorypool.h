@@ -37,6 +37,8 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 #include "f2_ptype.h"
 #include "f2_zlib.h"
 
+#define funk2_memorypool__initial_heap_size (10ull * 1024 * 1024)
+
 struct funk2_memorypool_s {
   u64                            pool_index;
   funk2_processor_mutex_t        global_memory_allocate_mutex;

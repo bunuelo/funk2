@@ -43,7 +43,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
   //rbt_tree__init(&(this->used_memory_tree), NULL, this->global_f2ptr_offset);
   
-  funk2_heap__init(&(this->free_memory_heap), 10 * 1024 * 1024);
+  funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
   
   funk2_set__init(&(this->used_memory_set));
@@ -647,6 +647,9 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     old_global_f2ptr_offset = size_i;
   }
   s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)old_global_f2ptr_offset));
+  
+  funk2_set__destroy(&(this->used_memory_set));
+  funk2_set__init(&(this->used_memory_set));
   {
     u64 element_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); element_count = size_i;}
     u64 index;
@@ -656,6 +659,9 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
       funk2_set__add(&(this->used_memory_set), element);
     }
   }
+  
+  funk2_heap__destroy(&(this->free_memory_heap));
+  funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
   {
     u64 node_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); node_count = size_i;}
     u64 index;

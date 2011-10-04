@@ -43,7 +43,7 @@ struct funk2_memblock_s {
   u8                                     raw_mem[0];
 } __attribute__((__packed__));
 
-#define funk2_memblock__byte_num(this) ((this)->rbt_node.key)
+#define funk2_memblock__byte_num(this) ((this)->heap_node.key)
 
 // funk2_memblock
 

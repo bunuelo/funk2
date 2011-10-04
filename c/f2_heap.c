@@ -141,7 +141,7 @@ void heap__tests() {
   printf("\n"); fflush(stdout);
   
   {
-    u64 node_num = 100;
+    u64 node_num = 10;
     
     funk2_heap_t* heap = (funk2_heap_t*)from_ptr(f2__malloc(sizeof(funk2_heap_t)));
     funk2_heap__init(heap, node_num);

@@ -101,7 +101,7 @@ funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
     }
     
     // percolate one level
-    if( last_node->key > this->node_array[child_index]->key) {
+    if( last_node->key < this->node_array[child_index]->key) {
       this->node_array[index] = this->node_array[child_index];
     } else {
       break;

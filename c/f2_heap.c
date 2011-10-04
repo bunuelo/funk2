@@ -96,7 +96,7 @@ funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
     // find larger child
     child_index = index << 1;
     if ((child_index != this->node_array_used_num) &&
-	(this->node_array[child_index + 1]->key < this->node_array[child_index]->key)) {
+	(this->node_array[child_index + 1]->key > this->node_array[child_index]->key)) {
       child_index ++;
     }
     

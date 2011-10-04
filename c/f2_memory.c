@@ -551,7 +551,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	// add all symbols to symbol_hash in ptypes.c
-	rbt_node_t* iter = rbt_tree__minimum(&(this->pool[pool_index].used_memory_tree));
+	funk2_heap_node_t* iter = funk2_heap__minimum(&(this->pool[pool_index].used_memory_tree));
 	while(iter) {
 	  ptype_block_t* block = (ptype_block_t*)iter;
 	  switch(block->ptype) {

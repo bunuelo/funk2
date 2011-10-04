@@ -305,7 +305,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     {
       funk2_set_element_t* set_element_array = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * this->used_memory_set.element_count));
       {
-	s64 index;
+	s64 index = 0;
 	set__iteration(&(this->used_memory_set), element,
 		       set_element_array[index] = element;
 		       index ++;

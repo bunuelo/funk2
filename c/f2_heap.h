@@ -50,7 +50,7 @@ funk2_heap_node_t* funk2_heap__maximum_node(  funk2_heap_t* this);
     funk2_heap_t*      funk2_heap__iteration__this = this;		\
     funk2_heap_node_t* node;						\
     s64                funk2_heap__iteration__index;			\
-    for (funk2_heap__iteration__index = 1; funk2_heap__iteration__index <= funk2_heap__iteration__this->node_array_used_name; funk2_heap__iteration__index ++) { \
+    for (funk2_heap__iteration__index = 1; funk2_heap__iteration__index <= funk2_heap__iteration__this->node_array_used_num; funk2_heap__iteration__index ++) { \
       node = funk2_heap__iteration__this->node_array[funk2_heap__iteration__index]; \
       {									\
 	body;								\

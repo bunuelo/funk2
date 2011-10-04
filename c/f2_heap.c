@@ -151,7 +151,7 @@ void heap__tests() {
       u64 i;
       for (i = 0; i < node_num; i ++) {
 	node_array[i] = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
-	node_array[i]->key = i + 100;
+	node_array[i]->key = i;
       }
     }
     

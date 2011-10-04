@@ -130,7 +130,7 @@ void funk2_heap__print(funk2_heap_t* this) {
 	printf(" "); fflush(stdout);
       }
       printf(u64__fstr, (u64)(node->key)); fflush(stdout);
-      index ++;
+      index = ++;
     }
   }
   printf("]"); fflush(stdout);

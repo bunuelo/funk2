@@ -160,7 +160,7 @@ void heap__tests() {
     
     {
       s64 i;
-      for (i = 0; i < 2; i ++) {
+      for (i = 0; i < 10; i ++) {
 	funk2_heap__insert(heap, node_array[i]);
       }
     }

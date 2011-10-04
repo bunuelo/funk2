@@ -137,6 +137,7 @@ void heap__tests() {
     funk2_heap__init(heap, 100);
     
     funk2_heap__print(heap);
+    printf("\n"); fflush(stdout);
     
     funk2_heap__destroy(heap);
     f2__free(to_ptr(heap));

@@ -141,7 +141,7 @@ void heap__tests() {
   printf("\n"); fflush(stdout);
   
   {
-    u64 node_num = 100;
+    u64 node_num = 10;
     
     funk2_heap_t* heap = (funk2_heap_t*)from_ptr(f2__malloc(sizeof(funk2_heap_t)));
     funk2_heap__init(heap, node_num);
@@ -162,6 +162,16 @@ void heap__tests() {
       s64 i;
       for (i = 0; i < node_num; i ++) {
 	funk2_heap__insert(heap, node_array[i]);
+	printf("\n  "); fflush(stdout); funk2_heap__print(heap); printf("\n"); fflush(stdout);
+      }
+    }
+    
+    printf("\nheap__tests note: after add heap: "); fflush(stdout); funk2_heap__print(heap); printf("\n"); fflush(stdout);
+    
+    {
+      s64 i;
+      for (i = 0; i < node_num; i ++) {
+	funk2_heap__remove(heap, node_array[i]);
 	printf("\n  "); fflush(stdout); funk2_heap__print(heap); printf("\n"); fflush(stdout);
       }
     }

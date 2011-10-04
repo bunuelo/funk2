@@ -533,7 +533,7 @@ void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int 
   }
   {
     {
-      f2size_t size_i = this->used_memory_tree.element_count;
+      f2size_t size_i = this->used_memory_set.element_count;
       safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
     }
     funk2_set__iteration(&(this->used_memory_set), element,

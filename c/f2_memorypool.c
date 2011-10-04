@@ -366,7 +366,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
   // add to free list
-  funk2_memorypool__free_memory_tree__insert(this, block);
+  funk2_memorypool__free_memory_heap__insert(this, block);
   // remove reference counts
   {
     ptype_block_t* ptype_block = (ptype_block_t*)block;

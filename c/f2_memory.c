@@ -551,31 +551,31 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	// add all symbols to symbol_hash in ptypes.c
-	funk2_heap__iteration(&(this->pool[pool_index].used_memory_heap), node,
-			      ptype_block_t* block = (ptype_block_t*)node;
-			      switch(block->ptype) {
-			      case ptype_symbol: {
-				f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
-				funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-			      } break;
-			      case ptype_scheduler_cmutex: {
-				ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-				funk2_processor_mutex__init(scheduler_cmutex_block->m);
-				if (scheduler_cmutex_block->locked_state) {
-				  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
-				}
-			      } break;
-			      case ptype_cmutex: {
-				ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
-				funk2_processor_mutex__init(cmutex_block->m);
-				if (cmutex_block->locked_state) {
-				  funk2_processor_mutex__lock(cmutex_block->m);
-				}
-			      } break;
-			      default:
-				break;
-			      }
-			      );
+	funk2_set__iteration(&(this->pool[pool_index].used_memory_set), element,
+			     ptype_block_t* block = (ptype_block_t*)from_ptr(element);
+			     switch(block->ptype) {
+			     case ptype_symbol: {
+			       f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
+			       funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
+			     } break;
+			     case ptype_scheduler_cmutex: {
+			       ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+			       funk2_processor_mutex__init(scheduler_cmutex_block->m);
+			       if (scheduler_cmutex_block->locked_state) {
+				 funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+			       }
+			     } break;
+			     case ptype_cmutex: {
+			       ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+			       funk2_processor_mutex__init(cmutex_block->m);
+			       if (cmutex_block->locked_state) {
+				 funk2_processor_mutex__lock(cmutex_block->m);
+			       }
+			     } break;
+			     default:
+			       break;
+			     }
+			     );
       }
     }
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));

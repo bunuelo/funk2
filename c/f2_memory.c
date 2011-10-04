@@ -551,7 +551,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
 	// add all symbols to symbol_hash in ptypes.c
-	funk2_heap__iteration(&(this->pool[pool_index].used_memory_tree), node,
+	funk2_heap__iteration(&(this->pool[pool_index].used_memory_heap), node,
 			      ptype_block_t* block = (ptype_block_t*)node;
 			      switch(block->ptype) {
 			      case ptype_symbol: {

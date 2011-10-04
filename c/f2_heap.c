@@ -139,11 +139,30 @@ void heap__tests() {
   printf("\n"); fflush(stdout);
   
   {
-    funk2_heap_t* heap = (funk2_heap_t*)from_ptr(f2__malloc(sizeof(funk2_heap_t)));
-    funk2_heap__init(heap, 100);
+    u64 node_num = 100;
     
-    funk2_heap__print(heap);
-    printf("\n"); fflush(stdout);
+    funk2_heap_t* heap = (funk2_heap_t*)from_ptr(f2__malloc(sizeof(funk2_heap_t)));
+    funk2_heap__init(heap, node_num);
+    
+    funk2_heap_node_t** node_array = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * node_num));
+    {
+      u64 i;
+      for (i = 0; i < node_num; i ++) {
+	node_array[i]->key = i + 100;
+      }
+    }
+    
+    funk2_heap__print(heap); printf("\n"); fflush(stdout);
+    
+    {
+      s64 i;
+      for (i = 0; i < 1; i ++) {
+	funk2_heap__insert(heap, node_array[i]);
+      }
+    }
+    
+    funk2_heap__print(heap); printf("\n"); fflush(stdout);
+    
     
     funk2_heap__destroy(heap);
     f2__free(to_ptr(heap));

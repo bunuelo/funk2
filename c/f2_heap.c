@@ -166,8 +166,6 @@ void heap__tests() {
       }
     }
     
-    printf("\nheap__tests note: after add heap: "); fflush(stdout); funk2_heap__print(heap);
-    
     {
       s64 i;
       for (i = 0; i < node_num; i ++) {
@@ -176,7 +174,10 @@ void heap__tests() {
       }
     }
     
+    printf("\n"); fflush(stdout);
+    
     printf("\nheap__tests note: final heap: "); fflush(stdout); funk2_heap__print(heap);
+    printf("\n"); fflush(stdout);
     
     funk2_heap__destroy(heap);
     f2__free(to_ptr(heap));

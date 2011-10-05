@@ -37,7 +37,7 @@
  */
  
 typedef struct {
-  volatile int counter;
+  volatile int24_t counter;
 } atomic_t;
 
 #define ATOMIC_INIT(i)  { (i) }

@@ -131,14 +131,6 @@ typedef u64 f2size_t;
 #  endif
 #endif // F2__APPLE
 
-#define s48__fstr                 s64__fstr
-#define u48__fstr_without_percent u64__fstr_without_percent
-#define u48__fstr                 u64__fstr
-#define x48__fstr_without_percent x64__fstr_without_percent
-#define x48__fstr                 x64__fstr
-#define X48__fstr_without_percent X64__fstr_without_percent
-#define X48__fstr                 X64__fstr
-
 #if int__bit_num == 32
 #  define s32__fstr "%d"
 #  define u32__fstr "%u"

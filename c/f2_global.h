@@ -84,34 +84,18 @@ typedef unsigned char boolean_t;
 
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
-#define F2__48BIT_F2PTR
-#ifdef F2__48BIT_F2PTR
-    typedef                      u48 f2ptr;
-#   define f2ptr__fstr           X48__fstr
-#   define f2ptr__bit_num         48
-    typedef                       u8 computer_id_t;
-#   define computer_id__fstr      X8__fstr
-#   define computer_id__bit_num    1
-    typedef                       u8 pool_index_t;
-#   define pool_index__fstr       X8__fstr
-#   define pool_index__bit_num     3
-    typedef                      u48 pool_address_t;
-#   define pool_address__fstr    X64__fstr
-#   define pool_address__bit_num  44
-#else
-    typedef                      u64 f2ptr;
-#   define f2ptr__fstr           X64__fstr
-#   define f2ptr__bit_num         64
-    typedef                      u32 computer_id_t;
-#   define computer_id__fstr     X32__fstr
-#   define computer_id__bit_num   17
-    typedef                       u8 pool_index_t;
-#   define pool_index__fstr       X8__fstr
-#   define pool_index__bit_num     5
-    typedef                      u64 pool_address_t;
-#   define pool_address__fstr    X64__fstr
-#   define pool_address__bit_num  42
-#endif
+typedef                       u64       f2ptr;
+#define f2ptr__fstr           X64__fstr
+#define f2ptr__bit_num         64
+typedef                       u32       computer_id_t;
+#define computer_id__fstr     X32__fstr
+#define computer_id__bit_num   17
+typedef                        u8       pool_index_t;
+#define pool_index__fstr       X8__fstr
+#define pool_index__bit_num     5
+typedef                       u64       pool_address_t;
+#define pool_address__fstr    X64__fstr
+#define pool_address__bit_num  42
 
 
 #define ideal_scheduler_processor_num processor_num

@@ -40,8 +40,8 @@
 
 struct ptype_block_s {
   funk2_memblock_t block;
-  ptype_t          ptype;
-  f2ptr            cause;
+  ptype_t          ptype : ptype__min_bits;
+  f2ptr            cause : f2ptr__bit_num;
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;
 
@@ -110,7 +110,7 @@ ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr
 
 struct ptype_gfunkptr_block_s {
   ptype_block_t ptype;
-  f2ptr         gfunkptr;
+  f2ptr         gfunkptr : f2ptr__bit_num;
 } __attribute__((__packed__));
 typedef struct ptype_gfunkptr_block_s ptype_gfunkptr_block_t;
 
@@ -238,7 +238,7 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
-  u8            immutable:1;
+  u8            immutable : 1;
   u64           length;
   f2ptr         f2ptr_data[0];
 } __attribute__((__packed__));

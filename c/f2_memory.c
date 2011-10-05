@@ -269,7 +269,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   funk2_set__add(&(this->pool[pool_index].used_memory_set), (funk2_set_element_t)block);
   block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
   block->used = 1;
-  ((ptype_block_t*)block)->ptype = ptype_newly_allocated;
+  ((ptype_block_t*)block)->block.ptype = ptype_newly_allocated;
   funk2_memory__debug_memory_test(this, 3);
 #ifdef DEBUG_MEMORY
   {

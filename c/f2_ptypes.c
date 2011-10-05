@@ -670,9 +670,9 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
   ptype_double_block_t* double_block = (ptype_double_block_t*)from_ptr(raw__f2ptr_to_ptr(double_f2ptr));
   debug__assert(double_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  double_block->ptype.ptype = ptype_double;
-  double_block->ptype.cause = cause;
-  double_block->d           = d;
+  double_block->ptype.block.ptype = ptype_double;
+  double_block->ptype.cause       = cause;
+  double_block->d                 = d;
   return double_f2ptr;
 }
 

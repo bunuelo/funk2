@@ -673,6 +673,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     for (index = 0; index < node_count; index ++) {
       funk2_heap_node_t* node; safe_read(fd, to_ptr(&node), sizeof(&node));
       node = ((funk2_heap_node_t*)(((u8*)node) + global_f2ptr_difference));
+      status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk (index = " u64__fstr ").", index);
       funk2_heap__insert(&(this->free_memory_heap), node);
     }
   }

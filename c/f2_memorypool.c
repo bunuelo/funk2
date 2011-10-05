@@ -415,7 +415,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       funk2_memblock_t* cause_block = (funk2_memblock_t*)from_ptr(cause_ptr);
       funk2_memblock__decrement_reference_count(cause_block, cause, &(__funk2.garbage_collector));
     }
-    switch(ptype_block->ptype) {
+    switch(ptype_block->block.ptype) {
     case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
     case ptype_integer:          break;
     case ptype_double:           break;

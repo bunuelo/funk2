@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-#define F2__DEBUG_HEAP 1
+//#define F2__DEBUG_HEAP 1
 
 #define funk2_heap__minimum_size (10)
 #define funk2_heap__maximum_key  (((u64)1ull)<<63)

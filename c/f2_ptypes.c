@@ -3598,9 +3598,9 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   ptype_chunk_block_t* chunk_block = (ptype_chunk_block_t*)from_ptr(raw__f2ptr_to_ptr(chunk_f2ptr));
   debug__assert(chunk_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  chunk_block->ptype.ptype = ptype_chunk;
-  chunk_block->ptype.cause = cause;
-  chunk_block->length      = length;
+  chunk_block->ptype.block.ptype = ptype_chunk;
+  chunk_block->ptype.cause       = cause;
+  chunk_block->length            = length;
   if (bytes) {memcpy(chunk_block->bytes, bytes, data_byte_num);}
   else       {memset(chunk_block->bytes, 0,     data_byte_num);}
   return chunk_f2ptr;
@@ -3613,9 +3613,9 @@ f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
   ptype_chunk_block_t* chunk_block = (ptype_chunk_block_t*)from_ptr(raw__f2ptr_to_ptr(chunk_f2ptr));
   debug__assert(chunk_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  chunk_block->ptype.ptype = ptype_chunk;
-  chunk_block->ptype.cause = cause;
-  chunk_block->length      = init_chunk_block->length;
+  chunk_block->ptype.block.ptype = ptype_chunk;
+  chunk_block->ptype.cause       = cause;
+  chunk_block->length            = init_chunk_block->length;
   memcpy(chunk_block->bytes, init_chunk_block->bytes, data_byte_num);
   return chunk_f2ptr;
 }
@@ -4306,10 +4306,10 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   debug__assert(simple_array_block, nil, "block is nil.");
   //debug__assert(!cause || valid_funk2_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_funk2_memblock_ptr(cause) failed");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  simple_array_block->ptype.ptype = ptype_simple_array;
-  simple_array_block->ptype.cause = cause;
-  simple_array_block->immutable   = 0;
-  simple_array_block->length      = length;
+  simple_array_block->ptype.block.ptype = ptype_simple_array;
+  simple_array_block->ptype.cause       = cause;
+  simple_array_block->immutable         = 0;
+  simple_array_block->length            = length;
   if (f2ptr_ptr) {memcpy(simple_array_block->f2ptr_data, from_ptr(f2ptr_ptr), data_byte_num);}
   else           {memset(simple_array_block->f2ptr_data, 0,                   sizeof(f2ptr) * length);}
   return simple_array_f2ptr;
@@ -4573,9 +4573,9 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  traced_array_block->ptype.ptype = ptype_traced_array;
-  traced_array_block->ptype.cause = cause;
-  traced_array_block->length      = length;
+  traced_array_block->ptype.block.ptype = ptype_traced_array;
+  traced_array_block->ptype.cause       = cause;
+  traced_array_block->length            = length;
   if (dptr_ptr) {memcpy(traced_array_block->dptr_data, from_ptr(dptr_ptr), data_byte_num);}
   else {
     int i;
@@ -4596,9 +4596,9 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
   ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
   debug__assert(traced_array_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  traced_array_block->ptype.ptype = ptype_traced_array;
-  traced_array_block->ptype.cause = cause;
-  traced_array_block->length      = length;
+  traced_array_block->ptype.block.ptype = ptype_traced_array;
+  traced_array_block->ptype.cause       = cause;
+  traced_array_block->length            = length;
   if (f2ptr_ptr) {
     int i;
     f2ptr*  f2ptr_iter = f2ptr_ptr;
@@ -5257,10 +5257,10 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type, f2ptr bug) {
   debug__assert(larva_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   if (bug)   {raw__exp__increment_reference_count(bug);}
-  larva_block->ptype.ptype = ptype_larva;
-  larva_block->ptype.cause = cause;
-  larva_block->larva_type  = larva_type;
-  larva_block->bug         = bug;
+  larva_block->ptype.block.ptype = ptype_larva;
+  larva_block->ptype.cause       = cause;
+  larva_block->larva_type        = larva_type;
+  larva_block->bug               = bug;
   return larva_f2ptr;
 }
 
@@ -5552,9 +5552,9 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   ptype_symbol_block_t* symbol_block = (ptype_symbol_block_t*)from_ptr(raw__f2ptr_to_ptr(symbol_f2ptr));
   debug__assert(symbol_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  symbol_block->ptype.ptype = ptype_symbol;
-  symbol_block->ptype.cause = cause;
-  symbol_block->length      = length;
+  symbol_block->ptype.block.ptype = ptype_symbol;
+  symbol_block->ptype.cause       = cause;
+  symbol_block->length            = length;
   if (str) {memcpy(symbol_block->str, str, length);}
   else     {memset(symbol_block->str, 0,   length);}
   symbol_block->str[length] = 0x00;

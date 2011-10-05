@@ -228,9 +228,9 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
   ptype_integer_block_t* integer_block = (ptype_integer_block_t*)from_ptr(raw__f2ptr_to_ptr(integer_f2ptr));
   debug__assert(integer_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  integer_block->ptype.ptype = ptype_integer;
-  integer_block->ptype.cause = cause;
-  integer_block->i           = i;
+  integer_block->ptype.block.ptype = ptype_integer;
+  integer_block->ptype.cause       = cause;
+  integer_block->i                 = i;
   return integer_f2ptr;
 }
 
@@ -1188,9 +1188,9 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
   ptype_float_block_t* float_block = (ptype_float_block_t*)from_ptr(raw__f2ptr_to_ptr(float_f2ptr));
   debug__assert(float_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  float_block->ptype.ptype = ptype_float;
-  float_block->ptype.cause = cause;
-  float_block->f           = f;
+  float_block->ptype.block.ptype = ptype_float;
+  float_block->ptype.cause       = cause;
+  float_block->f                 = f;
   return float_f2ptr;
 }
 
@@ -1572,9 +1572,9 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
   ptype_pointer_block_t* pointer_block = (ptype_pointer_block_t*)from_ptr(raw__f2ptr_to_ptr(pointer_f2ptr));
   debug__assert(pointer_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  pointer_block->ptype.ptype = ptype_pointer;
-  pointer_block->ptype.cause = cause;
-  pointer_block->p           = p;
+  pointer_block->ptype.block.ptype = ptype_pointer;
+  pointer_block->ptype.cause       = cause;
+  pointer_block->p                 = p;
   return pointer_f2ptr;
 }
 
@@ -1810,9 +1810,9 @@ f2ptr ptype_gfunkptr__new(int pool_index, f2ptr cause, computer_id_t gf2_compute
   ptype_gfunkptr_block_t* gfunkptr_block = (ptype_gfunkptr_block_t*)from_ptr(raw__f2ptr_to_ptr(gfunkptr_f2ptr));
   debug__assert(gfunkptr_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  gfunkptr_block->ptype.ptype = ptype_gfunkptr;
-  gfunkptr_block->ptype.cause = cause;
-  gfunkptr_block->gfunkptr    = f2ptr__new(gf2_computer_id, gf2_pool_index, gf2_pool_address);
+  gfunkptr_block->ptype.block.ptype = ptype_gfunkptr;
+  gfunkptr_block->ptype.cause       = cause;
+  gfunkptr_block->gfunkptr          = f2ptr__new(gf2_computer_id, gf2_pool_index, gf2_pool_address);
   return gfunkptr_f2ptr;
 }
 
@@ -2628,9 +2628,9 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
   ptype_char_block_t* char_block = (ptype_char_block_t*)from_ptr(raw__f2ptr_to_ptr(char_f2ptr));
   debug__assert(char_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  char_block->ptype.ptype = ptype_char;
-  char_block->ptype.cause = cause;
-  char_block->ch          = ch;
+  char_block->ptype.block.ptype = ptype_char;
+  char_block->ptype.cause       = cause;
+  char_block->ch                = ch;
   return char_f2ptr;
 }
 
@@ -2818,9 +2818,9 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
   ptype_string_block_t* string_block = (ptype_string_block_t*)from_ptr(raw__f2ptr_to_ptr(string_f2ptr));
   debug__assert(string_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  string_block->ptype.ptype = ptype_string;
-  string_block->ptype.cause = cause;
-  string_block->length      = length;
+  string_block->ptype.block.ptype = ptype_string;
+  string_block->ptype.cause       = cause;
+  string_block->length            = length;
   if (str) {memcpy(string_block->str, str, length);}
   else     {memset(string_block->str, 0,   length);}
   string_block->str[length] = 0x00;

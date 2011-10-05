@@ -2060,9 +2060,9 @@ f2ptr ptype_scheduler_cmutex__new(int pool_index, f2ptr cause) {
   ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)from_ptr(raw__f2ptr_to_ptr(scheduler_cmutex_f2ptr));
   debug__assert(scheduler_cmutex_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  scheduler_cmutex_block->ptype.ptype  = ptype_scheduler_cmutex;
-  scheduler_cmutex_block->ptype.cause  = cause;
-  scheduler_cmutex_block->locked_state = boolean__false;
+  scheduler_cmutex_block->ptype.block.ptype = ptype_scheduler_cmutex;
+  scheduler_cmutex_block->ptype.cause       = cause;
+  scheduler_cmutex_block->locked_state      = boolean__false;
   funk2_processor_mutex__init(scheduler_cmutex_block->m);
   return scheduler_cmutex_f2ptr;
 }
@@ -2320,9 +2320,9 @@ f2ptr ptype_cmutex__new(int pool_index, f2ptr cause) {
   ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)from_ptr(raw__f2ptr_to_ptr(cmutex_f2ptr));
   debug__assert(cmutex_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  cmutex_block->ptype.ptype  = ptype_cmutex;
-  cmutex_block->ptype.cause  = cause;
-  cmutex_block->locked_state = boolean__false;
+  cmutex_block->ptype.block.ptype = ptype_cmutex;
+  cmutex_block->ptype.cause       = cause;
+  cmutex_block->locked_state      = boolean__false;
   funk2_processor_mutex__init(cmutex_block->m);
   return cmutex_f2ptr;
 }

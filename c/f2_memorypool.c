@@ -624,7 +624,7 @@ void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {
     // chonk
     {
       u64 index;
-      for (index = 0; index < element_count; index ++) {
+      for (index = 0; index < this->used_memory_set__load_buffer__length; index ++) {
 	funk2_set_element_t element = this->used_memory_set__load_buffer[index];
 	element += global_f2ptr_difference;
 	funk2_set__add(&(this->used_memory_set), element);

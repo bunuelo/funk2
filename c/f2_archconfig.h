@@ -42,8 +42,8 @@
 typedef uint64_t ptr; //                        0 to 18.446744073709551615e18
 typedef uint64_t u64; //                        0 to 18.446744073709551615e18
 typedef  int64_t s64; // -9.223372036854775808e18 to 9.223372036854775807e18
-typedef union {uint64_t data : 48; void* v : 48;} u48;
-typedef union { int64_t data : 48; void* v : 48;} s48;
+typedef union {uint64_t data : 48; char* v : 48;} u48;
+typedef union { int64_t data : 48; char* v : 48;} s48;
 typedef uint32_t u32; //                        0 to 4.294967295e9
 typedef  int32_t s32; //           -2.147483648e9 to 2.147483647e9
 typedef uint16_t u16; //                        0 to 65535

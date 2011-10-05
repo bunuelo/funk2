@@ -47,10 +47,17 @@ struct funk2_memorypool_s {
   f2size_t                       total_global_memory;
   f2size_t                       total_free_memory;
   f2dynamicmemory_t              dynamic_memory;
+  
   funk2_set_t                    used_memory_set;
+  u64                            used_memory_set__load_buffer__length;
+  funk2_set_element_t*           used_memory_set__load_buffer;
+  s64                            used_memory_set__load_buffer__global_f2ptr_offset;
+  
   funk2_heap_t                   free_memory_heap; // free memory piles in heaps!
   u64                            free_memory_heap__load_buffer__length;
   funk2_heap_node_t**            free_memory_heap__load_buffer;
+  s64                            free_memory_heap__load_buffer__global_f2ptr_offset;
+  
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   u64                            next_unique_block_id;

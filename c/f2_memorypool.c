@@ -51,6 +51,9 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   
   funk2_set__init(&(this->used_memory_set));
   
+  this->used_memory_set__load_buffer__length = 0;
+  this->used_memory_set__load_buffer         = NULL;
+  
   funk2_memorypool__debug_memory_test(this, 1);
 }
 
@@ -613,6 +616,25 @@ void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {
   
   status("funk2_memorypool__rebuild_memory_from_image: here.");
   {
+    s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)this->used_memory_set__load_buffer__global_f2ptr_offset));
+    
+    // chonk
+    {
+      u64 index;
+      for (index = 0; index < element_count; index ++) {
+	funk2_set_element_t element = this->used_memory_set__load_buffer[index];
+	element += global_f2ptr_difference;
+	funk2_set__add(&(this->used_memory_set), element);
+      }
+    }
+    
+    f2__free(to_ptr(this->used_memory_set__load_buffer));
+    this->used_memory_set__load_buffer__length = 0;
+    this->used_memory_set__load_buffer         = NULL;
+  }
+  {
+    s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)this->free_memory_heap__load_buffer__global_f2ptr_offset));
+    
     // chonk
     {
       u64 index;
@@ -668,7 +690,8 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     old_global_f2ptr_offset = size_i;
   }
-  s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)old_global_f2ptr_offset));
+  this->free_memory_head__load_buffer__global_f2ptr_offset = old_global_f2ptr_offset;
+  this->used_memory_set__load_buffer__global_f2ptr_offset  = old_global_f2ptr_offset;
   
   status("funk2_memorypool__load_from_stream: loading used_memory_set from disk.");
   funk2_set__destroy(&(this->used_memory_set));
@@ -676,12 +699,18 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   {
     u64 element_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); element_count = size_i;}
     status("funk2_memorypool__load_from_stream: loading used_memory_set from disk (element_count = " u64__fstr ").", element_count);
-    u64 index;
-    for (index = 0; index < element_count; index ++) {
-      funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
-      element += global_f2ptr_difference;
-      funk2_set__add(&(this->used_memory_set), element);
+
+    this->used_memory_set__load_buffer__length = element_count;
+    this->used_memory_set__load_buffer         = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * this->used_memory_set__load_buffer__length));
+    
+    {
+      u64 index;
+      for (index = 0; index < this->used_memory_set__load_buffer__length; index ++) {
+	funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
+	this->used_memory_set__load_buffer[index] = element;
+      }
     }
+    
   }
   
   status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk.");

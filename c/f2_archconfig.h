@@ -32,6 +32,8 @@
 #  error could not detect operating system.
 #endif
 
+#define __INT48_TYPE__ 1
+
 #include <sys/types.h>
 #include <stdint.h>
 

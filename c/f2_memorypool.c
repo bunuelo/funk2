@@ -639,6 +639,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     
     //funk2_memorypool__decompress_and_free_compressed_data_for_loading(this);
   }
+  
   // HEAPEDIT
   //rbt_tree__load_from_stream(&(this->used_memory_tree), fd);
   //rbt_tree__load_from_stream(&(this->free_memory_tree), fd);
@@ -653,6 +654,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   funk2_set__init(&(this->used_memory_set));
   {
     u64 element_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); element_count = size_i;}
+    status("funk2_memorypool__load_from_stream: loading used_memory_set from disk (element_count = " u64__fstr ").", element_count);
     u64 index;
     for (index = 0; index < element_count; index ++) {
       funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
@@ -666,9 +668,10 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
   {
     u64 node_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); node_count = size_i;}
+    status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk (node_count = " u64__fstr ").", node_count);
     u64 index;
     for (index = 0; index < node_count; index ++) {
-      funk2_heap_node_t* node; safe_read(fd, to_ptr(&node), sizeof(funk2_heap_node_t*));
+      funk2_heap_node_t* node; safe_read(fd, to_ptr(&node), sizeof(&node));
       node = ((funk2_heap_node_t*)(((u8*)node) + global_f2ptr_difference));
       funk2_heap__insert(&(this->free_memory_heap), node);
     }

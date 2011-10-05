@@ -37,7 +37,7 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
   
   if (this->used) {
     ptype_block_t* block = (ptype_block_t*)this;
-    switch(block->ptype) {
+    switch(block->block.ptype) {
     case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
     case ptype_integer:         return boolean__false;
     case ptype_double:          return boolean__false;
@@ -79,7 +79,7 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     default:
       {
 	char str[1024];
-	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->ptype));
+	sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(block->block.ptype));
 	error(nil, str);
       }
     }
@@ -93,7 +93,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
   }
   if (this->used) {
     ptype_block_t* ptype_block = (ptype_block_t*)this;
-    switch(ptype_block->ptype) {
+    switch(ptype_block->block.ptype) {
     case ptype_free_memory:
     case ptype_newly_allocated:
     case ptype_integer:
@@ -112,7 +112,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_larva:
       break;
     default: {
-      status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->ptype), (long)ptype_block);
+      status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->block.ptype), (long)ptype_block);
       return boolean__false;
     } break;
     }

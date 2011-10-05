@@ -697,7 +697,7 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t));
     old_global_f2ptr_offset = size_i;
   }
-  this->free_memory_head__load_buffer__global_f2ptr_offset = old_global_f2ptr_offset;
+  this->free_memory_heap__load_buffer__global_f2ptr_offset = old_global_f2ptr_offset;
   this->used_memory_set__load_buffer__global_f2ptr_offset  = old_global_f2ptr_offset;
   
   status("funk2_memorypool__load_from_stream: loading used_memory_set from disk.");

@@ -504,9 +504,9 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
 }
 
 
-void* funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees(void* memorypool_arg) {
+void* funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory(void* memorypool_arg) {
   funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_arg;
-  funk2_memorypool__rebuild_memory_trees_from_image(memorypool);
+  funk2_memorypool__rebuild_memory_from_image(memorypool);
   return NULL;
 }
 
@@ -523,7 +523,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory_trees, (void*)(&(this->pool[pool_index])));
+	pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory, (void*)(&(this->pool[pool_index])));
       }
     }
     {

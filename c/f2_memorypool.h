@@ -47,10 +47,10 @@ struct funk2_memorypool_s {
   f2size_t                       total_global_memory;
   f2size_t                       total_free_memory;
   f2dynamicmemory_t              dynamic_memory;
-  //rbt_tree_t                     used_memory_tree;
-  //rbt_tree_t                     free_memory_tree; // free memory does grow on trees!
   funk2_set_t                    used_memory_set;
-  funk2_heap_t                   free_memory_heap; // free memory does pile in heaps!
+  funk2_heap_t                   free_memory_heap; // free memory piles in heaps!
+  u64                            free_memory_heap__load_buffer__length;
+  funk2_heap_node_t**            free_memory_heap__load_buffer;
   ptr                            global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                       total_allocated_memory_since_last_gc;
   u64                            next_unique_block_id;
@@ -96,7 +96,7 @@ void              funk2_memorypool__compress_for_saving                         
 void              funk2_memorypool__write_compressed_to_stream                     (funk2_memorypool_t* this, int fd);
 //void              funk2_memorypool__save_to_stream(funk2_memorypool_t* this, int fd);
 void              funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_memorypool_t* this);
-void              funk2_memorypool__rebuild_memory_trees_from_image                (funk2_memorypool_t* this);
+void              funk2_memorypool__rebuild_memory_from_image                      (funk2_memorypool_t* this);
 void              funk2_memorypool__load_from_stream                               (funk2_memorypool_t* this, int fd);
 
 #endif // F2__MEMORYPOOL__H

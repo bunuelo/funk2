@@ -26,7 +26,7 @@
 
 extern u8 __ptype__str[][128];
 
-typedef unsigned char enum ptype_e {
+typedef enum ptype_e {
   ptype_free_memory      = 0,
   ptype_newly_allocated  = 1,
   ptype_integer          = 2,

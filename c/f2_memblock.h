@@ -36,8 +36,8 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 
 struct funk2_memblock_s {
   funk2_heap_node_t                      heap_node;
-  funk2_garbage_collector_block_header_t gc;
   atomic_t                               reference_count;
+  funk2_garbage_collector_block_header_t gc;
   u8                                     used : 1;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));

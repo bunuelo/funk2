@@ -615,6 +615,9 @@ void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {
   //rbt_tree__reinit(&(this->used_memory_tree), this->global_f2ptr_offset);
   
   status("funk2_memorypool__rebuild_memory_from_image: here.");
+  
+  funk2_set__destroy(&(this->used_memory_set));
+  funk2_set__init(&(this->used_memory_set));
   {
     s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)this->used_memory_set__load_buffer__global_f2ptr_offset));
     
@@ -632,6 +635,9 @@ void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {
     this->used_memory_set__load_buffer__length = 0;
     this->used_memory_set__load_buffer         = NULL;
   }
+  
+  funk2_heap__destroy(&(this->free_memory_heap));
+  funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
   {
     s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)this->free_memory_heap__load_buffer__global_f2ptr_offset));
     
@@ -695,8 +701,6 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   this->used_memory_set__load_buffer__global_f2ptr_offset  = old_global_f2ptr_offset;
   
   status("funk2_memorypool__load_from_stream: loading used_memory_set from disk.");
-  funk2_set__destroy(&(this->used_memory_set));
-  funk2_set__init(&(this->used_memory_set));
   {
     u64 element_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); element_count = size_i;}
     status("funk2_memorypool__load_from_stream: loading used_memory_set from disk (element_count = " u64__fstr ").", element_count);
@@ -715,8 +719,6 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
   }
   
   status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk.");
-  funk2_heap__destroy(&(this->free_memory_heap));
-  funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
   {
     u64 node_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); node_count = size_i;}
     status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk (node_count = " u64__fstr ").", node_count);

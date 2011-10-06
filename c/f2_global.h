@@ -86,7 +86,7 @@ typedef unsigned char boolean_t;
 
 typedef                       u64       f2ptr;
 #define f2ptr__fstr           X64__fstr
-#define f2ptr__bit_num         46
+#define f2ptr__bit_num         40
 typedef                        u8       computer_id_t;
 #define computer_id__fstr      X8__fstr
 #define computer_id__bit_num    1
@@ -95,7 +95,7 @@ typedef                        u8       pool_index_t;
 #define pool_index__bit_num     5
 typedef                       u64       pool_address_t;
 #define pool_address__fstr    X64__fstr
-#define pool_address__bit_num  40
+#define pool_address__bit_num  34
 
 
 #define ideal_scheduler_processor_num processor_num

@@ -35,7 +35,7 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 #include "f2_atomic.h"
 
 struct funk2_memblock_s {
-  funk2_heap_node_t                      heap_node : pool_address__bit_num;
+  funk2_heap_node_t                      heap_node;
   funk2_garbage_collector_block_header_t gc;
   ptype_t                                ptype : ptype__min_bits;
   u8                                     used  : 1;

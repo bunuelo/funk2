@@ -76,7 +76,7 @@ s64 funk2_garbage_collector_mutation_buffer__calculate_save_size(funk2_garbage_c
   {
     u64 count = this->count;
     save_size += sizeof(count);
-    save_size += (sizeof(f2ptr) * count);
+    save_size += (sizeof(f2ptr_t) * count);
   }
   return save_size;
 }
@@ -176,7 +176,7 @@ s64 funk2_garbage_collector_no_more_references_buffer__calculate_save_size(funk2
   {
     u64 count = this->count;
     save_size += sizeof(count);
-    save_size += (sizeof(f2ptr) * count);
+    save_size += (sizeof(f2ptr_t) * count);
   }
   return save_size;
 }
@@ -278,7 +278,7 @@ s64 funk2_garbage_collector_protected_f2ptr_buffer__calculate_save_size(funk2_ga
   {
     u64 count = this->count;
     save_size += sizeof(count);
-    save_size += (sizeof(f2ptr) * count);
+    save_size += (sizeof(f2ptr_t) * count);
   }
   return save_size;
 }
@@ -375,7 +375,7 @@ s64 funk2_garbage_collector_other_grey_buffer__calculate_save_size(funk2_garbage
   {
     u64 count = this->count;
     save_size += sizeof(count);
-    save_size += (sizeof(f2ptr) * count);
+    save_size += (sizeof(f2ptr_t) * count);
   }
   return save_size;
 }

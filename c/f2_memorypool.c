@@ -479,17 +479,20 @@ funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree(funk2_
   //}
   //funk2_memorypool__debug_memory_test(this, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
   //return perfect_size_block;
-  funk2_memblock_t* maximum_block = (funk2_memblock_t*)funk2_heap__remove_maximum(&(this->free_memory_heap));
-  if (maximum_block && funk2_memblock__byte_num(maximum_block) >= byte_num) {
-    maximum_block->used = 1;
-  } else {
-    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)maximum_block);
-    if (! maximum_block) {
-      status("there are no free memory blocks left that are at least " u64__fstr " bytes.", (u64)byte_num);
+  funk2_memblock_t* maximum_block = NULL;
+  if (! funk2_heap__is_empty(&(this->free_memory_heap))) {
+    maximum_block = (funk2_memblock_t*)funk2_heap__remove_maximum(&(this->free_memory_heap));
+    if (maximum_block && funk2_memblock__byte_num(maximum_block) >= byte_num) {
+      maximum_block->used = 1;
     } else {
-      status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(maximum_block));
+      funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)maximum_block);
+      if (! maximum_block) {
+	status("there are no free memory blocks left that are at least " u64__fstr " bytes.", (u64)byte_num);
+      } else {
+	status("largest memory block is too small (need " f2size_t__fstr " bytes, have " f2size_t__fstr " bytes).", byte_num, funk2_memblock__byte_num(maximum_block));
+      }
+      maximum_block = NULL; // largest free memory block is not large enough.  fail.
     }
-    maximum_block = NULL; // largest free memory block is not large enough.  fail.
   }
   funk2_memorypool__debug_memory_test(this, 4); // memory assumption violation here (block is taken out of free list and not added to used list, yet).
   return maximum_block;

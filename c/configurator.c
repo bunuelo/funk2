@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
       double processor_usage   = 100.0;
       double target_usage      = (2.0 / 100.0);
       while (processor_usage > target_usage) {
-	s64 spin_nanoseconds = 1 * nanoseconds_per_second;
+	s64 spin_nanoseconds = nanoseconds_per_second / 2;
 	{
 	  u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 	  u64 begin__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();

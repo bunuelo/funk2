@@ -77,6 +77,14 @@ void funk2_heap__insert(funk2_heap_t* this, funk2_heap_node_t* node) {
 }
 
 
+funk2_heap_node_t* funk2_heap__maximum(funk2_heap_t* this) {
+  if (funk2_heap__is_empty(this)) {
+    return NULL;
+  }
+  return this->node_array[1];
+}
+
+
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
   s64                index;
   s64                child_index;

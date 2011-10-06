@@ -629,7 +629,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   case ptype_chunk:            return;
   case ptype_simple_array: {
     s64 i;
-    ptype_simple_array_block_slot_t* iter = ((ptype_simple_array_block_t*)block)->slot;
+    f2ptr_t* iter = ((ptype_simple_array_block_t*)block)->slot;
     for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, iter->data);
       iter ++;

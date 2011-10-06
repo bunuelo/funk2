@@ -710,14 +710,14 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     this->used_memory_set__load_buffer__length = element_count;
     this->used_memory_set__load_buffer         = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * this->used_memory_set__load_buffer__length));
     
-    {
-      u64 index;
-      for (index = 0; index < this->used_memory_set__load_buffer__length; index ++) {
-	funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
-	this->used_memory_set__load_buffer[index] = element;
-      }
-    }
-    
+    safe_read(fd, to_ptr(this->used_memory_set__load_buffer), sizeof(funk2_set_element_t) * this->used_memory_set__load_buffer__length);
+    //{
+    //  u64 index;
+    //  for (index = 0; index < this->used_memory_set__load_buffer__length; index ++) {
+    //	funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
+    //	this->used_memory_set__load_buffer[index] = element;
+    //  }
+    //}
   }
   
   status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk.");
@@ -728,14 +728,15 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     this->free_memory_heap__load_buffer__length = node_count;
     this->free_memory_heap__load_buffer         = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * this->free_memory_heap__load_buffer__length));
     
-    {
-      u64 index;
-      for (index = 0; index < this->free_memory_heap__load_buffer__length; index ++) {
-	funk2_heap_node_t* node; safe_read(fd, to_ptr(&node), sizeof(&node));
-	//status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk (index = " u64__fstr ").", index);
-	this->free_memory_heap__load_buffer[index] = node;
-      }
-    }
+    safe_read(fd, to_ptr(this->free_memory_heap__load_buffer), sizeof(funk2_heap_node_t*) * this->free_memory_heap__load_buffer__length);
+    //{
+    //  u64 index;
+    //  for (index = 0; index < this->free_memory_heap__load_buffer__length; index ++) {
+    //	funk2_heap_node_t* node; safe_read(fd, to_ptr(&node), sizeof(&node));
+    //	//status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk (index = " u64__fstr ").", index);
+    //	this->free_memory_heap__load_buffer[index] = node;
+    //  }
+    //}
   }
   
   status("funk2_memorypool__load_from_stream: done.");

@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
 	{
 	  u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 	  u64 begin__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
-	  while (pthread_mutex_trylock(&mutex) && (raw__nanoseconds_since_1970() - begin_nanoseconds_since_1970) < spin_nanoseconds) {
+	  while (pthread_mutex_trylock(&mutex) && (raw__nanoseconds_since_1970() - begin__nanoseconds_since_1970) < spin_nanoseconds) {
 	    raw__nanosleep(sleep_nanoseconds);
 	  }
 	  u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();

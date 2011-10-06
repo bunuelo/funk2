@@ -238,7 +238,7 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
   u8            immutable : 1;
-  u64           length;
+  u64           length : (f2ptr__bit_num - 2);
   f2ptr         f2ptr_data[0];
 } __attribute__((__packed__));
 typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;

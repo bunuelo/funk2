@@ -56,7 +56,7 @@ struct funk2_garbage_collector_mutation_buffer_s {
   funk2_processor_mutex_t mutex;
   u64                     count;
   u64                     alloc_length;
-  f2ptr*                  data;
+  f2ptr_t*                data;
 };
 
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this);
@@ -74,7 +74,7 @@ struct funk2_garbage_collector_no_more_references_buffer_s {
   funk2_processor_mutex_t mutex;
   u64                     count;
   u64                     alloc_length;
-  f2ptr*                  data;
+  f2ptr_t*                data;
 };
 
 void funk2_garbage_collector_no_more_references_buffer__init(funk2_garbage_collector_no_more_references_buffer_t* this);
@@ -92,7 +92,7 @@ struct funk2_garbage_collector_protected_f2ptr_buffer_s {
   funk2_processor_mutex_t mutex;
   u64                     count;
   u64                     alloc_length;
-  f2ptr*                  data;
+  f2ptr_t*                data;
 };
 
 void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collector_protected_f2ptr_buffer_t* this);
@@ -106,9 +106,9 @@ void funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(funk2_garb
 // garbage_collector_other_grey_buffer
 
 struct funk2_garbage_collector_other_grey_buffer_s {
-  u64    count;
-  u64    alloc_length;
-  f2ptr* data;
+  u64      count;
+  u64      alloc_length;
+  f2ptr_t* data;
 };
 
 void funk2_garbage_collector_other_grey_buffer__init(funk2_garbage_collector_other_grey_buffer_t* this);

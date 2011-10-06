@@ -37,7 +37,7 @@ void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutat
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
   this->alloc_length = 16ull * 1024 * 1024;
-  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
+  this->data         = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
 }
 
 void funk2_garbage_collector_mutation_buffer__destroy(funk2_garbage_collector_mutation_buffer_t* this) {
@@ -48,15 +48,15 @@ void funk2_garbage_collector_mutation_buffer__destroy(funk2_garbage_collector_mu
 void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_collector_mutation_buffer_t* this, f2ptr exp) {
   funk2_processor_mutex__user_lock(&(this->mutex));
   if (this->count == this->alloc_length) {
-    u64    old_alloc_length = this->alloc_length;
-    f2ptr* old_data         = this->data;
+    u64      old_alloc_length = this->alloc_length;
+    f2ptr_t* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
-    memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
+    this->data = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
+    memcpy(this->data, old_data, sizeof(f2ptr_t) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_mutation_buffer__know_of_mutation: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
   }
-  this->data[this->count] = exp;
+  this->data[this->count].data = exp;
   this->count ++;
   funk2_processor_mutex__unlock(&(this->mutex));
 }
@@ -65,7 +65,7 @@ void funk2_garbage_collector_mutation_buffer__flush_mutation_knowledge_to_gc_poo
   funk2_processor_mutex__lock(&(this->mutex));
   u64 i;
   for (i = 0; i < this->count; i ++) {
-    funk2_garbage_collector_pool__know_of_used_exp_self_mutation(pool, this->data[i]);
+    funk2_garbage_collector_pool__know_of_used_exp_self_mutation(pool, this->data[i].data);
   }
   this->count = 0;
   funk2_processor_mutex__unlock(&(this->mutex));
@@ -86,7 +86,7 @@ void funk2_garbage_collector_mutation_buffer__save_to_stream(funk2_garbage_colle
   safe_write(fd, to_ptr(&count), sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = this->data[index];
+    f2ptr exp = this->data[index].data;
     safe_write(fd, to_ptr(&exp), sizeof(exp));
   }
 }
@@ -99,7 +99,7 @@ u64 funk2_garbage_collector_mutation_buffer__save_to_buffer(funk2_garbage_collec
     memcpy(buffer, &count, sizeof(count)); buffer += sizeof(count);
     u64 index;
     for (index = 0; index < count; index ++) {
-      f2ptr exp = this->data[index];
+      f2ptr exp = this->data[index].data;
       //safe_write(fd, to_ptr(&exp), sizeof(exp));
       memcpy(buffer, &exp, sizeof(exp)); buffer += sizeof(exp);
     }
@@ -139,7 +139,7 @@ void funk2_garbage_collector_no_more_references_buffer__init(funk2_garbage_colle
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
   this->alloc_length = 1024 * 1024;
-  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
+  this->data         = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
 }
 
 void funk2_garbage_collector_no_more_references_buffer__destroy(funk2_garbage_collector_no_more_references_buffer_t* this) {
@@ -150,15 +150,15 @@ void funk2_garbage_collector_no_more_references_buffer__destroy(funk2_garbage_co
 void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references(funk2_garbage_collector_no_more_references_buffer_t* this, f2ptr exp) {
   funk2_processor_mutex__user_lock(&(this->mutex));
   if (this->count == this->alloc_length) {
-    u64    old_alloc_length = this->alloc_length;
-    f2ptr* old_data         = this->data;
+    u64      old_alloc_length = this->alloc_length;
+    f2ptr_t* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
-    memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
+    this->data = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
+    memcpy(this->data, old_data, sizeof(f2ptr_t) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
   }
-  this->data[this->count] = exp;
+  this->data[this->count].data = exp;
   this->count ++;
   funk2_processor_mutex__unlock(&(this->mutex));
 }
@@ -167,7 +167,7 @@ void funk2_garbage_collector_no_more_references_buffer__flush_no_more_references
   funk2_processor_mutex__lock(&(this->mutex));
   u64 i;
   for (i = 0; i < this->count; i ++) {
-    funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(pool, this->data[i]);
+    funk2_garbage_collector_pool__know_of_used_exp_self_no_more_references(pool, this->data[i].data);
   }
   this->count = 0;
   funk2_processor_mutex__unlock(&(this->mutex));
@@ -188,7 +188,7 @@ void funk2_garbage_collector_no_more_references_buffer__save_to_stream(funk2_gar
   safe_write(fd, to_ptr(&count), sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = this->data[index];
+    f2ptr exp = this->data[index].data;
     safe_write(fd, to_ptr(&exp), sizeof(exp));
   }
 }
@@ -201,7 +201,7 @@ u64 funk2_garbage_collector_no_more_references_buffer__save_to_buffer(funk2_garb
     memcpy(buffer, &count, sizeof(count)); buffer += sizeof(count);
     u64 index;
     for (index = 0; index < count; index ++) {
-      f2ptr exp = this->data[index];
+      f2ptr exp = this->data[index].data;
       //safe_write(fd, to_ptr(&exp), sizeof(exp));
       memcpy(buffer, &exp, sizeof(exp)); buffer += sizeof(exp);
     }
@@ -241,7 +241,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__init(funk2_garbage_collecto
   funk2_processor_mutex__init(&(this->mutex));
   this->count        = 0;
   this->alloc_length = 1024 * 1024;
-  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
+  this->data         = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
@@ -252,15 +252,15 @@ void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_colle
 void funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp) {
   funk2_processor_mutex__user_lock(&(this->mutex));
   if (this->count == this->alloc_length) {
-    u64    old_alloc_length = this->alloc_length;
-    f2ptr* old_data         = this->data;
+    u64      old_alloc_length = this->alloc_length;
+    f2ptr_t* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
-    memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
+    this->data = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
+    memcpy(this->data, old_data, sizeof(f2ptr_t) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
   }
-  this->data[this->count] = exp;
+  this->data[this->count].data = exp;
   this->count ++;
   funk2_processor_mutex__unlock(&(this->mutex));
 }
@@ -269,7 +269,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__flush_protected_f2ptr_knowl
   funk2_processor_mutex__lock(&(this->mutex));
   u64 i;
   for (i = 0; i < this->count; i ++) {
-    funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr(pool, this->data[i]);
+    funk2_garbage_collector_pool__know_of_used_exp_self_protected_f2ptr(pool, this->data[i].data);
   }
   this->count = 0;
   funk2_processor_mutex__unlock(&(this->mutex));
@@ -290,7 +290,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(funk2_garbag
   safe_write(fd, to_ptr(&count), sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = this->data[index];
+    f2ptr exp = this->data[index].data;
     safe_write(fd, to_ptr(&exp), sizeof(exp));
   }
 }
@@ -303,7 +303,7 @@ u64 funk2_garbage_collector_protected_f2ptr_buffer__save_to_buffer(funk2_garbage
     memcpy(buffer, &count, sizeof(count)); buffer += sizeof(count);
     u64 index;
     for (index = 0; index < count; index ++) {
-      f2ptr exp = this->data[index];
+      f2ptr exp = this->data[index].data;
       //safe_write(fd, to_ptr(&exp), sizeof(exp));
       memcpy(buffer, &exp, sizeof(exp)); buffer += sizeof(exp);
     }
@@ -342,7 +342,7 @@ s64 funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(funk2_garba
 void funk2_garbage_collector_other_grey_buffer__init(funk2_garbage_collector_other_grey_buffer_t* this) {
   this->count        = 0;
   this->alloc_length = 1024 * 1024;
-  this->data         = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
+  this->data         = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
 }
 
 void funk2_garbage_collector_other_grey_buffer__destroy(funk2_garbage_collector_other_grey_buffer_t* this) {
@@ -351,15 +351,15 @@ void funk2_garbage_collector_other_grey_buffer__destroy(funk2_garbage_collector_
 
 void funk2_garbage_collector_other_grey_buffer__know_of_other_grey(funk2_garbage_collector_other_grey_buffer_t* this, f2ptr exp) {
   if (this->count == this->alloc_length) {
-    u64    old_alloc_length = this->alloc_length;
-    f2ptr* old_data         = this->data;
+    u64      old_alloc_length = this->alloc_length;
+    f2ptr_t* old_data         = this->data;
     this->alloc_length = 2 * old_alloc_length;
-    this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->alloc_length));
-    memcpy(this->data, old_data, sizeof(f2ptr) * old_alloc_length);
+    this->data = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->alloc_length));
+    memcpy(this->data, old_data, sizeof(f2ptr_t) * old_alloc_length);
     free(old_data);
     status("funk2_garbage_collector_other_grey_buffer__know_of_protected_f2ptr: doubled buffer size from " u64__fstr " to " u64__fstr ".", old_alloc_length, this->alloc_length);
   }
-  this->data[this->count] = exp;
+  this->data[this->count].data = exp;
   this->count ++;
 }
 
@@ -367,7 +367,7 @@ void funk2_garbage_collector_other_grey_buffer__flush_other_greys(funk2_garbage_
   int pool_index = this_processor_thread__pool_index();
   u64 i;
   for (i = 0; i < this->count; i ++) {
-    funk2_garbage_collector_pool__grey_element(pool, pool_index, this->data[i]);
+    funk2_garbage_collector_pool__grey_element(pool, pool_index, this->data[i].data);
   }
   this->count = 0;
 }
@@ -387,7 +387,7 @@ void funk2_garbage_collector_other_grey_buffer__save_to_stream(funk2_garbage_col
   safe_write(fd, to_ptr(&count), sizeof(count));
   u64 index;
   for (index = 0; index < count; index ++) {
-    f2ptr exp = this->data[index];
+    f2ptr exp = this->data[index].data;
     safe_write(fd, to_ptr(&exp), sizeof(exp));
   }
 }
@@ -400,7 +400,7 @@ u64 funk2_garbage_collector_other_grey_buffer__save_to_buffer(funk2_garbage_coll
     memcpy(buffer, &count, sizeof(count)); buffer += sizeof(count);
     u64 index;
     for (index = 0; index < count; index ++) {
-      f2ptr exp = this->data[index];
+      f2ptr exp = this->data[index].data;
       //safe_write(fd, to_ptr(&exp), sizeof(exp));
       memcpy(buffer, &exp, sizeof(exp)); buffer += sizeof(exp);
     }
@@ -536,7 +536,7 @@ void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbag
   status("funk2_garbage_collector_pool: touch_all_protected_alloc_arrays.  pool_index=" u64__fstr " used_num=" u64__fstr " reentrance_count=" s64__fstr, this_processor_thread__pool_index(), this->protected_alloc_array.used_num, this->protected_alloc_array.reentrance_count);
   u64 i;
   for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
-    funk2_garbage_collector_pool__touch_f2ptr(this, this->protected_alloc_array.data[i]);
+    funk2_garbage_collector_pool__touch_f2ptr(this, this->protected_alloc_array.data[i].data);
   }
 }
 

@@ -4300,7 +4300,7 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause) {
 // simple_array
 
 f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {
-  u64 data_byte_num = (sizeof(f2ptr) * length);
+  u64 data_byte_num = (sizeof(ptype_simple_array_block_slot_t) * length);
   f2ptr simple_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_simple_array_block_t) + data_byte_num);
   ptype_simple_array_block_t* simple_array_block = (ptype_simple_array_block_t*)from_ptr(raw__f2ptr_to_ptr(simple_array_f2ptr));
   debug__assert(simple_array_block, nil, "block is nil.");
@@ -4310,8 +4310,8 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   simple_array_block->ptype.cause       = cause;
   simple_array_block->immutable         = 0;
   simple_array_block->length            = length;
-  if (f2ptr_ptr) {memcpy(simple_array_block->f2ptr_data, from_ptr(f2ptr_ptr), data_byte_num);}
-  else           {memset(simple_array_block->f2ptr_data, 0,                   sizeof(f2ptr) * length);}
+  if (f2ptr_ptr != NULL) {memcpy(simple_array_block->slot, from_ptr(f2ptr_ptr), data_byte_num);}
+  else                   {memset(simple_array_block->slot, 0,                   data_byte_num);}
   return simple_array_f2ptr;
 }
 

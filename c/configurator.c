@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     {
       u64    sleep_nanoseconds = 1;
       double processor_usage   = 100.0;
-      double target_usage      = (1.0 / 1000.0);
+      double target_usage      = (1.0 / 100.0);
       while (processor_usage > target_usage) {
 	s64 total_spins = 100;
 	{

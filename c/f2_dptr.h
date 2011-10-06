@@ -36,13 +36,13 @@ typedef struct funk2_dptr_s funk2_dptr_t;
 // dptr
 
 struct funk2_dptr_s {
-  f2ptr p;
+  f2ptr p                 : f2ptr__bit_num;
 #if defined(F2__USE_TRACED_DPTRS)
-  f2ptr tracing_on;
-  f2ptr trace;
-  f2ptr imagination_frame;
-  f2ptr mutate_funks;
-  f2ptr read_funks;
+  f2ptr tracing_on        : f2ptr__bit_num;
+  f2ptr trace             : f2ptr__bit_num;
+  f2ptr imagination_frame : f2ptr__bit_num;
+  f2ptr mutate_funks      : f2ptr__bit_num;
+  f2ptr read_funks        : f2ptr__bit_num;
 #endif // F2__USE_TRACED_DPTRS
 } __attribute__((__packed__));
 

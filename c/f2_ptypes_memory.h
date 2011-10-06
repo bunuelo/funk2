@@ -295,7 +295,7 @@ ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr 
 struct ptype_larva_block_s {
   ptype_block_t ptype;
   u32           larva_type;
-  f2ptr         bug;
+  f2ptr         bug : f2ptr__bit_num;
 } __attribute__((__packed__));
 typedef struct ptype_larva_block_s ptype_larva_block_t;
 

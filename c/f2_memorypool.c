@@ -570,23 +570,42 @@ void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int 
     f2size_t size_i = this->global_f2ptr_offset;
     safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
   }
-  {
+  
+  //
+  {  
+    u64                  save_buffer__length = this->used_memory_set.element_count;
+    funk2_set_element_t* save_buffer         = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * save_buffer__length));
     {
-      f2size_t size_i = this->used_memory_set.element_count;
+      f2size_t size_i = save_buffer__length;
       safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
     }
-    funk2_set__iteration(&(this->used_memory_set), element,
-			 safe_write(fd, to_ptr(&element), sizeof(funk2_set_element_t));
-			 );
+    {
+      u64 index = 0;
+      funk2_set__iteration(&(this->used_memory_set), element,
+			   save_buffer[index] = element;
+			   index ++;
+			   );
+    }
+    safe_write(fd, to_ptr(save_buffer), sizeof(funk2_set_element_t) * save_buffer__length);
+    f2__free(to_ptr(save_buffer));
   }
+  
+  //
   {
+    u64                 save_buffer__length = funk2_heap__size(&(this->free_memory_heap));
+    funk2_heap_node_t** save_buffer         = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * save_buffer__length));
     {
-      f2size_t size_i = funk2_heap__size(&(this->free_memory_heap));
+      f2size_t size_i = save_buffer__length;
       safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
     }
-    funk2_heap__iteration(&(this->free_memory_heap), node,
-			  safe_write(fd, to_ptr(&node), sizeof(&node));
-			  );
+    {
+      u64 index = 0;
+      funk2_heap__iteration(&(this->free_memory_heap), node,
+			    save_buffer[index] = node;
+			    );
+    }
+    safe_write(fd, to_ptr(save_buffer), sizeof(funk2_heap_node_t*) * save_buffer__length);
+    f2__free(to_ptr(save_buffer));
   }
 }
 

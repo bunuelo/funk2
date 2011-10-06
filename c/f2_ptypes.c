@@ -4310,8 +4310,8 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   simple_array_block->ptype.cause       = cause;
   simple_array_block->immutable         = 0;
   simple_array_block->length            = length;
-  if (f2ptr_ptr != NULL) {memcpy(simple_array_block->slot, from_ptr(f2ptr_ptr), data_byte_num);}
-  else                   {memset(simple_array_block->slot, 0,                   data_byte_num);}
+  if (f2ptr_ptr) {memcpy(simple_array_block->slot, from_ptr(f2ptr_ptr), data_byte_num);}
+  else           {memset(simple_array_block->slot, 0,                   data_byte_num);}
   return simple_array_f2ptr;
 }
 

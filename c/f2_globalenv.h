@@ -116,7 +116,6 @@ typedef struct funk2_globalenv_s {
   f2ptr ptype_double__symbol;
   f2ptr ptype_float__symbol;
   f2ptr ptype_pointer__symbol;
-  f2ptr ptype_gfunkptr__symbol;
   f2ptr ptype_scheduler_cmutex__symbol;
   f2ptr ptype_cmutex__symbol;
   f2ptr ptype_char__symbol;

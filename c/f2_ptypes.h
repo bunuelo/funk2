@@ -202,30 +202,6 @@ f2ptr f2__pointer__is_greater_than(        f2ptr cause, f2ptr this, f2ptr number
 f2ptr f2__pointer__is_less_than(           f2ptr cause, f2ptr this, f2ptr number);
 f2ptr f2__pointer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number);
 
-// gfunkptr
-
-f2ptr          pfunk2__f2gfunkptr__new(f2ptr cause, computer_id_t computer_id, pool_index_t pool_index, pool_address_t pool_address);
-f2ptr          pfunk2__f2gfunkptr__new_from_f2ptr(f2ptr cause, f2ptr f2p);
-f2ptr          pfunk2__f2gfunkptr__gfunkptr(f2ptr this, f2ptr cause);
-computer_id_t  pfunk2__f2gfunkptr__computer_id(f2ptr this, f2ptr cause);
-pool_index_t   pfunk2__f2gfunkptr__pool_index(f2ptr this, f2ptr cause);
-pool_address_t pfunk2__f2gfunkptr__pool_address(f2ptr this, f2ptr cause);
-
-f2ptr f2gfunkptr__primobject_type__new(f2ptr cause);
-
-boolean_t raw__gfunkptr__is_type(f2ptr cause, f2ptr exp);
-f2ptr      f2__gfunkptr__is_type(f2ptr cause, f2ptr exp);
-
-boolean_t raw__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__gfunkptr__eq(f2ptr cause, f2ptr this, f2ptr that);
-
-u64   raw__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__gfunkptr__eq_hash_value(f2ptr cause, f2ptr this);
-
-boolean_t raw__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__gfunkptr__equals(f2ptr cause, f2ptr this, f2ptr that);
-
-
 // scheduler_cmutex
 
 f2ptr            pfunk2__f2scheduler_cmutex__new(f2ptr cause);
@@ -539,7 +515,6 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
 f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__gfunkptr__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__scheduler_cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
@@ -751,39 +726,6 @@ typedef struct funk2_object_type__pointer__slot_s {
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__pointer__slot_t;
-
-// gfunkptr
-
-typedef struct funk2_object_type__gfunkptr__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr new_from_f2ptr__symbol;
-  f2ptr new_from_f2ptr__funk;
-  f2ptr gfunkptr__symbol;
-  f2ptr gfunkptr__funk;
-  f2ptr computer_id__symbol;
-  f2ptr computer_id__funk;
-  f2ptr pool_index__symbol;
-  f2ptr pool_index__funk;
-  f2ptr pool_address__symbol;
-  f2ptr pool_address__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__gfunkptr__slot_t;
 
 // scheduler_cmutex
 
@@ -1106,20 +1048,19 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr cause__funk;
   f2ptr cause__set__symbol;
   f2ptr cause__set__funk;
-  funk2_object_type__integer__slot_t         ptype_integer;
-  funk2_object_type__double__slot_t          ptype_double;
-  funk2_object_type__float__slot_t           ptype_float;
-  funk2_object_type__pointer__slot_t         ptype_pointer;
-  funk2_object_type__gfunkptr__slot_t        ptype_gfunkptr;
+  funk2_object_type__integer__slot_t          ptype_integer;
+  funk2_object_type__double__slot_t           ptype_double;
+  funk2_object_type__float__slot_t            ptype_float;
+  funk2_object_type__pointer__slot_t          ptype_pointer;
   funk2_object_type__scheduler_cmutex__slot_t ptype_scheduler_cmutex;
   funk2_object_type__cmutex__slot_t           ptype_cmutex;
-  funk2_object_type__char__slot_t            ptype_char;
-  funk2_object_type__string__slot_t          ptype_string;
-  funk2_object_type__symbol__slot_t          ptype_symbol;
-  funk2_object_type__chunk__slot_t           ptype_chunk;
-  funk2_object_type__simple_array__slot_t    ptype_simple_array;
-  funk2_object_type__traced_array__slot_t    ptype_traced_array;
-  funk2_object_type__larva__slot_t           ptype_larva;
+  funk2_object_type__char__slot_t             ptype_char;
+  funk2_object_type__string__slot_t           ptype_string;
+  funk2_object_type__symbol__slot_t           ptype_symbol;
+  funk2_object_type__chunk__slot_t            ptype_chunk;
+  funk2_object_type__simple_array__slot_t     ptype_simple_array;
+  funk2_object_type__traced_array__slot_t     ptype_traced_array;
+  funk2_object_type__larva__slot_t            ptype_larva;
 } funk2_ptype_object_types_t;
 
 

@@ -39,7 +39,6 @@ struct funk2_reader_s {
   f2ptr end_of_file_exception__symbol;
   f2ptr invalid_argument_type_exception;
   f2ptr illegal_escape_reader_metro_exception;
-  f2ptr gfunkptr_read__exception;
   f2ptr could_not_read_type_exception;
   f2ptr could_not_read_type_exception__symbol;
   f2ptr no_character_waiting_exception;
@@ -136,7 +135,6 @@ struct funk2_reader_s {
   f2ptr char__escape_hex_char;
   f2ptr char__escape_char;
   f2ptr char__escape_larva;
-  f2ptr char__escape_gfunkptr;
   f2ptr char__string_quote;
   f2ptr char__string_escape_newline;
   f2ptr char__string_escape_return;

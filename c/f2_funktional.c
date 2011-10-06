@@ -32,7 +32,6 @@ boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this) {
   case ptype_double:
   case ptype_float:
   case ptype_pointer:
-  case ptype_gfunkptr:
   case ptype_scheduler_cmutex:
   case ptype_cmutex:
   case ptype_char:

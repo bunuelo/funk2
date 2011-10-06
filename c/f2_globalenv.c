@@ -123,7 +123,6 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->ptype_double__symbol           = f2symbol__new(cause, strlen("ptype_double"),           (u8*)"ptype_double");
   this->ptype_float__symbol            = f2symbol__new(cause, strlen("ptype_float"),            (u8*)"ptype_float");
   this->ptype_pointer__symbol          = f2symbol__new(cause, strlen("ptype_pointer"),          (u8*)"ptype_pointer");
-  this->ptype_gfunkptr__symbol         = f2symbol__new(cause, strlen("ptype_gfunkptr"),         (u8*)"ptype_gfunkptr");
   this->ptype_scheduler_cmutex__symbol = f2symbol__new(cause, strlen("ptype_scheduler_cmutex"), (u8*)"ptype_scheduler_cmutex");
   this->ptype_cmutex__symbol           = f2symbol__new(cause, strlen("ptype_cmutex"),           (u8*)"ptype_cmutex");
   this->ptype_char__symbol             = f2symbol__new(cause, strlen("ptype_char"),             (u8*)"ptype_char");

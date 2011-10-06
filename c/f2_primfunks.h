@@ -1458,10 +1458,6 @@ f2ptr f2__float__to_double(f2ptr cause, f2ptr x);
 // pointer
 
 
-// gfunkptr
-
-f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x);
-
 // cmutex
 
 void  raw__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that);

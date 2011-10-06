@@ -105,23 +105,6 @@ ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr
 #define __pure__f2pointer__p(this)                   (((ptype_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->p)
 
 
-// gfunkptr
-
-struct ptype_gfunkptr_block_s {
-  ptype_block_t ptype;
-  f2ptr         gfunkptr : f2ptr__bit_num;
-} __attribute__((__packed__));
-typedef struct ptype_gfunkptr_block_s ptype_gfunkptr_block_t;
-
-ptype_gfunkptr_block_t* ptype_gfunkptr_block__new(int pool_index, f2ptr cause, computer_id_t gf2_computer_id, pool_index_t gf2_pool_indx, pool_address_t gf2_pool_address);
-
-#define __pure__f2gfunkptr__new(pool_index, cause, gf2_computer_id, gf2_pool_index, gf2_pool_address) ptype_gfunkptr__new(pool_index, cause, gf2_computer_id, gf2_pool_index, gf2_pool_address)
-#define __pure__f2gfunkptr__gfunkptr(this)                                                            (((ptype_gfunkptr_block_t*)(from_ptr(f2ptr_to_ptr(this))))->gfunkptr)
-#define __pure__f2gfunkptr__computer_id(this)                                                         __f2ptr__computer_id(__pure__f2gfunkptr__gfunkptr(this))
-#define __pure__f2gfunkptr__pool_index(this)                                                          __f2ptr__pool_index(__pure__f2gfunkptr__gfunkptr(this))
-#define __pure__f2gfunkptr__pool_address(this)                                                        __f2ptr__pool_address(__pure__f2gfunkptr__gfunkptr(this))
-
-
 // scheduler_cmutex
 
 struct ptype_scheduler_cmutex_block_s {

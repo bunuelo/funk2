@@ -38,7 +38,6 @@ extern ansi_color_t print__ansi__integer__foreground;
 extern ansi_color_t print__ansi__double__foreground;
 extern ansi_color_t print__ansi__float__foreground;
 extern ansi_color_t print__ansi__pointer__foreground;
-extern ansi_color_t print__ansi__gfunkptr__foreground;
 extern ansi_color_t print__ansi__scheduler_cmutex__foreground;
 extern ansi_color_t print__ansi__cmutex__foreground;
 extern ansi_color_t print__ansi__char__foreground;

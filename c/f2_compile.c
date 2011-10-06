@@ -1751,7 +1751,6 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
   else if (raw__pointer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__float__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__double__is_type(cause, exp))    {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__gfunkptr__is_type(cause, exp))  {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__string__is_type(cause, exp))    {result_bcs = f2__compile__value__set(cause, exp);}
   else if (raw__symbol__is_type(cause, exp))    {result_bcs = f2__compile__symbol(    cause, exp, is_funktional, local_variables, is_locally_funktional);}
   else if (raw__cons__is_type(cause, exp))      {result_bcs = f2__compile__cons_exp(  cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional);}

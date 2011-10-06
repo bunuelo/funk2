@@ -136,18 +136,6 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2pointer__new:
   case funk2_packet_type__pcs_request__f2pointer__p:
   case funk2_packet_type__pcs_respond__f2pointer__p:
-  case funk2_packet_type__pcs_request__f2gfunkptr__new:
-  case funk2_packet_type__pcs_respond__f2gfunkptr__new:
-  case funk2_packet_type__pcs_request__f2gfunkptr__new_from_f2ptr:
-  case funk2_packet_type__pcs_respond__f2gfunkptr__new_from_f2ptr:
-  case funk2_packet_type__pcs_request__f2gfunkptr__gfunkptr:
-  case funk2_packet_type__pcs_respond__f2gfunkptr__gfunkptr:
-  case funk2_packet_type__pcs_request__f2gfunkptr__computer_id:
-  case funk2_packet_type__pcs_respond__f2gfunkptr__computer_id:
-  case funk2_packet_type__pcs_request__f2gfunkptr__pool_index:
-  case funk2_packet_type__pcs_respond__f2gfunkptr__pool_index:
-  case funk2_packet_type__pcs_request__f2gfunkptr__pool_address:
-  case funk2_packet_type__pcs_respond__f2gfunkptr__pool_address:
   case funk2_packet_type__pcs_request__f2cmutex__new:
   case funk2_packet_type__pcs_respond__f2cmutex__new:
   case funk2_packet_type__pcs_request__f2cmutex__is_locked:

@@ -32,29 +32,28 @@
 
 f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
 
-ansi_color_t print__ansi__default__foreground         = ansi_color__light_gray;
-ansi_color_t print__ansi__nil__foreground             = ansi_color__white;
-ansi_color_t print__ansi__integer__foreground         = ansi_color__light_blue;
-ansi_color_t print__ansi__double__foreground          = ansi_color__light_blue;
-ansi_color_t print__ansi__float__foreground           = ansi_color__light_blue;
-ansi_color_t print__ansi__pointer__foreground         = ansi_color__light_blue;
-ansi_color_t print__ansi__gfunkptr__foreground        = ansi_color__dark_cyan;
+ansi_color_t print__ansi__default__foreground          = ansi_color__light_gray;
+ansi_color_t print__ansi__nil__foreground              = ansi_color__white;
+ansi_color_t print__ansi__integer__foreground          = ansi_color__light_blue;
+ansi_color_t print__ansi__double__foreground           = ansi_color__light_blue;
+ansi_color_t print__ansi__float__foreground            = ansi_color__light_blue;
+ansi_color_t print__ansi__pointer__foreground          = ansi_color__light_blue;
 ansi_color_t print__ansi__scheduler_cmutex__foreground = ansi_color__white;
 ansi_color_t print__ansi__cmutex__foreground           = ansi_color__white;
-ansi_color_t print__ansi__char__foreground            = ansi_color__light_blue;
-ansi_color_t print__ansi__string__foreground          = ansi_color__light_red;
-ansi_color_t print__ansi__symbol__foreground          = ansi_color__light_blue;
-ansi_color_t print__ansi__symbol__key__foreground     = ansi_color__dark_gray;
-ansi_color_t print__ansi__symbol__type__foreground    = ansi_color__dark_cyan;
-ansi_color_t print__ansi__chunk__foreground           = ansi_color__white;
-ansi_color_t print__ansi__simple_array__foreground    = ansi_color__white;
-ansi_color_t print__ansi__traced_array__foreground    = ansi_color__white;
-ansi_color_t print__ansi__larva__foreground           = ansi_color__dark_red;
-ansi_color_t print__ansi__end_recursion__foreground   = ansi_color__white;
-ansi_color_t print__ansi__error__foreground           = ansi_color__dark_red;
-ansi_color_t print__ansi__cons__foreground            = ansi_color__white;
-ansi_color_t print__ansi__doublelink__foreground      = ansi_color__white;
-ansi_color_t print__ansi__frame__foreground           = ansi_color__white;
+ansi_color_t print__ansi__char__foreground             = ansi_color__light_blue;
+ansi_color_t print__ansi__string__foreground           = ansi_color__light_red;
+ansi_color_t print__ansi__symbol__foreground           = ansi_color__light_blue;
+ansi_color_t print__ansi__symbol__key__foreground      = ansi_color__dark_gray;
+ansi_color_t print__ansi__symbol__type__foreground     = ansi_color__dark_cyan;
+ansi_color_t print__ansi__chunk__foreground            = ansi_color__white;
+ansi_color_t print__ansi__simple_array__foreground     = ansi_color__white;
+ansi_color_t print__ansi__traced_array__foreground     = ansi_color__white;
+ansi_color_t print__ansi__larva__foreground            = ansi_color__dark_red;
+ansi_color_t print__ansi__end_recursion__foreground    = ansi_color__white;
+ansi_color_t print__ansi__error__foreground            = ansi_color__dark_red;
+ansi_color_t print__ansi__cons__foreground             = ansi_color__white;
+ansi_color_t print__ansi__doublelink__foreground       = ansi_color__white;
+ansi_color_t print__ansi__frame__foreground            = ansi_color__white;
 
 void f2__write__ansi_color(f2ptr cause, f2ptr stream, ansi_color_t color, boolean_t use_ansi_colors, boolean_t use_html) {
   if (use_ansi_colors && stream) {f2__ansi__stream__reset(cause, stream); raw__ansi__stream__foreground(cause, stream, color);}
@@ -295,20 +294,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	sprintf(temp_str, ptr__fstr, f2pointer__p(exp, cause)); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
-      case ptype_gfunkptr: {
-	f2__write__ansi_color(cause, stream, print__ansi__gfunkptr__foreground, use_ansi_colors, use_html);
-	char temp_str[128];
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__escape_gfunkptr, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_left_paren, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
-	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__computer_id(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
-	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__pool_index(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
-	sprintf(temp_str, f2ptr__fstr, (f2ptr)f2gfunkptr__pool_address(exp, cause)); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__array_right_paren, cause));} width ++;
-	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
-      } break;
       case ptype_scheduler_cmutex: {
 	f2__write__ansi_color(cause, stream, print__ansi__scheduler_cmutex__foreground, use_ansi_colors, use_html);
 	char temp_str[128];
@@ -425,10 +410,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	char temp_str[128]; 
 	int  subexp_size[2];
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(chunk__begin_char, cause));} indent_space_num ++; available_width --; if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
-	if (show_slot_causes) {
-	  f2__write_pretty(cause, fiber, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
-	  if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
-	}
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
 	sprintf(temp_str, "chunk"); int temp_str__length = strlen(temp_str); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} indent_space_num += (temp_str__length + 1); available_width -= (temp_str__length + 1); if (available_width < 0) {if (wide_success) {wide_success[0] = 0;}}
 	if (show_slot_causes) {
@@ -437,10 +418,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	  sprintf(temp_str, "cause ");     if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	  f2__write_pretty(cause, fiber, stream, f2ptype__cause(exp, cause), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	}
-	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
-	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
-	sprintf(temp_str, "gfunkptr "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	f2__write_pretty(cause, fiber, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, "bytes"); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
@@ -1412,9 +1389,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	indent_space_num -= 7; available_width += 7;
 	if (! try_wide) {indent_space_num -= 3; available_width += 3;}
 	
-	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
-	sprintf(temp_str, "gfunkptr ");     if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	f2__write_pretty(cause, fiber, stream, f2gfunkptr__new_from_f2ptr(cause, exp), ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	sprintf(temp_str, "cause "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	if (! try_wide) {if (stream) {raw__stream__writef(cause, stream, "   ");} width += 3;}

@@ -545,35 +545,6 @@ f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
   return __funk2.reader.could_not_read_type_exception;
 }
 
-f2ptr f2__stream__try_read_unescaped_gfunkptr(f2ptr cause, f2ptr stream) {
-  f2ptr read_ch = f2__stream__try_getc(cause, stream);
-  if (raw__exception__is_type(cause, read_ch)) {
-    return read_ch;
-  }
-  if (raw__exception__is_type(cause, read_ch) && raw__eq(cause, f2exception__tag(read_ch, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
-  
-  if (raw__eq(cause, read_ch, __funk2.reader.char__escape_gfunkptr)) {
-    // read gfunkptr of form #g(ip_addr pool_index pool_address)
-    f2ptr gfunkptr_read_array = f2__stream__try_read(cause, stream);
-    if ((! raw__array__is_type(cause, gfunkptr_read_array)) || (raw__array__length(cause, gfunkptr_read_array) != 3)) {return __funk2.reader.gfunkptr_read__exception;}
-    f2ptr computer_id__integer  = raw__array__elt(cause, gfunkptr_read_array, 0);
-    f2ptr pool_index__integer   = raw__array__elt(cause, gfunkptr_read_array, 1);
-    f2ptr pool_address__integer = raw__array__elt(cause, gfunkptr_read_array, 2);
-    if ((! raw__integer__is_type(cause, computer_id__integer)) ||
-	(! raw__integer__is_type(cause, pool_index__integer)) ||
-	(! raw__integer__is_type(cause, pool_address__integer))) {
-      return __funk2.reader.gfunkptr_read__exception;
-    }
-    computer_id_t  computer_id  = f2integer__i(computer_id__integer, cause);
-    pool_index_t   pool_index   = f2integer__i(pool_index__integer, cause);
-    pool_address_t pool_address = f2integer__i(pool_address__integer, cause);
-    return f2gfunkptr__new(cause, computer_id, pool_index, pool_address);
-  } else {
-    f2__stream__ungetc(cause, stream, read_ch);
-  }
-  return __funk2.reader.could_not_read_type_exception;
-}
-
 f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
   f2ptr first_char = f2__stream__try_getc(cause, stream);
   if (raw__exception__is_type(cause, first_char)) {
@@ -598,13 +569,6 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
     
     {
       f2ptr try_read_result = f2__stream__try_read_unescaped_larva(cause, stream);
-      if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
-	return try_read_result;
-      }
-    }
-    
-    {
-      f2ptr try_read_result = f2__stream__try_read_unescaped_gfunkptr(cause, stream);
       if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
 	return try_read_result;
       }
@@ -1270,7 +1234,6 @@ void funk2_reader__init(funk2_reader_t* this) {
   }
   {char* str = "reader:invalid_argument_type-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->invalid_argument_type_exception);}
   {char* str = "reader:illegal_escape_reader_metro-exception"; f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->illegal_escape_reader_metro_exception);}
-  {char* str = "reader:gfunkptr_read-exception";               f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->gfunkptr_read__exception              = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->gfunkptr_read__exception);}
   {
     char* str = "reader:could_not_read_type-exception";
     f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
@@ -1376,7 +1339,6 @@ void funk2_reader__init(funk2_reader_t* this) {
   {this->char__escape_hex_char         = f2char__new(cause, 'c');  char* str = "char:escape_hex_char";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex_char);}
   {this->char__escape_char             = f2char__new(cause, '\\'); char* str = "char:escape_char";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_char);}
   {this->char__escape_larva            = f2char__new(cause, '!');  char* str = "char:escape_larva";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_larva);}
-  {this->char__escape_gfunkptr         = f2char__new(cause, 'g');  char* str = "char:escape_gfunkptr";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_gfunkptr);}
   {this->char__string_quote            = f2char__new(cause, '\''); char* str = "char:string_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
   {this->char__string_escape_newline   = f2char__new(cause, 'n');  char* str = "char:string_escape_newline";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_newline);}
   {this->char__string_escape_return    = f2char__new(cause, 'r');  char* str = "char:string_escape_return";    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_return);}
@@ -1403,7 +1365,6 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   }
   {char* str = "reader:invalid_argument_type-exception";       this->invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "reader:illegal_escape_reader_metro-exception"; this->illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "reader:gfunkptr_read-exception";               this->gfunkptr_read__exception              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {
     char* str = "reader:could_not_read_type-exception";
     f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
@@ -1507,7 +1468,6 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:escape_hex_char";         this->char__escape_hex_char         = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:escape_char";             this->char__escape_char             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:escape_larva";            this->char__escape_larva            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_gfunkptr";         this->char__escape_gfunkptr         = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_quote";            this->char__string_quote            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_escape_newline";   this->char__string_escape_newline   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
   {char* str = "char:string_escape_return";    this->char__string_escape_return    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}

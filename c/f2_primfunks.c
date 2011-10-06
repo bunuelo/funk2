@@ -415,13 +415,6 @@ def_pcfunk2(pointer__subtract, x, y,
 	    "",
 	    return f2__pointer__subtract(this_cause, x, y));
 
-// gfunkptr
-
-f2ptr f2__gfunkptr__new_from_pointer(f2ptr cause, f2ptr x) {f2ptr f2p = (f2ptr)((unsigned long)f2pointer__p(x, cause)); return f2gfunkptr__new(cause, __f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p));}
-def_pcfunk1(gfunkptr__new_from_pointer, x,
-	    "",
-	    return f2__gfunkptr__new_from_pointer(this_cause, x));
-
 // cmutex
 
 // avoids race conditions
@@ -1183,8 +1176,6 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   case ptype_newly_allocated:
     return boolean__false;
-  case ptype_gfunkptr:
-    return (f2gfunkptr__gfunkptr(x, cause) == f2gfunkptr__gfunkptr(y, cause));
   case ptype_scheduler_cmutex:
     return boolean__false;
   case ptype_cmutex:
@@ -1794,17 +1785,16 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_integer:         return raw__integer__eq_hash_value(        cause, exp);
-  case ptype_double:          return raw__double__eq_hash_value(         cause, exp);
-  case ptype_float:           return raw__float__eq_hash_value(          cause, exp);
-  case ptype_pointer:         return raw__pointer__eq_hash_value(        cause, exp);
-  case ptype_gfunkptr:        return raw__gfunkptr__eq_hash_value(       cause, exp);
+  case ptype_integer:          return raw__integer__eq_hash_value(        cause, exp);
+  case ptype_double:           return raw__double__eq_hash_value(         cause, exp);
+  case ptype_float:            return raw__float__eq_hash_value(          cause, exp);
+  case ptype_pointer:          return raw__pointer__eq_hash_value(        cause, exp);
   case ptype_scheduler_cmutex: return raw__scheduler_cmutex__eq_hash_value(cause, exp);
   case ptype_cmutex:           return raw__cmutex__eq_hash_value(          cause, exp);
-  case ptype_char:            return raw__char__eq_hash_value(           cause, exp);
-  case ptype_string:          return raw__string__eq_hash_value(         cause, exp);
-  case ptype_symbol:          return raw__symbol__eq_hash_value(         cause, exp);
-  case ptype_chunk:           return raw__chunk__eq_hash_value(          cause, exp);
+  case ptype_char:             return raw__char__eq_hash_value(           cause, exp);
+  case ptype_string:           return raw__string__eq_hash_value(         cause, exp);
+  case ptype_symbol:           return raw__symbol__eq_hash_value(         cause, exp);
+  case ptype_chunk:            return raw__chunk__eq_hash_value(          cause, exp);
   case ptype_simple_array:
   case ptype_traced_array: {
     if (raw__primobject__is_type(cause, exp) &&
@@ -1848,21 +1838,20 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   }
   switch(x_ptype) {
-  case ptype_integer:         return raw__integer__equals(        cause, x, y);
-  case ptype_double:          return raw__double__equals(         cause, x, y);
-  case ptype_float:           return raw__float__equals(          cause, x, y);
-  case ptype_pointer:         return raw__pointer__equals(        cause, x, y);
-  case ptype_gfunkptr:        return raw__gfunkptr__equals(       cause, x, y);
+  case ptype_integer:          return raw__integer__equals(        cause, x, y);
+  case ptype_double:           return raw__double__equals(         cause, x, y);
+  case ptype_float:            return raw__float__equals(          cause, x, y);
+  case ptype_pointer:          return raw__pointer__equals(        cause, x, y);
   case ptype_scheduler_cmutex: return raw__scheduler_cmutex__equals(cause, x, y);
   case ptype_cmutex:           return raw__cmutex__equals(          cause, x, y);
-  case ptype_char:            return raw__char__equals(           cause, x, y);
-  case ptype_string:          return raw__string__equals(         cause, x, y);
-  case ptype_symbol:          return raw__symbol__equals(         cause, x, y);
-  case ptype_chunk:           return raw__chunk__equals(          cause, x, y);
+  case ptype_char:             return raw__char__equals(           cause, x, y);
+  case ptype_string:           return raw__string__equals(         cause, x, y);
+  case ptype_symbol:           return raw__symbol__equals(         cause, x, y);
+  case ptype_chunk:            return raw__chunk__equals(          cause, x, y);
   case ptype_simple_array:
-  case ptype_traced_array:    return f2__object__equals(          cause, x, y);
-  case ptype_larva:           return raw__larva__equals(          cause, x, y);
-  default:                    return boolean__false;
+  case ptype_traced_array:     return f2__object__equals(          cause, x, y);
+  case ptype_larva:            return raw__larva__equals(          cause, x, y);
+  default:                     return boolean__false;
   }
 }
 
@@ -1945,10 +1934,6 @@ void f2__primcfunks__initialize() {
   // float
   
   // pointer
-  
-  // gfunkptr
-  
-  f2__primcfunk__init__1(gfunkptr__new_from_pointer, pointer);
   
   // cmutex
   

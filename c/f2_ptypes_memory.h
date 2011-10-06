@@ -218,16 +218,11 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 // simple_array
 
-struct ptype_simple_array_block_slot_s {
-  f2ptr data : f2ptr__bit_num;
-} __attribute__((__packed__));
-typedef struct ptype_simple_array_block_slot_s ptype_simple_array_block_slot_t;
-
 struct ptype_simple_array_block_s {
-  ptype_block_t                   ptype;
-  u8                              immutable : 1;
-  u64                             length : (f2ptr__bit_num - 2);
-  ptype_simple_array_block_slot_t slot[0];
+  ptype_block_t ptype;
+  u8            immutable : 1;
+  u64           length : (f2ptr__bit_num - 2);
+  f2ptr_t       slot[0];
 } __attribute__((__packed__));
 typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
 

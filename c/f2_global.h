@@ -97,6 +97,10 @@ typedef                       u64       pool_address_t;
 #define pool_address__fstr    X64__fstr
 #define pool_address__bit_num  34
 
+typedef struct f2ptr_s f2ptr_t;
+struct f2ptr_s {
+  f2ptr data : f2ptr__bit_num;
+} __attribute__((__packed__));
 
 #define ideal_scheduler_processor_num processor_num
 

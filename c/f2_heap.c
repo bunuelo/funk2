@@ -24,7 +24,7 @@
 //#define F2__DEBUG_HEAP 1
 
 #define funk2_heap__minimum_size (10)
-#define funk2_heap__maximum_key  (((u64)1ull)<<63)
+#define funk2_heap__maximum_key  ((((u64)1ull) << pool_address__bit_num) - 1)
 
 // funk2_heap
 

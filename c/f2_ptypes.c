@@ -4329,7 +4329,7 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
     ptype_error(cause, init_array, __funk2.globalenv.ptype_simple_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->f2ptr_data));
+  return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->slot));
 }
 
 u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {

@@ -53,9 +53,9 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     case ptype_simple_array: {
       boolean_t found_invalid = boolean__false;
       s64 i;
-      f2ptr* iter = (f2ptr*)((ptype_simple_array_block_t*)block)->f2ptr_data;
+      ptype_simple_array_block_slot_t* iter = ((ptype_simple_array_block_t*)block)->slot;
       for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
-	if (! funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(memory, __f2ptr_to_ptr(*iter))) {
+	if (! funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(memory, __f2ptr_to_ptr(iter->data))) {
 	  found_invalid = boolean__true;
 	  error(nil, "found invalid f2ptr in simple_array.");
 	}

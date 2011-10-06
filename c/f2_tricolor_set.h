@@ -37,14 +37,14 @@ enum funk2_tricolor_e {
 
 typedef struct funk2_tricolor_set_s funk2_tricolor_set_t;
 struct funk2_tricolor_set_s {
-  funk2_set_t black_set;
+  //funk2_set_t black_set;
   funk2_set_t white_set;
   funk2_set_t grey_set;
 };
 
 void  funk2_tricolor_set__init(funk2_tricolor_set_t* this);
 void  funk2_tricolor_set__destroy(funk2_tricolor_set_t* this);
-u64   funk2_tricolor_set__black_set__element_count(funk2_tricolor_set_t* this);
+//u64   funk2_tricolor_set__black_set__element_count(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__white_set__element_count(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__grey_set__element_count(funk2_tricolor_set_t* this);
 void  funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t color);

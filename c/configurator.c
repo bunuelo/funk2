@@ -100,16 +100,11 @@ int main(int argc, char** argv) {
       double processor_usage   = 100.0;
       double target_usage      = (2.0 / 100.0);
       while (processor_usage > target_usage) {
-	s64 total_spins = 2048;
+	s64 spin_nanoseconds = 1 * nanoseconds_per_second;
 	{
-	  s64 i = total_spins;
 	  u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 	  u64 begin__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
-	  while (pthread_mutex_trylock(&mutex)) {
-	    if (i <= 0) {
-	      break;
-	    }
-	    i --;
+	  while (pthread_mutex_trylock(&mutex) && (raw__nanoseconds_since_1970() - begin_nanoseconds_since_1970) < spin_nanoseconds) {
 	    raw__nanosleep(sleep_nanoseconds);
 	  }
 	  u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();

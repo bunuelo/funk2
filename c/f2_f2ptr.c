@@ -21,20 +21,4 @@
 
 #include "f2_f2ptr.h"
 
-void f2ptr__init(f2ptr_t* this, ip_addr_t ip_addr, pool_index_t pool_index, pool_offset_t pool_offset) {
-  this->ip_addr     = ip_addr;
-  this->pool_index  = pool_index;
-  this->pool_offset = pool_offset;
-}
-
-f2ptr_t* f2ptr__new(ip_addr_t ip_addr, pool_index_t pool_index, pool_offset_t pool_offset) {
-  f2ptr_t* this = (f2ptr_t*)f2__malloc(sizeof(f2ptr_t));
-  f2ptr__init(this, ip_addr, pool_index, pool_offset);
-  return this;
-}
-
-void f2ptr__delete(f2ptr_t* this) {
-  f2__free(this);
-}
-
 

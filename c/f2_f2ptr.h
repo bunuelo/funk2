@@ -31,18 +31,9 @@ typedef unsigned char      pool_index_t;
 typedef unsigned long long pool_offset_t;
 
 struct f2ptr_s {
-  ip_addr_t     ip_addr;
-  pool_index_t  pool_index;
-  pool_offset_t pool_offset;
+  f2ptr data : f2ptr__bit_num;
 } __attribute__((__packed__));
 typedef struct f2ptr_s f2ptr_t;
 
-void     big_f2ptr__init(f2ptr_t* this, ip_addr_t ip_addr, pool_index_t pool_index, pool_offset_t pool_offset);
-f2ptr_t* big_f2ptr__new(ip_addr_t ip_addr, pool_index_t pool_index, pool_offset_t pool_offset);
-void     big_f2ptr__delete(f2ptr_t* this);
-
-#define f2ptr__init(this, pool_offset) big_f2ptr__init(this, 0, 0, pool_offset);
-#define f2ptr__memcpy(dest, src)       memcpy(dest, src, sizeof(f2ptr_t))
-#define f2ptr__bzero(this)             bzero(this, sizeof(f2ptr_t))
 
 #endif // F2__F2PTR__H

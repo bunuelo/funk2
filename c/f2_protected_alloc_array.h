@@ -49,7 +49,7 @@ void funk2_protected_alloc_array_event_array__reset(funk2_protected_alloc_array_
 typedef struct funk2_protected_alloc_array_s {
   u64                                       used_num;
   u64                                       length;
-  f2ptr*                                    data;
+  f2ptr_t*                                  data;
   s64                                       reentrance_count;
   s64                                       max_reentrance_count;
   funk2_protected_alloc_array_event_array_t event_array;

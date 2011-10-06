@@ -4785,6 +4785,10 @@ f2ptr raw__funk__optimize(f2ptr cause, f2ptr this, s64 maximum_loop_count) {
       f2ptr optimized_bytecodes = f2__optimize_context__optimized_bytecodes(cause, optimize_context);
       f2__funk__body_bytecodes__set(cause, this, optimized_bytecodes);
     }
+    { // optimize for space.
+      f2__funk__demetropolized_body(cause, this, nil);
+      f2__funk__body(               cause, this, nil);
+    }
   }
   return optimize_context;
 }

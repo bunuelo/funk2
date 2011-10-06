@@ -602,6 +602,7 @@ void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int 
       u64 index = 0;
       funk2_heap__iteration(&(this->free_memory_heap), node,
 			    save_buffer[index] = node;
+			    index ++;
 			    );
     }
     safe_write(fd, to_ptr(save_buffer), sizeof(funk2_heap_node_t*) * save_buffer__length);

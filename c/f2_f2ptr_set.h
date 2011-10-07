@@ -24,7 +24,6 @@
 
 typedef struct funk2_f2ptr_set_s      funk2_f2ptr_set_t;
 typedef struct funk2_f2ptr_set_node_s funk2_f2ptr_set_node_t;
-typedef u64                     funk2_f2ptr_set_element_t;
 
 #define funk2_f2ptr_set_prime_number__16_bit (65521ull)
 #define funk2_f2ptr_set_prime_number__32_bit (3267000013ull)
@@ -35,25 +34,25 @@ typedef u64                     funk2_f2ptr_set_element_t;
 #define F2__F2PTR_SET__H
 
 struct funk2_f2ptr_set_node_s {
-  funk2_f2ptr_set_element_t element;
-  funk2_f2ptr_set_node_t*   next;
-};
+  f2ptr_t                 element;
+  funk2_f2ptr_set_node_t* next;
+} __attribute__((__packed__));
 
 struct funk2_f2ptr_set_s {
-  u64                element_count;
-  u64                bin_power;
+  u64                      element_count;
+  u64                      bin_power;
   funk2_f2ptr_set_node_t** bin;
-};
+} __attribute__((__packed__));
 
 void  funk2_f2ptr_set__init(funk2_f2ptr_set_t* this);
 void  funk2_f2ptr_set__destroy(funk2_f2ptr_set_t* this);
 u64   funk2_f2ptr_set__element_count(funk2_f2ptr_set_t* this);
-u64   funk2_f2ptr_set__element_bin_index(funk2_f2ptr_set_t* this, funk2_f2ptr_set_element_t element);
+u64   funk2_f2ptr_set__element_bin_index(funk2_f2ptr_set_t* this, f2ptr element);
 void  funk2_f2ptr_set__double_size(funk2_f2ptr_set_t* this);
-void  funk2_f2ptr_set__add(funk2_f2ptr_set_t* this, funk2_f2ptr_set_element_t element);
-void  funk2_f2ptr_set__remove(funk2_f2ptr_set_t* this, funk2_f2ptr_set_element_t element);
-void  funk2_f2ptr_set__remove_and_add_to(funk2_f2ptr_set_t* this, funk2_f2ptr_set_element_t element, funk2_f2ptr_set_t* to_f2ptr_set);
-void* funk2_f2ptr_set__mapc(funk2_f2ptr_set_t* this, void(* mapc_funk)(funk2_f2ptr_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void  funk2_f2ptr_set__add(funk2_f2ptr_set_t* this, f2ptr element);
+void  funk2_f2ptr_set__remove(funk2_f2ptr_set_t* this, f2ptr element);
+void  funk2_f2ptr_set__remove_and_add_to(funk2_f2ptr_set_t* this, f2ptr element, funk2_f2ptr_set_t* to_f2ptr_set);
+void* funk2_f2ptr_set__mapc(funk2_f2ptr_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
 s64   funk2_f2ptr_set__calculate_save_size(funk2_f2ptr_set_t* this);
 void  funk2_f2ptr_set__save_to_stream(funk2_f2ptr_set_t* this, int fd);
 u64   funk2_f2ptr_set__save_to_buffer(funk2_f2ptr_set_t* this, u8* initial_buffer);
@@ -70,7 +69,7 @@ void  funk2_f2ptr_set__test();
     for (funk2_f2ptr_set__iteration__index = 0; funk2_f2ptr_set__iteration__index < funk2_f2ptr_set__iteration__this__bin_count; funk2_f2ptr_set__iteration__index ++) { \
       funk2_f2ptr_set_node_t* funk2_f2ptr_set__iteration__index__iter = funk2_f2ptr_set__iteration__this__bin[funk2_f2ptr_set__iteration__index]; \
       while (funk2_f2ptr_set__iteration__index__iter != NULL) {		\
-	funk2_f2ptr_set_element_t element = funk2_f2ptr_set__iteration__index__iter->element; \
+	f2ptr element = funk2_f2ptr_set__iteration__index__iter->element.data; \
 	{								\
 	  body;								\
 	}								\

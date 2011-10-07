@@ -183,7 +183,7 @@ u64 funk2_f2ptr_set__save_to_buffer(funk2_f2ptr_set_t* this, u8* initial_buffer)
     for (i = 0; i < bin_num; i ++) {
       funk2_f2ptr_set_node_t* iter = this->bin[i];
       while (iter) {
-	f2ptr_t element; element.data = iter->element;
+	f2ptr_t element; element.data = iter->element.data;
 	//safe_write(fd, to_ptr(&element), sizeof(element));
 	memcpy(buffer, &element, sizeof(element)); buffer += sizeof(element);
 	iter = iter->next;

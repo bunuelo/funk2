@@ -165,7 +165,7 @@ void funk2_f2ptr_set__save_to_stream(funk2_f2ptr_set_t* this, int fd) {
   for (i = 0; i < bin_num; i ++) {
     funk2_f2ptr_set_node_t* iter = this->bin[i];
     while (iter) {
-      f2ptr_t element; element.data = iter->element;
+      f2ptr_t element; element.data = iter->element.data;
       safe_write(fd, to_ptr(&element), sizeof(element));
       iter = iter->next;
     }

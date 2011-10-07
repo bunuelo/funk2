@@ -45,6 +45,7 @@
 #include "f2_cpu.h"
 #include "f2_dlfcn.h"
 #include "f2_dptr.h"
+#include "f2_f2ptr_set.h"
 #include "f2_fiber.h"
 #include "f2_fileio.h"
 #include "f2_frame_objects.h"

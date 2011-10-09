@@ -22,7 +22,7 @@
 #ifndef F2__TRICOLOR_SET__H
 #define F2__TRICOLOR_SET__H
 
-#include "f2_set.h"
+#include "f2_f2ptr_set.h"
 
 // tricolor
 

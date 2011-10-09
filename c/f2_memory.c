@@ -552,7 +552,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	// add all symbols to symbol_hash in ptypes.c	
 	{
 	  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
-	  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)iter) + this->total_global_memory);
+	  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)iter) + this->pool[pool_index].total_global_memory);
 	  while(iter < end_of_blocks) {
 	    if (iter->used) {
 	      ptype_block_t* block = (ptype_block_t*)iter;

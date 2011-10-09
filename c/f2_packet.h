@@ -2008,7 +2008,7 @@ void send_packet__respond__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr t
 void recv_packet__respond__f2chunk__bit16__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit16__elt_t* packet);
 
 u16 funk2_node__f2chunk__bit16__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
-u16 f2chunk__bit16__elt(f2ptr cause, f2ptr this, u64 index);
+u16 f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit16__elt__set                   = 0x2F, //void             (f2ptr cause, f2ptr this, u64 index, u16 value);
@@ -2048,7 +2048,7 @@ void send_packet__respond__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2
 void recv_packet__respond__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit16__elt__set_t* packet);
 
 void funk2_node__f2chunk__bit16__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u16 value);
-void f2chunk__bit16__elt__set(f2ptr cause, f2ptr this, u64 index, u16 value);
+void f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 value);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit32__elt                        = 0x30, //u32              (f2ptr this, u64 index, f2ptr cause);
@@ -2088,7 +2088,7 @@ void send_packet__respond__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr t
 void recv_packet__respond__f2chunk__bit32__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit32__elt_t* packet);
 
 u32 funk2_node__f2chunk__bit32__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
-u32 f2chunk__bit32__elt(f2ptr cause, f2ptr this, u64 index);
+u32 f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit32__elt__set                   = 0x31, //void             (f2ptr cause, f2ptr this, u64 index, u32 value);
@@ -2128,7 +2128,7 @@ void send_packet__respond__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2
 void recv_packet__respond__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit32__elt__set_t* packet);
 
 void funk2_node__f2chunk__bit32__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u32 value);
-void f2chunk__bit32__elt__set(f2ptr cause, f2ptr this, u64 index, u32 value);
+void f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 value);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit64__elt                        = 0x32, //u64              (f2ptr this, u64 index, f2ptr cause);
@@ -2168,7 +2168,7 @@ void send_packet__respond__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr t
 void recv_packet__respond__f2chunk__bit64__elt(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit64__elt_t* packet);
 
 u64 funk2_node__f2chunk__bit64__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index);
-u64 f2chunk__bit64__elt(f2ptr cause, f2ptr this, u64 index);
+u64 f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit64__elt__set                   = 0x33, //void             (f2ptr this, u64 index, f2ptr cause, u64 value);
@@ -2208,7 +2208,7 @@ void send_packet__respond__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2
 void recv_packet__respond__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit64__elt__set_t* packet);
 
 void funk2_node__f2chunk__bit64__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u64 value);
-void f2chunk__bit64__elt__set(f2ptr cause, f2ptr this, u64 index, u64 value);
+void f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 value);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__cfunk_jump                        = 0x34, //f2ptr            (f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
@@ -2250,7 +2250,7 @@ void send_packet__respond__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr t
 void recv_packet__respond__f2chunk__cfunk_jump(funk2_node_t* funk2_node, pcs_respond__f2chunk__cfunk_jump_t* packet);
 
 f2ptr funk2_node__f2chunk__cfunk_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
-f2ptr f2chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args);
+f2ptr f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr env, f2ptr args);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bytecode_jump                     = 0x35, //int              (f2ptr cause, f2ptr this, f2ptr fiber);

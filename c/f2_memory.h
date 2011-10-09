@@ -50,36 +50,36 @@ struct funk2_memory_s {
 
 #define f2ptr__computer_id__bit_num  computer_id__bit_num
 #define f2ptr__pool_index__bit_num   pool_index__bit_num
-#define f2ptr__pool_address__bit_num pool_address__bit_num
+#define f2ptr__pool_block_address__bit_num pool_block_address__bit_num
 
 #define f2ptr__computer_id__max_value  ((((u64)1)<<(f2ptr__computer_id__bit_num))  - 1)
 #define f2ptr__pool_index__max_value   ((((u64)1)<<(f2ptr__pool_index__bit_num))   - 1)
-#define f2ptr__pool_address__max_value ((((u64)1)<<(f2ptr__pool_address__bit_num)) - 1)
+#define f2ptr__pool_block_address__max_value ((((u64)1)<<(f2ptr__pool_block_address__bit_num)) - 1)
 
-#define f2ptr__new(computer_id, pool_index, pool_address)  ((((u64)(computer_id)) << (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num)) | \
-							    (((u64)(pool_index))  <<  f2ptr__pool_address__bit_num) | \
-							    ( (u64)(pool_address)))
+#define f2ptr__new(computer_id, pool_index, pool_block_address)  ((((u64)(computer_id)) << (f2ptr__pool_block_address__bit_num + f2ptr__pool_index__bit_num)) | \
+							    (((u64)(pool_index))  <<  f2ptr__pool_block_address__bit_num) | \
+							    ( (u64)(pool_block_address)))
 
 #if (computer_id__bit_num == 0)
 #  define __f2ptr__computer_id(f2p)                        0
 #else
-#  define __f2ptr__computer_id(f2p)                        (((u64)(f2p)) >> (f2ptr__pool_address__bit_num + f2ptr__pool_index__bit_num))
+#  define __f2ptr__computer_id(f2p)                        (((u64)(f2p)) >> (f2ptr__pool_block_address__bit_num + f2ptr__pool_index__bit_num))
 #endif
-#define __f2ptr__pool_index(f2p)                          ((((u64)(f2p)) >> f2ptr__pool_address__bit_num) & f2ptr__pool_index__max_value)
-#define __f2ptr__pool_address(f2p)                         (((u64)(f2p)) & f2ptr__pool_address__max_value)
+#define __f2ptr__pool_index(f2p)                          ((((u64)(f2p)) >> f2ptr__pool_block_address__bit_num) & f2ptr__pool_index__max_value)
+#define __f2ptr__pool_block_address(f2p)                         (((u64)(f2p)) & f2ptr__pool_block_address__max_value)
 
 #if (computer_id__bit_num == 0)
 #  define __f2ptr__computer_id__set(f2p, computer_id) (f2p)
 #else
-#  define __f2ptr__computer_id__set(f2p, computer_id) f2ptr__new(         computer_id,      __f2ptr__pool_index(f2p), __f2ptr__pool_address(f2p))
+#  define __f2ptr__computer_id__set(f2p, computer_id) f2ptr__new(         computer_id,      __f2ptr__pool_index(f2p), __f2ptr__pool_block_address(f2p))
 #endif
-#define __f2ptr__pool_index__set(f2p, pool_index)     f2ptr__new(__f2ptr__computer_id(f2p),          pool_index,      __f2ptr__pool_address(f2p))
-#define __f2ptr__pool_address__set(f2p, pool_address) f2ptr__new(__f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p),          pool_address)
+#define __f2ptr__pool_index__set(f2p, pool_index)     f2ptr__new(__f2ptr__computer_id(f2p),          pool_index,      __f2ptr__pool_block_address(f2p))
+#define __f2ptr__pool_block_address__set(f2p, pool_block_address) f2ptr__new(__f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p),          pool_block_address)
 
-#define   __ptr__pool_address(pool_index, p) ((((u64)p) != (u64)0) ? ((u64)((((u64)(p)) - (u64)(__funk2.memory.pool[pool_index].global_f2ptr_offset)) >> f2ptr_block__bit_num)) : (u64)0)
-
-#define __f2ptr_to_ptr(f2p)             ((((u64)(f2p)) !=       ((u64)0)) ? ((to_ptr((__f2ptr__pool_address(f2p) << f2ptr_block__bit_num)        + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
-#define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_address(pool_index, p))))                                           : ((u64)0))
+#define   __ptr__pool_block_address(pool_index, p) ((((u64)p) != (u64)0) ? ((u64)(((u64)(p)) - (u64)(__funk2.memory.pool[pool_index].global_f2ptr_offset))) : (u64)0)
+					      
+#define __f2ptr_to_ptr(f2p)             ((((u64)(f2p)) !=       ((u64)0)) ? ((to_ptr((__f2ptr__pool_block_address(f2p))        + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
+#define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_block_address(pool_index, p))))                                           : ((u64)0))
 
 #ifdef DEBUG_MEMORY_POINTERS
 #  define      f2ptr_to_ptr(f2p) funk2_memory__used_f2ptr_to_ptr__debug(&(__funk2.memory), f2p)

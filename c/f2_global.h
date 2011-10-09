@@ -86,12 +86,12 @@ typedef unsigned char boolean_t;
 
 typedef                             u64       pool_address_t;
 #define pool_address__fstr          X64__fstr
-#define pool_address__bit_num        34
+#define pool_address__bit_num        36
 #define pool_address__max_byte_num     ((1ull << pool_address__bit_num) - 1)
 
-typedef                             u32       f2ptr;
-#define f2ptr__fstr                 X32__fstr
-#define f2ptr__bit_num               32
+typedef                             u64       f2ptr;
+#define f2ptr__fstr                 X64__fstr
+#define f2ptr__bit_num               40
 typedef                              u8       computer_id_t;
 #define computer_id__fstr            X8__fstr
 #define computer_id__bit_num          1
@@ -100,7 +100,7 @@ typedef                              u8       pool_index_t;
 #define pool_index__bit_num           3
 typedef                             u32       pool_block_address_t;
 #define pool_block_address__fstr    X32__fstr
-#define pool_block_address__bit_num  28
+#define pool_block_address__bit_num  36
 
 
 #define f2ptr_block__bit_num   (pool_address__bit_num - pool_block_address__bit_num)

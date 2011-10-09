@@ -266,7 +266,6 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   }
   // HEAPEDIT
   //rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
-  funk2_set__add(&(this->pool[pool_index].used_memory_set), (funk2_set_element_t)block);
   block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
   block->used = 1;
   ((ptype_block_t*)block)->block.ptype = ptype_newly_allocated;
@@ -550,32 +549,40 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	// add all symbols to symbol_hash in ptypes.c
-	funk2_set__iteration(&(this->pool[pool_index].used_memory_set), element,
-			     ptype_block_t* block = (ptype_block_t*)from_ptr(element);
-			     switch(block->block.ptype) {
-			     case ptype_symbol: {
-			       f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
-			       funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-			     } break;
-			     case ptype_scheduler_cmutex: {
-			       ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-			       funk2_processor_mutex__init(scheduler_cmutex_block->m);
-			       if (scheduler_cmutex_block->locked_state) {
-				 funk2_processor_mutex__lock(scheduler_cmutex_block->m);
-			       }
-			     } break;
-			     case ptype_cmutex: {
-			       ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
-			       funk2_processor_mutex__init(cmutex_block->m);
-			       if (cmutex_block->locked_state) {
-				 funk2_processor_mutex__lock(cmutex_block->m);
-			       }
-			     } break;
-			     default:
-			       break;
-			     }
-			     );
+	// add all symbols to symbol_hash in ptypes.c	
+	{
+	  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
+	  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)iter) + this->total_global_memory);
+	  while(iter < end_of_blocks) {
+	    if (iter->used) {
+	      ptype_block_t* block = (ptype_block_t*)iter;
+	      switch(block->block.ptype) {
+	      case ptype_symbol: {
+		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
+		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
+	      } break;
+	      case ptype_scheduler_cmutex: {
+		ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+		funk2_processor_mutex__init(scheduler_cmutex_block->m);
+		if (scheduler_cmutex_block->locked_state) {
+		  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+		}
+	      } break;
+	      case ptype_cmutex: {
+		ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+		funk2_processor_mutex__init(cmutex_block->m);
+		if (cmutex_block->locked_state) {
+		  funk2_processor_mutex__lock(cmutex_block->m);
+		}
+	      } break;
+	      default:
+		break;
+	      }
+	    }
+	    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+	  }
+	  release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+	}
       }
     }
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));

@@ -77,9 +77,15 @@ struct funk2_memory_s {
 #define __f2ptr__pool_index__set(f2p, pool_index)     f2ptr__new(__f2ptr__computer_id(f2p),          pool_index,      __f2ptr__pool_block_address(f2p))
 #define __f2ptr__pool_block_address__set(f2p, pool_block_address) f2ptr__new(__f2ptr__computer_id(f2p), __f2ptr__pool_index(f2p),          pool_block_address)
 
-#define   __ptr__pool_address(pool_index, p)       ((((u64)p) != (u64)0) ? ((u64)(((u64)(p)) - (u64)(__funk2.memory.pool[pool_index].global_f2ptr_offset))) : (u64)0)
+#define   __ptr__pool_address(pool_index, p)       ((((u64)p) != (u64)0) ? ({ \
+	u64 return_value = ((u64)(((u64)(p)) - (u64)(__funk2.memory.pool[pool_index].global_f2ptr_offset))); \
+	if (return_value & f2ptr_block__max_value) {			\
+	  error(nil, "__ptr__pool_address error: not aligned.");	\
+	}								\
+	return_value;							\
+      }) : (u64)0)
 #define   __ptr__pool_block_address(pool_index, p) ((__ptr__pool_address(pool_index, p)) >> f2ptr_block__bit_num)
-					      
+
 #define __f2ptr_to_ptr(f2p)             ((((u64)(f2p)) !=       ((u64)0)) ? ((to_ptr((__f2ptr__pool_address(f2p)) + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
 #define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_block_address(pool_index, p))))                                           : ((u64)0))
 

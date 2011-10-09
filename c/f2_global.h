@@ -103,8 +103,9 @@ typedef                             u32       pool_block_address_t;
 #define pool_block_address__bit_num  28
 
 
-#define f2ptr_block__bit_num (pool_address__bit_num - pool_block_address__bit_num)
-#define f2ptr_block__size    (1ull << f2ptr_block__bit_num)
+#define f2ptr_block__bit_num   (pool_address__bit_num - pool_block_address__bit_num)
+#define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
+#define f2ptr_block__max_value ((1ull << f2ptr_block__bit_num) - 1)
 
 
 

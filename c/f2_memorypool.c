@@ -49,11 +49,6 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->free_memory_heap__load_buffer__length = 0;
   this->free_memory_heap__load_buffer         = NULL;
   
-  funk2_set__init(&(this->used_memory_set));
-  
-  this->used_memory_set__load_buffer__length = 0;
-  this->used_memory_set__load_buffer         = NULL;
-  
   funk2_memorypool__debug_memory_test(this, 1);
 }
 
@@ -61,16 +56,21 @@ void funk2_memorypool__destroy(funk2_memorypool_t* this) {
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
   // HEAPEDIT
   funk2_heap__destroy(&(this->free_memory_heap));
-  funk2_set__destroy(&(this->used_memory_set));
 }
 
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
   f2size_t used_memory_count = 0;
-  // HEAPEDIT
-  funk2_set__iteration(&(this->used_memory_set), element,
-		       funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(element);
-		       used_memory_count += funk2_memblock__byte_num(block);
-		       );
+  {
+    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+    while(iter < end_of_blocks) {
+      if (iter->used) {
+	used_memory_count += funk2_memblock__byte_num(iter);
+      }
+      iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+    }
+    release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+  }
   //printf("\ntotal used memory = %d", used_memory_count); fflush(stdout);
   return used_memory_count;
 }
@@ -308,30 +308,6 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
 	this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
       }
     }
-    {
-      u64                  element_count     = this->used_memory_set.element_count;
-      funk2_set_element_t* set_element_array = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * element_count));
-      {
-	{
-	  s64 index = 0;
-	  funk2_set__iteration(&(this->used_memory_set), element,
-			       set_element_array[index] = element;
-			       index ++;
-			       );
-	}
-	funk2_set__destroy(&(this->used_memory_set));
-	funk2_set__init(&(this->used_memory_set));
-	{
-	  s64 index;
-	  for (index = 0; index < element_count; index ++) {
-	    funk2_set_element_t element = set_element_array[index];
-	    element += byte_diff;
-	    funk2_set__add(&(this->used_memory_set), element);
-	  }
-	}
-      }
-      f2__free(to_ptr(set_element_array));
-    }
     //if (last->used) {
     //release__assert(byte_num > old_total_global_memory, nil, "(byte_num > old_total_global_memory) because defragment was just called and there is still used memory at end.");
     funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
@@ -364,12 +340,6 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   funk2_memorypool__debug_memory_test(this, 2);
 }
 
-void funk2_memorypool__used_memory_set__add(funk2_memorypool_t* this, funk2_memblock_t* block) {
-  // HEAPEDIT
-  //rbt_tree__insert(&(this->used_memory_tree), (rbt_node_t*)block);
-  funk2_set__add(&(this->used_memory_set), (funk2_set_element_t)to_ptr(block));
-}
-
 void funk2_memorypool__free_memory_heap__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
   // HEAPEDIT
   //rbt_tree__insert(&(this->free_memory_tree), (rbt_node_t*)block);
@@ -399,7 +369,6 @@ u8 funk2_memorypool__defragment_free_memory_blocks_in_place(funk2_memorypool_t* 
 void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_t* block) {
   // remove from used list
   // HEAPEDIT
-  funk2_set__remove(&(this->used_memory_set), (funk2_set_element_t)to_ptr(block));
   // set to free
   debug__assert(block->used, nil, "attempting to free a block that is already free.");
   block->used = 0;
@@ -574,25 +543,6 @@ void funk2_memorypool__write_compressed_to_stream(funk2_memorypool_t* this, int 
   }
   
   //
-  {  
-    u64                  save_buffer__length = this->used_memory_set.element_count;
-    funk2_set_element_t* save_buffer         = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * save_buffer__length));
-    {
-      f2size_t size_i = save_buffer__length;
-      safe_write(fd, to_ptr(&size_i), sizeof(f2size_t));
-    }
-    {
-      u64 index = 0;
-      funk2_set__iteration(&(this->used_memory_set), element,
-			   save_buffer[index] = element;
-			   index ++;
-			   );
-    }
-    safe_write(fd, to_ptr(save_buffer), sizeof(funk2_set_element_t) * save_buffer__length);
-    f2__free(to_ptr(save_buffer));
-  }
-  
-  //
   {
     u64                 save_buffer__length = funk2_heap__size(&(this->free_memory_heap));
     funk2_heap_node_t** save_buffer         = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * save_buffer__length));
@@ -637,27 +587,6 @@ void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {
   //rbt_tree__reinit(&(this->used_memory_tree), this->global_f2ptr_offset);
   
   status("funk2_memorypool__rebuild_memory_from_image: here.");
-  
-  status("funk2_memorypool__rebuild_memory_from_image: rebuilding used_memory_set from load buffer.");
-  funk2_set__destroy(&(this->used_memory_set));
-  funk2_set__init(&(this->used_memory_set));
-  {
-    s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)this->used_memory_set__load_buffer__global_f2ptr_offset));
-    
-    // chonk
-    {
-      u64 index;
-      for (index = 0; index < this->used_memory_set__load_buffer__length; index ++) {
-	funk2_set_element_t element = this->used_memory_set__load_buffer[index];
-	element += global_f2ptr_difference;
-	funk2_set__add(&(this->used_memory_set), element);
-      }
-    }
-    
-    f2__free(to_ptr(this->used_memory_set__load_buffer));
-    this->used_memory_set__load_buffer__length = 0;
-    this->used_memory_set__load_buffer         = NULL;
-  }
   
   status("funk2_memorypool__rebuild_memory_from_image: rebuilding free_memory_heap from load buffer.");
   funk2_heap__destroy(&(this->free_memory_heap));
@@ -722,25 +651,6 @@ void funk2_memorypool__load_from_stream(funk2_memorypool_t* this, int fd) {
     old_global_f2ptr_offset = size_i;
   }
   this->free_memory_heap__load_buffer__global_f2ptr_offset = old_global_f2ptr_offset;
-  this->used_memory_set__load_buffer__global_f2ptr_offset  = old_global_f2ptr_offset;
-  
-  status("funk2_memorypool__load_from_stream: loading used_memory_set from disk.");
-  {
-    u64 element_count; {f2size_t size_i; safe_read(fd, to_ptr(&size_i), sizeof(f2size_t)); element_count = size_i;}
-    status("funk2_memorypool__load_from_stream: loading used_memory_set from disk (element_count = " u64__fstr ").", element_count);
-    
-    this->used_memory_set__load_buffer__length = element_count;
-    this->used_memory_set__load_buffer         = (funk2_set_element_t*)from_ptr(f2__malloc(sizeof(funk2_set_element_t) * this->used_memory_set__load_buffer__length));
-    
-    safe_read(fd, to_ptr(this->used_memory_set__load_buffer), sizeof(funk2_set_element_t) * this->used_memory_set__load_buffer__length);
-    //{
-    //  u64 index;
-    //  for (index = 0; index < this->used_memory_set__load_buffer__length; index ++) {
-    //	funk2_set_element_t element; safe_read(fd, to_ptr(&element), sizeof(funk2_set_element_t));
-    //	this->used_memory_set__load_buffer[index] = element;
-    //  }
-    //}
-  }
   
   status("funk2_memorypool__load_from_stream: loading free_memory_heap from disk.");
   {

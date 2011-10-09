@@ -139,14 +139,15 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
 }
 
 ptr funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
-  computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
-  pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
-  pool_address_t pool_address = __f2ptr__pool_address(f2p);
+  computer_id_t        computer_id        = __f2ptr__computer_id(f2p);
+  pool_index_t         pool_index         = __f2ptr__pool_index(f2p);
+  pool_block_address_t pool_block_address = __f2ptr__pool_block_address(f2p);
+  
   debug__assert(computer_id == 0, nil, "computer_id != 0");
-  if (computer_id != 0 || pool_address < 0 || pool_address >= this->pool[pool_index].total_global_memory) {
-    printf("\ncomputer_id  = " computer_id__fstr,  computer_id);
-    printf("\npool_index   = " pool_index__fstr,   pool_index);
-    printf("\npool_address = " pool_address__fstr, pool_address);
+  if (computer_id != 0 || pool_block_address < 0 || pool_block_address >= (this->pool[pool_index].total_global_memory >> f2ptr_block__bit_num)) {
+    printf("\ncomputer_id        = " computer_id__fstr,        computer_id);
+    printf("\npool_index         = " pool_index__fstr,         pool_index);
+    printf("\npool_block_address = " pool_block_address__fstr, pool_block_address);
     fflush(stdout);
     error(nil, "f2ptr_to_ptr__debug error: received invalid pointer.");
   }
@@ -167,13 +168,13 @@ void debug__found_unused_memory_block(funk2_memblock_t* block) {
 }
 
 ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
-  computer_id_t  computer_id  = __f2ptr__computer_id(f2p);
-  pool_index_t   pool_index   = __f2ptr__pool_index(f2p);
-  pool_address_t pool_address = __f2ptr__pool_address(f2p);
-  if (computer_id != 0 || pool_address < 0 || pool_address >= this->pool[pool_index].total_global_memory) {
-    printf("\ncomputer_id  = " computer_id__fstr,  computer_id);
-    printf("\npool_index   = " pool_index__fstr,   pool_index);
-    printf("\npool_address = " pool_address__fstr, pool_address);
+  computer_id_t        computer_id        = __f2ptr__computer_id(f2p);
+  pool_index_t         pool_index         = __f2ptr__pool_index(f2p);
+  pool_block_address_t pool_block_address = __f2ptr__pool_block_address(f2p);
+  if (computer_id != 0 || pool_block_address < 0 || pool_block_address >= (this->pool[pool_index].total_global_memory >> f2ptr_block__bit_num)) {
+    printf("\ncomputer_id        = " computer_id__fstr,        computer_id);
+    printf("\npool_index         = " pool_index__fstr,         pool_index);
+    printf("\npool_block_address = " pool_block_address__fstr, pool_block_address);
     fflush(stdout);
     error(nil, "used_f2ptr_to_ptr__debug error: received invalid pointer.");
   }
@@ -276,13 +277,13 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
 #ifdef DEBUG_MEMORY
   {
     ptr block_ptr = to_ptr(block);
-    s64 check_pool_address = __ptr__pool_address(pool_index, to_ptr(block_ptr));
-    if (check_pool_address < 0 || check_pool_address > f2ptr__pool_address__max_value) {
-      status("pool_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
+    s64 check_pool_block_address = __ptr__pool_block_address(pool_index, to_ptr(block_ptr));
+    if (check_pool_block_address < 0 || check_pool_block_address > f2ptr__pool_block_address__max_value) {
+      status("pool_block_address is out of range, (0 <= " s64__fstr " <= " u64__fstr ").", check_pool_block_address, f2ptr__pool_block_address__max_value);
       status("  pool_index = " pool_index__fstr, (pool_index_t)pool_index);
       status("  block_ptr  = " ptr__fstr,        (ptr)block_ptr);
       funk2_memory__print_gc_stats(this);
-      error(nil, "pool_address is out of range.");
+      error(nil, "pool_block_address is out of range.");
     }
   }
 #endif
@@ -301,11 +302,11 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
       funk2_memory__print_gc_stats(this);
       error(nil, "pool_index is out of range.");
     }
-    u64 check_pool_address = __f2ptr__pool_address(block_f2ptr);
-    if (check_pool_address > f2ptr__pool_address__max_value) {
-      status("[ERROR] pool_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_address, f2ptr__pool_address__max_value);
+    u64 check_pool_block_address = __f2ptr__pool_block_address(block_f2ptr);
+    if (check_pool_block_address > f2ptr__pool_block_address__max_value) {
+      status("[ERROR] pool_block_address is out of range, (0 <= " u64__fstr " <= " u64__fstr ").", check_pool_block_address, f2ptr__pool_block_address__max_value);
       funk2_memory__print_gc_stats(this);
-      error(nil, "pool_address is out of range.");
+      error(nil, "pool_block_address is out of range.");
     }
   }
 #endif

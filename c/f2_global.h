@@ -97,7 +97,7 @@ typedef                       u32       pool_address_t;
 #define pool_address__fstr    X32__fstr
 #define pool_address__bit_num  29
 
-#define f2ptr_block__bit_num    0
+#define f2ptr_block__bit_num    2
 #define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
 
 typedef struct f2ptr_s f2ptr_t;

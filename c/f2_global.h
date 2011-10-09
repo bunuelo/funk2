@@ -89,8 +89,8 @@ typedef                             u64       pool_address_t;
 #define pool_address__bit_num        34
 #define pool_address__max_byte_num     ((1ull << pool_address__bit_num) - 1)
 
-typedef                             u64       f2ptr;
-#define f2ptr__fstr                 X64__fstr
+typedef                             u32       f2ptr;
+#define f2ptr__fstr                 X32__fstr
 #define f2ptr__bit_num               32
 typedef                              u8       computer_id_t;
 #define computer_id__fstr            X8__fstr

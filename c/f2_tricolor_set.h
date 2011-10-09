@@ -37,22 +37,19 @@ enum funk2_tricolor_e {
 
 typedef struct funk2_tricolor_set_s funk2_tricolor_set_t;
 struct funk2_tricolor_set_s {
-  //funk2_set_t black_set;
-  funk2_set_t white_set;
-  funk2_set_t grey_set;
+  funk2_f2ptr_set_t white_set;
+  funk2_f2ptr_set_t grey_set;
 };
 
 void  funk2_tricolor_set__init(funk2_tricolor_set_t* this);
 void  funk2_tricolor_set__destroy(funk2_tricolor_set_t* this);
-//u64   funk2_tricolor_set__black_set__element_count(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__white_set__element_count(funk2_tricolor_set_t* this);
 u64   funk2_tricolor_set__grey_set__element_count(funk2_tricolor_set_t* this);
-void  funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t color);
-void  funk2_tricolor_set__remove_element(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t current_color);
-void  funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, funk2_set_element_t element, funk2_tricolor_t from_color, funk2_tricolor_t to_color);
-//void* funk2_tricolor_set__black_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
-void* funk2_tricolor_set__white_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
-void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* mapc_funk)(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void  funk2_tricolor_set__add_element(funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t color);
+void  funk2_tricolor_set__remove_element(funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t current_color);
+void  funk2_tricolor_set__change_element_color(funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t from_color, funk2_tricolor_t to_color);
+void* funk2_tricolor_set__white_set__mapc(funk2_tricolor_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void* funk2_tricolor_set__grey_set__mapc( funk2_tricolor_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
 s64   funk2_tricolor_set__calculate_save_size(funk2_tricolor_set_t* this);
 void  funk2_tricolor_set__save_to_stream(funk2_tricolor_set_t* this, int fd);
 u64   funk2_tricolor_set__save_to_buffer(funk2_tricolor_set_t* this, u8* initial_buffer);

@@ -163,7 +163,7 @@ f2ptr funk2_node__remote_f2ptr_to_local_f2ptr(funk2_node_t* this, f2ptr remote_f
   }
   computer_id_t remote_computer_id = __f2ptr__computer_id(remote_f2ptr);
   computer_id_t local_computer_id  = funk2_node__remote_computer_id_to_local_computer_id(this, remote_computer_id);
-  f2ptr local_f2ptr = f2ptr__new(local_computer_id, __f2ptr__pool_index(remote_f2ptr), __f2ptr__pool_address(remote_f2ptr));
+  f2ptr local_f2ptr = f2ptr__new(local_computer_id, __f2ptr__pool_index(remote_f2ptr), __f2ptr__pool_block_address(remote_f2ptr));
   //status("funk2_node__remote_f2ptr_to_local_f2ptr: remote_f2ptr=" f2ptr__fstr ", local_f2ptr=" f2ptr__fstr ".", remote_f2ptr, local_f2ptr);
   return local_f2ptr;
 }

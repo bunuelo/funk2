@@ -84,8 +84,8 @@ typedef unsigned char boolean_t;
 
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
-typedef                       u32       f2ptr;
-#define f2ptr__fstr           X32__fstr
+typedef                       u64       f2ptr;
+#define f2ptr__fstr           X64__fstr
 #define f2ptr__bit_num         32
 typedef                        u8       computer_id_t;
 #define computer_id__fstr      X8__fstr

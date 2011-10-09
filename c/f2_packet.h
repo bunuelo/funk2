@@ -1968,7 +1968,7 @@ void send_packet__respond__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2p
 void recv_packet__respond__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, pcs_respond__f2chunk__bit8__elt__set_t* packet);
 
 void funk2_node__f2chunk__bit8__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, u8 value);
-void f2chunk__bit8__elt__set(f2ptr cause, f2ptr this, u64 index, u8 value);
+void f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 value);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__bit16__elt                        = 0x2E, //u16              (f2ptr cause, f2ptr this, u64 index);

@@ -84,6 +84,9 @@ typedef unsigned char boolean_t;
 
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
+#define f2ptr_block__bit_num    4
+#define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
+
 typedef                       u64       f2ptr;
 #define f2ptr__fstr           X64__fstr
 #define f2ptr__bit_num         32
@@ -97,8 +100,8 @@ typedef                       u32       pool_address_t;
 #define pool_address__fstr    X32__fstr
 #define pool_address__bit_num  28
 
-#define f2ptr_block__bit_num    4
-#define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
+#define pool_address__max_byte_num ((1ull << (pool_address__bit_num + f2ptr_block__bit_num)) - 1)
+
 
 typedef struct f2ptr_s f2ptr_t;
 struct f2ptr_s {

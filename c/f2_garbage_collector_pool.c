@@ -695,7 +695,7 @@ void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector
   }
 }
 
-void funk2_garbage_collector_pool__free_white_exps__helper(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value) {
+void funk2_garbage_collector_pool__free_white_exps__helper(f2ptr element, void** user_data, boolean_t* stop, void** return_value) {
   f2ptr                           exp              =   (f2ptr)                          element;
   funk2_garbage_collector_pool_t* this             =   (funk2_garbage_collector_pool_t*)(user_data[0]);
   int                             pool_index       = *((int*)                           (user_data[1]));

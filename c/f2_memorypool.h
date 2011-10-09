@@ -35,6 +35,7 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 #include "f2_dynamic_memory.h"
 #include "f2_memblock.h"
 #include "f2_ptype.h"
+#include "f2_set.h"
 #include "f2_zlib.h"
 
 #define funk2_memorypool__initial_heap_size (128ull * 1024 * 1024)

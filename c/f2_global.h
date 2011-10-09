@@ -131,8 +131,8 @@ struct f2ptr_s {
 typedef u64 event_id_t;
 #define event_id__fstr "#x" X64__fstr
 
-#if (f2ptr__bit_num != (computer_id__bit_num + pool_index__bit_num + pool_address__bit_num))
-#  error (f2ptr__bit_num != (computer_id__bit_num + pool_index__bit_num + pool_address__bit_num))
+#if (f2ptr__bit_num != (computer_id__bit_num + pool_index__bit_num + pool_block_address__bit_num))
+#  error (f2ptr__bit_num != (computer_id__bit_num + pool_index__bit_num + pool_block_address__bit_num))
 #endif
 
 #endif // F2__GLOBAL__H

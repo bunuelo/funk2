@@ -263,7 +263,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
 
 
 void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f2size_t byte_num) {
-  if(((u64)byte_num) > ((u64)pool_address__max_byte_num) {
+  if (((u64)byte_num) > ((u64)pool_address__max_byte_num)) {
     status("funk2_memorypool__change_total_memory_available error: tried to allocate more memory than is able to be addressed ((u64)byte_num) > ((u64)pool_address__max_byte_num), ((u64)" u64__fstr ") > ((u64)" u64__fstr ").",
 	   ((u64)byte_num), ((u64)pool_address__max_byte_num));
     error(nil, "funk2_memorypool__change_total_memory_available error: tried to allocate more memory than is able to be addressed (are you using a 32 bit version still?).");

@@ -656,7 +656,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   }
 }
 
-void funk2_garbage_collector_pool__blacken_grey_nodes__helper(funk2_set_element_t element, void** user_data, boolean_t* stop, void** return_value) {
+void funk2_garbage_collector_pool__blacken_grey_nodes__helper(f2ptr element, void** user_data, boolean_t* stop, void** return_value) {
   f2ptr_t*                        grey_array = (f2ptr_t*)(user_data[0]);
   u64*                            grey_index = (u64*)(user_data[1]);
   f2ptr                           exp        = (f2ptr)element;

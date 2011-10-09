@@ -28,24 +28,27 @@ void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num)
     perror("malloc");
     exit(-1);
   }
-  this->ptr = ((temp_ptr + f2ptr_block__max_value) >> f2ptr_block__bit_num) << f2ptr_block__bit_num;
+  this->raw_ptr = temp_ptr;
+  this->ptr     = ((temp_ptr + f2ptr_block__max_value) >> f2ptr_block__bit_num) << f2ptr_block__bit_num;
   memset(from_ptr(this->ptr), 0, byte_num);
 }
 
 void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
-  f2__free(this->ptr);
+  f2__free(this->raw_ptr);
   this->byte_num = 0;
+  this->raw_ptr  = to_ptr(NULL);
   this->ptr      = to_ptr(NULL);
 }
 
 void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t byte_num) {
-  new_memory->ptr = to_ptr(realloc(from_ptr(old_memory->ptr), byte_num));
-  if (from_ptr(new_memory->ptr) == NULL) {
+  new_memory->raw_ptr = to_ptr(realloc(from_ptr(old_memory->ptr), byte_num + f2ptr_block__max_value));
+  if (from_ptr(new_memory->raw_ptr) == NULL) {
     status("f2dynamicmemory__realloc fatal: realloc error \"%s\".", strerror(errno));
     status("                                byte_num=" u64__fstr ".", (u64)byte_num);
     perror("realloc");
     exit(-1);
   }
+  new_memory->ptr = ((new_memory->raw_ptr + f2ptr_block__max_value) >> f2ptr_block__bit_num) << f2ptr_block__bit_num;
   if (old_memory->byte_num > byte_num) {
     memset(((u8*)from_ptr(new_memory->ptr)) + old_memory->byte_num, 0, byte_num - (old_memory->byte_num));
   }

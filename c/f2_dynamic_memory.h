@@ -28,6 +28,7 @@
 typedef struct f2dynamicmemory_s {
   f2size_t byte_num;
   ptr      ptr;
+  ptr      raw_ptr;
 } f2dynamicmemory_t;
 
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num);

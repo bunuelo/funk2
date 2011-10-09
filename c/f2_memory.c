@@ -196,18 +196,22 @@ ptr funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p) {
 }
 
 ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
-  ptr block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
-  if (block) {return block;}  
+  f2size_t byte_num_considering_block_size = (((byte_num - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
+  ptr block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num_considering_block_size));
+  if (block) {
+    block = ((((block - this->pool[pool_index].global_f2ptr_offset) + f2ptr_block__size - 1) >> f2ptr_block__bit_num) << f2ptr_block__bit_num) + this->pool[pool_index].global_f2ptr_offset;
+    return block;
+  }
   // If we get here then we failed to allocate enough memory from pool.
   funk2_memory__debug_memory_test(this, 3);
   if (funk2_memorypool__defragment_free_memory_blocks_in_place(&(this->pool[pool_index]))) {
-    block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
+    block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num_considering_block_size));
     if (block) {return block;}
   }
   __funk2.garbage_collector.gc_pool[pool_index].should_run_gc = boolean__true;
   status("funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree: before enlarge memory, this->pool[%d].total_global_memory=" f2size_t__fstr, pool_index, (f2size_t)(this->pool[pool_index].total_global_memory));
   do {
-    this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
+    this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num_considering_block_size;
     this->pool[pool_index].should_enlarge_memory_now                         = boolean__true;
     __funk2.user_thread_controller.please_wait                               = boolean__true;
     if (pthread_self() == this->memory_handling_thread) {
@@ -221,12 +225,12 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
     } else {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
     }
-    block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num));
+    block = to_ptr(funk2_memorypool__find_splittable_free_block_and_unfree(&(this->pool[pool_index]), byte_num_considering_block_size));
     if (block) {return block;}  
     // might need to loop more than once if two requests for memory from memory handling process occur at the same time.
   } while (1);
   // shouldn't get here if we have DYNAMIC_MEMORY defined.  if we are *only* using static_memory then this fails.  however, in distributed systems external memory systems could be asked for memory at this point (REMOTE_MEMORY?).
-  printf(  "\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num);
+  printf(  "\nfind_free_memory_for_new_memblock error: shouldn't get here.  byte_num = %u\n", (unsigned int)byte_num_considering_block_size);
   error(nil, "find_free_memory_for_new_memblock error: shouldn't get here.\n");
   return to_ptr(NULL);
 }

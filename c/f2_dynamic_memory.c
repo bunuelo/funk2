@@ -23,11 +23,12 @@
 
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
   this->byte_num = byte_num;
-  this->ptr      = f2__malloc(byte_num);
-  if (from_ptr(this->ptr) == NULL) {
+  ptr temp_ptr = f2__malloc(byte_num + f2ptr_block__max_value);
+  if (from_ptr(temp_ptr) == NULL) {
     perror("malloc");
     exit(-1);
   }
+  this->ptr = ((temp_ptr + f2ptr_block__max_value) >> f2ptr_block__bit_num) << f2ptr_block__bit_num;
   memset(from_ptr(this->ptr), 0, byte_num);
 }
 

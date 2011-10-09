@@ -48,17 +48,17 @@ struct funk2_memory_s {
 
 #define maximum_generation_num 7
 
-#define f2ptr__computer_id__bit_num  computer_id__bit_num
-#define f2ptr__pool_index__bit_num   pool_index__bit_num
+#define f2ptr__computer_id__bit_num        computer_id__bit_num
+#define f2ptr__pool_index__bit_num         pool_index__bit_num
 #define f2ptr__pool_block_address__bit_num pool_block_address__bit_num
 
-#define f2ptr__computer_id__max_value  ((((u64)1)<<(f2ptr__computer_id__bit_num))  - 1)
-#define f2ptr__pool_index__max_value   ((((u64)1)<<(f2ptr__pool_index__bit_num))   - 1)
+#define f2ptr__computer_id__max_value        ((((u64)1)<<(f2ptr__computer_id__bit_num))        - 1)
+#define f2ptr__pool_index__max_value         ((((u64)1)<<(f2ptr__pool_index__bit_num))         - 1)
 #define f2ptr__pool_block_address__max_value ((((u64)1)<<(f2ptr__pool_block_address__bit_num)) - 1)
 
 #define f2ptr__new(computer_id, pool_index, pool_block_address)  ((((u64)(computer_id)) << (f2ptr__pool_block_address__bit_num + f2ptr__pool_index__bit_num)) | \
-							    (((u64)(pool_index))  <<  f2ptr__pool_block_address__bit_num) | \
-							    ( (u64)(pool_block_address)))
+	    						          (((u64)(pool_index))  <<  f2ptr__pool_block_address__bit_num) | \
+							          ( (u64)(pool_block_address)))
 
 #if (computer_id__bit_num == 0)
 #  define __f2ptr__computer_id(f2p)                        0
@@ -80,7 +80,8 @@ struct funk2_memory_s {
 
 #define   __ptr__pool_block_address(pool_index, p)			\
   ((((u64)p) != (u64)0) ? ({						\
-      u64 return_value = ((u64)(((u64)(p)) - (u64)(__funk2.memory.pool[pool_index].dynamic_memory.ptr))); \
+      u64 return_value = ((u64)(((u64)(p)) - (u64)(__funk2.memory.pool[pool_index].global_f2ptr_offset))); \
+      return_value --;							\
       if (return_value & f2ptr_block__max_value) {			\
 	error(nil, "__ptr__pool_block_address error: not aligned.");	\
       }									\

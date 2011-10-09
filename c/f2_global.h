@@ -89,15 +89,15 @@ typedef                       u64       f2ptr;
 #define f2ptr__bit_num         32
 typedef                        u8       computer_id_t;
 #define computer_id__fstr      X8__fstr
-#define computer_id__bit_num    0
+#define computer_id__bit_num    1
 typedef                        u8       pool_index_t;
 #define pool_index__fstr       X8__fstr
 #define pool_index__bit_num     3
 typedef                       u32       pool_address_t;
 #define pool_address__fstr    X32__fstr
-#define pool_address__bit_num  29
+#define pool_address__bit_num  28
 
-#define f2ptr_block__bit_num    2
+#define f2ptr_block__bit_num    4
 #define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
 
 typedef struct f2ptr_s f2ptr_t;

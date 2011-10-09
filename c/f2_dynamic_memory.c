@@ -23,7 +23,7 @@
 
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
   this->byte_num = byte_num;
-  this->ptr      = f2__malloc
+  this->ptr      = f2__malloc(byte_num);
   if (from_ptr(this->ptr) == NULL) {
     perror("malloc");
     exit(-1);
@@ -37,7 +37,7 @@ void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
   this->ptr      = to_ptr(NULL);
 }
 
-void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t byte_num) {
+void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t minimum_byte_num) {
   new_memory->ptr = to_ptr(realloc(from_ptr(old_memory->ptr), byte_num));
   if (from_ptr(new_memory->ptr) == NULL) {
     status("f2dynamicmemory__realloc fatal: realloc error \"%s\".", strerror(errno));

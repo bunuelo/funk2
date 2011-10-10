@@ -378,14 +378,16 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
       //f2__print(cause, bug);
       f2fiber__value__set(fiber, cause, bug);
     }
+    
+    {
+      f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
+      f2cmutex__lock(exit_cmutex, cause);
+      f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "bug"));
+      f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
+      f2cmutex__unlock(exit_cmutex, cause);
+    }
+    
     resume_gc();
-  }
-  {
-    f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
-    f2cmutex__lock(exit_cmutex, cause);
-    f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "bug"));
-    f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
-    f2cmutex__unlock(exit_cmutex, cause);
   }
 }
 

@@ -34,7 +34,7 @@ typedef struct funk2_memory_s funk2_memory_t;
 #include "f2_user_thread_controller.h"
 #include "f2_never_delete_list.h"
 
-#define DEBUG_MEMORY 1
+//#define DEBUG_MEMORY 1
 
 struct funk2_memory_s {
   funk2_memorypool_t pool[memory_pool_num];

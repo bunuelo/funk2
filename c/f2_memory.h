@@ -90,7 +90,7 @@ struct funk2_memory_s {
       return_value;							\
     }) : (u64)0)
 
-#define __f2ptr_to_ptr(f2p)             ((((u64)(f2p)) !=       ((u64)0)) ? ((to_ptr((__f2ptr__pool_address(f2p)) + __funk2.memory.pool[__f2ptr__pool_index(f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
+#define __f2ptr_to_ptr(f2p)             ((((u64)(f2p)) !=       ((u64)0)) ? ((to_ptr(((u64)__f2ptr__pool_address((u64)f2p)) + __funk2.memory.pool[__f2ptr__pool_index((u64)f2p)].global_f2ptr_offset))) : (to_ptr(NULL)))
 #define   __ptr_to_f2ptr(pool_index, p) (((to_ptr(p))  != (to_ptr(NULL))) ?    ((u64)(f2ptr__new(0, pool_index, __ptr__pool_block_address(pool_index, p))))                              :   ((u64)0))
 
 #ifdef DEBUG_MEMORY_POINTERS

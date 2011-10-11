@@ -158,6 +158,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("****************************************************************");
   status("");
   
+  status("  sizeof(f2ptr_t)                    = " u64__fstr, (u64)(sizeof(f2ptr_t)));
   status("  sizeof(ptype_block_t)              = " u64__fstr, (u64)(sizeof(ptype_block_t)));
   status("  sizeof(ptype_simple_array_block_t) = " u64__fstr, (u64)(sizeof(ptype_simple_array_block_t)));
   status("");

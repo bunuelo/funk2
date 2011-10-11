@@ -508,7 +508,12 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   for (i = 0; i < memory_pool_num; i ++) {
     if (p >= this->pool[i].dynamic_memory.ptr &&
 	p <  this->pool[i].dynamic_memory.ptr + this->pool[i].total_global_memory) {
-      return f2ptr__new(0, i, ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset)));
+      u64 pool_address       = ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset));
+      u64 pool_block_address = pool_address >> f2ptr_block__bit_num;
+      if ((pool_block_address << f2ptr_block__bit_num) != pool_address) {
+	error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not block aligned.");
+      }
+      return f2ptr__new(0, i, pool_block_address);
     }
   }
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");

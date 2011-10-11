@@ -27,6 +27,7 @@
 boolean_t raw__cause_is_traced(f2ptr cause);
 f2ptr     raw__array__new(f2ptr cause, u64 length);
 f2ptr     raw__array__new_copy(f2ptr cause, u64 length, f2ptr init);
+f2ptr      f2__array__new(f2ptr cause, f2ptr lengths);
 f2ptr     raw__array__new_multidimensional(f2ptr cause, f2ptr lengths);
 f2ptr      f2__array__new_multidimensional(f2ptr cause, f2ptr lengths);
 boolean_t raw__array__is_type(f2ptr cause, f2ptr x);

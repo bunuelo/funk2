@@ -520,6 +520,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		if (! f2fiber__keep_undead(fiber, cause)) {
 		  f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
 		  if (f2cmutex__trylock(exit_cmutex, cause) == 0) {
+		    pause_gc();
 		    
 		    // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
 		    f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
@@ -541,6 +542,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 		    
 		    f2cmutex__unlock(exit_cmutex, cause);
+		    resume_gc();		    
 		  }
 		}
 	      }

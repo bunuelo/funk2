@@ -84,8 +84,8 @@ typedef unsigned char boolean_t;
 
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
-typedef                             u64       pool_address_t;
-#define pool_address__fstr          X64__fstr
+typedef                             u32       pool_address_t;
+#define pool_address__fstr          X32__fstr
 #define pool_address__bit_num        32
 #define pool_address__max_byte_num     ((1ull << pool_address__bit_num) - 1)
 

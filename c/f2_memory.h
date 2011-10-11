@@ -56,9 +56,9 @@ struct funk2_memory_s {
 #define f2ptr__pool_index__max_value         ((((u64)1)<<(f2ptr__pool_index__bit_num))         - 1)
 #define f2ptr__pool_block_address__max_value ((((u64)1)<<(f2ptr__pool_block_address__bit_num)) - 1)
 
-#define f2ptr__new(computer_id, pool_index, pool_block_address)  ((((u64)(computer_id)) << (f2ptr__pool_block_address__bit_num + f2ptr__pool_index__bit_num)) | \
-	    						          (((u64)(pool_index))  <<  f2ptr__pool_block_address__bit_num) | \
-							          ( (u64)(pool_block_address)))
+#define f2ptr__new(computer_id, pool_index, pool_block_address) ((f2ptr)((u64)(((u64)(computer_id)) << (f2ptr__pool_block_address__bit_num + f2ptr__pool_index__bit_num)) | \
+									 (u64)(((u64)(pool_index))  <<  f2ptr__pool_block_address__bit_num) | \
+									 (u64)( (u64)(pool_block_address))))
 
 #if (computer_id__bit_num == 0)
 #  define __f2ptr__computer_id(f2p)                        0

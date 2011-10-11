@@ -269,7 +269,9 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
   else if (command == __funk2.bytecode.bytecode__decrement__symbol)                  {f2__fiber__bytecode__decrement(                 fiber, bytecode, f2bytecode__arg0(bytecode, cause), f2bytecode__arg1(bytecode, cause));}
   
   else {
+    f2__fiber__print(cause, fiber, command);
     f2__fiber__print(cause, fiber, bytecode);
+    f2__fiber__print(cause, fiber, __funk2.bytecode.bytecode__block_enter__symbol);
     f2fiber__value__set(fiber, cause, f2larva__new(cause, 21, nil));
   }
   return boolean__false;

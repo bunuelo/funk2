@@ -3073,12 +3073,12 @@ f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2p
     
     assert_g_type(GTK_TYPE_WIDGET, gtk_widget);
     
-    u64 signal_name__length = raw__string__length(cause, signal_name);
-    u8* signal_name__str    = (u8*)alloca(signal_name__length + 1);
-    raw__string__str_copy(cause, signal_name, signal_name__str);
-    signal_name__str[signal_name__length] = 0;
+    u64 signal_name__utf8_length = raw__string__utf8_length(cause, signal_name);
+    u8* signal_name__utf8_str    = (u8*)alloca(signal_name__utf8_length + 1);
+    raw__string__str_copy(cause, signal_name, signal_name__utf8_str);
+    signal_name__utf8_str[signal_name__utf8_length] = 0;
     
-    funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__str, funk, args);
+    funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__utf8_str, funk, args);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);

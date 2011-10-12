@@ -430,7 +430,7 @@ boolean_t funk2_node_handler__node_event_id_is_known(funk2_node_handler_t* this,
 
 f2ptr f2__ip_addr__new(f2ptr cause, f2ptr b0, f2ptr b1, f2ptr b2, f2ptr b3) {
   f2ptr this = raw__array__new(cause, 5);
-  raw__array__elt__set(cause, this, 0, f2symbol__new(cause, strlen("ip_addr"), (u8*)"ip_addr"));
+  raw__array__elt__set(cause, this, 0, new__symbol(cause, "ip_addr"));
   raw__array__elt__set(cause, this, 1, b0);
   raw__array__elt__set(cause, this, 2, b1);
   raw__array__elt__set(cause, this, 3, b2);
@@ -444,7 +444,7 @@ f2ptr raw__ip_addr__new(f2ptr cause, u8* ip_addr) {
 
 f2ptr f2__client_id__new(f2ptr cause, f2ptr bind_device, f2ptr ip_addr, f2ptr port_num) {
   f2ptr this = raw__array__new(cause, 4);
-  raw__array__elt__set(cause, this, 0, f2symbol__new(cause, strlen("client_id"), (u8*)"client_id"));
+  raw__array__elt__set(cause, this, 0, new__symbol(cause, "client_id"));
   raw__array__elt__set(cause, this, 1, bind_device);
   raw__array__elt__set(cause, this, 2, ip_addr);
   raw__array__elt__set(cause, this, 3, port_num);
@@ -453,14 +453,14 @@ f2ptr f2__client_id__new(f2ptr cause, f2ptr bind_device, f2ptr ip_addr, f2ptr po
 
 f2ptr raw__client_id__new_from_client_id(f2ptr cause, client_id_t* client_id) {
   return f2__client_id__new(cause,
-			    f2symbol__new(cause, strlen((char*)(client_id->bind_device)), (u8*)(client_id->bind_device)),
+			    new__symbol(cause, client_id->bind_device),
 			    raw__ip_addr__new(cause, client_id->ip_addr),
 			    f2integer__new(cause, client_id->port_num));
 }
 
 f2ptr f2__funk2_node_info__new(f2ptr cause, f2ptr node_id, f2ptr computer_id, f2ptr client_id, f2ptr disconnected) {
   f2ptr this = raw__array__new(cause, 5);
-  raw__array__elt__set(cause, this, 0, f2symbol__new(cause, strlen("funk2_node_info"), (u8*)"funk2_node_info"));
+  raw__array__elt__set(cause, this, 0, new__symbol(cause, "funk2_node_info"));
   raw__array__elt__set(cause, this, 1, node_id);
   raw__array__elt__set(cause, this, 2, computer_id);
   raw__array__elt__set(cause, this, 3, client_id);
@@ -478,7 +478,7 @@ f2ptr f2__funk2_node_handler__known_node_info(f2ptr cause) {
 					       f2pointer__new(cause, node->node_id),
 					       f2integer__new(cause, node->computer_id),
 					       raw__client_id__new_from_client_id(cause, &(node->socket_client.client_id)),
-					       node->socket_client.socket.disconnected ? f2symbol__new(cause, strlen("disconnected"), (u8*)"disconnected") : nil),
+					       node->socket_client.socket.disconnected ? new__symbol(cause, "disconnected") : nil),
 		      seq);
     iter = iter->next;
   }

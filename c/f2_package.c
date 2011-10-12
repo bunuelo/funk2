@@ -679,19 +679,19 @@ def_pcfunk2(pathname__rename, old_filename, new_filename,
 
 
 f2ptr raw__getenv(f2ptr cause, f2ptr environment_variable) {
-  u64 environment_variable__length = raw__string__length(cause, environment_variable);
-  u8* environment_variable__str    = (u8*)from_ptr(f2__malloc(environment_variable__length + 1));
-  raw__string__str_copy(cause, environment_variable, environment_variable__str);
-  environment_variable__str[environment_variable__length] = 0;
+  u64 environment_variable__utf8_length = raw__string__utf8_length(cause, environment_variable);
+  u8* environment_variable__utf8_str    = (u8*)from_ptr(f2__malloc(environment_variable__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, environment_variable, environment_variable__utf8_str);
+  environment_variable__utf8_str[environment_variable__utf8_length] = 0;
   
-  char* environment_value = getenv((char*)environment_variable__str);
+  char* environment_value = getenv((char*)environment_variable__utf8_str);
   f2ptr result;
   if (environment_value == NULL) {
     result = nil;
   } else {
-    result =new__string(cause, environment_value);
+    result = new__string(cause, environment_value);
   }
-  f2__free(to_ptr(environment_variable__str));
+  f2__free(to_ptr(environment_variable__utf8_str));
   return result;
 }
 

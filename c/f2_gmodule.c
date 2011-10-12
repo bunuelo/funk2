@@ -195,11 +195,11 @@ u8* raw__gmodule__error() {
 }
 
 f2ptr f2__gmodule__error(f2ptr cause) {
-  u8* error_str = raw__gmodule__error();
-  if (error_str == NULL) {
+  u8* error_utf8_str = raw__gmodule__error();
+  if (error_utf8_str == NULL) {
     return nil;
   }
-  return f2string__new(cause, strlen((char*)error_str), error_str);
+  return new__string(cause, error_utf8_str);
 }
 def_pcfunk0(gmodule__error,
 	    "",

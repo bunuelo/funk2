@@ -80,9 +80,9 @@ void f2__nil__initialize() {
   
   f2ptr cause = initial_cause();
   
-  {char* str = "as-string"; __funk2.globalenv.object_type.nil_type.as__string__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "as-string"; __funk2.globalenv.object_type.nil_type.as__string__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(nil__as__string, this, cfunk); __funk2.globalenv.object_type.nil_type.as__string__funk = never_gc(cfunk);}
-  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.nil_type.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.nil_type.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(nil__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.nil_type.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }

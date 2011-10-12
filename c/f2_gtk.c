@@ -2674,12 +2674,12 @@ def_pcfunk3(gtk__pixbuf__new_from_rgba_data, width, height, rgba_data,
 f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    s64 filename__length = raw__string__length(cause, filename);
-    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-    raw__string__str_copy(cause, filename, filename__str);
-    filename__str[filename__length] = 0;
+    s64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+    u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+    filename__utf8_str[filename__utf8_length] = 0;
     GError*    g_error = NULL;
-    GdkPixbuf* pixbuf  = funk2_gtk__pixbuf__new_from_file(&(__funk2.gtk), filename__str, &g_error);
+    GdkPixbuf* pixbuf  = funk2_gtk__pixbuf__new_from_file(&(__funk2.gtk), filename__utf8_str, &g_error);
     f2ptr      this    = nil;
     if (pixbuf != NULL) {
       this = f2__gdk_pixbuf__new(cause, f2pointer__new(cause, to_ptr(pixbuf)));
@@ -2696,7 +2696,7 @@ f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
 															     new__symbol(cause, "gtk-error-message"), new__string(cause, g_error->message)))));
       }
     }
-    f2__free(to_ptr(filename__str));
+    f2__free(to_ptr(filename__utf8_str));
     return this;
   } else {
     return f2__gtk_not_supported_larva__new(cause);

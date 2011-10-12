@@ -970,7 +970,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__13_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(clause__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk = never_gc(cfunk);}
   
   
@@ -978,7 +978,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(wh_rank_shift_clause, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(wh_rank_shift_clause__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__funk = never_gc(cfunk);}
   
   
@@ -986,7 +986,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__18_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two, question);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(noun_group__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk = never_gc(cfunk);}
   
   
@@ -994,7 +994,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__9_slot(preposition_group, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(preposition_group__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk = never_gc(cfunk);}
   
   
@@ -1002,7 +1002,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__8_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(adjective_group__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk = never_gc(cfunk);}
   
   
@@ -1010,7 +1010,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__15_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_group__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk = never_gc(cfunk);}
   
   
@@ -1018,7 +1018,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__3_slot(combination_group, symbols, transitive, preposition);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(combination_group__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__funk = never_gc(cfunk);}
   
   
@@ -1026,7 +1026,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__3_slot(adjective_word, symbols, superlative, comparative);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(adjective_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__funk = never_gc(cfunk);}
   
   
@@ -1034,7 +1034,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__5_slot(adverb_word, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(adverb_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__funk = never_gc(cfunk);}
   
   
@@ -1042,7 +1042,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(binder_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(binder_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__funk = never_gc(cfunk);}
   
   
@@ -1050,7 +1050,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(classifier_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(classifier_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__funk = never_gc(cfunk);}
   
   
@@ -1058,7 +1058,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__12_slot(determiner_word, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(determiner_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__funk = never_gc(cfunk);}
   
   
@@ -1066,7 +1066,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__7_slot(noun_word, symbols, singular, plural, mass, possessive, time_unit, time_specific);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(noun_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk = never_gc(cfunk);}
   
   
@@ -1074,7 +1074,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__3_slot(number_word, symbols, singular, plural);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(number_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_number_word.new__funk = never_gc(cfunk);}
   
   
@@ -1082,7 +1082,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__5_slot(number_determiner_word, symbols, than_modifier, as_as_modifier, at_modifier, alone);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(number_determiner_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__funk = never_gc(cfunk);}
   
   
@@ -1090,7 +1090,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(ordinal_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(ordinal_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__funk = never_gc(cfunk);}
   
   
@@ -1098,7 +1098,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__3_slot(preposition_word, symbols, combination_first, combination_second);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(preposition_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__funk = never_gc(cfunk);}
   
   
@@ -1106,7 +1106,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__10_slot(pronoun_word, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(pronoun_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__funk = never_gc(cfunk);}
   
   
@@ -1114,7 +1114,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__3_slot(proper_noun_word, symbols, singular, plural);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(proper_noun_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__funk = never_gc(cfunk);}
   
   
@@ -1122,7 +1122,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(particle_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(particle_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__funk = never_gc(cfunk);}
   
   
@@ -1130,7 +1130,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(question_adjunct_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(question_adjunct_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__funk = never_gc(cfunk);}
   
   
@@ -1138,7 +1138,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(thing_pronoun_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(thing_pronoun_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__funk = never_gc(cfunk);}
   
   
@@ -1146,7 +1146,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__1_slot(infinitive_helper_word, symbols);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(infinitive_helper_word__new, cfunk);  __funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__funk = never_gc(cfunk);}
   
   
@@ -1154,7 +1154,7 @@ void f2__natural_language__initialize() {
   
   init_frame_object__23_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, ing, en, infinitive, past, present, Main, takes_particle, transitive, transitive_two, takes_to_object, takes_subject_to_object);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(verb_word__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk = never_gc(cfunk);}
   
   
@@ -1162,21 +1162,21 @@ void f2__natural_language__initialize() {
   
   init_frame_object__6_slot(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree_node__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "insert_after"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "insert_after"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_after, this, node, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk = never_gc(cfunk);}
-  {char* symbol_str = "insert_below_no_children"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "insert_below_no_children"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__insert_below_no_children, this, node, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk = never_gc(cfunk);}
-  {char* symbol_str = "add_child"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "add_child"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__add_child, this, node, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__funk = never_gc(cfunk);}
-  {char* symbol_str = "child_of_type_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "child_of_type_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__child_of_type_node, this, type, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__funk = never_gc(cfunk);}
-  {char* symbol_str = "containing_type_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "containing_type_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(parse_tree_node__containing_type_node, this, type, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__funk = never_gc(cfunk);}
-  {char* symbol_str = "containing_type_with_true_property_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "containing_type_with_true_property_node"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(parse_tree_node__containing_type_with_true_property_node, this, type, property, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__funk = never_gc(cfunk);}
-  {char* symbol_str = "containing_type_with_true_property-set"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "containing_type_with_true_property-set"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(parse_tree_node__containing_type_with_true_property__set, this, type, property, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__funk = never_gc(cfunk);}
   
   
@@ -1184,9 +1184,9 @@ void f2__natural_language__initialize() {
   
   init_frame_object__2_slot(parse_tree, root_node, current_node);
   
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(parse_tree__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__funk = never_gc(cfunk);}
   
   

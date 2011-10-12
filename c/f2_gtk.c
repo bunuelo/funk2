@@ -5624,12 +5624,12 @@ f2ptr raw__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f
     
     assert_g_type(GTK_TYPE_FILE_CHOOSER_DIALOG, gtk_this);
     
-    s64 current_name__length = raw__string__length(cause, current_name);
-    u8* current_name__str    = (u8*)from_ptr(f2__malloc(current_name__length + 1));
-    raw__string__str_copy(cause, current_name, current_name__str);
-    current_name__str[current_name__length] = 0;
-    funk2_gtk__file_chooser_dialog__set_current_name(&(__funk2.gtk), gtk_this, current_name__str);
-    f2__free(to_ptr(current_name__str));
+    s64 current_name__utf8_length = raw__string__utf8_length(cause, current_name);
+    u8* current_name__utf8_str    = (u8*)from_ptr(f2__malloc(current_name__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, current_name, current_name__utf8_str);
+    current_name__utf8_str[current_name__utf8_length] = 0;
+    funk2_gtk__file_chooser_dialog__set_current_name(&(__funk2.gtk), gtk_this, current_name__utf8_str);
+    f2__free(to_ptr(current_name__utf8_str));
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);

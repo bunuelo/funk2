@@ -482,7 +482,7 @@ def_pcfunk1(string__new_from_raw_c_string, x,
 // symbol
 
 f2ptr new__symbol(f2ptr cause, char* str) {
-  return f2symbol__new(cause, strlen(str), (u8*)(str));
+  return raw__symbol__new_from_utf8(cause, str);
 }
 
 // simple_array

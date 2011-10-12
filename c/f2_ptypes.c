@@ -3270,6 +3270,16 @@ def_pcfunk2(symbol__elt, this, index,
 	    return f2__symbol__elt(this_cause, this, index));
 
 
+f2ptr raw__symbol__new_from_utf8(f2ptr cause, char* utf8_string) {
+  u64                utf8_string__length = raw__utf8_string__length(utf8_string);
+  funk2_character_t* utf8_string__str    = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (utf8_string__length + 1)));
+  raw__utf8_string__str_copy(utf8_string, utf8_string__str);
+  f2ptr new = f2symbol__new(cause, utf8_string__length, utf8_string__str);
+  f2__free(to_ptr(utf8_string__str));
+  return new;
+}
+
+
 f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);

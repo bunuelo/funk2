@@ -1270,7 +1270,7 @@ u64 f2char__ch(f2ptr this, f2ptr cause);
 struct pcs_packet_payload_request__f2string__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   u64                                                length;
-  u8                                                 init[0];
+  funk2_character_t                                  init[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2string__new_s pcs_packet_payload_request__f2string__new_t;
 
@@ -1294,13 +1294,13 @@ struct pcs_respond__f2string__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2string__new_s pcs_respond__f2string__new_t;
 
-void send_packet__request__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
+void send_packet__request__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, funk2_character_t* init);
 void recv_packet__request__f2string__new(funk2_node_t* funk2_node, pcs_request__f2string__new_t* packet);
 void send_packet__respond__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2string__new(funk2_node_t* funk2_node, pcs_respond__f2string__new_t* packet);
 
-f2ptr funk2_node__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
-f2ptr f2string__new(f2ptr cause, u64 length, u8* init);
+f2ptr funk2_node__f2string__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, funk2_character_t* init);
+f2ptr f2string__new(f2ptr cause, u64 length, funk2_character_t* init);
 
 
 //  funk2_packet_type__pcs_request__f2string__length                           = 0x1E, //u64              (f2ptr cause, f2ptr this);
@@ -1362,7 +1362,7 @@ typedef struct pcs_request__f2string__elt_s pcs_request__f2string__elt_t;
 
 struct pcs_packet_payload_respond__f2string__elt_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u8                                                 elt;
+  funk2_character_t                                  elt;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_respond__f2string__elt_s pcs_packet_payload_respond__f2string__elt_t;
 
@@ -1374,11 +1374,11 @@ typedef struct pcs_respond__f2string__elt_s pcs_respond__f2string__elt_t;
 
 void send_packet__request__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 void recv_packet__request__f2string__elt(funk2_node_t* funk2_node, pcs_request__f2string__elt_t* packet);
-void send_packet__respond__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 elt);
+void send_packet__respond__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, funk2_character_t elt);
 void recv_packet__respond__f2string__elt(funk2_node_t* funk2_node, pcs_respond__f2string__elt_t* packet);
 
-u8 funk2_node__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
-u8 f2string__elt(f2ptr this, int index, f2ptr cause);
+funk2_character_t funk2_node__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
+funk2_character_t f2string__elt(f2ptr this, int index, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2string__str_copy                         = 0x21, //void             (f2ptr this, f2ptr cause, u8* str);
@@ -1401,7 +1401,8 @@ typedef struct pcs_request__f2string__str_copy_s pcs_request__f2string__str_copy
 
 struct pcs_packet_payload_respond__f2string__str_copy_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u8                                                 str[0];
+  u64                                                length;
+  funk2_character_t                                  str[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_respond__f2string__str_copy_s pcs_packet_payload_respond__f2string__str_copy_t;
 
@@ -1413,11 +1414,11 @@ typedef struct pcs_respond__f2string__str_copy_s pcs_respond__f2string__str_copy
 
 void send_packet__request__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2string__str_copy(funk2_node_t* funk2_node, pcs_request__f2string__str_copy_t* packet);
-void send_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8* str);
+void send_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, funk2_character_t* str);
 void recv_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, pcs_respond__f2string__str_copy_t* packet);
 
-void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8* str);
-void f2string__str_copy(f2ptr this, f2ptr cause, u8* str);
+void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, funk2_character_t* str);
+void f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str);
 
 
 //  funk2_packet_type__pcs_request__f2string__eq_hash_value                       = 0x22, //int              (f2ptr cause, f2ptr this);
@@ -1466,7 +1467,7 @@ int f2string__eq_hash_value(f2ptr cause, f2ptr this);
 struct pcs_packet_payload_request__f2symbol__new_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
   u64                                                length;
-  u8                                                 init[0];
+  funk2_character_t                                  init[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_request__f2symbol__new_s pcs_packet_payload_request__f2symbol__new_t;
 
@@ -1490,13 +1491,13 @@ struct pcs_respond__f2symbol__new_s {
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2symbol__new_s pcs_respond__f2symbol__new_t;
 
-void send_packet__request__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
+void send_packet__request__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, funk2_character_t* init);
 void recv_packet__request__f2symbol__new(funk2_node_t* funk2_node, pcs_request__f2symbol__new_t* packet);
 void send_packet__respond__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
 void recv_packet__respond__f2symbol__new(funk2_node_t* funk2_node, pcs_respond__f2symbol__new_t* packet);
 
-f2ptr funk2_node__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, u8* init);
-f2ptr f2symbol__new(f2ptr cause, u64 length, u8* init);
+f2ptr funk2_node__f2symbol__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, funk2_character_t* init);
+f2ptr f2symbol__new(f2ptr cause, u64 length, funk2_character_t* init);
 
 
 //  funk2_packet_type__pcs_request__f2symbol__length                           = 0x24, //u64              (f2ptr cause, f2ptr this);
@@ -1598,7 +1599,7 @@ typedef struct pcs_request__f2symbol__elt_s pcs_request__f2symbol__elt_t;
 
 struct pcs_packet_payload_respond__f2symbol__elt_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u8                                                 elt;
+  funk2_character_t                                  elt;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_respond__f2symbol__elt_s pcs_packet_payload_respond__f2symbol__elt_t;
 
@@ -1610,11 +1611,11 @@ typedef struct pcs_respond__f2symbol__elt_s pcs_respond__f2symbol__elt_t;
 
 void send_packet__request__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 void recv_packet__request__f2symbol__elt(funk2_node_t* funk2_node, pcs_request__f2symbol__elt_t* packet);
-void send_packet__respond__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 elt);
+void send_packet__respond__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, funk2_character_t elt);
 void recv_packet__respond__f2symbol__elt(funk2_node_t* funk2_node, pcs_respond__f2symbol__elt_t* packet);
 
-u8 funk2_node__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
-u8 f2symbol__elt(f2ptr this, int index, f2ptr cause);
+funk2_character_t funk2_node__f2symbol__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
+funk2_character_t f2symbol__elt(f2ptr this, int index, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2symbol__str_copy                         = 0x27, //void             (f2ptr this, f2ptr cause, u8* str);
@@ -1637,7 +1638,7 @@ typedef struct pcs_request__f2symbol__str_copy_s pcs_request__f2symbol__str_copy
 
 struct pcs_packet_payload_respond__f2symbol__str_copy_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
-  u8                                                 str[0];
+  funk2_character_t                                  str[0];
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_respond__f2symbol__str_copy_s pcs_packet_payload_respond__f2symbol__str_copy_t;
 
@@ -1649,11 +1650,11 @@ typedef struct pcs_respond__f2symbol__str_copy_s pcs_respond__f2symbol__str_copy
 
 void send_packet__request__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 void recv_packet__request__f2symbol__str_copy(funk2_node_t* funk2_node, pcs_request__f2symbol__str_copy_t* packet);
-void send_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8* str);
+void send_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, funk2_character_t* str);
 void recv_packet__respond__f2symbol__str_copy(funk2_node_t* funk2_node, pcs_respond__f2symbol__str_copy_t* packet);
 
-void funk2_node__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8* str);
-void f2symbol__str_copy(f2ptr cause, f2ptr this, u8* str);
+void funk2_node__f2symbol__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, funk2_character_t* str);
+void f2symbol__str_copy(f2ptr cause, f2ptr this, funk2_character_t* str);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__new                               = 0x28, //f2ptr            (f2ptr cause, u64 length, byte* bytes);

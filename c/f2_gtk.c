@@ -2352,9 +2352,9 @@ def_pcfunk1(gtk__hbox__new, spacing,
 f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    u64 label__length = raw__string__length(cause, label);
+    u64 label__length = raw__string__utf8_length(cause, label);
     u8* label__str    = (u8*)alloca(label__length + 1);
-    raw__string__str_copy(cause, label, label__str);
+    raw__string__utf8_str_copy(cause, label, label__str);
     label__str[label__length] = 0;
     
     GtkWidget* button = funk2_gtk__button__new_with_label(&(__funk2.gtk), label__str);

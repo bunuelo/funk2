@@ -24,40 +24,40 @@
 void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   char* symbol_str;
 
-  symbol_str = "globalenv:f2_globalenv.c";              this->f2_globalenv_c__cause__symbol              = f2symbol__new(initial_cause(), strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "globalenv:f2_globalenv.c";              this->f2_globalenv_c__cause__symbol              = new__symbol(initial_cause(), symbol_str);
   
   f2ptr cause = f2_globalenv_c__cause__new(initial_cause());
   
-  symbol_str = "globalenv:f2_bytecodes.c";              this->f2_bytecodes_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_ansi.c";                   this->f2_ansi_c__cause__symbol                   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_compile.c";                this->f2_compile_c__cause__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_gmodule.c";                this->f2_gmodule_c__cause__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_load.c";                   this->f2_load_c__cause__symbol                   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_memory.c";                 this->f2_memory_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_primfunks.c";              this->f2_primfunks_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_primobject_environment.c"; this->f2_primobject_environment_c__cause__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_primobject_frame.c";       this->f2_primobject_frame_c__cause__symbol       = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_primobject_ptypehash.c";   this->f2_primobject_ptypehash_c__cause__symbol   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_primobjects.c";            this->f2_primobjects_c__cause__symbol            = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_print.c";                  this->f2_print_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_processor.c";              this->f2_processor_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_pthread.c";                this->f2_pthread_c__cause__symbol                = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_ptypes.c";                 this->f2_ptypes_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_reader.c";                 this->f2_reader_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_redblacktree.c";           this->f2_redblacktree_c__cause__symbol           = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_repl.c";                   this->f2_repl_c__cause__symbol                   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_scheduler.c";              this->f2_scheduler_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_signal.c";                 this->f2_signal_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_socket.c";                 this->f2_socket_c__cause__symbol                 = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_swapmemory.c";             this->f2_swapmemory_c__cause__symbol             = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_fiber.c";                  this->f2_fiber_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_time.c";                   this->f2_time_c__cause__symbol                   = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_trace.c";                  this->f2_trace_c__cause__symbol                  = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:f2_serialize.c";              this->f2_serialize_c__cause__symbol              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "globalenv:funk2.c";                     this->funk2_c__cause__symbol                     = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "globalenv:f2_bytecodes.c";              this->f2_bytecodes_c__cause__symbol              = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_ansi.c";                   this->f2_ansi_c__cause__symbol                   = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_compile.c";                this->f2_compile_c__cause__symbol                = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_gmodule.c";                this->f2_gmodule_c__cause__symbol                = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_load.c";                   this->f2_load_c__cause__symbol                   = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_memory.c";                 this->f2_memory_c__cause__symbol                 = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_primfunks.c";              this->f2_primfunks_c__cause__symbol              = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_primobject_environment.c"; this->f2_primobject_environment_c__cause__symbol = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_primobject_frame.c";       this->f2_primobject_frame_c__cause__symbol       = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_primobject_ptypehash.c";   this->f2_primobject_ptypehash_c__cause__symbol   = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_primobjects.c";            this->f2_primobjects_c__cause__symbol            = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_print.c";                  this->f2_print_c__cause__symbol                  = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_processor.c";              this->f2_processor_c__cause__symbol              = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_pthread.c";                this->f2_pthread_c__cause__symbol                = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_ptypes.c";                 this->f2_ptypes_c__cause__symbol                 = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_reader.c";                 this->f2_reader_c__cause__symbol                 = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_redblacktree.c";           this->f2_redblacktree_c__cause__symbol           = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_repl.c";                   this->f2_repl_c__cause__symbol                   = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_scheduler.c";              this->f2_scheduler_c__cause__symbol              = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_signal.c";                 this->f2_signal_c__cause__symbol                 = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_socket.c";                 this->f2_socket_c__cause__symbol                 = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_swapmemory.c";             this->f2_swapmemory_c__cause__symbol             = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_fiber.c";                  this->f2_fiber_c__cause__symbol                  = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_time.c";                   this->f2_time_c__cause__symbol                   = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_trace.c";                  this->f2_trace_c__cause__symbol                  = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:f2_serialize.c";              this->f2_serialize_c__cause__symbol              = new__symbol(cause, symbol_str);
+  symbol_str = "globalenv:funk2.c";                     this->funk2_c__cause__symbol                     = new__symbol(cause, symbol_str);
 
-  symbol_str = "t";                                     this->true__symbol                               = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
-  symbol_str = "quote";                                 this->quote__symbol                              = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);
+  symbol_str = "t";                                     this->true__symbol                               = new__symbol(cause, symbol_str);
+  symbol_str = "quote";                                 this->quote__symbol                              = new__symbol(cause, symbol_str);
   
   this->backquote__list__symbol        = f2symbol__new(cause, strlen("backquote-list"),        (u8*)"backquote-list");
   this->backquote__list_append__symbol = f2symbol__new(cause, strlen("backquote-list_append"), (u8*)"backquote-list_append");

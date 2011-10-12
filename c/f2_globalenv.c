@@ -99,39 +99,39 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   
   f2__primobject__stream__reinitialize_globalvars();
   
-  this->stdin_stream__symbol  = f2symbol__new(cause, strlen("stdin"), (u8*)"stdin");
+  this->stdin_stream__symbol  = new__symbol(cause, "stdin");
   this->stdin_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDIN_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
   
-  this->stdout_stream__symbol  = f2symbol__new(cause, strlen("stdout"), (u8*)"stdout");
+  this->stdout_stream__symbol  = new__symbol(cause, "stdout");
   this->stdout_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDOUT_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stdout_stream__symbol, this->stdout_stream);
   
-  this->stderr_stream__symbol  = f2symbol__new(cause, strlen("stderr"), (u8*)"stderr");
+  this->stderr_stream__symbol  = new__symbol(cause, "stderr");
   this->stderr_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDERR_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stderr_stream__symbol, this->stderr_stream);
   
   this->type__symbol = new__symbol(cause, "type");
   
-  this->trace_all_compiles__symbol  = f2symbol__new(cause, strlen("-trace_all_compiles-"),  (u8*)"-trace_all_compiles-");
+  this->trace_all_compiles__symbol  = new__symbol(cause, "-trace_all_compiles-");
   
-  this->create_event__symbol = f2symbol__new(cause, strlen("create_event"), (u8*)"create_event");
-  this->read_event__symbol   = f2symbol__new(cause, strlen("read_event"),   (u8*)"read_event");
-  this->write_event__symbol  = f2symbol__new(cause, strlen("write_event"),  (u8*)"write_event");
+  this->create_event__symbol = new__symbol(cause, "create_event");
+  this->read_event__symbol   = new__symbol(cause, "read_event");
+  this->write_event__symbol  = new__symbol(cause, "write_event");
   
-  this->ptype_integer__symbol          = f2symbol__new(cause, strlen("ptype_integer"),          (u8*)"ptype_integer");
-  this->ptype_double__symbol           = f2symbol__new(cause, strlen("ptype_double"),           (u8*)"ptype_double");
-  this->ptype_float__symbol            = f2symbol__new(cause, strlen("ptype_float"),            (u8*)"ptype_float");
-  this->ptype_pointer__symbol          = f2symbol__new(cause, strlen("ptype_pointer"),          (u8*)"ptype_pointer");
-  this->ptype_scheduler_cmutex__symbol = f2symbol__new(cause, strlen("ptype_scheduler_cmutex"), (u8*)"ptype_scheduler_cmutex");
-  this->ptype_cmutex__symbol           = f2symbol__new(cause, strlen("ptype_cmutex"),           (u8*)"ptype_cmutex");
-  this->ptype_char__symbol             = f2symbol__new(cause, strlen("ptype_char"),             (u8*)"ptype_char");
-  this->ptype_string__symbol           = f2symbol__new(cause, strlen("ptype_string"),           (u8*)"ptype_string");
-  this->ptype_symbol__symbol           = f2symbol__new(cause, strlen("ptype_symbol"),           (u8*)"ptype_symbol");
-  this->ptype_chunk__symbol            = f2symbol__new(cause, strlen("ptype_chunk"),            (u8*)"ptype_chunk");
-  this->ptype_simple_array__symbol     = f2symbol__new(cause, strlen("ptype_simple_array"),     (u8*)"ptype_simple_array");
-  this->ptype_traced_array__symbol     = f2symbol__new(cause, strlen("ptype_traced_array"),     (u8*)"ptype_traced_array");
-  this->ptype_larva__symbol            = f2symbol__new(cause, strlen("ptype_larva"),            (u8*)"ptype_larva");
+  this->ptype_integer__symbol          = new__symbol(cause, "ptype_integer");
+  this->ptype_double__symbol           = new__symbol(cause, "ptype_double");
+  this->ptype_float__symbol            = new__symbol(cause, "ptype_float");
+  this->ptype_pointer__symbol          = new__symbol(cause, "ptype_pointer");
+  this->ptype_scheduler_cmutex__symbol = new__symbol(cause, "ptype_scheduler_cmutex");
+  this->ptype_cmutex__symbol           = new__symbol(cause, "ptype_cmutex");
+  this->ptype_char__symbol             = new__symbol(cause, "ptype_char");
+  this->ptype_string__symbol           = new__symbol(cause, "ptype_string");
+  this->ptype_symbol__symbol           = new__symbol(cause, "ptype_symbol");
+  this->ptype_chunk__symbol            = new__symbol(cause, "ptype_chunk");
+  this->ptype_simple_array__symbol     = new__symbol(cause, "ptype_simple_array");
+  this->ptype_traced_array__symbol     = new__symbol(cause, "ptype_traced_array");
+  this->ptype_larva__symbol            = new__symbol(cause, "ptype_larva");
   
   this->get__symbol     = new__symbol(cause, "get");
   this->set__symbol     = new__symbol(cause, "set");

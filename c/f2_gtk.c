@@ -3986,14 +3986,14 @@ f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr te
   if (&(__funk2.gtk.initialized_successfully)) {
     GtkTextIter gtk_text_iter;
     raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
-    u64 text__length = raw__string__length(cause, text);
-    u8* text__str    = (u8*)alloca(text__length + 1);
-    raw__string__str_copy(cause, text, text__str);
-    text__str[text__length] = 0;
+    u64 text__utf8_length = raw__string__utf8_length(cause, text);
+    u8* text__utf8_str    = (u8*)alloca(text__utf8_length + 1);
+    raw__string__utf8_str_copy(cause, text, text__utf8_str);
+    text__utf8_str[text__utf8_length] = 0;
     
     GtkTextIter mstart;
     GtkTextIter mend;
-    boolean_t   found = funk2_gtk__text_iter__forward_search(&(__funk2.gtk), &gtk_text_iter, text__str, &mstart, &mend);
+    boolean_t   found = funk2_gtk__text_iter__forward_search(&(__funk2.gtk), &gtk_text_iter, text__utf8_str, &mstart, &mend);
     if (! found) {
       return nil;
     }

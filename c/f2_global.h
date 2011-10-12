@@ -29,7 +29,9 @@
 #include "f2_debug_macros.h"
 #include "f2_system_headers.h"
 
-typedef unsigned int  uint;
+typedef unsigned int uint;
+
+typedef u32 funk2_character_t;
 
 #ifndef F2__APPLE
 typedef unsigned char boolean_t;
@@ -106,8 +108,6 @@ typedef                             u32       pool_block_address_t;
 #define f2ptr_block__bit_num   (pool_address__bit_num - pool_block_address__bit_num)
 #define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
 #define f2ptr_block__max_value ((1ull << f2ptr_block__bit_num) - 1)
-
-
 
 
 typedef struct f2ptr_s f2ptr_t;

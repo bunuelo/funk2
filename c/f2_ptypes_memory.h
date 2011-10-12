@@ -141,8 +141,6 @@ funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 #define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
-typedef u32 funk2_character_t;
-
 // character
 
 struct ptype_char_block_s {

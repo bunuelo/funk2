@@ -61,7 +61,7 @@ f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
   if (new_path_utf8_str == NULL) {
     return nil;
   }
-  f2ptr new_path = new__string(cause, new_path_utf8_str);
+  f2ptr new_path = new__string(cause, (char*)new_path_utf8_str);
   free(new_path_utf8_str);
   return new_path;
 }

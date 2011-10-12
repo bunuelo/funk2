@@ -245,8 +245,8 @@ f2ptr f2__expression_not_funkable__exception__new(f2ptr cause, f2ptr funktion) {
 void unrecognized_bytecode_register__error(f2ptr fiber, f2ptr cause, char* bytecode_name, f2ptr reg) {
   char reg_utf8_str[1024];
   if(raw__symbol__is_type(cause, reg)) {
-    f2symbol__utf8_str_copy(reg, cause, (u8*)reg_utf8_str);
-    reg_utf8_str[raw__symbol__utf8_length(reg, cause)] = (u8)0;
+    raw__symbol__utf8_str_copy(cause, reg, (u8*)reg_utf8_str);
+    reg_utf8_str[raw__symbol__utf8_length(cause, reg)] = (u8)0;
   } else {
     sprintf(reg_utf8_str, "<not symbolic>");
   }

@@ -456,13 +456,26 @@ def_pcfunk1(pathname__scan_for_filenames, pathname,
 	    "Scans a directory name and returns all filenames.",
 	    return f2__pathname__scan_for_filenames(this_cause, pathname));
 
+s64 funk2_character__strcmp(funk2_character_t* this, funk2_character_t* that) {
+  u64 index;
+  for (index = 0; this[index] != 0 && that[index] != 0; index ++) {
+    if (this[index] != that[index]) {
+      return that[index] - this[index];
+    }
+  }
+  if (this[index] != that[index]) {
+    return that[index] - this[index];
+  }
+  return 0;
+}
+
 f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname, f2ptr extension) {
   assert_argument_type(string, pathname);
   assert_argument_type(string, extension);
   f2ptr filenames = assert_value(f2__pathname__scan_for_filenames(cause, pathname));
   
-  u64 extension__length = raw__string__length(cause, extension);
-  u8* extension__str    = (u8*)from_ptr(f2__malloc(extension__length + 1));
+  u64                extension__length = raw__string__length(cause, extension);
+  funk2_character_t* extension__str    = (funk2_character_t*)from_ptr(f2__malloc((extension__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, extension, extension__str);
   extension__str[extension__length] = 0;
   
@@ -472,13 +485,23 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
     while (iter) {
       f2ptr filename = f2__cons__car(cause, iter);
       
-      u64 filename__length = raw__string__length(cause, filename);
-      u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
+      u64                filename__length = raw__string__length(cause, filename);
+      funk2_character_t* filename__str    = (funk2_character_t*)from_ptr(f2__malloc((filename__length + 1) * sizeof(funk2_character_t)));
       raw__string__str_copy(cause, filename, filename__str);
       filename__str[filename__length] = 0;
       
-      char* rindex_ptr = rindex((char*)filename__str, '.');
-      if ((rindex_ptr != NULL) && (strcmp((char*)extension__str, rindex_ptr + 1) == 0)) {
+      u64 filename__last_period_index = -1;
+      {
+	s64 index;
+	for (index = filename__length - 1; index >= 0; index --) {
+	  if (filename__str[index] == (funk2_character_t)'.') {
+	    filename__last_period_index = index;
+	    break;
+	  }
+	}
+      }
+      funk2_character_t* rindex_ptr = (filename__last_period_index != -1) ? filename__str + filename__last_period_index : NULL;
+      if ((rindex_ptr != NULL) && (funk2_character__strcmp(extension__str, rindex_ptr + 1) == 0)) {
 	f2ptr matching_filename = filename;
 	matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);
       }

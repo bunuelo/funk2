@@ -22,8 +22,8 @@
 #include "funk2.h"
 
 FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
-  int   utf8_length = raw__string__utf8_length(cause, filename);
-  char* utf8_str    = (char*)from_ptr(f2__malloc(utf8_length + 1));
+  u64 utf8_length = raw__string__utf8_length(cause, filename);
+  u8* utf8_str    = (char*)from_ptr(f2__malloc(utf8_length + 1));
   raw__string__utf8_str_copy(cause, filename, utf8_str);
   utf8_str[utf8_length] = 0;
   FILE* retval = fopen(utf8_str, "r");

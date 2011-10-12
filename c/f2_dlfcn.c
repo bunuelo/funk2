@@ -109,11 +109,11 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
   assert_argument_type(pointer, handle);
   assert_argument_type(symbol,  symbol);
   ptr raw_handle = f2pointer__p(handle, cause);
-  int symbol__length = f2symbol__length(symbol, cause);
-  u8* raw_symbol = (u8*)alloca(symbol__length + 1);
-  f2symbol__str_copy(symbol, cause, raw_symbol);
-  raw_symbol[symbol__length] = 0;
-  ptr result = raw__dlfcn__dlsym(raw_handle, raw_symbol);
+  u64 symbol__utf8_length = raw__symbol__utf8_length(cause, symbol);
+  u8* symbol__utf8_str    = (u8*)alloca(symbol__utf8_length + 1);
+  raw__symbol__str_copy(cause, symbol, symbol__utf8_str);
+  symbol__utf8_str[symbol__utf8_length] = 0;
+  ptr result = raw__dlfcn__dlsym(raw_handle, symbol__utf8_str);
   if (result == to_ptr(NULL)) {
     return nil;
   }

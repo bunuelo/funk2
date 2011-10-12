@@ -5132,7 +5132,7 @@ f2ptr raw__gtk__frame__new(f2ptr cause, f2ptr label) {
     if (label) {
       label__utf8_length = raw__string__utf8_length(cause, label);
       label__utf8_str    = (u8*)alloca(label__utf8_length + 1);
-      raw__string__str_copy(cause, label, label__utf8_str);
+      raw__string__utf8_str_copy(cause, label, label__utf8_str);
       label__utf8_str[label__utf8_length] = 0;
     } else {
       label__utf8_length = 0;

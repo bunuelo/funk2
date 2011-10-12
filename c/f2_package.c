@@ -378,13 +378,23 @@ f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  char* last_slash = rindex((char*)this__str, '/');
+  s64 last_slash_index = -1;
+  {
+    s64 index;
+    for (index = this__length - 1; index >= 0; index --) {
+      if (this__str[index] == (funk2_character_t)'/') {
+	last_slash_index = index;
+	break;
+      }
+    }
+  }
+  funk2_character_t* last_slash = (last_slash_index == -1) ? NULL : this__str + last_slash_index;
   if (last_slash) {
     last_slash[1] = 0;
   } else {
     this__str[0] = 0;
   }
-  f2ptr result = new__string(cause, (char*)this__str);
+  f2ptr result = new__funk2_string(cause, this__str);
   f2__free(to_ptr(this__str));
   return result;
 }

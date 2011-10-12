@@ -453,7 +453,7 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   def_pcfunk1(name##__type, x, "Returns the symbol `" #name ".", return f2__##name##__type(this_cause, x)); \
   									\
   f2ptr f2##name##__primobject_type__new(f2ptr cause) {			\
-    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("primobject"), (u8*)"primobject"), nil)); \
+    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "primobject"), nil)); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), __funk2.globalenv.object_type.primobject.primobject_type_##name.is_type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    __funk2.globalenv.object_type.primobject.primobject_type_##name.type__funk); \
     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     __funk2.globalenv.object_type.primobject.primobject_type_##name.new__funk); \
@@ -1223,11 +1223,11 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 #define tostring(x) stringify(x)
 
 #define initialize_primobject_funk__0_arg(name, funk_name) \
-  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = new__symbol(cause, symbol_str);} \
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(name##__##funk_name, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
 
 #define initialize_primobject_funk__1_arg(name, funk_name, arg_1) \
-  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {char* symbol_str = #funk_name; __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = new__symbol(cause, symbol_str);} \
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(name##__##funk_name, this, arg_1, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = never_gc(cfunk);}
 
 

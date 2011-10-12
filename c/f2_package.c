@@ -606,14 +606,14 @@ f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
 
 f2ptr f2__pathname__exists(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
-  s64 filename__length = raw__string__length(cause, filename);
-  u8* filename__string = (u8*)from_ptr(f2__malloc(filename__length + 1));
-  raw__string__str_copy(cause, filename, filename__string);
-  filename__string[filename__length] = 0;
+  s64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+  u8* filename__utf8_string = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, filename, filename__utf8_string);
+  filename__utf8_string[filename__utf8_length] = 0;
   
-  f2ptr result = raw__pathname__exists(cause, filename__string);
+  f2ptr result = raw__pathname__exists(cause, filename__utf8_string);
   
-  f2__free(to_ptr(filename__string));
+  f2__free(to_ptr(filename__utf8_string));
   return result;
 }
 def_pcfunk1(pathname__exists, filename,

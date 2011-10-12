@@ -313,6 +313,10 @@ f2ptr  f2__string__eq_hash_value(f2ptr cause, f2ptr this);
 boolean_t raw__string__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__string__equals(f2ptr cause, f2ptr this, f2ptr that);
 
+u64  raw__string__utf8_length  (f2ptr cause, f2ptr this);
+void raw__string__utf8_str_copy(f2ptr cause, f2ptr this, u8* utf8_str);
+
+
 // symbol
 
 f2ptr             pfunk2__f2symbol__new(f2ptr cause, u64 length, funk2_character_t* init);

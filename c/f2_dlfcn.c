@@ -91,7 +91,7 @@ f2ptr f2__dlfcn__dlerror(f2ptr cause) {
   if (str == NULL) {
     return nil;
   }
-  return f2string__new(cause, strlen((char*)str), str);
+  return new__string(cause, str);
 }
 def_pcfunk0(dlfcn__dlerror,
 	    "",

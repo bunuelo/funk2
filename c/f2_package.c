@@ -409,14 +409,14 @@ def_pcfunk1(pathname__directory_pathname, this,
 
 f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
   assert_argument_type(string, pathname);
-  u64 pathname__length = raw__string__length(cause, pathname);
-  u8* pathname__str    = (u8*)from_ptr(f2__malloc(pathname__length + 1));
-  raw__string__str_copy(cause, pathname, pathname__str);
-  pathname__str[pathname__length] = 0;
+  u64 pathname__utf8_length = raw__string__utf8_length(cause, pathname);
+  u8* pathname__utf8_str    = (u8*)from_ptr(f2__malloc(pathname__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, pathname, pathname__utf8_str);
+  pathname__utf8_str[pathname__utf8_length] = 0;
   
   f2ptr result = nil;
   {
-    DIR* dirp = opendir((char*)pathname__str);
+    DIR* dirp = opendir((char*)pathname__utf8_str);
     if (dirp == NULL) {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "pathname-scan_for_filenames_by_extension"));
@@ -449,7 +449,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
       result = absolute_filenames;
     }
   }
-  f2__free(to_ptr(pathname__str));
+  f2__free(to_ptr(pathname__utf8_str));
   return result;
 }
 def_pcfunk1(pathname__scan_for_filenames, pathname,

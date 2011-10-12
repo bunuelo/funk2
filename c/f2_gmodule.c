@@ -139,11 +139,11 @@ u8* raw__gmodule__name(ptr module) {
 f2ptr f2__gmodule__name(f2ptr cause, f2ptr module) {
   assert_argument_type(pointer, module);
   ptr raw_module = f2pointer__p(module, cause);
-  u8* module_name_str = raw__gmodule__name(raw_module);
-  if (module_name_str == NULL) {
+  u8* module_name_utf8_str = raw__gmodule__name(raw_module);
+  if (module_name_utf8_str == NULL) {
     return nil;
   }
-  return f2string__new(cause, strlen((char*)module_name_str), module_name_str);
+  return new__string(cause, module_name_utf8_str);
 }
 def_pcfunk1(gmodule__name, module,
 	    "",

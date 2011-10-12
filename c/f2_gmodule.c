@@ -113,11 +113,11 @@ f2ptr f2__gmodule__symbol(f2ptr cause, f2ptr module, f2ptr symbol_name) {
   assert_argument_type(pointer, module);
   assert_argument_type(string,  symbol_name);
   ptr raw_module = f2pointer__p(module, cause);
-  int symbol_name__length = f2string__length(symbol_name, cause);
-  u8* symbol_name__str    = (u8*)alloca(symbol_name__length + 1);
-  f2string__str_copy(symbol_name, cause, symbol_name__str);
-  symbol_name__str[symbol_name__length] = 0;
-  ptr symbol_pointer = raw__gmodule__symbol(raw_module, symbol_name__str);
+  int symbol_name__utf8_length = raw__string__utf8_length(cause, symbol_name);
+  u8* symbol_name__utf8_str    = (u8*)alloca(symbol_name__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, symbol_name, symbol_name__utf8_str);
+  symbol_name__utf8_str[symbol_name__utf8_length] = 0;
+  ptr symbol_pointer = raw__gmodule__symbol(raw_module, symbol_name__utf8_str);
   if (symbol_pointer == to_ptr(NULL)) {
     return nil;
   }

@@ -338,12 +338,12 @@ def_pcfunk1(pathnamelist__concat, this,
 	    return f2__pathnamelist__concat(this_cause, this));
 
 boolean_t raw__pathname__is_absolute(f2ptr cause, f2ptr this) {
-  u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  u64                this__length = raw__string__length(cause, this);
+  funk2_character_t* this__str    = (u8*)from_ptr(f2__malloc((this__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  boolean_t result = (this__str[0] == '/');
+  boolean_t result = (this__str[0] == (funk2_character_t)'/');
   
   f2__free(to_ptr(this__str));
   return result;

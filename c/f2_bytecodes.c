@@ -1979,7 +1979,7 @@ int f2__fiber__bytecode__newenv__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f
   f2ptr new_env    = f2environment__new(cause,
 					f2__frame__new(cause, nil),
 					parent_env,
-					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
+					new__symbol(cause, "push-env"));
   release__assert(new_env, fiber, "new_env is nil");
   release__assert(raw__environment__is_type(cause, new_env), fiber, "new_env is not environment");
   f2fiber__env__set(fiber, cause, new_env);

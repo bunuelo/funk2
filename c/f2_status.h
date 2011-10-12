@@ -33,6 +33,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...);
 // to disable status, there is a boolean global variable in f2_status.c
 #define status(msg, rest...) funk2_status(__FILE__, __LINE__, msg, ## rest)
 
+ssize_t raw__stream__write_character(f2ptr cause, f2ptr stream, funk2_character_t ch);
 ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...);
 ssize_t writef(int fd, char* msg, ...);
 

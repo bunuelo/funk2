@@ -2529,7 +2529,7 @@ f2ptr raw__optimize_fiber__call_bytecode__newenv__no_increment_pc(f2ptr cause, f
   f2ptr new_env    = f2environment__new(cause,
 					f2__frame__new(cause, nil),
 					parent_env,
-					f2symbol__new(cause, strlen("push-env"), (u8*)"push-env"));
+					new__symbol(cause, "push-env"));
   f2__optimize_fiber__env__set(cause, this, new_env);
   return nil;
 }
@@ -4830,7 +4830,7 @@ void f2__optimize__initialize() {
 			       sequence,
 			       execution_count);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_bytecode.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_bytecode.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_bytecode__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_bytecode.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
@@ -4842,11 +4842,11 @@ void f2__optimize__initialize() {
   
   f2__primcfunk__init__1(optimize_chunk__new_from_bytecodes, these);
   
-  {char* symbol_str = "as-bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "as-bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(optimize_chunk__as__bytecodes, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk = never_gc(cfunk);}
-  {char* symbol_str = "possible_optimized_funk_bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "possible_optimized_funk_bytecodes"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_chunk__possible_optimized_funk_bytecodes, this, funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
@@ -4859,7 +4859,7 @@ void f2__optimize__initialize() {
 			       true_chunk,
 			       false_chunk);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_transition__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
@@ -4871,7 +4871,7 @@ void f2__optimize__initialize() {
 			       data_type,
 			       args);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_data__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
@@ -4892,7 +4892,7 @@ void f2__optimize__initialize() {
 				return_reg,
 				env);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_fiber__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
@@ -4909,7 +4909,7 @@ void f2__optimize__initialize() {
 			       defined_data_set,
 			       optimized_bytecodes);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   

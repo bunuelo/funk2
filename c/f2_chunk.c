@@ -78,14 +78,14 @@ f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
   int fd;
   {
-    u64 filename__length = f2string__length(filename, cause);
-    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-    f2string__str_copy(filename, cause, filename__str);
+    u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+    u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
     filename__str[filename__length] = 0;
     
-    fd = open((char*)filename__str, O_RDONLY);
+    fd = open((char*)filename__utf8_str, O_RDONLY);
     
-    f2__free(to_ptr(filename__str));
+    f2__free(to_ptr(filename__utf8_str));
   }
   if (fd == -1) {
     f2ptr bug_frame = f2__frame__new(cause, nil);

@@ -49,20 +49,20 @@ u8* raw__gmodule__build_path(u8* directory, u8* module_name) {
 f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
   assert_argument_type(string, directory);
   assert_argument_type(string, module_name);
-  int directory__length = f2string__length(directory, cause);
-  u8* directory__str    = alloca(directory__length + 1);
-  f2string__str_copy(directory, cause, directory__str);
-  directory__str[directory__length] = 0;
-  int module_name__length = f2string__length(module_name, cause);
-  u8* module_name__str    = alloca(module_name__length + 1);
-  f2string__str_copy(module_name, cause, module_name__str);
-  module_name__str[module_name__length] = 0;
-  u8* new_path_str = raw__gmodule__build_path(directory__str, module_name__str);
-  if (new_path_str == NULL) {
+  int directory__utf8_length = raw__string__utf8_length(cause, directory);
+  u8* directory__utf8_str    = alloca(directory__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, directory, directory__str);
+  directory__utf8_str[directory__utf8_length] = 0;
+  int module_name__utf8_length = f2string__utf8_length(cause, module_name);
+  u8* module_name__utf8_str    = alloca(module_name__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, module_name, module_name__utf8_str);
+  module_name__utf8_str[module_name__utf8_length] = 0;
+  u8* new_path_utf8_str = raw__gmodule__build_path(directory__utf8_str, module_name__utf8_str);
+  if (new_path_utf8_str == NULL) {
     return nil;
   }
-  f2ptr new_path = f2string__new(cause, strlen((char*)new_path_str), new_path_str);
-  free(new_path_str);
+  f2ptr new_path = new__string(cause, new_path_utf8_str);
+  free(new_path_utf8_str);
   return new_path;
 }
 def_pcfunk2(gmodule__build_path, directory, module_name,

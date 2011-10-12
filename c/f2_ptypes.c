@@ -3270,6 +3270,45 @@ def_pcfunk2(symbol__elt, this, index,
 	    return f2__symbol__elt(this_cause, this, index));
 
 
+u64 raw__symbol__utf8_length(f2ptr cause, f2ptr this) {
+  u64                utf8_str__index = 0;
+  u64                this__length    = raw__symbol__length(cause, this);
+  funk2_character_t* str             = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
+  raw__symbol__str_copy(cause, this, str);
+  {
+    u64 index;
+    for (index = 0; index < this__length; index ++) {
+      s64 utf8_code__length = funk2_character__utf8_length(  str[index]);
+      utf8_str__index += utf8_code__length;
+    }
+  }
+  f2__free(to_ptr(str));
+  return utf8_str__index;
+}
+
+
+void raw__symbol__utf8_str_copy(f2ptr cause, f2ptr this, u8* utf8_str) {
+  u64                utf8_str__index = 0;
+  u64                this__length    = raw__symbol__length(cause, this);
+  funk2_character_t* str             = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
+  raw__symbol__str_copy(cause, this, str);
+  {
+    u64 index;
+    for (index = 0; index < this__length; index ++) {
+      s64 utf8_code__length = funk2_character__utf8_length(  str[index]);
+      u8  utf8_code[6];       funk2_character__utf8_str_copy(str[index], utf8_code);
+      {
+	u64 utf8_code__index;
+	for (utf8_code__index = 0; utf8_code__index < utf8_code__length; utf8_code__index ++) {
+	  utf8_str[utf8_str__index] = utf8_code[utf8_code__index]; utf8_str__index ++;
+	}
+      }
+    }
+  }
+  f2__free(to_ptr(str));
+}
+
+
 f2ptr raw__symbol__new_from_utf8(f2ptr cause, char* utf8_string) {
   u64                utf8_string__length = raw__utf8_string__length(utf8_string);
   funk2_character_t* utf8_string__str    = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (utf8_string__length + 1)));

@@ -48,14 +48,14 @@ ptr raw__dlfcn__dlopen_ex(u8* filename, int flag) {
 
 
 f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
-  int filename__length = f2string__length(filename, cause);
-  u8* raw_filename     = (u8*)alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, raw_filename);
-  raw_filename[filename__length] = 0;
+  int filename__utf8_length = raw__string__utf8_length(cause, filename);
+  u8* filename__utf8_str    = (u8*)alloca(filename__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+  filename__utf8_str[filename__utf8_length] = 0;
   int raw_flag = flag ? f2integer__i(flag, cause) : (RTLD_LAZY | RTLD_GLOBAL);
-  ptr result = to_ptr(raw__dlfcn__dlopen_ex(raw_filename, raw_flag));
+  ptr result = to_ptr(raw__dlfcn__dlopen_ex(filename__utf8_str, raw_flag));
   if (! result) {
-    status("f2__dlfcn__dlopen: failed to load library, \"%s\".", raw_filename);
+    status("f2__dlfcn__dlopen: failed to load library, \"%s\".", filename__utf8_str);
     char* dlerror_string = (char*)raw__dlfcn__dlerror();
     return f2larva__new(cause, 923, f2__bug__new(cause, f2integer__new(cause, 923), f2__frame__new(cause, f2list10__new(cause,
 															new__symbol(cause, "bug_type"),      new__symbol(cause, "could_not_open_dlfcn_dynamic_library"),
@@ -64,7 +64,7 @@ f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
 															new__symbol(cause, "flag"),          flag,
 															new__symbol(cause, "dlfcn-dlerror"), new__string(cause, dlerror_string)))));
   }
-  status("f2__dlfcn__dlopen: successfully loaded library, \"%s\".", raw_filename);
+  status("f2__dlfcn__dlopen: successfully loaded library, \"%s\".", filename__utf8_str);
   return f2pointer__new(cause, result);
 }
 

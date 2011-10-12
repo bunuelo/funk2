@@ -2827,6 +2827,135 @@ void raw__string__utf8_str_copy(f2ptr cause, f2ptr this, u8* utf8_str) {
 }
 
 
+f2size_t raw__utf8_char__parse_character(char* utf8_string, funk2_character_t* result) {
+  funk2_character_t ch0 = utf8_string[0];
+  if ((ch0 & 0x80) == 0) {
+    // normal ascii
+    if (result != NULL) {
+      *result = ch0;
+    }
+    return 1;
+  } else if ((ch0 & 0x40) != 0) {
+    if ((ch0 & 0x20) == 0) {
+      funk2_character_t ch1 = utf8_string[1];
+      if ((ch1 & 0xc0) == 0x80) {
+	if (result != NULL) {
+	  *result = ((ch0 & 0x1f) << 6) | (ch1 & 0x3f);
+	}
+	return 2;
+      }
+    } else if ((ch0 & 0x10) == 0) {
+      funk2_character_t ch1 = utf8_string[1];
+      if ((ch1 & 0xc0) == 0x80) {
+	funk2_character_t ch2 = utf8_string[2];
+	if ((ch2 & 0xc0) == 0x80) {
+	  if (result != NULL) {
+	    *result = ((ch0 & 0x0f) << 12) | ((ch1 & 0x3f) << 6) | (ch2 & 0x3f);
+	  }
+	  return 3;
+	}
+      }
+    } else if ((ch0 & 0x08) == 0) {
+      funk2_character_t ch1 = utf8_string[1];
+      if ((ch1 & 0xc0) == 0x80) {
+	funk2_character_t ch2 = utf8_string[2];
+	if ((ch2 & 0xc0) == 0x80) {
+	  funk2_character_t ch3 = utf8_string[3];
+	  if ((ch3 & 0xc0) == 0x80) {
+	    if (result != NULL) {
+	      *result = ((ch0 & 0x07) << 18) | ((ch1 & 0x3f) << 12) | ((ch2 & 0x3f) << 6) | (ch3 & 0x3f);
+	    }
+	    return 4;
+	  }
+	}
+      }
+    } else if ((ch0 & 0x04) == 0) {
+      funk2_character_t ch1 = utf8_string[1];
+      if ((ch1 & 0xc0) == 0x80) {
+	funk2_character_t ch2 = utf8_string[2];
+	if ((ch2 & 0xc0) == 0x80) {
+	  funk2_character_t ch3 = utf8_string[3];
+	  if ((ch3 & 0xc0) == 0x80) {
+	    funk2_character_t ch4 = utf8_string[4];
+	    if ((ch4 & 0xc0) == 0x80) {
+	      if (result != NULL) {
+		*result = ((ch0 & 0x03) << 24) | ((ch1 & 0x3f) << 18) | ((ch2 & 0x3f) << 12) | ((ch3 & 0x3f) << 6) | (ch4 & 0x3f);
+	      }
+	      return 5;
+	    }
+	  }
+	}
+      }
+    } else if ((ch0 & 0x02) == 0) {
+      funk2_character_t ch1 = utf8_string[1];
+      if ((ch1 & 0xc0) == 0x80) {
+	funk2_character_t ch2 = utf8_string[2];
+	if ((ch2 & 0xc0) == 0x80) {
+	  funk2_character_t ch3 = utf8_string[3];
+	  if ((ch3 & 0xc0) == 0x80) {
+	    funk2_character_t ch4 = utf8_string[4];
+	    if ((ch4 & 0xc0) == 0x80) {
+	      funk2_character_t ch5 = utf8_string[5];
+	      if ((ch5 & 0xc0) == 0x80) {
+		if (result != NULL) {
+		  *result = ((ch0 & 0x01) << 30) | ((ch1 & 0x3f) << 24) | ((ch2 & 0x3f) << 18) | ((ch3 & 0x3f) << 12) | ((ch4 & 0x3f) << 6) | (ch5 & 0x3f);
+		}
+		return 6;
+	      }
+	    }
+	  }
+	}
+      }
+    }
+  }
+  if (result != NULL) {
+    *result = (funk2_character_t)'?';
+  }
+  return 1;
+}
+
+f2size_t raw__utf8_char__utf8_length(char* utf8_char) {
+  return raw__utf8_char__parse_character(utf8_char, NULL);
+}
+
+
+u64 raw__utf8_string__length(char* utf8_string) {
+  u64 length = 0;
+  do {
+    funk2_character_t ch;
+    utf8_string += raw__utf8_string__parse_character(utf8_string, &ch);
+    if (ch == 0) {
+      return length;
+    }
+    length ++;
+  } while (1);
+}
+
+void raw__utf8_string__str_copy(char* utf8_string, funk2_character_t* str) {
+  u64 index = 0;
+  do {
+    funk2_character_t ch;
+    utf8_string += raw__utf8_string__parse_character(utf8_string, &ch);
+    if (ch == 0) {
+      return;
+    }
+    str[index] = ch;
+    index++;
+  } while (1);
+}
+
+
+f2ptr raw__string__new_from_utf8(f2ptr cause, char* utf8_string) {
+  u64                utf8_string__length = raw__utf8_string__length(utf8_string);
+  funk2_character_t* utf8_string__str    = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (utf8_string__length + 1)));
+  raw__utf8_string__str_copy(utf8_string, utf8_string__str);
+  f2ptr new = f2string__new(cause, utf8_string__length, utf8_string__str);
+  f2__free(to_ptr(utf8_string__str));
+  return new;
+}
+
+
+
 f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr              size                  = f2__terminal_print_frame__size(cause, terminal_print_frame);
   u64                size__i               = f2integer__i(size, cause);

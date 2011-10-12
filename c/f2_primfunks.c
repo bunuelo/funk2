@@ -448,7 +448,7 @@ f2ptr f2__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that) {
 // string
 
 f2ptr new__string(f2ptr cause, char* str) {
-  return f2string__new(cause, strlen(str), (u8*)(str));
+  return raw__string__new_from_utf8(cause, str);
 }
 
 f2ptr new__funk2_string(f2ptr cause, funk2_character_t* str) {

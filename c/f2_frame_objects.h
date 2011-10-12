@@ -807,7 +807,7 @@
 
 #define def_f2frame_object__primobject_type__new__slot_body(name, slot_body) \
   f2ptr f2frame_object__primobject_type__new__funkvar(name)(f2ptr cause) { \
-    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("frame"), (u8*)"frame"), nil)); \
+    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "frame"), nil)); \
     {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), frame_object__slot__funk__var(name, is_type));} \
     {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), frame_object__slot__funk__var(name, type));} \
     slot_body; \
@@ -1314,7 +1314,7 @@
   
 
 #define init_frame_object__funk(name, funk_name) \
-  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);} \
+  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = new__symbol(cause, symbol_str);} \
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame_object__funk__pcfunkvar(name, funk_name), this, cfunk); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
 
 

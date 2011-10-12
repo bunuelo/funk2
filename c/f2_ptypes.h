@@ -316,6 +316,8 @@ f2ptr      f2__string__equals(f2ptr cause, f2ptr this, f2ptr that);
 u64  raw__string__utf8_length  (f2ptr cause, f2ptr this);
 void raw__string__utf8_str_copy(f2ptr cause, f2ptr this, u8* utf8_str);
 
+f2ptr raw__string__new_from_utf8(f2ptr cause, char* utf8_string);
+
 
 // symbol
 

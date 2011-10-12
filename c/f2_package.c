@@ -373,8 +373,8 @@ def_pcfunk1(pathname__as__absolute_pathname, this,
 	    return f2__pathname__as__absolute_pathname(this_cause, this));
 
 f2ptr raw__pathname__directory_pathname(f2ptr cause, f2ptr this) {
-  u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  u64                this__length = raw__string__length(cause, this);
+  funk2_character_t* this__str    = (u8*)from_ptr(f2__malloc((this__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   

@@ -23,7 +23,7 @@
 
 // stream
 
-def_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
+def_primobject_12_slot(stream, cmutex, stream_type, unicode_mode, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
 
 f2ptr __file_stream__symbol        = -1;
 f2ptr __socket_stream__symbol      = -1;
@@ -31,7 +31,11 @@ f2ptr __string_stream__symbol      = -1;
 f2ptr __text_window_stream__symbol = -1;
 
 f2ptr f2__stream__new(f2ptr cause, f2ptr stream_type, f2ptr ungetc_stack, f2ptr rewind_stack, f2ptr rewindable, f2ptr rewind_length, f2ptr file_handle, f2ptr string, f2ptr index) {
-  return f2stream__new(cause, f2__cmutex__new(cause), stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, f2integer__new(cause, 1), f2integer__new(cause, 1));
+  f2ptr cmutex        = f2__cmutex__new(cause);
+  f2ptr unicode_mode  = nil;
+  f2ptr line_number   = f2integer__new(cause, 1);
+  f2ptr column_number = f2integer__new(cause, 1);
+  return f2stream__new(cause, cmutex, stream_type, unicode_mode, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
 }
 def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index,
 	    "",
@@ -427,6 +431,7 @@ f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "stream"),
 						new__symbol(cause, "cmutex"),          f2__stream__cmutex(       cause, this),
 						new__symbol(cause, "stream_type"),     f2__stream__stream_type(  cause, this),
+						new__symbol(cause, "unicode_mode"),    f2__stream__unicode_mode( cause, this),
 						new__symbol(cause, "ungetc_stack"),    f2__stream__ungetc_stack( cause, this),
 						new__symbol(cause, "rewind_stack"),    f2__stream__rewind_stack( cause, this),
 						new__symbol(cause, "rewindable"),      f2__stream__rewindable(   cause, this),
@@ -481,7 +486,7 @@ void f2__primobject__stream__initialize() {
   
   // stream
   
-  initialize_primobject_11_slot(stream, cmutex, stream_type, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
+  initialize_primobject_12_slot(stream, cmutex, stream_type, unicode_mode, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
   
   {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}

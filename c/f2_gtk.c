@@ -3075,7 +3075,7 @@ f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2p
     
     u64 signal_name__utf8_length = raw__string__utf8_length(cause, signal_name);
     u8* signal_name__utf8_str    = (u8*)alloca(signal_name__utf8_length + 1);
-    raw__string__str_copy(cause, signal_name, signal_name__utf8_str);
+    raw__string__utf8_str_copy(cause, signal_name, signal_name__utf8_str);
     signal_name__utf8_str[signal_name__utf8_length] = 0;
     
     funk2_gtk__signal_connect(&(__funk2.gtk), gtk_widget, signal_name__utf8_str, funk, args);

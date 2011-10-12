@@ -226,7 +226,7 @@ def_pcfunk2(terminal_print_frame__write_color__thread_unsafe, this, color,
 	    return f2__terminal_print_frame__write_color__thread_unsafe(this_cause, this, color));
 
 
-void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, u64 length, u8* string) {
+void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, u64 length, funk2_character_t* string) {
   f2ptr testing            = raw__terminal_print_frame__testing(cause, this);
   f2ptr stream             = raw__terminal_print_frame__stream(cause, this);
   f2ptr indent_distance    = raw__terminal_print_frame__indent_distance(cause, this);
@@ -247,11 +247,11 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
   {
     u64 index;
     for (index = 0; index < length; index ++) {
-      u8 ch = string[index];
+      funk2_character_t ch = string[index];
       switch(ch) {
-      case '\r':
+      case (funk2_character_t)'\r':
 	break;
-      case '\n':
+      case (funk2_character_t)'\n':
 	if ((testing == nil) && (height__i < max_height__i)) {
 	  if (use_html_codes) {
 	    raw__stream__writef(cause, stream, "<br>");
@@ -280,7 +280,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	  height__i ++;
 	}
 	break;
-      case '\t':
+      case (funk2_character_t)'\t':
 	{
 	  u64 spaces_until_next_tab = x__i - (((x__i + 7) >> 3) << 3);
 	  if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
@@ -312,9 +312,9 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    }
 	    raw__stream__writef(cause, stream, "\r\n");
 	  }
-	  if (ch >= 28 && ch <= 255) {
+	  if (ch >= 28) {
 	    switch(ch) {
-	    case ' ':
+	    case (funk2_character_t)' ':
 	      if (use_html_codes != nil) {
 		raw__stream__writef(cause, stream, "&nbsp;");
 	      } else {
@@ -322,7 +322,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	      }
 	      break;
 	    default:
-	      raw__stream__writef(cause, stream, "%c", ch);
+	      raw__stream__write_character(cause, stream, ch);
 	      break;
 	    }
 	  } else {
@@ -369,11 +369,12 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 f2ptr f2__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, f2ptr string) {
   assert_argument_type(terminal_print_frame, this);
   assert_argument_type(string,               string);
-  u64 string__length = f2string__length(string, cause);
-  u8* string__str    = (u8*)alloca(string__length);
+  u64                string__length = f2string__length(string, cause);
+  funk2_character_t* string__str    = (funk2_character_t*)from_ptr(f2__malloc((string__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, string, string__str);
-  string__str[string__length] = '\0';
+  string__str[string__length] = 0;
   raw__terminal_print_frame__write_string__thread_unsafe(cause, this, string__length, string__str);
+  f2__free(to_ptr(string__str));
   return nil;
 }
 def_pcfunk2(terminal_print_frame__write_string__thread_unsafe, this, string,

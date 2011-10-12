@@ -141,15 +141,17 @@ funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 #define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
+typedef u32 funk2_character_t;
+
 // character
 
 struct ptype_char_block_s {
-  ptype_block_t ptype;
-  u64           ch;
+  ptype_block_t     ptype;
+  funk2_character_t ch;
 } __attribute__((__packed__));;
 typedef struct ptype_char_block_s ptype_char_block_t;
 
-ptype_char_block_t* ptype_char_block__new(int pool_index, f2ptr cause, u64 ch);
+ptype_char_block_t* ptype_char_block__new(int pool_index, f2ptr cause, funk2_character_t ch);
 
 #define __pure__f2char__new(pool_index, cause, ch) ptype_char__new(pool_index, cause, ch)
 #define __pure__f2char__ch(this)                   (((ptype_char_block_t*)(from_ptr(f2ptr_to_ptr(this))))->ch)
@@ -158,13 +160,13 @@ ptype_char_block_t* ptype_char_block__new(int pool_index, f2ptr cause, u64 ch);
 // string
 
 struct ptype_string_block_s {
-  ptype_block_t ptype;
-  u64           length;
-  u8            str[0];
+  ptype_block_t     ptype;
+  u64               length;
+  funk2_character_t str[0];
 } __attribute__((__packed__));
 typedef struct ptype_string_block_s ptype_string_block_t;
 
-ptype_string_block_t* ptype_string_block__new(int pool_index, f2ptr cause, uint len, u8* data);
+ptype_string_block_t* ptype_string_block__new(int pool_index, f2ptr cause, uint len, funk2_character_t* data);
 
 #define __pure__f2string__new(pool_index, cause, len, init) ptype_string__new(pool_index, cause, len, init)
 #define __pure__f2string__length(this)                      (((ptype_string_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
@@ -174,14 +176,14 @@ ptype_string_block_t* ptype_string_block__new(int pool_index, f2ptr cause, uint 
 // symbol
 
 struct ptype_symbol_block_s {
-  ptype_block_t ptype;
-  u64           length;
-  u64           eq_hash_value;
-  u8            str[0];
+  ptype_block_t     ptype;
+  u64               length;
+  u64               eq_hash_value;
+  funk2_character_t str[0];
 } __attribute__((__packed__));
 typedef struct ptype_symbol_block_s ptype_symbol_block_t;
 
-ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint len, u8* data);
+ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint len, funk2_character_t* data);
 
 #define __pure__f2symbol__new(pool_index, cause, len, init) ptype_symbol__new(pool_index, cause, len, init)
 #define __pure__f2symbol__length(this)                      (((ptype_symbol_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)

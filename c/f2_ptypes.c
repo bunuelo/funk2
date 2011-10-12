@@ -2563,17 +2563,17 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
 
 // string
 
-f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, u8* str) {
-  f2ptr string_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_string_block_t) + length + 1);
+f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, funk2_character_t* str) {
+  f2ptr                 string_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_string_block_t) + ((length + 1) * sizeof(funk2_character_t)));
   ptype_string_block_t* string_block = (ptype_string_block_t*)from_ptr(raw__f2ptr_to_ptr(string_f2ptr));
   debug__assert(string_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   string_block->ptype.block.ptype = ptype_string;
   string_block->ptype.cause       = cause;
   string_block->length            = length;
-  if (str) {memcpy(string_block->str, str, length);}
-  else     {memset(string_block->str, 0,   length);}
-  string_block->str[length] = 0x00;
+  if (str) {memcpy(string_block->str, str, length * sizeof(funk2_character_t));}
+  else     {memset(string_block->str, 0,   length * sizeof(funk2_character_t));}
+  string_block->str[length] = 0;
   return string_f2ptr;
 }
 
@@ -2596,7 +2596,7 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
   return length;
 }
 
-u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
+funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -2604,11 +2604,11 @@ u8 pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  s8 ch = __pure__f2string__str(this)[index];
+  funk2_character_t ch = __pure__f2string__str(this)[index];
   return ch;
 }
 
-void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
+void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -2616,10 +2616,10 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, u8* str) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  memcpy(str, __pure__f2string__str(this), __pure__f2string__length(this));
+  memcpy(str, __pure__f2string__str(this), __pure__f2string__length(this) * sizeof(funk2_character_t));
 }
 
-void raw__string__str_copy(f2ptr cause, f2ptr this, u8* str) {
+void raw__string__str_copy(f2ptr cause, f2ptr this, funk2_character_t* str) {
   f2string__str_copy(this, cause, str);
 }
 
@@ -2647,7 +2647,7 @@ f2ptr f2__string__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen
 u64   raw__string__length(f2ptr cause, f2ptr this) {return f2string__length(this, cause);}
 f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__length(cause, this));}
 
-u8 raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
+funk2_character_t raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
   if (index < 0) {
     return f2larva__new(cause, 2, nil);
   }
@@ -2697,9 +2697,9 @@ f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   if (str__length < 0) {
     error(nil, "f2__string__new error: initial string length is less than zero.");
   }
-  u8* str__bytes = (u8*)alloca(str__length);
-  f2string__str_copy(str, cause, str__bytes);
-  return f2string__new(cause, str__length, str__bytes);
+  funk2_character_t* str__data = (u8*)alloca(str__length * sizeof(funk2_character_t));
+  f2string__str_copy(str, cause, str__data);
+  return f2string__new(cause, str__length, str__data);
 }
 
 def_pcfunk1(string__is_type, x,
@@ -2725,10 +2725,10 @@ u64 raw__string__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
     u64 previous_equals_hash_value__i = f2integer__i(previous_equals_hash_value, cause);
     return previous_equals_hash_value__i;
   }
-  u64 len = f2string__length(this, cause);
-  u8* str = (u8*)from_ptr(f2__malloc(len));
+  u64                len = f2string__length(this, cause);
+  funk2_character_t* str = (u8*)from_ptr(f2__malloc(len * sizeof(funk2_character_t)));
   f2string__str_copy(this, cause, str);
-  u64 retval = (u64)chararray__hash_value(len, str);
+  u64 retval = (u64)character_array__hash_value(len, str);
   f2__free(to_ptr(str));
   raw__ptypehash__add(cause, node_ptypehash, this, f2integer__new(cause, retval));
   return retval;
@@ -2745,10 +2745,10 @@ def_pcfunk2(string__equals_hash_value__loop_free, this, node_ptypehash,
 
 
 u64 raw__string__equals_hash_value(f2ptr cause, f2ptr this) {
-  u64 len = f2string__length(this, cause);
-  u8* str = (u8*)from_ptr(f2__malloc(len));
+  u64 len                = f2string__length(this, cause);
+  funk2_character_t* str = (u8*)from_ptr(f2__malloc(len * sizeof(funk2_character_t)));
   f2string__str_copy(this, cause, str);
-  u64 retval = (u64)chararray__hash_value(len, str);
+  u64 retval = (u64)character_array__hash_value(len, str);
   f2__free(to_ptr(str));
   return retval;
 }
@@ -2771,12 +2771,12 @@ boolean_t raw__string__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (this_len != that_len) {
     return nil;
   }
-  u64   both_len = this_len;
-  char* this_str = alloca(both_len);
-  char* that_str = alloca(both_len);
-  f2string__str_copy(this, cause, (u8*)this_str);
-  f2string__str_copy(that, cause, (u8*)that_str);
-  return (memcmp(this_str, that_str, both_len) == 0);
+  u64                both_len = this_len;
+  funk2_character_t* this_str = alloca(both_len * sizeof(funk2_character_t));
+  funk2_character_t* that_str = alloca(both_len * sizeof(funk2_character_t));
+  f2string__str_copy(this, cause, this_str);
+  f2string__str_copy(that, cause, that_str);
+  return (memcmp(this_str, that_str, both_len * sizeof(funk2_character_t)) == 0);
 }
 
 f2ptr f2__string__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -2789,51 +2789,51 @@ def_pcfunk2(string__equals, this, that,
 
 
 f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr size                  = f2__terminal_print_frame__size(cause, terminal_print_frame);
-  u64   size__i               = f2integer__i(size, cause);
-  f2ptr max_size              = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
-  u64   max_size__i           = f2integer__i(max_size, cause);
-  f2ptr use_one_line          = f2__terminal_print_frame__use_one_line(cause, terminal_print_frame);
-  u64   string__length        = raw__string__length(cause, this);
-  u8*   string__str           = (u8*)from_ptr(f2__malloc(string__length + 1)); raw__string__str_copy(cause, this, string__str); string__str[string__length] = 0;
-  u8*   string_string         = (u8*)from_ptr(f2__malloc((string__length << 1) + 128));
-  string_string[0]            = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
-  u64   string_string__length = 1;
+  f2ptr              size                  = f2__terminal_print_frame__size(cause, terminal_print_frame);
+  u64                size__i               = f2integer__i(size, cause);
+  f2ptr              max_size              = f2__terminal_print_frame__max_size(cause, terminal_print_frame);
+  u64                max_size__i           = f2integer__i(max_size, cause);
+  f2ptr              use_one_line          = f2__terminal_print_frame__use_one_line(cause, terminal_print_frame);
+  u64                string__length        = raw__string__length(cause, this);
+  funk2_character_t* string__str           = (funk2_character_t*)from_ptr(f2__malloc((string__length + 1)          * sizeof(funk2_character_t))); raw__string__str_copy(cause, this, string__str); string__str[string__length] = 0;
+  funk2_character_t* string_string         = (funk2_character_t*)from_ptr(f2__malloc(((string__length << 1) + 128) * sizeof(funk2_character_t)));
+  string_string[0]                         = f2char__ch(__funk2.reader.char__string_quote, cause);
+  u64                string_string__length = 1;
   {
     u64 size_index = 0;
     u64 index      = 0;
     while ((index < string__length) && (size__i < max_size__i)) {
       for (size_index = 0; (size_index < 8) && (index < string__length); index ++, size_index ++) {
-	u8 ch = string__str[index];
-	if (ch == (u8)f2char__ch(__funk2.reader.char__string_quote, cause)) {
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	funk2_character_t ch = string__str[index];
+	if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__string_quote, cause);
 	  string_string__length ++;
-	} else if ((use_one_line != nil) && (ch == '\n')) {
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	} else if ((use_one_line != nil) && (ch == (funk2_character_t)'\n')) {
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_newline, cause);
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__string_escape_newline, cause);
 	  string_string__length ++;
-	} else if (ch == (u8)f2char__ch(__funk2.reader.char__escape_char, cause)) {
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	} else if (ch == f2char__ch(__funk2.reader.char__escape_char, cause)) {
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	} else if (ch == '\r') {
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	} else if (ch == (funk2_character_t)'\r') {
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_return, cause);
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__string_escape_return, cause);
 	  string_string__length ++;
-	} else if (ch == '\t') {
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	} else if (ch == (funk2_character_t)'\t') {
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_tab, cause);
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__string_escape_tab, cause);
 	  string_string__length ++;
-	} else if (ch == '\b') {
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__escape_char, cause);
+	} else if (ch == (funk2_character_t)'\b') {
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	  string_string__length ++;
-	  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_escape_backspace, cause);
+	  string_string[string_string__length] = f2char__ch(__funk2.reader.char__string_escape_backspace, cause);
 	  string_string__length ++;
 	} else {
 	  string_string[string_string__length] = ch;
@@ -2843,11 +2843,13 @@ f2ptr raw__string__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
       size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
     }
     if (index < string__length) {
-      string_string__length += sprintf((char*)(string_string + string_string__length), "...");
+      string_string[string_string__length] = (funk2_character_t)'.'; string_string__length ++;
+      string_string[string_string__length] = (funk2_character_t)'.'; string_string__length ++;
+      string_string[string_string__length] = (funk2_character_t)'.'; string_string__length ++;
       f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
     }
   }
-  string_string[string_string__length] = (u8)f2char__ch(__funk2.reader.char__string_quote, cause);
+  string_string[string_string__length] = f2char__ch(__funk2.reader.char__string_quote, cause);
   string_string__length ++;
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__string__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, string_string__length, string_string);
@@ -2895,17 +2897,17 @@ f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 
 f2ptr f2string__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("ptype"), (u8*)"ptype"), nil));
-  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk);}
-  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.type__funk);}
-  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.new__funk);}
-  {char* slot_name = "length";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.length__funk);}
-  {char* slot_name = "elt";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.elt__funk);}
-  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.eq__funk);}
-  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__funk);}
-  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.equals__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.new__funk);}
+  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.length__funk);}
+  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.elt__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.equals__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__funk);}
-  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.terminal_print_with_frame__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -2913,17 +2915,17 @@ f2ptr f2string__primobject_type__new(f2ptr cause) {
 
 // symbol
 
-f2ptr ptype_symbol__new(int pool_index, f2ptr cause, u64 length, u8* str) {
+f2ptr ptype_symbol__new(int pool_index, f2ptr cause, u64 length, funk2_character_t* str) {
   if (length == 0) {
     return nil;
   }
   return funk2_symbol_hash__lookup_or_create_symbol(&(__funk2.ptypes.symbol_hash), pool_index, cause, length, str);
 }
 
-f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, u8* init) {
+f2ptr pfunk2__f2symbol__new(f2ptr cause, u64 length, funk2_character_t* init) {
   check_wait_politely();
-  int pool_index = this_processor_thread__pool_index();
-  f2ptr retval = __pure__f2symbol__new(pool_index, cause, length, init);
+  int   pool_index = this_processor_thread__pool_index();
+  f2ptr retval     = __pure__f2symbol__new(pool_index, cause, length, init);
   return retval;
 }
 
@@ -2935,7 +2937,7 @@ u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u64  length     = __pure__f2symbol__length(this);
+  u64 length = __pure__f2symbol__length(this);
   return length;
 }
 
@@ -2947,11 +2949,11 @@ u64 pfunk2__f2symbol__eq_hash_value(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u64  eq_hash_value = __pure__f2symbol__eq_hash_value(this);
+  u64 eq_hash_value = __pure__f2symbol__eq_hash_value(this);
   return eq_hash_value;
 }
 
-u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
+funk2_character_t pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -2959,11 +2961,11 @@ u8 pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u8 ch = __pure__f2symbol__str(this)[index];
+  funk2_character_t ch = __pure__f2symbol__str(this)[index];
   return ch;
 }
 
-void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
+void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -2971,10 +2973,10 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, u8* str) {
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  memcpy(str, __pure__f2symbol__str(this), __pure__f2symbol__length(this));
+  memcpy(str, __pure__f2symbol__str(this), __pure__f2symbol__length(this) * sizeof(funk2_character_t));
 }
 
-void raw__symbol__str_copy(f2ptr cause, f2ptr this, u8* str) {
+void raw__symbol__str_copy(f2ptr cause, f2ptr this, funk2_character_t* str) {
   f2symbol__str_copy(this, cause, str);
 }
 
@@ -2986,11 +2988,12 @@ boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
   return (x && f2ptype__raw(x, cause) == ptype_symbol);
 }
 f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbol__is_type(cause, x));}
-f2ptr f2__symbol__type(f2ptr cause, f2ptr x) {return f2symbol__new(cause, strlen("symbol"), (u8*)"symbol");}
+f2ptr f2__symbol__type(f2ptr cause, f2ptr x) {return new__symbol(cause, "symbol");}
 
 u64   raw__symbol__length(f2ptr cause, f2ptr this) {return f2symbol__length(this, cause);}
 f2ptr  f2__symbol__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__symbol__length(cause, this));}
 
+// this looks like a bug, but doing a big replacement -bo
 f2ptr f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y) {return f2integer__new(cause, f2symbol__elt(x, f2integer__i(y, cause), cause));}
 
 u64   raw__symbol__eq_hash_value(f2ptr cause, f2ptr this) {return f2symbol__eq_hash_value(this, cause);}
@@ -3005,9 +3008,9 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
   if (str__length < 0) {
     error(nil, "f2__symbol__new error: initial string length is less than zero.");
   }
-  u8* str__bytes = (u8*)alloca(str__length);
-  f2string__str_copy(str, cause, str__bytes);
-  return f2symbol__new(cause, str__length, str__bytes);
+  funk2_character_t* str__data = (funk2_character_t*)alloca(str__length * sizeof(funk2_character_t));
+  f2string__str_copy(str, cause, str__data);
+  return f2symbol__new(cause, str__length, str__data);
 }
 
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
@@ -3024,11 +3027,11 @@ boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (this__length != that__length) {
     return boolean__false;
   }
-  char* this__str = (char*)alloca(this__length + 1);
-  char* that__str = (char*)alloca(that__length + 1);
-  f2symbol__str_copy(this, cause, (u8*)this__str);
-  f2symbol__str_copy(that, cause, (u8*)that__str);
-  if (memcmp(this__str, that__str, this__length) != 0) {
+  funk2_character_t* this__str = (funk2_character_t*)alloca((this__length + 1) * sizeof(funk2_character_t));
+  funk2_character_t* that__str = (funk2_character_t*)alloca((that__length + 1) * sizeof(funk2_character_t));
+  f2symbol__str_copy(this, cause, this__str);
+  f2symbol__str_copy(that, cause, that__str);
+  if (memcmp(this__str, that__str, this__length * sizeof(funk2_character_t)) != 0) {
     return boolean__false;
   }
   return boolean__true;
@@ -3105,31 +3108,38 @@ f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u64       symbol__length     = raw__symbol__length(cause, this);
-  u8*       symbol__str        = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
-  boolean_t symbol_needs_quote = boolean__false;
+  u64                symbol__length     = raw__symbol__length(cause, this);
+  funk2_character_t* symbol__str        = (funk2_character_t*)from_ptr(f2__malloc((symbol__length + 1) * sizeof(funk2_character_t))); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
+  boolean_t          symbol_needs_quote = boolean__false;
   {
     u64 index;
     for (index = 0; index < symbol__length; index ++) {
-      char ch = symbol__str[index];
-      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+      funk2_character_t ch = symbol__str[index];
+      if (ch == (funk2_character_t)' '  ||
+	  ch == (funk2_character_t)'\t' ||
+	  ch == (funk2_character_t)'\n' ||
+	  ch == (funk2_character_t)'\r' ||
+	  ch == f2char__ch(__funk2.reader.char__left_paren,   cause) ||
+	  ch == f2char__ch(__funk2.reader.char__right_paren,  cause) ||
+	  ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) ||
+	  ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	symbol_needs_quote = boolean__true;
 	break;
       }
     }
   }
   if (symbol_needs_quote) {
-    u8* symbol_string         = (u8*)from_ptr(f2__malloc((symbol__length << 1) + 128));
-    symbol_string[0]          = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    funk2_character_t* symbol_string = (funk2_character_t*)from_ptr(f2__malloc(((symbol__length << 1) + 128) * sizeof(funk2_character_t)));
+    symbol_string[0]                 = f2char__ch(__funk2.reader.char__symbol_quote, cause);
     u64 symbol_string__length = 1;
     {
       u64 index;
       for (index = 0; index < symbol__length; index ++) {
-	u8 ch = symbol__str[index];
-	if (ch == (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
-	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_escape, cause);
+	funk2_character_t ch = symbol__str[index];
+	if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
+	  symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_escape, cause);
 	  symbol_string__length ++;
-	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+	  symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
 	  symbol_string__length ++;
 	} else {
 	  symbol_string[symbol_string__length] = ch;
@@ -3137,9 +3147,9 @@ f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 	}
       }
     }
-    symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
     symbol_string__length ++;
-    if ((symbol__length > 0) && (symbol__str[0] == (u8)f2char__ch(__funk2.reader.char__symbol_key, cause))) {
+    if ((symbol__length > 0) && (symbol__str[0] == f2char__ch(__funk2.reader.char__symbol_key, cause))) {
       raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     } else {
       raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
@@ -3148,7 +3158,7 @@ f2ptr raw__symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
     f2__free(to_ptr(symbol_string));
   } else {
-    if ((symbol__length > 0) && (symbol__str[0] == (u8)f2char__ch(__funk2.reader.char__symbol_key, cause))) {
+    if ((symbol__length > 0) && (symbol__str[0] == f2char__ch(__funk2.reader.char__symbol_key, cause))) {
       raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     } else {
       raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
@@ -3176,31 +3186,38 @@ f2ptr raw__key_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u64       symbol__length     = raw__symbol__length(cause, this);
-  u8*       symbol__str        = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
-  boolean_t symbol_needs_quote = boolean__false;
+  u64                symbol__length     = raw__symbol__length(cause, this);
+  funk2_character_t* symbol__str        = (funk2_character_t*)from_ptr(f2__malloc((symbol__length + 1) * sizeof(funk2_character_t))); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
+  boolean_t          symbol_needs_quote = boolean__false;
   {
     u64 index;
     for (index = 0; index < symbol__length; index ++) {
       char ch = symbol__str[index];
-      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+      if (ch == (funk2_character_t)' '  ||
+	  ch == (funk2_character_t)'\t' ||
+	  ch == (funk2_character_t)'\n' ||
+	  ch == (funk2_character_t)'\r' ||
+	  ch == f2char__ch(__funk2.reader.char__left_paren,   cause) ||
+	  ch == f2char__ch(__funk2.reader.char__right_paren,  cause) ||
+	  ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) ||
+	  ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	symbol_needs_quote = boolean__true;
 	break;
       }
     }
   }
   if (symbol_needs_quote) {
-    u8* symbol_string         = (u8*)from_ptr(f2__malloc((symbol__length << 1) + 128));
-    symbol_string[0]          = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    funk2_character_t* symbol_string = (funk2_character_t*)from_ptr(f2__malloc(((symbol__length << 1) + 128) * sizeof(funk2_character_t)));
+    symbol_string[0]                 = f2char__ch(__funk2.reader.char__symbol_quote, cause);
     u64 symbol_string__length = 1;
     {
       u64 index;
       for (index = 0; index < symbol__length; index ++) {
-	u8 ch = symbol__str[index];
-	if (ch == (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
-	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_escape, cause);
+	funk2_character_t ch = symbol__str[index];
+	if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
+	  symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_escape, cause);
 	  symbol_string__length ++;
-	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+	  symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
 	  symbol_string__length ++;
 	} else {
 	  symbol_string[symbol_string__length] = ch;
@@ -3208,7 +3225,7 @@ f2ptr raw__key_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
 	}
       }
     }
-    symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
     symbol_string__length ++;
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__key__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol_string__length, symbol_string);
@@ -3230,31 +3247,38 @@ f2ptr raw__type_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u64       symbol__length     = raw__symbol__length(cause, this);
-  u8*       symbol__str        = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
-  boolean_t symbol_needs_quote = boolean__false;
+  u64                symbol__length     = raw__symbol__length(cause, this);
+  funk2_character_t* symbol__str        = (funk2_character_t*)from_ptr(f2__malloc((symbol__length + 1) * sizeof(funk2_character_t))); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
+  boolean_t          symbol_needs_quote = boolean__false;
   {
     u64 index;
     for (index = 0; index < symbol__length; index ++) {
-      char ch = symbol__str[index];
-      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+      funk2_character_t ch = symbol__str[index];
+      if (ch == (funk2_character_t)' '  ||
+	  ch == (funk2_character_t)'\t' ||
+	  ch == (funk2_character_t)'\n' ||
+	  ch == (funk2_character_t)'\r' ||
+	  ch == f2char__ch(__funk2.reader.char__left_paren,   cause) ||
+	  ch == f2char__ch(__funk2.reader.char__right_paren,  cause) ||
+	  ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) ||
+	  ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	symbol_needs_quote = boolean__true;
 	break;
       }
     }
   }
   if (symbol_needs_quote) {
-    u8* symbol_string         = (u8*)from_ptr(f2__malloc((symbol__length << 1) + 128));
-    symbol_string[0]          = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    funk2_character_t* symbol_string = (funk2_character_t*)from_ptr(f2__malloc(((symbol__length << 1) + 128) * sizeof(funk2_character_t)));
+    symbol_string[0]                 = f2char__ch(__funk2.reader.char__symbol_quote, cause);
     u64 symbol_string__length = 1;
     {
       u64 index;
       for (index = 0; index < symbol__length; index ++) {
-	u8 ch = symbol__str[index];
-	if (ch == (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
-	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_escape, cause);
+	funk2_character_t ch = symbol__str[index];
+	if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
+	  symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_escape, cause);
 	  symbol_string__length ++;
-	  symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+	  symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
 	  symbol_string__length ++;
 	} else {
 	  symbol_string[symbol_string__length] = ch;
@@ -3262,7 +3286,7 @@ f2ptr raw__type_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
 	}
       }
     }
-    symbol_string[symbol_string__length] = (u8)f2char__ch(__funk2.reader.char__symbol_quote, cause);
+    symbol_string[symbol_string__length] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
     symbol_string__length ++;
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, symbol_string__length, symbol_string);
@@ -3279,9 +3303,9 @@ f2ptr raw__type_symbol__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
 
 
 f2ptr raw__symbol__as__string(f2ptr cause, f2ptr this) {
-  u64 symbol__length = raw__symbol__length(cause, this);
-  u8* symbol__str    = (u8*)from_ptr(f2__malloc(symbol__length + 1)); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
-  f2ptr string       = f2string__new(cause, symbol__length, symbol__str);
+  u64                symbol__length = raw__symbol__length(cause, this);
+  funk2_character_t* symbol__str    = (funk2_character_t*)from_ptr(f2__malloc((symbol__length + 1) * sizeof(funk2_character_t))); raw__symbol__str_copy(cause, this, symbol__str); symbol__str[symbol__length] = 0;
+  f2ptr              string         = f2string__new(cause, symbol__length, symbol__str);
   f2__free(to_ptr(symbol__str));
   return string;
 }

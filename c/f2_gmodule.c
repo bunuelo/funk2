@@ -53,7 +53,7 @@ f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
   u8* directory__utf8_str    = alloca(directory__utf8_length + 1);
   raw__string__utf8_str_copy(cause, directory, directory__utf8_str);
   directory__utf8_str[directory__utf8_length] = 0;
-  int module_name__utf8_length = f2string__utf8_length(cause, module_name);
+  int module_name__utf8_length = raw__string__utf8_length(cause, module_name);
   u8* module_name__utf8_str    = alloca(module_name__utf8_length + 1);
   raw__string__utf8_str_copy(cause, module_name, module_name__utf8_str);
   module_name__utf8_str[module_name__utf8_length] = 0;

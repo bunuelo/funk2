@@ -1520,13 +1520,13 @@ void f2__graph__initialize() {
   // graph_node
   initialize_primobject_1_slot(graph_node, label);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_edge
   initialize_primobject_3_slot(graph_edge, label, left_node, right_node);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_edge__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph
@@ -1575,7 +1575,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph_isomorphism__union,                     this, that);
   f2__primcfunk__init__1(graph_isomorphism__as__frame,                 this);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_isomorphism__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_decomposition_lattice_node
@@ -1583,7 +1583,7 @@ void f2__graph__initialize() {
   
   f2__primcfunk__init__4(graph_decomposition_lattice_node__combine_children_isomorphisms, this, left_child_isomorphisms, right_child_isomorphisms, graph);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // graph_decomposition_lattice
@@ -1595,7 +1595,7 @@ void f2__graph__initialize() {
   f2__primcfunk__init__2(graph_decomposition_lattice__subgraph_isomorphisms,           this, graph);
   f2__primcfunk__init__2(graph_decomposition_lattice__subgraph_max_isomorphisms,       this, graph);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }

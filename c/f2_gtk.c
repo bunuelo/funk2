@@ -2140,12 +2140,12 @@ f2ptr raw__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
     
     assert_g_type(GTK_TYPE_WINDOW, gtk_window);
     
-    u64 title__length = raw__string__length(cause, title);
-    u8* title__str    = (u8*)alloca(title__length + 1);
-    raw__string__str_copy(cause, title, title__str);
-    title__str[title__length] = 0;
+    u64 title__utf8_length = raw__string__utf8_length(cause, title);
+    u8* title__utf8_str    = (u8*)alloca(title__utf8_length + 1);
+    raw__string__utf8_str_copy(cause, title, title__str);
+    title__utf8_str[title__utf8_length] = 0;
     
-    funk2_gtk__window__set_title(&(__funk2.gtk), gtk_window, title__str);
+    funk2_gtk__window__set_title(&(__funk2.gtk), gtk_window, title__utf8_str);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);

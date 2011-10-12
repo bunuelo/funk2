@@ -86,45 +86,8 @@ ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
 ssize_t raw__stream__write_character(f2ptr cause, f2ptr stream, funk2_character_t ch) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "stream_writef error: stream is not stream.");}
   f2ptr file_handle = f2stream__file_handle(stream, cause);
-  int temp_msg__length;
-  u8  temp_msg[6];
-  if (ch <= 0x7f) {
-    temp_msg__length = 1;
-    temp_msg[0]      = ch;
-  } else if (ch <= 0x07ff) {
-    temp_msg__length = 2;
-    temp_msg[0]      = 0xc0 + (0x1f & (ch >> 6));
-    temp_msg[1]      = 0x80 + (0x3f & ch);
-  } else if (ch <= 0xffff) {
-    temp_msg__length = 3;
-    temp_msg[0]      = 0xe0 + (0x0f & (ch >> 12));
-    temp_msg[1]      = 0x80 + (0x3f & (ch >> 6));
-    temp_msg[2]      = 0x80 + (0x3f & ch);
-  } else if (ch <= 0x1fffff) {
-    temp_msg__length = 4;
-    temp_msg[0]      = 0xf0 + (0x07 & (ch >> 18));
-    temp_msg[1]      = 0x80 + (0x3f & (ch >> 12));
-    temp_msg[2]      = 0x80 + (0x3f & (ch >> 6));
-    temp_msg[3]      = 0x80 + (0x3f & ch);
-  } else if (ch <= 0x3ffffff) {
-    temp_msg__length = 5;
-    temp_msg[0]      = 0xf7 + (0x03 & (ch >> 24));
-    temp_msg[1]      = 0x80 + (0x3f & (ch >> 18));
-    temp_msg[2]      = 0x80 + (0x3f & (ch >> 12));
-    temp_msg[3]      = 0x80 + (0x3f & (ch >> 6));
-    temp_msg[4]      = 0x80 + (0x3f & ch);
-  } else if (ch <= 0x7fffffff) {
-    temp_msg__length = 6;
-    temp_msg[0]      = 0xfc + (0x01 & (ch >> 30));
-    temp_msg[1]      = 0x80 + (0x3f & (ch >> 24));
-    temp_msg[2]      = 0x80 + (0x3f & (ch >> 18));
-    temp_msg[3]      = 0x80 + (0x3f & (ch >> 12));
-    temp_msg[4]      = 0x80 + (0x3f & (ch >> 6));
-    temp_msg[5]      = 0x80 + (0x3f & ch);
-  } else {
-    temp_msg__length = 1;
-    temp_msg[0]      = (u8)'?';
-  }
+  int temp_msg__length = funk2_character__utf8_length(ch);
+  u8  temp_msg[6];       funk2_character__utf8_str_copy(ch, temp_msg);
   if (raw__file_stream__is_type(cause, stream)) {
     return raw__file_handle__write(cause, file_handle, temp_msg__length, temp_msg);
   } else if (raw__socket_stream__is_type(cause, stream)) {

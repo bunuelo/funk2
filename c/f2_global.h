@@ -31,7 +31,65 @@
 
 typedef unsigned int uint;
 
+
+// funk2_character
+
 typedef u32 funk2_character_t;
+
+#define funk2_character__utf8_length(this) ({				\
+      funk2_character_t funk2_character__utf8_length__this = (this);	\
+      u64 utf8_length = 1;						\
+      if (funk2_character__utf8_length__this <= 0x7f) {			\
+	utf8_length = 1;						\
+      } else if (funk2_character__utf8_length__this <= 0x07ff) {	\
+	utf8_length = 2;						\
+      } else if (funk2_character__utf8_length__this <= 0xffff) {	\
+	utf8_length = 3;						\
+      } else if (funk2_character__utf8_length__this <= 0x1fffff) {	\
+	utf8_length = 4;						\
+      } else if (funk2_character__utf8_length__this <= 0x3ffffff) {	\
+	utf8_length = 5;						\
+      } else if (funk2_character__utf8_length__this <= 0x7fffffff) {	\
+	utf8_length = 6;						\
+      }									\
+      utf8_length;							\
+    })
+
+#define funk2_character__utf8_str_copy(this, utf8_str) {		\
+    funk2_character_t funk2_character__utf8_str_copy__this     = (this); \
+    u8*               funk2_character__utf8_str_copy__utf8_str = (utf8_str); \
+    if (funk2_character__utf8_str_copy__this <= 0x7f) {			\
+      funk2_character__utf8_str_copy__utf8_str[0] = ch;							\
+    } else if (funk2_character__utf8_str_copy__this <= 0x07ff) {	\
+      funk2_character__utf8_str_copy__utf8_str[0] = 0xc0 + (0x1f & (funk2_character__utf8_str_copy__this >> 6)); \
+      funk2_character__utf8_str_copy__utf8_str[1] = 0x80 + (0x3f & funk2_character__utf8_str_copy__this); \
+    } else if (funk2_character__utf8_str_copy__this <= 0xffff) {	\
+      funk2_character__utf8_str_copy__utf8_str[0] = 0xe0 + (0x0f & (funk2_character__utf8_str_copy__this >> 12)); \
+      funk2_character__utf8_str_copy__utf8_str[1] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 6)); \
+      funk2_character__utf8_str_copy__utf8_str[2] = 0x80 + (0x3f & funk2_character__utf8_str_copy__this); \
+    } else if (funk2_character__utf8_str_copy__this <= 0x1fffff) {	\
+      funk2_character__utf8_str_copy__utf8_str[0] = 0xf0 + (0x07 & (funk2_character__utf8_str_copy__this >> 18)); \
+      funk2_character__utf8_str_copy__utf8_str[1] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 12)); \
+      funk2_character__utf8_str_copy__utf8_str[2] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 6)); \
+      funk2_character__utf8_str_copy__utf8_str[3] = 0x80 + (0x3f & funk2_character__utf8_str_copy__this); \
+    } else if (funk2_character__utf8_str_copy__this <= 0x3ffffff) {	\
+      funk2_character__utf8_str_copy__utf8_str[0] = 0xf7 + (0x03 & (funk2_character__utf8_str_copy__this >> 24)); \
+      funk2_character__utf8_str_copy__utf8_str[1] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 18)); \
+      funk2_character__utf8_str_copy__utf8_str[2] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 12)); \
+      funk2_character__utf8_str_copy__utf8_str[3] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 6)); \
+      funk2_character__utf8_str_copy__utf8_str[4] = 0x80 + (0x3f & funk2_character__utf8_str_copy__this); \
+    } else if (funk2_character__utf8_str_copy__this <= 0x7fffffff) {	\
+      funk2_character__utf8_str_copy__utf8_str[0] = 0xfc + (0x01 & (funk2_character__utf8_str_copy__this >> 30)); \
+      funk2_character__utf8_str_copy__utf8_str[1] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 24)); \
+      funk2_character__utf8_str_copy__utf8_str[2] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 18)); \
+      funk2_character__utf8_str_copy__utf8_str[3] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 12)); \
+      funk2_character__utf8_str_copy__utf8_str[4] = 0x80 + (0x3f & (funk2_character__utf8_str_copy__this >> 6)); \
+      funk2_character__utf8_str_copy__utf8_str[5] = 0x80 + (0x3f & funk2_character__utf8_str_copy__this); \
+    } else {								\
+      funk2_character__utf8_str_copy__utf8_str[0] = (u8)'?';						\
+    }									\
+  }
+
 
 #ifndef F2__APPLE
 typedef unsigned char boolean_t;

@@ -51,7 +51,7 @@ f2ptr f2__gmodule__build_path(f2ptr cause, f2ptr directory, f2ptr module_name) {
   assert_argument_type(string, module_name);
   int directory__utf8_length = raw__string__utf8_length(cause, directory);
   u8* directory__utf8_str    = alloca(directory__utf8_length + 1);
-  raw__string__utf8_str_copy(cause, directory, directory__str);
+  raw__string__utf8_str_copy(cause, directory, directory__utf8_str);
   directory__utf8_str[directory__utf8_length] = 0;
   int module_name__utf8_length = f2string__utf8_length(cause, module_name);
   u8* module_name__utf8_str    = alloca(module_name__utf8_length + 1);

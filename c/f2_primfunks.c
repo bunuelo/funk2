@@ -451,6 +451,12 @@ f2ptr new__string(f2ptr cause, char* str) {
   return f2string__new(cause, strlen(str), (u8*)(str));
 }
 
+f2ptr new__funk2_string(f2ptr cause, funk2_character_t* str) {
+  u64 length;
+  for (length = 0; str[length] != 0; length ++);
+  return f2string__new(cause, length, str);
+}
+
 //def_pcfunk2(string__equals, x, y, return f2__string__eq(this_cause, x, y));
 
 f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {

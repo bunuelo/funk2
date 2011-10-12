@@ -1468,7 +1468,9 @@ f2ptr  f2__cmutex__lock_both(f2ptr cause, f2ptr this, f2ptr that);
 
 // string
 
-f2ptr     new__string(f2ptr cause, char* str);
+f2ptr     new__string      (f2ptr cause, char*              str);
+f2ptr     new__funk2_string(f2ptr cause, funk2_character_t* str);
+
 f2ptr      f2__string__length(f2ptr cause, f2ptr x);
 f2ptr      f2__string__elt(f2ptr cause, f2ptr x, f2ptr y);
 boolean_t raw__string__eq(f2ptr cause, f2ptr x, f2ptr y);

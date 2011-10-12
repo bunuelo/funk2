@@ -2142,7 +2142,7 @@ f2ptr raw__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
     
     u64 title__utf8_length = raw__string__utf8_length(cause, title);
     u8* title__utf8_str    = (u8*)alloca(title__utf8_length + 1);
-    raw__string__utf8_str_copy(cause, title, title__str);
+    raw__string__utf8_str_copy(cause, title, title__utf8_str);
     title__utf8_str[title__utf8_length] = 0;
     
     funk2_gtk__window__set_title(&(__funk2.gtk), gtk_window, title__utf8_str);

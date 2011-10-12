@@ -39,12 +39,12 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
   f2ptr stream = f2__stream__new_open_file__rdonly(cause, filename);
   if (! stream) {
     {
-      u64 filename__length = raw__string__length(cause, filename);
-      u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-      raw__string__str_copy(cause, filename, filename__str);
-      filename__str[filename__length] = 0;
-      status("load error: couldn't open file for reading \'%s\'.", (char*)filename__str);
-      f2__free(to_ptr(filename__str));
+      u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+      u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+      raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+      filename__utf8_str[filename__utf8_length] = 0;
+      status("load error: couldn't open file for reading \'%s\'.", (char*)filename__utf8_str);
+      f2__free(to_ptr(filename__utf8_str));
     }
     return f2larva__new(cause, 49, f2__bug__new(cause, f2integer__new(cause, 49), f2__frame__new(cause, f2list6__new(cause,
 														     new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_open_file_for_reading"),

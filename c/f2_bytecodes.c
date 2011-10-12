@@ -243,15 +243,15 @@ void raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {f2fiber__s
 f2ptr f2__expression_not_funkable__exception__new(f2ptr cause, f2ptr funktion) {return f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, funktion);}
 
 void unrecognized_bytecode_register__error(f2ptr fiber, f2ptr cause, char* bytecode_name, f2ptr reg) {
-  char reg_str[1024];
+  char reg_utf8_str[1024];
   if(raw__symbol__is_type(cause, reg)) {
-    f2symbol__str_copy(reg, cause, (u8*)reg_str);
-    reg_str[f2symbol__length(reg, cause)] = (u8)0;
+    f2symbol__utf8_str_copy(reg, cause, (u8*)reg_utf8_str);
+    reg_utf8_str[raw__symbol__utf8_length(reg, cause)] = (u8)0;
   } else {
-    sprintf(reg_str, "<not symbolic>");
+    sprintf(reg_utf8_str, "<not symbolic>");
   }
   char str[1024];
-  sprintf(str, "%s error: unrecognized bytecode register (%s).", bytecode_name, reg_str);
+  sprintf(str, "%s error: unrecognized bytecode register (%s).", bytecode_name, reg_utf8_str);
   error(fiber, str);
 }
 

@@ -22,12 +22,12 @@
 #include "funk2.h"
 
 FILE* f2__fopen_for_read(f2ptr cause, f2ptr filename) {
-  int length = f2string__length(filename, cause);
-  char* str = (char*)from_ptr(f2__malloc(length + 1));
-  f2string__str_copy(filename, cause, (u8*)str);
-  str[length] = 0;
-  FILE* retval = fopen(str, "r");
-  f2__free(to_ptr(str));
+  int   utf8_length = raw__string__utf8_length(filename, cause);
+  char* str         = (char*)from_ptr(f2__malloc(utf8_length + 1));
+  raw__string__utf8_str_copy(cause, filename, utf8_str);
+  utf8_str[utf8_length] = 0;
+  FILE* retval = fopen(utf8_str, "r");
+  f2__free(to_ptr(utf8_str));
   return retval;
 }
 

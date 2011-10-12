@@ -5127,19 +5127,19 @@ def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_att
 f2ptr raw__gtk__frame__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    u64 label__length;
-    u8* label__str;
+    u64 label__utf8_length;
+    u8* label__utf8_str;
     if (label) {
-      label__length = raw__string__length(cause, label);
-      label__str    = (u8*)alloca(label__length + 1);
-      raw__string__str_copy(cause, label, label__str);
-      label__str[label__length] = 0;
+      label__utf8_length = raw__string__utf8_length(cause, label);
+      label__utf8_str    = (u8*)alloca(label__utf8_length + 1);
+      raw__string__str_copy(cause, label, label__utf8_str);
+      label__utf8_str[label__utf8_length] = 0;
     } else {
-      label__length = 0;
-      label__str    = NULL;
+      label__utf8_length = 0;
+      label__utf8_str    = NULL;
     }
     
-    GtkWidget* frame = funk2_gtk__frame__new(&(__funk2.gtk), label__str);
+    GtkWidget* frame = funk2_gtk__frame__new(&(__funk2.gtk), label__utf8_str);
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(frame)));
   } else {
     return f2__gtk_not_supported_larva__new(cause);

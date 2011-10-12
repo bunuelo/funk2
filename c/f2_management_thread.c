@@ -262,12 +262,12 @@ u64 raw__management_thread__add_save_memory_image_command(u8* filename) {
 
 f2ptr f2__management_thread__add_save_memory_image_command(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
-  u64 filename__length = f2string__length(filename, cause);
-  u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-  raw__string__str_copy(cause, filename, filename__str);
-  filename__str[filename__length] = 0;
-  f2ptr uid = f2integer__new(cause, raw__management_thread__add_save_memory_image_command(filename__str));
-  f2__free(to_ptr(filename__str));
+  u64 filename__utf8_length = f2string__utf8_length(filename, cause);
+  u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+  filename__utf8_str[filename__utf8_length] = 0;
+  f2ptr uid = f2integer__new(cause, raw__management_thread__add_save_memory_image_command(filename__utf8_str));
+  f2__free(to_ptr(filename__utf8_str));
   return uid;
 }
 def_pcfunk1(management_thread__add_save_memory_image_command, filename,
@@ -277,12 +277,12 @@ def_pcfunk1(management_thread__add_save_memory_image_command, filename,
 u64  raw__management_thread__add_load_memory_image_command(u8* filename) {return funk2_management_thread__add_load_memory_image_command(&(__funk2.management_thread), filename);}
 f2ptr f2__management_thread__add_load_memory_image_command(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
-  u64 filename__length = f2string__length(filename, cause);
-  u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-  raw__string__str_copy(cause, filename, filename__str);
-  filename__str[filename__length] = 0;
-  f2ptr uid = f2integer__new(cause, raw__management_thread__add_load_memory_image_command(filename__str));
-  f2__free(to_ptr(filename__str));
+  u64 filename__utf8_length = f2string__utf8_length(filename, cause);
+  u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+  filename__utf8_str[filename__utf8_length] = 0;
+  f2ptr uid = f2integer__new(cause, raw__management_thread__add_load_memory_image_command(filename__utf8_str));
+  f2__free(to_ptr(filename__utf8_str));
   return uid;
 }
 def_pcfunk1(management_thread__add_load_memory_image_command, filename,

@@ -5417,12 +5417,12 @@ def_pcfunk2(gtk__menu__append, menu, append_widget,
 f2ptr raw__gtk__check_button__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
   if (&(__funk2.gtk.initialized_successfully)) {
-    u64 label__length = raw__string__length(cause, label);
-    u8* label__str    = (u8*)from_ptr(f2__malloc(label__length + 1));
-    raw__string__str_copy(cause, label, label__str);
-    label__str[label__length] = 0;
-    GtkCheckButton* check_button = funk2_gtk__check_button__new(&(__funk2.gtk), (char*)label__str);
-    f2__free(to_ptr(label__str));
+    u64 label__utf8_length = raw__string__utf8_length(cause, label);
+    u8* label__utf8_str    = (u8*)from_ptr(f2__malloc(label__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, label, label__utf8_str);
+    label__utf8_str[label__utf8_length] = 0;
+    GtkCheckButton* check_button = funk2_gtk__check_button__new(&(__funk2.gtk), (char*)label__utf8_str);
+    f2__free(to_ptr(label__utf8_str));
     return f2__gtk_check_button__new(cause, f2pointer__new(cause, to_ptr(check_button)));
   } else {
     return f2__gtk_not_supported_larva__new(cause);

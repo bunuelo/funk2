@@ -59,26 +59,26 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   symbol_str = "t";                                     this->true__symbol                               = new__symbol(cause, symbol_str);
   symbol_str = "quote";                                 this->quote__symbol                              = new__symbol(cause, symbol_str);
   
-  this->backquote__list__symbol        = f2symbol__new(cause, strlen("backquote-list"),        (u8*)"backquote-list");
-  this->backquote__list_append__symbol = f2symbol__new(cause, strlen("backquote-list_append"), (u8*)"backquote-list_append");
-  this->comma__symbol                  = f2symbol__new(cause, strlen("comma"),                 (u8*)"comma");
-  this->cdr_comma__symbol              = f2symbol__new(cause, strlen("cdr-comma"),             (u8*)"cdr-comma");
+  this->backquote__list__symbol        = new__symbol(cause, "backquote-list");
+  this->backquote__list_append__symbol = new__symbol(cause, "backquote-list_append");
+  this->comma__symbol                  = new__symbol(cause, "comma");
+  this->cdr_comma__symbol              = new__symbol(cause, "cdr-comma");
   
-  this->funkvar__symbol                = f2symbol__new(cause, strlen("funkvar"),               (u8*)"funkvar");
-  this->define_funk__symbol            = f2symbol__new(cause, strlen("define-funk"),           (u8*)"define-funk");
-  this->mutatefunk__symbol             = f2symbol__new(cause, strlen("mutatefunk"),            (u8*)"mutatefunk");
-  this->define__symbol                 = f2symbol__new(cause, strlen("define"),                (u8*)"define");
-  this->mutate__symbol                 = f2symbol__new(cause, strlen("mutate"),                (u8*)"mutate");
-  this->and_rest__symbol               = f2symbol__new(cause, strlen(":rest"),                 (u8*)":rest");
-  this->apply__symbol                  = f2symbol__new(cause, strlen("funk-apply"),            (u8*)"funk-apply");
-  this->globalize__symbol              = f2symbol__new(cause, strlen("globalize"),             (u8*)"globalize");
-  this->globalize_funk__symbol         = f2symbol__new(cause, strlen("globalize-funk"),        (u8*)"globalize-funk");
-  this->yield__symbol                  = f2symbol__new(cause, strlen("yield"),                 (u8*)"yield");
-  this->if__symbol                     = f2symbol__new(cause, strlen("if"),                    (u8*)"if");
-  this->bytecode__symbol               = f2symbol__new(cause, strlen("bytecode"),              (u8*)"bytecode");
-  this->rawcode__symbol                = f2symbol__new(cause, strlen("rawcode"),               (u8*)"rawcode");
-  this->while__symbol                  = f2symbol__new(cause, strlen("while"),                 (u8*)"while");
-  this->return__symbol                 = f2symbol__new(cause, strlen("return"),                (u8*)"return");
+  this->funkvar__symbol                = new__symbol(cause, "funkvar");
+  this->define_funk__symbol            = new__symbol(cause, "define-funk");
+  this->mutatefunk__symbol             = new__symbol(cause, "mutatefunk");
+  this->define__symbol                 = new__symbol(cause, "define");
+  this->mutate__symbol                 = new__symbol(cause, "mutate");
+  this->and_rest__symbol               = new__symbol(cause, ":rest");
+  this->apply__symbol                  = new__symbol(cause, "funk-apply");
+  this->globalize__symbol              = new__symbol(cause, "globalize");
+  this->globalize_funk__symbol         = new__symbol(cause, "globalize-funk");
+  this->yield__symbol                  = new__symbol(cause, "yield");
+  this->if__symbol                     = new__symbol(cause, "if");
+  this->bytecode__symbol               = new__symbol(cause, "bytecode");
+  this->rawcode__symbol                = new__symbol(cause, "rawcode");
+  this->while__symbol                  = new__symbol(cause, "while");
+  this->return__symbol                 = new__symbol(cause, "return");
   
   this->bytecode_eq__symbol                 = new__symbol(cause, "bytecode:eq");
   this->bytecode_not__symbol                = new__symbol(cause, "bytecode:not");

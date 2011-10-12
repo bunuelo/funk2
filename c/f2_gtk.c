@@ -5743,17 +5743,17 @@ f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr 
     
     assert_g_type(GTK_TYPE_FILE_CHOOSER_DIALOG, gtk_this);
     
-    s64 pattern__length = raw__string__length(cause, pattern);
-    u8* pattern__str    = (u8*)from_ptr(f2__malloc(pattern__length + 1));
-    raw__string__str_copy(cause, pattern, pattern__str);
-    pattern__str[pattern__length] = 0;
-    s64 name__length = raw__string__length(cause, name);
-    u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-    raw__string__str_copy(cause, name, name__str);
-    name__str[name__length] = 0;
-    funk2_gtk__file_chooser_dialog__add_file_filter_pattern(&(__funk2.gtk), gtk_this, name__str, pattern__str);
-    f2__free(to_ptr(name__str));
-    f2__free(to_ptr(pattern__str));
+    s64 pattern__utf8_length = raw__string__utf8_length(cause, pattern);
+    u8* pattern__utf8_str    = (u8*)from_ptr(f2__malloc(pattern__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, pattern, pattern__utf8_str);
+    pattern__utf8_str[pattern__utf8_length] = 0;
+    s64 name__utf8_length = raw__string__utf8_length(cause, name);
+    u8* name__utf8_str    = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, name, name__utf8_str);
+    name__utf8_str[name__utf8_length] = 0;
+    funk2_gtk__file_chooser_dialog__add_file_filter_pattern(&(__funk2.gtk), gtk_this, name__utf8_str, pattern__utf8_str);
+    f2__free(to_ptr(name__utf8_str));
+    f2__free(to_ptr(pattern__utf8_str));
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);

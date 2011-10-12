@@ -4608,12 +4608,12 @@ f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
     
     assert_g_type(GTK_TYPE_LABEL, gtk_label);
     
-    u64 text__length = raw__string__length(cause, text);
-    u8* text__str    = (u8*)alloca(text__length + 1);
-    raw__string__str_copy(cause, text, text__str);
-    text__str[text__length] = 0;
+    u64 text__utf8_length = raw__string__utf8_length(cause, text);
+    u8* text__utf8_str    = (u8*)alloca(text__utf8_length + 1);
+    raw__string__utf8_str_copy(cause, text, text__utf8_str);
+    text__utf8_str[text__utf8_length] = 0;
     
-    funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__str);
+    funk2_gtk__label__set_text(&(__funk2.gtk), gtk_label, text__utf8_str);
     return nil;
   } else {
     return f2__gtk_not_supported_larva__new(cause);

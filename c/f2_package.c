@@ -657,20 +657,20 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
 f2ptr f2__pathname__rename(f2ptr cause, f2ptr old_filename, f2ptr new_filename) {
   assert_argument_type(string, old_filename);
   assert_argument_type(string, new_filename);
-  s64 old_filename__length = raw__string__length(cause, old_filename);
-  u8* old_filename__string = (u8*)from_ptr(f2__malloc(old_filename__length + 1));
-  raw__string__str_copy(cause, old_filename, old_filename__string);
-  old_filename__string[old_filename__length] = 0;
+  s64 old_filename__utf8_length = raw__string__utf8_length(cause, old_filename);
+  u8* old_filename__utf8_string = (u8*)from_ptr(f2__malloc(old_filename__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, old_filename, old_filename__utf8_string);
+  old_filename__utf8_string[old_filename__utf8_length] = 0;
   
-  s64 new_filename__length = raw__string__length(cause, new_filename);
-  u8* new_filename__string = (u8*)from_ptr(f2__malloc(new_filename__length + 1));
-  raw__string__str_copy(cause, new_filename, new_filename__string);
-  new_filename__string[new_filename__length] = 0;
+  s64 new_filename__utf8_length = raw__string__utf8_length(cause, new_filename);
+  u8* new_filename__utf8_string = (u8*)from_ptr(f2__malloc(new_filename__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, new_filename, new_filename__utf8_string);
+  new_filename__utf8_string[new_filename__utf8_length] = 0;
   
-  f2ptr result = raw__pathname__rename(cause, old_filename__string, new_filename__string);
+  f2ptr result = raw__pathname__rename(cause, old_filename__utf8_string, new_filename__utf8_string);
   
-  f2__free(to_ptr(old_filename__string));
-  f2__free(to_ptr(new_filename__string));
+  f2__free(to_ptr(old_filename__utf8_string));
+  f2__free(to_ptr(new_filename__utf8_string));
   return result;
 }
 def_pcfunk2(pathname__rename, old_filename, new_filename,

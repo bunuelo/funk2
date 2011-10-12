@@ -63,7 +63,7 @@ f2ptr raw__graph_edit_sequence__add(f2ptr cause, f2ptr this, f2ptr type, f2ptr f
   u64 add_cost = 0;
   if (cost_function == nil) {
     add_cost = 1;
-    if (raw__eq(cause, type, f2string__new(cause, 11, (u8*)"Delete Node"))) add_cost = 100;
+    if (raw__eq(cause, type, new__string(cause, "Delete Node"))) add_cost = 100;
   } else {
     f2ptr add_cost_from_f = f2__force_funk_apply(cause, f2__this__fiber(cause), cost_function, f2list3__new(cause, type, from, to));
     if (!raw__integer__is_type(cause, add_cost_from_f)) {
@@ -182,7 +182,7 @@ f2ptr raw__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2p
 	   //f2__print(cause, edge_in_between_refined); printf(" !! \n"); f2__print(cause, edge_in_graph_refined); printf(" !! \n");
 
 	   while (edge_in_between_refined && edge_in_graph_refined) {
-	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, f2string__new(cause, 11, (u8*)"Change Edge"),
+	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, new__string(cause, "Change Edge"),
 					f2__cons__cdr(cause, f2__cons__car(cause, edge_in_between_refined)),
 					f2__cons__cdr(cause, f2__cons__car(cause, edge_in_graph_refined)), cost_function);
 	     edge_in_between_refined = f2__cons__cdr(cause, edge_in_between_refined);
@@ -190,12 +190,12 @@ f2ptr raw__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2p
 	   }
 	   while (edge_in_between_refined) {
 	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, 
-					f2string__new(cause, 11, (u8*)"Delete Edge"),
+					new__string(cause, "Delete Edge"),
                                         f2__cons__cdr(cause, f2__cons__car(cause, edge_in_between_refined)), nil, cost_function);
 	     edge_in_between_refined = f2__cons__cdr(cause, edge_in_between_refined);
 	   }
 	   while (edge_in_graph_refined) {
-	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, f2string__new(cause, 11, (u8*)"Insert Edge"),
+	     f2__graph_edit_sequence__add(cause, new_graph_edit_sequence, new__string(cause, "Insert Edge"),
                                         nil, f2__cons__cdr(cause, f2__cons__car(cause, edge_in_graph_refined)), cost_function);
 	     edge_in_graph_refined = f2__cons__cdr(cause, edge_in_graph_refined);
 	   }
@@ -323,14 +323,14 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
 				f2ptr operations = f2__graph_edit_sequence__new(cause);
 				if (f2__graph_node__label(cause, leaf_graph__node) != f2__graph_node__label(cause, graph__node)) {
 				  f2__graph_edit_sequence__add(cause, operations, 
-							     f2string__new(cause, 11, (u8*)"Change Node"), leaf_graph__node, graph__node, cost_function);
+							     new__string(cause, "Change Node"), leaf_graph__node, graph__node, cost_function);
 				}
 				f2__graph_edit_sequence__add_mapping(cause, operations, leaf_graph__node, graph__node);
 				f2__redblacktree__insert(cause, leaf_graph__open_operations_rbt, operations);
 				);
 		 //Add the delete node edit
 		 f2ptr operations = f2__graph_edit_sequence__new(cause);
-		 f2__graph_edit_sequence__add(cause, operations, f2string__new(cause, 11, (u8*)"Delete Node"), leaf_graph__node, nil, cost_function);
+		 f2__graph_edit_sequence__add(cause, operations, new__string(cause, "Delete Node"), leaf_graph__node, nil, cost_function);
 		 f2__redblacktree__insert(cause, leaf_graph__open_operations_rbt, operations);
 		 );
 

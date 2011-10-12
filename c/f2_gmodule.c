@@ -199,7 +199,7 @@ f2ptr f2__gmodule__error(f2ptr cause) {
   if (error_utf8_str == NULL) {
     return nil;
   }
-  return new__string(cause, error_utf8_str);
+  return new__string(cause, (char*)error_utf8_str);
 }
 def_pcfunk0(gmodule__error,
 	    "",

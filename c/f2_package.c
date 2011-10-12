@@ -517,14 +517,14 @@ def_pcfunk2(pathname__scan_for_filenames_by_extension, pathname, extension,
 	    return f2__pathname__scan_for_filenames_by_extension(this_cause, pathname, extension));
 
 f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
-  u64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
-  raw__string__str_copy(cause, this, this__str);
-  this__str[this__length] = 0;
+  u64 this__utf8_length = raw__string__utf8_length(cause, this);
+  u8* this__utf8_str    = (u8*)from_ptr(f2__malloc(this__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, this, this__utf8_str);
+  this__utf8_str[this__utf8_length] = 0;
   
   f2ptr result = nil;
   struct stat buf;
-  if (stat((char*)this__str, &buf) != 0) {
+  if (stat((char*)this__utf8_str, &buf) != 0) {
     char* error_str = "unknown error occurred.";
     switch(errno) {
     case EACCES:       error_str = "Search permission is denied for one of the directories in the path prefix of path.  (See also path_resolution(7).)"; break;
@@ -563,7 +563,7 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_status_change"),          raw__time__new_from_unix_time(cause, buf.st_ctime));
     result = stat_frame;
   }
-  f2__free(to_ptr(this__str));
+  f2__free(to_ptr(this__utf8_str));
   return result;
 }
 

@@ -453,7 +453,7 @@ f2ptr f2__client_id__new(f2ptr cause, f2ptr bind_device, f2ptr ip_addr, f2ptr po
 
 f2ptr raw__client_id__new_from_client_id(f2ptr cause, client_id_t* client_id) {
   return f2__client_id__new(cause,
-			    new__symbol(cause, client_id->bind_device),
+			    new__symbol(cause, (char*)(client_id->bind_device)),
 			    raw__ip_addr__new(cause, client_id->ip_addr),
 			    f2integer__new(cause, client_id->port_num));
 }

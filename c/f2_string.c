@@ -451,11 +451,11 @@ f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
     f2__free(to_ptr(file__utf8_str));
     {
       f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_read_complete_file"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),    new__symbol(cause, "string-load"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"),    filename);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "read_length"), f2integer__new(cause, read_length));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "file_length"), f2integer__new(cause, file__length));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),         new__symbol(cause, "could_not_read_complete_file"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),         new__symbol(cause, "string-load"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"),         filename);
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "read_length"),      f2integer__new(cause, read_length));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "file_utf8_length"), f2integer__new(cause, file__utf8_length));
       return f2larva__new(cause, 91, f2__bug__new(cause, f2integer__new(cause, 91), bug_frame));
     }
   }

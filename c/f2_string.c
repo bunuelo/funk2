@@ -751,20 +751,21 @@ def_pcfunk1(string__lowercase, this,
 
 
 f2ptr raw__string__uppercase(f2ptr cause, f2ptr this) {
-  s64 this__length = raw__string__length(cause, this);
-  u8* this__str    = (u8*)from_ptr(f2__malloc(this__length + 1));
+  s64                this__length = raw__string__length(cause, this);
+  funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc((this__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
   this__str[this__length] = 0;
   
-  s64 new_string__length = this__length;
-  u8* new_string__str    = (u8*)from_ptr(f2__malloc(new_string__length + 1));
+  s64                new_string__length = this__length;
+  funk2_character_t* new_string__str    = (funk2_character_t*)from_ptr(f2__malloc((new_string__length + 1) * sizeof(funk2_character_t)));
   {
     s64 index;
     for (index = 0; index < this__length; index ++) {
-      u8 ch     = this__str[index];
-      u8 new_ch = 0;
-      if (ch >= 'a' && ch <= 'z') {
-	new_ch = ch - 'a' + 'A';
+      funk2_character_t ch     = this__str[index];
+      funk2_character_t new_ch = 0;
+      if (ch >= (funk2_character_t)'a' &&
+	  ch <= (funk2_character_t)'z') {
+	new_ch = ch - (funk2_character_t)'a' + (funk2_character_t)'A';
       } else {
 	new_ch = ch;
       }

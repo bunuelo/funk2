@@ -2283,21 +2283,21 @@ f2ptr raw__cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u8  cmutex_string[128];
-  u64 cmutex_string__length;
+  funk2_character_t cmutex_string[128];
+  u64               cmutex_string__length;
   {
     raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__cmutex__foreground);
-    cmutex_string__length = snprintf((char*)cmutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
+    cmutex_string__length = funk2_character_string__snprintf(cmutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cmutex_string__length, cmutex_string);
   }
   {
     raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
-    cmutex_string__length = snprintf((char*)cmutex_string, 128, "cmutex ");
+    cmutex_string__length = funk2_character_string__snprintf(cmutex_string, 128, "cmutex ");
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cmutex_string__length, cmutex_string);
   }
   {
     raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
-    cmutex_string__length = snprintf((char*)cmutex_string, 128, "is_locked ");
+    cmutex_string__length = funk2_character_string__snprintf(cmutex_string, 128, "is_locked ");
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cmutex_string__length, cmutex_string);
   }
   f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, f2bool__new(f2cmutex__is_locked(this, cause)), terminal_print_frame);
@@ -2309,7 +2309,7 @@ f2ptr raw__cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
   }
   {
     raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__cmutex__foreground);
-    cmutex_string__length = snprintf((char*)cmutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
+    cmutex_string__length = funk2_character_string__snprintf(cmutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cmutex_string__length, cmutex_string);
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

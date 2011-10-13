@@ -291,7 +291,7 @@ f2ptr              f2__char__equals       (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr             pfunk2__f2string__new          (f2ptr cause, u64 length, funk2_character_t* init);
 u64               pfunk2__f2string__length       (f2ptr this, f2ptr cause);
 funk2_character_t pfunk2__f2string__elt          (f2ptr this, int index, f2ptr cause);
-void              pfunk2__f2string__str_copy     (f2ptr this, f2ptr cause, u8* str);
+void              pfunk2__f2string__str_copy     (f2ptr this, f2ptr cause, funk2_character_t* str);
 u64               pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
 
 f2ptr f2string__primobject_type__new(f2ptr cause);
@@ -336,7 +336,7 @@ f2ptr      f2__symbol__length(f2ptr cause, f2ptr x);
 f2ptr      f2__symbol__elt(f2ptr cause, f2ptr x, f2ptr y);
 u64       raw__symbol__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr      f2__symbol__eq_hash_value(f2ptr cause, f2ptr this);
-void      raw__symbol__str_copy(f2ptr cause, f2ptr this, u8* str);
+void      raw__symbol__str_copy(f2ptr cause, f2ptr this, funk2_character_t* str);
 f2ptr      f2__symbol__new(f2ptr cause, f2ptr str);
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__symbol__eq(f2ptr cause, f2ptr x, f2ptr y);

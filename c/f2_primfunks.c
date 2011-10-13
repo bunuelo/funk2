@@ -1755,25 +1755,6 @@ def_pcfunk2(prev__set, exp, value,
 	    "",
 	    return f2__prev__set(this_cause, exp, value));
 
-// deprecated.
-f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
-  if ((! raw__string__is_type(cause, exp)) &&
-      (! raw__symbol__is_type(cause, exp))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  u64 length = raw__simple_length(cause, exp);
-  u8* str = alloca(length + 2);
-  str[0] = (u8)':';
-  raw__str_copy(cause, exp, str + 1);
-  str[length + 1] = 0;
-  f2ptr colonized = f2symbol__new(cause, length + 1, str);
-  return colonized;
-}
-def_pcfunk1(colonize, exp,
-	    "",
-	    return f2__colonize(this_cause, exp));
-
-
 u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   if (! exp) {
     return 0;

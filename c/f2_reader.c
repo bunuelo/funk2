@@ -693,8 +693,8 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
   }
   // read symbol quote
   if (raw__eq(cause, first_char, __funk2.reader.char__symbol_quote)) {
-    int buf_size = 64;
-    char* str = (char*)from_ptr(f2__malloc(buf_size));
+    int                buf_size = 64;
+    funk2_character_t* str      = (funk2_character_t*)from_ptr(f2__malloc(buf_size * sizeof(funk2_character_t)));
     int i = 0;
     f2ptr read_ch;
     do {
@@ -706,7 +706,7 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
       if (! raw__char__is_type(cause, read_ch)) {
 	return f2larva__new(cause, 19, nil);
       }
-      char ch = f2char__ch(read_ch, cause);
+      funk2_character_t ch = f2char__ch(read_ch, cause);
       if (raw__eq(cause, read_ch, __funk2.reader.char__symbol_quote)) {break;}
       if (raw__eq(cause, read_ch, __funk2.reader.char__symbol_escape)) {
 	// ignore next character
@@ -725,7 +725,7 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
       if (i >= buf_size) {
 	int old_buf_size = buf_size;
 	buf_size <<= 1;
-	str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
+	str = (funk2_character_t*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size * sizeof(funk2_character_t), buf_size * sizeof(funk2_character_t)));
       }
     } while(1);
     f2ptr exp = f2symbol__new(cause, i, str);

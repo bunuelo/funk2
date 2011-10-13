@@ -39,7 +39,7 @@ f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
     funk2_processor_mutex__unlock(&(__funk2.locale.interface_mutex));
     return nil;
   }
-  f2ptr retval = f2string__new(cause, strlen(old_locale_str), (u8*)old_locale_str);
+  f2ptr retval = new__string(cause, old_locale_str);
   funk2_processor_mutex__unlock(&(__funk2.locale.interface_mutex));
   return retval;
 }

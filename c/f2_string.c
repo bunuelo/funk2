@@ -426,14 +426,14 @@ def_pcfunk2(string__save, this, filename,
 f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
   int fd;
   {
-    u64 filename__length = f2string__length(filename, cause);
-    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-    f2string__str_copy(filename, cause, filename__str);
-    filename__str[filename__length] = 0;
+    u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+    u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+    filename__utf8_str[filename__utf8_length] = 0;
     
-    fd = open((char*)filename__str, O_RDONLY);
+    fd = open((char*)filename__utf8_str, O_RDONLY);
     
-    f2__free(to_ptr(filename__str));
+    f2__free(to_ptr(filename__utf8_str));
   }
   if (fd == -1) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
@@ -442,13 +442,13 @@ f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "filename"), filename);
     return f2larva__new(cause, 90, f2__bug__new(cause, f2integer__new(cause, 90), bug_frame));
   }
-  u64 file__length = lseek(fd, 0, SEEK_END);
+  u64 file__utf8_length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
-  u8* file__str = (u8*)from_ptr(f2__malloc(file__length));
-  u64 read_length = read(fd, file__str, file__length);
-  if (read_length != file__length) {
-    printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
-    f2__free(to_ptr(file__str));
+  u8* file__utf8_str = (u8*)from_ptr(f2__malloc(file__utf8_length + 1));
+  u64 read_length = read(fd, file__utf8_str, file__utf8_length);
+  if (read_length != file__utf8_length) {
+    printf("\nread_length=" u64__fstr ", file__utf8_length=" u64__fstr "\n", read_length, file__utf8_length);
+    f2__free(to_ptr(file__utf8_str));
     {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_read_complete_file"));
@@ -459,8 +459,9 @@ f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
       return f2larva__new(cause, 91, f2__bug__new(cause, f2integer__new(cause, 91), bug_frame));
     }
   }
-  f2ptr new_string = f2string__new(cause, file__length, file__str);
-  f2__free(to_ptr(file__str));
+  file__utf8_str[file__utf8_length] = 0;
+  f2ptr new_string = raw__string__new_from_utf8(cause, file__utf8_str);
+  f2__free(to_ptr(file__utf8_str));
   close(fd);
   return new_string;
 }

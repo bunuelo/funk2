@@ -200,10 +200,10 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
       }
     }
   }
-  u8  cons_string[128];
-  u64 cons_string__length = 0;
+  funk2_character_t cons_string[128];
+  u64               cons_string__length = 0;
   {
-    cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
+    cons_string[0]      = f2char__ch(__funk2.reader.char__left_paren, cause);
     cons_string__length = 1;
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__cons__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
@@ -218,12 +218,12 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 	x__i = f2integer__i(x, cause);
 	if (index > 0) {
 	  if (use_one_line != nil) {
-	    cons_string__length = sprintf((char*)cons_string, " ...");
+	    cons_string__length = funk2_character_string__snprintf(cons_string, 128, " ...");
 	  } else {
-	    cons_string__length = sprintf((char*)cons_string, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
+	    cons_string__length = funk2_character_string__snprintf(cons_string, 128, "%c...", ((x__i + 4) < max_x__i) ? ' ' : '\n');
 	  }
 	} else {
-	  cons_string__length = sprintf((char*)cons_string, "...");
+	  cons_string__length = funk2_character_string__snprintf(cons_string, 128, "...");
 	}
 	raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__foreground);
 	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
@@ -243,7 +243,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 		x    = f2__terminal_print_frame__x(cause, terminal_print_frame);
 		x__i = f2integer__i(x, cause);
 		if ((x__i + 1) < max_x__i) {
-		  cons_string__length = sprintf((char*)cons_string, " ");
+		  cons_string__length = funk2_character_string__snprintf(cons_string, 128, " ");
 		  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__cons__foreground);
 		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
 		}
@@ -254,7 +254,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
 		  return can_print_on_one_line;
 		}
 		if (can_print_on_one_line == nil) {
-		  cons_string__length = sprintf((char*)cons_string, "\n");
+		  cons_string__length = funk2_character_string__snprintf(cons_string, 128, "\n");
 		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
 		}
 	      }
@@ -292,7 +292,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
     f2__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);
   }
   {
-    cons_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
+    cons_string[0]      = f2char__ch(__funk2.reader.char__right_paren, cause);
     cons_string__length = 1;
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);

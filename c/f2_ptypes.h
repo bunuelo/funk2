@@ -545,7 +545,7 @@ f2ptr  f2__gensym(f2ptr cause, f2ptr initial_string);
 
 f2ptr raw__gensym__new_from_utf8(f2ptr cause, char* initial_utf8_string);
 
-#define gensym(cause, str) raw__gensym__new_from_utf8(cause, utf8_string)
+#define gensym(cause, str) raw__gensym__new_from_utf8(cause, str)
 
 // **
 

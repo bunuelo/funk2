@@ -386,7 +386,7 @@ f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
   while(*aliases_iter) {
     char* alias = *aliases_iter;
     //printf("\nalias: %d \"%s\"", strlen(alias), alias);
-    f2ptr new_string = f2string__new(cause, strlen(alias), (u8*)alias);
+    f2ptr new_string = new__string(cause, alias);
     f2ptr new_cons = f2cons__new(cause, new_string, nil);
     if (iter) {
       f2cons__cdr__set(iter, cause, new_cons);

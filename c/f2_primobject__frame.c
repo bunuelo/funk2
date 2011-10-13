@@ -654,9 +654,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		   );
   if (slot_count > 0) {
     if (use_one_line == nil) {
-      raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, terminal_print_frame, "\n");
+      frame_string__length = funk2_character_string__snprintf(frame_string, 128, "\n");
+      raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, frame_string__length, frame_string);
     } else {
-      raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, terminal_print_frame, " ");
+      frame_string__length = funk2_character_string__snprintf(frame_string, 128, " ");
+      raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, frame_string__length, frame_string);
     }
   }
   {

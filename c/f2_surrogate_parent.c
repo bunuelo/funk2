@@ -258,11 +258,11 @@ void raw__surrogate_parent__start_system_command(f2ptr cause, u8* command) {
 
 f2ptr f2__surrogate_parent__start_system_command(f2ptr cause, f2ptr command) {
   assert_argument_type(string, command);
-  u64 command__length = raw__string__length(cause, command);
-  u8* command__str    = alloca(command__length + 1);
-  raw__string__str_copy(cause, command, command__str);
-  command__str[command__length] = 0;
-  raw__surrogate_parent__start_system_command(cause, command__str);
+  u64 command__utf8_length = raw__string__utf8_length(cause, command);
+  u8* command__utf8_str    = alloca(command__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, command, command__utf8_str);
+  command__utf8_str[command__utf8_length] = 0;
+  raw__surrogate_parent__start_system_command(cause, command__utf8_str);
   return nil;
 }
 def_pcfunk1(surrogate_parent__start_system_command, command,

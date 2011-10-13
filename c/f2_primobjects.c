@@ -113,7 +113,7 @@ def_pcfunk5(primobject__dynamic_slot_type_value__set, this, slot_type, slot_name
 	    return f2__primobject__dynamic_slot_type_value__set(this_cause, this, slot_type, slot_name, value, no_such_slot_value));
 
 f2ptr f2primobject__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, f2symbol__new(cause, strlen("array"), (u8*)"array"), nil));
+  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "array"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.is_type__funk);}
   {char* slot_name = "object_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.object_type__funk);}
   {char* slot_name = "object_type";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol, new__symbol(cause, slot_name),     __funk2.globalenv.object_type.primobject.object_type__set__funk);}

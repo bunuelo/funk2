@@ -763,7 +763,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				     }
 				     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
 				   }
-				   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
+				   {
+				     slot_type_name_string__length = 1;
+				     slot_type_name_string[0] = (funk2_character_t)' ';
+				     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
+				   }
 				 }
 			       }
 			       {
@@ -817,7 +821,11 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
 				   }
 				 }
-				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
+				 {
+				   slot_name_string__length = 1;
+				   slot_name_string[0] = (funk2_character_t)' ';
+				   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, slot_name_string__length, slot_name_string);
+				 }
 				 {
 				   f2ptr size    = raw__terminal_print_frame__size(cause, terminal_print_frame);
 				   s64   size__i = f2integer__i(size, cause);
@@ -859,9 +867,13 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 			     raw__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
 			     if (slot_index < slot_count - 1) {
 			       if (use_one_line == nil) {
-				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)"\n");
+				 u64               temp_string__length = 1;
+				 funk2_character_t temp_string[1]; temp_string[0] = (funk2_character_t)'\n';
+				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, temp_string__length, temp_string);
 			       } else {
-				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)" ");
+				 u64               temp_string__length = 1;
+				 funk2_character_t temp_string[1]; temp_string[0] = (funk2_character_t)' ';
+				 raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, temp_string__length, temp_string);
 			       }
 			     }
 			     subexp_size    = raw__terminal_print_frame__size(cause, terminal_print_frame);

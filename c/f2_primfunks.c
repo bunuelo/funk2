@@ -1563,7 +1563,7 @@ f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr po
   u8* hostname__utf8_str = alloca(hostname__utf8_length + 1);
   raw__string__utf8_str_copy(hostname, cause, (u8*)hostname__utf8_str);
   hostname__utf8_str[hostname__utf8_length] = 0;
-  struct hostent* host_entity = gethostbyname(hostname__utf8_str);
+  struct hostent* host_entity = gethostbyname((char*)hostname__utf8_str);
   if (host_entity == NULL) {
     status("couldn't lookup funk2 node with gethostbyname: '%s'\n", hostname__utf8_str);
     return -3;

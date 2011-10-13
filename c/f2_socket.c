@@ -328,7 +328,7 @@ f2ptr raw__gethostbyname(f2ptr cause, f2ptr name) {
   name__utf8_str[name__utf8_length] = 0;
   //printf("\ntemp_str: %d \"%s\"", name__length, temp_str);
   f2ptr rv = f2pointer__new(cause, to_ptr(gethostbyname((char*)name__utf8_str)));
-  f2__free(to_ptr(temp_str));
+  f2__free(to_ptr(name__utf8_str));
   return rv;
 }
 

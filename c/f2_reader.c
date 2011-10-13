@@ -1210,7 +1210,7 @@ void funk2_reader__init(funk2_reader_t* this) {
     this->end_parens_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->end_parens_exception);
   }
-  {char* str = "reader:unmatched_begin_paren-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
+  {char* str = "reader:unmatched_begin_paren-exception";       f2ptr symbol = new__symbol(cause, str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
   {
     char* str = "reader:array_end_parens-exception";
     f2ptr symbol = new__symbol(cause, str);

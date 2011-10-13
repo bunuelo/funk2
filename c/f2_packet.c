@@ -2152,8 +2152,8 @@ void recv_packet__request__f2string__str_copy(funk2_node_t* funk2_node, pcs_requ
 
 void send_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, funk2_character_t* str) {
   packet_status("send_packet__respond__f2string__str_copy: executing.");
-  pcs_respond__f2string__str_copy_t* packet = (pcs_respond__f2string__str_copy_t*)alloca(sizeof(pcs_respond__f2string__str_copy_t) + str__size);
-  funk2_packet_header__init(&(packet->header), sizeof(packet->payload) + str__size);
+  pcs_respond__f2string__str_copy_t* packet = (pcs_respond__f2string__str_copy_t*)alloca(sizeof(pcs_respond__f2string__str_copy_t) + (length * sizeof(funk2_character_t)));
+  funk2_packet_header__init(&(packet->header), sizeof(packet->payload) + (length * sizeof(funk2_character_t)));
   packet->payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2string__str_copy;
   packet->payload.action_payload_header.cause               = cause;
   packet->payload.action_payload_header.fiber               = this_fiber;

@@ -4163,16 +4163,17 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr max_x                = f2__terminal_print_frame__max_x(cause, terminal_print_frame);
   u64   max_x__i             = f2integer__i(max_x, cause);
   u64   chunk__length        = raw__chunk__length(cause, this);
-  u8*   chunk_string         = (u8*)from_ptr(f2__malloc((chunk__length * 5) + max_x__i + 128));
-  u64   chunk_string__length = 0;
+  u64                chunk_string__max_length = (chunk__length * 5) + max_x__i + 128;
+  funk2_character_t* chunk_string             = (u8*)from_ptr(f2__malloc(chunk_string__max_length * sizeof(funk2_character_t)));
+  u64                chunk_string__length     = 0;
   {
-    chunk_string[0]      = (u8)f2char__ch(__funk2.reader.char__left_paren, cause);
+    chunk_string[0]      = f2char__ch(__funk2.reader.char__left_paren, cause);
     chunk_string__length = 1;
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   {
-    chunk_string__length = sprintf((char*)chunk_string, "chunk ");
+    chunk_string__length = funk2_character_string__snprintf(chunk_string, chunk_string__max_length, "chunk ");
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
@@ -4184,25 +4185,25 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
       for (index = 0; index < chunk__length; index ++) {
 	if (size__i < max_size__i) {
 	  size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
-	  u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "#x%02x", f2chunk__bit8__elt(this, index, cause));
+	  u64 increment_distance = funk2_character_string__snprintf(chunk_string + chunk_string__length, chunk_string__max_length - chunk_string__length, "#x%02x", f2chunk__bit8__elt(this, index, cause));
 	  chunk_string__length += increment_distance;
 	  x__i                 += increment_distance;
 	  if (index < (chunk__length - 1)) {
 	    if (max_x__i - x__i <= 5) {
-	      chunk_string__length += sprintf((char*)(chunk_string + chunk_string__length), "\n");
+	      chunk_string__length += funk2_character_string__snprintf(chunk_string + chunk_string__length, chunk_string__max_length - chunk_string__length, "\n");
 	      x__i                  = indent_distance__i;
 	      if ((testing != nil) && (testing_max_x_constraint != nil) && (use_one_line != nil)) {
 		f2__terminal_print_frame__failed_max_x_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 	      }
 	    } else {
-	      u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), " ");
+	      u64 increment_distance = funk2_character_string__snprintf(chunk_string + chunk_string__length, chunk_string__max_length - chunk_string__length, " ");
 	      chunk_string__length += increment_distance;
 	      x__i                 += increment_distance;
 	    }
 	  }
 	} else {
 	  f2__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
-	  u64 increment_distance = sprintf((char*)(chunk_string + chunk_string__length), "...");
+	  u64 increment_distance = funk2_character_string__snprintf(chunk_string + chunk_string__length, chunk_string__max_length - chunk_string__length, "...");
 	  chunk_string__length += increment_distance;
 	  x__i                 += increment_distance;
 	  break;
@@ -4213,7 +4214,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
   {
-    chunk_string[0]      = (u8)f2char__ch(__funk2.reader.char__right_paren, cause);
+    chunk_string[0]      = f2char__ch(__funk2.reader.char__right_paren, cause);
     chunk_string__length = 1;
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);

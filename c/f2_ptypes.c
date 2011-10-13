@@ -2763,7 +2763,7 @@ def_pcfunk2(string__equals_hash_value__loop_free, this, node_ptypehash,
 
 u64 raw__string__equals_hash_value(f2ptr cause, f2ptr this) {
   u64 len                = f2string__length(this, cause);
-  funk2_character_t* str = (u8*)from_ptr(f2__malloc(len * sizeof(funk2_character_t)));
+  funk2_character_t* str = (funk2_character_t*)from_ptr(f2__malloc(len * sizeof(funk2_character_t)));
   f2string__str_copy(this, cause, str);
   u64 retval = (u64)character_array__hash_value(len, str);
   f2__free(to_ptr(str));

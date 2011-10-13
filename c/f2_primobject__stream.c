@@ -43,7 +43,7 @@ def_pcfunk8(stream__new, stream_type, ungetc_stack, rewind_stack, rewindable, re
 
 
 f2ptr f2__file_stream__new(f2ptr cause, f2ptr file_handle) {
-  if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
+  if (__file_stream__symbol == -1) {__file_stream__symbol = new__symbol(cause, "file_stream");}
   assert_argument_type(file_handle, file_handle);
   boolean_t rewindable    = boolean__true;
   f2ptr     rewind_length = f2integer__new(cause, 0);
@@ -54,14 +54,14 @@ def_pcfunk1(file_stream__new, file_handle,
 	    return f2__file_stream__new(this_cause, file_handle));
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this) {
-  if (__file_stream__symbol == -1) {__file_stream__symbol = f2symbol__new(cause, strlen("file_stream"), (u8*)"file_stream");}
+  if (__file_stream__symbol == -1) {__file_stream__symbol = new__symbol(cause, "file_stream");}
   return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __file_stream__symbol));
 }
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__file_stream__is_type(cause, this));}
 
 
 f2ptr f2__socket_stream__new(f2ptr cause, f2ptr file_handle) {
-  if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
+  if (__socket_stream__symbol == -1) {__socket_stream__symbol = new__symbol(cause, "socket_stream");}
   assert_argument_type(file_handle, file_handle);
   boolean_t rewindable    = boolean__true;
   f2ptr     rewind_length = f2integer__new(cause, 0);
@@ -72,14 +72,14 @@ def_pcfunk1(socket_stream__new, file_handle,
 	    return f2__socket_stream__new(this_cause, file_handle));
 
 boolean_t raw__socket_stream__is_type(f2ptr cause, f2ptr this) {
-  if (__socket_stream__symbol == -1) {__socket_stream__symbol = f2symbol__new(cause, strlen("socket_stream"), (u8*)"socket_stream");}
+  if (__socket_stream__symbol == -1) {__socket_stream__symbol = new__symbol(cause, "socket_stream");}
   return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __socket_stream__symbol));
 }
 f2ptr f2__socket_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__socket_stream__is_type(cause, this));}
 
 
 f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
-  if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
+  if (__string_stream__symbol == -1) {__string_stream__symbol = new__symbol(cause, "string_stream");}
   assert_argument_type(string,  string);
   assert_argument_type(integer, index);
   boolean_t rewindable    = boolean__true;
@@ -91,7 +91,7 @@ def_pcfunk2(string_stream__new, string, index,
 	    return f2__string_stream__new(this_cause, string, index));
 
 boolean_t raw__string_stream__is_type(f2ptr cause, f2ptr this) {
-  if (__string_stream__symbol == -1) {__string_stream__symbol = f2symbol__new(cause, strlen("string_stream"), (u8*)"string_stream");}
+  if (__string_stream__symbol == -1) {__string_stream__symbol = new__symbol(cause, "string_stream");}
   return (raw__stream__is_type(cause, this) && f2__symbol__eq(cause, f2stream__stream_type(this, cause), __string_stream__symbol));
 }
 f2ptr f2__string_stream__is_type(f2ptr cause, f2ptr this) {return f2bool__new(raw__string_stream__is_type(cause, this));}

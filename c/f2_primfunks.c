@@ -1755,17 +1755,6 @@ def_pcfunk2(prev__set, exp, value,
 	    "",
 	    return f2__prev__set(this_cause, exp, value));
 
-f2ptr raw__str_copy(f2ptr cause, f2ptr object, u8* str) {
-  if (raw__string__is_type(cause, object)) {
-    f2string__str_copy(object, cause, str);
-    return nil;
-  } else if (raw__symbol__is_type(cause, object)) {
-    f2symbol__str_copy(object, cause, str);
-    return nil;
-  }
-  return f2larva__new(cause, 1, nil);
-}
-
 // deprecated.
 f2ptr f2__colonize(f2ptr cause, f2ptr exp) {
   if ((! raw__string__is_type(cause, exp)) &&

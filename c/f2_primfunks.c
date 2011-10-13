@@ -1578,7 +1578,7 @@ f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr po
   u16 port_num__i = f2integer__i(port_num, cause);
   client_id__init(&client_id, (u8*)"", ip_addr, port_num__i);
   computer_id_t computer_id = funk2_node_handler__add_node(&(__funk2.node_handler), 0, &client_id);
-  status("added knowledge of funk2 node: '%s' %d.%d.%d.%d:%d", hostname__str, ip_addr[0], ip_addr[1], ip_addr[2], ip_addr[3], port_num__i);
+  status("added knowledge of funk2 node: '%s' %d.%d.%d.%d:%d", hostname__utf8_str, ip_addr[0], ip_addr[1], ip_addr[2], ip_addr[3], port_num__i);
   return f2integer__new(cause, computer_id);
 }
 

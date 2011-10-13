@@ -548,10 +548,10 @@ boolean_t raw__string__contains(f2ptr cause, f2ptr this, f2ptr substring) {
   if (substring__length > this__length) {
     return boolean__false;
   }
-  u8* substring__str = (u8*)from_ptr(f2__malloc(substring__length));
+  funk2_character_t* substring__str = (funk2_character_t*)from_ptr(f2__malloc(substring__length * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, substring, substring__str);
   
-  u8* this__str = (u8*)from_ptr(f2__malloc(this__length));
+  funk2_character_t* this__str = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
   
   boolean_t found_substring = boolean__false;

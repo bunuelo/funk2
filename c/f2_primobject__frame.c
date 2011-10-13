@@ -764,9 +764,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
 				   }
 				   {
-				     slot_type_name_string__length = 1;
-				     slot_type_name_string[0] = (funk2_character_t)' ';
-				     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, type_slot_name_string__length, type_slot_name_string);
+				     u64               temp_string__length = 1;
+				     funk2_character_t temp_string[1]; temp_string[0] = (funk2_character_t)' ';
+				     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, temp_string__length, temp_string);
 				   }
 				 }
 			       }

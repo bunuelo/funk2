@@ -372,22 +372,29 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
       case ptype_symbol: {
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
 	int  i;
-	u64 symbol__utf8_length = raw__symbol__utf8_length(cause, exp);
-	u8* symbol__utf8_str    = (u8*)alloca(symbol__utf8_length + 1); 
-	raw__symbol__utf8_str_copy(cause, exp, symbol__utf8_str);
-	symbol__utf8_str[symbol__utf8_length] = 0;
-	char ch;
+	int                length = f2symbol__length(exp, cause);
+	funk2_character_t* temp_str_buf = (funk2_character_t*)alloca((length + 1) * sizeof(funk2_character_t));
+	f2symbol__str_copy(exp, cause, temp_str_buf);
+	temp_str_buf[length] = 0;
+	funk2_character_t ch;
 	int  subexp_size[2];
 	boolean_t all_cool = 1;
-	for (i = 0; i < symbol__utf8_length; i ++) {
-	  ch = symbol__utf8_str[i];
-	  if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+	for (i = 0; i < length; i ++) {
+	  ch = temp_str_buf[i];
+	  if (ch == (funk2_character_t)' '  ||
+	      ch == (funk2_character_t)'\t' ||
+	      ch == (funk2_character_t)'\n' ||
+	      ch == (funk2_character_t)'\r' ||
+	      ch == f2char__ch(__funk2.reader.char__left_paren,   cause) ||
+	      ch == f2char__ch(__funk2.reader.char__right_paren,  cause) ||
+	      ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) ||
+	      ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	    all_cool = 0;
 	  }
 	}
 	if (all_cool) {
-	  for (i = 0; i < symbol__utf8_length; i ++) {
-	    ch = symbol__utf8_str[i];
+	  for (i = 0; i < length; i ++) {
+	    ch = temp_str_buf[i];
 	    if (i == 0 && ch == f2char__ch(__funk2.reader.char__symbol_key, cause)) {
 	      f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
 	    }
@@ -395,9 +402,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    f2__fwrite__raw_char(cause, stream, ch, subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	  }
 	} else {
-	  if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__symbol_quote, cause));} width ++;
-	  for(i = 0; i < symbol__utf8_length; i ++) {
-	    ch = symbol__utf8_str[i];
+	  if (stream) {raw__stream__write_character(cause, stream, f2char__ch(__funk2.reader.char__symbol_quote, cause));} width ++;
+	  for(i = 0; i < length; i ++) {
+	    ch = temp_str_buf[i];
 	    if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
 	      f2__fwrite__raw_char(cause, stream, f2char__ch(__funk2.reader.char__symbol_escape, cause), subexp_size, use_html); width += subexp_size[0]; height += subexp_size[1];
 	    }

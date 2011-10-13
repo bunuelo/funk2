@@ -2171,7 +2171,7 @@ void recv_packet__respond__f2string__str_copy(funk2_node_t* funk2_node, pcs_resp
 void funk2_node__f2string__str_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, funk2_character_t* str) {
   send_packet__request__f2string__str_copy(funk2_node, this_fiber, cause, this);
   pcs_respond__f2string__str_copy_t* packet = (pcs_respond__f2string__str_copy_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
-  memcpy(str, packet->payload.str, package->payload.length * sizeof(funk2_character_t));
+  memcpy(str, packet->payload.str, packet->payload.length * sizeof(funk2_character_t));
   f2__free(to_ptr(packet));
 }
 

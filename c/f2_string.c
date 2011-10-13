@@ -391,14 +391,14 @@ f2ptr raw__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
     return f2larva__new(cause, 89, f2__bug__new(cause, f2integer__new(cause, 89), bug_frame));
   }
   u64 write_bytes;
-  u64 this__length = f2string__length(this, cause);
+  u64 this__utf8_length = raw__string__utf8_length(cause, this);
   {
-    u8* this__str    = (u8*)from_ptr(f2__malloc(this__length));
-    f2string__str_copy(this, cause, this__str);
+    u8* this__utf8_str = (u8*)from_ptr(f2__malloc(this__utf8_length));
+    raw__string__utf8_str_copy(cause, this, this__utf8_str);
     
-    write_bytes = write(fd, this__str, this__length);
+    write_bytes = write(fd, this__utf8_str, this__utf8_length);
     
-    f2__free(to_ptr(this__str));
+    f2__free(to_ptr(this__utf8_str));
   }
   f2ptr result = nil;
   if (write_bytes != this__length) {

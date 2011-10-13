@@ -1039,11 +1039,11 @@ def_pcfunk2(exp__fwrite_html, stream, exp,
 
 
 f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {
-  u64 directory_name__length = raw__string__length(cause, directory_name);
-  u8* directory_name__str = (u8*)alloca(directory_name__length + 1);
-  raw__string__str_copy(cause, directory_name, directory_name__str);
-  directory_name__str[directory_name__length] = 0;
-  int failure = mkdir((char*)directory_name__str, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+  u64 directory_name__utf8_length = raw__string__utf8_length(cause, directory_name);
+  u8* directory_name__utf8_str    = (u8*)alloca(directory_name__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, directory_name, directory_name__utf8_str);
+  directory_name__utf8_str[directory_name__length] = 0;
+  int failure = mkdir((char*)directory_name__utf8_str, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
   if (failure) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),       new__symbol(cause, "could_not_create_directory"));

@@ -958,7 +958,7 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
   }
   if (raw__cons__is_type(cause, symbol_list)) {
     u64 length = raw__simple_length(cause, symbol_list);
-    char* str = (char*)from_ptr(f2__malloc(length + 1));
+    funk2_character_t* str = (funk2_character_t*)from_ptr(f2__malloc((length + 1) * sizeof(funk2_character_t)));
     u64 i = 0;
     f2ptr iter = symbol_list;
     while (iter) {
@@ -967,10 +967,10 @@ f2ptr f2__stream__try_read_symbol(f2ptr cause, f2ptr stream) {
       i ++;
       iter = f2cons__cdr(iter, cause);
     }
-    str[i] = (char)0;
+    str[i] = 0;
     f2ptr symbol = nil;
-    if (length != 3 || str[0] != 'n' || str[1] != 'i' || str[2] != 'l') {
-      symbol = f2symbol__new(cause, length, (u8*)str);
+    if (length != 3 || str[0] != (funk2_character_t)'n' || str[1] != (funk2_character_t)'i' || str[2] != (funk2_character_t)'l') {
+      symbol = f2symbol__new(cause, length, str);
     }
     f2__free(to_ptr(str));
     return symbol;

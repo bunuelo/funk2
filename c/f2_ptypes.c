@@ -4164,7 +4164,7 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   u64   max_x__i             = f2integer__i(max_x, cause);
   u64   chunk__length        = raw__chunk__length(cause, this);
   u64                chunk_string__max_length = (chunk__length * 5) + max_x__i + 128;
-  funk2_character_t* chunk_string             = (u8*)from_ptr(f2__malloc(chunk_string__max_length * sizeof(funk2_character_t)));
+  funk2_character_t* chunk_string             = (funk2_character_t*)from_ptr(f2__malloc(chunk_string__max_length * sizeof(funk2_character_t)));
   u64                chunk_string__length     = 0;
   {
     chunk_string[0]      = f2char__ch(__funk2.reader.char__left_paren, cause);

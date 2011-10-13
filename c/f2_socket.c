@@ -322,13 +322,12 @@ def_pcfunk2(f2__listen, sockfd, backlog,
 
 // struct hostent *gethostbyname(const char *name);
 f2ptr raw__gethostbyname(f2ptr cause, f2ptr name) {
-  int name__length = f2string__length(name, cause);
-  char* temp_str = (char*)from_ptr(f2__malloc(sizeof(char) * (name__length + 1)));
-  if (!temp_str) {return nil;}
-  f2string__str_copy(name, cause, (u8*)temp_str);
-  temp_str[name__length] = (char)0;
+  u64 name__utf8_length = raw__string__utf8_length(cause, name);
+  u8* name__utf8_str    = (u8*)from_ptr(f2__malloc(name__length + 1));
+  raw__string__utf8_str_copy(cause, name, name__utf8_str);
+  name__utf8_str[name__utf8_length] = 0;
   //printf("\ntemp_str: %d \"%s\"", name__length, temp_str);
-  f2ptr rv = f2pointer__new(cause, to_ptr(gethostbyname(temp_str)));
+  f2ptr rv = f2pointer__new(cause, to_ptr(gethostbyname((char*)name__utf8_str)));
   f2__free(to_ptr(temp_str));
   return rv;
 }

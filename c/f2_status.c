@@ -97,6 +97,21 @@ ssize_t raw__stream__write_character(f2ptr cause, f2ptr stream, funk2_character_
   }
 }
 
+ssize_t funk2_character_string__snprintf(funk2_character_t* string, s64 max_length, char* utf8_msg, ...) {
+  va_list args;
+  int utf8_msg_len = strlen(utf8_msg);
+  u8* temp_utf8_msg = (u8*)alloca(2048 + utf8_msg_len);
+  va_start(args, utf8_msg);
+  vsprintf((char*)temp_utf8_msg, utf8_msg, args);
+  va_end(args);
+  u64 temp_utf8_msg__length = utf8_string__length(temp_utf8_msg);
+  if (temp_utf8_msg__length > max_length) {
+    return 0;
+  }
+  utf8_string__str_copy(temp_utf8_msg, string);
+  return temp_utf8_msg__length;
+}
+
 ssize_t writef(int fd, char* msg, ...) {
   va_list args;
   int msg_len = strlen(msg);

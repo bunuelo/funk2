@@ -382,6 +382,15 @@ def_pcfunk2(terminal_print_frame__write_string__thread_unsafe, this, string,
 	    return f2__terminal_print_frame__write_string__thread_unsafe(this_cause, this, string));
 
 
+void raw__terminal_print_frame__write_utf8_string__thread_unsafe(f2ptr cause, f2ptr this, u8* utf8_string) {
+  u64                temp_str__length = raw__utf8_string__length(utf8_string);
+  funk2_character_t* temp_str         = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * temp_str__length));
+  raw__utf8_string__str_copy(utf8_string, temp_str);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, this, temp_str__length, temp_str);
+  f2__free(to_ptr(temp_str));
+}
+
+
 f2ptr raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, __funk2.globalenv.terminal_print_with_frame__symbol);

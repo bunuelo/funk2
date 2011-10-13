@@ -28,8 +28,8 @@ void funk2_primobject__environment__init(funk2_primobject__environment_t* this) 
 }
 
 void funk2_primobject__environment__reinit(funk2_primobject__environment_t* this) {
-  this->environment__symbol         = f2symbol__new(initial_cause(), strlen("environment"),         (u8*)"environment");
-  this->current_environment__symbol = f2symbol__new(initial_cause(), strlen("current_environment"), (u8*)"current_environment");
+  this->environment__symbol         = new__symbol(initial_cause(), "environment");
+  this->current_environment__symbol = new__symbol(initial_cause(), "current_environment");
 }
 
 void funk2_primobject__environment__destroy(funk2_primobject__environment_t* this) {

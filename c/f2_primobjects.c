@@ -706,12 +706,12 @@ def_primobject_10_slot(funk,
 f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
   if (is_funktional != nil) {
     if (raw__symbol__is_type(cause, name)) {
-      u64 name__length = raw__symbol__length(cause, name);
-      u8* name__str    = (u8*)from_ptr(f2__malloc(name__length + 1));
-      raw__symbol__str_copy(cause, name, name__str);
-      name__str[name__length] = 0;
-      printf("\nf2__funk__new note is_funktional: %s", name__str);
-      f2__free(to_ptr(name__str));
+      u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
+      u8* name__utf8_str    = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
+      raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
+      name__utf8_str[name__utf8_length] = 0;
+      printf("\nf2__funk__new note is_funktional: %s", name__utf8_str);
+      f2__free(to_ptr(name__utf8_str));
     } else {
       printf("\nf2__funk__new note is_funktional: <unnamed>");
     }

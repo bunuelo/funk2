@@ -47,7 +47,7 @@ f2ptr f2dynamic_library__new(f2ptr cause, f2ptr type, f2ptr directory, f2ptr nam
 void f2__primobject__dynamic_library__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  __dynamic_library__symbol = f2symbol__new(cause, strlen("dynamic_library"), (u8*)"dynamic_library");
+  __dynamic_library__symbol = raw__symbol(cause, "dynamic_library");
 }
 
 void f2__primobject__dynamic_library__initialize() {

@@ -443,7 +443,7 @@ void f2__scheduler__initialize() {
     raw__array__elt__set(cause, processors, i, processor);
   }
   
-  __funk2.operating_system.scheduler__symbol = f2symbol__new(cause, strlen("scheduler:global_scheduler"), (u8*)"scheduler:global_scheduler");
+  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
   
   environment__add_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol, scheduler);
   

@@ -1306,7 +1306,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      }
 	      {
 		int subexp_size[2];
-		char* temp_slot_name_str = (char*)alloca(max_slot_name_length + 1);
+		funk2_character_t* temp_slot_name_str = (funk2_character_t*)alloca((max_slot_name_length + 1) * sizeof(funk2_character_t));
 		f2ptr keyvalue_pair_iter = keyvalue_pairs;
 		while (keyvalue_pair_iter) {
 		  f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
@@ -1314,10 +1314,10 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		  if (! raw__eq(cause, slot_name, __funk2.globalenv.type__symbol)) {
 		    f2ptr slot_value    = f2cons__cdr(keyvalue_pair, cause);
 		    if (raw__symbol__is_type(cause, slot_name)) {
-		      f2symbol__str_copy(slot_name, cause, (u8*)temp_slot_name_str);
-		      temp_slot_name_str[f2symbol__length(slot_name, cause)] = (char)0;
+		      raw__symbol__str_copy(cause, slot_name, temp_slot_name_str);
+		      temp_slot_name_str[f2symbol__length(slot_name, cause)] = 0;
 		    } else {
-		      temp_slot_name_str[0] = (char)0;
+		      temp_slot_name_str[0] = 0;
 		    }
 		    if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
 		    {f2__write_pretty__slot_key_and_value(temp_slot_name_str, max_slot_name_length, cause, fiber, stream, slot_value, nil, nil, nil,

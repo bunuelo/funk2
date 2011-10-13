@@ -401,7 +401,7 @@ void f2__scheduler__reinitialize_globalvars() {
   
   f2__scheduler__initialize_global_symbolic_vars();
   
-  __funk2.operating_system.scheduler__symbol = f2symbol__new(cause, strlen("scheduler:global_scheduler"), (u8*)"scheduler:global_scheduler");
+  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
   __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
 }
 
@@ -415,13 +415,13 @@ void f2__scheduler__initialize() {
   
   initialize_primobject_1_slot(scheduler, processors);
   
-  {char* symbol_str = "active_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "active_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__active_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk = never_gc(cfunk);}
-  {char* symbol_str = "processor_with_fewest_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "processor_with_fewest_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__processor_with_fewest_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk = never_gc(cfunk);}
-  {char* symbol_str = "add_fiber_to_least_used_processor"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "add_fiber_to_least_used_processor"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__add_fiber_to_least_used_processor, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // allocate scheduler and processors

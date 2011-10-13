@@ -169,7 +169,7 @@ f2ptr f2traced_cmutex__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__traced_cmutex__reinitialize_globalvars() {
-  __traced_cmutex__symbol = f2symbol__new(initial_cause(), strlen("traced_cmutex"), (u8*)"traced_cmutex");
+  __traced_cmutex__symbol = new__symbol(initial_cause(), "traced_cmutex");
 }
 
 void f2__primobject__traced_cmutex__initialize() {
@@ -185,15 +185,15 @@ void f2__primobject__traced_cmutex__initialize() {
   
   initialize_primobject_4_slot(traced_cmutex, cmutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
   
-  {char* symbol_str = "unlock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "unlock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__unlock, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__funk = never_gc(cfunk);}
-  {char* symbol_str = "trylock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "trylock"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__trylock, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__funk = never_gc(cfunk);}
-  {char* symbol_str = "is_locked"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "is_locked"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__is_locked, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__funk = never_gc(cfunk);}
-  {char* symbol_str = "lock_stack_trace"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "lock_stack_trace"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(traced_cmutex__lock_stack_trace, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(traced_cmutex__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }

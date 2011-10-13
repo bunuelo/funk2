@@ -1220,17 +1220,17 @@ def_pcfunk2(contains, this, element,
 f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
   assert_argument_type(string, filename);
   assert_argument_type(string, mode);
-  int filename_length = f2string__length(filename, cause);
-  char* filename_str = (char*)from_ptr(f2__malloc(filename_length + 1));
-  f2string__str_copy(filename, cause, (u8*)filename_str);
-  filename_str[filename_length] = 0;
-  int mode_length = f2string__length(mode, cause);
-  char* mode_str = (char*)from_ptr(f2__malloc(mode_length + 1));
-  f2string__str_copy(mode, cause, (u8*)mode_str);
-  mode_str[mode_length] = 0;
-  f2ptr fptr = f2pointer__new(cause, to_ptr(fopen(filename_str, mode_str)));
-  f2__free(to_ptr(filename_str));
-  f2__free(to_ptr(mode_str));
+  u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+  u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+  raw__string__str_copy(cause, filename, (u8*)filename__utf8_str);
+  filename__utf8_str[filename__utf8_length] = 0;
+  u64 mode__utf8_length = raw__string__utf8_length(cause, mode);
+  u8* mode__utf8_str    = (u8*)from_ptr(f2__malloc(mode__utf8_length + 1));
+  raw__string__str_copy(cause, mode, mode__utf8_str);
+  mode__utf8_str[mode__utf8_length] = 0;
+  f2ptr fptr = f2pointer__new(cause, to_ptr(fopen(filename__utf8_str, mode__utf8_str)));
+  f2__free(to_ptr(filename__utf8_str));
+  f2__free(to_ptr(mode__utf8_str));
   return fptr;
 }
 def_pcfunk2(fopen, filename, mode,

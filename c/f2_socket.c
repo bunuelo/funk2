@@ -367,7 +367,7 @@ def_pcfunk0(f2__h_errno__try_again,
 
 f2ptr raw__hostenv__h_name(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
-  return f2string__new(cause, strlen(this_hostent->h_name), (u8*)(this_hostent->h_name));
+  return new__string(cause, this_hostent->h_name);
 }
 
 f2ptr f2__hostenv__h_name(f2ptr cause, f2ptr this) {

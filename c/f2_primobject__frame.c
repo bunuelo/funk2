@@ -575,8 +575,8 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr use_one_line = raw__terminal_print_frame__use_one_line(cause, terminal_print_frame);
   f2ptr max_size     = raw__terminal_print_frame__max_size(cause, terminal_print_frame);
   s64   max_size__i  = f2integer__i(max_size, cause);
-  u8    frame_string[128];
-  u64   frame_string__length;
+  funk2_character_t frame_string[128];
+  u64               frame_string__length;
   {
     f2ptr x    = raw__terminal_print_frame__x(cause, terminal_print_frame);
     s64   x__i = f2integer__i(x, cause);
@@ -584,7 +584,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   }
   {
     raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__frame__foreground);
-    frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
+    frame_string__length = funk2_character_string__snprintf(frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, frame_string__length, frame_string);
   }
   f2ptr object_type = f2__object__type(cause, this);
@@ -878,7 +878,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   }
   {
     raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__frame__foreground);
-    frame_string__length = snprintf((char*)frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
+    frame_string__length = funk2_character_string__snprintf(frame_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, frame_string__length, frame_string);
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

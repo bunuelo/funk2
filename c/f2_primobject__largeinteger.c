@@ -1394,8 +1394,9 @@ f2ptr raw__largeinteger__terminal_print_with_frame(f2ptr cause, f2ptr this, f2pt
   f2ptr is_negative   = f2__largeinteger__is_negative(  cause, this);
   f2ptr integer_array = f2__largeinteger__integer_array(cause, this);
   if (is_negative != nil) {
-    char* negative_sign = "-";
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, (u8*)negative_sign);
+    funk2_character_t negative_sign_str[1];
+    negative_sign_str[0] = (funk2_character_t)'-';
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, negative_sign_str);
   }
   raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, integer_array, terminal_print_frame, boolean__false);
   raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__default__foreground);

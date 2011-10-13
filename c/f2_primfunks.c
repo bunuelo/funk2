@@ -463,7 +463,7 @@ f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
   int   utf8_length = raw__string__utf8_length(cause, x);
   char* utf8_str    = (char*)from_ptr(f2__malloc(utf8_length + 1));
   raw__string__utf8_str_copy(cause, x, (u8*)utf8_str);
-  utf8_str[length] = 0;
+  utf8_str[utf8_length] = 0;
   return f2pointer__new(cause, to_ptr(utf8_str));
 }
 def_pcfunk1(string__new_raw_c_string, x,

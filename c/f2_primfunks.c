@@ -473,7 +473,7 @@ def_pcfunk1(string__new_raw_c_string, x,
 f2ptr f2__string__new_from_raw_c_string(f2ptr cause, f2ptr x) {
   assert_argument_type(pointer, x);
   char* str = (char*)from_ptr(f2pointer__p(x, cause));
-  return f2string__new(cause, strlen(str), (u8*)str);
+  return new__string(cause, str);
 }
 def_pcfunk1(string__new_from_raw_c_string, x,
 	    "",

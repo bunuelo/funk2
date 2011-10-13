@@ -111,7 +111,7 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
   ptr raw_handle = f2pointer__p(handle, cause);
   u64 symbol__utf8_length = raw__symbol__utf8_length(cause, symbol);
   u8* symbol__utf8_str    = (u8*)alloca(symbol__utf8_length + 1);
-  raw__symbol__str_copy(cause, symbol, symbol__utf8_str);
+  raw__symbol__utf8_str_copy(cause, symbol, symbol__utf8_str);
   symbol__utf8_str[symbol__utf8_length] = 0;
   ptr result = raw__dlfcn__dlsym(raw_handle, symbol__utf8_str);
   if (result == to_ptr(NULL)) {

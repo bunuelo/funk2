@@ -1422,7 +1422,7 @@ f2ptr f2largeinteger__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject_largeinteger__reinitialize_globalvars() {
-  __largeinteger__symbol = f2symbol__new(initial_cause(), strlen("largeinteger"), (u8*)"largeinteger");
+  __largeinteger__symbol = new__symbol(initial_cause(), "largeinteger");
 }
 
 void f2__primobject_largeinteger__initialize() {
@@ -1460,7 +1460,7 @@ void f2__primobject_largeinteger__initialize() {
   f2__primcfunk__init__2(largeinteger__is_less_than, this, that);
   f2__primcfunk__init__2(largeinteger__is_numerically_equal_to, this, that);
   
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(largeinteger__terminal_print_with_frame, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }

@@ -674,12 +674,12 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
       }
       raw__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
     } else {
-      s64       slot_index                     = 0;
-      u8*       type_slot_name_string          = (u8*)from_ptr(f2__malloc(type_slot_name__max_length + 1));
-      s64       type_slot_name_string__length;
-      u8*       slot_name_string               = (u8*)from_ptr(f2__malloc(slot_name__max_length + 1));
-      s64       slot_name_string__length       = 0;
-      boolean_t failed_size_constraint         = boolean__false;
+      s64                slot_index                     = 0;
+      funk2_character_t* type_slot_name_string          = (funk2_character_t*)from_ptr(f2__malloc((type_slot_name__max_length + 1) * sizeof(funk2_character_t)));
+      s64                type_slot_name_string__length;
+      funk2_character_t* slot_name_string               = (funk2_character_t*)from_ptr(f2__malloc((slot_name__max_length      + 1) * sizeof(funk2_character_t)));
+      s64                slot_name_string__length       = 0;
+      boolean_t          failed_size_constraint         = boolean__false;
       //f2__print(cause, terminal_print_frame);
       frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		       boolean_t slot_should_be_printed = boolean__true;
@@ -756,7 +756,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				       //printf("\nnew_x__i=" s64__fstr, new_x__i);
 				       //printf("\nbefore_type_slot_name_x__i=" s64__fstr, before_type_slot_name_x__i);
 				       for (index = 0; (index < (type_slot_name__max_length - (new_x__i - before_type_slot_name_x__i))) && (index < type_slot_name__max_length); index ++) {
-					 type_slot_name_string[index] = ' ';
+					 type_slot_name_string[index] = (funk2_character_t)' ';
 				       }
 				       type_slot_name_string[index]  = 0;
 				       type_slot_name_string__length = index;
@@ -809,7 +809,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				       //printf("\nnew_x__i=" s64__fstr, new_x__i);
 				       //printf("\nbefore_slot_name_x__i=" s64__fstr, before_slot_name_x__i);
 				       for (index = 0; (index < (slot_name__max_length - (new_x__i - before_slot_name_x__i))) && (index < slot_name__max_length); index ++) {
-					 slot_name_string[index] = ' ';
+					 slot_name_string[index] = (funk2_character_t)' ';
 				       }
 				       slot_name_string[index]  = 0;
 				       slot_name_string__length = index;

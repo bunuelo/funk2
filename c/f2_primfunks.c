@@ -460,11 +460,11 @@ f2ptr new__funk2_string(f2ptr cause, funk2_character_t* str) {
 //def_pcfunk2(string__equals, x, y, return f2__string__eq(this_cause, x, y));
 
 f2ptr f2__string__new_raw_c_string(f2ptr cause, f2ptr x) {
-  int length = f2string__length(x, cause);
-  char* str = (char*)from_ptr(f2__malloc(length + 1));
-  f2string__str_copy(x, cause, (u8*)str);
-  str[length] = 0;
-  return f2pointer__new(cause, to_ptr(str));
+  int   utf8_length = raw__string__utf8_length(cause, x);
+  char* utf8_str    = (char*)from_ptr(f2__malloc(utf8_length + 1));
+  raw__string__utf8_str_copy(cause, x, (u8*)utf8_str);
+  utf8_str[length] = 0;
+  return f2pointer__new(cause, to_ptr(utf8_str));
 }
 def_pcfunk1(string__new_raw_c_string, x,
 	    "",

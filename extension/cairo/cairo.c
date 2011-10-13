@@ -1577,7 +1577,7 @@ f2ptr raw__cairo_svg_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2pt
   {
     s64 filename__utf8_length = raw__string__utf8_length(cause, filename);
     u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
-    raw__string__str_copy(cause, filename, filename__utf8_str);
+    raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
     filename__utf8_str[filename__utf8_length] = 0;
     double width__d  = f2double__d(width,  cause);
     double height__d = f2double__d(height, cause);

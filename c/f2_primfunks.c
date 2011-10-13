@@ -1559,13 +1559,13 @@ f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr po
     return -2;
   }
   client_id_t client_id;
-  int hostname__length = f2string__length(hostname, cause);
-  char* hostname__str = alloca(hostname__length + 1);
-  f2string__str_copy(hostname, cause, (u8*)hostname__str);
-  hostname__str[hostname__length] = 0;
-  struct hostent* host_entity = gethostbyname(hostname__str);
+  u64 hostname__utf8_length = raw__string__utf8_length(cause, hostname);
+  u8* hostname__utf8_str = alloca(hostname__utf8_length + 1);
+  raw__string__utf8_str_copy(hostname, cause, (u8*)hostname__utf8_str);
+  hostname__utf8_str[hostname__utf8_length] = 0;
+  struct hostent* host_entity = gethostbyname(hostname__utf8_str);
   if (host_entity == NULL) {
-    status("couldn't lookup funk2 node with gethostbyname: '%s'\n", hostname__str);
+    status("couldn't lookup funk2 node with gethostbyname: '%s'\n", hostname__utf8_str);
     return -3;
   }
   u32 netorder_ip_addr = *((u32*)(host_entity->h_addr_list[0]));

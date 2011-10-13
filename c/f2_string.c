@@ -354,8 +354,8 @@ def_pcfunk1(exp__as__string, exp,
 	    return f2__exp__as__string(this_cause, exp));
 
 f2ptr raw__string__as__symbol(f2ptr cause, f2ptr this) {
-  u64 this__length = f2string__length(this, cause);
-  u8* temp_str     = (u8*)from_ptr(f2__malloc(this__length));
+  u64                this__length = f2string__length(this, cause);
+  funk2_character_t* temp_str     = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   f2string__str_copy(this, cause, temp_str);
   f2ptr new_symbol = f2symbol__new(cause, this__length, temp_str);
   f2__free(to_ptr(temp_str));

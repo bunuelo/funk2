@@ -2714,7 +2714,7 @@ f2ptr f2__string__new(f2ptr cause, f2ptr str) {
   if (str__length < 0) {
     error(nil, "f2__string__new error: initial string length is less than zero.");
   }
-  funk2_character_t* str__data = (u8*)alloca(str__length * sizeof(funk2_character_t));
+  funk2_character_t* str__data = (funk2_character_t*)alloca(str__length * sizeof(funk2_character_t));
   f2string__str_copy(str, cause, str__data);
   return f2string__new(cause, str__length, str__data);
 }

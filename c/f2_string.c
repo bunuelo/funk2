@@ -401,7 +401,7 @@ f2ptr raw__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
     f2__free(to_ptr(this__utf8_str));
   }
   f2ptr result = nil;
-  if (write_bytes != this__length) {
+  if (write_bytes != this__utf8_length) {
     f2ptr bug_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_write_to_file"));
     f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_file"), new__string(cause, __FILE__));

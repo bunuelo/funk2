@@ -59,7 +59,7 @@ typedef u32 funk2_character_t;
     funk2_character_t funk2_character__utf8_str_copy__this     = (this); \
     u8*               funk2_character__utf8_str_copy__utf8_str = (utf8_str); \
     if (funk2_character__utf8_str_copy__this <= 0x7f) {			\
-      funk2_character__utf8_str_copy__utf8_str[0] = ch;							\
+      funk2_character__utf8_str_copy__utf8_str[0] = funk2_character__utf8_str_copy__this; \
     } else if (funk2_character__utf8_str_copy__this <= 0x07ff) {	\
       funk2_character__utf8_str_copy__utf8_str[0] = 0xc0 + (0x1f & (funk2_character__utf8_str_copy__this >> 6)); \
       funk2_character__utf8_str_copy__utf8_str[1] = 0x80 + (0x3f & funk2_character__utf8_str_copy__this); \

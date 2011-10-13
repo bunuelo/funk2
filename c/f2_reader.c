@@ -728,7 +728,7 @@ f2ptr f2__stream__try_read_symbol_quote(f2ptr cause, f2ptr stream) {
 	str = (char*)from_ptr(f2__new_alloc(to_ptr(str), old_buf_size, buf_size));
       }
     } while(1);
-    f2ptr exp = f2symbol__new(cause, i, (u8*)str);
+    f2ptr exp = f2symbol__new(cause, i, str);
     f2__free(to_ptr(str));
     return exp;
   } else {

@@ -102,7 +102,7 @@ f2ptr object_type__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2pt
 // end of object_type
 
 void f2__primobject_object_type__reinitialize_globalvars() {
-  __object_type__symbol = f2symbol__new(initial_cause(), strlen("object_type"), (u8*)"object_type");
+  __object_type__symbol = new__symbol(initial_cause(), "object_type");
 }
 
 void f2__primobject_object_type__initialize() {

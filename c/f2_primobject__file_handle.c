@@ -166,12 +166,12 @@ ssize_t raw__file_handle__send(f2ptr cause, f2ptr this, s64 data__length, u8* da
 f2ptr f2__file_handle__send(f2ptr cause, f2ptr this, f2ptr string) {
   assert_argument_type(file_handle, this);
   assert_argument_type(string,      string);
-  s64 string__length = raw__string__length(cause, string);
-  u8* string__str    = (u8*)from_ptr(f2__malloc(string__length + 1));
-  raw__string__str_copy(cause, string, string__str);
-  string__str[string__length] = 0;
-  f2ptr bytes_written = f2integer__new(cause, raw__file_handle__send(cause, this, string__length, string__str));
-  f2__free(to_ptr(string__str));
+  s64 string__utf8_length = raw__string__utf8_length(cause, string);
+  u8* string__utf8_str    = (u8*)from_ptr(f2__malloc(string__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, string, string__utf8_str);
+  string__utf8_str[string__utf8_length] = 0;
+  f2ptr bytes_written = f2integer__new(cause, raw__file_handle__send(cause, this, string__utf8_length, string__utf8_str));
+  f2__free(to_ptr(string__utf8_str));
   return bytes_written;
 }
 def_pcfunk2(file_handle__send, this, string,

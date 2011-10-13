@@ -630,8 +630,8 @@ f2ptr f2__stream__try_read_string(f2ptr cause, f2ptr stream) {
   }
   // read string
   if (raw__eq(cause, first_char, __funk2.reader.char__string_quote)) {
-    int buf_size = 64;
-    funk2_character_t* str = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * buf_size));
+    int                buf_size = 64;
+    funk2_character_t* str      = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * buf_size));
     int i = 0;
     f2ptr read_ch;
     do {

@@ -898,12 +898,12 @@ f2ptr f2__cairo_context__select_font_face(f2ptr cause, f2ptr this, f2ptr family,
 																			       "\nslant : 	the slant for the font, one of the symbols, `normal, `italic, or `oblique."
 																			       "\nweight : 	the weight for the font, one of the symbol, `normal or `bold.")))));
   }
-  s64 family__length = raw__string__length(cause, family);
-  u8* family__str    = (u8*)from_ptr(f2__malloc(family__length));
-  raw__string__str_copy(cause, family, family__str);
-  family__str[family__length] = 0;
-  f2ptr result = raw__cairo_context__select_font_face(cause, this, (char*)family__str, slant, weight);
-  f2__free(to_ptr(family__str));
+  s64 family__utf8_length = raw__string__utf8_length(cause, family);
+  u8* family__utf8_str    = (u8*)from_ptr(f2__malloc(family__utf8_length));
+  raw__string__utf8_str_copy(cause, family, family__utf8_str);
+  family__utf8_str[family__utf8_length] = 0;
+  f2ptr result = raw__cairo_context__select_font_face(cause, this, (char*)family__utf8_str, slant, weight);
+  f2__free(to_ptr(family__utf8_str));
   return result;
 }
 export_cefunk4(cairo_context__select_font_face, this, family, slant, weight, 0,

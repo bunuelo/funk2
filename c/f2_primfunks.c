@@ -1544,7 +1544,7 @@ def_pcfunk0(system__gethostname,
 	    if (gethostname(hostname, 1023) != 0) {
 	      return nil;
 	    }
-	    return f2string__new(this_cause, strlen(hostname), (u8*)hostname));
+	    return new__string(this_cause, hostname));
 
 // funk2_node_handler
 

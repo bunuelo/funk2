@@ -159,56 +159,57 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
   case ptype_free_memory:     return f2larva__new(cause, 32551, nil);
   case ptype_newly_allocated: return f2larva__new(cause, 53241, nil);
   case ptype_integer: {
-    u8 temp_str[1024];
-    snprintf((char*)temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
-    return f2string__new(cause, strlen((char*)temp_str), temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, s64__fstr, f2integer__i(exp, cause));
+    return f2string__new(cause, temp_str__length, temp_str);
   } break;
   case ptype_double: {
-    u8 temp_str[1024];
-    snprintf((char*)temp_str, 1024, double__fstr, f2double__d(exp, cause));
-    return f2string__new(cause, strlen((char*)temp_str), temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, double__fstr, f2double__d(exp, cause));
+    return f2string__new(cause, temp_str__length, temp_str);
   } break;
   case ptype_float: {
-    u8 temp_str[1024];
-    snprintf((char*)temp_str, 1024, float__fstr, f2float__f(exp, cause));
-    return f2string__new(cause, strlen((char*)temp_str), temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, float__fstr, f2float__f(exp, cause));
+    return f2string__new(cause, temp_str__length, temp_str);
   } break;
   case ptype_pointer: {
-    u8 temp_str[1024];
-    snprintf((char*)temp_str, 1024, pointer__fstr, f2pointer__p(exp, cause));
-    return f2string__new(cause, strlen((char*)temp_str), temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, pointer__fstr, f2pointer__p(exp, cause));
+    return f2string__new(cause, temp_str__length, temp_str);
   } break;
   case ptype_scheduler_cmutex: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, "<scheduler_cmutex " pointer__fstr ">", to_ptr(exp));
-    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<scheduler_cmutex " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, temp_str__length, temp_str);
   }
   case ptype_cmutex: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, "<cmutex " pointer__fstr ">", to_ptr(exp));
-    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<cmutex " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, temp_str__length, temp_str);
   }
   case ptype_char: {
-    u8 temp_str[1024];
-    u8 ch_value = f2char__ch(exp, cause);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length;
+    funk2_character_t ch_value = f2char__ch(exp, cause);
     if (ch_value >= 28) {
-      snprintf((char*)temp_str, 1024, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch_value);
+      temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch_value);
     } else {
-      snprintf((char*)temp_str, 1024, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch_value);
+      temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch_value);
     }
-    return f2string__new(cause, strlen((char*)temp_str), temp_str);
+    return f2string__new(cause, temp_str__length, temp_str);
   } break;
   case ptype_string: {
-    u64 exp__length = f2string__length(exp, cause);
-    u8* temp_old_str = (u8*)from_ptr(f2__malloc(exp__length));
+    u64                exp__length  = f2string__length(exp, cause);
+    funk2_character_t* temp_old_str = (funk2_character_t*)from_ptr(f2__malloc(exp__length * sizeof(funk2_character_t)));
     f2string__str_copy(exp, cause, temp_old_str);
-    u8* temp_str     = (u8*)from_ptr(f2__malloc(exp__length * 2));
+    funk2_character_t* temp_str     = (funk2_character_t*)from_ptr(f2__malloc((exp__length * 2) * sizeof(funk2_character_t)));
     u64 index;
     u64 new_index = 0;
     temp_str[new_index] = f2char__ch(__funk2.reader.char__string_quote, cause);
     new_index ++;
     for (index = 0; index < exp__length; index ++) {
-      u8 ch = temp_old_str[index];
+      funk2_character_t ch = temp_old_str[index];
       if (ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	temp_str[new_index] = f2char__ch(__funk2.reader.char__escape_char, cause);
 	new_index ++;
@@ -226,12 +227,19 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
   case ptype_symbol: {
     boolean_t all_cool = boolean__true;
     u64 exp__length = f2symbol__length(exp, cause);
-    u8* temp_old_str = (u8*)from_ptr(f2__malloc(exp__length));
+    funk2_character_t* temp_old_str = (funk2_character_t*)from_ptr(f2__malloc(exp__length * sizeof(funk2_character_t)));
     f2symbol__str_copy(exp, cause, temp_old_str);
     u64 index;
     for (index = 0; index < exp__length; index ++) {
-      u8 ch = temp_old_str[index];
-      if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == f2char__ch(__funk2.reader.char__left_paren, cause) || ch == f2char__ch(__funk2.reader.char__right_paren, cause) || ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) || ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
+      funk2_character_t ch = temp_old_str[index];
+      if (ch == (funk2_character_t)' '  ||
+	  ch == (funk2_character_t)'\t' ||
+	  ch == (funk2_character_t)'\n' ||
+	  ch == (funk2_character_t)'\r' ||
+	  ch == f2char__ch(__funk2.reader.char__left_paren,   cause) ||
+	  ch == f2char__ch(__funk2.reader.char__right_paren,  cause) ||
+	  ch == f2char__ch(__funk2.reader.char__symbol_quote, cause) ||
+	  ch == f2char__ch(__funk2.reader.char__string_quote, cause)) {
 	all_cool = boolean__false;
       }
     }
@@ -241,11 +249,11 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
       return new_string;
     } else {
       u64 new_index = 0;
-      u8* temp_str = (u8*)from_ptr(f2__malloc(exp__length * 2));
+      funk2_character_t* temp_str = (funk2_character_t*)from_ptr(f2__malloc((exp__length * 2) * sizeof(funk2_character_t)));
       temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_quote, cause);
       new_index ++;
       for (index = 0; index < exp__length; index ++) {
-	u8 ch = temp_old_str[index];
+	funk2_character_t ch = temp_old_str[index];
 	if (ch == f2char__ch(__funk2.reader.char__symbol_quote, cause)) {
 	  temp_str[new_index] = f2char__ch(__funk2.reader.char__symbol_escape, cause);
 	  new_index ++;
@@ -262,9 +270,9 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     }
   } break;
   case ptype_chunk: {
-    char temp_str[1024];
-    snprintf(temp_str, 1024, "<chunk " pointer__fstr ">", to_ptr(exp));
-    return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<chunk " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, temp_str__length, temp_str);
   }
   case ptype_simple_array:
   case ptype_traced_array: {

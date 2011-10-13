@@ -47,12 +47,12 @@ f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
 f2ptr f2__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
   assert_argument_type(       integer, category);
   assert_argument_type_or_nil(string,  locale);
-  char* locale_str = NULL;
+  u8* locale__utf8_str = NULL;
   if (locale != nil) {
-    int   locale_str__length = f2string__length(locale, cause);
-    locale_str               = alloca(locale_str__length + 1); f2string__str_copy(locale, cause, (u8*)locale_str); locale_str[locale_str__length] = 0;
+    u64 locale_str__utf8_length = raw__string__utf8_length(cause, locale);
+    locale__utf8_str            = alloca(locale_str__utf8_length + 1); raw__string__utf8_str_copy(cause, locale, locale__utf8_str); locale__utf8_str[locale_str__utf8_length] = 0;
   }
-  return raw__setlocale(cause, f2integer__i(category, cause), locale_str);
+  return raw__setlocale(cause, f2integer__i(category, cause), locale__utf8_str);
 } 
 def_pcfunk2(locale__setlocale, category, locale,
 	    "",

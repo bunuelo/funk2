@@ -5528,7 +5528,7 @@ void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr
 f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, u64 length, funk2_character_t* str) {
   ptype_symbol_block_t* symbol_block = NULL;
   // search for chararray in hashed symbols
-  u64 bin_index = (u64)((u64)funk2_character_array__hash_value(length, str) & (u64)(this->eq_hash_value_bit_mask));
+  u64 bin_index = (u64)((u64)character_array__hash_value(length, str) & (u64)(this->eq_hash_value_bit_mask));
   funk2_symbol_hash_node_t* node = (this->array[bin_index]);
   while (node) {
     symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(node->symbol));
@@ -5566,7 +5566,7 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   symbol_block->length            = length;
   if (str) {memcpy(symbol_block->str, str, length * sizeof(funk2_character_t));}
   else     {memset(symbol_block->str, 0,   length * sizeof(funk2_character_t));}
-  symbol_block->eq_hash_value  = (u64)((u64)funk2_character_array__hash_value(length, str));
+  symbol_block->eq_hash_value  = (u64)((u64)character_array__hash_value(length, str));
   
   // and add new symbol to hash table
   funk2_symbol_hash__add_symbol(this, symbol_f2ptr);

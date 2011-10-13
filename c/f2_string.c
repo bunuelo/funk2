@@ -54,7 +54,7 @@ f2ptr raw__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
       iter = f2cons__cdr(iter, cause);
     }
   }
-  u8* temp_str = (u8*)from_ptr(f2__malloc(total_length + 1));
+  funk2_character_t* temp_str = (funk2_character_t*)from_ptr(f2__malloc((total_length + 1) * sizeof(funk2_character_t)));
   u64 index = 0;
   {
     f2ptr iter = this;

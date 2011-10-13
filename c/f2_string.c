@@ -84,8 +84,8 @@ def_pcfunk1(stringlist__concat, this,
 	    return f2__stringlist__concat(this_cause, this));
 
 f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
-  u64 intersperse_string__length = f2string__length(intersperse_string, cause);
-  u8* intersperse_string__str    = (u8*)from_ptr(f2__malloc(intersperse_string__length + 1));
+  u64               intersperse_string__length = f2string__length(intersperse_string, cause);
+  funk2_character_* intersperse_string__str    = (funk2_character_t*)from_ptr(f2__malloc((intersperse_string__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, intersperse_string, intersperse_string__str);
   u64 total_length = 0;
   {
@@ -106,7 +106,7 @@ f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_st
       }
     }
   }
-  u8* temp_str = (u8*)from_ptr(f2__malloc(total_length + 1));
+  funk2_character_t* temp_str = (funk2_character_t*)from_ptr(f2__malloc((total_length + 1) * sizeof(funk2_character_t)));
   u64 index = 0;
   {
     f2ptr iter = this;
@@ -117,7 +117,7 @@ f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_st
       index += str_length;
       iter = f2cons__cdr(iter, cause);
       if (iter) {
-	memcpy(temp_str + index, intersperse_string__str, intersperse_string__length);
+	memcpy(temp_str + index, intersperse_string__str, intersperse_string__length * sizeof(funk2_character_t));
 	index += intersperse_string__length;
       }
     }

@@ -233,17 +233,17 @@ void f2__primobject__file_handle__initialize() {
   initialize_primobject_1_slot(file_handle,
 			       file_descriptor);
   
-  {char* symbol_str = "close"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "close"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__close, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk = never_gc(cfunk);}
-  {char* symbol_str = "nonblocking-set"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "nonblocking-set"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__nonblocking__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__try_read_character, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__funk = never_gc(cfunk);}
-  {char* symbol_str = "write"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "write"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__write, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk = never_gc(cfunk);}
-  {char* symbol_str = "send"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "send"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__send, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(file_handle__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }

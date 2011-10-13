@@ -543,6 +543,10 @@ f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 f2ptr raw__gensym(f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string);
 f2ptr  f2__gensym(f2ptr cause, f2ptr initial_string);
 
+f2ptr raw__gensym__new_from_utf8(f2ptr cause, char* initial_utf8_string);
+
+#define gensym(cause, str) raw__gensym__new_from_utf8(cause, utf8_string)
+
 // **
 
 void f2__ptypes__initialize__object_slots();

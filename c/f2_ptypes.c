@@ -5634,6 +5634,16 @@ def_pcfunk1(gensym, initial_string,
 	    "generates a symbol that did not exist previously.",
 	    return f2__gensym(this_cause, initial_string));
 
+f2ptr raw__gensym__new_from_utf8(f2ptr cause, char* initial_utf8_string) {
+  u64                initial_string__length = raw__utf8_string__length(initial_utf8_string);
+  funk2_character_t* initial_string         = (funk2_character_t*)from_ptr(f2__malloc(initial_string__length * sizeof(funk2_character_t)));
+  raw__utf8_string__str_copy(initial_utf8_string, initial_string);
+  f2ptr new = raw__gensym(cause, initial_string__length, initial_string);
+  f2__free(to_ptr(initial_string));
+  return new;
+}
+
+
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
   status("funk2_garbage_collector: touch_all_symbols.");
   funk2_symbol_hash_node_t** array_iter = this->array;

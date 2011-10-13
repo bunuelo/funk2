@@ -2940,7 +2940,7 @@ u64 raw__utf8_string__length(char* utf8_string) {
   u64 length = 0;
   do {
     funk2_character_t ch;
-    utf8_string += raw__utf8_string__parse_character(utf8_string, &ch);
+    utf8_string += raw__utf8_char__parse_character(utf8_string, &ch);
     if (ch == 0) {
       return length;
     }

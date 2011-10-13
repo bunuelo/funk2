@@ -663,10 +663,10 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
       f2ptr this__elt  = raw__array__elt(cause, this, 0);
       this__elt__value = f2integer__i(this__elt, cause);
     }
-    char temp_str[32];
-    snprintf(temp_str, 32, pad_front_with_zeros ? ("%09" u64__fstr_without_percent) : u64__fstr, this__elt__value);
+    funk2_character_t temp_str[32];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 32, pad_front_with_zeros ? ("%09" u64__fstr_without_percent) : u64__fstr, this__elt__value);
     //safe_write(1, to_ptr(temp_str), );
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, temp_str__length, temp_str);
   } else {
     f2ptr remaining_decimals_to_print;
     f2ptr first_decimals_to_print = raw__largeinteger__unsigned_array__divide(cause, this, max_decimals_at_once, &remaining_decimals_to_print);

@@ -823,23 +823,23 @@ void f2__string__initialize() {
   f2__primcfunk__init__1(string__load,        filename);
   f2__primcfunk__init__3(string__replace_all, this, token, replacement);
   
-  {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "as-symbol"; __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__as__symbol, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk = never_gc(cfunk);}
-  {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_string.save__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "save"; __funk2.globalenv.object_type.ptype.ptype_string.save__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__save, this, filename, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.save__funk = never_gc(cfunk);}
-  {char* str = "split"; __funk2.globalenv.object_type.ptype.ptype_string.split__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "split"; __funk2.globalenv.object_type.ptype.ptype_string.split__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__split, this, token, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.split__funk = never_gc(cfunk);}
-  {char* str = "contains"; __funk2.globalenv.object_type.ptype.ptype_string.contains__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "contains"; __funk2.globalenv.object_type.ptype.ptype_string.contains__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__contains, this, substring, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.contains__funk = never_gc(cfunk);}
-  {char* str = "substring"; __funk2.globalenv.object_type.ptype.ptype_string.substring__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "substring"; __funk2.globalenv.object_type.ptype.ptype_string.substring__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(string__substring, this, start_index, end_index, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.substring__funk = never_gc(cfunk);}
-  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "is_less_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_less_than, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk = never_gc(cfunk);}
-  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "is_greater_than"; __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__is_greater_than, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk = never_gc(cfunk);}
-  {char* str = "lowercase"; __funk2.globalenv.object_type.ptype.ptype_string.lowercase__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "lowercase"; __funk2.globalenv.object_type.ptype.ptype_string.lowercase__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__lowercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk = never_gc(cfunk);}
-  {char* str = "uppercase"; __funk2.globalenv.object_type.ptype.ptype_string.uppercase__symbol = f2symbol__new(cause, strlen(str), (u8*)str);}
+  {char* str = "uppercase"; __funk2.globalenv.object_type.ptype.ptype_string.uppercase__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
   
 }

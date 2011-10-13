@@ -202,21 +202,21 @@ void f2__primobject_list__initialize() {
   
   initialize_primobject_3_slot(list, write_cmutex, length, cons_cells);
   
-  {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_list.add__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_list.add__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(list__add, this, slot_name, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.add__funk = never_gc(cfunk);}
-  {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "lookup"; __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__lookup, this, slot_name, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk = never_gc(cfunk);}
-  {char* symbol_str = "car"; __funk2.globalenv.object_type.primobject.primobject_type_list.car__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "car"; __funk2.globalenv.object_type.primobject.primobject_type_list.car__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__car, this, slot_name, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.car__funk = never_gc(cfunk);}
-  {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "cdr"; __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__cdr, this, slot_name, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk = never_gc(cfunk);}
-  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "equals"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals, this, that, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.equals__funk = never_gc(cfunk);}
-  {char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__equals_hash_value__loop_free, this, node_hash, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__funk = never_gc(cfunk);}
-  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "equals_hash_value"; __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(list__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__symbol = f2symbol__new(cause, strlen(symbol_str), (u8*)symbol_str);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }

@@ -1479,8 +1479,8 @@ f2ptr raw__float__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u8  float_string[128];
-  u64 float_string__length = snprintf((char*)float_string, 128, "%1.8f", f2float__f(this, cause));
+  funk2_character_t float_string[128];
+  u64               float_string__length = funk2_character_string__snprintf(float_string, 128, "%1.8f", f2float__f(this, cause));
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__float__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, float_string__length, float_string);
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

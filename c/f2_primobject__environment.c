@@ -172,7 +172,7 @@ f2ptr f2environment__primobject_type__new_aux(f2ptr cause) {
 void f2__primobject_environment__reinitialize_globalvars() {
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
   
-  __environment__symbol = f2symbol__new(initial_cause(), strlen("environment"), (u8*)"environment");
+  __environment__symbol = new__symbol(initial_cause(), "environment");
 }
 
 void f2__primobject_environment__initialize() {
@@ -180,7 +180,7 @@ void f2__primobject_environment__initialize() {
   
   global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause(), nil),
 					     nil,
-					     f2symbol__new(initial_cause(), strlen("global_environment"), (u8*)"global_environment")));
+					     new__symbol(initial_cause(), "global_environment")));
   
   funk2_primobject__environment__init(&(__funk2.primobject__environment));
   

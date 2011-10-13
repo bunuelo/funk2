@@ -1222,11 +1222,11 @@ f2ptr f2__fopen(f2ptr cause, f2ptr filename, f2ptr mode) {
   assert_argument_type(string, mode);
   u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
   u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
-  raw__string__str_copy(cause, filename, (u8*)filename__utf8_str);
+  raw__string__utf8_str_copy(cause, filename, (u8*)filename__utf8_str);
   filename__utf8_str[filename__utf8_length] = 0;
   u64 mode__utf8_length = raw__string__utf8_length(cause, mode);
   u8* mode__utf8_str    = (u8*)from_ptr(f2__malloc(mode__utf8_length + 1));
-  raw__string__str_copy(cause, mode, mode__utf8_str);
+  raw__string__utf8_str_copy(cause, mode, mode__utf8_str);
   mode__utf8_str[mode__utf8_length] = 0;
   f2ptr fptr = f2pointer__new(cause, to_ptr(fopen(filename__utf8_str, mode__utf8_str)));
   f2__free(to_ptr(filename__utf8_str));

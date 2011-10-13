@@ -632,15 +632,15 @@ boolean_t raw__string__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
   u64 this__length = raw__string__length(cause, this);
   u64 that__length = raw__string__length(cause, that);
   {
-    u8* this__str = (u8*)from_ptr(f2__malloc(this__length + 1));
+    funk2_character_t* this__str = (funk2_character_t*)from_ptr(f2__malloc((this__length + 1) * sizeof(funk2_character_t)));
     raw__string__str_copy(cause, this, this__str);
     this__str[this__length] = 0;
     
-    u8* that__str = (u8*)from_ptr(f2__malloc(that__length + 1));
+    funk2_character_t* that__str = (funk2_character_t*)from_ptr(f2__malloc((that__length + 1) * sizeof(funk2_character_t)));
     raw__string__str_copy(cause, that, that__str);
     that__str[that__length] = 0;
     
-    comparison = memcmp(this__str, that__str, (this__length < that__length) ? this__length : that__length);
+    comparison = memcmp(this__str, that__str, ((this__length < that__length) ? this__length : that__length) * sizeof(funk2_character_t));
     
     f2__free(to_ptr(this__str));
     f2__free(to_ptr(that__str));

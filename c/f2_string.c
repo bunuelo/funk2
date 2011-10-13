@@ -373,9 +373,9 @@ def_pcfunk1(string__as__symbol, this,
 f2ptr raw__string__save(f2ptr cause, f2ptr this, f2ptr filename) {
   int fd;
   {
-    u64 filename__utf8_length = f2string__utf8_length(filename, cause);
+    u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
     u8* filename__utf8_str = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
-    f2string__utf8_str_copy(filename, cause, filename__utf8_str);
+    raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
     filename__utf8_str[filename__utf8_length] = 0;
     
     fd = open((char*)filename__utf8_str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);

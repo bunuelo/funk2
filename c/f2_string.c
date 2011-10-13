@@ -483,10 +483,10 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
   if (token__length == 0) {
     return f2larva__new(cause, 93, nil);
   }
-  u8* token__str = (u8*)from_ptr(f2__malloc(token__length));
+  funk2_character_t* token__str = (funk2_character_t*)from_ptr(f2__malloc(token__length * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, token, token__str);
   
-  u8* this__str = (u8*)from_ptr(f2__malloc(this__length));
+  funk2_character_t* this__str = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
   
   f2ptr new_seq                 = nil;
@@ -498,8 +498,8 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
     if ((index < 0) || ((index + token__length) > this__length)) {
       error(nil, "\nstring-split assert failed.\n");
     }
-    if (memcmp(this__str + index, token__str, token__length) == 0) {
-      s64   substr__length = index - end_of_last_match_index;
+    if (memcmp(this__str + index, token__str, token__length * sizeof(funk2_character_t)) == 0) {
+      s64 substr__length = index - end_of_last_match_index;
       if ((end_of_last_match_index + substr__length) > this__length) {
 	error(nil, "\nstring-split assert failed.\n");
       }
@@ -518,12 +518,12 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
     }
   }
   {
-    s64   substr__length = this__length - end_of_last_match_index;
+    s64 substr__length = this__length - end_of_last_match_index;
     if ((end_of_last_match_index + substr__length) > this__length) {
       error(nil, "\nstring-split assert failed.\n");
     }
-    f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
-    f2ptr new_cons       = f2cons__new(cause, new_substr, nil);
+    f2ptr new_substr = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
+    f2ptr new_cons   = f2cons__new(cause, new_substr, nil);
     if (iter == nil) {
       new_seq = new_cons;
     } else {

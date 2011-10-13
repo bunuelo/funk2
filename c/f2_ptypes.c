@@ -1084,8 +1084,8 @@ f2ptr raw__double__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u8  double_string[128];
-  u64 double_string__length = snprintf((char*)double_string, 128, "%1.16f", f2double__d(this, cause));
+  funk2_character_t double_string[128];
+  u64               double_string__length = funk2_character_string__snprintf(double_string, 128, "%1.16f", f2double__d(this, cause));
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__double__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, double_string__length, double_string);
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

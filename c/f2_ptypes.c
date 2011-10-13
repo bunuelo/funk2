@@ -2594,7 +2594,7 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, funk2_character
   return string_f2ptr;
 }
 
-f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, u8* init) {
+f2ptr pfunk2__f2string__new(f2ptr cause, u64 length, funk2_character_t* init) {
   check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2string__new(pool_index, cause, length, init);

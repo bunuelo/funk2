@@ -2952,7 +2952,7 @@ void raw__utf8_string__str_copy(char* utf8_string, funk2_character_t* str) {
   u64 index = 0;
   do {
     funk2_character_t ch;
-    utf8_string += raw__utf8_string__parse_character(utf8_string, &ch);
+    utf8_string += raw__utf8_char__parse_character(utf8_string, &ch);
     if (ch == 0) {
       return;
     }

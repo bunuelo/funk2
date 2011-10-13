@@ -52,7 +52,7 @@ f2ptr f2__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
     u64 locale_str__utf8_length = raw__string__utf8_length(cause, locale);
     locale__utf8_str            = alloca(locale_str__utf8_length + 1); raw__string__utf8_str_copy(cause, locale, locale__utf8_str); locale__utf8_str[locale_str__utf8_length] = 0;
   }
-  return raw__setlocale(cause, f2integer__i(category, cause), locale__utf8_str);
+  return raw__setlocale(cause, f2integer__i(category, cause), (char*)locale__utf8_str);
 } 
 def_pcfunk2(locale__setlocale, category, locale,
 	    "",

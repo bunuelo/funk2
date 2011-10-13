@@ -108,7 +108,7 @@ ssize_t funk2_character_string__snprintf(funk2_character_t* string, s64 max_leng
   if (temp_utf8_msg__length + 1 > max_length) {
     return 0;
   }
-  raw__utf8_string__str_copy(temp_utf8_msg, string);
+  raw__utf8_string__str_copy((char*)temp_utf8_msg, string);
   string[temp_utf8_msg__length] = 0;
   return temp_utf8_msg__length;
 }

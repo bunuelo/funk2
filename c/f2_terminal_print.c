@@ -865,7 +865,11 @@ f2ptr f2__terminal_print(f2ptr cause, f2ptr exp) {
   }
   // how to make this thread safe?
   // we need to cmutex somehow.
-  raw__terminal_print_frame__write_string__thread_unsafe(cause, standard_terminal_print_frame, 1, (u8*)"\n");
+  {
+    funk2_character_t temp_str[1];
+    temp_str[0] = (funk2_character_t)'\n';
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, standard_terminal_print_frame, 1, temp_str);
+  }
   return f2__exp__terminal_print_with_frame__thread_unsafe(cause, exp, standard_terminal_print_frame);
 }
 

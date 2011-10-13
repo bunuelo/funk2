@@ -2373,7 +2373,7 @@ f2ptr f2cmutex__primobject_type__new(f2ptr cause) {
 
 // char
 
-f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
+f2ptr ptype_char__new(int pool_index, f2ptr cause, funk2_character_t ch) {
   f2ptr char_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_char_block_t));
   ptype_char_block_t* char_block = (ptype_char_block_t*)from_ptr(raw__f2ptr_to_ptr(char_f2ptr));
   debug__assert(char_block, nil, "block is nil.");
@@ -2384,14 +2384,14 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, u64 ch) {
   return char_f2ptr;
 }
 
-f2ptr pfunk2__f2char__new(f2ptr cause, u64 ch) {
+f2ptr pfunk2__f2char__new(f2ptr cause, funk2_character_t ch) {
   check_wait_politely();
   int pool_index = this_processor_thread__pool_index();
   f2ptr retval = __pure__f2char__new(pool_index, cause, ch);
   return retval;
 }
 
-u64 pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
+funk2_character_t pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -2424,7 +2424,7 @@ def_pcfunk1(char__new, ch,
 	    "",
 	    return f2char__new(this_cause, f2char__ch(ch, this_cause)));
 
-u64 raw__char__ch(f2ptr cause, f2ptr this) {
+funk2_character_t raw__char__ch(f2ptr cause, f2ptr this) {
   return f2char__ch(this, cause);
 }
 
@@ -2497,13 +2497,30 @@ f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u8            char_string[128];
-  u64           char_string__length;
-  unsigned char ch = f2char__ch(this, cause);
+  funk2_character_t char_string[128];
+  u64               char_string__length;
+  funk2_character_t ch = f2char__ch(this, cause);
   if (ch >= 28) {
-    char_string__length = snprintf((char*)char_string, 128, "%c%c%c", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_char, cause), (char)ch);
+    char_string__length = 3;
+    char_string[0] = f2char__ch(__funk2.reader.char__escape, cause);
+    char_string[1] = f2char__ch(__funk2.reader.char__escape_char, cause);
+    char_string[2] = ch;
+    char_string[3] = 0;
   } else {
-    char_string__length = snprintf((char*)char_string, 128, "%c%c%X", (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex_char, cause), (uint)ch);
+    char_string__length = 2;
+    char_string[0] = f2char__ch(__funk2.reader.char__escape, cause);
+    char_string[1] = f2char__ch(__funk2.reader.char__escape_hex_char, cause);
+    {
+      char temp_str[128];
+      u64  temp_str__length = snprintf(temp_str, 128, "%X", (uint)ch);
+      {
+	u64 index;
+	for (index = 0; index < temp_str__length; index ++) {
+	  char_string[2 + index] = temp_str[index];
+	}
+      }
+      char_string__length += temp_str__length;
+    }
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__char__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, char_string__length, char_string);

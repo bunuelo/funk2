@@ -331,16 +331,16 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
       f2ptr cons_cells = f2__list__cons_cells(cause, exp);
       return f2__exp__as__string__with_hash(cause, cons_cells, element_hash);
     } else {
-      char temp_str[1024];
-      snprintf(temp_str, 1024, "<array " pointer__fstr ">", to_ptr(exp));
-      return f2string__new(cause, strlen(temp_str), (u8*)temp_str);
+      funk2_character_t temp_str[1024];
+      u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<array " pointer__fstr ">", to_ptr(exp));
+      return f2string__new(cause, temp_str__length, temp_str);
     }
   }
   case ptype_larva: {
-    u8 temp_str[1024];
+    funk2_character_t temp_str[1024];
     u32 larva_type = f2larva__larva_type(exp, cause);
-    snprintf((char*)temp_str, 1024, "%c%c" u32__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_larva, cause), larva_type);
-    return f2string__new(cause, strlen((char*)temp_str), temp_str);
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "%c%c" u32__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_larva, cause), larva_type);
+    return f2string__new(cause, temp_str__length, temp_str);
   } break;
   }
   return f2larva__new(cause, 23511, nil);

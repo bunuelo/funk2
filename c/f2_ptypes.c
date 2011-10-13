@@ -1729,8 +1729,8 @@ f2ptr raw__pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
-  u8  pointer_string[128];
-  u64 pointer_string__length = snprintf((char*)pointer_string, 128, "%c%c" ptr__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex, cause), f2pointer__p(this, cause));
+  funk2_character_t pointer_string[128];
+  u64               pointer_string__length = funk2_character_string__snprintf(pointer_string, 128, "%c%c" ptr__fstr, (char)f2char__ch(__funk2.reader.char__escape, cause), (char)f2char__ch(__funk2.reader.char__escape_hex, cause), f2pointer__p(this, cause));
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__pointer__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, pointer_string__length, pointer_string);
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

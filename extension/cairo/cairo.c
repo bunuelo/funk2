@@ -702,12 +702,12 @@ f2ptr f2__cairo_context__text_path(f2ptr cause, f2ptr this, f2ptr text) {
       (! raw__string__is_type(cause, text))) {
     return f2larva__new(cause, 1, nil);
   }
-  s64 text__length = raw__string__length(cause, text);
-  u8* text__str    = (u8*)from_ptr(f2__malloc(text__length + 1));
-  raw__string__str_copy(cause, text, text__str);
-  text__str[text__length] = 0;
-  f2ptr result = raw__cairo_context__text_path(cause, this, (char*)text__str);
-  f2__free(to_ptr(text__str));
+  s64 text__utf8_length = raw__string__utf8_length(cause, text);
+  u8* text__utf8_str    = (u8*)from_ptr(f2__malloc(text__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, text, text__utf8_str);
+  text__utf8_str[text__utf8_length] = 0;
+  f2ptr result = raw__cairo_context__text_path(cause, this, (char*)text__utf8_str);
+  f2__free(to_ptr(text__utf8_str));
   return result;
 }
 export_cefunk2(cairo_context__text_path, this, text, 0,

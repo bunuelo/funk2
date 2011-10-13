@@ -684,9 +684,9 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
 	if (x__i + 9 < max_x__i) {
 	  raw__largeinteger__unsigned_array__terminal_print_with_frame(cause, remaining_decimals_to_print, terminal_print_frame, boolean__true);
 	} else if (x__i + 6 < max_x__i) {
-	  char temp_str[32];
-	  snprintf(temp_str, 32, "...");
-	  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+	  funk2_character_t temp_str[32];
+	  u64               temp_str__length = funk2_character_string__snprintf(temp_str, 32, "...");
+	  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, temp_str__length, temp_str);
 	}
       } else if (size__i + 1 == max_size__i) {
 	{

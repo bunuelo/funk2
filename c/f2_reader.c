@@ -1205,7 +1205,7 @@ void funk2_reader__init(funk2_reader_t* this) {
   
   {
     char* str = "reader:end_parens-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->end_parens_exception__symbol = symbol;
     this->end_parens_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->end_parens_exception);
@@ -1213,269 +1213,269 @@ void funk2_reader__init(funk2_reader_t* this) {
   {char* str = "reader:unmatched_begin_paren-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->unmatched_begin_paren_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->unmatched_begin_paren_exception);}
   {
     char* str = "reader:array_end_parens-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->array_end_parens_exception__symbol = symbol;
     this->array_end_parens_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->array_end_parens_exception);
   }
   {
     char* str = "reader:doublelink_end_parens-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->doublelink_end_parens_exception__symbol = symbol;
     this->doublelink_end_parens_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->doublelink_end_parens_exception);
   }
   {
     char* str = "reader:end_of_file-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->end_of_file_exception__symbol = symbol;
     this->end_of_file_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->end_of_file_exception);
   }
-  {char* str = "reader:invalid_argument_type-exception";       f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->invalid_argument_type_exception);}
-  {char* str = "reader:illegal_escape_reader_metro-exception"; f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str); this->illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->illegal_escape_reader_metro_exception);}
+  {char* str = "reader:invalid_argument_type-exception";       f2ptr symbol = new__symbol(cause, str); this->invalid_argument_type_exception       = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->invalid_argument_type_exception);}
+  {char* str = "reader:illegal_escape_reader_metro-exception"; f2ptr symbol = new__symbol(cause, str); this->illegal_escape_reader_metro_exception = f2exception__new(cause, symbol, nil); environment__add_var_value(cause, global_environment(), symbol, this->illegal_escape_reader_metro_exception);}
   {
     char* str = "reader:could_not_read_type-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->could_not_read_type_exception__symbol = symbol;
     this->could_not_read_type_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->could_not_read_type_exception);
   }
   {
     char* str = "reader:no_character_waiting-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->no_character_waiting_exception__symbol = symbol;
     this->no_character_waiting_exception = f2exception__new(cause, symbol, nil);
     environment__add_var_value(cause, global_environment(), symbol, this->no_character_waiting_exception);
   }
   
-  {this->char__decimal_point           = f2char__new(cause, '.');  char* str = "char:decimal_point";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__decimal_point);}
-  {this->char__minus_sign              = f2char__new(cause, '-');  char* str = "char:minus_sign";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__minus_sign);}
+  {this->char__decimal_point           = f2char__new(cause, '.');  char* str = "char:decimal_point";           environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__decimal_point);}
+  {this->char__minus_sign              = f2char__new(cause, '-');  char* str = "char:minus_sign";              environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__minus_sign);}
   
-  {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__space);}
-  {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__tab);}
-  {this->char__newline                 = f2char__new(cause, '\n'); char* str = "char:newline";                 environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__newline);}
-  {this->char__return                  = f2char__new(cause, '\r'); char* str = "char:return";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__return);}
-  {this->char__backspace               = f2char__new(cause, '\b'); char* str = "char:backspace";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__backspace);}
+  {this->char__space                   = f2char__new(cause, ' ');  char* str = "char:space";                   environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__space);}
+  {this->char__tab                     = f2char__new(cause, '\t'); char* str = "char:tab";                     environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__tab);}
+  {this->char__newline                 = f2char__new(cause, '\n'); char* str = "char:newline";                 environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__newline);}
+  {this->char__return                  = f2char__new(cause, '\r'); char* str = "char:return";                  environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__return);}
+  {this->char__backspace               = f2char__new(cause, '\b'); char* str = "char:backspace";               environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__backspace);}
   
-  {this->char__0                       = f2char__new(cause, '0'); char* str = "char:0"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__0);}
-  {this->char__1                       = f2char__new(cause, '1'); char* str = "char:1"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__1);}
-  {this->char__2                       = f2char__new(cause, '2'); char* str = "char:2"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__2);}
-  {this->char__3                       = f2char__new(cause, '3'); char* str = "char:3"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__3);}
-  {this->char__4                       = f2char__new(cause, '4'); char* str = "char:4"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__4);}
-  {this->char__5                       = f2char__new(cause, '5'); char* str = "char:5"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__5);}
-  {this->char__6                       = f2char__new(cause, '6'); char* str = "char:6"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__6);}
-  {this->char__7                       = f2char__new(cause, '7'); char* str = "char:7"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__7);}
-  {this->char__8                       = f2char__new(cause, '8'); char* str = "char:8"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__8);}
-  {this->char__9                       = f2char__new(cause, '9'); char* str = "char:9"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__9);}
+  {this->char__0                       = f2char__new(cause, '0'); char* str = "char:0"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__0);}
+  {this->char__1                       = f2char__new(cause, '1'); char* str = "char:1"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__1);}
+  {this->char__2                       = f2char__new(cause, '2'); char* str = "char:2"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__2);}
+  {this->char__3                       = f2char__new(cause, '3'); char* str = "char:3"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__3);}
+  {this->char__4                       = f2char__new(cause, '4'); char* str = "char:4"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__4);}
+  {this->char__5                       = f2char__new(cause, '5'); char* str = "char:5"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__5);}
+  {this->char__6                       = f2char__new(cause, '6'); char* str = "char:6"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__6);}
+  {this->char__7                       = f2char__new(cause, '7'); char* str = "char:7"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__7);}
+  {this->char__8                       = f2char__new(cause, '8'); char* str = "char:8"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__8);}
+  {this->char__9                       = f2char__new(cause, '9'); char* str = "char:9"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__9);}
   
-  {this->char__lowercase_a             = f2char__new(cause, 'a'); char* str = "char:lowercase_a"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_a);}
-  {this->char__lowercase_b             = f2char__new(cause, 'b'); char* str = "char:lowercase_b"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_b);}
-  {this->char__lowercase_c             = f2char__new(cause, 'c'); char* str = "char:lowercase_c"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_c);}
-  {this->char__lowercase_d             = f2char__new(cause, 'd'); char* str = "char:lowercase_d"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_d);}
-  {this->char__lowercase_e             = f2char__new(cause, 'e'); char* str = "char:lowercase_e"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_e);}
-  {this->char__lowercase_f             = f2char__new(cause, 'f'); char* str = "char:lowercase_f"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_f);}
-  {this->char__lowercase_g             = f2char__new(cause, 'g'); char* str = "char:lowercase_g"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_g);}
-  {this->char__lowercase_h             = f2char__new(cause, 'h'); char* str = "char:lowercase_h"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_h);}
-  {this->char__lowercase_i             = f2char__new(cause, 'i'); char* str = "char:lowercase_i"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_i);}
-  {this->char__lowercase_j             = f2char__new(cause, 'j'); char* str = "char:lowercase_j"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_j);}
-  {this->char__lowercase_k             = f2char__new(cause, 'k'); char* str = "char:lowercase_k"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_k);}
-  {this->char__lowercase_l             = f2char__new(cause, 'l'); char* str = "char:lowercase_l"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_l);}
-  {this->char__lowercase_m             = f2char__new(cause, 'm'); char* str = "char:lowercase_m"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_m);}
-  {this->char__lowercase_n             = f2char__new(cause, 'n'); char* str = "char:lowercase_n"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_n);}
-  {this->char__lowercase_o             = f2char__new(cause, 'o'); char* str = "char:lowercase_o"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_o);}
-  {this->char__lowercase_p             = f2char__new(cause, 'p'); char* str = "char:lowercase_p"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_p);}
-  {this->char__lowercase_q             = f2char__new(cause, 'q'); char* str = "char:lowercase_q"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_q);}
-  {this->char__lowercase_r             = f2char__new(cause, 'r'); char* str = "char:lowercase_r"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_r);}
-  {this->char__lowercase_s             = f2char__new(cause, 's'); char* str = "char:lowercase_s"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_s);}
-  {this->char__lowercase_t             = f2char__new(cause, 't'); char* str = "char:lowercase_t"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_t);}
-  {this->char__lowercase_u             = f2char__new(cause, 'u'); char* str = "char:lowercase_u"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_u);}
-  {this->char__lowercase_v             = f2char__new(cause, 'v'); char* str = "char:lowercase_v"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_v);}
-  {this->char__lowercase_w             = f2char__new(cause, 'w'); char* str = "char:lowercase_w"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_w);}
-  {this->char__lowercase_x             = f2char__new(cause, 'x'); char* str = "char:lowercase_x"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_x);}
-  {this->char__lowercase_y             = f2char__new(cause, 'y'); char* str = "char:lowercase_y"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_y);}
-  {this->char__lowercase_z             = f2char__new(cause, 'z'); char* str = "char:lowercase_z"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__lowercase_z);}
+  {this->char__lowercase_a             = f2char__new(cause, 'a'); char* str = "char:lowercase_a"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_a);}
+  {this->char__lowercase_b             = f2char__new(cause, 'b'); char* str = "char:lowercase_b"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_b);}
+  {this->char__lowercase_c             = f2char__new(cause, 'c'); char* str = "char:lowercase_c"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_c);}
+  {this->char__lowercase_d             = f2char__new(cause, 'd'); char* str = "char:lowercase_d"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_d);}
+  {this->char__lowercase_e             = f2char__new(cause, 'e'); char* str = "char:lowercase_e"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_e);}
+  {this->char__lowercase_f             = f2char__new(cause, 'f'); char* str = "char:lowercase_f"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_f);}
+  {this->char__lowercase_g             = f2char__new(cause, 'g'); char* str = "char:lowercase_g"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_g);}
+  {this->char__lowercase_h             = f2char__new(cause, 'h'); char* str = "char:lowercase_h"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_h);}
+  {this->char__lowercase_i             = f2char__new(cause, 'i'); char* str = "char:lowercase_i"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_i);}
+  {this->char__lowercase_j             = f2char__new(cause, 'j'); char* str = "char:lowercase_j"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_j);}
+  {this->char__lowercase_k             = f2char__new(cause, 'k'); char* str = "char:lowercase_k"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_k);}
+  {this->char__lowercase_l             = f2char__new(cause, 'l'); char* str = "char:lowercase_l"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_l);}
+  {this->char__lowercase_m             = f2char__new(cause, 'm'); char* str = "char:lowercase_m"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_m);}
+  {this->char__lowercase_n             = f2char__new(cause, 'n'); char* str = "char:lowercase_n"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_n);}
+  {this->char__lowercase_o             = f2char__new(cause, 'o'); char* str = "char:lowercase_o"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_o);}
+  {this->char__lowercase_p             = f2char__new(cause, 'p'); char* str = "char:lowercase_p"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_p);}
+  {this->char__lowercase_q             = f2char__new(cause, 'q'); char* str = "char:lowercase_q"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_q);}
+  {this->char__lowercase_r             = f2char__new(cause, 'r'); char* str = "char:lowercase_r"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_r);}
+  {this->char__lowercase_s             = f2char__new(cause, 's'); char* str = "char:lowercase_s"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_s);}
+  {this->char__lowercase_t             = f2char__new(cause, 't'); char* str = "char:lowercase_t"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_t);}
+  {this->char__lowercase_u             = f2char__new(cause, 'u'); char* str = "char:lowercase_u"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_u);}
+  {this->char__lowercase_v             = f2char__new(cause, 'v'); char* str = "char:lowercase_v"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_v);}
+  {this->char__lowercase_w             = f2char__new(cause, 'w'); char* str = "char:lowercase_w"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_w);}
+  {this->char__lowercase_x             = f2char__new(cause, 'x'); char* str = "char:lowercase_x"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_x);}
+  {this->char__lowercase_y             = f2char__new(cause, 'y'); char* str = "char:lowercase_y"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_y);}
+  {this->char__lowercase_z             = f2char__new(cause, 'z'); char* str = "char:lowercase_z"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__lowercase_z);}
   
-  {this->char__uppercase_a             = f2char__new(cause, 'A'); char* str = "char:uppercase_a"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_a);}
-  {this->char__uppercase_b             = f2char__new(cause, 'B'); char* str = "char:uppercase_b"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_b);}
-  {this->char__uppercase_c             = f2char__new(cause, 'C'); char* str = "char:uppercase_c"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_c);}
-  {this->char__uppercase_d             = f2char__new(cause, 'D'); char* str = "char:uppercase_d"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_d);}
-  {this->char__uppercase_e             = f2char__new(cause, 'E'); char* str = "char:uppercase_e"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_e);}
-  {this->char__uppercase_f             = f2char__new(cause, 'F'); char* str = "char:uppercase_f"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_f);}
-  {this->char__uppercase_g             = f2char__new(cause, 'G'); char* str = "char:uppercase_g"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_g);}
-  {this->char__uppercase_h             = f2char__new(cause, 'H'); char* str = "char:uppercase_h"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_h);}
-  {this->char__uppercase_i             = f2char__new(cause, 'I'); char* str = "char:uppercase_i"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_i);}
-  {this->char__uppercase_j             = f2char__new(cause, 'J'); char* str = "char:uppercase_j"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_j);}
-  {this->char__uppercase_k             = f2char__new(cause, 'K'); char* str = "char:uppercase_k"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_k);}
-  {this->char__uppercase_l             = f2char__new(cause, 'L'); char* str = "char:uppercase_l"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_l);}
-  {this->char__uppercase_m             = f2char__new(cause, 'M'); char* str = "char:uppercase_m"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_m);}
-  {this->char__uppercase_n             = f2char__new(cause, 'N'); char* str = "char:uppercase_n"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_n);}
-  {this->char__uppercase_o             = f2char__new(cause, 'O'); char* str = "char:uppercase_o"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_o);}
-  {this->char__uppercase_p             = f2char__new(cause, 'P'); char* str = "char:uppercase_p"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_p);}
-  {this->char__uppercase_q             = f2char__new(cause, 'Q'); char* str = "char:uppercase_q"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_q);}
-  {this->char__uppercase_r             = f2char__new(cause, 'R'); char* str = "char:uppercase_r"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_r);}
-  {this->char__uppercase_s             = f2char__new(cause, 'S'); char* str = "char:uppercase_s"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_s);}
-  {this->char__uppercase_t             = f2char__new(cause, 'T'); char* str = "char:uppercase_t"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_t);}
-  {this->char__uppercase_u             = f2char__new(cause, 'U'); char* str = "char:uppercase_u"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_u);}
-  {this->char__uppercase_v             = f2char__new(cause, 'V'); char* str = "char:uppercase_v"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_v);}
-  {this->char__uppercase_w             = f2char__new(cause, 'W'); char* str = "char:uppercase_w"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_w);}
-  {this->char__uppercase_x             = f2char__new(cause, 'X'); char* str = "char:uppercase_x"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_x);}
-  {this->char__uppercase_y             = f2char__new(cause, 'Y'); char* str = "char:uppercase_y"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_y);}
-  {this->char__uppercase_z             = f2char__new(cause, 'Z'); char* str = "char:uppercase_z"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__uppercase_z);}
+  {this->char__uppercase_a             = f2char__new(cause, 'A'); char* str = "char:uppercase_a"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_a);}
+  {this->char__uppercase_b             = f2char__new(cause, 'B'); char* str = "char:uppercase_b"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_b);}
+  {this->char__uppercase_c             = f2char__new(cause, 'C'); char* str = "char:uppercase_c"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_c);}
+  {this->char__uppercase_d             = f2char__new(cause, 'D'); char* str = "char:uppercase_d"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_d);}
+  {this->char__uppercase_e             = f2char__new(cause, 'E'); char* str = "char:uppercase_e"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_e);}
+  {this->char__uppercase_f             = f2char__new(cause, 'F'); char* str = "char:uppercase_f"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_f);}
+  {this->char__uppercase_g             = f2char__new(cause, 'G'); char* str = "char:uppercase_g"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_g);}
+  {this->char__uppercase_h             = f2char__new(cause, 'H'); char* str = "char:uppercase_h"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_h);}
+  {this->char__uppercase_i             = f2char__new(cause, 'I'); char* str = "char:uppercase_i"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_i);}
+  {this->char__uppercase_j             = f2char__new(cause, 'J'); char* str = "char:uppercase_j"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_j);}
+  {this->char__uppercase_k             = f2char__new(cause, 'K'); char* str = "char:uppercase_k"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_k);}
+  {this->char__uppercase_l             = f2char__new(cause, 'L'); char* str = "char:uppercase_l"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_l);}
+  {this->char__uppercase_m             = f2char__new(cause, 'M'); char* str = "char:uppercase_m"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_m);}
+  {this->char__uppercase_n             = f2char__new(cause, 'N'); char* str = "char:uppercase_n"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_n);}
+  {this->char__uppercase_o             = f2char__new(cause, 'O'); char* str = "char:uppercase_o"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_o);}
+  {this->char__uppercase_p             = f2char__new(cause, 'P'); char* str = "char:uppercase_p"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_p);}
+  {this->char__uppercase_q             = f2char__new(cause, 'Q'); char* str = "char:uppercase_q"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_q);}
+  {this->char__uppercase_r             = f2char__new(cause, 'R'); char* str = "char:uppercase_r"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_r);}
+  {this->char__uppercase_s             = f2char__new(cause, 'S'); char* str = "char:uppercase_s"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_s);}
+  {this->char__uppercase_t             = f2char__new(cause, 'T'); char* str = "char:uppercase_t"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_t);}
+  {this->char__uppercase_u             = f2char__new(cause, 'U'); char* str = "char:uppercase_u"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_u);}
+  {this->char__uppercase_v             = f2char__new(cause, 'V'); char* str = "char:uppercase_v"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_v);}
+  {this->char__uppercase_w             = f2char__new(cause, 'W'); char* str = "char:uppercase_w"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_w);}
+  {this->char__uppercase_x             = f2char__new(cause, 'X'); char* str = "char:uppercase_x"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_x);}
+  {this->char__uppercase_y             = f2char__new(cause, 'Y'); char* str = "char:uppercase_y"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_y);}
+  {this->char__uppercase_z             = f2char__new(cause, 'Z'); char* str = "char:uppercase_z"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__uppercase_z);}
   
-  {this->char__left_paren              = f2char__new(cause, '[');  char* str = "char:left_paren";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__left_paren);}
-  {this->char__right_paren             = f2char__new(cause, ']');  char* str = "char:right_paren";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__right_paren);}
-  {this->char__array_left_paren        = f2char__new(cause, '(');  char* str = "char:array_left_paren";        environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_left_paren);}
-  {this->char__array_right_paren       = f2char__new(cause, ')');  char* str = "char:array_right_paren";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__array_right_paren);}
-  {this->char__doublelink_right_paren  = f2char__new(cause, '}');  char* str = "char:doublelink_right_paren";  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_right_paren);}
-  {this->char__doublelink_left_paren   = f2char__new(cause, '{');  char* str = "char:doublelink_left_paren";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__doublelink_left_paren);}
-  {this->char__quote                   = f2char__new(cause, '\\'); char* str = "char:quote";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__quote);}
-  {this->char__backquote               = f2char__new(cause, '`');  char* str = "char:backquote";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__backquote);}
-  {this->char__comma                   = f2char__new(cause, ',');  char* str = "char:comma";                   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__comma);}
-  {this->char__cdr_comma               = f2char__new(cause, '@');  char* str = "char:cdr_comma";               environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__cdr_comma);}
-  {this->char__funktion                = f2char__new(cause, '&');  char* str = "char:funktion";                environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__funktion);}
-  {this->char__escape                  = f2char__new(cause, '#');  char* str = "char:escape";                  environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape);}
-  {this->char__escape_hex              = f2char__new(cause, 'x');  char* str = "char:escape_hex";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex);}
-  {this->char__escape_hex_char         = f2char__new(cause, 'c');  char* str = "char:escape_hex_char";         environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_hex_char);}
-  {this->char__escape_char             = f2char__new(cause, '\\'); char* str = "char:escape_char";             environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_char);}
-  {this->char__escape_larva            = f2char__new(cause, '!');  char* str = "char:escape_larva";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__escape_larva);}
-  {this->char__string_quote            = f2char__new(cause, '\''); char* str = "char:string_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_quote);}
-  {this->char__string_escape_newline   = f2char__new(cause, 'n');  char* str = "char:string_escape_newline";   environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_newline);}
-  {this->char__string_escape_return    = f2char__new(cause, 'r');  char* str = "char:string_escape_return";    environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_return);}
-  {this->char__string_escape_tab       = f2char__new(cause, 't');  char* str = "char:string_escape_tab";       environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_tab);}
-  {this->char__string_escape_backspace = f2char__new(cause, 'b');  char* str = "char:string_escape_backspace"; environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__string_escape_backspace);}
-  {this->char__symbol_quote            = f2char__new(cause, '|');  char* str = "char:symbol_quote";            environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_quote);}
-  {this->char__symbol_escape           = f2char__new(cause, '\\'); char* str = "char:symbol_escape";           environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_escape);}
-  {this->char__symbol_key              = f2char__new(cause, ':');  char* str = "char:symbol_key";              environment__add_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str), this->char__symbol_key);}
+  {this->char__left_paren              = f2char__new(cause, '[');  char* str = "char:left_paren";              environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__left_paren);}
+  {this->char__right_paren             = f2char__new(cause, ']');  char* str = "char:right_paren";             environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__right_paren);}
+  {this->char__array_left_paren        = f2char__new(cause, '(');  char* str = "char:array_left_paren";        environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__array_left_paren);}
+  {this->char__array_right_paren       = f2char__new(cause, ')');  char* str = "char:array_right_paren";       environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__array_right_paren);}
+  {this->char__doublelink_right_paren  = f2char__new(cause, '}');  char* str = "char:doublelink_right_paren";  environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__doublelink_right_paren);}
+  {this->char__doublelink_left_paren   = f2char__new(cause, '{');  char* str = "char:doublelink_left_paren";   environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__doublelink_left_paren);}
+  {this->char__quote                   = f2char__new(cause, '\\'); char* str = "char:quote";                   environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__quote);}
+  {this->char__backquote               = f2char__new(cause, '`');  char* str = "char:backquote";               environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__backquote);}
+  {this->char__comma                   = f2char__new(cause, ',');  char* str = "char:comma";                   environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__comma);}
+  {this->char__cdr_comma               = f2char__new(cause, '@');  char* str = "char:cdr_comma";               environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__cdr_comma);}
+  {this->char__funktion                = f2char__new(cause, '&');  char* str = "char:funktion";                environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__funktion);}
+  {this->char__escape                  = f2char__new(cause, '#');  char* str = "char:escape";                  environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__escape);}
+  {this->char__escape_hex              = f2char__new(cause, 'x');  char* str = "char:escape_hex";              environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__escape_hex);}
+  {this->char__escape_hex_char         = f2char__new(cause, 'c');  char* str = "char:escape_hex_char";         environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__escape_hex_char);}
+  {this->char__escape_char             = f2char__new(cause, '\\'); char* str = "char:escape_char";             environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__escape_char);}
+  {this->char__escape_larva            = f2char__new(cause, '!');  char* str = "char:escape_larva";            environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__escape_larva);}
+  {this->char__string_quote            = f2char__new(cause, '\''); char* str = "char:string_quote";            environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__string_quote);}
+  {this->char__string_escape_newline   = f2char__new(cause, 'n');  char* str = "char:string_escape_newline";   environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__string_escape_newline);}
+  {this->char__string_escape_return    = f2char__new(cause, 'r');  char* str = "char:string_escape_return";    environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__string_escape_return);}
+  {this->char__string_escape_tab       = f2char__new(cause, 't');  char* str = "char:string_escape_tab";       environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__string_escape_tab);}
+  {this->char__string_escape_backspace = f2char__new(cause, 'b');  char* str = "char:string_escape_backspace"; environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__string_escape_backspace);}
+  {this->char__symbol_quote            = f2char__new(cause, '|');  char* str = "char:symbol_quote";            environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_quote);}
+  {this->char__symbol_escape           = f2char__new(cause, '\\'); char* str = "char:symbol_escape";           environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_escape);}
+  {this->char__symbol_key              = f2char__new(cause, ':');  char* str = "char:symbol_key";              environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_key);}
   
 }
 
 void funk2_reader__reinit(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
-  {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "reader:doublelink_end_parens-exception";       this->doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:doublelink_end_parens-exception";       this->doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {
     char* str = "reader:end_of_file-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->end_of_file_exception__symbol = symbol;
     this->end_of_file_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
   }
-  {char* str = "reader:invalid_argument_type-exception";       this->invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "reader:illegal_escape_reader_metro-exception"; this->illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "reader:invalid_argument_type-exception";       this->invalid_argument_type_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:illegal_escape_reader_metro-exception"; this->illegal_escape_reader_metro_exception = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {
     char* str = "reader:could_not_read_type-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->could_not_read_type_exception__symbol = symbol;
     this->could_not_read_type_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
   }
   {
     char* str = "reader:no_character_waiting-exception";
-    f2ptr symbol = f2symbol__new(cause, strlen(str), (u8*)str);
+    f2ptr symbol = new__symbol(cause, str);
     this->no_character_waiting_exception__symbol = symbol;
     this->no_character_waiting_exception = environment__safe_lookup_var_value(cause, global_environment(), symbol);
   }
   
-  {char* str = "char:decimal_point";           this->char__decimal_point           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:minus_sign";              this->char__minus_sign              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:decimal_point";           this->char__decimal_point           = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:minus_sign";              this->char__minus_sign              = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   
-  {char* str = "char:space";                   this->char__space                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:tab";                     this->char__tab                     = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:newline";                 this->char__newline                 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:return";                  this->char__return                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:backspace";               this->char__backspace               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:space";                   this->char__space                   = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:tab";                     this->char__tab                     = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:newline";                 this->char__newline                 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:return";                  this->char__return                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:backspace";               this->char__backspace               = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   
-  {char* str = "char:0"; this->char__0 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:1"; this->char__1 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:2"; this->char__2 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:3"; this->char__3 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:4"; this->char__4 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:5"; this->char__5 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:6"; this->char__6 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:7"; this->char__7 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:8"; this->char__8 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:9"; this->char__9 = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:0"; this->char__0 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:1"; this->char__1 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:2"; this->char__2 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:3"; this->char__3 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:4"; this->char__4 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:5"; this->char__5 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:6"; this->char__6 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:7"; this->char__7 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:8"; this->char__8 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:9"; this->char__9 = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   
-  {char* str = "char:lowercase_a"; this->char__lowercase_a = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_b"; this->char__lowercase_b = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_c"; this->char__lowercase_c = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_d"; this->char__lowercase_d = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_e"; this->char__lowercase_e = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_f"; this->char__lowercase_f = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_g"; this->char__lowercase_g = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_h"; this->char__lowercase_h = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_i"; this->char__lowercase_i = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_j"; this->char__lowercase_j = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_k"; this->char__lowercase_k = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_l"; this->char__lowercase_l = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_m"; this->char__lowercase_m = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_n"; this->char__lowercase_n = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_o"; this->char__lowercase_o = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_p"; this->char__lowercase_p = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_q"; this->char__lowercase_q = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_r"; this->char__lowercase_r = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_s"; this->char__lowercase_s = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_t"; this->char__lowercase_t = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_u"; this->char__lowercase_u = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_v"; this->char__lowercase_v = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_w"; this->char__lowercase_w = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_x"; this->char__lowercase_x = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_y"; this->char__lowercase_y = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:lowercase_z"; this->char__lowercase_z = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:lowercase_a"; this->char__lowercase_a = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_b"; this->char__lowercase_b = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_c"; this->char__lowercase_c = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_d"; this->char__lowercase_d = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_e"; this->char__lowercase_e = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_f"; this->char__lowercase_f = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_g"; this->char__lowercase_g = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_h"; this->char__lowercase_h = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_i"; this->char__lowercase_i = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_j"; this->char__lowercase_j = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_k"; this->char__lowercase_k = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_l"; this->char__lowercase_l = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_m"; this->char__lowercase_m = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_n"; this->char__lowercase_n = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_o"; this->char__lowercase_o = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_p"; this->char__lowercase_p = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_q"; this->char__lowercase_q = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_r"; this->char__lowercase_r = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_s"; this->char__lowercase_s = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_t"; this->char__lowercase_t = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_u"; this->char__lowercase_u = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_v"; this->char__lowercase_v = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_w"; this->char__lowercase_w = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_x"; this->char__lowercase_x = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_y"; this->char__lowercase_y = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_z"; this->char__lowercase_z = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   
-  {char* str = "char:uppercase_a"; this->char__uppercase_a = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_b"; this->char__uppercase_b = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_c"; this->char__uppercase_c = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_d"; this->char__uppercase_d = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_e"; this->char__uppercase_e = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_f"; this->char__uppercase_f = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_g"; this->char__uppercase_g = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_h"; this->char__uppercase_h = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_i"; this->char__uppercase_i = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_j"; this->char__uppercase_j = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_k"; this->char__uppercase_k = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_l"; this->char__uppercase_l = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_m"; this->char__uppercase_m = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_n"; this->char__uppercase_n = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_o"; this->char__uppercase_o = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_p"; this->char__uppercase_p = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_q"; this->char__uppercase_q = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_r"; this->char__uppercase_r = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_s"; this->char__uppercase_s = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_t"; this->char__uppercase_t = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_u"; this->char__uppercase_u = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_v"; this->char__uppercase_v = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_w"; this->char__uppercase_w = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_x"; this->char__uppercase_x = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_y"; this->char__uppercase_y = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:uppercase_z"; this->char__uppercase_z = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:uppercase_a"; this->char__uppercase_a = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_b"; this->char__uppercase_b = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_c"; this->char__uppercase_c = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_d"; this->char__uppercase_d = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_e"; this->char__uppercase_e = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_f"; this->char__uppercase_f = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_g"; this->char__uppercase_g = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_h"; this->char__uppercase_h = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_i"; this->char__uppercase_i = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_j"; this->char__uppercase_j = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_k"; this->char__uppercase_k = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_l"; this->char__uppercase_l = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_m"; this->char__uppercase_m = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_n"; this->char__uppercase_n = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_o"; this->char__uppercase_o = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_p"; this->char__uppercase_p = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_q"; this->char__uppercase_q = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_r"; this->char__uppercase_r = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_s"; this->char__uppercase_s = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_t"; this->char__uppercase_t = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_u"; this->char__uppercase_u = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_v"; this->char__uppercase_v = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_w"; this->char__uppercase_w = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_x"; this->char__uppercase_x = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_y"; this->char__uppercase_y = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:uppercase_z"; this->char__uppercase_z = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   
-  {char* str = "char:left_paren";              this->char__left_paren              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:right_paren";             this->char__right_paren             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:array_left_paren";        this->char__array_left_paren        = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:array_right_paren";       this->char__array_right_paren       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:doublelink_right_paren";  this->char__doublelink_right_paren  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:doublelink_left_paren";   this->char__doublelink_left_paren   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:quote";                   this->char__quote                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:backquote";               this->char__backquote               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:comma";                   this->char__comma                   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:cdr_comma";               this->char__cdr_comma               = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:funktion";                this->char__funktion                = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape";                  this->char__escape                  = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_hex";              this->char__escape_hex              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_hex_char";         this->char__escape_hex_char         = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_char";             this->char__escape_char             = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:escape_larva";            this->char__escape_larva            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_quote";            this->char__string_quote            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_escape_newline";   this->char__string_escape_newline   = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_escape_return";    this->char__string_escape_return    = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_escape_tab";       this->char__string_escape_tab       = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:string_escape_backspace"; this->char__string_escape_backspace = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:symbol_quote";            this->char__symbol_quote            = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:symbol_escape";           this->char__symbol_escape           = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
-  {char* str = "char:symbol_key";              this->char__symbol_key              = environment__safe_lookup_var_value(cause, global_environment(), f2symbol__new(cause, strlen(str), (u8*)str));}
+  {char* str = "char:left_paren";              this->char__left_paren              = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:right_paren";             this->char__right_paren             = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:array_left_paren";        this->char__array_left_paren        = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:array_right_paren";       this->char__array_right_paren       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:doublelink_right_paren";  this->char__doublelink_right_paren  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:doublelink_left_paren";   this->char__doublelink_left_paren   = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:quote";                   this->char__quote                   = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:backquote";               this->char__backquote               = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:comma";                   this->char__comma                   = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:cdr_comma";               this->char__cdr_comma               = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:funktion";                this->char__funktion                = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:escape";                  this->char__escape                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:escape_hex";              this->char__escape_hex              = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:escape_hex_char";         this->char__escape_hex_char         = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:escape_char";             this->char__escape_char             = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:escape_larva";            this->char__escape_larva            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:string_quote";            this->char__string_quote            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:string_escape_newline";   this->char__string_escape_newline   = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:string_escape_return";    this->char__string_escape_return    = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:string_escape_tab";       this->char__string_escape_tab       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:string_escape_backspace"; this->char__string_escape_backspace = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:symbol_quote";            this->char__symbol_quote            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:symbol_escape";           this->char__symbol_escape           = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:symbol_key";              this->char__symbol_key              = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
 }
 
 void funk2_reader__destroy(funk2_reader_t* this) {

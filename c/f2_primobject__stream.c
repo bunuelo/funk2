@@ -114,12 +114,12 @@ f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
   assert_argument_type(string,  filename);
   assert_argument_type(integer, mode);
-  u64   filename__length = f2string__length(filename, cause);
-  char* raw_filename = alloca(filename__length + 1);
-  f2string__str_copy(filename, cause, (u8*)raw_filename);
-  raw_filename[filename__length] = 0;
+  u64   filename__utf8_length = raw__string__utf8_length(cause, filename);
+  char* filename__utf8_str    = (char*)alloca(filename__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, filename, (u8*)filename__utf8_str);
+  filename__utf8_str[filename__utf8_length] = 0;
   u64 raw_mode = f2integer__i(mode, cause);
-  return raw__stream__new_open_file(cause, raw_filename, raw_mode);
+  return raw__stream__new_open_file(cause, filename__utf8_str, raw_mode);
 }
 def_pcfunk2(stream__new_open_file, filename, mode,
 	    "",

@@ -1709,16 +1709,16 @@ f2ptr raw__cairo_pdf_surface__new(f2ptr cause, f2ptr filename, f2ptr width, f2pt
 #if defined(F2__CAIRO_SUPPORTED)
   cairo_surface_t* cairo_surface;
   {
-    s64 filename__length = raw__string__length(cause, filename);
-    u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-    raw__string__str_copy(cause, filename, filename__str);
-    filename__str[filename__length] = 0;
+    s64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+    u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+    raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+    filename__utf8_str[filename__utf8_length] = 0;
     double width__d  = f2double__d(width,  cause);
     double height__d = f2double__d(height, cause);
-    cairo_surface = cairo_pdf_surface_create((char*)filename__str,
+    cairo_surface = cairo_pdf_surface_create((char*)filename__utf8_str,
 					     width__d,
 					     height__d);
-    f2__free(to_ptr(filename__str));
+    f2__free(to_ptr(filename__utf8_str));
   }
   cairo_status_t status = cairo_surface_status(cairo_surface);
   if (status != CAIRO_STATUS_SUCCESS) {

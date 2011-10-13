@@ -288,12 +288,12 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			value = nil;
 			frame__key_count ++;
 			);
-  boolean_t has_cairo_type     = boolean__false;
-  s64       cairo_type_index   = 0;
-  u8**      key_string_array   = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
-  s64*      key_length_array   = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
-  u8**      value_string_array = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
-  s64*      value_length_array = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
+  boolean_t           has_cairo_type     = boolean__false;
+  s64                 cairo_type_index   = 0;
+  funk2_character_t** key_string_array   = (funk2_character_t**)from_ptr(f2__malloc(sizeof(funk2_character_t*) * frame__key_count));
+  s64*                key_length_array   = (s64*)               from_ptr(f2__malloc(sizeof(s64)                * frame__key_count));
+  funk2_character_t** value_string_array = (funk2_character_t**)from_ptr(f2__malloc(sizeof(funk2_character_t*) * frame__key_count));
+  s64*                value_length_array = (s64*)               from_ptr(f2__malloc(sizeof(s64)                * frame__key_count));
   {
     s64 index = 0;
     frame__var__iteration(cause, frame, key, value,
@@ -305,14 +305,14 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			    {
 			      f2ptr key__string = assert_value(f2__exp__as__string(cause, key));
 			      key_length_array[index] = raw__string__length(cause, key__string);
-			      key_string_array[index] = (u8*)from_ptr(f2__malloc(key_length_array[index] + 1));
+			      key_string_array[index] = (funk2_character_t*)from_ptr(f2__malloc((key_length_array[index] + 1) * sizeof(funk2_character_t)));
 			      raw__string__str_copy(cause, key__string, key_string_array[index]);
 			      key_string_array[index][key_length_array[index]] = 0;
 			    }
 			    {
 			      f2ptr value__string = assert_value(f2__exp__as__string(cause, value));
 			      value_length_array[index] = raw__string__length(cause, value__string);
-			      value_string_array[index] = (u8*)from_ptr(f2__malloc(value_length_array[index] + 1));
+			      value_string_array[index] = (funk2_character_t*)from_ptr(f2__malloc((value_length_array[index] + 1) * sizeof(funk2_character_t)));
 			      raw__string__str_copy(cause, value__string, value_string_array[index]);
 			      value_string_array[index][value_length_array[index]] = 0;
 			    }

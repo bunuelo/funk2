@@ -84,8 +84,8 @@ def_pcfunk1(stringlist__concat, this,
 	    return f2__stringlist__concat(this_cause, this));
 
 f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
-  u64               intersperse_string__length = f2string__length(intersperse_string, cause);
-  funk2_character_* intersperse_string__str    = (funk2_character_t*)from_ptr(f2__malloc((intersperse_string__length + 1) * sizeof(funk2_character_t)));
+  u64                intersperse_string__length = f2string__length(intersperse_string, cause);
+  funk2_character_t* intersperse_string__str    = (funk2_character_t*)from_ptr(f2__malloc((intersperse_string__length + 1) * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, intersperse_string, intersperse_string__str);
   u64 total_length = 0;
   {

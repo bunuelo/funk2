@@ -90,7 +90,7 @@ f2ptr f2tensor__elt_from_array_of_integer_indices(f2ptr this, f2ptr indices, f2p
 // end of object
 
 void f2__primobject_tensor__reinitialize_globalvars() {
-  __tensor__symbol = f2symbol__new(initial_cause(), strlen("tensor"), (u8*)"tensor");
+  __tensor__symbol = new__symbol(initial_cause(), "tensor");
 }
 
 void f2__primobject_tensor__initialize() {

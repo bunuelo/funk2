@@ -1301,14 +1301,14 @@ export_cefunk1(cairo_surface__destroy, this, 0, "Destroys the cairo_surface.");
 
 f2ptr raw__cairo_surface__write_to_png(f2ptr cause, f2ptr this, f2ptr filename) {
 #if defined(F2__CAIRO_SUPPORTED)
-  s64 filename__length = raw__string__length(cause, filename);
-  u8* filename__str    = (u8*)from_ptr(f2__malloc(filename__length + 1));
-  raw__string__str_copy(cause, filename, filename__str);
-  filename__str[filename__length] = 0;
+  s64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+  u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+  filename__utf8_str[filename__utf8_length] = 0;
   cairo_surface_t* cairo_surface = raw__cairo_surface__as__cairo_surface_t(cause, this);
-  cairo_surface_write_to_png(cairo_surface, (char*)filename__str);
+  cairo_surface_write_to_png(cairo_surface, (char*)filename__utf8_str);
   cairo_status_t status = cairo_surface_status(cairo_surface);
-  f2__free(to_ptr(filename__str));
+  f2__free(to_ptr(filename__utf8_str));
   if (status != CAIRO_STATUS_SUCCESS) {
     f2ptr cairo_status;
     switch(status) {

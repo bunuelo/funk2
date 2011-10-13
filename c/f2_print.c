@@ -372,9 +372,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
       case ptype_symbol: {
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
 	int  i;
-	u64 symbol__utf8_length = raw__symbol__length(cause, exp);
+	u64 symbol__utf8_length = raw__symbol__utf8_length(cause, exp);
 	u8* symbol__utf8_str    = (u8*)alloca(symbol__utf8_length + 1); 
-	raw__symbol__str_copy(cause, exp, symbol__utf8_str);
+	raw__symbol__utf8_str_copy(cause, exp, symbol__utf8_str);
 	symbol__utf8_str[symbol__utf8_length] = 0;
 	char ch;
 	int  subexp_size[2];

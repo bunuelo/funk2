@@ -460,7 +460,7 @@ f2ptr raw__string__load(f2ptr cause, f2ptr filename) {
     }
   }
   file__utf8_str[file__utf8_length] = 0;
-  f2ptr new_string = raw__string__new_from_utf8(cause, file__utf8_str);
+  f2ptr new_string = raw__string__new_from_utf8(cause, (char*)file__utf8_str);
   f2__free(to_ptr(file__utf8_str));
   close(fd);
   return new_string;

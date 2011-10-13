@@ -694,9 +694,9 @@ void raw__largeinteger__unsigned_array__terminal_print_with_frame(f2ptr cause, f
 	  u64   size__i = f2integer__i(size, cause);
 	  size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
 	}
-	char temp_str[32];
-	snprintf(temp_str, 32, "...");
-	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, strlen(temp_str), (u8*)temp_str);
+	funk2_character_t temp_str[32];
+	u64               temp_str__length = funk2_character_string__snprintf(temp_str, 32, "...");
+	raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, temp_str__length, temp_str);
       }
     }
   }

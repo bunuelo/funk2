@@ -250,12 +250,16 @@ f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   assert_argument_type(stream, this);
   if ((! raw__char__is_type(cause, character)) &&
       (! raw__exception__is_type(cause, character))) {
-    error(nil, "raw__stream__ungetc error: byte must be char or exception.");
+    error(nil, "raw__stream__ungetc error: character must be char or exception.");
     return f2larva__new(cause, 11352, nil);
   }
-  funk2_character_t ch   = f2char__ch(character, cause);
-  u8                byte = (u8)ch;
-  raw__stream__ungetb(cause, this, byte);
+  if (raw__char__is_type(cause, character)) {
+    funk2_character_t ch   = f2char__ch(character, cause);
+    u8                byte = (u8)ch;
+    raw__stream__ungetb(cause, this, byte);
+  } else {
+    raw__stream__ungetb(cause, this, character);
+  }
   return nil;
 }
 def_pcfunk2(stream__ungetc, this, character,
@@ -468,7 +472,7 @@ f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 
 f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
   assert_argument_type(stream, this);
-  f2ptr byte      = f2__stream__try_read_byte(cause, this);
+  f2ptr byte = f2__stream__try_read_byte(cause, this);
   f2ptr character;
   if (raw__integer__is_type(cause, byte)) {
     u8 byte__i = f2integer__i(byte, cause);

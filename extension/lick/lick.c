@@ -554,8 +554,8 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				chunk_index += 8;
 			      }
 			      if (raw__symbol__is_type(cause, type_name)) {
-				s64 type_name__length = raw__symbol__length(cause, type_name);
-				u8* type_name__str    = (u8*)from_ptr(f2__malloc(type_name__length));
+				s64                type_name__length = raw__symbol__length(cause, type_name);
+				funk2_character_t* type_name__str    = (funk2_character_t*)from_ptr(f2__malloc(type_name__length * sizeof(funk2_character_t)));
 				raw__symbol__str_copy(cause, type_name, type_name__str);
 				{
 				  s64 index;
@@ -572,7 +572,7 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				raw__chunk__bit64__elt__set(cause, chunk, chunk_index, lick_chunk__chunk__length);
 				chunk_index += 8;
 				{
-				  u8* lick_chunk__chunk__str = (u8*)from_ptr(f2__malloc(lick_chunk__chunk__length));
+				  funk2_character_t* lick_chunk__chunk__str = (funk2_character_t*)from_ptr(f2__malloc(lick_chunk__chunk__length * sizeof(funk2_character_t)));
 				  raw__chunk__str_copy(cause, lick_chunk__chunk, lick_chunk__chunk__str);
 				  {
 				    s64 index;

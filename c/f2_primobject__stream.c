@@ -81,9 +81,10 @@ f2ptr f2__string_stream__new(f2ptr cause, f2ptr string, f2ptr index) {
   if (__string_stream__symbol == -1) {__string_stream__symbol = new__symbol(cause, "string_stream");}
   assert_argument_type(string,  string);
   assert_argument_type(integer, index);
-  boolean_t rewindable    = boolean__true;
-  f2ptr     rewind_length = f2integer__new(cause, 0);
-  return f2__stream__new(cause, __string_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, nil, string, index);
+  boolean_t rewindable           = boolean__true;
+  f2ptr     rewind_length        = f2integer__new(cause, 0);
+  f2ptr     character_byte_index = f2integer__new(cause, 0);
+  return f2__stream__new(cause, __string_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, nil, string, index, character_byte_index);
 }
 def_pcfunk2(string_stream__new, string, index,
 	    "",

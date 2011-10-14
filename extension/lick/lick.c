@@ -624,11 +624,11 @@ f2ptr raw__chunk__as__lick(f2ptr cause, f2ptr this) {
       if (chunk_index + type_name__length > chunk__length) {
 	return f2larva__new(cause, 2, nil);
       }
-      u8* type_name__str = (u8*)from_ptr(f2__malloc(type_name__length));
+      funk2_character_t* type_name__str = (funk2_character_t*)from_ptr(f2__malloc(type_name__length * sizeof(funk2_character_t)));
       {
 	s64 index;
 	for (index = 0; index < type_name__length; index ++) {
-	  type_name__str[index] = raw__chunk__bit8__elt(cause, this, chunk_index); chunk_index ++;
+	  type_name__str[index] = raw__chunk__bit32__elt(cause, this, chunk_index); chunk_index += 4;
 	}
       }
       type_name = f2symbol__new(cause, type_name__length, type_name__str);

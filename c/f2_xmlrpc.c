@@ -310,23 +310,23 @@ boolean_t funk2_xmlrpc__apply(funk2_xmlrpc_t* this, u8* url, u8* funkname, xmlrp
 }
 
 f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments) {
-  u64 url__length = raw__string__length(cause, url);
-  u8* url__str    = (u8*)alloca(url__length + 1);
-  raw__string__str_copy(cause, url, url__str);
-  url__str[url__length] = 0;
+  u64 url__utf8_length = raw__string__utf8_length(cause, url);
+  u8* url__utf8_str    = (u8*)alloca(url__utf8_length + 1);
+  raw__string__utf8_str_copy(cause, url, url__utf8_str);
+  url__utf8_str[url__utf8_length] = 0;
   
-  u64 funkname__length;
-  u8* funkname__str;
+  u64 funkname__utf8_length;
+  u8* funkname__utf8_str;
   if (raw__string__is_type(cause, funkname)) {
-    funkname__length = raw__string__length(cause, funkname);
-    funkname__str    = (u8*)alloca(funkname__length + 1);
-    raw__string__str_copy(cause, funkname, funkname__str);
+    funkname__utf8_length = raw__string__utf8_length(cause, funkname);
+    funkname__utf8_str    = (u8*)alloca(funkname__utf8_length + 1);
+    raw__string__utf8_str_copy(cause, funkname, funkname__str);
     funkname__str[funkname__length] = 0;
   } else if (raw__symbol__is_type(cause, funkname)) {
-    funkname__length = raw__symbol__length(cause, funkname);
-    funkname__str    = (u8*)alloca(funkname__length + 1);
-    raw__symbol__str_copy(cause, funkname, funkname__str);
-    funkname__str[funkname__length] = 0;
+    funkname__utf8_length = raw__symbol__utf8_length(cause, funkname);
+    funkname__utf8_str    = (u8*)alloca(funkname__utf8_length + 1);
+    raw__symbol__utf8_str_copy(cause, funkname, funkname__utf8_str);
+    funkname__utf8_str[funkname__utf8_length] = 0;
   } else {
     error(nil, "shouldn't get here because of type checking above.");
   }
@@ -369,7 +369,7 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
     if (call_successful_so_far) {
       char* fault_string;
       int   fault_code;
-      call_successful_so_far = funk2_xmlrpc__apply(&(__funk2.xmlrpc), url__str, funkname__str, argument_array, &resultP, &fault_string, &fault_code);
+      call_successful_so_far = funk2_xmlrpc__apply(&(__funk2.xmlrpc), url__utf8_str, funkname__utf8_str, argument_array, &resultP, &fault_string, &fault_code);
       if (! call_successful_so_far) {
 	status("f2_xmlrpc.c: error making call.");
 	return new__error(f2list12__new(cause,

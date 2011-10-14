@@ -300,7 +300,9 @@ f2ptr f2__string_stream__try_ungetbless_read_byte(f2ptr cause, f2ptr this) {
   u64 string_length = f2string__length(string, cause);
   u64 raw_index     = f2integer__i(index, cause);
   if (raw_index < string_length) {
-    f2ptr return_value = f2char__new(cause, f2string__elt(string, raw_index, cause));
+    funk2_character_t ch      = f2string__elt(string, raw_index, cause);
+    u8                byte__i = (u8)ch;
+    f2ptr return_value = f2integer__new(cause, byte__i);
     raw_index ++;
     f2stream__index__set(this, cause, f2integer__new(cause, raw_index));
     return return_value;

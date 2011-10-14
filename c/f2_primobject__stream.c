@@ -452,7 +452,7 @@ f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 						new__symbol(cause, "cmutex"),          f2__stream__cmutex(       cause, this),
 						new__symbol(cause, "stream_type"),     f2__stream__stream_type(  cause, this),
 						new__symbol(cause, "unicode_mode"),    f2__stream__unicode_mode( cause, this),
-						new__symbol(cause, "ungetc_stack"),    f2__stream__ungetc_stack( cause, this),
+						new__symbol(cause, "ungetb_stack"),    f2__stream__ungetb_stack( cause, this),
 						new__symbol(cause, "rewind_stack"),    f2__stream__rewind_stack( cause, this),
 						new__symbol(cause, "rewindable"),      f2__stream__rewindable(   cause, this),
 						new__symbol(cause, "rewind_length"),   f2__stream__rewind_length(cause, this),

@@ -175,14 +175,14 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
     xmlrpc_read_string_lp(env, value, &string__utf8_length, (const char**)&string__utf8_str);
     f2ptr new_string;
     {
-      u64 temp_str__utf8_length = string__length;
+      u64 temp_str__utf8_length = string__utf8_length;
       u8* temp_str__utf8_str    = (u8*)from_ptr(f2__malloc(temp_str__utf8_length + 1));
       memcpy(temp_str__utf8_str, string__utf8_str, temp_str__utf8_length);
       temp_str__utf8_str[temp_str__utf8_length] = 0;
       new_string = new__string(cause, temp_str__utf8_str);
       f2__free(to_ptr(temp_str__utf8_str));
     }
-    free(string__str); // note this memory was allocated by funk2 code.
+    free(string__str); // note this memory was allocated by funk2 code, so use normal free.
     return new_string;
   }
   case XMLRPC_TYPE_ARRAY: {  // vector array

@@ -250,7 +250,6 @@
 [globalize-funk prev                                        &primfunk:prev]
 [globalize-funk prev-set                                    &primfunk:prev__set]
 
-[globalize-funk colonize                                    &primfunk:colonize]
 [globalize-funk eq_hash_value                               &primfunk:eq_hash_value]
 [globalize-funk equals                                      &primfunk:equals]
 `[globalize-funk funktional?                                 &primfunk:funktionalp]

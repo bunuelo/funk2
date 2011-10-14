@@ -255,7 +255,7 @@ f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   }
   funk2_character_t ch   = f2char__ch(character, cause);
   u8                byte = (u8)ch;
-  assert_value(raw__stream__ungetb(cause, this, byte));
+  raw__stream__ungetb(cause, this, byte);
   return nil;
 }
 def_pcfunk2(stream__ungetc, this, character,

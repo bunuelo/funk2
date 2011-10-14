@@ -232,7 +232,9 @@ f2ptr f2__stream__ungetb(f2ptr cause, f2ptr this, f2ptr byte) {
   }
   f2ptr rewind_byte = f2__stream__rewind(cause, this);
   if (! raw__eq(cause, byte, rewind_byte)) {
-    error(nil, "ungetb rewind character mismatch.");
+    f2__terminal_print(cause, byte);
+    f2__terminal_print(cause, rewind_byte);
+    error(nil, "ungetb rewind byte mismatch.");
   }
   return nil;
 }

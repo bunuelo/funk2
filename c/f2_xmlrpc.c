@@ -55,17 +55,17 @@ xmlrpc_value* funk2_xmlrpc__create_xmlrpc_value_from_exp(xmlrpc_env* env, f2ptr 
     double d = (double)f;
     return xmlrpc_double_new(env, d);
   } else if (raw__symbol__is_type(cause, exp)) {
-    u64 exp__length = f2symbol__length(exp, cause);
-    u8* exp__str    = (u8*)alloca(exp__length + 1);
-    raw__symbol__str_copy(cause, exp, exp__str);
-    exp__str[exp__length] = 0;
-    return xmlrpc_string_new_lp(env, exp__length, (char*)exp__str);
+    u64 exp__utf8_length = raw__symbol__utf8_length(cause, exp);
+    u8* exp__utf8_str    = (u8*)alloca(exp__utf8_length + 1);
+    raw__symbol__utf8_str_copy(cause, exp, exp__utf8_str);
+    exp__utf8_str[exp__utf8_length] = 0;
+    return xmlrpc_string_new_lp(env, exp__utf8_length, (char*)exp__utf8_str);
   } else if (raw__string__is_type(cause, exp)) {
-    u64 exp__length = f2string__length(exp, cause);
-    u8* exp__str    = (u8*)alloca(exp__length + 1);
-    raw__string__str_copy(cause, exp, exp__str);
-    exp__str[exp__length] = 0;
-    return xmlrpc_string_new_lp(env, exp__length, (char*)exp__str);
+    u64 exp__utf8_length = raw__string__utf8_length(cause, exp);
+    u8* exp__utf8_str    = (u8*)alloca(exp__utf8_length + 1);
+    raw__string__utf8_str_copy(cause, exp, exp__utf8_str);
+    exp__utf8_str[exp__utf8_length] = 0;
+    return xmlrpc_string_new_lp(env, exp__utf8_length, (char*)exp__utf8_str);
   } else if (raw__time__is_type(cause, exp)) {
     f2ptr  nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, exp);
     u64    nanoseconds_since_1970__i = f2integer__i(nanoseconds_since_1970, cause);

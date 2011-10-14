@@ -64,7 +64,7 @@ f2ptr f2__socket_stream__new(f2ptr cause, f2ptr file_handle) {
   assert_argument_type(file_handle, file_handle);
   boolean_t rewindable    = boolean__true;
   f2ptr     rewind_length = f2integer__new(cause, 0);
-  return f2__stream__new(cause, __socket_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_handle, nil, nil);
+  return f2__stream__new(cause, __socket_stream__symbol, nil, nil, f2bool__new(rewindable), rewind_length, file_handle, nil, nil, nil);
 }
 def_pcfunk1(socket_stream__new, file_handle,
 	    "",

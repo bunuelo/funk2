@@ -1221,9 +1221,9 @@ export_cefunk4(string__gather_lick_notes, this, lick, note_object_hash, max_size
 
 f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   s64                this__length = raw__string__length(cause, this);
-  f2ptr              chunk        = raw__chunk__new(cause, this__length * sizeof(funk2_character_t));
   funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
+  f2ptr              chunk        = raw__chunk__new(cause, this__length * sizeof(funk2_character_t));
   {
     s64 index;
     for (index = 0; index < this__length; index ++) {
@@ -1252,7 +1252,7 @@ export_cefunk2(string__lick_to_chunk, this, note_object_hash, 0, "Licks this str
 
 f2ptr raw__string__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   f2ptr              chunk        = raw__lick_chunk__chunk(cause, lick_chunk);
-  s64                this__length = raw__chunk__length(cause, chunk);
+  s64                this__length = raw__chunk__length(cause, chunk) / sizeof(funk2_character_t);
   funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   {
     s64 index;
@@ -1310,7 +1310,7 @@ export_cefunk4(symbol__gather_lick_notes, this, lick, note_object_hash, max_size
 
 f2ptr raw__symbol__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   s64                this__length = raw__symbol__length(cause, this);
-  f2ptr              chunk        = raw__chunk__new(cause, this__length);
+  f2ptr              chunk        = raw__chunk__new(cause, this__length * sizeof(funk2_character_t));
   funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   raw__symbol__str_copy(cause, this, this__str);
   {

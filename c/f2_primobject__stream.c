@@ -249,7 +249,7 @@ void raw__stream__ungetb(f2ptr cause, f2ptr this, u8 byte__i) {
 f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   assert_argument_type(stream, this);
   if ((! raw__char__is_type(cause, character)) &&
-      (! raw__exception__is_type(cause, byte))) {
+      (! raw__exception__is_type(cause, character))) {
     error(nil, "raw__stream__ungetc error: byte must be char or exception.");
     return f2larva__new(cause, 11352, nil);
   }

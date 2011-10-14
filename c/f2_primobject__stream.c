@@ -550,7 +550,7 @@ void f2__primobject__stream__initialize() {
   
   // stream
   
-  initialize_primobject_12_slot(stream, cmutex, stream_type, unicode_mode, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
+  initialize_primobject_12_slot(stream, cmutex, stream_type, unicode_mode, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
   
   {char* symbol_str = "try_read_byte"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_byte, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__funk = never_gc(cfunk);}

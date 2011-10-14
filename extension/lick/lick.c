@@ -1220,14 +1220,14 @@ export_cefunk4(string__gather_lick_notes, this, lick, note_object_hash, max_size
 
 
 f2ptr raw__string__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
-  s64   this__length = raw__string__length(cause, this);
-  f2ptr chunk   = raw__chunk__new(cause, this__length);
-  u8*   this__str = (u8*)from_ptr(f2__malloc(this__length));
+  s64                this__length = raw__string__length(cause, this);
+  f2ptr              chunk        = raw__chunk__new(cause, this__length * sizeof(funk2_character_t));
+  funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   raw__string__str_copy(cause, this, this__str);
   {
     s64 index;
     for (index = 0; index < this__length; index ++) {
-      raw__chunk__bit8__elt__set(cause, chunk, index, this__str[index]);
+      raw__chunk__bit32__elt__set(cause, chunk, index * sizeof(funk2_character_t), this__str[index]);
     }
   }
   f2__free(to_ptr(this__str));

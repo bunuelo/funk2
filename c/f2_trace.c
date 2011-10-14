@@ -34,7 +34,7 @@ void raw__array__tracing_on__set(f2ptr cause, f2ptr this, boolean_t tracing_on) 
 // **
 
 void f2__trace__reinitialize_globalvars() {
-  {char *str = "do_not_remember"; __funk2.trace.do_not_remember__symbol = f2symbol__new(initial_cause(), strlen(str), (u8*)str);}
+  {char *str = "do_not_remember"; __funk2.trace.do_not_remember__symbol = new__symbol(initial_cause(), str);}
 }
 
 void f2__trace__initialize() {

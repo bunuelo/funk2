@@ -2666,11 +2666,17 @@ f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause,
 
 funk2_character_t raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
   if (index < 0) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
   }
   u64 length = f2string__length(this, cause);
   if (index >= length) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
   }
   return f2string__elt(this, index, cause);
 }
@@ -3969,7 +3975,10 @@ f2ptr f2__chunk__bit8__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   return f2pointer__new(cause, raw__chunk__bit8__elt(cause, this, index__i));
 }
@@ -3988,7 +3997,10 @@ f2ptr f2__chunk__bit8__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr valu
   assert_argument_type(pointer, value);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   s64 value__p = f2pointer__p(value, cause);
   if ((value__p < 0) || (value__p >= (((u64)1) << 8))) {
@@ -4011,7 +4023,10 @@ f2ptr f2__chunk__bit16__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   return f2pointer__new(cause, raw__chunk__bit16__elt(cause, this, index__i));
 }
@@ -4030,7 +4045,10 @@ f2ptr f2__chunk__bit16__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr val
   assert_argument_type(pointer, value);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   s64 value__p = f2pointer__p(value, cause);
   if ((value__p < 0) || (value__p >= (((u64)1) << 16))) {
@@ -4055,8 +4073,11 @@ f2ptr f2__chunk__bit32__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(chunk,   this);
   assert_argument_type(integer, index);
   s64 index__i = f2integer__i(index, cause);
-  if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+  if ((index__i < 0) || (index__i >= f2chunk__length(this, cause) - 3)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   return f2pointer__new(cause, raw__chunk__bit32__elt(cause, this, index__i));
 }
@@ -4075,7 +4096,10 @@ f2ptr f2__chunk__bit32__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr val
   assert_argument_type(pointer, value);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   s64 value__p = f2pointer__p(value, cause);
   if ((value__p < 0) || (value__p >= (((u64)1) << 32))) {
@@ -4101,7 +4125,10 @@ f2ptr f2__chunk__bit64__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(integer, index);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   return f2pointer__new(cause, raw__chunk__bit64__elt(cause, this, index__i));
 }
@@ -4120,7 +4147,10 @@ f2ptr f2__chunk__bit64__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr val
   assert_argument_type(pointer, value);
   s64 index__i = f2integer__i(index, cause);
   if ((index__i < 0) || (index__i >= f2chunk__length(this, cause))) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
   }
   s64 value__p = f2pointer__p(value, cause);
   // don't need to check range here because 64 bits is the size of our pointer object.

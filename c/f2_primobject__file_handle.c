@@ -81,7 +81,7 @@ def_pcfunk2(file_handle__nonblocking__set, this, value,
 	    return f2__file_handle__nonblocking__set(this_cause, this, value));
 
 
-f2ptr raw__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
+f2ptr raw__file_handle__try_read_character(f2ptr cause, f2ptr this) {
   f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
   if (! raw__integer__is_type(cause, file_descriptor)) {return f2larva__new(cause, 172462, nil);}
   u64 fd = f2integer__i(file_descriptor, cause);
@@ -91,7 +91,7 @@ f2ptr raw__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
   switch (result) {
   case read_nonblocking_result__success:
     if (bytes_read == 1) {
-      return f2integer__new(cause, data[0]);
+      return f2char__new(cause, data[0]);
     }
     break;
   case read_nonblocking_result__end_of_file:
@@ -104,15 +104,15 @@ f2ptr raw__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
   return nil;
 }
 
-f2ptr f2__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
+f2ptr f2__file_handle__try_read_character(f2ptr cause, f2ptr this) {
   assert_argument_type(file_handle, this);
-  return raw__file_handle__try_read_byte(cause, this);
+  return raw__file_handle__try_read_character(cause, this);
 }
-def_pcfunk1(file_handle__try_read_byte, this,
-	    "Tries to read one byte from the file_handle.  "
-	    "If the file_handle is set to non-blocking mode and no byte is waiting, nil is returned.  "
+def_pcfunk1(file_handle__try_read_character, this,
+	    "Tries to read one character from the file_handle.  "
+	    "If the file_handle is set to non-blocking mode and no character is waiting, nil is returned.  "
 	    "If end of file is reached, bug is returned.  ",
-	    return f2__file_handle__try_read_byte(this_cause, this));
+	    return f2__file_handle__try_read_character(this_cause, this));
 
 
 ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* data) {
@@ -205,7 +205,7 @@ f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2file_handle__primobject_type__new(cause);
   {char* slot_name = "close";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk);}
   {char* slot_name = "nonblocking";               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk);}
-  {char* slot_name = "try_read_byte";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__funk);}
+  {char* slot_name = "try_read_character";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__funk);}
   {char* slot_name = "write";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk);}
   {char* slot_name = "send";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk);}
@@ -237,8 +237,8 @@ void f2__primobject__file_handle__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__close, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk = never_gc(cfunk);}
   {char* symbol_str = "nonblocking-set"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__nonblocking__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "try_read_byte"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__try_read_byte, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__funk = never_gc(cfunk);}
+  {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__try_read_character, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_character__funk = never_gc(cfunk);}
   {char* symbol_str = "write"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__write, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk = never_gc(cfunk);}
   {char* symbol_str = "send"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__symbol = new__symbol(cause, symbol_str);}

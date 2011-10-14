@@ -310,17 +310,16 @@ f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2pt
   s64 red__i   = f2integer__i(red,   cause);
   s64 green__i = f2integer__i(green, cause);
   s64 blue__i  = f2integer__i(blue,  cause);
-  if (pixel__i < 0 || pixel__i >= (1ull << 32)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (red__i < 0 || red__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (green__i < 0 || green__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
-  }
-  if (blue__i < 0 || blue__i >= (1ull << 16)) {
-    return f2larva__new(cause, 2, nil);
+  if ((pixel__i < 0 || pixel__i >= (1ull << 32)) ||
+      (red__i   < 0 || red__i   >= (1ull << 16)) ||
+      (green__i < 0 || green__i >= (1ull << 16)) ||
+      (blue__i  < 0 || blue__i  >= (1ull << 16))) {
+    return new__error(f2list10__new(cause,
+				    new__symbol(cause, "bug_name"), new__symbol(cause, "gdk_color_out_of_bounds"),
+				    new__symbol(cause, "pixel"),    pixel,
+				    new__symbol(cause, "red"),      red,
+				    new__symbol(cause, "green"),    green,
+				    new__symbol(cause, "blue"),     blue));
   }
   return f2gdk_color__new(cause, pixel, red, green, blue);
 }

@@ -305,10 +305,10 @@ f2ptr f2__string_stream__try_ungetbless_read_byte(f2ptr cause, f2ptr this) {
 f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
   assert_argument_type(stream, this);
   f2ptr byte         = nil;
-  f2ptr ungetc_stack = f2stream__ungetc_stack(this, cause);
+  f2ptr ungetb_stack = f2stream__ungetb_stack(this, cause);
   if (ungetb_stack) {
-    byte = f2cons__car(ungetc_stack, cause);
-    f2stream__ungetc_stack__set(this, cause, f2cons__cdr(ungetc_stack, cause));
+    byte = f2cons__car(ungetb_stack, cause);
+    f2stream__ungetb_stack__set(this, cause, f2cons__cdr(ungetb_stack, cause));
   }
   if (byte == nil) {
     if (raw__file_stream__is_type(cause, this)) {

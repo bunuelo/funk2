@@ -560,8 +560,8 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				{
 				  s64 index;
 				  for (index = 0; index < type_name__length; index ++) {
-				    raw__chunk__bit8__elt__set(cause, chunk, chunk_index, type_name__str[index]);
-				    chunk_index ++;
+				    raw__chunk__bit32__elt__set(cause, chunk, chunk_index, type_name__str[index]);
+				    chunk_index += 4;
 				  }
 				}
 				f2__free(to_ptr(type_name__str));
@@ -572,7 +572,7 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				raw__chunk__bit64__elt__set(cause, chunk, chunk_index, lick_chunk__chunk__length);
 				chunk_index += 8;
 				{
-				  funk2_character_t* lick_chunk__chunk__str = (funk2_character_t*)from_ptr(f2__malloc(lick_chunk__chunk__length * sizeof(funk2_character_t)));
+				  u8* lick_chunk__chunk__str = (u8*)from_ptr(f2__malloc(lick_chunk__chunk__length));
 				  raw__chunk__str_copy(cause, lick_chunk__chunk, lick_chunk__chunk__str);
 				  {
 				    s64 index;

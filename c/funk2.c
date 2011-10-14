@@ -274,7 +274,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	status("found user-friendly load.");
       }
       
-      f2ptr args = f2cons__new(cause, f2string__new(cause, strlen(this->command_line.load_source_filename), (u8*)this->command_line.load_source_filename), nil);
+      f2ptr args = f2cons__new(cause, new__string(cause, this->command_line.load_source_filename), nil);
       
       // start a fiber executing the user read-eval-print loop
       f2__fiber_serial(cause,

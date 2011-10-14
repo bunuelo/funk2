@@ -250,7 +250,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   never_gc(cause);
   
   // try to find a boot function
-  f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("boot"), (u8*)"boot"));
+  f2ptr boot_funk = environment__lookup_funkvar_value(cause, global_environment(), new__symbol(cause, "boot"));
   if (! raw__funkable__is_type(cause, boot_funk)) {
     status("warning: no boot function defined.");
     
@@ -259,11 +259,11 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       status("load_source_filename = '%s'.", this->command_line.load_source_filename);
       
       // try to find a nice user-friendly load
-      f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("load"), (u8*)"load"));
+      f2ptr load_funk = environment__lookup_funkvar_value(cause, global_environment(), new__symbol(cause, "load"));
       if (raw__larva__is_type(cause, load_funk)) {
 	status("couldn't find user-friendly load function, so trying to find primfunk:load.");
 	// if we can't find a user-friendly load, then use this basic hardcoded one for compiling the user-friendly one.
-	load_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:load"), (u8*)"primfunk:load"));
+	load_funk = environment__lookup_funkvar_value(cause, global_environment(), new__symbol(cause, "primfunk:load"));
 	if (raw__larva__is_type(cause, load_funk)) {
 	  f2__fiber__print(cause, nil, global_environment());
 	  error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
@@ -288,10 +288,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       
       if (! this->command_line.no_repl) {
 	// unless the user has explicitely specified the "--no-repl" command-line option, try to find a nice user-friendly repl
-	f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("repl"), (u8*)"repl"));
+	f2ptr repl_funk = environment__lookup_funkvar_value(cause, global_environment(), new__symbol(cause, "repl"));
 	if (raw__larva__is_type(cause, repl_funk)) {
 	  // if we can't find a user-friendly repl, then use this basic hardcoded one for compiling the user-friendly one.
-	  repl_funk = environment__lookup_funkvar_value(cause, global_environment(), f2symbol__new(cause, strlen("primfunk:simple_repl"), (u8*)"primfunk:simple_repl"));
+	  repl_funk = environment__lookup_funkvar_value(cause, global_environment(), new__symbol(cause, "primfunk:simple_repl"));
 	  if (raw__larva__is_type(cause, repl_funk)) {
 	    error(nil, "funk2 main (raw__funkable__is_type(repl_funk)) assertion failed.");
 	  }

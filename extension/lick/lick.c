@@ -1341,7 +1341,7 @@ export_cefunk2(symbol__lick_to_chunk, this, note_object_hash, 0, "Licks this sym
 
 f2ptr raw__symbol__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
   f2ptr              chunk        = raw__lick_chunk__chunk(cause, lick_chunk);
-  s64                this__length = raw__chunk__length(cause, chunk);
+  s64                this__length = raw__chunk__length(cause, chunk) / sizeof(funk2_character_t);
   funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   {
     s64 index;

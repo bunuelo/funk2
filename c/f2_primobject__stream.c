@@ -349,7 +349,7 @@ f2ptr f2__stream__getb(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getb error: stream isn't a stream.");}
   f2ptr read_byte = nil;
   while (read_byte == nil) {
-    read_ch = f2__stream__try_read_byte(cause, stream);
+    read_byte = f2__stream__try_read_byte(cause, stream);
     if (read_byte == nil) {
       f2__this__fiber__yield(cause);
       raw__spin_sleep_yield();

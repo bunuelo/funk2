@@ -320,7 +320,7 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
   if (raw__string__is_type(cause, funkname)) {
     funkname__utf8_length = raw__string__utf8_length(cause, funkname);
     funkname__utf8_str    = (u8*)alloca(funkname__utf8_length + 1);
-    raw__string__utf8_str_copy(cause, funkname, funkname__str);
+    raw__string__utf8_str_copy(cause, funkname, funkname__utf8_str);
     funkname__str[funkname__length] = 0;
   } else if (raw__symbol__is_type(cause, funkname)) {
     funkname__utf8_length = raw__symbol__utf8_length(cause, funkname);

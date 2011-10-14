@@ -469,10 +469,12 @@ f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
 f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
   assert_argument_type(stream, this);
   f2ptr byte      = f2__stream__try_read_byte(cause, this);
-  f2ptr character = nil;
+  f2ptr character;
   if (raw__integer__is_type(cause, byte)) {
     u8 byte__i = f2integer__i(byte, cause);
     character = f2char__new(cause, byte__i);
+  } else {
+    character = byte;
   }
   if (raw__eq(cause, character, __funk2.reader.char__newline)) {
     f2ptr line_num    = f2__stream__line_number(cause, this);

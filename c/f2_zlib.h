@@ -26,10 +26,8 @@
 
 boolean_t zlib__deflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length);
 boolean_t zlib__deflate_length(u8* src_data, u64 src_length, u64* dest_length);
-f2ptr f2__string__deflate(f2ptr cause, f2ptr this);
 boolean_t zlib__inflate(u8* dest_data, u64* dest_length, u8* src_data, u64 src_length);
 boolean_t zlib__inflate_length(u8* src_data, u64 src_length, u64* dest_length);
-f2ptr f2__string__inflate(f2ptr cause, f2ptr this);
 
 // **
 

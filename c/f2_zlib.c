@@ -109,39 +109,6 @@ boolean_t zlib__deflate_length(u8* src_data, u64 src_length, u64* dest_length) {
   return zlib__deflate(NULL, dest_length, src_data, src_length);
 }
 
-f2ptr raw__string__deflate(f2ptr cause, f2ptr this) {
-  u64 src_length = raw__string__length(cause, this);
-  u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
-  raw__string__str_copy(cause, this, src_data);
-  
-  u64 dest_length = 0;
-  if (zlib__deflate_length(src_data, src_length, &dest_length)) {
-    f2__free(to_ptr(src_data));
-    return nil;
-  }
-  
-  u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
-  if (zlib__deflate(temp_data, &dest_length, src_data, src_length)) {
-    f2__free(to_ptr(src_data));
-    f2__free(to_ptr(temp_data));
-    return nil;
-  }
-  f2__free(to_ptr(src_data));
-  
-  f2ptr new_string = f2string__new(cause, dest_length, temp_data);
-  f2__free(to_ptr(temp_data));
-  return new_string;
-}
-
-f2ptr f2__string__deflate(f2ptr cause, f2ptr this) {
-  assert_argument_type(string, this);
-  return raw__string__deflate(cause, this);
-}
-def_pcfunk1(string__deflate, this,
-	    "",
-	    return f2__string__deflate(this_cause, this));
-
-
 f2ptr raw__chunk__deflate(f2ptr cause, f2ptr this) {
   u64 src_length = raw__chunk__length(cause, this);
   u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
@@ -260,39 +227,6 @@ boolean_t zlib__inflate_length(u8* src_data, u64 src_length, u64* dest_length) {
 }
 
 
-f2ptr raw__string__inflate(f2ptr cause, f2ptr this) {
-  u64 src_length = raw__string__length(cause, this);
-  u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
-  raw__string__str_copy(cause, this, src_data);
-  
-  u64 dest_length = 0;
-  if (zlib__inflate_length(src_data, src_length, &dest_length)) {
-    f2__free(to_ptr(src_data));
-    return nil;
-  }
-  
-  u8* temp_data = (u8*)from_ptr(f2__malloc(dest_length));
-  if (zlib__inflate(temp_data, &dest_length, src_data, src_length)) {
-    f2__free(to_ptr(src_data));
-    f2__free(to_ptr(temp_data));
-    return nil;
-  }
-  f2__free(to_ptr(src_data));
-  
-  f2ptr new_string = f2string__new(cause, dest_length, temp_data);
-  f2__free(to_ptr(temp_data));
-  return new_string;
-}
-
-f2ptr f2__string__inflate(f2ptr cause, f2ptr this) {
-  assert_argument_type(string, this);
-  return raw__string__inflate(cause, this);
-}
-def_pcfunk1(string__inflate, this,
-	    "",
-	    return f2__string__inflate(this_cause, this));
-
-
 f2ptr raw__chunk__inflate(f2ptr cause, f2ptr this) {
   u64 src_length = raw__chunk__length(cause, this);
   u8* src_data   = (u8*)from_ptr(f2__malloc(src_length));
@@ -336,9 +270,7 @@ void f2__zlib__initialize() {
   
   f2__zlib__reinitialize_globalvars();
   
-  f2__primcfunk__init__1(string__deflate, this);
-  f2__primcfunk__init__1(chunk__deflate,  this);
-  f2__primcfunk__init__1(string__inflate, this);
-  f2__primcfunk__init__1(chunk__inflate,  this);
+  f2__primcfunk__init__1(chunk__deflate, this);
+  f2__primcfunk__init__1(chunk__inflate, this);
 }
 

@@ -312,11 +312,11 @@ f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
   }
   if (byte == nil) {
     if (raw__file_stream__is_type(cause, this)) {
-      byte = f2__file_stream__try_ungetcless_read_byte(cause, this);
+      byte = f2__file_stream__try_ungetbless_read_byte(cause, this);
     } else if (raw__socket_stream__is_type(cause, this)) {
-      byte = f2__socket_stream__try_ungetcless_read_byte(cause, this);
+      byte = f2__socket_stream__try_ungetbless_read_byte(cause, this);
     } else if (raw__string_stream__is_type(cause, this)) {
-      byte = f2__string_stream__try_ungetcless_read_byte(cause, this);
+      byte = f2__string_stream__try_ungetbless_read_byte(cause, this);
     }
   }
   if (byte && f2stream__rewindable(this, cause)) {

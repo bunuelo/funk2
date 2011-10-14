@@ -1251,13 +1251,13 @@ export_cefunk2(string__lick_to_chunk, this, note_object_hash, 0, "Licks this str
 
 
 f2ptr raw__string__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2ptr object_note_hash) {
-  f2ptr chunk        = raw__lick_chunk__chunk(cause, lick_chunk);
-  s64   this__length = raw__chunk__length(cause, chunk);
-  u8*   this__str    = (u8*)from_ptr(f2__malloc(this__length));
+  f2ptr              chunk        = raw__lick_chunk__chunk(cause, lick_chunk);
+  s64                this__length = raw__chunk__length(cause, chunk);
+  funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(this__length * sizeof(funk2_character_t)));
   {
     s64 index;
     for (index = 0; index < this__length; index ++) {
-      this__str[index] = raw__chunk__bit8__elt(cause, chunk, index);
+      this__str[index] = raw__chunk__bit32__elt(cause, chunk, index * sizeof(funk2_character_t));
     }
   }
   f2ptr this = f2string__new(cause, this__length, this__str);

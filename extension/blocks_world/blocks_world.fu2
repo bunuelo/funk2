@@ -129,7 +129,7 @@
     ]]
 
 [deftypefunk blocks_world execute setup_default_scenario []
-  [have this setup_large_scenario]]
+  [have this setup_small_scenario]]
 
 
 

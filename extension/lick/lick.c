@@ -498,7 +498,7 @@ f2ptr raw__lick__chunk_length(f2ptr cause, f2ptr this) {
 			      if (type_name == nil) {
 				chunk_length += 0; // type_name__str
 			      } else if (raw__symbol__is_type(cause, type_name)) {
-				chunk_length += raw__symbol__length(cause, type_name);
+				chunk_length += (raw__symbol__length(cause, type_name) * 4);
 			      } else {
 				return f2larva__new(cause, 13251, nil);
 			      }
@@ -560,8 +560,7 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				{
 				  s64 index;
 				  for (index = 0; index < type_name__length; index ++) {
-				    raw__chunk__bit32__elt__set(cause, chunk, chunk_index, type_name__str[index]);
-				    chunk_index += 4;
+				    raw__chunk__bit32__elt__set(cause, chunk, chunk_index, type_name__str[index]); chunk_index += 4;
 				  }
 				}
 				f2__free(to_ptr(type_name__str));
@@ -577,8 +576,7 @@ f2ptr raw__lick__as__chunk(f2ptr cause, f2ptr this) {
 				  {
 				    s64 index;
 				    for (index = 0; index < lick_chunk__chunk__length; index ++) {
-				      raw__chunk__bit8__elt__set(cause, chunk, chunk_index, lick_chunk__chunk__str[index]);
-				      chunk_index ++;
+				      raw__chunk__bit8__elt__set(cause, chunk, chunk_index, lick_chunk__chunk__str[index]); chunk_index ++;
 				    }
 				  }
 				  f2__free(to_ptr(lick_chunk__chunk__str));
@@ -601,28 +599,36 @@ f2ptr raw__chunk__as__lick(f2ptr cause, f2ptr this) {
   s64 chunk__length = raw__chunk__length(cause, this);
   s64 chunk_index   = 0;
   if (chunk_index + 8 > chunk__length) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_index_overran_lick_chunk"),
+				   new__symbol(cause, "this"),     this));
   }
   s64   root_note__i = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
   f2ptr root_note    = f2integer__new(cause, root_note__i);
   f2ptr chunk_note_hash = f2__ptypehash__new(cause);
   while (chunk_index < chunk__length) {
     if (chunk_index + 8 > chunk__length) {
-      return f2larva__new(cause, 2, nil);
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_index_overran_lick_chunk"),
+				     new__symbol(cause, "this"),     this));
     }
     s64   lick_note__i = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
     f2ptr lick_note    = f2integer__new(cause, lick_note__i);
     
     if (chunk_index + 8 > chunk__length) {
-      return f2larva__new(cause, 2, nil);
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_index_overran_lick_chunk"),
+				     new__symbol(cause, "this"),     this));
     }
     s64   type_name__length = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
     f2ptr type_name;
     if (type_name__length == 0) {
       type_name = nil;
     } else {
-      if (chunk_index + type_name__length > chunk__length) {
-	return f2larva__new(cause, 2, nil);
+      if (chunk_index + (type_name__length * 4) > chunk__length) {
+	return new__error(f2list4__new(cause,
+				       new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_index_overran_lick_chunk"),
+				       new__symbol(cause, "this"),     this));
       }
       funk2_character_t* type_name__str = (funk2_character_t*)from_ptr(f2__malloc(type_name__length * sizeof(funk2_character_t)));
       {
@@ -636,11 +642,15 @@ f2ptr raw__chunk__as__lick(f2ptr cause, f2ptr this) {
     }
     
     if (chunk_index + 8 > chunk__length) {
-      return f2larva__new(cause, 2, nil);
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_index_overran_lick_chunk"),
+				     new__symbol(cause, "this"),     this));
     }
     s64 lick_chunk__chunk__length = raw__chunk__bit64__elt(cause, this, chunk_index); chunk_index += 8;
     if (chunk_index + lick_chunk__chunk__length > chunk__length) {
-      return f2larva__new(cause, 2, nil);
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_index_overran_lick_chunk"),
+				     new__symbol(cause, "this"),     this));
     }
     f2ptr lick_chunk__chunk = raw__chunk__new(cause, lick_chunk__chunk__length);
     {

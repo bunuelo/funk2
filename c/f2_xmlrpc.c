@@ -182,7 +182,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
       new_string = new__string(cause, (char*)temp_str__utf8_str);
       f2__free(to_ptr(temp_str__utf8_str));
     }
-    free(string__str); // note this memory was allocated by funk2 code, so use normal free.
+    free(string__utf8_str); // note this memory was allocated by funk2 code, so use normal free.
     return new_string;
   }
   case XMLRPC_TYPE_ARRAY: {  // vector array

@@ -25,7 +25,9 @@
 // stream
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
-declare_object_type_12_slot(stream, cmutex, stream_type, unicode_mode, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number,
+declare_object_type_12_slot(stream, cmutex, stream_type, unicode_mode, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number,
+			    f2ptr try_read_byte__symbol;
+			    f2ptr try_read_byte__funk;
 			    f2ptr try_read_character__symbol;
 			    f2ptr try_read_character__funk;
 			    f2ptr rewind__symbol;
@@ -45,7 +47,7 @@ declare_object_type_12_slot(stream, cmutex, stream_type, unicode_mode, ungetc_st
 
 // stream
 
-declare_primobject_12_slot(stream, cmutex, stream_type, unicode_mode, ungetc_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
+declare_primobject_12_slot(stream, cmutex, stream_type, unicode_mode, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, line_number, column_number);
 
 boolean_t raw__file_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);
@@ -69,13 +71,20 @@ f2ptr f2__stream__file_mode__rdwr(f2ptr cause);
 f2ptr f2__stream__new_open_file__rdonly(f2ptr cause, f2ptr filename);
 f2ptr f2__stream__new_open_file__rdwr(f2ptr cause, f2ptr filename);
 
-f2ptr  f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character);
-void  raw__stream__ungetc(f2ptr cause, f2ptr this, char ch);
-f2ptr  f2__stream__try_read_character(f2ptr cause, f2ptr this);
-f2ptr  f2__stream__getc(f2ptr cause, f2ptr stream);
+f2ptr  f2__stream__ungetb(f2ptr cause, f2ptr this, f2ptr byte);
+void  raw__stream__ungetb(f2ptr cause, f2ptr this, u8 byte__i);
+f2ptr  f2__stream__try_read_byte(f2ptr cause, f2ptr this);
+f2ptr  f2__stream__getb(f2ptr cause, f2ptr stream);
+
 f2ptr  f2__stream__rewind(f2ptr cause, f2ptr this);
+
 f2ptr raw__stream__rewind_to_length(f2ptr cause, f2ptr this, s64 length);
 f2ptr  f2__stream__rewind_to_length(f2ptr cause, f2ptr this, f2ptr length);
+
+f2ptr  f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character);
+void  raw__stream__ungetc(f2ptr cause, f2ptr this, funk2_character_t ch);
+f2ptr  f2__stream__try_read_character(f2ptr cause, f2ptr this);
+f2ptr  f2__stream__getc(f2ptr cause, f2ptr stream);
 
 f2ptr f2stream__primobject_type__new_aux(f2ptr cause);
 

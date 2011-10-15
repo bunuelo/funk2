@@ -2420,9 +2420,21 @@ def_pcfunk1(char__type, this,
 	    "",
 	    return f2__char__type(this_cause, this));
 
+f2ptr f2__char__new(f2ptr cause, f2ptr character) {
+  funk2_character_t character__ch;
+  if (raw__char__is_type(cause, character)) {
+    character__ch = f2char__ch(character, cause);
+  } else if (raw__integer__is_type(cause, character)) {
+    character__ch = f2integer__i(character, cause);
+  } else {
+    return f2larva__new(cause, 1, nil);
+  }
+  return f2char__new(this_cause, character__ch);
+}
+
 def_pcfunk1(char__new, ch,
 	    "",
-	    return f2char__new(this_cause, f2char__ch(ch, this_cause)));
+	    return f2__char__new(this_cause, ch));
 
 funk2_character_t raw__char__ch(f2ptr cause, f2ptr this) {
   return f2char__ch(this, cause);

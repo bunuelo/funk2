@@ -457,18 +457,18 @@ f2ptr raw__stream__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list26__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "stream"),
-						new__symbol(cause, "cmutex"),               f2__stream__cmutex(       cause, this),
-						new__symbol(cause, "stream_type"),          f2__stream__stream_type(  cause, this),
-						new__symbol(cause, "ungetb_stack"),         f2__stream__ungetb_stack( cause, this),
-						new__symbol(cause, "rewind_stack"),         f2__stream__rewind_stack( cause, this),
-						new__symbol(cause, "rewindable"),           f2__stream__rewindable(   cause, this),
-						new__symbol(cause, "rewind_length"),        f2__stream__rewind_length(cause, this),
-						new__symbol(cause, "file_handle"),          f2__stream__file_handle(  cause, this),
-						new__symbol(cause, "string"),               f2__stream__string(       cause, this),
-						new__symbol(cause, "index"),                f2__stream__index(        cause, this),
-						new__symbol(cause, "character_byte_index"), f2__stream__unicode_mode( cause, this),
-						new__symbol(cause, "line_number"),          f2__stream__line_number(  cause, this),
-						new__symbol(cause, "column_number"),        f2__stream__column_number(cause, this)));
+						new__symbol(cause, "cmutex"),               f2__stream__cmutex(              cause, this),
+						new__symbol(cause, "stream_type"),          f2__stream__stream_type(         cause, this),
+						new__symbol(cause, "ungetb_stack"),         f2__stream__ungetb_stack(        cause, this),
+						new__symbol(cause, "rewind_stack"),         f2__stream__rewind_stack(        cause, this),
+						new__symbol(cause, "rewindable"),           f2__stream__rewindable(          cause, this),
+						new__symbol(cause, "rewind_length"),        f2__stream__rewind_length(       cause, this),
+						new__symbol(cause, "file_handle"),          f2__stream__file_handle(         cause, this),
+						new__symbol(cause, "string"),               f2__stream__string(              cause, this),
+						new__symbol(cause, "index"),                f2__stream__index(               cause, this),
+						new__symbol(cause, "character_byte_index"), f2__stream__character_byte_index(cause, this),
+						new__symbol(cause, "line_number"),          f2__stream__line_number(         cause, this),
+						new__symbol(cause, "column_number"),        f2__stream__column_number(       cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

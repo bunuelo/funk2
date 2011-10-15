@@ -2429,7 +2429,7 @@ f2ptr f2__char__new(f2ptr cause, f2ptr character) {
   } else {
     return f2larva__new(cause, 1, nil);
   }
-  return f2char__new(this_cause, character__ch);
+  return f2char__new(cause, character__ch);
 }
 
 def_pcfunk1(char__new, ch,

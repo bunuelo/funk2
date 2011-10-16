@@ -21,6 +21,16 @@
 
 #include "transframe.h"
 
+// transframe_change_type
+
+boolean_t raw__transframe_change_type__is_type(f2ptr cause, f2ptr object) {
+  return (raw__eq(cause, object, new__symbol(cause, "add")) ||
+	  raw__eq(cause, object, new__symbol(cause, "remove")));
+}
+
+
+// transframe_change
+
 def_ceframe5(transframe, transframe_change, change_type, change_object, change_slot_type, change_slot, change_target);
 
 f2ptr raw__transframe_change__new(f2ptr cause, f2ptr change_type, f2ptr change_object, f2ptr change_slot_type, f2ptr change_slot, f2ptr change_target) {
@@ -28,6 +38,7 @@ f2ptr raw__transframe_change__new(f2ptr cause, f2ptr change_type, f2ptr change_o
 }
 
 f2ptr f2__transframe_change__new(f2ptr cause, f2ptr change_type, f2ptr change_object, f2ptr change_slot_type, f2ptr change_slot, f2ptr change_target) {
+  assert_argument_type(transframe_change_type, change_type);
   return raw__transframe_change__new(cause, change_type, change_object, change_slot_type, change_slot, change_target);
 }
 export_cefunk5(transframe_change__new, change_type, change_object, change_slot_type, change_slot, change_target, 0, "Returns a new transframe_change object.");
@@ -39,6 +50,8 @@ f2ptr f2__transframe_change_type__new_aux(f2ptr cause) {
 }
 
 
+
+// transframe
 
 def_ceframe1(transframe, transframe, change_set);
 

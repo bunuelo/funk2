@@ -257,8 +257,15 @@ f2ptr f2__stream__ungetc(f2ptr cause, f2ptr this, f2ptr character) {
   }
   if (raw__char__is_type(cause, character)) {
     funk2_character_t ch   = f2char__ch(character, cause);
-    u8                byte = (u8)ch;
-    raw__stream__ungetb(cause, this, byte);
+    u64               ch__utf8__length = funk2_character__utf8_length(ch);
+    u8                ch__utf8_str[6];
+    funk2_character__utf8_str_copy(ch, ch__utf8_str);
+    {
+      s64 index;
+      for (index = ch__utf8_length - 1; index >= 0; index --) {
+	raw__stream__ungetb(cause, this, ch__utf8_str[index]);
+      }
+    }
   } else {
     raw__stream__ungetb(cause, this, character);
   }

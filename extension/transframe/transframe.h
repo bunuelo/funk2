@@ -24,12 +24,21 @@
 
 #include "../../c/funk2.h"
 
+def_header_ceframe1(transframe_change, change_set);
+
+f2ptr     raw__transframe_change__new(f2ptr cause);
+f2ptr      f2__transframe_change__new(f2ptr cause);
+
+f2ptr f2__transframe_change_type__new_aux(f2ptr cause);
+
+
 def_header_ceframe1(transframe, change_set);
 
 f2ptr     raw__transframe__new(f2ptr cause);
 f2ptr      f2__transframe__new(f2ptr cause);
 
 f2ptr f2__transframe_type__new_aux(f2ptr cause);
+
 
 // **
 

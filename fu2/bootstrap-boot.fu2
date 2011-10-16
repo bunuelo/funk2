@@ -31,7 +31,7 @@
 		   '\n**                     **'
 		   '\n**  ']
   [ansi-stream-foreground [get standard-terminal stream] 9]
-  [terminal_format standard-terminal 'Welcome to funk2']
+  [terminal_format standard-terminal 'Welcome to funkϨ']
   [ansi-stream-foreground [get standard-terminal stream] 15]
   [terminal_format standard-terminal '!  **'
 		   '\n**                     **'

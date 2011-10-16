@@ -81,7 +81,8 @@ f2ptr f2__transframe__core_extension__ping(f2ptr cause) {
 export_cefunk0(transframe__core_extension__ping, 0, "");
 
 f2ptr f2__transframe__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(transframe, semantic_object);
+  core_extension__ping(transframe, semantic_frame);
+  core_extension__ping(transframe, semantic_knowledge_base);
   status("transframe initialized.");
   return nil;
 }

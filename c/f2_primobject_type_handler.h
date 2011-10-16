@@ -108,7 +108,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__fiber__slot_t                            primobject_type_fiber;
   funk2_object_type__processor__slot_t                        primobject_type_processor;
   funk2_object_type__scheduler__slot_t                        primobject_type_scheduler;
-  funk2_object_type__transframe__slot_t                       primobject_type_transframe;
   funk2_object_type__bug__slot_t                              primobject_type_bug;
   funk2_object_type__time__slot_t                             primobject_type_time;
   funk2_object_type__size_2d__slot_t                          primobject_type_size_2d;

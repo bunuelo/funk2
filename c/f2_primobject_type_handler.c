@@ -173,7 +173,6 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "fiber_trigger";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2fiber_trigger__primobject_type__new_aux(cause));}
   {char* type_name = "processor";                        funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                        f2processor__primobject_type__new_aux(cause));}
   {char* type_name = "scheduler";                        funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                        f2scheduler__primobject_type__new_aux(cause));}
-  {char* type_name = "transframe";                       funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                       f2transframe__primobject_type__new(cause));}
   {char* type_name = "bug";                              funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                              f2bug__primobject_type__new_aux(cause));}
   {char* type_name = "time";                             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                             f2time__primobject_type__new_aux(cause));}
   {char* type_name = "size_2d";                          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                          f2size_2d__primobject_type__new(cause));}

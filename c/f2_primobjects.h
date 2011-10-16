@@ -33,7 +33,6 @@ typedef struct funk2_object_type__funk__slot_s             funk2_object_type__fu
 typedef struct funk2_object_type__metro__slot_s            funk2_object_type__metro__slot_t;
 typedef struct funk2_object_type__exception__slot_s        funk2_object_type__exception__slot_t;
 typedef struct funk2_object_type__bytecode__slot_s         funk2_object_type__bytecode__slot_t;
-typedef struct funk2_object_type__transframe__slot_s       funk2_object_type__transframe__slot_t;
 typedef struct funk2_object_type__time__slot_s             funk2_object_type__time__slot_t;
 typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__size_2d__slot_t;
 typedef struct funk2_object_type__event__slot_s            funk2_object_type__event__slot_t;
@@ -1606,11 +1605,6 @@ declare_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
 f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause);
 
 
-// transframe
-
-declare_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
-
-
 // size_2d
 
 declare_primobject_2_slot(size_2d, x, y);
@@ -2033,10 +2027,6 @@ declare_object_type_4_slot(bytecode, command, arg0, arg1, arg2,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
-
-// transframe
-
-declare_object_type_2_slot(transframe, nanoseconds_since_1970, symbol_old_news, );
 
 // size_2d
 

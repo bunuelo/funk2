@@ -1312,16 +1312,6 @@ f2ptr f2bytecode__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-// transframe
-
-def_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
-
-f2ptr f2__transframe__new(f2ptr cause, f2ptr nanoseconds_since_1970, f2ptr symbol_old_news) {return f2transframe__new(cause, nanoseconds_since_1970, symbol_old_news);}
-def_pcfunk2(transframe__new, nanoseconds_since_1970, symbol_old_news,
-	    "",
-	    return f2__transframe__new(this_cause, nanoseconds_since_1970, symbol_old_news));
-
-
 // size_2d
 
 def_primobject_2_slot(size_2d, x, y);
@@ -1374,7 +1364,6 @@ void f2__primobjects__reinitialize_globalvars() {
   __metro__symbol            = new__symbol(cause, "metro");
   __exception__symbol        = new__symbol(cause, "exception");
   __bytecode__symbol         = new__symbol(cause, "bytecode");
-  __transframe__symbol       = new__symbol(cause, "transframe");
   __bug__symbol              = new__symbol(cause, "bug");
   __size_2d__symbol          = new__symbol(cause, "size_2d");
   __event__symbol            = new__symbol(cause, "event");
@@ -1545,10 +1534,6 @@ void f2__primobjects__initialize() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__funk = never_gc(cfunk);}
   
-  
-  // transframe
-  
-  initialize_primobject_2_slot(transframe, nanoseconds_since_1970, symbol_old_news);
   
   // size_2d
   

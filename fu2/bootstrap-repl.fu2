@@ -28,7 +28,7 @@
   |                                        |
   | ']
 [primfunk:ansi__stream__foreground stdout 9]
-[primfunk:exp__format stdout 'funkϨ img']
+[primfunk:exp__format stdout 'funkϩ img']
 [primfunk:ansi__stream__foreground stdout 15]
 [primfunk:exp__format stdout '/']
 [primfunk:ansi__stream__foreground stdout 9]
@@ -1124,8 +1124,8 @@
 [memory-debug_assert_valid]
 
 [terminal_format standard-terminal '\n'
-		 'funkϨ: done compiling fu2/bootstrap-repl.fu2.' '\n'
-		 'funkϨ: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
+		 'funkϩ: done compiling fu2/bootstrap-repl.fu2.' '\n'
+		 'funkϩ: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
 
 `[primfunk:memory_image__save 'img/bootstrap-repl.img']
 

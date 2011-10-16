@@ -81,21 +81,21 @@ void f2__write__tab(f2ptr cause, f2ptr stream, boolean_t use_html) {
   }
 }
 
-void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, char ch, int return_size[2], boolean_t use_html) {
+void f2__fwrite__raw_char(f2ptr cause, f2ptr stream, funk2_character_t ch, int return_size[2], boolean_t use_html) {
   int width    = 0;
   int height   = 0;
   switch(ch) {
-  case ' ':
+  case (funk2_character_t)' ':
     f2__write__space(cause, stream, use_html); width ++;
     break;
-  case '\n':
+  case (funk2_character_t)'\n':
     f2__write__line_break(cause, stream, use_html); width = 0; height ++;
     break;
-  case '\t':
+  case (funk2_character_t)'\t':
     f2__write__tab(cause, stream, use_html); width = 0; height ++;
     break;
   default:
-    if(stream) {raw__stream__writef(cause, stream, "%c", ch);} width ++;
+    if(stream) {raw__stream__write_character(cause, stream, ch);} width ++;
     break;
   }
   if (return_size) {return_size[0] = width; return_size[1] = height;}

@@ -303,8 +303,8 @@ f2ptr f2__string_stream__try_ungetbless_read_byte(f2ptr cause, f2ptr this) {
   u64   character_byte_index__i = f2integer__i(                  character_byte_index, cause);
   if (index__i < string__length) {
     funk2_character_t ch      = f2string__elt(string, index__i, cause);
-    u64               ch__utf8_length = raw__funk2_character__utf8_length(  ch);
-    u8                ch__utf8_str[6];  raw__funk2_character__utf8_str_copy(ch, ch__utf8_str);
+    u64               ch__utf8_length = funk2_character__utf8_length(  ch);
+    u8                ch__utf8_str[6];  funk2_character__utf8_str_copy(ch, ch__utf8_str);
     if (character_byte_index__i < ch__utf8_length) {
       u8    byte__i      = ch__utf8_str[character_byte_index__i];
       f2ptr return_value = f2integer__new(cause, byte__i);

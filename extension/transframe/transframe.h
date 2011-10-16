@@ -23,6 +23,7 @@
 #define F2__EXTENSION__TRANSFRAME__H
 
 #include "../../c/funk2.h"
+#include "../semantic_object/semantic_object.h"
 
 def_header_ceframe5(transframe_change, change_type, change_object, change_slot_type, change_slot, change_target);
 

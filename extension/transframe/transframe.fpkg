@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage transframe
-  :packages   []
+  :packages   [semantic_object]
    :sources   ['transframe-core.fu2']
     :binaries ['.libs/libf2e_transframe.so']]
 

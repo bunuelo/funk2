@@ -94,7 +94,7 @@ def_pcfunk1(exp__comma_filter_backquoted, this,
 	    return f2__exp__comma_filter_backquoted(this_cause, this));
 
 boolean_t raw__char__is_whitespace(f2ptr cause, f2ptr this) {
-  u8 ch = f2char__ch(this, cause);
+  //u8 ch = f2char__ch(this, cause);
   //if (ch < 28 || ch > 128) {
   //  return boolean__true;
   //}

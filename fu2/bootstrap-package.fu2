@@ -177,6 +177,7 @@
 						     'extension/semantic_time/'
 						     'extension/semantic_visual_object/'
 						     'extension/timeline/'
+						     'extension/transframe/'
 						     'example/divisi2/'
 						     'example/em_two_webpage/'
 						     'example/english_language/'

@@ -492,7 +492,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
   if (! raw__integer__is_type(cause, b0)) {
     character = b0;
   } else {
-    u8 b0__i = f2integer__i(b0, cause);
+    u64 b0__i = f2integer__i(b0, cause);
     if (b0__i <= 127) {
       // ascii one-byte character
       character = f2char__new(cause, b0__i);
@@ -502,7 +502,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
       if (! raw__integer__is_type(cause, b1)) {
 	character = b1;
       } else {
-	u8 b1__i = f2integer__i(b1, cause);
+	u64 b1__i = f2integer__i(b1, cause);
 	funk2_character_t ch = ((b0__i & 0x1F) << 6) | (b1__0 & 0x3F);
 	character = f2char__new(cause, ch);
       }
@@ -512,12 +512,12 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
       if (! raw__integer__is_type(cause, b1)) {
 	character = b1;
       } else {
-	u8 b1__i = f2integer__i(b1, cause);
+	u64 b1__i = f2integer__i(b1, cause);
 	f2ptr b2 = f2__stream__try_read_byte(cause, this);
 	if (! raw__integer__is_type(cause, b2)) {
 	  character = b2;
 	} else {
-	  u8 b2__i = f2integer__i(b2, cause);
+	  u64 b2__i = f2integer__i(b2, cause);
 	  funk2_character_t ch = ((b0__i & 0x0F) << 12) | ((b1__0 & 0x3F) << 6) | (b2__0 & 0x3F);
 	  character = f2char__new(cause, ch);
 	}
@@ -528,17 +528,17 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
       if (! raw__integer__is_type(cause, b1)) {
 	character = b1;
       } else {
-	u8 b1__i = f2integer__i(b1, cause);
+	u64 b1__i = f2integer__i(b1, cause);
 	f2ptr b2 = f2__stream__try_read_byte(cause, this);
 	if (! raw__integer__is_type(cause, b2)) {
 	  character = b2;
 	} else {
-	  u8 b2__i = f2integer__i(b2, cause);
+	  u64 b2__i = f2integer__i(b2, cause);
 	  f2ptr b3 = f2__stream__try_read_byte(cause, this);
 	  if (! raw__integer__is_type(cause, b3)) {
 	    character = b3;
 	  } else {
-	    u8 b3__i = f2integer__i(b3, cause);
+	    u64 b3__i = f2integer__i(b3, cause);
 	    funk2_character_t ch = ((b0__i & 0x07) << 18) | ((b1__0 & 0x3F) << 12) | ((b2__0 & 0x3F) << 6) | (b3__0 & 0x3F);
 	    character = f2char__new(cause, ch);
 	  }

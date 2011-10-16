@@ -531,7 +531,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr m
 	  }
 	  
 	  sws_scale(funk2_movie_context->image_convert_context,
-		    (uint8_t**)(((AVPicture*)funk2_movie_context->rgb_picture_frame)->data),
+		    (uint8_t**)(const uint8_t* const*)(((AVPicture*)funk2_movie_context->rgb_picture_frame)->data),
 		    ((AVPicture*)funk2_movie_context->rgb_picture_frame)->linesize,
 		    0,
 		    height__i,

@@ -802,6 +802,15 @@ extension_timeline_libf2e_timeline_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 	$(CCLD) $(extension_timeline_libf2e_timeline_la_CFLAGS) \
 	$(CFLAGS) $(extension_timeline_libf2e_timeline_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_transframe_libf2e_transframe_la_LIBADD =
+am_extension_transframe_libf2e_transframe_la_OBJECTS = extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo
+extension_transframe_libf2e_transframe_la_OBJECTS =  \
+	$(am_extension_transframe_libf2e_transframe_la_OBJECTS)
+extension_transframe_libf2e_transframe_la_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(extension_transframe_libf2e_transframe_la_CFLAGS) \
+	$(CFLAGS) $(extension_transframe_libf2e_transframe_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 lib_libfunk2_la_LIBADD =
 am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_agent.lo \
 	c/lib_libfunk2_la-f2_array.lo c/lib_libfunk2_la-f2_ansi.lo \
@@ -1012,6 +1021,7 @@ SOURCES = $(extension_blocks_world_libf2e_blocks_world_la_SOURCES) \
 	$(extension_semantic_time_libf2e_semantic_time_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
 	$(extension_timeline_libf2e_timeline_la_SOURCES) \
+	$(extension_transframe_libf2e_transframe_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 DIST_SOURCES =  \
 	$(extension_blocks_world_libf2e_blocks_world_la_SOURCES) \
@@ -1084,6 +1094,7 @@ DIST_SOURCES =  \
 	$(extension_semantic_time_libf2e_semantic_time_la_SOURCES) \
 	$(extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES) \
 	$(extension_timeline_libf2e_timeline_la_SOURCES) \
+	$(extension_transframe_libf2e_transframe_la_SOURCES) \
 	$(lib_libfunk2_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
@@ -1425,7 +1436,8 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                       extension/semantic_time/libf2e_semantic_time.la \
                       extension/semantic_visual_object/libf2e_semantic_visual_object.la \
-                      extension/timeline/libf2e_timeline.la
+                      extension/timeline/libf2e_timeline.la \
+                      extension/transframe/libf2e_transframe.la
 
 lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
 
@@ -1629,6 +1641,7 @@ extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES = 
 extension_semantic_time_libf2e_semantic_time_la_SOURCES = extension/semantic_time/semantic_time.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES = extension/semantic_visual_object/semantic_visual_object.c
 extension_timeline_libf2e_timeline_la_SOURCES = extension/timeline/timeline.c
+extension_transframe_libf2e_transframe_la_SOURCES = extension/transframe/transframe.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 FUNK2_VERSION = `cat version`
@@ -1790,6 +1803,8 @@ extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(li
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_timeline_libf2e_timeline_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_timeline_libf2e_timeline_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_transframe_libf2e_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_transframe_libf2e_transframe_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES = config_bit_num.h config_compile_time_id.h
 AM_MAKEFLAGS = img/bootstrap.img
@@ -2646,6 +2661,17 @@ extension/timeline/extension_timeline_libf2e_timeline_la-timeline.lo:  \
 	extension/timeline/$(DEPDIR)/$(am__dirstamp)
 extension/timeline/libf2e_timeline.la: $(extension_timeline_libf2e_timeline_la_OBJECTS) $(extension_timeline_libf2e_timeline_la_DEPENDENCIES) extension/timeline/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_timeline_libf2e_timeline_la_LINK) -rpath $(libdir) $(extension_timeline_libf2e_timeline_la_OBJECTS) $(extension_timeline_libf2e_timeline_la_LIBADD) $(LIBS)
+extension/transframe/$(am__dirstamp):
+	@$(MKDIR_P) extension/transframe
+	@: > extension/transframe/$(am__dirstamp)
+extension/transframe/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/transframe/$(DEPDIR)
+	@: > extension/transframe/$(DEPDIR)/$(am__dirstamp)
+extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo:  \
+	extension/transframe/$(am__dirstamp) \
+	extension/transframe/$(DEPDIR)/$(am__dirstamp)
+extension/transframe/libf2e_transframe.la: $(extension_transframe_libf2e_transframe_la_OBJECTS) $(extension_transframe_libf2e_transframe_la_DEPENDENCIES) extension/transframe/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_transframe_libf2e_transframe_la_LINK) -rpath $(libdir) $(extension_transframe_libf2e_transframe_la_OBJECTS) $(extension_transframe_libf2e_transframe_la_LIBADD) $(LIBS)
 c/$(am__dirstamp):
 	@$(MKDIR_P) c
 	@: > c/$(am__dirstamp)
@@ -3304,6 +3330,8 @@ mostlyclean-compile:
 	-rm -f extension/semantic_visual_object/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.lo
 	-rm -f extension/timeline/extension_timeline_libf2e_timeline_la-timeline.$(OBJEXT)
 	-rm -f extension/timeline/extension_timeline_libf2e_timeline_la-timeline.lo
+	-rm -f extension/transframe/extension_transframe_libf2e_transframe_la-transframe.$(OBJEXT)
+	-rm -f extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -3504,6 +3532,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_time/$(DEPDIR)/extension_semantic_time_libf2e_semantic_time_la-semantic_time.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_visual_object/$(DEPDIR)/extension_semantic_visual_object_libf2e_semantic_visual_object_la-semantic_visual_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/timeline/$(DEPDIR)/extension_timeline_libf2e_timeline_la-timeline.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/transframe/$(DEPDIR)/extension_transframe_libf2e_transframe_la-transframe.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -4091,6 +4120,14 @@ extension/timeline/extension_timeline_libf2e_timeline_la-timeline.lo: extension/
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/timeline/timeline.c' object='extension/timeline/extension_timeline_libf2e_timeline_la-timeline.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_timeline_libf2e_timeline_la_CFLAGS) $(CFLAGS) -c -o extension/timeline/extension_timeline_libf2e_timeline_la-timeline.lo `test -f 'extension/timeline/timeline.c' || echo '$(srcdir)/'`extension/timeline/timeline.c
+
+extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo: extension/transframe/transframe.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_transframe_libf2e_transframe_la_CFLAGS) $(CFLAGS) -MT extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo -MD -MP -MF extension/transframe/$(DEPDIR)/extension_transframe_libf2e_transframe_la-transframe.Tpo -c -o extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo `test -f 'extension/transframe/transframe.c' || echo '$(srcdir)/'`extension/transframe/transframe.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/transframe/$(DEPDIR)/extension_transframe_libf2e_transframe_la-transframe.Tpo extension/transframe/$(DEPDIR)/extension_transframe_libf2e_transframe_la-transframe.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/transframe/transframe.c' object='extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_transframe_libf2e_transframe_la_CFLAGS) $(CFLAGS) -c -o extension/transframe/extension_transframe_libf2e_transframe_la-transframe.lo `test -f 'extension/transframe/transframe.c' || echo '$(srcdir)/'`extension/transframe/transframe.c
 
 c/lib_libfunk2_la-f2_agent.lo: c/f2_agent.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_agent.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_agent.Tpo -c -o c/lib_libfunk2_la-f2_agent.lo `test -f 'c/f2_agent.c' || echo '$(srcdir)/'`c/f2_agent.c
@@ -5176,6 +5213,7 @@ clean-libtool:
 	-rm -rf extension/semantic_time/.libs extension/semantic_time/_libs
 	-rm -rf extension/semantic_visual_object/.libs extension/semantic_visual_object/_libs
 	-rm -rf extension/timeline/.libs extension/timeline/_libs
+	-rm -rf extension/transframe/.libs extension/transframe/_libs
 	-rm -rf lib/.libs lib/_libs
 
 distclean-libtool:
@@ -5549,6 +5587,8 @@ distclean-generic:
 	-rm -f extension/semantic_visual_object/$(am__dirstamp)
 	-rm -f extension/timeline/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/timeline/$(am__dirstamp)
+	-rm -f extension/transframe/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/transframe/$(am__dirstamp)
 	-rm -f lib/$(am__dirstamp)
 
 maintainer-clean-generic:
@@ -5559,7 +5599,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -5607,7 +5647,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

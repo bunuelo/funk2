@@ -21,17 +21,16 @@
 
 #include "transframe.h"
 
-def_ceframe1(transframe, transframe_change, change_set);
+def_ceframe5(transframe, transframe_change, change_type, change_object, change_slot_type, change_slot, change_target);
 
-f2ptr raw__transframe_change__new(f2ptr cause) {
-  f2ptr change_set = f2__set__new(cause);
-  return f2transframe_change__new(cause, change_set);
+f2ptr raw__transframe_change__new(f2ptr cause, f2ptr change_type, f2ptr change_object, f2ptr change_slot_type, f2ptr change_slot, f2ptr change_target) {
+  return f2transframe_change__new(cause, change_type, change_object, change_slot_type, change_slot, change_target);
 }
 
-f2ptr f2__transframe_change__new(f2ptr cause) {
-  return raw__transframe_change__new(cause);
+f2ptr f2__transframe_change__new(f2ptr cause, f2ptr change_type, f2ptr change_object, f2ptr change_slot_type, f2ptr change_slot, f2ptr change_target) {
+  return raw__transframe_change__new(cause, change_type, change_object, change_slot_type, change_slot, change_target);
 }
-export_cefunk0(transframe_change__new, 0, "Returns a new transframe_change object.");
+export_cefunk5(transframe_change__new, change_type, change_object, change_slot_type, change_slot, change_target, 0, "Returns a new transframe_change object.");
 
 
 f2ptr f2__transframe_change_type__new_aux(f2ptr cause) {

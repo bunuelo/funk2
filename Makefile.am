@@ -282,7 +282,8 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
                       extension/semantic_time/libf2e_semantic_time.la \
                       extension/semantic_visual_object/libf2e_semantic_visual_object.la \
-                      extension/timeline/libf2e_timeline.la
+                      extension/timeline/libf2e_timeline.la \
+                      extension/transframe/libf2e_transframe.la
 
 lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
 
@@ -487,6 +488,7 @@ extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES   
 extension_semantic_time_libf2e_semantic_time_la_SOURCES                                                               = extension/semantic_time/semantic_time.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                             = extension/semantic_visual_object/semantic_visual_object.c
 extension_timeline_libf2e_timeline_la_SOURCES                                                                         = extension/timeline/timeline.c
+extension_transframe_libf2e_transframe_la_SOURCES                                                                     = extension/transframe/transframe.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -722,6 +724,9 @@ extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS  = $(li
 
 extension_timeline_libf2e_timeline_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_timeline_libf2e_timeline_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_transframe_libf2e_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_transframe_libf2e_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h

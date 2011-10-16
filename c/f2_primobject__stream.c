@@ -295,17 +295,28 @@ f2ptr f2__socket_stream__try_ungetbless_read_byte(f2ptr cause, f2ptr this) {
 
 f2ptr f2__string_stream__try_ungetbless_read_byte(f2ptr cause, f2ptr this) {
   assert_argument_type(string_stream, this);
-  f2ptr string = f2stream__string(this, cause);
-  f2ptr index  = f2stream__index( this, cause);
-  u64 string_length = f2string__length(string, cause);
-  u64 raw_index     = f2integer__i(index, cause);
-  if (raw_index < string_length) {
-    funk2_character_t ch      = f2string__elt(string, raw_index, cause);
-    u8                byte__i = (u8)ch;
-    f2ptr return_value = f2integer__new(cause, byte__i);
-    raw_index ++;
-    f2stream__index__set(this, cause, f2integer__new(cause, raw_index));
-    return return_value;
+  f2ptr string                  = f2stream__string(              this,                 cause);
+  u64   string__length          = f2string__length(              string,               cause);
+  f2ptr index                   = f2stream__index(               this,                 cause);
+  u64   index__i                = f2integer__i(                  index,                cause);
+  f2ptr character_byte_index    = f2stream__character_byte_index(this,                 cause);
+  u64   character_byte_index__i = f2integer__i(                  character_byte_index, cause);
+  if (index__i < string__length) {
+    funk2_character_t ch      = f2string__elt(string, index__i, cause);
+    u64               ch__utf8_length = raw__funk2_character__utf8_length(  ch);
+    u8                ch__utf8_str[6];  raw__funk2_character__utf8_str_copy(ch, ch__utf8_str);
+    if (character_byte_index__i < ch__utf8_length) {
+      u8    byte__i      = ch__utf8_str[character_byte_index__i];
+      f2ptr return_value = f2integer__new(cause, byte__i);
+      character_byte_index__i ++;
+      if (character_byte_index__i >= ch__utf8_length) {
+	character_byte_index__i = 0;
+	index__i ++;
+	f2stream__index__set(this, cause, f2integer__new(cause, index__i));
+      }
+      f2stream__character_byte_index__set(this, cause, f2integer__new(cause, character_byte_index__i));
+      return return_value;
+    }
   }
   return __funk2.reader.end_of_file_exception;
 }

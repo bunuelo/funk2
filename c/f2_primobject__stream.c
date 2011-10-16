@@ -503,7 +503,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
 	character = b1;
       } else {
 	u64 b1__i = f2integer__i(b1, cause);
-	funk2_character_t ch = ((b0__i & 0x1F) << 6) | (b1__0 & 0x3F);
+	funk2_character_t ch = ((b0__i & 0x1F) << 6) | (b1__i & 0x3F);
 	character = f2char__new(cause, ch);
       }
     } else if ((b0__i & 0xF0) == 0xE0) {
@@ -518,7 +518,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
 	  character = b2;
 	} else {
 	  u64 b2__i = f2integer__i(b2, cause);
-	  funk2_character_t ch = ((b0__i & 0x0F) << 12) | ((b1__0 & 0x3F) << 6) | (b2__0 & 0x3F);
+	  funk2_character_t ch = ((b0__i & 0x0F) << 12) | ((b1__i & 0x3F) << 6) | (b2__i & 0x3F);
 	  character = f2char__new(cause, ch);
 	}
       }
@@ -539,7 +539,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
 	    character = b3;
 	  } else {
 	    u64 b3__i = f2integer__i(b3, cause);
-	    funk2_character_t ch = ((b0__i & 0x07) << 18) | ((b1__0 & 0x3F) << 12) | ((b2__0 & 0x3F) << 6) | (b3__0 & 0x3F);
+	    funk2_character_t ch = ((b0__i & 0x07) << 18) | ((b1__i & 0x3F) << 12) | ((b2__i & 0x3F) << 6) | (b3__i & 0x3F);
 	    character = f2char__new(cause, ch);
 	  }
 	}

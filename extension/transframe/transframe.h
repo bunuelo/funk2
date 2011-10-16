@@ -24,7 +24,7 @@
 
 #include "../../c/funk2.h"
 
-def_header_ceframe1(transframe, width);
+def_header_ceframe1(transframe, change_set);
 
 f2ptr     raw__transframe__new(f2ptr cause);
 f2ptr      f2__transframe__new(f2ptr cause);

@@ -21,11 +21,11 @@
 
 #include "transframe.h"
 
-def_ceframe1(transframe, transframe, width);
+def_ceframe1(transframe, transframe, change_set);
 
 f2ptr raw__transframe__new(f2ptr cause) {
-  f2ptr width = nil;
-  return f2transframe__new(cause, width);
+  f2ptr change_set = f2__set__new(cause);
+  return f2transframe__new(cause, change_set);
 }
 
 f2ptr f2__transframe__new(f2ptr cause) {

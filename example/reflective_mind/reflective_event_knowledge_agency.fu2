@@ -18,6 +18,21 @@
  rights to redistribute these changes.'
 
 
+[deframe reflective_mind_action [frame] [phenomenal_name focus_knowledge_base [transframe_set [new set]]]
+  [new [initial-phenomenal_name]
+       [= phenomenal_name initial-phenomenal_name]
+       ]]
+
+[deftypefunk reflective_mind_action execute know_of_begin_execution []
+  [terminal_format standard-terminal '\nreflective_mind_action ' phenomenal_name ' beginning execution.']
+  ]
+
+[deftypefunk reflective_mind_action execute know_of_end_execution []
+  [terminal_format standard-terminal '\nreflective_mind_action ' phenomenal_name ' ending execution.']
+  ]
+
+
+
 'reflective_event_knowledge_agency'
 
 [deframe reflective_event_knowledge_agency [agency] []

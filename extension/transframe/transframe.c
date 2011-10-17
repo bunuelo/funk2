@@ -56,9 +56,22 @@ f2ptr f2__transframe_change__apply_to_knowledge_base(f2ptr cause, f2ptr this, f2
 export_cefunk2(transframe_change__apply_to_knowledge_base, this, knowledge_base, 0, "Applies this change to given knowledge_base.");
 
 
+f2ptr raw__transframe_change__unapply_from_knowledge_base(f2ptr cause, f2ptr this, f2ptr knowledge_base) {
+  return nil;
+}
+
+f2ptr f2__transframe_change__unapply_from_knowledge_base(f2ptr cause, f2ptr this, f2ptr knowledge_base) {
+  assert_argument_type(transframe_change,       this);
+  assert_argument_type(semantic_knowledge_base, knowledge_base);
+  return raw__transframe_change__unapply_from_knowledge_base(cause, this, knowledge_base);
+}
+export_cefunk2(transframe_change__unapply_from_knowledge_base, this, knowledge_base, 0, "Applies this change to given knowledge_base.");
+
+
 f2ptr f2__transframe_change_type__new_aux(f2ptr cause) {
   f2ptr this = f2__transframe_change_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "apply_to_knowledge_base"), f2__core_extension_funk__new(cause, new__symbol(cause, "transframe"), new__symbol(cause, "transframe_change__apply_to_knowledge_base")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "apply_to_knowledge_base"),     f2__core_extension_funk__new(cause, new__symbol(cause, "transframe"), new__symbol(cause, "transframe_change__apply_to_knowledge_base")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "unapply_from_knowledge_base"), f2__core_extension_funk__new(cause, new__symbol(cause, "transframe"), new__symbol(cause, "transframe_change__unapply_from_knowledge_base")));}
   return this;
 }
 

@@ -144,31 +144,6 @@ def_ceframe7(semantic_knowledge_base, semantic_knowledge_base,
 	     trace_remove_semantic_frame,
 	     trace_callback_funks_frame);
 
-/*
-f2ptr raw__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
-  f2ptr trace_callback_funks_frame = f2__frame__new(cause, nil);
-  return f2semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame, trace_callback_funks_frame);
-}
-
-f2ptr f2__semantic_knowledge_base__new(f2ptr cause, f2ptr name, f2ptr semantic_realm) {
-  assert_argument_type(semantic_realm, semantic_realm);
-  f2ptr trace_event_stream          = f2__forgetful_event_stream__new(cause);
-  f2ptr trace_add_semantic_frame    = nil;
-  f2ptr trace_remove_semantic_frame = nil;
-  if (cause != nil) {
-    trace_add_semantic_frame    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_add_semantic_frame"));
-    trace_remove_semantic_frame = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_knowledge_base-trace_remove_semantic_frame"));
-  }
-  f2ptr semantic_frame_set = f2__set__new(cause);
-  f2ptr this = raw__semantic_knowledge_base__new(cause, name, semantic_realm, semantic_frame_set, trace_event_stream, trace_add_semantic_frame, trace_remove_semantic_frame);
-  f2__semantic_realm__add_semantic_knowledge_base(cause, semantic_realm, this);
-  return this;
-}
-export_cefunk2(semantic_knowledge_base__new, name, semantic_realm, 0, "Takes a name nad a semantic_realm and returns a new semantic_knowledge_base object.");
-*/
-
-
-
 f2ptr raw__semantic_knowledge_base__type_create_with_details(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm, f2ptr semantic_frame_set, f2ptr trace_event_stream, f2ptr trace_add_semantic_frame, f2ptr trace_remove_semantic_frame) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_knowledge_base"));

@@ -45,6 +45,7 @@ export_cefunk5(transframe_change__new, change_type, change_object, change_slot_t
 
 
 f2ptr raw__transframe_change__apply_to_knowledge_base(f2ptr cause, f2ptr this, f2ptr knowledge_base) {
+  
   return nil;
 }
 
@@ -90,6 +91,14 @@ f2ptr f2__transframe__new(f2ptr cause) {
   return raw__transframe__new(cause);
 }
 export_cefunk0(transframe__new, 0, "Returns a new transframe object.");
+
+
+f2ptr raw__transframe__apply_to_knowledge_base(f2ptr cause, f2ptr this, f2ptr knowledge_base) {
+  f2ptr change_set = f2__transframe__change_set(cause, this);
+  set__iteration(cause, change_set, change,
+		 raw__transframe_change__apply_to_knowledge_base(cause, change, knowledge_base));
+  return nil;
+}
 
 
 f2ptr f2__transframe_type__new_aux(f2ptr cause) {

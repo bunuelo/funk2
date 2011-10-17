@@ -288,12 +288,12 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			value = nil;
 			frame__key_count ++;
 			);
-  boolean_t           has_cairo_type     = boolean__false;
-  s64                 cairo_type_index   = 0;
-  funk2_character_t** key_string_array   = (funk2_character_t**)from_ptr(f2__malloc(sizeof(funk2_character_t*) * frame__key_count));
-  s64*                key_length_array   = (s64*)               from_ptr(f2__malloc(sizeof(s64)                * frame__key_count));
-  funk2_character_t** value_string_array = (funk2_character_t**)from_ptr(f2__malloc(sizeof(funk2_character_t*) * frame__key_count));
-  s64*                value_length_array = (s64*)               from_ptr(f2__malloc(sizeof(s64)                * frame__key_count));
+  boolean_t has_cairo_type          = boolean__false;
+  s64       cairo_type_index        = 0;
+  u8**      key_utf8_string_array   = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
+  s64*      key_utf8_length_array   = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
+  u8**      value_utf8_string_array = (u8**)from_ptr(f2__malloc(sizeof(u8*) * frame__key_count));
+  s64*      value_utf8_length_array = (s64*)from_ptr(f2__malloc(sizeof(s64) * frame__key_count));
   {
     s64 index = 0;
     frame__var__iteration(cause, frame, key, value,
@@ -304,17 +304,17 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 			    }
 			    {
 			      f2ptr key__string = assert_value(f2__exp__as__string(cause, key));
-			      key_length_array[index] = raw__string__length(cause, key__string);
-			      key_string_array[index] = (funk2_character_t*)from_ptr(f2__malloc((key_length_array[index] + 1) * sizeof(funk2_character_t)));
-			      raw__string__str_copy(cause, key__string, key_string_array[index]);
-			      key_string_array[index][key_length_array[index]] = 0;
+			      key_utf8_length_array[index] = raw__string__utf8_length(cause, key__string);
+			      key_utf8_string_array[index] = (u8*)from_ptr(f2__malloc((key_utf8_length_array[index] + 1) * sizeof(u8)));
+			      raw__string__utf8_str_copy(cause, key__string, key_utf8_string_array[index]);
+			      key_utf8_string_array[index][key_utf8_length_array[index]] = 0;
 			    }
 			    {
 			      f2ptr value__string = assert_value(f2__exp__as__string(cause, value));
-			      value_length_array[index] = raw__string__length(cause, value__string);
-			      value_string_array[index] = (funk2_character_t*)from_ptr(f2__malloc((value_length_array[index] + 1) * sizeof(funk2_character_t)));
-			      raw__string__str_copy(cause, value__string, value_string_array[index]);
-			      value_string_array[index][value_length_array[index]] = 0;
+			      value_utf8_length_array[index] = raw__string__utf8_length(cause, value__string);
+			      value_utf8_string_array[index] = (u8*)from_ptr(f2__malloc((value_utf8_length_array[index] + 1) * sizeof(u8)));
+			      raw__string__utf8_str_copy(cause, value__string, value_utf8_string_array[index]);
+			      value_utf8_string_array[index][value_utf8_length_array[index]] = 0;
 			    }
 			  }
 			  index ++;
@@ -331,7 +331,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)key_string_array[index]));
+	    f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)key_utf8_string_array[index]));
 	    f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
 	    double text_extents__width__d = f2double__d(text_extents__width, cause);
 	    if (text_extents__width__d > max_key_text_width) {
@@ -341,7 +341,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	  {
 	    raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
 	    raw__cairo_context__set_font_size(cause, this, font_size);
-	    f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_string_array[index]));
+	    f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_utf8_string_array[index]));
 	    f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
 	    double text_extents__width__d = f2double__d(text_extents__width, cause);
 	    if (text_extents__width__d > max_value_text_width) {
@@ -355,7 +355,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       double title_font_size = font_size * 1.05;
       raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
       raw__cairo_context__set_font_size(cause, this, title_font_size);
-      f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_string_array[cairo_type_index]));
+      f2ptr text_extents = assert_value(raw__cairo_context__text_extents(cause, this, (char*)value_utf8_string_array[cairo_type_index]));
       f2ptr  text_extents__width    = raw__cairo_text_extents__width(cause, text_extents);
       double text_extents__width__d = f2double__d(text_extents__width, cause);
       double squish_factor          = 1.0;
@@ -365,7 +365,7 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
       if (squish_factor > 0.25) {
 	double y0 = cy - (title_font_size * frame__key_count / 2);
 	double x0 = cx - ((text_extents__width__d / 2) * squish_factor);
-	raw__cairo_context__render_text_scaled(cause, this, x0, y0, title_font_size, squish_factor, 1.0, (char*)value_string_array[cairo_type_index], red, green, blue, alpha);
+	raw__cairo_context__render_text_scaled(cause, this, x0, y0, title_font_size, squish_factor, 1.0, (char*)value_utf8_string_array[cairo_type_index], red, green, blue, alpha);
       }
     }
     double space_between_key_and_value = 1.0;
@@ -389,13 +389,13 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
 	      raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "bold"));
 	      raw__cairo_context__set_font_size(cause, this, font_size);
 	      double x0 = cx + ((-(max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) * squish_factor);
-	      raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)key_string_array[index], red, green, blue, alpha);
+	      raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)key_utf8_string_array[index], red, green, blue, alpha);
 	    }
 	    {
 	      raw__cairo_context__select_font_face(cause, this, "serif", new__symbol(cause, "normal"), new__symbol(cause, "normal"));
 	      raw__cairo_context__set_font_size(cause, this, font_size);
 	      double x0 = cx + ((-((max_key_text_width + space_between_key_and_value + max_value_text_width) / 2) + max_key_text_width + space_between_key_and_value) * squish_factor);
-	      raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)value_string_array[index], red, green, blue, alpha);
+	      raw__cairo_context__render_text_scaled(cause, this, x0, y0, font_size, squish_factor, 1.0, (char*)value_utf8_string_array[index], red, green, blue, alpha);
 	    }
 	    y_index ++;
 	  }
@@ -406,12 +406,12 @@ f2ptr raw__cairo_context__render_centered_outlined_frame(f2ptr cause, f2ptr this
   {
     s64 index;
     for (index = 0; index < frame__key_count; index ++) {
-      f2__free(to_ptr(key_string_array[index]));
-      f2__free(to_ptr(value_string_array[index]));
+      f2__free(to_ptr(key_utf8_string_array[index]));
+      f2__free(to_ptr(value_utf8_string_array[index]));
     }
   }
-  f2__free(to_ptr(key_string_array));
-  f2__free(to_ptr(value_string_array));
+  f2__free(to_ptr(key_utf8_string_array));
+  f2__free(to_ptr(value_utf8_string_array));
   return nil;
 }
 

@@ -65,7 +65,7 @@ f2ptr f2__transframe_change__unapply_from_knowledge_base(f2ptr cause, f2ptr this
   assert_argument_type(semantic_knowledge_base, knowledge_base);
   return raw__transframe_change__unapply_from_knowledge_base(cause, this, knowledge_base);
 }
-export_cefunk2(transframe_change__unapply_from_knowledge_base, this, knowledge_base, 0, "Applies this change to given knowledge_base.");
+export_cefunk2(transframe_change__unapply_from_knowledge_base, this, knowledge_base, 0, "Unapplies this change from given knowledge_base.");
 
 
 f2ptr f2__transframe_change_type__new_aux(f2ptr cause) {

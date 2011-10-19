@@ -6193,7 +6193,7 @@ export_cefunk0(gtk_extension__core_extension__initialize, 0, "");
 
 f2ptr f2__gtk_extension__core_extension__define_types(f2ptr cause) {
   // g_object
-  f2__add_type(cause, new__symbol(cause, "g_object"), f2__g_object_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "g_object"), f2__g_object_type__new(cause));
   
   // gtk_widget
   // gtk_box

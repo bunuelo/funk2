@@ -44,7 +44,6 @@
 #include "f2_package_handler.h"
 #include "f2_graph.h"
 #include "f2_graph_match_error_correcting.h"
-#include "f2_gtk.h"
 #include "f2_nil.h"
 #include "f2_processor.h"
 #include "f2_scheduler.h"

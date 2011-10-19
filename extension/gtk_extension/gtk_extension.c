@@ -6218,12 +6218,12 @@ f2ptr f2__gtk_extension__core_extension__define_types(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "gtk_entry"),        f2__gtk_entry_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_image"),        f2__gtk_image_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_text_buffer"),  f2__gtk_text_buffer_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_iter"),    f2__gtk_text_iter_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gdk_color"),        f2__gdk_color_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gdkpixbuf"),        f2__gdkpixbuf_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_mark"),    f2__gtk_text_mark_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_callback"),     f2__gtk_callback_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_range"),   f2__gtk_text_range_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_iter"),    f2__gtk_text_iter_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gdk_color"),        f2__gdk_color_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gdkpixbuf"),        f2__gdkpixbuf_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_mark"),    f2__gtk_text_mark_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_callback"),     f2__gtk_callback_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_range"),   f2__gtk_text_range_type__new(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_progress_bar"), f2__gtk_progress_bar_type__new_aux(cause));
   
   status("gtk_extension types defined.");

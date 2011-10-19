@@ -58,7 +58,6 @@
 #include "f2_graph_cluster.h"
 #include "f2_graph_match_error_correcting.h"
 #include "f2_graphviz.h"
-#include "f2_gtk.h"
 #include "f2_hash.h"
 #include "f2_heap.h"
 #include "f2_html.h"
@@ -194,9 +193,9 @@ typedef struct funk2_s {
   funk2_surrogate_parent_t            surrogate_parent;
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
-#if defined(F2__GTK__SUPPORTED)
-  funk2_gtk_t                         gtk;
-#endif
+  //#if defined(F2__GTK__SUPPORTED)
+  //funk2_gtk_t                         gtk;
+  //#endif
   funk2_virtual_processor_handler_t   virtual_processor_handler;
 } funk2_t;
 

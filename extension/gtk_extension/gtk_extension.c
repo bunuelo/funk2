@@ -6178,8 +6178,6 @@ f2ptr f2__gtk_extension__core_extension__ping(f2ptr cause) {
 export_cefunk0(gtk_extension__core_extension__ping, 0, "");
 
 f2ptr f2__gtk_extension__core_extension__initialize(f2ptr cause) {
-  f2ptr cause = initial_cause();
-  
   if (__funk2__gtk != NULL) {
     printf("\nTried to initialize gtk while gtk is already initialized.");
     status(  "Tried to initialize gtk while gtk is already initialized.");

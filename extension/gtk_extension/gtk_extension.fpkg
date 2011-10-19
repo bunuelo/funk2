@@ -24,7 +24,7 @@
 
 [defcore gtk_extension 'extension/gtk_extension/.libs/libf2e_gtk_extension.so']
 
-[defpackage gtk []
+[defpackage gtk
   :packages [gtk_extension]]
 
 

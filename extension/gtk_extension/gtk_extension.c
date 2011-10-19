@@ -266,7 +266,7 @@ f2ptr f2__gtk_image_type__new_aux(f2ptr cause) {
 // gtk_text_iter
 
 //def_frame_object__global__2_slot(gtk_text_iter, gtk_session, chunk);
-def_ceframe2(gtk_extension, gtk_text_iter, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_text_iter, gtk_session, chunk);
 
 f2ptr f2__gtk_text_iter__new(f2ptr cause, f2ptr chunk) {
   return f2gtk_text_iter__new(cause, f2__gtk__session_symbol(cause), chunk);

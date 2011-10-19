@@ -6211,20 +6211,24 @@ export_cefunk0(gtk_extension__core_extension__initialize, 0, "");
 
 f2ptr f2__gtk_extension__core_extension__define_types(f2ptr cause) {
   
-  f2__add_type(cause, new__symbol(cause, "g_object"),         f2__g_object_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_widget"),       f2__gtk_widget_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_box"),          f2__gtk_box_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_label"),        f2__gtk_label_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_entry"),        f2__gtk_entry_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_image"),        f2__gtk_image_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_buffer"),  f2__gtk_text_buffer_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_iter"),    f2__gtk_text_iter_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "gdk_color"),        f2__gdk_color_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "gdk_pixbuf"),       f2__gdk_pixbuf_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_mark"),    f2__gtk_text_mark_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_callback"),     f2__gtk_callback_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_text_range"),   f2__gtk_text_range_type__new(cause));
-  f2__add_type(cause, new__symbol(cause, "gtk_progress_bar"), f2__gtk_progress_bar_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "g_object"),                f2__g_object_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_widget"),              f2__gtk_widget_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_box"),                 f2__gtk_box_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_label"),               f2__gtk_label_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_entry"),               f2__gtk_entry_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_image"),               f2__gtk_image_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_buffer"),         f2__gtk_text_buffer_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_iter"),           f2__gtk_text_iter_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gdk_color"),               f2__gdk_color_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gdk_pixbuf"),              f2__gdk_pixbuf_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_mark"),           f2__gtk_text_mark_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_callback"),            f2__gtk_callback_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_range"),          f2__gtk_text_range_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_progress_bar"),        f2__gtk_progress_bar_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_menu"),                f2__gtk_menu_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_menu_bar"),            f2__gtk_menu_bar_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_check_button"),        f2__gtk_check_button_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_file_chooser_dialog"), f2__gtk_file_chooser_dialog_type__new_aux(cause));
   
   status("gtk_extension types defined.");
   return nil;

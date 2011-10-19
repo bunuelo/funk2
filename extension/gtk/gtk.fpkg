@@ -19,6 +19,5 @@
 
 [defpackage gtk
   :packages [image]
-   :sources ['primfunks-gtk.fu2'
-	     'bootstrap-gtk.fu2']]
+   :sources ['gtk-core.fu2']]
 

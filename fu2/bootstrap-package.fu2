@@ -106,7 +106,6 @@
 						     'built-in/xmlrpc/'
 						     'built-in/graph_match_error_correcting/'
 						     'built-in/graph_cluster/'
-						     'built-in/gtk/'
 						     'built-in/natural_language/'
 						     'extension/blocks_world/'
 						     'extension/cairo/'

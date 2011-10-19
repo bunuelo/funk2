@@ -125,7 +125,7 @@ void f2__initialize() {
   f2__graph__initialize();
   f2__graph_cluster__initialize();
   f2__graph_match_error_correcting__initialize();
-  f2__gtk__initialize();
+  //f2__gtk__initialize();
   f2__terminal_print__initialize();
   f2__nil__initialize();
   f2__knowledge__initialize();
@@ -202,9 +202,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
   
-#if defined(F2__GTK__SUPPORTED)
-  funk2_gtk__init(&(this->gtk), &argc, &argv);
-#endif // F2__GTK__SUPPORTED
+  //#if defined(F2__GTK__SUPPORTED)
+  //funk2_gtk__init(&(this->gtk), &argc, &argv);
+  //#endif // F2__GTK__SUPPORTED
   
   f2ptr cause = initial_cause();
   
@@ -242,9 +242,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
   }
   
-#if defined(F2__GTK__SUPPORTED)
-  funk2_gtk__start_gtk_main(&(__funk2.gtk));
-#endif // F2__GTK__SUPPORTED
+  //#if defined(F2__GTK__SUPPORTED)
+  //funk2_gtk__start_gtk_main(&(__funk2.gtk));
+  //#endif // F2__GTK__SUPPORTED
   
   cause = f2__cause__new_with_inherited_properties(cause, nil);
   never_gc(cause);

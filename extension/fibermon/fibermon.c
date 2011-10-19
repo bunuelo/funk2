@@ -20,6 +20,7 @@
 // 
 
 #include "../../c/funk2.h"
+#include "../gtk_extension/gtk_extension.h"
 
 f2ptr f2__fibermon__bytes__to_memory_string(f2ptr cause, f2ptr this) {
   f2ptr i = object__get_0(cause, this, "as-integer");

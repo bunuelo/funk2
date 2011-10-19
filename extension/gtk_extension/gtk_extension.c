@@ -335,9 +335,11 @@ f2ptr f2__gdk__color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2pt
   }
   return f2gdk_color__new(cause, pixel, red, green, blue);
 }
-def_pcfunk4(gdk__color__new, pixel, red, green, blue,
-	    "Accepts integer pixel, red, green, and blue values.  Returns a new GtkColor object.",
-	    return f2__gdk__color__new(this_cause, pixel, red, green, blue));
+export_cefunk4(gdk__color__new, pixel, red, green, blue, 0,
+	       "Accepts integer pixel, red, green, and blue values.  Returns a new GtkColor object.");
+//def_pcfunk4(gdk__color__new, pixel, red, green, blue,
+//	    "Accepts integer pixel, red, green, and blue values.  Returns a new GtkColor object.",
+//	    return f2__gdk__color__new(this_cause, pixel, red, green, blue));
 
 
 f2ptr f2__gdk__rgb_color__new(f2ptr cause, f2ptr red, f2ptr green, f2ptr blue) {

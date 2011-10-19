@@ -24,6 +24,158 @@
 
 [gtk_extension-core_extension-define_types]
 
+[defcorefunk gtk-is_supported                                  gtk_extension gtk__is_supported]
+
+'expose_event'
+
+[defcorefunk gtk-expose_event-signal_connect                   gtk_extension gtk__expose_event__signal_connect]
+
+'key_press_event'
+
+[defcorefunk gtk-key_press_event-signal_connect                gtk_extension gtk__key_press_event__signal_connect]
+
+'response_event'
+
+[defcorefunk gtk-response_event-signal_connect                 gtk_extension gtk__response_event__signal_connect]
+
+'update_preview_event'
+
+[defcorefunk gtk-update_preview_event-signal_connect           gtk_extension gtk__update_preview_event__signal_connect]
+
+'object'
+
+[defcorefunk g-object-ref                                      gtk_extension g__object__ref]
+[defcorefunk g-object-unref                                    gtk_extension g__object__unref]
+
+'widget'
+
+[defcorefunk gtk-widget-show                                   gtk_extension gtk__widget__show]
+[defcorefunk gtk-widget-show_all                               gtk_extension gtk__widget__show_all]
+[defcorefunk gtk-widget-hide                                   gtk_extension gtk__widget__hide]
+[defcorefunk gtk-widget-hide_all                               gtk_extension gtk__widget__hide_all]
+[defcorefunk gtk-widget-set_size_request                       gtk_extension gtk__widget__set_size_request]
+[defcorefunk gtk-widget-queue_draw_area                        gtk_extension gtk__widget__queue_draw_area]
+[defcorefunk gtk-widget-get_visible                            gtk_extension gtk__widget__get_visible]
+[defcorefunk gtk-widget-destroy                                gtk_extension gtk__widget__destroy]
+[defcorefunk gtk-widget-connect_hide_on_delete                 gtk_extension gtk__widget__connect_hide_on_delete]
+[defcorefunk gtk-widget-modify_fg                              gtk_extension gtk__widget__modify_fg]
+[defcorefunk gtk-widget-modify_bg                              gtk_extension gtk__widget__modify_bg]
+[defcorefunk gtk-widget-set_sensitive                          gtk_extension gtk__widget__set_sensitive]
+[defcorefunk gtk-widget-set_no_show_all                        gtk_extension gtk__widget__set_no_show_all]
+[defcorefunk gtk-widget-draw_arc                               gtk_extension gtk__widget__draw_arc]
+[defcorefunk gtk-widget-draw_rectangle                         gtk_extension gtk__widget__draw_rectangle]
+[defcorefunk gtk-misc-set_alignment                            gtk_extension gtk__misc__set_alignment]
+[defcorefunk gtk-window-new                                    gtk_extension gtk__window__new]
+[defcorefunk gtk-window-set_title                              gtk_extension gtk__window__set_title]
+[defcorefunk gtk-window-set_default_size                       gtk_extension gtk__window__set_default_size]
+[defcorefunk gtk-window-resize                                 gtk_extension gtk__window__resize]
+[defcorefunk gtk-window-set_transient_for                      gtk_extension gtk__window__set_transient_for]
+[defcorefunk gtk-window-set_destroy_with_parent                gtk_extension gtk__window__set_destroy_with_parent]
+[defcorefunk gtk-vbox-new                                      gtk_extension gtk__vbox__new]
+[defcorefunk gtk-hbox-new                                      gtk_extension gtk__hbox__new]
+[defcorefunk gtk-button-new_with_label                         gtk_extension gtk__button__new_with_label]
+[defcorefunk gtk-entry-new                                     gtk_extension gtk__entry__new]
+[defcorefunk gtk-entry-get_text                                gtk_extension gtk__entry__get_text]
+[defcorefunk gtk-entry-set_text                                gtk_extension gtk__entry__set_text]
+[defcorefunk gtk-image-new_from_pixbuf                         gtk_extension gtk__image__new_from_pixbuf]
+[defcorefunk gtk-image-set_from_pixbuf                         gtk_extension gtk__image__set_from_pixbuf]
+[defcorefunk gtk-scrolled_window-new                           gtk_extension gtk__scrolled_window__new]
+[defcorefunk gtk-scrolled_window-add_with_viewport             gtk_extension gtk__scrolled_window__add_with_viewport]
+[defcorefunk gtk-scrolled_window-set_policy                    gtk_extension gtk__scrolled_window__set_policy]
+[defcorefunk gtk-text_view-new                                 gtk_extension gtk__text_view__new]
+[defcorefunk gtk-text_view-get_buffer                          gtk_extension gtk__text_view__get_buffer]
+[defcorefunk gtk-text_view-set_wrap_mode                       gtk_extension gtk__text_view__set_wrap_mode]
+[defcorefunk gtk-pixbuf-new_from_rgb_data                      gtk_extension gtk__pixbuf__new_from_rgb_data]
+[defcorefunk gtk-pixbuf-new_from_rgba_data                     gtk_extension gtk__pixbuf__new_from_rgba_data]
+[defcorefunk gtk-pixbuf-new_from_file                          gtk_extension gtk__pixbuf__new_from_file]
+[defcorefunk gtk-pixbuf-get_width                              gtk_extension gtk__pixbuf__get_width]
+[defcorefunk gtk-pixbuf-get_height                             gtk_extension gtk__pixbuf__get_height]
+[defcorefunk gtk-pixbuf-get_rgba_pixel_data                    gtk_extension gtk__pixbuf__get_rgba_pixel_data]
+[defcorefunk gtk-pixbuf-get_rgb_pixel_data                     gtk_extension gtk__pixbuf__get_rgb_pixel_data]
+[defcorefunk gtk-container-add                                 gtk_extension gtk__container__add]
+[defcorefunk gtk-container-remove                              gtk_extension gtk__container__remove]
+[defcorefunk gtk-container-replace                             gtk_extension gtk__container__replace]
+[defcorefunk gtk-box-pack_start                                gtk_extension gtk__box__pack_start]
+[defcorefunk gtk-signal_connect                                gtk_extension gtk__signal_connect]
+[defcorefunk gtk-pop_callback_event                            gtk_extension gtk__pop_callback_event]
+[defcorefunk gtk-text_buffer-get_start_iter                    gtk_extension gtk__text_buffer__get_start_iter]
+[defcorefunk gtk-text_buffer-select_range                      gtk_extension gtk__text_buffer__select_range]
+[defcorefunk gtk-text_buffer-get_text                          gtk_extension gtk__text_buffer__get_text]
+[defcorefunk gtk-text_buffer-set_text                          gtk_extension gtk__text_buffer__set_text]
+[defcorefunk gtk-text_iter-forward_search                      gtk_extension gtk__text_iter__forward_search]
+[defcorefunk gtk-paned-pack1                                   gtk_extension gtk__paned__pack1]
+[defcorefunk gtk-paned-pack2                                   gtk_extension gtk__paned__pack2]
+[defcorefunk gtk-paned-set_position                            gtk_extension gtk__paned__set_position]
+[defcorefunk gtk-vpaned-new                                    gtk_extension gtk__vpaned__new]
+[defcorefunk gtk-hpaned-new                                    gtk_extension gtk__hpaned__new]
+[defcorefunk gdk-color-new                                     gtk_extension gdk__color__new]
+[defcorefunk gdk-rgb_color-new                                 gtk_extension gdk__rgb_color__new]
+[defcorefunk gtk-progress_bar-new                              gtk_extension gtk__progress_bar__new]
+[defcorefunk gtk-progress_bar-set_fraction                     gtk_extension gtk__progress_bar__set_fraction]
+[defcorefunk gtk-progress_bar-set_text                         gtk_extension gtk__progress_bar__set_text]
+[defcorefunk gtk-progress_bar-set_orientation                  gtk_extension gtk__progress_bar__set_orientation]
+[defcorefunk gtk-progress_bar-pulse                            gtk_extension gtk__progress_bar__pulse]
+[defcorefunk gtk-progress_bar-set_pulse_step                   gtk_extension gtk__progress_bar__set_pulse_step]
+[defcorefunk gtk-notebook-new                                  gtk_extension gtk__notebook__new]
+[defcorefunk gtk-notebook-append_page                          gtk_extension gtk__notebook__append_page]
+[defcorefunk gtk-notebook-prepend_page                         gtk_extension gtk__notebook__prepend_page]
+[defcorefunk gtk-notebook-insert_page                          gtk_extension gtk__notebook__insert_page]
+[defcorefunk gtk-notebook-remove_page                          gtk_extension gtk__notebook__remove_page]
+[defcorefunk gtk-notebook-get_current_page                     gtk_extension gtk__notebook__get_current_page]
+[defcorefunk gtk-notebook-set_scrollable                       gtk_extension gtk__notebook__set_scrollable]
+[defcorefunk gtk-label-new                                     gtk_extension gtk__label__new]
+[defcorefunk gtk-label-set_text                                gtk_extension gtk__label__set_text]
+[defcorefunk gtk-label-set_selectable                          gtk_extension gtk__label__set_selectable]
+[defcorefunk gtk-scale-new_with_range                          gtk_extension gtk__scale__new_with_range]
+[defcorefunk gtk-scale-set_digits                              gtk_extension gtk__scale__set_digits]
+[defcorefunk gtk-range-get_value                               gtk_extension gtk__range__get_value]
+[defcorefunk gtk-range-set_value                               gtk_extension gtk__range__set_value]
+[defcorefunk gtk-range-set_range                               gtk_extension gtk__range__set_range]
+[defcorefunk gtk-range-set_increments                          gtk_extension gtk__range__set_increments]
+[defcorefunk gtk-drawing_area-new                              gtk_extension gtk__drawing_area__new]
+[defcorefunk gtk-table-new                                     gtk_extension gtk__table__new]
+[defcorefunk gtk-table-attach                                  gtk_extension gtk__table__attach]
+[defcorefunk gtk-frame-new                                     gtk_extension gtk__frame__new]
+[defcorefunk gtk-menu_bar-new                                  gtk_extension gtk__menu_bar__new]
+[defcorefunk gtk-menu_bar-append                               gtk_extension gtk__menu_bar__append]
+[defcorefunk gtk-menu_item-new                                 gtk_extension gtk__menu_item__new]
+[defcorefunk gtk-menu_item-set_submenu                         gtk_extension gtk__menu_item__set_submenu]
+[defcorefunk gtk-check_menu_item-new                           gtk_extension gtk__check_menu_item__new]
+[defcorefunk gtk-check_menu_item-get_active                    gtk_extension gtk__check_menu_item__get_active]
+[defcorefunk gtk-check_menu_item-set_active                    gtk_extension gtk__check_menu_item__set_active]
+[defcorefunk gtk-menu-new                                      gtk_extension gtk__menu__new]
+[defcorefunk gtk-menu-append                                   gtk_extension gtk__menu__append]
+[defcorefunk gtk-check_button-new                              gtk_extension gtk__check_button__new]
+[defcorefunk gtk-check_button-get_active                       gtk_extension gtk__check_button__get_active]
+[defcorefunk gtk-check_button-set_active                       gtk_extension gtk__check_button__set_active]
+[defcorefunk gtk-file_chooser_dialog-new_for_file_open         gtk_extension gtk__file_chooser_dialog__new_for_file_open]
+[defcorefunk gtk-file_chooser_dialog-new_for_folder_select     gtk_extension gtk__file_chooser_dialog__new_for_folder_select]
+[defcorefunk gtk-file_chooser_dialog-new_for_file_save         gtk_extension gtk__file_chooser_dialog__new_for_file_save]
+[defcorefunk gtk-file_chooser_dialog-set_current_folder        gtk_extension gtk__file_chooser_dialog__set_current_folder]
+[defcorefunk gtk-file_chooser_dialog-set_current_name          gtk_extension gtk__file_chooser_dialog__set_current_name]
+[defcorefunk gtk-file_chooser_dialog-set_filename              gtk_extension gtk__file_chooser_dialog__set_filename]
+[defcorefunk gtk-file_chooser_dialog-get_filenames             gtk_extension gtk__file_chooser_dialog__get_filenames]
+[defcorefunk gtk-file_chooser_dialog-set_select_multiple       gtk_extension gtk__file_chooser_dialog__set_select_multiple]
+[defcorefunk gtk-file_chooser_dialog-add_file_filter_pattern   gtk_extension gtk__file_chooser_dialog__add_file_filter_pattern]
+[defcorefunk gtk-file_chooser_dialog-set_preview_widget        gtk_extension gtk__file_chooser_dialog__set_preview_widget]
+[defcorefunk gtk-file_chooser_dialog-set_preview_widget_active gtk_extension gtk__file_chooser_dialog__set_preview_widget_active]
+[defcorefunk gtk-file_chooser_dialog-get_preview_filename      gtk_extension gtk__file_chooser_dialog__get_preview_filename]
+
+
+'keyval'
+
+[defcorefunk gtk-gdk_keyval_to_unicode                         gtk_extension gtk__gdk_keyval_to_unicode]
+
+'gdk-keysyms-frame'
+
+[defcorefunk gtk-gdk_keysyms_frame-new                         gtk_extension gtk__gdk_keysyms_frame__new]
+
+'gtk-responses-frame'
+
+[defcorefunk gtk-responses_frame-new                           gtk_extension gtk__responses_frame__new]
+
+
+
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 

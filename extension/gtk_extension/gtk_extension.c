@@ -6445,6 +6445,9 @@ void f2__gtk_extension__start_main_thread() {
   status(  "Tried to initialize gtk but gtk is not supported.");
 #endif // F2__GTK__SUPPORTED
 }
+export_cefunk0(gtk_extension__start_main_thread, 0,
+	       "Starts gtk_main processor_thread.");
+
 
 
 // **

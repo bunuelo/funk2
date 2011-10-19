@@ -37,7 +37,8 @@ f2ptr f2__gtk__session_symbol(f2ptr cause) {
 
 // g_object
 
-def_frame_object__global__2_slot(g_object, gtk_session, pointer);
+//def_frame_object__global__2_slot(g_object, gtk_session, pointer);
+def_ceframe2(gtk_extension, g_object, gtk_session, pointer);
 
 f2ptr f2__g_object__new(f2ptr cause, f2ptr pointer) {
   return f2g_object__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -6186,6 +6187,8 @@ void f2__gtk__initialize() {
   }
   
   // g_object
+  f2__add_type(cause, new__symbol(cause, "g_object"), f2__g_object_type__new_aux(cause));
+  
   // gtk_widget
   // gtk_box
   // gtk_label

@@ -17,7 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage gtk
-  :packages [image]
-   :sources ['gtk-core.fu2']]
+[defpackage gtk_extension
+  :packages   [image]
+   :sources   ['gtk_extension-core.fu2']]
+    :binaries ['.libs/libf2e_gtk_extension.so']]
+
+[defcore gtk_extension 'extension/image/.libs/libf2e_gtk_extension.so']
 

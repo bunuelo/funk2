@@ -6434,7 +6434,7 @@ export_cefunk0(gtk__gdk_keysyms_frame__new, 0,
 
 
 
-void f2__gtk_extension__start_main_thread() {
+f2ptr f2__gtk_extension__start_main_thread() {
 #if defined(F2__GTK__SUPPORTED)
   int*    argc = &(__funk2.command_line.argc);
   char*** argv = &(__funk2.command_line.argv);
@@ -6444,6 +6444,7 @@ void f2__gtk_extension__start_main_thread() {
   printf("\nTried to initialize gtk but gtk is not supported.");
   status(  "Tried to initialize gtk but gtk is not supported.");
 #endif // F2__GTK__SUPPORTED
+  return nil;
 }
 export_cefunk0(gtk_extension__start_main_thread, 0,
 	       "Starts gtk_main processor_thread.");

@@ -6158,7 +6158,6 @@ def_pcfunk0(gtk__gdk_keysyms_frame__new,
 
 void f2__gtk_extension__start_main_thread() {
 #if defined(F2__GTK__SUPPORTED)
-  funk2_gtk__init(__funk2__gtk);
   int*    argc = &(__funk2.command_line.argc);
   char*** argv = &(__funk2.command_line.argv);
   funk2_gtk__init(__funk2__gtk, argc, argv);

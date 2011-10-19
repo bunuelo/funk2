@@ -4661,7 +4661,7 @@ f2ptr f2__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f
   assert_argument_type(gtk_widget, tab_label);
   return raw__gtk__notebook__insert_page(cause, notebook, child, tab_label, position);
 }
-export_cefunk0(gtk__notebook__insert_page, notebook, child, tab_label, position, 0,
+export_cefunk4(gtk__notebook__insert_page, notebook, child, tab_label, position, 0,
 	       "Inserts a new GtkNotebookPage to a specific position within a GtkNotebook.");
 //def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position,
 //	    "Inserts a new GtkNotebookPage to a specific position within a GtkNotebook.",

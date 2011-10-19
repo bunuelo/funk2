@@ -174,8 +174,6 @@
 
 [defcorefunk gtk-responses_frame-new                           gtk_extension gtk__responses_frame__new]
 
-[defcorefunk gtk_extension-start_main_thread                   gtk_extension gtk_extension__start_main_thread]
-
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 
@@ -412,7 +410,6 @@
 	  [gtk-globalize_keysyms]]]
 
 [if [gtk-is_supported]
-    [prog [gtk_extension-start_main_thread]
-	  [gtk-event_handling_fiber-start]]
+    [gtk-event_handling_fiber-start]
   [format stdout 'GTK is not supported, so not starting ' `gtk-event_handling_fiber '.']]
 

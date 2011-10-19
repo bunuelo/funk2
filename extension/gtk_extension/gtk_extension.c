@@ -6434,23 +6434,6 @@ export_cefunk0(gtk__gdk_keysyms_frame__new, 0,
 
 
 
-f2ptr f2__gtk_extension__start_main_thread() {
-#if defined(F2__GTK__SUPPORTED)
-  int*    argc = &(__funk2.command_line.argc);
-  char*** argv = &(__funk2.command_line.argv);
-  funk2_gtk__init(__funk2__gtk, argc, argv);
-  funk2_gtk__start_gtk_main(__funk2__gtk);
-#else  // not F2__GTK__SUPPORTED
-  printf("\nTried to initialize gtk but gtk is not supported.");
-  status(  "Tried to initialize gtk but gtk is not supported.");
-#endif // F2__GTK__SUPPORTED
-  return nil;
-}
-export_cefunk0(gtk_extension__start_main_thread, 0,
-	       "Starts gtk_main processor_thread.");
-
-
-
 // **
 
 f2ptr f2__gtk_extension__core_extension__ping(f2ptr cause) {
@@ -6465,9 +6448,20 @@ f2ptr f2__gtk_extension__core_extension__initialize(f2ptr cause) {
   } else {
     __funk2__gtk = (funk2_gtk_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_t)));
     __funk2__gtk->initialized_successfully = boolean__false;
+    {
+#if defined(F2__GTK__SUPPORTED)
+      int*    argc = &(__funk2.command_line.argc);
+      char*** argv = &(__funk2.command_line.argv);
+      funk2_gtk__init(__funk2__gtk, argc, argv);
+      funk2_gtk__start_gtk_main(__funk2__gtk);
+#else  // not F2__GTK__SUPPORTED
+      printf("\nTried to initialize gtk but gtk is not supported.");
+      status(  "Tried to initialize gtk but gtk is not supported.");
+#endif // F2__GTK__SUPPORTED
+    }
   }
   
-  status("gtk_extension initialized.");
+  status("gtk_extension finished initializing.");
   return nil;
 }
 export_cefunk0(gtk_extension__core_extension__initialize, 0, "");

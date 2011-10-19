@@ -26,10 +26,10 @@ funk2_gtk_t* __funk2__gtk = NULL;
 
 f2ptr f2__gtk__session_symbol(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (__funk2.gtk.session_symbol == nil) {
-    __funk2.gtk.session_symbol = f2__gensym(cause, new__string(cause, "gtk_session"));
+  if (__funk2__gtk->session_symbol == nil) {
+    __funk2__gtk->session_symbol = f2__gensym(cause, new__string(cause, "gtk_session"));
   }
-  return __funk2.gtk.session_symbol;
+  return __funk2__gtk->session_symbol;
 #else
   return nil;
 #endif // F2__GTK__SUPPORTED
@@ -2073,7 +2073,7 @@ f2ptr f2__gtk_not_supported_larva__new(f2ptr cause) {
 
 boolean_t raw__gtk__is_supported(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     return boolean__true;
   } else {
     return boolean__false;
@@ -2093,7 +2093,7 @@ def_pcfunk0(gtk__is_supported,
 
 f2ptr raw__gtk__window__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* window = funk2_gtk__window__new(&(__funk2.gtk));
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(window)));
   } else {
@@ -2135,7 +2135,7 @@ def_pcfunk0(gtk__window__new,
 
 f2ptr raw__gtk__window__set_title(f2ptr cause, f2ptr window, f2ptr title) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, window);
     GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
     
@@ -2168,7 +2168,7 @@ def_pcfunk2(gtk__window__set_title, window, title,
 
 f2ptr raw__gtk__window__set_default_size(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, window);
     GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
     
@@ -2199,7 +2199,7 @@ def_pcfunk3(gtk__window__set_default_size, window, width, height,
 
 f2ptr raw__gtk__window__resize(f2ptr cause, f2ptr window, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, window);
     GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
     
@@ -2230,7 +2230,7 @@ def_pcfunk3(gtk__window__resize, window, width, height,
 
 f2ptr raw__gtk__window__set_transient_for(f2ptr cause, f2ptr window, f2ptr parent) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, window);
     assert_gtk_object_is_from_this_session(gtk_widget, parent);
     GtkWidget* gtk_window        = raw__gtk_widget__as__GtkWidget(cause, window);
@@ -2271,7 +2271,7 @@ def_pcfunk2(gtk__window__set_transient_for, window, parent,
 
 f2ptr raw__gtk__window__set_destroy_with_parent(f2ptr cause, f2ptr window, f2ptr setting) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, window);
     GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
     
@@ -2306,7 +2306,7 @@ def_pcfunk2(gtk__window__set_destroy_with_parent, window, setting,
 
 f2ptr raw__gtk__vbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64        spacing__i = f2integer__i(spacing, cause);
     GtkWidget* vbox       = funk2_gtk__vbox__new(&(__funk2.gtk), spacing__i);
     return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(vbox)));
@@ -2329,7 +2329,7 @@ def_pcfunk1(gtk__vbox__new, spacing,
 
 f2ptr raw__gtk__hbox__new(f2ptr cause, f2ptr spacing) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64        spacing__i = f2integer__i(spacing, cause);
     GtkWidget* hbox       = funk2_gtk__hbox__new(&(__funk2.gtk), spacing__i);
     return f2__gtk_box__new(cause, f2pointer__new(cause, to_ptr(hbox)));
@@ -2352,7 +2352,7 @@ def_pcfunk1(gtk__hbox__new, spacing,
 
 f2ptr raw__gtk__button__new_with_label(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64 label__length = raw__string__utf8_length(cause, label);
     u8* label__str    = (u8*)alloca(label__length + 1);
     raw__string__utf8_str_copy(cause, label, label__str);
@@ -2379,7 +2379,7 @@ def_pcfunk1(gtk__button__new_with_label, label,
 
 f2ptr raw__gtk__scrolled_window__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* scrolled_window = funk2_gtk__scrolled_window__new(&(__funk2.gtk));
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(scrolled_window)));
   } else {
@@ -2400,7 +2400,7 @@ def_pcfunk0(gtk__scrolled_window__new,
 
 f2ptr raw__gtk__scrolled_window__add_with_viewport(f2ptr cause, f2ptr scrolled_window, f2ptr child) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, scrolled_window);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     GtkWidget* gtk_scrolled_window = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
@@ -2451,7 +2451,7 @@ GtkPolicyType raw__gtk_policy_type__as__GtkPolicyType(f2ptr cause, f2ptr this) {
 
 f2ptr raw__gtk__scrolled_window__set_policy(f2ptr cause, f2ptr scrolled_window, f2ptr hscrollbar_policy, f2ptr vscrollbar_policy) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, scrolled_window);
     GtkWidget* gtk_scrolled_window = raw__gtk_widget__as__GtkWidget(cause, scrolled_window);
     
@@ -2482,7 +2482,7 @@ def_pcfunk3(gtk__scrolled_window__set_policy, scrolled_window, hscrollbar_policy
 
 f2ptr raw__gtk__text_view__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* text_view = funk2_gtk__text_view__new(&(__funk2.gtk));
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(text_view)));
   } else {
@@ -2503,7 +2503,7 @@ def_pcfunk0(gtk__text_view__new,
 
 f2ptr raw__gtk__text_view__get_buffer(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -2536,7 +2536,7 @@ def_pcfunk1(gtk__text_view__get_buffer, widget,
 
 f2ptr raw__gtk__text_view__set_wrap_mode(f2ptr cause, f2ptr widget, f2ptr wrap_mode) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -2583,7 +2583,7 @@ def_pcfunk2(gtk__text_view__set_wrap_mode, widget, wrap_mode,
 
 f2ptr raw__gtk__pixbuf__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     s64 width__i  = f2integer__i(width,  cause);
     s64 height__i = f2integer__i(height, cause);
     if (width__i <= 0 || height__i <= 0) {
@@ -2674,7 +2674,7 @@ def_pcfunk3(gtk__pixbuf__new_from_rgba_data, width, height, rgba_data,
 
 f2ptr raw__gtk__pixbuf__new_from_file(f2ptr cause, f2ptr filename) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     s64 filename__utf8_length = raw__string__utf8_length(cause, filename);
     u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
     raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
@@ -2718,7 +2718,7 @@ def_pcfunk1(gtk__pixbuf__new_from_file, filename,
 
 f2ptr raw__gtk__pixbuf__get_width(f2ptr cause, f2ptr pixbuf) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gdk_pixbuf, pixbuf);
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
     
@@ -2745,7 +2745,7 @@ def_pcfunk1(gtk__pixbuf__get_width, pixbuf,
 
 f2ptr raw__gtk__pixbuf__get_height(f2ptr cause, f2ptr pixbuf) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gdk_pixbuf, pixbuf);
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
     
@@ -2772,7 +2772,7 @@ def_pcfunk1(gtk__pixbuf__get_height, pixbuf,
 
 f2ptr raw__gtk__pixbuf__get_rgba_pixel_data(f2ptr cause, f2ptr pixbuf) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gdk_pixbuf, pixbuf);
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
     
@@ -2807,7 +2807,7 @@ def_pcfunk1(gtk__pixbuf__get_rgba_pixel_data, pixbuf,
 
 f2ptr raw__gtk__pixbuf__get_rgb_pixel_data(f2ptr cause, f2ptr pixbuf) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gdk_pixbuf, pixbuf);
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
     
@@ -2844,7 +2844,7 @@ def_pcfunk1(gtk__pixbuf__get_rgb_pixel_data, pixbuf,
 
 f2ptr raw__gtk__container__add(f2ptr cause, f2ptr widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     assert_gtk_object_is_from_this_session(gtk_widget, add_widget);
     GtkWidget* gtk_widget     = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -2875,7 +2875,7 @@ def_pcfunk2(gtk__container__add, widget, add_widget,
 
 f2ptr raw__gtk__container__remove(f2ptr cause, f2ptr widget, f2ptr remove_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     assert_gtk_object_is_from_this_session(gtk_widget, remove_widget);
     GtkWidget* gtk_widget        = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -2907,7 +2907,7 @@ def_pcfunk2(gtk__container__remove, widget, remove_widget,
 
 f2ptr raw__gtk__container__replace(f2ptr cause, f2ptr widget, f2ptr remove_widget, f2ptr add_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     assert_gtk_object_is_from_this_session(gtk_widget, remove_widget);
     assert_gtk_object_is_from_this_session(gtk_widget, add_widget);
@@ -2944,7 +2944,7 @@ def_pcfunk3(gtk__container__replace, widget, remove_widget, add_widget,
 
 f2ptr raw__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -2975,7 +2975,7 @@ def_pcfunk3(gtk__expose_event__signal_connect, widget, funk, args,
 
 f2ptr raw__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3006,7 +3006,7 @@ def_pcfunk3(gtk__key_press_event__signal_connect, widget, funk, args,
 
 f2ptr raw__gtk__response_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3037,7 +3037,7 @@ def_pcfunk3(gtk__response_event__signal_connect, widget, funk, args,
 
 f2ptr raw__gtk__update_preview_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3068,7 +3068,7 @@ def_pcfunk3(gtk__update_preview_event__signal_connect, widget, funk, args,
 
 f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3106,7 +3106,7 @@ def_pcfunk4(gtk__signal_connect, widget, signal_name, funk, args,
 
 f2ptr raw__g__object__ref(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(g_object, this);
     GObject* g_object = raw__g_object__as__GObject(cause, this);
     
@@ -3134,7 +3134,7 @@ def_pcfunk1(g__object__ref, this,
 
 f2ptr raw__g__object__unref(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(g_object, this);
     GObject* g_object = raw__g_object__as__GObject(cause, this);
     
@@ -3163,7 +3163,7 @@ def_pcfunk1(g__object__unref, this,
 
 f2ptr raw__gtk__widget__show(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3190,7 +3190,7 @@ def_pcfunk1(gtk__widget__show, widget,
 
 f2ptr raw__gtk__widget__show_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3217,7 +3217,7 @@ def_pcfunk1(gtk__widget__show_all, widget,
 
 f2ptr raw__gtk__widget__hide(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3244,7 +3244,7 @@ def_pcfunk1(gtk__widget__hide, widget,
 
 f2ptr raw__gtk__widget__hide_all(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3271,7 +3271,7 @@ def_pcfunk1(gtk__widget__hide_all, widget,
 
 f2ptr raw__gtk__widget__set_size_request(f2ptr cause, f2ptr widget, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3302,7 +3302,7 @@ def_pcfunk3(gtk__widget__set_size_request, widget, width, height,
 
 f2ptr raw__gtk__widget__get_visible(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3328,7 +3328,7 @@ def_pcfunk1(gtk__widget__get_visible, widget,
 
 f2ptr raw__gtk__widget__destroy(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3355,7 +3355,7 @@ def_pcfunk1(gtk__widget__destroy, widget,
 
 f2ptr raw__gtk__widget__connect_hide_on_delete(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3403,7 +3403,7 @@ GtkStateType raw__gtk_state_type__as__GtkStateType(f2ptr cause, f2ptr this) {
 
 f2ptr raw__gtk__widget__modify_fg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3438,7 +3438,7 @@ def_pcfunk3(gtk__widget__modify_fg, widget, state, color,
 
 f2ptr raw__gtk__widget__modify_bg(f2ptr cause, f2ptr widget, f2ptr state, f2ptr color) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget*   gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3473,7 +3473,7 @@ def_pcfunk3(gtk__widget__modify_bg, widget, state, color,
 
 f2ptr raw__gtk__widget__set_sensitive(f2ptr cause, f2ptr widget, f2ptr sensitive) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3500,7 +3500,7 @@ def_pcfunk2(gtk__widget__set_sensitive, widget, sensitive,
 
 f2ptr raw__gtk__widget__set_no_show_all(f2ptr cause, f2ptr widget, f2ptr no_show_all) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3529,7 +3529,7 @@ def_pcfunk2(gtk__widget__set_no_show_all, widget, no_show_all,
 
 f2ptr raw__gtk__widget__queue_draw_area(f2ptr cause, f2ptr widget, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3564,7 +3564,7 @@ def_pcfunk5(gtk__widget__queue_draw_area, widget, x, y, width, height,
 
 f2ptr raw__gtk__widget__draw_arc(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height, f2ptr angle1, f2ptr angle2) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3666,7 +3666,7 @@ def_pcfunk8(gtk__widget__draw_arc, widget, filled, x, y, width, height, angle1, 
 
 f2ptr raw__gtk__widget__draw_rectangle(f2ptr cause, f2ptr widget, f2ptr filled, f2ptr x, f2ptr y, f2ptr width, f2ptr height) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -3703,7 +3703,7 @@ def_pcfunk6(gtk__widget__draw_rectangle, widget, filled, x, y, width, height,
 
 f2ptr raw__gtk__misc__set_alignment(f2ptr cause, f2ptr misc, f2ptr xalign, f2ptr yalign) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, misc);
     GtkWidget* gtk_misc  = raw__gtk_widget__as__GtkWidget(cause, misc);
     
@@ -3736,7 +3736,7 @@ def_pcfunk3(gtk__misc__set_alignment, misc, xalign, yalign,
 
 f2ptr raw__gtk__box__pack_start(f2ptr cause, f2ptr widget, f2ptr child_widget, f2ptr expand, f2ptr fill, f2ptr padding) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     assert_gtk_object_is_from_this_session(gtk_widget, child_widget);
     GtkWidget* gtk_widget       = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -3769,7 +3769,7 @@ def_pcfunk5(gtk__box__pack_start, box, child_widget, expand, fill, padding,
 
 f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     funk2_gtk_callback_event_t* callback_event = funk2_gtk__pop_callback_event(&(__funk2.gtk));
     if (! callback_event) {
       return nil;
@@ -3862,7 +3862,7 @@ def_pcfunk0(gtk__pop_callback_event,
 
 f2ptr raw__gtk__text_buffer__get_start_iter(f2ptr cause, f2ptr text_buffer) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_text_buffer, text_buffer);
     GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
     
@@ -3890,7 +3890,7 @@ def_pcfunk1(gtk__text_buffer__get_start_iter, text_buffer,
 
 f2ptr raw__gtk__text_buffer__select_range(f2ptr cause, f2ptr text_buffer, f2ptr range) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_text_buffer, text_buffer);
     GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
     
@@ -3924,7 +3924,7 @@ def_pcfunk2(gtk__text_buffer__select_range, text_buffer, range,
 
 f2ptr raw__gtk__text_buffer__get_text(f2ptr cause, f2ptr text_buffer) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_text_buffer, text_buffer);
     GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
     
@@ -3951,7 +3951,7 @@ def_pcfunk1(gtk__text_buffer__get_text, text_buffer,
 
 f2ptr raw__gtk__text_buffer__set_text(f2ptr cause, f2ptr text_buffer, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_text_buffer, text_buffer);
     GtkTextBuffer* gtk_text_buffer = raw__gtk_text_buffer__as__GtkTextBuffer(cause, text_buffer);
     
@@ -3984,7 +3984,7 @@ def_pcfunk2(gtk__text_buffer__set_text, text_buffer, text,
 
 f2ptr raw__gtk__text_iter__forward_search(f2ptr cause, f2ptr text_iter, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkTextIter gtk_text_iter;
     raw__gtk_text_iter__as__GtkTextIter(cause, text_iter, &gtk_text_iter);
     u64 text__utf8_length = raw__string__utf8_length(cause, text);
@@ -4021,7 +4021,7 @@ def_pcfunk2(gtk__text_iter__forward_search, text_iter, text,
 
 f2ptr raw__gtk__paned__pack1(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, paned);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
@@ -4052,7 +4052,7 @@ def_pcfunk4(gtk__paned__pack1, paned, child, resize, shrink,
 
 f2ptr raw__gtk__paned__pack2(f2ptr cause, f2ptr paned, f2ptr child, f2ptr resize, f2ptr shrink) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, paned);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     GtkWidget* gtk_paned = raw__gtk_widget__as__GtkWidget(cause, paned);
@@ -4085,7 +4085,7 @@ def_pcfunk4(gtk__paned__pack2, paned, child, resize, shrink,
 
 f2ptr raw__gtk__paned__set_position(f2ptr cause, f2ptr paned, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, paned);
     GtkWidget* gtk_paned   = raw__gtk_widget__as__GtkWidget(cause, paned);
     
@@ -4116,7 +4116,7 @@ def_pcfunk2(gtk__paned__set_position, paned, position,
 
 f2ptr raw__gtk__vpaned__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* gtk_widget = funk2_gtk__vpaned__new(&(__funk2.gtk));
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
   } else {
@@ -4139,7 +4139,7 @@ def_pcfunk0(gtk__vpaned__new,
 
 f2ptr raw__gtk__hpaned__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* gtk_widget = funk2_gtk__hpaned__new(&(__funk2.gtk));
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(gtk_widget)));
   } else {
@@ -4162,7 +4162,7 @@ def_pcfunk0(gtk__hpaned__new,
 
 f2ptr raw__gtk__progress_bar__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkProgressBar* gtk_progress_bar = funk2_gtk__progress_bar__new(&(__funk2.gtk));
     return f2__gtk_progress_bar__new(cause, f2pointer__new(cause, to_ptr(gtk_progress_bar)));
   } else {
@@ -4183,7 +4183,7 @@ def_pcfunk0(gtk__progress_bar__new,
 
 f2ptr raw__gtk__progress_bar__set_fraction(f2ptr cause, f2ptr this, f2ptr fraction) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_progress_bar, this);
     GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
     
@@ -4215,7 +4215,7 @@ def_pcfunk2(gtk__progress_bar__set_fraction, this, fraction,
 
 f2ptr raw__gtk__progress_bar__set_text(f2ptr cause, f2ptr this, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_progress_bar, this);
     GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
     
@@ -4248,7 +4248,7 @@ def_pcfunk2(gtk__progress_bar__set_text, this, text,
 
 f2ptr raw__gtk__progress_bar__set_orientation(f2ptr cause, f2ptr this, f2ptr orientation) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_progress_bar, this);
     GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
     
@@ -4288,7 +4288,7 @@ def_pcfunk2(gtk__progress_bar__set_orientation, this, orientation,
 
 f2ptr raw__gtk__progress_bar__pulse(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_progress_bar, this);
     GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
     
@@ -4315,7 +4315,7 @@ def_pcfunk1(gtk__progress_bar__pulse, this,
 
 f2ptr raw__gtk__progress_bar__set_pulse_step(f2ptr cause, f2ptr this, f2ptr fraction) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_progress_bar, this);
     GtkProgressBar* gtk_this = raw__gtk_progress_bar__as__GtkProgressBar(cause, this);
     
@@ -4349,7 +4349,7 @@ def_pcfunk2(gtk__progress_bar__set_pulse_step, this, fraction,
 
 f2ptr raw__gtk__notebook__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* gtk_widget = funk2_gtk__notebook__new(&(__funk2.gtk));
 
     assert_g_type(GTK_TYPE_NOTEBOOK, gtk_widget);
@@ -4373,7 +4373,7 @@ def_pcfunk0(gtk__notebook__new,
 
 f2ptr raw__gtk__notebook__append_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, notebook);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     assert_gtk_object_is_from_this_session(gtk_widget, tab_label);
@@ -4411,7 +4411,7 @@ def_pcfunk3(gtk__notebook__append_page, notebook, child, tab_label,
 
 f2ptr raw__gtk__notebook__prepend_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, notebook);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     assert_gtk_object_is_from_this_session(gtk_widget, tab_label);
@@ -4449,7 +4449,7 @@ def_pcfunk3(gtk__notebook__prepend_page, notebook, child, tab_label,
 
 f2ptr raw__gtk__notebook__insert_page(f2ptr cause, f2ptr notebook, f2ptr child, f2ptr tab_label, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, notebook);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     assert_gtk_object_is_from_this_session(gtk_widget, tab_label);
@@ -4488,7 +4488,7 @@ def_pcfunk4(gtk__notebook__insert_page, notebook, child, tab_label, position,
 
 f2ptr raw__gtk__notebook__remove_page(f2ptr cause, f2ptr notebook, f2ptr position) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, notebook);
     GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
 
@@ -4517,7 +4517,7 @@ def_pcfunk2(gtk__notebook__remove_page, notebook, position,
 
 f2ptr raw__gtk__notebook__get_current_page(f2ptr cause, f2ptr notebook) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, notebook);
     GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
     
@@ -4547,7 +4547,7 @@ def_pcfunk1(gtk__notebook__get_current_page, notebook,
 
 f2ptr raw__gtk__notebook__set_scrollable(f2ptr cause, f2ptr notebook, f2ptr scrollable) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, notebook);
     GtkWidget* gtk_notebook = raw__gtk_widget__as__GtkWidget(cause, notebook);
     
@@ -4576,7 +4576,7 @@ def_pcfunk2(gtk__notebook__set_scrollable, notebook, scrollable,
 
 f2ptr raw__gtk__label__new(f2ptr cause, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64 text__utf8_length = raw__string__utf8_length(cause, text);
     u8* text__utf8_str    = (u8*)alloca(text__utf8_length + 1);
     raw__string__utf8_str_copy(cause, text, text__utf8_str);
@@ -4603,7 +4603,7 @@ def_pcfunk1(gtk__label__new, text,
 
 f2ptr raw__gtk__label__set_text(f2ptr cause, f2ptr label, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_label, label);
     GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
     
@@ -4636,7 +4636,7 @@ def_pcfunk2(gtk__label__set_text, label, text,
 
 f2ptr raw__gtk__label__set_selectable(f2ptr cause, f2ptr label, f2ptr selectable) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_label, label);
     GtkLabel* gtk_label = raw__gtk_label__as__GtkLabel(cause, label);
     
@@ -4683,7 +4683,7 @@ GtkOrientation raw__gtk_orientation__as__GtkOrientation(f2ptr cause, f2ptr this)
 
 f2ptr raw__gtk__scale__new_with_range(f2ptr cause, f2ptr orientation, f2ptr min, f2ptr max, f2ptr step) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkOrientation gtk_orientation = raw__gtk_orientation__as__GtkOrientation(cause, orientation);
     double         min__d          = f2double__d(min,  cause);
     double         max__d          = f2double__d(max,  cause);
@@ -4717,7 +4717,7 @@ def_pcfunk4(gtk__scale__new_with_range, orientation, min, max, step,
 
 f2ptr raw__gtk__scale__set_digits(f2ptr cause, f2ptr this, f2ptr digits) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_scale, this);
     GtkScale* gtk_scale = raw__gtk_scale__as__GtkScale(cause, this);
     
@@ -4766,7 +4766,7 @@ boolean_t raw__gtk_range__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr raw__gtk__range__get_value(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_range, this);
     GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
     
@@ -4792,7 +4792,7 @@ def_pcfunk1(gtk__range__get_value, this,
 
 f2ptr raw__gtk__range__set_value(f2ptr cause, f2ptr this, f2ptr value) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_range, this);
     GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
     
@@ -4821,7 +4821,7 @@ def_pcfunk2(gtk__range__set_value, this, value,
 
 f2ptr raw__gtk__range__set_range(f2ptr cause, f2ptr this, f2ptr min, f2ptr max) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_range, this);
     GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
     
@@ -4852,7 +4852,7 @@ def_pcfunk3(gtk__range__set_range, this, min, max,
 
 f2ptr raw__gtk__range__set_increments(f2ptr cause, f2ptr this, f2ptr step, f2ptr page) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_range, this);
     GtkRange* gtk_range = raw__gtk_range__as__GtkRange(cause, this);
     
@@ -4885,7 +4885,7 @@ def_pcfunk3(gtk__range__set_increments, this, step, page,
 
 f2ptr raw__gtk__entry__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkEntry* entry = funk2_gtk__entry__new(&(__funk2.gtk));
     
     assert_g_type(GTK_TYPE_ENTRY, entry);
@@ -4909,7 +4909,7 @@ def_pcfunk0(gtk__entry__new,
 
 f2ptr raw__gtk__entry__get_text(f2ptr cause, f2ptr entry) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_entry, entry);
     GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
     
@@ -4939,7 +4939,7 @@ def_pcfunk1(gtk__entry__get_text, entry,
 
 f2ptr raw__gtk__entry__set_text(f2ptr cause, f2ptr entry, f2ptr text) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_entry, entry);
     GtkEntry* gtk_entry = raw__gtk_entry__as__GtkEntry(cause, entry);
     
@@ -4974,7 +4974,7 @@ def_pcfunk2(gtk__entry__set_text, entry, text,
 
 f2ptr raw__gtk__image__new_from_pixbuf(f2ptr cause, f2ptr pixbuf) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gdk_pixbuf, pixbuf);
     GdkPixbuf* gdk_pixbuf = raw__gdk_pixbuf__as__GdkPixbuf(cause, pixbuf);
     
@@ -5001,7 +5001,7 @@ def_pcfunk1(gtk__image__new_from_pixbuf, pixbuf,
 
 f2ptr raw__gtk__image__set_from_pixbuf(f2ptr cause, f2ptr image, f2ptr pixbuf) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_image,  image);
     assert_gtk_object_is_from_this_session(gdk_pixbuf, pixbuf);
     GtkImage*  gdk_image  = raw__gtk_image__as__GtkImage(  cause, image);
@@ -5034,7 +5034,7 @@ def_pcfunk2(gtk__image__set_from_pixbuf, image, pixbuf,
 
 f2ptr raw__gtk__drawing_area__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* drawing_area = funk2_gtk__drawing_area__new(&(__funk2.gtk));
     return f2__gtk_widget__new(cause, f2pointer__new(cause, to_ptr(drawing_area)));
   } else {
@@ -5057,7 +5057,7 @@ def_pcfunk0(gtk__drawing_area__new,
 
 f2ptr raw__gtk__table__new(f2ptr cause, f2ptr rows, f2ptr columns, f2ptr homogenous) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     s64        rows__i    = f2integer__i(rows,    cause);
     s64        columns__i = f2integer__i(columns, cause);
     GtkWidget* table      = funk2_gtk__table__new(&(__funk2.gtk), rows__i, columns__i, (homogenous != nil) ? TRUE : FALSE);
@@ -5082,7 +5082,7 @@ def_pcfunk3(gtk__table__new, rows, columns, homogenous,
 
 f2ptr raw__gtk__table__attach(f2ptr cause, f2ptr table, f2ptr child, f2ptr left_attach, f2ptr right_attach, f2ptr top_attach, f2ptr bottom_attach, f2ptr xpadding, f2ptr ypadding) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, table);
     assert_gtk_object_is_from_this_session(gtk_widget, child);
     GtkWidget* gtk_table        = raw__gtk_widget__as__GtkWidget(cause, table);
@@ -5127,7 +5127,7 @@ def_pcfunk8(gtk__table__attach, table, child, left_attach, right_attach, top_att
 
 f2ptr raw__gtk__frame__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64 label__utf8_length;
     u8* label__utf8_str;
     if (label) {
@@ -5163,7 +5163,7 @@ def_pcfunk1(gtk__frame__new, label,
 
 f2ptr raw__gtk__menu_bar__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkMenuBar* menu_bar = funk2_gtk__menu_bar__new(&(__funk2.gtk));
     return f2__gtk_menu_bar__new(cause, f2pointer__new(cause, to_ptr(menu_bar)));
   } else {
@@ -5184,7 +5184,7 @@ def_pcfunk0(gtk__menu_bar__new,
 
 f2ptr raw__gtk__menu_bar__append(f2ptr cause, f2ptr menu_bar, f2ptr append_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_menu_bar, menu_bar);
     assert_gtk_object_is_from_this_session(gtk_widget,   append_widget);
     GtkMenuBar* gtk_menu_bar      = raw__gtk_menu_bar__as__GtkMenuBar(cause, menu_bar);
@@ -5217,7 +5217,7 @@ def_pcfunk2(gtk__menu_bar__append, menu_bar, append_widget,
 
 f2ptr raw__gtk__menu_item__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64 label__utf8_length;
     u8* label__utf8_str;
     label__utf8_length = raw__string__utf8_length(cause, label);
@@ -5246,7 +5246,7 @@ def_pcfunk1(gtk__menu_item__new, label,
 
 f2ptr raw__gtk__menu_item__set_submenu(f2ptr cause, f2ptr widget, f2ptr submenu) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     assert_gtk_object_is_from_this_session(gtk_widget, submenu);
     GtkWidget* gtk_widget         = raw__gtk_widget__as__GtkWidget(cause, widget);
@@ -5279,7 +5279,7 @@ def_pcfunk2(gtk__menu_item__set_submenu, widget, submenu,
 
 f2ptr raw__gtk__check_menu_item__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64 label__utf8_length;
     u8* label__utf8_str;
     label__utf8_length = raw__string__utf8_length(cause, label);
@@ -5308,7 +5308,7 @@ def_pcfunk1(gtk__check_menu_item__new, label,
 
 f2ptr raw__gtk__check_menu_item__get_active(f2ptr cause, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -5334,7 +5334,7 @@ def_pcfunk1(gtk__check_menu_item__get_active, widget,
 
 f2ptr raw__gtk__check_menu_item__set_active(f2ptr cause, f2ptr widget, f2ptr active) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_widget, widget);
     GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
     
@@ -5363,7 +5363,7 @@ def_pcfunk2(gtk__check_menu_item__set_active, widget, active,
 
 f2ptr raw__gtk__menu__new(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkMenu* menu = funk2_gtk__menu__new(&(__funk2.gtk));
     return f2__gtk_menu__new(cause, f2pointer__new(cause, to_ptr(menu)));
   } else {
@@ -5384,7 +5384,7 @@ def_pcfunk0(gtk__menu__new,
 
 f2ptr raw__gtk__menu__append(f2ptr cause, f2ptr menu, f2ptr append_widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_menu,   menu);
     assert_gtk_object_is_from_this_session(gtk_widget, append_widget);
     GtkMenu*   gtk_menu          = raw__gtk_menu__as__GtkMenu(cause, menu);
@@ -5417,7 +5417,7 @@ def_pcfunk2(gtk__menu__append, menu, append_widget,
 
 f2ptr raw__gtk__check_button__new(f2ptr cause, f2ptr label) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     u64 label__utf8_length = raw__string__utf8_length(cause, label);
     u8* label__utf8_str    = (u8*)from_ptr(f2__malloc(label__utf8_length + 1));
     raw__string__utf8_str_copy(cause, label, label__utf8_str);
@@ -5444,7 +5444,7 @@ def_pcfunk1(gtk__check_button__new, label,
 
 f2ptr raw__gtk__check_button__get_active(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_check_button, this);
     GtkCheckButton* gtk_check_button = raw__gtk_check_button__as__GtkCheckButton(cause, this);
     
@@ -5470,7 +5470,7 @@ def_pcfunk1(gtk__check_button__get_active, this,
 
 f2ptr raw__gtk__check_button__set_active(f2ptr cause, f2ptr this, f2ptr active) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_check_button, this);
     GtkCheckButton* gtk_check_button = raw__gtk_check_button__as__GtkCheckButton(cause, this);
     
@@ -5499,7 +5499,7 @@ def_pcfunk2(gtk__check_button__set_active, this, active,
 
 f2ptr raw__gtk__file_chooser_dialog__new_for_file_open(f2ptr cause, f2ptr parent_window) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* gtk_parent_window;
     if (parent_window == nil) {
       gtk_parent_window = NULL;
@@ -5528,7 +5528,7 @@ def_pcfunk1(gtk__file_chooser_dialog__new_for_file_open, parent_window,
 
 f2ptr raw__gtk__file_chooser_dialog__new_for_folder_select(f2ptr cause, f2ptr parent_window) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* gtk_parent_window;
     if (parent_window == nil) {
       gtk_parent_window = NULL;
@@ -5557,7 +5557,7 @@ def_pcfunk1(gtk__file_chooser_dialog__new_for_folder_select, parent_window,
 
 f2ptr raw__gtk__file_chooser_dialog__new_for_file_save(f2ptr cause, f2ptr parent_window) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     GtkWidget* gtk_parent_window;
     if (parent_window == nil) {
       gtk_parent_window = NULL;
@@ -5586,7 +5586,7 @@ def_pcfunk1(gtk__file_chooser_dialog__new_for_file_save, parent_window,
 
 f2ptr raw__gtk__file_chooser_dialog__set_current_folder(f2ptr cause, f2ptr this, f2ptr filename) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5619,7 +5619,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_current_folder, this, filename,
 
 f2ptr raw__gtk__file_chooser_dialog__set_current_name(f2ptr cause, f2ptr this, f2ptr current_name) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5652,7 +5652,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_current_name, this, current_name,
 
 f2ptr raw__gtk__file_chooser_dialog__set_filename(f2ptr cause, f2ptr this, f2ptr filename) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5685,7 +5685,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_filename, this, filename,
 
 f2ptr raw__gtk__file_chooser_dialog__get_filenames(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5711,7 +5711,7 @@ def_pcfunk1(gtk__file_chooser_dialog__get_filenames, this,
 
 f2ptr raw__gtk__file_chooser_dialog__set_select_multiple(f2ptr cause, f2ptr this, f2ptr select_multiple) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5738,7 +5738,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_select_multiple, this, select_multiple
 
 f2ptr raw__gtk__file_chooser_dialog__add_file_filter_pattern(f2ptr cause, f2ptr this, f2ptr name, f2ptr pattern) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5777,7 +5777,7 @@ def_pcfunk3(gtk__file_chooser_dialog__add_file_filter_pattern, this, name, patte
 
 f2ptr raw__gtk__file_chooser_dialog__set_preview_widget(f2ptr cause, f2ptr this, f2ptr widget) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     assert_gtk_object_is_from_this_session(gtk_widget,              widget);
     GtkFileChooserDialog* gtk_this   = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
@@ -5808,7 +5808,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget, this, widget,
 
 f2ptr raw__gtk__file_chooser_dialog__set_preview_widget_active(f2ptr cause, f2ptr this, f2ptr preview_widget_active) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     
@@ -5835,7 +5835,7 @@ def_pcfunk2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_w
 
 f2ptr raw__gtk__file_chooser_dialog__get_preview_filename(f2ptr cause, f2ptr this) {
 #if defined(F2__GTK__SUPPORTED)
-  if (&(__funk2.gtk.initialized_successfully)) {
+  if (&(__funk2__gtk->initialized_successfully)) {
     assert_gtk_object_is_from_this_session(gtk_file_chooser_dialog, this);
     GtkFileChooserDialog* gtk_this = raw__gtk_file_chooser_dialog__as__GtkFileChooserDialog(cause, this);
     

@@ -6215,6 +6215,7 @@ f2ptr f2__gtk_extension__core_extension__define_types(f2ptr cause) {
   f2__add_type(cause, new__symbol(cause, "gtk_widget"),              f2__gtk_widget_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_box"),                 f2__gtk_box_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_label"),               f2__gtk_label_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_scale"),               f2__gtk_scale_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_entry"),               f2__gtk_entry_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_image"),               f2__gtk_image_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "gtk_text_buffer"),         f2__gtk_text_buffer_type__new_aux(cause));

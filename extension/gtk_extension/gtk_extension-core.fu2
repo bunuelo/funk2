@@ -22,8 +22,6 @@
 [defcorefunk gtk_extension-core_extension-define_types gtk_extension gtk_extension__core_extension__define_types]
 [defcorefunk gtk_extension-core_extension-initialize   gtk_extension gtk_extension__core_extension__initialize]
 
-[gtk_extension-core_extension-define_types]
-
 [defcorefunk gtk-is_supported                                  gtk_extension gtk__is_supported]
 
 'expose_event'
@@ -173,6 +171,17 @@
 'gtk-responses-frame'
 
 [defcorefunk gtk-responses_frame-new                           gtk_extension gtk__responses_frame__new]
+
+
+
+'****************************************************************************************************************'
+'* All core funks are defined at this point, so we can call a funktion within the gtk_extension core extension. *'
+'*                                                                                                              *'
+'*' [gtk_extension-core_extension-define_types] '                                                               *'
+'*                                                                                                              *'
+'*                                                                                                              *'
+'****************************************************************************************************************'
+
 
 
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'

@@ -6182,7 +6182,7 @@ void f2__gtk__initialize() {
     status(  "Tried to initialize gtk while gtk is already initialized.");
   } else {
     __funk2__gtk = (funk2_gtk_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_t)));
-    __funk2__gtk->successfully_initialized = boolean__false;
+    __funk2__gtk->initialized_successfully = boolean__false;
   }
   
   // g_object

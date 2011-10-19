@@ -18,6 +18,13 @@
  rights to redistribute these changes.'
 
 
+[defcorefunk gtk_extension-core_extension-ping         gtk_extension gtk_extension__core_extension__ping]
+[defcorefunk gtk_extension-core_extension-define_types gtk_extension gtk_extension__core_extension__define_types]
+[defcorefunk gtk_extension-core_extension-initialize   gtk_extension gtk_extension__core_extension__initialize]
+
+[gtk_extension-core_extension-define_types]
+
+
 'Lazy Porting: A technique for implementing object type functionality only when member functions for get/set/execute funks have the same names.'
 
 [deftypefunk gtk_widget get     widget                              []                      this]

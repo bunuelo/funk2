@@ -6172,10 +6172,12 @@ void f2__gtk_extension__start_main_thread() {
 
 // **
 
-void f2__gtk__reinitialize_globalvars() {
+f2ptr f2__gtk_extension__core_extension__ping(f2ptr cause) {
+  return nil;
 }
+export_cefunk0(gtk_extension__core_extension__ping, 0, "");
 
-void f2__gtk__initialize() {
+f2ptr f2__gtk_extension__core_extension__initialize(f2ptr cause) {
   f2ptr cause = initial_cause();
   
   if (__funk2__gtk != NULL) {
@@ -6186,6 +6188,12 @@ void f2__gtk__initialize() {
     __funk2__gtk->initialized_successfully = boolean__false;
   }
   
+  status("gtk_extension initialized.");
+  return nil;
+}
+export_cefunk0(gtk_extension__core_extension__initialize, 0, "");
+
+f2ptr f2__gtk_extension__core_extension__define_types(f2ptr cause) {
   // g_object
   f2__add_type(cause, new__symbol(cause, "g_object"), f2__g_object_type__new_aux(cause));
   
@@ -6203,5 +6211,15 @@ void f2__gtk__initialize() {
   // gtk_text_range
   // gtk_progress_bar
   
+  status("gtk_extension types defined.");
+  return nil;
 }
+export_cefunk0(gtk_extension__core_extension__define_types, 0, "");
+
+f2ptr f2__gtk_extension__core_extension__destroy(f2ptr cause) {
+  status("gtk_extension destroyed.");
+  return nil;
+}
+export_cefunk0(gtk_extension__core_extension__destroy, 0, "");
+
 

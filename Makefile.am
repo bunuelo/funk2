@@ -225,6 +225,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/forward_planner/libf2e_forward_planner.la \
                       extension/frame_ball/libf2e_frame_ball.la \
                       extension/graph_isomorphism/libf2e_graph_isomorphism.la \
+                      extension/gtk_extension/libf2e_gtk_extension.la \
                       extension/image/libf2e_image.la \
                       extension/image_sequence/libf2e_image_sequence.la \
                       extension/interval_tree/libf2e_interval_tree.la \
@@ -429,6 +430,7 @@ extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES       
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                           = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES                                                                     = extension/frame_ball/frame_ball.c
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                                       = extension/graph_isomorphism/graph_isomorphism.c
+extension_gtk_extension_libf2e_gtk_extension_la_SOURCES                                                               = extension/gtk_extension/gtk_extension.c
 extension_image_libf2e_image_la_SOURCES                                                                               = extension/image/image.c
 extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                             = extension/image_sequence/image_sequence.c
 extension_interval_tree_libf2e_interval_tree_la_SOURCES                                                               = extension/interval_tree/interval_tree.c
@@ -519,6 +521,9 @@ extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_fibermon_libf2e_fibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_gtk_extension_libf2e_gtk_extension_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_gtk_extension_libf2e_gtk_extension_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_image_libf2e_image_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_image_libf2e_image_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

@@ -19,8 +19,10 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#include "gtk_extension.h"
 
+
+funk2_gtk_t* __funk2__gtk = NULL;
 
 f2ptr f2__gtk__session_symbol(f2ptr cause) {
 #if defined(F2__GTK__SUPPORTED)
@@ -6154,6 +6156,20 @@ def_pcfunk0(gtk__gdk_keysyms_frame__new,
 
 
 
+void f2__gtk_extension__start_main_thread() {
+#if defined(F2__GTK__SUPPORTED)
+  funk2_gtk__init(__funk2__gtk);
+  int*    argc = &(__funk2.command_line.argc);
+  char*** argv = &(__funk2.command_line.argv);
+  funk2_gtk__init(__funk2__gtk, argc, argv);
+  funk2_gtk__start_gtk_main(__funk2__gtk);
+#else  // not F2__GTK__SUPPORTED
+  printf("\nTried to initialize gtk but gtk is not supported.");
+  status(  "Tried to initialize gtk but gtk is not supported.");
+#endif // F2__GTK__SUPPORTED
+}
+
+
 // **
 
 void f2__gtk__reinitialize_globalvars() {
@@ -6162,316 +6178,28 @@ void f2__gtk__reinitialize_globalvars() {
 void f2__gtk__initialize() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "gtk", "", &f2__string__reinitialize_globalvars);
-  
-  f2__string__reinitialize_globalvars();
+  if (__funk2__gtk != NULL) {
+    printf("\nTried to initialize gtk while gtk is already initialized.");
+    status(  "Tried to initialize gtk while gtk is already initialized.");
+  } else {
+    __funk2__gtk = (funk2_gtk_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_t)));
+    __funk2__gtk->successfully_initialized = boolean__false;
+  }
   
   // g_object
-  
-  init_frame_object__1_slot(g_object, pointer);
-  
-  
   // gtk_widget
-  
-  init_frame_object__1_slot(gtk_widget, pointer);
-  
-  
   // gtk_box
-  
-  init_frame_object__1_slot(gtk_box, pointer);
-  
-  
   // gtk_label
-  
-  init_frame_object__1_slot(gtk_label, pointer);
-  
-  
   // gtk_entry
-  
-  init_frame_object__1_slot(gtk_entry, pointer);
-  
-  
   // gtk_image
-  
-  init_frame_object__1_slot(gtk_image, pointer);
-  
-  
   // gtk_text_buffer
-  
-  init_frame_object__1_slot(gtk_text_buffer, pointer);
-  
-  
   // gtk_text_iter
-  
-  init_frame_object__1_slot(gtk_text_iter, chunk);
-  
-  
   // gdk_color
-  
-  init_frame_object__4_slot(gdk_color, pixel, red, green, blue);
-  
-  
   // gdkpixbuf
-  
-  init_frame_object__1_slot(gdk_pixbuf, pointer);
-  
-  
   // gtk_text_mark
-  
-  init_frame_object__1_slot(gtk_text_mark, pointer);
-  
-  
   // gtk_callback
-  
-  init_frame_object__2_slot(gtk_callback, funk, args);
-  
-  
   // gtk_text_range
-  
-  init_frame_object__2_slot(gtk_text_range, start, end);
-  
-  
   // gtk_progress_bar
-  
-  init_frame_object__1_slot(gtk_progress_bar, pointer);
-  
-
-  f2__primcfunk__init__0(gtk__is_supported);
-  
-  // expose_event
-  
-  f2__primcfunk__init__3(gtk__expose_event__signal_connect,         widget, funk, args);
-  
-  // key_press_event
-  
-  f2__primcfunk__init__3(gtk__key_press_event__signal_connect,      widget, funk, args);
-  
-  // response_event
-  
-  f2__primcfunk__init__3(gtk__response_event__signal_connect,       widget, funk, args);
-  
-  // update_preview_event
-  
-  f2__primcfunk__init__3(gtk__update_preview_event__signal_connect, widget, funk, args);
-  
-  // object
-  
-  f2__primcfunk__init__1(g__object__ref,                            this);
-  f2__primcfunk__init__1(g__object__unref,                          this);
-  
-  // widget
-  
-  f2__primcfunk__init__1(gtk__widget__show,                         widget);
-  f2__primcfunk__init__1(gtk__widget__show_all,                     widget);
-  f2__primcfunk__init__1(gtk__widget__hide,                         widget);
-  f2__primcfunk__init__1(gtk__widget__hide_all,                     widget);
-  f2__primcfunk__init__3(gtk__widget__set_size_request,             widget, width, height);
-  f2__primcfunk__init__5(gtk__widget__queue_draw_area,              widget, x, y, width, height);
-  f2__primcfunk__init__1(gtk__widget__get_visible,                  widget);
-  f2__primcfunk__init__1(gtk__widget__destroy,                      widget);
-  f2__primcfunk__init__1(gtk__widget__connect_hide_on_delete,       widget);
-  f2__primcfunk__init__3(gtk__widget__modify_fg,                    widget, state, color);
-  f2__primcfunk__init__3(gtk__widget__modify_bg,                    widget, state, color);
-  f2__primcfunk__init__2(gtk__widget__set_sensitive,                widget, sensitive);
-  f2__primcfunk__init__2(gtk__widget__set_no_show_all,              widget, no_show_all);
-  // widget draw funks
-  f2__primcfunk__init__8(gtk__widget__draw_arc,                     widget, filled, x, y, width, height, angle1, angle2);
-  f2__primcfunk__init__6(gtk__widget__draw_rectangle,               widget, filled, x, y, width, height);
-  
-  // window
-  
-  f2__primcfunk__init__0(gtk__window__new);
-  f2__primcfunk__init__2(gtk__window__set_title,                    window, title);
-  f2__primcfunk__init__3(gtk__window__set_default_size,             window, width, height);
-  f2__primcfunk__init__3(gtk__window__resize,                       window, width, height);
-  f2__primcfunk__init__2(gtk__window__set_transient_for,            window, parent);
-  f2__primcfunk__init__2(gtk__window__set_destroy_with_parent,      window, setting);
-  
-  // vbox
-  
-  f2__primcfunk__init__1(gtk__vbox__new,                            spacing);
-  
-  // hbox
-  
-  f2__primcfunk__init__1(gtk__hbox__new,                            spacing);
-  
-  // button
-  
-  f2__primcfunk__init__1(gtk__button__new_with_label,               label);
-  
-  // scrolled_window
-  
-  f2__primcfunk__init__0(gtk__scrolled_window__new);
-  f2__primcfunk__init__2(gtk__scrolled_window__add_with_viewport,   scrolled_window, child);
-  f2__primcfunk__init__3(gtk__scrolled_window__set_policy,          scrolled_window, hscrollbar_policy, vscrollbar_policy);
-
-  // text_view
-  
-  f2__primcfunk__init__0(gtk__text_view__new);
-  f2__primcfunk__init__1(gtk__text_view__get_buffer,                text_view);
-  f2__primcfunk__init__2(gtk__text_view__set_wrap_mode,             text_view, wrap_mode);
-  
-  // gdk_pixbuf
-  
-  f2__primcfunk__init__3(gtk__pixbuf__new_from_rgb_data,            width, height, rgb_data);
-  f2__primcfunk__init__3(gtk__pixbuf__new_from_rgba_data,           width, height, rgba_data);
-  f2__primcfunk__init__1(gtk__pixbuf__new_from_file,                filename);
-  f2__primcfunk__init__1(gtk__pixbuf__get_width,                    this);
-  f2__primcfunk__init__1(gtk__pixbuf__get_height,                   this);
-  f2__primcfunk__init__1(gtk__pixbuf__get_rgba_pixel_data,          this);
-  f2__primcfunk__init__1(gtk__pixbuf__get_rgb_pixel_data,           this);
-  
-  // container
-  
-  f2__primcfunk__init__2(gtk__container__add,                       widget, add_widget);
-  f2__primcfunk__init__2(gtk__container__remove,                    widget, remove_widget);
-  f2__primcfunk__init__3(gtk__container__replace,                   widget, remove_widget, add_widget);
-  f2__primcfunk__init__5(gtk__box__pack_start,                      widget, child_widget, expand, fill, padding);
-  f2__primcfunk__init__4(gtk__signal_connect,                       widget, signal_name, funk, args);
-  f2__primcfunk__init__0(gtk__pop_callback_event);
-  f2__primcfunk__init__1(gtk__text_buffer__get_start_iter,          text_buffer);
-  f2__primcfunk__init__2(gtk__text_buffer__select_range,            text_buffer, range);
-  f2__primcfunk__init__1(gtk__text_buffer__get_text,                text_buffer);
-  f2__primcfunk__init__2(gtk__text_buffer__set_text,                text_buffer, text);
-  f2__primcfunk__init__2(gtk__text_iter__forward_search,            text_iter, text);
-  
-  // misc
-  
-  f2__primcfunk__init__3(gtk__misc__set_alignment, misc, xalign, yalign);
-  
-  // paned
-  
-  f2__primcfunk__init__4(gtk__paned__pack1,        paned, child, resize, shrink);
-  f2__primcfunk__init__4(gtk__paned__pack2,        paned, child, resize, shrink);
-  f2__primcfunk__init__2(gtk__paned__set_position, paned, position);
-  
-  // vpaned
-  
-  f2__primcfunk__init__0(gtk__vpaned__new);
-  
-  // hpaned
-  
-  f2__primcfunk__init__0(gtk__hpaned__new);
-  
-  // color
-  
-  f2__primcfunk__init__4(gdk__color__new,     pixel, red, green, blue);
-  f2__primcfunk__init__3(gdk__rgb_color__new, red, green, blue);
-  
-  // progress_bar
-  
-  f2__primcfunk__init__0(gtk__progress_bar__new);
-  f2__primcfunk__init__2(gtk__progress_bar__set_fraction,    this, fraction);
-  f2__primcfunk__init__2(gtk__progress_bar__set_text,        this, text);
-  f2__primcfunk__init__2(gtk__progress_bar__set_orientation, this, orientation);
-  f2__primcfunk__init__1(gtk__progress_bar__pulse,           this);
-  f2__primcfunk__init__2(gtk__progress_bar__set_pulse_step,  this, fraction);
-  
-  // notebook
-  
-  f2__primcfunk__init__0(gtk__notebook__new);
-  f2__primcfunk__init__3(gtk__notebook__append_page,      notebook, child, tab_label);
-  f2__primcfunk__init__3(gtk__notebook__prepend_page,     notebook, child, tab_label);
-  f2__primcfunk__init__4(gtk__notebook__insert_page,      notebook, child, tab_label, position);
-  f2__primcfunk__init__4(gtk__notebook__remove_page,      notebook, child, tab_label, position);
-  f2__primcfunk__init__1(gtk__notebook__get_current_page, notebook);
-  f2__primcfunk__init__2(gtk__notebook__set_scrollable,   notebook, scrollable);
-  
-  // label
-  
-  f2__primcfunk__init__1(gtk__label__new,            text);
-  f2__primcfunk__init__2(gtk__label__set_text,       label, text);
-  f2__primcfunk__init__2(gtk__label__set_selectable, label, selectable);
-  
-  // scale
-  
-  f2__primcfunk__init__4(gtk__scale__new_with_range, orientation, min, max, step);
-  f2__primcfunk__init__2(gtk__scale__set_digits,     this, digits);
-  
-  // range
-  
-  f2__primcfunk__init__1(gtk__range__get_value,      this);
-  f2__primcfunk__init__2(gtk__range__set_value,      this, value);
-  f2__primcfunk__init__3(gtk__range__set_range,      this, min, max);
-  f2__primcfunk__init__3(gtk__range__set_increments, this, step, page);
-  
-  // entry
-  
-  f2__primcfunk__init__0(gtk__entry__new);
-  f2__primcfunk__init__1(gtk__entry__get_text, entry);
-  f2__primcfunk__init__2(gtk__entry__set_text, entry, text);
-  
-  // image
-  
-  f2__primcfunk__init__1(gtk__image__new_from_pixbuf, pixbuf);
-  f2__primcfunk__init__2(gtk__image__set_from_pixbuf, image, pixbuf);
-  
-  // drawing_area
-  
-  f2__primcfunk__init__0(gtk__drawing_area__new);
-  
-  // table
-  
-  f2__primcfunk__init__3(gtk__table__new,    rows, columns, homogenous);
-  f2__primcfunk__init__8(gtk__table__attach, table, child, left_attach, right_attach, top_attach, bottom_attach, xpadding, ypadding);
-  
-  // frame
-  
-  f2__primcfunk__init__1(gtk__frame__new, label);
-  
-  // menu_bar
-  
-  f2__primcfunk__init__0(gtk__menu_bar__new);
-  f2__primcfunk__init__2(gtk__menu_bar__append, menu_bar, add_widget);
-  
-  // file_chooser_dialog
-  
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_open,         parent_window);
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_folder_select,     parent_window);
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__new_for_file_save,         parent_window);
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_current_folder,        this, filename);
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_current_name,          this, current_name);
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_filename,              this, filename);
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__get_filenames,             this);
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_select_multiple,       this, select_multiple);
-  f2__primcfunk__init__3(gtk__file_chooser_dialog__add_file_filter_pattern,   this, name, pattern);
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget,        this, widget);
-  f2__primcfunk__init__2(gtk__file_chooser_dialog__set_preview_widget_active, this, preview_widget_active);
-  f2__primcfunk__init__1(gtk__file_chooser_dialog__get_preview_filename,      this);
-  
-  // menu_item
-  
-  f2__primcfunk__init__1(gtk__menu_item__new,         label);
-  f2__primcfunk__init__2(gtk__menu_item__set_submenu, widget, submenu);
-  
-  // check_menu_item
-  
-  f2__primcfunk__init__1(gtk__check_menu_item__new,        label);
-  f2__primcfunk__init__1(gtk__check_menu_item__get_active, this);
-  f2__primcfunk__init__2(gtk__check_menu_item__set_active, this, active);
-  
-  // menu
-  
-  f2__primcfunk__init__0(gtk__menu__new);
-  f2__primcfunk__init__2(gtk__menu__append, menu, add_widget);
-  
-  // check_button
-  
-  f2__primcfunk__init__1(gtk__check_button__new,        label);
-  f2__primcfunk__init__1(gtk__check_button__get_active, this);
-  f2__primcfunk__init__2(gtk__check_button__set_active, this, active);
-  
-  // keyval
-  
-  f2__primcfunk__init__1(gtk__gdk_keyval_to_unicode, keyval);
-  
-  // gdk_keysyms_frame
-  
-  f2__primcfunk__init__0(gtk__gdk_keysyms_frame__new);
-  
-  // responses_frame
-  
-  f2__primcfunk__init__0(gtk__responses_frame__new);
   
 }
 

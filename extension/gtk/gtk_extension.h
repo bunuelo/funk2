@@ -19,10 +19,10 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__GTK__TYPES__H
-#define F2__GTK__TYPES__H
+#ifndef F2__GTK_EXTENSION__TYPES__H
+#define F2__GTK_EXTENSION__TYPES__H
 
-#include "f2_processor_thread.h"
+#include "../../c/funk2.h"
 
 #ifndef XLIB_IMAGE_SIDE_SIZE_LIMIT
 #define XLIB_IMAGE_SIDE_SIZE_LIMIT ((s64)(0xffffull))
@@ -81,13 +81,13 @@ struct funk2_gtk_s {
   f2ptr                            session_symbol;
 };
 
-#endif // F2__GTK__TYPES__H
+#endif // F2__GTK_EXTENSION__TYPES__H
 
 
-#ifndef F2__GTK__H
-#define F2__GTK__H
+#ifndef F2__GTK_EXTENSION__H
+#define F2__GTK_EXTENSION__H
 
-#include "f2_primfunks.h"
+#include "../../c/funk2.h"
 
 // g_object
 
@@ -452,4 +452,4 @@ f2ptr  f2__gtk__check_button__new(f2ptr cause, f2ptr label);
 
 void f2__gtk__initialize();
 
-#endif // F2__GTK__H
+#endif // F2__GTK_EXTENSION__H

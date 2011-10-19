@@ -118,6 +118,7 @@
 						     'extension/forward_planner/'
 						     'extension/frame_ball/'
 						     'extension/graph_isomorphism/'
+						     'extension/gtk_extension/'
 						     'extension/image/'
 						     'extension/image_sequence/'
 						     'extension/interval_tree/'

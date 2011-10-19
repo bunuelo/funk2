@@ -59,7 +59,8 @@ boolean_t raw__g_object__is_from_this_session(f2ptr cause, f2ptr this) {
 
 // gtk_widget
 
-def_frame_object__global__2_slot(gtk_widget, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_widget, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_widget, gtk_session, pointer);
 
 f2ptr f2__gtk_widget__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_widget__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -88,7 +89,8 @@ f2ptr f2gtk_widget__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_box
 
-def_frame_object__global__2_slot(gtk_box, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_box, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_box, gtk_session, pointer);
 
 f2ptr f2__gtk_box__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_box__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -117,7 +119,8 @@ f2ptr f2gtk_box__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_text_buffer
 
-def_frame_object__global__2_slot(gtk_text_buffer, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_text_buffer, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_text_buffer, gtk_session, pointer);
 
 f2ptr f2__gtk_text_buffer__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_text_buffer__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -145,7 +148,8 @@ f2ptr f2gtk_text_buffer__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_label
 
-def_frame_object__global__2_slot(gtk_label, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_label, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_label, gtk_session, pointer);
 
 f2ptr f2__gtk_label__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_label__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -173,7 +177,8 @@ f2ptr f2gtk_label__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_scale
 
-def_frame_object__global__2_slot(gtk_scale, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_scale, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_scale, gtk_session, pointer);
 
 f2ptr f2__gtk_scale__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_scale__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -202,7 +207,8 @@ f2ptr f2gtk_scale__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_entry
 
-def_frame_object__global__2_slot(gtk_entry, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_entry, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_entry, gtk_session, pointer);
 
 f2ptr f2__gtk_entry__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_entry__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -231,7 +237,8 @@ f2ptr f2gtk_entry__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_image
 
-def_frame_object__global__2_slot(gtk_image, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_image, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_image, gtk_session, pointer);
 
 f2ptr f2__gtk_image__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_image__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -258,7 +265,8 @@ f2ptr f2gtk_image__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_text_iter
 
-def_frame_object__global__2_slot(gtk_text_iter, gtk_session, chunk);
+//def_frame_object__global__2_slot(gtk_text_iter, gtk_session, chunk);
+def_ceframe2(gtk_extension, gtk_text_iter, gtk_session, pointer);
 
 f2ptr f2__gtk_text_iter__new(f2ptr cause, f2ptr chunk) {
   return f2gtk_text_iter__new(cause, f2__gtk__session_symbol(cause), chunk);
@@ -280,7 +288,8 @@ boolean_t raw__gtk_text_iter__is_from_this_session(f2ptr cause, f2ptr this) {
 
 // gdk_color
 
-def_frame_object__global__4_slot(gdk_color, pixel, red, green, blue);
+//def_frame_object__global__4_slot(gdk_color, pixel, red, green, blue);
+def_ceframe4(gtk_extension, gdk_color, pixel, red, green, blue);
 
 f2ptr f2__gdk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
   return f2gdk_color__new(cause, pixel, red, green, blue);
@@ -360,7 +369,8 @@ def_pcfunk3(gdk__rgb_color__new, red, green, blue,
 
 // gdk_pixbuf
 
-def_frame_object__global__2_slot(gdk_pixbuf, gtk_session, pointer);
+//def_frame_object__global__2_slot(gdk_pixbuf, gtk_session, pointer);
+def_ceframe2(gtk_extension, gdk_pixbuf, gtk_session, pointer);
 
 f2ptr f2__gdk_pixbuf__new(f2ptr cause, f2ptr pointer) {
   return f2gdk_pixbuf__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -387,7 +397,8 @@ f2ptr f2gdk_pixbuf__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_text_mark
 
-def_frame_object__global__2_slot(gtk_text_mark, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_text_mark, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_text_mark, gtk_session, pointer);
 
 f2ptr f2__gtk_text_mark__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_text_mark__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -408,7 +419,8 @@ boolean_t raw__gtk_text_mark__is_from_this_session(f2ptr cause, f2ptr this) {
 
 // gtk_callback
 
-def_frame_object__global__2_slot(gtk_callback, funk, args);
+//def_frame_object__global__2_slot(gtk_callback, funk, args);
+def_ceframe2(gtk_extension, gtk_callback, funk, args);
 
 f2ptr f2__gtk_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
   return f2gtk_callback__new(cause, funk, args);
@@ -417,7 +429,8 @@ f2ptr f2__gtk_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
 
 // gtk_text_range
 
-def_frame_object__global__2_slot(gtk_text_range, start, end);
+//def_frame_object__global__2_slot(gtk_text_range, start, end);
+def_ceframe2(gtk_extension, gtk_text_range, start, end);
 
 f2ptr f2__gtk_text_range__new(f2ptr cause, f2ptr start, f2ptr end) {
   return f2gtk_text_range__new(cause, start, end);
@@ -426,7 +439,8 @@ f2ptr f2__gtk_text_range__new(f2ptr cause, f2ptr start, f2ptr end) {
 
 // gtk_progress_bar
 
-def_frame_object__global__2_slot(gtk_progress_bar, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_progress_bar, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_progress_bar, gtk_session, pointer);
 
 f2ptr f2__gtk_progress_bar__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_progress_bar__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -453,7 +467,8 @@ f2ptr f2gtk_progress_bar__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_menu
 
-def_frame_object__global__2_slot(gtk_menu, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_menu, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_menu, gtk_session, pointer);
 
 f2ptr f2__gtk_menu__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_menu__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -480,7 +495,8 @@ f2ptr f2gtk_menu__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_menu_bar
 
-def_frame_object__global__2_slot(gtk_menu_bar, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_menu_bar, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_menu_bar, gtk_session, pointer);
 
 f2ptr f2__gtk_menu_bar__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_menu_bar__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -507,7 +523,8 @@ f2ptr f2gtk_menu_bar__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_check_button
 
-def_frame_object__global__2_slot(gtk_check_button, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_check_button, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_check_button, gtk_session, pointer);
 
 f2ptr f2__gtk_check_button__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_check_button__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -534,7 +551,8 @@ f2ptr f2gtk_check_button__primobject_type__new_aux(f2ptr cause) {
 
 // gtk_file_chooser_dialog
 
-def_frame_object__global__2_slot(gtk_file_chooser_dialog, gtk_session, pointer);
+//def_frame_object__global__2_slot(gtk_file_chooser_dialog, gtk_session, pointer);
+def_ceframe2(gtk_extension, gtk_file_chooser_dialog, gtk_session, pointer);
 
 f2ptr f2__gtk_file_chooser_dialog__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_file_chooser_dialog__new(cause, f2__gtk__session_symbol(cause), pointer);
@@ -6192,22 +6210,21 @@ f2ptr f2__gtk_extension__core_extension__initialize(f2ptr cause) {
 export_cefunk0(gtk_extension__core_extension__initialize, 0, "");
 
 f2ptr f2__gtk_extension__core_extension__define_types(f2ptr cause) {
-  // g_object
-  f2__add_type(cause, new__symbol(cause, "g_object"), f2__g_object_type__new(cause));
   
-  // gtk_widget
-  // gtk_box
-  // gtk_label
-  // gtk_entry
-  // gtk_image
-  // gtk_text_buffer
-  // gtk_text_iter
-  // gdk_color
-  // gdkpixbuf
-  // gtk_text_mark
-  // gtk_callback
-  // gtk_text_range
-  // gtk_progress_bar
+  f2__add_type(cause, new__symbol(cause, "g_object"),         f2__g_object_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_widget"),       f2__gtk_widget_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_box"),          f2__gtk_box_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_label"),        f2__gtk_label_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_entry"),        f2__gtk_entry_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_image"),        f2__gtk_image_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_buffer"),  f2__gtk_text_buffer_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_iter"),    f2__gtk_text_iter_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gdk_color"),        f2__gdk_color_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gdkpixbuf"),        f2__gdkpixbuf_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_mark"),    f2__gtk_text_mark_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_callback"),     f2__gtk_callback_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_text_range"),   f2__gtk_text_range_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "gtk_progress_bar"), f2__gtk_progress_bar_type__new_aux(cause));
   
   status("gtk_extension types defined.");
   return nil;

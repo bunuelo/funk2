@@ -144,6 +144,10 @@ typedef unsigned char boolean_t;
 
 #define error(fiber, str) {fputs("\n*** ", stderr); fputs(str, stderr); fputs(" ***\n", stderr); assert_failed(fiber, __FILE__, __LINE__, str); exit(-1);}
 
+// pool_address can be larger than pool_block_address.
+// the difference ends up being the f2ptr_block__bit_num
+// computer_id__bit_num can be zero.
+
 typedef                             u64       pool_address_t;
 #define pool_address__fstr          X64__fstr
 #define pool_address__bit_num        37

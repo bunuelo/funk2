@@ -905,7 +905,7 @@
 			     [= mindmon_project nil]
 			     [have this close_project]
 			     
-			     [set window default_size [+ 640 16] [+ [* 240 2] 128 320]]
+			     [set window default_size [+ 640 16] [+ [* 240 2] 128 320 32]]
 			     
 			     [have window show_all]
 			     

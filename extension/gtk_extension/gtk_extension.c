@@ -821,6 +821,27 @@ void funk2_gtk__update_preview_event__signal_connect(funk2_gtk_t* this, GtkWidge
 }
 
 
+// value_changed
+
+void funk2_gtk__value_changed_event__signal_connect__callback_handler(GtkWidget* widget, gpointer data) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
+  funk2_gtk__add_callback_event(__funk2__gtk, callback, NULL);
+}
+
+void funk2_gtk__value_changed_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk, f2ptr args) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
+  callback->funk      = funk;
+  callback->args      = args;
+  callback->args_type = funk2_gtk_callback_args_type__value_changed;
+  funk2_gtk__add_callback(this, callback);
+  {
+    gdk_threads_enter();
+    g_signal_connect(G_OBJECT(widget), "value-changed", G_CALLBACK(funk2_gtk__value_changed_event__signal_connect__callback_handler), callback);
+    gdk_threads_leave();
+  }
+}
+
+
 // object
 
 void funk2_g__object__ref(funk2_gtk_t* this, GObject* object) {
@@ -3158,9 +3179,37 @@ f2ptr f2__gtk__update_preview_event__signal_connect(f2ptr cause, f2ptr widget, f
 }
 export_cefunk3(gtk__update_preview_event__signal_connect, widget, funk, args, 0,
 	       "Connects an update_preview_event signal handler to a GtkWidget.");
-//def_pcfunk3(gtk__update_preview_event__signal_connect, widget, funk, args,
-//	    "Connects an update_preview_event signal handler to a GtkWidget.",
-//	    return f2__gtk__update_preview_event__signal_connect(this_cause, widget, funk, args));
+
+
+// value_changed_event
+
+f2ptr raw__gtk__value_changed_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2__gtk->initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, widget);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    assert_g_type(GTK_TYPE_WIDGET, gtk_widget);
+    
+    funk2_gtk__value_changed_event__signal_connect(__funk2__gtk, gtk_widget, funk, args);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__value_changed_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
+  return raw__gtk__value_changed_event__signal_connect(cause, widget, funk, args);
+}
+export_cefunk3(gtk__value_changed_event__signal_connect, widget, funk, args, 0,
+	       "Connects an value_changed_event signal handler to a GtkWidget.");
+
 
 
 // works for 'clicked' event but not 'expose_event'
@@ -3980,6 +4029,9 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 	args = f2cons__new(cause, key_event_frame, funk_args);
       } break;
       case funk2_gtk_callback_args_type__update_preview: {
+	args = funk_args;
+      } break;
+      case funk2_gtk_callback_args_type__value_changed: {
 	args = funk_args;
       } break;
       default:

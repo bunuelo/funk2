@@ -90,6 +90,11 @@
     
     [have table_hbox pack_start table_scale nil nil 0]
     
+    [have table_scale value_changed_event-signal_connect
+	  [funk []
+		[terminal_format standard-terminal '\nscale value-changed: ' [get table_scale value]]]
+	  nil]
+    
     [dotimes [column 4]
       [dotimes [row 10]
 	[have table attach [gtk-label-new [format nil 'column=' column '\nrow=' row]] column [+ column 1] row [+ row 1] 0 0]]]

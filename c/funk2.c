@@ -326,6 +326,13 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     
   }
   
+  {
+    f2ptr result = f2__global_core_extension_handler__reset_to_boot_state(cause);
+    if (raw__larva__is_type(cause, result)) {
+      error(nil, "funk2: error resetting global core extension handler to boot state.");
+    }
+  }
+  
   pause_gc();
   funk2_virtual_processor_handler__start_virtual_processors(&(this->virtual_processor_handler));
   resume_gc();

@@ -159,6 +159,10 @@
 [defcorefunk gtk-file_chooser_dialog-set_preview_widget_active gtk_extension gtk__file_chooser_dialog__set_preview_widget_active]
 [defcorefunk gtk-file_chooser_dialog-get_preview_filename      gtk_extension gtk__file_chooser_dialog__get_preview_filename]
 
+[gtk_extension-core_extension-define_types]
+
+
+
 
 'keyval'
 
@@ -171,16 +175,6 @@
 'gtk-responses-frame'
 
 [defcorefunk gtk-responses_frame-new                           gtk_extension gtk__responses_frame__new]
-
-
-
-'****************************************************************************************************************'
-'* All core funks are defined at this point, so we can call a funktion within the gtk_extension core extension. *'
-'*                                                                                                              *'
-'*' [gtk_extension-core_extension-define_types] '                                                               *'
-'*                                                                                                              *'
-'*                                                                                                              *'
-'****************************************************************************************************************'
 
 
 

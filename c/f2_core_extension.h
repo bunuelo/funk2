@@ -777,8 +777,9 @@ f2ptr f2core_extension_handler__primobject_type__new_aux(f2ptr cause);
 
 // global_core_extension_handler
 
+f2ptr f2__global_core_extension_handler__reset_to_boot_state   (f2ptr cause);
 f2ptr f2__global_core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr name, f2ptr filename);
-f2ptr f2__global_core_extension_handler__lookup_core_extension( f2ptr cause, f2ptr name);
+f2ptr f2__global_core_extension_handler__lookup_core_extension (f2ptr cause, f2ptr name);
 
 // **
 

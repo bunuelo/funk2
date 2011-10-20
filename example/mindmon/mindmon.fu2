@@ -469,6 +469,11 @@
 	     [prog [set scale range 0.0 [- movie_length 1]]
 		   [set scale value [- movie_length 1]]]]]
        
+       [have scale value_changed_event-signal_connect
+	     [funk []
+		   [= need_update t]
+		   [have [get this cycle_trigger] trigger]]
+	     nil]
        
        'agents'
        

@@ -744,9 +744,10 @@ struct funk2_object_type__core_extension_handler__slot_s {
 
 // core_extension
 
-declare_frame_object_3_slot(core_extension,
+declare_frame_object_4_slot(core_extension,
 			    name,
 			    filename,
+			    initialized_time_stamp_cmutex,
 			    initialized_time_stamp);
 
 f2ptr raw__core_extension__new(               f2ptr cause, f2ptr name, f2ptr filename);

@@ -24,11 +24,12 @@
 
 // core_extension
 
-def_frame_object__global__3_slot(core_extension, name, filename, initialized_time_stamp);
+def_frame_object__global__4_slot(core_extension, name, filename, initialized_time_stamp_cmutex, initialized_time_stamp);
 
 f2ptr raw__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
-  f2ptr initialized_time_stamp = nil;
-  return f2core_extension__new(cause, name, filename, initialized_time_stamp);
+  f2ptr initialized_time_stamp_cmutex = f2__cmutex__new(cause);
+  f2ptr initialized_time_stamp        = nil;
+  return f2core_extension__new(cause, name, filename, initialized_time_stamp_cmutex, initialized_time_stamp);
 }
 
 f2ptr f2__core_extension__new(f2ptr cause, f2ptr name, f2ptr filename) {
@@ -41,14 +42,18 @@ def_pcfunk2(core_extension__new, name, filename,
 
 
 f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
+  f2ptr initialized_time_stamp_cmutex = f2__core_extension__initialized_time_stamp_cmutex(cause, this);
+  raw__cmutex__lock(cause, initialized_time_stamp_cmutex);
   if (f2__core_extension__initialized_time_stamp(cause, this) != nil) {
-    return f2larva__new(cause, 124352, nil);
+    raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
+    return nil;
   }
   f2ptr name                 = f2__core_extension__name(    cause, this);
   f2ptr initialize_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension__initialize"))));
   f2ptr initialize_funk      = f2__core_extension_funk__new(cause, name, initialize_funk_name);
-  f2ptr result = f2__core_extension_funk__apply_without_initializing(cause, initialize_funk, nil);
+  f2ptr result               = f2__core_extension_funk__apply_without_initializing(cause, initialize_funk, nil);
   if (raw__larva__is_type(cause, result)) {
+    raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
     return f2larva__new(cause, 3435, f2__bug__new(cause, f2integer__new(cause, 3435), f2__frame__new(cause, f2list8__new(cause,
 															 new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_initialize_core_extension"),
 															 new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-initialize"),
@@ -56,6 +61,7 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
 															 new__symbol(cause, "result"),   result))));
   }
   f2__core_extension__initialized_time_stamp__set(cause, this, f2__time(cause));
+  raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
   return nil;
 }
 
@@ -69,14 +75,18 @@ def_pcfunk1(core_extension__initialize, this,
 
 
 f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
+  f2ptr initialized_time_stamp_cmutex = f2__core_extension__initialized_time_stamp_cmutex(cause, this);
+  raw__cmutex__lock(cause, initialized_time_stamp_cmutex);
   if (f2__core_extension__initialized_time_stamp(cause, this) == nil) {
-    return f2larva__new(cause, 124351, nil);
+    raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
+    return nil;
   }
   f2ptr name              = f2__core_extension__name(    cause, this);
   f2ptr destroy_funk_name = f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, name), new__string(cause, "__core_extension__destroy"))));
   f2ptr destroy_funk      = f2__core_extension_funk__new(cause, name, destroy_funk_name);
-  f2ptr result = f2__core_extension_funk__apply(cause, destroy_funk, nil);
+  f2ptr result            = f2__core_extension_funk__apply(cause, destroy_funk, nil);
   if (raw__larva__is_type(cause, result)) {
+    raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
     return f2larva__new(cause, 3435, f2__bug__new(cause, f2integer__new(cause, 3435), f2__frame__new(cause, f2list8__new(cause,
 															 new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_destroy_core_extension"),
 															 new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-destroy"),
@@ -84,6 +94,7 @@ f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
 															 new__symbol(cause, "result"),   result))));
   }
   f2__core_extension__initialized_time_stamp__set(cause, this, nil);
+  raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
   return nil;
 }
 
@@ -100,10 +111,7 @@ f2ptr raw__core_extension__assure_initialized(f2ptr cause, f2ptr this) {
   if (f2__core_extension__initialized_time_stamp(cause, this) != nil) {
     return nil;
   }
-  f2ptr result = f2__core_extension__initialize(cause, this);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
+  assert_value(f2__core_extension__initialize(cause, this));
   return nil;
 }
 
@@ -120,10 +128,7 @@ f2ptr raw__core_extension__assure_destroyed(f2ptr cause, f2ptr this) {
   if (f2__core_extension__initialized_time_stamp(cause, this) == nil) {
     return nil;
   }
-  f2ptr result = f2__core_extension__destroy(cause, this);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
+  assert_value(f2__core_extension__destroy(cause, this));
   return nil;
 }
 
@@ -369,7 +374,7 @@ void f2__core_extension__initialize_module() {
   
   // core_extension
   
-  init_frame_object__3_slot(core_extension, name, filename, initialized_time_stamp);
+  init_frame_object__4_slot(core_extension, name, filename, initialized_time_stamp_cmutex, initialized_time_stamp);
   
   f2__primcfunk__init__2(core_extension__new, name, filename);
   

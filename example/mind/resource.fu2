@@ -111,9 +111,6 @@
        [have fiber_starting_mutex unlock]
        this]]
 
-`[defmetro resource [name args :rest body]
-   `[new resource [quote ,name] [funk ,args @body]]]
-
 [deftypefunk resource get local_time []
   [get fiber bytecode_count]]
 

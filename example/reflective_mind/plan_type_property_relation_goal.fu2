@@ -21,26 +21,7 @@
 
 'plan_type_property_relation_goal'
 
-[deframe plan_type_property_relation_goal [frame] [mind
-						       
-						       this-source_type
-	 					       this-source_property
-						       this-source_property_value
-						       this-key_type
-						       this-key
-						       this-target_type
-						       this-target_property
-						       this-target_property_value
-						       
-						       this-source_phenomenal_name
-						       this-target_phenomenal_name
-						       this-source_type_event_phenomenal_name
-						       this-target_type_event_phenomenal_name
-						       
-						       phenomenal_name
-						       event_phenomenal_name
-						       
-						       [current_goal_event nil]]
+[deframe plan_type_property_relation_goal [object_type_property_relation_goal] []
   [new [initial-mind
 	initial-source_type
 	initial-source_property
@@ -50,166 +31,15 @@
 	initial-target_type
 	initial-target_property
 	initial-target_property_value]
-       [= mind                                   initial-mind]
-       [= this-source_type                       initial-source_type]
-       [= this-source_property                   initial-source_property]
-       [= this-source_property_value             initial-source_property_value]
-       [= this-key_type                          initial-key_type]
-       [= this-key                               initial-key]
-       [= this-target_type                       initial-target_type]
-       [= this-target_property                   initial-target_property]
-       [= this-target_property_value             initial-target_property_value]
-       [= this-source_phenomenal_name            [get this __source_phenomenal_name]]
-       [= this-target_phenomenal_name            [get this __target_phenomenal_name]]
-       [= this-source_type_event_phenomenal_name [get this __source_type_event_phenomenal_name]]
-       [= this-target_type_event_phenomenal_name [get this __target_type_event_phenomenal_name]]
-       [= phenomenal_name                        [get this __phenomenal_name]]
-       [= event_phenomenal_name                  [get this __event_phenomenal_name]]
+       [construct object_type_property_relation_goal
+		  initial-mind
+		  initial-source_type
+		  initial-source_property
+		  initial-source_property_value
+		  initial-key_type
+		  initial-key
+		  initial-target_type
+		  initial-target_property
+		  initial-target_property_value]
        ]]
-
-[deftypefunk plan_type_property_relation_goal get __phenomenal_name []
-  [get [format nil [have [get this as-declarative_string] replace_all ' ' '_'] '_goal'] as-symbol]]
-
-[deftypefunk plan_type_property_relation_goal get __event_phenomenal_name []
-  [get [format nil [get this __phenomenal_name] '_event'] as-symbol]]
-
-[defunk plan_type_property_relation_goal-english_conslist [object_type object_property object_property_value]
-  [if [eq object_property_value t]
-      `[a ,object_type that ,object_property]
-    `[a ,object_property_value ,object_property ,object_type]]]
-
-[defunk plan_type_property_relation_goal-english_string [object_type object_property object_property_value]
-  [conslist-as-english_string [plan_type_property_relation_goal-english_conslist object_type object_property object_property_value]]]
-
-[deftypefunk plan_type_property_relation_goal get as-english_conslist []
-  [append `[I want]
-	  [plan_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
-	  `[to be]
-	  `[,this-key]
-	  [plan_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
-
-[deftypefunk plan_type_property_relation_goal get as-string []
-  [conslist-as-english_string [get this as-english_conslist]]]
-
-[defunk plan_type_property_relation_goal-declarative_english_conslist [source_type source_property source_property_value key_type key target_type target_property target_property_value]
-  [append [plan_type_property_relation_goal-english_conslist source_type source_property source_property_value]
-	  `[is]
-	  `[,key]
-	  [plan_type_property_relation_goal-english_conslist target_type target_property target_property_value]]]
-
-[defunk plan_type_property_relation_goal-declarative_english_string [source_type source_property source_property_value key_type key target_type target_property target_property_value]
-  [conslist-as-english_string [plan_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value key_type key target_type target_property target_property_value]]]
-
-[deftypefunk plan_type_property_relation_goal get as-declarative_english_conslist []
-  [plan_type_property_relation_goal-declarative_english_conslist this-source_type this-source_property this-source_property_value this-key_type this-key this-target_type this-target_property this-target_property_value]]
-
-[deftypefunk plan_type_property_relation_goal get as-declarative_string []
-  [conslist-as-english_string [get this as-declarative_english_conslist]]]
-
-[deftypefunk plan_type_property_relation_goal get as-negative_declarative_english_conslist []
-  [append [plan_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
-	  `[is not]
-	  `[,this-key]
-	  [plan_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
-
-[deftypefunk plan_type_property_relation_goal get as-negative_declarative_string []
-  [conslist-as-english_string [get this as-negative_declarative_english_conslist]]]
-
-[deftypefunk plan_type_property_relation_goal get as-now_true_english_conslist []
-  [append [plan_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
-	  `[is now]
-	  `[,this-key]
-	  [plan_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
-
-[deftypefunk plan_type_property_relation_goal get as-now_true_string []
-  [conslist-as-english_string [get this as-now_true_english_conslist]]]
-
-[deftypefunk plan_type_property_relation_goal get as-no_longer_true_english_conslist []
-  [append [plan_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
-	  `[is no longer]
-	  `[,this-key]
-	  [plan_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
-
-[deftypefunk plan_type_property_relation_goal get as-no_longer_true_string []
-  [conslist-as-english_string [get this as-no_longer_true_english_conslist]]]
-
-[defunk plan_object_type_event-phenomenal_name [plan_object-phenomenal_name]
-  [get [format nil plan_object-phenomenal_name '_type_event'] as-symbol]]
-
-[deftypefunk plan_type_property_relation_goal get __source_phenomenal_name []
-  [translate_plan_knowledge_to_plan_type_knowledge_resource-semantic_plan_object_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
-
-[deftypefunk plan_type_property_relation_goal get __target_phenomenal_name []
-  [translate_plan_knowledge_to_plan_type_knowledge_resource-semantic_plan_object_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
-
-[deftypefunk plan_type_property_relation_goal get __source_type_event_phenomenal_name []
-  [plan_object_type_event-phenomenal_name [get this __source_phenomenal_name]]]
-
-[deftypefunk plan_type_property_relation_goal get __target_type_event_phenomenal_name []
-  [plan_object_type_event-phenomenal_name [get this __target_phenomenal_name]]]
-
-[deftypefunk plan_type_property_relation_goal get matches_type_event [event_time
-									  semantic_plan_object_type_event_source
-									  key_type
-									  key
-									  semantic_plan_object_type_event_target]
-  [let [[matches t]]
-    [if [not [eq this-source_type `?]]
-	[let [[semantic_plan_object_type_event_source-phenomenal_name [get semantic_plan_object_type_event_source phenomenal_name]]]
-	  [if [not [eq this-source_type_event_phenomenal_name semantic_plan_object_type_event_source-phenomenal_name]]
-	      [= matches nil]]]]
-    [if matches
-	[prog [if [not [eq this-key_type `?]]
-		  [if [not [eq this-key_type key_type]]
-		      [= matches nil]]]
-	      [if matches
-		  [prog [if [not [eq this-key `?]]
-			    [if [not [eq this-key key]]
-				[= matches nil]]]
-			[if matches
-			    [prog [if [not [eq this-target_type `?]]
-				      [let [[semantic_plan_object_type_event_target-phenomenal_name [get semantic_plan_object_type_event_target phenomenal_name]]]
-					[if [not [eq this-target_type_event_phenomenal_name semantic_plan_object_type_event_target-phenomenal_name]]
-					    [= matches nil]]]]]]]]]]
-    matches]]
-
-
-[deftypefunk plan_type_property_relation_goal execute add_type_event [event_time
-									  semantic_plan_object_type_event_source
-									  key_type
-									  key
-									  semantic_plan_object_type_event_target]
-  
-  [if [null current_goal_event]
-      [if [get this matches_type_event
-	       event_time
-	       semantic_plan_object_type_event_source
-	       key_type
-	       key
-	       semantic_plan_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-now_true_string]]
-		[let [[semantic_goal_event [new semantic_goal_event [get semantic_plan_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
-		  [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
-		  [have [get [get this mind] semantic_knowledge_base `plan_goal_knowledge] add_semantic_frame semantic_goal_event]
-		  [= current_goal_event semantic_goal_event]
-		  ]]]]]
-
-[deftypefunk plan_type_property_relation_goal execute remove_type_event [event_time
-									 semantic_plan_object_type_event_source
-									 key_type
-									 key
-									 semantic_plan_object_type_event_target]
-  [if [not [null current_goal_event]]
-      [if [get this matches_type_event
-	       event_time
-	       semantic_plan_object_type_event_source
-	       key_type
-	       key
-	       semantic_plan_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-no_longer_true_string]]
-		[let [[semantic_goal_event current_goal_event]]
-		  [set semantic_goal_event absolute_end_time [new semantic_time event_time]]
-		  [= current_goal_event nil]
-		  ]]]]]
-
 

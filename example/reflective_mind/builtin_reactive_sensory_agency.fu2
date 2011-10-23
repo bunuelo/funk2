@@ -233,7 +233,7 @@
       
       [= previous_perception perception]
       'Once we have finished changing visual_knowledge, we add a special ending trace event.'
-      [terminal_format standard-terminal '\n' [get [time] date_and_time_string]
+      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		       'end_of_visual_changes event added to visual_knowledge trace events.']
       [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
       ]]]

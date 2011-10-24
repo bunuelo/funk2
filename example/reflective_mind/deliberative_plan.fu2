@@ -189,7 +189,7 @@
 											   [key         [elt arguments 1]]
 											   [value       [elt arguments 2]]]
 										       [eval `[funk [this]
-												    [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[physical_type_property_relation_goal-english_string source_type key value] '."']
+												    [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_relation_goal-english_string source_type key value] '."']
 												    [have this wait_for_property [quote ,source_type] [quote ,key] [quote ,value]]
 												    ]]]]]
 					      [[eq `wait-for-relationship command] [if [not [eq 7 arguments-length]]

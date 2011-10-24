@@ -205,7 +205,7 @@
 											   [target_property_value [elt arguments 6]]]
 										       [eval `[funk [this]
 												    [terminal_format standard-terminal '\nplan waiting for relationship to exist: "'
-														     ,[physical_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
+														     ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
 												    [have this wait_for_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
 												    ]]]]]
 					      [t                                   [error bug_name `deliberative_plan_compile_error]]]]]]

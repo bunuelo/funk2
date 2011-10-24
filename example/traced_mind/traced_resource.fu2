@@ -33,7 +33,15 @@
 
 [deftypefunk traced_resource execute finish_wrapped_active_funk []
   [let [[target [get this resource_semantic_frame]]]
-    [set target active nil]]]
+    [set target active nil]
+    'Handle learning of transframe in parallel, once traced_resource has finished executing.'
+    [fiber [funk []
+		 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+				  'resource, ' name ', has finished executing, so learning transframe.']
+		 
+		 ]
+	   nil]
+    nil]]
 
 [deftypefunk traced_resource get wrapped_active_funk [active_funk]
   [let [[active_funk-args [get active_funk args]]]

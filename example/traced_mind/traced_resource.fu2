@@ -37,7 +37,7 @@
     'Handle learning of transframe in parallel, once traced_resource has finished executing.'
     [fiber [funk []
 		 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-				  'resource, ' name ', has finished executing, so learning transframe.']
+				  'resource, ' name ', has finished executing, so we should learn transframe in parallel here.']
 		 
 		 ]
 	   nil]

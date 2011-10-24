@@ -75,7 +75,7 @@
 											   [key         [elt arguments 1]]
 											   [value       [elt arguments 2]]]
 										       [append `[wait until]
-											       [physical_type_property_relation_goal-english_conslist source_type key value]]]]]
+											       [object_type_property_relation_goal-english_conslist source_type key value]]]]]
 					      [[eq `wait-for-relationship command] [if [not [eq 7 arguments-length]]
 										       `[error punctuation-colon ,[flatten_constree expression]]
 										     [let [[source_type           [elt arguments 0]]

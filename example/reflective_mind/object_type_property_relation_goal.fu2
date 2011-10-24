@@ -141,10 +141,10 @@
   [get [format nil object-phenomenal_name '_type_event'] as-symbol]]
 
 [deftypefunk object_type_property_relation_goal get __source_phenomenal_name []
-  [translate_object_knowledge_to_object_type_knowledge_resource-semantic_object_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
+  [semantic_object_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
 
 [deftypefunk object_type_property_relation_goal get __target_phenomenal_name []
-  [translate_object_knowledge_to_object_type_knowledge_resource-semantic_object_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
+  [semantic_object_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
 
 [deftypefunk object_type_property_relation_goal get __source_type_event_phenomenal_name []
   [object_type_event-phenomenal_name [get this __source_phenomenal_name]]]

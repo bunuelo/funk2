@@ -76,9 +76,6 @@
        [= vital t]
        nil]]
 
-[defunk translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name [phenomenal_name property_key property property_value]
-  [get [format nil phenomenal_name '_' property_key '_' property '_' property_value] as-symbol]]
-
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_goal [goal]
   `[terminal_format standard-terminal '\ndeliberative_layer: adding physical goal, "' [get goal as-string] '."']
   [= goals [cons goal goals]]]
@@ -141,7 +138,7 @@
     semantic_physical_object_type_event]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_type_event_with_property_type [phenomenal_name property_key property property_value]
-  [let [[object_type_with_propety_phenomenal_name [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
+  [let [[object_type_with_propety_phenomenal_name [semantic_object_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
     [get this semantic_physical_object_type_event object_type_with_propety_phenomenal_name]]]
 
 [defunk translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property [source key_type key target]
@@ -186,16 +183,16 @@
 														 target_property
 														 target_property_value]
   
-  [translate_physical_knowledge_to_physical_type_knowledge_resource-type_relation-phenomenal_name [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name source_phenomenal_name
-																											source_property_key
-																											source_property
-																											source_property_value]
+  [translate_physical_knowledge_to_physical_type_knowledge_resource-type_relation-phenomenal_name [semantic_object_type_event-phenomenal_name source_phenomenal_name
+																	      source_property_key
+																	      source_property
+																	      source_property_value]
 												  key_type
 												  key
-												  [translate_physical_knowledge_to_physical_type_knowledge_resource-semantic_physical_object_type_event-phenomenal_name target_phenomenal_name
-																											target_property_key
-																											target_property
-																											target_property_value]]]
+												  [semantic_object_type_event-phenomenal_name target_phenomenal_name
+																	      target_property_key
+																	      target_property
+																	      target_property_value]]]
 
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_relation [event_time semantic_physical_object_type_event_source key_type key semantic_physical_object_type_event_target]

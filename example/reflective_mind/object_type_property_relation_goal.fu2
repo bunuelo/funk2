@@ -19,6 +19,10 @@
 
 
 
+[defunk semantic_object_type_event-phenomenal_name [phenomenal_name property_key property property_value]
+  [get [format nil phenomenal_name '_' property_key '_' property '_' property_value] as-symbol]]
+
+
 'object_type_property_relation_goal'
 
 [deframe object_type_property_relation_goal [frame] [mind

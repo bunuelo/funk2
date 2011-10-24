@@ -129,7 +129,7 @@
     [= semantic_physical_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
     [if [null semantic_physical_object_type_event]
 	[prog [= semantic_physical_object_type_event [new semantic_physical_object_type_event [get [get this mind] semantic_realm]
-							  [physical_object_type_event-phenomenal_name phenomenal_name]
+							  [object_type_event-phenomenal_name phenomenal_name]
 							  phenomenal_name]]
 	      [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame semantic_physical_object_type_event]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_physical_object_type_event]

@@ -86,7 +86,7 @@
 											   [target_property       [elt arguments 5]]
 											   [target_property_value [elt arguments 6]]]
 										       [append `[wait until]
-											       [physical_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value `preposition key target_type target_property target_property_value]]]]]
+											       [object_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value `preposition key target_type target_property target_property_value]]]]]
 					      [t                                   `[error ,[flatten_constree expression]]]]]]]
 	[t                          `[error punctuation-colon ,[flatten_constree expression]]]]]
 

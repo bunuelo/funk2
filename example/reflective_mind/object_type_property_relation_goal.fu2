@@ -23,6 +23,7 @@
   [get [format nil phenomenal_name '_' property_key '_' property '_' property_value] as-symbol]]
 
 
+
 'object_type_property_relation_goal'
 
 [deframe object_type_property_relation_goal [frame] [mind

@@ -19,11 +19,11 @@
 
 
 
-[defunk semantic_object_type_event-phenomenal_name [source key_type key target]
-  [get [format nil source '_' key_type '_' key '_' target] as-symbol]]
+[defunk semantic_object_property_type_event-phenomenal_name [source key_type key target]
+  [get [format nil source '_' key_type '_' key '_' target '_property_type_event'] as-symbol]]
 
 [defunk semantic_object_relation_type_event-phenomenal_name [source_source source_key_type source_key source_target key_type key target_source target_key_type target_key target_target]
-  [get [format nil [semantic_object_type_event-phenomenal_name source_source source_key_type source_key source_target] '_' key_type '_' key '_' [semantic_object_type_event-phenomenal_name target_source target_key_type target_key target_target]] as-symbol]]
+  [get [format nil [semantic_object_property_type_event-phenomenal_name source_source source_key_type source_key source_target] '_' key_type '_' key '_' [semantic_object_property_type_event-phenomenal_name target_source target_key_type target_key target_target] '_relation_type_event'] as-symbol]]
 
 
 
@@ -149,13 +149,16 @@
   [conslist-as-english_string [get this as-no_longer_true_english_conslist]]]
 
 [defunk object_type_event-phenomenal_name [object-phenomenal_name]
-  [get [format nil object-phenomenal_name '_type_event'] as-symbol]]
+  object-phenomenal_name]
+
+`[defunk object_type_event-phenomenal_name [object-phenomenal_name]
+   [get [format nil object-phenomenal_name '_type_event'] as-symbol]]
 
 [deftypefunk object_type_property_relation_goal get __source_phenomenal_name []
-  [semantic_object_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
+  [semantic_object_property_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
 
 [deftypefunk object_type_property_relation_goal get __target_phenomenal_name []
-  [semantic_object_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
+  [semantic_object_property_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
 
 [deftypefunk object_type_property_relation_goal get __source_type_event_phenomenal_name []
   [object_type_event-phenomenal_name [get this __source_phenomenal_name]]]

@@ -107,7 +107,7 @@
   [string-concat '<' [get unique_name as-string] '>']]
 
 [deftypefunk deliberative_plan execute wait_for_property [source_type key value]
-  [let [[looking_for_event-phenomenal_name [semantic_object_type_event-phenomenal_name source_type `property key value]]]
+  [let [[looking_for_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type `property key value]]]
     [terminal_format standard-terminal '\nwaiting for property: looking for event, ' looking_for_event-phenomenal_name '.']
     [let [[done nil]]
       [while [not done]
@@ -122,16 +122,16 @@
 	    [sleep 30]]]]]]
 
 [deftypefunk deliberative_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
-  [let [[looking_for_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name source_type
-																   `property
-																   source_property
-																   source_property_value
-																   `preposition
-																   key
-																   target_type
-																   `property
-																   target_property
-																   target_property_value]]]]
+  [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name source_type
+												`property
+												source_property
+												source_property_value
+												`preposition
+												key
+												target_type
+												`property
+												target_property
+												target_property_value]]]
     [terminal_format standard-terminal '\nwaiting for relationship: looking for event, ' looking_for_event-phenomenal_name '.']
     [let [[done nil]]
       [while [not done]

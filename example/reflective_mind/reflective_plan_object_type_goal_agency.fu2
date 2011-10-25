@@ -137,7 +137,7 @@
     semantic_plan_object_type_event]]
 
 [deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get semantic_plan_object_type_event_with_property_type [phenomenal_name property_key property property_value]
-  [let [[object_type_with_propety_phenomenal_name [semantic_object_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
+  [let [[object_type_with_propety_phenomenal_name [semantic_object_property_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
     [get this semantic_plan_object_type_event object_type_with_propety_phenomenal_name]]]
 
 [defunk translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property [source key_type key target]
@@ -182,16 +182,16 @@
 														 target_property
 														 target_property_value]
   
-  [translate_plan_knowledge_to_plan_type_knowledge_resource-type_relation-phenomenal_name [semantic_object_type_event-phenomenal_name source_phenomenal_name
-																      source_property_key
-																      source_property
-																      source_property_value]
+  [translate_plan_knowledge_to_plan_type_knowledge_resource-type_relation-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_phenomenal_name
+																	       source_property_key
+																	       source_property
+																	       source_property_value]
 											  key_type
 											  key
-											  [semantic_object_type_event-phenomenal_name target_phenomenal_name
-																      target_property_key
-																      target_property
-																      target_property_value]]]
+											  [semantic_object_property_type_event-phenomenal_name target_phenomenal_name
+																	       target_property_key
+																	       target_property
+																	       target_property_value]]]
 
 
 [deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute add_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]

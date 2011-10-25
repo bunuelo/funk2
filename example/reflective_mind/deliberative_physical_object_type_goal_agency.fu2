@@ -138,7 +138,7 @@
     semantic_physical_object_type_event]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_physical_object_type_event_with_property_type [phenomenal_name property_key property property_value]
-  [let [[object_type_with_propety_phenomenal_name [semantic_object_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
+  [let [[object_type_with_propety_phenomenal_name [semantic_object_property_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
     [get this semantic_physical_object_type_event object_type_with_propety_phenomenal_name]]]
 
 [defunk translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property [source key_type key target]
@@ -167,10 +167,10 @@
     [let [[relation_set [have semantic_physical_object_type_event_source lookup_set compound_key [get semantic_physical_object_type_event_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
-	  [let [[relation-phenomenal_name   [semantic_object_type_event-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]
-											key_type
-											key
-											[get semantic_physical_object_type_event_target phenomenal_name]]]
+	  [let [[relation-phenomenal_name   [semantic_object_property_type_event-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]
+												 key_type
+												 key
+												 [get semantic_physical_object_type_event_target phenomenal_name]]]
 		[relation-meta_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
 						  semantic_physical_object_type_event_source
 						  key_type

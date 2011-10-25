@@ -161,29 +161,6 @@
 								  semantic_physical_object_type_events]]]]]
     semantic_physical_object_type_events]]
 
-[defunk translate_physical_knowledge_to_physical_type_knowledge_resource-type_property_relation-phenomenal_name [source_phenomenal_name
-														 source_property_key
-														 source_property
-														 source_property_value
-														 key_type
-														 key
-														 target_phenomenal_name
-														 target_property_key
-														 target_property
-														 target_property_value]
-  
-  [semantic_object_type_event-phenomenal_name [semantic_object_type_event-phenomenal_name source_phenomenal_name
-											  source_property_key
-											  source_property
-											  source_property_value]
-					      key_type
-					      key
-					      [semantic_object_type_event-phenomenal_name target_phenomenal_name
-											  target_property_key
-											  target_property
-											  target_property_value]]]
-
-
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_relation [event_time semantic_physical_object_type_event_source key_type key semantic_physical_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nadd_type_relation ' [get semantic_physical_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_physical_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]

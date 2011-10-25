@@ -158,16 +158,10 @@
   [semantic_object_property_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
 
 [deftypefunk object_type_property_relation_goal get __source_type_event_phenomenal_name []
-  [get this __source_phenomenal_name]]
+  [object_type_event-phenomenal_name [get this __source_phenomenal_name]]]
 
 [deftypefunk object_type_property_relation_goal get __target_type_event_phenomenal_name []
-  [get this __target_phenomenal_name]]
-
-`[deftypefunk object_type_property_relation_goal get __source_type_event_phenomenal_name []
-   [object_type_event-phenomenal_name [get this __source_phenomenal_name]]]
-
-`[deftypefunk object_type_property_relation_goal get __target_type_event_phenomenal_name []
-   [object_type_event-phenomenal_name [get this __target_phenomenal_name]]]
+  [object_type_event-phenomenal_name [get this __target_phenomenal_name]]]
 
 [deftypefunk object_type_property_relation_goal get matches_type_event [event_time
 									  semantic_object_type_event_source

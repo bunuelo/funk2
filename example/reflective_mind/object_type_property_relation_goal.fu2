@@ -149,10 +149,7 @@
   [conslist-as-english_string [get this as-no_longer_true_english_conslist]]]
 
 [defunk object_type_event-phenomenal_name [object-phenomenal_name]
-  object-phenomenal_name]
-
-`[defunk object_type_event-phenomenal_name [object-phenomenal_name]
-   [get [format nil object-phenomenal_name '_type_event'] as-symbol]]
+  [get [format nil object-phenomenal_name '_type_event'] as-symbol]]
 
 [deftypefunk object_type_property_relation_goal get __source_phenomenal_name []
   [semantic_object_property_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]

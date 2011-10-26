@@ -227,7 +227,8 @@
 											[have event-semantic_frame map_type_key_values
 											      [funk [slot_type slot_key slot_value]
 												    [if [is-type `symbol slot_value]
-													[get this semantic_physical_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
+													[let [[event-semantic_frame-slot_value-semantic_physical_object_type_event_with_property_type [get this semantic_physical_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]
+													  [set event-semantic_frame-slot_value-semantic_physical_object_type_event_with_property_type absolute_start_time [new semantic_time event-time]]]]]]
 											]
 										       [[is-type `semantic_physical_object event-semantic_frame]
 											[let [[event-semantic_frame-copy [get this semantic_physical_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]

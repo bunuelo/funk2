@@ -207,14 +207,52 @@
 			[set relation absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
 
-`[[and [eq event-key_type `property] [eq event-key `physical_object_type]]
-  'create semantic_physical_object_type_event.'
-  [get this semantic_physical_object_type_event event-value]
-  [have event-semantic_frame map_type_key_values
-	[funk [slot_type slot_key slot_value]
-	      [if [is-type `symbol slot_value]
-		  [get this semantic_physical_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
-  ]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_property [event_time semantic_physical_object_type_event_source key_type key target_property_name]
+  [if debug [terminal_format standard-terminal '\nadd_type_property ' [get semantic_physical_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' target_property_name]]
+  [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
+    [let [[property_set [have semantic_physical_object_type_event_source lookup_set compound_key target_property_name]]
+	  [property     nil]]
+      [if [or [null property_set] [get property_set is_empty]]
+	  [let [[property-phenomenal_name   [semantic_object_property_type_event-phenomenal_name [get semantic_physical_object_type_event_source phenomenal_name]
+												 key_type
+												 key
+												 target_property_name]]
+		[property-meta_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
+						  semantic_physical_object_type_event_source
+						  key_type
+						  key
+						  target_property_name]]]
+	    [= property [new semantic_physical_object_type_property_event [get [get this mind] semantic_realm]
+			     relation-phenomenal_name
+			     relation-meta_relationship
+			     target_property_name]]
+	    [set property absolute_start_time [new semantic_time event_time]]
+	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame property]
+	    [have semantic_physical_object_type_event_source add compound_key target_property_name property]
+	    `[have this add_type_to_goal_states event_time semantic_physical_object_type_event_source key_type key target_property_name]
+	    ]
+	[prog [= property [get property_set an_arbitrary_element]]
+	      [set property [+ [get property count] 1]]]]]]]
+
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_property [event_time semantic_physical_object_type_event_source key_type key target_property_name]
+  [if debug [terminal_format standard-terminal '\nremove_type_property ' [get semantic_physical_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' target_property_name]]
+  [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
+    [let [[property_set [have semantic_physical_object_type_event_source lookup_set compound_key target_property_name]]
+	  [property     nil]]
+      [if [or [null property_set] [get property_set is_empty]]
+	  [prog [terminal_format standard-terminal
+				 '\nwarning: got remove ' [get semantic_physical_object_type_event_source phenomenal_name] ' ' compound_key ' ' target_property_name ' property, but no property found.']
+		]
+	[prog [= property [get property_set an_arbitrary_element]]
+	      [let [[property-count [get property count]]]
+		[if [> property-count 1]
+		    [set property count [- property-count 1]]
+		  [prog `[have this remove_type_from_goal_states event_time semantic_physical_object_type_event_source key_type key target_property_name]
+			[have semantic_physical_object_type_event_source remove compound_key target_property_name property]
+			`[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_semantic_frame property]
+			[set property absolute_end_time [new semantic_time event_time]]
+			]]]]]]]]
 
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
@@ -252,12 +290,15 @@
 																		       event-key
 																		       event-value-copy]]]
 												   
+												   [have this add_type_property event-time event-semantic_physical_object_type_event event-key_type event-key event-value-copy]
+												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]
 													       [if [is-type `semantic_physical_object slot_value]
 														   [mapc [funk [forward_semantic_physical_object_type_event]
 															       [have this add_type_relation event-time event-semantic_physical_object_type_event slot_type slot_key forward_semantic_physical_object_type_event]]
 															 [get this all_semantic_physical_object_type_events slot_value]]]]]
+												   
 												   
 												   [have event-semantic_frame-copy map_reverse_type_key_values
 													 [funk [slot_type slot_key slot_value]
@@ -291,13 +332,15 @@
 															     [get this semantic_physical_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
 															   event-value]]]
 											  'should use copy after this point'
-
+											  
 											  [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												 [let [[event-semantic_physical_object_type_event [get this semantic_physical_object_type_event_with_property_type
-																		 [get event-semantic_frame-copy physical_object_type]
-																		 event-key_type
-																		 event-key
-																		 event-value-copy]]]
+																		       [get event-semantic_frame-copy physical_object_type]
+																		       event-key_type
+																		       event-key
+																		       event-value-copy]]]
+												   
+												   [have this remove_type_property event-time event-semantic_physical_object_type_event event-key_type event-key event-value-copy]
 												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]

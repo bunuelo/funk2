@@ -225,7 +225,7 @@
 						  target_property_name]]]
 	    [= property [new semantic_physical_object_type_property_event [get [get this mind] semantic_realm]
 			     property-phenomenal_name
-			     relation-meta_relationship
+			     property-meta_relationship
 			     target_property_name]]
 	    [set property absolute_start_time [new semantic_time event_time]]
 	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame property]

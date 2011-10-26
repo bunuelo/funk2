@@ -262,6 +262,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_goal_event/libf2e_semantic_goal_event.la \
                       extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.la \
                       extension/semantic_physical_object_type_event/libf2e_semantic_physical_object_type_event.la \
+                      extension/semantic_physical_object_type_property_event/libf2e_semantic_physical_object_type_property_event.la \
                       extension/semantic_physical_object_type_relation_event/libf2e_semantic_physical_object_type_relation_event.la \
                       extension/semantic_planner/libf2e_semantic_planner.la \
                       extension/semantic_proprioception/libf2e_semantic_proprioception.la \
@@ -464,6 +465,7 @@ extension_semantic_object_libf2e_semantic_object_la_SOURCES                     
 extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                                         = extension/semantic_packable_object/semantic_packable_object.c
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES                                         = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_SOURCES                   = extension/semantic_physical_object_type_event/semantic_physical_object_type_event.c
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_SOURCES = extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_SOURCES = extension/semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.c
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                 = extension/semantic_plan_object/semantic_plan_object.c
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                           = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
@@ -653,6 +655,9 @@ extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS  = 
 
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

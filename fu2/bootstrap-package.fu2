@@ -152,6 +152,7 @@
 						     'extension/semantic_packable_object/'
 						     'extension/semantic_physical_object/'
 						     'extension/semantic_physical_object_type_event/'
+						     'extension/semantic_physical_object_type_property_event/'
 						     'extension/semantic_physical_object_type_relation_event/'
 						     'extension/semantic_plan_object/'
 						     'extension/semantic_plan_object_type_event/'

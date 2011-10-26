@@ -208,14 +208,14 @@
 			]]]]]]]]
 
 `[[and [eq event-key_type `property] [eq event-key `physical_object_type]]
-											'create semantic_physical_object_type_event.'
-											[get this semantic_physical_object_type_event event-value]
-											[have event-semantic_frame map_type_key_values
-											      [funk [slot_type slot_key slot_value]
-												    [if [is-type `symbol slot_value]
-													[get this semantic_physical_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
-											]
-										       
+  'create semantic_physical_object_type_event.'
+  [get this semantic_physical_object_type_event event-value]
+  [have event-semantic_frame map_type_key_values
+	[funk [slot_type slot_key slot_value]
+	      [if [is-type `symbol slot_value]
+		  [get this semantic_physical_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
+  ]
+
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]]
@@ -247,10 +247,10 @@
 											  
 											  [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												 [let [[event-semantic_physical_object_type_event [get this semantic_physical_object_type_event_with_property_type
-																		 [get event-semantic_frame-copy physical_object_type]
-																		 event-key_type
-																		 event-key
-																		 event-value-copy]]]
+																		       [get event-semantic_frame-copy physical_object_type]
+																		       event-key_type
+																		       event-key
+																		       event-value-copy]]]
 												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]

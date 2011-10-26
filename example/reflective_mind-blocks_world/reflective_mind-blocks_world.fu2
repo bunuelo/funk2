@@ -79,7 +79,7 @@
   
   'create blocks_world agent specific plans'
   
-  [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
+  [have this create_physical_semantic_plan `[prog [wait-to-call move_left]
 						  [wait-for-relationship block shape cube below gripper is-me t]
 						  [wait-to-call grab]
 						  [wait-for-property gripper movement_command stop]

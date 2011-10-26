@@ -24,34 +24,34 @@
 
 // semantic_physical_object_type_property_event
 
-f2ptr raw__semantic_physical_object_type_property_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type) {
-  assert_argument_type(semantic_object_type_event, target_object_type);
+f2ptr raw__semantic_physical_object_type_property_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_property_name) {
+  assert_argument_type(symbol, target_property_name);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_physical_object_type_property_event"));
   }
   assert_value(raw__semantic_know_of_relationship_event__type_create(cause, this, semantic_realm, meta_relationship));
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type"), target_object_type);
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"),     new__symbol(cause, "count"),              f2integer__new(cause, 1));
+  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "count")) == nil) {
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_property_name"), target_property_name);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "count"),                f2integer__new(cause, 1));
   }
   return this;
 }
 
-f2ptr raw__semantic_physical_object_type_property_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type) {
+f2ptr raw__semantic_physical_object_type_property_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_property_name) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_physical_object_type_property_event__type_create(cause, this, semantic_realm, phenomenal_name, meta_relationship, target_object_type));
+  assert_value(raw__semantic_physical_object_type_property_event__type_create(cause, this, semantic_realm, phenomenal_name, meta_relationship, target_property_name));
   return this;
 }
 
-f2ptr f2__semantic_physical_object_type_property_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_object_type) {
+f2ptr f2__semantic_physical_object_type_property_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_property_name) {
   assert_argument_type(semantic_realm,                    semantic_realm);
-  assert_argument_type(semantic_object_type_event,        target_object_type);
+  assert_argument_type(symbol,                            target_property_name);
   assert_argument_type(relationship_meta_semantic_object, meta_relationship);
-  return raw__semantic_physical_object_type_property_event__new(cause, semantic_realm, phenomenal_name, meta_relationship, target_object_type);
+  return raw__semantic_physical_object_type_property_event__new(cause, semantic_realm, phenomenal_name, meta_relationship, target_property_name);
 }
-export_cefunk4(semantic_physical_object_type_property_event__new, semantic_realm, phenomenal_name, meta_relationship, target_object_type, 0, "Given a semantic_object_type_event, returns a new semantic_physical_object_type_property_event object.");
+export_cefunk4(semantic_physical_object_type_property_event__new, semantic_realm, phenomenal_name, meta_relationship, target_property_name, 0, "Given a symbol, returns a new semantic_physical_object_type_property_event object.");
 
 
 boolean_t raw__semantic_physical_object_type_property_event__is_type(f2ptr cause, f2ptr thing) {
@@ -87,39 +87,39 @@ f2ptr f2__semantic_physical_object_type_property_event__type(f2ptr cause, f2ptr 
 export_cefunk1(semantic_physical_object_type_property_event__type, thing, 0, "Returns the specific type of object that this semantic_physical_object_type_property_event is.");
 
 
-f2ptr raw__semantic_physical_object_type_property_event__target_object_type__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type"));
+f2ptr raw__semantic_physical_object_type_property_event__target_property_name__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_property_name"));
 }
 
-f2ptr f2__semantic_physical_object_type_property_event__target_object_type__lookup_set(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_physical_object_type_property_event__target_property_name__lookup_set(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_physical_object_type_property_event, this);
-  return raw__semantic_physical_object_type_property_event__target_object_type__lookup_set(cause, this);
+  return raw__semantic_physical_object_type_property_event__target_property_name__lookup_set(cause, this);
 }
-export_cefunk1(semantic_physical_object_type_property_event__target_object_type__lookup_set, this, 0, "");
+export_cefunk1(semantic_physical_object_type_property_event__target_property_name__lookup_set, this, 0, "");
 
 
-f2ptr raw__semantic_physical_object_type_property_event__target_object_type__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type"), that);
+f2ptr raw__semantic_physical_object_type_property_event__target_property_name__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_property_name"), that);
 }
 
-f2ptr f2__semantic_physical_object_type_property_event__target_object_type__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_physical_object_type_property_event__target_property_name__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_physical_object_type_property_event, this);
-  assert_argument_type(semantic_object_type_event,                   that);
-  return raw__semantic_physical_object_type_property_event__target_object_type__add(cause, this, that);
+  assert_argument_type(symbol,                                       that);
+  return raw__semantic_physical_object_type_property_event__target_property_name__add(cause, this, that);
 }
-export_cefunk2(semantic_physical_object_type_property_event__target_object_type__add, this, that, 0, "");
+export_cefunk2(semantic_physical_object_type_property_event__target_property_name__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_physical_object_type_property_event__target_object_type__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "target_object_type"), that);
+f2ptr raw__semantic_physical_object_type_property_event__target_property_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_property_name"), that);
 }
 
-f2ptr f2__semantic_physical_object_type_property_event__target_object_type__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_physical_object_type_property_event__target_property_name__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_physical_object_type_property_event, this);
-  assert_argument_type(semantic_object_type_event,                   that);
-  return raw__semantic_physical_object_type_property_event__target_object_type__remove(cause, this, that);
+  assert_argument_type(symbol,                                       that);
+  return raw__semantic_physical_object_type_property_event__target_property_name__remove(cause, this, that);
 }
-export_cefunk2(semantic_physical_object_type_property_event__target_object_type__remove, this, that, 0, "");
+export_cefunk2(semantic_physical_object_type_property_event__target_property_name__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_physical_object_type_property_event__count(f2ptr cause, f2ptr this) {
@@ -148,14 +148,14 @@ export_cefunk2(semantic_physical_object_type_property_event__count__set, this, t
 f2ptr f2__semantic_physical_object_type_property_event_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause,
 							    new__symbol(cause, "semantic_know_of_relationship_event")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "target_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__target_object_type__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "target_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__target_object_type__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "target_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__target_object_type__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "count"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__count")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "count"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__count__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "target_property_name"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__target_property_name__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "target_property_name"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__target_property_name__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "target_property_name"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__target_property_name__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "count"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__count")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "count"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object_type_property_event"), new__symbol(cause, "semantic_physical_object_type_property_event__count__set")));}
   return this;
 }
 
@@ -170,7 +170,6 @@ export_cefunk0(semantic_physical_object_type_property_event__core_extension__pin
 
 f2ptr f2__semantic_physical_object_type_property_event__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_physical_object_type_property_event, semantic_know_of_relationship_event);
-  core_extension__ping(semantic_physical_object_type_property_event, semantic_object_type_event);
   status("semantic_physical_object_type_property_event initialized.");
   return nil;
 }

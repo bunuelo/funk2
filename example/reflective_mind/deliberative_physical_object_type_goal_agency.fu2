@@ -290,7 +290,7 @@
 																		       event-key
 																		       event-value-copy]]]
 												   
-												   [have this add_type_property event-time event-semantic_physical_object_type_event event-key_type event-key event-value-copy]
+												   [have this add_type_property event-time event-semantic_frame-copy event-key_type event-key event-value-copy]
 												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]
@@ -340,7 +340,7 @@
 																		       event-key
 																		       event-value-copy]]]
 												   
-												   [have this remove_type_property event-time event-semantic_physical_object_type_event event-key_type event-key event-value-copy]
+												   [have this remove_type_property event-time event-semantic_frame-copy event-key_type event-key event-value-copy]
 												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]

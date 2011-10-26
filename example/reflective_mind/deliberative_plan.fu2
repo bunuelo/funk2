@@ -119,7 +119,8 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [sleep 30]]]]]]
+	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
+	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
 [deftypefunk deliberative_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
@@ -143,7 +144,8 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [sleep 30]]]]]]
+	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
+	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
 [defunk deliberative_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]

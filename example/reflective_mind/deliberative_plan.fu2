@@ -197,7 +197,7 @@
 											   [property              [elt arguments 3]]
 											   [property_value        [elt arguments 4]]]
 										       [eval `[funk [this]
-												    [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_relation_goal-english_string source_type source_property source_property_value property property_value] '."']
+												    [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
 												    [have this wait_for_property [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,property] [quote ,property_value]]
 												    ]]]]]
 					      [[eq `wait-for-relationship command] [if [not [eq 7 arguments-length]]

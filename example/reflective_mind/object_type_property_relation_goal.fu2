@@ -108,6 +108,9 @@
 	`[a ,source_property_value ,source_property ,source_type that ,property]
       `[a ,source_property_value ,source_property ,property_value ,property ,source_type]]]]
 
+[defunk object_type_property_property_goal-english_string [source_type source_property source_property_value property property_value]
+  [conslist-as-english_string [object_type_property_property_goal-english_conslist source_type source_property source_property_value property property_value]]]
+
 [deftypefunk object_type_property_relation_goal get as-english_conslist []
   [append `[I want]
 	  [object_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]

@@ -442,7 +442,7 @@
        [= movie_resolution_entry [gtk-entry-new]]
        [have entry_hbox pack_start movie_resolution_label nil nil 0]
        [have entry_hbox pack_start movie_resolution_entry t t 0]
-       [set this movie_resolution 1]
+       [set this movie_resolution 8]
        [have movie_resolution_entry request_size 40 16]
        
        [= step_delay_label [gtk-label-new 'Step Delay: ']]

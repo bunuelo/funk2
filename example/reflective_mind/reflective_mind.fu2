@@ -28,7 +28,7 @@
        [type-have reflective_mind this connect_knowledge_reflection]
        [type-have reflective_mind this create_builtin_actions]
        
-       [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
+       [let [[end_of_physical_type_changes_trigger [get [get this resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	 [fiber [funk []
 		      [while t
 			[wait-for-trigger end_of_physical_type_changes_trigger]

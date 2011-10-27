@@ -27,8 +27,9 @@
 		       global_semantic_realm
 		       semantic_knowledge_base_ptypehash
 		       semantic_knowledge_base_add_event_callback_funks
-		       [index_name_type_mutex     [new mutex]]
-		       [index_name_type_ptypehash [new ptypehash]]]
+		       [index_name_type_mutex                 [new mutex]]
+		       [index_name_type_ptypehash             [new ptypehash]]
+		       [ready_for_physical_world_step_trigger [new fiber_trigger]]]
   [new []
        [terminal_format standard-terminal '\ncreating mind.']
        [cause-define semantic_frame-trace_add                            t]

@@ -290,21 +290,23 @@
 																		       event-key
 																		       event-value-copy]]]
 												   
+												   [mapc [funk [event-semantic_physical_object_type_event]
+													       [have this add_type_property event-time event-semantic_physical_object_type_event event-key_type event-key event-value-copy]]
+													 [get this all_semantic_physical_object_type_events event-semantic_frame-copy]]
+												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]
-													       [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy slot_type slot_key slot_value]
-														      [have this add_type_property event-time event-semantic_physical_object_type_event slot_type slot_key slot_value]]
-														     [[is-type `semantic_physical_object slot_value]
+													       [cond [[is-type `semantic_physical_object slot_value]
 														      [mapc [funk [forward_semantic_physical_object_type_event]
 																  [have this add_type_relation event-time event-semantic_physical_object_type_event slot_type slot_key forward_semantic_physical_object_type_event]]
 															    [get this all_semantic_physical_object_type_events slot_value]]]]]]
 												   
 												   [have event-semantic_frame-copy map_reverse_type_key_values
 													 [funk [slot_type slot_key slot_value]
-													       [if [is-type `semantic_physical_object slot_value]
-														   [mapc [funk [backward_semantic_physical_object_type_event]
-															       [have this add_type_relation event-time backward_semantic_physical_object_type_event slot_type slot_key event-semantic_physical_object_type_event]]
-															 [get this all_semantic_physical_object_type_events slot_value]]]]]
+													       [cond [[is-type `semantic_physical_object slot_value]
+														      [mapc [funk [backward_semantic_physical_object_type_event]
+																  [have this add_type_relation event-time backward_semantic_physical_object_type_event slot_type slot_key event-semantic_physical_object_type_event]]
+															    [get this all_semantic_physical_object_type_events slot_value]]]]]]
 												   
 												   ]]
 												[[and [eq event-key_type `preposition] [is-type `semantic_physical_object event-value-copy]]
@@ -339,11 +341,13 @@
 																		       event-key
 																		       event-value-copy]]]
 												   
+												   [mapc [funk [event-semantic_physical_object_type_event]
+													       [have this remove_type_property event-time event-semantic_physical_object_type_event event-key_type event-key event-value-copy]]
+													 [get this all_semantic_physical_object_type_events event-semantic_frame-copy]]
+												   
 												   [have event-semantic_frame-copy map_type_key_values
 													 [funk [slot_type slot_key slot_value]
-													       [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy slot_type slot_key slot_value]
-														      [have this remove_type_property event-time event-semantic_physical_object_type_event slot_type slot_key slot_value]]
-														     [[is-type `semantic_physical_object slot_value]
+													       [cond [[is-type `semantic_physical_object slot_value]
 														      [mapc [funk [forward_semantic_physical_object_type_event]
 																  [have this remove_type_relation event-time event-semantic_physical_object_type_event slot_type slot_key forward_semantic_physical_object_type_event]]
 															    [get this all_semantic_physical_object_type_events slot_value]]]]]]

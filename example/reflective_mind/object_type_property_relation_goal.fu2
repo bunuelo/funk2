@@ -99,6 +99,15 @@
 [defunk object_type_property_relation_goal-english_string [object_type object_property object_property_value]
   [conslist-as-english_string [object_type_property_relation_goal-english_conslist object_type object_property object_property_value]]]
 
+[defunk object_type_property_property_goal-english_conslist [source_type source_property source_property_value property property_value]
+  [if [eq source_property_value t]
+      [if [eq property_value t]
+	  `[a ,source_type that ,source_property and ,property]
+	`[a ,property_value ,property ,source_type that ,source_property]]
+    [if [eq property_value t]
+	`[a ,source_property_value ,source_property ,source_type that ,property]
+      `[a ,source_property_value ,source_property ,property_value ,property ,source_type]]]]
+
 [deftypefunk object_type_property_relation_goal get as-english_conslist []
   [append `[I want]
 	  [object_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]

@@ -538,9 +538,9 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(double, this__y);
   double this__y__d = f2double__d(this__y, cause);
   
-  f2ptr this__x_velocity = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x_velocity"), nil));
-  assert_argument_type(double, this__x_velocity);
-  double this__x_velocity__d = f2double__d(this__x_velocity, cause);
+  f2ptr this__y_velocity = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y_velocity"), nil));
+  assert_argument_type(double, this__y_velocity);
+  double this__y_velocity__d = f2double__d(this__y_velocity, cause);
   
   f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
   assert_argument_type(double, this__height);

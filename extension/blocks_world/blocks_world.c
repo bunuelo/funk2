@@ -578,12 +578,12 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   
   if (obstacle_block != nil) {
     
-    f2ptr obstable_block__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
-    assert_argument_type(symbol, obstable_block__shape);
+    f2ptr obstacle_block__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
+    assert_argument_type(symbol, obstacle_block__shape);
     
-    f2ptr obstable_block__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
-    assert_argument_type(double, obstable_block__x);
-    double obstable_block__x__d = f2double__d(obstacle_block__x, cause);
+    f2ptr obstacle_block__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+    assert_argument_type(double, obstacle_block__x);
+    double obstacle_block__x__d = f2double__d(obstacle_block__x, cause);
     
     double maximum_block_y = obstacle_below_y - this__height__d;
     double next_block_y    = this__y__d + (step_size * this__y_velocity__d);
@@ -599,7 +599,7 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
 	this__y_velocity    = f2double__new(cause, this__y_velocity__d);
 	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "y_velocity"), this__y_velocity));
       }
-      if (raw__eq(cause, obstable_block__shape, new__symbol(cause, "pyramid"))) {
+      if (raw__eq(cause, obstacle_block__shape, new__symbol(cause, "pyramid"))) {
 	double slide_horizontal_speed = (this__x__d < obstacle_block__x__d) ? -1.0 : 1.0;
 	{
 	  this__x__d = this__x__d + (step_size * slide_horizontal_speed);

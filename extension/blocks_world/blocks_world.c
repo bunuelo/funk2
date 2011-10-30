@@ -27,49 +27,6 @@ boolean_t raw__blocks_world_sprite__is_type(f2ptr cause, f2ptr object) {
   return raw__object__inherits_from(cause, object, new__symbol(cause, "blocks_world_sprite"));
 }
 
-/*
-  [cond [[eq `cube shape]
-	 
-	 [have cairo_context move_to     x         y]
-	 [have cairo_context rel_line_to width     0.0]
-	 [have cairo_context rel_line_to 0.0       height]
-	 [have cairo_context rel_line_to [- width] 0.0]
-	 [have cairo_context close_path]]
-	
-	[[eq `pyramid shape]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [/ width 2]       height]
-	 [have cairo_context rel_line_to [- width] 0.0]
-	 [have cairo_context close_path]]
-	
-	[[eq `gripper shape]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] 0.0]
-	 [have cairo_context rel_line_to 0.0               y]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
-	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
-	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
-	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
-	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]]     y]
-	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]
-	 [have cairo_context rel_line_to [- [/ [* width 4] 6]] 0.0]
-	 [have cairo_context close_path]
-	 
-	 ]
-	
-*/
-
 f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   assert_argument_type(blocks_world_sprite, this);
   assert_argument_type(cairo_context,       cairo_context);
@@ -79,7 +36,7 @@ f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr thi
   f2ptr this__y      = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y"),      nil));
   f2ptr this__width  = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "width"),  nil));
   f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
-
+  
   assert_argument_type(double, this__x);
   assert_argument_type(double, this__y);
   assert_argument_type(double, this__width);
@@ -102,29 +59,6 @@ f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr thi
     raw__cairo_context__rel_line_to(cause, cairo_context, -this__width__d, 0.0);
     raw__cairo_context__close_path( cause, cairo_context);
   } else if (raw__eq(cause, new__symbol(cause, "gripper"), this__shape)) {
-    /*
-	 [have cairo_context move_to     [+ x [/ width 2]] 0.0]
-	 [have cairo_context rel_line_to 0.0               y]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [- [/ width 2]]   [/ [* height 2] 3]]
-	 [have cairo_context rel_line_to    [/ width 3]    [/    height    3]]
-	 [have cairo_context rel_line_to [- [/ width 3]]   [- [/ height    3]]]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]] y]
-	 [have cairo_context rel_line_to [/ width 2]       [/ [* height 2] 3]]
-	 [have cairo_context rel_line_to [- [/ width 3]]   [/    height    3]]
-	 [have cairo_context rel_line_to [/    width 3]    [- [/ height    3]]]
-	 [have cairo_context close_path]
-	 
-	 [have cairo_context move_to     [+ x [/ width 2]]     y]
-	 [have cairo_context rel_line_to [/ width 3]           [/ [* height 4] 9]]
-	 [have cairo_context rel_line_to [- [/ [* width 4] 6]] 0.0]
-	 [have cairo_context close_path]
-    */
-    
     raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), 0.0);
     raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,                                 this__y__d);
     raw__cairo_context__close_path( cause, cairo_context);
@@ -163,40 +97,6 @@ double raw__blocks_world_sprite__render_shape_text_height(f2ptr cause, f2ptr thi
   }
   return 0.0;
 }
-
-/*
-  [have cairo_context save]
-  [cond [[eq `red   color] [have cairo_context set_source_rgba 1.0  0.75 0.75 1.0]]
-	[[eq `brown color] [have cairo_context set_source_rgba 1.0  0.75 0.5  1.0]]
-	[[eq `green color] [have cairo_context set_source_rgba 0.5  1.0  0.75 1.0]]
-	[[eq `blue  color] [have cairo_context set_source_rgba 0.5  0.75 1.0  1.0]]
-	[[eq `black color] [have cairo_context set_source_rgba 0.75 0.75 0.75 1.0]]
-	[[eq `white color] [have cairo_context set_source_rgba 0.9  0.9  0.9  1.0]]]
-  [have cairo_context set_line_width 0.0]
-  [have this render_shape_path_to_cairo cairo_context]
-  [have cairo_context fill]
-  [have cairo_context restore]
-  
-  [have cairo_context save]
-  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context set_line_cap `square]
-  [have cairo_context set_line_width 0.02]
-  [have this render_shape_path_to_cairo cairo_context]
-  [have cairo_context stroke]
-  [have cairo_context restore]
-  
-  [have cairo_context save]
-  [have cairo_context set_source_rgba 0.0 0.0 0.0 1.0]
-  [have cairo_context select_font_face 'Times New Roman' `normal `normal]
-  [have cairo_context set_font_size 0.2]
-  [let [[text_extents [have cairo_context text_extents [get name as-string]]]]
-    [have cairo_context move_to
-	  [+ x [/ [- width [get text_extents width]] 2]]
-	  [- [+ y height] [get this render_shape_text_height]]]]
-  [have cairo_context text_path [get name as-string]]
-  [have cairo_context fill]
-  [have cairo_context restore]
-*/
 
 f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {
   assert_argument_type(blocks_world_sprite, this);
@@ -276,54 +176,6 @@ f2ptr f2__blocks_world_gripper__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
   return f2__blocks_world_sprite__render_to_cairo(cause, this, cairo_context);
 }
 
-/*
-  [let [[next_x [+ x [* step_size x_velocity]]]
-	[next_y [+ y [* step_size y_velocity]]]]
-    [if [< next_x 0.0]
-	[= next_x 0.0]]
-    [if [> next_x [- [get blocks_world_physics width] 1]]
-	[= next_x [- [get blocks_world_physics width] 1]]]
-    
-    [let [[obstacle_below_y nil]
-	  [obstacle_block   nil]]
-      [mapc [funk [block]
-		  [if [not [eq this block]]
-		      [if [and [get this overlaps_horizontally block]
-			       [< y [get block y]]
-			       [or [null obstacle_below_y]
-				   [< [get block y] obstacle_below_y]]]
-			  [prog [= obstacle_below_y [get block y]]
-				[= obstacle_block   block]]]]]
-	    [get blocks_world_physics blocks]]
-      [= on_block nil]
-      [if [not [null obstacle_below_y]]
-	  [prog `[terminal_format standard-terminal '\n' `[,name on ,[get block name]]]
-		[let [[maximum_block_y [- obstacle_below_y height]]]
-		  [if [< maximum_block_y next_y]
-		      [prog [= on_block   obstacle_block]
-			    [= next_y     maximum_block_y]
-			    [= y_velocity 0.0]
-			    [if [eq `grab movement_command]
-				[prog [= movement_command      `recoil]
-				      [= is_holding            obstacle_block]
-				      [= is_holding_relative_x [- [get obstacle_block x] x]]
-				      ]]]]]]]
-      ]
-    
-    [if [< next_y 0.5]
-	[prog [= next_y 0.5]
-	      [if [eq `recoil movement_command]
-		  [= movement_command nil]]]]
-    
-    [if [eq `drop movement_command]
-	[prog [= movement_command      nil]
-	      [= is_holding            nil]
-	      [= is_holding_relative_x nil]]]
-    
-    [= x next_x]
-    [= y next_y]]]
-*/
-
 f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(blocks_world_gripper, this);
   
@@ -402,16 +254,6 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
     double maximum_block_y = obstacle_below_y - this__height__d;
     double next_block_y    = this__y__d + (step_size * this__y_velocity__d);
     if (maximum_block_y < next_block_y) {
-      /*      
-		      [prog [= on_block   obstacle_block]
-			    [= next_y     maximum_block_y]
-			    [= y_velocity 0.0]
-			    [if [eq `grab movement_command]
-				[prog [= movement_command      `recoil]
-				      [= is_holding            obstacle_block]
-				      [= is_holding_relative_x [- [get obstacle_block x] x]]
-				      ]]]]]]]
-      */
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "on_block"), obstacle_block));
       next_y = maximum_block_y;
       {
@@ -435,21 +277,6 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
     }
     
   }
-  
-  /*
-    [if [< next_y 0.5]
-	[prog [= next_y 0.5]
-	      [if [eq `recoil movement_command]
-		  [= movement_command nil]]]]
-    
-    [if [eq `drop movement_command]
-	[prog [= movement_command      nil]
-	      [= is_holding            nil]
-	      [= is_holding_relative_x nil]]]
-    
-    [= x next_x]
-    [= y next_y]]]
-  */
   
   if (next_y < 0.5) {
     next_y = 0.5;
@@ -484,23 +311,6 @@ f2ptr raw__blocks_world_gripper__step(f2ptr cause, f2ptr this, double step_size)
   return nil;
 }
 
-
-/*
-  [cond [[null movement_command]
-	 [= x_velocity 0.0]
-	 [= y_velocity 0.0]]
-	[[eq movement_command `left]
-	 [= x_velocity [- gripper_movement_speed]]]
-	[[eq movement_command `right]
-	 [= x_velocity gripper_movement_speed]]
-	[[eq movement_command `grab]
-	 [= y_velocity gripper_grab_speed]]
-	[[eq movement_command `recoil]
-	 [= y_velocity [- gripper_grab_speed]]]
-	[[eq movement_command `drop]
-	 ]
-	]]
-*/
 
 f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(blocks_world_gripper, this);
@@ -563,50 +373,6 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
   
   return nil;
 }
-
-/*
-  `[prog [= perception_list nil]
-	 [mapc [funk [gripper]
-		     [if [eq this gripper]
-			 [prog [have this __add_perception `[,[get gripper name] is me]]
-			       [have this __add_perception `[,[get gripper name] movement_command ,[if [get gripper movement_command]
-												       [get gripper movement_command]
-												     `nil]]]
-			       ]]
-		     
-		     [have this __add_perception `[,[get gripper name] is-a gripper]]
-		     [have this __add_perception `[,[get gripper name] color ,[get gripper color]]]
-		     [have this __add_perception `[,[get gripper name] is-holding ,[if [get gripper is_holding]
-										       [get [get gripper is_holding] name]
-										     `nil]]]
-		     
-		     [if [> [get gripper x] x]
-			 [have this __add_perception `[,[get gripper name] right-of ,name]]]
-		     [if [< [get gripper x] x]
-			 [have this __add_perception `[,[get gripper name] left-of ,name]]]
-		     
-		     ]
-	       [get blocks_world_physics grippers]]
-	 [mapc [funk [block]
-		     [have this __add_perception `[,[get block name] is-a block]]
-		     [have this __add_perception `[,[get block name] color ,[get block color]]]
-		     [have this __add_perception `[,[get block name] shape ,[get block shape]]]
-		     
-		     [if [get block on_block]
-			 [have this __add_perception `[,[get block name] on ,[get [get block on_block] name]]]]
-		     
-		     [if [> [get block x] x]
-			 [have this __add_perception `[,[get block name] right-of ,name]]]
-		     [if [< [get block x] x]
-			 [have this __add_perception `[,[get block name] left-of ,name]]]
-		     [if [and [> x [- [get block x] 0.25]]
-			      [< x [+ [get block x] 0.25]]]
-			 [have this __add_perception `[,[get block name] below ,name]]]
-		     
-		     ]
-	       [get blocks_world_physics blocks]]
-	 [= perception_list [reverse perception_list]]]
-*/
 
 f2ptr raw__blocks_world_gripper__add_perception(f2ptr cause, f2ptr this, f2ptr perception) {
   f2ptr perception_list = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "perception_list"), nil));
@@ -751,46 +517,9 @@ boolean_t raw__blocks_world_block__overlaps_horizontally(f2ptr cause, f2ptr this
   double block__x__d     = f2double__d(block__x,      cause);
   double block__width__d = f2double__d(block__width,  cause);
   
-  /*
-    [not [or [<= [+ this__x__d this__width__d] [get block x]]
-             [>= this__x__d                    [+ [get block x] [get block width]]]]]]
-  */
-  
   return (! (((this__x__d + this__width__d) <= block__x__d)                       ||
 	     (this__x__d                    >= (block__x__d + block__width__d))));
 }
-
-/*
-  [let [[obstacle_below_y nil]
-	[obstacle_block   nil]]
-    [mapc [funk [block]
-		[if [not [eq this block]]
-		    [if [and [get this overlaps_horizontally block]
-			     [< y [get block y]]
-			     [or [null obstacle_below_y]
-				 [< [get block y] obstacle_below_y]]]
-			[prog [= obstacle_below_y [get block y]]
-			      [= obstacle_block   block]]]]]
-	  [get blocks_world_physics blocks]]
-    [= on_block nil]
-    [if [not [null obstacle_below_y]]
-	[prog `[terminal_format standard-terminal '\n' `[,name on ,[get block name]]]
-	      [let [[maximum_block_y [- obstacle_below_y height]]]
-		[let [[next_block_y [+ y [* step_size y_velocity]]]]
-		  [if [< maximum_block_y next_block_y]
-		      [prog [= on_block   obstacle_block]
-			    [= y          maximum_block_y]
-			    [= y_velocity 0.0]]
-		    [= y next_block_y]]]]]]
-    ]
-  [mapc [funk [gripper]
-	      [if [eq this [get gripper is_holding]]
-		  [prog [= x [+ [get gripper x] [get gripper is_holding_relative_x]]]
-			[= y [+ [get gripper y] [get gripper height]]]
-			[= x_velocity 0.0]
-			[= y_velocity 0.0]]]]
-	[get blocks_world_physics grippers]]
-*/
 
 f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(blocks_world_block, this);
@@ -809,9 +538,9 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(double, this__y);
   double this__y__d = f2double__d(this__y, cause);
   
-  f2ptr this__y_velocity = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "y_velocity"), nil));
-  assert_argument_type(double, this__y_velocity);
-  double this__y_velocity__d = f2double__d(this__y_velocity, cause);
+  f2ptr this__x_velocity = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x_velocity"), nil));
+  assert_argument_type(double, this__x_velocity);
+  double this__x_velocity__d = f2double__d(this__x_velocity, cause);
   
   f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
   assert_argument_type(double, this__height);
@@ -849,6 +578,13 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   
   if (obstacle_block != nil) {
     
+    f2ptr obstable_block__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
+    assert_argument_type(symbol, obstable_block__shape);
+    
+    f2ptr obstable_block__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+    assert_argument_type(double, obstable_block__x);
+    double obstable_block__x__d = f2double__d(obstacle_block__x, cause);
+    
     double maximum_block_y = obstacle_below_y - this__height__d;
     double next_block_y    = this__y__d + (step_size * this__y_velocity__d);
     if (maximum_block_y < next_block_y) {
@@ -863,7 +599,14 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
 	this__y_velocity    = f2double__new(cause, this__y_velocity__d);
 	assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "y_velocity"), this__y_velocity));
       }
-      
+      if (raw__eq(cause, obstable_block__shape, new__symbol(cause, "pyramid"))) {
+	double slide_horizontal_speed = (this__x__d < obstacle_block__x__d) ? -1.0 : 1.0;
+	{
+	  this__x__d = this__x__d + (step_size * slide_horizontal_speed);
+	  this__x    = f2double__new(cause, this__x__d);
+	  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "x"), this__x));
+	}
+      }
     } else {
       {
 	this__y__d = next_block_y;
@@ -881,12 +624,6 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
       {
 	f2ptr gripper__is_holding = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "is_holding"), nil));
 	if (raw__eq(cause, this, gripper__is_holding)) {
-	  /*
-		  [prog [= x [+ [get gripper x] [get gripper is_holding_relative_x]]]
-			[= y [+ [get gripper y] [get gripper height]]]
-			[= x_velocity 0.0]
-			[= y_velocity 0.0]]]]
-	  */ 
 	  f2ptr gripper__x = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "x"), nil));
 	  assert_argument_type(double, gripper__x);
 	  double gripper__x__d = f2double__d(gripper__x, cause);
@@ -926,10 +663,6 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   return nil;
 }
 
-
-/*  
-    [= y_velocity [+ y_velocity [* step_size 9.8]]]]
-*/
 
 f2ptr raw__blocks_world_block__handle_movement(f2ptr cause, f2ptr this, double step_size) {
   assert_argument_type(blocks_world_block, this);
@@ -1000,15 +733,6 @@ f2ptr f2__blocks_world_physics__render_to_cairo(f2ptr cause, f2ptr this, f2ptr c
 export_cefunk4(blocks_world_physics__render_to_cairo, this, cairo_context, image_width, image_height, 0, "Renders blocks_world_physics object to cairo_context.");
 
 
-
-/*
-  `[prog [mapc [funk [gripper]
-		     [have gripper step step_size]]
-	       grippers]
-	 [mapc [funk [block]
-		     [have block step step_size]]
-	       blocks]]]
-*/
 
 f2ptr f2__blocks_world_physics__step(f2ptr cause, f2ptr this, f2ptr step_size) {
   assert_argument_type(blocks_world_physics, this);

@@ -578,10 +578,10 @@ f2ptr raw__blocks_world_block__step(f2ptr cause, f2ptr this, double step_size) {
   
   if (obstacle_block != nil) {
     
-    f2ptr obstacle_block__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
+    f2ptr obstacle_block__shape = assert_value(f2__frame__lookup_var_value(cause, obstacle_block, new__symbol(cause, "shape"), nil));
     assert_argument_type(symbol, obstacle_block__shape);
     
-    f2ptr obstacle_block__x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "x"), nil));
+    f2ptr obstacle_block__x = assert_value(f2__frame__lookup_var_value(cause, obstacle_block, new__symbol(cause, "x"), nil));
     assert_argument_type(double, obstacle_block__x);
     double obstacle_block__x__d = f2double__d(obstacle_block__x, cause);
     

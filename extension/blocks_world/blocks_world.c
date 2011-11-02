@@ -475,8 +475,8 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
 	if (block__x__d < this__x__d) {
 	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "left-of"), this__name));
 	}
-	if ((this__x__d > ((block__x__d - (block__width__d / 2.0)) - 0.25)) &&
-	    (this__x__d < ((block__x__d + (block__width__d / 2.0)) + 0.25))) {
+	if ((this__x__d > ((block__x__d - (block__width__d / 2.0)) - 0.125)) &&
+	    (this__x__d < ((block__x__d + (block__width__d / 2.0)) + 0.125))) {
 	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below"), this__name));
 	}
       }

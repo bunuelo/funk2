@@ -84,7 +84,7 @@
 						  [wait-to-call grab]
 						  [wait-for-property gripper is-me t movement_command stop]
 						  [wait-to-call move_right]
-						  [wait-for-relationship block shape pyramid below gripper is-me t]
+						  [wait-for-relationship block shape pyramid below block shape cube]
 						  [wait-to-call drop]
 						  ]]
   
@@ -93,7 +93,7 @@
 						  [wait-to-call grab]
 						  [wait-for-property gripper is-me t movement_command stop]
 						  [wait-to-call move_left]
-						  [wait-for-relationship block shape cube below gripper is-me t]
+						  [wait-for-relationship block shape cube below block shape pyramid]
 						  [wait-to-call drop]
 						  ]]
   

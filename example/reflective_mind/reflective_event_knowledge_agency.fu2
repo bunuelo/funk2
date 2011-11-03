@@ -141,7 +141,7 @@
 											   [[and [is-type `semantic_resource event-semantic_frame]
 												 [eq event-key_type `property] [eq event-key `active]]
 											    [let* [[resource event-semantic_frame]
-												   [active   [get resource active]]]
+												   [active   event-value]]
 											      [if [get this debug]
 												  [terminal_format standard-terminal '\nadd active: ' active]]
 											      [if active

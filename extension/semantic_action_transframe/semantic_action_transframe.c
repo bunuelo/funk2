@@ -80,56 +80,56 @@ f2ptr f2__semantic_action_transframe__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_action_transframe__type, thing, 0, "Returns the specific type of object that this semantic_action_transframe is.");
 
 
-f2ptr raw__semantic_action_transframe__relation__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_action_transframe__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "remove"), that);
 }
 
-f2ptr f2__semantic_action_transframe__relation__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_action_transframe__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__semantic_action_transframe__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_action_transframe__relation__remove__add(cause, this, that);
+  return raw__semantic_action_transframe__remove__add(cause, this, that);
 }
-export_cefunk2(semantic_action_transframe__relation__remove__add, this, that, 0, "");
+export_cefunk2(semantic_action_transframe__remove__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_action_transframe__relation__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_action_transframe__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "remove"), that);
 }
 
-f2ptr f2__semantic_action_transframe__relation__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_action_transframe__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__semantic_action_transframe__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_action_transframe__relation__remove__remove(cause, this, that);
+  return raw__semantic_action_transframe__remove__remove(cause, this, that);
 }
-export_cefunk2(semantic_action_transframe__relation__remove__remove, this, that, 0, "");
+export_cefunk2(semantic_action_transframe__remove__remove, this, that, 0, "");
 
 
-f2ptr raw__semantic_action_transframe__relation__add__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_action_transframe__add__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "add"), that);
 }
 
-f2ptr f2__semantic_action_transframe__relation__add__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_action_transframe__add__add(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__semantic_action_transframe__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_action_transframe__relation__add__add(cause, this, that);
+  return raw__semantic_action_transframe__add__add(cause, this, that);
 }
-export_cefunk2(semantic_action_transframe__relation__add__add, this, that, 0, "");
+export_cefunk2(semantic_action_transframe__add__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_action_transframe__relation__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_action_transframe__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "add"), that);
 }
 
-f2ptr f2__semantic_action_transframe__relation__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_action_transframe__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__semantic_action_transframe__is_type(cause, this)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_action_transframe__relation__add__remove(cause, this, that);
+  return raw__semantic_action_transframe__add__remove(cause, this, that);
 }
-export_cefunk2(semantic_action_transframe__relation__add__remove, this, that, 0, "");
+export_cefunk2(semantic_action_transframe__add__remove, this, that, 0, "");
 
 
 f2ptr f2__semantic_action_transframe__primobject_type__new(f2ptr cause) {

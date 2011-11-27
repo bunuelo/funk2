@@ -54,11 +54,13 @@
    :sources ['builtin_reactive_resource.fu2']]
 
 [defpackage builtin_reactive_neural_plug_agency
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     builtin_reactive_resource]
    :sources ['builtin_reactive_neural_plug_agency.fu2']]
 
 [defpackage builtin_reactive_sensory_agency
   :packages [reflective_mind_core
+	     builtin_reactive_resource
 	     semantic_visual_object
 	     semantic_agent
 	     semantic_event
@@ -69,7 +71,8 @@
    :sources ['builtin_reactive_sensory_agency.fu2']]
 
 [defpackage builtin_reactive_physical_agency
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     builtin_reactive_resource]
    :sources ['builtin_reactive_physical_agency.fu2']]
 
 
@@ -91,7 +94,8 @@
    :sources ['learned_reactive_resource.fu2']]
 
 [defpackage learned_reactive_physical_agency
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     learned_reactive_resource]
    :sources ['learned_reactive_physical_agency.fu2']]
 
 [defpackage reflective_mind_proprioceptual_object
@@ -117,6 +121,7 @@
 
 [defpackage learned_reactive_sensory_agency
   :packages [reflective_mind_core
+	     learned_reactive_resource
 	     reflective_mind_perception
 	     semantic_object_type_event
 	     semantic_physical_object
@@ -126,11 +131,13 @@
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     learned_reactive_resource]
    :sources ['learned_reactive_language_agency.fu2']]
 
 [defpackage learned_reactive_physical_knowledge_agency
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     learned_reactive_resource]
    :sources ['learned_reactive_physical_knowledge_agency.fu2']]
 
 
@@ -160,12 +167,14 @@
 
 [defpackage deliberative_plan_agency
   :packages [reflective_mind_core
+	     deliberative_resource
 	     semantic_planner
 	     deliberative_plan]
    :sources ['deliberative_plan_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [reflective_mind_core
+	     deliberative_resource
 	     deliberative_plan]
    :sources ['deliberative_execution_agency.fu2']]
 
@@ -180,6 +189,7 @@
 
 [defpackage deliberative_physical_object_type_goal_agency
   :packages [reflective_mind_core
+	     deliberative_resource
 	     semantic_plan_object
 	     semantic_plan_object_type_event
 	     semantic_plan_object_type_relation_event
@@ -189,8 +199,6 @@
 
 
 'reflective_layer'
-
-`reflective_event_knowledge_agency
 
 [defpackage reflective_layer
   :packages [reflective_mind_core
@@ -209,6 +217,7 @@
 
 [defpackage reflective_plan_bug_response_agency
   :packages [reflective_mind_core
+	     reflective_resource
 	     semantic_assumption]
    :sources ['reflective_plan_bug_response_agency.fu2']]
 
@@ -219,19 +228,22 @@
 
 [defpackage reflective_plan_object_type_goal_agency
   :packages [reflective_mind_core
+	     reflective_resource
 	     semantic_goal_event
 	     plan_type_property_relation_goal]
    :sources ['reflective_plan_object_type_goal_agency.fu2']]
 
 [defpackage reflective_event_knowledge_agency
-  :packages [semantic_resource_action_sequence
+  :packages [reflective_mind_core
+	     reflective_resource
+	     semantic_resource_action_sequence
 	     semantic_know_of_relationship_event
-	     semantic_resource_event_knowledge_base
-	     reflective_mind_core]
+	     semantic_resource_event_knowledge_base]
    :sources ['reflective_event_knowledge_agency.fu2']]
 
 [defpackage reflective_credit_assignment_agency
   :packages [reflective_mind_core
+	     reflective_resource
 	     semantic_category
 	     semantic_situation]
    :sources ['reflective_credit_assignment_agency.fu2']]

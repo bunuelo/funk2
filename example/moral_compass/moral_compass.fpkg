@@ -44,7 +44,8 @@
    :sources ['self_reflective_resource.fu2']]
 
 [defpackage self_reflective_other_agents_knowledge_agency
-  :packages [moral_compass_core]
+  :packages [moral_compass_core
+	     self_reflective_resource]
    :sources ['self_reflective_other_agents_knowledge_agency.fu2']]
 
 
@@ -63,7 +64,8 @@
    :sources ['self_conscious_resource.fu2']]
 
 [defpackage self_conscious_imprimer_agency
-  :packages [moral_compass_core]
+  :packages [moral_compass_core
+	     self_conscious_resource]
    :sources ['self_conscious_imprimer_agency.fu2']]
 
 

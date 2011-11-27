@@ -20,10 +20,12 @@
 
 'traced_resource'
 
-[deframe traced_resource [resource] []
-  [new [initial-name initial-active_funk]
+[deframe traced_resource [resource] [simulate_knowledge_base_names]
+  [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
        [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
 	 [construct resource initial-name wrapped_active_funk]
+	 
+	 [= simulate_knowledge_base_names initial-simulate_knowledge_base_names]
 	 
 	 ]]]
 

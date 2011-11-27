@@ -65,11 +65,11 @@
 
 'translate_plan_knowledge_to_plan_type_knowledge_resource'
 
-[deframe translate_plan_knowledge_to_plan_type_knowledge_resource [traced_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
-										     [semantic_plan_object_copy_mutex       [new mutex]]
-										     [goals                                     nil]]
+[deframe translate_plan_knowledge_to_plan_type_knowledge_resource [reflective_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
+											 [semantic_plan_object_copy_mutex       [new mutex]]
+											 [goals                                     nil]]
   [new []
-       [construct traced_resource `translate_plan_knowledge_to_plan_type_knowledge
+       [construct reflective_resource `translate_plan_knowledge_to_plan_type_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

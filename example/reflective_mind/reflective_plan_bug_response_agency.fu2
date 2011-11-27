@@ -44,9 +44,9 @@
 
 'initial_plan_bug_response_resource'
 
-[deframe initial_plan_bug_response_resource [traced_resource] []
+[deframe initial_plan_bug_response_resource [reflective_resource] []
   [new []
-       [construct traced_resource `initial_plan_bug_response
+       [construct reflective_resource `initial_plan_bug_response
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal
 					 '\nreflective_layer: initial plan bug response here.'
@@ -60,9 +60,9 @@
 
 'assign_plan_execution_failure_blame_resource'
 
-[deframe assign_plan_execution_failure_blame_resource [traced_resource] []
+[deframe assign_plan_execution_failure_blame_resource [reflective_resource] []
   [new []
-       [construct traced_resource `assign_plan_execution_failure_blame
+       [construct reflective_resource `assign_plan_execution_failure_blame
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal '\nreflective_layer: assigning plan execution failure blame here.']
 			[let [[hypotheses [let [[hypothesis_set [semantic-lookup_set semantic_plan hypothesis]]]
@@ -84,9 +84,9 @@
 
 'expected_precondition_does_not_exist_response_resource'
 
-[deframe expected_precondition_does_not_exist_response_resource [traced_resource] []
+[deframe expected_precondition_does_not_exist_response_resource [reflective_resource] []
   [new []
-       [construct traced_resource `expected_precondition_does_not_exist_response
+       [construct reflective_resource `expected_precondition_does_not_exist_response
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal '\nreflective_layer: expected precondition does not exist response here.']
 			[have [get this mind] wait_to_call `reflective `plan_bug_response `assign_plan_execution_failure_blame semantic_plan bug]
@@ -96,9 +96,9 @@
 
 'unknown_bug_name_response_resource'
 
-[deframe unknown_bug_name_response_resource [traced_resource] []
+[deframe unknown_bug_name_response_resource [reflective_resource] []
   [new []
-       [construct traced_resource `unknown_bug_name_response
+       [construct reflective_resource `unknown_bug_name_response
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal
 					 '\nreflective_layer: unknown bug name response here.'

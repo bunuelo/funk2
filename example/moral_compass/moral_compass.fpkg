@@ -34,9 +34,14 @@
 
 [defpackage self_reflective_layer
   :packages [moral_compass_core
+	     self_reflective_resource
 	     self_reflective_other_agents_knowledge_agency
 	     english_language]
    :sources ['self_reflective_layer.fu2']]
+
+[defpackage self_reflective_resource
+  :packages [moral_compass_core]
+   :sources ['self_reflective_resource.fu2']]
 
 [defpackage self_reflective_other_agents_knowledge_agency
   :packages [moral_compass_core]
@@ -48,9 +53,14 @@
 
 [defpackage self_conscious_layer
   :packages [moral_compass_core
+	     self_conscious_resource
 	     self_conscious_imprimer_agency
 	     english_language]
    :sources ['self_conscious_layer.fu2']]
+
+[defpackage self_conscious_resource
+  :packages [moral_compass_core]
+   :sources ['self_conscious_resource.fu2']]
 
 [defpackage self_conscious_imprimer_agency
   :packages [moral_compass_core]

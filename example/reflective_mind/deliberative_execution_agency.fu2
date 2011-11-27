@@ -29,9 +29,9 @@
        
        this]]
 
-[deframe deliberative_execute_plan_resource [traced_resource] []
+[deframe deliberative_execute_plan_resource [deliberative_resource] []
   [new []
-       [construct traced_resource `execute_plan
+       [construct deliberative_resource `execute_plan
 		  [funk [semantic_plan]
 			[assert-type semantic_plan_object semantic_plan]
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']

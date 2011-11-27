@@ -19,10 +19,10 @@
 
 'continuous_sensing_resource'
 
-[deframe continuous_sensing_resource [traced_resource] [perception
-							[perception_trigger [new fiber_trigger]]]
+[deframe continuous_sensing_resource [builtin_reactive_resource] [perception
+								  [perception_trigger [new fiber_trigger]]]
   [new []
-       [construct traced_resource `continuous_sensing
+       [construct builtin_reactive_resource `continuous_sensing
 		  [funk []
 			[have this think_to_self 'Continuous sensing is starting.']
 			[let* [[body              [get this body]]
@@ -42,10 +42,10 @@
 
 'propogate_visual_objects_to_visual_knowledge_resource'
 
-[deframe propogate_visual_objects_to_visual_knowledge_resource [traced_resource] [[previous_perception              nil]
-										  [semantic_visual_object_ptypehash [new ptypehash]]]
+[deframe propogate_visual_objects_to_visual_knowledge_resource [builtin_reactive_resource] [[previous_perception              nil]
+											    [semantic_visual_object_ptypehash [new ptypehash]]]
   [new []
-       [construct traced_resource `propogate_visual_objects_to_visual_knowledge
+       [construct builtin_reactive_resource `propogate_visual_objects_to_visual_knowledge
 		  [funk []
 			[have this update_visual_knowledge_from_visual_objects]]]
        [= vital t]
@@ -241,10 +241,10 @@
 
 'propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource'
 
-[deframe propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource [traced_resource] [[previous_perception     nil]
+[deframe propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource [builtin_reactive_resource] [[previous_perception     nil]
 												  [semantic_proprioception nil]]
   [new []
-       [construct traced_resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge
+       [construct builtin_reactive_resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge
 		  [funk []
 			[have this update_proprioceptual_knowledge_from_proprioceptual_objects]]]
        [= vital t]
@@ -314,11 +314,11 @@
 
 'propogate_somatosensory_objects_to_somatosensory_knowledge_resource'
 
-[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [traced_resource] [[previous_perception                           nil]
-												[semantic_somatosensation                      nil]
-												[semantic_semantosensory_object_name_ptypehash [new ptypehash]]]
+[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [builtin_reactive_resource] [[previous_perception                           nil]
+													  [semantic_somatosensation                      nil]
+													  [semantic_semantosensory_object_name_ptypehash [new ptypehash]]]
   [new []
-       [construct traced_resource `propogate_somatosensory_objects_to_somatosensory_knowledge
+       [construct builtin_reactive_resource `propogate_somatosensory_objects_to_somatosensory_knowledge
 		  [funk []
 			[have this update_somatosensory_knowledge_from_somatosensory_objects]]]
        [= vital t]

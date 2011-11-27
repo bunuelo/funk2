@@ -38,9 +38,9 @@
 
 'translate_visual_knowledge_to_physical_knowledge_resource'
 
-[deframe translate_visual_knowledge_to_physical_knowledge_resource [traced_resource] [[semantic_physical_object_mutex [new mutex]]]
+[deframe translate_visual_knowledge_to_physical_knowledge_resource [learned_reactive_resource] [[semantic_physical_object_mutex [new mutex]]]
   [new []
-       [construct traced_resource `translate_visual_knowledge_to_physical_knowledge
+       [construct learned_reactive_resource `translate_visual_knowledge_to_physical_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

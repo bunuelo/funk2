@@ -20,9 +20,9 @@
 
 'reflective_mind-blocks_world-move_left_resource'
 
-[deframe reflective_mind-blocks_world-move_left_resource [traced_resource] []
+[deframe reflective_mind-blocks_world-move_left_resource [builtin_reactive_resource] []
   [new []
-       [construct traced_resource `move_left
+       [construct builtin_reactive_resource `move_left
 		  [funk []
 			[have [get this body] move_left]]]]]
 
@@ -32,9 +32,9 @@
 
 'reflective_mind-blocks_world-move_right_resource'
 
-[deframe reflective_mind-blocks_world-move_right_resource [traced_resource] []
+[deframe reflective_mind-blocks_world-move_right_resource [builtin_reactive_resource] []
   [new []
-       [construct traced_resource `move_right
+       [construct builtin_reactive_resource `move_right
 		  [funk []
 			[have [get this body] move_right]]]]]
 
@@ -44,8 +44,8 @@
 
 'reflective_mind-blocks_world-grab_resource'
 
-[deframe reflective_mind-blocks_world-grab_resource [traced_resource] []
-  [new [] [construct traced_resource `grab
+[deframe reflective_mind-blocks_world-grab_resource [builtin_reactive_resource] []
+  [new [] [construct builtin_reactive_resource `grab
 		     [funk []
 			   [have [get this body] grab]]]]]
 
@@ -55,8 +55,8 @@
 
 'reflective_mind-blocks_world-drop_resource'
 
-[deframe reflective_mind-blocks_world-drop_resource [traced_resource] []
-  [new [] [construct traced_resource `drop
+[deframe reflective_mind-blocks_world-drop_resource [builtin_reactive_resource] []
+  [new [] [construct builtin_reactive_resource `drop
 		     [funk []
 			   [have [get this body] drop]]]]]
 
@@ -66,9 +66,9 @@
 
 'reflective_mind-blocks_world-stop_resource'
 
-[deframe reflective_mind-blocks_world-stop_resource [traced_resource] []
+[deframe reflective_mind-blocks_world-stop_resource [builtin_reactive_resource] []
   [new []
-       [construct traced_resource `stop
+       [construct builtin_reactive_resource `stop
 		  [funk []
 			[have [get this body] stop]]]]]
 

@@ -43,10 +43,15 @@
 
 [defpackage builtin_reactive_layer
   :packages [reflective_mind_core
+	     builtin_reactive_resource
 	     builtin_reactive_neural_plug_agency
 	     builtin_reactive_sensory_agency
 	     builtin_reactive_physical_agency]
    :sources ['builtin_reactive_layer.fu2']]
+
+[defpackage builtin_reactive_resource
+  :packages [reflective_mind_core]
+   :sources ['builtin_reactive_resource.fu2']]
 
 [defpackage builtin_reactive_neural_plug_agency
   :packages [reflective_mind_core]
@@ -73,12 +78,17 @@
 
 [defpackage learned_reactive_layer
   :packages [reflective_mind_core
+	     learned_reactive_resource
 	     learned_reactive_physical_agency
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
 	     learned_reactive_physical_knowledge_agency
 	     english_language]
    :sources ['learned_reactive_layer.fu2']]
+
+[defpackage learned_reactive_resource
+  :packages [reflective_mind_core]
+   :sources ['learned_reactive_resource.fu2']]
 
 [defpackage learned_reactive_physical_agency
   :packages [reflective_mind_core]
@@ -128,10 +138,15 @@
 
 [defpackage deliberative_layer
   :packages [reflective_mind_core
+	     deliberative_resource
 	     deliberative_plan_agency
 	     deliberative_execution_agency
 	     deliberative_physical_object_type_goal_agency]
    :sources ['deliberative_layer.fu2']]
+
+[defpackage deliberative_resource
+  :packages [reflective_mind_core]
+   :sources ['deliberative_resource.fu2']]
 
 [defpackage deliberative_action
   :packages [reflective_mind_core]
@@ -179,6 +194,7 @@
 
 [defpackage reflective_layer
   :packages [reflective_mind_core
+	     reflective_resource
 	     reflective_plan_bug_response_agency
 	     reflective_plan_object_type_goal_agency
 	     reflective_event_knowledge_agency
@@ -186,6 +202,10 @@
 	     english_language
 	     ]
    :sources ['reflective_layer.fu2']]
+
+[defpackage reflective_resource
+  :packages [reflective_mind_core]
+   :sources ['reflective_resource.fu2']]
 
 [defpackage reflective_plan_bug_response_agency
   :packages [reflective_mind_core

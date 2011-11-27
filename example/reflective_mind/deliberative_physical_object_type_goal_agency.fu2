@@ -65,12 +65,12 @@
 
 'translate_physical_knowledge_to_physical_type_knowledge_resource'
 
-[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [traced_resource] [[semantic_physical_object_type_event_mutex [new mutex]]
-											     [semantic_physical_object_copy_mutex       [new mutex]]
-											     [goals                                     nil]
-											     [end_of_physical_type_changes_trigger      [new fiber_trigger]]]
+[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [deliberative_resource] [[semantic_physical_object_type_event_mutex [new mutex]]
+												   [semantic_physical_object_copy_mutex       [new mutex]]
+												   [goals                                     nil]
+												   [end_of_physical_type_changes_trigger      [new fiber_trigger]]]
   [new []
-       [construct traced_resource `translate_physical_knowledge_to_physical_type_knowledge
+       [construct deliberative_resource `translate_physical_knowledge_to_physical_type_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

@@ -39,9 +39,7 @@ f2ptr raw__semantic_action_transframe__new(f2ptr cause, f2ptr semantic_realm) {
 }
 
 f2ptr f2__semantic_action_transframe__new(f2ptr cause, f2ptr semantic_realm) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_action_transframe__new(cause, semantic_realm);
 }
 export_cefunk1(semantic_action_transframe__new, semantic_realm, 0, "Returns a new semantic_action_transframe object.");
@@ -85,9 +83,7 @@ f2ptr raw__semantic_action_transframe__remove__add(f2ptr cause, f2ptr this, f2pt
 }
 
 f2ptr f2__semantic_action_transframe__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_action_transframe__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_action_transframe, this);
   return raw__semantic_action_transframe__remove__add(cause, this, that);
 }
 export_cefunk2(semantic_action_transframe__remove__add, this, that, 0, "");
@@ -98,9 +94,7 @@ f2ptr raw__semantic_action_transframe__remove__remove(f2ptr cause, f2ptr this, f
 }
 
 f2ptr f2__semantic_action_transframe__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_action_transframe__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_action_transframe, this);
   return raw__semantic_action_transframe__remove__remove(cause, this, that);
 }
 export_cefunk2(semantic_action_transframe__remove__remove, this, that, 0, "");
@@ -111,9 +105,7 @@ f2ptr raw__semantic_action_transframe__add__add(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__semantic_action_transframe__add__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_action_transframe__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_action_transframe, this);
   return raw__semantic_action_transframe__add__add(cause, this, that);
 }
 export_cefunk2(semantic_action_transframe__add__add, this, that, 0, "");
@@ -124,9 +116,7 @@ f2ptr raw__semantic_action_transframe__add__remove(f2ptr cause, f2ptr this, f2pt
 }
 
 f2ptr f2__semantic_action_transframe__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if (! raw__semantic_action_transframe__is_type(cause, this)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_action_transframe, this);
   return raw__semantic_action_transframe__add__remove(cause, this, that);
 }
 export_cefunk2(semantic_action_transframe__add__remove, this, that, 0, "");
@@ -156,10 +146,7 @@ f2ptr f2__semantic_action_transframe__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_action_transframe__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_action_transframe__core_extension__initialize(f2ptr cause) {
-  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__core_extension__ping")), nil);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
+  assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__core_extension__ping")), nil));
   f2__add_type(cause, new__symbol(cause, "semantic_action_transframe"), f2__semantic_action_transframe__primobject_type__new(cause));
   status("semantic_action_transframe initialized.");
   return nil;

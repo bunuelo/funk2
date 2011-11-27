@@ -29,10 +29,6 @@ f2ptr raw__semantic_action_transframe__type_create(f2ptr cause, f2ptr this, f2pt
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_action_transframe"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"), nil);
-  }
   return this;
 }
 
@@ -84,11 +80,71 @@ f2ptr f2__semantic_action_transframe__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_action_transframe__type, thing, 0, "Returns the specific type of object that this semantic_action_transframe is.");
 
 
+f2ptr raw__semantic_physical_object__relation__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "remove"), that);
+}
+
+f2ptr f2__semantic_physical_object__relation__remove__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__relation__remove__add(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__relation__remove__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__relation__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "remove"), that);
+}
+
+f2ptr f2__semantic_physical_object__relation__remove__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__relation__remove__remove(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__relation__remove__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__relation__add__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "add"), that);
+}
+
+f2ptr f2__semantic_physical_object__relation__add__add(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__relation__add__add(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__relation__add__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__relation__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "add"), that);
+}
+
+f2ptr f2__semantic_physical_object__relation__add__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  if ((! raw__semantic_physical_object__is_type(cause, this)) ||
+      (! raw__semantic_physical_object__is_type(cause, that))) {
+    return f2larva__new(cause, 1, nil);
+  }
+  return raw__semantic_physical_object__relation__add__remove(cause, this, that);
+}
+export_cefunk2(semantic_physical_object__relation__add__remove, this, that, 0, "");
+
+
 f2ptr f2__semantic_action_transframe__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),             new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "remove"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__remove__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "remove"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__remove__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "add"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__add__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "add"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_transframe"), new__symbol(cause, "semantic_action_transframe__add__remove")));}
   return this;
 }
 

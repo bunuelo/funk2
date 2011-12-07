@@ -349,17 +349,14 @@ f2ptr f2__dlfcn_dynamic_library_handler__new(f2ptr cause) {
 
 
 f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
-  f2ptr dlfcn_dynamic_library_filename_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash(cause, this);
+  f2ptr dlfcn_dynamic_library_filename_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash(cause, this));
   f2ptr dynamic_library                     = nil;
-  dynamic_library                           = f2__ptypehash__lookup(cause, dlfcn_dynamic_library_filename_hash, filename);
+  dynamic_library                           = assert_value(f2__ptypehash__lookup(cause, dlfcn_dynamic_library_filename_hash, filename));
   if (dynamic_library == nil) {
-    dynamic_library = f2__dlfcn_dynamic_library__new_open(cause, filename, nil);
-    if (raw__larva__is_type(cause, dynamic_library)) {
-      return dynamic_library;
-    }
-    f2ptr pointer                            = f2__dlfcn_dynamic_library__pointer(cause, dynamic_library);
-    f2ptr dlfcn_dynamic_library_pointer_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this);
-    f2ptr already_loaded_dynamic_library     = f2__ptypehash__lookup(cause, dlfcn_dynamic_library_pointer_hash, pointer);
+    dynamic_library                          = assert_value(f2__dlfcn_dynamic_library__new_open(cause, filename, nil));
+    f2ptr pointer                            = assert_value(f2__dlfcn_dynamic_library__pointer(cause, dynamic_library));
+    f2ptr dlfcn_dynamic_library_pointer_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this));
+    f2ptr already_loaded_dynamic_library     = assert_value(f2__ptypehash__lookup(cause, dlfcn_dynamic_library_pointer_hash, pointer));
     if (already_loaded_dynamic_library == nil) {
       f2__ptypehash__add(cause, dlfcn_dynamic_library_pointer_hash, pointer, dynamic_library);
     } else {
@@ -380,21 +377,15 @@ def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename,
 	    return f2__dlfcn_dynamic_library_handler__dynamic_library(this_cause, this, filename));
 
 f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
-  f2ptr dynamic_library = raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename);
-  if (raw__larva__is_type(cause, dynamic_library)) {
-    return dynamic_library;
-  }
-  if (! raw__dlfcn_dynamic_library__is_type(cause, dynamic_library)) {
-    return f2larva__new(cause, 1, nil);
-  }
-  f2ptr close_result = f2__dlfcn_dynamic_library__close(cause, dynamic_library);
-  if (raw__larva__is_type(cause, close_result)) {
-    return close_result;
-  }
+  f2ptr dynamic_library = assert_value(raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename));
+  assert_argument_type(dlfcn_dynamic_library, dynamic_library);
+  f2ptr close_result = assert_value(f2__dlfcn_dynamic_library__close(cause, dynamic_library));
   {
-    f2ptr dlfcn_dynamic_library_filename_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash(cause, this);
-    f2ptr keys_to_remove = nil;
+    f2ptr dlfcn_dynamic_library_filename_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash(cause, this));
+    f2ptr keys_to_remove                      = nil;
     ptypehash__iteration(cause, dlfcn_dynamic_library_filename_hash, filename, dlfcn_dynamic_library,
+			 assert_value(filename);
+			 assert_value(dlfcn_dynamic_library);
 			 if (raw__eq(cause, dynamic_library, dlfcn_dynamic_library)) {
 			   keys_to_remove = f2cons__new(cause, filename, keys_to_remove);
 			 }
@@ -409,9 +400,11 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2
     }
   }
   {
-    f2ptr dlfcn_dynamic_library_pointer_hash  = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this);
+    f2ptr dlfcn_dynamic_library_pointer_hash  = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this));
     f2ptr keys_to_remove = nil;
     ptypehash__iteration(cause, dlfcn_dynamic_library_pointer_hash, pointer, dlfcn_dynamic_library,
+			 assert_value(pointer);
+			 assert_value(dlfcn_dynamic_library);
 			 if (raw__eq(cause, dynamic_library, dlfcn_dynamic_library)) {
 			   keys_to_remove = f2cons__new(cause, pointer, keys_to_remove);
 			 }
@@ -441,10 +434,9 @@ def_pcfunk2(dlfcn_dynamic_library_handler__unload_dynamic_library, this, filenam
 f2ptr raw__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this) {
   f2ptr changed_libraries = nil;
   {
-    f2ptr dlfcn_dynamic_library_pointer_hash = f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this);
+    f2ptr dlfcn_dynamic_library_pointer_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this));
     ptypehash__value__iteration(cause, dlfcn_dynamic_library_pointer_hash, dynamic_library,
-				f2ptr changed_on_disk = f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library);
-				assert_value(changed_on_disk);
+				f2ptr changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library));
 				if (changed_on_disk != nil) {
 				  changed_libraries = f2cons__new(cause, dynamic_library, changed_libraries);
 				}

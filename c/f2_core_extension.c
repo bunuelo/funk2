@@ -236,7 +236,7 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
   {
     f2ptr iter = changed_core_extensions;
     while (iter) {
-      f2ptr core_extension = assure_value(f2__cons__car(cause, iter));
+      f2ptr core_extension = assert_value(f2__cons__car(cause, iter));
       {
 	assert_value(f2__core_extension__assure_destroyed(cause, core_extension));
 	f2ptr filename = f2__core_extension__filename(cause, core_extension);

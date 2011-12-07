@@ -54,11 +54,13 @@ f2ptr raw__core_extension__initialize(f2ptr cause, f2ptr this) {
   f2ptr result               = f2__core_extension_funk__apply_without_initializing(cause, initialize_funk, nil);
   if (raw__larva__is_type(cause, result)) {
     raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
-    return f2larva__new(cause, 3435, f2__bug__new(cause, f2integer__new(cause, 3435), f2__frame__new(cause, f2list8__new(cause,
-															 new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_initialize_core_extension"),
-															 new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-initialize"),
-															 new__symbol(cause, "this"),     this,
-															 new__symbol(cause, "result"),   result))));
+    catch_value(result,
+		f2list8__new(cause,
+			     new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_initialize_core_extension"),
+			     new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-initialize"),
+			     new__symbol(cause, "this"),     this,
+			     new__symbol(cause, "result"),   result));
+    return result;
   }
   f2__core_extension__initialized_time_stamp__set(cause, this, f2__time(cause));
   raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
@@ -87,11 +89,13 @@ f2ptr raw__core_extension__destroy(f2ptr cause, f2ptr this) {
   f2ptr result            = f2__core_extension_funk__apply(cause, destroy_funk, nil);
   if (raw__larva__is_type(cause, result)) {
     raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);
-    return f2larva__new(cause, 3435, f2__bug__new(cause, f2integer__new(cause, 3435), f2__frame__new(cause, f2list8__new(cause,
-															 new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_destroy_core_extension"),
-															 new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-destroy"),
-															 new__symbol(cause, "this"),     this,
-															 new__symbol(cause, "result"),   result))));
+    catch_value(result,
+		f2list8__new(cause,
+			     new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_destroy_core_extension"),
+			     new__symbol(cause, "funkname"), new__symbol(cause, "core_extension-destroy"),
+			     new__symbol(cause, "this"),     this,
+			     new__symbol(cause, "result"),   result));
+    return result;
   }
   f2__core_extension__initialized_time_stamp__set(cause, this, nil);
   raw__cmutex__unlock(cause, initialized_time_stamp_cmutex);

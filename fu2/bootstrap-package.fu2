@@ -230,7 +230,7 @@
 		[t                        [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
 	[= iter [cddr iter]]]]
     `[have [get [global_package_handler] package_frame] add [quote ,name] [new package
-									       source-filename
+									       [pathname-directory_pathname source-filename]
 									       [quote ,name]
 									       [conslist @[mapcar [funk [package_dependency]
 													`[quote ,package_dependency]]

@@ -435,18 +435,17 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "description"), new__string(cause, errno_str));
       result = f2larva__new(cause, 67, f2__bug__new(cause, f2integer__new(cause, 67), bug_frame));
     } else {
-      f2ptr absolute_filenames = nil;
+      f2ptr relative_filenames = nil;
       struct dirent* directory_entry;
       do {
 	directory_entry = readdir(dirp);
 	if (directory_entry) {
 	  f2ptr relative_filename = f2__pathname__concat(cause, pathname, new__string(cause, directory_entry->d_name));
-	  f2ptr absolute_filename = f2__pathname__as__absolute_pathname(cause, relative_filename);
-	  absolute_filenames = f2cons__new(cause, absolute_filename, absolute_filenames);
+	  relative_filenames = f2cons__new(cause, relative_filename, relative_filenames);
 	}
       } while (directory_entry);
       closedir(dirp);
-      result = absolute_filenames;
+      result = relative_filenames;
     }
   }
   f2__free(to_ptr(pathname__utf8_str));

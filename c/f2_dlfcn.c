@@ -243,26 +243,42 @@ f2ptr f2__dlfcn_dynamic_library__new(f2ptr cause, f2ptr pointer, f2ptr filename,
 }
 
 
-f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag) {
-  f2ptr stat = f2__pathname__stat(cause, filename);
-  if (raw__larva__is_type(cause, stat)) {
-    return stat;
+f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag, f2ptr search_pathnames) {
+  f2ptr stat;
+  f2ptr full_filename = nil;
+  {
+    f2ptr     search_pathnames__iter = search_pathnames;
+    boolean_t keep_searching         = boolean__true;
+    while (keep_searching) {
+      f2ptr search_pathname = f2__cons__car(cause, search_pathnames__iter);
+      f2ptr full_filename   = f2__pathname__concat(cause, search_pathname, filename);
+      stat = f2__pathname__stat(cause, full_filename);
+      if (! raw__larva__is_type(cause, stat)) {
+	keep_searching = boolean__false;
+      } else {
+	search_pathnames__iter = f2__cons__cdr(cause, search_pathnames__iter);
+      }
+    }
   }
-  f2ptr dlfcn_pointer = f2__dlfcn__dlopen(cause, filename, flag);
-  if (raw__larva__is_type(cause, dlfcn_pointer)) {
-    return dlfcn_pointer;
+  if (full_filename == nil) {
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),         new__symbol(cause, "could_not_find_dynamic_library_in_search_path"),
+				   new__symbol(cause, "filename"),         filename,
+				   new__symbol(cause, "flag"),             flag,
+				   new__symbol(cause, "search_pathnames"), search_pathnames));
   }
-  return f2__dlfcn_dynamic_library__new(cause, dlfcn_pointer, filename, stat);
+  f2ptr dlfcn_pointer = assert_value(f2__dlfcn__dlopen(cause, full_filename, flag));
+  return f2__dlfcn_dynamic_library__new(cause, dlfcn_pointer, full_filename, stat);
 }
 
-f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag) {
+f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag, f2ptr search_pathnames) {
   assert_argument_type(       string, filename);
   assert_argument_type_or_nil(integer, flag);
-  return raw__dlfcn_dynamic_library__new_open(cause, filename, flag);
+  return raw__dlfcn_dynamic_library__new_open(cause, filename, flag, search_pathnames);
 }
-def_pcfunk2(dlfcn_dynamic_library__new_open, filename, flag,
+def_pcfunk3(dlfcn_dynamic_library__new_open, filename, flag, search_pathnames
 	    "",
-	    return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag));
+	    return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag, search_pathnames));
 
 
 f2ptr raw__dlfcn_dynamic_library__lookup_symbol(f2ptr cause, f2ptr this, f2ptr symbol) {
@@ -336,21 +352,30 @@ f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause) {
 
 // dlfcn_dynamic_library_handler
 
-def_frame_object__global__2_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash);
+def_frame_object__global__3_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
 
-f2ptr f2__dlfcn_dynamic_library_handler__new(f2ptr cause) {
+f2ptr f2__dlfcn_dynamic_library_handler__new(f2ptr cause, f2ptr search_pathnames) {
   f2ptr dlfcn_dynamic_library_pointer_hash  = f2__ptypehash__new(cause);
   f2ptr dlfcn_dynamic_library_filename_hash = f2__ptypehash__new(cause);
-  return f2dlfcn_dynamic_library_handler__new(cause, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash);
+  return f2dlfcn_dynamic_library_handler__new(cause, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
+}
+
+
+void raw__dlfcn_dynamic_library_handler__reinit(f2ptr cause, f2ptr this) {
+  f2ptr dlfcn_dynamic_library_pointer_hash  = f2__ptypehash__new(cause);
+  f2ptr dlfcn_dynamic_library_filename_hash = f2__ptypehash__new(cause);
+  f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash__set( cause, this, dlfcn_dynamic_library_pointer_hash);
+  f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash__set(cause, this, dlfcn_dynamic_library_filename_hash);
 }
 
 
 f2ptr raw__dlfcn_dynamic_library_handler__dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
   f2ptr dlfcn_dynamic_library_filename_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash(cause, this));
+  f2ptr search_pathnames                    = assert_value(f2__dlfcn_dynamic_library_handler__search_pathnames(                   cause, this));
   f2ptr dynamic_library                     = nil;
   dynamic_library                           = assert_value(f2__ptypehash__lookup(cause, dlfcn_dynamic_library_filename_hash, filename));
   if (dynamic_library == nil) {
-    dynamic_library                          = assert_value(f2__dlfcn_dynamic_library__new_open(cause, filename, nil));
+    dynamic_library                          = assert_value(f2__dlfcn_dynamic_library__new_open(cause, filename, nil, search_pathnames));
     f2ptr pointer                            = assert_value(f2__dlfcn_dynamic_library__pointer(cause, dynamic_library));
     f2ptr dlfcn_dynamic_library_pointer_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this));
     f2ptr already_loaded_dynamic_library     = assert_value(f2__ptypehash__lookup(cause, dlfcn_dynamic_library_pointer_hash, pointer));
@@ -476,13 +501,8 @@ f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {
 
 f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
-  f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
-  if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
-    return dlfcn_dynamic_library_handler;
-  }
-  if (! raw__dlfcn_dynamic_library_handler__is_type(cause, dlfcn_dynamic_library_handler)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  f2ptr dlfcn_dynamic_library_handler = assert_value(environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-")));
+  assert_argument_type(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_handler);
   return f2__dlfcn_dynamic_library_handler__dynamic_library(cause, dlfcn_dynamic_library_handler, filename);
 }
 def_pcfunk1(global_dlfcn_dynamic_library, filename,
@@ -539,8 +559,12 @@ def_pcfunk0(global_dlfcn_dynamic_library__unload_changed,
 void f2__dlfcn__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause));
-  
+  f2ptr dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
+  if ((dynamic_library_handler == nil) || raw__larva__is_type(cause, dynamic_library_handler)) {
+    environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause), nil);
+  } else {
+    raw__dlfcn_dynamic_library_handler__reinit(cause, dynamic_library_handler);
+  }
 }
 
 void f2__dlfcn__initialize() {

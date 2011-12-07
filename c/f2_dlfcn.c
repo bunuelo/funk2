@@ -257,6 +257,7 @@ f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fl
 	if (! raw__larva__is_type(cause, stat)) {
 	  keep_searching = boolean__false;
 	} else {
+	  keep_searching         = (search_pathnames__iter != nil);
 	  search_pathnames__iter = f2__cons__cdr(cause, search_pathnames__iter);
 	}
       }

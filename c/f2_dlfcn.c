@@ -561,7 +561,7 @@ void f2__dlfcn__reinitialize_globalvars() {
   
   f2ptr dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
   if ((dynamic_library_handler == nil) || raw__larva__is_type(cause, dynamic_library_handler)) {
-    environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause), nil);
+    environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause));
   } else {
     raw__dlfcn_dynamic_library_handler__reinit(cause, dynamic_library_handler);
   }

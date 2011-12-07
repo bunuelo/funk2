@@ -379,7 +379,7 @@ def_pcfunk2(dlfcn_dynamic_library_handler__dynamic_library, this, filename,
 f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2ptr this, f2ptr filename) {
   f2ptr dynamic_library = assert_value(raw__dlfcn_dynamic_library_handler__dynamic_library(cause, this, filename));
   assert_argument_type(dlfcn_dynamic_library, dynamic_library);
-  f2ptr close_result = assert_value(f2__dlfcn_dynamic_library__close(cause, dynamic_library));
+  assert_value(f2__dlfcn_dynamic_library__close(cause, dynamic_library));
   {
     f2ptr dlfcn_dynamic_library_filename_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_filename_hash(cause, this));
     f2ptr keys_to_remove                      = nil;

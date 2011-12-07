@@ -271,7 +271,7 @@ f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fl
 				   new__symbol(cause, "search_pathnames"), search_pathnames));
   }
   f2ptr dlfcn_pointer = assert_value(f2__dlfcn__dlopen(cause, full_filename, flag));
-  return f2__dlfcn_dynamic_library__new(cause, dlfcn_pointer, full_filename, stat);
+  return f2__dlfcn_dynamic_library__new(cause, dlfcn_pointer, filename, stat);
 }
 
 f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag, f2ptr search_pathnames) {

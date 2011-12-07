@@ -252,13 +252,13 @@ f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fl
       boolean_t keep_searching = (search_pathnames__iter != nil);
       while (keep_searching) {
 	f2ptr search_pathname = assert_value(f2__cons__car(cause, search_pathnames__iter));
-	f2ptr full_filename   = f2__pathname__concat(cause, search_pathname, filename);
+	f2ptr full_filename   = assert_value(f2__pathname__concat(cause, search_pathname, filename));
 	stat = f2__pathname__stat(cause, full_filename);
 	if (! raw__larva__is_type(cause, stat)) {
 	  keep_searching = boolean__false;
 	} else {
-	  keep_searching         = (search_pathnames__iter != nil);
 	  search_pathnames__iter = assert_value(f2__cons__cdr(cause, search_pathnames__iter));
+	  keep_searching         = (search_pathnames__iter != nil);
 	}
       }
     }

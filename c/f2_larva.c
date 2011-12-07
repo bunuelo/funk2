@@ -29,7 +29,7 @@ f2ptr f2__larva__invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr so
     value_was_larva = f2bool__new(boolean__true);
     value           = f2__bug__new_from_larva(cause, value);
   }
-  return f2larva__new(cause, 7, f2__bug__new(cause, f2integer__new(cause, 7), f2__frame__new(cause, f2list16__new(cause,
+  return f2larva__new(cause, 7, f2__bug__new(cause, f2integer__new(cause, 7), f2__frame__new(cause, f2list14__new(cause,
 														  new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_value"),
 														  new__symbol(cause, "source_filename"),    source_filename,
 														  new__symbol(cause, "source_line_number"), source_line_number,

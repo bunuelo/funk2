@@ -276,7 +276,7 @@ f2ptr f2__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fla
   assert_argument_type_or_nil(integer, flag);
   return raw__dlfcn_dynamic_library__new_open(cause, filename, flag, search_pathnames);
 }
-def_pcfunk3(dlfcn_dynamic_library__new_open, filename, flag, search_pathnames
+def_pcfunk3(dlfcn_dynamic_library__new_open, filename, flag, search_pathnames,
 	    "",
 	    return f2__dlfcn_dynamic_library__new_open(this_cause, filename, flag, search_pathnames));
 

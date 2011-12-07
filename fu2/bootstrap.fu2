@@ -50,15 +50,11 @@
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']
   [reload_all_package_definitions]
-  [eval `[prog [print 'load_minimal_core_packages debug: 0']
-	       
-	       [require number
+  [eval `[prog [require number
 			ansi
 			mutex
 			math
 			basic_bug_responses]
-	       
-	       [print 'load_minimal_core_packages debug: 1']
 	       
 	       [defunk backup_repl []
 		 [let* [[trigger [new fiber_trigger]]

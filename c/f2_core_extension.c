@@ -218,7 +218,6 @@ def_pcfunk2(core_extension_handler__lookup_core_extension, this, name,
 
 
 f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
-  status("raw__core_extension_handler__unload_changed debug: 0");
   f2ptr changed_core_extensions = nil;
   {
     f2ptr core_extension_name_hash = assert_value(f2__core_extension_handler__core_extension_name_hash(cause, this));
@@ -234,7 +233,6 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
 				}
 				);
   }
-  status("raw__core_extension_handler__unload_changed debug: 1");
   {
     f2ptr iter = changed_core_extensions;
     while (iter) {
@@ -247,7 +245,6 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
       iter = assert_value(f2__cons__cdr(cause, iter));
     }
   }
-  status("raw__core_extension_handler__unload_changed debug: 2");
   return nil;
 }
 

@@ -368,14 +368,9 @@
 
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
-    [print 'require-package debug: 0']
     [global_core_extension_handler-unload_changed]
-    [print 'require-package debug: 1']
     [global_dlfcn_dynamic_library-unload_changed]
-    [print 'require-package debug: 2']
-    [let [[result [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
-      [print 'require-package debug: 3']
-      result]]]
+    [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
 
 [defmetro require [:rest names]
   `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]

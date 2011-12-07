@@ -187,7 +187,8 @@ def_pcfunk0(core_extension_handler__new,
 
 f2ptr raw__core_extension_handler__add_new_core_extension(f2ptr cause, f2ptr this, f2ptr name, f2ptr filename) {
   f2ptr core_extension_name_hash = f2__core_extension_handler__core_extension_name_hash(cause, this);
-  f2ptr core_extension = f2__core_extension__new(cause, name, filename);
+  f2ptr core_extension           = assert_value(f2__core_extension__new(cause, name, filename));
+  assert_argument_type(core_extension, core_extension);
   f2__ptypehash__add(cause, core_extension_name_hash, name, core_extension);
   return nil;
 }
@@ -217,41 +218,34 @@ def_pcfunk2(core_extension_handler__lookup_core_extension, this, name,
 
 
 f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
+  status("raw__core_extension_handler__unload_changed debug: 0");
   f2ptr changed_core_extensions = nil;
   {
-    f2ptr core_extension_name_hash = f2__core_extension_handler__core_extension_name_hash(cause, this);
+    f2ptr core_extension_name_hash = assert_value(f2__core_extension_handler__core_extension_name_hash(cause, this));
+    assert_argument_type(ptypehash, core_extension_name_hash);
     ptypehash__value__iteration(cause, core_extension_name_hash, core_extension,
-				f2ptr changed_on_disk = f2__core_extension__changed_on_disk(cause, core_extension);
-				if (raw__larva__is_type(cause, changed_on_disk)) {
-				  return changed_on_disk;
-				}
+				assert_value(core_extension);
+				assert_argument_type(core_extension, core_extension);
+				f2ptr changed_on_disk = assert_value(f2__core_extension__changed_on_disk(cause, core_extension));
 				if (changed_on_disk != nil) {
 				  changed_core_extensions = f2cons__new(cause, core_extension, changed_core_extensions);
 				}
 				);
   }
+  status("raw__core_extension_handler__unload_changed debug: 1");
   {
     f2ptr iter = changed_core_extensions;
     while (iter) {
-      f2ptr core_extension = f2cons__car(iter, cause);
+      f2ptr core_extension = assure_value(f2__cons__car(cause, iter));
       {
-	{
-	  f2ptr result = f2__core_extension__assure_destroyed(cause, core_extension);
-	  if (raw__larva__is_type(cause, result)) {
-	    return result;
-	  }
-	}
+	assert_value(f2__core_extension__assure_destroyed(cause, core_extension));
 	f2ptr filename = f2__core_extension__filename(cause, core_extension);
-	{
-	  f2ptr result = f2__global_dlfcn_dynamic_library__unload_dynamic_library(cause, filename);
-	  if (raw__larva__is_type(cause, result)) {
-	    return result;
-	  }
-	}
+	assert_value(f2__global_dlfcn_dynamic_library__unload_dynamic_library(cause, filename));
       }
-      iter = f2cons__cdr(iter, cause);
+      iter = assert_value(f2__cons__cdr(cause, iter));
     }
   }
+  status("raw__core_extension_handler__unload_changed debug: 2");
   return nil;
 }
 
@@ -324,13 +318,8 @@ def_pcfunk1(global_core_extension_handler__lookup_core_extension, name,
 
 
 f2ptr f2__global_core_extension_handler__unload_changed(f2ptr cause) {
-  f2ptr core_extension_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"));
-  if (raw__larva__is_type(cause, core_extension_handler)) {
-    return core_extension_handler;
-  }
-  if (! raw__core_extension_handler__is_type(cause, core_extension_handler)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  f2ptr core_extension_handler = assert_value(environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-")));
+  assert_argument_type(core_extension_handler, core_extension_handler);
   return f2__core_extension_handler__unload_changed(cause, core_extension_handler);
 }
 def_pcfunk0(global_core_extension_handler__unload_changed,

@@ -248,7 +248,7 @@ f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fl
   f2ptr full_filename = nil;
   {
     f2ptr     search_pathnames__iter = search_pathnames;
-    boolean_t keep_searching         = boolean__true;
+    boolean_t keep_searching         = (search_pathnames__iter != nil);
     while (keep_searching) {
       f2ptr search_pathname = f2__cons__car(cause, search_pathnames__iter);
       f2ptr full_filename   = f2__pathname__concat(cause, search_pathname, filename);

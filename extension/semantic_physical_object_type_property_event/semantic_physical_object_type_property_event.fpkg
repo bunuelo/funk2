@@ -25,5 +25,5 @@
     :sources     ['semantic_physical_object_type_property_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_physical_object_type_property_event.so']]
 
-[defcore semantic_physical_object_type_property_event 'extension/semantic_physical_object_type_property_event/.libs/libf2e_semantic_physical_object_type_property_event.so']
+[defcore semantic_physical_object_type_property_event 'libf2e_semantic_physical_object_type_property_event.so']
 

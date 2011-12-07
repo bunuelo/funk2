@@ -24,5 +24,5 @@
     :sources     ['semantic_situation_category-core.fu2']
      :binaries   ['.libs/libf2e_semantic_situation_category.so']]
 
-[defcore semantic_situation_category 'extension/semantic_situation_category/.libs/libf2e_semantic_situation_category.so']
+[defcore semantic_situation_category 'libf2e_semantic_situation_category.so']
 

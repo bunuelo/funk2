@@ -24,5 +24,5 @@
     :sources     ['semantic_goal-core.fu2']
      :binaries   ['.libs/libf2e_semantic_goal.so']]
 
-[defcore semantic_goal 'extension/semantic_goal/.libs/libf2e_semantic_goal.so']
+[defcore semantic_goal 'libf2e_semantic_goal.so']
 

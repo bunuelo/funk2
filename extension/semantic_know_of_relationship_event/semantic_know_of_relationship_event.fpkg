@@ -23,5 +23,5 @@
     :sources     ['semantic_know_of_relationship_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_know_of_relationship_event.so']]
 
-[defcore semantic_know_of_relationship_event 'extension/semantic_know_of_relationship_event/.libs/libf2e_semantic_know_of_relationship_event.so']
+[defcore semantic_know_of_relationship_event 'libf2e_semantic_know_of_relationship_event.so']
 

@@ -25,5 +25,5 @@
     :sources     ['semantic_proprioceptual_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_proprioceptual_object.so']]
 
-[defcore semantic_proprioceptual_object 'extension/semantic_proprioceptual_object/.libs/libf2e_semantic_proprioceptual_object.so']
+[defcore semantic_proprioceptual_object 'libf2e_semantic_proprioceptual_object.so']
 

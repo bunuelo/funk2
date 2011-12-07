@@ -23,5 +23,5 @@
    :sources   ['transframe-core.fu2']
     :binaries ['.libs/libf2e_transframe.so']]
 
-[defcore transframe 'extension/transframe/.libs/libf2e_transframe.so']
+[defcore transframe 'libf2e_transframe.so']
 

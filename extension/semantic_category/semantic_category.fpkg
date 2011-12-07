@@ -23,5 +23,5 @@
     :sources     ['semantic_category-core.fu2']
      :binaries   ['.libs/libf2e_semantic_category.so']]
 
-[defcore semantic_category 'extension/semantic_category/.libs/libf2e_semantic_category.so']
+[defcore semantic_category 'libf2e_semantic_category.so']
 

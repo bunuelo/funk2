@@ -23,5 +23,5 @@
     :sources     ['semantic_proprioceptual_orientation-core.fu2']
      :binaries   ['.libs/libf2e_semantic_proprioceptual_orientation.so']]
 
-[defcore semantic_proprioceptual_orientation 'extension/semantic_proprioceptual_orientation/.libs/libf2e_semantic_proprioceptual_orientation.so']
+[defcore semantic_proprioceptual_orientation 'libf2e_semantic_proprioceptual_orientation.so']
 

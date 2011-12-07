@@ -23,5 +23,5 @@
     :sources     ['semantic_proprioceptual_position-core.fu2']
      :binaries   ['.libs/libf2e_semantic_proprioceptual_position.so']]
 
-[defcore semantic_proprioceptual_position 'extension/semantic_proprioceptual_position/.libs/libf2e_semantic_proprioceptual_position.so']
+[defcore semantic_proprioceptual_position 'libf2e_semantic_proprioceptual_position.so']
 

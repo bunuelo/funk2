@@ -24,5 +24,5 @@
     :sources     ['semantic_self-core.fu2']
      :binaries   ['.libs/libf2e_semantic_self.so']]
 
-[defcore semantic_self 'extension/semantic_self/.libs/libf2e_semantic_self.so']
+[defcore semantic_self 'libf2e_semantic_self.so']
 

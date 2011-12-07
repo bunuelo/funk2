@@ -25,5 +25,5 @@
     :sources     ['semantic_resource_event_knowledge_base-core.fu2']
      :binaries   ['.libs/libf2e_semantic_resource_event_knowledge_base.so']]
 
-[defcore semantic_resource_event_knowledge_base 'extension/semantic_resource_event_knowledge_base/.libs/libf2e_semantic_resource_event_knowledge_base.so']
+[defcore semantic_resource_event_knowledge_base 'libf2e_semantic_resource_event_knowledge_base.so']
 

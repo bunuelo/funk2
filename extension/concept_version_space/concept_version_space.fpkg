@@ -22,5 +22,5 @@
    :sources   ['concept_version_space-core.fu2']
     :binaries ['.libs/libf2e_concept_version_space.so']]
 
-[defcore concept_version_space 'extension/concept_version_space/.libs/libf2e_concept_version_space.so']
+[defcore concept_version_space 'libf2e_concept_version_space.so']
 

@@ -22,5 +22,5 @@
    :sources   ['interval_tree-core.fu2']
     :binaries ['.libs/libf2e_interval_tree.so']]
 
-[defcore interval_tree 'extension/interval_tree/.libs/libf2e_interval_tree.so']
+[defcore interval_tree 'libf2e_interval_tree.so']
 

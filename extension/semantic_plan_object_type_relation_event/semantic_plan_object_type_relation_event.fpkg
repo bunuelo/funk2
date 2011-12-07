@@ -25,5 +25,5 @@
     :sources     ['semantic_plan_object_type_relation_event-core.fu2']
      :binaries   ['.libs/libf2e_semantic_plan_object_type_relation_event.so']]
 
-[defcore semantic_plan_object_type_relation_event 'extension/semantic_plan_object_type_relation_event/.libs/libf2e_semantic_plan_object_type_relation_event.so']
+[defcore semantic_plan_object_type_relation_event 'libf2e_semantic_plan_object_type_relation_event.so']
 

@@ -23,5 +23,5 @@
     :sources     ['semantic_somatosensory_object-core.fu2']
      :binaries   ['.libs/libf2e_semantic_somatosensory_object.so']]
 
-[defcore semantic_somatosensory_object 'extension/semantic_somatosensory_object/.libs/libf2e_semantic_somatosensory_object.so']
+[defcore semantic_somatosensory_object 'libf2e_semantic_somatosensory_object.so']
 

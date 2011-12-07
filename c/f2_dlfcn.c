@@ -621,7 +621,7 @@ void f2__dlfcn__initialize() {
   f2__primcfunk__init__1(global_dlfcn_dynamic_library__unload_dynamic_library, filename);
   f2__primcfunk__init__0(global_dlfcn_dynamic_library__unload_changed);
   
-  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause));
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
   
 }
 

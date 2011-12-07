@@ -142,12 +142,9 @@ def_pcfunk1(core_extension__assure_destroyed, this,
 
 
 f2ptr raw__core_extension__changed_on_disk(f2ptr cause, f2ptr this) {
-  f2ptr filename        = f2__core_extension__filename(cause, this);
-  f2ptr dynamic_library = f2__global_dlfcn_dynamic_library(cause, filename);
-  f2ptr changed_on_disk = f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library);
-  if (raw__larva__is_type(cause, changed_on_disk)) {
-    return changed_on_disk;
-  }
+  f2ptr filename        = assert_value(f2__core_extension__filename(cause, this));
+  f2ptr dynamic_library = assert_value(f2__global_dlfcn_dynamic_library(cause, filename));
+  f2ptr changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library));
   return changed_on_disk;
 }
 

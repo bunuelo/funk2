@@ -144,12 +144,7 @@ def_pcfunk1(core_extension__assure_destroyed, this,
 f2ptr raw__core_extension__changed_on_disk(f2ptr cause, f2ptr this) {
   f2ptr filename        = assert_value(f2__core_extension__filename(cause, this));
   f2ptr dynamic_library = f2__global_dlfcn_dynamic_library(cause, filename);
-  f2ptr changed_on_disk;
-  if (raw__larva__is_type(cause, dynamic_library)) {
-    changed_on_disk = nil;
-  } else {
-    changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library));
-  }
+  f2ptr changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library));
   return changed_on_disk;
 }
 
@@ -231,9 +226,11 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
     ptypehash__value__iteration(cause, core_extension_name_hash, core_extension,
 				assert_value(core_extension);
 				assert_argument_type(core_extension, core_extension);
-				f2ptr changed_on_disk = assert_value(f2__core_extension__changed_on_disk(cause, core_extension));
-				if (changed_on_disk != nil) {
-				  changed_core_extensions = f2cons__new(cause, core_extension, changed_core_extensions);
+				f2ptr changed_on_disk = f2__core_extension__changed_on_disk(cause, core_extension);
+				if (! raw__larva__is_type(cause, changed_on_disk)) {
+				  if (changed_on_disk != nil) {
+				    changed_core_extensions = f2cons__new(cause, core_extension, changed_core_extensions);
+				  }
 				}
 				);
   }

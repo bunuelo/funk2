@@ -608,7 +608,7 @@ void f2__dlfcn__initialize() {
   
   // dlfcn_dynamic_library_handler
   
-  init_frame_object__2_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash);
+  init_frame_object__3_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
   
   {char* symbol_str = "dynamic_library"; __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(dlfcn_dynamic_library_handler__dynamic_library, this, filename, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__funk = never_gc(cfunk);}

@@ -75,13 +75,32 @@ def_pcfunk1(source__new, code,
 	    "",
 	    return f2__source__new(this_cause, code));
 
-f2ptr f2__source__load(f2ptr cause, f2ptr filename) {
-  f2ptr code = f2__string__load(cause, filename);
+f2ptr f2__source__load(f2ptr cause, f2ptr filename, f2ptr search_pathnames) {
+  f2ptr code = nil;
+  {
+    f2ptr iter = search_pathnames;
+    while (iter != nil) {
+      f2ptr search_pathname = assert_value(f2__cons__car(cause, iter));
+      f2ptr full_filename   = assert_value(f2__pathname__concat(cause, search_pathname, filename));
+      code                  = f2__string__load(cause, full_filename);
+      if (raw__larva__is_type(cause, code)) {
+	iter = assert_value(f2__cons__cdr(cause, iter));
+      } else {
+	iter = nil;
+      }
+    }
+  }
+  if (code == nil) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),         new__symbol(cause, "could_not_find_source_filename_in_search_path"),
+				   new__symbol(cause, "filename"),         filename,
+				   new__symbol(cause, "search_pathnames"), search_pathnames));
+  }
   return f2__source__new(cause, code);
 }
-def_pcfunk1(source__load, filename,
+def_pcfunk2(source__load, filename, search_pathnames,
 	    "load source code from a file named by filename.",
-	    return f2__source__load(this_cause, filename));
+	    return f2__source__load(this_cause, filename, search_pathnames));
 
 f2ptr f2source__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2source__primobject_type__new(cause);
@@ -732,7 +751,7 @@ void f2__package__initialize() {
   initialize_primobject_1_slot(source,
 			       code);
   
-  f2__primcfunk__init__1(source__load, filename);
+  f2__primcfunk__init__2(source__load, filename, search_pathnames);
   
   f2__primcfunk__init__1(source__eval, this);
   

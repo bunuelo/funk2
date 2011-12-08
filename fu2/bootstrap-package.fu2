@@ -53,13 +53,15 @@
 
 [globalize file_loaded_modification_time_hash [hash]]
 
+[globalize -global_source_path- `['./' '/usr/share/funk2/']]
+
 [defunk filename-load [this]
   [with-new-cause [cause-define source-filename this]
 		  [cause-define cause-name      `filename-load]
 		  [if [or [have [this-cause] lookup `load_carefully]
 			  [not [have [this-cause] lookup `load_quickly]]]
 		      [prog [print `[filename-load loading ,this carefully]] 
-			    [source-eval [source-load this]]]
+			    [source-eval [source-load this -global_source_path-]]]
 		    [prog [print `[filename-load loading ,this quickly]]
 			  [primfunk:load this]]]
 		  [memory-debug_assert_valid]

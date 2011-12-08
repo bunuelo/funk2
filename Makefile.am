@@ -26,6 +26,10 @@ source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
 source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
+source__fu2__dir             = $(source__funk2__dir)fu2/
+source__built_in__dir        = $(source__funk2__dir)built-in/
+source__extension__dir       = $(source__funk2__dir)extension/
+source__example__dir         = $(source__funk2__dir)example/
 source__icons__dir           = $(source__funk2__dir)icons/
 
 compile__funk2__dir           = $(source__funk2__dir)
@@ -50,6 +54,10 @@ plain__install__system_bin__dir     = $(plain_install_root_dir)usr/bin/
 plain__install__bin__dir            = $(plain_install_root_dir)usr/bin/
 plain__install__include__dir        = $(plain_install_root_dir)usr/include/funk2/
 plain__install__img__dir            = $(plain_install_root_dir)usr/share/funk2/img/
+plain__install__fu2__dir            = $(plain_install_root_dir)usr/share/funk2/fu2/
+plain__install__built_in__dir       = $(plain_install_root_dir)usr/share/funk2/built-in/
+plain__install__extension__dir      = $(plain_install_root_dir)usr/share/funk2/extension/
+plain__install__example__dir        = $(plain_install_root_dir)usr/share/funk2/example/
 plain__install__icons__dir          = $(plain_install_root_dir)usr/share/funk2/icons/
 plain__install__man__dir            = $(plain_install_root_dir)usr/share/man/man1/
 plain__install__funk2               = $(plain__install__bin__dir)funk2
@@ -841,11 +849,19 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__include__dir)"                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__fu2__dir)"                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)"                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)"                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                 >> install-sh
 	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
+	echo "install -m644 $(source__fu2__dir)* $(chroot__install__fu2__dir)"             >> install-sh
+	echo "install -m644 $(source__built_in__dir)* $(chroot__install__built_in__dir)"   >> install-sh
+	echo "install -m644 $(source__extension__dir)* $(chroot__install__extension__dir)" >> install-sh
+	echo "install -m644 $(source__example__dir)* $(chroot__install__example__dir)"     >> install-sh
 	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh
 	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                  >> install-sh
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh

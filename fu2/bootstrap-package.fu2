@@ -55,6 +55,22 @@
 
 [globalize -global_source_path- `['./' '/usr/share/funk2/']]
 
+[defunk filename-stat [this]
+  [let [[stat   nil]
+	[result nil]]
+    [let [[iter -global_source_path-]]
+      [while iter
+	[let* [[source_path   [car iter]]
+	       [full_filename [format nil source_path this]]]
+	  [= result [shelter [pathname-stat full_filename]]]
+	  [if [not [is-type `bug result]]
+	      [prog [= stat result]
+		    [= iter nil]]
+	    [= iter [cdr iter]]]]]]
+    [if [is-type `bug result]
+	[bug result]
+      stat]]]
+
 [defunk filename-load [this]
   [with-new-cause [cause-define source-filename this]
 		  [cause-define cause-name      `filename-load]
@@ -65,7 +81,7 @@
 		    [prog [print `[filename-load loading ,this quickly]]
 			  [primfunk:load this]]]
 		  [memory-debug_assert_valid]
-		  [let [[stat [pathname-stat this]]]
+		  [let [[stat [filename-stat this]]]
 		    [let [[time_of_last_modification [have stat lookup `time_of_last_modification]]]
 		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
   nil]

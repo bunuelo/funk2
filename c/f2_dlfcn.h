@@ -106,10 +106,20 @@ f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause);
 
 // global_dlfcn_dynamic_library_handler
 
+//  init_frame_object__3_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
+
+declare_primobject_3_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
+
+
 f2ptr f2__global_dlfcn_dynamic_library_handler(f2ptr cause);
 
 
 // global_dlfcn_dynamic_library
+
+//  init_frame_object__4_slot(dlfcn_dynamic_library, pointer, filename, stat, pointer_symbol_hash);
+
+declare_primobject_4_slot(dlfcn_dynamic_library, pointer, filename, stat, pointer_symbol_hash);
+
 
 f2ptr f2__global_dlfcn_dynamic_library(                        f2ptr cause, f2ptr filename);
 f2ptr f2__global_dlfcn_dynamic_library__lookup_symbol(         f2ptr cause, f2ptr filename, f2ptr symbol);

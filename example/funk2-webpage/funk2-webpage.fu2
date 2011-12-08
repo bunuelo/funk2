@@ -411,6 +411,7 @@
 
 
 [defunk compile_funk2_css [context]
+  [shelter [mkdir [get context root_dir]]]
   [have [htmldoc_css context] save [string-concat [get context root_dir] 'default.css']]]
 
 [defunk compile_funk2_root_page [context]
@@ -452,6 +453,8 @@
   [print 'done compiling']
   nil]]
 
+[shelter [mkdir '/home/neptune/Desktop/www/']]
+[shelter [mkdir '/home/neptune/Desktop/www/funk2/']]
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/funk2/']]]
   [set  context hostname                               'funk2.org']
   [set  context title                                  'Funk2']

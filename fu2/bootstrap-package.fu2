@@ -61,7 +61,7 @@
     [let [[iter -global_source_path-]]
       [while iter
 	[let* [[source_path   [car iter]]
-	       [full_filename [format nil source_path this]]]
+	       [full_filename [pathname-concat source_path this]]]
 	  [= result [shelter [pathname-stat full_filename]]]
 	  [if [not [is-type `bug result]]
 	      [prog [= stat result]

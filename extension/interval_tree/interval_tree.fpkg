@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 [defpackage interval_tree
-  :packages   []
-   :sources   ['interval_tree-core.fu2']
-    :binaries ['.libs/libf2e_interval_tree.so']]
+  :packages            []
+   :sources            ['interval_tree-core.fu2']
+    :dynamic_libraries ['libf2e_interval_tree.so']]
 
 [defcore interval_tree 'libf2e_interval_tree.so']
 

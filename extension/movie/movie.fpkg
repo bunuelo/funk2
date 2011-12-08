@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage movie
-  :packages   [image_sequence]
-   :sources   ['movie-core.fu2']
-    :binaries ['.libs/libf2e_movie.so']]
+  :packages            [image_sequence]
+   :sources            ['movie-core.fu2']
+    :dynamic_libraries ['libf2e_movie.so']]
 

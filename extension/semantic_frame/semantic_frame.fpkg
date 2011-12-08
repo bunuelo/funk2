@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_frame
-  :packages   [semantic_realm
-	       semantic_relationship_key]
-   :sources   ['semantic_frame-core.fu2']
-    :binaries ['.libs/libf2e_semantic_frame.so']]
+  :packages            [semantic_realm
+			semantic_relationship_key]
+   :sources            ['semantic_frame-core.fu2']
+    :dynamic_libraries ['libf2e_semantic_frame.so']]
 
 [defcore semantic_frame 'libf2e_semantic_frame.so']
 

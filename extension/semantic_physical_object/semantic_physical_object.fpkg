@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_physical_object
-  :documentation 'Basic physical knowledge for dealing with containment and other semantic physical relationships.'
-   :packages     [semantic_object]
-    :sources     ['semantic_physical_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_physical_object.so']]
+  :documentation        'Basic physical knowledge for dealing with containment and other semantic physical relationships.'
+   :packages            [semantic_object]
+    :sources            ['semantic_physical_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_physical_object.so']]
 

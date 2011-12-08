@@ -49,9 +49,9 @@
    :sources ['blocks_world_window.fu2']]
 
 [defpackage blocks_world-core
-  :packages [cairo gtk]
-   :sources ['blocks_world-core.fu2']
-    :binaries ['.libs/libf2e_blocks_world.so']]
+  :packages            [cairo gtk]
+   :sources            ['blocks_world-core.fu2']
+    :dynamic_libraries ['libf2e_blocks_world.so']]
 
 [defpackage blocks_world
   :packages [blocks_world-core

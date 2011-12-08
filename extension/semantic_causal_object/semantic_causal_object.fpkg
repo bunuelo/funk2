@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_causal_object
-  :documentation 'Basic knowledge for dealing with causal orderings of objects--useful for thinking about responsibility for knowledge.'
-   :packages     [semantic_object]
-    :sources     ['semantic_causal_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_causal_object.so']]
+  :documentation        'Basic knowledge for dealing with causal orderings of objects--useful for thinking about responsibility for knowledge.'
+   :packages            [semantic_object]
+    :sources            ['semantic_causal_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_causal_object.so']]
 
 [defcore semantic_causal_object 'libf2e_semantic_causal_object.so']
 

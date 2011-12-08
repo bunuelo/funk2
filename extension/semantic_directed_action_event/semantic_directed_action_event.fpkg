@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_directed_action_event
-  :documentation 'Basic knowledge for dealing with directed agent actions as events.'
-   :packages     [semantic_action_event]
-    :sources     ['semantic_directed_action_event-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_directed_action_event.so']]
+  :documentation        'Basic knowledge for dealing with directed agent actions as events.'
+   :packages            [semantic_action_event]
+    :sources            ['semantic_directed_action_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_directed_action_event.so']]
 

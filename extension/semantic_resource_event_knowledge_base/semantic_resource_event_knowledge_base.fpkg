@@ -18,12 +18,12 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_resource_event_knowledge_base
-  :documentation 'Knowledge base for dealing with resource events.'
-   :packages     [semantic_event_knowledge_base
-		  semantic_know_of_relationship_event
-		  semantic_resource]
-    :sources     ['semantic_resource_event_knowledge_base-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_resource_event_knowledge_base.so']]
+  :documentation        'Knowledge base for dealing with resource events.'
+   :packages            [semantic_event_knowledge_base
+			 semantic_know_of_relationship_event
+			 semantic_resource]
+    :sources            ['semantic_resource_event_knowledge_base-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_resource_event_knowledge_base.so']]
 
 [defcore semantic_resource_event_knowledge_base 'libf2e_semantic_resource_event_knowledge_base.so']
 

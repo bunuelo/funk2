@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_action_transframe
-  :documentation 'Representation for dealing with action-trans-frame hypotheses.'
-   :packages     [semantic_object]
-    :sources     ['semantic_action_transframe-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_action_transframe.so']]
+  :documentation        'Representation for dealing with action-trans-frame hypotheses.'
+   :packages            [semantic_object]
+    :sources            ['semantic_action_transframe-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_action_transframe.so']]
 

@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_know_of_existence_event
-  :documentation 'Knowledge of the knowledge that a phenomenon exists.'
-   :packages     [semantic_causal_event]
-    :sources     ['semantic_know_of_existence_event-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_know_of_existence_event.so']]
+  :documentation        'Knowledge of the knowledge that a phenomenon exists.'
+   :packages            [semantic_causal_event]
+    :sources            ['semantic_know_of_existence_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_know_of_existence_event.so']]
 
 [defcore semantic_know_of_existence_event 'libf2e_semantic_know_of_existence_event.so']
 

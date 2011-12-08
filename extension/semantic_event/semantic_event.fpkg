@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_event
-  :documentation 'Basic knowledge for dealing with events in time.'
-   :packages     [semantic_temporal_object
-		  semantic_time]
-    :sources     ['semantic_event-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_event.so']]
+  :documentation        'Basic knowledge for dealing with events in time.'
+   :packages            [semantic_temporal_object
+			 semantic_time]
+    :sources            ['semantic_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_event.so']]
 
 [defcore semantic_event 'libf2e_semantic_event.so']
 

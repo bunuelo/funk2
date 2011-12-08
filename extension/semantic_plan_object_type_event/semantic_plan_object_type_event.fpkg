@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_plan_object_type_event
-  :documentation 'Basic knowledge for dealing with plan object types.'
-   :packages     [semantic_object_type_event]
-    :sources     ['semantic_plan_object_type_event-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_plan_object_type_event.so']]
+  :documentation        'Basic knowledge for dealing with plan object types.'
+   :packages            [semantic_object_type_event]
+    :sources            ['semantic_plan_object_type_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_plan_object_type_event.so']]
 
 [defcore semantic_plan_object_type_event 'libf2e_semantic_plan_object_type_event.so']
 

@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_action_event
-  :documentation 'Basic knowledge for dealing with agent actions as events.'
-   :packages     [semantic_causal_event]
-    :sources     ['semantic_action_event-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_action_event.so']]
+  :documentation        'Basic knowledge for dealing with agent actions as events.'
+   :packages            [semantic_causal_event]
+    :sources            ['semantic_action_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_action_event.so']]
 

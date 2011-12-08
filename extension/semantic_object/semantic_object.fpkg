@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_object
-  :documentation 'Basic physical knowledge for dealing with properties of objects, their noun references, classifier references, etc.'
-   :packages     [semantic_frame]
-    :sources     ['semantic_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_object.so']]
+  :documentation        'Basic physical knowledge for dealing with properties of objects, their noun references, classifier references, etc.'
+   :packages            [semantic_frame]
+    :sources            ['semantic_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_object.so']]
 
 'used to depend on semantic_knowledge_base.'
 

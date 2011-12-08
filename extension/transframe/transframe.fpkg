@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage transframe
-  :packages   [semantic_frame
-	       semantic_knowledge_base]
-   :sources   ['transframe-core.fu2']
-    :binaries ['.libs/libf2e_transframe.so']]
+  :packages            [semantic_frame
+			semantic_knowledge_base]
+   :sources            ['transframe-core.fu2']
+    :dynamic_libraries ['libf2e_transframe.so']]
 
 [defcore transframe 'libf2e_transframe.so']
 

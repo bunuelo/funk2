@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_realm
-  :packages   [equals_hash
-	       forgetful_event_stream
-	       lick]
-   :sources   ['semantic_realm-core.fu2']
-    :binaries ['.libs/libf2e_semantic_realm.so']]
+  :packages            [equals_hash
+			forgetful_event_stream
+			lick]
+   :sources            ['semantic_realm-core.fu2']
+    :dynamic_libraries ['libf2e_semantic_realm.so']]
 
 [defcore semantic_realm 'libf2e_semantic_realm.so']
 

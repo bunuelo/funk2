@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_goal_action_causal_hypothesis
-  :documentation 'Basic knowledge for keeping track of hypotheses about which actions may cause which goal states.'
-   :packages     [semantic_event
-		  semantic_goal]
-    :sources     ['semantic_goal_action_causal_hypothesis-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_goal_action_causal_hypothesis.so']]
+  :documentation        'Basic knowledge for keeping track of hypotheses about which actions may cause which goal states.'
+   :packages            [semantic_event
+			 semantic_goal]
+    :sources            ['semantic_goal_action_causal_hypothesis-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_goal_action_causal_hypothesis.so']]
 
 [defcore semantic_goal_action_causal_hypothesis 'libf2e_semantic_goal_action_causal_hypothesis.so']
 

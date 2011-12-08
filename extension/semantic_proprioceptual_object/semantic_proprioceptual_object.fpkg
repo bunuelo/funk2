@@ -18,12 +18,12 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_proprioceptual_object
-  :documentation 'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
-   :packages     [semantic_object
-		  semantic_proprioceptual_position
-		  semantic_proprioceptual_orientation]
-    :sources     ['semantic_proprioceptual_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_proprioceptual_object.so']]
+  :documentation        'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
+   :packages            [semantic_object
+			 semantic_proprioceptual_position
+			 semantic_proprioceptual_orientation]
+    :sources            ['semantic_proprioceptual_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_proprioceptual_object.so']]
 
 [defcore semantic_proprioceptual_object 'libf2e_semantic_proprioceptual_object.so']
 

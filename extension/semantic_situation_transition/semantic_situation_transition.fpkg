@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_situation_transition
-  :documentation 'Basic knowledge for dealing with transitions between situational sets of events.'
-   :packages     [semantic_object
-		  semantic_event]
-    :sources     ['semantic_situation_transition-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_situation_transition.so']]
+  :documentation        'Basic knowledge for dealing with transitions between situational sets of events.'
+   :packages            [semantic_object
+			 semantic_event]
+    :sources            ['semantic_situation_transition-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_situation_transition.so']]
 
 [defcore semantic_situation_transition 'libf2e_semantic_situation_transition.so']
 

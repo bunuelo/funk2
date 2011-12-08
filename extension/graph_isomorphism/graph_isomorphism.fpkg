@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage graph_isomorphism
-  :packages   []
-   :sources   ['graph_isomorphism-core.fu2']
-    :binaries ['.libs/libf2e_graph_isomorphism.so']]
+  :packages            []
+   :sources            ['graph_isomorphism-core.fu2']
+    :dynamic_libraries ['libf2e_graph_isomorphism.so']]
 

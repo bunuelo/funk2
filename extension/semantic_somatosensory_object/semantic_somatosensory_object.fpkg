@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_somatosensory_object
-  :documentation 'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
-   :packages     [semantic_object]
-    :sources     ['semantic_somatosensory_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_somatosensory_object.so']]
+  :documentation        'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
+   :packages            [semantic_object]
+    :sources            ['semantic_somatosensory_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_somatosensory_object.so']]
 
 [defcore semantic_somatosensory_object 'libf2e_semantic_somatosensory_object.so']
 

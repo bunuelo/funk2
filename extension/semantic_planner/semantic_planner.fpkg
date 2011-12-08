@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_planner
-  :documentation 'Basic physical knowledge for a planner.'
-   :packages     [semantic_object]
-    :sources     ['semantic_planner-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_planner.so']]
+  :documentation        'Basic physical knowledge for a planner.'
+   :packages            [semantic_object]
+    :sources            ['semantic_planner-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_planner.so']]
 

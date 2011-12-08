@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_ordered_object
-  :documentation 'Basic knowledge for dealing with transitive orderings of objects--useful for temporal and spatial thinking.'
-   :packages     [semantic_object]
-    :sources     ['semantic_ordered_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_ordered_object.so']]
+  :documentation        'Basic knowledge for dealing with transitive orderings of objects--useful for temporal and spatial thinking.'
+   :packages            [semantic_object]
+    :sources            ['semantic_ordered_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_ordered_object.so']]
 
 [defcore semantic_ordered_object 'libf2e_semantic_ordered_object.so']
 

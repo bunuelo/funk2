@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_category
-  :documentation 'Basic knowledge for dealing with positive and negative examples of a category.'
-   :packages     [semantic_object]
-    :sources     ['semantic_category-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_category.so']]
+  :documentation        'Basic knowledge for dealing with positive and negative examples of a category.'
+   :packages            [semantic_object]
+    :sources            ['semantic_category-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_category.so']]
 
 [defcore semantic_category 'libf2e_semantic_category.so']
 

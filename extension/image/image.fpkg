@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 [defpackage image
-  :packages   []
-   :sources   ['image-core.fu2']
-    :binaries ['.libs/libf2e_image.so']]
+  :packages            []
+   :sources            ['image-core.fu2']
+    :dynamic_libraries ['libf2e_image.so']]
 
 [defcore image 'libf2e_image.so']
 

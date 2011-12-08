@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_time
-  :packages   []
-   :sources   ['semantic_time-core.fu2']
-    :binaries ['.libs/libf2e_semantic_time.so']]
+  :packages            []
+   :sources            ['semantic_time-core.fu2']
+    :dynamic_libraries ['libf2e_semantic_time.so']]
 
 [defcore semantic_time 'libf2e_semantic_time.so']
 

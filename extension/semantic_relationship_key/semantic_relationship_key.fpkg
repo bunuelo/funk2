@@ -18,9 +18,9 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_relationship_key
-  :packages   [semantic_realm]
-   :sources   ['semantic_relationship_key-core.fu2']
-    :binaries ['.libs/libf2e_semantic_relationship_key.so']]
+  :packages            [semantic_realm]
+   :sources            ['semantic_relationship_key-core.fu2']
+    :dynamic_libraries ['libf2e_semantic_relationship_key.so']]
 
 [defcore semantic_relationship_key 'libf2e_semantic_relationship_key.so']
 

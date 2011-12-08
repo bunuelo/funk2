@@ -18,10 +18,10 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_resource
-  :documentation 'Basic knowledge for thinking about mental resources.'
-   :packages     [semantic_object]
-    :sources     ['semantic_resource-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_resource.so']]
+  :documentation        'Basic knowledge for thinking about mental resources.'
+   :packages            [semantic_object]
+    :sources            ['semantic_resource-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_resource.so']]
 
 [defcore semantic_resource 'libf2e_semantic_resource.so']
 

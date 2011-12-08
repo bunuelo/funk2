@@ -18,11 +18,11 @@
  rights to redistribute these changes.'
 
 [defpackage semantic_packable_object
-  :documentation 'Basic knowledge for dealing with hierarchical and transitive orderings of objects--useful for temporal and spatial reasoning.'
-   :packages     [semantic_ordered_object
-		  semantic_containment_object]
-    :sources     ['semantic_packable_object-core.fu2']
-     :binaries   ['.libs/libf2e_semantic_packable_object.so']]
+  :documentation        'Basic knowledge for dealing with hierarchical and transitive orderings of objects--useful for temporal and spatial reasoning.'
+   :packages            [semantic_ordered_object
+			 semantic_containment_object]
+    :sources            ['semantic_packable_object-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_packable_object.so']]
 
 [defcore semantic_packable_object 'libf2e_semantic_packable_object.so']
 

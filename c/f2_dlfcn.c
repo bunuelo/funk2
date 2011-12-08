@@ -319,10 +319,26 @@ def_pcfunk1(dlfcn_dynamic_library__close, this,
 	    return f2__dlfcn_dynamic_library__close(this_cause, this));
 
 
-f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
-  f2ptr filename     = assert_value(f2__dlfcn_dynamic_library__filename(cause, this));
-  f2ptr stat         = assert_value(f2__dlfcn_dynamic_library__stat(cause, this));
-  f2ptr current_stat = assert_value(f2__pathname__stat(cause, filename));
+f2ptr raw__dlfcn_dynamic_library__current_stat(f2ptr cause, f2ptr this, f2ptr search_pathnames) {
+  f2ptr filename = assert_value(f2__dlfcn_dynamic_library__filename(cause, this));
+  {
+    f2ptr iter = search_pathnames;
+    while (iter != nil) {
+      f2ptr search_pathname = assert_value(f2__cons__car(cause, iter));
+      f2ptr full_filename   = f2__pathname__concat(cause, search_pathname, filename);
+      f2ptr stat            = f2__pathname__stat(cause, full_filename);
+      if (! raw__larva__is_type(cause, stat)) {
+	return stat;
+      }
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
+  }
+  return nil;
+}
+
+f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this, f2ptr search_pathnames) {
+  f2ptr stat         = assert_value( f2__dlfcn_dynamic_library__stat(        cause, this));
+  f2ptr current_stat = assert_value(raw__dlfcn_dynamic_library__current_stat(cause, this, search_pathnames));
   if ((! raw__frame__is_type(cause, current_stat)) ||
       (! raw__frame__is_type(cause, stat))) {
     return f2larva__new(cause, 227, nil);
@@ -335,13 +351,13 @@ f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
   return f2bool__new(boolean__true);
 }
 
-f2ptr f2__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this) {
+f2ptr f2__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this, f2ptr search_pathnames) {
   assert_argument_type(dlfcn_dynamic_library, this);
-  return raw__dlfcn_dynamic_library__changed_on_disk(cause, this);
+  return raw__dlfcn_dynamic_library__changed_on_disk(cause, this, search_pathnames);
 }
-def_pcfunk1(dlfcn_dynamic_library__changed_on_disk, this,
+def_pcfunk2(dlfcn_dynamic_library__changed_on_disk, this, search_pathnames,
 	    "",
-	    return f2__dlfcn_dynamic_library__changed_on_disk(this_cause, this));
+	    return f2__dlfcn_dynamic_library__changed_on_disk(this_cause, this, search_pathnames));
 
 
 f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause) {
@@ -457,12 +473,13 @@ def_pcfunk2(dlfcn_dynamic_library_handler__unload_dynamic_library, this, filenam
 
 
 f2ptr raw__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this) {
+  f2ptr search_pathnames  = f2__dlfcn_dynamic_library_handler__search_pathnames(cause, this);
   f2ptr changed_libraries = nil;
   {
     f2ptr dlfcn_dynamic_library_pointer_hash = assert_value(f2__dlfcn_dynamic_library_handler__dlfcn_dynamic_library_pointer_hash(cause, this));
     ptypehash__value__iteration(cause, dlfcn_dynamic_library_pointer_hash, dynamic_library,
 				assert_argument_type(dlfcn_dynamic_library, dynamic_library);
-				f2ptr changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library));
+				f2ptr changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library, search_pathnames));
 				if (changed_on_disk != nil) {
 				  changed_libraries = f2cons__new(cause, dynamic_library, changed_libraries);
 				}

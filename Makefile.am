@@ -29,6 +29,7 @@ source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__built_in__dir        = $(source__funk2__dir)built-in/
 source__extension__dir       = $(source__funk2__dir)extension/
+source__test__dir            = $(source__funk2__dir)test/
 source__example__dir         = $(source__funk2__dir)example/
 source__icons__dir           = $(source__funk2__dir)icons/
 
@@ -48,6 +49,7 @@ chroot__install__img__dir            = $(chroot_install_root_dir)usr/share/funk2
 chroot__install__fu2__dir            = $(chroot_install_root_dir)usr/share/funk2/fu2/
 chroot__install__built_in__dir       = $(chroot_install_root_dir)usr/share/funk2/built-in/
 chroot__install__extension__dir      = $(chroot_install_root_dir)usr/share/funk2/extension/
+chroot__install__test__dir           = $(chroot_install_root_dir)usr/share/funk2/test/
 chroot__install__example__dir        = $(chroot_install_root_dir)usr/share/funk2/example/
 chroot__install__icons__dir          = $(chroot_install_root_dir)usr/share/funk2/icons/
 chroot__install__man__dir            = $(chroot_install_root_dir)usr/share/man/man1/
@@ -61,6 +63,7 @@ plain__install__img__dir            = $(plain_install_root_dir)usr/share/funk2/i
 plain__install__fu2__dir            = $(plain_install_root_dir)usr/share/funk2/fu2/
 plain__install__built_in__dir       = $(plain_install_root_dir)usr/share/funk2/built-in/
 plain__install__extension__dir      = $(plain_install_root_dir)usr/share/funk2/extension/
+plain__install__test__dir           = $(plain_install_root_dir)usr/share/funk2/test/
 plain__install__example__dir        = $(plain_install_root_dir)usr/share/funk2/example/
 plain__install__icons__dir          = $(plain_install_root_dir)usr/share/funk2/icons/
 plain__install__man__dir            = $(plain_install_root_dir)usr/share/man/man1/
@@ -941,6 +944,15 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_visual_object/"                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)timeline/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)transframe/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)"                                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)cairo-test/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)concept_version_space-test/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)gtk-test/"                                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)interval_tree-test/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)optimize-test/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)propogator-test/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)timeline-test/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)xmlrpc-test/"                                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)divisi2/"                                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)em_two_webpage/"                                                                                                           >> install-sh
@@ -1060,6 +1072,15 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_visual_object/*.f*                       $(chroot__install__extension__dir)semantic_visual_object/"                       >> install-sh
 	echo "install -m644 $(source__extension__dir)timeline/*.f*                                     $(chroot__install__extension__dir)timeline/"                                     >> install-sh
 	echo "install -m644 $(source__extension__dir)transframe/*.f*                                   $(chroot__install__extension__dir)transframe/"                                   >> install-sh
+	echo "install -m644 $(source__test__dir)*                                                      $(chroot__install__test__dir)"                                                   >> install-sh
+	echo "install -m644 $(source__test__dir)cairo-test/*.f*                                        $(chroot__install__test__dir)cairo-test/"                                        >> install-sh
+	echo "install -m644 $(source__test__dir)concept_version_space-test/*.f*                        $(chroot__install__test__dir)concept_version_space-test/"                        >> install-sh
+	echo "install -m644 $(source__test__dir)gtk-test/*.f*                                          $(chroot__install__test__dir)gtk-test/"                                          >> install-sh
+	echo "install -m644 $(source__test__dir)interval_tree-test/*.f*                                $(chroot__install__test__dir)interval_tree-test/"                                >> install-sh
+	echo "install -m644 $(source__test__dir)optimize-test/*.f*                                     $(chroot__install__test__dir)optimize-test/"                                     >> install-sh
+	echo "install -m644 $(source__test__dir)propogator-test/*.f*                                   $(chroot__install__test__dir)propogator-test/"                                   >> install-sh
+	echo "install -m644 $(source__test__dir)timeline-test/*.f*                                     $(chroot__install__test__dir)timeline-test/"                                     >> install-sh
+	echo "install -m644 $(source__test__dir)xmlrpc-test/*.f*                                       $(chroot__install__test__dir)xmlrpc-test/"                                       >> install-sh
 	echo "install -m644 $(source__example__dir)*                                                   $(chroot__install__example__dir)"                                                >> install-sh
 	echo "install -m644 $(source__example__dir)divisi2/*.f*                                        $(chroot__install__example__dir)divisi2/"                                        >> install-sh
 	echo "install -m644 $(source__example__dir)em_two_webpage/*.f*                                 $(chroot__install__example__dir)em_two_webpage/"                                 >> install-sh

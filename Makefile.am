@@ -942,6 +942,31 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)timeline/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)transframe/"                                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)divisi2/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)em_two_webpage/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)english_language/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)funk2-htmldoc/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)funk2-webpage/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)graph_match/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)gtk_timeline/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)isis_world/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)isis_world_client/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)macbeth/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mind/"                                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon-1.0/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon-blocks_world/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon-isis_world/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)moral_compass/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)moral_compass-isis_world/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)rct_webpage/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_mind/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_mind-blocks_world/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)roboverse/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)socket-client/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)socket-server/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)traced_mind/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)visualize/"                                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                                                                              >> install-sh
 	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                                                                                >> install-sh
@@ -1036,6 +1061,31 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)timeline/*.f*                                     $(chroot__install__extension__dir)timeline/"                                     >> install-sh
 	echo "install -m644 $(source__extension__dir)transframe/*.f*                                   $(chroot__install__extension__dir)transframe/"                                   >> install-sh
 	echo "install -m644 $(source__example__dir)*                                                   $(chroot__install__example__dir)"                                                >> install-sh
+	echo "install -m644 $(source__example__dir)divisi2/*.f*                                        $(chroot__install__example__dir)divisi2/"                                        >> install-sh
+	echo "install -m644 $(source__example__dir)em_two_webpage/*.f*                                 $(chroot__install__example__dir)em_two_webpage/"                                 >> install-sh
+	echo "install -m644 $(source__example__dir)english_language/*.f*                               $(chroot__install__example__dir)english_language/"                               >> install-sh
+	echo "install -m644 $(source__example__dir)funk2-htmldoc/*.f*                                  $(chroot__install__example__dir)funk2-htmldoc/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)funk2-webpage/*.f*                                  $(chroot__install__example__dir)funk2-webpage/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)graph_match/*.f*                                    $(chroot__install__example__dir)graph_match/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)gtk_timeline/*.f*                                   $(chroot__install__example__dir)gtk_timeline/"                                   >> install-sh
+	echo "install -m644 $(source__example__dir)isis_world/*.f*                                     $(chroot__install__example__dir)isis_world/"                                     >> install-sh
+	echo "install -m644 $(source__example__dir)isis_world_client/*.f*                              $(chroot__install__example__dir)isis_world_client/"                              >> install-sh
+	echo "install -m644 $(source__example__dir)macbeth/*.f*                                        $(chroot__install__example__dir)macbeth/"                                        >> install-sh
+	echo "install -m644 $(source__example__dir)mind/*.f*                                           $(chroot__install__example__dir)mind/"                                           >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon/*.f*                                        $(chroot__install__example__dir)mindmon/"                                        >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon-1.0/*.f*                                    $(chroot__install__example__dir)mindmon-1.0/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon-blocks_world/*.f*                           $(chroot__install__example__dir)mindmon-blocks_world/"                           >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon-isis_world/*.f*                             $(chroot__install__example__dir)mindmon-isis_world/"                             >> install-sh
+	echo "install -m644 $(source__example__dir)moral_compass/*.f*                                  $(chroot__install__example__dir)moral_compass/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)moral_compass-isis_world/*.f*                       $(chroot__install__example__dir)moral_compass-isis_world/"                       >> install-sh
+	echo "install -m644 $(source__example__dir)rct_webpage/*.f*                                    $(chroot__install__example__dir)rct_webpage/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)reflective_mind/*.f*                                $(chroot__install__example__dir)reflective_mind/"                                >> install-sh
+	echo "install -m644 $(source__example__dir)reflective_mind-blocks_world/*.f*                   $(chroot__install__example__dir)reflective_mind-blocks_world/"                   >> install-sh
+	echo "install -m644 $(source__example__dir)roboverse/*.f*                                      $(chroot__install__example__dir)roboverse/"                                      >> install-sh
+	echo "install -m644 $(source__example__dir)socket-client/*.f*                                  $(chroot__install__example__dir)socket-client/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)socket-server/*.f*                                  $(chroot__install__example__dir)socket-server/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)traced_mind/*.f*                                    $(chroot__install__example__dir)traced_mind/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)visualize/*.f*                                      $(chroot__install__example__dir)visualize/"                                      >> install-sh
 	echo "install -m644 $(source__icons__dir)*                                                     $(chroot__install__icons__dir)"                                                  >> install-sh
 	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                                                                                                               >> install-sh
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                                                             >> install-sh

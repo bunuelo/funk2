@@ -244,7 +244,6 @@ f2ptr f2__dlfcn_dynamic_library__new(f2ptr cause, f2ptr pointer, f2ptr filename,
 
 
 f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr flag, f2ptr search_pathnames) {
-  f2__print(cause, search_pathnames);
   f2ptr stat;
   f2ptr full_filename = nil;
   {
@@ -254,7 +253,6 @@ f2ptr raw__dlfcn_dynamic_library__new_open(f2ptr cause, f2ptr filename, f2ptr fl
       while (keep_searching) {
 	f2ptr search_pathname = assert_value(f2__cons__car(cause, search_pathnames__iter));
 	full_filename   = assert_value(f2__pathname__concat(cause, search_pathname, filename));
-	f2__print(cause, full_filename);
 	stat = f2__pathname__stat(cause, full_filename);
 	if (raw__larva__is_type(cause, stat)) {
 	  search_pathnames__iter = assert_value(f2__cons__cdr(cause, search_pathnames__iter));

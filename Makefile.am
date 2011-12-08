@@ -841,58 +841,204 @@ clean: clean-am clean-img
 	mkdir -p lib/.libs
 
 make-install-sh:
-	echo "#!/bin/sh"                                                                      > install-sh
-	echo "echo \"\""                                                                                                                           >> install-sh
-	echo "echo \"make: performing system-wide installation of funk2\""                                                                         >> install-sh
-	echo "echo \"\""                                                                                                                           >> install-sh
-	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                     >> install-sh
-#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                     >> install-sh
-	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""                                                                 >> install-sh
-	echo "echo \"\""                                                                                                                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                                                                         >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                                                                         >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__include__dir)"                                                                                     >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                                                                                  >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__fu2__dir)"                                                                                         >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)"                                                                                    >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)alien/"                                                                              >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)ansi/"                                                                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)basic_bug_responses/"                                                                >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_cluster/"                                                                      >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_match_error_correcting/"                                                       >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graphviz/"                                                                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)math/"                                                                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)mutex/"                                                                              >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)natural_language/"                                                                   >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)number/"                                                                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)utilities/"                                                                          >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)xmlrpc/"                                                                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                                                                                   >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                     >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                                       >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                                         >> install-sh
-	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                                           >> install-sh
-	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                         >> install-sh
-	echo "install -m644 c/*.h $(chroot__install__include__dir)"                                                                                >> install-sh
-	echo "install -m644 $(source__fu2__dir)*                                   $(chroot__install__fu2__dir)"                                   >> install-sh
-	echo "install -m644 $(source__built_in__dir)*                              $(chroot__install__built_in__dir)"                              >> install-sh
-	echo "install -m644 $(source__built_in__dir)alien/*                        $(chroot__install__built_in__dir)alien/"                        >> install-sh
-	echo "install -m644 $(source__built_in__dir)ansi/*                         $(chroot__install__built_in__dir)ansi/"                         >> install-sh
-	echo "install -m644 $(source__built_in__dir)basic_bug_responses/*          $(chroot__install__built_in__dir)basic_bug_responses/"          >> install-sh
-	echo "install -m644 $(source__built_in__dir)graph_cluster/*                $(chroot__install__built_in__dir)graph_cluster/"                >> install-sh
-	echo "install -m644 $(source__built_in__dir)graph_match_error_correcting/* $(chroot__install__built_in__dir)graph_match_error_correcting/" >> install-sh
-	echo "install -m644 $(source__built_in__dir)graphviz/*                     $(chroot__install__built_in__dir)graphviz/"                     >> install-sh
-	echo "install -m644 $(source__built_in__dir)math/*                         $(chroot__install__built_in__dir)math/"                         >> install-sh
-	echo "install -m644 $(source__built_in__dir)mutex/*                        $(chroot__install__built_in__dir)mutex/"                        >> install-sh
-	echo "install -m644 $(source__built_in__dir)natural_language/*             $(chroot__install__built_in__dir)natural_language/"             >> install-sh
-	echo "install -m644 $(source__built_in__dir)number/*                       $(chroot__install__built_in__dir)number/"                       >> install-sh
-	echo "install -m644 $(source__built_in__dir)utilities/*                    $(chroot__install__built_in__dir)utilities/"                    >> install-sh
-	echo "install -m644 $(source__built_in__dir)xmlrpc/*                       $(chroot__install__built_in__dir)xmlrpc/"                       >> install-sh
-	echo "install -m644 $(source__extension__dir)* $(chroot__install__extension__dir)"                                                         >> install-sh
-	echo "install -m644 $(source__example__dir)*   $(chroot__install__example__dir)"                                                           >> install-sh
-	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"                                                                 >> install-sh
-	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                                                                          >> install-sh
-	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                        >> install-sh
+	echo "#!/bin/sh"                                                                                                                                                              > install-sh
+	echo "echo \"\""                                                                                                                                                             >> install-sh
+	echo "echo \"make: performing system-wide installation of funk2\""                                                                                                           >> install-sh
+	echo "echo \"\""                                                                                                                                                             >> install-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                                                       >> install-sh
+#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                                                       >> install-sh
+	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""                                                                                                   >> install-sh
+	echo "echo \"\""                                                                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__include__dir)"                                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__fu2__dir)"                                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)"                                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)alien/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)ansi/"                                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)basic_bug_responses/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_cluster/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_match_error_correcting/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graphviz/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)math/"                                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)mutex/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)natural_language/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)number/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)utilities/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)xmlrpc/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)blocks_world/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)cairo/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)causality/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)conceptnet/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)concept_version_space/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)equals_hash/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)event_stream/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)fibermon/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)forgetful_event_stream/"                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)forward_planner/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)frame_ball/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)graph_isomorphism/"                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)gtk_extension/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)image/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)image_sequence/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)interval_tree/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)lick/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)movie/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_event/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_transframe/"                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_agent/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_assumption/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_category/"                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_event/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_object/"                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_containment_object/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_directed_action_event/"                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_knowledge_base/"                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_sequence/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_tree/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_frame/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal_action_causal_hypothesis/"                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal_event/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_knowledge_base/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_know_of_existence_event/"                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_know_of_relationship_event/"                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_object/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_object_type_event/"                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_ordered_object/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_packable_object/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object_type_event/"                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object_type_property_event/"                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object_type_relation_event/"                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_planner/"                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object/"                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_event/"                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioception/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_object/"                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_position/"                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_realm/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_relationship_key/"                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource/"                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_event/"                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_sequence/"                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_event_knowledge_base/"                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_self/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation_category/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation_transition/"                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_somatosensation/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_somatosensory_object/"                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_temporal_object/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_time/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_visual_object/"                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)timeline/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)transframe/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                                                                           >> install-sh
+	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                                                                             >> install-sh
+	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                           >> install-sh
+	echo "install -m644 c/*.h $(chroot__install__include__dir)"                                                                                                                  >> install-sh
+	echo "install -m644 $(source__fu2__dir)*                                                    $(chroot__install__fu2__dir)"                                                    >> install-sh
+	echo "install -m644 $(source__built_in__dir)*                                               $(chroot__install__built_in__dir)"                                               >> install-sh
+	echo "install -m644 $(source__built_in__dir)alien/*                                         $(chroot__install__built_in__dir)alien/"                                         >> install-sh
+	echo "install -m644 $(source__built_in__dir)ansi/*                                          $(chroot__install__built_in__dir)ansi/"                                          >> install-sh
+	echo "install -m644 $(source__built_in__dir)basic_bug_responses/*                           $(chroot__install__built_in__dir)basic_bug_responses/"                           >> install-sh
+	echo "install -m644 $(source__built_in__dir)graph_cluster/*                                 $(chroot__install__built_in__dir)graph_cluster/"                                 >> install-sh
+	echo "install -m644 $(source__built_in__dir)graph_match_error_correcting/*                  $(chroot__install__built_in__dir)graph_match_error_correcting/"                  >> install-sh
+	echo "install -m644 $(source__built_in__dir)graphviz/*                                      $(chroot__install__built_in__dir)graphviz/"                                      >> install-sh
+	echo "install -m644 $(source__built_in__dir)math/*                                          $(chroot__install__built_in__dir)math/"                                          >> install-sh
+	echo "install -m644 $(source__built_in__dir)mutex/*                                         $(chroot__install__built_in__dir)mutex/"                                         >> install-sh
+	echo "install -m644 $(source__built_in__dir)natural_language/*                              $(chroot__install__built_in__dir)natural_language/"                              >> install-sh
+	echo "install -m644 $(source__built_in__dir)number/*                                        $(chroot__install__built_in__dir)number/"                                        >> install-sh
+	echo "install -m644 $(source__built_in__dir)utilities/*                                     $(chroot__install__built_in__dir)utilities/"                                     >> install-sh
+	echo "install -m644 $(source__built_in__dir)xmlrpc/*                                        $(chroot__install__built_in__dir)xmlrpc/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)*                                              $(chroot__install__extension__dir)"                                              >> install-sh
+	echo "install -m644 $(source__extension__dir)blocks_world/*                                 $(chroot__install__extension__dir)blocks_world/"                                 >> install-sh
+	echo "install -m644 $(source__extension__dir)cairo/*                                        $(chroot__install__extension__dir)cairo/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)causality/*                                    $(chroot__install__extension__dir)causality/"                                    >> install-sh
+	echo "install -m644 $(source__extension__dir)conceptnet/*                                   $(chroot__install__extension__dir)conceptnet/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)concept_version_space/*                        $(chroot__install__extension__dir)concept_version_space/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)equals_hash/*                                  $(chroot__install__extension__dir)equals_hash/"                                  >> install-sh
+	echo "install -m644 $(source__extension__dir)event_stream/*                                 $(chroot__install__extension__dir)event_stream/"                                 >> install-sh
+	echo "install -m644 $(source__extension__dir)fibermon/*                                     $(chroot__install__extension__dir)fibermon/"                                     >> install-sh
+	echo "install -m644 $(source__extension__dir)forgetful_event_stream/*                       $(chroot__install__extension__dir)forgetful_event_stream/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)forward_planner/*                              $(chroot__install__extension__dir)forward_planner/"                              >> install-sh
+	echo "install -m644 $(source__extension__dir)frame_ball/*                                   $(chroot__install__extension__dir)frame_ball/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)graph_isomorphism/*                            $(chroot__install__extension__dir)graph_isomorphism/"                            >> install-sh
+	echo "install -m644 $(source__extension__dir)gtk_extension/*                                $(chroot__install__extension__dir)gtk_extension/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)image/*                                        $(chroot__install__extension__dir)image/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)image_sequence/*                               $(chroot__install__extension__dir)image_sequence/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)interval_tree/*                                $(chroot__install__extension__dir)interval_tree/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)lick/*                                         $(chroot__install__extension__dir)lick/"                                         >> install-sh
+	echo "install -m644 $(source__extension__dir)meta_semantic_knowledge_base/*                 $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                 >> install-sh
+	echo "install -m644 $(source__extension__dir)movie/*                                        $(chroot__install__extension__dir)movie/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)propogator/*                                   $(chroot__install__extension__dir)propogator/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_action_event/*                        $(chroot__install__extension__dir)semantic_action_event/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_action_transframe/*                   $(chroot__install__extension__dir)semantic_action_transframe/"                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_agent/*                               $(chroot__install__extension__dir)semantic_agent/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_assumption/*                          $(chroot__install__extension__dir)semantic_assumption/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_category/*                            $(chroot__install__extension__dir)semantic_category/"                            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_causal_event/*                        $(chroot__install__extension__dir)semantic_causal_event/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_causal_object/*                       $(chroot__install__extension__dir)semantic_causal_object/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_containment_object/*                  $(chroot__install__extension__dir)semantic_containment_object/"                  >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_directed_action_event/*               $(chroot__install__extension__dir)semantic_directed_action_event/"               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event/*                               $(chroot__install__extension__dir)semantic_event/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_knowledge_base/*                $(chroot__install__extension__dir)semantic_event_knowledge_base/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_sequence/*                      $(chroot__install__extension__dir)semantic_event_sequence/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_tree/*                          $(chroot__install__extension__dir)semantic_event_tree/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_frame/*                               $(chroot__install__extension__dir)semantic_frame/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_goal/*                                $(chroot__install__extension__dir)semantic_goal/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_goal_action_causal_hypothesis/*       $(chroot__install__extension__dir)semantic_goal_action_causal_hypothesis/"       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_goal_event/*                          $(chroot__install__extension__dir)semantic_goal_event/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_knowledge_base/*                      $(chroot__install__extension__dir)semantic_knowledge_base/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_know_of_existence_event/*             $(chroot__install__extension__dir)semantic_know_of_existence_event/"             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_know_of_relationship_event/*          $(chroot__install__extension__dir)semantic_know_of_relationship_event/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_object/*                              $(chroot__install__extension__dir)semantic_object/"                              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_object_type_event/*                   $(chroot__install__extension__dir)semantic_object_type_event/"                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_ordered_object/*                      $(chroot__install__extension__dir)semantic_ordered_object/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_packable_object/*                     $(chroot__install__extension__dir)semantic_packable_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object/*                     $(chroot__install__extension__dir)semantic_physical_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object_type_event/*          $(chroot__install__extension__dir)semantic_physical_object_type_event/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object_type_property_event/* $(chroot__install__extension__dir)semantic_physical_object_type_property_event/" >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object_type_relation_event/* $(chroot__install__extension__dir)semantic_physical_object_type_relation_event/" >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_planner/*                             $(chroot__install__extension__dir)semantic_planner/"                             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_object/*                         $(chroot__install__extension__dir)semantic_plan_object/"                         >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_event/*              $(chroot__install__extension__dir)semantic_plan_object_type_event/"              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_relation_event/*     $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioception/*                      $(chroot__install__extension__dir)semantic_proprioception/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_object/*               $(chroot__install__extension__dir)semantic_proprioceptual_object/"               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_orientation/*          $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_position/*             $(chroot__install__extension__dir)semantic_proprioceptual_position/"             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_realm/*                               $(chroot__install__extension__dir)semantic_realm/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_relationship_key/*                    $(chroot__install__extension__dir)semantic_relationship_key/"                    >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource/*                            $(chroot__install__extension__dir)semantic_resource/"                            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource_action_event/*               $(chroot__install__extension__dir)semantic_resource_action_event/"               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource_action_sequence/*            $(chroot__install__extension__dir)semantic_resource_action_sequence/"            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource_event_knowledge_base/*       $(chroot__install__extension__dir)semantic_resource_event_knowledge_base/"       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_self/*                                $(chroot__install__extension__dir)semantic_self/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_situation/*                           $(chroot__install__extension__dir)semantic_situation/"                           >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_situation_category/*                  $(chroot__install__extension__dir)semantic_situation_category/"                  >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_situation_transition/*                $(chroot__install__extension__dir)semantic_situation_transition/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_somatosensation/*                     $(chroot__install__extension__dir)semantic_somatosensation/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_somatosensory_object/*                $(chroot__install__extension__dir)semantic_somatosensory_object/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_temporal_object/*                     $(chroot__install__extension__dir)semantic_temporal_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_time/*                                $(chroot__install__extension__dir)semantic_time/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_visual_object/*                       $(chroot__install__extension__dir)semantic_visual_object/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)timeline/*                                     $(chroot__install__extension__dir)timeline/"                                     >> install-sh
+	echo "install -m644 $(source__extension__dir)transframe/*                                   $(chroot__install__extension__dir)transframe/"                                   >> install-sh
+	echo "install -m644 $(source__example__dir)*                                                $(chroot__install__example__dir)"                                                >> install-sh
+	echo "install -m644 $(source__icons__dir)*                                                  $(chroot__install__icons__dir)"                                                  >> install-sh
+	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                                                                                                            >> install-sh
+	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                                                          >> install-sh
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions

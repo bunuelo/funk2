@@ -841,34 +841,58 @@ clean: clean-am clean-img
 	mkdir -p lib/.libs
 
 make-install-sh:
-	echo "#!/bin/sh"                                                                                                              > install-sh
-	echo "echo \"\""                                                                                                             >> install-sh
-	echo "echo \"make: performing system-wide installation of funk2\""                                                           >> install-sh
-	echo "echo \"\""                                                                                                             >> install-sh
-	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                       >> install-sh
-#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                       >> install-sh
-	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""                                                   >> install-sh
-	echo "echo \"\""                                                                                                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                                                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                                                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__include__dir)"                                                                       >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                                                                    >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__fu2__dir)"                                                                           >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__built_in__dir)"                                                                      >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                                                                     >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                       >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                         >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                           >> install-sh
-	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                             >> install-sh
-	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                           >> install-sh
-	echo "install -m644 c/*.h $(chroot__install__include__dir)"                                                                  >> install-sh
-	echo "cp -a $(source__fu2__dir)*       $(chroot__install__fu2__dir);       chmod -R a+rx $(chroot__install__fu2__dir)"       >> install-sh
-	echo "cp -a $(source__built_in__dir)*  $(chroot__install__built_in__dir);  chmod -R a+rx $(chroot__install__built_in__dir)"  >> install-sh
-	echo "cp -a $(source__extension__dir)* $(chroot__install__extension__dir); chmod -R a+rx $(chroot__install__extension__dir)" >> install-sh
-	echo "cp -a $(source__example__dir)*   $(chroot__install__example__dir);   chmod -R a+rx $(chroot__install__example__dir)"   >> install-sh
-	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"                                                   >> install-sh
-	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                                                            >> install-sh
-	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                          >> install-sh
+	echo "#!/bin/sh"                                                                      > install-sh
+	echo "echo \"\""                                                                                                                           >> install-sh
+	echo "echo \"make: performing system-wide installation of funk2\""                                                                         >> install-sh
+	echo "echo \"\""                                                                                                                           >> install-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                     >> install-sh
+#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                     >> install-sh
+	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""                                                                 >> install-sh
+	echo "echo \"\""                                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__include__dir)"                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__fu2__dir)"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)"                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)alien/"                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)ansi/"                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)basic_bug_responses/"                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_cluster/"                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_match_error_correcting/"                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graphviz/"                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)math/"                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)mutex/"                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)natural_language/"                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)number/"                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)utilities/"                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)xmlrpc/"                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                                         >> install-sh
+	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                                           >> install-sh
+	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                         >> install-sh
+	echo "install -m644 c/*.h $(chroot__install__include__dir)"                                                                                >> install-sh
+	echo "install -m644 $(source__fu2__dir)*                                   $(chroot__install__fu2__dir)"                                   >> install-sh
+	echo "install -m644 $(source__built_in__dir)*                              $(chroot__install__built_in__dir)"                              >> install-sh
+	echo "install -m644 $(source__built_in__dir)alien/*                        $(chroot__install__built_in__dir)alien/"                        >> install-sh
+	echo "install -m644 $(source__built_in__dir)ansi/*                         $(chroot__install__built_in__dir)ansi/"                         >> install-sh
+	echo "install -m644 $(source__built_in__dir)basic_bug_responses/*          $(chroot__install__built_in__dir)basic_bug_responses/"          >> install-sh
+	echo "install -m644 $(source__built_in__dir)graph_cluster/*                $(chroot__install__built_in__dir)graph_cluster/"                >> install-sh
+	echo "install -m644 $(source__built_in__dir)graph_match_error_correcting/* $(chroot__install__built_in__dir)graph_match_error_correcting/" >> install-sh
+	echo "install -m644 $(source__built_in__dir)graphviz/*                     $(chroot__install__built_in__dir)graphviz/"                     >> install-sh
+	echo "install -m644 $(source__built_in__dir)math/*                         $(chroot__install__built_in__dir)math/"                         >> install-sh
+	echo "install -m644 $(source__built_in__dir)mutex/*                        $(chroot__install__built_in__dir)mutex/"                        >> install-sh
+	echo "install -m644 $(source__built_in__dir)natural_language/*             $(chroot__install__built_in__dir)natural_language/"             >> install-sh
+	echo "install -m644 $(source__built_in__dir)number/*                       $(chroot__install__built_in__dir)number/"                       >> install-sh
+	echo "install -m644 $(source__built_in__dir)utilities/*                    $(chroot__install__built_in__dir)utilities/"                    >> install-sh
+	echo "install -m644 $(source__built_in__dir)xmlrpc/*                       $(chroot__install__built_in__dir)xmlrpc/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)* $(chroot__install__extension__dir)"                                                         >> install-sh
+	echo "install -m644 $(source__example__dir)*   $(chroot__install__example__dir)"                                                           >> install-sh
+	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"                                                                 >> install-sh
+	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                                                                          >> install-sh
+	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                        >> install-sh
 	chmod a+x install-sh
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions

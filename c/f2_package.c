@@ -537,14 +537,11 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
     case EOVERFLOW:    error_str = "(stat()) path refers to a file whose size cannot be represented in the type off_t.  This can occur when an application compiled on a 32-bit platform without -D_FILE_OFFSET_BITS=64 calls stat() on a file whose size exceeds (2<<31)-1 bits."; break;
     }
     status("raw__pathname__stat: failed to stat pathname \"%s\".", this__utf8_str);
-    {
-      f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "failed_to_stat_pathname"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),    new__symbol(cause, "pathname-stat"));
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "this"),        this);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "description"), new__string(cause, error_str));
-      result = f2larva__new(cause, 655, f2__bug__new(cause, f2integer__new(cause, 655), bug_frame));
-    }
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),    new__symbol(cause, "failed_to_stat_pathname"),
+				   new__symbol(cause, "funkname"),    new__symbol(cause, "pathname-stat"),
+				   new__symbol(cause, "this"),        this,
+				   new__symbol(cause, "description"), new__string(cause, error_str)));
   } else {
     f2ptr stat_frame = f2__frame__new(cause, nil);
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "id_of_device_containing_file"),        f2integer__new(cause, (s64)buf.st_dev));

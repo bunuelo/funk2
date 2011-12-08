@@ -104,7 +104,7 @@ def_pcfunk1(source__eval, this,
 
 // package
 
-def_primobject_10_slot(package,
+def_primobject_11_slot(package,
 		       pathname,
 		       name,
 		       package_dependencies,
@@ -114,9 +114,10 @@ def_primobject_10_slot(package,
 		       object_types_defined_set,
 		       loaded_all_dependencies_time,
 		       documentation,
-		       binary_dependencies);
+		       binary_dependencies,
+		       dynamic_library_dependencies);
 
-f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies) {
+f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies, f2ptr dynamic_library_dependencies) {
   f2ptr load_cmutex                  = f2__cmutex__new(cause);
   f2ptr load_fiber                   = nil;
   f2ptr object_types_defined_set     = f2__set__new(cause);
@@ -131,11 +132,12 @@ f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_de
 			object_types_defined_set,
 			loaded_all_dependencies_time,
 			documentation,
-			binary_dependencies);
+			binary_dependencies,
+			dynamic_library_dependencies);
 }
-def_pcfunk6(package__new, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies,
+def_pcfunk7(package__new, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies, dynamic_library_dependencies,
 	    "",
-	    return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies));
+	    return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies, dynamic_library_dependencies));
 
 
 f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph) {
@@ -736,7 +738,7 @@ void f2__package__initialize() {
   
   // package
   
-  initialize_primobject_10_slot(package,
+  initialize_primobject_11_slot(package,
 				pathname,
 				name,
 				package_dependencies,
@@ -746,7 +748,8 @@ void f2__package__initialize() {
 				object_types_defined_set,
 				loaded_all_dependencies_time,
 				documentation,
-				binary_dependencies);
+				binary_dependencies,
+				dynamic_library_dependencies);
   
   __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__symbol = new__symbol(cause, "dependency_graph");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__dependency_graph, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__funk = never_gc(cfunk);}

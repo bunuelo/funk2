@@ -215,19 +215,21 @@
 						     ]]
 
 [defmetro defpackage [name :rest dependencies]
-  [let [[package_dependencies nil]
-	[source_dependencies  nil]
-	[documentation        nil]
-	[binary_dependencies  nil]]
+  [let [[package_dependencies         nil]
+	[source_dependencies          nil]
+	[documentation                nil]
+	[binary_dependencies          nil]
+	[dynamic_library_dependencies nil]]
     [let [[iter dependencies]]
       [while iter
 	[let [[key   [car  iter]]
 	      [value [cadr iter]]]
-	  [cond [[eq key `:packages]      [= package_dependencies value]]
-		[[eq key `:sources]       [= source_dependencies  value]]
-		[[eq key `:documentation] [= documentation        value]]
-		[[eq key `:binaries]      [= binary_dependencies  value]]
-		[t                        [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
+	  [cond [[eq key `:packages]          [= package_dependencies         value]]
+		[[eq key `:sources]           [= source_dependencies          value]]
+		[[eq key `:documentation]     [= documentation                value]]
+		[[eq key `:binaries]          [= binary_dependencies          value]]
+		[[eq key `:dynamic_libraries] [= dynamic_library_dependencies value]]
+		[t                            [error bug_type `unknown_package_dependency_key_type funkname `defpackage]]]]
 	[= iter [cddr iter]]]]
     `[have [get [global_package_handler] package_frame] add [quote ,name] [new package
 									       [pathname-directory_pathname source-filename]
@@ -238,6 +240,7 @@
 									       [conslist @source_dependencies]
 									       ,documentation
 									       [conslist @binary_dependencies]
+									       [conslist @dynamic_library_dependencies]
 									       ]]]]
 
 [defunk package_names []

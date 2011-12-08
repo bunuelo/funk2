@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore conceptnet 'extension/conceptnet/.libs/libf2e_conceptnet.so']
-
 [defcorefunk conceptnet-new_from_graph_file       conceptnet conceptnet__new_from_graph_file]
 [defcorefunk conceptnet-core_extension-ping       conceptnet conceptnet__core_extension__ping]
 [defcorefunk conceptnet-core_extension-initialize conceptnet conceptnet__core_extension__initialize]

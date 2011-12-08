@@ -23,3 +23,5 @@
     :sources            ['semantic_assumption-core.fu2']
      :dynamic_libraries ['libf2e_semantic_assumption.so']]
 
+[defcore semantic_assumption 'libf2e_semantic_assumption.so']
+

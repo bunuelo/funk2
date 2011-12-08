@@ -23,3 +23,5 @@
     :sources            ['semantic_physical_object-core.fu2']
      :dynamic_libraries ['libf2e_semantic_physical_object.so']]
 
+[defcore semantic_physical_object 'libf2e_semantic_physical_object.so']
+

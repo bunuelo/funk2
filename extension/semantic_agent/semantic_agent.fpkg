@@ -23,3 +23,5 @@
     :sources            ['semantic_agent-core.fu2']
      :dynamic_libraries ['libf2e_semantic_agent.so']]
 
+[defcore semantic_agent 'libf2e_semantic_agent.so']
+

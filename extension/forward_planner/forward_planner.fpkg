@@ -21,3 +21,5 @@
   :sources            ['forward_planner-core.fu2']
    :dynamic_libraries ['libf2e_forward_planner.so']]
 
+[defcore forward_planner 'libf2e_forward_planner.so']
+

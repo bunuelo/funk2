@@ -22,3 +22,5 @@
    :sources            ['image_sequence-core.fu2']
     :dynamic_libraries ['libf2e_image_sequence.so']]
 
+[defcore image_sequence 'libf2e_image_sequence.so']
+

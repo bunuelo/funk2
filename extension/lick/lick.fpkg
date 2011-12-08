@@ -22,3 +22,5 @@
    :sources            ['lick-core.fu2']
     :dynamic_libraries ['libf2e_lick.so']]
 
+[defcore lick 'libf2e_lick.so']
+

@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_event_knowledge_base 'extension/semantic_event_knowledge_base/.libs/libf2e_semantic_event_knowledge_base.so']
-
 [defcorefunk semantic_event_knowledge_base-core_extension-ping       semantic_event_knowledge_base semantic_event_knowledge_base__core_extension__ping]
 [defcorefunk semantic_event_knowledge_base-core_extension-initialize semantic_event_knowledge_base semantic_event_knowledge_base__core_extension__initialize]
 

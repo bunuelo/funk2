@@ -23,3 +23,5 @@
     :sources            ['semantic_visual_object-core.fu2']
      :dynamic_libraries ['libf2e_semantic_visual_object.so']]
 
+[defcore semantic_visual_object 'libf2e_semantic_visual_object.so']
+

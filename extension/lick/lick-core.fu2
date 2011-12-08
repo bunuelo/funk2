@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore lick 'extension/lick/.libs/libf2e_lick.so']
-
 [defcorefunk lick-core_extension-ping       lick lick__core_extension__ping]
 [defcorefunk lick-core_extension-initialize lick lick__core_extension__initialize]
 

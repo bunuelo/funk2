@@ -21,3 +21,5 @@
   :sources            ['frame_ball-core.fu2']
    :dynamic_libraries ['libf2e_frame_ball.so']]
 
+[defcore frame_ball 'libf2e_frame_ball.so']
+

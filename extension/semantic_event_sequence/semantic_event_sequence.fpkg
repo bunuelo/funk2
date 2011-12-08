@@ -23,3 +23,5 @@
     :sources            ['semantic_event_sequence-core.fu2']
      :dynamic_libraries ['libf2e_semantic_event_sequence.so']]
 
+[defcore semantic_event_sequence 'libf2e_semantic_event_sequence.so']
+

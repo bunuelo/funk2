@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore image_sequence 'extension/image_sequence/.libs/libf2e_image_sequence.so']
-
 [defcorefunk image_sequence-core_extension-ping       image_sequence image_sequence__core_extension__ping]
 [defcorefunk image_sequence-core_extension-initialize image_sequence image_sequence__core_extension__initialize]
 

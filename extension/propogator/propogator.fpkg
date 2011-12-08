@@ -22,3 +22,5 @@
    :sources            ['propogator-core.fu2']
     :dynamic_libraries ['libf2e_propogator.so']]
 
+[defcore propogator 'libf2e_propogator.so']
+

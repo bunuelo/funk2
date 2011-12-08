@@ -23,3 +23,5 @@
     :sources            ['semantic_planner-core.fu2']
      :dynamic_libraries ['libf2e_semantic_planner.so']]
 
+[defcore semantic_planner 'libf2e_semantic_planner.so']
+

@@ -22,3 +22,5 @@
    :sources            ['graph_isomorphism-core.fu2']
     :dynamic_libraries ['libf2e_graph_isomorphism.so']]
 
+[defcore graph_isomorphism 'libf2e_graph_isomorphism.so']
+

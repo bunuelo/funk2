@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore propogator 'extension/propogator/.libs/libf2e_propogator.so']
-
 [defcorefunk propogator-core_extension-ping       propogator propogator__core_extension__ping]
 [defcorefunk propogator-core_extension-initialize propogator propogator__core_extension__initialize]
 

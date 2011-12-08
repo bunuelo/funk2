@@ -23,3 +23,5 @@
     :sources            ['semantic_resource_action_event-core.fu2']
      :dynamic_libraries ['libf2e_semantic_resource_action_event.so']]
 
+[defcore semantic_resource_action_event 'libf2e_semantic_resource_action_event.so']
+

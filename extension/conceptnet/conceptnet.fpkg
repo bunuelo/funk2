@@ -22,3 +22,5 @@
    :sources            ['conceptnet-core.fu2']
     :dynamic_libraries ['libf2e_conceptnet.so']]
 
+[defcore conceptnet 'libf2e_conceptnet.so']
+

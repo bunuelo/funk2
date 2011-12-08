@@ -22,3 +22,5 @@
    :sources            ['movie-core.fu2']
     :dynamic_libraries ['libf2e_movie.so']]
 
+[defcore movie 'libf2e_movie.so']
+

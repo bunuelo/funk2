@@ -23,6 +23,8 @@
 			'fibermon.fu2']
     :dynamic_libraries ['libf2e_fibermon.so']]
 
+[defcore fibermon 'libf2e_fibermon.so']
+
 [defpackage fibermon1
   :packages [math number gtk]
    :sources ['fibermon1.fu2']]

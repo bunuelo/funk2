@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_visual_object 'extension/semantic_visual_object/.libs/libf2e_semantic_visual_object.so']
-
 [defcorefunk semantic_visual_object-core_extension-ping       semantic_visual_object semantic_visual_object__core_extension__ping]
 [defcorefunk semantic_visual_object-core_extension-initialize semantic_visual_object semantic_visual_object__core_extension__initialize]
 

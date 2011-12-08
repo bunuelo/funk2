@@ -22,3 +22,5 @@
    :sources            ['event_stream-core.fu2']
     :dynamic_libraries ['libf2e_event_stream.so']]
 
+[defcore event_stream 'libf2e_event_stream.so']
+

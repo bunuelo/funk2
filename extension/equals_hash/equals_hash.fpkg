@@ -21,3 +21,5 @@
   :packages [lick]
    :sources ['equals_hash-core.fu2']]
 
+[defcore equals_hash 'libf2e_equals_hash.so']
+

@@ -23,3 +23,5 @@
     :sources            ['semantic_action_transframe-core.fu2']
      :dynamic_libraries ['libf2e_semantic_action_transframe.so']]
 
+[defcore semantic_action_transframe 'libf2e_semantic_action_transframe.so']
+

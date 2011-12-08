@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_action_transframe 'extension/semantic_action_transframe/.libs/libf2e_semantic_action_transframe.so']
-
 [defcorefunk semantic_action_transframe-core_extension-ping       semantic_action_transframe semantic_action_transframe__core_extension__ping]
 [defcorefunk semantic_action_transframe-core_extension-initialize semantic_action_transframe semantic_action_transframe__core_extension__initialize]
 

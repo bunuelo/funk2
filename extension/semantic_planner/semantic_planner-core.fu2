@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore semantic_planner 'extension/semantic_planner/.libs/libf2e_semantic_planner.so']
-
 [defcorefunk semantic_planner-core_extension-ping       semantic_planner semantic_planner__core_extension__ping]
 [defcorefunk semantic_planner-core_extension-initialize semantic_planner semantic_planner__core_extension__initialize]
 

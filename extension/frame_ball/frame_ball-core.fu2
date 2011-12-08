@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore frame_ball 'extension/frame_ball/.libs/libf2e_frame_ball.so']
-
 [defcorefunk frame_ball-core_extension-ping       frame_ball frame_ball__core_extension__ping]
 [defcorefunk frame_ball-core_extension-initialize frame_ball frame_ball__core_extension__initialize]
 

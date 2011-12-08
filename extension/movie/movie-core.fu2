@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore movie 'extension/movie/.libs/libf2e_movie.so']
-
 [defcorefunk movie-core_extension-ping       movie movie__core_extension__ping]
 [defcorefunk movie-core_extension-initialize movie movie__core_extension__initialize]
 

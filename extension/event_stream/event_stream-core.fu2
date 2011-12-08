@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcore event_stream 'extension/event_stream/.libs/libf2e_event_stream.so']
-
 [defcorefunk event_stream-core_extension-ping         event_stream event_stream__core_extension__ping]
 [defcorefunk event_stream-core_extension-define_types event_stream event_stream__core_extension__define_types]
 [defcorefunk event_stream-core_extension-initialize   event_stream event_stream__core_extension__initialize]

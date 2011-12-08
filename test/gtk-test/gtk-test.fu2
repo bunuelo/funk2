@@ -45,7 +45,7 @@
 	[check_button       [gtk-check_button-new 'Check']]
 	[swindow            [gtk-scrolled_window-new]]
 	[notebook           [gtk-notebook-new]]
-	[logo_image         [gtk-image-new_from_file 'icons/funk2.png']]
+	[logo_image         [gtk-image-new_from_file [package_filename-to_absolute_pathname 'icons/funk2.png']]]
 	[drawing_area       [gtk-drawing_area-new]]
 	[text_view          [gtk-text_view-new]]
 	[table_hbox         [gtk-hbox-new 2]]

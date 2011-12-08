@@ -517,11 +517,18 @@ f2ptr f2dlfcn_dynamic_library_handler__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+// global_dlfcn_dynamic_library_handler
+
+f2ptr f2__global_dlfcn_dynamic_library_handler(f2ptr cause) {
+  return assert_value(environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-")));
+}
+
+
 // global_dlfcn_dynamic_library
 
 f2ptr f2__global_dlfcn_dynamic_library(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
-  f2ptr dlfcn_dynamic_library_handler = assert_value(environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-")));
+  f2ptr dlfcn_dynamic_library_handler = assert_value(f2__global_dlfcn_dynamic_library_handler(cause));
   assert_argument_type(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_handler);
   return f2__dlfcn_dynamic_library_handler__dynamic_library(cause, dlfcn_dynamic_library_handler, filename);
 }
@@ -544,7 +551,7 @@ def_pcfunk2(global_dlfcn_dynamic_library__lookup_symbol, filename, symbol,
 
 f2ptr f2__global_dlfcn_dynamic_library__unload_dynamic_library(f2ptr cause, f2ptr filename) {
   assert_argument_type(string, filename);
-  f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
+  f2ptr dlfcn_dynamic_library_handler = assert_value(f2__global_dlfcn_dynamic_library_handler(cause));
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;
   }
@@ -559,7 +566,7 @@ def_pcfunk1(global_dlfcn_dynamic_library__unload_dynamic_library, filename,
 
 
 f2ptr f2__global_dlfcn_dynamic_library__unload_changed(f2ptr cause) {
-  f2ptr dlfcn_dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
+  f2ptr dlfcn_dynamic_library_handler = assert_value(f2__global_dlfcn_dynamic_library_handler(cause));
   if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
     return dlfcn_dynamic_library_handler;
   }
@@ -579,7 +586,7 @@ def_pcfunk0(global_dlfcn_dynamic_library__unload_changed,
 void f2__dlfcn__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  f2ptr dynamic_library_handler = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"));
+  f2ptr dynamic_library_handler = f2__global_dlfcn_dynamic_library_handler(cause);
   if ((dynamic_library_handler == nil) || raw__larva__is_type(cause, dynamic_library_handler)) {
     environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
   } else {

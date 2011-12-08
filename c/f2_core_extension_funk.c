@@ -66,7 +66,7 @@ f2ptr raw__core_extension_funk__filename(f2ptr cause, f2ptr this) {
   f2ptr core_extension      = f2__global_core_extension_handler__lookup_core_extension(cause, core_extension_name);
   catch_value(core_extension,
 	      f2list10__new(cause,
-			    new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_lookup_core_extension"),
+			    new__symbol(cause, "bug_name"),            new__symbol(cause, "could_not_lookup_core_extension"),
 			    new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-filename"),
 			    new__symbol(cause, "core_extension"),      core_extension,
 			    new__symbol(cause, "core_extension_name"), core_extension_name,
@@ -88,7 +88,7 @@ f2ptr raw__core_extension_funk__pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);
   catch_value(filename,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
 			   new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-pointer"),
 			   new__symbol(cause, "filename"), filename,
 			   new__symbol(cause, "this"),     this));
@@ -132,7 +132,7 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
       f2ptr pointer = raw__core_extension_funk__pointer(cause, this);
       catch_value(pointer,
 		  f2list8__new(cause,
-			       new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+			       new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
 			       new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-cfunk"),
 			       new__symbol(cause, "pointer"),  pointer,
 			       new__symbol(cause, "this"),     this));
@@ -167,7 +167,7 @@ f2ptr raw__core_extension_funk__apply_without_initializing(f2ptr cause, f2ptr th
   f2ptr cfunk = raw__core_extension_funk__cfunk(cause, this);
   catch_value(cfunk,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_cfunk"),
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_get_core_extension_funk_cfunk"),
 			   new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-apply_without_initializing"),
 			   new__symbol(cause, "cfunk"),    cfunk,
 			   new__symbol(cause, "this"),     this));
@@ -189,7 +189,7 @@ f2ptr raw__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   f2ptr core_extension      = f2__global_core_extension_handler__lookup_core_extension(cause, core_extension_name);
   catch_value(core_extension,
 	      f2list10__new(cause,
-			    new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_lookup_core_extension"),
+			    new__symbol(cause, "bug_name"),            new__symbol(cause, "could_not_lookup_core_extension"),
 			    new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-apply"),
 			    new__symbol(cause, "core_extension_name"), core_extension_name,
 			    new__symbol(cause, "core_extension"),      core_extension,
@@ -197,7 +197,7 @@ f2ptr raw__core_extension_funk__apply(f2ptr cause, f2ptr this, f2ptr args) {
   f2ptr result = f2__core_extension__assure_initialized(cause, core_extension);
   catch_value(result,
 	      f2list12__new(cause,
-			    new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_assure_core_extension_is_initialized"),
+			    new__symbol(cause, "bug_name"),            new__symbol(cause, "could_not_assure_core_extension_is_initialized"),
 			    new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-apply"),
 			    new__symbol(cause, "core_extension_name"), core_extension_name,
 			    new__symbol(cause, "core_extension"),      core_extension,
@@ -219,7 +219,7 @@ f2ptr raw__core_extension_funk__args_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename = f2__core_extension_funk__filename(cause, this);
   catch_value(filename,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
 			   new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-args_pointer"),
 			   new__symbol(cause, "filename"), filename,
 			   new__symbol(cause, "this"),     this));
@@ -240,7 +240,7 @@ f2ptr raw__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
   f2ptr args_pointer = f2__core_extension_funk__args_pointer(cause, this);
   catch_value(args_pointer,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"),     new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+			   new__symbol(cause, "bug_name"),     new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
 			   new__symbol(cause, "funkname"),     new__symbol(cause, "core_extension_funk-args_cfunk"),
 			   new__symbol(cause, "args_pointer"), args_pointer,
 			   new__symbol(cause, "this"),         this));
@@ -268,7 +268,7 @@ f2ptr raw__core_extension_funk__args(f2ptr cause, f2ptr this) {
   f2ptr args_cfunk = raw__core_extension_funk__args_cfunk(cause, this);
   catch_value(args_cfunk,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"),   new__symbol(cause, "could_not_get_core_extension_funk_cfunk"),
+			   new__symbol(cause, "bug_name"),   new__symbol(cause, "could_not_get_core_extension_funk_cfunk"),
 			   new__symbol(cause, "funkname"),   new__symbol(cause, "core_extension_funk-args"),
 			   new__symbol(cause, "args_cfunk"), args_cfunk,
 			   new__symbol(cause, "this"),       this));
@@ -289,7 +289,7 @@ f2ptr raw__core_extension_funk__is_funktional_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename   = f2__core_extension_funk__filename(cause, this);
   catch_value(filename,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
 			   new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
 			   new__symbol(cause, "filename"), filename,
 			   new__symbol(cause, "this"),     this));
@@ -310,7 +310,7 @@ f2ptr raw__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
   f2ptr is_funktional_pointer = f2__core_extension_funk__is_funktional_pointer(cause, this);
   catch_value(is_funktional_pointer,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"),              new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
+			   new__symbol(cause, "bug_name"),              new__symbol(cause, "could_not_get_core_extension_funk_pointer"),
 			   new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-is_funktional_pointer"),
 			   new__symbol(cause, "is_funktional_pointer"), is_funktional_pointer,
 			   new__symbol(cause, "this"),                  this));
@@ -338,7 +338,7 @@ f2ptr raw__core_extension_funk__is_funktional(f2ptr cause, f2ptr this) {
   f2ptr is_funktional_cfunk = raw__core_extension_funk__is_funktional_cfunk(cause, this);
   catch_value(is_funktional_cfunk,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_get_core_extension_funk_is_funktional_cfunk"),
+			   new__symbol(cause, "bug_name"),            new__symbol(cause, "could_not_get_core_extension_funk_is_funktional_cfunk"),
 			   new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-is_funktional"),
 			   new__symbol(cause, "is_funktional_cfunk"), is_funktional_cfunk,
 			   new__symbol(cause, "this"),                this));
@@ -359,7 +359,7 @@ f2ptr raw__core_extension_funk__documentation_pointer(f2ptr cause, f2ptr this) {
   f2ptr filename   = f2__core_extension_funk__filename(cause, this);
   catch_value(filename,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
+			   new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_get_core_extension_funk_filename"),
 			   new__symbol(cause, "funkname"), new__symbol(cause, "core_extension_funk-documentation_pointer"),
 			   new__symbol(cause, "filename"), filename,
 			   new__symbol(cause, "this"),     this));
@@ -380,7 +380,7 @@ f2ptr raw__core_extension_funk__documentation_cfunk(f2ptr cause, f2ptr this) {
   f2ptr documentation_pointer = f2__core_extension_funk__documentation_pointer(cause, this);
   catch_value(documentation_pointer,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"),              new__symbol(cause, "could_not_get_core_extension_funk_documentation_pointer"),
+			   new__symbol(cause, "bug_name"),              new__symbol(cause, "could_not_get_core_extension_funk_documentation_pointer"),
 			   new__symbol(cause, "funkname"),              new__symbol(cause, "core_extension_funk-documentation_cfunk"),
 			   new__symbol(cause, "documentation_pointer"), documentation_pointer,
 			   new__symbol(cause, "this"),                  this));
@@ -408,7 +408,7 @@ f2ptr raw__core_extension_funk__documentation(f2ptr cause, f2ptr this) {
   f2ptr documentation_cfunk = raw__core_extension_funk__documentation_cfunk(cause, this);
   catch_value(documentation_cfunk,
 	      f2list8__new(cause,
-			   new__symbol(cause, "bug_type"),            new__symbol(cause, "could_not_get_core_extension_funk_documentation_cfunk"),
+			   new__symbol(cause, "bug_name"),            new__symbol(cause, "could_not_get_core_extension_funk_documentation_cfunk"),
 			   new__symbol(cause, "funkname"),            new__symbol(cause, "core_extension_funk-documentation"),
 			   new__symbol(cause, "documentation_cfunk"), documentation_cfunk,
 			   new__symbol(cause, "this"),                this));

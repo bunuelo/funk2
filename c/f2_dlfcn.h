@@ -87,8 +87,8 @@ f2ptr raw__dlfcn_dynamic_library__lookup_symbol(  f2ptr cause, f2ptr this, f2ptr
 f2ptr  f2__dlfcn_dynamic_library__lookup_symbol(  f2ptr cause, f2ptr this, f2ptr symbol);
 f2ptr raw__dlfcn_dynamic_library__close(          f2ptr cause, f2ptr this);
 f2ptr  f2__dlfcn_dynamic_library__close(          f2ptr cause, f2ptr this);
-f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this);
-f2ptr  f2__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this);
+f2ptr raw__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this, f2ptr search_pathnames);
+f2ptr  f2__dlfcn_dynamic_library__changed_on_disk(f2ptr cause, f2ptr this, f2ptr search_pathnames);
 
 f2ptr f2dlfcn_dynamic_library__primobject_type__new_aux(f2ptr cause);
 

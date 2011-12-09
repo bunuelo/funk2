@@ -47,8 +47,9 @@
 	      [let [[eval_result [with-new-cause [cause-define source_expression source_expression]
 						 [eval [get source_expression body]]]]]
 		[if [is-type `bug eval_result]
-		    [prog [have [get bug frame] add `source_expression source_expression]
-			  [bug bug]]]]]
+		    [let [[bug eval_result]]
+		      [have [get bug frame] add `source_expression source_expression]
+		      [bug bug]]]]]
 	[source-read this]]]
 
 [globalize file_loaded_modification_time_hash [hash]]

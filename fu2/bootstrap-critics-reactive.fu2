@@ -42,7 +42,7 @@
 	  [ansi-stream-foreground [get standard-terminal stream] 7]
 	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 	    [if bug-fiber
-		[prog [terminal_format standard-terminal '\n\nBug Fiber Stack Trace:']
+		[prog [terminal_format standard-terminal '\n\nBackground Bug Fiber Stack Trace:']
 		      [have bug print_backtrace]
 		      [mapc [funk [x] [terminal_format standard-terminal '\n  ' x]] [get [get bug-fiber stack_trace] blocks]]]]]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
@@ -61,7 +61,7 @@
 	  [ansi-stream-foreground [get standard-terminal stream] 7]
 	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 	    [if bug-fiber
-		[prog [terminal_format standard-terminal '\n\nBug Fiber Stack Trace:']
+		[prog [terminal_format standard-terminal '\n\nUser Bug Fiber Stack Trace:']
 		      [have bug print_backtrace]
 		      [mapc [funk [x] [terminal_format standard-terminal '\n  ' x]] [get [get bug-fiber stack_trace] blocks]]]]]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]

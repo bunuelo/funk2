@@ -454,8 +454,10 @@
   [print 'done compiling']
   nil]]
 
-[shelter [mkdir '/home/neptune/Desktop/www/']]
-[shelter [mkdir '/home/neptune/Desktop/www/funk2/']]
+[prog [shelter [mkdir '/home/neptune/Desktop/www/']]
+      [shelter [mkdir '/home/neptune/Desktop/www/funk2/']]
+      nil]
+
 [let [[context [new htmldoc_context '/home/neptune/Desktop/www/funk2/']]]
   [set  context hostname                               'funk2.org']
   [set  context title                                  'Funk2']

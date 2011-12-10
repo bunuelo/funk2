@@ -83,6 +83,7 @@
 	target_type_property
 	target_type_property_value]]
 
+
 [deftypefunk reflective_mind execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `deliberative] create_physical_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
@@ -107,6 +108,13 @@
 
 [deftypefunk reflective_mind get plan_semantic_plans []
   [get [get this layer `deliberative] plan_semantic_plans]]
+
+
+[deftypefunk reflective_mind execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
+  [have-apply [get this layer `reflective] create_reflective_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
+
+[deftypefunk reflective_mind get reflective_actions []
+  [get [get this layer `reflective] reflective_actions]]
 
 
 

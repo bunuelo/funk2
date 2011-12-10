@@ -20,7 +20,7 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [mental_layer] []
+[deframe reflective_layer [mental_layer] [[reflective_action_english_symbol_ptypehash [new ptypehash]]]
   [new []
        [construct mental_layer 3 `reflective]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
@@ -38,4 +38,15 @@
   [have [get this agency `plan_object_type_goal]      connect_knowledge_reflection]
   [have [get this agency `reflective_event_knowledge] connect_knowledge_reflection]
   nil]
+
+
+[deftypefunk reflective_layer execute add_reflective_action [action]
+  `[terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
+  [have reflective_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
+
+[deftypefunk reflective_layer get reflective_actions []
+  [get reflective_action_english_symbol_ptypehash values]]
+
+[deftypefunk reflective_layer execute lookup_reflective_action [english_conslist]
+  [have reflective_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 

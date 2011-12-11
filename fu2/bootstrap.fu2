@@ -19,6 +19,13 @@
 
 [memory-debug_assert_valid]
 
+[defunk load_all_builtin_package_definitions []
+  [load 'built-in/number/number.fpkg']
+  [load 'built-in/ansi/ansi.fpkg']
+  [load 'built-in/mutex/mutex.fpkg']
+  [load 'built-in/math/math.fpkg']
+  [load 'built-in/basic_bug_responses/basic_bug_responses.fpkg']]
+
 [defunk load_minimal_core_packages []
   [load 'fu2/bootstrap-primobject.fu2']
   [load 'fu2/bootstrap-reader.fu2']
@@ -51,53 +58,34 @@
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']
   
-  [defunk reload_all_basic_packages []
-    [reload_all_package_definitions]
-    [eval `[prog [require number
-			  ansi
-			  mutex
-			  math
-			  basic_bug_responses]
-		 
-		 [defunk backup_repl []
-		   [let* [[trigger [new fiber_trigger]]
-			  [fiber   [fiber [funk [] 
-						[cause-define cause-name `backup_repl]
-						[wait-for-trigger trigger]
-						[repl]]
-					  nil]]]
-		     [set fiber paused t]
-		     [while [global_scheduler-contains_active_fiber fiber]
-		       [millisleep 100]]
-		     [have trigger trigger]
-		     nil]]
-		 
-		 
-		 [defunk load_all_core_packages []
-		   [require utilities
-			    number
-			    math
-			    graphviz
-			    xmlrpc
-			    graph_match_error_correcting
-			    graph_cluster
-			    gtk
-			    fibermon
-			    natural_language]]
-		 
-		 [defunk load_isismon_release_packages []
-		   [require fibermon
-			    isismon]]
-		 
-		 ]]]
-  ]
+  [load_all_builtin_package_definitions]
+  [eval `[prog [require number
+			ansi
+			mutex
+			math
+			basic_bug_responses]
+	       
+	       [defunk backup_repl []
+		 [let* [[trigger [new fiber_trigger]]
+			[fiber   [fiber [funk [] 
+					      [cause-define cause-name `backup_repl]
+					      [wait-for-trigger trigger]
+					      [repl]]
+					nil]]]
+		   [set fiber paused t]
+		   [while [global_scheduler-contains_active_fiber fiber]
+		     [millisleep 100]]
+		   [have trigger trigger]
+		   nil]]
+	       
+	       ]]]
 
 
 
 [defunk load_funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
-[globalize funk2_release_names `[isismon debian]]
+[globalize funk2_release_names `[debian]]
 [globalize funk2_release_name  `debian]
 
 [cond [[eq funk2_release_name nil]             [prog [terminal_format standard-terminal
@@ -108,10 +96,6 @@
 						     [terminal_format standard-terminal
 								      '\nDone compiling user\'s customized version of Funk2.'
 								      '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
-      [[eq funk2_release_name `isismon]        [prog [terminal_format standard-terminal '\nCompiling IsisMon package binary release.']
-						     [load_minimal_core_packages]
-						     [load_isismon_release_packages]
-						     [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
       [[eq funk2_release_name `debian]         [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']
 						     [load_minimal_core_packages]
 						     [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]

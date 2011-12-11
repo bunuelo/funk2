@@ -93,27 +93,30 @@
 [defunk load_funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
-[globalize funk2_release_names `[isismon debian]]
-[globalize funk2_release_name  `debian]
+[globalize funk2_release_names `[isismon debian debian-preinst]]
+[globalize funk2_release_name  `debian-preinst]
 
-[cond [[eq funk2_release_name nil]      [prog [terminal_format standard-terminal
-							       '\nCompiling user\'s customized version of Funk2.'
-							       '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']
-					      [load_minimal_core_packages]
-					      [load_funk2-devrc]
-					      [terminal_format standard-terminal
-							       '\nDone compiling user\'s customized version of Funk2.'
-							       '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
-      [[eq funk2_release_name `isismon] [prog [terminal_format standard-terminal '\nCompiling IsisMon package binary release.']
-					      [load_minimal_core_packages]
-					      [load_isismon_release_packages]
-					      [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
-      [[eq funk2_release_name `debian]  [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']
-					      [load_minimal_core_packages]
-					      [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
-      [t                                [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
-					       funk2_release_name  funk2_release_name
-					       funk2_release_names funk2_release_names]]]
+[cond [[eq funk2_release_name nil]             [prog [terminal_format standard-terminal
+								      '\nCompiling user\'s customized version of Funk2.'
+								      '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']
+						     [load_minimal_core_packages]
+						     [load_funk2-devrc]
+						     [terminal_format standard-terminal
+								      '\nDone compiling user\'s customized version of Funk2.'
+								      '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
+      [[eq funk2_release_name `isismon]        [prog [terminal_format standard-terminal '\nCompiling IsisMon package binary release.']
+						     [load_minimal_core_packages]
+						     [load_isismon_release_packages]
+						     [terminal_format standard-terminal '\nDone compiling IsisMon package binary release.']]]
+      [[eq funk2_release_name `debian]         [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']
+						     [load_minimal_core_packages]
+						     [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
+      [[eq funk2_release_name `debian-preinst] [prog [terminal_format standard-terminal '\nCompiling Debian Pre-install Funk2 package binary release.']
+						     `[load_minimal_core_packages]
+						     [terminal_format standard-terminal '\nDone compiling Debian Pre-install Funk2 package binary release.']]]
+      [t                                       [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
+						      funk2_release_name  funk2_release_name
+						      funk2_release_names funk2_release_names]]]
 
 [terminal_format standard-terminal '\nsaving img/bootstrap.img.']
 [save_memory_image 'img/bootstrap.img']

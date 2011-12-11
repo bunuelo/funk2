@@ -50,51 +50,55 @@
   [load 'fu2/bootstrap-core_extension_funk.fu2']
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']
-  [reload_all_package_definitions]
-  [eval `[prog [require number
-			ansi
-			mutex
-			math
-			basic_bug_responses]
-	       
-	       [defunk backup_repl []
-		 [let* [[trigger [new fiber_trigger]]
-			[fiber   [fiber [funk [] 
-					      [cause-define cause-name `backup_repl]
-					      [wait-for-trigger trigger]
-					      [repl]]
-					nil]]]
-		   [set fiber paused t]
-		   [while [global_scheduler-contains_active_fiber fiber]
-		     [millisleep 100]]
-		   [have trigger trigger]
-		   nil]]
-	       
-					
-	       [defunk load_all_core_packages []
-		 [require utilities
-			  number
+  
+  [defunk reload_all_basic_packages []
+    [reload_all_package_definitions]
+    [eval `[prog [require number
+			  ansi
+			  mutex
 			  math
-			  graphviz
-			  xmlrpc
-			  graph_match_error_correcting
-			  graph_cluster
-			  gtk
-			  fibermon
-			  natural_language]]
-	       
-	       [defunk load_isismon_release_packages []
-		 [require fibermon
-			  isismon]]
-	       
-	       ]]]
+			  basic_bug_responses]
+		 
+		 [defunk backup_repl []
+		   [let* [[trigger [new fiber_trigger]]
+			  [fiber   [fiber [funk [] 
+						[cause-define cause-name `backup_repl]
+						[wait-for-trigger trigger]
+						[repl]]
+					  nil]]]
+		     [set fiber paused t]
+		     [while [global_scheduler-contains_active_fiber fiber]
+		       [millisleep 100]]
+		     [have trigger trigger]
+		     nil]]
+		 
+		 
+		 [defunk load_all_core_packages []
+		   [require utilities
+			    number
+			    math
+			    graphviz
+			    xmlrpc
+			    graph_match_error_correcting
+			    graph_cluster
+			    gtk
+			    fibermon
+			    natural_language]]
+		 
+		 [defunk load_isismon_release_packages []
+		   [require fibermon
+			    isismon]]
+		 
+		 ]]]
+  ]
+
 
 
 [defunk load_funk2-devrc []
   [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2-devrc']]]]
 
-[globalize funk2_release_names `[isismon debian debian-preinst]]
-[globalize funk2_release_name  `debian-preinst]
+[globalize funk2_release_names `[isismon debian]]
+[globalize funk2_release_name  `debian]
 
 [cond [[eq funk2_release_name nil]             [prog [terminal_format standard-terminal
 								      '\nCompiling user\'s customized version of Funk2.'
@@ -111,9 +115,6 @@
       [[eq funk2_release_name `debian]         [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']
 						     [load_minimal_core_packages]
 						     [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
-      [[eq funk2_release_name `debian-preinst] [prog [terminal_format standard-terminal '\nCompiling Debian Pre-install Funk2 package binary release.']
-						     `[load_minimal_core_packages]
-						     [terminal_format standard-terminal '\nDone compiling Debian Pre-install Funk2 package binary release.']]]
       [t                                       [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
 						      funk2_release_name  funk2_release_name
 						      funk2_release_names funk2_release_names]]]

@@ -330,7 +330,7 @@
 		      [mapc [funk [source_dependency]
 				  [let [[full_source_dependency [if [filename-is_global source_dependency]
 								    source_dependency
-								  [pathname-concat [get package pathname] full_source_dependency]]]]
+								  [pathname-concat [get package pathname] source_dependency]]]]
 				    [package_filename-load full_source_dependency]]]
 			    [get package source_dependencies]]
 		      [mapc [funk [object_type_defined]

@@ -78,9 +78,7 @@ def_pcfunk1(source__new, code,
 f2ptr raw__source__load(f2ptr cause, f2ptr filename, f2ptr search_pathnames) {
   f2ptr code = nil;
   {
-    f2ptr first_char = raw__string__elt(cause, filename, 0);
-    assert_argument_type(char, first_char);
-    char ch = raw__char__ch(cause, first_char);
+    char ch = raw__string__elt(cause, filename, 0);
     if (ch == '/') {
       code = f2__string__load(cause, filename);
     } else {

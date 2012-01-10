@@ -54,7 +54,7 @@
 
 [globalize file_loaded_modification_time_hash [hash]]
 
-[globalize -global_source_path- `['./' '/usr/share/funk2/']]
+[globalize -global_source_path- `['./' '/usr/share/funk2/' '/usr/local/share/funk2/']]
 
 [defunk package_filename-stat [this]
   [let [[stat   nil]
@@ -293,15 +293,19 @@
 [defunk pathnames-all_fpkg_filenames [this]
   [let [[fpkg_filenames nil]]
     [mapc [funk [pathname]
-		[memory-debug_assert_valid]
-		[format stdout '\nscanning ' pathname ' for package definitions.']
-		[= fpkg_filenames [append fpkg_filenames [let [[result [shelter [pathname-scan_for_filenames_by_extension pathname 'fpkg']]]]
-							   [if [is-type `bug result]
-							       nil
-							     result]]]]]
+		[let [[iter -global_source_path-]]
+		  [while iter
+		    [let* [[source_path   [car iter]]
+			   [full_pathname [pathname-concat source_path this]]]
+		      [format stdout '\nscanning ' full_pathname ' for package definitions.']
+		      [= fpkg_filenames [append fpkg_filenames [let [[result [shelter [pathname-scan_for_filenames_by_extension full_pathname 'fpkg']]]]
+								 [if [is-type `bug result]
+								     nil
+								   result]]]]]]]]
 	  this]
-    [memory-debug_assert_valid]
     fpkg_filenames]]
+
+
 
 [defunk reload_all_package_definitions []
   [mapc [funk [filename]

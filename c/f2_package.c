@@ -440,7 +440,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
     DIR* dirp = opendir((char*)pathname__utf8_str);
     if (dirp == NULL) {
       f2ptr bug_frame = f2__frame__new(cause, nil);
-      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "pathname-scan_for_filenames_by_extension"));
+      f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"),  new__symbol(cause, "pathname-scan_for_filenames"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),  new__symbol(cause, "could_not_open_directory"));
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "pathname"),  pathname);
       char* errno_str = "unrecognized error number.";

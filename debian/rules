@@ -9,6 +9,12 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+# old depends:
+#  libxmlrpc-c3,
+#  libcurl3,
+#  libgtk2.0-0,
+#  libavcodec52,
+#  libswscale0
 
 
 

@@ -54,7 +54,7 @@
 
 [globalize file_loaded_modification_time_hash [hash]]
 
-[globalize -global_source_path- `['./' '/usr/share/funk2/' '/usr/local/share/funk2/']]
+[globalize -global_source_path- `['./' '/' '/usr/share/funk2/' '/usr/local/share/funk2/']]
 
 [defunk package_filename-stat [this]
   [let [[stat   nil]

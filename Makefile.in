@@ -562,6 +562,16 @@ extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_ty
 	$(CFLAGS) \
 	$(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LIBADD =
+am_extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_OBJECTS = extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_OBJECTS = $(am_extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_OBJECTS)
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_LIBADD =
 am_extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_OBJECTS = extension/semantic_physical_object_type_relation_event/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.lo
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_OBJECTS = $(am_extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_OBJECTS)
@@ -1008,6 +1018,7 @@ SOURCES = $(extension_blocks_world_libf2e_blocks_world_la_SOURCES) \
 	$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES) \
 	$(extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES) \
 	$(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_SOURCES) \
+	$(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_SOURCES) \
 	$(extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_SOURCES) \
 	$(extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES) \
 	$(extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES) \
@@ -1082,6 +1093,7 @@ DIST_SOURCES =  \
 	$(extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES) \
 	$(extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES) \
 	$(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_SOURCES) \
+	$(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_SOURCES) \
 	$(extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_SOURCES) \
 	$(extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES) \
 	$(extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES) \
@@ -1273,6 +1285,10 @@ source__funk2__dir = ./
 source__fu2__dir = $(source__funk2__dir)fu2/
 source__bootstrap__fu2 = $(source__fu2__dir)bootstrap.fu2
 source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
+source__built_in__dir = $(source__funk2__dir)built-in/
+source__extension__dir = $(source__funk2__dir)extension/
+source__test__dir = $(source__funk2__dir)test/
+source__example__dir = $(source__funk2__dir)example/
 source__icons__dir = $(source__funk2__dir)icons/
 compile__funk2__dir = $(source__funk2__dir)
 compile__bin__dir = $(compile__funk2__dir)bin/
@@ -1286,6 +1302,11 @@ chroot__install__bin__dir = $(chroot_install_root_dir)usr/bin/
 chroot__install__lib__dir = $(chroot_install_root_dir)usr/lib/
 chroot__install__include__dir = $(chroot_install_root_dir)usr/include/funk2/
 chroot__install__img__dir = $(chroot_install_root_dir)usr/share/funk2/img/
+chroot__install__fu2__dir = $(chroot_install_root_dir)usr/share/funk2/fu2/
+chroot__install__built_in__dir = $(chroot_install_root_dir)usr/share/funk2/built-in/
+chroot__install__extension__dir = $(chroot_install_root_dir)usr/share/funk2/extension/
+chroot__install__test__dir = $(chroot_install_root_dir)usr/share/funk2/test/
+chroot__install__example__dir = $(chroot_install_root_dir)usr/share/funk2/example/
 chroot__install__icons__dir = $(chroot_install_root_dir)usr/share/funk2/icons/
 chroot__install__man__dir = $(chroot_install_root_dir)usr/share/man/man1/
 chroot__install__funk2 = $(chroot__install__bin__dir)funk2
@@ -1294,6 +1315,11 @@ plain__install__system_bin__dir = $(plain_install_root_dir)usr/bin/
 plain__install__bin__dir = $(plain_install_root_dir)usr/bin/
 plain__install__include__dir = $(plain_install_root_dir)usr/include/funk2/
 plain__install__img__dir = $(plain_install_root_dir)usr/share/funk2/img/
+plain__install__fu2__dir = $(plain_install_root_dir)usr/share/funk2/fu2/
+plain__install__built_in__dir = $(plain_install_root_dir)usr/share/funk2/built-in/
+plain__install__extension__dir = $(plain_install_root_dir)usr/share/funk2/extension/
+plain__install__test__dir = $(plain_install_root_dir)usr/share/funk2/test/
+plain__install__example__dir = $(plain_install_root_dir)usr/share/funk2/example/
 plain__install__icons__dir = $(plain_install_root_dir)usr/share/funk2/icons/
 plain__install__man__dir = $(plain_install_root_dir)usr/share/man/man1/
 plain__install__funk2 = $(plain__install__bin__dir)funk2
@@ -1429,6 +1455,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_goal_event/libf2e_semantic_goal_event.la \
                       extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.la \
                       extension/semantic_physical_object_type_event/libf2e_semantic_physical_object_type_event.la \
+                      extension/semantic_physical_object_type_property_event/libf2e_semantic_physical_object_type_property_event.la \
                       extension/semantic_physical_object_type_relation_event/libf2e_semantic_physical_object_type_relation_event.la \
                       extension/semantic_planner/libf2e_semantic_planner.la \
                       extension/semantic_proprioception/libf2e_semantic_proprioception.la \
@@ -1630,6 +1657,7 @@ extension_semantic_object_libf2e_semantic_object_la_SOURCES = extension/semantic
 extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES = extension/semantic_packable_object/semantic_packable_object.c
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_SOURCES = extension/semantic_physical_object/semantic_physical_object.c
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_SOURCES = extension/semantic_physical_object_type_event/semantic_physical_object_type_event.c
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_SOURCES = extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_SOURCES = extension/semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.c
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES = extension/semantic_plan_object/semantic_plan_object.c
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
@@ -1769,6 +1797,8 @@ extension_semantic_physical_object_libf2e_semantic_physical_object_la_LDFLAGS = 
 extension_semantic_physical_object_libf2e_semantic_physical_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -2416,6 +2446,16 @@ extension/semantic_physical_object_type_event/extension_semantic_physical_object
 	extension/semantic_physical_object_type_event/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_physical_object_type_event/libf2e_semantic_physical_object_type_event.la: $(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_OBJECTS) $(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_DEPENDENCIES) extension/semantic_physical_object_type_event/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_LINK) -rpath $(libdir) $(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_OBJECTS) $(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_LIBADD) $(LIBS)
+extension/semantic_physical_object_type_property_event/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_physical_object_type_property_event
+	@: > extension/semantic_physical_object_type_property_event/$(am__dirstamp)
+extension/semantic_physical_object_type_property_event/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_physical_object_type_property_event/$(DEPDIR)
+	@: > extension/semantic_physical_object_type_property_event/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo: extension/semantic_physical_object_type_property_event/$(am__dirstamp) \
+	extension/semantic_physical_object_type_property_event/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_physical_object_type_property_event/libf2e_semantic_physical_object_type_property_event.la: $(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_OBJECTS) $(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_DEPENDENCIES) extension/semantic_physical_object_type_property_event/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LINK) -rpath $(libdir) $(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_OBJECTS) $(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_LIBADD) $(LIBS)
 extension/semantic_physical_object_type_relation_event/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_physical_object_type_relation_event
 	@: > extension/semantic_physical_object_type_relation_event/$(am__dirstamp)
@@ -3305,6 +3345,8 @@ mostlyclean-compile:
 	-rm -f extension/semantic_physical_object/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.lo
 	-rm -f extension/semantic_physical_object_type_event/extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la-semantic_physical_object_type_event.$(OBJEXT)
 	-rm -f extension/semantic_physical_object_type_event/extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la-semantic_physical_object_type_event.lo
+	-rm -f extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.$(OBJEXT)
+	-rm -f extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo
 	-rm -f extension/semantic_physical_object_type_relation_event/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.$(OBJEXT)
 	-rm -f extension/semantic_physical_object_type_relation_event/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.lo
 	-rm -f extension/semantic_plan_object/extension_semantic_plan_object_libf2e_semantic_plan_object_la-semantic_plan_object.$(OBJEXT)
@@ -3532,6 +3574,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_packable_object/$(DEPDIR)/extension_semantic_packable_object_libf2e_semantic_packable_object_la-semantic_packable_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_physical_object/$(DEPDIR)/extension_semantic_physical_object_libf2e_semantic_physical_object_la-semantic_physical_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_physical_object_type_event/$(DEPDIR)/extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la-semantic_physical_object_type_event.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_physical_object_type_property_event/$(DEPDIR)/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_physical_object_type_relation_event/$(DEPDIR)/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_plan_object/$(DEPDIR)/extension_semantic_plan_object_libf2e_semantic_plan_object_la-semantic_plan_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_plan_object_type_event/$(DEPDIR)/extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la-semantic_plan_object_type_event.Plo@am__quote@
@@ -3953,6 +3996,14 @@ extension/semantic_physical_object_type_event/extension_semantic_physical_object
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_physical_object_type_event/semantic_physical_object_type_event.c' object='extension/semantic_physical_object_type_event/extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la-semantic_physical_object_type_event.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_physical_object_type_event/extension_semantic_physical_object_type_event_libf2e_semantic_physical_object_type_event_la-semantic_physical_object_type_event.lo `test -f 'extension/semantic_physical_object_type_event/semantic_physical_object_type_event.c' || echo '$(srcdir)/'`extension/semantic_physical_object_type_event/semantic_physical_object_type_event.c
+
+extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo: extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_CFLAGS) $(CFLAGS) -MT extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo -MD -MP -MF extension/semantic_physical_object_type_property_event/$(DEPDIR)/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.Tpo -c -o extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo `test -f 'extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c' || echo '$(srcdir)/'`extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_physical_object_type_property_event/$(DEPDIR)/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.Tpo extension/semantic_physical_object_type_property_event/$(DEPDIR)/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c' object='extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_physical_object_type_property_event/extension_semantic_physical_object_type_property_event_libf2e_semantic_physical_object_type_property_event_la-semantic_physical_object_type_property_event.lo `test -f 'extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c' || echo '$(srcdir)/'`extension/semantic_physical_object_type_property_event/semantic_physical_object_type_property_event.c
 
 extension/semantic_physical_object_type_relation_event/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.lo: extension/semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la_CFLAGS) $(CFLAGS) -MT extension/semantic_physical_object_type_relation_event/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.lo -MD -MP -MF extension/semantic_physical_object_type_relation_event/$(DEPDIR)/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.Tpo -c -o extension/semantic_physical_object_type_relation_event/extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_object_type_relation_event_la-semantic_physical_object_type_relation_event.lo `test -f 'extension/semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.c' || echo '$(srcdir)/'`extension/semantic_physical_object_type_relation_event/semantic_physical_object_type_relation_event.c
@@ -5214,6 +5265,7 @@ clean-libtool:
 	-rm -rf extension/semantic_packable_object/.libs extension/semantic_packable_object/_libs
 	-rm -rf extension/semantic_physical_object/.libs extension/semantic_physical_object/_libs
 	-rm -rf extension/semantic_physical_object_type_event/.libs extension/semantic_physical_object_type_event/_libs
+	-rm -rf extension/semantic_physical_object_type_property_event/.libs extension/semantic_physical_object_type_property_event/_libs
 	-rm -rf extension/semantic_physical_object_type_relation_event/.libs extension/semantic_physical_object_type_relation_event/_libs
 	-rm -rf extension/semantic_plan_object/.libs extension/semantic_plan_object/_libs
 	-rm -rf extension/semantic_plan_object_type_event/.libs extension/semantic_plan_object_type_event/_libs
@@ -5565,6 +5617,8 @@ distclean-generic:
 	-rm -f extension/semantic_physical_object/$(am__dirstamp)
 	-rm -f extension/semantic_physical_object_type_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_physical_object_type_event/$(am__dirstamp)
+	-rm -f extension/semantic_physical_object_type_property_event/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_physical_object_type_property_event/$(am__dirstamp)
 	-rm -f extension/semantic_physical_object_type_relation_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_physical_object_type_relation_event/$(am__dirstamp)
 	-rm -f extension/semantic_plan_object/$(DEPDIR)/$(am__dirstamp)
@@ -5627,7 +5681,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_property_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -5675,7 +5729,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/causality/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_transframe/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_assumption/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_property_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -5767,6 +5821,81 @@ img/bootstrap.img: img/bootstrap-repl.img
 	rm -f img/bootstrap.img
 	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 fu2/bootstrap.fu2
 
+finish_compiling_all_core_extensions: $(all_core_extensions)
+	cp -fa extension/blocks_world/.libs/libf2e_*.*                                                                 $(compile__lib__dir)
+	cp -fa extension/causality/.libs/libf2e_*.*                                                                       $(compile__lib__dir)
+	cp -fa extension/cairo/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
+	cp -fa extension/concept_version_space/.libs/libf2e_*.*                                               $(compile__lib__dir)
+	cp -fa extension/conceptnet/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
+	cp -fa extension/event_stream/.libs/libf2e_*.*                                                                 $(compile__lib__dir)
+	cp -fa extension/equals_hash/.libs/libf2e_*.*                                                                   $(compile__lib__dir)
+	cp -fa extension/fibermon/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
+	cp -fa extension/forgetful_event_stream/.libs/libf2e_*.*                                             $(compile__lib__dir)
+	cp -fa extension/forward_planner/.libs/libf2e_*.*                                                           $(compile__lib__dir)
+	cp -fa extension/frame_ball/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
+	cp -fa extension/graph_isomorphism/.libs/libf2e_*.*                                                       $(compile__lib__dir)
+	cp -fa extension/gtk_extension/.libs/libf2e_*.*                                                               $(compile__lib__dir)
+	cp -fa extension/image/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
+	cp -fa extension/image_sequence/.libs/libf2e_*.*                                                             $(compile__lib__dir)
+	cp -fa extension/interval_tree/.libs/libf2e_*.*                                                               $(compile__lib__dir)
+	cp -fa extension/lick/.libs/libf2e_*.*                                                                                 $(compile__lib__dir)
+	cp -fa extension/meta_semantic_knowledge_base/.libs/libf2e_*.*                                 $(compile__lib__dir)
+	cp -fa extension/movie/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
+	cp -fa extension/propogator/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
+	cp -fa extension/semantic_action_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
+	cp -fa extension/semantic_action_transframe/.libs/libf2e_*.*                                     $(compile__lib__dir)
+	cp -fa extension/semantic_agent/.libs/libf2e_*.*                                                             $(compile__lib__dir)
+	cp -fa extension/semantic_causal_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
+	cp -fa extension/semantic_event_sequence/.libs/libf2e_*.*                                           $(compile__lib__dir)
+	cp -fa extension/semantic_causal_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
+	cp -fa extension/semantic_assumption/.libs/libf2e_*.*                                                   $(compile__lib__dir)
+	cp -fa extension/semantic_category/.libs/libf2e_*.*                                                       $(compile__lib__dir)
+	cp -fa extension/semantic_containment_object/.libs/libf2e_*.*                                   $(compile__lib__dir)
+	cp -fa extension/semantic_directed_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
+	cp -fa extension/semantic_event/.libs/libf2e_*.*                                                             $(compile__lib__dir)
+	cp -fa extension/semantic_event_tree/.libs/libf2e_*.*                                                   $(compile__lib__dir)
+	cp -fa extension/semantic_frame/.libs/libf2e_*.*                                                             $(compile__lib__dir)
+	cp -fa extension/semantic_know_of_existence_event/.libs/libf2e_*.*                         $(compile__lib__dir)
+	cp -fa extension/semantic_know_of_relationship_event/.libs/libf2e_*.*                   $(compile__lib__dir)
+	cp -fa extension/semantic_knowledge_base/.libs/libf2e_*.*                                           $(compile__lib__dir)
+	cp -fa extension/semantic_object_type_event/.libs/libf2e_*.*                                     $(compile__lib__dir)
+	cp -fa extension/semantic_ordered_object/.libs/libf2e_*.*                                           $(compile__lib__dir)
+	cp -fa extension/semantic_object/.libs/libf2e_*.*                                                           $(compile__lib__dir)
+	cp -fa extension/semantic_packable_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_physical_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_plan_object/.libs/libf2e_*.*                                                 $(compile__lib__dir)
+	cp -fa extension/semantic_plan_object_type_event/.libs/libf2e_*.*                           $(compile__lib__dir)
+	cp -fa extension/semantic_plan_object_type_relation_event/.libs/libf2e_*.*         $(compile__lib__dir)
+	cp -fa extension/semantic_event_knowledge_base/.libs/libf2e_*.*                               $(compile__lib__dir)
+	cp -fa extension/semantic_goal/.libs/libf2e_*.*                                                               $(compile__lib__dir)
+	cp -fa extension/semantic_goal_event/.libs/libf2e_*.*                                                   $(compile__lib__dir)
+	cp -fa extension/semantic_goal_action_causal_hypothesis/.libs/libf2e_*.*             $(compile__lib__dir)
+	cp -fa extension/semantic_physical_object_type_event/.libs/libf2e_*.*                   $(compile__lib__dir)
+	cp -fa extension/semantic_physical_object_type_property_event/.libs/libf2e_*.* $(compile__lib__dir)
+	cp -fa extension/semantic_physical_object_type_relation_event/.libs/libf2e_*.* $(compile__lib__dir)
+	cp -fa extension/semantic_planner/.libs/libf2e_*.*                                                         $(compile__lib__dir)
+	cp -fa extension/semantic_proprioception/.libs/libf2e_*.*                                           $(compile__lib__dir)
+	cp -fa extension/semantic_proprioceptual_object/.libs/libf2e_*.*                             $(compile__lib__dir)
+	cp -fa extension/semantic_proprioceptual_orientation/.libs/libf2e_*.*                   $(compile__lib__dir)
+	cp -fa extension/semantic_proprioceptual_position/.libs/libf2e_*.*                         $(compile__lib__dir)
+	cp -fa extension/semantic_realm/.libs/libf2e_*.*                                                             $(compile__lib__dir)
+	cp -fa extension/semantic_relationship_key/.libs/libf2e_*.*                                       $(compile__lib__dir)
+	cp -fa extension/semantic_resource/.libs/libf2e_*.*                                                       $(compile__lib__dir)
+	cp -fa extension/semantic_resource_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
+	cp -fa extension/semantic_resource_action_sequence/.libs/libf2e_*.*                       $(compile__lib__dir)
+	cp -fa extension/semantic_resource_event_knowledge_base/.libs/libf2e_*.*             $(compile__lib__dir)
+	cp -fa extension/semantic_self/.libs/libf2e_*.*                                                               $(compile__lib__dir)
+	cp -fa extension/semantic_situation/.libs/libf2e_*.*                                                     $(compile__lib__dir)
+	cp -fa extension/semantic_situation_category/.libs/libf2e_*.*                                   $(compile__lib__dir)
+	cp -fa extension/semantic_situation_transition/.libs/libf2e_*.*                               $(compile__lib__dir)
+	cp -fa extension/semantic_somatosensation/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_somatosensory_object/.libs/libf2e_*.*                               $(compile__lib__dir)
+	cp -fa extension/semantic_temporal_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_time/.libs/libf2e_*.*                                                               $(compile__lib__dir)
+	cp -fa extension/semantic_visual_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
+	cp -fa extension/timeline/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
+	cp -fa extension/transframe/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
+
 clean-img:
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
@@ -5778,29 +5907,275 @@ clean: clean-am clean-img
 	mkdir -p lib/.libs
 
 make-install-sh:
-	echo "#!/bin/sh"                                                                    > install-sh
-	echo "echo \"\""                                                                   >> install-sh
-	echo "echo \"make: performing system-wide installation of funk2\""                 >> install-sh
-	echo "echo \"\""                                                                   >> install-sh
-	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""             >> install-sh
-#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""             >> install-sh
-	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""         >> install-sh
-	echo "echo \"\""                                                                   >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                 >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                 >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__include__dir)"                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                          >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                 >> install-sh
-	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                   >> install-sh
-	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)" >> install-sh
-	echo "install -m644 c/*.h $(chroot__install__include__dir)"                        >> install-sh
-	echo "install -m644 $(source__icons__dir)* $(chroot__install__icons__dir)"         >> install-sh
-	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                  >> install-sh
-	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                >> install-sh
+	echo "#!/bin/sh"                                                                                                                                                                 > install-sh
+	echo "echo \"\""                                                                                                                                                                >> install-sh
+	echo "echo \"make: performing system-wide installation of funk2\""                                                                                                              >> install-sh
+	echo "echo \"\""                                                                                                                                                                >> install-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                                                          >> install-sh
+#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                                                          >> install-sh
+	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""                                                                                                      >> install-sh
+	echo "echo \"\""                                                                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__img__dir)"                                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__bin__dir)"                                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__include__dir)"                                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__system_bin__dir)"                                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__fu2__dir)"                                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)"                                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)alien/"                                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)ansi/"                                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)basic_bug_responses/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_cluster/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graph_match_error_correcting/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)graphviz/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)math/"                                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)mutex/"                                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)natural_language/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)number/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)utilities/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__built_in__dir)xmlrpc/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)blocks_world/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)cairo/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)causality/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)conceptnet/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)concept_version_space/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)equals_hash/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)event_stream/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)fibermon/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)forgetful_event_stream/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)forward_planner/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)frame_ball/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)graph_isomorphism/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)gtk_extension/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)image/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)image_sequence/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)interval_tree/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)lick/"                                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)movie/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_event/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_transframe/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_agent/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_assumption/"                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_category/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_event/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_object/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_containment_object/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_directed_action_event/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_knowledge_base/"                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_sequence/"                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_tree/"                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_frame/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal_action_causal_hypothesis/"                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal_event/"                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_knowledge_base/"                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_know_of_existence_event/"                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_know_of_relationship_event/"                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_object/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_object_type_event/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_ordered_object/"                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_packable_object/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object_type_event/"                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object_type_property_event/"                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_physical_object_type_relation_event/"                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_planner/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object/"                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_event/"                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioception/"                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_object/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_position/"                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_realm/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_relationship_key/"                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource/"                                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_event/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_sequence/"                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_event_knowledge_base/"                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_self/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation_category/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation_transition/"                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_somatosensation/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_somatosensory_object/"                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_temporal_object/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_time/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_visual_object/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)timeline/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)transframe/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)"                                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)cairo-test/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)concept_version_space-test/"                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)gtk-test/"                                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)interval_tree-test/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)optimize-test/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)propogator-test/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)timeline-test/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)xmlrpc-test/"                                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)divisi2/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)em_two_webpage/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)english_language/"                                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)funk2-htmldoc/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)funk2-webpage/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)graph_match/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)gtk_timeline/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)isis_world/"                                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)isis_world_client/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)macbeth/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mind/"                                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon-1.0/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon-blocks_world/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)mindmon-isis_world/"                                                                                                       >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)moral_compass/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)moral_compass-isis_world/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)rct_webpage/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_mind/"                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_mind-blocks_world/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)roboverse/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)socket-client/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)socket-server/"                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)traced_mind/"                                                                                                              >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)visualize/"                                                                                                                >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                                                                              >> install-sh
+	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                                                                                >> install-sh
+	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-sh
+	echo "install -m644 c/*.h $(chroot__install__include__dir)"                                                                                                                     >> install-sh
+	echo "install -m644 $(source__fu2__dir)*                                                       $(chroot__install__fu2__dir)"                                                    >> install-sh
+	echo "install -m644 $(source__built_in__dir)*                                                  $(chroot__install__built_in__dir)"                                               >> install-sh
+	echo "install -m644 $(source__built_in__dir)alien/*.f*                                         $(chroot__install__built_in__dir)alien/"                                         >> install-sh
+	echo "install -m644 $(source__built_in__dir)ansi/*.f*                                          $(chroot__install__built_in__dir)ansi/"                                          >> install-sh
+	echo "install -m644 $(source__built_in__dir)basic_bug_responses/*.f*                           $(chroot__install__built_in__dir)basic_bug_responses/"                           >> install-sh
+	echo "install -m644 $(source__built_in__dir)graph_cluster/*.f*                                 $(chroot__install__built_in__dir)graph_cluster/"                                 >> install-sh
+	echo "install -m644 $(source__built_in__dir)graph_match_error_correcting/*.f*                  $(chroot__install__built_in__dir)graph_match_error_correcting/"                  >> install-sh
+	echo "install -m644 $(source__built_in__dir)graphviz/*.f*                                      $(chroot__install__built_in__dir)graphviz/"                                      >> install-sh
+	echo "install -m644 $(source__built_in__dir)math/*.f*                                          $(chroot__install__built_in__dir)math/"                                          >> install-sh
+	echo "install -m644 $(source__built_in__dir)mutex/*.f*                                         $(chroot__install__built_in__dir)mutex/"                                         >> install-sh
+	echo "install -m644 $(source__built_in__dir)natural_language/*.f*                              $(chroot__install__built_in__dir)natural_language/"                              >> install-sh
+	echo "install -m644 $(source__built_in__dir)number/*.f*                                        $(chroot__install__built_in__dir)number/"                                        >> install-sh
+	echo "install -m644 $(source__built_in__dir)utilities/*.f*                                     $(chroot__install__built_in__dir)utilities/"                                     >> install-sh
+	echo "install -m644 $(source__built_in__dir)xmlrpc/*.f*                                        $(chroot__install__built_in__dir)xmlrpc/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)*                                                 $(chroot__install__extension__dir)"                                              >> install-sh
+	echo "install -m644 $(source__extension__dir)blocks_world/*.f*                                 $(chroot__install__extension__dir)blocks_world/"                                 >> install-sh
+	echo "install -m644 $(source__extension__dir)cairo/*.f*                                        $(chroot__install__extension__dir)cairo/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)causality/*.f*                                    $(chroot__install__extension__dir)causality/"                                    >> install-sh
+	echo "install -m644 $(source__extension__dir)conceptnet/*.f*                                   $(chroot__install__extension__dir)conceptnet/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)concept_version_space/*.f*                        $(chroot__install__extension__dir)concept_version_space/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)equals_hash/*.f*                                  $(chroot__install__extension__dir)equals_hash/"                                  >> install-sh
+	echo "install -m644 $(source__extension__dir)event_stream/*.f*                                 $(chroot__install__extension__dir)event_stream/"                                 >> install-sh
+	echo "install -m644 $(source__extension__dir)fibermon/*.f*                                     $(chroot__install__extension__dir)fibermon/"                                     >> install-sh
+	echo "install -m644 $(source__extension__dir)forgetful_event_stream/*.f*                       $(chroot__install__extension__dir)forgetful_event_stream/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)forward_planner/*.f*                              $(chroot__install__extension__dir)forward_planner/"                              >> install-sh
+	echo "install -m644 $(source__extension__dir)frame_ball/*.f*                                   $(chroot__install__extension__dir)frame_ball/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)graph_isomorphism/*.f*                            $(chroot__install__extension__dir)graph_isomorphism/"                            >> install-sh
+	echo "install -m644 $(source__extension__dir)gtk_extension/*.f*                                $(chroot__install__extension__dir)gtk_extension/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)image/*.f*                                        $(chroot__install__extension__dir)image/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)image_sequence/*.f*                               $(chroot__install__extension__dir)image_sequence/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)interval_tree/*.f*                                $(chroot__install__extension__dir)interval_tree/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)lick/*.f*                                         $(chroot__install__extension__dir)lick/"                                         >> install-sh
+	echo "install -m644 $(source__extension__dir)meta_semantic_knowledge_base/*.f*                 $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                 >> install-sh
+	echo "install -m644 $(source__extension__dir)movie/*.f*                                        $(chroot__install__extension__dir)movie/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)propogator/*.f*                                   $(chroot__install__extension__dir)propogator/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_action_event/*.f*                        $(chroot__install__extension__dir)semantic_action_event/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_action_transframe/*.f*                   $(chroot__install__extension__dir)semantic_action_transframe/"                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_agent/*.f*                               $(chroot__install__extension__dir)semantic_agent/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_assumption/*.f*                          $(chroot__install__extension__dir)semantic_assumption/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_category/*.f*                            $(chroot__install__extension__dir)semantic_category/"                            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_causal_event/*.f*                        $(chroot__install__extension__dir)semantic_causal_event/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_causal_object/*.f*                       $(chroot__install__extension__dir)semantic_causal_object/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_containment_object/*.f*                  $(chroot__install__extension__dir)semantic_containment_object/"                  >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_directed_action_event/*.f*               $(chroot__install__extension__dir)semantic_directed_action_event/"               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event/*.f*                               $(chroot__install__extension__dir)semantic_event/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_knowledge_base/*.f*                $(chroot__install__extension__dir)semantic_event_knowledge_base/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_sequence/*.f*                      $(chroot__install__extension__dir)semantic_event_sequence/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_tree/*.f*                          $(chroot__install__extension__dir)semantic_event_tree/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_frame/*.f*                               $(chroot__install__extension__dir)semantic_frame/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_goal/*.f*                                $(chroot__install__extension__dir)semantic_goal/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_goal_action_causal_hypothesis/*.f*       $(chroot__install__extension__dir)semantic_goal_action_causal_hypothesis/"       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_goal_event/*.f*                          $(chroot__install__extension__dir)semantic_goal_event/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_knowledge_base/*.f*                      $(chroot__install__extension__dir)semantic_knowledge_base/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_know_of_existence_event/*.f*             $(chroot__install__extension__dir)semantic_know_of_existence_event/"             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_know_of_relationship_event/*.f*          $(chroot__install__extension__dir)semantic_know_of_relationship_event/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_object/*.f*                              $(chroot__install__extension__dir)semantic_object/"                              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_object_type_event/*.f*                   $(chroot__install__extension__dir)semantic_object_type_event/"                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_ordered_object/*.f*                      $(chroot__install__extension__dir)semantic_ordered_object/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_packable_object/*.f*                     $(chroot__install__extension__dir)semantic_packable_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object/*.f*                     $(chroot__install__extension__dir)semantic_physical_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object_type_event/*.f*          $(chroot__install__extension__dir)semantic_physical_object_type_event/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object_type_property_event/*.f* $(chroot__install__extension__dir)semantic_physical_object_type_property_event/" >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_physical_object_type_relation_event/*.f* $(chroot__install__extension__dir)semantic_physical_object_type_relation_event/" >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_planner/*.f*                             $(chroot__install__extension__dir)semantic_planner/"                             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_object/*.f*                         $(chroot__install__extension__dir)semantic_plan_object/"                         >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_event/*.f*              $(chroot__install__extension__dir)semantic_plan_object_type_event/"              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_relation_event/*.f*     $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioception/*.f*                      $(chroot__install__extension__dir)semantic_proprioception/"                      >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_object/*.f*               $(chroot__install__extension__dir)semantic_proprioceptual_object/"               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_orientation/*.f*          $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_position/*.f*             $(chroot__install__extension__dir)semantic_proprioceptual_position/"             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_realm/*.f*                               $(chroot__install__extension__dir)semantic_realm/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_relationship_key/*.f*                    $(chroot__install__extension__dir)semantic_relationship_key/"                    >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource/*.f*                            $(chroot__install__extension__dir)semantic_resource/"                            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource_action_event/*.f*               $(chroot__install__extension__dir)semantic_resource_action_event/"               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource_action_sequence/*.f*            $(chroot__install__extension__dir)semantic_resource_action_sequence/"            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_resource_event_knowledge_base/*.f*       $(chroot__install__extension__dir)semantic_resource_event_knowledge_base/"       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_self/*.f*                                $(chroot__install__extension__dir)semantic_self/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_situation/*.f*                           $(chroot__install__extension__dir)semantic_situation/"                           >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_situation_category/*.f*                  $(chroot__install__extension__dir)semantic_situation_category/"                  >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_situation_transition/*.f*                $(chroot__install__extension__dir)semantic_situation_transition/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_somatosensation/*.f*                     $(chroot__install__extension__dir)semantic_somatosensation/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_somatosensory_object/*.f*                $(chroot__install__extension__dir)semantic_somatosensory_object/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_temporal_object/*.f*                     $(chroot__install__extension__dir)semantic_temporal_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_time/*.f*                                $(chroot__install__extension__dir)semantic_time/"                                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_visual_object/*.f*                       $(chroot__install__extension__dir)semantic_visual_object/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)timeline/*.f*                                     $(chroot__install__extension__dir)timeline/"                                     >> install-sh
+	echo "install -m644 $(source__extension__dir)transframe/*.f*                                   $(chroot__install__extension__dir)transframe/"                                   >> install-sh
+	echo "install -m644 $(source__test__dir)*                                                      $(chroot__install__test__dir)"                                                   >> install-sh
+	echo "install -m644 $(source__test__dir)cairo-test/*.f*                                        $(chroot__install__test__dir)cairo-test/"                                        >> install-sh
+	echo "install -m644 $(source__test__dir)concept_version_space-test/*.f*                        $(chroot__install__test__dir)concept_version_space-test/"                        >> install-sh
+	echo "install -m644 $(source__test__dir)gtk-test/*.f*                                          $(chroot__install__test__dir)gtk-test/"                                          >> install-sh
+	echo "install -m644 $(source__test__dir)interval_tree-test/*.f*                                $(chroot__install__test__dir)interval_tree-test/"                                >> install-sh
+	echo "install -m644 $(source__test__dir)optimize-test/*.f*                                     $(chroot__install__test__dir)optimize-test/"                                     >> install-sh
+	echo "install -m644 $(source__test__dir)propogator-test/*.f*                                   $(chroot__install__test__dir)propogator-test/"                                   >> install-sh
+	echo "install -m644 $(source__test__dir)timeline-test/*.f*                                     $(chroot__install__test__dir)timeline-test/"                                     >> install-sh
+	echo "install -m644 $(source__test__dir)xmlrpc-test/*.f*                                       $(chroot__install__test__dir)xmlrpc-test/"                                       >> install-sh
+	echo "install -m644 $(source__example__dir)*                                                   $(chroot__install__example__dir)"                                                >> install-sh
+	echo "install -m644 $(source__example__dir)divisi2/*.f*                                        $(chroot__install__example__dir)divisi2/"                                        >> install-sh
+	echo "install -m644 $(source__example__dir)em_two_webpage/*.f*                                 $(chroot__install__example__dir)em_two_webpage/"                                 >> install-sh
+	echo "install -m644 $(source__example__dir)english_language/*.f*                               $(chroot__install__example__dir)english_language/"                               >> install-sh
+	echo "install -m644 $(source__example__dir)funk2-htmldoc/*.f*                                  $(chroot__install__example__dir)funk2-htmldoc/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)funk2-webpage/*.f*                                  $(chroot__install__example__dir)funk2-webpage/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)graph_match/*.f*                                    $(chroot__install__example__dir)graph_match/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)gtk_timeline/*.f*                                   $(chroot__install__example__dir)gtk_timeline/"                                   >> install-sh
+	echo "install -m644 $(source__example__dir)isis_world/*.f*                                     $(chroot__install__example__dir)isis_world/"                                     >> install-sh
+	echo "install -m644 $(source__example__dir)isis_world_client/*.f*                              $(chroot__install__example__dir)isis_world_client/"                              >> install-sh
+	echo "install -m644 $(source__example__dir)macbeth/*.f*                                        $(chroot__install__example__dir)macbeth/"                                        >> install-sh
+	echo "install -m644 $(source__example__dir)mind/*.f*                                           $(chroot__install__example__dir)mind/"                                           >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon/*.f*                                        $(chroot__install__example__dir)mindmon/"                                        >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon-1.0/*.f*                                    $(chroot__install__example__dir)mindmon-1.0/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon-blocks_world/*.f*                           $(chroot__install__example__dir)mindmon-blocks_world/"                           >> install-sh
+	echo "install -m644 $(source__example__dir)mindmon-isis_world/*.f*                             $(chroot__install__example__dir)mindmon-isis_world/"                             >> install-sh
+	echo "install -m644 $(source__example__dir)moral_compass/*.f*                                  $(chroot__install__example__dir)moral_compass/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)moral_compass-isis_world/*.f*                       $(chroot__install__example__dir)moral_compass-isis_world/"                       >> install-sh
+	echo "install -m644 $(source__example__dir)rct_webpage/*.f*                                    $(chroot__install__example__dir)rct_webpage/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)reflective_mind/*.f*                                $(chroot__install__example__dir)reflective_mind/"                                >> install-sh
+	echo "install -m644 $(source__example__dir)reflective_mind-blocks_world/*.f*                   $(chroot__install__example__dir)reflective_mind-blocks_world/"                   >> install-sh
+	echo "install -m644 $(source__example__dir)roboverse/*.f*                                      $(chroot__install__example__dir)roboverse/"                                      >> install-sh
+	echo "install -m644 $(source__example__dir)socket-client/*.f*                                  $(chroot__install__example__dir)socket-client/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)socket-server/*.f*                                  $(chroot__install__example__dir)socket-server/"                                  >> install-sh
+	echo "install -m644 $(source__example__dir)traced_mind/*.f*                                    $(chroot__install__example__dir)traced_mind/"                                    >> install-sh
+	echo "install -m644 $(source__example__dir)visualize/*.f*                                      $(chroot__install__example__dir)visualize/"                                      >> install-sh
+	echo "install -m644 $(source__icons__dir)*                                                     $(chroot__install__icons__dir)"                                                  >> install-sh
+	echo "gzip -c debian/funk2.1 > debian/funk2.1.gz"                                                                                                                               >> install-sh
+	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                                                             >> install-sh
 	chmod a+x install-sh
 
-bin/funk2$(EXEEXT): lib/libfunk2.la $(all_core_extensions)
+bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
 install: install-am make-install-sh

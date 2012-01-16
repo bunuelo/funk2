@@ -3,7 +3,20 @@
 #include <string.h>
 #include <sched.h>
 #include <time.h>
+#include <sys/time.h>
 #include <pthread.h>
+
+
+#ifdef __MACH__
+#include <mach/clock.h>
+#include <mach/mach.h>
+#include <mach/mach_init.h>
+#include <mach/thread_policy.h>
+#include <unistd.h>
+#define cpu_set_t thread_affinity_policy_data_t
+#define CPU_SETSIZE sysconf(_SC_NPROCESSORS_ONLN)
+#define CPU_ZERO(new_mask) *new_mask.affinity_tag = THREAD_AFFINITY_TAG_NULL
+#endif
 
 void print_usage() {
   printf("\n"
@@ -28,6 +41,7 @@ void print_usage() {
 typedef unsigned long long u64;
 typedef   signed long long s64;
 
+#define CLOCK_THREAD_CPUTIME_ID NULL
 #define nanoseconds_per_second ((u64)1000000000ull)
 
 void raw__nanosleep(u64 nanoseconds) {
@@ -40,7 +54,17 @@ void raw__nanosleep(u64 nanoseconds) {
 
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
+#ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
+  clock_serv_t cclock;
+  mach_timespec_t mts;
+  host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+  clock_get_time(cclock, &mts);
+  mach_port_deallocate(mach_task_self(), cclock);
+  ts.tv_sec = mts.tv_sec;
+  ts.tv_nsec = mts.tv_nsec;
+#else
   clock_gettime(CLOCK_REALTIME, &ts);
+#endif
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 }
 

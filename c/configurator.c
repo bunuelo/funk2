@@ -13,9 +13,10 @@
 #include <mach/mach_init.h>
 #include <mach/thread_policy.h>
 #include <unistd.h>
-#define cpu_set_t thread_affinity_policy_data_t
-#define CPU_SETSIZE sysconf(_SC_NPROCESSORS_ONLN)
-#define CPU_ZERO(new_mask) *new_mask.affinity_tag = THREAD_AFFINITY_TAG_NULL
+#define cpu_set_t               thread_affinity_policy_data_t
+#define CPU_SETSIZE             sysconf(_SC_NPROCESSORS_ONLN)
+#define CPU_ZERO(new_mask)      *new_mask.affinity_tag = THREAD_AFFINITY_TAG_NULL
+#define CLOCK_THREAD_CPUTIME_ID NULL
 #endif
 
 void print_usage() {
@@ -41,7 +42,6 @@ void print_usage() {
 typedef unsigned long long u64;
 typedef   signed long long s64;
 
-#define CLOCK_THREAD_CPUTIME_ID NULL
 #define nanoseconds_per_second ((u64)1000000000ull)
 
 void raw__nanosleep(u64 nanoseconds) {

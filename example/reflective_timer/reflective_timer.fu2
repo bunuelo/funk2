@@ -1,0 +1,82 @@
+'Copyright (c) 2007-2011 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'reflective_timer_trigger'
+
+[deframe reflective_timer_trigger [frame] [trigger_time trigger]
+  [new [initial-trigger_time initial-trigger]
+       [= trigger_time initial-trigger_time]
+       [= trigger      initial-trigger]]]
+
+
+'reflective_timer'
+
+[deframe reflective_timer [frame] [mutate_mutex current_time sorted_timer_triggers]
+  [new [initial-current_time]
+       [= mutate_mutex          [new mutex]]
+       [= current_time          initial-current_time]
+       [= sorted_timer_triggers []]]]
+
+[deftypefunk reflective_timer set current_time [new-current_time]
+  [have mutate_mutex lock]
+  [if [< new-current_time current_time]
+      [prog [have mutate_mutex unlock]
+	    [error funk_name `reflective_timer-set-current_time
+		   bug_name  `new-current_time-is-less_than-current_time]]]
+  [if [not [== current_time new-current_time]]
+      [prog [= current_time new-current_time]
+	    [let [[keep_looping t]]
+	      [while keep_looping
+		[= keep_looping nil]
+		[if sorted_timer_triggers
+		    [let [[first_timer_trigger [car sorted_timer_triggers]]]
+		      [if [>= current_time [get first_timer_trigger trigger_time]]
+			  [prog [have [get first_timer_trigger trigger] trigger]
+				[= keep_looping t]
+				[= sorted_timer_triggers [cdr sorted_timer_triggers]]]]]]]]]]
+  [have mutate_mutex unlock]]
+
+[deftypefunk reflective_timer execute wait_for_time [wait_trigger_time]
+  [let [[new_timer_trigger [new reflective_timer_trigger wait_trigger_time [new fiber_trigger]]]]
+    [have mutate_mutex lock]
+    
+    [let [[done nil]
+	  [iter sorted_timer_triggers]
+	  [prev nil]]
+      [while [not done]
+	[let [[first_timer_trigger [if iter [car iter]]]]
+	  [if [or [null first_timer_trigger]
+		  [< wait_trigger_time [get first_timer_trigger trigger_time]]]
+	      [prog [if prev
+			[set prev cdr [cons new_timer_trigger iter]]
+		      [= sorted_timer_triggers [cons new_timer_trigger iter]]]
+		    [= done t]]
+	    [= prev iter]]]]]
+    
+    [let [[fiber [this-fiber]]]
+      [fiber [funk []
+		   [while [global_scheduler-contains_active_fiber fiber]
+		     [millisleep 100]]
+		   [have mutate_mutex unlock]]
+	     []]]
+    
+    [wait-for-trigger [get new_timer_trigger trigger]]]]
+
+

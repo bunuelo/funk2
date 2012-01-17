@@ -37,6 +37,9 @@
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_type_knowledge]
   ]
 
+[deftypefunk deliberative_physical_object_type_goal_agency get physical_type_knowledge_reflective_timer []
+  [get [get this resource `translate_physical_knowledge_to_physical_type_knowledge] physical_type_knowledge_reflective_timer]]
+
 [deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   ]
 
@@ -69,7 +72,7 @@
 												   [semantic_physical_object_copy_mutex       [new mutex]]
 												   [goals                                     nil]
 												   [end_of_physical_type_changes_trigger      [new fiber_trigger]]
-												   [processing_reflective_timer               [new reflective_timer [new semantic_time `before]]]]
+												   [physical_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
   [new []
        [construct deliberative_resource `translate_physical_knowledge_to_physical_type_knowledge
 		  [funk []
@@ -269,7 +272,7 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [set processing_reflective_timer current_time [new semantic_time event-time]]
+										 [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[is-type `semantic_physical_object event-semantic_frame]
 											[let [[event-semantic_frame-copy [get this semantic_physical_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]
 											      [event-value-copy          [if [is-type `semantic_physical_object event-value]
@@ -329,7 +332,7 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [set processing_reflective_timer current_time [new semantic_time event-time]]
+										 [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[is-type `semantic_physical_object event-semantic_frame]
 											[let [[event-semantic_frame-copy [get this semantic_physical_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]
 											      [event-value-copy          [if [is-type `semantic_physical_object event-value]

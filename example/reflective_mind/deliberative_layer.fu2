@@ -42,6 +42,9 @@
 [deftypefunk deliberative_layer execute create_builtin_actions []
   [have [get this agency `plan] create_builtin_actions]]
 
+[deftypefunk deliberative_layer get physical_type_knowledge_reflective_timer []
+  [get [get this agency `physical_object_type_goal] physical_type_knowledge_reflective_timer]]
+
 [deftypefunk deliberative_layer execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [have [get this agency `physical_object_type_goal] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 

@@ -101,7 +101,6 @@ void f2__initialize() {
   f2__primobject_type_handler__initialize();
   f2__primobject_type__initialize();
   f2__sort__initialize();
-  f2__search__initialize();
   f2__management_thread__initialize();
   f2__simple_repl__initialize();
   f2__garbage_collector__initialize();

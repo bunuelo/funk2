@@ -47,13 +47,13 @@
 		[= keep_looping nil]
 		[if sorted_timer_triggers
 		    [let [[first_timer_trigger [car sorted_timer_triggers]]]
-		      [if [>= current_time [get first_timer_trigger trigger_time]]
+		      [if [> current_time [get first_timer_trigger trigger_time]]
 			  [prog [have [get first_timer_trigger trigger] trigger]
 				[= keep_looping t]
 				[= sorted_timer_triggers [cdr sorted_timer_triggers]]]]]]]]]]
   [have mutate_mutex unlock]]
 
-[deftypefunk reflective_timer execute wait_for_time [wait_trigger_time]
+[deftypefunk reflective_timer execute wait_until_after [wait_trigger_time]
   [let [[new_timer_trigger [new reflective_timer_trigger wait_trigger_time [new fiber_trigger]]]]
     [have mutate_mutex lock]
     

@@ -194,7 +194,8 @@
 														 
 														 'Handle learning of transframe here.'
 														 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																  'resource, ' name ', has finished and it is time to learn transframe now.']
+																  'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and reflective physical_type knowledge time has also caught up.'
+																  '\n  All information is ready for learning physical_type transframe for resource.']
 														 
 														 
 														 

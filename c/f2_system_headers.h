@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2011 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -154,7 +154,6 @@
 #  include <gtk/gtk.h>
 #  include <gdk/gdkkeysyms.h>
 #endif
-
 
 #ifdef F2__LIBAVCODEC_SUPPORTED
 #  ifdef HAVE_AV_CONFIG_H

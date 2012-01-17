@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2011 Bo Morgan.
+'Copyright (c) 2007-2012 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -25,7 +25,8 @@
 'reflective_mind_core'
 
 [defpackage reflective_mind_core
-  :packages [traced_mind]]
+  :packages [traced_mind
+	     reflective_timer]]
 
 
 'reflective_mind'

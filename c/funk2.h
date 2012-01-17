@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2011 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -89,7 +89,6 @@
 #include "f2_primfunks__fcntl.h"
 #include "f2_primfunks__ioctl.h"
 #include "f2_primfunks__locale.h"
-#include "f2_primfunks__string.h"
 #include "f2_primobject__boolean.h"
 #include "f2_primobject__char_pointer.h"
 #include "f2_primobject__circular_buffer.h"
@@ -124,7 +123,6 @@
 #include "f2_simple_repl.h"
 #include "f2_scheduler.h"
 #include "f2_scheduler_thread_controller.h"
-#include "f2_search.h"
 #include "f2_set.h"
 #include "f2_signal.h"
 #include "f2_socket.h"

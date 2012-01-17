@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2011 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -27,17 +27,17 @@ boolean_t __received_segmentation_fault = 0;
 void f2__receive_signal(int sig) {
   switch(sig) {
   case SIGINT:
-    printf ("\nsignal note: received ctrl-c\n"); fflush(stdout);
+    printf ("\nfunk2 fatal: received ctrl-c (SIGINT).  calling exit.\n"); fflush(stdout);
     __received_signal__sigint = 1;
     exit(-1);
     break;
   case SIGSEGV:
-    printf ("\nsignal note: received segmentation fault\n"); fflush(stdout);
+    printf ("\nfunk2 fatal: received segmentation fault (SIGSEGV).  calling exit.\n"); fflush(stdout);
     __received_segmentation_fault = 1;
     exit(-1);
     break;
   default:
-    printf ("\nsignal warning: received unknown signal (%d)\n", sig);
+    printf ("\nfunk2 signal warning: received unknown signal (%d).  doing nothing.\n", sig);
     //signal(sig, SIG_DFL);
     break;
   }

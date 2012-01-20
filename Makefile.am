@@ -533,6 +533,7 @@ extension_semantic_action_transframe_libf2e_semantic_action_transframe_la_SOURCE
 extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                             = extension/semantic_agent/semantic_agent.c
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                               = extension/semantic_causal_event/semantic_causal_event.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                           = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_SOURCES                                       = extension/semantic_event_transframe/semantic_event_transframe.c
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                                             = extension/semantic_causal_object/semantic_causal_object.c
 extension_semantic_assumption_libf2e_semantic_assumption_la_SOURCES                                                   = extension/semantic_assumption/semantic_assumption.c
 extension_semantic_category_libf2e_semantic_category_la_SOURCES                                                       = extension/semantic_category/semantic_category.c
@@ -681,6 +682,9 @@ extension_semantic_causal_event_libf2e_semantic_causal_event_la_CFLAGS  = $(lib_
 
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -903,6 +907,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_knowledge_base/"                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_sequence/"                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_tree/"                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_transframe/"                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_frame/"                                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal/"                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_goal_action_causal_hypothesis/"                                                                                 >> install-sh
@@ -1031,6 +1036,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_event_knowledge_base/*.f*                $(chroot__install__extension__dir)semantic_event_knowledge_base/"                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_event_sequence/*.f*                      $(chroot__install__extension__dir)semantic_event_sequence/"                      >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_event_tree/*.f*                          $(chroot__install__extension__dir)semantic_event_tree/"                          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_event_transframe/*.f*                    $(chroot__install__extension__dir)semantic_event_transframe/"                    >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_frame/*.f*                               $(chroot__install__extension__dir)semantic_frame/"                               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_goal/*.f*                                $(chroot__install__extension__dir)semantic_goal/"                                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_goal_action_causal_hypothesis/*.f*       $(chroot__install__extension__dir)semantic_goal_action_causal_hypothesis/"       >> install-sh

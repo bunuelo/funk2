@@ -177,6 +177,7 @@
 						     'extension/semantic_directed_action_event/'
 						     'extension/semantic_event/'
 						     'extension/semantic_event_knowledge_base/'
+						     'extension/semantic_event_transframe/'
 						     'extension/semantic_goal/'
 						     'extension/semantic_goal_event/'
 						     'extension/semantic_goal_action_causal_hypothesis/'

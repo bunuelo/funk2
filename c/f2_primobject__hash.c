@@ -63,7 +63,7 @@ void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) 
   f2ptr bin_num_power    = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
   f2ptr bin_array        = f2hash__bin_array(this, cause);
-  f2ptr temp_hash   = raw__hash__new(cause, bin_num_power__i + 1, hash_value_funk, equals_funk);
+  f2ptr temp_hash        = raw__hash__new(cause, bin_num_power__i + 1, hash_value_funk, equals_funk);
   {
     u64 bin_num = 1ull << bin_num_power__i;
     status("f2__hash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, bin_num << 1);
@@ -86,7 +86,7 @@ void f2__hash__double_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this) 
 u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object) {
   f2ptr hash_value_funk = f2hash__hash_value_funk(this, cause);
   u64   key__hash_value = 0;
-  if (! hash_value_funk) {
+  if (hash_value_funk == nil) {
     key__hash_value = raw__eq_hash_value(cause, object);
   } else {
     f2ptr hash_value_integer = f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, object, nil));
@@ -96,9 +96,9 @@ u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr obje
 }
 
 boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr object_a, f2ptr object_b) {
-  f2ptr equals_funk = f2hash__equals_funk(this, cause);
-  boolean_t equals = boolean__false;
-  if (! equals_funk) {
+  f2ptr     equals_funk = f2hash__equals_funk(this, cause);
+  boolean_t equals      = boolean__false;
+  if (equals_funk == nil) {
     equals = raw__eq(cause, object_a, object_b);
   } else {
     equals = (f2__force_funk_apply(cause, fiber, equals_funk, f2cons__new(cause, object_a, f2cons__new(cause, object_b, nil))) != nil);

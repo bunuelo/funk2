@@ -110,6 +110,10 @@
 [defunk funk2_download-content []
   [string-prog '<h1>Download</h1>'
 	       ''
+	       '<h2>Funk2 Download and Install Tutorial</h2>'
+	       ''
+	       'This website does not have many compiled packages of the Funk2 substrate.  If you would like to experiment with the latest stable version of the Funk2 substrate, please see our new <a href="https://github.com/bunuelo/funk2/wiki">Funk2 Tutorial Wiki</a> on GitHub, which includes a <a href="https://github.com/bunuelo/funk2/wiki/Download-and-Install">Download and Install Tutorial</a> as well!'
+	       ''
 	       '<h2>Binary and Source Packages</h2>'
 	       ''
 	       '<p>The following is a direct link to the latest version of platform independent source code, which compiles and runs cleanly on Linux, MacOSX, and Windows (under CygWin):</p>'

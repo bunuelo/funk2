@@ -50,10 +50,11 @@
        [= b         initial-b]
        [= c         initial-c]
        [= fiber     [fiber [funk []
-				 [wait-for-trigger [get algorithm clock_trigger]]
-				 
-				 [terminal_format standard-terminal '\nfiber #: ' [+ [* j [get algorithm size]] i]]
-				 
+				 [while t
+				   [wait-for-trigger [get algorithm clock_trigger]]
+				   
+				   [terminal_format standard-terminal '\nfiber #: ' [+ [* j [get algorithm size]] i]]
+				   ]
 				 
 				 ]
 			   []]]]]
@@ -143,7 +144,7 @@
 	[have algorithm clock]
 	[terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
 	[terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
-	[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
+	[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]]
       
       nil]]]
 

@@ -50,7 +50,7 @@
        [= b         initial-b]
        [= c         initial-c]
        [= fiber     [fiber [funk []
-				 [wait-for-trigger [get algorithm start_trigger]]
+				 [wait-for-trigger [get algorithm clock_trigger]]
 				 
 				 [terminal_format standard-terminal '\nfiber #: ' [+ [* j [get algorithm size]] i]]
 				 
@@ -61,24 +61,40 @@
 [deftypefunk canons_processor get active []
   [global_scheduler-contains_active_fiber fiber]]
 
-[deframe canons_algorithm [frame] [size start_trigger processor_array]
+[deframe canons_algorithm [frame] [size clock_trigger processor_array]
   [new [initial-size]
        [= size            initial-size]
-       [= start_trigger   [new fiber_trigger]]
+       [= clock_trigger   [new fiber_trigger]]
        [= processor_array [new array size size]]
        [dotimes [j size]
 	 [dotimes [i size]
 	   [set [get processor_array elt j] elt i [new canons_processor this i j 0 0 0]]]]
-       [dotimes [j size]
-	 [dotimes [i size]
-	   [while [get [get this processor i j] active]
-	     [millisleep 100]]]]]]
+       [have this wait_until_inactive]]]
+
+[deftypefunk canons_algorithm get active []
+  [let [[j      [- size 1]]
+	[i      [- size 1]]
+	[active nil]]
+    [while [>= j 0]
+      [while [>= i 0]
+	[if [get [get this processor i j] active]
+	    [prog [= active t]
+		  [= i      0]
+		  [= j      0]]]
+	[= i [- i 1]]]
+      [= j [- j 1]]]
+    active]]
+
+[deftypefunk canons_algorithm execute wait_until_inactive []
+  [while [get this active]
+    [millisleep [* 100 size size]]]]
 
 [deftypefunk canons_algorithm get processor [i j]
   [get [get processor_array elt j] elt i]]
 
-[deftypefunk canons_algorithm execute start []
-  [have start_trigger trigger]]
+[deftypefunk canons_algorithm execute clock []
+  [have clock_trigger trigger]
+  [have this wait_until_inactive]]
 
 [deftypefunk canons_algorithm set a_matrix [a_matrix]
   [dotimes [j size]
@@ -106,7 +122,7 @@
       [terminal_format standard-terminal '\nb_matrix: ' b_matrix]
       [set algorithm a_matrix a_matrix]
       [set algorithm b_matrix b_matrix]
-      [have algorithm start]
+      [have algorithm clock]
       nil]]]
 
 

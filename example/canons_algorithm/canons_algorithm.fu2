@@ -172,14 +172,15 @@
 [deftypefunk canons_algorithm execute wait_until_inactive []
   [yield]
   [while [get this active]
-    [millisleep [* 100 size size]]]]
+    [millisleep 100]]]
 
 [deftypefunk canons_algorithm get processor [i j]
   [get [get processor_array elt i] elt j]]
 
 [deftypefunk canons_algorithm execute clock []
+  [have this wait_until_inactive]
   [have clock_trigger trigger]
-  [have this wait_until_inactive]]
+  [yield]]
 
 [deftypefunk canons_algorithm set a_matrix [a_matrix]
   [dotimes [j size]

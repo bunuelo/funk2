@@ -48,12 +48,12 @@
 
 [deftypefunk canons_port execute send [element]
   [let [[event [new event_stream_event [time]]]]
-    [have event add_var_value `element element]
+    [have event add `element element]
     [have event_stream add event]]]
 
 [deftypefunk canons_port execute receive []
   [let [[event [get iterator current]]]
-    [have event lookup_var_value `element]]]
+    [have event lookup `element]]]
 
 [deframe canons_processor [frame] [clock_trigger size i j input-port up-port down-port left-port right-port fiber [a 0] [b 0] [c 0]]
   [new [initial-clock_trigger initial-size initial-i initial-j]

@@ -41,6 +41,13 @@
 	[set this elt i j [random max_value]]]]
     this]]
 
+[defunk canons_matrix-new_debug [size]
+  [let [[this [new canons_matrix size]]]
+    [dotimes [j size]
+      [dotimes [i size]
+	[set this elt i j [+ [* i size] j]]]]
+    this]]
+
 [deframe canons_port [frame] [value]]
 
 [deftypefunk canons_port execute write [element]
@@ -82,6 +89,11 @@
 						   [= b [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
+				       
+				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': phase one complete.']
+				       
+				       
+				       
 				       
 				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
 				       [wait-for-trigger clock_trigger]
@@ -170,8 +182,8 @@
 
 [defunk canons_algorithm-test []
   [let [[size 4]]
-    [let [[original_a_matrix [canons_matrix-new_random size 2]]
-	  [original_b_matrix [canons_matrix-new_random size 2]]
+    [let [[original_a_matrix [canons_matrix-new_debug size]]
+	  [original_b_matrix [canons_matrix-new_debug size]]
 	  [algorithm         [new canons_algorithm size]]]
       [set algorithm a_matrix original_a_matrix]
       [set algorithm b_matrix original_b_matrix]

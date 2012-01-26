@@ -84,9 +84,7 @@
 						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
 						   [= a [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
-						 [wait-for-trigger clock_trigger]]]]
-				       
-				       [dotimes [n [- size 1]]
+						 [wait-for-trigger clock_trigger]]]
 					 [if [< n j]
 					     [prog [wait-for-trigger clock_trigger]
 						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
@@ -97,7 +95,7 @@
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
 				       
-				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': phase one complete, beginning phase two.']
+				       `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': phase one complete, beginning phase two.']
 				       
 				       [dotimes [n [- size 1]]
 					 [wait-for-trigger clock_trigger]
@@ -177,6 +175,7 @@
   [get [get processor_array elt i] elt j]]
 
 [deftypefunk canons_algorithm execute clock []
+  [have this wait_until_inactive]
   [have clock_trigger trigger]
   [have this wait_until_inactive]]
 

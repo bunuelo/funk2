@@ -61,7 +61,7 @@
 				       
 				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': starting.']
 				       
-				       [dotimes [n size]
+				       [dotimes [n [- size 1]]
 					 [if [< n i]
 					     [prog [wait-for-trigger clock_trigger]
 						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
@@ -72,7 +72,7 @@
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
 				       
-				       [dotimes [n size]
+				       [dotimes [n [- size 1]]
 					 [if [< n j]
 					     [prog [wait-for-trigger clock_trigger]
 						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']

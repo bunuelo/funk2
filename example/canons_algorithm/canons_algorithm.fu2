@@ -91,7 +91,7 @@
     [millisleep [* 100 size size]]]]
 
 [deftypefunk canons_algorithm get processor [i j]
-  [get [get processor_array elt j] elt i]]
+  [get [get processor_array elt i] elt j]]
 
 [deftypefunk canons_algorithm execute clock []
   [have clock_trigger trigger]

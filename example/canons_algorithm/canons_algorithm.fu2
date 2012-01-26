@@ -214,7 +214,7 @@
     c_matrix]]
 
 [defunk canons_algorithm-test []
-  [let [[size 4]]
+  [let [[size 6]]
     [let [[original_a_matrix [canons_matrix-new_debug    size]]
 	  [original_b_matrix [canons_matrix-new_identity size]]
 	  [algorithm         [new canons_algorithm size]]]
@@ -223,7 +223,6 @@
       
       [terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
       [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
-      [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
       [have algorithm clock]
       
       [dotimes [N [+ [* [- size 1] [+ 4 5]] 1]]
@@ -235,8 +234,6 @@
 	]
       
       [have algorithm clock]
-      [terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
-      [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
       [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
       
       nil]]]

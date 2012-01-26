@@ -24,10 +24,10 @@
        [have this zero]]]
 
 [deftypefunk canons_matrix set elt [i j value]
-  [set [get array elt j] elt i value]]
+  [set [get array elt i] elt j value]]
 
 [deftypefunk canons_matrix get elt [i j]
-  [get [get array elt j] elt i]]
+  [get [get array elt i] elt j]]
 
 [deftypefunk canons_matrix execute zero []
   [dotimes [j size]
@@ -41,19 +41,19 @@
 	[set this elt i j [random max_value]]]]
     this]]
 
-[deframe canons_processor [frame] [algorithm fiber i j a b c]
-  [new [initial-algorithm initial-i initial-j initial-a initial-b initial-c]
+[deframe canons_processor [frame] [algorithm fiber i j [a 0] [b 0] [c 0]]
+  [new [initial-algorithm initial-i initial-j]
        [= algorithm initial-algorithm]
        [= i         initial-i]
        [= j         initial-j]
-       [= a         initial-a]
-       [= b         initial-b]
-       [= c         initial-c]
        [= fiber     [fiber [funk []
 				 [while t
 				   [wait-for-trigger [get algorithm clock_trigger]]
 				   
 				   [terminal_format standard-terminal '\nfiber #: ' [+ [* j [get algorithm size]] i]]
+				   
+				   
+				   
 				   ]
 				 
 				 ]
@@ -69,7 +69,7 @@
        [= processor_array [new array size size]]
        [dotimes [j size]
 	 [dotimes [i size]
-	   [set [get processor_array elt j] elt i [new canons_processor this i j 0 0 0]]]]
+	   [set [get processor_array elt j] elt i [new canons_processor this i j]]]]
        [have this wait_until_inactive]]]
 
 [deftypefunk canons_algorithm get active []

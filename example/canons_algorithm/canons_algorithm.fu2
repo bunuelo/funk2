@@ -41,6 +41,12 @@
 	[set this elt i j [random max_value]]]]
     this]]
 
+[defunk canons_matrix-new_identity [size]
+  [let [[this [new canons_matrix size]]]
+    [dotimes [i size]
+      [set this elt i i 1]]
+    this]]
+
 [defunk canons_matrix-new_debug [size]
   [let [[this [new canons_matrix size]]]
     [dotimes [j size]
@@ -207,8 +213,8 @@
 
 [defunk canons_algorithm-test []
   [let [[size 2]]
-    [let [[original_a_matrix [canons_matrix-new_debug size]]
-	  [original_b_matrix [canons_matrix-new_debug size]]
+    [let [[original_a_matrix [canons_matrix-new_debug    size]]
+	  [original_b_matrix [canons_matrix-new_identity size]]
 	  [algorithm         [new canons_algorithm size]]]
       [set algorithm a_matrix original_a_matrix]
       [set algorithm b_matrix original_b_matrix]

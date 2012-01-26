@@ -41,17 +41,18 @@
 	[set this elt i j [random max_value]]]]
     this]]
 
-[deframe canons_processor [frame] [clock_trigger size i j fiber [a 0] [b 0] [c 0]]
+[deframe canons_processor [frame] [clock_trigger size i j input-port up-port down-port left-port right-port fiber [a 0] [b 0] [c 0]]
   [new [initial-clock_trigger initial-size initial-i initial-j]
        [= clock_trigger initial-clock_trigger]
        [= size          initial-size]
        [= i             initial-i]
        [= j             initial-j]
+       [= input-port    [new forgetful_event_stream]]
        [= fiber         [fiber [funk []
 				     [while t
 				       [wait-for-trigger clock_trigger]
 				       
-				       [terminal_format standard-terminal '\nfiber #: ' [+ [* j size] i]]
+				       [terminal_format standard-terminal '\nfiber #: ' [+ [* i size] j]]
 				       
 				       
 				       
@@ -71,6 +72,12 @@
        [dotimes [j size]
 	 [dotimes [i size]
 	   [set [get processor_array elt j] elt i [new canons_processor clock_trigger size i j]]]]
+       [dotimes [j size]
+	 [dotimes [i size]
+	   [set [get this processor i j] up-port    [get [get this processor [% [+ [- i 1] size] size]          j]                input-port]]
+	   [set [get this processor i j] down-port  [get [get this processor [%    [+ i 1]       size]          j]                input-port]]
+	   [set [get this processor i j] left-port  [get [get this processor          i                [% [+ [- j 1] size] size]] input-port]]
+	   [set [get this processor i j] right-port [get [get this processor          i                [%    [+ j 1]       size]] input-port]]]]
        [have this wait_until_inactive]]]
 
 [deftypefunk canons_algorithm get active []

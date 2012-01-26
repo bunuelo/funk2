@@ -18,6 +18,6 @@
  rights to redistribute these changes.'
 
 [defpackage canons_algorithm
-  :packages [math]
+  :packages [math forgetful_event_stream]
    :sources ['canons_algorithm.fu2']]
 

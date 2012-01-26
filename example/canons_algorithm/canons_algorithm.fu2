@@ -1,0 +1,113 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe matrix [frame] [size array]
+  [new [initial-size]
+       [= size initial-size]
+       [= array [new array size size]]
+       [have this zero]]]
+
+[deftypefunk matrix set elt [i j value]
+  [set [get array elt j] elt i value]]
+
+[deftypefunk matrix get elt [i j]
+  [get [get array elt j] elt i]]
+
+[deftypefunk matrix execute zero []
+  [dotimes [j size]
+    [dotimes [i size]
+      [set this elt i j 0]]]]
+
+[defunk matrix-new_random [size max_value]
+  [let [[this [new matrix size]]]
+    [dotimes [j size]
+      [dotimes [i size]
+	[set this elt i j [random max_value]]]]
+    this]]
+
+[deframe canons_processor [frame] [algorithm fiber i j a b c]
+  [new [initial-algorithm initial-i initial-j initial-a initial-b initial-c]
+       [= algorithm initial-algorithm]
+       [= i         initial-i]
+       [= j         initial-j]
+       [= a         initial-a]
+       [= b         initial-b]
+       [= c         initial-c]
+       [= fiber     [fiber [funk []
+				 [wait-for-trigger [get algorithm start_trigger]]
+				 
+				 [terminal_format standard-terminal '\nfiber #: ' [+ [* j [get algorithm size]] i]]
+				 
+				 
+				 ]
+			   []]]]]
+
+[deftypefunk canons_processor get active []
+  [global_scheduler-contains_active_fiber fiber]]
+
+[deframe canons_algorithm [frame] [size start_trigger processor_array]
+  [new [initial-size]
+       [= size            initial-size]
+       [= start_trigger   [new fiber_trigger]]
+       [= processor_array [new array size size]]
+       [dotimes [j size]
+	 [dotimes [i size]
+	   [set [get processor_array elt j] elt i [new canons_processor this i j 0 0 0]]]]
+       [dotimes [j size]
+	 [dotimes [i size]
+	   [while [get [get this processor i j] active]
+	     [millisleep 100]]]]]]
+
+[deftypefunk canons_algorithm get processor [i j]
+  [get [get processor_array elt j] elt i]]
+
+[deftypefunk canons_algorithm execute start []
+  [have start_trigger trigger]]
+
+[deftypefunk canons_algorithm set a_matrix [a_matrix]
+  [dotimes [j size]
+    [dotimes [i size]
+      [set [get this processor i j] a [get a_matrix elt i j]]]]]
+
+[deftypefunk canons_algorithm set b_matrix [b_matrix]
+  [dotimes [j size]
+    [dotimes [i size]
+      [set [get this processor i j] b [get b_matrix elt i j]]]]]
+
+[deftypefunk canons_algorithm get c_matrix []
+  [let [[c_matrix [new matrix size]]]
+    [dotimes [j size]
+      [dotimes [i size]
+	[set c_matrix elt i j [get [get this processor i j] c]]]]
+    c_matrix]]
+
+[defunk canons_algorithm-test []
+  [let [[size 4]]
+    [let [[a_matrix  [matrix-new_random size 2]]
+	  [b_matrix  [matrix-new_random size 2]]
+	  [algorithm [new canons_algorithm size]]]
+      [terminal_format standard-terminal '\na_matrix: ' a_matrix]
+      [terminal_format standard-terminal '\nb_matrix: ' b_matrix]
+      [set algorithm a_matrix a_matrix]
+      [set algorithm b_matrix b_matrix]
+      [have algorithm start]
+      nil]]]
+
+
+

@@ -73,15 +73,13 @@
 				     [while t
 				       
 				       [wait-for-trigger clock_trigger]
-				       `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': starting.']
+				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': starting.']
 				       
 				       [dotimes [n [- size 1]]
 					 [if [< n i]
 					     [prog [wait-for-trigger clock_trigger]
-						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
 						   [have left-port write a]
 						   [wait-for-trigger clock_trigger]
-						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
 						   [= a [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
@@ -89,45 +87,37 @@
 				       [dotimes [n [- size 1]]
 					 [if [< n j]
 					     [prog [wait-for-trigger clock_trigger]
-						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
 						   [have up-port write b]
 						   [wait-for-trigger clock_trigger]
-						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading b in.']
 						   [= b [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
 				       
-				       `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': phase one complete, beginning phase two.']
+				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': phase one complete, beginning phase two.']
 				       
 				       [dotimes [n [- size 1]]
 					 [wait-for-trigger clock_trigger]
-					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': c += a * b.']
 					 [= c [+ c [* a b]]]
 					 
 					 [wait-for-trigger clock_trigger]
-					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
 					 [have left-port write a]
 					 
 					 [wait-for-trigger clock_trigger]
-					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
 					 [= a [have input-port read]]
 					 
 					 [wait-for-trigger clock_trigger]
-					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
 					 [have up-port write b]
 					 
 					 [wait-for-trigger clock_trigger]
-					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading b in.']
 					 [= b [have input-port read]]
 					 ]
 				       
 				       [wait-for-trigger clock_trigger]
-				       `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': c += a * b.']
 				       [= c [+ c [* a b]]]
 				       
 				       
 				       [wait-for-trigger clock_trigger]
-				       `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
+				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
 				       
 				       
 				       
@@ -144,11 +134,11 @@
        [= size            initial-size]
        [= clock_trigger   [new fiber_trigger]]
        [= processor_array [new array size size]]
-       [dotimes [j size]
-	 [dotimes [i size]
+       [dotimes [i size]
+	 [dotimes [j size]
 	   [set [get processor_array elt i] elt j [new canons_processor clock_trigger size i j]]]]
-       [dotimes [j size]
-	 [dotimes [i size]
+       [dotimes [i size]
+	 [dotimes [j size]
 	   [set [get this processor i j] up-port   [get [get this processor [% [+ [- i 1] size] size]          j]                input-port]]
 	   [set [get this processor i j] left-port [get [get this processor          i                [% [+ [- j 1] size] size]] input-port]]]]
        [have this wait_until_inactive]]]

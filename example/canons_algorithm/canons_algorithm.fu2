@@ -78,10 +78,10 @@
 				       [dotimes [n [- size 1]]
 					 [if [< n i]
 					     [prog [wait-for-trigger clock_trigger]
-						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
+						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
 						   [have left-port write a]
 						   [wait-for-trigger clock_trigger]
-						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
+						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
 						   [= a [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
@@ -89,10 +89,10 @@
 				       [dotimes [n [- size 1]]
 					 [if [< n j]
 					     [prog [wait-for-trigger clock_trigger]
-						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
+						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
 						   [have up-port write b]
 						   [wait-for-trigger clock_trigger]
-						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading b in.']
+						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading b in.']
 						   [= b [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
@@ -101,28 +101,28 @@
 				       
 				       [dotimes [n [- size 1]]
 					 [wait-for-trigger clock_trigger]
-					 [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': c += a * b.']
+					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': c += a * b.']
 					 [= c [+ c [* a b]]]
 					 
 					 [wait-for-trigger clock_trigger]
-					 [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
+					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing a left.']
 					 [have left-port write a]
 					 
 					 [wait-for-trigger clock_trigger]
-					 [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
+					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
 					 [= a [have input-port read]]
 					 
 					 [wait-for-trigger clock_trigger]
-					 [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
+					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
 					 [have up-port write b]
 					 
 					 [wait-for-trigger clock_trigger]
-					 [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading b in.']
+					 `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading b in.']
 					 [= b [have input-port read]]
 					 ]
 				       
 				       [wait-for-trigger clock_trigger]
-				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': c += a * b.']
+				       `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': c += a * b.']
 				       [= c [+ c [* a b]]]
 				       
 				       
@@ -212,7 +212,7 @@
     c_matrix]]
 
 [defunk canons_algorithm-test []
-  [let [[size 2]]
+  [let [[size 4]]
     [let [[original_a_matrix [canons_matrix-new_debug    size]]
 	  [original_b_matrix [canons_matrix-new_identity size]]
 	  [algorithm         [new canons_algorithm size]]]
@@ -227,15 +227,16 @@
       [dotimes [N [+ [* [- size 1] [+ 4 5]] 1]]
 	[have algorithm clock]
 	[terminal_format standard-terminal '\nN=' N]
-	[terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
-	[terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
-	[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]]
+	`[terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
+	`[terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
+	`[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
+	]
       
       [have algorithm clock]
       [terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
       [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
-      [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]]
-    
+      [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
+      
       nil]]]
 
 

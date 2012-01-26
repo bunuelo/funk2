@@ -65,13 +65,15 @@
        [= fiber         [fiber [funk []
 				     [while t
 				       
-				       [terminal_format standard-terminal '\nfiber #: ' [+ [* i size] j]]
+				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': starting.']
 				       
 				       [dotimes [n size]
 					 [if [< n i]
 					     [prog [wait-for-trigger clock_trigger]
+						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': sending a left.']
 						   [have left-port send a]
 						   [wait-for-trigger clock_trigger]
+						   [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': receiving a.']
 						   [= a [have input-port receive]]]
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]

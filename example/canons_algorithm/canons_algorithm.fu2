@@ -83,6 +83,7 @@
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
 				       
+				       [wait-for-trigger clock_trigger]
 				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
 				       
 				       
@@ -179,13 +180,19 @@
       [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
       [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
       
-      [dotimes [N [* size 4]]
+      [dotimes [N [+ [- size 1]
+		     [- size 1]]]
 	[have algorithm clock]
 	[terminal_format standard-terminal '\nN=' N]
 	[terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
 	[terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
 	[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]]
       
+      [have algorithm clock]
+      [terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
+      [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
+      [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]]
+    
       nil]]]
 
 

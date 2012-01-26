@@ -73,7 +73,7 @@
 				     [while t
 				       
 				       [wait-for-trigger clock_trigger]
-				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': starting.']
+				       [terminal_format standard-terminal '\nprocessor i=' i ' j=' j ': starting.']
 				       
 				       [dotimes [n [- size 1]]
 					 [if [< n i]
@@ -93,7 +93,7 @@
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
 				       
-				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': phase one complete, beginning phase two.']
+				       [terminal_format standard-terminal '\nprocessor i=' i ' j=' j ': phase one complete, beginning phase two.']
 				       
 				       [dotimes [n [- size 1]]
 					 [wait-for-trigger clock_trigger]
@@ -117,7 +117,7 @@
 				       
 				       
 				       [wait-for-trigger clock_trigger]
-				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
+				       [terminal_format standard-terminal '\nprocessor i=' i ' j=' j ': finished.']
 				       
 				       
 				       

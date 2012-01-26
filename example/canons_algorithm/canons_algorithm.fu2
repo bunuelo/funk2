@@ -84,7 +84,9 @@
 						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': reading a in.']
 						   [= a [have input-port read]]]
 					   [prog [wait-for-trigger clock_trigger]
-						 [wait-for-trigger clock_trigger]]]
+						 [wait-for-trigger clock_trigger]]]]
+				       
+				       [dotimes [n [- size 1]]
 					 [if [< n j]
 					     [prog [wait-for-trigger clock_trigger]
 						   `[terminal_format standard-terminal '\nfiber i=' i ' j=' j ': writing b up.']
@@ -176,7 +178,8 @@
 
 [deftypefunk canons_algorithm execute clock []
   [have this wait_until_inactive]
-  [have clock_trigger trigger]]
+  [have clock_trigger trigger]
+  [have this wait_until_inactive]]
 
 [deftypefunk canons_algorithm set a_matrix [a_matrix]
   [dotimes [j size]

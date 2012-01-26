@@ -101,10 +101,24 @@
     [dotimes [i size]
       [set [get this processor i j] a [get a_matrix elt i j]]]]]
 
+[deftypefunk canons_algorithm get a_matrix []
+  [let [[a_matrix [new canons_matrix size]]]
+    [dotimes [j size]
+      [dotimes [i size]
+	[set a_matrix elt i j [get [get this processor i j] a]]]]
+    a_matrix]]
+
 [deftypefunk canons_algorithm set b_matrix [b_matrix]
   [dotimes [j size]
     [dotimes [i size]
       [set [get this processor i j] b [get b_matrix elt i j]]]]]
+
+[deftypefunk canons_algorithm get b_matrix []
+  [let [[b_matrix [new canons_matrix size]]]
+    [dotimes [j size]
+      [dotimes [i size]
+	[set b_matrix elt i j [get [get this processor i j] b]]]]
+    b_matrix]]
 
 [deftypefunk canons_algorithm get c_matrix []
   [let [[c_matrix [new canons_matrix size]]]
@@ -115,14 +129,22 @@
 
 [defunk canons_algorithm-test []
   [let [[size 4]]
-    [let [[a_matrix  [canons_matrix-new_random size 2]]
-	  [b_matrix  [canons_matrix-new_random size 2]]
-	  [algorithm [new canons_algorithm size]]]
-      [terminal_format standard-terminal '\na_matrix: ' a_matrix]
-      [terminal_format standard-terminal '\nb_matrix: ' b_matrix]
-      [set algorithm a_matrix a_matrix]
-      [set algorithm b_matrix b_matrix]
-      [have algorithm clock]
+    [let [[original_a_matrix [canons_matrix-new_random size 2]]
+	  [original_b_matrix [canons_matrix-new_random size 2]]
+	  [algorithm         [new canons_algorithm size]]]
+      [set algorithm a_matrix original_a_matrix]
+      [set algorithm b_matrix original_b_matrix]
+      
+      [terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
+      [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
+      [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
+      
+      [dotimes [i 4]
+	[have algorithm clock]
+	[terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
+	[terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
+	[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
+      
       nil]]]
 
 

@@ -62,7 +62,7 @@
 [deftypefunk canons_port execute read []
   value]
 
-[deframe canons_processor [frame] [clock_trigger size i j input-port up-port down-port left-port right-port fiber [a 0] [b 0] [c 0]]
+[deframe canons_processor [frame] [clock_trigger size i j input-port up-port left-port fiber [a 0] [b 0] [c 0]]
   [new [initial-clock_trigger initial-size initial-i initial-j]
        [= clock_trigger initial-clock_trigger]
        [= size          initial-size]
@@ -149,10 +149,8 @@
 	   [set [get processor_array elt i] elt j [new canons_processor clock_trigger size i j]]]]
        [dotimes [j size]
 	 [dotimes [i size]
-	   [set [get this processor i j] up-port    [get [get this processor [% [+ [- i 1] size] size]          j]                input-port]]
-	   [set [get this processor i j] down-port  [get [get this processor [%    [+ i 1]       size]          j]                input-port]]
-	   [set [get this processor i j] left-port  [get [get this processor          i                [% [+ [- j 1] size] size]] input-port]]
-	   [set [get this processor i j] right-port [get [get this processor          i                [%    [+ j 1]       size]] input-port]]]]
+	   [set [get this processor i j] up-port   [get [get this processor [% [+ [- i 1] size] size]          j]                input-port]]
+	   [set [get this processor i j] left-port [get [get this processor          i                [% [+ [- j 1] size] size]] input-port]]
        [have this wait_until_inactive]]]
 
 [deftypefunk canons_algorithm get active []
@@ -214,7 +212,7 @@
     c_matrix]]
 
 [defunk canons_algorithm-test []
-  [let [[size 6]]
+  [let [[size 4]]
     [let [[original_a_matrix [canons_matrix-new_debug    size]]
 	  [original_b_matrix [canons_matrix-new_identity size]]
 	  [algorithm         [new canons_algorithm size]]]

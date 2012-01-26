@@ -66,6 +66,7 @@
        [= fiber         [fiber [funk []
 				     [while t
 				       
+				       [wait-for-trigger clock_trigger]
 				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': starting.']
 				       
 				       [dotimes [n [- size 1]]
@@ -119,8 +120,8 @@
 				       [= c [+ c [* a b]]]
 				       
 				       
-				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
 				       [wait-for-trigger clock_trigger]
+				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
 				       
 				       
 				       
@@ -215,6 +216,7 @@
       [terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
       [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
       [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
+      [have algorithm clock]
       
       [dotimes [N [+ [* [- size 1] [+ 4 5]] 1]]
 	[have algorithm clock]

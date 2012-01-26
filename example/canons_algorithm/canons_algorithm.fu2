@@ -65,9 +65,26 @@
        [= fiber         [fiber [funk []
 				     [while t
 				       
-				       [wait-for-trigger clock_trigger]
-				       
 				       [terminal_format standard-terminal '\nfiber #: ' [+ [* i size] j]]
+				       
+				       [dotimes [n size]
+					 [if [< n i]
+					     [prog [wait-for-trigger clock_trigger]
+						   [have left-port send a]
+						   [wait-for-trigger clock_trigger]
+						   [= a [have input-port receive]]]
+					   [prog [wait-for-trigger clock_trigger]
+						 [wait-for-trigger clock_trigger]]]]
+				       
+				       [dotimes [n size]
+					 [if [< n j]
+					     [prog [wait-for-trigger clock_trigger]
+						   [have up-port send b]
+						   [wait-for-trigger clock_trigger]
+						   [= b [have input-port receive]]]
+					   [prog [wait-for-trigger clock_trigger]
+						 [wait-for-trigger clock_trigger]]]]
+				       
 				       
 				       
 				       
@@ -163,8 +180,9 @@
       [terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
       [terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]
       
-      [dotimes [i 4]
+      [dotimes [N [* size 4]]
 	[have algorithm clock]
+	[terminal_format standard-terminal '\nN=' N]
 	[terminal_format standard-terminal '\na_matrix: ' [get algorithm a_matrix]]
 	[terminal_format standard-terminal '\nb_matrix: ' [get algorithm b_matrix]]
 	[terminal_format standard-terminal '\nc_matrix: ' [get algorithm c_matrix]]]

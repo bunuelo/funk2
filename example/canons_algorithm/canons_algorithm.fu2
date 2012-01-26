@@ -83,8 +83,8 @@
 					   [prog [wait-for-trigger clock_trigger]
 						 [wait-for-trigger clock_trigger]]]]
 				       
-				       [wait-for-trigger clock_trigger]
 				       [terminal_format standard-terminal '\nfiber i=' i ' j=' j ': finished.']
+				       [wait-for-trigger clock_trigger]
 				       
 				       
 				       

@@ -150,7 +150,7 @@
        [dotimes [j size]
 	 [dotimes [i size]
 	   [set [get this processor i j] up-port   [get [get this processor [% [+ [- i 1] size] size]          j]                input-port]]
-	   [set [get this processor i j] left-port [get [get this processor          i                [% [+ [- j 1] size] size]] input-port]]
+	   [set [get this processor i j] left-port [get [get this processor          i                [% [+ [- j 1] size] size]] input-port]]]]
        [have this wait_until_inactive]]]
 
 [deftypefunk canons_algorithm get active []

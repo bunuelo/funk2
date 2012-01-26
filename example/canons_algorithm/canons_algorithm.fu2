@@ -17,25 +17,25 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe matrix [frame] [size array]
+[deframe canons_matrix [frame] [size array]
   [new [initial-size]
        [= size initial-size]
        [= array [new array size size]]
        [have this zero]]]
 
-[deftypefunk matrix set elt [i j value]
+[deftypefunk canons_matrix set elt [i j value]
   [set [get array elt j] elt i value]]
 
-[deftypefunk matrix get elt [i j]
+[deftypefunk canons_matrix get elt [i j]
   [get [get array elt j] elt i]]
 
-[deftypefunk matrix execute zero []
+[deftypefunk canons_matrix execute zero []
   [dotimes [j size]
     [dotimes [i size]
       [set this elt i j 0]]]]
 
-[defunk matrix-new_random [size max_value]
-  [let [[this [new matrix size]]]
+[defunk canons_matrix-new_random [size max_value]
+  [let [[this [new canons_matrix size]]]
     [dotimes [j size]
       [dotimes [i size]
 	[set this elt i j [random max_value]]]]
@@ -91,7 +91,7 @@
       [set [get this processor i j] b [get b_matrix elt i j]]]]]
 
 [deftypefunk canons_algorithm get c_matrix []
-  [let [[c_matrix [new matrix size]]]
+  [let [[c_matrix [new canons_matrix size]]]
     [dotimes [j size]
       [dotimes [i size]
 	[set c_matrix elt i j [get [get this processor i j] c]]]]
@@ -99,8 +99,8 @@
 
 [defunk canons_algorithm-test []
   [let [[size 4]]
-    [let [[a_matrix  [matrix-new_random size 2]]
-	  [b_matrix  [matrix-new_random size 2]]
+    [let [[a_matrix  [canons_matrix-new_random size 2]]
+	  [b_matrix  [canons_matrix-new_random size 2]]
 	  [algorithm [new canons_algorithm size]]]
       [terminal_format standard-terminal '\na_matrix: ' a_matrix]
       [terminal_format standard-terminal '\nb_matrix: ' b_matrix]

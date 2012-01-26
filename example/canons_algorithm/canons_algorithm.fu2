@@ -41,15 +41,30 @@
 	[set this elt i j [random max_value]]]]
     this]]
 
+[deframe canons_port [frame] [event_stream iterator]
+  [new []
+       [= event_stream [new forgetful_event_stream]]
+       [= iterator     [get event_stream new-iterator]]]]
+
+[deftypefunk canons_port execute send [element]
+  [let [[event [new event_stream_event [time]]]]
+    [have event add_var_value `element element]
+    [have event_stream add event]]]
+
+[deftypefunk canons_port execute receive []
+  [let [[event [get iterator current]]]
+    [have event lookup_var_value `element]]]
+
 [deframe canons_processor [frame] [clock_trigger size i j input-port up-port down-port left-port right-port fiber [a 0] [b 0] [c 0]]
   [new [initial-clock_trigger initial-size initial-i initial-j]
        [= clock_trigger initial-clock_trigger]
        [= size          initial-size]
        [= i             initial-i]
        [= j             initial-j]
-       [= input-port    [new forgetful_event_stream]]
+       [= input-port    [new canons_port]]
        [= fiber         [fiber [funk []
 				     [while t
+				       
 				       [wait-for-trigger clock_trigger]
 				       
 				       [terminal_format standard-terminal '\nfiber #: ' [+ [* i size] j]]

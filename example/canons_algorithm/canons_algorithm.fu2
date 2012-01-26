@@ -202,7 +202,7 @@
     c_matrix]]
 
 [defunk canons_algorithm-test []
-  [let [[size 4]]
+  [let [[size 3]]
     [let [[original_a_matrix [canons_matrix-new_debug    size]]
 	  [original_b_matrix [canons_matrix-new_identity size]]
 	  [algorithm         [new canons_algorithm size]]]

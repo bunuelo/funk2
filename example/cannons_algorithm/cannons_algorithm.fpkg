@@ -17,7 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage canons_algorithm
+[defpackage cannons_algorithm
   :packages [math]
-   :sources ['canons_algorithm.fu2']]
+   :sources ['cannons_algorithm.fu2']]
 

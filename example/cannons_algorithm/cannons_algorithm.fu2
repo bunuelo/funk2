@@ -84,7 +84,7 @@
     [terminal_format standard-terminal '\nprocessor i=' i ' j=' j ': finished.']]]
 
 
-[deftypefunk cannons_processor execute phase_one []
+[deftypefunk cannons_processor execute execute_phase_one []
   [dotimes [n [- size 1]]
     [if [< n i]
 	[prog [wait-for-trigger clock_trigger]
@@ -103,7 +103,7 @@
 	    [wait-for-trigger clock_trigger]]]]]
 
 
-[deftypefunk cannons_processor execute phase_two []
+[deftypefunk cannons_processor execute execute_phase_two []
   [dotimes [n [- size 1]]
     [wait-for-trigger clock_trigger]
     [= c [+ c [* a b]]]

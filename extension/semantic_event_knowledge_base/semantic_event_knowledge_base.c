@@ -252,6 +252,7 @@ f2ptr f2__semantic_event_knowledge_base__core_extension__initialize(f2ptr cause)
   core_extension__ping(semantic_event_knowledge_base, meta_semantic_knowledge_base);
   core_extension__ping(semantic_event_knowledge_base, semantic_event);
   core_extension__ping(semantic_event_knowledge_base, semantic_event_tree);
+  core_extension__ping(semantic_event_knowledge_base, semantic_event_transframe);
   f2__add_type(cause, new__symbol(cause, "semantic_event_knowledge_base"), f2__semantic_event_knowledge_base_type__new(cause));
   status("semantic_event_knowledge_base initialized.");
   return nil;

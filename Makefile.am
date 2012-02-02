@@ -1125,4 +1125,4 @@ bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 install: install-am make-install-sh
 	./install-sh
 
-extensions: $(all_core_extensions)
+extensions: finish_compiling_all_core_extensions

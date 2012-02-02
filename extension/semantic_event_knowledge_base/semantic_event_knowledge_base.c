@@ -217,7 +217,7 @@ f2ptr f2__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr thi
   assert_argument_type(semantic_event_knowledge_base, this);
   assert_argument_type(semantic_time,                 start_semantic_time);
   assert_argument_type(semantic_time,                 end_semantic_time);
-  return raw__semantic_event_knowledge_base__event_transframe(cause, this, semantic_time);
+  return raw__semantic_event_knowledge_base__event_transframe(cause, this, start_semantic_time, end_semantic_time);
 }
 export_cefunk3(semantic_event_knowledge_base__event_transframe, this, start_semantic_time, end_semantic_time, 0,
 	       "Returns a new semantic_event_transframe derived from this semantic_event_knowledge_base that represents the change in events between start_semantic_time and end_semantic_time.");

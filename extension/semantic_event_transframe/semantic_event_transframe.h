@@ -23,6 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_EVENT_TRANSFRAME__H
 
 #include "../semantic_object/semantic_object.h"
+#include "../semantic_object/semantic_event.h"
 
 
 // **

@@ -28,12 +28,7 @@ f2ptr raw__semantic_event_transframe__type_create(f2ptr cause, f2ptr this, f2ptr
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_transframe"));
   }
-  {
-    f2ptr result = raw__semantic_object__type_create(cause, this, semantic_realm);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   return this;
 }
 
@@ -42,12 +37,7 @@ f2ptr raw__semantic_event_transframe__new(f2ptr cause, f2ptr semantic_realm) {
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  {
-    f2ptr result = raw__semantic_event_transframe__type_create(cause, this, semantic_realm);
-     if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_event_transframe__type_create(cause, this, semantic_realm));
   return this;
 }
 
@@ -96,10 +86,8 @@ f2ptr raw__semantic_event_transframe__relationship__removal__add(f2ptr cause, f2
 }
 
 f2ptr f2__semantic_event_transframe__relationship__removal__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_transframe__is_type(cause, this)) ||
-      (! raw__semantic_event_transframe__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_transframe, this);
+  assert_argument_type(semantic_event,            that);
   return raw__semantic_event_transframe__relationship__removal__add(cause, this, that);
 }
 export_cefunk2(semantic_event_transframe__relationship__removal__add, this, that, 0, "");
@@ -110,10 +98,8 @@ f2ptr raw__semantic_event_transframe__relationship__removal__remove(f2ptr cause,
 }
 
 f2ptr f2__semantic_event_transframe__relationship__removal__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_transframe__is_type(cause, this)) ||
-      (! raw__semantic_event_transframe__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_transframe, this);
+  assert_argument_type(semantic_event,            that);
   return raw__semantic_event_transframe__relationship__removal__remove(cause, this, that);
 }
 export_cefunk2(semantic_event_transframe__relationship__removal__remove, this, that, 0, "");
@@ -124,10 +110,8 @@ f2ptr raw__semantic_event_transframe__relationship__addition__add(f2ptr cause, f
 }
 
 f2ptr f2__semantic_event_transframe__relationship__addition__add(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_transframe__is_type(cause, this)) ||
-      (! raw__semantic_event_transframe__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_transframe, this);
+  assert_argument_type(semantic_event,            that);
   return raw__semantic_event_transframe__relationship__addition__add(cause, this, that);
 }
 export_cefunk2(semantic_event_transframe__relationship__addition__add, this, that, 0, "");
@@ -138,10 +122,8 @@ f2ptr raw__semantic_event_transframe__relationship__addition__remove(f2ptr cause
 }
 
 f2ptr f2__semantic_event_transframe__relationship__addition__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  if ((! raw__semantic_event_transframe__is_type(cause, this)) ||
-      (! raw__semantic_event_transframe__is_type(cause, that))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_event_transframe, this);
+  assert_argument_type(semantic_event,            that);
   return raw__semantic_event_transframe__relationship__addition__remove(cause, this, that);
 }
 export_cefunk2(semantic_event_transframe__relationship__addition__remove, this, that, 0, "");
@@ -170,16 +152,23 @@ f2ptr f2__semantic_event_transframe__core_extension__ping(f2ptr cause) {
 }
 export_cefunk0(semantic_event_transframe__core_extension__ping, 0, "");
 
+
 f2ptr f2__semantic_event_transframe__core_extension__initialize(f2ptr cause) {
-  f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__core_extension__ping")), nil);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
-  f2__add_type(cause, new__symbol(cause, "semantic_event_transframe"), f2__semantic_event_transframe__primobject_type__new(cause));
+  core_extension__ping(semantic_event_transframe, semantic_object);
+  core_extension__ping(semantic_event_transframe, semantic_event);
   status("semantic_event_transframe initialized.");
   return nil;
 }
 export_cefunk0(semantic_event_transframe__core_extension__initialize, 0, "");
+
+
+f2ptr f2__semantic_event_transframe__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "semantic_event_transframe"), f2__semantic_event_transframe__primobject_type__new(cause));
+  status("semantic_event_transframe define types.");
+  return nil;
+}
+export_cefunk0(semantic_event_transframe__core_extension__define_types, 0, "");
+
 
 f2ptr f2__semantic_event_transframe__core_extension__destroy(f2ptr cause) {
   status("semantic_event_transframe destroyed.");

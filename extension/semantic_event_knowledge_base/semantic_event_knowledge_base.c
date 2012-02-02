@@ -175,7 +175,7 @@ f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr th
       f2ptr iter = start_events;
       while (iter != nil) {
 	f2ptr event = f2__cons__car(cause, iter);
-	raw__set__add(cause, start_event_hash, event);
+	raw__set__add(cause, start_event_set, event);
 	iter = f2__cons__cdr(cause, iter);
       }
     }
@@ -185,7 +185,7 @@ f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr th
       f2ptr iter = end_events;
       while (iter != nil) {
 	f2ptr event = f2__cons__car(cause, iter);
-	raw__set__add(cause, end_event_hash, event);
+	raw__set__add(cause, end_event_set, event);
 	iter = f2__cons__cdr(cause, iter);
       }
     }

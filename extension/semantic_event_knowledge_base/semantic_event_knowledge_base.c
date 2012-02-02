@@ -166,7 +166,7 @@ export_cefunk4(semantic_event_knowledge_base__most_recent_filtered_events, this,
 
 
 f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr this, f2ptr start_semantic_time, f2ptr end_semantic_time) {
-  f2ptr semantic_realm            = f2__semantic_frame__semantic_realm(cause, this);
+  f2ptr semantic_realm            = assert_value(f2__semantic_knowledge_base__semantic_realm(cause, this));
   f2ptr semantic_event_transframe = assert_value(f2__semantic_event_transframe__new(cause, semantic_realm));
   {
     f2ptr start_events    = assert_value(raw__semantic_event_knowledge_base__events_containing_time(cause, this, start_semantic_time));

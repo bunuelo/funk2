@@ -249,7 +249,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/movie/libf2e_movie.la \
                       extension/propogator/libf2e_propogator.la \
                       extension/semantic_action_event/libf2e_semantic_action_event.la \
-                      extension/semantic_action_transframe/libf2e_semantic_action_transframe.la \
                       extension/semantic_agent/libf2e_semantic_agent.la \
                       extension/semantic_causal_event/libf2e_semantic_causal_event.la \
                       extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
@@ -325,7 +324,6 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/movie/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
 	cp -fa extension/propogator/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 	cp -fa extension/semantic_action_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
-	cp -fa extension/semantic_action_transframe/.libs/libf2e_*.*                                     $(compile__lib__dir)
 	cp -fa extension/semantic_agent/.libs/libf2e_*.*                                                             $(compile__lib__dir)
 	cp -fa extension/semantic_causal_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
 	cp -fa extension/semantic_event_sequence/.libs/libf2e_*.*                                           $(compile__lib__dir)
@@ -531,7 +529,6 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SO
 extension_movie_libf2e_movie_la_SOURCES                                                                               = extension/movie/movie.c
 extension_propogator_libf2e_propogator_la_SOURCES                                                                     = extension/propogator/propogator.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                               = extension/semantic_action_event/semantic_action_event.c
-extension_semantic_action_transframe_libf2e_semantic_action_transframe_la_SOURCES                                     = extension/semantic_action_transframe/semantic_action_transframe.c
 extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                             = extension/semantic_agent/semantic_agent.c
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                               = extension/semantic_causal_event/semantic_causal_event.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                           = extension/semantic_event_sequence/semantic_event_sequence.c
@@ -672,9 +669,6 @@ extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CF
 
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_semantic_action_transframe_libf2e_semantic_action_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_action_transframe_libf2e_semantic_action_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_agent_libf2e_semantic_agent_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_agent_libf2e_semantic_agent_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -897,7 +891,6 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)movie/"                                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_event/"                                                                                                  >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_transframe/"                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_agent/"                                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_assumption/"                                                                                                    >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_category/"                                                                                                      >> install-sh
@@ -1026,7 +1019,6 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)movie/*.f*                                        $(chroot__install__extension__dir)movie/"                                        >> install-sh
 	echo "install -m644 $(source__extension__dir)propogator/*.f*                                   $(chroot__install__extension__dir)propogator/"                                   >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action_event/*.f*                        $(chroot__install__extension__dir)semantic_action_event/"                        >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_action_transframe/*.f*                   $(chroot__install__extension__dir)semantic_action_transframe/"                   >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_agent/*.f*                               $(chroot__install__extension__dir)semantic_agent/"                               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_assumption/*.f*                          $(chroot__install__extension__dir)semantic_assumption/"                          >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_category/*.f*                            $(chroot__install__extension__dir)semantic_category/"                            >> install-sh

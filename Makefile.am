@@ -253,7 +253,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_causal_event/libf2e_semantic_causal_event.la \
                       extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
                       extension/semantic_causal_object/libf2e_semantic_causal_object.la \
-                      extension/semantic_assumption/libf2e_semantic_assumption.la \
                       extension/semantic_category/libf2e_semantic_category.la \
                       extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                       extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
@@ -328,7 +327,6 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_causal_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
 	cp -fa extension/semantic_event_sequence/.libs/libf2e_*.*                                           $(compile__lib__dir)
 	cp -fa extension/semantic_causal_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
-	cp -fa extension/semantic_assumption/.libs/libf2e_*.*                                                   $(compile__lib__dir)
 	cp -fa extension/semantic_category/.libs/libf2e_*.*                                                       $(compile__lib__dir)
 	cp -fa extension/semantic_containment_object/.libs/libf2e_*.*                                   $(compile__lib__dir)
 	cp -fa extension/semantic_directed_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
@@ -533,7 +531,6 @@ extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                       
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                               = extension/semantic_causal_event/semantic_causal_event.c
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                           = extension/semantic_event_sequence/semantic_event_sequence.c
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                                             = extension/semantic_causal_object/semantic_causal_object.c
-extension_semantic_assumption_libf2e_semantic_assumption_la_SOURCES                                                   = extension/semantic_assumption/semantic_assumption.c
 extension_semantic_category_libf2e_semantic_category_la_SOURCES                                                       = extension/semantic_category/semantic_category.c
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                                   = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                             = extension/semantic_directed_action_event/semantic_directed_action_event.c
@@ -681,9 +678,6 @@ extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(
 
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_semantic_assumption_libf2e_semantic_assumption_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_assumption_libf2e_semantic_assumption_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_category_libf2e_semantic_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_category_libf2e_semantic_category_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -892,7 +886,6 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_event/"                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_agent/"                                                                                                         >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_assumption/"                                                                                                    >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_category/"                                                                                                      >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_event/"                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_object/"                                                                                                 >> install-sh
@@ -1020,7 +1013,6 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)propogator/*.f*                                   $(chroot__install__extension__dir)propogator/"                                   >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action_event/*.f*                        $(chroot__install__extension__dir)semantic_action_event/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_agent/*.f*                               $(chroot__install__extension__dir)semantic_agent/"                               >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_assumption/*.f*                          $(chroot__install__extension__dir)semantic_assumption/"                          >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_category/*.f*                            $(chroot__install__extension__dir)semantic_category/"                            >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_causal_event/*.f*                        $(chroot__install__extension__dir)semantic_causal_event/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_causal_object/*.f*                       $(chroot__install__extension__dir)semantic_causal_object/"                       >> install-sh

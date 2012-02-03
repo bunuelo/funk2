@@ -162,8 +162,7 @@
 
 [defpackage deliberative_plan
   :packages [reflective_mind_core
-	     deliberative_action
-	     semantic_action_transframe]
+	     deliberative_action]
    :sources ['deliberative_plan.fu2']]
 
 [defpackage deliberative_plan_agency
@@ -218,8 +217,7 @@
 
 [defpackage reflective_plan_bug_response_agency
   :packages [reflective_mind_core
-	     reflective_resource
-	     semantic_assumption]
+	     reflective_resource]
    :sources ['reflective_plan_bug_response_agency.fu2']]
 
 [defpackage plan_type_property_relation_goal

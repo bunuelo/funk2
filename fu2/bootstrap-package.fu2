@@ -168,6 +168,7 @@
 						     'extension/meta_semantic_knowledge_base/'
 						     'extension/movie/'
 						     'extension/propogator/'
+						     'extension/semantic_action/'
 						     'extension/semantic_action_event/'
 						     'extension/semantic_agent/'
 						     'extension/semantic_category/'

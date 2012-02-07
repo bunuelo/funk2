@@ -148,6 +148,7 @@ export_cefunk0(semantic_action__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_action__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_action, semantic_object);
+  core_extension__ping(semantic_action, semantic_event);
   status("semantic_action initialized.");
   return nil;
 }

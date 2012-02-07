@@ -19,7 +19,8 @@
 
 [defpackage semantic_action
   :documentation        'Basic physical knowledge for dealing with memories of effects of actions in terms of specific target knowledge bases as well as generalizations of these effects based on various forms of dependency contexts.'
-   :packages            [semantic_object]
+   :packages            [semantic_object
+			 semantic_event]
     :sources            ['semantic_action-core.fu2']
      :dynamic_libraries ['libf2e_semantic_action.so']]
 

@@ -202,6 +202,7 @@
 
 [defpackage reflective_layer
   :packages [reflective_mind_core
+	     semantic_action
 	     reflective_resource
 	     reflective_plan_bug_response_agency
 	     reflective_plan_object_type_goal_agency

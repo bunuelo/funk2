@@ -63,7 +63,7 @@
 	      [set deliberative_semantic_action phenomenal_name phenomenal_name]
 	      [have deliberative_semantic_action_phenomenal_name_ptypehash add phenomenal_name deliberative_semantic_action]
 	      [let [[deliberative_action_knowledge [get [get this mind] semantic_knowledge_base `deliberative_action_knowledge]]]
-		[have deliberative_action_knowledge add_semantic_frame semantic_action]]]]
+		[have deliberative_action_knowledge add_semantic_frame deliberative_semantic_action]]]]
     [have deliberative_semantic_action_phenomenal_name_ptypehash_mutex unlock]
     deliberative_semantic_action]]
 

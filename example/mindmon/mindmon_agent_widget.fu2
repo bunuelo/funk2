@@ -454,7 +454,7 @@
        
        [have vbox pack_start entry nil nil 0]
        
-       [have vbox pack_start knowledge_scrolled_window nil nil 0]
+       [have vbox pack_start knowledge_scrolled_window t t 0]
        [have knowledge_scrolled_window add_with_viewport knowledge_vbox]
        
        [have frame add vbox]

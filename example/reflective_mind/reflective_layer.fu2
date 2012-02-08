@@ -50,3 +50,7 @@
 [deftypefunk reflective_layer execute lookup_reflective_action [english_conslist]
   [have reflective_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
+
+[deftypefunk reflective_mind get deliberative_semantic_action [phenomenal_name]
+  [get [get this agency `reflective_event_knowledge] deliberative_semantic_action phenomenal_name]]
+

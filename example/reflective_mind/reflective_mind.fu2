@@ -113,6 +113,10 @@
   [get [get this layer `deliberative] plan_semantic_plans]]
 
 
+[deftypefunk reflective_mind get deliberative_semantic_action [phenomenal_name]
+  [get [get this layer `reflective] deliberative_semantic_action phenomenal_name]]
+
+
 [deftypefunk reflective_mind execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `reflective] create_reflective_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 

@@ -217,7 +217,7 @@
 														   [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
 														     [let [[event_transframe [get physical_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
 														       
-														       [get [get this mind] deliberative_action [get resource phenomenal_name]]
+														       [get [get this mind] deliberative_semantic_action [get resource phenomenal_name]]
 														       
 														       ]]]
 													     []]

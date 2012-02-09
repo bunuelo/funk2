@@ -477,7 +477,7 @@
        
        'agents'
        
-       [= agent_hbox [gtk-hbox-new 2]]
+       [= agent_hbox [gtk-hbox-new 0]]
        [have vbox pack_start agent_hbox t t 0]
        
        [= initialized t]
@@ -1014,7 +1014,7 @@
   [let [[new_mindmon_project [new mindmon_project this]]]
     [have new_mindmon_project create_new_mindmon_blocks_world]
     [have project_vbox remove project_vbox__contained_widget]
-    [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+    [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
     [have [get new_mindmon_project widget] show_all]
     [= project_vbox__contained_widget [get new_mindmon_project widget]]
     [= mindmon_project new_mindmon_project]]
@@ -1026,7 +1026,7 @@
   [let [[new_mindmon_project [new mindmon_project this]]]
     [have new_mindmon_project create_new_mindmon_isis_world]
     [have project_vbox remove project_vbox__contained_widget]
-    [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+    [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
     [have [get new_mindmon_project widget] show_all]
     [= project_vbox__contained_widget [get new_mindmon_project widget]]
     [= mindmon_project new_mindmon_project]]
@@ -1038,7 +1038,7 @@
   [let [[new_mindmon_project [mindmon_project-new_from_file this filename]]]
     [if new_mindmon_project
 	[prog [have project_vbox remove project_vbox__contained_widget]
-	      [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+	      [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
 	      [have [get new_mindmon_project widget] show_all]
 	      [= project_vbox__contained_widget [get new_mindmon_project widget]]
 	      [= mindmon_project new_mindmon_project]

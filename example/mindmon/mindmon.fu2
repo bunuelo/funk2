@@ -478,7 +478,7 @@
        'agents'
        
        [= agent_hbox [gtk-hbox-new 2]]
-       [have vbox pack_start agent_hbox nil nil 0]
+       [have vbox pack_start agent_hbox t t 0]
        
        [= initialized t]
        [have execute_mutex unlock]

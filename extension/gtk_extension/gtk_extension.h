@@ -41,7 +41,8 @@ enum funk2_gtk_callback_args_type_e {
   funk2_gtk_callback_args_type__key_press,
   funk2_gtk_callback_args_type__response,
   funk2_gtk_callback_args_type__update_preview,
-  funk2_gtk_callback_args_type__value_changed
+  funk2_gtk_callback_args_type__value_changed,
+  funk2_gtk_callback_args_type__size_allocate
 };
 
 struct funk2_gtk_callback_s {

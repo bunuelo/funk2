@@ -44,6 +44,10 @@
 
 [defcorefunk gtk-value_changed_event-signal_connect            gtk_extension gtk__value_changed_event__signal_connect]
 
+'size_allocate_event'
+
+[defcorefunk gtk-size_allocate_event-signal_connect            gtk_extension gtk__size_allocate_event__signal_connect]
+
 'object'
 
 [defcorefunk g-object-ref                                      gtk_extension g__object__ref]
@@ -197,6 +201,7 @@
 [deftypefunk gtk_widget execute response_event-signal_connect       [funk args]             [gtk-response_event-signal_connect       [get this widget] funk args]]
 [deftypefunk gtk_widget execute update_preview_event-signal_connect [funk args]             [gtk-update_preview_event-signal_connect [get this widget] funk args]]
 [deftypefunk gtk_widget execute value_changed_event-signal_connect  [funk args]             [gtk-value_changed_event-signal_connect  [get this widget] funk args]]
+[deftypefunk gtk_widget execute size_allocate_event-signal_connect  [funk args]             [gtk-size_allocate_event-signal_connect  [get this widget] funk args]]
 
 'GtkWidget'
 [deftypefunk gtk_widget execute show                   []                                      [gtk-widget-show                   [get this widget]]]

@@ -354,6 +354,7 @@
 				  update_button
 				  cameras_enabled_check_button
 				  
+				  movie_vbox
 				  movie_gtk_image
 				  scale
 				  agent_hbox
@@ -428,7 +429,7 @@
 		       [set mindmon_world all_cameras_enabled cameras_enabled]]]]
 	     nil]
        
-       [= entry_hbox [gtk-hbox-new 2]]
+       [= entry_hbox [gtk-hbox-new 0]]
        [have controller_vbox pack_start entry_hbox nil nil 0]
        
        [= step_size_label [gtk-label-new 'Step Size: ']]
@@ -458,12 +459,14 @@
        
        'movie image'
        
+       [= movie_vbox [gtk-vbox-new 0]]
+       
        [= movie_gtk_image [gtk-image-new_from_image [new image 640 480 nil]]]
-       [have vbox pack_start movie_gtk_image nil nil 0]
+       [have movie_vbox pack_start movie_gtk_image nil nil 0]
        
        [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
        [set scale digits 0]
-       [have vbox pack_start scale t t 0]
+       [have movie_vbox pack_start scale t t 0]
        [let [[movie_length [get this movie_length]]]
 	 [if [> movie_length 1]
 	     [prog [set scale range 0.0 [- movie_length 1]]
@@ -474,6 +477,8 @@
 		   [= need_update t]
 		   [have [get this cycle_trigger] trigger]]
 	     nil]
+       
+       [have vbox pack_start movie_vbox nil nil 0]
        
        'agents'
        

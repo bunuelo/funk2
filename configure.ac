@@ -60,7 +60,7 @@ fi
 have_ncursesw_requirements=1
 AC_MSG_NOTICE([Checking for ncursesw and its requirements.])
 AC_CHECK_LIB(ncursesw,mvprintw, [],[have_ncursesw_requirements=0])
-AC_CHECK_HEADERS([ncursesw/ncurses.h],[],[have_ncursesw_requirements=0])
+AC_CHECK_HEADERS([ncurses.h],[],[have_ncursesw_requirements=0])
 AM_CONDITIONAL(NCURSESW_SUPPORTED, test $have_ncursesw_requirements == 1)
 if test $have_ncursesw_requirements == 1
 then

@@ -22,7 +22,7 @@
 #include "ncurses_extension.h"
 
 #if F2__NCURSESW_SUPPORTED
-#  include <ncursesw/ncurses.h>
+#  include <ncurses.h>
 #endif // F2__NCURSESW_SUPPORTED
 
 void funk2_ncurses_extension__test() {

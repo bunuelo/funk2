@@ -219,8 +219,8 @@
 														       
 														       [let [[semantic_action [get [get this mind] deliberative_semantic_action [get resource phenomenal_name]]]]
 															 
-															 [semantic-add event           transframe    event_transframe]
-															 [semantic-add semantic_action example_event event]
+															 [semantic-add action_sequence transframe    event_transframe]
+															 [semantic-add semantic_action example_event action_sequence]
 															 
 															 ]]]]
 													     []]

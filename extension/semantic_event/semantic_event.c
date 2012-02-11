@@ -82,6 +82,9 @@ boolean_t raw__semantic_event__is_type(f2ptr cause, f2ptr thing) {
     return boolean__true;
   }
   f2ptr thing_type = f2__lookup_type(cause, thing_type_name);
+  if (raw__larva__is_type(cause, thing_type)) {
+    return boolean__false;
+  }
   if (raw__primobject_type__has_parent_type(cause, thing_type, this_type_name_symbol)) {
     return boolean__true;
   }

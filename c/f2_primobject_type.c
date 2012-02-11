@@ -106,6 +106,9 @@ def_pcfunk2(primobject_type__type_funk__keys, this, type_name,
 	    return f2__primobject_type__type_funk__keys(this_cause, this, type_name));
 
 boolean_t raw__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name) {
+  if (! raw__primobject_type__is_type(cause, this)) {
+    return boolean__false;
+  }
   f2ptr parents = f2__primobject_type__parents(cause, this);
   {
     f2ptr parents_iter = parents;
@@ -125,6 +128,7 @@ boolean_t raw__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr t
 }
 
 f2ptr f2__primobject_type__has_parent_type(f2ptr cause, f2ptr this, f2ptr type_name) {
+  assert_argument_type(primobject_type, this);
   return f2bool__new(raw__primobject_type__has_parent_type(cause, this, type_name));
 }
 def_pcfunk2(primobject_type__has_parent_type, this, type_name,

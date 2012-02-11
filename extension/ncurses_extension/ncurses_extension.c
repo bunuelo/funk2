@@ -21,9 +21,9 @@
 
 #include "ncurses_extension.h"
 
-#if F2__NCURSESW_SUPPORTED
+#if F2__NCURSES_SUPPORTED
 #  include <ncurses.h>
-#endif // F2__NCURSESW_SUPPORTED
+#endif // F2__NCURSES_SUPPORTED
 
 void funk2_ncurses_extension__test() {
   setlocale(LC_ALL,"");
@@ -39,9 +39,9 @@ void funk2_ncurses_extension__test() {
 
 
 f2ptr f2__ncurses_extension__test(f2ptr cause) {
-#if F2__NCURSESW_SUPPORTED
+#if F2__NCURSES_SUPPORTED
   funk2_ncurses_extension__test();
-#endif
+#endif // F2__NCURSES_SUPPORTED
   return nil;
 }
 export_cefunk0(ncurses_extension__test, 0, "");

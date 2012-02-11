@@ -295,8 +295,8 @@ f2ptr raw__semantic_event__transframe__add(f2ptr cause, f2ptr this, f2ptr that) 
 }
 
 f2ptr f2__semantic_event__transframe__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event,      this);
-  assert_argument_type(semantic_transframe, that);
+  assert_argument_type(semantic_event,            this);
+  assert_argument_type(semantic_event_transframe, that);
   return raw__semantic_event__transframe__add(cause, this, that);
 }
 export_cefunk2(semantic_event__transframe__add, this, that, 0, "");
@@ -307,8 +307,8 @@ f2ptr raw__semantic_event__transframe__remove(f2ptr cause, f2ptr this, f2ptr tha
 }
 
 f2ptr f2__semantic_event__transframe__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event,      this);
-  assert_argument_type(semantic_transframe, that);
+  assert_argument_type(semantic_event,            this);
+  assert_argument_type(semantic_event_transframe, that);
   return raw__semantic_event__transframe__remove(cause, this, that);
 }
 export_cefunk2(semantic_event__transframe__remove, this, that, 0, "");
@@ -361,7 +361,7 @@ export_cefunk0(semantic_event__core_extension__ping, 0, "");
 f2ptr f2__semantic_event__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_event, semantic_temporal_object);
   core_extension__ping(semantic_event, semantic_time);
-  core_extension__ping(semantic_event, semantic_transframe);
+  core_extension__ping(semantic_event, semantic_event_transframe);
   status("semantic_event initialized.");
   return nil;
 }

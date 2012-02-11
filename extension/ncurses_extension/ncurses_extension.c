@@ -21,7 +21,30 @@
 
 #include "ncurses_extension.h"
 
+#if F2__NCURSESW_SUPPORTED
+#  include <ncursesw/ncurses.h>
+#endif // F2__NCURSESW_SUPPORTED
 
+void funk2_ncurses_extension__test() {
+  setlocale(LC_ALL,"");
+  initscr();
+  curs_set(0); //remove cursor
+  addstr("\u2019"); //Print out the unicode character
+  refresh(); //update screen
+  getch();  //wait for input
+  endwin();
+}
+
+#endif
+
+
+f2ptr f2__ncurses_extension__test(f2ptr cause) {
+#if F2__NCURSESW_SUPPORTED
+  funk2_ncurses_extension__test();
+#endif
+  return nil;
+}
+export_cefunk0(ncurses_extension__test, 0, "");
 
 
 // **

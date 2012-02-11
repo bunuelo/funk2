@@ -41,6 +41,8 @@ void funk2_ncurses_extension__test() {
 f2ptr f2__ncurses_extension__test(f2ptr cause) {
 #if F2__NCURSES_SUPPORTED
   funk2_ncurses_extension__test();
+#else
+  printf("\nncurses is not supported."); fflush(stdout);
 #endif // F2__NCURSES_SUPPORTED
   return nil;
 }

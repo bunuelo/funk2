@@ -361,7 +361,6 @@ export_cefunk0(semantic_event__core_extension__ping, 0, "");
 f2ptr f2__semantic_event__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_event, semantic_temporal_object);
   core_extension__ping(semantic_event, semantic_time);
-  core_extension__ping(semantic_event, semantic_event_transframe);
   status("semantic_event initialized.");
   return nil;
 }

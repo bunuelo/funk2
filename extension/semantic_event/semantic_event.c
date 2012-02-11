@@ -295,8 +295,8 @@ f2ptr raw__semantic_event__transframe__add(f2ptr cause, f2ptr this, f2ptr that) 
 }
 
 f2ptr f2__semantic_event__transframe__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event, this);
-  assert_argument_type(semantic_event,  that);
+  assert_argument_type(semantic_event,      this);
+  assert_argument_type(semantic_transframe, that);
   return raw__semantic_event__transframe__add(cause, this, that);
 }
 export_cefunk2(semantic_event__transframe__add, this, that, 0, "");
@@ -307,8 +307,8 @@ f2ptr raw__semantic_event__transframe__remove(f2ptr cause, f2ptr this, f2ptr tha
 }
 
 f2ptr f2__semantic_event__transframe__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_event, this);
-  assert_argument_type(semantic_event,  that);
+  assert_argument_type(semantic_event,      this);
+  assert_argument_type(semantic_transframe, that);
   return raw__semantic_event__transframe__remove(cause, this, that);
 }
 export_cefunk2(semantic_event__transframe__remove, this, that, 0, "");

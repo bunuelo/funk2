@@ -964,6 +964,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__test__dir)interval_tree-test/"                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)optimize-test/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)propogator-test/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)ncurses-test/"                                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)timeline-test/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)xmlrpc-test/"                                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                          >> install-sh
@@ -1094,6 +1095,7 @@ make-install-sh:
 	echo "install -m644 $(source__test__dir)interval_tree-test/*.f*                                $(chroot__install__test__dir)interval_tree-test/"                                >> install-sh
 	echo "install -m644 $(source__test__dir)optimize-test/*.f*                                     $(chroot__install__test__dir)optimize-test/"                                     >> install-sh
 	echo "install -m644 $(source__test__dir)propogator-test/*.f*                                   $(chroot__install__test__dir)propogator-test/"                                   >> install-sh
+	echo "install -m644 $(source__test__dir)ncurses-test/*.f*                                      $(chroot__install__test__dir)ncurses-test/"                                      >> install-sh
 	echo "install -m644 $(source__test__dir)timeline-test/*.f*                                     $(chroot__install__test__dir)timeline-test/"                                     >> install-sh
 	echo "install -m644 $(source__test__dir)xmlrpc-test/*.f*                                       $(chroot__install__test__dir)xmlrpc-test/"                                       >> install-sh
 	echo "install -m644 $(source__example__dir)*                                                   $(chroot__install__example__dir)"                                                >> install-sh

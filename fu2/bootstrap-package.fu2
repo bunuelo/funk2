@@ -256,6 +256,7 @@
 						     'test/interval_tree-test/'
 						     'test/optimize-test/'
 						     'test/propogator-test/'
+						     'test/ncurses-test/'
 						     'test/timeline-test/'
 						     'test/xmlrpc-test/'
 						     ]]

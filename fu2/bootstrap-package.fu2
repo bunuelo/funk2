@@ -167,6 +167,7 @@
 						     'extension/lick/'
 						     'extension/meta_semantic_knowledge_base/'
 						     'extension/movie/'
+						     'extension/ncurses_extension/'
 						     'extension/propogator/'
 						     'extension/semantic_action/'
 						     'extension/semantic_action_event/'

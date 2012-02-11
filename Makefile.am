@@ -247,6 +247,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/lick/libf2e_lick.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                       extension/movie/libf2e_movie.la \
+                      extension/ncurses_extension/libf2e_ncurses_extension.la \
                       extension/propogator/libf2e_propogator.la \
                       extension/semantic_action/libf2e_semantic_action.la \
                       extension/semantic_action_knowledge_base/libf2e_semantic_action_knowledge_base.la \
@@ -323,6 +324,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/lick/.libs/libf2e_*.*                                                                                 $(compile__lib__dir)
 	cp -fa extension/meta_semantic_knowledge_base/.libs/libf2e_*.*                                 $(compile__lib__dir)
 	cp -fa extension/movie/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
+	cp -fa extension/ncurses_extension/.libs/libf2e_*.*                                                       $(compile__lib__dir)
 	cp -fa extension/propogator/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 	cp -fa extension/semantic_action/.libs/libf2e_*.*                                                           $(compile__lib__dir)
 	cp -fa extension/semantic_action_knowledge_base/.libs/libf2e_*.*                             $(compile__lib__dir)
@@ -529,6 +531,7 @@ extension_interval_tree_libf2e_interval_tree_la_SOURCES                         
 extension_lick_libf2e_lick_la_SOURCES                                                                                 = extension/lick/lick.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                 = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_movie_libf2e_movie_la_SOURCES                                                                               = extension/movie/movie.c
+extension_ncurses_extension_libf2e_ncurses_extension_la_SOURCES                                                       = extension/ncurses_extension/ncurses_extension.c
 extension_propogator_libf2e_propogator_la_SOURCES                                                                     = extension/propogator/propogator.c
 extension_semantic_action_libf2e_semantic_action_la_SOURCES                                                           = extension/semantic_action/semantic_action.c
 extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES                             = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
@@ -657,6 +660,9 @@ extension_frame_ball_libf2e_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_ncurses_extension_libf2e_ncurses_extension_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_ncurses_extension_libf2e_ncurses_extension_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -895,6 +901,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)lick/"                                                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)movie/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)ncurses_extension/"                                                                                                      >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action/"                                                                                                        >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_knowledge_base/"                                                                                         >> install-sh
@@ -1024,6 +1031,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)lick/*.f*                                         $(chroot__install__extension__dir)lick/"                                         >> install-sh
 	echo "install -m644 $(source__extension__dir)meta_semantic_knowledge_base/*.f*                 $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                 >> install-sh
 	echo "install -m644 $(source__extension__dir)movie/*.f*                                        $(chroot__install__extension__dir)movie/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)ncurses_extension/*.f*                            $(chroot__install__extension__dir)ncurses_extension/"                            >> install-sh
 	echo "install -m644 $(source__extension__dir)propogator/*.f*                                   $(chroot__install__extension__dir)propogator/"                                   >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action/*.f*                              $(chroot__install__extension__dir)semantic_action/"                              >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action_knowledge_base/*.f*               $(chroot__install__extension__dir)semantic_action_knowledge_base/"               >> install-sh

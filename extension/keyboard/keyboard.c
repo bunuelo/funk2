@@ -45,7 +45,6 @@ export_cefunk0(keyboard__read_byte, 0, "Wait for next byte from keyboard.");
 
 
 f2ptr f2__keyboard__read_character(f2ptr cause) {
-  assert_argument_type(stream, this);
   f2ptr character;
   f2ptr b0 = assert_value(f2__keyboard__read_byte(cause));
   u64 b0__i = f2integer__i(b0, cause);

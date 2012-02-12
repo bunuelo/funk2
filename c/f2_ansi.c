@@ -21,6 +21,28 @@
 
 #include "funk2.h"
 
+void raw__ansi__stream__write(f2ptr cause, f2ptr stream, f2ptr string) {
+  f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
+  u64 string__length = raw__string__length(cause, string);
+  u8* string__str    = (u8*)from_ptr(f2__malloc(string__length + 1));
+  raw__string__str_copy(cause, string, string__str);
+  string__str[string__length] = 0;
+  raw__stream__writef(cause, stream, "%s", string__str);
+  f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
+}
+
+f2ptr f2__ansi__stream__write(f2ptr cause, f2ptr stream, f2ptr string) {
+  assert_argument_type(stream, stream);
+  assert_argument_type(string, string);
+  raw__ansi__stream__write(cause, stream, string);
+  return nil;
+}
+def_pcfunk2(ansi__stream__write, stream, string,
+	    "",
+	    return f2__ansi__stream__write(this_cause, stream, string));
+
+
+
 void raw__ansi__stream__print_code(f2ptr cause, f2ptr stream, int code) {
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
   raw__stream__writef(cause, stream, "%c[%dm", 27, code);
@@ -537,6 +559,7 @@ void f2__ansi__initialize() {
   
   f2__ansi__reinitialize_globalvars();
   
+  f2__primcfunk__init(ansi__stream__write);
   f2__primcfunk__init(ansi__stream__print_code);
   f2__primcfunk__init(ansi__stream__reset);
   f2__primcfunk__init(ansi__stream__bold);

@@ -41,7 +41,7 @@ f2ptr f2__keyboard__read_byte(f2ptr cause) {
   }
   return f2integer__new(cause, ch);
 }
-export_cefunk1(keyboard__read_byte, 0, "Wait for next byte from keyboard.");
+export_cefunk0(keyboard__read_byte, 0, "Wait for next byte from keyboard.");
 
 
 f2ptr f2__keyboard__read_character(f2ptr cause) {
@@ -106,7 +106,7 @@ f2ptr f2__keyboard__read_character(f2ptr cause) {
   }
   return character;
 }
-export_cefunk1(keyboard__read_character, 0, "Wait for next character from keyboard.");
+export_cefunk0(keyboard__read_character, 0, "Wait for next character from keyboard.");
 
 
 

@@ -24,7 +24,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__27_slot(terminal_print_frame,
+def_frame_object__global__26_slot(terminal_print_frame,
 				  cmutex,
 				  testing,
 				  testing_max_x_constraint,

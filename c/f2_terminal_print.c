@@ -230,6 +230,137 @@ def_pcfunk2(terminal_print_frame__write_color__thread_unsafe, this, color,
 	    return f2__terminal_print_frame__write_color__thread_unsafe(this_cause, this, color));
 
 
+void raw__terminal_print_frame__write_string__thread_unsafe__helper(f2ptr cause, f2ptr this, u64 length, funk2_character_t* string,
+								    funk2_character_t ch,
+								    f2ptr &testing,
+								    f2ptr &stream,
+								    f2ptr &indent_distance,
+								    s64   &indent_distance__i,
+								    f2ptr &x,
+								    s64   &x__i,
+								    f2ptr &height,
+								    s64   &height__i,
+								    f2ptr &max_x,
+								    s64   &max_x__i,
+								    f2ptr &max_height,
+								    s64   &max_height__i,
+								    f2ptr &left_extent,
+								    s64   &left_extent__i,
+								    f2ptr &right_extent,
+								    s64   &right_extent__i,
+								    f2ptr &use_html_codes,
+								    f2ptr &escape_sequence) {
+  switch(ch) {
+  case (funk2_character_t)'\r':
+    break;
+  case (funk2_character_t)'\n':
+    if ((testing == nil) && (height__i < max_height__i)) {
+      if (use_html_codes) {
+	raw__stream__writef(cause, stream, "<br>");
+      }
+      
+      raw__stream__writef(cause, stream, "\r\n");
+      {
+	u64 index;
+	for (index = 0; index < indent_distance__i; index ++) {
+	  if (use_html_codes) {
+	    raw__stream__writef(cause, stream, "&nbsp;");
+	  } else {
+	    raw__stream__writef(cause, stream, " ");
+	  }
+	}
+      }
+    }
+    if ((testing != nil) || (height__i < max_height__i)) {
+      x__i = indent_distance__i;
+      if ((! left_extent) || x__i < left_extent__i) {
+	left_extent__i = x__i;
+	if (! left_extent) {
+	  left_extent = f2bool__new(boolean__true);
+	}
+      }
+      height__i ++;
+    }
+    break;
+  case (funk2_character_t)'\t':
+    {
+      s64 spaces_until_next_tab = (x__i < 0) ? 8 : ((((x__i + 8) >> 3) << 3) - x__i);
+      if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
+	u64 subindex;
+	for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
+	  if (use_html_codes != nil) {
+	    raw__stream__writef(cause, stream, "&nbsp;");
+	  } else {
+	    raw__stream__writef(cause, stream, " ");
+	  }
+	}
+      }
+      if ((testing != nil) || (x__i + spaces_until_next_tab < max_x__i)) {
+	x__i += spaces_until_next_tab;
+	if ((! right_extent) || x__i > right_extent__i) {
+	  right_extent__i = x__i;
+	  if (! right_extent) {
+	    right_extent = f2bool__new(boolean__true);
+	  }
+	}
+      }
+    }
+    break;
+  case (funk2_character_t)'\b':
+    if (x__i > 0) {
+      raw__stream__writef(cause, stream, "\b");
+      x__i --;
+    }
+    break;
+  default:
+    if (testing == nil) {
+      if (x__i >= max_x__i) {
+	if (use_html_codes) {
+	  raw__stream__writef(cause, stream, "<br>");
+	}
+	raw__stream__writef(cause, stream, "\r\n");
+      }
+      if (ch >= 28 && ch != 0x7F) {
+	switch(ch) {
+	case (funk2_character_t)' ':
+	  if (use_html_codes != nil) {
+	    raw__stream__writef(cause, stream, "&nbsp;");
+	  } else {
+	    raw__stream__writef(cause, stream, " ");
+	  }
+	  break;
+	default:
+	  raw__stream__write_character(cause, stream, ch);
+	  break;
+	}
+      } else {
+	funk2_character_t replacement_character = (funk2_character_t)0xFFFD;
+	raw__stream__write_character(cause, stream, replacement_character);
+      }
+    }
+    if ((testing == nil) || (x__i < max_x__i)) {
+      if ((testing == nil) && (x__i >= max_x__i)) {
+	x__i = indent_distance__i;
+	if ((! left_extent) || x__i < left_extent__i) {
+	  left_extent__i = x__i;
+	  if (! left_extent) {
+	    left_extent = f2bool__new(boolean__true);
+	  }
+	}
+	height__i ++;
+      }
+      x__i ++;
+      if ((! right_extent) || x__i > right_extent__i) {
+	right_extent__i = x__i;
+	if (! right_extent) {
+	  right_extent = f2bool__new(boolean__true);
+	}
+      }
+    }
+    break;
+  }
+}
+
 void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, u64 length, funk2_character_t* string) {
   f2ptr testing            = raw__terminal_print_frame__testing(cause, this);
   f2ptr stream             = raw__terminal_print_frame__stream(cause, this);
@@ -248,118 +379,34 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
   f2ptr right_extent       = raw__terminal_print_frame__right_extent(cause, this);
   s64   right_extent__i    = right_extent ? f2integer__i(right_extent, cause) : 0;
   f2ptr use_html_codes     = raw__terminal_print_frame__use_html_codes(cause, this);
+  f2ptr escape_sequence    = raw__terminal_print_frame__escape_sequence(cause, this);
   {
     u64 index;
     for (index = 0; index < length; index ++) {
       funk2_character_t ch = string[index];
-      switch(ch) {
-      case (funk2_character_t)'\r':
-	break;
-      case (funk2_character_t)'\n':
-	if ((testing == nil) && (height__i < max_height__i)) {
-	  if (use_html_codes) {
-	    raw__stream__writef(cause, stream, "<br>");
-	  }
-	  
-	  raw__stream__writef(cause, stream, "\r\n");
-	  {
-	    u64 index;
-	    for (index = 0; index < indent_distance__i; index ++) {
-	      if (use_html_codes) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
-	      }
-	    }
-	  }
-	}
-	if ((testing != nil) || (height__i < max_height__i)) {
-	  x__i = indent_distance__i;
-	  if ((! left_extent) || x__i < left_extent__i) {
-	    left_extent__i = x__i;
-	    if (! left_extent) {
-	      left_extent = f2bool__new(boolean__true);
-	    }
-	  }
-	  height__i ++;
-	}
-	break;
-      case (funk2_character_t)'\t':
-	{
-	  s64 spaces_until_next_tab = (x__i < 0) ? 8 : ((((x__i + 8) >> 3) << 3) - x__i);
-	  if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
-	    u64 subindex;
-	    for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
-	      if (use_html_codes != nil) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
-	      }
-	    }
-	  }
-	  if ((testing != nil) || (x__i + spaces_until_next_tab < max_x__i)) {
-	    x__i += spaces_until_next_tab;
-	    if ((! right_extent) || x__i > right_extent__i) {
-	      right_extent__i = x__i;
-	      if (! right_extent) {
-		right_extent = f2bool__new(boolean__true);
-	      }
-	    }
-	  }
-	}
-	break;
-      case (funk2_character_t)'\b':
-	if (x__i > 0) {
-	  raw__stream__writef(cause, stream, "\b");
-	  x__i --;
-	}
-	break;
-      default:
-	if (testing == nil) {
-	  if (x__i >= max_x__i) {
-	    if (use_html_codes) {
-	      raw__stream__writef(cause, stream, "<br>");
-	    }
-	    raw__stream__writef(cause, stream, "\r\n");
-	  }
-	  if (ch >= 28 && ch != 0x7F) {
-	    switch(ch) {
-	    case (funk2_character_t)' ':
-	      if (use_html_codes != nil) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
-	      }
-	      break;
-	    default:
-	      raw__stream__write_character(cause, stream, ch);
-	      break;
-	    }
-	  } else {
-	    funk2_character_t replacement_character = (funk2_character_t)0xFFFD;
-	    raw__stream__write_character(cause, stream, replacement_character);
-	  }
-	}
-	if ((testing == nil) || (x__i < max_x__i)) {
-	  if ((testing == nil) && (x__i >= max_x__i)) {
-	    x__i = indent_distance__i;
-	    if ((! left_extent) || x__i < left_extent__i) {
-	      left_extent__i = x__i;
-	      if (! left_extent) {
-		left_extent = f2bool__new(boolean__true);
-	      }
-	    }
-	    height__i ++;
-	  }
-	  x__i ++;
-	  if ((! right_extent) || x__i > right_extent__i) {
-	    right_extent__i = x__i;
-	    if (! right_extent) {
-	      right_extent = f2bool__new(boolean__true);
-	    }
-	  }
-	}
-	break;
+      if (escape_sequence != nil) {
+	
+      } else {
+	raw__terminal_print_frame__write_string__thread_unsafe__helper(f2ptr cause, f2ptr this, u64 length, funk2_character_t* string,
+								       ch,
+								       testing,
+								       stream,
+								       indent_distance,
+								       indent_distance__i,
+								       x,
+								       x__i,
+								       height,
+								       height__i,
+								       max_x,
+								       max_x__i,
+								       max_height,
+								       max_height__i,
+								       left_extent,
+								       left_extent__i,
+								       right_extent,
+								       right_extent__i,
+								       use_html_codes,
+								       escape_sequence);
       }
     }
   }

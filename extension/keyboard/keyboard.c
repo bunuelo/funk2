@@ -25,7 +25,7 @@
 def_ceframe1(termios, termios, chunk);
 
 f2ptr raw__termios__new(f2ptr cause, struct termios* opts) {
-  return f2termios__new(cause, f2chunk__new(cause, sizeof(opts), &opts));
+  return f2termios__new(cause, f2chunk__new(cause, sizeof(*opts), opts));
 }
 
 void raw__termios__copy_termios(f2ptr cause, f2ptr this, struct termios* dest) {

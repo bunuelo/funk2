@@ -37,15 +37,16 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   u32 bytes_read = 0;
   u8  ch;
   read_nonblocking(STDIN_FILENO, &ch, 1, &bytes_read);
-  if (bytes_read == 0) {
-    return nil;
-  }
   //------  restore old settings ---------
   res=tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
   if (res != 0) {
     return f2larva__new(cause, 62353, nil);
   }
-  return f2integer__new(cause, ch);
+  if (bytes_read == 0) {
+    return nil;
+  } else {
+    return f2integer__new(cause, ch);
+  }
 }
 export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
 

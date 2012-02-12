@@ -387,7 +387,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
       if (escape_sequence != nil) {
 	
       } else {
-	raw__terminal_print_frame__write_string__thread_unsafe__helper(f2ptr cause, f2ptr this, u64 length, funk2_character_t* string,
+	raw__terminal_print_frame__write_string__thread_unsafe__helper(cause, this, length, string,
 								       ch,
 								       testing,
 								       stream,

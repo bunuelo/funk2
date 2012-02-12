@@ -232,7 +232,7 @@ def_pcfunk2(terminal_print_frame__write_color__thread_unsafe, this, color,
 
 void raw__terminal_print_frame__write_string__thread_unsafe__helper(f2ptr cause, f2ptr this, u64 length, funk2_character_t* string,
 								    funk2_character_t ch,
-								    f2ptr &testing,
+								    int &testing,
 								    f2ptr &stream,
 								    f2ptr &indent_distance,
 								    s64   &indent_distance__i,

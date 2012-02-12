@@ -22,7 +22,8 @@
 #include "keyboard.h"
 
 
-f2ptr f2__keyboard__read_byte(f2ptr cause) {
+
+f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   struct termios org_opts, new_opts;
   //-----  store old settings -----------
   int res = tcgetattr(STDIN_FILENO, &org_opts);
@@ -33,19 +34,27 @@ f2ptr f2__keyboard__read_byte(f2ptr cause) {
   memcpy(&new_opts, &org_opts, sizeof(new_opts));
   new_opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL);
   tcsetattr(STDIN_FILENO, TCSANOW, &new_opts);
-  s64 ch = getchar();
+  u32 bytes_read = 0;
+  u8  ch;
+  read_nonblocking_result_t read_nonblocking_result = read_nonblocking(STDIN_FILENO, &ch, 1, &bytes_read);
+  if (bytes_read == 0) {
+    return nil;
+  }
   //------  restore old settings ---------
   res=tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
   if (res != 0) {
-    return f2larva__new(cause, 62352, nil);
+    return f2larva__new(cause, 62353, nil);
   }
   return f2integer__new(cause, ch);
 }
-export_cefunk0(keyboard__read_byte, 0, "Wait for next byte from keyboard.");
+export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
 
 
-f2ptr f2__keyboard__read_character(f2ptr cause) {
-  f2ptr b0    = assert_value(f2__keyboard__read_byte(cause));
+f2ptr f2__keyboard__try_read_character(f2ptr cause) {
+  f2ptr b0    = assert_value(f2__keyboard__try_read_byte(cause));
+  if (b0 == nil) {
+    return nil;
+  }
   u64   b0__i = f2integer__i(b0, cause);
   if (b0__i <= 127) {
     // ascii one-byte character
@@ -79,7 +88,7 @@ f2ptr f2__keyboard__read_character(f2ptr cause) {
     return f2char__new(cause, (funk2_character_t)0xFFFD);
   }
 }
-export_cefunk0(keyboard__read_character, 0, "Wait for next character from keyboard.");
+export_cefunk0(keyboard__try_read_character, 0, "Wait for next character from keyboard.");
 
 
 

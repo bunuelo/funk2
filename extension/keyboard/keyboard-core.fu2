@@ -17,8 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk keyboard-read_byte      keyboard keyboard__read_byte]
-[defcorefunk keyboard-read_character keyboard keyboard__read_character]
+[defcorefunk keyboard-try_read_byte      keyboard keyboard__try_read_byte]
+[defcorefunk keyboard-try_read_character keyboard keyboard__try_read_character]
 
 [defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
 [defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]
@@ -26,4 +26,18 @@
 
 [keyboard-core_extension-define_types]
 
+[defunk keyboard-read_byte []
+  [let [[b nil]]
+    [while [null b]
+      [= b [keyboard-try_read_byte]]
+      [if [null b]
+	  [millisleep 100]]]
+    b]]
 
+[defunk keyboard-read_character []
+  [let [[ch nil]]
+    [while [null ch]
+      [= ch [keyboard-try_read_character]]
+      [if [null ch]
+	  [millisleep 100]]]
+    ch]]

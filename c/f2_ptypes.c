@@ -2576,16 +2576,16 @@ f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr 
 
 f2ptr f2char__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
-  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);}
-  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.type__funk);}
-  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.new__funk);}
-  {char* slot_name = "ch";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.ch__funk);}
-  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq__funk);}
-  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk);}
-  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.new__funk);}
+  {char* slot_name = "ch";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.ch__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk);}
-  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -2627,7 +2627,6 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
 
 funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
@@ -2635,6 +2634,16 @@ funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_character_t ch = __pure__f2string__str(this)[index];
   return ch;
+}
+
+void pfunk2__f2string__elt__set(f2ptr this, int index, f2ptr cause, funk2_character_t ch) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_string) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  __pure__f2string__str(this)[index] = ch;
 }
 
 void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str) {
@@ -2677,6 +2686,32 @@ u64   raw__string__length(f2ptr cause, f2ptr this) {return f2string__length(this
 f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__string__length(cause, this));}
 
 funk2_character_t raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
+  if (index < 0) {
+    error(nil, "array_access_out_of_bounds");
+    //return new__error(f2list6__new(cause,
+    //				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+    //				   new__symbol(cause, "this"),     this,
+    //				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
+  }
+  u64 length = f2string__length(this, cause);
+  if (index >= length) {
+    error(nil, "array_access_out_of_bounds");
+    //return new__error(f2list6__new(cause,
+    //				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+    //				   new__symbol(cause, "this"),     this,
+    //				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
+  }
+  return f2string__elt(this, index, cause);
+}
+
+f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
+  assert_argument_type(string, this);
+  u64 raw_index = f2integer__i(index, cause);
+  return f2char__new(cause, raw__string__elt(cause, this, raw_index));
+}
+
+
+void raw__string__elt__set(f2ptr cause, f2ptr this, s64 index, funk2_character_t ch) {
   if (index < 0) {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),

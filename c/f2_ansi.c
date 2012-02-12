@@ -23,11 +23,11 @@
 
 void raw__ansi__stream__write(f2ptr cause, f2ptr stream, f2ptr string) {
   f2__cmutex__lock(cause, f2__stream__cmutex(cause, stream));
-  u64 string__length = raw__string__length(cause, string);
-  u8* string__str    = (u8*)from_ptr(f2__malloc(string__length + 1));
-  raw__string__str_copy(cause, string, string__str);
-  string__str[string__length] = 0;
-  raw__stream__writef(cause, stream, "%s", string__str);
+  u64 string__utf8_length = raw__string__utf8_length(cause, string);
+  u8* string__utf8_str    = (u8*)from_ptr(f2__malloc(string__utf8_length + 1));
+  raw__string__utf8_str_copy(cause, string, string__utf8_str);
+  string__utf8_str[string__utf8_length] = 0;
+  raw__stream__writef(cause, stream, "%s", string__utf8_str);
   f2__cmutex__unlock(cause, f2__stream__cmutex(cause, stream));
 }
 

@@ -17,8 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk ncurses-test []
-  
-  
-  ]
+[defpackage keyboard
+  :packages            []
+   :sources            ['keyboard-core.fu2']
+    :dynamic_libraries ['libf2e_keyboard.so']]
+
+[defcore keyboard 'libf2e_keyboard.so']
+
 

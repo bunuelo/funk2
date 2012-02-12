@@ -19,17 +19,17 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__NCURSES_EXTENSION__H
-#define F2__EXTENSION__NCURSES_EXTENSION__H
+#ifndef F2__EXTENSION__KEYBOARD__H
+#define F2__EXTENSION__KEYBOARD__H
 
 #include "../../c/funk2.h"
 
 
 // **
 
-f2ptr f2__ncurses_extension__core_extension__ping      (f2ptr cause);
-f2ptr f2__ncurses_extension__core_extension__initialize(f2ptr cause);
-f2ptr f2__ncurses_extension__core_extension__destroy   (f2ptr cause);
+f2ptr f2__keyboard__core_extension__ping      (f2ptr cause);
+f2ptr f2__keyboard__core_extension__initialize(f2ptr cause);
+f2ptr f2__keyboard__core_extension__destroy   (f2ptr cause);
 
-#endif // F2__EXTENSION__NCURSES_EXTENSION__H
+#endif // F2__EXTENSION__KEYBOARD__H
 

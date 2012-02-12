@@ -56,22 +56,22 @@ else
 *** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
 fi
 
-# Checking for ncurses.
-have_ncurses_requirements=1
-AC_MSG_NOTICE([Checking for ncurses and its requirements.])
-AC_CHECK_LIB(ncurses,initscr, [],[have_ncurses_requirements=0])
-AC_CHECK_HEADERS([ncurses.h],[],[have_ncurses_requirements=0])
-AM_CONDITIONAL(NCURSES_SUPPORTED, test $have_ncurses_requirements == 1)
-if test $have_ncurses_requirements == 1
-then
-  AC_MSG_NOTICE([Feature ncurses is fully supported.])
-  AC_DEFINE(F2__NCURSES_SUPPORTED, 1, Build ncurses support into Funk2)
-else
-  AC_MSG_NOTICE([
-*** ncurses is not required to build Funk2, but the ncurses development headers
-*** are not installed, so ncurses support will not be compiled into Funk2.  The
-*** latest version of ncurses is available at http://invisible-island.net/ncurses/ncurses.html])
-fi
+## Checking for ncurses.
+#have_ncurses_requirements=1
+#AC_MSG_NOTICE([Checking for ncurses and its requirements.])
+#AC_CHECK_LIB(ncurses,initscr, [],[have_ncurses_requirements=0])
+#AC_CHECK_HEADERS([ncurses.h],[],[have_ncurses_requirements=0])
+#AM_CONDITIONAL(NCURSES_SUPPORTED, test $have_ncurses_requirements == 1)
+#if test $have_ncurses_requirements == 1
+#then
+#  AC_MSG_NOTICE([Feature ncurses is fully supported.])
+#  AC_DEFINE(F2__NCURSES_SUPPORTED, 1, Build ncurses support into Funk2)
+#else
+#  AC_MSG_NOTICE([
+#*** ncurses is not required to build Funk2, but the ncurses development headers
+#*** are not installed, so ncurses support will not be compiled into Funk2.  The
+#*** latest version of ncurses is available at http://invisible-island.net/ncurses/ncurses.html])
+#fi
 
 PKG_CHECK_MODULES(GTK, gtk+-2.0, AC_DEFINE(F2__GTK_SUPPORTED, 1, [Define if we have support for GTK+]), [AC_MSG_NOTICE([
 *** GTK+ 2.0 is not required to build Funk2, but the GLib development headers

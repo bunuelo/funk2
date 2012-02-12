@@ -17,7 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage ncurses-test
-  :packages [ncurses]
-   :sources ['ncurses-test.fu2']]
+[defcorefunk keyboard-test keyboard keyboard__test]
+
+[defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
+[defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]
+[defcorefunk keyboard-core_extension-initialize   keyboard keyboard__core_extension__initialize]
+
+[keyboard-core_extension-define_types]
+
 

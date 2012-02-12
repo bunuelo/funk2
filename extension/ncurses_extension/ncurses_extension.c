@@ -25,6 +25,9 @@
 #  include <ncurses.h>
 #endif // F2__NCURSES_SUPPORTED
 
+
+#if F2__NCURSES_SUPPORTED
+
 void funk2_ncurses_extension__test() {
   setlocale(LC_ALL,"");
   initscr();
@@ -35,7 +38,7 @@ void funk2_ncurses_extension__test() {
   endwin();
 }
 
-#endif
+#endif // F2__NCURSES_SUPPORTED
 
 
 f2ptr f2__ncurses_extension__test(f2ptr cause) {

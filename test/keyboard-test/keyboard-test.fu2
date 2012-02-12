@@ -18,7 +18,10 @@
  rights to redistribute these changes.'
 
 [defunk keyboard-test []
-  
-  
-  ]
+  [let [[done nil]]
+    [while [not done]
+      [let [[ch [keyboard-read_character]]]
+	[print ch]
+	[if [eq ch #c1b]
+	    [= done t]]]]]]
 

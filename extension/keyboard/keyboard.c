@@ -79,17 +79,17 @@ f2ptr f2__keyboard__read_character(f2ptr cause) {
     }
   } else if ((b0__i & 0xF8) == 0xF0) {
     // utf8 four-byte character
-    f2ptr b1 = f2__stream__try_read_byte(cause, this);
+    f2ptr b1 = assert_value(f2__keyboard__read_byte(cause));
     if (! raw__integer__is_type(cause, b1)) {
       character = b1;
     } else {
       u64 b1__i = f2integer__i(b1, cause);
-      f2ptr b2 = f2__stream__try_read_byte(cause, this);
+      f2ptr b2 = assert_value(f2__keyboard__read_byte(cause));
       if (! raw__integer__is_type(cause, b2)) {
 	character = b2;
       } else {
 	u64 b2__i = f2integer__i(b2, cause);
-	f2ptr b3 = f2__stream__try_read_byte(cause, this);
+	f2ptr b3 = assert_value(f2__keyboard__read_byte(cause));
 	if (! raw__integer__is_type(cause, b3)) {
 	  character = b3;
 	} else {

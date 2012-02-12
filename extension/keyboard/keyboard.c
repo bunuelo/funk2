@@ -58,6 +58,7 @@ f2ptr raw__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
   if (res != 0) {
     return f2larva__new(cause, 12353, nil);
   }
+  return nil;
 }
 
 f2ptr f2__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {

@@ -22,6 +22,38 @@
 #include "keyboard.h"
 
 
+f2ptr funk2_keyboard__getch(f2ptr cause, int file_descriptor) {
+  struct termios org_opts, new_opts;
+  //-----  store old settings -----------
+  int res = tcgetattr(file_descriptor, &org_opts);
+  if (res != 0) {
+    return f2larva__new(cause, 62351, nil);
+  }
+  //---- set new terminal parms --------
+  memcpy(&new_opts, &org_opts, sizeof(new_opts));
+  new_opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL);
+  tcsetattr(file_descriptor, TCSANOW, &new_opts);
+  s64 ch = getchar();
+  //------  restore old settings ---------
+  res=tcsetattr(file_descriptor, TCSANOW, &org_opts);
+  if (res != 0) {
+    return f2larva__new(cause, 62352, nil);
+  }
+  return f2integer__new(cause, ch);
+}
+
+f2ptr raw__keyboard__getch(f2ptr cause, f2ptr file_descriptor) {
+  int file_descriptor__i = f2integer__i(file_descriptor, cause);
+  return funk2_keyboard__getch(cause, file_descriptor__i);
+}
+
+f2ptr f2__keyboard__getch(f2ptr cause, f2ptr file_descriptor) {
+  assert_argument_type(integer, file_descriptor);
+  return raw__keyboard__getch(cause, file_descriptor);
+}
+export_cefunk1(keyboard__getch, 0, "Get current key from keyboard without waiting.");
+
+
 // **
 
 f2ptr f2__keyboard__core_extension__ping(f2ptr cause) {

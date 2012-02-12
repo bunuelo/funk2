@@ -30,7 +30,7 @@ f2ptr raw__termios__new(f2ptr cause, struct termios* opts) {
 
 void raw__termios__copy_termios(f2ptr cause, f2ptr this, struct termios* dest) {
   f2ptr chunk = raw__termios__chunk(cause, this);
-  raw__chunk__str_copy(cause, this, dest);
+  raw__chunk__str_copy(cause, this, (u8*)dest);
 }
 
 f2ptr f2__termios_type__new_aux(f2ptr cause) {

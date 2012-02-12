@@ -17,8 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk keyboard-try_read_byte      keyboard keyboard__try_read_byte]
-[defcorefunk keyboard-try_read_character keyboard keyboard__try_read_character]
+[defcorefunk keyboard-current_mode             keyboard keyboard__current_mode]
+[defcorefunk keyboard-current_mode-set         keyboard keyboard__current_mode__set]
+[defcorefunk keyboard-enable_noncanonical_mode keyboard keyboard__enable_noncanonical_mode]
+[defcorefunk keyboard-try_read_byte            keyboard keyboard__try_read_byte]
+[defcorefunk keyboard-try_read_character       keyboard keyboard__try_read_character]
 
 [defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
 [defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]

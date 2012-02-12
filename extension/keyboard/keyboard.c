@@ -22,6 +22,63 @@
 #include "keyboard.h"
 
 
+def_ceframe1(termios, chunk);
+
+f2ptr raw__termios__new(f2ptr cause, struct termios* opts) {
+  return f2termios__new(cause, f2chunk__new(cause, sizeof(opts), &opts));
+}
+
+void raw__termios__copy_termios(f2ptr cause, f2ptr this, struct termios* dest) {
+  f2ptr chunk = raw__termios__chunk(cause, this);
+  raw__chunk__str_copy(cause, this, dest);
+}
+
+f2ptr f2__termios_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__termios_type__new(cause);
+  return this;
+}
+
+
+
+f2ptr f2__keyboard__current_mode(f2ptr cause) {
+  struct termios opts;
+  int res = tcgetattr(STDIN_FILENO, &opts);
+  if (res != 0) {
+    return f2larva__new(cause, 12351, nil);
+  }
+  return raw__termios__new(cause, &opts);
+}
+export_cefunk0(keyboard__current_mode, 0, "Return a termios struct containing the current standard input device attributes.");
+
+
+f2ptr raw__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
+  struct termios opts;
+  raw__termios__copy_termios(cause, termios, &opts);
+  int res = tcsetattr(STDIN_FILENO, TCSANOW, &opts);
+  if (res != 0) {
+    return f2larva__new(cause, 12353, nil);
+  }
+}
+
+f2ptr f2__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
+  assert_argument_type(termios, termios);
+  return raw__keyboard__current_mode__set(cause, termios);
+}
+export_cefunk1(keyboard__current_mode__set, termios, 0, "Sets the current standard input device attributes to those given by the termios struct.");
+
+
+f2ptr f2__keyboard__enable_noncanonical_mode(f2ptr cause) {
+  struct termios opts;
+  int res = tcgetattr(STDIN_FILENO, &opts);
+  if (res != 0) {
+    return f2larva__new(cause, 22351, nil);
+  }
+  opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL);
+  tcsetattr(STDIN_FILENO, TCSANOW, &opts);
+  return nil;
+}
+export_cefunk0(keyboard__enable_noncanonical_mode, 0, "Enables noncanonical mode device attributes for the standard input.");
+
 
 f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   struct termios org_opts, new_opts;
@@ -126,6 +183,7 @@ f2ptr f2__keyboard__core_extension__initialize(f2ptr cause) {
 export_cefunk0(keyboard__core_extension__initialize, 0, "");
 
 f2ptr f2__keyboard__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "termios"), f2__termios_type__new_aux(cause));
   status("keyboard types defined.");
   return nil;
 }

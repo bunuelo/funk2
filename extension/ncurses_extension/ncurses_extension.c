@@ -29,6 +29,7 @@
 #if F2__NCURSES_SUPPORTED
 
 void funk2_ncurses_extension__test() {
+  printf("\nbeginning\n");
   setlocale(LC_ALL,"");
   initscr();
   curs_set(0); //remove cursor
@@ -36,6 +37,7 @@ void funk2_ncurses_extension__test() {
   refresh(); //update screen
   getch();  //wait for input
   endwin();
+  printf("\nending\n");
 }
 
 #endif // F2__NCURSES_SUPPORTED

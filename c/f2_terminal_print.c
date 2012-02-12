@@ -24,7 +24,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__25_slot(terminal_print_frame,
+def_frame_object__global__27_slot(terminal_print_frame,
 				  cmutex,
 				  testing,
 				  testing_max_x_constraint,
@@ -49,7 +49,8 @@ def_frame_object__global__25_slot(terminal_print_frame,
 				  failed_max_size_constraint,
 				  resize_to_fit,
 				  max_nanoseconds_for_resize,
-				  print_as_frame_hash);
+				  print_as_frame_hash,
+				  escape_sequence);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr resize_to_fit, f2ptr max_nanoseconds_for_resize) {
   assert_argument_type(stream,  stream);
@@ -74,6 +75,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr failed_max_height_constraint  = f2bool__new(boolean__false);
   f2ptr failed_max_size_constraint    = f2bool__new(boolean__false);
   f2ptr print_as_frame_hash           = f2__ptypehash__new(cause);
+  f2ptr escape_sequence               = nil;
   return f2terminal_print_frame__new(cause,
 				     cmutex,
 				     testing,
@@ -99,7 +101,8 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     failed_max_size_constraint,
 				     resize_to_fit,
 				     max_nanoseconds_for_resize,
-				     print_as_frame_hash);
+				     print_as_frame_hash,
+				     escape_sequence);
 }
 def_pcfunk9(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, max_nanoseconds_for_resize,
 	    "",
@@ -921,7 +924,7 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__25_slot(terminal_print_frame,
+  init_frame_object__26_slot(terminal_print_frame,
 			     cmutex,
 			     testing,
 			     testing_max_x_constraint,
@@ -946,7 +949,8 @@ void f2__terminal_print__initialize() {
 			     failed_max_size_constraint,
 			     resize_to_fit,
 			     max_nanoseconds_for_resize,
-			     print_as_frame_hash);
+			     print_as_frame_hash,
+			     escape_sequence);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(terminal_print_frame__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk = never_gc(cfunk);}

@@ -305,7 +305,6 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	}
 	break;
       case (funk2_character_t)'\b':
-      case (funk2_character_t)0x7F:
 	if (x__i > 0) {
 	  raw__stream__writef(cause, stream, "\b");
 	  x__i --;
@@ -319,7 +318,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    }
 	    raw__stream__writef(cause, stream, "\r\n");
 	  }
-	  if (ch >= 28) {
+	  if (ch >= 28 && ch != 0x7F) {
 	    switch(ch) {
 	    case (funk2_character_t)' ':
 	      if (use_html_codes != nil) {

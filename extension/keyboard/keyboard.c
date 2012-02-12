@@ -22,36 +22,93 @@
 #include "keyboard.h"
 
 
-f2ptr funk2_keyboard__getch(f2ptr cause, int file_descriptor) {
+f2ptr f2__keyboard__read_byte(f2ptr cause) {
   struct termios org_opts, new_opts;
   //-----  store old settings -----------
-  int res = tcgetattr(file_descriptor, &org_opts);
+  int res = tcgetattr(STDIN_FILENO, &org_opts);
   if (res != 0) {
     return f2larva__new(cause, 62351, nil);
   }
   //---- set new terminal parms --------
   memcpy(&new_opts, &org_opts, sizeof(new_opts));
   new_opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL);
-  tcsetattr(file_descriptor, TCSANOW, &new_opts);
+  tcsetattr(STDIN_FILENO, TCSANOW, &new_opts);
   s64 ch = getchar();
   //------  restore old settings ---------
-  res=tcsetattr(file_descriptor, TCSANOW, &org_opts);
+  res=tcsetattr(STDIN_FILENO, TCSANOW, &org_opts);
   if (res != 0) {
     return f2larva__new(cause, 62352, nil);
   }
   return f2integer__new(cause, ch);
 }
+export_cefunk1(keyboard__read_byte, 0, "Wait for next byte from keyboard.");
 
-f2ptr raw__keyboard__getch(f2ptr cause, f2ptr file_descriptor) {
-  int file_descriptor__i = f2integer__i(file_descriptor, cause);
-  return funk2_keyboard__getch(cause, file_descriptor__i);
-}
 
-f2ptr f2__keyboard__getch(f2ptr cause, f2ptr file_descriptor) {
-  assert_argument_type(integer, file_descriptor);
-  return raw__keyboard__getch(cause, file_descriptor);
+f2ptr f2__keyboard__read_character(f2ptr cause) {
+  assert_argument_type(stream, this);
+  f2ptr character;
+  f2ptr b0 = assert_value(f2__keyboard__read_byte(cause));
+  u64 b0__i = f2integer__i(b0, cause);
+  if (b0__i <= 127) {
+    // ascii one-byte character
+    character = f2char__new(cause, b0__i);
+  } else if ((b0__i & 0xE0) == 0xC0) {
+    // utf8 two-byte character
+    f2ptr b1 = assert_value(f2__keyboard__read_byte(cause));
+    if (! raw__integer__is_type(cause, b1)) {
+      character = b1;
+    } else {
+      u64 b1__i = f2integer__i(b1, cause);
+      funk2_character_t ch = ((b0__i & 0x1F) << 6) | (b1__i & 0x3F);
+      character = f2char__new(cause, ch);
+    }
+  } else if ((b0__i & 0xF0) == 0xE0) {
+    // utf8 three-byte character
+    f2ptr b1 = assert_value(f2__keyboard__read_byte(cause));
+    if (! raw__integer__is_type(cause, b1)) {
+      character = b1;
+    } else {
+      u64 b1__i = f2integer__i(b1, cause);
+      f2ptr b2 = assert_value(f2__keyboard__read_byte(cause));
+      if (! raw__integer__is_type(cause, b2)) {
+	character = b2;
+      } else {
+	u64 b2__i = f2integer__i(b2, cause);
+	funk2_character_t ch = ((b0__i & 0x0F) << 12) | ((b1__i & 0x3F) << 6) | (b2__i & 0x3F);
+	character = f2char__new(cause, ch);
+      }
+    }
+  } else if ((b0__i & 0xF8) == 0xF0) {
+    // utf8 four-byte character
+    f2ptr b1 = f2__stream__try_read_byte(cause, this);
+    if (! raw__integer__is_type(cause, b1)) {
+      character = b1;
+    } else {
+      u64 b1__i = f2integer__i(b1, cause);
+      f2ptr b2 = f2__stream__try_read_byte(cause, this);
+      if (! raw__integer__is_type(cause, b2)) {
+	character = b2;
+      } else {
+	u64 b2__i = f2integer__i(b2, cause);
+	f2ptr b3 = f2__stream__try_read_byte(cause, this);
+	if (! raw__integer__is_type(cause, b3)) {
+	  character = b3;
+	} else {
+	  u64 b3__i = f2integer__i(b3, cause);
+	  funk2_character_t ch = ((b0__i & 0x07) << 18) | ((b1__i & 0x3F) << 12) | ((b2__i & 0x3F) << 6) | (b3__i & 0x3F);
+	  character = f2char__new(cause, ch);
+	}
+      }
+    }
+  } else {
+    // invalid character.
+    character = f2char__new(cause, (funk2_character_t)'?');
+  }
+  return character;
 }
-export_cefunk1(keyboard__getch, file_descriptor, 0, "Get current key from keyboard without waiting.");
+export_cefunk1(keyboard__read_character, 0, "Wait for next character from keyboard.");
+
+
 
 
 // **

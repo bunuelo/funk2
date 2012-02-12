@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk keyboard-getch keyboard keyboard__getch]
+[defcorefunk keyboard-read_byte      keyboard keyboard__read_byte]
+[defcorefunk keyboard-read_character keyboard keyboard__read_character]
 
 [defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
 [defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]

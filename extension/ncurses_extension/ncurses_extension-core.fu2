@@ -17,9 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defcorefunk ncurses_extension-test ncurses_extension ncurses_extension__test]
+
 [defcorefunk ncurses_extension-core_extension-ping         ncurses_extension ncurses_extension__core_extension__ping]
 [defcorefunk ncurses_extension-core_extension-define_types ncurses_extension ncurses_extension__core_extension__define_types]
 [defcorefunk ncurses_extension-core_extension-initialize   ncurses_extension ncurses_extension__core_extension__initialize]
 
 [ncurses_extension-core_extension-define_types]
+
 

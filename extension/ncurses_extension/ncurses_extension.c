@@ -33,6 +33,16 @@ void funk2_ncurses_extension__test() {
   initscr();
   curs_set(0); //remove cursor
   addstr("\u2019"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\n"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\n"); //Print out the unicode character
+  addstr("\u2019"); //Print out the unicode character
+  addstr("\n"); //Print out the unicode character
   refresh(); //update screen
   getch();  //wait for input
   endwin();

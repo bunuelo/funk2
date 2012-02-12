@@ -36,7 +36,7 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   tcsetattr(STDIN_FILENO, TCSANOW, &new_opts);
   u32 bytes_read = 0;
   u8  ch;
-  read_nonblocking_result_t read_nonblocking_result = read_nonblocking(STDIN_FILENO, &ch, 1, &bytes_read);
+  read_nonblocking(STDIN_FILENO, &ch, 1, &bytes_read);
   if (bytes_read == 0) {
     return nil;
   }

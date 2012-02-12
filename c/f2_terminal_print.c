@@ -282,7 +282,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	break;
       case (funk2_character_t)'\t':
 	{
-	  u64 spaces_until_next_tab = x__i - (((x__i + 7) >> 3) << 3);
+	  u64 spaces_until_next_tab = (x__i < 0) ? 8 : x__i - (((x__i + 7) >> 3) << 3);
 	  if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
 	    u64 subindex;
 	    for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
@@ -302,6 +302,12 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	      }
 	    }
 	  }
+	}
+	break;
+      case (funk2_character_t)'\b':
+	if (x__i > 0) {
+	  raw__stream__writef(cause, stream, "\b");
+	  x__i --;
 	}
 	break;
       default:

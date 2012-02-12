@@ -18,10 +18,26 @@
  rights to redistribute these changes.'
 
 [defunk keyboard-test []
-  [let [[done nil]]
+  [let [[old_opts [keyboard-current_mode]]
+	[done     nil]]
+    [keyboard-enable_noncanonical_mode]
     [while [not done]
       [let [[ch [keyboard-read_character]]]
 	[terminal_format standard-terminal '\n' ch ': ' [get ch string]]
 	[if [eq ch #c1b]
-	    [= done t]]]]]]
+	    [= done t]]]]
+    [keyboard-current_mode-set old_opts]]]
+
+
+[defunk keyboard-test2 []
+  [let [[old_opts [keyboard-current_mode]]
+	[done     nil]]
+    [keyboard-enable_noncanonical_mode]
+    [while [not done]
+      [let [[ch [keyboard-read_character]]]
+	[terminal_format standard-terminal [get ch string]]
+	[if [eq ch #c1b]
+	    [= done t]]]]
+    [keyboard-current_mode-set old_opts]]]
+
 

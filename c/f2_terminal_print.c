@@ -110,7 +110,7 @@ def_pcfunk9(terminal_print_frame__new, stream, indent_distance, max_x, max_heigh
 
 
 f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr cmutex                = f2__cmutex__new(cause);
+  f2ptr cmutex               = f2__cmutex__new(cause);
   f2ptr already_printed_hash = f2__ptypehash__new(cause);
   f2ptr print_as_frame_hash  = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
@@ -138,7 +138,8 @@ f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
 				     f2__terminal_print_frame__failed_max_size_constraint(   cause, this),
 				     f2__terminal_print_frame__resize_to_fit(                cause, this),
 				     f2__terminal_print_frame__max_nanoseconds_for_resize(   cause, this),
-				     print_as_frame_hash);
+				     print_as_frame_hash,
+				     f2__terminal_print_frame__escape_sequence(              cause, this));
 }
 
 f2ptr f2__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {

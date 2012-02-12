@@ -35,9 +35,9 @@
     [keyboard-enable_noncanonical_mode]
     [while [not done]
       [let [[ch [keyboard-read_character]]]
-	[terminal_format standard-terminal [get ch string]]
-	[if [eq ch #c1b]
-	    [= done t]]]]
+	[cond [[eq ch #c7F] [terminal_format standard-terminal '\b']]
+	      [[eq ch #c1B] [= done t]]
+	      [t            [terminal_format standard-terminal [get ch string]]]]]]
     [keyboard-current_mode-set old_opts]]]
 
 

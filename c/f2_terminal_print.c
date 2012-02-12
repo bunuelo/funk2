@@ -268,23 +268,43 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	      funk2_character_t escape_char_2__ch       = raw__char__ch(cause, escape_char_2);
 	      if (escape_char_2__ch == (funk2_character_t)'A') {
 		// key up
-		raw__stream__writef(cause, stream, "<up>\b\b\b\b");
-		raw__stream__writef(cause, stream, "%c[A", 27);
+		//raw__stream__writef(cause, stream, "<up>\b\b\b\b");
+		if (height__i > 0) {
+		  height__i --;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[A", 27);
+		  }
+		}
 		escape_sequence = nil;
 	      } else if (escape_char_2__ch == (funk2_character_t)'B') {
 		// key down
-		raw__stream__writef(cause, stream, "<down>\b\b\b\b\b\b");
-		raw__stream__writef(cause, stream, "%c[B", 27);
+		//raw__stream__writef(cause, stream, "<down>\b\b\b\b\b\b");
+		if (height__i < (max_height__i - 1)) {
+		  height__i ++;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[B", 27);
+		  }
+		}
 		escape_sequence = nil;
 	      } else if (escape_char_2__ch == (funk2_character_t)'C') {
 		// key right
-		raw__stream__writef(cause, stream, "<right>\b\b\b\b\b\b\b");
-		raw__stream__writef(cause, stream, "%c[C", 27);
+		//raw__stream__writef(cause, stream, "<right>\b\b\b\b\b\b\b");
+		if (x__i < (max_x__i - 1)) {
+		  x__i ++;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[C", 27);
+		  }
+		}
 		escape_sequence = nil;
 	      } else if (escape_char_2__ch == (funk2_character_t)'D') {
 		// key left
-		raw__stream__writef(cause, stream, "<left>\b\b\b\b\b\b");
-		raw__stream__writef(cause, stream, "%c[D", 27);
+		//raw__stream__writef(cause, stream, "<left>\b\b\b\b\b\b");
+		if (x__i > 0) {
+		  x__i --;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[D", 27);
+		  }
+		}
 		escape_sequence = nil;
 	      } else {
 		escape_sequence_unrecognized = boolean__true;

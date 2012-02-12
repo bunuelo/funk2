@@ -45,65 +45,39 @@ export_cefunk0(keyboard__read_byte, 0, "Wait for next byte from keyboard.");
 
 
 f2ptr f2__keyboard__read_character(f2ptr cause) {
-  f2ptr character;
-  f2ptr b0 = assert_value(f2__keyboard__read_byte(cause));
-  u64 b0__i = f2integer__i(b0, cause);
+  f2ptr b0    = assert_value(f2__keyboard__read_byte(cause));
+  u64   b0__i = f2integer__i(b0, cause);
   if (b0__i <= 127) {
     // ascii one-byte character
-    character = f2char__new(cause, b0__i);
+    return f2char__new(cause, b0__i);
   } else if ((b0__i & 0xE0) == 0xC0) {
     // utf8 two-byte character
-    f2ptr b1 = assert_value(f2__keyboard__read_byte(cause));
-    if (! raw__integer__is_type(cause, b1)) {
-      character = b1;
-    } else {
-      u64 b1__i = f2integer__i(b1, cause);
-      funk2_character_t ch = ((b0__i & 0x1F) << 6) | (b1__i & 0x3F);
-      character = f2char__new(cause, ch);
-    }
+    f2ptr             b1    = assert_value(f2__keyboard__read_byte(cause));
+    u64               b1__i = f2integer__i(b1, cause);
+    funk2_character_t ch    = ((b0__i & 0x1F) << 6) | (b1__i & 0x3F);
+    return f2char__new(cause, ch);
   } else if ((b0__i & 0xF0) == 0xE0) {
     // utf8 three-byte character
-    f2ptr b1 = assert_value(f2__keyboard__read_byte(cause));
-    if (! raw__integer__is_type(cause, b1)) {
-      character = b1;
-    } else {
-      u64 b1__i = f2integer__i(b1, cause);
-      f2ptr b2 = assert_value(f2__keyboard__read_byte(cause));
-      if (! raw__integer__is_type(cause, b2)) {
-	character = b2;
-      } else {
-	u64 b2__i = f2integer__i(b2, cause);
-	funk2_character_t ch = ((b0__i & 0x0F) << 12) | ((b1__i & 0x3F) << 6) | (b2__i & 0x3F);
-	character = f2char__new(cause, ch);
-      }
-    }
+    f2ptr             b1    = assert_value(f2__keyboard__read_byte(cause));
+    u64               b1__i = f2integer__i(b1, cause);
+    f2ptr             b2    = assert_value(f2__keyboard__read_byte(cause));
+    u64               b2__i = f2integer__i(b2, cause);
+    funk2_character_t ch    = ((b0__i & 0x0F) << 12) | ((b1__i & 0x3F) << 6) | (b2__i & 0x3F);
+    return f2char__new(cause, ch);
   } else if ((b0__i & 0xF8) == 0xF0) {
     // utf8 four-byte character
-    f2ptr b1 = assert_value(f2__keyboard__read_byte(cause));
-    if (! raw__integer__is_type(cause, b1)) {
-      character = b1;
-    } else {
-      u64 b1__i = f2integer__i(b1, cause);
-      f2ptr b2 = assert_value(f2__keyboard__read_byte(cause));
-      if (! raw__integer__is_type(cause, b2)) {
-	character = b2;
-      } else {
-	u64 b2__i = f2integer__i(b2, cause);
-	f2ptr b3 = assert_value(f2__keyboard__read_byte(cause));
-	if (! raw__integer__is_type(cause, b3)) {
-	  character = b3;
-	} else {
-	  u64 b3__i = f2integer__i(b3, cause);
-	  funk2_character_t ch = ((b0__i & 0x07) << 18) | ((b1__i & 0x3F) << 12) | ((b2__i & 0x3F) << 6) | (b3__i & 0x3F);
-	  character = f2char__new(cause, ch);
-	}
-      }
-    }
+    f2ptr             b1    = assert_value(f2__keyboard__read_byte(cause));
+    u64               b1__i = f2integer__i(b1, cause);
+    f2ptr             b2    = assert_value(f2__keyboard__read_byte(cause));
+    u64               b2__i = f2integer__i(b2, cause);
+    f2ptr             b3    = assert_value(f2__keyboard__read_byte(cause));
+    u64               b3__i = f2integer__i(b3, cause);
+    funk2_character_t ch    = ((b0__i & 0x07) << 18) | ((b1__i & 0x3F) << 12) | ((b2__i & 0x3F) << 6) | (b3__i & 0x3F);
+    return f2char__new(cause, ch);
   } else {
     // invalid character.
-    character = f2char__new(cause, (funk2_character_t)'?');
+    return f2char__new(cause, (funk2_character_t)0xFFFD);
   }
-  return character;
 }
 export_cefunk0(keyboard__read_character, 0, "Wait for next character from keyboard.");
 

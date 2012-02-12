@@ -21,7 +21,7 @@
   [let [[done nil]]
     [while [not done]
       [let [[ch [keyboard-read_character]]]
-	[terminal_format standard-terminal ch]
+	[terminal_format standard-terminal '\n' ch ': ' [get ch string]]
 	[if [eq ch #c1b]
 	    [= done t]]]]]]
 

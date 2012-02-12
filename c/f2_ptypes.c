@@ -2963,7 +2963,7 @@ f2size_t raw__utf8_char__parse_character(char* utf8_string, funk2_character_t* r
     }
   }
   if (result != NULL) {
-    *result = (funk2_character_t)'?';
+    *result = (funk2_character_t)0xFFFD;
   }
   return 1;
 }

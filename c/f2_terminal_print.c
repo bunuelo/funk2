@@ -312,21 +312,17 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    }
 	    raw__stream__writef(cause, stream, "\r\n");
 	  }
-	  if (ch >= 28) {
-	    switch(ch) {
-	    case (funk2_character_t)' ':
-	      if (use_html_codes != nil) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
-	      }
-	      break;
-	    default:
-	      raw__stream__write_character(cause, stream, ch);
-	      break;
+	  switch(ch) {
+	  case (funk2_character_t)' ':
+	    if (use_html_codes != nil) {
+	      raw__stream__writef(cause, stream, "&nbsp;");
+	    } else {
+	      raw__stream__writef(cause, stream, " ");
 	    }
-	  } else {
-	    raw__stream__writef(cause, stream, "?");
+	    break;
+	  default:
+	    raw__stream__write_character(cause, stream, ch);
+	    break;
 	  }
 	}
 	if ((testing == nil) || (x__i < max_x__i)) {

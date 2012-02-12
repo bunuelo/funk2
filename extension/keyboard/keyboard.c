@@ -61,25 +61,43 @@ f2ptr f2__keyboard__try_read_character(f2ptr cause) {
     return f2char__new(cause, b0__i);
   } else if ((b0__i & 0xE0) == 0xC0) {
     // utf8 two-byte character
-    f2ptr             b1    = assert_value(f2__keyboard__read_byte(cause));
+    f2ptr             b1    = assert_value(f2__keyboard__try_read_byte(cause));
+    if (b1 == nil) {
+      return f2larva__new(cause, 65424, nil);
+    }
     u64               b1__i = f2integer__i(b1, cause);
     funk2_character_t ch    = ((b0__i & 0x1F) << 6) | (b1__i & 0x3F);
     return f2char__new(cause, ch);
   } else if ((b0__i & 0xF0) == 0xE0) {
     // utf8 three-byte character
-    f2ptr             b1    = assert_value(f2__keyboard__read_byte(cause));
+    f2ptr             b1    = assert_value(f2__keyboard__try_read_byte(cause));
+    if (b1 == nil) {
+      return f2larva__new(cause, 65425, nil);
+    }
     u64               b1__i = f2integer__i(b1, cause);
-    f2ptr             b2    = assert_value(f2__keyboard__read_byte(cause));
+    f2ptr             b2    = assert_value(f2__keyboard__try_read_byte(cause));
+    if (b2 == nil) {
+      return f2larva__new(cause, 65426, nil);
+    }
     u64               b2__i = f2integer__i(b2, cause);
     funk2_character_t ch    = ((b0__i & 0x0F) << 12) | ((b1__i & 0x3F) << 6) | (b2__i & 0x3F);
     return f2char__new(cause, ch);
   } else if ((b0__i & 0xF8) == 0xF0) {
     // utf8 four-byte character
-    f2ptr             b1    = assert_value(f2__keyboard__read_byte(cause));
+    f2ptr             b1    = assert_value(f2__keyboard__try_read_byte(cause));
+    if (b1 == nil) {
+      return f2larva__new(cause, 65427, nil);
+    }
     u64               b1__i = f2integer__i(b1, cause);
-    f2ptr             b2    = assert_value(f2__keyboard__read_byte(cause));
+    f2ptr             b2    = assert_value(f2__keyboard__try_read_byte(cause));
+    if (b2 == nil) {
+      return f2larva__new(cause, 65428, nil);
+    }
     u64               b2__i = f2integer__i(b2, cause);
-    f2ptr             b3    = assert_value(f2__keyboard__read_byte(cause));
+    f2ptr             b3    = assert_value(f2__keyboard__try_read_byte(cause));
+    if (b3 == nil) {
+      return f2larva__new(cause, 65429, nil);
+    }
     u64               b3__i = f2integer__i(b3, cause);
     funk2_character_t ch    = ((b0__i & 0x07) << 18) | ((b1__i & 0x3F) << 12) | ((b2__i & 0x3F) << 6) | (b3__i & 0x3F);
     return f2char__new(cause, ch);

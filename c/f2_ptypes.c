@@ -2503,6 +2503,21 @@ def_pcfunk1(char__equals_hash_value, this,
 	    return f2__char__equals_hash_value(this_cause, this));
 
 
+f2ptr raw__char__string(f2ptr cause, f2ptr this) {
+  funk2_character_t temp[1];
+  temp[0] = f2char__ch(this, cause);
+  return f2string__new(cause, 1, temp);
+}
+
+f2ptr f2__char__string(f2ptr cause, f2ptr this) {
+  assert_argument_type(char, this);
+  return raw__char__string(cause, this);
+}
+def_pcfunk1(char__string, this,
+	    "",
+	    return f2__char__string(this_cause, this));
+
+
 f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -2585,6 +2600,7 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
   {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__funk);}
   {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk);}
+  {char* slot_name = "string";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.string__funk);}
   {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk);}
   return this;
 }
@@ -2688,42 +2704,10 @@ f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause,
 funk2_character_t raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
   if (index < 0) {
     error(nil, "array_access_out_of_bounds");
-    //return new__error(f2list6__new(cause,
-    //				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-    //				   new__symbol(cause, "this"),     this,
-    //				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
   }
   u64 length = f2string__length(this, cause);
   if (index >= length) {
     error(nil, "array_access_out_of_bounds");
-    //return new__error(f2list6__new(cause,
-    //				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-    //				   new__symbol(cause, "this"),     this,
-    //				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
-  }
-  return f2string__elt(this, index, cause);
-}
-
-f2ptr f2__string__elt(f2ptr cause, f2ptr this, f2ptr index) {
-  assert_argument_type(string, this);
-  u64 raw_index = f2integer__i(index, cause);
-  return f2char__new(cause, raw__string__elt(cause, this, raw_index));
-}
-
-
-void raw__string__elt__set(f2ptr cause, f2ptr this, s64 index, funk2_character_t ch) {
-  if (index < 0) {
-    return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				   new__symbol(cause, "this"),     this,
-				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
-  }
-  u64 length = f2string__length(this, cause);
-  if (index >= length) {
-    return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				   new__symbol(cause, "this"),     this,
-				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
   }
   return f2string__elt(this, index, cause);
 }
@@ -6012,6 +5996,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(char__equals_hash_value__loop_free, this, node_ptypehash, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "string"; __funk2.globalenv.object_type.ptype.ptype_char.string__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__string, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.string__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(char__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk = never_gc(cfunk);}
   

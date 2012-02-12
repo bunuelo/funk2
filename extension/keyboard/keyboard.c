@@ -51,7 +51,7 @@ f2ptr f2__keyboard__getch(f2ptr cause, f2ptr file_descriptor) {
   assert_argument_type(integer, file_descriptor);
   return raw__keyboard__getch(cause, file_descriptor);
 }
-export_cefunk1(keyboard__getch, 0, "Get current key from keyboard without waiting.");
+export_cefunk1(keyboard__getch, file_descriptor, 0, "Get current key from keyboard without waiting.");
 
 
 // **

@@ -30,12 +30,12 @@
 
 void funk2_ncurses_extension__test() {
   printf("\nbeginning\n");
-  setlocale(LC_ALL,"");
+  //setlocale(LC_ALL,"");
   initscr();
   curs_set(0); //remove cursor
   addstr("\nthis is a test\n"); //Print out the unicode character
   refresh(); //update screen
-  getch();  //wait for input
+  //getch();  //wait for input
   endwin();
   printf("\nending\n");
 }

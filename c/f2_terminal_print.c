@@ -399,7 +399,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
     raw__terminal_print_frame__height__set(         cause, this, f2integer__new(cause, height__i));
     raw__terminal_print_frame__left_extent__set(    cause, this, f2integer__new(cause, left_extent__i));
     raw__terminal_print_frame__right_extent__set(   cause, this, f2integer__new(cause, right_extent__i));
-    raw__terminal_print_frame__escape_sequence__set(cause, this, f2integer__new(cause, escape_sequence));
+    raw__terminal_print_frame__escape_sequence__set(cause, this, escape_sequence);
   }
 }
 

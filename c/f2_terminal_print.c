@@ -282,7 +282,7 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	break;
       case (funk2_character_t)'\t':
 	{
-	  u64 spaces_until_next_tab = (x__i < 0) ? 8 : x__i - (((x__i + 7) >> 3) << 3);
+	  s64 spaces_until_next_tab = (x__i < 0) ? 8 : ((((x__i + 8) >> 3) << 3) - x__i);
 	  if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
 	    u64 subindex;
 	    for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {

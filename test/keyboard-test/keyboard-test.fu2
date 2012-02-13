@@ -145,7 +145,7 @@
 							      [millisleep 10]]
 							    [terminal_format standard-terminal standard-terminal]
 							    ]]]
-		[have this print_debug cursor_x ' ' cursor_y]]]]]
+		[have this print_debug cursor_x ' ' cursor_y '    ']]]]]
     [keyboard-current_mode-set old_opts]]]
 
 

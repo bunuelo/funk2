@@ -111,7 +111,7 @@
 	[done     nil]]
     [keyboard-enable_noncanonical_mode]
     [let [[fiber [fiber [funk []
-			      [= start_x [get standard-terminal x]]
+			      [= start-x [get standard-terminal x]]
 			      [= start_y [get standard-terminal height]]
 			      [keyboard-check_keypress] 'get rid of first enter.'
 			      [while [not done]
@@ -167,7 +167,7 @@
 										      ]]]
 					  [have this print_debug cursor_x ' ' cursor_y '    ']]]]]]
 			[]]]]
-      [while [global_scheduler-contains_active_fiber fiber]
+      [while [get fiber is_complete]
 	[millisleep 100]]
       [keyboard-current_mode-set old_opts]]]]
 

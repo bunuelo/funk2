@@ -82,14 +82,14 @@
 				  [buffer_max_y 0]]]
 
 [deftypefunk keyboard_editor execute print_debug [:rest expressions]
-  [dotimes [i [+ cursor-y 1]]
+  [dotimes [i [+ cursor_y 1]]
     [print-ansi-up]]
-  [dotimes [i [+ cursor-x 4]]
+  [dotimes [i [+ cursor_x 4]]
     [print-ansi-left]]
   [apply &terminal_format [cons standard-terminal expressions]]
-  [dotimes [i [+ cursor-x 4]]
+  [dotimes [i [+ cursor_x 4]]
     [print-ansi-right]]
-  [dotimes [i [+ cursor-y 1]]
+  [dotimes [i [+ cursor_y 1]]
     [print-ansi-down]]]
 
 [deftypefunk keyboard_editor execute read []

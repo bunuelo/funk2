@@ -485,6 +485,62 @@ void raw__terminal_print_frame__write_utf8_string__thread_unsafe(f2ptr cause, f2
 }
 
 
+void raw__terminal_print_frame__write_ansi__up__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[A");
+}
+
+void raw__terminal_print_frame__write_ansi__down__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[B");
+}
+
+void raw__terminal_print_frame__write_ansi__right__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[C");
+}
+
+void raw__terminal_print_frame__write_ansi__left__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[D");
+}
+
+void raw__terminal_print_frame__write_ansi__move__thread_unsafe(f2ptr cause, f2ptr this, s64 x, s64 y) {
+  if (y < 0) {
+    int i;
+    for (i = 0; i < -y; i ++) {
+      raw__terminal_print_frame__write_ansi__up__thread_unsafe(cause, this);
+    }
+  } else if (y > 0) {
+    int i;
+    for (i = 0; i < y; i ++) {
+      raw__terminal_print_frame__write_ansi__down__thread_unsafe(cause, this);
+    }
+  }
+  if (x < 0) {
+    int i;
+    for (i = 0; i < -x; i ++) {
+      raw__terminal_print_frame__write_ansi__left__thread_unsafe(cause, this);
+    }
+  } else if (x > 0) {
+    int i;
+    for (i = 0; i < x; i ++) {
+      raw__terminal_print_frame__write_ansi__right__thread_unsafe(cause, this);
+    }
+  }
+}
+
+f2ptr f2__terminal_print_frame__write_ansi__move__thread_unsafe(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  assert_argument_type(terminal_print_frame, this);
+  assert_argument_type(integer,              x);
+  assert_argument_type(integer,              y);
+  s64 x__i = f2integer__i(x, cause);
+  s64 y__y = f2integer__i(y, cause);
+  raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, this, x__i, y__i);
+  return nil;
+}
+def_pcfunk3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y,
+	    "Writes ansi escape sequences to the given terminal_print_frame in order to move the cursor the given number of x and y distances given as positive or negative integers.\n"
+	    "Positive x is to the right, while positive y is down.",
+	    return f2__terminal_print_frame__write_ansi__move__thread_unsafe(this_cause, this, x, y));
+
+
 f2ptr raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, __funk2.globalenv.terminal_print_with_frame__symbol);
@@ -1050,6 +1106,8 @@ void f2__terminal_print__initialize() {
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame);
   f2__primcfunk__init__2(exp__terminal_stream_print__thread_unsafe,     this, stream);
+  
+  f2__primcfunk__init__3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y);
   
 }
 

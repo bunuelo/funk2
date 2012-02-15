@@ -136,7 +136,6 @@
 											      [have this insert_line cursor_y]
 											      [dotimes [i [+ [- buffer_max_y cursor_y] 1]]
 												[terminal_format standard-terminal '\n']
-												[print-ansi-erase_line]
 												[dotimes [i start_x]
 												  [terminal_format standard-terminal ' ']]
 												[terminal_format standard-terminal [get this line [+ cursor_y i]]]]

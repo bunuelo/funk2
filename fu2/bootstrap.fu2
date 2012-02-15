@@ -25,7 +25,7 @@
   [load 'built-in/mutex/mutex.fpkg']
   [load 'built-in/math/math.fpkg']
   [load 'built-in/basic_bug_responses/basic_bug_responses.fpkg']
-  [load 'extension/keyboard.fpkg']]
+  [load 'extension/keyboard/keyboard.fpkg']]
 
 [defunk load_minimal_core_packages []
   [load 'fu2/bootstrap-primobject.fu2']

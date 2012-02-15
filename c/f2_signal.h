@@ -24,7 +24,7 @@
 
 #include "f2_global.h"
 
-extern boolean_t __received_signal__sigint;
+extern int __received_signal__sigint;
 
 void funk2_receive_signal(int sig);
 

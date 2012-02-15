@@ -134,7 +134,7 @@
 											      [if [> cursor_y buffer_max_y]
 												  [= buffer_max_y cursor_y]]
 											      [have this insert_line cursor_y]
-											      [dotimes [i [- buffer_max_y cursor_y]]
+											      [dotimes [i [+ [- buffer_max_y cursor_y] 1]]
 												[terminal_format standard-terminal '\n']
 												[print-ansi-erase_line]
 												[dotimes [i start_x]

@@ -63,7 +63,8 @@
 	  [keyboard-current_mode-set old_opts]
 	  result]]]]]
 
-[deframe keyboard_editor [frame] [[start_x      0]
+[deframe keyboard_editor [frame] [[done         nil]
+				  [start_x      0]
 				  [start_y      0]
 				  [cursor_x     0]
 				  [cursor_y     0]
@@ -135,8 +136,7 @@
 
 
 [deftypefunk keyboard_editor execute read []
-  [let [[old_opts [keyboard-current_mode]]
-	[done     nil]]
+  [let [[old_opts [keyboard-current_mode]]]
     [keyboard-enable_noncanonical_mode]
     'Temporarily catch bug if there is one, so that we can get back out of canonical keyboard mode below.'
     [let [[result [shelter [= start_x [get standard-terminal x]]

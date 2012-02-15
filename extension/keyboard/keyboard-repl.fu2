@@ -84,6 +84,9 @@
     [dotimes [i [- [get old_array length] line_index]]
       [set line_array elt [+ line_index i 1] [get old_array elt [+ line_index i]]]]]]
 
+[deftypefunk keyboard_editor get line_num []
+  [get line_array length]]
+
 [deftypefunk keyboard_editor get current_line []
   [get line_array elt cursor_y]]
 
@@ -115,16 +118,16 @@
 [deftypefunk keyboard_editor execute press_enter []
   [= cursor_x 0]
   [= cursor_y [+ cursor_y 1]]
-  [if [> cursor_y buffer_max_y]
-      [= buffer_max_y cursor_y]]
   [have this insert_line cursor_y]
+  [if [> [get this line_num] buffer_max_y]
+      [= buffer_max_y [get this line_num]]]
   [dotimes [i [+ [- buffer_max_y cursor_y] 1]]
     [terminal_format standard-terminal '\n']
     [dotimes [i start_x]
       [terminal_format standard-terminal ' ']]
     [terminal_format standard-terminal [get this line [+ cursor_y i]]]]
-  [print-ansi-move 0 [- [- buffer_max_y cursor_y 1]]]
-  [terminal_format standard-terminal '\r']
+  [print-ansi-move 0 [- buffer_max_y cursor_y 1]]
+  [terminal_format standard-terminal '\n']
   [dotimes [i start_x]
     [terminal_format standard-terminal ' ']]]
 

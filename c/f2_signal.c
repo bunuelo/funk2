@@ -48,8 +48,12 @@ void funk2_receive_signal(int sig) {
 }
 
 
+boolean_t raw__system__received_signal__sigint(f2ptr cause) {
+  return __received_signal__sigint;
+}
+
 f2ptr f2__system__received_signal__sigint(f2ptr cause) {
-  return f2bool__new(__received_signal__sigint);
+  return f2bool__new(raw__system__received_signal__sigint(cause));
 }
 def_pcfunk0(system__received_signal__sigint,
 	    "Returns true if the SIGINT signal has been received.",

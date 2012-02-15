@@ -82,6 +82,10 @@ export_cefunk0(keyboard__enable_noncanonical_mode, 0, "Enables noncanonical mode
 
 
 f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
+  if (raw__system__received_signal__sigint(cause)) {
+    f2__system__clear_signal__sigint(cause);
+    return f2larva__new(cause, 777, nil);
+  }
   struct termios org_opts, new_opts;
   //-----  store old settings -----------
   int res = tcgetattr(STDIN_FILENO, &org_opts);

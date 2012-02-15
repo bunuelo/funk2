@@ -26,7 +26,15 @@
 
 extern boolean_t __received_signal__sigint;
 
-void f2__receive_signal(int sig);
+void funk2_receive_signal(int sig);
+
+
+f2ptr raw__system__received_signal__sigint(f2ptr cause);
+f2ptr  f2__system__received_signal__sigint(f2ptr cause);
+f2ptr  f2__system__clear_signal__sigint(f2ptr cause);
+
+  // **
+
 void f2__signal__initialize();
 
 #endif // F2__SIGNAL__H

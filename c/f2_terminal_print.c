@@ -531,7 +531,7 @@ f2ptr f2__terminal_print_frame__write_ansi__move__thread_unsafe(f2ptr cause, f2p
   assert_argument_type(integer,              x);
   assert_argument_type(integer,              y);
   s64 x__i = f2integer__i(x, cause);
-  s64 y__y = f2integer__i(y, cause);
+  s64 y__i = f2integer__i(y, cause);
   raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, this, x__i, y__i);
   return nil;
 }

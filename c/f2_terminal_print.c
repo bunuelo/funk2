@@ -486,19 +486,19 @@ void raw__terminal_print_frame__write_utf8_string__thread_unsafe(f2ptr cause, f2
 
 
 void raw__terminal_print_frame__write_ansi__up__thread_unsafe(f2ptr cause, f2ptr this) {
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[A");
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[A");
 }
 
 void raw__terminal_print_frame__write_ansi__down__thread_unsafe(f2ptr cause, f2ptr this) {
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[B");
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[B");
 }
 
 void raw__terminal_print_frame__write_ansi__right__thread_unsafe(f2ptr cause, f2ptr this) {
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[C");
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[C");
 }
 
 void raw__terminal_print_frame__write_ansi__left__thread_unsafe(f2ptr cause, f2ptr this) {
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, "\x1B[D");
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[D");
 }
 
 void raw__terminal_print_frame__write_ansi__move__thread_unsafe(f2ptr cause, f2ptr this, s64 x, s64 y) {

@@ -58,6 +58,7 @@ def_pcfunk0(system__received_signal__sigint,
 
 f2ptr f2__system__clear_signal__sigint(f2ptr cause) {
   __received_signal__sigint = boolean__false;
+  return nil;
 }
 
 def_pcfunk0(system__clear_signal__sigint,

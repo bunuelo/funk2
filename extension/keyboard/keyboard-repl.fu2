@@ -161,7 +161,8 @@
 
 [defunk keyboard-read []
   [let [[keyboard_editor [new keyboard_editor]]]
-    [have keyboard_editor read]]]
+    [have keyboard_editor read]
+    keyboard_editor]]
 
 [defunk keyboard-repl []
   [terminal_format standard-terminal '\n in-> ']

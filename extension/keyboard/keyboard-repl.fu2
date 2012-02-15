@@ -57,7 +57,11 @@
 				  [cursor_x     0]
 				  [cursor_y     0]
 				  [buffer_max_x 0]
-				  [buffer_max_y 0]]]
+				  [buffer_max_y 0]
+				  line_array]
+  [new []
+       [= line_array [new array 1]]
+       [set line_array elt 0 '']]]
 
 [deftypefunk keyboard_editor execute print_debug [:rest expressions]
   [print-ansi-move [- cursor_x] [- [+ cursor_y 1]]]

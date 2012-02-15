@@ -24,4 +24,7 @@
 
 [defcore keyboard 'libf2e_keyboard.so']
 
+[defpackage keyboard-repl
+  :packages [keyboard]
+   :sources ['keyboard-repl.fu2']]
 

@@ -24,7 +24,8 @@
   [load 'built-in/ansi/ansi.fpkg']
   [load 'built-in/mutex/mutex.fpkg']
   [load 'built-in/math/math.fpkg']
-  [load 'built-in/basic_bug_responses/basic_bug_responses.fpkg']]
+  [load 'built-in/basic_bug_responses/basic_bug_responses.fpkg']
+  [load 'extension/keyboard.fpkg']]
 
 [defunk load_minimal_core_packages []
   [load 'fu2/bootstrap-primobject.fu2']
@@ -63,7 +64,8 @@
 			ansi
 			mutex
 			math
-			basic_bug_responses]
+			basic_bug_responses
+			keyboard-repl]
 	       
 	       [defunk backup_repl []
 		 [let* [[trigger [new fiber_trigger]]

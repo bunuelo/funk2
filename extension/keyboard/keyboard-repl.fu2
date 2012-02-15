@@ -67,7 +67,7 @@
   [let [[line_str [get line_array elt line_index]]]
     [let [[first_part [get line_str substring 0          char_index]]
 	  [last_part  [get line_str substring char_index [get line_str length]]]]
-      [format nil first_part [get char string] last_part]]]]
+      [set line_array elt line_index [format nil first_part [get char string] last_part]]]]]
 
 [deftypefunk keyboard_editor execute insert_line [line_index]
   [let [[old_array line_array]]
@@ -78,6 +78,8 @@
     [dotimes [i [- [get old_array length] line_index]]
       [set line_array elt [+ line_index i 1] [get old_array elt [+ line_index i]]]]]]
 
+[deftypefunk keyboard_editor get current_line []
+  [get line_array cursor_y]]
 
 [deftypefunk keyboard_editor execute print_debug [:rest expressions]
   [print-ansi-move [- cursor_x] [- [+ cursor_y 1]]]
@@ -128,7 +130,8 @@
 											      [= cursor_x [+ cursor_x 1]]
 											      [if [> cursor_x buffer_max_x]
 												  [= buffer_max_x cursor_x]]
-											      [terminal_format standard-terminal [get key string]]]]]]
+											      [terminal_format standard-terminal [get key string] [let [[current_line [get this current_line]]]
+																		    [get current_line substring cursor_x [get current_line length]]]]]]]]
 		  [t                              [prog [dotimes [i 10]
 							  [terminal_format standard-terminal '.']
 							  [millisleep 10]]

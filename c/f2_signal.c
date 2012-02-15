@@ -27,7 +27,7 @@ boolean_t __received_segmentation_fault = boolean__false;
 void funk2_receive_signal(int sig) {
   switch(sig) {
   case SIGINT:
-    if (__received_signal__sigint) {
+    if (! __received_signal__sigint) {
       printf ("\nFunk2 Warning: Received Ctrl-C (SIGINT) from user.  If you press Ctrl-C once more, Funk2 will exit entirely.\n"); fflush(stdout);
     } else {
       printf ("\nFunk2 Fatal: Received more than one Ctrl-C (SIGINT) from user.  Exiting Funk2 immediately.\n"); fflush(stdout);

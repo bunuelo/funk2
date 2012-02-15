@@ -21,19 +21,21 @@
 
 #include "funk2.h"
 
-boolean_t __received_signal__sigint     = boolean__false;
-boolean_t __received_segmentation_fault = boolean__false;
+int __received_signal__sigint     = 0;
+int __received_segmentation_fault = 0;
 
 void funk2_receive_signal(int sig) {
   switch(sig) {
   case SIGINT:
-    if (! __received_signal__sigint) {
-      printf ("\nFunk2 Warning: Received Ctrl-C (SIGINT) from user.  If you press Ctrl-C once more, Funk2 will exit entirely.\n"); fflush(stdout);
+    if (__received_signal__sigint == 0) {
+      printf ("\nFunk2 Warning: Received Ctrl-C (SIGINT) from user.\n"); fflush(stdout);
+    } else if (__received_signal__sigint == 1) {
+      printf ("\nFunk2 Second Warning: Received another Ctrl-C (SIGINT) from user.  The first Ctrl-C from user has not been processed.  PRESSING CTRL-C AGAIN WILL EXIT FUNK2 ENTIRELY. \n"); fflush(stdout);
     } else {
-      printf ("\nFunk2 Fatal: Received more than one Ctrl-C (SIGINT) from user.  Exiting Funk2 immediately.\n"); fflush(stdout);
+      printf ("\nFunk2 Fatal: Received yet another Ctrl-C (SIGINT) from user.  Exiting Funk2 immediately.\n"); fflush(stdout);
       exit(-1);
     }
-    __received_signal__sigint = boolean__true;
+    __received_signal__sigint ++;
     break;
   case SIGSEGV:
     printf ("\nfunk2 fatal: received segmentation fault (SIGSEGV).  calling exit.\n"); fflush(stdout);
@@ -49,7 +51,7 @@ void funk2_receive_signal(int sig) {
 
 
 boolean_t raw__system__received_signal__sigint(f2ptr cause) {
-  return __received_signal__sigint;
+  return (__received_signal__sigint != 0);
 }
 
 f2ptr f2__system__received_signal__sigint(f2ptr cause) {
@@ -61,7 +63,7 @@ def_pcfunk0(system__received_signal__sigint,
 
 
 f2ptr f2__system__clear_signal__sigint(f2ptr cause) {
-  __received_signal__sigint = boolean__false;
+  __received_signal__sigint = 0;
   return nil;
 }
 

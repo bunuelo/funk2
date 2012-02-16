@@ -306,7 +306,7 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
   f2ptr current_line = assert_value(raw__keyboard_editor__current_line(cause, this));
   s64   current_line__length = raw__string__length(cause, current_line);
   if (cursor_x__i != current_line__length) {
-    u8*   current_line__str    = (u8*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (current_line__length + 1)));
+    funk2_character_t* current_line__str = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (current_line__length + 1)));
     raw__string__str_copy(cause, current_line, current_line__str);
     current_line__str[current_line__length] = 0;
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, current_line__length - cursor_x__i, current_line__str + cursor_x__i);

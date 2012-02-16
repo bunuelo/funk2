@@ -542,7 +542,7 @@ def_pcfunk3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y,
 
 
 void raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25l");
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B" "[?25l");
 }
 
 f2ptr f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
@@ -556,7 +556,7 @@ def_pcfunk1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this,
 
 
 void raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25h");
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B" "[?25h");
 }
 
 f2ptr f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {

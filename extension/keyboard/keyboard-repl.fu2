@@ -269,7 +269,7 @@
 		  [[eq key `key:end]              [have this press_end]]
 		  [[is-type `char key]            [have this press_char_key key]]
 		  [t                              [have this press_unknown_key]]]
-	    [have this print_debug cursor_x ' ' cursor_y '    ']]]]]
+	    `[have this print_debug cursor_x ' ' cursor_y '    ']]]]]
 
 
 [deftypefunk keyboard_editor execute read []

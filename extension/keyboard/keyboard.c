@@ -296,7 +296,6 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
   assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_x, cursor_y, key));
   cursor_x = f2integer__new(cause, f2integer__i(cursor_x, cause) + 1);
   s64 cursor_x__i = f2integer__i(cursor_x, cause);
-  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[A");
   {
     funk2_character_t output_string[2];
     output_string[0] = f2char__ch(key, cause);

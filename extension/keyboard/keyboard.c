@@ -248,6 +248,33 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 export_cefunk0(keyboard__check_keypress, 0, "Check for next keypress.");
 
 
+f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index, f2ptr char_index, f2ptr ch) {
+  s64 ch__ch = f2char__ch(ch, cause);
+  f2ptr line_array = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"));
+  assert_argument_type(array, line_array);
+  f2ptr line_str   = assert_value(f2__array__elt(cause, line_array, line_index));
+  assert_argument_type(string, line_str);
+  f2ptr first_part  = assert_value(raw__string__substring(cause, line_str, f2integer__new(cause, 0), char_index));
+  f2ptr last_part   = assert_value(raw__string__substring(cause, line_str, char_index, f2__string__length(cause, line_str)));
+  funk2_character_t middle_part__str[2];
+  middle_part__str[0] = ch__ch;
+  middle_part__str[1] = 0;
+  f2ptr middle_part = f2string__new(cause, 1, middle_part);
+  f2ptr new_line    = assert_value(f2__stringlist__concat(cause, f2list3__new(cause, first_part, middle_part, last_part)));
+  assert_value(f2__array__elt__set(cause, line_str, line_index, new_line));
+  return nil;
+}
+
+f2ptr f2__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index, f2ptr char_index, f2ptr ch) {
+  assert_argument_type(frame,   this);
+  assert_argument_type(integer, line_index);
+  assert_argument_type(integer, char_index);
+  assert_argument_type(char,    ch);
+  return raw__keyboard_editor__insert_char(cause, this, line_index__i, char_index__i, ch__ch);
+}
+export_cefunk4(keyboard_editor__insert_char, this, line_index, char_index, ch, 0, "Insert character into keyboard_editor.");
+
+
 // **
 
 f2ptr f2__keyboard__core_extension__ping(f2ptr cause) {

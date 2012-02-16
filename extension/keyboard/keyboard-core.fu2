@@ -24,7 +24,8 @@
 [defcorefunk keyboard-try_read_character       keyboard keyboard__try_read_character]
 [defcorefunk keyboard-check_keypress           keyboard keyboard__check_keypress]
 
-[defcorefunk keyboard_editor-insert_char keyboard keyboard_editor__insert_char]
+[defcorefunk keyboard_editor-current_line keyboard keyboard_editor__current_line]
+[defcorefunk keyboard_editor-insert_char  keyboard keyboard_editor__insert_char]
 
 [defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
 [defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]

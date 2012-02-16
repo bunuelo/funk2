@@ -275,6 +275,42 @@ f2ptr f2__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index
 export_cefunk4(keyboard_editor__insert_char, this, line_index, char_index, ch, 0, "Insert character into keyboard_editor.");
 
 
+f2ptr raw__keyboard_editor__current_line(f2ptr cause, f2ptr this) {
+  f2ptr line_array = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"), nil));
+  f2ptr cursor_y   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_y"),   nil));
+  return assert_value(f2__array__elt(cause, line_array, cursor_y));
+}
+
+f2ptr f2__keyboard_editor__current_line(f2ptr cause, f2ptr this) {
+  assert_argument_type(frame, this);
+  return raw__keyboard_editor__current_line(cause, this);
+}
+export_cefunk1(keyboard_editor__current_line, this, 0, "Returns the current line being edited.");
+
+
+/*
+f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, f2ptr key) {
+  f2ptr cursor_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_x"), nil));
+  assert_argument_type(integer, cursor_x);
+  f2ptr cursor_y = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_y"), nil));
+  assert_argument_type(integer, cursor_y);
+  assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_x, cursor_y, key));
+  cursor_x = f2integer__new(cause, f2integer__i(cursor_x, cause) + 1);
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[A");
+  funk2_character_t output_string[2];
+  output_string[0] = f2char__ch(key, cause);
+  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, output_string);
+  
+}
+
+f2ptr f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
+  assert_argument_type(frame, this);
+  assert_argument_type(char,  key);
+  return raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, key);
+}
+export_cefunk2(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, key, 0, "Press and insert character key into keyboard_editor (thread unsafe).");
+*/
+
 // **
 
 f2ptr f2__keyboard__core_extension__ping(f2ptr cause) {

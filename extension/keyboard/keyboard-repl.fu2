@@ -59,11 +59,8 @@
 [deftypefunk keyboard_editor execute destroy []
   [keyboard-current_mode-set old_termios_options]]
 
-`[deftypefunk keyboard_editor execute insert_char [line_index char_index char]
-  [let [[line_str [get line_array elt line_index]]]
-    [let [[first_part [get line_str substring 0          char_index]]
-	  [last_part  [get line_str substring char_index [get line_str length]]]]
-      [set line_array elt line_index [format nil first_part [get char string] last_part]]]]]
+[deftypefunk keyboard_editor execute insert_char [line_index char_index char]
+  [keyboard_editor-insert_char line_index char_index char]]
 
 [deftypefunk keyboard_editor execute remove_char [line_index char_index]
   [let [[line_str [get line_array elt line_index]]]
@@ -92,7 +89,7 @@
   [get line_array length]]
 
 [deftypefunk keyboard_editor get current_line []
-  [get line_array elt cursor_y]]
+  [keyboard_editor-current_line this]]
 
 [deftypefunk keyboard_editor get line [line_index]
   [get line_array elt line_index]]

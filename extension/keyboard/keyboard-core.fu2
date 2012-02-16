@@ -35,13 +35,9 @@
 [keyboard-core_extension-define_types]
 
 [defunk keyboard_editor-press_and_insert_char_key [this terminal_print_frame key]
-  [print 'keyboard-core.fu2 debug 0']
   [while [have [get terminal_print_frame cmutex] trylock]]
-  [print 'keyboard-core.fu2 debug 1']
   [let [[result [keyboard_editor-press_and_insert_char_key-thread_unsafe this terminal_print_frame key]]]
-    [print 'keyboard-core.fu2 debug 2']
     [have [get terminal_print_frame cmutex] unlock]
-    [print 'keyboard-core.fu2 debug 3']
     result]]
 
 [defunk keyboard-read_byte []

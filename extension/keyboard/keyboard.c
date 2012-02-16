@@ -249,8 +249,8 @@ export_cefunk0(keyboard__check_keypress, 0, "Check for next keypress.");
 
 
 f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index, f2ptr char_index, f2ptr ch) {
-  s64 ch__ch = f2char__ch(ch, cause);
-  f2ptr line_array = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"));
+  s64   ch__ch     = f2char__ch(ch, cause);
+  f2ptr line_array = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"), nil));
   assert_argument_type(array, line_array);
   f2ptr line_str   = assert_value(f2__array__elt(cause, line_array, line_index));
   assert_argument_type(string, line_str);

@@ -261,7 +261,7 @@ f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_inde
   middle_part__str[1] = 0;
   f2ptr middle_part = f2string__new(cause, 1, middle_part__str);
   f2ptr new_line    = assert_value(f2__stringlist__concat(cause, f2list3__new(cause, first_part, middle_part, last_part)));
-  assert_value(f2__array__elt__set(cause, line_str, line_index, new_line));
+  assert_value(f2__array__elt__set(cause, line_array, line_index, new_line));
   return nil;
 }
 

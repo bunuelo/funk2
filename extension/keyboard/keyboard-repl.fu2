@@ -147,7 +147,7 @@
 		[print-ansi-move [- cursor_x buffer_max_x] [- cursor_y [+ buffer_max_y 1]]]
 		]]]]]
 
-[deftypefunk keyboard_editor execute press_enter []
+[deftypefunk keyboard_editor execute insert_enter_char []
   [let [[old_line [get this current_line]]]
     [have this insert_line cursor_y]
     [set this line cursor_y       [get old_line substring 0 cursor_x]]
@@ -169,7 +169,21 @@
     [terminal_format standard-terminal ' ']]
   [let [[line [get this line buffer_max_y]]]
     [terminal_format standard-terminal line]
-    [print-ansi-move [- [get line length]] [- cursor_y buffer_max_y]]]]
+    [print-ansi-move [- [get line length]] [- cursor_y buffer_max_y]]]] 
+
+[deftypefunk keyboard_editor get input []
+  [let [[stringlist nil]]
+    [dotimes [i [get this line_num]]
+      [= stringlist [cons [get this line [- buffer_max_y i]] stringlist]]]
+    [have [format nil '[' [stringlist-intersperse stringlist '\n'] ']'] read]]]
+
+[deftypefunk keyboard_editor execute press_enter []
+  [if [and [== cursor_y buffer_max_y]
+	   [== cursor_x [get [get this current_line] length]]]
+      [if [get this input]
+	  [= done t]]]
+  [if [not done]
+      [have this insert_enter_char]]]
 
 [deftypefunk keyboard_editor execute press_tab []
   [let [[tab_space_num [- [<< [>> [+ cursor_x 8] 3] 3] cursor_x]]]
@@ -222,10 +236,12 @@
 	    [print-ansi-move -1 0]]]]
 
 [deftypefunk keyboard_editor execute press_home []
-  ]
+  [print-ansi-move [- cursor_x] 0]
+  [= cursor_x 0]]
 
 [deftypefunk keyboard_editor execute press_end []
-  ]
+  [print-ansi-move [- [get [get this line cursor_y] length] cursor_x] 0]
+  [= cursor_x [get [get this line cursor_y] length]]]
 
 [deftypefunk keyboard_editor execute press_char_key [key]
   [cond [[equals [get key string] '\n'] [have this press_enter]]
@@ -290,7 +306,7 @@
 [defunk keyboard-read []
   [let [[keyboard_editor [new keyboard_editor]]]
     [have keyboard_editor read]
-    keyboard_editor]]
+    [get keyboard_editor input]]]
 
 [defunk keyboard-repl []
   [terminal_format standard-terminal '\n in-> ']

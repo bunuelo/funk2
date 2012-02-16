@@ -341,8 +341,7 @@
 	    [print-ansi-move cursor_x cursor_y]]]]
 
 [deftypefunk keyboard_editor execute press_char_key [key]
-  [print key]
-  [cond [[eq key #c0D] [have this press_enter]]
+  [cond [[eq key #c0A] [have this press_enter]]
 	[[eq key #c09] [have this press_tab]]
 	[t             [prog [have this insert_char cursor_y cursor_x key]
 			     [= cursor_x [+ cursor_x 1]]

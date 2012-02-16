@@ -52,6 +52,7 @@
 	  result]]]]]
 
 [deframe keyboard_editor [frame] [[old_termios_options             nil]
+				  [history_sequence                nil]
 				  [done                            nil]
 				  [start_x                         0]
 				  [start_y                         0]
@@ -290,6 +291,9 @@
 
 
 [deftypefunk keyboard_editor execute initialize []
+  [= history_sequence [cons line_array history_sequence]]
+  [= line_array       [new array 1]]
+  [set line_array elt 0 '']
   [= done nil]
   [= old_termios_options [keyboard-current_mode]]
   [keyboard-enable_noncanonical_mode]

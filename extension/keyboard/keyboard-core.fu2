@@ -27,6 +27,7 @@
 [defcorefunk keyboard_editor-current_line                            keyboard keyboard_editor__current_line]
 [defcorefunk keyboard_editor-insert_char                             keyboard keyboard_editor__insert_char]
 [defcorefunk keyboard_editor-press_and_insert_char_key-thread_unsafe keyboard keyboard_editor__press_and_insert_char_key__thread_unsafe]
+[defcorefunk keyboard_editor-handle_text_keys-thread_unsafe          keyboard keyboard_editor__handle_text_keys__thread_unsafe]
 
 [defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
 [defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]
@@ -37,6 +38,12 @@
 [defunk keyboard_editor-press_and_insert_char_key [this terminal_print_frame key]
   [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [keyboard_editor-press_and_insert_char_key-thread_unsafe this terminal_print_frame key]]]
+    [have [get terminal_print_frame cmutex] unlock]
+    result]]
+
+[defunk keyboard_editor-handle_text_keys [this terminal_print_frame]
+  [while [have [get terminal_print_frame cmutex] trylock]]
+  [let [[result [keyboard_editor-handle_text_keys-thread_unsafe this terminal_print_frame]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
 

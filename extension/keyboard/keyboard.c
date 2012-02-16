@@ -338,6 +338,31 @@ f2ptr f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause,
 export_cefunk3(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, terminal_print_frame, key, 0, "Press and insert character key into keyboard_editor (thread unsafe with respect to the terminal_print_frame).");
 
 
+f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr     key         = nil;
+  boolean_t is_text_key = boolean__true;
+  while (is_text_key) {
+    key = assert_value(f2__keyboard__check_keypress(cause));
+    if (raw__char__is_type(cause, key)) {
+      raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
+      assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
+      assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));
+      raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
+    } else {
+      is_text_key = boolean__false;
+    }
+  }
+  return key;
+}
+
+f2ptr f2__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(frame,                this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__keyboard_editor__handle_text_keys__thread_unsafe(cause, this, terminal_print_frame);
+}
+export_cefunk2(keyboard_editor____thread_unsafe, this, terminal_print_frame, 0, "Handle text keys and return a special symbolic key when one is encountered (thread unsafe with respect to the terminal_print_frame).");
+
+
 // **
 
 f2ptr f2__keyboard__core_extension__ping(f2ptr cause) {

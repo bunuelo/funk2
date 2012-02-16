@@ -541,9 +541,8 @@ def_pcfunk3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y,
 	    return f2__terminal_print_frame__write_ansi__move__thread_unsafe(this_cause, this, x, y));
 
 
-f2ptr raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+void raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
   raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25l");
-  return nil;
 }
 
 f2ptr f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
@@ -555,9 +554,8 @@ def_pcfunk1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this,
 	    return f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(this_cause, this));
 
 
-f2ptr raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+void raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
   raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25h");
-  return nil;
 }
 
 f2ptr f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {

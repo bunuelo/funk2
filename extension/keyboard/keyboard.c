@@ -341,17 +341,29 @@ export_cefunk3(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, 
 f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr     key         = nil;
   boolean_t is_text_key = boolean__true;
+  printf("\ndebug 0."); fflush(stdout);
   while (is_text_key) {
+    printf("\ndebug 1."); fflush(stdout);
     key = assert_value(f2__keyboard__check_keypress(cause));
+    printf("\ndebug 2."); fflush(stdout);
     if (raw__char__is_type(cause, key)) {
+      printf("\ndebug 3."); fflush(stdout);
       raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
+      printf("\ndebug 4."); fflush(stdout);
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
+      printf("\ndebug 5."); fflush(stdout);
       assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));
+      printf("\ndebug 6."); fflush(stdout);
       raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
+      printf("\ndebug 7."); fflush(stdout);
     } else {
+      printf("\ndebug 8."); fflush(stdout);
       is_text_key = boolean__false;
+      printf("\ndebug 9."); fflush(stdout);
     }
+    printf("\ndebug 10."); fflush(stdout);
   }
+  printf("\ndebug 11."); fflush(stdout);
   return key;
 }
 

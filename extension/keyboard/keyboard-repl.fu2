@@ -342,7 +342,7 @@
     key]]
 
 [deftypefunk keyboard_editor execute handle_key []
-  [let [[key [keyboard-handle_text_keys]]]
+  [let [[key [keyboard_editor-handle_text_keys this standard-terminal]]]
     [if [null key]
 	[millisleep 100]
       [prog [print-ansi-hide_cursor]

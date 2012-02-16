@@ -84,6 +84,14 @@
     [dotimes [i [- [get old_array length] line_index]]
       [set line_array elt [+ line_index i 1] [get old_array elt [+ line_index i]]]]]]
 
+[deftypefunk keyboard_editor execute remove_line [line_index]
+  [let [[old_array line_array]]
+    [= line_array [new array [- [get old_array length] 1]]]
+    [dotimes [i [- line_index 1]]
+      [set line_array elt i [get old_array elt i]]]
+    [dotimes [i [- [get old_array length] line_index]]
+      [set line_array elt [- [+ line_index i] 1] [get old_array elt [+ line_index i]]]]]]
+
 [deftypefunk keyboard_editor get line_num []
   [get line_array length]]
 
@@ -106,9 +114,6 @@
       [print-ansi-move [- cursor_x [- end_x begin_x]]
 		       [- [+ cursor_y 1] [- end_y begin_y]]]]]]
 
-[defunk print-ansi-erase_line []
-  [terminal_format standard-terminal [get #c1B string] '[K']]
-
 [deftypefunk keyboard_editor execute press_backspace []
   [if [> cursor_x 0]
       [prog [= cursor_x [- cursor_x 1]]
@@ -116,7 +121,14 @@
 	    [terminal_format standard-terminal '\b']
 	    [let [[current_line [get this current_line]]]
 	      [terminal_format standard-terminal [get current_line substring cursor_x [get current_line length]] ' ']
-	      [print-ansi-move [- cursor_x [get current_line length] 1] 0]]]]]  
+	      [print-ansi-move [- cursor_x [get current_line length] 1] 0]]]
+    [if [> cursor_y 0]
+	[prog [let [[this_line [get this line cursor_y]]
+		    [prev_line [get this line [- cursor_y 1]]]]
+		[have this remove_line cursor_y]
+		[= cursor_y [- cursor_y 1]]
+		[= cursor_x [get prev_line length]]
+		[set this line cursor_y [format nil prev_line this_line]]]]]]]
 
 [deftypefunk keyboard_editor execute press_enter []
   [let [[old_line [get this current_line]]]

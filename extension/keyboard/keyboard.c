@@ -84,7 +84,7 @@ export_cefunk0(keyboard__enable_noncanonical_mode, 0, "Enables noncanonical mode
 f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   if (raw__system__received_signal__sigint(cause)) {
     f2__system__clear_signal__sigint(cause);
-    return new__symbol(cause, "key:ctrl_c");
+    return f2larva__new(cause, 777, nil);
   }
   struct termios org_opts, new_opts;
   //-----  store old settings -----------
@@ -114,11 +114,11 @@ export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
 
 
 f2ptr f2__keyboard__try_read_character(f2ptr cause) {
-  f2ptr b0    = assert_value(f2__keyboard__try_read_byte(cause));
+  f2ptr b0 = assert_value(f2__keyboard__try_read_byte(cause));
   if (b0 == nil) {
     return nil;
   }
-  u64   b0__i = f2integer__i(b0, cause);
+  u64 b0__i = f2integer__i(b0, cause);
   if (b0__i <= 127) {
     // ascii one-byte character
     return f2char__new(cause, b0__i);

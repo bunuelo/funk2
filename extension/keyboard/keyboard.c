@@ -372,7 +372,7 @@ f2ptr f2__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr th
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__keyboard_editor__handle_text_keys__thread_unsafe(cause, this, terminal_print_frame);
 }
-export_cefunk2(keyboard_editor____thread_unsafe, this, terminal_print_frame, 0, "Handle text keys and return a special symbolic key when one is encountered (thread unsafe with respect to the terminal_print_frame).");
+export_cefunk2(keyboard_editor__handle_text_keys__thread_unsafe, this, terminal_print_frame, 0, "Handle text keys and return a special symbolic key when one is encountered (thread unsafe with respect to the terminal_print_frame).");
 
 
 // **

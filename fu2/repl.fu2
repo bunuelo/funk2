@@ -142,13 +142,16 @@
 					  [terminal_write output-terminal eval-exp]]]
 		[terminal_repl-io input-stream output-terminal]]]]]]]
 
-[defunk repl []
+[defunk terminal_repl []
   [let [[result [terminal_repl-io standard-input standard-terminal]]]
     [if [is-type `exception result]
 	[prog [terminal_format standard-terminal
 			       '\nerror terminal repl: unexpected exception ' result '\n'
 			       '\n                     restarting terminal repl.\n']
-	      [repl]]]]]
+	      [terminal_repl]]]]]
+
+[defunk repl []
+  [terminal_repl]]
 
 [defunk load1 [filename]
   [with-new-cause [cause-define cause-name      `load1]

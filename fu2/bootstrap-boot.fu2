@@ -50,24 +50,3 @@
 				     [cons user_command nil]]]]
 
 
-' bug: this creates a segmentation fault...
-`[defunk boot []
-  [if user-boot-commands
-      [mapc [funk [user-boot-command]
-		  [format stdout \'\\nuser-boot-command: \' user-boot-command]
-		  [eval user-boot-command]]
-	    user-boot-commands]]
-  [format stdout
-	  \'\\n\'
-	  \'\\n*************************\'
-	  \'\\n**                     **\'
-	  \'\\n**  \' `Welcome \' \' `to \' \' `funk2 \'!  **\'
-	  \'\\n**                     **\'
-	  \'\\n*************************\'
-	  \'\\n\']
-  `[funk2_node_handler-know_of_node [system-gethostname] [system-peer_command_server-port_num]]
-   [send_request_register_peer 0 [system-node_id] (0 0 0 0) [system-peer_command_server-port_num]]
-   [repl]
-   ]
-'
-

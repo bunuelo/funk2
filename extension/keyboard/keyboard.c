@@ -254,8 +254,8 @@ f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_inde
   assert_argument_type(array, line_array);
   f2ptr line_str   = assert_value(f2__array__elt(cause, line_array, line_index));
   assert_argument_type(string, line_str);
-  f2ptr first_part  = assert_value(raw__string__substring(cause, line_str, f2integer__new(cause, 0), char_index));
-  f2ptr last_part   = assert_value(raw__string__substring(cause, line_str, char_index, f2__string__length(cause, line_str)));
+  f2ptr first_part  = assert_value(f2__string__substring(cause, line_str, f2integer__new(cause, 0), char_index));
+  f2ptr last_part   = assert_value(f2__string__substring(cause, line_str, char_index,               f2__string__length(cause, line_str)));
   funk2_character_t middle_part__str[2];
   middle_part__str[0] = ch__ch;
   middle_part__str[1] = 0;

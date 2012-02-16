@@ -254,6 +254,8 @@ f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_inde
   f2ptr line_array = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"), nil));
   assert_argument_type(array, line_array);
   printf("\ntebug 1"); fflush(stdout);
+  f2__print(cause, line_array);
+  f2__print(cause, line_index);
   f2ptr line_str   = assert_value(f2__array__elt(cause, line_array, line_index));
   printf("\ntebug 1.5"); fflush(stdout);
   assert_argument_type(string, line_str);

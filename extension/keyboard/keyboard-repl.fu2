@@ -340,6 +340,11 @@
 [deftypefunk keyboard_editor execute press_char_key [key]
   [cond [[eq key #c0A] [have this press_enter]]
 	[[eq key #c09] [have this press_tab]]
+	[t             [keyboard_editor-press_and_insert_char_key this standard-terminal key]]]]
+
+`[deftypefunk keyboard_editor execute press_char_key [key]
+  [cond [[eq key #c0A] [have this press_enter]]
+	[[eq key #c09] [have this press_tab]]
 	[t             [prog `[have this insert_char cursor_y cursor_x key]
 			     [keyboard_editor-insert_char this cursor_y cursor_x key]
 			     [= cursor_x [+ cursor_x 1]]

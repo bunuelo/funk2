@@ -288,7 +288,6 @@ f2ptr f2__keyboard_editor__current_line(f2ptr cause, f2ptr this) {
 export_cefunk1(keyboard_editor__current_line, this, 0, "Returns the current line being edited.");
 
 
-/*
 f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, f2ptr key) {
   f2ptr cursor_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_x"), nil));
   assert_argument_type(integer, cursor_x);
@@ -296,20 +295,40 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
   assert_argument_type(integer, cursor_y);
   assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_x, cursor_y, key));
   cursor_x = f2integer__new(cause, f2integer__i(cursor_x, cause) + 1);
+  s64 cursor_x__i = f2integer__i(cursor_x, cause);
   raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[A");
-  funk2_character_t output_string[2];
-  output_string[0] = f2char__ch(key, cause);
-  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, output_string);
-  
+  {
+    funk2_character_t output_string[2];
+    output_string[0] = f2char__ch(key, cause);
+    output_string[1] = 0;
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, output_string);
+  }
+  f2ptr current_line = assert_value(raw__keyboard_editor__current_line(cause, this));
+  s64   current_line__length = raw__string__length(cause, current_line);
+  if (cursor_x__i != current_line__length) {
+    u8*   current_line__str    = (u8*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (current_line__length + 1)));
+    raw__string__str_copy(cause, current_line, current_line__str);
+    current_line__str[current_line__length] = 0;
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, current_line__length - cursor_x__i, current_line__str + cursor_x__i);
+    raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, terminal_print_frame, -(current_line__length - cursor_x__i), 0);
+  }
+  f2ptr buffer_max_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "buffer_max_x"), nil));
+  assert_argument_type(integer, buffer_max_x);
+  s64 buffer_max_x__i = f2integer__i(buffer_max_x, cause);
+  if (current_line__length > buffer_max_x__i) {
+    assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "buffer_max_x"), f2integer__new(cause, current_line__length)));
+  }
+  return nil;
 }
 
-f2ptr f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key) {
-  assert_argument_type(frame, this);
-  assert_argument_type(char,  key);
-  return raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, key);
+f2ptr f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, f2ptr key) {
+  assert_argument_type(frame,                this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  assert_argument_type(char,                 key);
+  return raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key);
 }
-export_cefunk2(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, key, 0, "Press and insert character key into keyboard_editor (thread unsafe).");
-*/
+export_cefunk3(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, terminal_print_frame, key, 0, "Press and insert character key into keyboard_editor (thread unsafe with respect to the terminal_print_frame).");
+
 
 // **
 

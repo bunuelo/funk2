@@ -51,7 +51,8 @@
 	  [keyboard-current_mode-set old_opts]
 	  result]]]]]
 
-[deframe keyboard_editor [frame] [[done                            nil]
+[deframe keyboard_editor [frame] [[old_termios_options             nil]
+				  [done                            nil]
 				  [start_x                         0]
 				  [start_y                         0]
 				  [cursor_x                        0]
@@ -288,19 +289,26 @@
 	    `[have this print_debug cursor_x ' ' cursor_y '    ']]]]]
 
 
+[deftypefunk keyboard_editor execute initialize []
+  [= done nil]
+  [= old_termios_options [keyboard-current_mode]]
+  [keyboard-enable_noncanonical_mode]
+  [= start_x [get standard-terminal x]]
+  [= start_y [get standard-terminal height]]
+  nil]
+
+[deftypefunk keyboard_editor execute destroy []
+  [keyboard-current_mode-set old_termios_options]]
+
 [deftypefunk keyboard_editor execute reads []
-  [let [[old_opts [keyboard-current_mode]]]
-    [keyboard-enable_noncanonical_mode]
-    'Temporarily catch bug if there is one, so that we can get back out of canonical keyboard mode below.'
-    [let [[result [shelter [= start_x [get standard-terminal x]]
-			   [= start_y [get standard-terminal height]]
-			   [keyboard-check_keypress] 'get rid of first enter.'
-			   [while [not done]
-			     [have this check_key]]]]]
-      [keyboard-current_mode-set old_opts]
-      [if [is-type `bug result]
-	  [bug result]
-	result]]]]
+  [have this initialize]
+  'Temporarily catch bug if there is one, so that we can get back out of canonical keyboard mode below.'
+  [let [[result [shelter [while [not done]
+			   [have this check_key]]]]]
+    [have this destroy]
+    [if [is-type `bug result]
+	[bug result]
+      result]]]
 
 
 [defunk keyboard-reads []
@@ -321,7 +329,7 @@
 	      [cond [[eq read `quit] [prog [= done t]
 					   [= iter nil]]]
 		    [t               [let [[result [shelter [cause-define cause-name `repl-eval]
-							    [cause-define cause-exp read-exp]
+							    [cause-define cause-exp  read]
 							    [ansi-stream-reset [get standard-terminal stream]]
 							    [eval read]]]]
 				       [if [is-type `bug result]

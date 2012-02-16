@@ -306,7 +306,7 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
   assert_argument_type(integer, cursor_x);
   f2ptr cursor_y = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_y"), nil));
   assert_argument_type(integer, cursor_y);
-  assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_x, cursor_y, key));
+  assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_y, cursor_x, key));
   s64 cursor_x__i = f2integer__i(cursor_x, cause);
   printf("\ndebug 1"); fflush(stdout);
   cursor_x__i ++;

@@ -805,7 +805,10 @@ f2ptr raw__string__multiply(f2ptr cause, f2ptr this, s64 num) {
     }
   }
   result__str[result__length] = 0;
-  return f2string__new(cause, result__length, result__str);
+  f2ptr result = f2string__new(cause, result__length, result__str);
+  f2__free(to_ptr(this__str));
+  f2__free(to_ptr(result__str));
+  return result;
 }
 
 f2ptr f2__string__multiply(f2ptr cause, f2ptr this, f2ptr num) {

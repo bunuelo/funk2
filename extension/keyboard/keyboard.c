@@ -316,8 +316,10 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
     funk2_character_t* current_line__str = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (current_line__length + 1)));
     raw__string__str_copy(cause, current_line, current_line__str);
     current_line__str[current_line__length] = 0;
+    raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, current_line__length - cursor_x__i, &current_line__str[cursor_x__i]);
     raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, terminal_print_frame, -(current_line__length - cursor_x__i), 0);
+    raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
     f2__free(to_ptr(current_line__str));
   }
   f2ptr buffer_max_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "buffer_max_x"), nil));
@@ -339,22 +341,15 @@ export_cefunk3(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, 
 
 
 f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr     key           = nil;
-  boolean_t found_key_yet = boolean__false;
-  boolean_t is_text_key   = boolean__true;
+  f2ptr     key         = nil;
+  boolean_t is_text_key = boolean__true;
   while (is_text_key) {
     key = assert_value(f2__keyboard__check_keypress(cause));
     if (raw__char__is_type(cause, key)) {
-      if (! found_key_yet) {
-	raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
-      }
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
       assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));
       found_key_yet = boolean__true;
     } else {
-      if (found_key_yet) {
-	raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
-      }
       is_text_key = boolean__false;
     }
   }

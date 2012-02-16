@@ -79,6 +79,10 @@ void      raw__terminal_print_frame__write_ansi__down__thread_unsafe            
 void      raw__terminal_print_frame__write_ansi__right__thread_unsafe                                         (f2ptr cause, f2ptr this);
 void      raw__terminal_print_frame__write_ansi__left__thread_unsafe                                          (f2ptr cause, f2ptr this);
 void      raw__terminal_print_frame__write_ansi__move__thread_unsafe                                          (f2ptr cause, f2ptr this, s64 x, s64 y);
+f2ptr     raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe                                   (f2ptr cause, f2ptr this);
+f2ptr      f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe                                   (f2ptr cause, f2ptr this);
+f2ptr     raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe                                   (f2ptr cause, f2ptr this);
+f2ptr      f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe                                   (f2ptr cause, f2ptr this);
 f2ptr     raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe                          (f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe                          (f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression);

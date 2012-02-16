@@ -29,5 +29,6 @@
 [globalize-funk exp-terminal_print_with_frame-thread_unsafe &primfunk:exp__terminal_print_with_frame__thread_unsafe]
 [globalize-funk exp-terminal_stream_print-thread_unsafe     &primfunk:exp__terminal_stream_print__thread_unsafe]
 
-[globalize-funk terminal_print_frame-write_ansi-move-thread_unsafe &primfunk:terminal_print_frame__write_ansi__move__thread_unsafe]
-
+[globalize-funk terminal_print_frame-write_ansi-move-thread_unsafe        &primfunk:terminal_print_frame__write_ansi__move__thread_unsafe]
+[globalize-funk terminal_print_frame-write_ansi-hide_cursor-thread_unsafe &primfunk:terminal_print_frame__write_ansi__hide_cursor__thread_unsafe]
+[globalize-funk terminal_print_frame-write_ansi-show_cursor-thread_unsafe &primfunk:terminal_print_frame__write_ansi__show_cursor__thread_unsafe]

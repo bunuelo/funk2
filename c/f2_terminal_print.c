@@ -541,6 +541,34 @@ def_pcfunk3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y,
 	    return f2__terminal_print_frame__write_ansi__move__thread_unsafe(this_cause, this, x, y));
 
 
+f2ptr raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25l");
+  return nil;
+}
+
+f2ptr f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  assert_argument_type(terminal_print_frame, this);
+  return raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, this);
+}
+def_pcfunk1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this,
+	    "Writes the escape sequence '<escape>[?25l' in order to hide the cursor.",
+	    return f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(this_cause, this));
+
+
+f2ptr raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25h");
+  return nil;
+}
+
+f2ptr f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  assert_argument_type(terminal_print_frame, this);
+  return raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, this);
+}
+def_pcfunk1(terminal_print_frame__write_ansi__show_cursor__thread_unsafe, this,
+	    "Writes the escape sequence '<escape>[?25h' in order to show the cursor.",
+	    return f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(this_cause, this));
+
+
 f2ptr raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = f2__object__slot__type_funk(cause, expression, __funk2.globalenv.execute__symbol, __funk2.globalenv.terminal_print_with_frame__symbol);
@@ -1107,7 +1135,9 @@ void f2__terminal_print__initialize() {
   f2__primcfunk__init__2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame);
   f2__primcfunk__init__2(exp__terminal_stream_print__thread_unsafe,     this, stream);
   
-  f2__primcfunk__init__3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y);
+  f2__primcfunk__init__3(terminal_print_frame__write_ansi__move__thread_unsafe,        this, x, y);
+  f2__primcfunk__init__1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this);
+  f2__primcfunk__init__1(terminal_print_frame__write_ansi__show_cursor__thread_unsafe, this);
   
 }
 

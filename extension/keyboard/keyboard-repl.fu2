@@ -17,10 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk print-ansi-hide_cursor []
+`[defunk print-ansi-hide_cursor []
   [format stdout [get #c1B string] '[?25l']]
 
-[defunk print-ansi-show_cursor []
+`[defunk print-ansi-show_cursor []
   [format stdout [get #c1B string] '[?25h']]
 
 [deframe keyboard_editor [frame] [[old_termios_options             nil]

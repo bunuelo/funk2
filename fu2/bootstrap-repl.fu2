@@ -477,15 +477,6 @@
     [have [get terminal_print_frame cmutex] unlock]
     result]]
 
-[defunk terminal_print_frame-write_ansi-move [this x y]
-  [while [have [get this cmutex] trylock]]
-  [let [[result [terminal_print_frame-write_ansi-move-thread_unsafe this x y]]]
-    [have [get this cmutex] unlock]
-    result]]
-
-[defunk print-ansi-move [x y]
-  [terminal_print_frame-write_ansi-move standard-terminal x y]]
-
 [defmetro parlet [varpairs :rest body]
   `[let ,[mapcar [funk [varpair]
 		       [let [[var       [first  varpair]]

@@ -295,6 +295,7 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
   assert_argument_type(integer, cursor_y);
   assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_x, cursor_y, key));
   cursor_x = f2integer__new(cause, f2integer__i(cursor_x, cause) + 1);
+  assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "cursor_x"), cursor_x));
   s64 cursor_x__i = f2integer__i(cursor_x, cause);
   {
     funk2_character_t output_string[2];

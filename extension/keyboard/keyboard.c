@@ -270,7 +270,7 @@ f2ptr f2__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index
   assert_argument_type(integer, line_index);
   assert_argument_type(integer, char_index);
   assert_argument_type(char,    ch);
-  return raw__keyboard_editor__insert_char(cause, this, line_index__i, char_index__i, ch__ch);
+  return raw__keyboard_editor__insert_char(cause, this, line_index, char_index, ch);
 }
 export_cefunk4(keyboard_editor__insert_char, this, line_index, char_index, ch, 0, "Insert character into keyboard_editor.");
 

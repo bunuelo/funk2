@@ -175,9 +175,9 @@ export_cefunk0(keyboard__try_read_character, 0, "Wait for next character from ke
 f2ptr f2__keyboard__check_keypress(f2ptr cause) {
   f2ptr old_opts = assert_value(f2__keyboard__current_mode(cause));
   assert_value(f2__keyboard__enable_noncanonical_mode(cause));
-  f2ptr ch = assert_value(f2__keyboard__try_read_character(cause));
+  f2ptr ch     = assert_value(f2__keyboard__try_read_character(cause));
+  f2ptr result = nil;
   {
-    f2ptr result = nil;
     if (ch != nil) {
       if (raw__char__is_type(cause, ch)) {
 	funk2_character_t ch__ch = raw__char__ch(cause, ch);

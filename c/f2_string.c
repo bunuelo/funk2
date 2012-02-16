@@ -788,6 +788,37 @@ def_pcfunk1(string__uppercase, this,
 	    return f2__string__uppercase(this_cause, this));
 
 
+f2ptr raw__string__multiply(f2ptr cause, f2ptr this, s64 num) {
+  if (num < 0) {
+    return f2larva__new(cause, 34634, nil);
+  }
+  s64                this__length   = raw__string__length(cause, this);
+  funk2_character_t* this__str      = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (this__length + 1)));
+  raw__string__str_copy(cause, this, this__str);
+  this__str[this__length] = 0;
+  s64                result__length = this__length * num;
+  funk2_character_t* result__str    = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (result__length + 1)));
+  {
+    s64 i;
+    for (i = 0; i < num; i ++) {
+      memcpy(result__str + (i * this__length), this__str, sizeof(funk2_character_t) * this__length);
+    }
+  }
+  result__str[result__length] = 0;
+  return f2string__new(cause, result__length, result__str);
+}
+
+f2ptr f2__string__multiply(f2ptr cause, f2ptr this, f2ptr num) {
+  assert_argument_type(string,  this);
+  assert_argument_type(integer, num);
+  s64 num__i = f2integer__i(num, cause);
+  return raw__string__multiply(cause, this, num__i);
+}
+def_pcfunk2(string__multiply, this, num,
+	    "Returns a new string that is the given number of times copied and concatenated of the original string.",
+	    return f2__string__multiply(this_cause, this, num));
+
+
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);
   {char* slot_name = "as-symbol";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
@@ -799,6 +830,7 @@ f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "is_greater_than"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk);}
   {char* slot_name = "lowercase";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk);}
   {char* slot_name = "uppercase";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk);}
+  {char* slot_name = "multiply";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.multiply__funk);}
   return this;
 }
 
@@ -841,6 +873,8 @@ void f2__string__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__lowercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk = never_gc(cfunk);}
   {char* str = "uppercase"; __funk2.globalenv.object_type.ptype.ptype_string.uppercase__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
+  {char* str = "multiply"; __funk2.globalenv.object_type.ptype.ptype_string.multiply__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__multiply, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.multiply__funk = never_gc(cfunk);}
   
 }
 

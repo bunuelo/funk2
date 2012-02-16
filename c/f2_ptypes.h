@@ -872,6 +872,8 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr lowercase__funk;
   f2ptr uppercase__symbol;
   f2ptr uppercase__funk;
+  f2ptr multiply__symbol;
+  f2ptr multiply__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol

@@ -26,7 +26,6 @@
 	    user-boot-commands]]
   [ansi-stream-foreground [get standard-terminal stream] 15]
   [terminal_format standard-terminal
-		   '\n'
 		   '\n*************************'
 		   '\n**                     **'
 		   '\n**  ']

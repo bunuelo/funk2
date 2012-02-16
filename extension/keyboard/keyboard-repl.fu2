@@ -299,12 +299,20 @@
 [deftypefunk keyboard_editor execute press_right []
   [if [< cursor_x [get [get this line cursor_y] length]]
       [prog [= cursor_x [+ cursor_x 1]]
-	    [print-ansi-move 1 0]]]]
+	    [print-ansi-move 1 0]]
+    [if [< cursor_y buffer_max_y]
+	[prog [print-ansi-move [- cursor_x] 1]
+	      [= cursor_x 0]
+	      [= cursor_y [+ cursor_y 1]]]]]]
 
 [deftypefunk keyboard_editor execute press_left []
   [if [> cursor_x 0]
       [prog [= cursor_x [- cursor_x 1]]
-	    [print-ansi-move -1 0]]]]
+	    [print-ansi-move -1 0]]
+    [if [> cursor_y 0]
+	[prog [= cursor_y [- cursor_y 1]]
+	      [= cursor_x [get [get this current_line] length]]
+	      [print-ansi-move cursor_x -1]]]]]
 
 [deftypefunk keyboard_editor execute press_home []
   [print-ansi-move [- cursor_x] 0]
@@ -471,4 +479,7 @@
 		  [= iter [cdr iter]]]]]]]]]]
 
 
+
+[defunk repl []
+  [keyboard-repl]]
 

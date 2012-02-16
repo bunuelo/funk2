@@ -348,7 +348,6 @@ f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr t
     if (raw__char__is_type(cause, key)) {
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
       assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));
-      found_key_yet = boolean__true;
     } else {
       is_text_key = boolean__false;
     }

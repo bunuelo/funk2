@@ -547,7 +547,8 @@ void raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cau
 
 f2ptr f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
   assert_argument_type(terminal_print_frame, this);
-  return raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, this);
+  raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, this);
+  return nil;
 }
 def_pcfunk1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this,
 	    "Writes the escape sequence '<escape>[?25l' in order to hide the cursor.",
@@ -560,7 +561,8 @@ void raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cau
 
 f2ptr f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
   assert_argument_type(terminal_print_frame, this);
-  return raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, this);
+  raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, this);
+  return nil;
 }
 def_pcfunk1(terminal_print_frame__write_ansi__show_cursor__thread_unsafe, this,
 	    "Writes the escape sequence '<escape>[?25h' in order to show the cursor.",

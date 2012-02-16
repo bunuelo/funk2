@@ -339,16 +339,22 @@ export_cefunk3(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, 
 
 
 f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  f2ptr     key         = nil;
-  boolean_t is_text_key = boolean__true;
+  f2ptr     key           = nil;
+  boolean_t found_key_yet = boolean__false;
+  boolean_t is_text_key   = boolean__true;
   while (is_text_key) {
     key = assert_value(f2__keyboard__check_keypress(cause));
     if (raw__char__is_type(cause, key)) {
-      //raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
+      if (! found_key_yet) {
+	raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
+      }
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
       assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));
-      //raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
+      found_key_yet = boolean__true;
     } else {
+      if (found_key_yet) {
+	raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
+      }
       is_text_key = boolean__false;
     }
   }

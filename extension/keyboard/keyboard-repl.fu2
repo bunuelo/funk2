@@ -185,7 +185,8 @@
       [prog [= cursor_y [- cursor_y 1]]
 	    [print-ansi-move 0 -1]
 	    [if saving_x_column_during_movement
-		[= cursor_x saved_x_column]]
+		[prog [print-ansi-move [- saved_x_column cursor_x] 0]
+		      [= cursor_x saved_x_column]]]
 	    [let [[line [get this line cursor_y]]]
 	      [if [> cursor_x [get line length]]
 		  [prog [if [not saving_x_column_during_movement]
@@ -200,7 +201,8 @@
       [prog [= cursor_y [+ cursor_y 1]]
 	    [print-ansi-move 0 1]
 	    [if saving_x_column_during_movement
-		[= cursor_x saved_x_column]]
+		[prog [print-ansi-move [- saved_x_column cursor_x] 0]
+		      [= cursor_x saved_x_column]]]
 	    [let [[line [get this line cursor_y]]]
 	      [if [> cursor_x [get line length]]
 		  [prog [if [not saving_x_column_during_movement]
@@ -267,7 +269,7 @@
 		  [[eq key `key:end]              [have this press_end]]
 		  [[is-type `char key]            [have this press_char_key key]]
 		  [t                              [have this press_unknown_key]]]
-	    [have this print_debug cursor_x ' ' cursor_y '    ']]]]]
+	    `[have this print_debug cursor_x ' ' cursor_y '    ']]]]]
 
 
 [deftypefunk keyboard_editor execute read []

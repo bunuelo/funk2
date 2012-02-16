@@ -17,6 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defunk print-ansi-hide_cursor []
+  [format stdout [get #c1B string] '[?25l']]
+
+[defunk print-ansi-show_cursor []
+  [format stdout [get #c1B string] '[?25h']]
+
 [defunk keyboard-check_keypress []
   [let [[old_opts [keyboard-current_mode]]]
     [keyboard-enable_noncanonical_mode]
@@ -247,7 +253,9 @@
     [if [get this previous_page_exists]
 	[let [[old_cursor_x cursor_x]]
 	  [have this goto_previous_page]
-	  [= cursor_x old_cursor_x]
+	  [if saving_x_column_during_movement
+	      [= cursor_x saved_x_column]
+	    [= cursor_x old_cursor_x]]
 	  [= cursor_y buffer_max_y]
 	  [let [[line [get this line cursor_y]]]
 	    [if [> cursor_x [get line length]]
@@ -275,7 +283,9 @@
     [if [get this next_page_exists]
 	[let [[old_cursor_x cursor_x]]
 	  [have this goto_next_page]
-	  [= cursor_x old_cursor_x]
+	  [if saving_x_column_during_movement
+	      [= cursor_x saved_x_column]
+	    [= cursor_x old_cursor_x]]
 	  [= cursor_y 0]
 	  [let [[line [get this line cursor_y]]]
 	    [if [> cursor_x [get line length]]
@@ -399,7 +409,8 @@
   [let [[key [keyboard-check_keypress]]]
     [if [null key]
 	[millisleep 100]
-      [prog [if [not [or [eq key `key:up]
+      [prog [print-ansi-hide_cursor]
+	    [if [not [or [eq key `key:up]
 			 [eq key `key:down]]]
 		[= saving_x_column_during_movement nil]]
             [cond [[eq key `key:backspace]        [have this press_backspace]]
@@ -414,7 +425,8 @@
 		  [[eq key `key:page_down]        [have this press_page_down]]
 		  [[is-type `char key]            [have this press_char_key key]]
 		  [t                              [have this press_unknown_key]]]
-	    `[have this print_debug cursor_x ' ' cursor_y '    ']]]]]
+	    `[have this print_debug cursor_x ' ' cursor_y '    ']
+	    [print-ansi-show_cursor]]]]]
 
 
 [deftypefunk keyboard_editor execute reads []

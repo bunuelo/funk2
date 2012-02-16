@@ -192,7 +192,7 @@
 			    [prog [= saving_x_column_during_movement t]
 				  [= saved_x_column                  cursor_x]]]
 			[print-ansi-move [- [get line length] cursor_x] 0]
-			[= cursor_x [get line length]]]
+			[= cursor_x [get line length]]]]]]]]
 
 
 [deftypefunk keyboard_editor execute press_down []

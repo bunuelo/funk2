@@ -233,6 +233,10 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 	      }
 	    }
 	  }
+	} else if (ch__ch == '\t') {
+	  result = new__symbol(cause, "key:tab");
+	} else if (ch__ch == '\n') {
+	  result = new__symbol(cause, "key:enter");
 	} else {
 	  result = ch;
 	}

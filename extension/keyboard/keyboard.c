@@ -344,10 +344,10 @@ f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr t
   while (is_text_key) {
     key = assert_value(f2__keyboard__check_keypress(cause));
     if (raw__char__is_type(cause, key)) {
-      raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
+      //raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
       assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));
-      raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
+      //raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
     } else {
       is_text_key = boolean__false;
     }

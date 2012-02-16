@@ -18,13 +18,13 @@
  rights to redistribute these changes.'
 
 [defpackage keyboard
-  :packages            []
+  :packages            [mutex]
    :sources            ['keyboard-core.fu2']
     :dynamic_libraries ['libf2e_keyboard.so']]
 
 [defcore keyboard 'libf2e_keyboard.so']
 
 [defpackage keyboard-repl
-  :packages [keyboard]
+  :packages [keyboard math]
    :sources ['keyboard-repl.fu2']]
 

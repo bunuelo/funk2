@@ -192,7 +192,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 	      funk2_character_t escaped_ch__ch = raw__char__ch(cause, escaped_ch);
 	      if (escaped_ch__ch == (funk2_character_t)'[') {
 		f2ptr ansi_ch = f2__keyboard__try_read_character(cause);
-		if ((ansi_ch != nil) && raw__char__is_type(cause, ansi_ch)_) {
+		if ((ansi_ch != nil) && raw__char__is_type(cause, ansi_ch)) {
 		  funk2_character_t ansi_ch__ch = raw__char__ch(cause, ansi_ch);
 		  if (ansi_ch__ch == (funk2_character_t)'A') {
 		    result = new__symbol(cause, "key:up");
@@ -204,7 +204,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		    result = new__symbol(cause, "key:left");
 		  } else if (ansi_ch__ch == (funk2_character_t)'5') {
 		    f2ptr ansi2_ch = f2__keyboard__try_read_character(cause);
-		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)_) {
+		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
 		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
 		      if (ansi2_ch__ch == (funk2_character_t)'~') {
 			result = new__symbol(cause, "key:page_up");
@@ -212,7 +212,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		    }
 		  } else if (ansi_ch__ch == (funk2_character_t)'6') {
 		    f2ptr ansi2_ch = f2__keyboard__try_read_character(cause);
-		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)_) {
+		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
 		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
 		      if (ansi2_ch__ch == (funk2_character_t)'~') {
 			result = new__symbol(cause, "key:page_down");
@@ -222,7 +222,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		}
 	      } else if (escaped_ch__ch == (funk2_character_t)'O') {
 		f2ptr other_ch = f2__keyboard__try_read_character(cause);
-		if ((other_ch != nil) && raw__char__is_type(cause, other_ch)_) {
+		if ((other_ch != nil) && raw__char__is_type(cause, other_ch)) {
 		  funk2_character_t other_ch__ch = raw__char__ch(cause, other_ch);
 		  if (other_ch__ch == (funk2_character_t)'H') {
 		    result = new__symbol(cause, "key:home");

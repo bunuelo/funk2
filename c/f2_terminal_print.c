@@ -327,7 +327,6 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	      iter = f2__cons__cdr(cause, iter);
 	    }
 	  }
-	  raw__stream__write_character(cause, stream, ch);
 	}
       } else {
 	switch(ch) {

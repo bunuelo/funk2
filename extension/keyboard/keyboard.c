@@ -249,19 +249,28 @@ export_cefunk0(keyboard__check_keypress, 0, "Check for next keypress.");
 
 
 f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index, f2ptr char_index, f2ptr ch) {
+  printf("\ntebug 0"); fflush(stdout);
   s64   ch__ch     = f2char__ch(ch, cause);
   f2ptr line_array = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"), nil));
   assert_argument_type(array, line_array);
+  printf("\ntebug 1"); fflush(stdout);
   f2ptr line_str   = assert_value(f2__array__elt(cause, line_array, line_index));
   assert_argument_type(string, line_str);
+  printf("\ntebug 2"); fflush(stdout);
   f2ptr first_part  = assert_value(f2__string__substring(cause, line_str, f2integer__new(cause, 0), char_index));
+  assert_argument_type(string, first_part);
+  printf("\ntebug 3"); fflush(stdout);
   f2ptr last_part   = assert_value(f2__string__substring(cause, line_str, char_index,               f2__string__length(cause, line_str)));
+  assert_argument_type(string, last_part);
+  printf("\ntebug 4"); fflush(stdout);
   funk2_character_t middle_part__str[2];
   middle_part__str[0] = ch__ch;
   middle_part__str[1] = 0;
   f2ptr middle_part = f2string__new(cause, 1, middle_part__str);
+  printf("\ntebug 5"); fflush(stdout);
   f2ptr new_line    = assert_value(f2__stringlist__concat(cause, f2list3__new(cause, first_part, middle_part, last_part)));
   assert_value(f2__array__elt__set(cause, line_array, line_index, new_line));
+  printf("\ntebug 6"); fflush(stdout);
   return nil;
 }
 

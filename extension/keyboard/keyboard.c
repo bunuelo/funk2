@@ -289,37 +289,45 @@ export_cefunk1(keyboard_editor__current_line, this, 0, "Returns the current line
 
 
 f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, f2ptr key) {
+  printf("\ndebug 0"); fflush(stdout);
   f2ptr cursor_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_x"), nil));
   assert_argument_type(integer, cursor_x);
   f2ptr cursor_y = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_y"), nil));
   assert_argument_type(integer, cursor_y);
   assert_value(f2__keyboard_editor__insert_char(cause, this, cursor_x, cursor_y, key));
   s64 cursor_x__i = f2integer__i(cursor_x, cause);
+  printf("\ndebug 1"); fflush(stdout);
   cursor_x__i ++;
   cursor_x = f2integer__new(cause, cursor_x__i);
   assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "cursor_x"), cursor_x));
+  printf("\ndebug 2"); fflush(stdout);
   {
     funk2_character_t output_string[2];
     output_string[0] = f2char__ch(key, cause);
     output_string[1] = 0;
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, 1, output_string);
   }
-  f2ptr current_line = assert_value(raw__keyboard_editor__current_line(cause, this));
+  printf("\ndebug 3"); fflush(stdout);
+  f2ptr current_line         = assert_value(raw__keyboard_editor__current_line(cause, this));
   s64   current_line__length = raw__string__length(cause, current_line);
   if (cursor_x__i < current_line__length) {
+    printf("\ndebug 4"); fflush(stdout);
     funk2_character_t* current_line__str = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (current_line__length + 1)));
     raw__string__str_copy(cause, current_line, current_line__str);
     current_line__str[current_line__length] = 0;
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, current_line__length - cursor_x__i, current_line__str + cursor_x__i);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, current_line__length - cursor_x__i, &current_line__str[cursor_x__i]);
     raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, terminal_print_frame, -(current_line__length - cursor_x__i), 0);
     f2__free(to_ptr(current_line__str));
+    printf("\ndebug 5"); fflush(stdout);
   }
+  printf("\ndebug 6"); fflush(stdout);
   f2ptr buffer_max_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "buffer_max_x"), nil));
   assert_argument_type(integer, buffer_max_x);
   s64 buffer_max_x__i = f2integer__i(buffer_max_x, cause);
   if (current_line__length > buffer_max_x__i) {
     assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "buffer_max_x"), f2integer__new(cause, current_line__length)));
   }
+  printf("\ndebug 7"); fflush(stdout);
   return nil;
 }
 

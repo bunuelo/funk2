@@ -172,6 +172,80 @@ f2ptr f2__keyboard__try_read_character(f2ptr cause) {
 export_cefunk0(keyboard__try_read_character, 0, "Wait for next character from keyboard.");
 
 
+f2ptr f2__keyboard__check_keypress(f2ptr cause) {
+  f2ptr old_opts = assert_value(f2__keyboard__current_mode(cause));
+  assert_value(f2__keyboard__enable_noncanonical_mode(cause));
+  f2ptr ch = assert_value(f2__keyboard__try_read_character(cause));
+  {
+    f2ptr result = nil;
+    if (ch != nil) {
+      if (raw__char__is_type(cause, ch)) {
+	funk2_character_t ch__ch = raw__char__ch(cause, ch);
+	if (ch__ch == 0x7F) {
+	  result = new__symbol(cause, "key:backspace");
+	} else if (ch__ch == 0x1B) {
+	  f2ptr escaped_ch = f2__keyboard__try_read_character(cause);
+	  if (escaped_ch == nil) {
+	    result = new__symbol(cause, "key:escape");
+	  } else {
+	    if (raw__char__is_type(cause, ch)) {
+	      funk2_character_t escaped_ch__ch = raw__char__ch(cause, escaped_ch);
+	      if (escaped_ch__ch == (funk2_character_t)'[') {
+		f2ptr ansi_ch = f2__keyboard__try_read_character(cause);
+		if ((ansi_ch != nil) && raw__char__is_type(cause, ansi_ch)_) {
+		  funk2_character_t ansi_ch__ch = raw__char__ch(cause, ansi_ch);
+		  if (ansi_ch__ch == (funk2_character_t)'A') {
+		    result = new__symbol(cause, "key:up");
+		  } else if (ansi_ch__ch == (funk2_character_t)'B') {
+		    result = new__symbol(cause, "key:down");
+		  } else if (ansi_ch__ch == (funk2_character_t)'C') {
+		    result = new__symbol(cause, "key:right");
+		  } else if (ansi_ch__ch == (funk2_character_t)'D') {
+		    result = new__symbol(cause, "key:left");
+		  } else if (ansi_ch__ch == (funk2_character_t)'5') {
+		    f2ptr ansi2_ch = f2__keyboard__try_read_character(cause);
+		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)_) {
+		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
+		      if (ansi2_ch__ch == (funk2_character_t)'~') {
+			result = new__symbol(cause, "key:page_up");
+		      }
+		    }
+		  } else if (ansi_ch__ch == (funk2_character_t)'6') {
+		    f2ptr ansi2_ch = f2__keyboard__try_read_character(cause);
+		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)_) {
+		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
+		      if (ansi2_ch__ch == (funk2_character_t)'~') {
+			result = new__symbol(cause, "key:page_down");
+		      }
+		    }
+		  }
+		}
+	      } else if (escaped_ch__ch == (funk2_character_t)'O') {
+		f2ptr other_ch = f2__keyboard__try_read_character(cause);
+		if ((other_ch != nil) && raw__char__is_type(cause, other_ch)_) {
+		  funk2_character_t other_ch__ch = raw__char__ch(cause, other_ch);
+		  if (other_ch__ch == (funk2_character_t)'H') {
+		    result = new__symbol(cause, "key:home");
+		  } else if (other_ch__ch == (funk2_character_t)'F') {
+		    result = new__symbol(cause, "key:end");
+		  }
+		}
+	      }
+	    }
+	  }
+	} else {
+	  result = ch;
+	}
+      }
+      if (result == nil) {
+	result = new__symbol(cause, "key:invalid");
+      }
+    }
+  }
+  f2__keyboard__current_mode__set(cause, old_opts);
+  return result;
+}
+export_cefunk0(keyboard__check_keypress, 0, "Check for next keypress.");
 
 
 // **

@@ -1145,7 +1145,7 @@ make-install-full-sh: make-install-sh
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
-install: install-am make-install-sh img/bootstrap.img
+install: install-am make-install-sh
 	./install-sh
 
 install-full: install make-install-full-sh img/bootstrap.img

@@ -1146,7 +1146,7 @@ make-debian-postinst:
 	echo "#!/bin/sh -e"                                           > debian/postinst
 	echo ""                                                      >> debian/postinst
 	echo "ldconfig"                                              >> debian/postinst
-	echo "cd /tmp"                                               >> debian/postinst
+	echo "cd /usr/share/funk2"                                   >> debian/postinst
 	echo "mkdir -p img"                                          >> debian/postinst
 	echo "funk2 fu2/bootstrap-repl.fu2"                          >> debian/postinst
 	echo "funk2 fu2/bootstrap.fu2"                               >> debian/postinst

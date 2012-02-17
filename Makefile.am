@@ -26,7 +26,6 @@ source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
 source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
-source__fu2__dir             = $(source__funk2__dir)fu2/
 source__built_in__dir        = $(source__funk2__dir)built-in/
 source__extension__dir       = $(source__funk2__dir)extension/
 source__test__dir            = $(source__funk2__dir)test/

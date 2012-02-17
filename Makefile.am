@@ -1153,18 +1153,18 @@ make-debian-postinst:
 	echo "install -m644 img/bootstrap.img /usr/share/funk2/img/" >> debian/postinst
 	echo ""                                                      >> debian/postinst
 
-
+extensions: finish_compiling_all_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
-install-minimal: install-am make-install-sh
+install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)
 	./install-sh
-
-install: install make-install-full-sh img/bootstrap.img
-	./install-full-sh
 
 install-debian: install-minimal make-debian-postinst
 
+# full install
+install: install-minimal make-install-full-sh img/bootstrap.img
+	./install-full-sh
 
-extensions: finish_compiling_all_core_extensions
+

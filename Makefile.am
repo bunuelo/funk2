@@ -1129,7 +1129,7 @@ make-install-minimal-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                                                             >> install-minimal-sh
 	chmod a+x install-minimal-sh
 
-make-install-sh:
+make-install-sh: make-install-minimal-sh
 	echo "#!/bin/sh"                                                                                                                                                                 > install-sh
 	echo "echo \"\""                                                                                                                                                                >> install-sh
 	echo "echo \"make: install-sh performing system-wide installation of funk2\""                                                                                                   >> install-sh

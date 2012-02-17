@@ -112,17 +112,17 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
 }
 export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
 
-#define assert_value_with_ctrl_c(value) {			\
-    f2ptr temp_value = (value);					\
-    if (raw__larva__is_type(cause, temp_value)) {		\
-      if (raw__larva__bug_type(cause, temp_value) == 777) {	\
-	return temp_value;					\
-      } else {							\
-	assert_value(temp_value);				\
+#define assert_value_with_ctrl_c(value) ({			\
+      f2ptr temp_value = (value);				\
+      if (raw__larva__is_type(cause, temp_value)) {		\
+	if (raw__larva__bug_type(cause, temp_value) == 777) {	\
+	  return temp_value;					\
+	} else {						\
+	  assert_value(temp_value);				\
+	}							\
       }								\
-    }								\
-    temp_value;							\
-  }
+      temp_value;						\
+    })
 
 f2ptr f2__keyboard__try_read_character(f2ptr cause) {
   f2ptr b0 = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));

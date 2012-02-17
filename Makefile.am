@@ -1143,15 +1143,14 @@ make-install-full-sh: make-install-sh
 	chmod a+x install-full-sh
 
 make-debian-postinst:
-	echo "#!/bin/sh -e"                                           > debian/postinst
-	echo ""                                                      >> debian/postinst
-	echo "ldconfig"                                              >> debian/postinst
-	echo "cd /usr/share/funk2"                                   >> debian/postinst
-	echo "mkdir -p img"                                          >> debian/postinst
-	echo "funk2 fu2/bootstrap-repl.fu2"                          >> debian/postinst
-	echo "funk2 fu2/bootstrap.fu2"                               >> debian/postinst
-	echo "install -m644 img/bootstrap.img /usr/share/funk2/img/" >> debian/postinst
-	echo ""                                                      >> debian/postinst
+	echo "#!/bin/sh -e"                  > debian/postinst
+	echo ""                             >> debian/postinst
+	echo "ldconfig"                     >> debian/postinst
+	echo "cd /usr/share/funk2"          >> debian/postinst
+	echo "mkdir -p img"                 >> debian/postinst
+	echo "funk2 fu2/bootstrap-repl.fu2" >> debian/postinst
+	echo "funk2 fu2/bootstrap.fu2"      >> debian/postinst
+	echo ""                             >> debian/postinst
 
 extensions: finish_compiling_all_core_extensions
 

@@ -969,6 +969,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__test__dir)timeline-test/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)xmlrpc-test/"                                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)cannons_algorithm/"                                                                                                        >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)divisi2/"                                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)em_two_webpage/"                                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)english_language/"                                                                                                         >> install-sh
@@ -1099,6 +1100,7 @@ make-install-sh:
 	echo "install -m644 $(source__test__dir)timeline-test/*.f*                                     $(chroot__install__test__dir)timeline-test/"                                     >> install-sh
 	echo "install -m644 $(source__test__dir)xmlrpc-test/*.f*                                       $(chroot__install__test__dir)xmlrpc-test/"                                       >> install-sh
 	echo "install -m644 $(source__example__dir)*                                                   $(chroot__install__example__dir)"                                                >> install-sh
+	echo "install -m644 $(source__example__dir)cannons_algorithm/*.f*                              $(chroot__install__example__dir)cannons_algorithm/"                              >> install-sh
 	echo "install -m644 $(source__example__dir)divisi2/*.f*                                        $(chroot__install__example__dir)divisi2/"                                        >> install-sh
 	echo "install -m644 $(source__example__dir)em_two_webpage/*.f*                                 $(chroot__install__example__dir)em_two_webpage/"                                 >> install-sh
 	echo "install -m644 $(source__example__dir)english_language/*.f*                               $(chroot__install__example__dir)english_language/"                               >> install-sh

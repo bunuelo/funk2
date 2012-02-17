@@ -49,12 +49,11 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/funk2.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/funk2 install
+	$(MAKE) DESTDIR=$(CURDIR)/debian/funk2 install-debian
 
 
 # Build architecture-independent files here.
 binary-indep: install
-	$(MAKE) DESTDIR=$(CURDIR)/debian/funk2 install-full
 	dpkg-shlibdeps debian/tmp/usr/bin/* debian/tmp/usr/sbin/* debian/tmp/usr/lib/*
 	dh_testdir
 	dh_testroot

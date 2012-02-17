@@ -1142,6 +1142,14 @@ make-install-full-sh: make-install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-full-sh
 	chmod a+x install-full-sh
 
+make-debian-postinst:
+	echo "#!/bin/sh -e"  > debian/postinst
+	echo ""             >> debian/postinst
+	echo "ldconfig"     >> debian/postinst
+	echo ""             >> debian/postinst
+
+
+
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
@@ -1150,5 +1158,8 @@ install: install-am make-install-sh
 
 install-full: install make-install-full-sh img/bootstrap.img
 	./install-full-sh
+
+install-debian: install make-debian-postinst
+
 
 extensions: finish_compiling_all_core_extensions

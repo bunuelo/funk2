@@ -318,7 +318,7 @@
   [keyboard_editor-press_and_insert_char_key this standard-terminal key]]
 
 [deftypefunk keyboard_editor execute press_ctrl_c []
-  [terminal_format standard-terminal '\nCTRL-C PRESSED']
+  [terminal_format standard-terminal '\nrepl: exiting funk2 immediately.']
   [quit]]
 
 [deftypefunk keyboard_editor execute press_unknown_key []

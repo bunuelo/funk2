@@ -112,9 +112,20 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
 }
 export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
 
+#define assert_value_with_ctrl_c(value) {			\
+    f2ptr temp_value = (value);					\
+    if (raw__larva__is_type(cause, temp_value)) {		\
+      if (raw__larva__bug_type(cause, temp_value) == 777) {	\
+	return temp_value;					\
+      } else {							\
+	assert_value(temp_value);				\
+      }								\
+    }								\
+    temp_value;							\
+  }
 
 f2ptr f2__keyboard__try_read_character(f2ptr cause) {
-  f2ptr b0 = assert_value(f2__keyboard__try_read_byte(cause));
+  f2ptr b0 = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
   if (b0 == nil) {
     return nil;
   }
@@ -124,7 +135,7 @@ f2ptr f2__keyboard__try_read_character(f2ptr cause) {
     return f2char__new(cause, b0__i);
   } else if ((b0__i & 0xE0) == 0xC0) {
     // utf8 two-byte character
-    f2ptr             b1    = assert_value(f2__keyboard__try_read_byte(cause));
+    f2ptr             b1    = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
     if (b1 == nil) {
       return f2larva__new(cause, 65424, nil);
     }
@@ -133,12 +144,12 @@ f2ptr f2__keyboard__try_read_character(f2ptr cause) {
     return f2char__new(cause, ch);
   } else if ((b0__i & 0xF0) == 0xE0) {
     // utf8 three-byte character
-    f2ptr             b1    = assert_value(f2__keyboard__try_read_byte(cause));
+    f2ptr             b1    = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
     if (b1 == nil) {
       return f2larva__new(cause, 65425, nil);
     }
     u64               b1__i = f2integer__i(b1, cause);
-    f2ptr             b2    = assert_value(f2__keyboard__try_read_byte(cause));
+    f2ptr             b2    = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
     if (b2 == nil) {
       return f2larva__new(cause, 65426, nil);
     }
@@ -147,17 +158,17 @@ f2ptr f2__keyboard__try_read_character(f2ptr cause) {
     return f2char__new(cause, ch);
   } else if ((b0__i & 0xF8) == 0xF0) {
     // utf8 four-byte character
-    f2ptr             b1    = assert_value(f2__keyboard__try_read_byte(cause));
+    f2ptr             b1    = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
     if (b1 == nil) {
       return f2larva__new(cause, 65427, nil);
     }
     u64               b1__i = f2integer__i(b1, cause);
-    f2ptr             b2    = assert_value(f2__keyboard__try_read_byte(cause));
+    f2ptr             b2    = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
     if (b2 == nil) {
       return f2larva__new(cause, 65428, nil);
     }
     u64               b2__i = f2integer__i(b2, cause);
-    f2ptr             b3    = assert_value(f2__keyboard__try_read_byte(cause));
+    f2ptr             b3    = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
     if (b3 == nil) {
       return f2larva__new(cause, 65429, nil);
     }
@@ -175,7 +186,7 @@ export_cefunk0(keyboard__try_read_character, 0, "Wait for next character from ke
 f2ptr f2__keyboard__check_keypress(f2ptr cause) {
   f2ptr old_opts = assert_value(f2__keyboard__current_mode(cause));
   assert_value(f2__keyboard__enable_noncanonical_mode(cause));
-  f2ptr ch     = assert_value(f2__keyboard__try_read_character(cause));
+  f2ptr ch     = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
   f2ptr result = nil;
   {
     if (ch != nil) {
@@ -184,14 +195,14 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 	if (ch__ch == 0x7F) {
 	  result = new__symbol(cause, "key:backspace");
 	} else if (ch__ch == 0x1B) {
-	  f2ptr escaped_ch = f2__keyboard__try_read_character(cause);
+	  f2ptr escaped_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 	  if (escaped_ch == nil) {
 	    result = new__symbol(cause, "key:escape");
 	  } else {
 	    if (raw__char__is_type(cause, ch)) {
 	      funk2_character_t escaped_ch__ch = raw__char__ch(cause, escaped_ch);
 	      if (escaped_ch__ch == (funk2_character_t)'[') {
-		f2ptr ansi_ch = f2__keyboard__try_read_character(cause);
+		f2ptr ansi_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 		if ((ansi_ch != nil) && raw__char__is_type(cause, ansi_ch)) {
 		  funk2_character_t ansi_ch__ch = raw__char__ch(cause, ansi_ch);
 		  if (ansi_ch__ch == (funk2_character_t)'A') {
@@ -203,7 +214,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		  } else if (ansi_ch__ch == (funk2_character_t)'D') {
 		    result = new__symbol(cause, "key:left");
 		  } else if (ansi_ch__ch == (funk2_character_t)'5') {
-		    f2ptr ansi2_ch = f2__keyboard__try_read_character(cause);
+		    f2ptr ansi2_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
 		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
 		      if (ansi2_ch__ch == (funk2_character_t)'~') {
@@ -211,7 +222,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		      }
 		    }
 		  } else if (ansi_ch__ch == (funk2_character_t)'6') {
-		    f2ptr ansi2_ch = f2__keyboard__try_read_character(cause);
+		    f2ptr ansi2_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
 		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
 		      if (ansi2_ch__ch == (funk2_character_t)'~') {
@@ -221,7 +232,7 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		  }
 		}
 	      } else if (escaped_ch__ch == (funk2_character_t)'O') {
-		f2ptr other_ch = f2__keyboard__try_read_character(cause);
+		f2ptr other_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 		if ((other_ch != nil) && raw__char__is_type(cause, other_ch)) {
 		  funk2_character_t other_ch__ch = raw__char__ch(cause, other_ch);
 		  if (other_ch__ch == (funk2_character_t)'H') {
@@ -344,7 +355,7 @@ f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr t
   f2ptr     key         = nil;
   boolean_t is_text_key = boolean__true;
   while (is_text_key) {
-    key = assert_value(f2__keyboard__check_keypress(cause));
+    key = assert_value_with_ctrl_c(f2__keyboard__check_keypress(cause));
     if (raw__char__is_type(cause, key)) {
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "saving_x_column_during_movement"), nil));
       assert_value(f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(cause, this, terminal_print_frame, key));

@@ -329,7 +329,7 @@
     [if [null key]
 	[millisleep 100]
       [if [is-type `bug key]
-	  [if [== [get bug bug_type] 777]
+	  [if [== [get key bug_type] 777]
 	      [have this press_ctrl_c]
 	    [bug key]]
 	[prog [print-ansi-hide_cursor]

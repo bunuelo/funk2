@@ -318,6 +318,7 @@
   [keyboard_editor-press_and_insert_char_key this standard-terminal key]]
 
 [deftypefunk keyboard_editor execute press_ctrl_c []
+  [terminal_format standard-terminal '\nCTRL-C PRESSED']
   [quit]]
 
 [deftypefunk keyboard_editor execute press_unknown_key []
@@ -347,7 +348,6 @@
 		    [[eq key `key:end]              [have this press_end]]
 		    [[eq key `key:page_up]          [have this press_page_up]]
 		    [[eq key `key:page_down]        [have this press_page_down]]
-		    [[eq key `key:ctrl_c]           [have this press_ctrl_c]]
 		    [t                              [have this press_unknown_key]]]
 	      `[have this print_debug cursor_x ' ' cursor_y '    ']
 	      [print-ansi-show_cursor]]]]]]

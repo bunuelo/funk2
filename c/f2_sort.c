@@ -124,13 +124,13 @@ def_pcfunk1(sort_integer_array, integers,
 
 f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {
   f2ptr key;
-  s64   raw_key;
+  //s64   raw_key;
   s64   i, j, k;
   if (first_element < last_element) {
     k = ((first_element + last_element) / 2);
     quicksort_swap_f2ptr(cause,  array, first_element,        k );
     key = raw__array__elt(cause, array, first_element);
-    raw_key = f2integer__i(key, cause);
+    //raw_key = f2integer__i(key, cause);
     i = first_element + 1;
     j = last_element;
     while (i <= j) {

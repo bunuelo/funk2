@@ -26,7 +26,6 @@ source__funk2__dir           = ./
 source__fu2__dir             = $(source__funk2__dir)fu2/
 source__bootstrap__fu2       = $(source__fu2__dir)bootstrap.fu2
 source__bootstrap__repl__fu2 = $(source__fu2__dir)bootstrap-repl.fu2
-source__fu2__dir             = $(source__funk2__dir)fu2/
 source__built_in__dir        = $(source__funk2__dir)built-in/
 source__extension__dir       = $(source__funk2__dir)extension/
 source__test__dir            = $(source__funk2__dir)test/
@@ -247,7 +246,10 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/lick/libf2e_lick.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                       extension/movie/libf2e_movie.la \
+                      extension/keyboard/libf2e_keyboard.la \
                       extension/propogator/libf2e_propogator.la \
+                      extension/semantic_action/libf2e_semantic_action.la \
+                      extension/semantic_action_knowledge_base/libf2e_semantic_action_knowledge_base.la \
                       extension/semantic_action_event/libf2e_semantic_action_event.la \
                       extension/semantic_agent/libf2e_semantic_agent.la \
                       extension/semantic_causal_event/libf2e_semantic_causal_event.la \
@@ -321,7 +323,10 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/lick/.libs/libf2e_*.*                                                                                 $(compile__lib__dir)
 	cp -fa extension/meta_semantic_knowledge_base/.libs/libf2e_*.*                                 $(compile__lib__dir)
 	cp -fa extension/movie/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
+	cp -fa extension/keyboard/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
 	cp -fa extension/propogator/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
+	cp -fa extension/semantic_action/.libs/libf2e_*.*                                                           $(compile__lib__dir)
+	cp -fa extension/semantic_action_knowledge_base/.libs/libf2e_*.*                             $(compile__lib__dir)
 	cp -fa extension/semantic_action_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
 	cp -fa extension/semantic_agent/.libs/libf2e_*.*                                                             $(compile__lib__dir)
 	cp -fa extension/semantic_causal_event/.libs/libf2e_*.*                                               $(compile__lib__dir)
@@ -525,7 +530,10 @@ extension_interval_tree_libf2e_interval_tree_la_SOURCES                         
 extension_lick_libf2e_lick_la_SOURCES                                                                                 = extension/lick/lick.c
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                 = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_movie_libf2e_movie_la_SOURCES                                                                               = extension/movie/movie.c
+extension_keyboard_libf2e_keyboard_la_SOURCES                                                                         = extension/keyboard/keyboard.c
 extension_propogator_libf2e_propogator_la_SOURCES                                                                     = extension/propogator/propogator.c
+extension_semantic_action_libf2e_semantic_action_la_SOURCES                                                           = extension/semantic_action/semantic_action.c
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES                             = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
 extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                               = extension/semantic_action_event/semantic_action_event.c
 extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                             = extension/semantic_agent/semantic_agent.c
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                               = extension/semantic_causal_event/semantic_causal_event.c
@@ -652,6 +660,9 @@ extension_frame_ball_libf2e_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_keyboard_libf2e_keyboard_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_keyboard_libf2e_keyboard_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -663,6 +674,12 @@ extension_lick_libf2e_lick_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_action_libf2e_semantic_action_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_action_libf2e_semantic_action_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -824,7 +841,8 @@ extension_transframe_libf2e_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 CONFIGURE_DEPENDENCIES = config_bit_num.h config_compile_time_id.h
 CONFIG_CLEAN_FILES     = config_bit_num.h config_compile_time_id.h
 
-AM_MAKEFLAGS = img/bootstrap.img
+# causes building of img/bootstrap.img
+#AM_MAKEFLAGS = img/bootstrap.img
 
 clean-img:
 	rm -f img/bootstrap-repl.img
@@ -839,7 +857,7 @@ clean: clean-am clean-img
 make-install-sh:
 	echo "#!/bin/sh"                                                                                                                                                                 > install-sh
 	echo "echo \"\""                                                                                                                                                                >> install-sh
-	echo "echo \"make: performing system-wide installation of funk2\""                                                                                                              >> install-sh
+	echo "echo \"make: install-sh performing system-wide installation of funk2\""                                                                                           >> install-sh
 	echo "echo \"\""                                                                                                                                                                >> install-sh
 	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                                                          >> install-sh
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                                                          >> install-sh
@@ -883,7 +901,10 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)lick/"                                                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)movie/"                                                                                                                  >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)keyboard/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action/"                                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_knowledge_base/"                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_event/"                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_agent/"                                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_category/"                                                                                                      >> install-sh
@@ -943,9 +964,11 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__test__dir)interval_tree-test/"                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)optimize-test/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)propogator-test/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__test__dir)keyboard-test/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)timeline-test/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__test__dir)xmlrpc-test/"                                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)"                                                                                                                          >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)cannons_algorithm/"                                                                                                        >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)divisi2/"                                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)em_two_webpage/"                                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)english_language/"                                                                                                         >> install-sh
@@ -974,7 +997,6 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__icons__dir)"                                                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__man__dir)"                                                                                                                              >> install-sh
 	echo "install -m755 $(compile__funk2) $(chroot__install__funk2)"                                                                                                                >> install-sh
-	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-sh
 	echo "install -m644 c/*.h $(chroot__install__include__dir)"                                                                                                                     >> install-sh
 	echo "install -m644 $(source__fu2__dir)*                                                       $(chroot__install__fu2__dir)"                                                    >> install-sh
 	echo "install -m644 $(source__built_in__dir)*                                                  $(chroot__install__built_in__dir)"                                               >> install-sh
@@ -1010,7 +1032,10 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)lick/*.f*                                         $(chroot__install__extension__dir)lick/"                                         >> install-sh
 	echo "install -m644 $(source__extension__dir)meta_semantic_knowledge_base/*.f*                 $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                 >> install-sh
 	echo "install -m644 $(source__extension__dir)movie/*.f*                                        $(chroot__install__extension__dir)movie/"                                        >> install-sh
+	echo "install -m644 $(source__extension__dir)keyboard/*.f*                                     $(chroot__install__extension__dir)keyboard/"                                     >> install-sh
 	echo "install -m644 $(source__extension__dir)propogator/*.f*                                   $(chroot__install__extension__dir)propogator/"                                   >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_action/*.f*                              $(chroot__install__extension__dir)semantic_action/"                              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_action_knowledge_base/*.f*               $(chroot__install__extension__dir)semantic_action_knowledge_base/"               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action_event/*.f*                        $(chroot__install__extension__dir)semantic_action_event/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_agent/*.f*                               $(chroot__install__extension__dir)semantic_agent/"                               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_category/*.f*                            $(chroot__install__extension__dir)semantic_category/"                            >> install-sh
@@ -1070,9 +1095,11 @@ make-install-sh:
 	echo "install -m644 $(source__test__dir)interval_tree-test/*.f*                                $(chroot__install__test__dir)interval_tree-test/"                                >> install-sh
 	echo "install -m644 $(source__test__dir)optimize-test/*.f*                                     $(chroot__install__test__dir)optimize-test/"                                     >> install-sh
 	echo "install -m644 $(source__test__dir)propogator-test/*.f*                                   $(chroot__install__test__dir)propogator-test/"                                   >> install-sh
+	echo "install -m644 $(source__test__dir)keyboard-test/*.f*                                     $(chroot__install__test__dir)keyboard-test/"                                     >> install-sh
 	echo "install -m644 $(source__test__dir)timeline-test/*.f*                                     $(chroot__install__test__dir)timeline-test/"                                     >> install-sh
 	echo "install -m644 $(source__test__dir)xmlrpc-test/*.f*                                       $(chroot__install__test__dir)xmlrpc-test/"                                       >> install-sh
 	echo "install -m644 $(source__example__dir)*                                                   $(chroot__install__example__dir)"                                                >> install-sh
+	echo "install -m644 $(source__example__dir)cannons_algorithm/*.f*                              $(chroot__install__example__dir)cannons_algorithm/"                              >> install-sh
 	echo "install -m644 $(source__example__dir)divisi2/*.f*                                        $(chroot__install__example__dir)divisi2/"                                        >> install-sh
 	echo "install -m644 $(source__example__dir)em_two_webpage/*.f*                                 $(chroot__install__example__dir)em_two_webpage/"                                 >> install-sh
 	echo "install -m644 $(source__example__dir)english_language/*.f*                               $(chroot__install__example__dir)english_language/"                               >> install-sh
@@ -1103,10 +1130,41 @@ make-install-sh:
 	echo "install -m644 debian/funk2.1.gz $(chroot__install__man__dir)"                                                                                                             >> install-sh
 	chmod a+x install-sh
 
+make-install-full-sh: make-install-sh
+	echo "#!/bin/sh"                                                                                                                                                                 > install-full-sh
+	echo "echo \"\""                                                                                                                                                                >> install-full-sh
+	echo "echo \"make: install-full-sh performing system-wide installation of funk2\""                                                                                              >> install-full-sh
+	echo "echo \"\""                                                                                                                                                                >> install-full-sh
+	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                                                          >> install-full-sh
+#	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                                                          >> install-full-sh
+	echo "echo \"  install__include__dir = $(chroot__install__include__dir)\""                                                                                                      >> install-full-sh
+	echo "echo \"\""                                                                                                                                                                >> install-full-sh
+	echo "./install-sh"                                                                                                                                                             >> install-full-sh
+	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-full-sh
+	chmod a+x install-full-sh
+
+make-debian-postinst:
+	echo "#!/bin/sh -e"                  > debian/postinst
+	echo ""                             >> debian/postinst
+	echo "ldconfig"                     >> debian/postinst
+	echo "cd /usr/share/funk2"          >> debian/postinst
+	echo "mkdir -p img"                 >> debian/postinst
+	echo "funk2 fu2/bootstrap-repl.fu2" >> debian/postinst
+	echo "funk2 fu2/bootstrap.fu2"      >> debian/postinst
+	echo ""                             >> debian/postinst
+
+extensions: finish_compiling_all_core_extensions
+
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) -Llib/.libs -lfunk2
 
-install: install-am make-install-sh
+install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)
 	./install-sh
 
-extensions: finish_compiling_all_core_extensions
+install-debian: install-minimal make-debian-postinst
+
+# full install
+install: install-minimal make-install-full-sh img/bootstrap.img
+	./install-full-sh
+
+

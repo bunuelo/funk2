@@ -19,23 +19,18 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__SIGNAL__H
-#define F2__SIGNAL__H
+#ifndef F2__EXTENSION__SEMANTIC_ACTION__H
+#define F2__EXTENSION__SEMANTIC_ACTION__H
 
-#include "f2_global.h"
-
-extern int __received_signal__sigint;
-
-void funk2_receive_signal(int sig);
+#include "../semantic_object/semantic_object.h"
+#include "../semantic_event/semantic_event.h"
 
 
-boolean_t raw__system__received_signal__sigint(f2ptr cause);
-f2ptr      f2__system__received_signal__sigint(f2ptr cause);
-f2ptr      f2__system__clear_signal__sigint(f2ptr cause);
+// **
 
-  // **
+f2ptr f2__semantic_action__core_extension__ping      (f2ptr cause);
+f2ptr f2__semantic_action__core_extension__initialize(f2ptr cause);
+f2ptr f2__semantic_action__core_extension__destroy   (f2ptr cause);
 
-void f2__signal__initialize();
-
-#endif // F2__SIGNAL__H
+#endif // F2__EXTENSION__SEMANTIC_ACTION__H
 

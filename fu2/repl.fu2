@@ -43,7 +43,10 @@
       [if [is-type `exception read_exp]
 	  [let [[tag [object-get read_exp `tag]]]
 	    [if [eq tag `reader:no_character_waiting-exception]
-		[millisleep 1000]
+		[if [system-received_signal-sigint]
+		    [prog [system-clear_signal-sigint]
+			  [error signal `read-sigint]]
+		  [millisleep 1000]]
 	      [= read_successful `t]]]
 	[= read_successful `t]]]
     read_exp]]
@@ -139,13 +142,16 @@
 					  [terminal_write output-terminal eval-exp]]]
 		[terminal_repl-io input-stream output-terminal]]]]]]]
 
-[defunk repl []
+[defunk terminal_repl []
   [let [[result [terminal_repl-io standard-input standard-terminal]]]
     [if [is-type `exception result]
 	[prog [terminal_format standard-terminal
 			       '\nerror terminal repl: unexpected exception ' result '\n'
 			       '\n                     restarting terminal repl.\n']
-	      [repl]]]]]
+	      [terminal_repl]]]]]
+
+[defunk repl []
+  [terminal_repl]]
 
 [defunk load1 [filename]
   [with-new-cause [cause-define cause-name      `load1]

@@ -11285,6 +11285,23 @@ $as_echo "$as_me:
 *** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&6;}
 fi
 
+## Checking for ncurses.
+#have_ncurses_requirements=1
+#AC_MSG_NOTICE([Checking for ncurses and its requirements.])
+#AC_CHECK_LIB(ncurses,initscr, [],[have_ncurses_requirements=0])
+#AC_CHECK_HEADERS([ncurses.h],[],[have_ncurses_requirements=0])
+#AM_CONDITIONAL(NCURSES_SUPPORTED, test $have_ncurses_requirements == 1)
+#if test $have_ncurses_requirements == 1
+#then
+#  AC_MSG_NOTICE([Feature ncurses is fully supported.])
+#  AC_DEFINE(F2__NCURSES_SUPPORTED, 1, Build ncurses support into Funk2)
+#else
+#  AC_MSG_NOTICE([
+#*** ncurses is not required to build Funk2, but the ncurses development headers
+#*** are not installed, so ncurses support will not be compiled into Funk2.  The
+#*** latest version of ncurses is available at http://invisible-island.net/ncurses/ncurses.html])
+#fi
+
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
@@ -16923,11 +16940,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16926: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16943: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16930: \$? = $ac_status" >&5
+   echo "$as_me:16947: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -17022,11 +17039,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17025: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17042: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17029: \$? = $ac_status" >&5
+   echo "$as_me:17046: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17074,11 +17091,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17077: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17094: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17081: \$? = $ac_status" >&5
+   echo "$as_me:17098: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized

@@ -24,7 +24,7 @@
 
 // terminal_print_frame
 
-def_frame_object__global__25_slot(terminal_print_frame,
+def_frame_object__global__26_slot(terminal_print_frame,
 				  cmutex,
 				  testing,
 				  testing_max_x_constraint,
@@ -49,7 +49,8 @@ def_frame_object__global__25_slot(terminal_print_frame,
 				  failed_max_size_constraint,
 				  resize_to_fit,
 				  max_nanoseconds_for_resize,
-				  print_as_frame_hash);
+				  print_as_frame_hash,
+				  escape_sequence);
 
 f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_distance, f2ptr max_x, f2ptr max_height, f2ptr max_size, f2ptr use_ansi_codes, f2ptr use_html_codes, f2ptr resize_to_fit, f2ptr max_nanoseconds_for_resize) {
   assert_argument_type(stream,  stream);
@@ -74,6 +75,7 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
   f2ptr failed_max_height_constraint  = f2bool__new(boolean__false);
   f2ptr failed_max_size_constraint    = f2bool__new(boolean__false);
   f2ptr print_as_frame_hash           = f2__ptypehash__new(cause);
+  f2ptr escape_sequence               = nil;
   return f2terminal_print_frame__new(cause,
 				     cmutex,
 				     testing,
@@ -99,7 +101,8 @@ f2ptr f2__terminal_print_frame__new(f2ptr cause, f2ptr stream, f2ptr indent_dist
 				     failed_max_size_constraint,
 				     resize_to_fit,
 				     max_nanoseconds_for_resize,
-				     print_as_frame_hash);
+				     print_as_frame_hash,
+				     escape_sequence);
 }
 def_pcfunk9(terminal_print_frame__new, stream, indent_distance, max_x, max_height, max_size, use_ansi_codes, use_html_codes, resize_to_fit, max_nanoseconds_for_resize,
 	    "",
@@ -107,7 +110,7 @@ def_pcfunk9(terminal_print_frame__new, stream, indent_distance, max_x, max_heigh
 
 
 f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr cmutex                = f2__cmutex__new(cause);
+  f2ptr cmutex               = f2__cmutex__new(cause);
   f2ptr already_printed_hash = f2__ptypehash__new(cause);
   f2ptr print_as_frame_hash  = f2__ptypehash__new(cause);
   return f2terminal_print_frame__new(cause,
@@ -135,7 +138,8 @@ f2ptr raw__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
 				     f2__terminal_print_frame__failed_max_size_constraint(   cause, this),
 				     f2__terminal_print_frame__resize_to_fit(                cause, this),
 				     f2__terminal_print_frame__max_nanoseconds_for_resize(   cause, this),
-				     print_as_frame_hash);
+				     print_as_frame_hash,
+				     f2__terminal_print_frame__escape_sequence(              cause, this));
 }
 
 f2ptr f2__terminal_print_frame__new_copy(f2ptr cause, f2ptr this) {
@@ -244,93 +248,112 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
   f2ptr right_extent       = raw__terminal_print_frame__right_extent(cause, this);
   s64   right_extent__i    = right_extent ? f2integer__i(right_extent, cause) : 0;
   f2ptr use_html_codes     = raw__terminal_print_frame__use_html_codes(cause, this);
+  f2ptr escape_sequence    = raw__terminal_print_frame__escape_sequence(cause, this);
   {
     u64 index;
     for (index = 0; index < length; index ++) {
       funk2_character_t ch = string[index];
-      switch(ch) {
-      case (funk2_character_t)'\r':
-	break;
-      case (funk2_character_t)'\n':
-	if ((testing == nil) && (height__i < max_height__i)) {
-	  if (use_html_codes) {
-	    raw__stream__writef(cause, stream, "<br>");
+      if (escape_sequence != nil) {
+	escape_sequence = f2cons__new(cause, f2char__new(cause, ch), escape_sequence);
+	boolean_t escape_sequence_unrecognized = boolean__false;
+	f2ptr     reverse_escape_sequence      = f2__reverse(cause, escape_sequence);
+	f2ptr     escape_iter_1                = f2__cons__cdr(cause, reverse_escape_sequence);
+	if (escape_iter_1 != nil) {
+	  f2ptr             escape_char_1                = f2__cons__car(cause, escape_iter_1);
+	  funk2_character_t escape_char_1__ch            = raw__char__ch(cause, escape_char_1);
+	  if (escape_char_1__ch == (funk2_character_t)'[') {
+	    f2ptr             escape_iter_2           = f2__cons__cdr(cause, escape_iter_1);
+	    if (escape_iter_2 != nil) {
+	      f2ptr             escape_char_2           = f2__cons__car(cause, escape_iter_2);
+	      funk2_character_t escape_char_2__ch       = raw__char__ch(cause, escape_char_2);
+	      if (escape_char_2__ch == (funk2_character_t)'A') {
+		// key up
+		//raw__stream__writef(cause, stream, "<up>\b\b\b\b");
+		if (height__i > 0) {
+		  height__i --;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[A", 27);
+		  }
+		}
+		escape_sequence = nil;
+	      } else if (escape_char_2__ch == (funk2_character_t)'B') {
+		// key down
+		//raw__stream__writef(cause, stream, "<down>\b\b\b\b\b\b");
+		if (height__i < (max_height__i - 1)) {
+		  height__i ++;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[B", 27);
+		  }
+		}
+		escape_sequence = nil;
+	      } else if (escape_char_2__ch == (funk2_character_t)'C') {
+		// key right
+		//raw__stream__writef(cause, stream, "<right>\b\b\b\b\b\b\b");
+		if (x__i < (max_x__i - 1)) {
+		  x__i ++;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[C", 27);
+		  }
+		}
+		escape_sequence = nil;
+	      } else if (escape_char_2__ch == (funk2_character_t)'D') {
+		// key left
+		//raw__stream__writef(cause, stream, "<left>\b\b\b\b\b\b");
+		if (x__i > 0) {
+		  x__i --;
+		  if (testing == nil) {
+		    raw__stream__writef(cause, stream, "%c[D", 27);
+		  }
+		}
+		escape_sequence = nil;
+	      } else {
+		escape_sequence_unrecognized = boolean__true;
+	      }
+	    }
+	  } else {
+	    escape_sequence_unrecognized = boolean__true;
 	  }
-	  
-	  raw__stream__writef(cause, stream, "\r\n");
+	}
+	if (escape_sequence_unrecognized) {
+	  escape_sequence = nil;
 	  {
-	    u64 index;
-	    for (index = 0; index < indent_distance__i; index ++) {
-	      if (use_html_codes) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
+	    f2ptr iter = reverse_escape_sequence;
+	    while (iter != nil) {
+	      f2ptr escape_ch = f2__cons__car(cause, iter);
+	      {
+		funk2_character_t escape_ch__ch = raw__char__ch(cause, escape_ch);
+		raw__stream__write_character(cause, stream, escape_ch__ch);
 	      }
+	      iter = f2__cons__cdr(cause, iter);
 	    }
 	  }
 	}
-	if ((testing != nil) || (height__i < max_height__i)) {
-	  x__i = indent_distance__i;
-	  if ((! left_extent) || x__i < left_extent__i) {
-	    left_extent__i = x__i;
-	    if (! left_extent) {
-	      left_extent = f2bool__new(boolean__true);
-	    }
-	  }
-	  height__i ++;
-	}
-	break;
-      case (funk2_character_t)'\t':
-	{
-	  u64 spaces_until_next_tab = x__i - (((x__i + 7) >> 3) << 3);
-	  if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
-	    u64 subindex;
-	    for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
-	      if (use_html_codes != nil) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
-	      }
-	    }
-	  }
-	  if ((testing != nil) || (x__i + spaces_until_next_tab < max_x__i)) {
-	    x__i += spaces_until_next_tab;
-	    if ((! right_extent) || x__i > right_extent__i) {
-	      right_extent__i = x__i;
-	      if (! right_extent) {
-		right_extent = f2bool__new(boolean__true);
-	      }
-	    }
-	  }
-	}
-	break;
-      default:
-	if (testing == nil) {
-	  if (x__i >= max_x__i) {
+      } else {
+	switch(ch) {
+	case (funk2_character_t)0x1B: // escape
+	  escape_sequence = f2cons__new(cause, f2char__new(cause, (funk2_character_t)0x1B), nil);
+	  break;
+	case (funk2_character_t)'\r':
+	  break;
+	case (funk2_character_t)'\n':
+	  if ((testing == nil) && (height__i < max_height__i)) {
 	    if (use_html_codes) {
 	      raw__stream__writef(cause, stream, "<br>");
 	    }
+	    
 	    raw__stream__writef(cause, stream, "\r\n");
-	  }
-	  if (ch >= 28) {
-	    switch(ch) {
-	    case (funk2_character_t)' ':
-	      if (use_html_codes != nil) {
-		raw__stream__writef(cause, stream, "&nbsp;");
-	      } else {
-		raw__stream__writef(cause, stream, " ");
+	    {
+	      u64 index;
+	      for (index = 0; index < indent_distance__i; index ++) {
+		if (use_html_codes) {
+		  raw__stream__writef(cause, stream, "&nbsp;");
+		} else {
+		  raw__stream__writef(cause, stream, " ");
+		}
 	      }
-	      break;
-	    default:
-	      raw__stream__write_character(cause, stream, ch);
-	      break;
 	    }
-	  } else {
-	    raw__stream__writef(cause, stream, "?");
 	  }
-	}
-	if ((testing == nil) || (x__i < max_x__i)) {
-	  if ((testing == nil) && (x__i >= max_x__i)) {
+	  if ((testing != nil) || (height__i < max_height__i)) {
 	    x__i = indent_distance__i;
 	    if ((! left_extent) || x__i < left_extent__i) {
 	      left_extent__i = x__i;
@@ -340,30 +363,100 @@ void raw__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr t
 	    }
 	    height__i ++;
 	  }
-	  x__i ++;
-	  if ((! right_extent) || x__i > right_extent__i) {
-	    right_extent__i = x__i;
-	    if (! right_extent) {
-	      right_extent = f2bool__new(boolean__true);
+	  break;
+	case (funk2_character_t)'\t':
+	  {
+	    s64 spaces_until_next_tab = (x__i < 0) ? 8 : ((((x__i + 8) >> 3) << 3) - x__i);
+	    if ((testing == nil) && (x__i + spaces_until_next_tab < max_x__i)) {
+	      u64 subindex;
+	      for (subindex = 0; subindex < spaces_until_next_tab; subindex ++) {
+		if (use_html_codes != nil) {
+		  raw__stream__writef(cause, stream, "&nbsp;");
+		} else {
+		  raw__stream__writef(cause, stream, " ");
+		}
+	      }
+	    }
+	    if ((testing != nil) || (x__i + spaces_until_next_tab < max_x__i)) {
+	      x__i += spaces_until_next_tab;
+	      if ((! right_extent) || x__i > right_extent__i) {
+		right_extent__i = x__i;
+		if (! right_extent) {
+		  right_extent = f2bool__new(boolean__true);
+		}
+	      }
 	    }
 	  }
+	  break;
+	case (funk2_character_t)'\b':
+	  if (x__i > 0) {
+	    raw__stream__writef(cause, stream, "\b");
+	    x__i --;
+	  }
+	  break;
+	default:
+	  if (testing == nil) {
+	    if (x__i >= max_x__i) {
+	      if (use_html_codes) {
+		raw__stream__writef(cause, stream, "<br>");
+	      }
+	      raw__stream__writef(cause, stream, "\r\n");
+	    }
+	    if (ch >= 28 && ch != 0x7F) {
+	      switch(ch) {
+	      case (funk2_character_t)' ':
+		if (use_html_codes != nil) {
+		  raw__stream__writef(cause, stream, "&nbsp;");
+		} else {
+		  raw__stream__writef(cause, stream, " ");
+		}
+		break;
+	      default:
+		raw__stream__write_character(cause, stream, ch);
+		break;
+	      }
+	    } else {
+	      funk2_character_t replacement_character = (funk2_character_t)0xFFFD;
+	      raw__stream__write_character(cause, stream, replacement_character);
+	    }
+	  }
+	  if ((testing == nil) || (x__i < max_x__i)) {
+	    if ((testing == nil) && (x__i >= max_x__i)) {
+	      x__i = indent_distance__i;
+	      if ((! left_extent) || x__i < left_extent__i) {
+		left_extent__i = x__i;
+		if (! left_extent) {
+		  left_extent = f2bool__new(boolean__true);
+		}
+	      }
+	      height__i ++;
+	    }
+	    x__i ++;
+	    if ((! right_extent) || x__i > right_extent__i) {
+	      right_extent__i = x__i;
+	      if (! right_extent) {
+		right_extent = f2bool__new(boolean__true);
+	      }
+	    }
+	  }
+	  break;
 	}
-	break;
       }
     }
-  }
-  if (testing != nil) {
-    if (right_extent__i >= max_x__i) {
-      raw__terminal_print_frame__failed_max_x_constraint__set(cause, this, f2bool__new(boolean__true));
+    if (testing != nil) {
+      if (right_extent__i >= max_x__i) {
+	raw__terminal_print_frame__failed_max_x_constraint__set(cause, this, f2bool__new(boolean__true));
+      }
+      if (height__i >= max_height__i) {
+	raw__terminal_print_frame__failed_max_height_constraint__set(cause, this, f2bool__new(boolean__true));
+      }
     }
-    if (height__i >= max_height__i) {
-      raw__terminal_print_frame__failed_max_height_constraint__set(cause, this, f2bool__new(boolean__true));
-    }
+    raw__terminal_print_frame__x__set(              cause, this, f2integer__new(cause, x__i));
+    raw__terminal_print_frame__height__set(         cause, this, f2integer__new(cause, height__i));
+    raw__terminal_print_frame__left_extent__set(    cause, this, f2integer__new(cause, left_extent__i));
+    raw__terminal_print_frame__right_extent__set(   cause, this, f2integer__new(cause, right_extent__i));
+    raw__terminal_print_frame__escape_sequence__set(cause, this, escape_sequence);
   }
-  raw__terminal_print_frame__x__set(           cause, this, f2integer__new(cause, x__i));
-  raw__terminal_print_frame__height__set(      cause, this, f2integer__new(cause, height__i));
-  raw__terminal_print_frame__left_extent__set( cause, this, f2integer__new(cause, left_extent__i));
-  raw__terminal_print_frame__right_extent__set(cause, this, f2integer__new(cause, right_extent__i));
 }
 
 f2ptr f2__terminal_print_frame__write_string__thread_unsafe(f2ptr cause, f2ptr this, f2ptr string) {
@@ -389,6 +482,90 @@ void raw__terminal_print_frame__write_utf8_string__thread_unsafe(f2ptr cause, f2
   raw__terminal_print_frame__write_string__thread_unsafe(cause, this, temp_str__length, temp_str);
   f2__free(to_ptr(temp_str));
 }
+
+
+void raw__terminal_print_frame__write_ansi__up__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[A");
+}
+
+void raw__terminal_print_frame__write_ansi__down__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[B");
+}
+
+void raw__terminal_print_frame__write_ansi__right__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[C");
+}
+
+void raw__terminal_print_frame__write_ansi__left__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[D");
+}
+
+void raw__terminal_print_frame__write_ansi__move__thread_unsafe(f2ptr cause, f2ptr this, s64 x, s64 y) {
+  if (y < 0) {
+    int i;
+    for (i = 0; i < -y; i ++) {
+      raw__terminal_print_frame__write_ansi__up__thread_unsafe(cause, this);
+    }
+  } else if (y > 0) {
+    int i;
+    for (i = 0; i < y; i ++) {
+      raw__terminal_print_frame__write_ansi__down__thread_unsafe(cause, this);
+    }
+  }
+  if (x < 0) {
+    int i;
+    for (i = 0; i < -x; i ++) {
+      raw__terminal_print_frame__write_ansi__left__thread_unsafe(cause, this);
+    }
+  } else if (x > 0) {
+    int i;
+    for (i = 0; i < x; i ++) {
+      raw__terminal_print_frame__write_ansi__right__thread_unsafe(cause, this);
+    }
+  }
+}
+
+f2ptr f2__terminal_print_frame__write_ansi__move__thread_unsafe(f2ptr cause, f2ptr this, f2ptr x, f2ptr y) {
+  assert_argument_type(terminal_print_frame, this);
+  assert_argument_type(integer,              x);
+  assert_argument_type(integer,              y);
+  s64 x__i = f2integer__i(x, cause);
+  s64 y__i = f2integer__i(y, cause);
+  raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, this, x__i, y__i);
+  return nil;
+}
+def_pcfunk3(terminal_print_frame__write_ansi__move__thread_unsafe, this, x, y,
+	    "Writes ansi escape sequences to the given terminal_print_frame in order to move the cursor the given number of x and y distances given as positive or negative integers.\n"
+	    "Positive x is to the right, while positive y is down.",
+	    return f2__terminal_print_frame__write_ansi__move__thread_unsafe(this_cause, this, x, y));
+
+
+void raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25l");
+}
+
+f2ptr f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  assert_argument_type(terminal_print_frame, this);
+  raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, this);
+  return nil;
+}
+def_pcfunk1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this,
+	    "Writes the escape sequence '<escape>[?25l' in order to hide the cursor.",
+	    return f2__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(this_cause, this));
+
+
+void raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  raw__terminal_print_frame__write_utf8_string__thread_unsafe(cause, this, (u8*)"\x1B[?25h");
+}
+
+f2ptr f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(f2ptr cause, f2ptr this) {
+  assert_argument_type(terminal_print_frame, this);
+  raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, this);
+  return nil;
+}
+def_pcfunk1(terminal_print_frame__write_ansi__show_cursor__thread_unsafe, this,
+	    "Writes the escape sequence '<escape>[?25h' in order to show the cursor.",
+	    return f2__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(this_cause, this));
 
 
 f2ptr raw__terminal_print_frame__can_print_expression_on_one_line__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression) {
@@ -914,7 +1091,7 @@ void f2__terminal_print__initialize() {
   
   // terminal_print_frame
   
-  init_frame_object__25_slot(terminal_print_frame,
+  init_frame_object__26_slot(terminal_print_frame,
 			     cmutex,
 			     testing,
 			     testing_max_x_constraint,
@@ -939,7 +1116,8 @@ void f2__terminal_print__initialize() {
 			     failed_max_size_constraint,
 			     resize_to_fit,
 			     max_nanoseconds_for_resize,
-			     print_as_frame_hash);
+			     print_as_frame_hash,
+			     escape_sequence);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(terminal_print_frame__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk = never_gc(cfunk);}
@@ -955,6 +1133,10 @@ void f2__terminal_print__initialize() {
   
   f2__primcfunk__init__2(exp__terminal_print_with_frame__thread_unsafe, this, terminal_print_frame);
   f2__primcfunk__init__2(exp__terminal_stream_print__thread_unsafe,     this, stream);
+  
+  f2__primcfunk__init__3(terminal_print_frame__write_ansi__move__thread_unsafe,        this, x, y);
+  f2__primcfunk__init__1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this);
+  f2__primcfunk__init__1(terminal_print_frame__write_ansi__show_cursor__thread_unsafe, this);
   
 }
 

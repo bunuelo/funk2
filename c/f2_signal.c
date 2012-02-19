@@ -21,15 +21,21 @@
 
 #include "funk2.h"
 
-boolean_t __received_signal__sigint     = 0;
-boolean_t __received_segmentation_fault = 0;
+int __received_signal__sigint     = 0;
+int __received_segmentation_fault = 0;
 
-void f2__receive_signal(int sig) {
+void funk2_receive_signal(int sig) {
   switch(sig) {
   case SIGINT:
-    printf ("\nfunk2 fatal: received ctrl-c (SIGINT).  calling exit.\n"); fflush(stdout);
-    __received_signal__sigint = 1;
-    exit(-1);
+    if (__received_signal__sigint == 0) {
+      printf ("\nFunk2 Warning: Received Ctrl-C (SIGINT) from user.\n"); fflush(stdout);
+    } else if (__received_signal__sigint == 1) {
+      printf ("\nFunk2 Second Warning: Received another Ctrl-C (SIGINT) from user.  The first Ctrl-C from user has not been processed.  PRESSING CTRL-C AGAIN WILL EXIT FUNK2 ENTIRELY. \n"); fflush(stdout);
+    } else {
+      printf ("\nFunk2 Fatal: Received yet another Ctrl-C (SIGINT) from user.  Exiting Funk2 immediately.\n"); fflush(stdout);
+      exit(-1);
+    }
+    __received_signal__sigint ++;
     break;
   case SIGSEGV:
     printf ("\nfunk2 fatal: received segmentation fault (SIGSEGV).  calling exit.\n"); fflush(stdout);
@@ -42,6 +48,29 @@ void f2__receive_signal(int sig) {
     break;
   }
 }
+
+
+boolean_t raw__system__received_signal__sigint(f2ptr cause) {
+  return (__received_signal__sigint != 0);
+}
+
+f2ptr f2__system__received_signal__sigint(f2ptr cause) {
+  return f2bool__new(raw__system__received_signal__sigint(cause));
+}
+def_pcfunk0(system__received_signal__sigint,
+	    "Returns true if the SIGINT signal has been received.",
+	    return f2__system__received_signal__sigint(this_cause));
+
+
+f2ptr f2__system__clear_signal__sigint(f2ptr cause) {
+  __received_signal__sigint = 0;
+  return nil;
+}
+
+def_pcfunk0(system__clear_signal__sigint,
+	    "Clears the SIGINT signal.",
+	    return f2__system__clear_signal__sigint(this_cause));
+
 
 void f2__signal__reinitialize_globalvars() {
   //f2ptr cause =
@@ -57,7 +86,11 @@ void f2__signal__initialize() {
   
   f2__signal__reinitialize_globalvars();
   
-  signal(SIGINT,  f2__receive_signal);
-  signal(SIGSEGV, f2__receive_signal);
+  signal(SIGINT,  funk2_receive_signal);
+  signal(SIGSEGV, funk2_receive_signal);
+
+  f2__primcfunk__init__0(system__received_signal__sigint);
+  f2__primcfunk__init__0(system__clear_signal__sigint);
+
 }
 

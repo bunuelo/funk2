@@ -26,7 +26,6 @@
 	    user-boot-commands]]
   [ansi-stream-foreground [get standard-terminal stream] 15]
   [terminal_format standard-terminal
-		   '\n'
 		   '\n*************************'
 		   '\n**                     **'
 		   '\n**  ']
@@ -40,38 +39,13 @@
   [ansi-stream-reset [get standard-terminal stream]]
   [repl]]
 
-[defunk load-funk2rc []
-  [shelter [filename-load [pathname-concat [getenv 'HOME'] '.funk2rc']]]]
-
 [defunk boot []
   [with-new-cause [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]
 		  [cause-define standard-input    stdin]
-		  [load-funk2rc]
 		  [post_userfile_init_boot]]]
 
 [defunk boot-add_user_command [user_command]
   [mutate user-boot-commands [append user-boot-commands
 				     [cons user_command nil]]]]
 
-
-' bug: this creates a segmentation fault...
-`[defunk boot []
-  [if user-boot-commands
-      [mapc [funk [user-boot-command]
-		  [format stdout \'\\nuser-boot-command: \' user-boot-command]
-		  [eval user-boot-command]]
-	    user-boot-commands]]
-  [format stdout
-	  \'\\n\'
-	  \'\\n*************************\'
-	  \'\\n**                     **\'
-	  \'\\n**  \' `Welcome \' \' `to \' \' `funk2 \'!  **\'
-	  \'\\n**                     **\'
-	  \'\\n*************************\'
-	  \'\\n\']
-  `[funk2_node_handler-know_of_node [system-gethostname] [system-peer_command_server-port_num]]
-   [send_request_register_peer 0 [system-node_id] (0 0 0 0) [system-peer_command_server-port_num]]
-   [repl]
-   ]
-'
 

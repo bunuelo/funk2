@@ -842,6 +842,30 @@ void funk2_gtk__value_changed_event__signal_connect(funk2_gtk_t* this, GtkWidget
 }
 
 
+// size_allocate_event
+
+gboolean funk2_gtk__size_allocate_event__signal_connect__callback_handler(GtkWidget* widget, GtkAllocation* gtk_allocation, gpointer data) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)data;
+  GtkAllocation*        allocation = (GtkAllocation*)from_ptr(f2__malloc(sizeof(GtkAllocation)));
+  memcpy(allocation, gtk_allocation, sizeof(GtkAllocation));
+  funk2_gtk__add_callback_event(__funk2__gtk, callback, allocation);
+  return FALSE;
+}
+
+void funk2_gtk__size_allocate_event__signal_connect(funk2_gtk_t* this, GtkWidget* widget, f2ptr funk, f2ptr args) {
+  funk2_gtk_callback_t* callback = (funk2_gtk_callback_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_t)));
+  callback->funk      = funk;
+  callback->args      = args;
+  callback->args_type = funk2_gtk_callback_args_type__size_allocate;
+  funk2_gtk__add_callback(this, callback);
+  {
+    gdk_threads_enter();
+    g_signal_connect(G_OBJECT(widget), "size-allocate", G_CALLBACK(funk2_gtk__size_allocate_event__signal_connect__callback_handler), callback);
+    gdk_threads_leave();
+  }
+}
+
+
 // object
 
 void funk2_g__object__ref(funk2_gtk_t* this, GObject* object) {
@@ -3212,6 +3236,36 @@ export_cefunk3(gtk__value_changed_event__signal_connect, widget, funk, args, 0,
 
 
 
+// size_allocate_event
+
+f2ptr raw__gtk__size_allocate_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2__gtk->initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, widget);
+    GtkWidget* gtk_widget = raw__gtk_widget__as__GtkWidget(cause, widget);
+    
+    assert_g_type(GTK_TYPE_WIDGET, gtk_widget);
+    
+    funk2_gtk__size_allocate_event__signal_connect(__funk2__gtk, gtk_widget, funk, args);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__size_allocate_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr funk, f2ptr args) {
+  assert_argument_type(gtk_widget, widget);
+  assert_argument_type(funkable,   funk);
+  assert_argument_type(conslist,   args);
+  return raw__gtk__size_allocate_event__signal_connect(cause, widget, funk, args);
+}
+export_cefunk3(gtk__size_allocate_event__signal_connect, widget, funk, args, 0,
+	       "Connects an size_allocate_event signal handler to a GtkWidget.");
+
+
 // works for 'clicked' event but not 'expose_event'
 
 f2ptr raw__gtk__signal_connect(f2ptr cause, f2ptr widget, f2ptr signal_name, f2ptr funk, f2ptr args) {
@@ -4033,6 +4087,16 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
       } break;
       case funk2_gtk_callback_args_type__value_changed: {
 	args = funk_args;
+      } break;
+      case funk2_gtk_callback_args_type__size_allocate: {
+	GtkAllocation* allocation = (GtkAllocation*)(callback_event->args);
+	f2ptr size_allocate_event_frame = f2__frame__new(cause, f2list8__new(cause,
+									     new__symbol(cause, "x"),      f2integer__new(cause, allocation->x),
+									     new__symbol(cause, "y"),      f2integer__new(cause, allocation->y),
+									     new__symbol(cause, "width"),  f2integer__new(cause, allocation->width),
+									     new__symbol(cause, "height"), f2integer__new(cause, allocation->height)));
+	f2__free(to_ptr(allocation));
+	args = f2cons__new(cause, size_allocate_event_frame, funk_args);
       } break;
       default:
 	error(nil, "invalid gtk callback event args_type.");

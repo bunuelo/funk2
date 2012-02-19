@@ -553,7 +553,7 @@ f2ptr f2__stream__try_read_character(f2ptr cause, f2ptr this) {
       }
     } else {
       // invalid character.
-      character = f2char__new(cause, (funk2_character_t)'?');
+      character = f2char__new(cause, (funk2_character_t)0xFFFD);
     }
   }
   if (raw__eq(cause, character, __funk2.reader.char__newline)) {

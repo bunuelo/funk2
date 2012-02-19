@@ -17,9 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk semantic_physical_object-core_extension-ping         semantic_physical_object semantic_physical_object__core_extension__ping]
-[defcorefunk semantic_physical_object-core_extension-initialize   semantic_physical_object semantic_physical_object__core_extension__initialize]
-[defcorefunk semantic_physical_object-core_extension-define_types semantic_physical_object semantic_physical_object__core_extension__define_types]
+[defpackage keyboard
+  :packages            [mutex]
+   :sources            ['keyboard-core.fu2']
+    :dynamic_libraries ['libf2e_keyboard.so']]
 
-[semantic_physical_object-core_extension-define_types]
+[defcore keyboard 'libf2e_keyboard.so']
+
+[defpackage keyboard-repl
+  :packages [keyboard math]
+   :sources ['keyboard-repl.fu2']]
 

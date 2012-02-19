@@ -285,6 +285,8 @@ u64               raw__char__eq_hash_value(f2ptr cause, f2ptr this);
 f2ptr              f2__char__eq_hash_value(f2ptr cause, f2ptr this);
 boolean_t         raw__char__equals       (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr              f2__char__equals       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr             raw__char__string       (f2ptr cause, f2ptr this);
+f2ptr              f2__char__string       (f2ptr cause, f2ptr this);
 
 // string
 
@@ -820,6 +822,8 @@ typedef struct funk2_object_type__char__slot_s {
   f2ptr equals_hash_value__loop_free__funk;
   f2ptr equals_hash_value__symbol;
   f2ptr equals_hash_value__funk;
+  f2ptr string__symbol;
+  f2ptr string__funk;
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__char__slot_t;
@@ -868,6 +872,8 @@ typedef struct funk2_object_type__string__slot_s {
   f2ptr lowercase__funk;
   f2ptr uppercase__symbol;
   f2ptr uppercase__funk;
+  f2ptr multiply__symbol;
+  f2ptr multiply__funk;
 } funk2_object_type__string__slot_t;
 
 // symbol

@@ -17,9 +17,15 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk semantic_physical_object-core_extension-ping         semantic_physical_object semantic_physical_object__core_extension__ping]
-[defcorefunk semantic_physical_object-core_extension-initialize   semantic_physical_object semantic_physical_object__core_extension__initialize]
-[defcorefunk semantic_physical_object-core_extension-define_types semantic_physical_object semantic_physical_object__core_extension__define_types]
+[defunk keyboard-test []
+  [let [[old_opts [keyboard-current_mode]]
+	[done     nil]]
+    [keyboard-enable_noncanonical_mode]
+    [while [not done]
+      [let [[ch [keyboard-read_character]]]
+	[terminal_format standard-terminal '\n' ch ': ' [get ch string]]
+	[if [eq ch #c1b]
+	    [= done t]]]]
+    [keyboard-current_mode-set old_opts]]]
 
-[semantic_physical_object-core_extension-define_types]
 

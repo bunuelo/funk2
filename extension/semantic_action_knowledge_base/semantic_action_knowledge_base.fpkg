@@ -17,9 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk semantic_physical_object-core_extension-ping         semantic_physical_object semantic_physical_object__core_extension__ping]
-[defcorefunk semantic_physical_object-core_extension-initialize   semantic_physical_object semantic_physical_object__core_extension__initialize]
-[defcorefunk semantic_physical_object-core_extension-define_types semantic_physical_object semantic_physical_object__core_extension__define_types]
+[defpackage semantic_action_knowledge_base
+  :packages            [meta_semantic_knowledge_base
+			semantic_action]
+   :sources            ['semantic_action_knowledge_base-core.fu2']
+    :dynamic_libraries ['libf2e_semantic_action_knowledge_base.so']]
 
-[semantic_physical_object-core_extension-define_types]
+[defcore semantic_action_knowledge_base 'libf2e_semantic_action_knowledge_base.so']
 

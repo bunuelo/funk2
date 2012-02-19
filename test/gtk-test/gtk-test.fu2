@@ -85,6 +85,11 @@
     [have swindow      add          text_view]
     [have notebook     append_page  swindow [gtk-label-new 'Document']]
     
+    [have swindow size_allocate_event-signal_connect
+	  [funk [event]
+		[terminal_format standard-terminal '\nsize_allocate_event for scrolled_window: ' event]]
+	  []]
+    
     [have drawing_area request_size 100 100]
     [have notebook     append_page  drawing_area [gtk-label-new 'Drawing Area']]
     

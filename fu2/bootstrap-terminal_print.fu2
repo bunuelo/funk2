@@ -1,5 +1,4 @@
-' 
- Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2012 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -16,9 +15,37 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.
-'
+ rights to redistribute these changes.'
 
-[deftypefunk terminal_print_frame get     new_copy     []       [terminal_print_frame-new_copy     this]
+[deftypefunk terminal_print_frame get     new_copy     []       [terminal_print_frame-new_copy     this]]
 [deftypefunk terminal_print_frame execute write_string [string] [terminal_print_frame-write_string this string]]
+
+[defunk terminal_print_frame-write_ansi-move [this x y]
+  [while [have [get this cmutex] trylock]]
+  [let [[result [terminal_print_frame-write_ansi-move-thread_unsafe this x y]]]
+    [have [get this cmutex] unlock]
+    result]]
+
+[defunk print-ansi-move [x y]
+  [terminal_print_frame-write_ansi-move standard-terminal x y]]
+
+
+[defunk terminal_print_frame-write_ansi-hide_cursor [this]
+  [while [have [get this cmutex] trylock]]
+  [let [[result [terminal_print_frame-write_ansi-hide_cursor-thread_unsafe this]]]
+    [have [get this cmutex] unlock]
+    result]]
+
+[defunk print-ansi-hide_cursor []
+  [terminal_print_frame-write_ansi-hide_cursor standard-terminal]]
+
+
+[defunk terminal_print_frame-write_ansi-show_cursor [this]
+  [while [have [get this cmutex] trylock]]
+  [let [[result [terminal_print_frame-write_ansi-show_cursor-thread_unsafe this]]]
+    [have [get this cmutex] unlock]
+    result]]
+
+[defunk print-ansi-show_cursor []
+  [terminal_print_frame-write_ansi-show_cursor standard-terminal]]
 

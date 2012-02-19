@@ -2503,6 +2503,21 @@ def_pcfunk1(char__equals_hash_value, this,
 	    return f2__char__equals_hash_value(this_cause, this));
 
 
+f2ptr raw__char__string(f2ptr cause, f2ptr this) {
+  funk2_character_t temp[1];
+  temp[0] = f2char__ch(this, cause);
+  return f2string__new(cause, 1, temp);
+}
+
+f2ptr f2__char__string(f2ptr cause, f2ptr this) {
+  assert_argument_type(char, this);
+  return raw__char__string(cause, this);
+}
+def_pcfunk1(char__string, this,
+	    "",
+	    return f2__char__string(this_cause, this));
+
+
 f2ptr raw__char__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   {
     f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
@@ -2576,16 +2591,17 @@ f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr 
 
 f2ptr f2char__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
-  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);}
-  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.type__funk);}
-  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.new__funk);}
-  {char* slot_name = "ch";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.ch__funk);}
-  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq__funk);}
-  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk);}
-  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.new__funk);}
+  {char* slot_name = "ch";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.ch__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals__funk);}
   {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk);}
-  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk);}
+  {char* slot_name = "string";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.string__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -2627,7 +2643,6 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
 
 funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
 #ifdef F2__PTYPE__TYPE_CHECK
   if (__pure__f2ptype__raw(this) != ptype_string) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
@@ -2635,6 +2650,16 @@ funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_character_t ch = __pure__f2string__str(this)[index];
   return ch;
+}
+
+void pfunk2__f2string__elt__set(f2ptr this, int index, f2ptr cause, funk2_character_t ch) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_string) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  __pure__f2string__str(this)[index] = ch;
 }
 
 void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str) {
@@ -2678,17 +2703,11 @@ f2ptr  f2__string__length(f2ptr cause, f2ptr this) {return f2integer__new(cause,
 
 funk2_character_t raw__string__elt(f2ptr cause, f2ptr this, s64 index) {
   if (index < 0) {
-    return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				   new__symbol(cause, "this"),     this,
-				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
+    error(nil, "array_access_out_of_bounds");
   }
   u64 length = f2string__length(this, cause);
   if (index >= length) {
-    return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				   new__symbol(cause, "this"),     this,
-				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
+    error(nil, "array_access_out_of_bounds");
   }
   return f2string__elt(this, index, cause);
 }
@@ -2944,7 +2963,7 @@ f2size_t raw__utf8_char__parse_character(char* utf8_string, funk2_character_t* r
     }
   }
   if (result != NULL) {
-    *result = (funk2_character_t)'?';
+    *result = (funk2_character_t)0xFFFD;
   }
   return 1;
 }
@@ -5977,6 +5996,8 @@ void f2__ptypes__initialize__object_slots() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(char__equals_hash_value__loop_free, this, node_ptypehash, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__funk = never_gc(cfunk);}
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "string"; __funk2.globalenv.object_type.ptype.ptype_char.string__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(char__string, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.string__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(char__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk = never_gc(cfunk);}
   

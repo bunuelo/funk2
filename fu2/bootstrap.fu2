@@ -24,7 +24,8 @@
   [load 'built-in/ansi/ansi.fpkg']
   [load 'built-in/mutex/mutex.fpkg']
   [load 'built-in/math/math.fpkg']
-  [load 'built-in/basic_bug_responses/basic_bug_responses.fpkg']]
+  [load 'built-in/basic_bug_responses/basic_bug_responses.fpkg']
+  [load 'extension/keyboard/keyboard.fpkg']]
 
 [defunk load_minimal_core_packages []
   [load 'fu2/bootstrap-primobject.fu2']
@@ -58,12 +59,15 @@
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']
   
-  [load_necessary_builtin_package_definitions]
+  `[load_necessary_builtin_package_definitions]
+  [reload_all_package_definitions]
+  
   [eval `[prog [require number
 			ansi
 			mutex
 			math
-			basic_bug_responses]
+			basic_bug_responses
+			keyboard-repl]
 	       
 	       [defunk backup_repl []
 		 [let* [[trigger [new fiber_trigger]]
@@ -96,9 +100,9 @@
 						     [terminal_format standard-terminal
 								      '\nDone compiling user\'s customized version of Funk2.'
 								      '\n  Feel free to use ~/.funk2rc-dev to add commands to this compile process.']]]
-      [[eq funk2_release_name `debian]         [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package binary release.']
+      [[eq funk2_release_name `debian]         [prog [terminal_format standard-terminal '\nCompiling Debian Funk2 package postinst image.']
 						     [load_minimal_core_packages]
-						     [terminal_format standard-terminal '\nDone compiling Debian Funk2 package binary release.']]]
+						     [terminal_format standard-terminal '\nDone compiling Debian Funk2 package postinst image.']]]
       [t                                       [error bug_type            `unknown-funk2_release_name-in-bootstrap.fu2
 						      funk2_release_name  funk2_release_name
 						      funk2_release_names funk2_release_names]]]

@@ -202,6 +202,8 @@
 
 [defpackage reflective_layer
   :packages [reflective_mind_core
+	     semantic_action
+	     semantic_action_knowledge_base
 	     reflective_resource
 	     reflective_plan_bug_response_agency
 	     reflective_plan_object_type_goal_agency
@@ -237,7 +239,8 @@
 	     reflective_resource
 	     semantic_resource_action_sequence
 	     semantic_know_of_relationship_event
-	     semantic_resource_event_knowledge_base]
+	     semantic_resource_event_knowledge_base
+	     semantic_event_transframe]
    :sources ['reflective_event_knowledge_agency.fu2']]
 
 [defpackage reflective_credit_assignment_agency

@@ -354,6 +354,7 @@
 				  update_button
 				  cameras_enabled_check_button
 				  
+				  movie_vbox
 				  movie_gtk_image
 				  scale
 				  agent_hbox
@@ -428,7 +429,7 @@
 		       [set mindmon_world all_cameras_enabled cameras_enabled]]]]
 	     nil]
        
-       [= entry_hbox [gtk-hbox-new 2]]
+       [= entry_hbox [gtk-hbox-new 0]]
        [have controller_vbox pack_start entry_hbox nil nil 0]
        
        [= step_size_label [gtk-label-new 'Step Size: ']]
@@ -458,12 +459,14 @@
        
        'movie image'
        
+       [= movie_vbox [gtk-vbox-new 0]]
+       
        [= movie_gtk_image [gtk-image-new_from_image [new image 640 480 nil]]]
-       [have vbox pack_start movie_gtk_image nil nil 0]
+       [have movie_vbox pack_start movie_gtk_image nil nil 0]
        
        [= scale [gtk-scale-new_with_range `horizontal 0.0 1.0 1.0]]
        [set scale digits 0]
-       [have vbox pack_start scale t t 0]
+       [have movie_vbox pack_start scale t t 0]
        [let [[movie_length [get this movie_length]]]
 	 [if [> movie_length 1]
 	     [prog [set scale range 0.0 [- movie_length 1]]
@@ -475,10 +478,12 @@
 		   [have [get this cycle_trigger] trigger]]
 	     nil]
        
+       [have vbox pack_start movie_vbox nil nil 0]
+       
        'agents'
        
-       [= agent_hbox [gtk-hbox-new 2]]
-       [have vbox pack_start agent_hbox nil nil 0]
+       [= agent_hbox [gtk-hbox-new 0]]
+       [have vbox pack_start agent_hbox t t 0]
        
        [= initialized t]
        [have execute_mutex unlock]
@@ -1014,7 +1019,7 @@
   [let [[new_mindmon_project [new mindmon_project this]]]
     [have new_mindmon_project create_new_mindmon_blocks_world]
     [have project_vbox remove project_vbox__contained_widget]
-    [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+    [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
     [have [get new_mindmon_project widget] show_all]
     [= project_vbox__contained_widget [get new_mindmon_project widget]]
     [= mindmon_project new_mindmon_project]]
@@ -1026,7 +1031,7 @@
   [let [[new_mindmon_project [new mindmon_project this]]]
     [have new_mindmon_project create_new_mindmon_isis_world]
     [have project_vbox remove project_vbox__contained_widget]
-    [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+    [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
     [have [get new_mindmon_project widget] show_all]
     [= project_vbox__contained_widget [get new_mindmon_project widget]]
     [= mindmon_project new_mindmon_project]]
@@ -1038,7 +1043,7 @@
   [let [[new_mindmon_project [mindmon_project-new_from_file this filename]]]
     [if new_mindmon_project
 	[prog [have project_vbox remove project_vbox__contained_widget]
-	      [have project_vbox pack_start [get new_mindmon_project widget] nil nil 0]
+	      [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
 	      [have [get new_mindmon_project widget] show_all]
 	      [= project_vbox__contained_widget [get new_mindmon_project widget]]
 	      [= mindmon_project new_mindmon_project]

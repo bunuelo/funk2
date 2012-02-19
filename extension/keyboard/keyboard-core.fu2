@@ -1,0 +1,77 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defcorefunk keyboard-current_mode             keyboard keyboard__current_mode]
+[defcorefunk keyboard-current_mode-set         keyboard keyboard__current_mode__set]
+[defcorefunk keyboard-enable_noncanonical_mode keyboard keyboard__enable_noncanonical_mode]
+[defcorefunk keyboard-try_read_byte            keyboard keyboard__try_read_byte]
+[defcorefunk keyboard-try_read_character       keyboard keyboard__try_read_character]
+[defcorefunk keyboard-check_keypress           keyboard keyboard__check_keypress]
+
+[defcorefunk keyboard_editor-current_line                            keyboard keyboard_editor__current_line]
+[defcorefunk keyboard_editor-insert_char                             keyboard keyboard_editor__insert_char]
+[defcorefunk keyboard_editor-press_and_insert_char_key-thread_unsafe keyboard keyboard_editor__press_and_insert_char_key__thread_unsafe]
+[defcorefunk keyboard_editor-handle_text_keys-thread_unsafe          keyboard keyboard_editor__handle_text_keys__thread_unsafe]
+
+[defcorefunk keyboard-core_extension-ping         keyboard keyboard__core_extension__ping]
+[defcorefunk keyboard-core_extension-define_types keyboard keyboard__core_extension__define_types]
+[defcorefunk keyboard-core_extension-initialize   keyboard keyboard__core_extension__initialize]
+
+[keyboard-core_extension-define_types]
+
+[defunk keyboard_editor-press_and_insert_char_key [this terminal_print_frame key]
+  [while [have [get terminal_print_frame cmutex] trylock]]
+  [let [[result [keyboard_editor-press_and_insert_char_key-thread_unsafe this terminal_print_frame key]]]
+    [have [get terminal_print_frame cmutex] unlock]
+    result]]
+
+[defunk keyboard_editor-handle_text_keys [this terminal_print_frame]
+  [while [have [get terminal_print_frame cmutex] trylock]]
+  [let [[result [shelter [keyboard_editor-handle_text_keys-thread_unsafe this terminal_print_frame]]]]
+    [have [get terminal_print_frame cmutex] unlock]
+    [if [is-type `bug result]
+	[bug result]
+      result]]]
+
+[defunk keyboard-read_byte []
+  [let [[old_opts [keyboard-current_mode]]]
+    [keyboard-enable_noncanonical_mode]
+    [let [[b nil]]
+      [while [null b]
+	[= b [shelter [keyboard-try_read_byte]]]
+	[if [null b]
+	    [millisleep 100]]]
+      [keyboard-current_mode-set old_opts]
+      [if [is-type `bug b]
+	  [bug b]
+	b]]]]
+
+[defunk keyboard-read_character []
+  [let [[old_opts [keyboard-current_mode]]]
+    [keyboard-enable_noncanonical_mode]
+    [let [[ch nil]]
+      [while [null ch]
+	[= ch [shelter [keyboard-try_read_character]]]
+	[if [null ch]
+	    [millisleep 100]]]
+      [keyboard-current_mode-set old_opts]
+      [if [is-type `bug ch]
+	  [bug ch]
+	ch]]]]
+

@@ -81,14 +81,14 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* Define to 1 if you have the `clock_gettime' library (-lclock_gettime). */
+#undef HAVE_LIBCLOCK_GETTIME
+
 /* Define to 1 if you have the `curl' library (-lcurl). */
 #undef HAVE_LIBCURL
 
 /* Define to 1 if you have the `gmon' library (-lgmon). */
 #undef HAVE_LIBGMON
-
-/* Define to 1 if you have the `rt' library (-lrt). */
-#undef HAVE_LIBRT
 
 /* Define to 1 if you have the <linux/sockios.h> header file. */
 #undef HAVE_LINUX_SOCKIOS_H

@@ -332,7 +332,7 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
   }
   
   xmlrpc_value* resultP;
-  boolean_t     success      = boolean__false;
+  //boolean_t     success      = boolean__false;
   f2ptr         return_value = nil;
   
   boolean_t call_successful_so_far = boolean__true;
@@ -389,7 +389,7 @@ f2ptr raw__xmlrpc__apply(f2ptr cause, f2ptr url, f2ptr funkname, f2ptr arguments
   
   if (call_successful_so_far) {
     return_value = funk2_xmlrpc__new_exp_from_xmlrpc_value(&(__funk2.xmlrpc.xmlrpc_environment), cause, resultP);
-    success = boolean__true;
+    //success = boolean__true;
     
     // Dispose of our result value.
     xmlrpc_DECREF(resultP);

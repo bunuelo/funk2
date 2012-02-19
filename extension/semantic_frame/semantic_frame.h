@@ -158,6 +158,13 @@ f2ptr f2__semantic_frame_type__new(f2ptr cause);
 				    code));				\
   }
 
+#define semantic_frame__value__iteration(cause, this, slot_value, code) { \
+    f2ptr semantic_frame__iteration__frame = raw__semantic_frame__frame(cause, this); \
+    frame__value__iteration(cause, semantic_frame__iteration__frame, semantic_frame__iteration__slot_value_set, \
+			    set__iteration(cause, semantic_frame__iteration__slot_value_set, slot_value, \
+					   code));			\
+  }
+
 
 f2ptr f2__object__semantic__lookup_set       (f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);
 f2ptr f2__object__semantic__lookup_set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args);

@@ -54,7 +54,7 @@ install: build
 
 # Build architecture-independent files here.
 binary-indep: install
-	dpkg-shlibdeps debian/funk2/usr/bin/* debian/funk2/usr/sbin/* debian/funk2/usr/lib/*
+#	dpkg-shlibdeps debian/funk2/usr/bin/* debian/funk2/usr/sbin/* debian/funk2/usr/lib/*
 	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/funk2 -name '*.la'`
 	dh_testdir
 	dh_testroot

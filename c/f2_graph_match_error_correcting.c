@@ -371,7 +371,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
       if (S_minimal_open_operations != nil) c_open = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_open_operations), cause);
       //u64 c_closed = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
       f2ptr S_closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, current_S);
-      f2ptr S_minimal_closed_operations = f2__redblacktree__minimum(cause, S_closed_operations_rbt);
+      //f2ptr S_minimal_closed_operations = f2__redblacktree__minimum(cause, S_closed_operations_rbt);
       //if (S_minimal_closed_operations != nil) {
       //	c_closed = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_closed_operations), cause);
       //}

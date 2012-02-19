@@ -379,6 +379,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_visual_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
 	cp -fa extension/timeline/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
 	cp -fa extension/transframe/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
+	sed -i "/dependency_libs/ s/'.*'/''/" `find . -name '*.la'`
 
 lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
 

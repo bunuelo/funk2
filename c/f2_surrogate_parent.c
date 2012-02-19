@@ -140,8 +140,8 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	  }
 	  read_buffer[index] = ch;
 	}
-	read_buffer[index] = 0;
 	read_buffer__strlen = index;
+	read_buffer[read_buffer__strlen] = 0;
       }
       pid_t system_child_pid = fork();
       if (system_child_pid == -1) {

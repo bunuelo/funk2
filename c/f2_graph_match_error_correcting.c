@@ -369,13 +369,12 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
       f2ptr S_open_operations_rbt = f2__ptypehash__lookup(cause, open_operations_rbt_hash, current_S);
       f2ptr S_minimal_open_operations = f2__redblacktree__minimum(cause, S_open_operations_rbt);
       if (S_minimal_open_operations != nil) c_open = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_open_operations), cause);
-      u64 c_closed = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
+      //u64 c_closed = graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__maximum_possible_cost;
       f2ptr S_closed_operations_rbt = f2__ptypehash__lookup(cause, closed_operations_rbt_hash, current_S);
       f2ptr S_minimal_closed_operations = f2__redblacktree__minimum(cause, S_closed_operations_rbt);
-      if (S_minimal_closed_operations != nil) {
-	c_closed = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_closed_operations), cause);
-      }
-      c_closed; // not used, but removes warning.
+      //if (S_minimal_closed_operations != nil) {
+      //	c_closed = f2integer__i(f2__graph_edit_sequence__cost(cause, S_minimal_closed_operations), cause);
+      //}
       
       if (lattice_node == nil) {  // leaf
 	f2__ptypehash__add(cause, n_hash, current_S, f2integer__new(cause, c_open));

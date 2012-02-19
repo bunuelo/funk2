@@ -304,7 +304,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/transframe/libf2e_transframe.la
 
 finish_compiling_all_core_extensions: $(all_core_extensions)
-	sed -i "/dependency_libs/ s/'.*'/''/" `find ./extension -name '*.la'`
 	cp -fa extension/blocks_world/.libs/libf2e_*.*                                                                 $(compile__lib__dir)
 	cp -fa extension/causality/.libs/libf2e_*.*                                                                       $(compile__lib__dir)
 	cp -fa extension/cairo/.libs/libf2e_*.*                                                                               $(compile__lib__dir)

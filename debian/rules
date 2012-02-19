@@ -55,6 +55,7 @@ install: build
 # Build architecture-independent files here.
 binary-indep: install
 	dpkg-shlibdeps debian/tmp/usr/bin/* debian/tmp/usr/sbin/* debian/tmp/usr/lib/*
+	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/tmp/usr/lib -name '*.la'`
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 

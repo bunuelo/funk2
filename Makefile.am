@@ -989,6 +989,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__example__dir)rct_webpage/"                                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_mind/"                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_mind-blocks_world/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__example__dir)reflective_timer/"                                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)roboverse/"                                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)socket-client/"                                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__example__dir)socket-server/"                                                                                                            >> install-sh
@@ -1120,6 +1121,7 @@ make-install-sh:
 	echo "install -m644 $(source__example__dir)rct_webpage/*.f*                                    $(chroot__install__example__dir)rct_webpage/"                                    >> install-sh
 	echo "install -m644 $(source__example__dir)reflective_mind/*.f*                                $(chroot__install__example__dir)reflective_mind/"                                >> install-sh
 	echo "install -m644 $(source__example__dir)reflective_mind-blocks_world/*.f*                   $(chroot__install__example__dir)reflective_mind-blocks_world/"                   >> install-sh
+	echo "install -m644 $(source__example__dir)reflective_timer/*.f*                               $(chroot__install__example__dir)reflective_timer/"                               >> install-sh
 	echo "install -m644 $(source__example__dir)roboverse/*.f*                                      $(chroot__install__example__dir)roboverse/"                                      >> install-sh
 	echo "install -m644 $(source__example__dir)socket-client/*.f*                                  $(chroot__install__example__dir)socket-client/"                                  >> install-sh
 	echo "install -m644 $(source__example__dir)socket-server/*.f*                                  $(chroot__install__example__dir)socket-server/"                                  >> install-sh

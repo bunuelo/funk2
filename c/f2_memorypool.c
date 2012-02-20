@@ -292,13 +292,13 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     }
     funk2_memblock_t* iter          = from_ptr(this->dynamic_memory.ptr);
     funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
-    funk2_memblock_t* last          = NULL;
+    //funk2_memblock_t* last          = NULL;
     while(iter < end_of_blocks) {
       // HEAPEDIT
       //if (iter->rbt_node.parent) {iter->rbt_node.parent = (rbt_node_t*)(((u8*)(iter->rbt_node.parent) + byte_diff));}
       //if (iter->rbt_node.left)   {iter->rbt_node.left   = (rbt_node_t*)(((u8*)(iter->rbt_node.left)   + byte_diff));}
       //if (iter->rbt_node.right)  {iter->rbt_node.right  = (rbt_node_t*)(((u8*)(iter->rbt_node.right)  + byte_diff));}
-      last = iter;
+      //last = iter;
       iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
     }
     // HEAPEDIT

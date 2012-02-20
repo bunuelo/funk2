@@ -25,6 +25,24 @@
 #include "../semantic_object/semantic_object.h"
 #include "../semantic_event/semantic_event.h"
 
+// semantic_action
+
+f2ptr     raw__semantic_action__type_create              (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_action__new                      (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_action__new                      (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_action__is_type                  (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_action__is_type                  (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_action__type                     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_action__type                     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_action__physical_object_type     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_action__physical_object_type     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_action__physical_object_type__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action__physical_object_type__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_action__example_event__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action__example_event__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_action__example_event__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action__example_event__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_action__primobject_type__new     (f2ptr cause);
 
 // **
 

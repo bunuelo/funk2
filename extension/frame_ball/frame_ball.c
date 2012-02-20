@@ -34,24 +34,22 @@ boolean_t raw__frame__ball_size_is_less_than_with_ptypehash(f2ptr cause, f2ptr t
   raw__ptypehash__add(cause, ptypehash, this, f2bool__new(boolean__true));
   // frame nodes count as one.
   s64 this_size = 1;
-  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-		   type_slot_name = nil;
-		   slot_name      = nil;
-		   if (raw__frame__is_type(cause, slot_value)) {
-		     s64 slot_value__exact_size;
-		     if (raw__frame__ball_size_is_less_than_with_ptypehash(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
-		       this_size += slot_value__exact_size;
-		     } else {
-		       return boolean__false;
-		     }
-		   } else {
-		     // non-frame leaf nodes count as one.
-		     this_size ++;
-		   }
-		   if (this_size >= maximum_size) {
-		     return boolean__false;
-		   }
-		   );
+  frame__value__iteration(cause, this, slot_value,
+			  if (raw__frame__is_type(cause, slot_value)) {
+			    s64 slot_value__exact_size;
+			    if (raw__frame__ball_size_is_less_than_with_ptypehash(cause, slot_value, ptypehash, maximum_size - this_size, &slot_value__exact_size)) {
+			      this_size += slot_value__exact_size;
+			    } else {
+			      return boolean__false;
+			    }
+			  } else {
+			    // non-frame leaf nodes count as one.
+			    this_size ++;
+			  }
+			  if (this_size >= maximum_size) {
+			    return boolean__false;
+			  }
+			  );
   *exact_size = this_size;
   return boolean__true;
 }

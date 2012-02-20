@@ -44,28 +44,28 @@ chroot__install__system_bin__dir     = $(chroot_install_root_dir)usr/bin/
 chroot__install__bin__dir            = $(chroot_install_root_dir)usr/bin/
 chroot__install__lib__dir            = $(chroot_install_root_dir)usr/lib/
 chroot__install__include__dir        = $(chroot_install_root_dir)usr/include/funk2/
-chroot__install__img__dir            = $(chroot_install_root_dir)usr/share/funk2/img/
-chroot__install__fu2__dir            = $(chroot_install_root_dir)usr/share/funk2/fu2/
-chroot__install__built_in__dir       = $(chroot_install_root_dir)usr/share/funk2/built-in/
-chroot__install__extension__dir      = $(chroot_install_root_dir)usr/share/funk2/extension/
-chroot__install__test__dir           = $(chroot_install_root_dir)usr/share/funk2/test/
-chroot__install__example__dir        = $(chroot_install_root_dir)usr/share/funk2/example/
-chroot__install__icons__dir          = $(chroot_install_root_dir)usr/share/funk2/icons/
-chroot__install__man__dir            = $(chroot_install_root_dir)usr/share/man/man1/
+chroot__install__img__dir            = $(chroot_install_root_dir)var/lib/funk2/img/
+chroot__install__fu2__dir            = $(chroot_install_root_dir)var/lib/funk2/fu2/
+chroot__install__built_in__dir       = $(chroot_install_root_dir)var/lib/funk2/built-in/
+chroot__install__extension__dir      = $(chroot_install_root_dir)var/lib/funk2/extension/
+chroot__install__test__dir           = $(chroot_install_root_dir)var/lib/funk2/test/
+chroot__install__example__dir        = $(chroot_install_root_dir)var/lib/funk2/example/
+chroot__install__icons__dir          = $(chroot_install_root_dir)var/lib/funk2/icons/
+chroot__install__man__dir            = $(chroot_install_root_dir)var/lib/man/man1/
 chroot__install__funk2               = $(chroot__install__bin__dir)funk2
 chroot__install__bootstrap__img      = $(chroot__install__img__dir)bootstrap.img
 
 plain__install__system_bin__dir     = $(plain_install_root_dir)usr/bin/
 plain__install__bin__dir            = $(plain_install_root_dir)usr/bin/
 plain__install__include__dir        = $(plain_install_root_dir)usr/include/funk2/
-plain__install__img__dir            = $(plain_install_root_dir)usr/share/funk2/img/
-plain__install__fu2__dir            = $(plain_install_root_dir)usr/share/funk2/fu2/
-plain__install__built_in__dir       = $(plain_install_root_dir)usr/share/funk2/built-in/
-plain__install__extension__dir      = $(plain_install_root_dir)usr/share/funk2/extension/
-plain__install__test__dir           = $(plain_install_root_dir)usr/share/funk2/test/
-plain__install__example__dir        = $(plain_install_root_dir)usr/share/funk2/example/
-plain__install__icons__dir          = $(plain_install_root_dir)usr/share/funk2/icons/
-plain__install__man__dir            = $(plain_install_root_dir)usr/share/man/man1/
+plain__install__img__dir            = $(plain_install_root_dir)var/lib/funk2/img/
+plain__install__fu2__dir            = $(plain_install_root_dir)var/lib/funk2/fu2/
+plain__install__built_in__dir       = $(plain_install_root_dir)var/lib/funk2/built-in/
+plain__install__extension__dir      = $(plain_install_root_dir)var/lib/funk2/extension/
+plain__install__test__dir           = $(plain_install_root_dir)var/lib/funk2/test/
+plain__install__example__dir        = $(plain_install_root_dir)var/lib/funk2/example/
+plain__install__icons__dir          = $(plain_install_root_dir)var/lib/funk2/icons/
+plain__install__man__dir            = $(plain_install_root_dir)var/lib/man/man1/
 plain__install__funk2               = $(plain__install__bin__dir)funk2
 plain__install__bootstrap__img      = $(plain__install__img__dir)bootstrap.img
 
@@ -1145,16 +1145,6 @@ make-install-full-sh: make-install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-full-sh
 	chmod a+x install-full-sh
 
-make-debian-postinst:
-	echo "#!/bin/sh -e"                  > debian/postinst
-	echo ""                             >> debian/postinst
-	echo "ldconfig"                     >> debian/postinst
-	echo "cd /usr/share/funk2"          >> debian/postinst
-	echo "mkdir -p img"                 >> debian/postinst
-	echo "funk2 fu2/bootstrap-repl.fu2" >> debian/postinst
-	echo "funk2 fu2/bootstrap.fu2"      >> debian/postinst
-	echo ""                             >> debian/postinst
-
 extensions: finish_compiling_all_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
@@ -1163,7 +1153,7 @@ bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
 install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)
 	./install-sh
 
-install-debian: install-minimal make-debian-postinst
+install-debian: install-minimal
 
 # full install
 install: install-minimal make-install-full-sh img/bootstrap.img

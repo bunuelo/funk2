@@ -2,3 +2,8 @@
 
 ldconfig
 
+cd /var/lib/funk2
+mkdir -p img
+funk2 fu2/bootstrap-repl.fu2
+funk2 fu2/bootstrap.fu2
+

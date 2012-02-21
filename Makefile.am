@@ -852,7 +852,11 @@ clean: clean-am clean-img
 	rm -f config_compile_time_id.h
 	rm -f config_bit_num.h
 	rm -f bin/funk2$(EXEEXT)
-	mkdir -p lib/.libs
+	rm -f install.sh gprof.txt libtool Makefile
+	rm -rf c/.deps c/.dirstamp
+	rm -f config.h config.log config.status
+	rm -rf lib bin
+#	mkdir -p lib/.libs
 
 make-install-sh:
 	echo "#!/bin/sh"                                                                                                                                                                 > install-sh

@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+rm /var/lib/funk2/img/bootstrap.img
+rm -r /var/lib/funk2/img

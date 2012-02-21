@@ -51,7 +51,7 @@ chroot__install__extension__dir      = $(chroot_install_root_dir)var/lib/funk2/e
 chroot__install__test__dir           = $(chroot_install_root_dir)var/lib/funk2/test/
 chroot__install__example__dir        = $(chroot_install_root_dir)var/lib/funk2/example/
 chroot__install__icons__dir          = $(chroot_install_root_dir)var/lib/funk2/icons/
-chroot__install__man__dir            = $(chroot_install_root_dir)var/lib/man/man1/
+chroot__install__man__dir            = $(chroot_install_root_dir)usr/share/man/man1/
 chroot__install__funk2               = $(chroot__install__bin__dir)funk2
 chroot__install__bootstrap__img      = $(chroot__install__img__dir)bootstrap.img
 
@@ -65,7 +65,7 @@ plain__install__extension__dir      = $(plain_install_root_dir)var/lib/funk2/ext
 plain__install__test__dir           = $(plain_install_root_dir)var/lib/funk2/test/
 plain__install__example__dir        = $(plain_install_root_dir)var/lib/funk2/example/
 plain__install__icons__dir          = $(plain_install_root_dir)var/lib/funk2/icons/
-plain__install__man__dir            = $(plain_install_root_dir)var/lib/man/man1/
+plain__install__man__dir            = $(plain_install_root_dir)usr/share/man/man1/
 plain__install__funk2               = $(plain__install__bin__dir)funk2
 plain__install__bootstrap__img      = $(plain__install__img__dir)bootstrap.img
 
@@ -170,7 +170,6 @@ ACLOCAL_AMFLAGS = -I m4
 
 
 all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
-                      extension/causality/libf2e_causality.la \
                       extension/cairo/libf2e_cairo.la \
                       extension/concept_version_space/libf2e_concept_version_space.la \
                       extension/conceptnet/libf2e_conceptnet.la \
@@ -247,7 +246,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
 
 finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/blocks_world/.libs/libf2e_*.*                                                                 $(compile__lib__dir)
-	cp -fa extension/causality/.libs/libf2e_*.*                                                                       $(compile__lib__dir)
 	cp -fa extension/cairo/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
 	cp -fa extension/concept_version_space/.libs/libf2e_*.*                                               $(compile__lib__dir)
 	cp -fa extension/conceptnet/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
@@ -454,7 +452,6 @@ lib_libfunk2_la_SOURCES = \
   config_bit_num.h
 
 extension_blocks_world_libf2e_blocks_world_la_SOURCES                                                                 = extension/blocks_world/blocks_world.c
-extension_causality_libf2e_causality_la_SOURCES                                                                       = extension/causality/causality.c
 extension_cairo_libf2e_cairo_la_SOURCES                                                                               = extension/cairo/cairo.c
 extension_concept_version_space_libf2e_concept_version_space_la_SOURCES                                               = extension/concept_version_space/concept_version_space.c
 extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                                     = extension/conceptnet/conceptnet.c
@@ -577,9 +574,6 @@ extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_blocks_world_libf2e_blocks_world_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_causality_libf2e_causality_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_causality_libf2e_causality_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_concept_version_space_libf2e_concept_version_space_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_concept_version_space_libf2e_concept_version_space_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -838,7 +832,6 @@ make-install-sh: backup-stamp
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)"                                                                                                                        >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)blocks_world/"                                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)cairo/"                                                                                                                  >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)causality/"                                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)conceptnet/"                                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)concept_version_space/"                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)equals_hash/"                                                                                                            >> install-sh
@@ -970,7 +963,6 @@ make-install-sh: backup-stamp
 	echo "install -m644 $(source__extension__dir)*                                                 $(chroot__install__extension__dir)"                                              >> install-sh
 	echo "install -m644 $(source__extension__dir)blocks_world/*.f*                                 $(chroot__install__extension__dir)blocks_world/"                                 >> install-sh
 	echo "install -m644 $(source__extension__dir)cairo/*.f*                                        $(chroot__install__extension__dir)cairo/"                                        >> install-sh
-	echo "install -m644 $(source__extension__dir)causality/*.f*                                    $(chroot__install__extension__dir)causality/"                                    >> install-sh
 	echo "install -m644 $(source__extension__dir)conceptnet/*.f*                                   $(chroot__install__extension__dir)conceptnet/"                                   >> install-sh
 	echo "install -m644 $(source__extension__dir)concept_version_space/*.f*                        $(chroot__install__extension__dir)concept_version_space/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)equals_hash/*.f*                                  $(chroot__install__extension__dir)equals_hash/"                                  >> install-sh

@@ -800,7 +800,8 @@ clean: clean-am clean-img backup-stamp
 	rm -rf lib bin
 	rm -f install-sh
 	mv install-sh.backup install-sh
-#	mkdir -p lib/.libs
+	find . -name ".dirstamp" -print0 | xargs -0 -n 1 rm -r
+	find . -name ".deps"     -print0 | xargs -0 -n 1 rm -r
 
 make-install-sh: backup-stamp
 	echo "#!/bin/sh"                                                                                                                                                                 > install-sh

@@ -16,13 +16,7 @@ configure-stamp:
 	./configure --prefix=/usr --disable-rpath
 	touch $@
 
-backup: backup-stamp
-backup-stamp: build-stamp
-	cp install-sh install-sh.backup
-	cp configure configure.backup
-	touch $@
-
-build: build-stamp backup
+build: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 	# Add here commands to compile the package.
@@ -30,7 +24,7 @@ build-stamp: configure-stamp
 	#docbook-to-man debian/funk2.sgml > funk2.1
 	touch $@
 
-clean: configure backup
+clean: configure
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp stamp-h1
@@ -40,8 +34,6 @@ clean: configure backup
 	rm -rf debian/substvars debian/funk2.1.gz
 	# put the backuped files which may change back so we get a clean
 	# build environment again
-	mv -f install-sh.backup install-sh
-	mv -f configure.backup configure
 
 install: build
 	dh_testdir

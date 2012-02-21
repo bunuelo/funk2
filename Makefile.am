@@ -848,7 +848,13 @@ clean-img:
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
 
-clean: clean-am clean-img
+backup: backup-stamp
+backup-stamp:
+	cp -f install-sh install-sh.backup
+	touch $@
+
+clean: clean-am clean-img backup-stamp
+	rm -f backup-stamp
 	rm -f config_compile_time_id.h
 	rm -f config_bit_num.h
 	rm -f bin/funk2$(EXEEXT)
@@ -860,8 +866,7 @@ clean: clean-am clean-img
 	mv install-sh.backup install-sh
 #	mkdir -p lib/.libs
 
-make-install-sh:
-	mv install-sh install-sh.backup
+make-install-sh: backup-stamp
 	echo "#!/bin/sh"                                                                                                                                                                 > install-sh
 	echo "echo \"\""                                                                                                                                                                >> install-sh
 	echo "echo \"make: install-sh performing system-wide installation of funk2\""                                                                                                   >> install-sh

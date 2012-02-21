@@ -78,75 +78,19 @@ config_compile_time_id.h:
 	echo ""                                        >> config_compile_time_id.h
 	echo "#endif // F2__CONFIG_COMPILE_TIME_ID__H" >> config_compile_time_id.h
 
-# get the name of the architecture
-#processor = $(shell uname -p)
-# get the name of the operating system
-#os_name = $(shell uname -s)
-
-# determine the number of processor
-#ifeq ($(os_name),Darwin)
-#   processor_num = $(shell sysctl -n hw.ncpu)
-#else
-#  processor_num = $(shell cat /proc/cpuinfo | grep processor | grep -v type | wc -l)
-#endif
-
 libs = -lpthread
-
-# processor_power_num description:
-#   0 power => 1 processor,
-#   1 power => 2 processors,
-#   2 power => 4 processors,
-#   3 power => 8 processors,
-#   4 power => 16 processors, etc.
-
-#ifeq ($(processor_num),0)
-#  processor_flags = -Dprocessor_num_power=0
-#endif
-#ifeq ($(processor_num),1)
-#  processor_flags = -Dprocessor_num_power=0
-#endif
-#ifeq ($(processor_num),2)
-#  processor_flags = -Dprocessor_num_power=1
-#endif
-#ifeq ($(processor_num),4)
-#  processor_flags = -Dprocessor_num_power=2
-#endif
-#ifeq ($(processor_num),8)
-#  processor_flags = -Dprocessor_num_power=3
-#endif
-#ifeq ($(processor_num),16)
-#  processor_flags = -Dprocessor_num_power=4
-#endif
-#processor_flags = -Dprocessor_num_power=3
 
 funk2_objs   = $(funk2_server_objs)
 
-#version_flags = -DF2__COMPILE_TIME_ID=$(shell cat seconds.tmp)
-
-#gmodule_linker_flags = $(shell pkg-config --libs gmodule-2.0)
 dlfcn_linker_flags   = -ldl
-
-#opengl_linker_flags = -lGL -lGLU -lXxf86vm
-#`pkg-config --cflags --libs GL GLU Xxf86vm`
 
 math_linker_flags = -lm
 
 zlib_linker_flags = -lz
 
-#@MK@ifeq ($(build_vendor),apple)
-#  realtime_linker_flags = 
-#@MK@else
-#  realtime_linker_flags = -lrt
-#@MK@endif
-
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags)
 
-#dynamic_library_linker_flags = $(dlfcn_linker_flags) $(opengl_linker_flags) -lrt
-#dynamic_library_flags        = $(shell pkg-config --cflags gmodule-2.0) -DF2__GMODULE__SUPPORTED 
-#dynamic_library_linker_flags = $(gmodule_linker_flags)
-
-trace_flags           = #-DF2__TRACE__ALL_POINTERS -DF2__TRACE__ALL_COMPILES 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 
 if XMLRPC_SUPPORTED
@@ -155,14 +99,12 @@ xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 endif
 
-#system_cflags = -Dbuild_os=\"$(build_os)\" -Dbuild_vendor=\"$(build_vendor)\"
-
 debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
 
 optimize_flags = 
 
-debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(debug_flags)
-release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(trace_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(optimize_flags)
+debug__cc_flags   = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(debug_flags)
+release__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(optimize_flags)
 athena__cc_flags  = $(release__cc_flags) -DF2__SINGLE_USER_32BIT_VERSION
 
 #cc_flags = $(debug__cc_flags)

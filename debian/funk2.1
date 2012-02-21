@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH FUNK2 1 "Oct 25, 2010"
+.TH FUNK2 1 "Feb 20, 2012"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -49,14 +49,14 @@ A user supplied filename of file from which to read and execute source code afte
 A user supplied command to execute after booting and before exiting.
 .TP
 .B \-p <portnum>  [:default 22222 :try anything from 22222 to 23221]
-The localhost peer-command-server port number.  Each copy of funk2 sharing a network interface must be able to allocate a unique peer-command-server port number.
+The localhost peer-command-server port number.  Each copy of funk2 sharing a network interface allocates a unique peer-command-server port number for distibuted programming.
 .\" .SH SEE ALSO
 .\" .BR bar (1),
 .\" .BR baz (1).
 .br
 This program is explained more fully at
-.IR "http://funk2.org/about/".
+.IR "http://funk2.org/".
 .SH AUTHOR
-funk2 was written and is maintained by Bo Morgan.
+funk2 is written and is maintained by Bo Morgan.
 .PP
 This manual page was written by Bo Morgan <bo@mit.edu> for the Debian project (and may be freely used by others).

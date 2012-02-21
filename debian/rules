@@ -20,9 +20,8 @@ build: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 	# Add here commands to compile the package.
-	$(MAKE) -l 1.0
+	$(MAKE) -j 9
 	#docbook-to-man debian/funk2.sgml > funk2.1
-	gzip --stdout debian/funk2.1 > debian/funk2.1.gz
 	touch $@
 
 clean: configure

@@ -856,12 +856,15 @@ clean: clean-am clean-img
 	rm -rf c/.deps c/.dirstamp
 	rm -f config.h config.log config.status
 	rm -rf lib bin
+	rm -f install-sh
+	mv install-sh.backup install-sh
 #	mkdir -p lib/.libs
 
 make-install-sh:
+	mv install-sh install-sh.backup
 	echo "#!/bin/sh"                                                                                                                                                                 > install-sh
 	echo "echo \"\""                                                                                                                                                                >> install-sh
-	echo "echo \"make: install-sh performing system-wide installation of funk2\""                                                                                           >> install-sh
+	echo "echo \"make: install-sh performing system-wide installation of funk2\""                                                                                                   >> install-sh
 	echo "echo \"\""                                                                                                                                                                >> install-sh
 	echo "echo \"  install__bin__dir     = $(chroot__install__bin__dir)\""                                                                                                          >> install-sh
 #	echo "echo \"  install__lib__dir     = $(chroot__install__lib__dir)\""                                                                                                          >> install-sh

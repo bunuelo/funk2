@@ -35,7 +35,7 @@ f2ptr raw__semantic_action_knowledge_base__know_of_add__after_callback(f2ptr cau
 		       set__iteration(cause, removal_set, removal,
 				      
 				      );
-		       set__iteration(cause, addition_set, removal,
+		       set__iteration(cause, addition_set, addition,
 				      
 				      );
 		       );

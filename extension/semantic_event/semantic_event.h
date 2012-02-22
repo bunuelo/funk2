@@ -54,9 +54,9 @@ f2ptr     raw__semantic_event__update_child_container_start_and_end_times_with_p
 f2ptr     raw__semantic_event__update_child_container_start_and_end_times_with_parent_end_time  (f2ptr cause, f2ptr this, f2ptr parent_end_time);
 f2ptr     raw__semantic_event__update_child_container_start_and_end_times_with_parent_event     (f2ptr cause, f2ptr this, f2ptr parent_semantic_event);
 f2ptr      f2__semantic_event__update_child_container_start_and_end_times_with_parent_event     (f2ptr cause, f2ptr this, f2ptr parent_semantic_event);
-f2ptr     raw__semantic_event__transframe__lookup_set                                           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event__transframe__lookup_set                                           (f2ptr cause, f2ptr this);
 f2ptr      f2__semantic_event__transframe__lookup_set                                           (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event__transframe__add                                                  (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event__transframe__add                                                  (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__semantic_event__transframe__add                                                  (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__semantic_event__transframe__remove                                               (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__semantic_event__transframe__remove                                               (f2ptr cause, f2ptr this, f2ptr that);

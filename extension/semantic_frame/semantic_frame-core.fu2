@@ -31,8 +31,8 @@
 [semantic_frame-core_extension-define_types]
 
 
-[defmetro semantic-lookup_set       [this slot_name :rest args] `[object-semantic-lookup_set           ,this [quote ,slot_name] @args]]
-[defmetro semantic-lookup_set-apply [this slot_name       args] `[object-semantic-lookup_set-apply     ,this [quote ,slot_name] ,args]]
+[defmetro semantic-lookup_set       [this slot_name :rest args] `[object-semantic-lookup_set       ,this [quote ,slot_name] @args]]
+[defmetro semantic-lookup_set-apply [this slot_name       args] `[object-semantic-lookup_set-apply ,this [quote ,slot_name] ,args]]
 [defmetro semantic-add              [this slot_name :rest args] `[object-semantic-add              ,this [quote ,slot_name] @args]]
 [defmetro semantic-add-apply        [this slot_name       args] `[object-semantic-add-apply        ,this [quote ,slot_name] ,args]]
 [defmetro semantic-remove           [this slot_name :rest args] `[object-semantic-remove           ,this [quote ,slot_name] @args]]

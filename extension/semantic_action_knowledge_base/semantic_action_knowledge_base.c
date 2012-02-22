@@ -22,29 +22,17 @@
 #include "semantic_action_knowledge_base.h"
 
 
-f2ptr raw__semantic_action_knowledge_base__know_of_remove__before_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (raw__semantic_action__is_type(cause, semantic_frame)) {
-    f2ptr semantic_action = semantic_frame;
-    if (raw__eq(cause, new__symbol(cause, "relationship"), key_type) && raw__eq(cause, new__symbol(cause, "example_event"), key)) {
-      // deal with it.
-    }
-  }
-  return nil;
-}
-
-f2ptr f2__semantic_action_knowledge_base__know_of_remove__before_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  assert_argument_type(semantic_action_knowledge_base, this);
-  assert_argument_type(semantic_frame,                 semantic_frame);
-  return raw__semantic_action_knowledge_base__know_of_remove__before_callback(cause, this, semantic_frame, key_type, key, value);
-}
-export_cefunk5(semantic_action_knowledge_base__know_of_remove__before_callback, this, semantic_frame, key_type, key, value, 0, "Callback for semantic_action_knowledge_base.");
-
-
 f2ptr raw__semantic_action_knowledge_base__know_of_add__after_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
   if (raw__semantic_action__is_type(cause, semantic_frame)) {
     f2ptr semantic_action = semantic_frame;
     if (raw__eq(cause, new__symbol(cause, "relationship"), key_type) && raw__eq(cause, new__symbol(cause, "example_event"), key)) {
-      // handle it.
+      f2ptr example_event = value;
+      {
+	f2ptr transframe_set = assert_value(f2__semantic_event__transframe__lookup_set(cause, example_event));
+	set__iteration(cause, transframe_set, transframe,
+		       printf("\nyeah!  :-D"); fflush(stdout);
+		       );
+      }
     }
   }
   return nil;
@@ -65,7 +53,6 @@ f2ptr raw__semantic_action_knowledge_base__type_create(f2ptr cause, f2ptr this, 
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_action_knowledge_base"));
   }
   assert_value(raw__meta_semantic_knowledge_base__type_create(cause, this, name, semantic_realm));
-  assert_value(raw__semantic_knowledge_base__add_trace_callback_funk__remove_semantic_frame_value__before(cause, this, f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_knowledge_base"), new__symbol(cause, "semantic_action_knowledge_base__know_of_remove__before_callback"))));
   assert_value(raw__semantic_knowledge_base__add_trace_callback_funk__add_semantic_frame_value__after(    cause, this, f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_action_knowledge_base"), new__symbol(cause, "semantic_action_knowledge_base__know_of_add__after_callback"))));
   return this;
 }

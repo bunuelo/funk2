@@ -167,15 +167,15 @@ declare_object_type_1_slot(relative_time, total_nanoseconds,
 
 boolean_t raw__relative_time__equals     (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__relative_time__equals     (f2ptr cause, f2ptr this, f2ptr that);
-u64       raw__relative_time__days       (f2ptr cause, f2ptr this);
+s64       raw__relative_time__days       (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__days       (f2ptr cause, f2ptr this);
-u64       raw__relative_time__hours      (f2ptr cause, f2ptr this);
+s64       raw__relative_time__hours      (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__hours      (f2ptr cause, f2ptr this);
-u64       raw__relative_time__minutes    (f2ptr cause, f2ptr this);
+s64       raw__relative_time__minutes    (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__minutes    (f2ptr cause, f2ptr this);
-u64       raw__relative_time__seconds    (f2ptr cause, f2ptr this);
+s64       raw__relative_time__seconds    (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__seconds    (f2ptr cause, f2ptr this);
-u64       raw__relative_time__nanoseconds(f2ptr cause, f2ptr this);
+s64       raw__relative_time__nanoseconds(f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__nanoseconds(f2ptr cause, f2ptr this);
 
 

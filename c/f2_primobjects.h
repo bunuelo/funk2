@@ -33,7 +33,6 @@ typedef struct funk2_object_type__funk__slot_s             funk2_object_type__fu
 typedef struct funk2_object_type__metro__slot_s            funk2_object_type__metro__slot_t;
 typedef struct funk2_object_type__exception__slot_s        funk2_object_type__exception__slot_t;
 typedef struct funk2_object_type__bytecode__slot_s         funk2_object_type__bytecode__slot_t;
-typedef struct funk2_object_type__time__slot_s             funk2_object_type__time__slot_t;
 typedef struct funk2_object_type__size_2d__slot_s          funk2_object_type__size_2d__slot_t;
 typedef struct funk2_object_type__event__slot_s            funk2_object_type__event__slot_t;
 typedef struct funk2_object_type__bytecode_event__slot_s   funk2_object_type__bytecode_event__slot_t;

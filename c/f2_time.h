@@ -67,6 +67,7 @@ f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause);
 
 // time
 
+typedef struct funk2_object_type__time__slot_s funk2_object_type__time__slot_t;
 declare_object_type_1_slot(time, nanoseconds_since_1970,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
@@ -135,6 +136,7 @@ f2ptr      f2__time__nanoseconds(f2ptr cause, f2ptr this);
 
 // relative_time
 
+typedef struct funk2_object_type__relative_time__slot_s funk2_object_type__relative_time__slot_t;
 declare_object_type_1_slot(relative_time, nanoseconds_since_1970,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;

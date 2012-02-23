@@ -366,6 +366,7 @@ def_pcfunk2(time__is_greater_than, this, that,
 	    "Returns t if this time is further in the future than that time.",
 	    return f2__time__is_greater_than(this_cause, this, that));
 
+
 f2ptr raw__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
   f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
   f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that);
@@ -385,6 +386,24 @@ f2ptr f2__time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(time__is_numerically_equal_to, this, that,
 	    "Returns t if the nanoseconds_since_1970 of this time is numerically equal to those of that time.",
 	    return f2__time__is_numerically_equal_to(this_cause, this, that));
+
+
+f2ptr raw__time__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
+  f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that);
+  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
+  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
+  return f2__relative_time__new(cause, f2integer__new(cause, this__nanoseconds_since_1970__i - that__nanoseconds_since_1970__i));
+}
+
+f2ptr f2__time__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(time, this);
+  assert_argument_type(time, that);
+  return raw__time__minus(cause, this, that);
+}
+def_pcfunk2(time__minus, this, that,
+	    "Returns a new relative_time object that represents the difference between this and that time.",
+	    return f2__time__minus(this_cause, this, that));
 
 
 f2ptr raw__time__abbreviated_weekday_name(f2ptr cause, f2ptr this) {
@@ -618,6 +637,7 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "is_less_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_less_than__funk);}
   {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_greater_than__funk);}
   {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.is_numerically_equal_to__funk);}
+  {char* slot_name = "minus";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.minus__funk);}
   {char* slot_name = "abbreviated_weekday_name";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.abbreviated_weekday_name__funk);}
   {char* slot_name = "weekday_name";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.weekday_name__funk);}
   {char* slot_name = "abbreviated_month_name";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_time.abbreviated_month_name__funk);}
@@ -864,9 +884,10 @@ void f2__time__initialize() {
   initialize_primobject_funk__0_arg(time, minutes);
   initialize_primobject_funk__0_arg(time, seconds);
   initialize_primobject_funk__0_arg(time, nanoseconds);
-  initialize_primobject_funk__1_arg(time, is_less_than,             that);
-  initialize_primobject_funk__1_arg(time, is_greater_than,          that);
-  initialize_primobject_funk__1_arg(time, is_numerically_equal_to,  that);
+  initialize_primobject_funk__1_arg(time, is_less_than,            that);
+  initialize_primobject_funk__1_arg(time, is_greater_than,         that);
+  initialize_primobject_funk__1_arg(time, is_numerically_equal_to, that);
+  initialize_primobject_funk__1_arg(time, minus,                   that);
   initialize_primobject_funk__0_arg(time, abbreviated_weekday_name);
   initialize_primobject_funk__0_arg(time, weekday_name);
   initialize_primobject_funk__0_arg(time, abbreviated_month_name);

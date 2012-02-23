@@ -212,8 +212,6 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 	  result = new__symbol(cause, "key:ctrl_h");
 	} else if (ch__ch == 0x09) {
 	  result = new__symbol(cause, "key:ctrl_i");
-	} else if (ch__ch == 0x0A) {
-	  result = new__symbol(cause, "key:ctrl_j");
 	} else if (ch__ch == 0x0B) {
 	  result = new__symbol(cause, "key:ctrl_k");
 	} else if (ch__ch == 0x0C) {

@@ -847,7 +847,36 @@ def_pcfunk2(relative_time__is_numerically_equal_to, this, that,
 
 
 f2ptr raw__relative_time__as__string(f2ptr cause, f2ptr this) {
-  return new__string(cause, "<relative_time>");
+  s64 total_nanoseconds = raw__relative_time__total_nanoseconds(cause, this);
+  if (total_nanoseconds == 0) {
+    return new__string(cause, "now");
+  } else {
+    s64       days                = raw__relative_time__days(        cause, this);
+    s64       hours               = raw__relative_time__hours(       cause, this);
+    s64       minutes             = raw__relative_time__minutes(     cause, this);
+    s64       seconds             = raw__relative_time__seconds(     cause, this);
+    s64       milliseconds        = raw__relative_time__milliseconds(cause, this);
+    s64       microseconds        = raw__relative_time__microseconds(cause, this);
+    s64       nanoseconds         = raw__relative_time__nanoseconds( cause, this);
+    boolean_t is_past             = raw__relative_time__is_past(     cause, this);
+    f2ptr     days_string         = (days         == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, days)),         (days         == 1) ? new__string(cause, " day ")         : new__string(cause, " days ")));
+    f2ptr     hours_string        = (hours        == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, hours)),        (hours        == 1) ? new__string(cause, " hour ")        : new__string(cause, " hours ")));
+    f2ptr     minutes_string      = (minutes      == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, minutes)),      (minutes      == 1) ? new__string(cause, " minute ")      : new__string(cause, " minutes ")));
+    f2ptr     seconds_string      = (seconds      == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, seconds)),      (seconds      == 1) ? new__string(cause, " second ")      : new__string(cause, " seconds ")));
+    f2ptr     milliseconds_string = (milliseconds == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, milliseconds)), (milliseconds == 1) ? new__string(cause, " millisecond ") : new__string(cause, " milliseconds ")));
+    f2ptr     microseconds_string = (microseconds == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, microseconds)), (microseconds == 1) ? new__string(cause, " microsecond ") : new__string(cause, " microseconds ")));
+    f2ptr     nanoseconds_string  = (nanoseconds  == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, nanoseconds)),  (nanoseconds  == 1) ? new__string(cause, " nanosecond ")  : new__string(cause, " nanoseconds ")));
+    f2ptr     is_past_string      = is_past             ? new__string(cause, " in the past") : new__string(cause, " in the future");
+    return f2__stringlist__concat(cause, f2list8__new(cause,
+						      days_string,
+						      hours_string,
+						      minutes_string,
+						      seconds_string,
+						      milliseconds_string,
+						      microseconds_string,
+						      nanoseconds_string,
+						      is_past_string));
+  }
 }
 
 f2ptr f2__relative_time__as__string(f2ptr cause, f2ptr this) {

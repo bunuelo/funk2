@@ -192,7 +192,51 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
     if (ch != nil) {
       if (raw__char__is_type(cause, ch)) {
 	funk2_character_t ch__ch = raw__char__ch(cause, ch);
-	if (ch__ch == 0x7F) {
+	if (ch__ch == 0x00) {
+	  result = new__symbol(cause, "key:ctrl_space");
+	} else if (ch__ch == 0x01) {
+	  result = new__symbol(cause, "key:ctrl_a");
+	} else if (ch__ch == 0x02) {
+	  result = new__symbol(cause, "key:ctrl_b");
+	} else if (ch__ch == 0x03) {
+	  result = new__symbol(cause, "key:ctrl_c");
+	} else if (ch__ch == 0x04) {
+	  result = new__symbol(cause, "key:ctrl_d");
+	} else if (ch__ch == 0x05) {
+	  result = new__symbol(cause, "key:ctrl_e");
+	} else if (ch__ch == 0x06) {
+	  result = new__symbol(cause, "key:ctrl_f");
+	} else if (ch__ch == 0x07) {
+	  result = new__symbol(cause, "key:ctrl_g");
+	} else if (ch__ch == 0x08) {
+	  result = new__symbol(cause, "key:ctrl_h");
+	} else if (ch__ch == 0x09) {
+	  result = new__symbol(cause, "key:ctrl_i");
+	} else if (ch__ch == 0x0A) {
+	  result = new__symbol(cause, "key:ctrl_j");
+	} else if (ch__ch == 0x0B) {
+	  result = new__symbol(cause, "key:ctrl_k");
+	} else if (ch__ch == 0x0C) {
+	  result = new__symbol(cause, "key:ctrl_l");
+	} else if (ch__ch == 0x0E) {
+	  result = new__symbol(cause, "key:ctrl_n");
+	} else if (ch__ch == 0x0F) {
+	  result = new__symbol(cause, "key:ctrl_o");
+	} else if (ch__ch == 0x10) {
+	  result = new__symbol(cause, "key:ctrl_p");
+	} else if (ch__ch == 0x12) {
+	  result = new__symbol(cause, "key:ctrl_r");
+	} else if (ch__ch == 0x14) {
+	  result = new__symbol(cause, "key:ctrl_t");
+	} else if (ch__ch == 0x16) {
+	  result = new__symbol(cause, "key:ctrl_v");
+	} else if (ch__ch == 0x17) {
+	  result = new__symbol(cause, "key:ctrl_w");
+	} else if (ch__ch == 0x18) {
+	  result = new__symbol(cause, "key:ctrl_x");
+	} else if (ch__ch == 0x19) {
+	  result = new__symbol(cause, "key:ctrl_y");
+	} else if (ch__ch == 0x7F) {
 	  result = new__symbol(cause, "key:backspace");
 	} else if (ch__ch == 0x1B) {
 	  f2ptr escaped_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));

@@ -211,7 +211,9 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 	} else if (ch__ch == 0x08) {
 	  result = new__symbol(cause, "key:ctrl_h");
 	} else if (ch__ch == 0x09) {
-	  result = new__symbol(cause, "key:ctrl_i");
+	  result = new__symbol(cause, "key:tab");
+	} else if (ch__ch == 0x0A) {
+	  result = new__symbol(cause, "key:enter");
 	} else if (ch__ch == 0x0B) {
 	  result = new__symbol(cause, "key:ctrl_k");
 	} else if (ch__ch == 0x0C) {
@@ -304,10 +306,6 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 	      }
 	    }
 	  }
-	} else if (ch__ch == '\t') {
-	  result = new__symbol(cause, "key:tab");
-	} else if (ch__ch == '\n') {
-	  result = new__symbol(cause, "key:enter");
 	} else {
 	  result = ch;
 	}

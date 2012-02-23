@@ -213,6 +213,22 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		    result = new__symbol(cause, "key:right");
 		  } else if (ansi_ch__ch == (funk2_character_t)'D') {
 		    result = new__symbol(cause, "key:left");
+		  } else if (ansi_ch__ch == (funk2_character_t)'2') {
+		    f2ptr ansi2_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
+		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
+		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
+		      if (ansi2_ch__ch == (funk2_character_t)'~') {
+			result = new__symbol(cause, "key:insert");
+		      }
+		    }
+		  } else if (ansi_ch__ch == (funk2_character_t)'3') {
+		    f2ptr ansi2_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
+		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
+		      funk2_character_t ansi2_ch__ch = raw__char__ch(cause, ansi2_ch);
+		      if (ansi2_ch__ch == (funk2_character_t)'~') {
+			result = new__symbol(cause, "key:delete");
+		      }
+		    }
 		  } else if (ansi_ch__ch == (funk2_character_t)'5') {
 		    f2ptr ansi2_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 		    if ((ansi2_ch != nil) && raw__char__is_type(cause, ansi2_ch)) {
@@ -235,10 +251,12 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
 		f2ptr other_ch = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
 		if ((other_ch != nil) && raw__char__is_type(cause, other_ch)) {
 		  funk2_character_t other_ch__ch = raw__char__ch(cause, other_ch);
-		  if (other_ch__ch == (funk2_character_t)'H') {
-		    result = new__symbol(cause, "key:home");
-		  } else if (other_ch__ch == (funk2_character_t)'F') {
+		  if (other_ch__ch == (funk2_character_t)'F') {
 		    result = new__symbol(cause, "key:end");
+		  } else if (other_ch__ch == (funk2_character_t)'H') {
+		    result = new__symbol(cause, "key:home");
+		  } else if (other_ch__ch == (funk2_character_t)'P') {
+		    result = new__symbol(cause, "key:f1");
 		  }
 		}
 	      }

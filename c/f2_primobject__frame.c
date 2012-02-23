@@ -621,10 +621,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 		   boolean_t slot_should_be_printed = boolean__true;
 		   if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {
-		     if (raw__symbol__is_type(cause, slot_value) &&
-			 (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
-			  raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
-			  raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order")))) {
+		     if (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
+			 raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
+			 raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order"))) {
 		       slot_should_be_printed = boolean__false;
 		     }
 		   } else {
@@ -701,10 +700,9 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
 			   boolean_t slot_should_be_printed = boolean__true;
 			   if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {
-			     if (raw__symbol__is_type(cause, slot_value) &&
-				 (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
-				  raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
-				  raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order")))) {
+			     if (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
+				 raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
+				 raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order"))) {
 			       slot_should_be_printed = boolean__false;
 			     }
 			   }

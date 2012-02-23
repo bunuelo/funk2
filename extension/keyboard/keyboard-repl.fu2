@@ -332,7 +332,7 @@
 	  [if [== [get key bug_type] 777]
 	      [have this press_ctrl_c]
 	    [bug key]]
-	[prog [print-ansi-hide_cursor]
+	[prog `[print-ansi-hide_cursor]
 	      [if [not [or [eq key `key:up]
 			   [eq key `key:down]]]
 		  [= saving_x_column_during_movement nil]]
@@ -350,7 +350,7 @@
 		    [[eq key `key:page_down]        [have this press_page_down]]
 		    [t                              [have this press_unknown_key]]]
 	      `[have this print_debug cursor_x ' ' cursor_y '    ']
-	      [print-ansi-show_cursor]]]]]]
+	      `[print-ansi-show_cursor]]]]]]
 
 
 [deftypefunk keyboard_editor execute reads []

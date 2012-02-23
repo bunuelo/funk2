@@ -327,10 +327,10 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
     funk2_character_t* current_line__str = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (current_line__length + 1)));
     raw__string__str_copy(cause, current_line, current_line__str);
     current_line__str[current_line__length] = 0;
-    raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
+    //raw__terminal_print_frame__write_ansi__hide_cursor__thread_unsafe(cause, terminal_print_frame);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, current_line__length - cursor_x__i, &current_line__str[cursor_x__i]);
     raw__terminal_print_frame__write_ansi__move__thread_unsafe(cause, terminal_print_frame, -(current_line__length - cursor_x__i), 0);
-    raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
+    //raw__terminal_print_frame__write_ansi__show_cursor__thread_unsafe(cause, terminal_print_frame);
     f2__free(to_ptr(current_line__str));
   }
   f2ptr buffer_max_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "buffer_max_x"), nil));

@@ -114,20 +114,20 @@ declare_object_type_1_slot(time, nanoseconds_since_1970,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
-boolean_t raw__time__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__time__equals(f2ptr cause, f2ptr this, f2ptr that);
-u64       raw__time__years(f2ptr cause, f2ptr this);
-f2ptr      f2__time__years(f2ptr cause, f2ptr this);
-u64       raw__time__months(f2ptr cause, f2ptr this);
-f2ptr      f2__time__months(f2ptr cause, f2ptr this);
-u64       raw__time__days(f2ptr cause, f2ptr this);
-f2ptr      f2__time__days(f2ptr cause, f2ptr this);
-u64       raw__time__hours(f2ptr cause, f2ptr this);
-f2ptr      f2__time__hours(f2ptr cause, f2ptr this);
-u64       raw__time__minutes(f2ptr cause, f2ptr this);
-f2ptr      f2__time__minutes(f2ptr cause, f2ptr this);
-u64       raw__time__seconds(f2ptr cause, f2ptr this);
-f2ptr      f2__time__seconds(f2ptr cause, f2ptr this);
+boolean_t raw__time__equals     (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__time__equals     (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__time__years      (f2ptr cause, f2ptr this);
+f2ptr      f2__time__years      (f2ptr cause, f2ptr this);
+u64       raw__time__months     (f2ptr cause, f2ptr this);
+f2ptr      f2__time__months     (f2ptr cause, f2ptr this);
+u64       raw__time__days       (f2ptr cause, f2ptr this);
+f2ptr      f2__time__days       (f2ptr cause, f2ptr this);
+u64       raw__time__hours      (f2ptr cause, f2ptr this);
+f2ptr      f2__time__hours      (f2ptr cause, f2ptr this);
+u64       raw__time__minutes    (f2ptr cause, f2ptr this);
+f2ptr      f2__time__minutes    (f2ptr cause, f2ptr this);
+u64       raw__time__seconds    (f2ptr cause, f2ptr this);
+f2ptr      f2__time__seconds    (f2ptr cause, f2ptr this);
 u64       raw__time__nanoseconds(f2ptr cause, f2ptr this);
 f2ptr      f2__time__nanoseconds(f2ptr cause, f2ptr this);
 
@@ -138,10 +138,6 @@ f2ptr      f2__time__nanoseconds(f2ptr cause, f2ptr this);
 declare_object_type_1_slot(relative_time, nanoseconds_since_1970,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
-			   f2ptr years__symbol;
-			   f2ptr years__funk;
-			   f2ptr months__symbol;
-			   f2ptr months__funk;
 			   f2ptr days__symbol;
 			   f2ptr days__funk;
 			   f2ptr hours__symbol;
@@ -164,20 +160,16 @@ declare_object_type_1_slot(relative_time, nanoseconds_since_1970,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
-boolean_t raw__relative_time__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__relative_time__equals(f2ptr cause, f2ptr this, f2ptr that);
-u64       raw__relative_time__years(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__years(f2ptr cause, f2ptr this);
-u64       raw__relative_time__months(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__months(f2ptr cause, f2ptr this);
-u64       raw__relative_time__days(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__days(f2ptr cause, f2ptr this);
-u64       raw__relative_time__hours(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__hours(f2ptr cause, f2ptr this);
-u64       raw__relative_time__minutes(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__minutes(f2ptr cause, f2ptr this);
-u64       raw__relative_time__seconds(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__seconds(f2ptr cause, f2ptr this);
+boolean_t raw__relative_time__equals     (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__relative_time__equals     (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__relative_time__days       (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__days       (f2ptr cause, f2ptr this);
+u64       raw__relative_time__hours      (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__hours      (f2ptr cause, f2ptr this);
+u64       raw__relative_time__minutes    (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__minutes    (f2ptr cause, f2ptr this);
+u64       raw__relative_time__seconds    (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__seconds    (f2ptr cause, f2ptr this);
 u64       raw__relative_time__nanoseconds(f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__nanoseconds(f2ptr cause, f2ptr this);
 

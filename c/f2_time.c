@@ -658,30 +658,6 @@ def_pcfunk2(relative_time__equals, this, that,
 	    "The relative_time represented by this and that relative_time object are the same even if the objects themselves are different objects., """,
 	    return f2__relative_time__equals(this_cause, this, that));
 
-u64 raw__relative_time__years(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.years;
-}
-
-f2ptr f2__relative_time__years(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__years(cause, this));}
-def_pcfunk1(relative_time__years, this,
-	    "The number of years since the monk Dionysius Exiguus thought Jesus Christ was born.",
-	    return f2__relative_time__years(this_cause, this));
-
-u64 raw__relative_time__months(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.months;
-}
-
-f2ptr f2__relative_time__months(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__months(cause, this));}
-def_pcfunk1(relative_time__months, this,
-	    "The number of months since the beginning of the year.",
-	    return f2__relative_time__months(this_cause, this));
-
 u64 raw__relative_time__days(f2ptr cause, f2ptr this) {
   u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
   funk2_date_t funk2_date;
@@ -921,8 +897,6 @@ void f2__time__initialize() {
   
   initialize_primobject_1_slot(relative_time, nanoseconds_since_1970);
   initialize_primobject_funk__0_arg(relative_time, equals);
-  initialize_primobject_funk__0_arg(relative_time, years);
-  initialize_primobject_funk__0_arg(relative_time, months);
   initialize_primobject_funk__0_arg(relative_time, days);
   initialize_primobject_funk__0_arg(relative_time, hours);
   initialize_primobject_funk__0_arg(relative_time, minutes);

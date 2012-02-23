@@ -867,7 +867,7 @@ f2ptr raw__relative_time__as__string(f2ptr cause, f2ptr this) {
     f2ptr     milliseconds_string = (milliseconds == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, milliseconds)), (milliseconds == 1) ? new__string(cause, " millisecond ") : new__string(cause, " milliseconds ")));
     f2ptr     microseconds_string = (microseconds == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, microseconds)), (microseconds == 1) ? new__string(cause, " microsecond ") : new__string(cause, " microseconds ")));
     f2ptr     nanoseconds_string  = (nanoseconds  == 0) ? new__string(cause, "") : f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2integer__new(cause, nanoseconds)),  (nanoseconds  == 1) ? new__string(cause, " nanosecond ")  : new__string(cause, " nanoseconds ")));
-    f2ptr     is_past_string      = is_past             ? new__string(cause, "in the past") : new__string(cause, "in the future");
+    f2ptr     is_past_string      = is_past             ? new__string(cause, "before") : new__string(cause, "after");
     return f2__stringlist__concat(cause, f2list8__new(cause,
 						      days_string,
 						      hours_string,

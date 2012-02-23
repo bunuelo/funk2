@@ -30,14 +30,14 @@ f2ptr raw__semantic_action_knowledge_base__know_of_add__after_callback(f2ptr cau
       {
 	f2ptr transframe_set = assert_value(f2__semantic_event__transframe__lookup_set(cause, example_event));
 	set__iteration(cause, transframe_set, transframe,
-		       f2ptr removal_set  = assert_value(f2__semantic_event_transframe__removal__lookup_set(cause, transframe));
-		       f2ptr addition_set = assert_value(f2__semantic_event_transframe__addition__lookup_set(cause, transframe));
-		       set__iteration(cause, removal_set, removal,
-				      
-				      );
-		       set__iteration(cause, addition_set, addition,
-				      
-				      );
+		       //f2ptr removal_set  = assert_value(f2__semantic_event_transframe__removal__lookup_set(cause, transframe));
+		       //f2ptr addition_set = assert_value(f2__semantic_event_transframe__addition__lookup_set(cause, transframe));
+		       //set__iteration(cause, removal_set, removal,
+		       //		      
+		       //		      );
+		       //set__iteration(cause, addition_set, addition,
+		       //		      
+		       //		      );
 		       );
       }
     }

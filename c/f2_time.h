@@ -38,6 +38,9 @@ typedef struct funk2_date_s {
 } funk2_date_t;
 
 #define nanoseconds_per_second ((s64)1000000000)
+#define nanoseconds_per_minute (nanoseconds_per_second * 60)
+#define nanoseconds_per_hour   (nanoseconds_per_minute * 60)
+#define nanoseconds_per_day    (nanoseconds_per_hour   * 24)
 
 //void   f2__sleep(int microseconds);
 void   f2__nanosleep(u64 nanoseconds);
@@ -59,9 +62,9 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause);
 
 // relative_time
 
-declare_primobject_1_slot(relative_time, nanoseconds_since_1970);
+declare_primobject_1_slot(relative_time, total_nanoseconds);
 
-f2ptr f2__relative_time__new(f2ptr cause, f2ptr nanoseconds_since_1970);
+f2ptr f2__relative_time__new(f2ptr cause, f2ptr total_nanoseconds);
 f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause);
 
 
@@ -137,7 +140,7 @@ f2ptr      f2__time__nanoseconds(f2ptr cause, f2ptr this);
 // relative_time
 
 typedef struct funk2_object_type__relative_time__slot_s funk2_object_type__relative_time__slot_t;
-declare_object_type_1_slot(relative_time, nanoseconds_since_1970,
+declare_object_type_1_slot(relative_time, total_nanoseconds,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
 			   f2ptr days__symbol;

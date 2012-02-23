@@ -636,18 +636,18 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
 
 // relative_time
 
-def_primobject_1_slot(relative_time, nanoseconds_since_1970);
+def_primobject_1_slot(relative_time, total_nanoseconds);
 
-f2ptr f2__relative_time__new(f2ptr cause, f2ptr nanoseconds_since_1970) {return f2relative_time__new(cause, nanoseconds_since_1970);}
-def_pcfunk1(relative_time__new, nanoseconds_since_1970,
+f2ptr f2__relative_time__new(f2ptr cause, f2ptr total_nanoseconds) {return f2relative_time__new(cause, total_nanoseconds);}
+def_pcfunk1(relative_time__new, total_nanoseconds,
 	    "",
-	    return f2__relative_time__new(this_cause, nanoseconds_since_1970));
+	    return f2__relative_time__new(this_cause, total_nanoseconds));
 
 boolean_t raw__relative_time__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__relative_time__is_type(cause, that)) {
     return boolean__false;
   }
-  return raw__eq(cause, f2__relative_time__nanoseconds_since_1970(cause, this), f2__relative_time__nanoseconds_since_1970(cause, that));
+  return raw__eq(cause, f2__relative_time__total_nanoseconds(cause, this), f2__relative_time__total_nanoseconds(cause, that));
 }
 
 f2ptr f2__relative_time__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -658,11 +658,9 @@ def_pcfunk2(relative_time__equals, this, that,
 	    "The relative_time represented by this and that relative_time object are the same even if the objects themselves are different objects., """,
 	    return f2__relative_time__equals(this_cause, this, that));
 
-u64 raw__relative_time__days(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.days;
+s64 raw__relative_time__days(f2ptr cause, f2ptr this) {
+  s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  return total_nanoseconds__i / nanoseconds_per_day;
 }
 
 f2ptr f2__relative_time__days(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__days(cause, this));}
@@ -670,11 +668,10 @@ def_pcfunk1(relative_time__days, this,
 	    "The number of days since the beginning of the month.",
 	    return f2__relative_time__days(this_cause, this));
 
-u64 raw__relative_time__hours(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.hours;
+s64 raw__relative_time__hours(f2ptr cause, f2ptr this) {
+  s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  s64 total_days           = total_nanoseconds__i / nanoseconds_per_day;
+  return (total_nanoseconds__i - (total_days * nanoseconds_per_day)) / nanoseconds_per_hour;
 }
 
 f2ptr f2__relative_time__hours(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__hours(cause, this));}
@@ -682,11 +679,10 @@ def_pcfunk1(relative_time__hours, this,
 	    "The number of hours since the beginning of the day.",
 	    return f2__relative_time__hours(this_cause, this));
 
-u64 raw__relative_time__minutes(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.minutes;
+s64 raw__relative_time__minutes(f2ptr cause, f2ptr this) {
+  s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  s64 total_hours          = total_nanoseconds__i / nanoseconds_per_hour;
+  return (total_nanoseconds__i - (total_hours * nanoseconds_per_hour)) / nanoseconds_per_minute;
 }
 
 f2ptr f2__relative_time__minutes(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__minutes(cause, this));}
@@ -694,11 +690,10 @@ def_pcfunk1(relative_time__minutes, this,
 	    "The number of minutes since the beginning of the hour.",
 	    return f2__relative_time__minutes(this_cause, this));
 
-u64 raw__relative_time__seconds(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.seconds;
+s64 raw__relative_time__seconds(f2ptr cause, f2ptr this) {
+  s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  s64 total_minutes        = total_nanoseconds__i / nanoseconds_per_minute;
+  return (total_nanoseconds__i - (total_minutes * nanoseconds_per_minute)) / nanoseconds_per_second;
 }
 
 f2ptr f2__relative_time__seconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__seconds(cause, this));}
@@ -706,11 +701,10 @@ def_pcfunk1(relative_time__seconds, this,
 	    "The number of seconds since the beginning of the minute.",
 	    return f2__relative_time__seconds(this_cause, this));
 
-u64 raw__relative_time__nanoseconds(f2ptr cause, f2ptr this) {
-  u64 nanoseconds_since_1970__i = f2integer__i(f2relative_time__nanoseconds_since_1970(this, cause), cause);
-  funk2_date_t funk2_date;
-  nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
-  return funk2_date.nanoseconds;
+s64 raw__relative_time__nanoseconds(f2ptr cause, f2ptr this) {
+  s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  s64 total_seconds        = total_nanoseconds__i / nanoseconds_per_second;
+  return (total_nanoseconds__i - (total_seconds * nanoseconds_per_second));
 }
 
 f2ptr f2__relative_time__nanoseconds(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__relative_time__nanoseconds(cause, this));}
@@ -719,11 +713,11 @@ def_pcfunk1(relative_time__nanoseconds, this,
 	    return f2__relative_time__nanoseconds(this_cause, this));
 
 f2ptr raw__relative_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__relative_time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__relative_time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  if (this__nanoseconds_since_1970__i < that__nanoseconds_since_1970__i) {
+  f2ptr this__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, this);
+  f2ptr that__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, that);
+  s64   this__total_nanoseconds__i = f2integer__i(this__total_nanoseconds, cause);
+  s64   that__total_nanoseconds__i = f2integer__i(that__total_nanoseconds, cause);
+  if (this__total_nanoseconds__i < that__total_nanoseconds__i) {
     return boolean__true;
   }
   return boolean__false;
@@ -739,11 +733,11 @@ def_pcfunk2(relative_time__is_less_than, this, that,
 	    return f2__relative_time__is_less_than(this_cause, this, that));
 
 f2ptr raw__relative_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__relative_time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__relative_time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  if (this__nanoseconds_since_1970__i > that__nanoseconds_since_1970__i) {
+  f2ptr this__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, this);
+  f2ptr that__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, that);
+  s64   this__total_nanoseconds__i = f2integer__i(this__total_nanoseconds, cause);
+  s64   that__total_nanoseconds__i = f2integer__i(that__total_nanoseconds, cause);
+  if (this__total_nanoseconds__i > that__total_nanoseconds__i) {
     return boolean__true;
   }
   return boolean__false;
@@ -759,11 +753,11 @@ def_pcfunk2(relative_time__is_greater_than, this, that,
 	    return f2__relative_time__is_greater_than(this_cause, this, that));
 
 f2ptr raw__relative_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__relative_time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__relative_time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  if (this__nanoseconds_since_1970__i == that__nanoseconds_since_1970__i) {
+  f2ptr this__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, this);
+  f2ptr that__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, that);
+  s64   this__total_nanoseconds__i = f2integer__i(this__total_nanoseconds, cause);
+  s64   that__total_nanoseconds__i = f2integer__i(that__total_nanoseconds, cause);
+  if (this__total_nanoseconds__i == that__total_nanoseconds__i) {
     return boolean__true;
   }
   return boolean__false;
@@ -775,7 +769,7 @@ f2ptr f2__relative_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr 
   return f2bool__new(raw__relative_time__is_numerically_equal_to(cause, this, that));
 }
 def_pcfunk2(relative_time__is_numerically_equal_to, this, that,
-	    "Returns t if the nanoseconds_since_1970 of this relative_time is numerically equal to those of that relative_time.",
+	    "Returns t if the total_nanoseconds of this relative_time is numerically equal to those of that relative_time.",
 	    return f2__relative_time__is_numerically_equal_to(this_cause, this, that));
 
 
@@ -891,7 +885,7 @@ void f2__time__initialize() {
 
   // relative_time
   
-  initialize_primobject_1_slot(relative_time, nanoseconds_since_1970);
+  initialize_primobject_1_slot(relative_time, total_nanoseconds);
   initialize_primobject_funk__0_arg(relative_time, equals);
   initialize_primobject_funk__0_arg(relative_time, days);
   initialize_primobject_funk__0_arg(relative_time, hours);

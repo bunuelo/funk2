@@ -37,10 +37,12 @@ typedef struct funk2_date_s {
   u64 nanoseconds;
 } funk2_date_t;
 
-#define nanoseconds_per_second ((s64)1000000000)
-#define nanoseconds_per_minute (nanoseconds_per_second * 60)
-#define nanoseconds_per_hour   (nanoseconds_per_minute * 60)
-#define nanoseconds_per_day    (nanoseconds_per_hour   * 24)
+#define nanoseconds_per_microsecond ((s64)1000)
+#define nanoseconds_per_millisecond (nanoseconds_per_microsecond * 1000)
+#define nanoseconds_per_second      (nanoseconds_per_millisecond * 1000)
+#define nanoseconds_per_minute      (nanoseconds_per_second      * 60)
+#define nanoseconds_per_hour        (nanoseconds_per_minute      * 60)
+#define nanoseconds_per_day         (nanoseconds_per_hour        * 24)
 
 //void   f2__sleep(int microseconds);
 void   f2__nanosleep(u64 nanoseconds);
@@ -153,6 +155,10 @@ declare_object_type_1_slot(relative_time, total_nanoseconds,
 			   f2ptr minutes__funk;
 			   f2ptr seconds__symbol;
 			   f2ptr seconds__funk;
+			   f2ptr milliseconds__symbol;
+			   f2ptr milliseconds__funk;
+			   f2ptr microseconds__symbol;
+			   f2ptr microseconds__funk;
 			   f2ptr nanoseconds__symbol;
 			   f2ptr nanoseconds__funk;
 			   f2ptr is_less_than__symbol;
@@ -169,18 +175,22 @@ declare_object_type_1_slot(relative_time, total_nanoseconds,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
-boolean_t raw__relative_time__equals     (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__relative_time__equals     (f2ptr cause, f2ptr this, f2ptr that);
-s64       raw__relative_time__days       (f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__days       (f2ptr cause, f2ptr this);
-s64       raw__relative_time__hours      (f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__hours      (f2ptr cause, f2ptr this);
-s64       raw__relative_time__minutes    (f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__minutes    (f2ptr cause, f2ptr this);
-s64       raw__relative_time__seconds    (f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__seconds    (f2ptr cause, f2ptr this);
-s64       raw__relative_time__nanoseconds(f2ptr cause, f2ptr this);
-f2ptr      f2__relative_time__nanoseconds(f2ptr cause, f2ptr this);
+boolean_t raw__relative_time__equals      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__relative_time__equals      (f2ptr cause, f2ptr this, f2ptr that);
+s64       raw__relative_time__days        (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__days        (f2ptr cause, f2ptr this);
+s64       raw__relative_time__hours       (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__hours       (f2ptr cause, f2ptr this);
+s64       raw__relative_time__minutes     (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__minutes     (f2ptr cause, f2ptr this);
+s64       raw__relative_time__seconds     (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__seconds     (f2ptr cause, f2ptr this);
+s64       raw__relative_time__milliseconds(f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__milliseconds(f2ptr cause, f2ptr this);
+s64       raw__relative_time__microseconds(f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__microseconds(f2ptr cause, f2ptr this);
+s64       raw__relative_time__nanoseconds (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__nanoseconds (f2ptr cause, f2ptr this);
 
 
 // **

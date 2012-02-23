@@ -88,6 +88,10 @@ declare_object_type_1_slot(time, nanoseconds_since_1970,
 			   f2ptr minutes__funk;
 			   f2ptr seconds__symbol;
 			   f2ptr seconds__funk;
+			   f2ptr milliseconds__symbol;
+			   f2ptr milliseconds__funk;
+			   f2ptr microseconds__symbol;
+			   f2ptr microseconds__funk;
 			   f2ptr nanoseconds__symbol;
 			   f2ptr nanoseconds__funk;
 			   f2ptr is_less_than__symbol;

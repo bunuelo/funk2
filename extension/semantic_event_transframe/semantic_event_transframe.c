@@ -24,7 +24,8 @@
 
 // semantic_event_transframe_change
 
-f2ptr raw__semantic_event_transframe_change__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr change_type, f2ptr change_relative_time, f2ptr change_event) {
+f2ptr raw__semantic_event_transframe_change__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+  //, f2ptr change_type, f2ptr change_relative_time, f2ptr change_event
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_transframe_change"));
   }

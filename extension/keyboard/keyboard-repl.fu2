@@ -353,6 +353,18 @@
   [terminal_format standard-terminal '\nrepl: exiting funk2.']
   [quit]]
 
+[deftypefunk keyboard_editor execute press_ctrl_space []
+  ]
+
+[deftypefunk keyboard_editor execute press_ctrl_k []
+  ]
+
+[deftypefunk keyboard_editor execute press_ctrl_w []
+  ]
+
+[deftypefunk keyboard_editor execute press_ctrl_y []
+  ]
+
 [deftypefunk keyboard_editor execute press_unknown_key []
   ]
 
@@ -382,6 +394,10 @@
 		    [[eq key `key:end]              [have this press_end]]
 		    [[eq key `key:page_up]          [have this press_page_up]]
 		    [[eq key `key:page_down]        [have this press_page_down]]
+		    [[eq key `key:ctrl_space]       [have this press_ctrl_space]]
+		    [[eq key `key:ctrl_k]           [have this press_ctrl_k]]
+		    [[eq key `key:ctrl_w]           [have this press_ctrl_w]]
+		    [[eq key `key:ctrl_y]           [have this press_ctrl_y]]
 		    [[eq key `key:f1]               [have this press_f1]]
 		    [t                              [have this press_unknown_key]]]
 	      `[have this print_debug cursor_x ' ' cursor_y '    ']

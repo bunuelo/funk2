@@ -796,7 +796,7 @@ f2ptr raw__relative_time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list16__new(cause,
+    frame = f2__frame__new(cause, f2list12__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "relative_time"),
 						new__symbol(cause, "days"),        f2__relative_time__days(       cause, this),
 						new__symbol(cause, "hours"),       f2__relative_time__hours(      cause, this),

@@ -418,16 +418,25 @@ def_pcfunk2(time__is_numerically_equal_to, this, that,
 
 
 f2ptr raw__time__minus(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr this__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, this);
-  f2ptr that__nanoseconds_since_1970 = f2__time__nanoseconds_since_1970(cause, that);
-  s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
-  s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
-  return f2__relative_time__new(cause, f2integer__new(cause, this__nanoseconds_since_1970__i - that__nanoseconds_since_1970__i));
+  if (raw__time__is_type(cause, that)) {
+    f2ptr this__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
+    f2ptr that__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that);
+    s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
+    s64   that__nanoseconds_since_1970__i = f2integer__i(that__nanoseconds_since_1970, cause);
+    return f2__relative_time__new(cause, f2integer__new(cause, this__nanoseconds_since_1970__i - that__nanoseconds_since_1970__i));
+  } else if (raw__relative_time__is_type(cause, that)) {
+    f2ptr this__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this);
+    f2ptr that__total_nanoseconds         = f2__relative_time__total_nanoseconds(cause, that);
+    s64   this__nanoseconds_since_1970__i = f2integer__i(this__nanoseconds_since_1970, cause);
+    s64   that__total_nanoseconds__i      = f2integer__i(that__total_nanoseconds, cause);
+    return f2__time__new(cause, f2integer__new(cause, this__nanoseconds_since_1970__i - that__total_nanoseconds__i));
+  } else {
+    return f2larva__new(cause, 34626, nil);
+  }
 }
 
 f2ptr f2__time__minus(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(time, this);
-  assert_argument_type(time, that);
   return raw__time__minus(cause, this, that);
 }
 def_pcfunk2(time__minus, this, that,
@@ -910,8 +919,8 @@ def_pcfunk2(relative_time__is_numerically_equal_to, this, that,
 
 f2ptr raw__relative_time__plus(f2ptr cause, f2ptr this, f2ptr that) {
   if (raw__relative_time__is_type(cause, that)) {
-    f2ptr this__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, this);
-    f2ptr that__total_nanoseconds = f2__relative_time__total_nanoseconds(cause, that);
+    f2ptr this__total_nanoseconds    = f2__relative_time__total_nanoseconds(cause, this);
+    f2ptr that__total_nanoseconds    = f2__relative_time__total_nanoseconds(cause, that);
     s64   this__total_nanoseconds__i = f2integer__i(this__total_nanoseconds, cause);
     s64   that__total_nanoseconds__i = f2integer__i(that__total_nanoseconds, cause);
     return f2__relative_time__new(cause, f2integer__new(cause, this__total_nanoseconds__i + that__total_nanoseconds__i));
@@ -929,6 +938,24 @@ f2ptr f2__relative_time__plus(f2ptr cause, f2ptr this, f2ptr that) {
 def_pcfunk2(relative_time__plus, this, that,
 	    "Returns t if this relative_time is further in the past than that relative_time.",
 	    return f2__relative_time__plus(this_cause, this, that));
+
+
+f2ptr raw__relative_time__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__total_nanoseconds    = f2__relative_time__total_nanoseconds(cause, this);
+  f2ptr that__total_nanoseconds    = f2__relative_time__total_nanoseconds(cause, that);
+  s64   this__total_nanoseconds__i = f2integer__i(this__total_nanoseconds, cause);
+  s64   that__total_nanoseconds__i = f2integer__i(that__total_nanoseconds, cause);
+  return f2__relative_time__new(cause, f2integer__new(cause, this__total_nanoseconds__i - that__total_nanoseconds__i));
+}
+
+f2ptr f2__relative_time__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(relative_time, this);
+  assert_argument_type(relative_time, that);
+  return f2bool__new(raw__relative_time__minus(cause, this, that));
+}
+def_pcfunk2(relative_time__minus, this, that,
+	    "Returns t if this relative_time is further in the past than that relative_time.",
+	    return f2__relative_time__minus(this_cause, this, that));
 
 
 f2ptr raw__relative_time__as__string(f2ptr cause, f2ptr this) {
@@ -1040,6 +1067,7 @@ f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.is_greater_than__funk);}
   {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.is_numerically_equal_to__funk);}
   {char* slot_name = "plus";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.plus__funk);}
+  {char* slot_name = "minus";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.minus__funk);}
   {char* slot_name = "as-string";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__funk);}
   {char* slot_name = "as-graphviz_label";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__funk);}
@@ -1121,6 +1149,7 @@ void f2__time__initialize() {
   initialize_primobject_funk__1_arg(relative_time, is_greater_than,          that);
   initialize_primobject_funk__1_arg(relative_time, is_numerically_equal_to,  that);
   initialize_primobject_funk__1_arg(relative_time, plus,                     that);
+  initialize_primobject_funk__1_arg(relative_time, minus,                    that);
   
   {char* symbol_str = "as-string"; __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(relative_time__as__string, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__funk = never_gc(cfunk);}

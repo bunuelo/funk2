@@ -177,6 +177,8 @@ declare_object_type_1_slot(relative_time, total_nanoseconds,
 			   f2ptr is_numerically_equal_to__funk;
 			   f2ptr plus__symbol;
 			   f2ptr plus__funk;
+			   f2ptr minus__symbol;
+			   f2ptr minus__funk;
 			   f2ptr as__graphviz_label__symbol;
 			   f2ptr as__graphviz_label__funk;
 			   f2ptr as__string__symbol;

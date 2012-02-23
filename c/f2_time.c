@@ -847,8 +847,9 @@ def_pcfunk2(relative_time__is_numerically_equal_to, this, that,
 
 
 f2ptr raw__relative_time__as__string(f2ptr cause, f2ptr this) {
-  s64 total_nanoseconds = raw__relative_time__total_nanoseconds(cause, this);
-  if (total_nanoseconds == 0) {
+  f2ptr total_nanoseconds    = f2__relative_time__total_nanoseconds(cause, this);
+  s64   total_nanoseconds__i = f2integer__i(total_nanoseconds, cause);
+  if (total_nanoseconds__i == 0) {
     return new__string(cause, "now");
   } else {
     s64       days                = raw__relative_time__days(        cause, this);

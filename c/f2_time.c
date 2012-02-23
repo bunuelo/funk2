@@ -798,8 +798,6 @@ f2ptr raw__relative_time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list16__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "relative_time"),
-						new__symbol(cause, "years"),       f2__relative_time__years(      cause, this),
-						new__symbol(cause, "months"),      f2__relative_time__months(     cause, this),
 						new__symbol(cause, "days"),        f2__relative_time__days(       cause, this),
 						new__symbol(cause, "hours"),       f2__relative_time__hours(      cause, this),
 						new__symbol(cause, "minutes"),     f2__relative_time__minutes(    cause, this),
@@ -823,8 +821,6 @@ def_pcfunk2(relative_time__terminal_print_with_frame, this, terminal_print_frame
 f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2relative_time__primobject_type__new(cause);
   {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.equals__funk);}
-  {char* slot_name = "years";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.years__funk);}
-  {char* slot_name = "months";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.months__funk);}
   {char* slot_name = "days";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.days__funk);}
   {char* slot_name = "hours";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.hours__funk);}
   {char* slot_name = "minutes";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.minutes__funk);}

@@ -726,6 +726,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	  f2ptr object_type_slot_pair = f2__cons__car(cause, object_type_slot_pairs_iter);
 	  f2ptr type_slot_name = f2__cons__car(cause, object_type_slot_pair);
 	  f2ptr slot_name      = f2__cons__cdr(cause, object_type_slot_pair);
+	  f2ptr slot_value     = raw__frame__lookup_type_var_value(cause, this, type_slot_name, slot_name, nil);
 	  {
 	    boolean_t slot_should_be_printed = boolean__true;
 	    if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {

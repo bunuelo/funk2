@@ -147,6 +147,8 @@ typedef struct funk2_object_type__relative_time__slot_s funk2_object_type__relat
 declare_object_type_1_slot(relative_time, total_nanoseconds,
 			   f2ptr equals__symbol;
 			   f2ptr equals__funk;
+			   f2ptr is_past__symbol;
+			   f2ptr is_past__funk;
 			   f2ptr days__symbol;
 			   f2ptr days__funk;
 			   f2ptr hours__symbol;
@@ -177,6 +179,8 @@ declare_object_type_1_slot(relative_time, total_nanoseconds,
 
 boolean_t raw__relative_time__equals      (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__relative_time__equals      (f2ptr cause, f2ptr this, f2ptr that);
+boolean_t raw__relative_time__is_past     (f2ptr cause, f2ptr this);
+f2ptr      f2__relative_time__is_past     (f2ptr cause, f2ptr this);
 s64       raw__relative_time__days        (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__days        (f2ptr cause, f2ptr this);
 s64       raw__relative_time__hours       (f2ptr cause, f2ptr this);

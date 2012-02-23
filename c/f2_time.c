@@ -678,8 +678,21 @@ def_pcfunk2(relative_time__equals, this, that,
 	    "The relative_time represented by this and that relative_time object are the same even if the objects themselves are different objects., """,
 	    return f2__relative_time__equals(this_cause, this, that));
 
+boolean_t raw__relative_time__is_past(f2ptr cause, f2ptr this) {
+  s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  return (total_nanoseconds__i < 0);
+}
+
+f2ptr f2__relative_time__is_past(f2ptr cause, f2ptr this) {return f2bool__new(raw__relative_time__is_past(cause, this));}
+def_pcfunk1(relative_time__is_past, this,
+	    "Whether or not this relative_time is_past.",
+	    return f2__relative_time__is_past(this_cause, this));
+
 s64 raw__relative_time__days(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   return total_nanoseconds__i / nanoseconds_per_day;
 }
 
@@ -690,6 +703,9 @@ def_pcfunk1(relative_time__days, this,
 
 s64 raw__relative_time__hours(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   s64 total_days           = total_nanoseconds__i / nanoseconds_per_day;
   return (total_nanoseconds__i - (total_days * nanoseconds_per_day)) / nanoseconds_per_hour;
 }
@@ -701,6 +717,9 @@ def_pcfunk1(relative_time__hours, this,
 
 s64 raw__relative_time__minutes(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   s64 total_hours          = total_nanoseconds__i / nanoseconds_per_hour;
   return (total_nanoseconds__i - (total_hours * nanoseconds_per_hour)) / nanoseconds_per_minute;
 }
@@ -712,6 +731,9 @@ def_pcfunk1(relative_time__minutes, this,
 
 s64 raw__relative_time__seconds(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   s64 total_minutes        = total_nanoseconds__i / nanoseconds_per_minute;
   return (total_nanoseconds__i - (total_minutes * nanoseconds_per_minute)) / nanoseconds_per_second;
 }
@@ -723,6 +745,9 @@ def_pcfunk1(relative_time__seconds, this,
 
 s64 raw__relative_time__milliseconds(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   s64 total_seconds        = total_nanoseconds__i / nanoseconds_per_second;
   return (total_nanoseconds__i - (total_seconds * nanoseconds_per_second)) / nanoseconds_per_millisecond;
 }
@@ -734,6 +759,9 @@ def_pcfunk1(relative_time__milliseconds, this,
 
 s64 raw__relative_time__microseconds(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   s64 total_milliseconds   = total_nanoseconds__i / nanoseconds_per_millisecond;
   return (total_nanoseconds__i - (total_milliseconds * nanoseconds_per_millisecond)) / nanoseconds_per_microsecond;
 }
@@ -745,6 +773,9 @@ def_pcfunk1(relative_time__microseconds, this,
 
 s64 raw__relative_time__nanoseconds(f2ptr cause, f2ptr this) {
   s64 total_nanoseconds__i = f2integer__i(f2relative_time__total_nanoseconds(this, cause), cause);
+  if (total_nanoseconds__i < 0) {
+    total_nanoseconds__i = -total_nanoseconds__i;
+  }
   s64 total_microseconds   = total_nanoseconds__i / nanoseconds_per_microsecond;
   return (total_nanoseconds__i - (total_microseconds * nanoseconds_per_microsecond));
 }
@@ -845,8 +876,9 @@ f2ptr raw__relative_time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list16__new(cause,
+    frame = f2__frame__new(cause, f2list18__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "relative_time"),
+						new__symbol(cause, "is_past"),      f2__relative_time__is_past(     cause, this),
 						new__symbol(cause, "days"),         f2__relative_time__days(        cause, this),
 						new__symbol(cause, "hours"),        f2__relative_time__hours(       cause, this),
 						new__symbol(cause, "minutes"),      f2__relative_time__minutes(     cause, this),
@@ -872,6 +904,7 @@ def_pcfunk2(relative_time__terminal_print_with_frame, this, terminal_print_frame
 f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2relative_time__primobject_type__new(cause);
   {char* slot_name = "equals";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.equals__funk);}
+  {char* slot_name = "is_past";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.is_past__funk);}
   {char* slot_name = "days";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.days__funk);}
   {char* slot_name = "hours";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.hours__funk);}
   {char* slot_name = "minutes";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.minutes__funk);}
@@ -948,6 +981,7 @@ void f2__time__initialize() {
   
   initialize_primobject_1_slot(relative_time, total_nanoseconds);
   initialize_primobject_funk__0_arg(relative_time, equals);
+  initialize_primobject_funk__0_arg(relative_time, is_past);
   initialize_primobject_funk__0_arg(relative_time, days);
   initialize_primobject_funk__0_arg(relative_time, hours);
   initialize_primobject_funk__0_arg(relative_time, minutes);

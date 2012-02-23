@@ -346,7 +346,7 @@ u64 raw__time__nanoseconds(f2ptr cause, f2ptr this) {
   funk2_date_t funk2_date;
   nanoseconds_since_1970__to_funk2_date(nanoseconds_since_1970__i, &funk2_date);
   u64 microseconds = funk2_date.nanoseconds / nanoseconds_per_microsecond;
-  u64 nanoseconds  = funk2_date.nanoseconds - (milliseconds * nanoseconds_per_millisecond);
+  u64 nanoseconds  = funk2_date.nanoseconds - (microseconds * nanoseconds_per_microsecond);
   return nanoseconds;
 }
 

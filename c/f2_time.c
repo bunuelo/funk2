@@ -793,8 +793,21 @@ def_pcfunk2(relative_time__is_numerically_equal_to, this, that,
 	    return f2__relative_time__is_numerically_equal_to(this_cause, this, that));
 
 
-f2ptr raw__relative_time__as__graphviz_label(f2ptr cause, f2ptr this) {
+f2ptr raw__relative_time__as__string(f2ptr cause, f2ptr this) {
   return new__string(cause, "<relative_time>");
+}
+
+f2ptr f2__relative_time__as__string(f2ptr cause, f2ptr this) {
+  assert_argument_type(relative_time, this);
+  return raw__relative_time__as__string(cause, this);
+}
+def_pcfunk1(relative_time__as__string, this,
+	    "Returns a string representation of this relative_time.",
+	    return f2__relative_time__as__string(this_cause, this));
+
+
+f2ptr raw__relative_time__as__graphviz_label(f2ptr cause, f2ptr this) {
+  return raw__relative_time__as__string(cause, this);
 }
 
 f2ptr f2__relative_time__as__graphviz_label(f2ptr cause, f2ptr this) {
@@ -843,6 +856,7 @@ f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "is_less_than";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.is_less_than__funk);}
   {char* slot_name = "is_greater_than";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.is_greater_than__funk);}
   {char* slot_name = "is_numerically_equal_to";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.is_numerically_equal_to__funk);}
+  {char* slot_name = "as-string";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__funk);}
   {char* slot_name = "as-graphviz_label";         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__funk);}
   return this;
@@ -917,6 +931,8 @@ void f2__time__initialize() {
   initialize_primobject_funk__1_arg(relative_time, is_greater_than,          that);
   initialize_primobject_funk__1_arg(relative_time, is_numerically_equal_to,  that);
   
+  {char* symbol_str = "as-string"; __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(relative_time__as__string, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__funk = never_gc(cfunk);}
   {char* symbol_str = "as-graphviz_label"; __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(relative_time__as__graphviz_label, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}

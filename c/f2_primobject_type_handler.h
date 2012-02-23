@@ -109,7 +109,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__scheduler__slot_t                        primobject_type_scheduler;
   funk2_object_type__bug__slot_t                              primobject_type_bug;
   funk2_object_type__time__slot_t                             primobject_type_time;
-  funk2_object_type__relative_time__slot_t                    primobject_type_relative_time;
+  //funk2_object_type__relative_time__slot_t                    primobject_type_relative_time;
   funk2_object_type__size_2d__slot_t                          primobject_type_size_2d;
   funk2_object_type__event__slot_t                            primobject_type_event;
   funk2_object_type__bytecode_event__slot_t                   primobject_type_bytecode_event;

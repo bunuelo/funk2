@@ -14,6 +14,7 @@
 #  include <mach/clock.h>
 #  include <mach/mach.h>
 #  include <mach/mach_init.h>
+#  include <mach/thread_info.h>
 #  include <mach/thread_policy.h>
 #  define cpu_set_t               thread_affinity_policy_data_t
 #  define CPU_SETSIZE             sysconf(_SC_NPROCESSORS_ONLN)

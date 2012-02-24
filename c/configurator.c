@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <sched.h>
 #include <time.h>
 #include <sys/time.h>
@@ -10,15 +11,14 @@
 
 
 #ifdef F2__APPLE
-#include <mach/clock.h>
-#include <mach/mach.h>
-#include <mach/mach_init.h>
-#include <mach/thread_policy.h>
-#include <unistd.h>
-#define cpu_set_t               thread_affinity_policy_data_t
-#define CPU_SETSIZE             sysconf(_SC_NPROCESSORS_ONLN)
-#define CPU_ZERO(new_mask)      *new_mask.affinity_tag = THREAD_AFFINITY_TAG_NULL
-#define CLOCK_THREAD_CPUTIME_ID NULL
+#  include <mach/clock.h>
+#  include <mach/mach.h>
+#  include <mach/mach_init.h>
+#  include <mach/thread_policy.h>
+#  define cpu_set_t               thread_affinity_policy_data_t
+#  define CPU_SETSIZE             sysconf(_SC_NPROCESSORS_ONLN)
+#  define CPU_ZERO(new_mask)      *new_mask.affinity_tag = THREAD_AFFINITY_TAG_NULL
+#  define CLOCK_THREAD_CPUTIME_ID NULL
 #endif
 
 void print_usage() {
@@ -71,9 +71,23 @@ u64 raw__nanoseconds_since_1970() {
 }
 
 u64 raw__processor_thread__execution_nanoseconds() {
+#ifdef F2__APPLE // OS X does not have clock_gettime, use clock_get_time
+  thread_t               my_mach_thread    = mach_thread_self();
+  int                    flavor            = THREAD_BASIC_INFO;
+  thread_info_t          thread_info;
+  mach_msg_type_number_t thread_infoCnt    = THREAD_INFO_MAX;
+  kern_return_t          mach_return_value = thread_info(my_mach_thread, flavor, thread_info, &thread_infoCnt);
+  if (mach_return_value != KERN_SUCCESS) {
+    fprintf(stderr, "\nfunk2 error: raw__processor_thread__execution_nanoseconds had error executing thread_info.\n");
+    exit(-1);
+  }
+  u64 nanoseconds = (((u64)(thread_info.system_time.seconds + thread_info.user_time.seconds)) * nanoseconds_per_second) + (((u64)(thread_info.system_time.microseconds + thread_info.user_time.microseconds)) * nanoseconds_per_microsecond);
+  return nanoseconds;
+#else
   struct timespec ts;
   clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
+#endif
 }
 
 int main(int argc, char** argv) {

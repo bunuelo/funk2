@@ -75,14 +75,14 @@ u64 raw__processor_thread__execution_nanoseconds() {
 #ifdef F2__APPLE // OS X does not have clock_gettime, use clock_get_time
   thread_t               my_mach_thread    = mach_thread_self();
   int                    flavor            = THREAD_BASIC_INFO;
-  thread_info_t          thread_info;
+  thread_info_t          thread_basic_info;
   mach_msg_type_number_t thread_infoCnt    = THREAD_INFO_MAX;
-  kern_return_t          mach_return_value = thread_info(my_mach_thread, flavor, thread_info, &thread_infoCnt);
+  kern_return_t          mach_return_value = thread_info(my_mach_thread, flavor, thread_basic_info, &thread_infoCnt);
   if (mach_return_value != KERN_SUCCESS) {
     fprintf(stderr, "\nfunk2 error: raw__processor_thread__execution_nanoseconds had error executing thread_info.\n");
     exit(-1);
   }
-  u64 nanoseconds = (((u64)(thread_info.system_time.seconds + thread_info.user_time.seconds)) * nanoseconds_per_second) + (((u64)(thread_info.system_time.microseconds + thread_info.user_time.microseconds)) * nanoseconds_per_microsecond);
+  u64 nanoseconds = (((u64)(thread_basic_info.system_time.seconds + thread_basic_info.user_time.seconds)) * nanoseconds_per_second) + (((u64)(thread_bassic_info.system_time.microseconds + thread_basic_info.user_time.microseconds)) * nanoseconds_per_microsecond);
   return nanoseconds;
 #else
   struct timespec ts;

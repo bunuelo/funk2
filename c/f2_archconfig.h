@@ -26,7 +26,7 @@
 #  define F2__CYGWIN 1
 #elif defined(__linux__)
 #  define F2__LINUX 1
-#elif defined(__APPLE__)
+#elif defined(__MACH__) || defined(__APPLE__)
 #  define F2__APPLE 1
 #else
 #  error could not detect operating system.

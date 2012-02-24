@@ -77,7 +77,7 @@ u64 raw__processor_thread__execution_nanoseconds() {
   int                      flavor            = THREAD_BASIC_INFO;
   struct thread_basic_info thread_basic_info;
   mach_msg_type_number_t   thread_infoCnt    = THREAD_BASIC_INFO_COUNT;
-  kern_return_t            mach_return_value = thread_info(my_mach_thread, flavor, &thread_basic_info, &thread_infoCnt);
+  kern_return_t            mach_return_value = thread_info(my_mach_thread, flavor, (thread_info_t)&thread_basic_info, &thread_infoCnt);
   if (mach_return_value != KERN_SUCCESS) {
     fprintf(stderr, "\nfunk2 error: raw__processor_thread__execution_nanoseconds had error executing thread_info.\n");
     exit(-1);

@@ -7,7 +7,7 @@
 #include <pthread.h>
 
 
-#ifdef __MACH__
+#ifdef F2__APPLE
 #include <mach/clock.h>
 #include <mach/mach.h>
 #include <mach/mach_init.h>
@@ -54,7 +54,7 @@ void raw__nanosleep(u64 nanoseconds) {
 
 u64 raw__nanoseconds_since_1970() {
   struct timespec ts;
-#ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
+#ifdef F2__APPLE // OS X does not have clock_gettime, use clock_get_time
   clock_serv_t cclock;
   mach_timespec_t mts;
   host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);

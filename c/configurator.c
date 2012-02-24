@@ -6,6 +6,8 @@
 #include <sys/time.h>
 #include <pthread.h>
 
+#include "f2_os.h"
+
 
 #ifdef F2__APPLE
 #include <mach/clock.h>

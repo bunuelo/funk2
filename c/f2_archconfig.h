@@ -22,15 +22,7 @@
 #ifndef F2__ARCHCONFIG__H
 #define F2__ARCHCONFIG__H
 
-#if defined(__CYGWIN__) || defined(__WIN32__)
-#  define F2__CYGWIN 1
-#elif defined(__linux__)
-#  define F2__LINUX 1
-#elif defined(__MACH__) || defined(__APPLE__)
-#  define F2__APPLE 1
-#else
-#  error could not detect operating system.
-#endif
+#include "f2_os.h"
 
 #include <sys/types.h>
 #include <stdint.h>

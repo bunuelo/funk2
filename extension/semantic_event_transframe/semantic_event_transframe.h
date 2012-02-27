@@ -27,19 +27,23 @@
 
 // semantic_event_transframe
 
-f2ptr     raw__semantic_event_transframe__type_create         (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_event_transframe__new                 (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_event_transframe__new                 (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_event_transframe__is_type             (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_event_transframe__is_type             (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_event_transframe__type                (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event_transframe__type                (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event_transframe__change__lookup_set (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_event_transframe__change__lookup_set (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_event_transframe__change__add        (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event_transframe__change__add        (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event_transframe__change__remove     (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_event_transframe__change__remove     (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event_transframe__type_create       (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_event_transframe__new               (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_event_transframe__new               (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_event_transframe__is_type           (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_event_transframe__is_type           (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_event_transframe__type              (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event_transframe__type              (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event_transframe__change__lookup_set(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_event_transframe__change__lookup_set(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_event_transframe__change__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event_transframe__change__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event_transframe__change__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_event_transframe__change__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_event_transframe__removal__add      (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr      f2__semantic_event_transframe__removal__add      (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr     raw__semantic_event_transframe__addition__add     (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr      f2__semantic_event_transframe__addition__add     (f2ptr cause, f2ptr this, f2ptr event);
 
 
 // **

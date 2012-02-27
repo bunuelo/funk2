@@ -146,9 +146,9 @@ void      funk2_garbage_collector_pool__change_used_exp_color                   
 void      funk2_garbage_collector_pool__init_sets_from_memorypool                (funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index);
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes                    (funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__add_protected_alloc_f2ptr                (funk2_garbage_collector_pool_t* this, f2ptr exp);
-void      funk2_garbage_collector_pool__signal_enter_protected_region            (funk2_garbage_collector_pool_t* this, char* source_filename, int source_line_num);
-void      funk2_garbage_collector_pool__signal_exit_protected_region             (funk2_garbage_collector_pool_t* this, char* source_filename, int source_line_num);
-boolean_t funk2_garbage_collector_pool__in_protected_region                      (funk2_garbage_collector_pool_t* this);
+void      funk2_garbage_collector_pool__signal_enter_protected_region            (funk2_garbage_collector_pool_t* this, f2ptr fiber, char* source_filename, int source_line_num);
+void      funk2_garbage_collector_pool__signal_exit_protected_region             (funk2_garbage_collector_pool_t* this, f2ptr fiber, char* source_filename, int source_line_num);
+boolean_t funk2_garbage_collector_pool__in_protected_region                      (funk2_garbage_collector_pool_t* this, f2ptr fiber);
 void      funk2_garbage_collector_pool__touch_f2ptr                              (funk2_garbage_collector_pool_t* this, f2ptr exp);
 void      funk2_garbage_collector_pool__touch_all_protected_alloc_arrays         (funk2_garbage_collector_pool_t* this);
 void      funk2_garbage_collector_pool__know_of_used_exp_self_mutation           (funk2_garbage_collector_pool_t* this, f2ptr exp); // assumes called by self  user processor thread

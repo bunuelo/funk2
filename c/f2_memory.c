@@ -246,7 +246,9 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
 f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
   f2size_t blocked_byte_num = (((byte_num - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
 #ifdef DEBUG_MEMORY
-  if ((! funk2_garbage_collector_pool__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index]))) && (! this->bootstrapping_mode)) {
+  f2ptr fiber = raw__global_scheduler__processor_thread_current_fiber(pool_index);
+  if ((! funk2_garbage_collector_pool__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index]), fiber)) &&
+      (! this->bootstrapping_mode)) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new used without protection outside of bootstrapping mode.");
   }
 #endif

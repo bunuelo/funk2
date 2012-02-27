@@ -352,7 +352,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
   f2ptr larva = f2fiber__value(fiber, cause);
   f2fiber__paused__set(fiber, cause, __funk2.globalenv.true__symbol);
   {
-    pause_gc();
+    fiber__pause_gc(fiber);
     f2ptr bug = f2larva__bug(larva, cause);
     if (! bug) {
       bug = f2__bug__new_from_larva(cause, larva);
@@ -387,7 +387,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
       f2cmutex__unlock(exit_cmutex, cause);
     }
     
-    resume_gc();
+    fiber__resume_gc(fiber);
   }
 }
 
@@ -425,7 +425,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     i --;
   }
   
-  pause_gc();
+  fiber__pause_gc(fiber);
   {
     f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
     u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
@@ -433,7 +433,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
     bytecode_count           = f2integer__new(cause, bytecode_count__i);
     f2fiber__bytecode_count__set(fiber, cause, bytecode_count);
   }
-  resume_gc();
+  fiber__resume_gc(fiber);
   
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);
   return exit_reason;
@@ -502,10 +502,10 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
 		  u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
 		  
-		  pause_gc();
+		  fiber__pause_gc(fiber);
 		  f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
 		  f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
-		  resume_gc();
+		  fiber__resume_gc(fiber);
 		  
 		  if(exit_reason == exit_reason__found_larva) {
 		    need_to_launch_larva_handling_critic_fiber = 1;
@@ -520,7 +520,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		if (! f2fiber__keep_undead(fiber, cause)) {
 		  f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
 		  if (f2cmutex__trylock(exit_cmutex, cause) == 0) {
-		    pause_gc();
+		    fiber__pause_gc(fiber);
 		    
 		    // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
 		    f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
@@ -542,7 +542,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 		    
 		    f2cmutex__unlock(exit_cmutex, cause);
-		    resume_gc();		    
+		    fiber__resume_gc(fiber);
 		  }
 		}
 	      }
@@ -568,7 +568,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	    status("larva type (" u64__fstr ") found in fiber and fiber has a critic, so launching critic fiber in serial.", larva_type);
 	  }
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
-	  pause_gc();
+	  fiber__pause_gc(fiber);
 	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
@@ -577,7 +577,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	      error(nil, "processor-execute_next_bytecodes: error adding critic fiber.");
 	    }
 	  }
-	  resume_gc();
+	  fiber__resume_gc(fiber);
 	} else {
 	  char status_msg[1024];
 	  snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");

@@ -97,7 +97,9 @@ f2ptr raw__global_scheduler__remove_fiber                  (f2ptr cause, f2ptr f
 f2ptr  f2__global_scheduler__remove_fiber                  (f2ptr cause, f2ptr fiber);
 void  raw__global_scheduler__complete_fiber                (f2ptr cause, f2ptr fiber);
 f2ptr  f2__global_scheduler__complete_fiber                (f2ptr cause, f2ptr fiber);
-f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index);
+
+f2ptr raw__global_scheduler__try_get_processor_thread_current_fiber(int pool_index);
+f2ptr raw__global_scheduler__processor_thread_current_fiber        (int pool_index);
 
 
 // user functions

@@ -157,7 +157,7 @@ funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__lookup_pr
   if (protected_alloc_array == NULL) {
     protected_alloc_array = from_ptr(f2__malloc(sizeof(funk2_protected_alloc_array_t)));
     funk2_protected_alloc_array__init(protected_alloc_array);
-    funk2_hash__add(&(this->fiber_hash), to_ptr(protected_alloc_array));
+    funk2_hash__add(&(this->fiber_hash), fiber, to_ptr(protected_alloc_array));
   }
   return protected_alloc_array;
 }

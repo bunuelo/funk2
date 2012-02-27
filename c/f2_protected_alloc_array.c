@@ -128,6 +128,14 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
   return (this->reentrance_count != 0);
 }
 
+void funk2_protected_alloc_array__touch_all(funk2_protected_alloc_array_t* this) {
+  status("funk2_protected_alloc_array: touch_all.  pool_index=" u64__fstr " used_num=" u64__fstr " reentrance_count=" s64__fstr, this_processor_thread__pool_index(), this->protected_alloc_array.used_num, this->protected_alloc_array.reentrance_count);
+  u64 i;
+  for (i = 0; i < used_num; i ++) {
+    funk2_garbage_collector_pool__touch_f2ptr(this, data[i].data);
+  }
+}
+
 
 // funk2_protected_alloc_array_fiber_hash
 
@@ -188,3 +196,11 @@ boolean_t funk2_protected_alloc_array_fiber_hash__in_protected_region(funk2_prot
 }
 
 
+void funk2_protected_alloc_array_fiber_hash__touch_all(funk2_protected_alloc_array_fiber_hash_t* this) {
+  funk2_hash__iteration(&(this->fiber_hash), key, value,
+			f2ptr                          fiber                 = key;
+			funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(value);
+			status("funk2_protected_alloc_array_fiber_hash: touch_all.  pool_index=" u64__fstr " fiber=" f2ptr__fstr, this_processor_thread__pool_index(), fiber);
+			funk2_protected_alloc_array__touch_all(protected_alloc_array);
+			);
+}

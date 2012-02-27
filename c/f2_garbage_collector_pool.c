@@ -508,23 +508,23 @@ boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_coll
 void funk2_garbage_collector_pool__add_protected_alloc_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
   if (exp) {
     f2ptr fiber = nil;
-    funk2_protected_alloc_array_fiber_hash__add_protected_alloc_f2ptr(&(this->protected_alloc_array), fiber, exp);
+    funk2_protected_alloc_array_fiber_hash__add_protected_alloc_f2ptr(&(this->protected_alloc_array_fiber_hash), fiber, exp);
   }
 }
 
 void funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_collector_pool_t* this, char* source_filename, int source_line_num) {
   f2ptr fiber = nil;
-  funk2_protected_alloc_array_fiber_hash__signal_enter_protected_region(&(this->protected_alloc_array), fiber, source_filename, source_line_num);
+  funk2_protected_alloc_array_fiber_hash__signal_enter_protected_region(&(this->protected_alloc_array_fiber_hash), fiber, source_filename, source_line_num);
 }
 
 void funk2_garbage_collector_pool__signal_exit_protected_region(funk2_garbage_collector_pool_t* this, char* source_filename, int source_line_num) {
   f2ptr fiber = nil;
-  funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region(&(this->protected_alloc_array), fiber, source_filename, source_line_num);
+  funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region(&(this->protected_alloc_array_fiber_hash), fiber, source_filename, source_line_num);
 }
 
 boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collector_pool_t* this) {
   f2ptr fiber = nil;
-  return funk2_protected_alloc_array_fiber_hash__in_protected_region(&(this->protected_alloc_array), fiber);
+  return funk2_protected_alloc_array_fiber_hash__in_protected_region(&(this->protected_alloc_array_fiber_hash), fiber);
 }
 
 void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* this, f2ptr exp) {
@@ -535,11 +535,7 @@ void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* t
 }
 
 void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
-  status("funk2_garbage_collector_pool: touch_all_protected_alloc_arrays.  pool_index=" u64__fstr " used_num=" u64__fstr " reentrance_count=" s64__fstr, this_processor_thread__pool_index(), this->protected_alloc_array.used_num, this->protected_alloc_array.reentrance_count);
-  u64 i;
-  for (i = 0; i < this->protected_alloc_array.used_num; i ++) {
-    funk2_garbage_collector_pool__touch_f2ptr(this, this->protected_alloc_array.data[i].data);
-  }
+  funk2_protected_alloc_array_fiber_hash__touch_all(&(this->protected_alloc_array_fiber_hash));
 }
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp) {

@@ -729,10 +729,18 @@ f2ptr f2time__primobject_type__new_aux(f2ptr cause) {
 
 def_primobject_1_slot(relative_time, total_nanoseconds);
 
-f2ptr f2__relative_time__new(f2ptr cause, f2ptr total_nanoseconds) {return f2relative_time__new(cause, total_nanoseconds);}
+f2ptr f2__relative_time__new(f2ptr cause, f2ptr total_nanoseconds) {
+  assert_argument_type(integer, total_nanoseconds);
+  return f2relative_time__new(cause, total_nanoseconds);
+}
 def_pcfunk1(relative_time__new, total_nanoseconds,
 	    "",
 	    return f2__relative_time__new(this_cause, total_nanoseconds));
+
+s64 raw__relative_time__total_nanoseconds(f2ptr cause, f2ptr this) {
+  f2ptr total_nanoseconds = f2__relative_time__total_nanoseconds(cause, this);
+  return f2integer__i(total_nanoseconds, cause);
+}
 
 boolean_t raw__relative_time__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__relative_time__is_type(cause, that)) {

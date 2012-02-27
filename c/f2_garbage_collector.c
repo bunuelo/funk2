@@ -184,17 +184,15 @@ def_pcfunk0(garbage_collector__user_signal_garbage_collect_now,
 	    return f2__garbage_collector__user_signal_garbage_collect_now(this_cause));
 
 // memory handling thread should never call this function
-void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, f2ptr fiber, char* source_filename, int source_line_num) {
+void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {
   int   pool_index = this_processor_thread__pool_index();
-  //f2ptr fiber      = raw__global_scheduler__processor_thread_current_fiber(pool_index);
-  funk2_garbage_collector_pool__signal_enter_protected_region(&(this->gc_pool[pool_index]), fiber, source_filename, source_line_num);
+  funk2_garbage_collector_pool__signal_enter_protected_region(&(this->gc_pool[pool_index]), source_filename, source_line_num);
 }
 
 // memory handling thread should never call this function
-void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this, f2ptr fiber, char* source_filename, int source_line_num) {
+void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {
   int   pool_index = this_processor_thread__pool_index();
-  //f2ptr fiber      = raw__global_scheduler__processor_thread_current_fiber(pool_index);
-  funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]), fiber, source_filename, source_line_num);
+  funk2_garbage_collector_pool__signal_exit_protected_region(&(this->gc_pool[pool_index]), source_filename, source_line_num);
 }
 
 void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this) {

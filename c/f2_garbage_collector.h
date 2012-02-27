@@ -68,11 +68,8 @@ s64       funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t
 void      funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, int fd);
 void      funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, int fd);
 
-#define fiber__pause_gc(this)  funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector), this, __FILE__, __LINE__)
-#define fiber__resume_gc(this) funk2_garbage_collector__signal_exit_protected_region( &(__funk2.garbage_collector), this, __FILE__, __LINE__)
-
-#define pause_gc()  fiber__pause_gc(nil)
-#define resume_gc() fiber__resume_gc(nil)
+#define pause_gc()  funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector), __FILE__, __LINE__)
+#define resume_gc() funk2_garbage_collector__signal_exit_protected_region( &(__funk2.garbage_collector), __FILE__, __LINE__)
 
 #define never_gc(exp) funk2_garbage_collector__add_f2ptr_to_never_delete_list(&(__funk2.garbage_collector), exp, __FILE__, __LINE__);
 

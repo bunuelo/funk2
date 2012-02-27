@@ -69,8 +69,12 @@ void      funk2_protected_alloc_array__touch_all                    (funk2_prote
 
 // funk2_protected_alloc_array_fiber_hash
 
+#define funk2_protected_alloc_array_fiber_hash__extra_array_buffer__max_num 1024
+
 typedef struct funk2_protected_alloc_array_fiber_hash_s {
-  funk2_hash_t fiber_hash;
+  funk2_hash_t                   used_fiber_hash;
+  u64                            extra_array_buffer__count;
+  funk2_protected_alloc_array_t* extra_array_buffer[funk2_protected_alloc_array_fiber_hash__extra_array_buffer__max_num];
 } funk2_protected_alloc_array_fiber_hash_t;
 
 void                           funk2_protected_alloc_array_fiber_hash__init                            (funk2_protected_alloc_array_fiber_hash_t* this);

@@ -52,9 +52,9 @@ f2ptr f2__semantic_event_transframe_change__new(f2ptr cause, f2ptr semantic_real
   assert_argument_type(symbol,         change_type);
   assert_argument_type(relative_time,  change_relative_time);
   assert_argument_type(semantic_event, change_event);
-  return raw__semantic_event_transframe_change__new(cause, semantic_realm);
+  return raw__semantic_event_transframe_change__new(cause, semantic_realm, change_type, change_relative_time, change_event);
 }
-export_cefunk1(semantic_event_transframe_change__new, semantic_realm, 0, "Returns a new semantic_event_transframe_change object.");
+export_cefunk4(semantic_event_transframe_change__new, semantic_realm, change_type, change_relative_time, change_event, 0, "Returns a new semantic_event_transframe_change object.");
 
 
 boolean_t raw__semantic_event_transframe_change__is_type(f2ptr cause, f2ptr thing) {

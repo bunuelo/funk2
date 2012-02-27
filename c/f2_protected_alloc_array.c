@@ -149,7 +149,7 @@ void funk2_protected_alloc_array_fiber_hash__destroy(funk2_protected_alloc_array
   {
     u64 index;
     for (index = 0; index < this->extra_array_buffer__count; index ++) {
-      f2ptr protected_alloc_array = this->extra_array_buffer[index];
+      funk2_protected_alloc_array_t* protected_alloc_array = this->extra_array_buffer[index];
       funk2_protected_alloc_array__destroy(protected_alloc_array);
       f2__free(to_ptr(protected_alloc_array));
     }

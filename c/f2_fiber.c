@@ -296,7 +296,7 @@ f2ptr __fiber__environment_critics__symbol = -1;
 
 boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
   boolean_t bytecode_is_yield = boolean__false;
-  fiber__pause_gc(nil);
+  fiber__pause_gc(fiber);
   {
     debug__assert(raw__fiber__is_type(nil, fiber), nil, "fiber type assertion failed.");
     debug__assert((! cause) || raw__cause__is_type(nil, cause), nil, "fiber type assertion failed.");
@@ -309,7 +309,7 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
     
     bytecode_is_yield = f2__fiber__execute_bytecode(cause, fiber, bytecode);
   }
-  fiber__resume_gc(nil);
+  fiber__resume_gc(fiber);
   return bytecode_is_yield;
 }
 

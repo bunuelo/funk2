@@ -57,8 +57,8 @@ boolean_t                   funk2_hash__contains            (funk2_hash_t* this,
     while (funk2_hash__iteration__index < funk2_hash__iteration__this__bin_num) { \
       funk2_hash_bin_node_t* funk2_hash__iteration__bin_node = funk2_hash__iteration__this->bin_array[funk2_hash__iteration__index]; \
       while (funk2_hash__iteration__bin_node != NULL) {			\
-	u64 key   = funk2_hash__iteration__bin_node.key;		\
-	u64 value = funk2_hash__iteration__bin_node.value;		\
+	u64 key   = funk2_hash__iteration__bin_node->keyvalue_pair.key;	\
+	u64 value = funk2_hash__iteration__bin_node->keyvalue_pair.value; \
 	{								\
 	  code;								\
 	}								\

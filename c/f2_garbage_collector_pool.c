@@ -520,7 +520,7 @@ void funk2_garbage_collector_pool__signal_enter_protected_region(funk2_garbage_c
 
 void funk2_garbage_collector_pool__signal_exit_protected_region(funk2_garbage_collector_pool_t* this, char* source_filename, int source_line_num) {
   f2ptr fiber = nil;
-  funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region(&(this->protected_alloc_array_fiber_hash), source_filename, source_line_num);
+  funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region(&(this->protected_alloc_array_fiber_hash), fiber, source_filename, source_line_num);
 }
 
 boolean_t funk2_garbage_collector_pool__in_protected_region(funk2_garbage_collector_pool_t* this) {

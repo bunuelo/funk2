@@ -535,7 +535,7 @@ void funk2_garbage_collector_pool__touch_f2ptr(funk2_garbage_collector_pool_t* t
 }
 
 void funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(funk2_garbage_collector_pool_t* this) {
-  funk2_protected_alloc_array_fiber_hash__touch_all(&(this->protected_alloc_array_fiber_hash));
+  funk2_protected_alloc_array_fiber_hash__touch_all(&(this->protected_alloc_array_fiber_hash), this);
 }
 
 void funk2_garbage_collector_pool__know_of_used_exp_self_mutation(funk2_garbage_collector_pool_t* this, f2ptr exp) {

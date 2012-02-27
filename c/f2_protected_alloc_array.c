@@ -86,7 +86,7 @@ void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_allo
 }
 
 void found_max_reentrance(u64 max_reentrance_count) {
-  status("found max reentrace count: " u64__fstr, max_reentrance_count);
+  //status("found max reentrace count: " u64__fstr, max_reentrance_count);
 }
 
 void funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num) {

@@ -24,26 +24,34 @@
 
 // semantic_event_transframe_change
 
-f2ptr raw__semantic_event_transframe_change__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
-  //, f2ptr change_type, f2ptr change_relative_time, f2ptr change_event
+f2ptr raw__semantic_event_transframe_change__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr change_type, f2ptr change_relative_time, f2ptr change_event) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event_transframe_change"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
+  // avoids redefining in cases of multiple inheritance.
+  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "change_type")) == nil) {
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"),     new__symbol(cause, "change_type"),          change_type);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"),     new__symbol(cause, "change_relative_time"), change_relative_time);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "change_event"),         change_event);
+  }
   return this;
 }
 
-f2ptr raw__semantic_event_transframe_change__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_event_transframe_change__new(f2ptr cause, f2ptr semantic_realm, f2ptr change_type, f2ptr change_relative_time, f2ptr change_event) {
   f2ptr this = f2__frame__new(cause, nil);
   if (raw__larva__is_type(cause, this)) {
     return this;
   }
-  assert_value(raw__semantic_event_transframe_change__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_event_transframe_change__type_create(cause, this, semantic_realm, change_type, change_relative_time, change_event));
   return this;
 }
 
-f2ptr f2__semantic_event_transframe_change__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_event_transframe_change__new(f2ptr cause, f2ptr semantic_realm, f2ptr change_type, f2ptr change_relative_time, f2ptr change_event) {
   assert_argument_type(semantic_realm, semantic_realm);
+  assert_argument_type(symbol,         change_type);
+  assert_argument_type(relative_time,  change_relative_time);
+  assert_argument_type(semantic_event, change_event);
   return raw__semantic_event_transframe_change__new(cause, semantic_realm);
 }
 export_cefunk1(semantic_event_transframe_change__new, semantic_realm, 0, "Returns a new semantic_event_transframe_change object.");

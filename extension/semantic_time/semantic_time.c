@@ -21,6 +21,10 @@
 
 #include "semantic_time.h"
 
+
+
+// semantic_time
+
 def_ceframe1(semantic_time, semantic_time, value);
 
 f2ptr raw__semantic_time__new(f2ptr cause, f2ptr value) {
@@ -316,6 +320,303 @@ f2ptr f2__semantic_time_type__new_aux(f2ptr cause) {
 
 
 
+// semantic_relative_time
+
+def_ceframe1(semantic_time, semantic_relative_time, value);
+
+f2ptr raw__semantic_relative_time__new(f2ptr cause, f2ptr value) {
+  return f2semantic_relative_time__new(cause, value);
+}
+
+f2ptr f2__semantic_relative_time__new(f2ptr cause, f2ptr value) {
+  if ((! raw__time__is_type(cause, value)) &&
+      (! raw__eq(cause, new__symbol(cause, "before"), value)) &&
+      (! raw__eq(cause, new__symbol(cause, "after"),  value)) &&
+      (! raw__eq(cause, new__symbol(cause, "now"),    value))) {
+    return f2larva__new(cause, 13516, nil);
+  }
+  return raw__semantic_relative_time__new(cause, value);
+}
+export_cefunk1(semantic_relative_time__new, value, 0, "Returns a new semantic_relative_time object.  Possible initial values include any time object, or one of the symbols: before, after, or now.");
+
+f2ptr raw__semantic_relative_time(f2ptr cause) {
+  return f2__semantic_relative_time__new(cause, f2__time(cause));
+}
+
+f2ptr f2__semantic_relative_time(f2ptr cause) {
+  return raw__semantic_relative_time(cause);
+}
+export_cefunk0(semantic_relative_time, 0, "Returns a new semantic_relative_time object with the current absolute time.");
+
+
+boolean_t raw__semantic_relative_time__is__before(f2ptr cause, f2ptr this) {
+  f2ptr value = f2__semantic_relative_time__value(cause, this);
+  return raw__eq(cause, new__symbol(cause, "before"), value);
+}
+
+f2ptr f2__semantic_relative_time__is__before(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_relative_time, this);
+  return raw__semantic_relative_time__is__before(cause, this);
+}
+export_cefunk1(semantic_relative_time__is__before, this, 0, "Returns whether this semantic_relative_time symbolically represents the time `before.");
+
+
+boolean_t raw__semantic_relative_time__is__after(f2ptr cause, f2ptr this) {
+  f2ptr value = f2__semantic_relative_time__value(cause, this);
+  return raw__eq(cause, new__symbol(cause, "after"), value);
+}
+
+f2ptr f2__semantic_relative_time__is__after(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_relative_time, this);
+  return raw__semantic_relative_time__is__after(cause, this);
+}
+export_cefunk1(semantic_relative_time__is__after, this, 0, "Returns whether this semantic_relative_time symbolically represents the time `after.");
+
+
+boolean_t raw__semantic_relative_time__is__now(f2ptr cause, f2ptr this) {
+  f2ptr value = f2__semantic_relative_time__value(cause, this);
+  return raw__eq(cause, new__symbol(cause, "now"), value);
+}
+
+f2ptr f2__semantic_relative_time__is__now(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_relative_time, this);
+  return raw__semantic_relative_time__is__now(cause, this);
+}
+export_cefunk1(semantic_relative_time__is__now, this, 0, "Returns whether this semantic_relative_time symbolically represents the time `now.");
+
+
+f2ptr raw__semantic_relative_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__value = f2__semantic_relative_time__value(cause, this);
+  f2ptr that__value = f2__semantic_relative_time__value(cause, that);
+  {
+    boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this__value);
+    boolean_t that__is__now = raw__eq(cause, new__symbol(cause, "now"), that__value);
+    f2ptr     now           = nil;
+    if (this__is__now || that__is__now) {
+      now = assert_value(f2__time(cause));
+    }
+    if (this__is__now) {
+      this__value = now;
+    }
+    if (that__is__now) {
+      that__value = now;
+    }
+  }
+  boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
+  boolean_t that__is_type__time = raw__time__is_type(cause, that__value);
+  if (this__is_type__time && that__is_type__time) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    return f2bool__new(this__value__nanoseconds_since_1970__i < that__value__nanoseconds_since_1970__i);
+  } else if (this__is_type__time) { // ! that__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+      return f2bool__new(boolean__true);
+    } else {
+      return f2larva__new(cause, 321515, nil);
+    }
+  } else if (that__is_type__time) { // ! this__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321516, nil);
+    }
+  } else { // (! this__is_type__time) && (! that__is_type__time)
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+	return f2bool__new(boolean__true);
+      } else {
+	return f2larva__new(cause, 321517, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321518, nil);
+      }
+    } else {
+      return f2larva__new(cause, 321519, nil);
+    }
+  }
+}
+
+f2ptr f2__semantic_relative_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_relative_time, this);
+  assert_argument_type(semantic_relative_time, that);
+  return raw__semantic_relative_time__is_less_than(cause, this, that);
+}
+export_cefunk2(semantic_relative_time__is_less_than, this, that, 0, "Returns whether this semantic_relative_time is less than that semantic_relative_time.");
+
+
+f2ptr raw__semantic_relative_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__value = f2__semantic_relative_time__value(cause, this);
+  f2ptr that__value = f2__semantic_relative_time__value(cause, that);
+  {
+    boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this__value);
+    boolean_t that__is__now = raw__eq(cause, new__symbol(cause, "now"), that__value);
+    f2ptr     now           = nil;
+    if (this__is__now || that__is__now) {
+      now = assert_value(f2__time(cause));
+    }
+    if (this__is__now) {
+      this__value = now;
+    }
+    if (that__is__now) {
+      that__value = now;
+    }
+  }
+  boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
+  boolean_t that__is_type__time = raw__time__is_type(cause, that__value);
+  if (this__is_type__time && that__is_type__time) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    return f2bool__new(this__value__nanoseconds_since_1970__i > that__value__nanoseconds_since_1970__i);
+  } else if (this__is_type__time) { // ! that__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321515, nil);
+    }
+  } else if (that__is_type__time) { // ! this__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      return f2bool__new(boolean__true);
+    } else {
+      return f2larva__new(cause, 321516, nil);
+    }
+  } else { // (! this__is_type__time) && (! that__is_type__time)
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321517, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+	return f2bool__new(boolean__true);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321518, nil);
+      }
+    } else {
+      return f2larva__new(cause, 321519, nil);
+    }
+  }
+}
+
+f2ptr f2__semantic_relative_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_relative_time, this);
+  assert_argument_type(semantic_relative_time, that);
+  return raw__semantic_relative_time__is_greater_than(cause, this, that);
+}
+export_cefunk2(semantic_relative_time__is_greater_than, this, that, 0, "Returns whether this semantic_relative_time is greater than that semantic_relative_time.");
+
+
+f2ptr raw__semantic_relative_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__value = f2__semantic_relative_time__value(cause, this);
+  f2ptr that__value = f2__semantic_relative_time__value(cause, that);
+  {
+    boolean_t this__is__now = raw__eq(cause, new__symbol(cause, "now"), this__value);
+    boolean_t that__is__now = raw__eq(cause, new__symbol(cause, "now"), that__value);
+    f2ptr     now           = nil;
+    if (this__is__now && that__is__now) {
+      return f2bool__new(boolean__true);
+    }
+    if (this__is__now || that__is__now) {
+      now = assert_value(f2__time(cause));
+    }
+    if (this__is__now) {
+      this__value = now;
+    }
+    if (that__is__now) {
+      that__value = now;
+    }
+  }
+  boolean_t this__is_type__time = raw__time__is_type(cause, this__value);
+  boolean_t that__is_type__time = raw__time__is_type(cause, that__value);
+  if (this__is_type__time && that__is_type__time) {
+    f2ptr this__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, this__value);
+    s64   this__value__nanoseconds_since_1970__i = f2integer__i(this__value__nanoseconds_since_1970, cause);
+    f2ptr that__value__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, that__value);
+    s64   that__value__nanoseconds_since_1970__i = f2integer__i(that__value__nanoseconds_since_1970, cause);
+    return f2bool__new(this__value__nanoseconds_since_1970__i == that__value__nanoseconds_since_1970__i);
+  } else if (this__is_type__time) { // ! that__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321515, nil);
+    }
+  } else if (that__is_type__time) { // ! this__is_type__time
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      return f2bool__new(boolean__false);
+    } else {
+      return f2larva__new(cause, 321516, nil);
+    }
+  } else { // (! this__is_type__time) && (! that__is_type__time)
+    if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+	return f2bool__new(boolean__true);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else {
+	return f2larva__new(cause, 321517, nil);
+      }
+    } else if (raw__eq(cause, new__symbol(cause, "after"), this__value)) {
+      if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
+	return f2bool__new(boolean__false);
+      } else if (raw__eq(cause, new__symbol(cause, "after"), that__value)) {
+	return f2bool__new(boolean__true);
+      } else {
+	return f2larva__new(cause, 321518, nil);
+      }
+    } else {
+      return f2larva__new(cause, 321519, nil);
+    }
+  }
+}
+
+f2ptr f2__semantic_relative_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_relative_time, this);
+  assert_argument_type(semantic_relative_time, that);
+  return raw__semantic_relative_time__is_numerically_equal_to(cause, this, that);
+}
+export_cefunk2(semantic_relative_time__is_numerically_equal_to, this, that, 0, "Returns whether this semantic_relative_time is numerically equal to that semantic_relative_time (now == now, before == before, after == after).");
+
+
+f2ptr f2__semantic_relative_time_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__semantic_relative_time_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is-before"),               f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_relative_time__is__before")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is-after"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_relative_time__is__after")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is-now"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_relative_time__is__now")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_less_than"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_relative_time__is_less_than")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_greater_than"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_relative_time__is_greater_than")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_numerically_equal_to"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"), new__symbol(cause, "semantic_relative_time__is_numerically_equal_to")));}
+  return this;
+}
+
+
+
 // **
 
 f2ptr f2__semantic_time__core_extension__ping(f2ptr cause) {
@@ -330,7 +631,8 @@ f2ptr f2__semantic_time__core_extension__initialize(f2ptr cause) {
 export_cefunk0(semantic_time__core_extension__initialize, 0, "");
 
 f2ptr f2__semantic_time__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "semantic_time"), f2__semantic_time_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "semantic_time"),          f2__semantic_time_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "semantic_relative_time"), f2__semantic_relative_time_type__new_aux(cause));
   status("semantic_time types defined.");
   return nil;
 }

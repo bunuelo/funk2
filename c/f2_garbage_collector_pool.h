@@ -128,7 +128,7 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_mutation_buffer_t           other_mutations;
   funk2_garbage_collector_no_more_references_buffer_t other_no_more_references;
   funk2_garbage_collector_protected_f2ptr_buffer_t    other_protected_f2ptr;
-  funk2_protected_alloc_array_t                       protected_alloc_array;
+  funk2_protected_alloc_array_fiber_hash_t            protected_alloc_array_fiber_hash;
   boolean_t                                           should_run_gc;
   funk2_garbage_collector_other_grey_buffer_t         other_grey_buffer[memory_pool_num];
   u8*                                                 temporary_load_buffer;

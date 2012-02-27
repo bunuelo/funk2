@@ -128,15 +128,63 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
   return (this->reentrance_count != 0);
 }
 
-/*
-s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this) {
-  s64 save_size = 0;
-  {
-    u64 used_num = this->used_num;
-    save_size += sizeof(used_num);
-    save_size += (sizeof(f2ptr) * used_num);
-  }
-  return save_size;
+
+// funk2_protected_alloc_array_fiber_hash
+
+void funk2_protected_alloc_array_fiber_hash__init(funk2_protected_alloc_array_fiber_hash_t* this) {
+  funk2_hash__init(&(this->fiber_hash), 10);
 }
 
-*/
+void funk2_protected_alloc_array_fiber_hash__destroy(funk2_protected_alloc_array_fiber_hash_t* this) {
+  funk2_hash__destroy(&(this->fiber_hash));
+}
+
+funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__try_lookup_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
+  funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__lookup(&(this->fiber_hash), fiber));
+  return protected_alloc_array;
+}
+
+funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__lookup_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
+  funk2_protected_alloc_array_t* protected_alloc_array = funk2_protected_alloc_array_fiber_hash__try_lookup_protected_alloc_array(this, fiber);
+  if (protected_alloc_array == NULL) {
+    protected_alloc_array = from_ptr(f2__malloc(sizeof(funk2_protected_alloc_array_t)));
+    funk2_protected_alloc_array__init(protected_alloc_array);
+    funk2_hash__add(&(this->fiber_hash), to_ptr(protected_alloc_array));
+  }
+  return protected_alloc_array;
+}
+
+void funk2_protected_alloc_array_fiber_hash__remove_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
+  funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__lookup(&(this->fiber_hash), fiber));
+  if (protected_alloc_array == NULL) {
+    error(nil, "funk2_protected_alloc_array_fiber_hash__remove_protected_alloc_array fatal error: protected_alloc_array == NULL.");
+  }
+  funk2_hash__remove(&(this->fiber_hash), fiber);
+  funk2_protected_alloc_array__destroy(protected_alloc_array);
+  f2__free(to_ptr(protected_alloc_array));
+}
+
+void funk2_protected_alloc_array_fiber_hash__add_protected_alloc_f2ptr(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, f2ptr exp) {
+  funk2_protected_alloc_array_t* protected_alloc_array = funk2_protected_alloc_array_fiber_hash__lookup_protected_alloc_array(this, fiber);
+  funk2_protected_alloc_array__add_protected_alloc_f2ptr(protected_alloc_array, exp);
+}
+
+void funk2_protected_alloc_array_fiber_hash__signal_enter_protected_region(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, char* source_filename, int source_line_num) {
+  funk2_protected_alloc_array_t* protected_alloc_array = funk2_protected_alloc_array_fiber_hash__lookup_protected_alloc_array(this, fiber);
+  funk2_protected_alloc_array__signal_enter_protected_region(protected_alloc_array, source_filename, source_line_num);
+}
+
+void funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, char* source_filename, int source_line_num) {
+  funk2_protected_alloc_array_t* protected_alloc_array = funk2_protected_alloc_array_fiber_hash__lookup_protected_alloc_array(this, fiber);
+  funk2_protected_alloc_array__signal_exit_protected_region(protected_alloc_array, source_filename, source_line_num);
+}
+
+boolean_t funk2_protected_alloc_array_fiber_hash__in_protected_region(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
+  funk2_protected_alloc_array_t* protected_alloc_array = funk2_protected_alloc_array_fiber_hash__try_lookup_protected_alloc_array(this, fiber);
+  if (protected_alloc_array == NULL) {
+    return boolean__false;
+  }
+  return funk2_protected_alloc_array__in_protected_region(protected_alloc_array);
+}
+
+

@@ -148,7 +148,10 @@ void funk2_protected_alloc_array_fiber_hash__destroy(funk2_protected_alloc_array
 }
 
 funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__try_lookup_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
-  funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__lookup(&(this->fiber_hash), fiber));
+  funk2_protected_alloc_array_t* protected_alloc_array = NULL;
+  if (funk2_hash__contains(&(this->fiber_hash), fiber)) {
+    protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__lookup(&(this->fiber_hash), fiber));
+  }
   return protected_alloc_array;
 }
 
@@ -163,7 +166,7 @@ funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__lookup_pr
 }
 
 void funk2_protected_alloc_array_fiber_hash__remove_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
-  funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__lookup(&(this->fiber_hash), fiber));
+  funk2_protected_alloc_array_t* protected_alloc_array = funk2_protected_alloc_array_fiber_hash__try_lookup_protected_alloc_array(this, fiber);
   if (protected_alloc_array == NULL) {
     error(nil, "funk2_protected_alloc_array_fiber_hash__remove_protected_alloc_array fatal error: protected_alloc_array == NULL.");
   }

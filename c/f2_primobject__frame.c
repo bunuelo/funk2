@@ -618,45 +618,45 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   s64 type_slot_name__max_length          = 0;
   s64 slot_name__max_length               = 0;
   //f2__print(cause, terminal_print_frame);
-  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-		   boolean_t slot_should_be_printed = boolean__true;
-		   if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {
-		     if (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
-			 raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
-			 raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order"))) {
-		       slot_should_be_printed = boolean__false;
-		     }
-		   } else {
-		     types_exist_besides_variables = boolean__true;
-		   }
-		   if (slot_should_be_printed) {
-		     {
-		       f2ptr x_offset = raw__terminal_print_frame__expression_x_offset__thread_unsafe(cause, terminal_print_frame, type_slot_name);
-		       //f2__print(cause, x_offset);
-		       if (raw__larva__is_type(cause, x_offset)) {
-			 return x_offset;
-		       }
-		       s64 x_offset__i = f2integer__i(x_offset, cause);
-		       //printf("\nx_offset__i=" s64__fstr, x_offset__i);
-		       if (x_offset__i > type_slot_name__max_length) {
-			 type_slot_name__max_length = x_offset__i;
-		       }
-		     }
-		     {
-		       f2ptr x_offset = raw__terminal_print_frame__expression_x_offset__thread_unsafe(cause, terminal_print_frame, slot_name);
-		       //f2__print(cause, x_offset);
-		       if (raw__larva__is_type(cause, x_offset)) {
-			 return x_offset;
-		       }
-		       s64 x_offset__i = f2integer__i(x_offset, cause);
-		       //printf("\nx_offset__i=" s64__fstr, x_offset__i);
-		       if (x_offset__i > slot_name__max_length) {
-			 slot_name__max_length = x_offset__i;
-		       }
-		     }
-		     slot_count ++;
-		   }
-		   );
+  frame__slot__iteration(cause, this, type_slot_name, slot_name,
+			 boolean_t slot_should_be_printed = boolean__true;
+			 if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {
+			   if (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
+			       raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
+			       raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order"))) {
+			     slot_should_be_printed = boolean__false;
+			   }
+			 } else {
+			   types_exist_besides_variables = boolean__true;
+			 }
+			 if (slot_should_be_printed) {
+			   {
+			     f2ptr x_offset = raw__terminal_print_frame__expression_x_offset__thread_unsafe(cause, terminal_print_frame, type_slot_name);
+			     //f2__print(cause, x_offset);
+			     if (raw__larva__is_type(cause, x_offset)) {
+			       return x_offset;
+			     }
+			     s64 x_offset__i = f2integer__i(x_offset, cause);
+			     //printf("\nx_offset__i=" s64__fstr, x_offset__i);
+			     if (x_offset__i > type_slot_name__max_length) {
+			       type_slot_name__max_length = x_offset__i;
+			     }
+			   }
+			   {
+			     f2ptr x_offset = raw__terminal_print_frame__expression_x_offset__thread_unsafe(cause, terminal_print_frame, slot_name);
+			     //f2__print(cause, x_offset);
+			     if (raw__larva__is_type(cause, x_offset)) {
+			       return x_offset;
+			     }
+			     s64 x_offset__i = f2integer__i(x_offset, cause);
+			     //printf("\nx_offset__i=" s64__fstr, x_offset__i);
+			     if (x_offset__i > slot_name__max_length) {
+			       slot_name__max_length = x_offset__i;
+			     }
+			   }
+			   slot_count ++;
+			 }
+			 );
   if (slot_count > 0) {
     if (use_one_line == nil) {
       frame_string__length = funk2_character_string__snprintf(frame_string, 128, "\n");
@@ -697,37 +697,37 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	      iter = f2__cons__cdr(cause, iter);
 	    }
 	  }
-	  frame__iteration(cause, this, type_slot_name, slot_name, slot_value,
-			   boolean_t slot_should_be_printed = boolean__true;
-			   if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {
-			     if (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
-				 raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
-				 raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order"))) {
-			       slot_should_be_printed = boolean__false;
-			     }
-			   }
-			   if (slot_should_be_printed) {
-			     boolean_t found_slot_in_order = boolean__false;
-			     {
-			       f2ptr iter = object_type_slot_pairs;
-			       while (iter != nil) {
-				 f2ptr object_type_slot_pair = f2__cons__car(cause, iter);
-				 f2ptr order_slot_type = f2__cons__car(cause, object_type_slot_pair);
-				 f2ptr order_slot      = f2__cons__cdr(cause, object_type_slot_pair);
-				 if (raw__eq(cause, type_slot_name, order_slot_type) &&
-				     raw__eq(cause, slot_name, order_slot)) {
-				   found_slot_in_order = boolean__true;
-				   iter = nil;
-				 } else {
-				   iter = f2__cons__cdr(cause, iter);
+	  frame__slot__iteration(cause, this, type_slot_name, slot_name,
+				 boolean_t slot_should_be_printed = boolean__true;
+				 if (raw__eq(cause, type_slot_name, __funk2.primobject__frame.variable__symbol)) {
+				   if (raw__eq(cause, slot_name, __funk2.globalenv.type__symbol) ||
+				       raw__eq(cause, slot_name, new__symbol(cause, "print_object_type")) ||
+				       raw__eq(cause, slot_name, new__symbol(cause, "print_object_slot_order"))) {
+				     slot_should_be_printed = boolean__false;
+				   }
 				 }
-			       }
-			     }
-			     if (! found_slot_in_order) {
-			       object_type_slot_pairs = f2cons__new(cause, f2cons__new(cause, type_slot_name, slot_name), object_type_slot_pairs);
-			     }
-			   }
-			   );
+				 if (slot_should_be_printed) {
+				   boolean_t found_slot_in_order = boolean__false;
+				   {
+				     f2ptr iter = object_type_slot_pairs;
+				     while (iter != nil) {
+				       f2ptr object_type_slot_pair = f2__cons__car(cause, iter);
+				       f2ptr order_slot_type = f2__cons__car(cause, object_type_slot_pair);
+				       f2ptr order_slot      = f2__cons__cdr(cause, object_type_slot_pair);
+				       if (raw__eq(cause, type_slot_name, order_slot_type) &&
+					   raw__eq(cause, slot_name, order_slot)) {
+					 found_slot_in_order = boolean__true;
+					 iter = nil;
+				       } else {
+					 iter = f2__cons__cdr(cause, iter);
+				       }
+				     }
+				   }
+				   if (! found_slot_in_order) {
+				     object_type_slot_pairs = f2cons__new(cause, f2cons__new(cause, type_slot_name, slot_name), object_type_slot_pairs);
+				   }
+				 }
+				 );
 	  object_type_slot_pairs = f2__reverse(cause, object_type_slot_pairs);
 	}
 	f2ptr object_type_slot_pairs_iter = object_type_slot_pairs;

@@ -143,6 +143,11 @@ f2ptr f2frame__primobject_type__new_aux(f2ptr cause);
                        ptypehash__iteration(cause, type_slot_ptypehash, slot_name, slot_value, \
                        code;))
 
+#define frame__slot__iteration(cause, this, type_slot_name, slot_name, code) \
+  ptypehash__iteration(cause, f2frame__type_ptypehash(this, cause), type_slot_name, type_slot_ptypehash, \
+                       ptypehash__key__iteration(cause, type_slot_ptypehash, slot_name, \
+                       code;))
+
 #define frame__value__iteration(cause, this, slot_value, code)		\
   ptypehash__value__iteration(cause, f2frame__type_ptypehash(this, cause), type_slot_ptypehash, \
 			      ptypehash__value__iteration(cause, type_slot_ptypehash, slot_value, \

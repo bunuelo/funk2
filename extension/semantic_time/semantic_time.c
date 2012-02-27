@@ -373,7 +373,30 @@ export_cefunk1(semantic_relative_time__is__forever_after, this, 0, "Returns whet
 
 
 f2ptr raw__semantic_relative_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  f2ptr this__value = raw__semantic_relative_time__value(cause, this);
+  f2ptr that__value = raw__semantic_relative_time__value(cause, that);
+  if (raw__relative_time__is_type(cause, this__value) &&
+      raw__relative_time__is_type(cause, that__value)) {
+    f2ptr this__relative_time                    = this__value;
+    f2ptr that__relative_time                    = that__value;
+    s64   this__relative_time__total_nanoseconds = raw__relative_time__total_nanoseconds(cause, this__relative_time);
+    s64   that__relative_time__total_nanoseconds = raw__relative_time__total_nanoseconds(cause, that__relative_time);
+    return f2bool__new(this__relative_time__total_nanoseconds < that__relative_time__total_nanoseconds);
+  }
+  if (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+    if        (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+      return f2bool__new(boolean__true);
+    }
+  } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+    if        (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+      return f2bool__new(boolean__false);
+    }
+  }
+  return f2larva__new(cause, 42628, nil);
 }
 
 f2ptr f2__semantic_relative_time__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -385,7 +408,30 @@ export_cefunk2(semantic_relative_time__is_less_than, this, that, 0, "Returns whe
 
 
 f2ptr raw__semantic_relative_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  f2ptr this__value = raw__semantic_relative_time__value(cause, this);
+  f2ptr that__value = raw__semantic_relative_time__value(cause, that);
+  if (raw__relative_time__is_type(cause, this__value) &&
+      raw__relative_time__is_type(cause, that__value)) {
+    f2ptr this__relative_time                    = this__value;
+    f2ptr that__relative_time                    = that__value;
+    s64   this__relative_time__total_nanoseconds = raw__relative_time__total_nanoseconds(cause, this__relative_time);
+    s64   that__relative_time__total_nanoseconds = raw__relative_time__total_nanoseconds(cause, that__relative_time);
+    return f2bool__new(this__relative_time__total_nanoseconds > that__relative_time__total_nanoseconds);
+  }
+  if (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+    if        (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+      return f2bool__new(boolean__false);
+    }
+  } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+    if        (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+      return f2bool__new(boolean__false);
+    }
+  }
+  return f2larva__new(cause, 42629, nil);
 }
 
 f2ptr f2__semantic_relative_time__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
@@ -397,7 +443,30 @@ export_cefunk2(semantic_relative_time__is_greater_than, this, that, 0, "Returns 
 
 
 f2ptr raw__semantic_relative_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
-  return nil;
+  f2ptr this__value = raw__semantic_relative_time__value(cause, this);
+  f2ptr that__value = raw__semantic_relative_time__value(cause, that);
+  if (raw__relative_time__is_type(cause, this__value) &&
+      raw__relative_time__is_type(cause, that__value)) {
+    f2ptr this__relative_time                    = this__value;
+    f2ptr that__relative_time                    = that__value;
+    s64   this__relative_time__total_nanoseconds = raw__relative_time__total_nanoseconds(cause, this__relative_time);
+    s64   that__relative_time__total_nanoseconds = raw__relative_time__total_nanoseconds(cause, that__relative_time);
+    return f2bool__new(this__relative_time__total_nanoseconds == that__relative_time__total_nanoseconds);
+  }
+  if (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+    if        (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+      return f2bool__new(boolean__true);
+    } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+      return f2bool__new(boolean__false);
+    }
+  } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+    if        (raw__eq(cause, this__value, new__symbol(cause, "forever_before"))) {
+      return f2bool__new(boolean__false);
+    } else if (raw__eq(cause, this__value, new__symbol(cause, "forever_after"))) {
+      return f2bool__new(boolean__true);
+    }
+  }
+  return f2larva__new(cause, 42630, nil);
 }
 
 f2ptr f2__semantic_relative_time__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {

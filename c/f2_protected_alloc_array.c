@@ -128,6 +128,7 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
   return (this->reentrance_count != 0);
 }
 
+/*
 s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this) {
   s64 save_size = 0;
   {
@@ -138,3 +139,4 @@ s64 funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array
   return save_size;
 }
 
+*/

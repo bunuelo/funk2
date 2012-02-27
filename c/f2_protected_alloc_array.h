@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -41,10 +41,10 @@ typedef struct funk2_protected_alloc_array_event_array_s {
   funk2_protected_alloc_array_event_t* data;
 } funk2_protected_alloc_array_event_array_t;
 
-void funk2_protected_alloc_array_event_array__init(funk2_protected_alloc_array_event_array_t* this);
-void funk2_protected_alloc_array_event_array__destroy(funk2_protected_alloc_array_event_array_t* this);
+void funk2_protected_alloc_array_event_array__init     (funk2_protected_alloc_array_event_array_t* this);
+void funk2_protected_alloc_array_event_array__destroy  (funk2_protected_alloc_array_event_array_t* this);
 void funk2_protected_alloc_array_event_array__add_event(funk2_protected_alloc_array_event_array_t* this, funk2_protected_alloc_array_event_type_t type, char* source_filename, int source_line_num);
-void funk2_protected_alloc_array_event_array__reset(funk2_protected_alloc_array_event_array_t* this);
+void funk2_protected_alloc_array_event_array__reset    (funk2_protected_alloc_array_event_array_t* this);
 
 typedef struct funk2_protected_alloc_array_s {
   u64                                       used_num;
@@ -55,18 +55,32 @@ typedef struct funk2_protected_alloc_array_s {
   funk2_protected_alloc_array_event_array_t event_array;
 } funk2_protected_alloc_array_t;
 
-void      funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this);
-void      funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this);
-void      funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp);
+void      funk2_protected_alloc_array__init                         (funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__destroy                      (funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__add_protected_alloc_f2ptr    (funk2_protected_alloc_array_t* this, f2ptr exp);
 void      funk2_protected_alloc_array__signal_enter_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num);
-void      funk2_protected_alloc_array__signal_exit_protected_region(funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num);
-boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc_array_t* this);
-s64       funk2_protected_alloc_array__calculate_save_size(funk2_protected_alloc_array_t* this);
+void      funk2_protected_alloc_array__signal_exit_protected_region (funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num);
+boolean_t funk2_protected_alloc_array__in_protected_region          (funk2_protected_alloc_array_t* this);
+//s64       funk2_protected_alloc_array__calculate_save_size          (funk2_protected_alloc_array_t* this);
+
+
 /*
-void      funk2_protected_alloc_array__save_to_stream(funk2_protected_alloc_array_t* this, int fd);
-void      funk2_protected_alloc_array__load_from_stream(funk2_protected_alloc_array_t* this, int fd);
-s64       funk2_protected_alloc_array__load_from_buffer(funk2_protected_alloc_array_t* this, u8* buffer);
+// funk2_protected_alloc_array_fiber_hash
+
+typedef struct funk2_protected_alloc_array_fiber_hash_s {
+  funk2_hash_t hash;
+  
+} funk2_protected_alloc_array_fiber_hash_t;
+
+void      funk2_protected_alloc_array_fiber_hash__init                         (funk2_protected_alloc_array_fiber_hash_t* this);
+void      funk2_protected_alloc_array_fiber_hash__destroy                      (funk2_protected_alloc_array_fiber_hash_t* this);
+void      funk2_protected_alloc_array_fiber_hash__add_protected_alloc_f2ptr    (funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, f2ptr exp);
+void      funk2_protected_alloc_array_fiber_hash__signal_enter_protected_region(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, char* source_filename, int source_line_num);
+void      funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region (funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, char* source_filename, int source_line_num);
+boolean_t funk2_protected_alloc_array_fiber_hash__in_protected_region          (funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber);
+//s64       funk2_protected_alloc_array_fiber_hash__calculate_save_size          (funk2_protected_alloc_array_fiber_hash_t* this);
 */
+
 
 #endif // F2__PROTECTED_ALLOC_ARRAY__H
 

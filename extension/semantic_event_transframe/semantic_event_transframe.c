@@ -194,7 +194,7 @@ export_cefunk2(semantic_event_transframe__change__remove, this, that, 0, "");
 
 
 f2ptr raw__semantic_event_transframe__removal__add(f2ptr cause, f2ptr this, f2ptr event) {
-  f2ptr semantic_realm = f2__semantic_object__semantic_realm(cause, this);
+  f2ptr semantic_realm = f2__semantic_frame__semantic_realm(cause, this);
   f2ptr change_type    = new__symbol(cause, "removal");
   f2ptr change_event   = event;
   f2ptr change         = f2__semantic_event_transframe_change__new(cause, semantic_realm, change_type, change_event);
@@ -210,7 +210,7 @@ export_cefunk2(semantic_event_transframe__removal__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_event_transframe__addition__add(f2ptr cause, f2ptr this, f2ptr event) {
-  f2ptr semantic_realm = f2__semantic_object__semantic_realm(cause, this);
+  f2ptr semantic_realm = f2__semantic_frame__semantic_realm(cause, this);
   f2ptr change_type    = new__symbol(cause, "addition");
   f2ptr change_event   = event;
   f2ptr change         = f2__semantic_event_transframe_change__new(cause, semantic_realm, change_type, change_event);

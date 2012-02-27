@@ -64,6 +64,7 @@ boolean_t                   funk2_hash__contains            (funk2_hash_t* this,
 	}								\
 	funk2_hash__iteration__bin_node = funk2_hash__iteration__bin_node->next; \
       }									\
+      funk2_hash__iteration__index ++;					\
     }									\
   }
 

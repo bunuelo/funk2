@@ -55,7 +55,9 @@ typedef struct funk2_protected_alloc_array_s {
   f2ptr_t*                                  data;
   s64                                       reentrance_count;
   s64                                       max_reentrance_count;
+#ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array_t event_array;
+#endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
 } funk2_protected_alloc_array_t;
 
 void      funk2_protected_alloc_array__init                         (funk2_protected_alloc_array_t* this);
@@ -69,7 +71,7 @@ void      funk2_protected_alloc_array__touch_all                    (funk2_prote
 
 // funk2_protected_alloc_array_fiber_hash
 
-#define funk2_protected_alloc_array_fiber_hash__extra_array_buffer__max_num 8
+#define funk2_protected_alloc_array_fiber_hash__extra_array_buffer__max_num 2
 
 typedef struct funk2_protected_alloc_array_fiber_hash_s {
   funk2_hash_t                   used_fiber_hash;

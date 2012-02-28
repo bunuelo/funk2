@@ -63,12 +63,16 @@ void funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this) {
   }
   this->reentrance_count     = 0;
   this->max_reentrance_count = 0;
+#ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array__init(&(this->event_array));
+#endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
 }
 
 void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this) {
   free(this->data);
+#ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array__destroy(&(this->event_array));
+#endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY
 }
 
 void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_alloc_array_t* this, f2ptr exp) {

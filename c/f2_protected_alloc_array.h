@@ -71,7 +71,7 @@ void      funk2_protected_alloc_array__touch_all                    (funk2_prote
 
 // funk2_protected_alloc_array_fiber_hash
 
-#define funk2_protected_alloc_array_fiber_hash__extra_array_buffer__max_num 2
+#define funk2_protected_alloc_array_fiber_hash__extra_array_buffer__max_num 8
 
 typedef struct funk2_protected_alloc_array_fiber_hash_s {
   funk2_hash_t                   used_fiber_hash;

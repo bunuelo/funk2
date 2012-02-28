@@ -131,7 +131,8 @@
 				      [project_directory          `uninitialized]
 				      [agent_directory            `uninitialized]
 				      [movie_export_directory     `uninitialized]
-				      [cameras_enabled            `uninitialized]]
+				      [cameras_enabled            `uninitialized]
+				      [record_movie               `uninitialized]]
   [new []
        [have this create_default_directories]
        [have this fix_invalid_with_defaults]]]
@@ -147,7 +148,8 @@
   [if [or [not [get this contains `project_directory]]          [eq `uninitialized [have this lookup `project_directory]]]          [have this add `project_directory          [pathname-concat [getenv 'HOME'] 'MindMon Data/Projects']]]
   [if [or [not [get this contains `agent_directory]]            [eq `uninitialized [have this lookup `agent_directory]]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'MindMon Data/Agents']]]
   [if [or [not [get this contains `movie_export_directory]]     [eq `uninitialized [have this lookup `movie_export_directory]]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'MindMon Data/Movies']]]
-  [if [or [not [get this contains `cameras_enabled]]            [eq `uninitialized [have this lookup `cameras_enabled]]]            [have this add `cameras_enabled            t]]]
+  [if [or [not [get this contains `cameras_enabled]]            [eq `uninitialized [have this lookup `cameras_enabled]]]            [have this add `cameras_enabled            t]]
+  [if [or [not [get this contains `record_movie]]               [eq `uninitialized [have this lookup `record_movie]]]               [have this add `record_movie               nil]]]
 
 
 [deftypefunk mindmon_preferences execute save [filename]
@@ -174,6 +176,7 @@
 					    isis_world_server_hostname__data_entry
 					    
 					    cameras_enabled__check_button
+					    record_movie__check_button
 					    
 					    project_directory
 					    project_directory__hbox
@@ -216,6 +219,10 @@
        [= cameras_enabled__check_button [gtk-check_button-new 'Cameras Enabled by Default in New Projects']]
        [have vbox pack_start cameras_enabled__check_button nil nil 0]
        [set cameras_enabled__check_button active [get [get mindmon preferences] cameras_enabled]]
+       
+       [= record_movie__check_button [gtk-check_button-new 'Recording Movies Enabled by Default in New Projects']]
+       [have vbox pack_start record_movie__check_button nil nil 0]
+       [set record_movie__check_button active [get [get mindmon preferences] record_movie]]
        
        [= project_directory [get [get mindmon preferences] project_directory]]
        [= project_directory__hbox [gtk-hbox-new 0]]
@@ -318,6 +325,7 @@
 		     [set preferences agent_directory            agent_directory]
 		     [set preferences movie_export_directory     movie_export_directory]
 		     [set preferences cameras_enabled            [get cameras_enabled__check_button active]]
+		     [set preferences record_movie               [get record_movie__check_button active]]
 		     [set mindmon preferences preferences]
 		     [have mindmon save_preferences]]
 		   [have window destroy]]
@@ -353,6 +361,7 @@
 				  step_button
 				  update_button
 				  cameras_enabled_check_button
+				  record_movie_check_button
 				  
 				  movie_vbox
 				  movie_gtk_image
@@ -387,14 +396,17 @@
        [= step_button                  [gtk-button-new_with_label 'Step 1 Second']]
        [= update_button                [gtk-button-new_with_label 'Update']]
        [= cameras_enabled_check_button [gtk-check_button-new      'Cameras Enabled']]
+       [= record_movie_check_button    [gtk-check_button-new      'Record Movie']]
        [have controller_button_hbox pack_start play_button                  nil nil 0]
        [have controller_button_hbox pack_start stop_button                  nil nil 0]
        [have controller_button_hbox pack_start step_button                  nil nil 0]
        [have controller_button_hbox pack_start update_button                nil nil 0]
        [have controller_button_hbox pack_start cameras_enabled_check_button nil nil 0]
+       [have controller_button_hbox pack_start record_movie_check_button    nil nil 0]
        [have controller_vbox pack_start controller_button_hbox nil nil 0]
        
        [set cameras_enabled_check_button active [get [get mindmon preferences] cameras_enabled]]
+       [set record_movie_check_button    active [get [get mindmon preferences] record_movie]]
        
        [have play_button signal_connect 'clicked'
 	     [funk []
@@ -427,6 +439,12 @@
 		     [if [null mindmon_world]
 			 [terminal_format standard-terminal '\nMindMon internal warning: mindmon_world is nil.']
 		       [set mindmon_world all_cameras_enabled cameras_enabled]]]]
+	     nil]
+       [have record_movie_check_button signal_connect 'toggled'
+	     [funk []
+		   [let [[record_movie [get record_movie_check_button active]]]
+		     [terminal_format standard-terminal '\nMindMon: Recording Movie ' [if record_movie 'Enabled' 'Disabled'] '.']
+		     ]]
 	     nil]
        
        [= entry_hbox [gtk-hbox-new 0]]

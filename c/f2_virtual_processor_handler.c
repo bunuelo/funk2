@@ -223,18 +223,41 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_pr
   return virtual_processor_thread;
 }
 
-u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
+s64 funk2_virtual_processor_handler__try_get_my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
   if (__funk2.memory.bootstrapping_mode) {
     return 0;
   }
   pthread_t pthread                 = pthread_self();
-  u64       virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
+  s64       virtual_processor_index = -1;
+  if (funk2_hash__contains(&(this->virtual_processor_index_pthread_hash), (u64)pthread)) {
+    virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
+  }
   return virtual_processor_index;
 }
 
+u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
+  s64 virtual_processor_index = funk2_virtual_processor_handler__try_get_my_virtual_processor_index(this);
+  if (virtual_processor_index == -1) {
+    error(nil, "funk2_virtual_processor_handler__my_virtual_processor_index fatal error: could not find virtual processor index.");
+  }
+  return (u64)virtual_processor_index;
+}
+
+funk2_virtual_processor_t* funk2_virtual_processor_handler__try_get_my_virtual_processor(funk2_virtual_processor_handler_t* this) {
+  s64 virtual_processor_assignment_index = funk2_virtual_processor_handler__try_get_my_virtual_processor_index(this);
+  if (virtual_processor_assignment_index == -1) {
+    return NULL;
+  } else {
+    return this->virtual_processor[virtual_processor_assignment_index];
+  }
+}
+
 funk2_virtual_processor_t* funk2_virtual_processor_handler__my_virtual_processor(funk2_virtual_processor_handler_t* this) {
-  u64 virtual_processor_assignment_index = funk2_virtual_processor_handler__my_virtual_processor_index(this);
-  return this->virtual_processor[virtual_processor_assignment_index];
+  funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__try_get_my_virtual_processor(this);
+  if (my_virtual_processor == NULL) {
+    error(nil, "funk2_virtual_processor_handler__my_virtual_processor fatal error: could not get my virtual processor.");
+  }
+  return my_virtual_processor;
 }
 
 void funk2_virtual_processor_handler__yield(funk2_virtual_processor_handler_t* this) {

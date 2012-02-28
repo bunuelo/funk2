@@ -88,6 +88,10 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
   funk2_processor_mutex__unlock(&(this->access_mutex));
 }
 
+s64 this_processor_thread__try_get_pool_index() {
+  return funk2_virtual_processor_handler__try_get_my_virtual_processor_index(&(__funk2.virtual_processor_handler));
+}
+
 u64 this_processor_thread__pool_index() {
   return funk2_virtual_processor_handler__my_virtual_processor_index(&(__funk2.virtual_processor_handler));
 }

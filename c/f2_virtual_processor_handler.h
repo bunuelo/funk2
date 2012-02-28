@@ -49,17 +49,19 @@ struct funk2_virtual_processor_handler_s {
   boolean_t                              hardware_affinities_enabled;
 };
 
-void                              funk2_virtual_processor_handler__init(                                                                funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);
-void                              funk2_virtual_processor_handler__destroy(                                                             funk2_virtual_processor_handler_t* this);
-void                              funk2_virtual_processor_handler__destroy_all_virtual_processor_threads(                               funk2_virtual_processor_handler_t* this);
-void                              funk2_virtual_processor_handler__start_virtual_processors(                                            funk2_virtual_processor_handler_t* this);
-funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(                                   funk2_virtual_processor_handler_t* this);
-void                              funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignment_to_virtual_processor(    funk2_virtual_processor_handler_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread, u64 virtual_processor_index);
+void                              funk2_virtual_processor_handler__init                                                                (funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);
+void                              funk2_virtual_processor_handler__destroy                                                             (funk2_virtual_processor_handler_t* this);
+void                              funk2_virtual_processor_handler__destroy_all_virtual_processor_threads                               (funk2_virtual_processor_handler_t* this);
+void                              funk2_virtual_processor_handler__start_virtual_processors                                            (funk2_virtual_processor_handler_t* this);
+funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread                                   (funk2_virtual_processor_handler_t* this);
+void                              funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignment_to_virtual_processor    (funk2_virtual_processor_handler_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread, u64 virtual_processor_index);
 void                              funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignment_from_virtual_processor(funk2_virtual_processor_handler_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
-funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread(                                         funk2_virtual_processor_handler_t* this);
-u64                               funk2_virtual_processor_handler__my_virtual_processor_index(                                          funk2_virtual_processor_handler_t* this);
-funk2_virtual_processor_t*        funk2_virtual_processor_handler__my_virtual_processor(                                                funk2_virtual_processor_handler_t* this);
-void                              funk2_virtual_processor_handler__yield(                                                               funk2_virtual_processor_handler_t* this);
+funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__my_virtual_processor_thread                                         (funk2_virtual_processor_handler_t* this);
+s64                               funk2_virtual_processor_handler__try_get_my_virtual_processor_index                                  (funk2_virtual_processor_handler_t* this);
+u64                               funk2_virtual_processor_handler__my_virtual_processor_index                                          (funk2_virtual_processor_handler_t* this);
+funk2_virtual_processor_t*        funk2_virtual_processor_handler__try_get_my_virtual_processor                                        (funk2_virtual_processor_handler_t* this);
+funk2_virtual_processor_t*        funk2_virtual_processor_handler__my_virtual_processor                                                (funk2_virtual_processor_handler_t* this);
+void                              funk2_virtual_processor_handler__yield                                                               (funk2_virtual_processor_handler_t* this);
 
 // **
 

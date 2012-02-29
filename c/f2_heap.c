@@ -56,7 +56,7 @@ boolean_t funk2_heap__is_empty(funk2_heap_t* this) {
 
 
 boolean_t funk2_heap__is_full(funk2_heap_t* this) {
-  return ((this->node_array_used_num == heap_index__max));
+  return ((this->node_array_used_num == (heap_index__max - 1)));
 }
 
 

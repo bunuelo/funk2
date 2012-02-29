@@ -304,6 +304,10 @@ void funk2_memorypool__free_memory_heap__insert(funk2_memorypool_t* this, funk2_
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
 }
 
+void funk2_memorypool__free_memory_heap__remove(funk2_memorypool_t* this, funk2_memblock_t* block) {
+  funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)block);
+}
+
 u64 u64__log2(u64 this) {
   s64 power = 63;
   u64 mask  = 0x8000000000000000ull;

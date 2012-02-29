@@ -386,6 +386,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     }
   }
   
+  /*
   // try to join block with next block if next block is also free
   {
     funk2_memblock_t* next_block    = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
@@ -399,6 +400,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       }
     }
   }
+  */
   
   // add block to free list
   funk2_memorypool__free_memory_heap__insert(this, block);

@@ -78,9 +78,11 @@ void funk2_heap__insert(funk2_heap_t* this, funk2_heap_node_t* node) {
   this->node_array_used_num ++;
   
   for(index = this->node_array_used_num; this->node_array[index >> 1]->key < node->key; index >>= 1) {
-    this->node_array[index] = this->node_array[index >> 1];
+    this->node_array[index]             = this->node_array[index >> 1];
+    this->node_array[index]->heap_index = index;
   }
-  this->node_array[index] = node;
+  this->node_array[index]             = node;
+  this->node_array[index]->heap_index = index;
 }
 
 
@@ -114,12 +116,14 @@ funk2_heap_node_t* funk2_heap__remove_index(funk2_heap_t* this, s64 remove_index
     
     // percolate one level
     if (last_node->key < this->node_array[child_index]->key) {
-      this->node_array[index] = this->node_array[child_index];
+      this->node_array[index]             = this->node_array[child_index];
+      this->node_array[index]->heap_index = index;
     } else {
       break;
     }
   }
-  this->node_array[index] = last_node;
+  this->node_array[index]             = last_node;
+  this->node_array[index]->heap_index = index;
   return old_index_node;
 }
 

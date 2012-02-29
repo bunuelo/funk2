@@ -359,10 +359,10 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 1), 1),
 			   f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 								      new__string(cause, "%"))));
-  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 2), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_used_memory != nil) ? this__total_used_memory : f2integer__new(cause, 0))),
-																		       new__string(cause, "b"))));
-  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 3), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__defragmentation != nil) ? this__defragmentation : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 2), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__defragmentation != nil) ? this__defragmentation : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 																		       new__string(cause, "%"))));
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 3), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_used_memory != nil) ? this__total_used_memory : f2integer__new(cause, 0))),
+																		       new__string(cause, "b"))));
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 4), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_free_memory != nil) ? this__total_free_memory : f2integer__new(cause, 0))),
 																		       new__string(cause, "b"))));
   {

@@ -126,7 +126,6 @@ funk2_heap_node_t* funk2_heap__remove_index(funk2_heap_t* this, s64 remove_index
   this->node_array[index]             = last_node;
   this->node_array[index]->heap_index = index;
   
-  old_index_node->heap_index = -1;
   return old_index_node;
 }
 

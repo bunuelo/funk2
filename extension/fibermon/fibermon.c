@@ -400,9 +400,9 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
     f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_efficiency"), this__execution_efficiency);
   }
   f2ptr  this__total_global_memory  = assert_value(f2__system__memorypool__total_global_memory(cause, this__index));
-  f2ptr  this__total_used_memory    = assert_value(f2__number__minus(cause, this__total_global_memory, this__total_free_memory));
   f2ptr  this__total_free_memory    = assert_value(f2__system__memorypool__total_free_memory(  cause, this__index));
   s64    this__total_free_memory__i = f2integer__i(this__total_free_memory, cause);
+  f2ptr  this__total_used_memory    = assert_value(f2__number__minus(cause, this__total_global_memory, this__total_free_memory));
   f2ptr  maximum_block__byte_num    = assert_value(f2__memory__pool__maximum_block__byte_num(cause, index));
   s64    maximum_block__byte_num__i = f2integer__i(maximum_block__byte_num, cause);
   double this__defragmentation__d   = (this__total_free_memory__i == 0) ? 0.0 : (((double)maximum_block__byte_num__i) / ((double)this__total_free_memory__i));

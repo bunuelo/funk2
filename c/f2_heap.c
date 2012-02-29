@@ -133,6 +133,13 @@ funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
   return maximum_node;
 }
 
+void funk2_heap__remove(funk2_heap_t* this, funk2_heap_node_t* node) {
+  funk2_heap_node_t* removed_node = funk2_heap__remove_index(this, node->heap_index);
+  if (node != removed_node) {
+    error(nil, "funk2_heap__remove fatal error: removed node is not correct.");
+  }
+}
+
 
 u64 funk2_heap__size(funk2_heap_t* this) {
   return this->node_array_used_num;

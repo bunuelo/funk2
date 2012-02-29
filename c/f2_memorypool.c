@@ -304,9 +304,9 @@ void funk2_memorypool__free_memory_heap__insert(funk2_memorypool_t* this, funk2_
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
 }
 
-//void funk2_memorypool__free_memory_heap__remove(funk2_memorypool_t* this, funk2_memblock_t* block) {
-//  funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)block);
-//}
+void funk2_memorypool__free_memory_heap__remove(funk2_memorypool_t* this, funk2_memblock_t* block) {
+  funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)block);
+}
 
 u64 u64__log2(u64 this) {
   s64 power = 63;
@@ -386,7 +386,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     }
   }
   
-  /*
   // try to join block with next block if next block is also free
   {
     funk2_memblock_t* next_block    = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
@@ -400,7 +399,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       }
     }
   }
-  */
   
   // add block to free list
   funk2_memorypool__free_memory_heap__insert(this, block);

@@ -741,8 +741,8 @@ void f2__memory__preinitialize() {
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);
 }
 
-void f2__primcfunks__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
+void f2__memory__reinitialize_globalvars() {
+  //f2ptr cause = f2_memory_c__cause__new(initial_cause());
   
 }
 

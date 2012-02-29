@@ -55,7 +55,6 @@ void f2__initialize() {
   // ** 
   // **********************************************************************************************************************************************************************************
   
-  f2__memory__initialize();
   f2__primobjects__initialize();
   f2__primobject_tensor__initialize();
   f2__primobject_object__initialize();
@@ -136,6 +135,7 @@ void f2__initialize() {
   f2__larva__initialize();
   f2__optimize__initialize();
   f2__primobject__matrix__initialize();
+  f2__memory__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

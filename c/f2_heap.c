@@ -28,13 +28,12 @@
 
 // funk2_heap
 
-void funk2_heap__init(funk2_heap_t* this, u64 node_array_size) {
-  if (node_array_size < funk2_heap__minimum_size) {
-    error(nil, "funk2_heap__init error: node_array_size is less than funk2_heap__minimum_size.");
+void funk2_heap__init(funk2_heap_t* this) {
+  if (heap_index__max < funk2_heap__minimum_size) {
+    error(nil, "funk2_heap__init error: heap_index__max is less than funk2_heap__minimum_size.");
   }
-  this->node_array_size     = node_array_size;
   this->node_array_used_num = 0;
-  this->node_array          = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (node_array_size + 1)));
+  this->node_array          = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (heap_index__max + 1)));
   this->node_array[0]       = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
   this->node_array[0]->key  = funk2_heap__maximum_key;
 }
@@ -56,7 +55,7 @@ boolean_t funk2_heap__is_empty(funk2_heap_t* this) {
 
 
 boolean_t funk2_heap__is_full(funk2_heap_t* this) {
-  return ((this->node_array_used_num == (this->node_array_size)));
+  return ((this->node_array_used_num == heap_index__max));
 }
 
 
@@ -128,12 +127,6 @@ funk2_heap_node_t* funk2_heap__remove_index(funk2_heap_t* this, s64 remove_index
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
   funk2_heap_node_t* maximum_node = funk2_heap__remove_index(this, 1);
   return maximum_node;
-}
-
-
-void funk2_heap__remove(funk2_heap_t* this, funk2_heap_node_t* node) {
-  s64 remove_index = funk2_heap__find_node_index(this, node);
-  funk2_heap__remove_index(this, remove_index);
 }
 
 

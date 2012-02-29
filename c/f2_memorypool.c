@@ -38,7 +38,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0);
   
-  funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
+  funk2_heap__init(&(this->free_memory_heap));
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
   
   this->free_memory_heap__load_buffer__length = 0;
@@ -550,7 +550,7 @@ void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {
   
   status("funk2_memorypool__rebuild_memory_from_image: rebuilding free_memory_heap from load buffer.");
   funk2_heap__destroy(&(this->free_memory_heap));
-  funk2_heap__init(&(this->free_memory_heap), funk2_memorypool__initial_heap_size);
+  funk2_heap__init(&(this->free_memory_heap));
   {
     s64 global_f2ptr_difference = (((s64)this->global_f2ptr_offset) - ((s64)this->free_memory_heap__load_buffer__global_f2ptr_offset));
     

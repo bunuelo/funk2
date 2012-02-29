@@ -22,21 +22,24 @@
 #ifndef F2__HEAP__H
 #define F2__HEAP__H
 
+#define heap_index__bit_num (7 + 10 + 10)
+#define heap_index__max     ((1ull << heap_index__bit_num) - 1)
+
 typedef struct funk2_heap_node_s funk2_heap_node_t;
 struct funk2_heap_node_s {
-  u64 key : pool_address__bit_num;
+  u64 key        : pool_address__bit_num;
+  u64 heap_index : heap_index__bit_num;
 } __attribute__((__packed__));
 
 typedef struct funk2_heap_s funk2_heap_t;
 struct funk2_heap_s {
-  u64                 node_array_size;
   u64                 node_array_used_num;
   funk2_heap_node_t** node_array;
 };
 
 // funk2_heap
 
-void               funk2_heap__init          (funk2_heap_t* this, u64 node_array_size);
+void               funk2_heap__init          (funk2_heap_t* this);
 void               funk2_heap__destroy       (funk2_heap_t* this);
 void               funk2_heap__make_empty    (funk2_heap_t* this);
 boolean_t          funk2_heap__is_empty      (funk2_heap_t* this);
@@ -45,7 +48,7 @@ void               funk2_heap__insert        (funk2_heap_t* this, funk2_heap_nod
 funk2_heap_node_t* funk2_heap__maximum       (funk2_heap_t* this);
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this);
 u64                funk2_heap__size          (funk2_heap_t* this);
-//void               funk2_heap__remove        (funk2_heap_t* this, funk2_heap_node_t* node);
+void               funk2_heap__remove        (funk2_heap_t* this, funk2_heap_node_t* node);
 
 #define funk2_heap__iteration(this, node, body) {			\
     funk2_heap_t*      funk2_heap__iteration__this = this;		\

@@ -164,6 +164,7 @@ f2ptr       f2__memory__assert_valid(f2ptr cause);
 
 // **
 
+void f2__memory__preinitialize();
 void f2__memory__initialize();
 void f2__memory__destroy();
 

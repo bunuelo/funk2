@@ -27,7 +27,7 @@ void f2__initialize() {
   f2__module_registration__initialize();
   f2__redblacktree__initialize();
   f2__heap__initialize();
-  f2__memory__initialize();
+  f2__memory__preinitialize();
   f2__ptypes__initialize();
   f2__system_processor__initialize();
   f2__system_file_handler__initialize();
@@ -55,6 +55,7 @@ void f2__initialize() {
   // ** 
   // **********************************************************************************************************************************************************************************
   
+  f2__memory__initialize();
   f2__primobjects__initialize();
   f2__primobject_tensor__initialize();
   f2__primobject_object__initialize();

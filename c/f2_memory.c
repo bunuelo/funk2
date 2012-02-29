@@ -732,7 +732,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
 
 // **
 
-void f2__memory__initialize() {
+void f2__memory__preinitialize() {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
     funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
@@ -742,6 +742,10 @@ void f2__memory__initialize() {
   
   f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
   
+}
+
+void f2__memory__initialize() {
+  f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
 }
 
 void f2__memory__destroy() {

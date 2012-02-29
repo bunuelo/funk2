@@ -275,7 +275,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   
   this->pool[pool_index].total_free_memory                    -= funk2_memblock__byte_num(block);
   this->pool[pool_index].total_allocated_memory_since_last_gc += funk2_memblock__byte_num(block);
-  if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= __funk2.memory.pool[pool_index].total_free_memory) {
+  if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= (__funk2.memory.pool[pool_index].total_free_memory >> 8)) {
     __funk2.garbage_collector.gc_pool[pool_index].should_run_gc = boolean__true;
   }
   // HEAPEDIT

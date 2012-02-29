@@ -278,8 +278,6 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= (__funk2.memory.pool[pool_index].total_free_memory >> 8)) {
     __funk2.garbage_collector.gc_pool[pool_index].should_run_gc = boolean__true;
   }
-  // HEAPEDIT
-  //rbt_tree__insert(&(this->pool[pool_index].used_memory_tree), (rbt_node_t*)block);
   block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
   block->used = 1;
   ((ptype_block_t*)block)->block.ptype = ptype_newly_allocated;
@@ -349,6 +347,32 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
     raw__fast_spin_sleep_yield();
   }
 }
+
+u64 funk2_memory__pool__maximum_block__byte_num(funk2_memory_t* this, s64 pool_index) {
+  if (pool_index < 0 || pool_index > memory_pool_num) {
+    error(nil, "funk2_memory__pool__maximum_block__byte_num fatal error: pool_index is out of range.");
+  }
+  funk2_memorypool_t* memorypool = &(this->pool[pool_index]);
+  return funk2_memorypool__maximum_block__byte_num(memorypool);
+}
+
+
+u64 raw__memory__pool__maximum_block__byte_num(f2ptr cause, s64 pool_index) {
+  if (pool_index < 0 || pool_index > memory_pool_num) {
+    error(nil, "raw__memory__pool__maximum_block__byte_num fatal error: pool_index is out of range.");
+  }
+  return funk2_memory__pool__maximum_block__byte_num(&(__funk2.memory), pool_index);
+}
+
+f2ptr f2__memory__pool__maximum_block__byte_num(f2ptr cause, f2ptr pool_index) {
+  assert_argument_type(integer, pool_index);
+  s64 pool_index__i = f2integer__i(pool_index, cause);
+  return f2integer__new(cause, raw__memory__pool__maximum_block__byte_num(cause, pool_index__i));
+}
+def_pcfunk1(memory__pool__maximum_block__byte_num, pool_index,
+	    "Returns the maximum block size in bytes of the memory pool with the given index.",
+	    return f2__memory__pool__maximum_block__byte_num(this_cause, pool_index));
+
 
 void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment) {
   int pool_index;
@@ -460,49 +484,6 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   return boolean__false;
 }
 
-/*
-boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename) {
-  printf("\nfunk2_memory__save_image_to_file: saving memory image."); fflush(stdout);
-  status("  funk2_memory__save_image_to_file: saving memory image.");
-  funk2_memory__debug_memory_test(this, 0);
-  funk2_memory__print_gc_stats(this);
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
-  }
-  // note: we do not collect garbage here.
-  int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-  if (fd == -1) {
-    printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
-    return boolean__true;
-  }
-  f2ptr f2_i;
-  u64   i;
-  i = 0xfaded;             safe_write(fd, to_ptr(&i), sizeof(u64));
-  i = F2__COMPILE_TIME_ID; safe_write(fd, to_ptr(&i), sizeof(u64));
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    printf("\nfunk2_memory__save_image_to_file: saving pool %d.", pool_index); fflush(stdout);
-    status(  "funk2_memory__save_image_to_file: saving pool %d.", pool_index);
-    funk2_memorypool__save_to_stream(&(this->pool[pool_index]), fd);
-  }
-  f2_i = this->global_environment_f2ptr; safe_write(fd, to_ptr(&f2_i), sizeof(f2ptr));
-  {
-    printf("\nfunk2_memory__save_image_to_file: saving garbage collector."); fflush(stdout);
-    status(  "funk2_memory__save_image_to_file: saving garbage collector.");
-    funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
-  }
-  close(fd);
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
-  }
-  funk2_memory__debug_memory_test(this, 0);
-  funk2_memory__print_gc_stats(this);
-  printf("\nfunk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename); fflush(stdout);
-  status(  "funk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename);
-  printf("\n\n"); fflush(stdout);
-  return boolean__false;
-}
-*/
 
 f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
@@ -758,6 +739,9 @@ void f2__memory__initialize() {
   }
   
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+  
+  f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
+  
 }
 
 void f2__memory__destroy() {

@@ -263,7 +263,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   if (blocked_byte_num < sizeof(funk2_memblock_t)) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new: block of size less than sizeof(funk2_memblock_t) was requested.");
   }
-  if (funk2_memblock__byte_num(block) > blocked_byte_num + ((((sizeof(funk2_memblock_t) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num)) {
+  if (funk2_memblock__byte_num(block) > blocked_byte_num + memblock__minimum_size) {
     funk2_memblock_t* new_block           = (funk2_memblock_t*)(((u8*)(block)) + blocked_byte_num);
     int               new_block__byte_num = funk2_memblock__byte_num(block) - blocked_byte_num;
     funk2_memblock__init(new_block, new_block__byte_num, 0);

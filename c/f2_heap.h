@@ -42,9 +42,10 @@ void               funk2_heap__make_empty    (funk2_heap_t* this);
 boolean_t          funk2_heap__is_empty      (funk2_heap_t* this);
 boolean_t          funk2_heap__is_full       (funk2_heap_t* this);
 void               funk2_heap__insert        (funk2_heap_t* this, funk2_heap_node_t* node);
+funk2_heap_node_t* funk2_heap__maximum       (funk2_heap_t* this);
 funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this);
-funk2_heap_node_t* funk2_heap__maximum_node  (funk2_heap_t* this);
 u64                funk2_heap__size          (funk2_heap_t* this);
+//void               funk2_heap__remove        (funk2_heap_t* this, funk2_heap_node_t* node);
 
 #define funk2_heap__iteration(this, node, body) {			\
     funk2_heap_t*      funk2_heap__iteration__this = this;		\

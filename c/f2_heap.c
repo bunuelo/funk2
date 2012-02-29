@@ -60,6 +60,14 @@ boolean_t funk2_heap__is_full(funk2_heap_t* this) {
 }
 
 
+funk2_heap_node_t* funk2_heap__maximum(funk2_heap_t* this) {
+  if (funk2_heap__is_empty(this)) {
+    return NULL;
+  }
+  return this->node_array[1];
+}
+
+
 // this->node_array[0] is a sentinel
 void funk2_heap__insert(funk2_heap_t* this, funk2_heap_node_t* node) {
   s64 index;
@@ -77,26 +85,23 @@ void funk2_heap__insert(funk2_heap_t* this, funk2_heap_node_t* node) {
 }
 
 
-funk2_heap_node_t* funk2_heap__maximum(funk2_heap_t* this) {
-  if (funk2_heap__is_empty(this)) {
-    return NULL;
-  }
-  return this->node_array[1];
-}
-
-
-funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
+funk2_heap_node_t* funk2_heap__remove_index(funk2_heap_t* this, s64 remove_index) {
   s64                index;
   s64                child_index;
-  funk2_heap_node_t* maximum_node;
+  funk2_heap_node_t* old_index_node;
   funk2_heap_node_t* last_node;
   
   if (funk2_heap__is_empty(this)) {
     error(nil, "funk2_heap error: attempt to remove node from empty heap.");
   }
   
-  maximum_node = this->node_array[1];
-  last_node    = this->node_array[this->node_array_used_num];
+  if ((remove_index < 1) ||
+      (remove_index > this->node_array_used_num)) {
+    error(nil, "funk2_heap error: attempt to remove node index outside of heap.");
+  }
+  
+  old_index_node = this->node_array[remove_index];
+  last_node      = this->node_array[this->node_array_used_num];
   
   this->node_array_used_num --;
   
@@ -109,22 +114,26 @@ funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
     }
     
     // percolate one level
-    if( last_node->key < this->node_array[child_index]->key) {
+    if (last_node->key < this->node_array[child_index]->key) {
       this->node_array[index] = this->node_array[child_index];
     } else {
       break;
     }
   }
   this->node_array[index] = last_node;
+  return old_index_node;
+}
+
+
+funk2_heap_node_t* funk2_heap__remove_maximum(funk2_heap_t* this) {
+  funk2_heap_node_t* maximum_node = funk2_heap__remove_index(this, 1);
   return maximum_node;
 }
 
 
-funk2_heap_node_t* funk2_heap__maximum_node(funk2_heap_t* this) {
-  if (funk2_heap__is_empty(this)) {
-    error(nil, "funk2_heap error: attempted to find maximum value in empty heap.");
-  }
-  return this->node_array[1];
+void funk2_heap__remove(funk2_heap_t* this, funk2_heap_node_t* node) {
+  s64 remove_index = funk2_heap__find_node_index(this, node);
+  funk2_heap__remove_index(this, remove_index);
 }
 
 

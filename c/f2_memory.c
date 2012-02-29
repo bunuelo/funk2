@@ -739,12 +739,16 @@ void f2__memory__preinitialize() {
   }
   
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);
-  
-  f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
+}
+
+void f2__primcfunks__reinitialize_globalvars() {
+  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
   
 }
 
 void f2__memory__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "memory", "", &f2__memory__reinitialize_globalvars);
+  
   f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
 }
 

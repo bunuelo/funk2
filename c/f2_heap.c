@@ -107,7 +107,7 @@ funk2_heap_node_t* funk2_heap__remove_index(funk2_heap_t* this, s64 remove_index
   
   this->node_array_used_num --;
   
-  for(index = 1; (index << 1) <= this->node_array_used_num; index = child_index) {
+  for(index = remove_index; (index << 1) <= this->node_array_used_num; index = child_index) {
     // find larger child
     child_index = index << 1;
     if ((child_index != this->node_array_used_num) &&

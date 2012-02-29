@@ -386,7 +386,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     }
   }
   
-  /*
   // try to join block with next block if next block is also free
   {
     funk2_memblock_t* next_block    = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
@@ -395,12 +394,12 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       if (! next_block->used) {
 	// remove next block from free memory heap
 	funk2_memorypool__free_memory_heap__remove(this, next_block);
+	funk2_memorypool__free_memory_heap__insert(this, next_block);
 	// increase the size of this block to include next block
-	funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
+	//funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
       }
     }
   }
-  */
   
   // add block to free list
   funk2_memorypool__free_memory_heap__insert(this, block);

@@ -32,10 +32,11 @@ void funk2_heap__init(funk2_heap_t* this) {
   if (heap_index__max < funk2_heap__minimum_size) {
     error(nil, "funk2_heap__init error: heap_index__max is less than funk2_heap__minimum_size.");
   }
-  this->node_array_used_num = 0;
-  this->node_array          = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (heap_index__max + 1)));
-  this->node_array[0]       = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
-  this->node_array[0]->key  = funk2_heap__maximum_key;
+  this->node_array_used_num       = 0;
+  this->node_array                = (funk2_heap_node_t**)from_ptr(f2__malloc(sizeof(funk2_heap_node_t*) * (heap_index__max + 1)));
+  this->node_array[0]             = (funk2_heap_node_t*)from_ptr(f2__malloc(sizeof(funk2_heap_node_t)));
+  this->node_array[0]->key        = funk2_heap__maximum_key;
+  this->node_array[0]->heap_index = 0;
 }
 
 

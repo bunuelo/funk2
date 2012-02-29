@@ -312,13 +312,13 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__progress_bar        = raw__gtk__progress_bar__new(   cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "progress_bar"),        this__progress_bar);
   f2ptr this__fiber_vbox          = raw__gtk__vbox__new(           cause, f2integer__new(cause, 2));                                                           f2__frame__add_var_value(cause, this, new__symbol(cause, "fiber_vbox"),          this__fiber_vbox);
   f2ptr this__fibermon_fiber_hash = f2__ptypehash__new(            cause);                                                                                     f2__frame__add_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), this__fibermon_fiber_hash);
-  f2ptr this__table               = raw__gtk__table__new(          cause, f2integer__new(cause, 4), f2integer__new(cause, 2), nil);                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table"),               this__table);
-  f2ptr this__table_labels        = f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, 4), f2integer__new(cause, 2)));                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"),        this__table_labels);
+  f2ptr this__table               = raw__gtk__table__new(          cause, f2integer__new(cause, 5), f2integer__new(cause, 2), nil);                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table"),               this__table);
+  f2ptr this__table_labels        = f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, 5), f2integer__new(cause, 2)));                            f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"),        this__table_labels);
   f2ptr this__index               = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"), nil); if (! raw__integer__is_type(cause, this__index)) {return f2larva__new(cause, 81, nil);}
   f2ptr this__frame               = raw__gtk__frame__new(          cause, f2__stringlist__concat(cause, f2list2__new(cause, new__string(cause, "processor #"), f2__exp__as__string(cause, this__index)))); f2__frame__add_var_value(cause, this, new__symbol(cause, "frame"), this__frame);
   {
     u64 row;
-    for (row = 0; row < 4; row ++) {
+    for (row = 0; row < 5; row ++) {
       f2ptr row_labels = raw__array__elt(cause, this__table_labels, row);
       {
 	u64 column;
@@ -333,8 +333,9 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   }
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  0), 0), new__string(cause, "bytecodes_per_second"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  1), 0), new__string(cause, "execution_efficiency"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 0), new__string(cause, "total_used_memory"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "total_free_memory"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 0), new__string(cause, "defragmentation"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "total_used_memory"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 0), new__string(cause, "total_free_memory"));
   f2__gtk__box__pack_start(cause, this__vbox, this__table,        nil, nil, f2integer__new(cause, 0));
   f2__gtk__box__pack_start(cause, this__vbox, this__progress_bar, nil, nil, f2integer__new(cause, 0));
   f2__gtk__box__pack_start(cause, this__vbox, this__fiber_vbox, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));
@@ -349,6 +350,7 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
   f2ptr this__table_labels         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"),         nil); if (! raw__array__is_type(cause, this__table_labels)) {return f2larva__new(cause, 93, nil);}
   f2ptr this__bytecodes_per_second = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), nil);
   f2ptr this__execution_efficiency = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"), nil);
+  f2ptr this__defragmentation      = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "defragmentation"),      nil);
   f2ptr this__total_used_memory    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_used_memory"),    nil);
   f2ptr this__total_free_memory    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_free_memory"),    nil);
   
@@ -359,7 +361,9 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
 								      new__string(cause, "%"))));
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 2), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_used_memory != nil) ? this__total_used_memory : f2integer__new(cause, 0))),
 																		       new__string(cause, "b"))));
-  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 3), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_free_memory != nil) ? this__total_free_memory : f2integer__new(cause, 0))),
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 3), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__defragmentation != nil) ? this__defragmentation : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
+																		       new__string(cause, "%"))));
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 4), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__total_free_memory != nil) ? this__total_free_memory : f2integer__new(cause, 0))),
 																		       new__string(cause, "b"))));
   {
     f2ptr progress_fraction = (this__execution_efficiency != nil) ? this__execution_efficiency : f2double__new(cause, 0.0);
@@ -395,11 +399,18 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
     f2__frame__add_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"), this__bytecodes_per_second);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "execution_efficiency"), this__execution_efficiency);
   }
-  f2ptr this__total_global_memory = f2__system__memorypool__total_global_memory(cause, this__index);
-  f2ptr this__total_free_memory   = f2__system__memorypool__total_free_memory(  cause, this__index);
-  f2ptr this__total_used_memory   = f2__number__minus(cause, this__total_global_memory, this__total_free_memory);
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "total_free_memory"), this__total_free_memory);
+  f2ptr  this__total_global_memory  = assert_value(f2__system__memorypool__total_global_memory(cause, this__index));
+  f2ptr  this__total_used_memory    = assert_value(f2__number__minus(cause, this__total_global_memory, this__total_free_memory));
+  f2ptr  this__total_free_memory    = assert_value(f2__system__memorypool__total_free_memory(  cause, this__index));
+  s64    this__total_free_memory__i = f2integer__i(this__total_free_memory, cause);
+  f2ptr  maximum_block__byte_num    = assert_value(f2__memory__pool__maximum_block__byte_num(cause, index));
+  s64    maximum_block__byte_num__i = f2integer__i(maximum_block__byte_num, cause);
+  double this__defragmentation__d   = (this__total_free_memory__i == 0) ? 0.0 : (((double)maximum_block__byte_num__i) / ((double)this__total_free_memory__i));
+  f2ptr  this__defragmentation      = f2double__new(cause, this__defragmentation__d);
+  
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "defragmentation"),   this__defragmentation);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"), this__total_used_memory);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "total_free_memory"), this__total_free_memory);
   return nil;
 }
 export_cefunk1(fibermon_processor__recompute_statistics_fast, this, 0, "");

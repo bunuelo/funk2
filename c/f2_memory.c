@@ -367,6 +367,9 @@ u64 raw__memory__pool__maximum_block__byte_num(f2ptr cause, s64 pool_index) {
 f2ptr f2__memory__pool__maximum_block__byte_num(f2ptr cause, f2ptr pool_index) {
   assert_argument_type(integer, pool_index);
   s64 pool_index__i = f2integer__i(pool_index, cause);
+  if (pool_index__i < 0 || pool_index__i > memory_pool_num) {
+    return f2larva__new(cause, 235242, nil);
+  }
   return f2integer__new(cause, raw__memory__pool__maximum_block__byte_num(cause, pool_index__i));
 }
 def_pcfunk1(memory__pool__maximum_block__byte_num, pool_index,

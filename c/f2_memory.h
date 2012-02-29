@@ -124,31 +124,31 @@ void safe_read(int fd, ptr p, f2size_t object_size);
 
 // funk2_memory
 
-void      funk2_memory__init(funk2_memory_t* this);
-void      funk2_memory__destroy(funk2_memory_t* this);
-void      funk2_memory__handle(funk2_memory_t* this);
-void      funk2_memory__print_gc_stats(funk2_memory_t* this);
-boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
-boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
-boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p);
-ptr       funk2_memory__f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
-ptr       funk2_memory__used_f2ptr_to_ptr__debug(funk2_memory_t* this, f2ptr f2p);
-//boolean_t funk2_memory__garbage_collect_generation(funk2_memory_t* this, int generation_num);
-//boolean_t funk2_memory__garbage_collect_generations_until_did_something(funk2_memory_t* this);
+void      funk2_memory__init                                                    (funk2_memory_t* this);
+void      funk2_memory__destroy                                                 (funk2_memory_t* this);
+void      funk2_memory__handle                                                  (funk2_memory_t* this);
+void      funk2_memory__print_gc_stats                                          (funk2_memory_t* this);
+boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr                  (funk2_memory_t* this, ptr p);
+boolean_t funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr             (funk2_memory_t* this, ptr p);
+boolean_t funk2_memory__is_valid_funk2_memblock_ptr                             (funk2_memory_t* this, ptr p);
+ptr       funk2_memory__f2ptr_to_ptr__debug                                     (funk2_memory_t* this, f2ptr f2p);
+ptr       funk2_memory__used_f2ptr_to_ptr__debug                                (funk2_memory_t* this, f2ptr f2p);
 ptr       funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, int pool_index, f2size_t byte_num);
-f2ptr     funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num);
-void      funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment);
-f2ptr     funk2_memory__global_environment(funk2_memory_t* this);
-boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename);
-f2ptr     funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p);
-void      funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this);
-boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filename);
-//void      funk2_memory__touch_all_referenced_from_f2ptr(funk2_memory_t* this, f2ptr exp);
-boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this);
-void      funk2_memory__memory_test(funk2_memory_t* this);
-f2ptr       f2__memory__assert_valid(f2ptr cause);
+f2ptr     funk2_memory__funk2_memblock_f2ptr__try_new                           (funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr     funk2_memory__funk2_memblock_f2ptr__new_from_pool                     (funk2_memory_t* this, int pool_index, f2size_t byte_num);
+f2ptr     funk2_memory__funk2_memblock_f2ptr__new                               (funk2_memory_t* this, f2size_t byte_num);
+u64       funk2_memory__pool__maximum_block__byte_num                           (funk2_memory_t* this, s64 pool_index);
+u64        raw__memory__pool__maximum_block__byte_num                           (f2ptr cause, s64 pool_index);
+f2ptr       f2__memory__pool__maximum_block__byte_num                           (f2ptr cause, f2ptr pool_index);
+void      funk2_memory__global_environment__set                                 (funk2_memory_t* this, f2ptr global_environment);
+f2ptr     funk2_memory__global_environment                                      (funk2_memory_t* this);
+boolean_t funk2_memory__save_image_to_file                                      (funk2_memory_t* this, char* filename);
+f2ptr     funk2_memory__ptr_to_f2ptr__slow                                      (funk2_memory_t* this, ptr p);
+void      funk2_memory__rebuild_memory_info_from_image                          (funk2_memory_t* this);
+boolean_t funk2_memory__load_image_from_file                                    (funk2_memory_t* this, char* filename);
+boolean_t funk2_memory__check_all_memory_pointers_valid                         (funk2_memory_t* this);
+void      funk2_memory__memory_test                                             (funk2_memory_t* this);
+f2ptr       f2__memory__assert_valid                                            (f2ptr cause);
 
 #ifdef DEBUG_MEMORY
 #  if (DEBUG_MEMORY > 0)

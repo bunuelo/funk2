@@ -308,6 +308,7 @@
 				     elapsed_nanoseconds
 				     elapsed_execution_nanoseconds
 				     elapsed_bytecode_count
+				     defragmentation
 				     total_used_memory
 				     total_free_memory]
   [new [index]

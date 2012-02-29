@@ -405,7 +405,7 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   f2ptr  this__total_used_memory    = assert_value(f2__number__minus(cause, this__total_global_memory, this__total_free_memory));
   f2ptr  maximum_block__byte_num    = assert_value(f2__memory__pool__maximum_block__byte_num(cause, this__index));
   s64    maximum_block__byte_num__i = f2integer__i(maximum_block__byte_num, cause);
-  double this__fragmentation__d     = (this__total_free_memory__i == 0) ? 0.0 : (((double)maximum_block__byte_num__i) / ((double)this__total_free_memory__i));
+  double this__fragmentation__d     = 1.0 - ((this__total_free_memory__i == 0) ? 0.0 : (((double)maximum_block__byte_num__i) / ((double)this__total_free_memory__i)));
   f2ptr  this__fragmentation        = f2double__new(cause, this__fragmentation__d);
   
   f2__frame__add_var_value(cause, this, new__symbol(cause, "fragmentation"),     this__fragmentation);

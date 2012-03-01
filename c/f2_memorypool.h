@@ -63,8 +63,8 @@ struct funk2_memorypool_s {
 };
 
 #define funk2_memorypool__end_of_blocks(this) ({			\
-      funk2_memorypool_t* memorypool = (this);				\
-      (funk2_memblock_t*)(((u8*)from_ptr(memorypool->dynamic_memory.ptr)) + memorypool->total_global_memory); \
+      funk2_memorypool_t* funk2_memorypool__end_of_blocks__memorypool = (this);	\
+      (funk2_memblock_t*)(((u8*)from_ptr(funk2_memorypool__end_of_blocks__memorypool->dynamic_memory.ptr)) + funk2_memorypool__end_of_blocks__memorypool->total_global_memory); \
     })
 
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))

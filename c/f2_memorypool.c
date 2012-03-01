@@ -55,8 +55,9 @@ void funk2_memorypool__destroy(funk2_memorypool_t* this) {
 f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
   f2size_t used_memory_count = 0;
   {
-    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+    funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
+    //funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
     while(iter < end_of_blocks) {
       if (iter->used) {
 	used_memory_count += funk2_memblock__byte_num(iter);
@@ -265,8 +266,8 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     status("funk2_memorypool__change_total_memory_available: new->ptr=0x" X64__fstr " " u64__fstr, this->dynamic_memory.ptr, this->dynamic_memory.ptr);
     this->global_f2ptr_offset = this->dynamic_memory.ptr - 1;
     this->total_global_memory = byte_num;
+    // update all absolute pointers by a constant offset, if memory has moved
     if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {
-      // memory has moved, so we need to update all absolute pointers by a constant offset.
       s64 byte_diff = (s64)(this->dynamic_memory.ptr - old_dynamic_memory.ptr);
       // fix global environment pointer, if it is in this pool
       if (__funk2.memory.global_environment_ptr >= old_dynamic_memory.ptr &&

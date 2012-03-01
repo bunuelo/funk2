@@ -38,6 +38,8 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0);
   
+  this->last_block_byte_num = this->total_global_memory;
+  
   funk2_heap__init(&(this->free_memory_heap));
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
   
@@ -288,9 +290,10 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     {
       funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
       funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
+      this->last_block_byte_num = funk2_memblock__byte_num(old_end_of_blocks);
       old_end_of_blocks->used = 0;
-      status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
       funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);
+      status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
       release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
     }
     this->total_free_memory += (byte_num - old_total_global_memory);
@@ -344,6 +347,13 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	funk2_memorypool__free_memory_heap__remove(this, next_block);
 	// increase the size of this block to include next block
 	funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
+	{
+	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+	  if (block_after < end_of_blocks) {
+	  } else {
+	    this->last_block_byte_num = funk2_memblock__byte_num(block);
+	  }
+	}
       } else {
 	done = boolean__true;
       }

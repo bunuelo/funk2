@@ -269,18 +269,22 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
 	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
-    funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
+    funk2_memblock_t* iter          = from_ptr(this->dynamic_memory.ptr);
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
+    while(iter < end_of_blocks) {
+      iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+    }
     {
       s64 index;
       for (index = 1; index <= this->free_memory_heap.node_array_used_num; index ++) {
 	this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
       }
     }
-    funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
-    old_end_of_blocks->used = 0;
-    status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
-    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);
-    release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
+    funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
+    iter->used = 0;
+    status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
+    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)iter);
+    release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
   } else {
     if (byte_num > old_total_global_memory) {
       funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);

@@ -35,6 +35,7 @@ libf2e_semantic_resource_action_sequence-2.14.0            0
 libf2e_semantic_proprioceptual_object-2.14.0               0
 libf2e_semantic_know_of_relationship_event-2.14.0          0
 libf2e_semantic_resource_action_event-2.14.0               0
+libf2e_semantic_causal_concept-2.14.0                      0
 libf2e_semantic_causal_event-2.14.0                        0
 libf2e_semantic_directed_action_event-2.14.0               0
 libf2e_semantic_event_knowledge_base-2.14.0                0

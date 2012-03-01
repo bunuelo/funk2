@@ -7,6 +7,6 @@ mkdir -p img
 funk2 fu2/bootstrap-repl.fu2
 funk2 fu2/bootstrap.fu2
 
-rm /var/lib/funk2/funk2_debug.log
-rm /var/lib/funk2/img/bootstrap-repl.img
+rm -f /var/lib/funk2/funk2_debug.log
+rm -f /var/lib/funk2/img/bootstrap-repl.img
 

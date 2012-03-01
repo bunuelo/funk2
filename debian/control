@@ -21,30 +21,27 @@ Depends:
  ${shlibs:Depends},
  ${misc:Depends}
 Description: reflective programming language
- Funk2 is a novel programming language that introduced a programming
- technology that we call Causal Reflective Programming. The language
- is based on a peer-to-peer shared memory system, allowing individuals
- access to large numbers of processors and memory. Funk2 uses a
- virtual scheduler, processor, and thread model that is based on top
- of the shared memory system, while taking advantage of the specific
- number of processor cores on each machine. We use Posix Threads to
- implement virtual processors. Funk2 includes very simple and abstract
- data and syntax representation--inspired by lisp and scheme. Funk2
- compiles to bytecodes that may be shared between architectures,
- inspired by these similar concepts in Python and Java virtual
- machines. What is novel to the Funk2 programming language is it's
- unique ability to keep track of everything that it does, which uses a
- lot of memory when used indiscreetly, but in general allows
- reflective tracing for causal reasons why bugs occur, when they
- inevitably do. Other reflective features of the language include an
- event-based inter-process communication system that works across the
- peer-to-peer network, inspired by the Erlang model. We see a language
- like this as necessary for the social, iterative, cooperative design
- environment for large distributed complex control systems. Our
- applications are inspired by Marvin Minsky's, Emotion Machine layered
- control algorithm for a Society of Mind.
+ Funk2 is a novel programming language that supports "Causal Reflective
+ Programming." The language is based on a peer-to-peer shared memory
+ system, allowing access to large numbers of processors and memory.
+ Funk2 uses a virtual scheduler, processor, and thread model that is
+ based on top of the shared memory system, while taking advantage of the
+ specific number of processor cores on each machine and using POSIX
+ threads to implement virtual processors.  Funk2 includes a very simple
+ and abstract data and syntax representation--inspired by lisp and
+ scheme and compiles to bytecode that may be shared between
+ architectures. 
  .
- How does it work?
+ Funk2's has a unique ability to keep track of everything that it does,
+ which uses a lot of memory when used indiscreetly, but in general
+ allows reflective tracing for causal reasons why bugs occur. Other
+ reflective features of the language include an event-based
+ inter-process communication system that works across the peer-to-peer
+ network, inspired by the Erlang model. Funk2 is useful in social,
+ iterative, cooperative design environments and for large distributed
+ complex control systems. Its applications are inspired by Marvin
+ Minsky's, Emotion Machine layered control algorithm for a Society of
+ Mind.
  .
  Examples of the most basic computational features include: (1) memory
  creation, (2) memory read, and (3) memory write. Tracing all causal

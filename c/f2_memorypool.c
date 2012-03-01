@@ -350,6 +350,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	{
 	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
 	  if (block_after < end_of_blocks) {
+	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(block);
 	  } else {
 	    this->last_block_byte_num = funk2_memblock__byte_num(block);
 	  }

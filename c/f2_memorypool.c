@@ -421,7 +421,8 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   
   // try to join block with previous block if next block is also free
   {
-    funk2_memblock_t* beginning_of_blocks = funk2_memorypool__end_of_blocks(this);
+    funk2_memblock_t* beginning_of_blocks = funk2_memorypool__beginning_of_blocks(this);
+    funk2_memblock_t* end_of_blocks       = funk2_memorypool__end_of_blocks(this);
     boolean_t         done                = boolean__false;
     while (! done) {
       funk2_memblock_t* previous_block = (funk2_memblock_t*)(((u8*)block) - funk2_memblock__previous_byte_num(block));

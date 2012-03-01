@@ -406,13 +406,14 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       // remove next block from free memory heap
       funk2_memorypool__free_memory_heap__remove(this, next_block);
       // increase the size of this block to include next block
-      funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
+      u64 block__byte_num = funk2_memblock__byte_num(block) + funk2_memblock__byte_num(next_block);
+      funk2_memblock__byte_num(block) = block__byte_num;
       {
-	funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+	funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + block__byte_num);
 	if (block_after < end_of_blocks) {
-	  funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(block);
+	  funk2_memblock__previous_byte_num(block_after) = block__byte_num;
 	} else {
-	  this->last_block_byte_num = funk2_memblock__byte_num(block);
+	  this->last_block_byte_num = block__byte_num;
 	}
       }
     }
@@ -427,13 +428,14 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	// remove previous block from free memory heap
 	funk2_memorypool__free_memory_heap__remove(this, previous_block);
 	// increase the size of previous block to include this block
-	funk2_memblock__byte_num(previous_block) += funk2_memblock__byte_num(block);
+	u64 previous_block__byte_num = funk2_memblock__byte_num(previous_block) + funk2_memblock__byte_num(block);
+	funk2_memblock__byte_num(previous_block) = previous_block__byte_num;
 	{
-	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)previous_block) + funk2_memblock__byte_num(previous_block));
+	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)previous_block) + previous_block__byte_num);
 	  if (block_after < end_of_blocks) {
-	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(previous_block);
+	    funk2_memblock__previous_byte_num(block_after) = previous_block__byte_num;
 	  } else {
-	    this->last_block_byte_num = funk2_memblock__byte_num(previous_block);
+	    this->last_block_byte_num = previous_block__byte_num;
 	  }
 	}
 	// swap block to be previous block

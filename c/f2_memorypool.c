@@ -38,8 +38,6 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0);
   
-  this->last_block_byte_num = this->total_global_memory;
-  
   funk2_heap__init(&(this->free_memory_heap));
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
   
@@ -58,7 +56,7 @@ f2size_t funk2_memorypool__total_used_memory(funk2_memorypool_t* this) {
   f2size_t used_memory_count = 0;
   {
     funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
     while(iter < end_of_blocks) {
       if (iter->used) {
 	used_memory_count += funk2_memblock__byte_num(iter);
@@ -86,7 +84,7 @@ void funk2_memorypool__memory_test__dynamic_memory(funk2_memorypool_t* this) {
 
 void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this) {
   funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   while(iter < end_of_blocks) {
     release__assert(funk2_memblock__byte_num(iter) > 0, nil, "memory_test__byte_num_zero failed.");
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
@@ -96,7 +94,7 @@ void funk2_memorypool__memory_test__byte_num_zero(funk2_memorypool_t* this) {
 
 void funk2_memorypool__memory_test__all_known_types(funk2_memorypool_t* this) {
   funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   while(iter < end_of_blocks) {
     if (! funk2_memblock__is_self_consistently_valid(iter)) {
       error(nil, "found self-inconsistent memblock ptype.");
@@ -186,7 +184,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
     }
     {
       funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(memorypool->dynamic_memory.ptr));
-      funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
+      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(memorypool->dynamic_memory.ptr)) + memorypool->total_global_memory);
       while(iter < end_of_blocks) {
 	if (funk2_memblock__byte_num(iter) == 0) {
 	  status("memorypool_assertion_failed");
@@ -215,7 +213,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
     }
     {
       funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(memorypool->dynamic_memory.ptr));
-      funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
+      funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(memorypool->dynamic_memory.ptr)) + memorypool->total_global_memory);
       while(iter < end_of_blocks) {
 	if (! funk2_memblock__is_self_consistently_valid(iter)) {
 	  status("memorypool_assertion_failed");
@@ -271,39 +269,26 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
 	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
-    //funk2_memblock_t* iter              = from_ptr(this->dynamic_memory.ptr);
-    funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
-    //while(iter < old_end_of_blocks) {
-    //  iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-    //}
+    funk2_memblock_t* iter          = from_ptr(this->dynamic_memory.ptr);
+    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
+    while(iter < end_of_blocks) {
+      iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+    }
     {
       s64 index;
       for (index = 1; index <= this->free_memory_heap.node_array_used_num; index ++) {
 	this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
       }
     }
-    /*
-    funk2_memblock_t* old_last_block                     = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - this->last_block_byte_num);
-    funk2_memblock__previous_byte_num(old_end_of_blocks) = funk2_memblock__byte_num(old_last_block);
-    funk2_memblock__byte_num(old_end_of_blocks)          = (byte_num - old_total_global_memory);
-    */
-    this->last_block_byte_num                            = funk2_memblock__byte_num(old_end_of_blocks);
-    
-    old_end_of_blocks->used = 0;
-    status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
-    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);
-    release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
+    funk2_memblock__byte_num(iter) = (byte_num - old_total_global_memory);
+    iter->used = 0;
+    status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(iter));
+    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)iter);
+    release__assert(funk2_memblock__byte_num(iter) > 0, nil, "(funk2_memblock__byte_num(iter) >= 0) should be enough free space to reduce memory block.");
   } else {
     if (byte_num > old_total_global_memory) {
       funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
-      
-      /*
-      funk2_memblock_t* old_last_block         = (funk2_memblock_t*)(((u8*)block) - this->last_block_byte_num);
-      funk2_memblock__previous_byte_num(block) = funk2_memblock__byte_num(old_last_block);
-      funk2_memblock__byte_num(block)          = (byte_num - old_total_global_memory);
-      */
-      this->last_block_byte_num                = funk2_memblock__byte_num(block);
-      
+      funk2_memblock__byte_num(block) = (byte_num - old_total_global_memory);
       block->used = 0;
       funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
       release__assert(funk2_memblock__byte_num(block) > 0, nil, "(funk2_memblock__byte_num(block) > 0) should be enough free space to reduce memory block.");
@@ -348,11 +333,11 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   debug__assert(block->used, nil, "attempting to free a block that is already free.");
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
-  
+
   // try to join block with next block if next block is also free
   {
-    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
-    boolean_t         done          = boolean__false;
+    funk2_memblock_t* end_of_blocks      = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+    boolean_t         done = boolean__false;
     while (! done) {
       funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
       if ((next_block < end_of_blocks) &&
@@ -361,14 +346,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	funk2_memorypool__free_memory_heap__remove(this, next_block);
 	// increase the size of this block to include next block
 	funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
-	{
-	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
-	  if (block_after < end_of_blocks) {
-	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(block);
-	  } else {
-	    this->last_block_byte_num = funk2_memblock__byte_num(block);
-	  }
-	}
       } else {
 	done = boolean__true;
       }
@@ -468,7 +445,7 @@ u64 funk2_memorypool__maximum_block__byte_num(funk2_memorypool_t* this) {
 boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memorypool_t* this, funk2_memory_t* memory) {
   boolean_t         found_invalid = boolean__false;
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
-  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
   while(iter < end_of_blocks) {
     if (! funk2_memory__is_reasonably_valid_funk2_memblock_ptr(memory, to_ptr(iter))) {
       status("funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");

@@ -37,6 +37,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->global_f2ptr_offset = to_ptr(this->dynamic_memory.ptr - 1);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
   funk2_memblock__init(block, this->total_global_memory, 0);
+  funk2_memblock__previous_byte_num(block) = 0; // we shouldn't ever use this.
   
   this->last_block_byte_num = this->total_global_memory;
   
@@ -290,6 +291,10 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     {
       funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
       funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
+      {
+	funk2_memblock_t* old_last_block = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - this->last_block_byte_num);
+	//funk2_memblock__previous_byte_num(block) = funk2_memblock__byte_num(old_last_block);
+      }
       this->last_block_byte_num = funk2_memblock__byte_num(old_end_of_blocks);
       old_end_of_blocks->used = 0;
       funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);

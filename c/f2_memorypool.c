@@ -396,10 +396,11 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     }
   }
   
+  funk2_memblock_t* end_of_blocks = this->end_of_blocks;
+  
   // try to join block with next block if next block is also free
   {
-    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
-    funk2_memblock_t* next_block    = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+    funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
     if ((next_block < end_of_blocks) &&
 	(! next_block->used)) {
       // remove next block from free memory heap
@@ -421,7 +422,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   {
     funk2_memblock_t* beginning_of_blocks = funk2_memorypool__beginning_of_blocks(this);
     if (block != beginning_of_blocks) {
-      funk2_memblock_t* end_of_blocks  = funk2_memorypool__end_of_blocks(this);
       funk2_memblock_t* previous_block = (funk2_memblock_t*)(((u8*)block) - funk2_memblock__previous_byte_num(block));
       if (! previous_block->used) {
 	// remove previous block from free memory heap

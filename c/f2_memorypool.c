@@ -269,28 +269,24 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
 	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
       if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
     }
-    funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
+    // fix pointers in heap
     {
       s64 index;
       for (index = 1; index <= this->free_memory_heap.node_array_used_num; index ++) {
 	this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
       }
     }
+  } else if (byte_num <= old_total_global_memory) {
+    error(nil, "funk2_memorypool__change_total_memory_available error: not implemented yet.");
+  }
+  // make new free block at the old end of blocks
+  {
+    funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
     funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
     old_end_of_blocks->used = 0;
     status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
     funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);
     release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
-  } else {
-    if (byte_num > old_total_global_memory) {
-      funk2_memblock_t* block = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
-      funk2_memblock__byte_num(block) = (byte_num - old_total_global_memory);
-      block->used = 0;
-      funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
-      release__assert(funk2_memblock__byte_num(block) > 0, nil, "(funk2_memblock__byte_num(block) > 0) should be enough free space to reduce memory block.");
-    } else {
-      release__assert(0, nil, "funk2_memorypool__change_total_memory_available error: not implemented yet.");
-    }
   }
   this->total_free_memory += (byte_num - old_total_global_memory);
   funk2_memorypool__debug_memory_test(this, 2);

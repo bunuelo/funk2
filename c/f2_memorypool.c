@@ -293,7 +293,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
       funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
       {
 	funk2_memblock_t* old_last_block = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - this->last_block_byte_num);
-	//funk2_memblock__previous_byte_num(block) = funk2_memblock__byte_num(old_last_block);
+	funk2_memblock__previous_byte_num(block) = funk2_memblock__byte_num(old_last_block);
       }
       this->last_block_byte_num = funk2_memblock__byte_num(old_end_of_blocks);
       old_end_of_blocks->used = 0;

@@ -274,11 +274,11 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
       funk2_memblock__previous_byte_num(new_block) = blocked_byte_num;
       funk2_memorypool__free_memory_heap__insert(memorypool, new_block);
       {
-	funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)new_block) + blocked_byte_num);
+	funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)new_block) + new_block__byte_num);
 	if (block_after < end_of_blocks) {
-	  funk2_memblock__previous_byte_num(block_after) = blocked_byte_num;
+	  funk2_memblock__previous_byte_num(block_after) = new_block__byte_num;
 	} else {
-	  memorypool->last_block_byte_num = blocked_byte_num;
+	  memorypool->last_block_byte_num = new_block__byte_num;
 	}
       }
     }

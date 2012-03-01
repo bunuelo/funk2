@@ -340,35 +340,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
 
-  // try to join block with next block if next block is also free
-  {
-    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
-    boolean_t         done          = boolean__false;
-    while (! done) {
-      funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
-      if ((next_block < end_of_blocks) &&
-	  (! next_block->used)) {
-	// remove next block from free memory heap
-	funk2_memorypool__free_memory_heap__remove(this, next_block);
-	// increase the size of this block to include next block
-	funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
-	{
-	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
-	  if (block_after < end_of_blocks) {
-	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(block);
-	  } else {
-	    this->last_block_byte_num = funk2_memblock__byte_num(block);
-	  }
-	}
-      } else {
-	done = boolean__true;
-      }
-    }
-  }
-  
-  // add block to free list
-  funk2_memorypool__free_memory_heap__insert(this, block);
-
   // remove reference counts
   {
     ptype_block_t* ptype_block = (ptype_block_t*)block;
@@ -421,6 +392,65 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       }
     }
   }
+  
+  // try to join block with next block if next block is also free
+  {
+    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(this);
+    boolean_t         done          = boolean__false;
+    while (! done) {
+      funk2_memblock_t* next_block = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+      if ((next_block < end_of_blocks) &&
+	  (! next_block->used)) {
+	// remove next block from free memory heap
+	funk2_memorypool__free_memory_heap__remove(this, next_block);
+	// increase the size of this block to include next block
+	funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
+	{
+	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+	  if (block_after < end_of_blocks) {
+	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(block);
+	  } else {
+	    this->last_block_byte_num = funk2_memblock__byte_num(block);
+	  }
+	}
+      } else {
+	done = boolean__true;
+      }
+    }
+  }
+  
+  // try to join block with previous block if next block is also free
+  {
+    funk2_memblock_t* beginning_of_blocks = funk2_memorypool__end_of_blocks(this);
+    boolean_t         done                = boolean__false;
+    while (! done) {
+      funk2_memblock_t* previous_block = (funk2_memblock_t*)(((u8*)block) - funk2_memblock__previous_byte_num(block));
+      if (! previous_block->used) {
+	// remove previous block from free memory heap
+	funk2_memorypool__free_memory_heap__remove(this, previous_block);
+	// increase the size of previous block to include this block
+	funk2_memblock__byte_num(previous_block) += funk2_memblock__byte_num(block);
+	{
+	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(previous_block));
+	  if (block_after < end_of_blocks) {
+	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(previous_block);
+	  } else {
+	    this->last_block_byte_num = funk2_memblock__byte_num(previous_block);
+	  }
+	}
+	// swap block to be previous block
+	block = previous_block;
+	if (block == beginning_of_blocks) {
+	  done = boolean__true;
+	}
+      } else {
+	done = boolean__true;
+      }
+    }
+  }
+  
+  // add block to free list
+  funk2_memorypool__free_memory_heap__insert(this, block);
 }
 
 // look for memory block that is not used and is big enough for us to split up

@@ -32,7 +32,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->total_global_memory                  = ((((sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
   f2dynamicmemory__init_and_alloc(&(this->dynamic_memory), this->total_global_memory);
   
-  this->end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
+  this->end_of_blocks = funk2_memorypool__end_of_blocks(this);
   
   this->total_free_memory = this->total_global_memory;
   

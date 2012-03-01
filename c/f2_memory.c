@@ -248,8 +248,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   f2size_t blocked_byte_num = (((byte_num - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
 #ifdef DEBUG_MEMORY
   f2ptr fiber = raw__global_scheduler__processor_thread_current_fiber(pool_index);
-  funk2_memorypool_t* memorypool = &(__funk2.garbage_collector.gc_pool[pool_index]);
-  if ((! funk2_garbage_collector_pool__in_protected_region(memorypool, fiber)) &&
+  if ((! funk2_garbage_collector_pool__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index]), fiber)) &&
       (! this->bootstrapping_mode)) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new used without protection outside of bootstrapping mode.");
   }
@@ -267,18 +266,19 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   }
   if (funk2_memblock__byte_num(block) > blocked_byte_num + memblock__minimum_size) {
     {    
-      funk2_memblock_t* end_of_blocks       = funk2_memorypool__end_of_blocks(memorypool);
-      funk2_memblock_t* new_block           = (funk2_memblock_t*)(((u8*)(block)) + blocked_byte_num);
-      int               new_block__byte_num = funk2_memblock__byte_num(block) - blocked_byte_num;
+      funk2_memorypool_t* memorypool          = &(this->pool[pool_index]);
+      funk2_memblock_t*   end_of_blocks       = funk2_memorypool__end_of_blocks(memorypool);
+      funk2_memblock_t*   new_block           = (funk2_memblock_t*)(((u8*)(block)) + blocked_byte_num);
+      int                 new_block__byte_num = funk2_memblock__byte_num(block) - blocked_byte_num;
       funk2_memblock__init(new_block, new_block__byte_num, 0);
       funk2_memblock__previous_byte_num(new_block) = blocked_byte_num;
       funk2_memorypool__free_memory_heap__insert(memorypool, new_block);
       {
-	funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)new_block) + blocked_byte_num);
+	funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)new_block) + funk2_memblock__byte_num(new_block));
 	if (block_after < end_of_blocks) {
-	  funk2_memblock__previous_byte_num(block_after) = blocked_byte_num;
+	  funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(new_block);
 	} else {
-	  memorypool->last_block_byte_num = blocked_byte_num;
+	  memorypool->last_block_byte_num = funk2_memblock__byte_num(new_block);
 	}
       }
     }

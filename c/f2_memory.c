@@ -267,10 +267,22 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     funk2_memblock_t* new_block           = (funk2_memblock_t*)(((u8*)(block)) + blocked_byte_num);
     int               new_block__byte_num = funk2_memblock__byte_num(block) - blocked_byte_num;
     funk2_memblock__init(new_block, new_block__byte_num, 0);
+    {
+      funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)new_block) + funk2_memblock__byte_num(new_block));
+      funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(new_block);
+    }
     
     funk2_memorypool__free_memory_heap__insert(&(this->pool[pool_index]), new_block);
     
     funk2_memblock__byte_num(block) = blocked_byte_num;
+    {
+      funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+      if (block_after < funk2_memorypool__end_of_blocks(&(this->pool[pool_index]))) {
+	funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(block);
+      } else {
+	this->pool[pool_index].last_block_byte_num = funk2_memblock__byte_num(block);
+      }
+    }
   }
   
   this->pool[pool_index].total_free_memory                    -= funk2_memblock__byte_num(block);

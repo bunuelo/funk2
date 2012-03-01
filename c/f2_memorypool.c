@@ -405,7 +405,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	funk2_memorypool__free_memory_heap__remove(this, next_block);
 	// increase the size of this block to include next block
 	funk2_memblock__byte_num(block) += funk2_memblock__byte_num(next_block);
-	// set the correct previous_byte_num for the block_after
 	{
 	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
 	  if (block_after < end_of_blocks) {
@@ -423,7 +422,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   // try to join block with previous block if next block is also free
   {
     funk2_memblock_t* beginning_of_blocks = funk2_memorypool__beginning_of_blocks(this);
-    funk2_memblock_t* block_after         = (funk2_memblock_t*)(((u8*)block) + funk2_memblock__byte_num(block));
+    funk2_memblock_t* end_of_blocks       = funk2_memorypool__end_of_blocks(this);
     boolean_t         done                = boolean__false;
     if (block == beginning_of_blocks) {
       done = boolean__true;
@@ -435,8 +434,14 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	funk2_memorypool__free_memory_heap__remove(this, previous_block);
 	// increase the size of previous block to include this block
 	funk2_memblock__byte_num(previous_block) += funk2_memblock__byte_num(block);
-	// set the correct previous_byte_num for the block_after
-	funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(previous_block);
+	{
+	  funk2_memblock_t* block_after = (funk2_memblock_t*)(((u8*)previous_block) + funk2_memblock__byte_num(previous_block));
+	  if (block_after < end_of_blocks) {
+	    funk2_memblock__previous_byte_num(block_after) = funk2_memblock__byte_num(previous_block);
+	  } else {
+	    this->last_block_byte_num = funk2_memblock__byte_num(previous_block);
+	  }
+	}
 	// swap block to be previous block
 	block = previous_block;
 	if (block == beginning_of_blocks) {

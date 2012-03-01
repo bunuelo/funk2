@@ -357,6 +357,16 @@ extension_semantic_category_libf2e_semantic_category_la_LINK =  \
 	$(CFLAGS) \
 	$(extension_semantic_category_libf2e_semantic_category_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LIBADD =
+am_extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_OBJECTS = extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_OBJECTS = $(am_extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_OBJECTS)
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LINK =  \
+	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_CFLAGS) \
+	$(CFLAGS) \
+	$(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_LIBADD =
 am_extension_semantic_causal_event_libf2e_semantic_causal_event_la_OBJECTS = extension/semantic_causal_event/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.lo
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_OBJECTS = $(am_extension_semantic_causal_event_libf2e_semantic_causal_event_la_OBJECTS)
@@ -1013,6 +1023,7 @@ SOURCES = $(extension_blocks_world_libf2e_blocks_world_la_SOURCES) \
 	$(extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES) \
 	$(extension_semantic_agent_libf2e_semantic_agent_la_SOURCES) \
 	$(extension_semantic_category_libf2e_semantic_category_la_SOURCES) \
+	$(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES) \
 	$(extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES) \
 	$(extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES) \
 	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES) \
@@ -1089,6 +1100,7 @@ DIST_SOURCES =  \
 	$(extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES) \
 	$(extension_semantic_agent_libf2e_semantic_agent_la_SOURCES) \
 	$(extension_semantic_category_libf2e_semantic_category_la_SOURCES) \
+	$(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES) \
 	$(extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES) \
 	$(extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES) \
 	$(extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES) \
@@ -1397,6 +1409,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_event_sequence/libf2e_semantic_event_sequence.la \
                       extension/semantic_causal_object/libf2e_semantic_causal_object.la \
                       extension/semantic_category/libf2e_semantic_category.la \
+                      extension/semantic_causal_concept/libf2e_semantic_causal_concept.la \
                       extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                       extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
                       extension/semantic_event/libf2e_semantic_event.la \
@@ -1602,6 +1615,7 @@ extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES = extens
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES = extension/semantic_event_sequence/semantic_event_sequence.c
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES = extension/semantic_causal_object/semantic_causal_object.c
 extension_semantic_category_libf2e_semantic_category_la_SOURCES = extension/semantic_category/semantic_category.c
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES = extension/semantic_causal_concept/semantic_causal_concept.c
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES = extension/semantic_directed_action_event/semantic_directed_action_event.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES = extension/semantic_event/semantic_event.c
@@ -1725,6 +1739,8 @@ extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDFLAGS = $(li
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_category_libf2e_semantic_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_category_libf2e_semantic_category_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
@@ -2179,6 +2195,17 @@ extension/semantic_category/extension_semantic_category_libf2e_semantic_category
 	extension/semantic_category/$(DEPDIR)/$(am__dirstamp)
 extension/semantic_category/libf2e_semantic_category.la: $(extension_semantic_category_libf2e_semantic_category_la_OBJECTS) $(extension_semantic_category_libf2e_semantic_category_la_DEPENDENCIES) $(EXTRA_extension_semantic_category_libf2e_semantic_category_la_DEPENDENCIES) extension/semantic_category/$(am__dirstamp)
 	$(AM_V_CCLD)$(extension_semantic_category_libf2e_semantic_category_la_LINK) -rpath $(libdir) $(extension_semantic_category_libf2e_semantic_category_la_OBJECTS) $(extension_semantic_category_libf2e_semantic_category_la_LIBADD) $(LIBS)
+extension/semantic_causal_concept/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_causal_concept
+	@: > extension/semantic_causal_concept/$(am__dirstamp)
+extension/semantic_causal_concept/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) extension/semantic_causal_concept/$(DEPDIR)
+	@: > extension/semantic_causal_concept/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo:  \
+	extension/semantic_causal_concept/$(am__dirstamp) \
+	extension/semantic_causal_concept/$(DEPDIR)/$(am__dirstamp)
+extension/semantic_causal_concept/libf2e_semantic_causal_concept.la: $(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_OBJECTS) $(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_DEPENDENCIES) $(EXTRA_extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_DEPENDENCIES) extension/semantic_causal_concept/$(am__dirstamp)
+	$(AM_V_CCLD)$(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LINK) -rpath $(libdir) $(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_OBJECTS) $(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LIBADD) $(LIBS)
 extension/semantic_causal_event/$(am__dirstamp):
 	@$(MKDIR_P) extension/semantic_causal_event
 	@: > extension/semantic_causal_event/$(am__dirstamp)
@@ -3273,6 +3300,8 @@ mostlyclean-compile:
 	-rm -f extension/semantic_agent/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.lo
 	-rm -f extension/semantic_category/extension_semantic_category_libf2e_semantic_category_la-semantic_category.$(OBJEXT)
 	-rm -f extension/semantic_category/extension_semantic_category_libf2e_semantic_category_la-semantic_category.lo
+	-rm -f extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.$(OBJEXT)
+	-rm -f extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo
 	-rm -f extension/semantic_causal_event/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.$(OBJEXT)
 	-rm -f extension/semantic_causal_event/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.lo
 	-rm -f extension/semantic_causal_object/extension_semantic_causal_object_libf2e_semantic_causal_object_la-semantic_causal_object.$(OBJEXT)
@@ -3524,6 +3553,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_action_knowledge_base/$(DEPDIR)/extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la-semantic_action_knowledge_base.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_agent/$(DEPDIR)/extension_semantic_agent_libf2e_semantic_agent_la-semantic_agent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_category/$(DEPDIR)/extension_semantic_category_libf2e_semantic_category_la-semantic_category.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_causal_concept/$(DEPDIR)/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_causal_event/$(DEPDIR)/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_causal_object/$(DEPDIR)/extension_semantic_causal_object_libf2e_semantic_causal_object_la-semantic_causal_object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@extension/semantic_containment_object/$(DEPDIR)/extension_semantic_containment_object_libf2e_semantic_containment_object_la-semantic_containment_object.Plo@am__quote@
@@ -3772,6 +3802,13 @@ extension/semantic_category/extension_semantic_category_libf2e_semantic_category
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='extension/semantic_category/semantic_category.c' object='extension/semantic_category/extension_semantic_category_libf2e_semantic_category_la-semantic_category.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_category_libf2e_semantic_category_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_category/extension_semantic_category_libf2e_semantic_category_la-semantic_category.lo `test -f 'extension/semantic_category/semantic_category.c' || echo '$(srcdir)/'`extension/semantic_category/semantic_category.c
+
+extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo: extension/semantic_causal_concept/semantic_causal_concept.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_CFLAGS) $(CFLAGS) -MT extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo -MD -MP -MF extension/semantic_causal_concept/$(DEPDIR)/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.Tpo -c -o extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo `test -f 'extension/semantic_causal_concept/semantic_causal_concept.c' || echo '$(srcdir)/'`extension/semantic_causal_concept/semantic_causal_concept.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) extension/semantic_causal_concept/$(DEPDIR)/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.Tpo extension/semantic_causal_concept/$(DEPDIR)/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='extension/semantic_causal_concept/semantic_causal_concept.c' object='extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_CFLAGS) $(CFLAGS) -c -o extension/semantic_causal_concept/extension_semantic_causal_concept_libf2e_semantic_causal_concept_la-semantic_causal_concept.lo `test -f 'extension/semantic_causal_concept/semantic_causal_concept.c' || echo '$(srcdir)/'`extension/semantic_causal_concept/semantic_causal_concept.c
 
 extension/semantic_causal_event/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.lo: extension/semantic_causal_event/semantic_causal_event.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(extension_semantic_causal_event_libf2e_semantic_causal_event_la_CFLAGS) $(CFLAGS) -MT extension/semantic_causal_event/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.lo -MD -MP -MF extension/semantic_causal_event/$(DEPDIR)/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.Tpo -c -o extension/semantic_causal_event/extension_semantic_causal_event_libf2e_semantic_causal_event_la-semantic_causal_event.lo `test -f 'extension/semantic_causal_event/semantic_causal_event.c' || echo '$(srcdir)/'`extension/semantic_causal_event/semantic_causal_event.c
@@ -5015,6 +5052,7 @@ clean-libtool:
 	-rm -rf extension/semantic_action_knowledge_base/.libs extension/semantic_action_knowledge_base/_libs
 	-rm -rf extension/semantic_agent/.libs extension/semantic_agent/_libs
 	-rm -rf extension/semantic_category/.libs extension/semantic_category/_libs
+	-rm -rf extension/semantic_causal_concept/.libs extension/semantic_causal_concept/_libs
 	-rm -rf extension/semantic_causal_event/.libs extension/semantic_causal_event/_libs
 	-rm -rf extension/semantic_causal_object/.libs extension/semantic_causal_object/_libs
 	-rm -rf extension/semantic_containment_object/.libs extension/semantic_containment_object/_libs
@@ -5367,6 +5405,8 @@ distclean-generic:
 	-rm -f extension/semantic_agent/$(am__dirstamp)
 	-rm -f extension/semantic_category/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_category/$(am__dirstamp)
+	-rm -f extension/semantic_causal_concept/$(DEPDIR)/$(am__dirstamp)
+	-rm -f extension/semantic_causal_concept/$(am__dirstamp)
 	-rm -f extension/semantic_causal_event/$(DEPDIR)/$(am__dirstamp)
 	-rm -f extension/semantic_causal_event/$(am__dirstamp)
 	-rm -f extension/semantic_causal_object/$(DEPDIR)/$(am__dirstamp)
@@ -5475,7 +5515,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/keyboard/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_knowledge_base/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_transframe/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_property_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/keyboard/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_knowledge_base/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_concept/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_transframe/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_property_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -5523,7 +5563,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/keyboard/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_knowledge_base/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_transframe/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_property_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
+	-rm -rf c/$(DEPDIR) extension/blocks_world/$(DEPDIR) extension/cairo/$(DEPDIR) extension/concept_version_space/$(DEPDIR) extension/conceptnet/$(DEPDIR) extension/equals_hash/$(DEPDIR) extension/event_stream/$(DEPDIR) extension/fibermon/$(DEPDIR) extension/forgetful_event_stream/$(DEPDIR) extension/forward_planner/$(DEPDIR) extension/frame_ball/$(DEPDIR) extension/graph_isomorphism/$(DEPDIR) extension/gtk_extension/$(DEPDIR) extension/image/$(DEPDIR) extension/image_sequence/$(DEPDIR) extension/interval_tree/$(DEPDIR) extension/keyboard/$(DEPDIR) extension/lick/$(DEPDIR) extension/meta_semantic_knowledge_base/$(DEPDIR) extension/movie/$(DEPDIR) extension/propogator/$(DEPDIR) extension/semantic_action/$(DEPDIR) extension/semantic_action_event/$(DEPDIR) extension/semantic_action_knowledge_base/$(DEPDIR) extension/semantic_agent/$(DEPDIR) extension/semantic_category/$(DEPDIR) extension/semantic_causal_concept/$(DEPDIR) extension/semantic_causal_event/$(DEPDIR) extension/semantic_causal_object/$(DEPDIR) extension/semantic_containment_object/$(DEPDIR) extension/semantic_directed_action_event/$(DEPDIR) extension/semantic_event/$(DEPDIR) extension/semantic_event_knowledge_base/$(DEPDIR) extension/semantic_event_sequence/$(DEPDIR) extension/semantic_event_transframe/$(DEPDIR) extension/semantic_event_tree/$(DEPDIR) extension/semantic_frame/$(DEPDIR) extension/semantic_goal/$(DEPDIR) extension/semantic_goal_action_causal_hypothesis/$(DEPDIR) extension/semantic_goal_event/$(DEPDIR) extension/semantic_know_of_existence_event/$(DEPDIR) extension/semantic_know_of_relationship_event/$(DEPDIR) extension/semantic_knowledge_base/$(DEPDIR) extension/semantic_object/$(DEPDIR) extension/semantic_object_type_event/$(DEPDIR) extension/semantic_ordered_object/$(DEPDIR) extension/semantic_packable_object/$(DEPDIR) extension/semantic_physical_object/$(DEPDIR) extension/semantic_physical_object_type_event/$(DEPDIR) extension/semantic_physical_object_type_property_event/$(DEPDIR) extension/semantic_physical_object_type_relation_event/$(DEPDIR) extension/semantic_plan_object/$(DEPDIR) extension/semantic_plan_object_type_event/$(DEPDIR) extension/semantic_plan_object_type_relation_event/$(DEPDIR) extension/semantic_planner/$(DEPDIR) extension/semantic_proprioception/$(DEPDIR) extension/semantic_proprioceptual_object/$(DEPDIR) extension/semantic_proprioceptual_orientation/$(DEPDIR) extension/semantic_proprioceptual_position/$(DEPDIR) extension/semantic_realm/$(DEPDIR) extension/semantic_relationship_key/$(DEPDIR) extension/semantic_resource/$(DEPDIR) extension/semantic_resource_action_event/$(DEPDIR) extension/semantic_resource_action_sequence/$(DEPDIR) extension/semantic_resource_event_knowledge_base/$(DEPDIR) extension/semantic_self/$(DEPDIR) extension/semantic_situation/$(DEPDIR) extension/semantic_situation_category/$(DEPDIR) extension/semantic_situation_transition/$(DEPDIR) extension/semantic_somatosensation/$(DEPDIR) extension/semantic_somatosensory_object/$(DEPDIR) extension/semantic_temporal_object/$(DEPDIR) extension/semantic_time/$(DEPDIR) extension/semantic_visual_object/$(DEPDIR) extension/timeline/$(DEPDIR) extension/transframe/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -5644,6 +5684,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_event_sequence/.libs/libf2e_*.*                                           $(compile__lib__dir)
 	cp -fa extension/semantic_causal_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
 	cp -fa extension/semantic_category/.libs/libf2e_*.*                                                       $(compile__lib__dir)
+	cp -fa extension/semantic_causal_concept/.libs/libf2e_*.*                                           $(compile__lib__dir)
 	cp -fa extension/semantic_containment_object/.libs/libf2e_*.*                                   $(compile__lib__dir)
 	cp -fa extension/semantic_directed_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
 	cp -fa extension/semantic_event/.libs/libf2e_*.*                                                             $(compile__lib__dir)
@@ -5764,6 +5805,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_category/"                                                                                                      >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_event/"                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_object/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_concept/"                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_containment_object/"                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_directed_action_event/"                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event/"                                                                                                         >> install-sh
@@ -5895,6 +5937,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_category/*.f*                            $(chroot__install__extension__dir)semantic_category/"                            >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_causal_event/*.f*                        $(chroot__install__extension__dir)semantic_causal_event/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_causal_object/*.f*                       $(chroot__install__extension__dir)semantic_causal_object/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_causal_concept/*.f*                      $(chroot__install__extension__dir)semantic_causal_concept/"                      >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_containment_object/*.f*                  $(chroot__install__extension__dir)semantic_containment_object/"                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_directed_action_event/*.f*               $(chroot__install__extension__dir)semantic_directed_action_event/"               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_event/*.f*                               $(chroot__install__extension__dir)semantic_event/"                               >> install-sh

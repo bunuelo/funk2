@@ -46,6 +46,7 @@ struct funk2_memorypool_s {
   f2size_t                total_global_memory;
   f2size_t                total_free_memory;
   f2dynamicmemory_t       dynamic_memory;
+  u64                     last_block_byte_num;
   
   funk2_heap_t            free_memory_heap; // free memory piles in heaps!
   u64                     free_memory_heap__load_buffer__length;
@@ -60,6 +61,11 @@ struct funk2_memorypool_s {
   s64                     temporary_compressed_data_for_saving__length;
   u8*                     temporary_compressed_data_for_saving;
 };
+
+#define funk2_memorypool__end_of_blocks(this) ({			\
+      funk2_memorypool_t* memorypool = (this);				\
+      (funk2_memblock_t*)(((u8*)from_ptr(memorypool->dynamic_memory.ptr)) + memorypool->total_global_memory); \
+    })
 
 #define funk2_memorypool__memory_mutex__lock(this)     funk2_processor_mutex__lock(&((this)->global_memory_allocate_mutex))
 #define funk2_memorypool__memory_mutex__try_lock(this) funk2_processor_mutex__trylock(&((this)->global_memory_allocate_mutex))

@@ -38,6 +38,7 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 
 struct funk2_memblock_s {
   funk2_heap_node_t                      heap_node;
+  u64                                    previous_byte_num : pool_address__bit_num;
   funk2_garbage_collector_block_header_t gc;
   ptype_t                                ptype : ptype__min_bits;
   u8                                     used  : 1;
@@ -45,7 +46,8 @@ struct funk2_memblock_s {
   u8                                     raw_mem[0];
 } __attribute__((__packed__));
 
-#define funk2_memblock__byte_num(this) ((this)->heap_node.key)
+#define funk2_memblock__byte_num(this)          ((this)->heap_node.key)
+#define funk2_memblock__previous_byte_num(this) ((this)->previous_byte_num)
 
 // funk2_memblock
 

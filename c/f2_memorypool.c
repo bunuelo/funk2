@@ -304,7 +304,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
       release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
     }
     this->total_free_memory += (byte_num - old_total_global_memory);
-    this->end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
+    this->end_of_blocks = funk2_memorypool__end_of_blocks(this);
   }
   funk2_memorypool__debug_memory_test(this, 2);
 }

@@ -85,7 +85,8 @@ boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* t
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memblock_t* beginning_of_blocks = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks       = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
+    funk2_memblock_t* end_of_blocks       = funk2_memorypool__end_of_blocks(&(this->pool[pool_index]));
+    //funk2_memblock_t* end_of_blocks       = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
     if (p >= to_ptr(beginning_of_blocks) && p < to_ptr(end_of_blocks)) {
       is_within_memory_pool_range = boolean__true;
       break;
@@ -121,8 +122,8 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
   }
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_memblock_t* iter = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
-    funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
+    funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
+    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(this->pool[pool_index]));
     if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
       int byte_num;
       while(iter < end_of_blocks) {
@@ -556,7 +557,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	// add all symbols to symbol_hash in ptypes.c	
 	{
 	  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
-	  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)iter) + this->pool[pool_index].total_global_memory);
+	  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(this->pool[pool_index]));
 	  while(iter < end_of_blocks) {
 	    if (iter->used) {
 	      ptype_block_t* block = (ptype_block_t*)iter;

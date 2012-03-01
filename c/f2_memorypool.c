@@ -255,40 +255,45 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
     return;
   }
   
-  f2size_t          old_total_global_memory = this->total_global_memory;
-  f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
-  status("funk2_memorypool__change_total_memory_available: old->ptr=0x" X64__fstr " " u64__fstr, old_dynamic_memory.ptr, old_dynamic_memory.ptr);
-  f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, byte_num);
-  status("funk2_memorypool__change_total_memory_available: new->ptr=0x" X64__fstr " " u64__fstr, this->dynamic_memory.ptr, this->dynamic_memory.ptr);
-  this->global_f2ptr_offset = this->dynamic_memory.ptr - 1;
-  this->total_global_memory = byte_num;
-  if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {
-    // fixing pointers here (globals, funk2_memblock__next(block))
-    s64 byte_diff = (s64)(this->dynamic_memory.ptr - old_dynamic_memory.ptr);
-    if (__funk2.memory.global_environment_ptr >= old_dynamic_memory.ptr &&
-	__funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
-      if (__funk2.memory.global_environment_ptr) {__funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;}
-    }
-    // fix pointers in heap
-    {
-      s64 index;
-      for (index = 1; index <= this->free_memory_heap.node_array_used_num; index ++) {
-	this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
+  f2size_t old_total_global_memory = this->total_global_memory;
+  if (byte_num <= old_total_global_memory) {
+    error(nil, "funk2_memorypool__change_total_memory_available error: reducing memory pool size not yet implemented.");
+  } else {
+    f2dynamicmemory_t old_dynamic_memory; memcpy(&old_dynamic_memory, &(this->dynamic_memory), sizeof(f2dynamicmemory_t));
+    status("funk2_memorypool__change_total_memory_available: old->ptr=0x" X64__fstr " " u64__fstr, old_dynamic_memory.ptr, old_dynamic_memory.ptr);
+    f2dynamicmemory__realloc(&(this->dynamic_memory), &old_dynamic_memory, byte_num);
+    status("funk2_memorypool__change_total_memory_available: new->ptr=0x" X64__fstr " " u64__fstr, this->dynamic_memory.ptr, this->dynamic_memory.ptr);
+    this->global_f2ptr_offset = this->dynamic_memory.ptr - 1;
+    this->total_global_memory = byte_num;
+    if (this->dynamic_memory.ptr != old_dynamic_memory.ptr) {
+      // memory has moved, so we need to update all absolute pointers by a constant offset.
+      s64 byte_diff = (s64)(this->dynamic_memory.ptr - old_dynamic_memory.ptr);
+      // fix global environment pointer, if it is in this pool
+      if (__funk2.memory.global_environment_ptr >= old_dynamic_memory.ptr &&
+	  __funk2.memory.global_environment_ptr <  old_dynamic_memory.ptr + old_total_global_memory) {
+	if (__funk2.memory.global_environment_ptr) {
+	  __funk2.memory.global_environment_ptr = __funk2.memory.global_environment_ptr + byte_diff;
+	}
+      }
+      // fix pointers in heap
+      {
+	s64 index;
+	for (index = 1; index <= this->free_memory_heap.node_array_used_num; index ++) {
+	  this->free_memory_heap.node_array[index] = (funk2_heap_node_t*)(((u8*)this->free_memory_heap.node_array[index]) + byte_diff);
+	}
       }
     }
-  } else if (byte_num <= old_total_global_memory) {
-    error(nil, "funk2_memorypool__change_total_memory_available error: not implemented yet.");
+    // make new free block at the old end of blocks
+    {
+      funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
+      funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
+      old_end_of_blocks->used = 0;
+      status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
+      funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);
+      release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
+    }
+    this->total_free_memory += (byte_num - old_total_global_memory);
   }
-  // make new free block at the old end of blocks
-  {
-    funk2_memblock_t* old_end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + old_total_global_memory);
-    funk2_memblock__byte_num(old_end_of_blocks) = (byte_num - old_total_global_memory);
-    old_end_of_blocks->used = 0;
-    status("funk2_memorypool__change_total_memory_available: created new block with size funk2_memblock__byte_num(last) = " f2size_t__fstr, funk2_memblock__byte_num(old_end_of_blocks));
-    funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)old_end_of_blocks);
-    release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
-  }
-  this->total_free_memory += (byte_num - old_total_global_memory);
   funk2_memorypool__debug_memory_test(this, 2);
 }
 

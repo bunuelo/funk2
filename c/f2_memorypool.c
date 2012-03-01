@@ -32,6 +32,8 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->total_global_memory                  = ((((sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
   f2dynamicmemory__init_and_alloc(&(this->dynamic_memory), this->total_global_memory);
   
+  this->end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
+  
   this->total_free_memory = this->total_global_memory;
   
   this->global_f2ptr_offset = to_ptr(this->dynamic_memory.ptr - 1);
@@ -302,6 +304,7 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
       release__assert(funk2_memblock__byte_num(old_end_of_blocks) > 0, nil, "(funk2_memblock__byte_num(old_end_of_blocks) >= 0) should be enough free space to reduce memory block.");
     }
     this->total_free_memory += (byte_num - old_total_global_memory);
+    this->end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
   }
   funk2_memorypool__debug_memory_test(this, 2);
 }
@@ -579,6 +582,8 @@ void funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_mem
   
   f2__free(to_ptr(this->temporary_compressed_data_for_loading));
   this->temporary_compressed_data_for_loading = NULL;
+
+  this->end_of_blocks = funk2_memorypool__end_of_blocks(this);
 }
 
 void funk2_memorypool__rebuild_memory_from_image(funk2_memorypool_t* this) {

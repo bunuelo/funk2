@@ -46,6 +46,7 @@ struct funk2_memorypool_s {
   f2size_t                total_global_memory;
   f2size_t                total_free_memory;
   f2dynamicmemory_t       dynamic_memory;
+  funk2_memblock_t*       end_of_blocks;
   u64                     last_block_byte_num;
   
   funk2_heap_t            free_memory_heap; // free memory piles in heaps!

@@ -35,7 +35,7 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
   if (this->need_defragmentation) {
-    status("funk2_memory__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
+    status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
     __funk2.user_thread_controller.please_wait = boolean__true;
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     status("");

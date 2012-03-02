@@ -269,6 +269,84 @@ void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controll
 
 
 
+// funk2_user_thread_controller__defragment__move_memory
+
+void funk2_user_thread_controller__defragment__move_memory__init(funk2_user_thread_controller__defragment__move_memory_t* this) {
+  this->start = boolean__false;
+  funk2_processor_mutex__init(&(this->done_mutex));
+}
+
+void funk2_user_thread_controller__defragment__move_memory__destroy(funk2_user_thread_controller__defragment__move_memory_t* this) {
+}
+
+void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2_user_thread_controller__defragment__move_memory_t* this) {
+  this->done_count     = 0;
+  this->everyone_done  = boolean__false;
+  this->start          = boolean__true;
+  {
+    u64 wait_tries = 0;
+    while (this->done_count < memory_pool_num) {
+      wait_tries ++;
+      if (wait_tries > 1000) {
+	raw__spin_sleep_yield();
+      } else {
+	raw__fast_spin_sleep_yield();
+      }
+    }
+  }
+  this->start         = boolean__false;
+  this->everyone_done = boolean__true;
+}
+
+void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_user_thread_controller__defragment__move_memory_t* this) {
+  status("funk2_user_thread_controller__defragment__move_memory__user_process: defragment moving memory.");
+  
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count ++;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
+}
+
+
+
+// funk2_user_thread_controller__defragment__fix_pointers
+
+void funk2_user_thread_controller__defragment__fix_pointers__init(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
+  this->start = boolean__false;
+  funk2_processor_mutex__init(&(this->done_mutex));
+}
+
+void funk2_user_thread_controller__defragment__fix_pointers__destroy(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
+}
+
+void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
+  this->done_count     = 0;
+  this->everyone_done  = boolean__false;
+  this->start          = boolean__true;
+  {
+    u64 wait_tries = 0;
+    while (this->done_count < memory_pool_num) {
+      wait_tries ++;
+      if (wait_tries > 1000) {
+	raw__spin_sleep_yield();
+      } else {
+	raw__fast_spin_sleep_yield();
+      }
+    }
+  }
+  this->start         = boolean__false;
+  this->everyone_done = boolean__true;
+}
+
+void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
+  status("funk2_user_thread_controller__defragment__fix_pointers__user_process: defragment moving memory.");
+  
+  funk2_processor_mutex__lock(&(this->done_mutex));
+  this->done_count ++;
+  funk2_processor_mutex__unlock(&(this->done_mutex));
+}
+
+
+
 // funk2_user_thread_controller
 
 void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
@@ -281,6 +359,8 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
   funk2_user_thread_controller__free_white_exps__init(&(this->free_white_exps));
   funk2_user_thread_controller__exit__init(&(this->exit));
+  funk2_user_thread_controller__defragment__move_memory__init(&(this->defragment__move_memory));
+  funk2_user_thread_controller__defragment__fix_pointers__init(&(this->defragment__fix_pointers));
 }
 
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
@@ -291,6 +371,8 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_user_thread_controller__grey_from_other_nodes__destroy(&(this->grey_from_other_nodes));
   funk2_user_thread_controller__free_white_exps__destroy(&(this->free_white_exps));
   funk2_user_thread_controller__exit__destroy(&(this->exit));
+  funk2_user_thread_controller__defragment__move_memory__destroy(&(this->defragment__move_memory));
+  funk2_user_thread_controller__defragment__fix_pointers__destroy(&(this->defragment__fix_pointers));
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
@@ -329,6 +411,8 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
       else if                         (this->grey_from_other_nodes.start) {funk2_user_thread_controller__grey_from_other_nodes__user_process(           &(this->grey_from_other_nodes));}
       else if                               (this->free_white_exps.start) {funk2_user_thread_controller__free_white_exps__user_process(                 &(this->free_white_exps));}
       else if                                          (this->exit.start) {funk2_user_thread_controller__exit__user_process(                            &(this->exit));}
+      else if                       (this->defragment__move_memory.start) {funk2_user_thread_controller__defragment__move_memory__user_process(         &(this->defragment__move_memory));}
+      else if                      (this->defragment__fix_pointers.start) {funk2_user_thread_controller__defragment__fix_pointers__user_process(        &(this->defragment__fix_pointers));}
       {
 	wait_tries ++;
 	if (wait_tries > 1000) {
@@ -367,6 +451,14 @@ void funk2_user_thread_controller__free_white_exps(funk2_user_thread_controller_
 
 void funk2_user_thread_controller__exit(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__exit__signal_execute(&(this->exit));
+}
+
+void funk2_user_thread_controller__defragment__move_memory(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__defragment__move_memory__signal_execute(&(this->defragment__move_memory));
+}
+
+void funk2_user_thread_controller__defragment__fix_pointers(funk2_user_thread_controller_t* this) {
+  funk2_user_thread_controller__defragment__fix_pointers__signal_execute(&(this->defragment__fix_pointers));
 }
 
 

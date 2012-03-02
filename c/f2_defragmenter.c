@@ -104,7 +104,6 @@ void f2__defragmenter__reinitialize_globalvars() {
 }
 
 void f2__defragmenter__initialize() {
-  f2ptr cause = initial_cause();
   funk2_module_registration__add_module(&(__funk2.module_registration), "defragmenter", "", &f2__defragmenter__reinitialize_globalvars);
   f2__defragmenter__reinitialize_globalvars();
   

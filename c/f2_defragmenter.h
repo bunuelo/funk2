@@ -31,4 +31,9 @@ void funk2_defragmenter__init   (funk2_defragmenter_t* this);
 void funk2_defragmenter__destroy(funk2_defragmenter_t* this);
 void funk2_defragmenter__handle (funk2_defragmenter_t* this);
 
+// **
+
+void f2__defragmenter__reinitialize_globalvars();
+void f2__defragmenter__initialize();
+
 #endif // F2__DEFRAGMENTER__H

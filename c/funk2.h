@@ -178,6 +178,7 @@ typedef struct funk2_s {
   funk2_scheduler_thread_controller_t scheduler_thread_controller;
   funk2_management_thread_t           management_thread;
   funk2_garbage_collector_t           garbage_collector;
+  funk2_defragmenter_t                defragmenter;
   funk2_user_thread_controller_t      user_thread_controller;
   funk2_ptypes_t                      ptypes;
   funk2_reader_t                      reader;

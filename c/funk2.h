@@ -43,6 +43,7 @@
 #include "f2_core_extension_funk.h"
 #include "f2_core_extension.h"
 #include "f2_cpu.h"
+#include "f2_defragmenter.h"
 #include "f2_dlfcn.h"
 #include "f2_dptr.h"
 #include "f2_f2ptr_set.h"

@@ -22,7 +22,8 @@
 #include "funk2.h"
 
 void funk2_defragmenter__init(funk2_defragmenter_t* this) {
-  this->need_defragmentation = boolean__false;
+  this->total_defragmentation_count = 0;
+  this->need_defragmentation        = boolean__false;
 }
 
 void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
@@ -61,7 +62,57 @@ void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
       }
     }
     this->need_defragmentation = boolean__false;
+    this->total_defragmentation_count ++;
     __funk2.user_thread_controller.please_wait = boolean__false;
   }
+}
+
+void funk2_defragmenter__signal_start(funk2_defragmenter_t* this) {
+  this->need_defragmentation = boolean__true;
+}
+
+f2ptr f2__defragmenter__signal_start(f2ptr cause) {
+  funk2_defragmenter__signal_start(&(__funk2.defragmenter));
+  return nil;
+}
+def_pcfunk0(defragmenter__signal_start,
+	    "Signals to the management thread to start a defragmentation of memory.",
+	    return f2__defragmenter__signal_start(this_cause));
+
+
+u64 funk2_defragmenter__total_defragmentation_count(funk2_defragmenter_t* this) {
+  return this->total_defragmentation_count;
+}
+
+u64 raw__defragmenter__total_defragmentation_count(f2ptr cause) {
+  return funk2_defragmenter__total_defragmentation_count(&(__funk2.defragmenter));
+}
+
+f2ptr f2__defragmenter__total_defragmentation_count(f2ptr cause) {
+  return f2integer__new(cause, raw__defragmenter__total_defragmentation_count(cause));
+}
+def_pcfunk0(defragmenter__total_defragmentation_count,
+	    "Signals to the management thread to start a defragmentation of memory.",
+	    return f2__defragmenter__total_defragmentation_count(this_cause));
+
+
+
+
+// **
+
+void f2__defragmenter__reinitialize_globalvars() {
+}
+
+void f2__defragmenter__initialize() {
+  f2ptr cause = initial_cause();
+  funk2_module_registration__add_module(&(__funk2.module_registration), "defragmenter", "", &f2__defragmenter__reinitialize_globalvars);
+  f2__defragmenter__reinitialize_globalvars();
+  
+  f2__primcfunk__init__0(defragmenter__signal_start);
+  f2__primcfunk__init__0(defragmenter__total_defragmentation_count);
+  
+}
+
+void f2__defragmenter__destroy() {
 }
 

@@ -23,6 +23,7 @@
 #define F2__DEFRAGMENTER__H
 
 typedef struct funk2_defragmenter_s {
+  u64       total_defragmentation_count;
   boolean_t need_defragmentation;
 } funk2_defragmenter_t;
 

@@ -193,20 +193,18 @@ typedef struct funk2_s {
   funk2_surrogate_parent_t            surrogate_parent;
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
-  //#if defined(F2__GTK__SUPPORTED)
-  //funk2_gtk_t                         gtk;
-  //#endif
   funk2_virtual_processor_handler_t   virtual_processor_handler;
 } funk2_t;
 
-void      funk2__init(   funk2_t* this, int argc, char** argv);
+void      funk2__init   (funk2_t* this, int argc, char** argv);
 void      funk2__destroy(funk2_t* this);
-boolean_t funk2__handle( funk2_t* this);
+boolean_t funk2__handle (funk2_t* this);
 
 void funk2__start_main_in_separate_thread();
 
 int funk2__main(funk2_t* this, int argc, char** argv);
 
+// this should be the only global variable ever.
 extern funk2_t __funk2;
 
 #endif // FUNK2__H

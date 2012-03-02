@@ -201,10 +201,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
   
-  //#if defined(F2__GTK__SUPPORTED)
-  //funk2_gtk__init(&(this->gtk), &argc, &argv);
-  //#endif // F2__GTK__SUPPORTED
-  
   f2ptr cause = initial_cause();
   
   char* install__bootstrap_img__filename      = F2__INSTALL__BOOTSTRAP_IMG__FILENAME;
@@ -241,10 +237,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
   }
   
-  //#if defined(F2__GTK__SUPPORTED)
-  //funk2_gtk__start_gtk_main(&(__funk2.gtk));
-  //#endif // F2__GTK__SUPPORTED
-  
   cause = f2__cause__new_with_inherited_properties(cause, nil);
   never_gc(cause);
   
@@ -265,7 +257,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	load_funk = environment__lookup_funkvar_value(cause, global_environment(), new__symbol(cause, "primfunk:load"));
 	if (raw__larva__is_type(cause, load_funk)) {
 	  f2__fiber__print(cause, nil, global_environment());
-	  error(nil, "funk2 main (raw__funkable__is_type(load_funk)) assertion failed.");
+	  error(nil, "could not find primfunk:load for compiling user-friendly load.");
 	} else {
 	  status("found primfunk:load.");
 	}
@@ -273,9 +265,9 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
 	status("found user-friendly load.");
       }
       
-      f2ptr args = f2cons__new(cause, new__string(cause, this->command_line.load_source_filename), nil);
+      f2ptr args = f2list1__new(cause, new__string(cause, this->command_line.load_source_filename));
       
-      // start a fiber executing the user read-eval-print loop
+      // start a fiber executing the load
       f2__fiber_serial(cause,
 		       cause,
 		       nil,
@@ -407,35 +399,17 @@ void funk2__destroy(funk2_t* this) {
 }
 
 boolean_t funk2__handle(funk2_t* this) {
-  //status("funk2-handle: peer command server handling clients.");
   funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
-  //status("funk2-handle: peer command server flushing command input buffer.");
   funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
-  //status("funk2-handle: node handler handling nodes.");
   funk2_node_handler__handle_nodes(&(this->node_handler));
-  //status("funk2-handle: handling memory.");
   funk2_memory__handle(&(this->memory));
-  //status("funk2-handle: handling garbage collection.");
   funk2_garbage_collector__handle(&(this->garbage_collector));
-  //status("funk2-handle: management thread handling user threads.");
   funk2_management_thread__handle_user_threads(&(this->management_thread));
-  //status("funk2-handle: handling cpu.");
   funk2_cpu__handle(&(this->cpu));
-  //status("funk2-handle: handling surrogate parent.");
   funk2_surrogate_parent__handle(&(this->surrogate_parent));
   
-  //printf("\nYour parent is here."); fflush(stdout);
-  // very primitive global reflection might go here if necessary... (maybe handle global process signals?)
-  //status("funk2-handle: done handling.");
   raw__fast_spin_sleep_yield();
   return boolean__false; // should return true if we did something.
-}
-
-//#define TEST
-
-void funk2_test() {
-  funk2_set__test();
-  //funk2_gc_touch_circle_buffer__test();
 }
 
 pthread_t separate_thread__thread;
@@ -443,11 +417,8 @@ boolean_t separate_thread__done_booting;
 
 // see funk2_main.c for actual main function.
 int funk2__main(funk2_t* this, int argc, char** argv) {
+  // our main code position is our reference for where the funk core has been loaded in memory.
   __funk2.funk2_main_code_position = to_ptr(&funk2__main);
-  //printf("\nfunk2__main: this function is at " u64__fstr "\n", __funk2.funk2_main_code_position);
-#ifdef TEST
-  funk2_test();
-#endif // TEST
   funk2__init(this, argc, argv);
   
   separate_thread__done_booting = boolean__true;

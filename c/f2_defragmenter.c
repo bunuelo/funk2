@@ -21,3 +21,48 @@
 
 #include "funk2.h"
 
+void funk2_defragmenter__init(funk2_defragmenter_t* this) {
+  this->need_defragmentation = boolean__false;
+}
+
+void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
+}
+
+void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
+  
+}
+
+void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
+  if (this->need_defragmentation) {
+    status("funk2_memory__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
+    __funk2.user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
+    status("");
+    status("*******************************");
+    status("**** DOING DEFRAGMENTATION ****");
+    status("*******************************");
+    status("");
+    {
+      int index;
+      for (index = 0; index < memory_pool_num; index ++) {
+	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+      }
+    }
+    funk2_defragmenter__defragment(this);
+    status("");
+    status("***********************************");
+    status("**** DONE WITH DEFRAGMENTATION ****");
+    status("***********************************");
+    status("");
+    {
+      int index;
+      for (index = 0; index < memory_pool_num; index ++) {
+	this->gc_pool[index].should_run_gc = boolean__false;
+	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+      }
+    }
+    this->need_defragmentation = boolean__false;
+    __funk2.user_thread_controller.please_wait = boolean__false;
+  }
+}
+

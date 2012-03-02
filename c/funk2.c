@@ -185,6 +185,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_memory__init(&(this->memory));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
+  funk2_defragmenter__init(&(this->defragmenter));
   funk2_bytecode__init(&(this->bytecode));
   funk2_operating_system__init(&(this->operating_system));
   funk2_locale__init(&(this->locale));
@@ -377,6 +378,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_locale__destroy(&(this->locale));
   funk2_operating_system__destroy(&(this->operating_system));
   funk2_bytecode__destroy(&(this->bytecode));
+  funk2_defragmenter__destroy(&(this->defragmenter));
   funk2_garbage_collector__destroy(&(this->garbage_collector));
   funk2_memory__destroy(&(this->memory));  
   funk2_command_line__destroy(&(this->command_line));
@@ -399,14 +401,15 @@ void funk2__destroy(funk2_t* this) {
 }
 
 boolean_t funk2__handle(funk2_t* this) {
-  funk2_peer_command_server__handle_clients(&(this->peer_command_server));  
-  funk2_peer_command_server__flush_command_input_buffer(&(__funk2.peer_command_server), 1);
-  funk2_node_handler__handle_nodes(&(this->node_handler));
-  funk2_memory__handle(&(this->memory));
-  funk2_garbage_collector__handle(&(this->garbage_collector));
-  funk2_management_thread__handle_user_threads(&(this->management_thread));
-  funk2_cpu__handle(&(this->cpu));
-  funk2_surrogate_parent__handle(&(this->surrogate_parent));
+  funk2_peer_command_server__handle_clients(            &(this->peer_command_server));  
+  funk2_peer_command_server__flush_command_input_buffer(&(this->peer_command_server), 1);
+  funk2_node_handler__handle_nodes(                     &(this->node_handler));
+  funk2_memory__handle(                                 &(this->memory));
+  funk2_garbage_collector__handle(                      &(this->garbage_collector));
+  funk2_defragmenter__handle(                           &(this->defragmenter));
+  funk2_management_thread__handle_user_threads(         &(this->management_thread));
+  funk2_cpu__handle(                                    &(this->cpu));
+  funk2_surrogate_parent__handle(                       &(this->surrogate_parent));
   
   raw__fast_spin_sleep_yield();
   return boolean__false; // should return true if we did something.

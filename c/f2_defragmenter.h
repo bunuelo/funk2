@@ -22,6 +22,12 @@
 #ifndef F2__DEFRAGMENTER__H
 #define F2__DEFRAGMENTER__H
 
+typedef struct funk2_defragmenter_s {
+  boolean_t need_defragmentation;
+} funk2_defragmenter_t;
 
+void funk2_defragmenter__init   (funk2_defragmenter_t* this);
+void funk2_defragmenter__destroy(funk2_defragmenter_t* this);
+void funk2_defragmenter__handle (funk2_defragmenter_t* this);
 
 #endif // F2__DEFRAGMENTER__H

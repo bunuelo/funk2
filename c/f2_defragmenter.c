@@ -112,6 +112,3 @@ void f2__defragmenter__initialize() {
   
 }
 
-void f2__defragmenter__destroy() {
-}
-

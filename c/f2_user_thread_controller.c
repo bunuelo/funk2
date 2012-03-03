@@ -299,7 +299,8 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
 }
 
 void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_user_thread_controller__defragment__move_memory_t* this) {
-  status("funk2_user_thread_controller__defragment__move_memory__user_process: defragment moving memory.");
+  u64 pool_index = this_processor_thread__pool_index();
+  status("funk2_user_thread_controller__defragment__move_memory__user_process: defragment moving memory.  pool_index=" u64__fstr, pool_index);
   
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;
@@ -338,7 +339,8 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
 }
 
 void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
-  status("funk2_user_thread_controller__defragment__fix_pointers__user_process: defragment moving memory.");
+  u64 pool_index = this_processor_thread__pool_index();
+  status("funk2_user_thread_controller__defragment__fix_pointers__user_process: defragment moving memory.  pool_index=" u64__fstr, pool_index);
   
   funk2_processor_mutex__lock(&(this->done_mutex));
   this->done_count ++;

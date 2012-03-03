@@ -100,6 +100,7 @@ typedef struct funk2_user_thread_controller__defragment__move_memory_s {
   funk2_processor_mutex_t done_mutex;
   s64                     done_count;
   boolean_t               everyone_done;
+  funk2_processor_mutex_t user_process_already_waiting_mutex[memory_pool_num];
 } funk2_user_thread_controller__defragment__move_memory_t;
 
 void funk2_user_thread_controller__defragment__move_memory__init(funk2_user_thread_controller__defragment__move_memory_t* this);
@@ -114,6 +115,7 @@ typedef struct funk2_user_thread_controller__defragment__fix_pointers_s {
   funk2_processor_mutex_t done_mutex;
   s64                     done_count;
   boolean_t               everyone_done;
+  funk2_processor_mutex_t user_process_already_waiting_mutex[memory_pool_num];
 } funk2_user_thread_controller__defragment__fix_pointers_t;
 
 void funk2_user_thread_controller__defragment__fix_pointers__init(funk2_user_thread_controller__defragment__fix_pointers_t* this);
@@ -129,7 +131,6 @@ typedef struct funk2_user_thread_controller_s {
   boolean_t                                                                    please_wait;
   s64                                                                          waiting_count;
   funk2_processor_mutex_t                                                      waiting_count_mutex;
-  funk2_processor_mutex_t                                                      user_process_already_waiting_mutex[memory_pool_num];
   funk2_user_thread_controller__touch_all_protected_alloc_arrays_t             touch_all_protected_alloc_arrays;
   funk2_user_thread_controller__blacken_grey_nodes_t                           blacken_grey_nodes;
   funk2_user_thread_controller__grey_from_other_nodes_t                        grey_from_other_nodes;

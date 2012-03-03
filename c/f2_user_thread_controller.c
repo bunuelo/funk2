@@ -446,7 +446,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 void funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_controller_t* this) {
   if (this->please_wait) {
     u64 pool_index = this_processor_thread__pool_index();
-    if (funk2_processor_mutex__try_lock(&(this->user_process_already_waiting_mutex[pool_index])) == 0) {
+    if (funk2_processor_mutex__trylock(&(this->user_process_already_waiting_mutex[pool_index])) == 0) {
       funk2_user_thread_controller__user_wait_politely(this);
       funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
     } else {

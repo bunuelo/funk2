@@ -327,11 +327,11 @@ void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_u
       
       
       
+      this->user_process_done[pool_index] = boolean__true;
       funk2_processor_mutex__lock(&(this->done_mutex));
       this->done_count ++;
       funk2_processor_mutex__unlock(&(this->done_mutex));
     }
-    this->user_process_done[pool_index] = boolean__true;
     funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
     raw__spin_sleep_yield();
@@ -398,11 +398,11 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
       
       
       
+      this->user_process_done[pool_index] = boolean__true;
       funk2_processor_mutex__lock(&(this->done_mutex));
       this->done_count ++;
       funk2_processor_mutex__unlock(&(this->done_mutex));
     }
-    this->user_process_done[pool_index] = boolean__true;
     funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
     raw__spin_sleep_yield();

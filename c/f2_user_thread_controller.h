@@ -100,6 +100,7 @@ typedef struct funk2_user_thread_controller__defragment__move_memory_s {
   funk2_processor_mutex_t done_mutex;
   s64                     done_count;
   boolean_t               everyone_done;
+  boolean_t               user_process_done[memory_pool_num];
   funk2_processor_mutex_t user_process_already_waiting_mutex[memory_pool_num];
 } funk2_user_thread_controller__defragment__move_memory_t;
 
@@ -115,6 +116,7 @@ typedef struct funk2_user_thread_controller__defragment__fix_pointers_s {
   funk2_processor_mutex_t done_mutex;
   s64                     done_count;
   boolean_t               everyone_done;
+  boolean_t               user_process_done[memory_pool_num];
   funk2_processor_mutex_t user_process_already_waiting_mutex[memory_pool_num];
 } funk2_user_thread_controller__defragment__fix_pointers_t;
 

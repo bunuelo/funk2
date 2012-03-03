@@ -356,6 +356,13 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   this->waiting_count = 0;
   funk2_processor_mutex__init(&(this->waiting_count_mutex));
 
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      funk2_processor_mutex__init(&(this->user_process_already_waiting_mutex[index]));
+    }
+  }
+
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__blacken_grey_nodes__init(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
@@ -367,6 +374,13 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
 
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
   funk2_processor_mutex__destroy(&(this->waiting_count_mutex));
+  
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      funk2_processor_mutex__destroy(&(this->user_process_already_waiting_mutex[index]));
+    }
+  }
   
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__blacken_grey_nodes__destroy(&(this->blacken_grey_nodes));
@@ -431,7 +445,13 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 
 void funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_controller_t* this) {
   if (this->please_wait) {
-    funk2_user_thread_controller__user_wait_politely(this);
+    u64 pool_index = this_processor_thread__pool_index();
+    if (funk2_processor_mutex__try_lock(&(this->user_process_already_waiting_mutex[pool_index])) == 0) {
+      funk2_user_thread_controller__user_wait_politely(this);
+      funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
+    } else {
+      raw__spin_sleep_yield();
+    }
   }
 }
 

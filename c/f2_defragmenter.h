@@ -27,9 +27,11 @@ typedef struct funk2_defragmenter_s {
   boolean_t need_defragmentation;
 } funk2_defragmenter_t;
 
-void funk2_defragmenter__init   (funk2_defragmenter_t* this);
-void funk2_defragmenter__destroy(funk2_defragmenter_t* this);
-void funk2_defragmenter__handle (funk2_defragmenter_t* this);
+void funk2_defragmenter__init                     (funk2_defragmenter_t* this);
+void funk2_defragmenter__destroy                  (funk2_defragmenter_t* this);
+void funk2_defragmenter__memory_pool__move_memory (funk2_defragmenter_t* this, u64 pool_index);
+void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u64 pool_index);
+void funk2_defragmenter__handle                   (funk2_defragmenter_t* this);
 
 // **
 

@@ -30,10 +30,14 @@ void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
 }
 
 void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u64 pool_index) {
+  status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr, pool_index);
+  
   
 }
 
 void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u64 pool_index) {
+  status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr, pool_index);
+  
   
 }
 

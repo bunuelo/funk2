@@ -323,8 +323,6 @@ void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_u
   if (funk2_processor_mutex__trylock(&(this->user_process_already_waiting_mutex[pool_index])) == funk2_processor_mutex_trylock_result__success) {
     if ((! this->user_process_done[pool_index]) &&
 	(! this->everyone_done)) {
-      status("funk2_user_thread_controller__defragment__move_memory__user_process: defragment moving memory.  pool_index=" u64__fstr, pool_index);
-      
       funk2_defragmenter__memory_pool__move_memory(&(__funk2.defragmenter), pool_index);
       
       this->user_process_done[pool_index] = boolean__true;
@@ -394,8 +392,6 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
   if (funk2_processor_mutex__trylock(&(this->user_process_already_waiting_mutex[pool_index])) == funk2_processor_mutex_trylock_result__success) {
     if ((! this->user_process_done[pool_index]) &&
 	(! this->everyone_done)) {
-      status("funk2_user_thread_controller__defragment__fix_pointers__user_process: defragment fixing memory pointers.  pool_index=" u64__fstr, pool_index);
-      
       funk2_defragmenter__memory_pool__fix_pointers(&(__funk2.defragmenter), pool_index);
       
       this->user_process_done[pool_index] = boolean__true;

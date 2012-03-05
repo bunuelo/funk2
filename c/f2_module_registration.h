@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -36,6 +36,7 @@ void funk2_module_registration_node__destroy(funk2_module_registration_node_t* t
 
 typedef struct funk2_module_registration_s {
   funk2_module_registration_node_t* module_list;
+  funk2_module_registration_node_t* end_of_module_list;
 } funk2_module_registration_t;
 
 void funk2_module_registration__init(funk2_module_registration_t* this);

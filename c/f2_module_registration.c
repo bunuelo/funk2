@@ -49,7 +49,8 @@ void funk2_module_registration_node__reinitialize(funk2_module_registration_node
 // funk2_module_registration
 
 void funk2_module_registration__init(funk2_module_registration_t* this) {
-  this->module_list = NULL;
+  this->module_list        = NULL;
+  this->end_of_module_list = NULL;
 }
 
 void funk2_module_registration__destroy(funk2_module_registration_t* this) {
@@ -65,8 +66,13 @@ void funk2_module_registration__destroy(funk2_module_registration_t* this) {
 void funk2_module_registration__add_module(funk2_module_registration_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
   funk2_module_registration_node_t* new_node = (funk2_module_registration_node_t*)from_ptr(f2__malloc(sizeof(funk2_module_registration_node_t)));
   funk2_module_registration_node__init(new_node, name, description, reinitialize_function);
-  new_node->next = this->module_list;
-  this->module_list = new_node;
+  new_node->next = NULL;
+  if (this->end_of_module_list) {
+    this->end_of_module_list->next = new_node;
+  } else {
+    this->module_list = new_node;
+  }
+  this->end_of_module_list = new_node;
 }
 
 void funk2_module_registration__reinitialize_all_modules(funk2_module_registration_t* this) {

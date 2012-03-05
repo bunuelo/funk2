@@ -89,6 +89,7 @@ f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* th
       return (f2ptr)funk2_hash__lookup(new_old_memory_position_hash, (u64)exp);
     }
   }
+  status("funk2_defragmenter__memory_pool__lookup_new_f2ptr fatal error: could not find f2ptr in hash.  exp=" f2ptr__fstr, exp);
   error(nil, "funk2_defragmenter__memory_pool__lookup_new_f2ptr fatal error: could not find f2ptr in hash.");
 }
 

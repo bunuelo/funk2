@@ -180,7 +180,7 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
   funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
-  status("funk2_defragmenter__defragment ");
+  status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     

@@ -46,6 +46,9 @@ void f2__initialize() {
       f2__cause__reinitialize_globalvars();
       f2__primobject__ptypehash__reinitialize_globalvars(); 
       f2__primobject_frame__reinitialize_globalvars();
+      
+      f2__primobject_environment__reinitialize_globalvars();
+      f2__globalenv__reinitialize();
     }
     f2__primobjects__initialize();
     f2__cause__initialize();

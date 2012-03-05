@@ -166,7 +166,7 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
     funk2_memblock_t* iter = funk2_memorypool__beginning_of_blocks(memorypool);
     while (iter < end_of_blocks) {
       funk2_defragmenter__memory_pool__fix_pointers_in_memblock(this, iter);
-      iter = (funk2_memblock_t*)(((u8*)iter) + iter__byte_num);
+      iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
     }
   }
   

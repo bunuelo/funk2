@@ -226,7 +226,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
       
     }
     
-    f2__pre_reinitialize_global_vars();
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
   }
   

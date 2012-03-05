@@ -146,7 +146,6 @@
 #include "f2_xmlrpc.h"
 #include "f2_zlib.h"
 
-void f2__pre_reinitialize_global_vars();
 void f2__destroy();
 
 #define relative_ptr__to__raw_executable(x) from_ptr(x + __funk2.funk2_main_code_position)

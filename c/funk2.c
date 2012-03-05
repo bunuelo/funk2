@@ -23,13 +23,6 @@
 
 // funk2
 
-void f2__pre_reinitialize_global_vars() {
-  f2__primobjects__reinitialize_globalvars();
-  f2__cause__reinitialize_globalvars();
-  f2__primobject__ptypehash__reinitialize_globalvars(); 
-  f2__primobject_frame__reinitialize_globalvars();
-}
-
 void f2__initialize() {
   f2__module_registration__initialize();
   f2__redblacktree__initialize();
@@ -48,8 +41,12 @@ void f2__initialize() {
   // **   3. all packages besides global environment are "initialized" (including global environment prerequisite components, such as ptypehash, frame, and environment primobjects)
   // ** 
   {
-    f2__pre_reinitialize_global_vars();
-    
+    {
+      f2__primobjects__reinitialize_globalvars();
+      f2__cause__reinitialize_globalvars();
+      f2__primobject__ptypehash__reinitialize_globalvars(); 
+      f2__primobject_frame__reinitialize_globalvars();
+    }
     f2__primobject_environment__initialize();
     f2__globalenv__initialize();
     f2__primobject__ptypehash__initialize();

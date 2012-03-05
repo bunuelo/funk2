@@ -176,6 +176,8 @@ void f2__primobject_environment__reinitialize_globalvars() {
 }
 
 void f2__primobject_environment__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-environment", "", &f2__primobject_environment__reinitialize_globalvars);
+  
   f2__primobject_environment__reinitialize_globalvars();
   
   global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause(), nil),

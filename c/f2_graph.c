@@ -1501,8 +1501,6 @@ f2ptr f2graph_decomposition_lattice__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__graph__reinitialize_globalvars() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "graph", "", &f2__graph__reinitialize_globalvars);
-  
   f2ptr cause = initial_cause();
   
   __graph_node__symbol                       = new__symbol(cause, "graph_node");
@@ -1514,6 +1512,8 @@ void f2__graph__reinitialize_globalvars() {
 }
 
 void f2__graph__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "graph", "", &f2__graph__reinitialize_globalvars);
+  
   f2__graph__reinitialize_globalvars();
   f2ptr cause = initial_cause();
   

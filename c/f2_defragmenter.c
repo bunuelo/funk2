@@ -60,9 +60,10 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
       u64 iter__byte_num = funk2_memblock__byte_num(iter);
       {
 	if (iter->used) {
-	  funk2_hash__add(new_old_memory_position_hash, __ptr_to_f2ptr(pool_index, iter), __ptr_to_f2ptr(pool_index, new_iter));
+	  funk2_hash__add(new_old_memory_position_hash, __ptr_to_f2ptr(pool_index, to_ptr(iter)), __ptr_to_f2ptr(pool_index, to_ptr(new_iter)));
 	  memmove(new_iter, iter, iter__byte_num);
 	  funk2_memblock__previous_byte_num(new_iter) = previous_new_iter__byte_num;
+	  previous_new_iter__byte_num = iter__byte_num;
 	  new_iter = (funk2_memblock_t*)(((u8*)new_iter) + iter__byte_num);
 	} else {
 	  funk2_heap__remove(free_memory_heap, (funk2_heap_node_t*)iter);

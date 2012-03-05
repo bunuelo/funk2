@@ -22,9 +22,14 @@
 #ifndef F2__DEFRAGMENTER__H
 #define F2__DEFRAGMENTER__H
 
+#include "f2_heap.h"
+
+#define position_hash__bit_num heap_index__bit_num
+
 typedef struct funk2_defragmenter_s {
-  u64       total_defragmentation_count;
-  boolean_t need_defragmentation;
+  u64          total_defragmentation_count;
+  boolean_t    need_defragmentation;
+  funk2_hash_t new_old_memory_position_hash[memory_pool_num];
 } funk2_defragmenter_t;
 
 void funk2_defragmenter__init                     (funk2_defragmenter_t* this);

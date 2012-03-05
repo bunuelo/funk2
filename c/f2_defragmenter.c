@@ -32,13 +32,134 @@ void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
 void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u64 pool_index) {
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr, pool_index);
   
+  funk2_memorypool_t* memorypool       = __funk2.memory.pool[pool_index];
+  funk2_memblock_t*   end_of_blocks    = funk2_memorypool__end_of_blocks(memorypool);
+  funk2_heap_t*       free_memory_heap = &(memorypool->free_memory_heap);
   
+  funk2_hash_t* new_old_memory_position_hash = &(this->new_old_memory_position_hash[pool_index]);
+  funk2_hash__init(new_old_memory_position_hash, position_hash__bit_num);
+  
+  {
+    u64               previous_new_iter__byte_num = 0;
+    funk2_memblock_t* iter                        = funk2_memorypool__beginning_of_blocks(memorypool);
+    funk2_memblock_t* new_iter                    = funk2_memorypool__beginning_of_blocks(memorypool);
+    while (iter < end_of_blocks) {
+      u64 iter__byte_num = funk2_memblock__byte_num(iter);
+      {
+	if (iter->used) {
+	  funk2_hash__add(new_old_memory_position_hash, to_ptr(iter), to_ptr(new_iter));
+	  memmove(new_iter, iter, iter__byte_num);
+	  funk2_memblock__previous_byte_num(new_iter) = previous_new_iter__byte_num;
+	  new_iter = (funk2_memblock_t*)(((u8*)new_iter) + iter__byte_num);
+	} else {
+	  funk2_heap__remove(free_memory_heap, (funk2_heap_node_t*)iter);
+	}
+      }
+      iter = (funk2_memblock_t*)(((u8*)iter) + iter__byte_num);
+    }
+    u64 last_free_block__byte_num = (u64)(((u8*)end_of_blocks) - ((u8*)new_iter));
+    funk2_memblock__init(new_iter, last_free_block__byte_num, 0);
+    funk2_memblock__previous_byte_num(new_iter) = previous_new_iter__byte_num;
+    memorypool->last_block_byte_num = last_free_block__byte_num;
+    funk2_heap__insert(free_memory_heap, (funk2_heap_node_t*)new_iter);
+  }
+  
+  status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr " done.", pool_index);
+}
+
+
+f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* this, f2ptr exp) {
+  s64 pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    funk2_hash_t* new_old_memory_position_hash = &(this->new_old_memory_position_hash[pool_index]);
+    if (funk2_hash__contains(new_old_memory_position_hash, (u64)exp)) {
+      return (f2ptr)funk2_hash__lookup(new_old_memory_position_hash, (u64)exp);
+    }
+  }
+  error(nil, "funk2_defragmenter__memory_pool__lookup_new_f2ptr fatal error: could not find f2ptr in hash.");
+}
+
+void funk2_defragmenter__memory_pool__fix_pointers_in_dptr(funk2_defragmenter_t* this, funk2_dptr_t* dptr) {
+  if (dptr->p)                 {dptr->p                 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, dptr->p);}
+#if defined(F2__USE_TRACED_DPTRS)
+  if (dptr->tracing_on)        {dptr->tracing_on        = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, dptr->tracing_on);}
+  if (dptr->trace)             {dptr->trace             = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, dptr->trace);}
+  if (dptr->imagination_frame) {dptr->imagination_frame = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, dptr->imagination_frame);}
+  if (dptr->mutate_funks)      {dptr->mutate_funks      = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, dptr->mutate_funks);}
+  if (dptr->read_funks)        {dptr->read_funks        = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, dptr->read_funks);}
+#endif // F2__USE_TRACED_DPTRS
+}
+
+void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmenter_t* this, funk2_memblock_t* memblock) {
+  ptype_block_t* ptype_block = (ptype_block_t*)memblock;
+  {
+    f2ptr cause = ptype_block->cause;
+    if (cause) {
+      ptype_block->cause = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cause);
+    }
+  }
+  switch(ptype_block->block.ptype) {
+  case ptype_free_memory: error(nil, "block of type free_memory in defragmenter.");
+  case ptype_integer:          return;
+  case ptype_double:           return;
+  case ptype_float:            return;
+  case ptype_pointer:          return;
+  case ptype_scheduler_cmutex: return;
+  case ptype_cmutex:           return;
+  case ptype_char:             return;
+  case ptype_string:           return;
+  case ptype_symbol:           return;
+  case ptype_chunk:            return;
+  case ptype_simple_array: {
+    s64 i;
+    f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
+    for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
+      if (iter->data) {
+	iter->data = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, iter->data);
+      }
+      iter ++;
+    }
+  } return;
+  case ptype_traced_array: {
+    s64 i;
+    funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)ptype_block)->dptr_data;
+    for (i = ((ptype_traced_array_block_t*)ptype_block)->length; i > 0; i --) {
+      funk2_defragmenter__memory_pool__fix_pointers_in_dptr(this, iter);
+      iter ++;
+    }
+  } return;
+  case ptype_larva: {
+    f2ptr bug = ((ptype_larva_block_t*)ptype_block)->bug;
+    if (bug) {
+      ((ptype_larva_block_t*)ptype_block)->bug = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, bug);
+    }
+  } return;
+  default:
+    {
+      char str[1024];
+      sprintf(str, "unknown type (" s64__fstr ") of block in garbage collector.", (s64)(ptype_block->block.ptype));
+      error(nil, str);
+    }
+  }
 }
 
 void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u64 pool_index) {
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr, pool_index);
   
+  funk2_memorypool_t* memorypool    = __funk2.memory.pool[pool_index];
+  funk2_memblock_t*   end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
   
+  {
+    funk2_memblock_t* iter = funk2_memorypool__beginning_of_blocks(memorypool);
+    while (iter < end_of_blocks) {
+      funk2_defragmenter__memory_pool__fix_pointers_in_memblock(this, iter);
+      iter = (funk2_memblock_t*)(((u8*)iter) + iter__byte_num);
+    }
+  }
+  
+  funk2_hash__destroy(&(this->new_old_memory_position_hash[pool_index]), position_hash__bit_num);
+  
+  status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }
 
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {

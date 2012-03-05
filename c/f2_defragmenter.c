@@ -234,8 +234,9 @@ void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
   if (this->need_defragmentation) {
     status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
     
-    // stop system
+    // stop and reinitialize system (but don't restart)
     funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
+    funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
     //__funk2.user_thread_controller.please_wait = boolean__true;
     //funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     
@@ -265,8 +266,6 @@ void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
     this->need_defragmentation = boolean__false;
     this->total_defragmentation_count ++;
     
-    // restart system
-    funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
     funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
     //__funk2.user_thread_controller.please_wait = boolean__false;
     

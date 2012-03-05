@@ -159,7 +159,7 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
 void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u64 pool_index) {
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr, pool_index);
   
-  funk2_memorypool_t* memorypool    = __funk2.memory.pool[pool_index];
+  funk2_memorypool_t* memorypool    = &(__funk2.memory.pool[pool_index]);
   funk2_memblock_t*   end_of_blocks = funk2_memorypool__end_of_blocks(memorypool);
   
   {

@@ -44,7 +44,7 @@ void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
 void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u64 pool_index) {
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr, pool_index);
   
-  funk2_memorypool_t* memorypool       = __funk2.memory.pool[pool_index];
+  funk2_memorypool_t* memorypool       = &(__funk2.memory.pool[pool_index]);
   funk2_memblock_t*   end_of_blocks    = funk2_memorypool__end_of_blocks(memorypool);
   funk2_heap_t*       free_memory_heap = &(memorypool->free_memory_heap);
   

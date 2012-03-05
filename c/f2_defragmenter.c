@@ -195,7 +195,7 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
 	      ptype_block_t* block = (ptype_block_t*)iter;
 	      switch(block->block.ptype) {
 	      case ptype_symbol: {
-		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
+		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
 		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	      } break;
 	      default:

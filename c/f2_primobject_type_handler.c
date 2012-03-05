@@ -267,6 +267,8 @@ void f2__primobject_type_handler__initialize() {
   
   f2__primobject_type_handler__reinitialize_globalvars();
   
+  f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
+  
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"), nil);
   __funk2.primobject_type_handler.type_hash = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
   

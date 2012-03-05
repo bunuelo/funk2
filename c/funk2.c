@@ -47,16 +47,21 @@ void f2__initialize() {
       f2__primobject__ptypehash__reinitialize_globalvars(); 
       f2__primobject_frame__reinitialize_globalvars();
     }
-    f2__primobject_environment__initialize();
-    f2__globalenv__initialize();
+    f2__primobjects__initialize();
+    f2__cause__initialize();
     f2__primobject__ptypehash__initialize();
     f2__primobject_frame__initialize();
+    
+    f2__primobject_environment__initialize();
+    f2__globalenv__initialize();
+    //f2__primobject__ptypehash__initialize();
+    //f2__primobject_frame__initialize();
   }
   // ** 
   // **********************************************************************************************************************************************************************************
   
   f2__memory__initialize();
-  f2__primobjects__initialize();
+  //f2__primobjects__initialize();
   f2__primobject_tensor__initialize();
   f2__primobject_object__initialize();
   f2__primobject_object_type__initialize();
@@ -110,7 +115,7 @@ void f2__initialize() {
   f2__agent__initialize();
   f2__primobject_hash__initialize();
   f2__dlfcn__initialize();
-  f2__cause__initialize();
+  //f2__cause__initialize();
   f2__zlib__initialize();
   f2__cpu__initialize();
   f2__time__initialize();

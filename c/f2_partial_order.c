@@ -67,14 +67,14 @@ f2ptr f2partial_order_node__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__partial_order__reinitialize_globalvars() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "partial_order", "", &f2__partial_order__reinitialize_globalvars);
-  
   f2ptr cause = initial_cause();
   
   __partial_order_node__symbol = new__symbol(cause, "partial_order_node");
 }
 
 void f2__partial_order__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "partial_order", "", &f2__partial_order__reinitialize_globalvars);
+  
   f2__partial_order__reinitialize_globalvars();
   f2ptr cause = initial_cause();
   

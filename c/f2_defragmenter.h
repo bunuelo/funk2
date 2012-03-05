@@ -24,7 +24,7 @@
 
 #include "f2_heap.h"
 
-#define position_hash__bit_num heap_index__bit_num
+#define position_hash__bit_num (17ull)
 
 typedef struct funk2_defragmenter_s {
   u64          total_defragmentation_count;

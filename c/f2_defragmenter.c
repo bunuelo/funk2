@@ -181,6 +181,14 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
   funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
+
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__memory_mutex__lock(&(__funk2.memory.pool[pool_index]));
+    }
+  }
+  
   {
     boolean_t old_user_please_wait = __funk2.user_thread_controller.please_wait;
     // temporarily allow memory allocation to occur as we reinitialize funk core.
@@ -218,6 +226,14 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     // set user please_wait back to old value.
     __funk2.user_thread_controller.please_wait = old_user_please_wait;
   }
+
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_memorypool__memory_mutex__unlock(&(__funk2.memory.pool[pool_index]));
+    }
+  }
+  
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {

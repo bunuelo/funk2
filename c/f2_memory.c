@@ -516,6 +516,11 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
       return f2ptr__new(0, i, pool_block_address);
     }
   }
+  status("funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.  p=" ptr__fstr, p);
+  for (i = 0; i < memory_pool_num; i ++) {
+    status("funk2_memory__ptr_to_f2ptr__slow: this->pool[%d].dynamic_memory.ptr =" ptr__fstr, i, this->pool[i].dynamic_memory.ptr);
+    status("funk2_memory__ptr_to_f2ptr__slow: this->pool[%d].total_global_memory=" u64__fstr, i, (u64)this->pool[i].total_global_memory);
+  }
   error(nil, "funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.");
 }
 

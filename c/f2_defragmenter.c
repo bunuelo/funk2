@@ -55,7 +55,7 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
   {
     u64               previous_new_iter__byte_num = 0;
     funk2_memblock_t* iter                        = funk2_memorypool__beginning_of_blocks(memorypool);
-    funk2_memblock_t* new_iter                    = funk2_memorypool__beginning_of_blocks(memorypool);
+    funk2_memblock_t* new_iter                    = iter;
     while (iter < end_of_blocks) {
       u64 iter__byte_num = funk2_memblock__byte_num(iter);
       {
@@ -167,7 +167,9 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
   {
     funk2_memblock_t* iter = funk2_memorypool__beginning_of_blocks(memorypool);
     while (iter < end_of_blocks) {
-      funk2_defragmenter__memory_pool__fix_pointers_in_memblock(this, iter);
+      if (iter->used) {
+	funk2_defragmenter__memory_pool__fix_pointers_in_memblock(this, iter);
+      }
       iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
     }
   }

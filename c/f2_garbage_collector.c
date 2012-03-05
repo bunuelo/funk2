@@ -37,6 +37,8 @@ void funk2_garbage_collector__init(funk2_garbage_collector_t* this) {
   
   funk2_processor_mutex__init(&(this->total_garbage_collection_count__mutex));
   this->total_garbage_collection_count = 0;
+  
+  status("initializing garbage collector done.");
 }
 
 void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {

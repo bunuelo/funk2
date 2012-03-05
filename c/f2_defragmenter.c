@@ -180,16 +180,15 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
   funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
-  
+  status("funk2_defragmenter__defragment ");
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	// add all symbols to symbol_hash in ptypes.c	
 	{
-	  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(__funk2.memory.pool[pool_index].dynamic_memory.ptr));
+	  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
 	  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
 	  while(iter < end_of_blocks) {
 	    if (iter->used) {
@@ -198,20 +197,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
 	      case ptype_symbol: {
 		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-	      } break;
-	      case ptype_scheduler_cmutex: {
-		ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-		funk2_processor_mutex__init(scheduler_cmutex_block->m);
-		if (scheduler_cmutex_block->locked_state) {
-		  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
-		}
-	      } break;
-	      case ptype_cmutex: {
-		ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
-		funk2_processor_mutex__init(cmutex_block->m);
-		if (cmutex_block->locked_state) {
-		  funk2_processor_mutex__lock(cmutex_block->m);
-		}
 	      } break;
 	      default:
 		break;

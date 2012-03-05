@@ -178,59 +178,67 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
 }
 
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
-  funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
-  funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
-  status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
-
-  funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
   
   {
-    boolean_t old_user_please_wait = __funk2.user_thread_controller.please_wait;
-    // temporarily allow memory allocation to occur as we reinitialize funk core.
-    __funk2.user_thread_controller.please_wait = boolean__false;
-    {
-      funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
-      
-      {
-	s64 pool_index;
-	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	  {
-	    funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
-	    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
-	    while(iter < end_of_blocks) {
-	      if (iter->used) {
-		ptype_block_t* block = (ptype_block_t*)iter;
-		switch(block->block.ptype) {
-		case ptype_symbol: {
-		  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
-		  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-		} break;
-		default:
-		  break;
-		}
-	      }
-	      iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-	    }
-	    release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
-	  }
-	}
-	
-      }
-      funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_defragmenter__memory_pool__move_memory(this, pool_index);
     }
-    // set user please_wait back to old value.
-    __funk2.user_thread_controller.please_wait = old_user_please_wait;
   }
   
-  funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
-  funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_defragmenter__memory_pool__fix_pointers(this, pool_index);
+    }
+  }
+  
+  //funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
+  //funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
+  status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
+  
+  {
+    funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
+    
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	{
+	  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+	  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+	  while(iter < end_of_blocks) {
+	    if (iter->used) {
+	      ptype_block_t* block = (ptype_block_t*)iter;
+	      switch(block->block.ptype) {
+	      case ptype_symbol: {
+		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
+		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
+	      } break;
+	      default:
+		break;
+	      }
+	    }
+	    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+	  }
+	  release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+	}
+      }
+      
+    }
+    funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+  }
+  
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
   if (this->need_defragmentation) {
     status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
-    __funk2.user_thread_controller.please_wait = boolean__true;
-    funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
+    
+    // stop system
+    funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
+    //__funk2.user_thread_controller.please_wait = boolean__true;
+    //funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
+    
     status("");
     status("*******************************");
     status("**** DOING DEFRAGMENTATION ****");
@@ -256,7 +264,12 @@ void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
     }
     this->need_defragmentation = boolean__false;
     this->total_defragmentation_count ++;
-    __funk2.user_thread_controller.please_wait = boolean__false;
+    
+    // restart system
+    funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
+    funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
+    //__funk2.user_thread_controller.please_wait = boolean__false;
+    
   }
 }
 

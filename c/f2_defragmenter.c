@@ -182,33 +182,41 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
   {
-    funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
-    
+    boolean_t old_user_please_wait = __funk2.user_thread_controller.please_wait;
+    // temporarily allow memory allocation to occur as we reinitialize funk core.
+    __funk2.user_thread_controller.please_wait = boolean__false;
     {
-      s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	{
-	  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
-	  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
-	  while(iter < end_of_blocks) {
-	    if (iter->used) {
-	      ptype_block_t* block = (ptype_block_t*)iter;
-	      switch(block->block.ptype) {
-	      case ptype_symbol: {
-		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
-		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-	      } break;
-	      default:
-		break;
+      funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
+      
+      {
+	s64 pool_index;
+	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	  {
+	    funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+	    funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+	    while(iter < end_of_blocks) {
+	      if (iter->used) {
+		ptype_block_t* block = (ptype_block_t*)iter;
+		switch(block->block.ptype) {
+		case ptype_symbol: {
+		  f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
+		  funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
+		} break;
+		default:
+		  break;
+		}
 	      }
+	      iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
 	    }
-	    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+	    release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
 	  }
-	  release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
 	}
+	
       }
+      funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
     }
-    funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+    // set user please_wait back to old value.
+    __funk2.user_thread_controller.please_wait = old_user_please_wait;
   }
 }
 

@@ -62,6 +62,8 @@ void funk2_garbage_collector__init_sets_from_memory(funk2_garbage_collector_t* t
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_pool__init_sets_from_memorypool(&(this->gc_pool[pool_index]), &(memory->pool[pool_index]), pool_index);
   }
+  
+  status("initializing garbage collector from memory done.");
 }
 
 void funk2_garbage_collector__know_of_used_exp_mutation(funk2_garbage_collector_t* this, f2ptr exp) {

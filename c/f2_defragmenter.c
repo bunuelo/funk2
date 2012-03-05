@@ -24,9 +24,21 @@
 void funk2_defragmenter__init(funk2_defragmenter_t* this) {
   this->total_defragmentation_count = 0;
   this->need_defragmentation        = boolean__false;
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_hash__init(&(this->new_old_memory_position_hash[pool_index]), position_hash__bit_num);
+    }
+  }
 }
 
 void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      funk2_hash__destroy(&(this->new_old_memory_position_hash[pool_index]));
+    }
+  }
 }
 
 void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u64 pool_index) {
@@ -37,6 +49,7 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
   funk2_heap_t*       free_memory_heap = &(memorypool->free_memory_heap);
   
   funk2_hash_t* new_old_memory_position_hash = &(this->new_old_memory_position_hash[pool_index]);
+  funk2_hash__destroy(new_old_memory_position_hash);
   funk2_hash__init(new_old_memory_position_hash, position_hash__bit_num);
   
   {
@@ -156,8 +169,6 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
       iter = (funk2_memblock_t*)(((u8*)iter) + iter__byte_num);
     }
   }
-  
-  funk2_hash__destroy(&(this->new_old_memory_position_hash[pool_index]), position_hash__bit_num);
   
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }

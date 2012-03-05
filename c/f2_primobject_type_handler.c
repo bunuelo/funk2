@@ -34,7 +34,7 @@ void funk2_primobject_type_handler__reset_type_hash(funk2_primobject_type_handle
   funk2_processor_mutex__user_lock(&(this->type_hash_cmutex));
   f2ptr new_type_hash = raw__ptypehash__new(cause, 5);
   this->type_hash = new_type_hash;
-  environment__add_var_value(cause, global_environment(), new__symbol(cause, "type_hash"), new_type_hash);
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"), new_type_hash);
   funk2_processor_mutex__unlock(&(this->type_hash_cmutex));
 }
 
@@ -220,24 +220,6 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "physical_sim_object";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2physical_sim_object__primobject_type__new(cause));}
-  //{char* type_name = "g_object";                      funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                      f2g_object__primobject_type__new(cause));}
-  //{char* type_name = "gtk_widget";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2gtk_widget__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_box";                       funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                       f2gtk_box__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_label";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2gtk_label__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_scale";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2gtk_scale__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_entry";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2gtk_entry__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_text_buffer";               funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),               f2gtk_text_buffer__primobject_type__new_aux(cause));}
-  //{char* type_name = "gdk_pixbuf";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2gdk_pixbuf__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_text_iter";                 funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                 f2gtk_text_iter__primobject_type__new(cause));}
-  //{char* type_name = "gtk_callback";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2gtk_callback__primobject_type__new(cause));}
-  //{char* type_name = "gtk_text_mark";                 funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                 f2gtk_text_mark__primobject_type__new(cause));}
-  //{char* type_name = "gtk_text_range";                funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                f2gtk_text_range__primobject_type__new(cause));}
-  //{char* type_name = "gtk_progress_bar";              funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),              f2gtk_progress_bar__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_menu_bar";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2gtk_menu_bar__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_menu";                      funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                      f2gtk_menu__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_check_button";              funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),              f2gtk_check_button__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_file_chooser_dialog";       funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),       f2gtk_file_chooser_dialog__primobject_type__new_aux(cause));}
-  //{char* type_name = "gtk_image";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2gtk_image__primobject_type__new_aux(cause));}
   {char* type_name = "terminal_print_frame";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2terminal_print_frame__primobject_type__new_aux(cause));}
   {char* type_name = "knowledge";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2knowledge__primobject_type__new_aux(cause));}
   {char* type_name = "clause";                        funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                        f2clause__primobject_type__new_aux(cause));}
@@ -276,13 +258,17 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
 // **
 
 void f2__primobject_type_handler__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
+  f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
+  __funk2.primobject_type_handler.type_hash = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
 }
 
 void f2__primobject_type_handler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars);
   
   f2__primobject_type_handler__reinitialize_globalvars();
+  
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"), nil);
+  __funk2.primobject_type_handler.type_hash = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
   
   f2__primcfunk__init__2(add_type,    type_name, type);
   f2__primcfunk__init__1(lookup_type, type_name);

@@ -23,7 +23,7 @@
 
 void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   char* symbol_str;
-
+  
   symbol_str = "globalenv:f2_globalenv.c";              this->f2_globalenv_c__cause__symbol              = new__symbol(initial_cause(), symbol_str);
   
   f2ptr cause = f2_globalenv_c__cause__new(initial_cause());

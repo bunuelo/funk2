@@ -621,14 +621,29 @@ void f2__primobject__stream__reinitialize_globalvars() {
   __socket_stream__symbol      = new__symbol(cause, "socket_stream");
   __string_stream__symbol      = new__symbol(cause, "string_stream");
   __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
+
+
+  // stream
+  
+  {char* symbol_str = "try_read_byte"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_byte, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__funk = never_gc(cfunk);}
+  {char* symbol_str = "try_read_character"; __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__try_read_character, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk = never_gc(cfunk);}
+  {char* symbol_str = "rewind"; __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__rewind, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk = never_gc(cfunk);}
+  {char* symbol_str = "rewind_to_length"; __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(stream__rewind_to_length, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__funk = never_gc(cfunk);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(stream__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
 }
 
 void f2__primobject__stream__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-stream", "", &f2__primobject__stream__reinitialize_globalvars);
   
-  f2__primobject__stream__reinitialize_globalvars();
-  
   f2ptr cause = initial_cause();
+  
+  f2__primobject__stream__reinitialize_globalvars();
   
   // stream
   

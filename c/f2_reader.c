@@ -1405,7 +1405,7 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {char* str = "char:lowercase_e"; this->char__lowercase_e = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "char:lowercase_f"; this->char__lowercase_f = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "char:lowercase_g"; this->char__lowercase_g = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  --{char* str = "char:lowercase_h"; this->char__lowercase_h = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "char:lowercase_h"; this->char__lowercase_h = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "char:lowercase_i"; this->char__lowercase_i = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "char:lowercase_j"; this->char__lowercase_j = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "char:lowercase_k"; this->char__lowercase_k = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}

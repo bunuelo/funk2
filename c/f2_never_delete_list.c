@@ -90,6 +90,7 @@ s64 funk2_never_delete_list__load_from_buffer(funk2_never_delete_list_t* this, u
 }
 
 void funk2_never_delete_list__defragmenter__fix_pointers(funk2_never_delete_list_t* this, funk2_defragmenter_t* defragmenter) {
+  u64 used_num = this->used_num;
   u64 index;
   for (index = 0; index < used_num; index ++) {
     f2ptr exp = this->data[index];

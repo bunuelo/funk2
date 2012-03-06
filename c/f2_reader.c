@@ -1203,6 +1203,11 @@ def_pcfunk1(stream__try_read, stream,
 void funk2_reader__init(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
+}
+
+void funk2_reader__reinit(funk2_reader_t* this) {
+  f2ptr cause = f2_reader_c__cause__new(initial_cause());
+  
   {
     char* str = "reader:end_parens-exception";
     f2ptr symbol = new__symbol(cause, str);
@@ -1347,11 +1352,6 @@ void funk2_reader__init(funk2_reader_t* this) {
   {this->char__symbol_quote            = f2char__new(cause, '|');  char* str = "char:symbol_quote";            environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_quote);}
   {this->char__symbol_escape           = f2char__new(cause, '\\'); char* str = "char:symbol_escape";           environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_escape);}
   {this->char__symbol_key              = f2char__new(cause, ':');  char* str = "char:symbol_key";              environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_key);}
-  
-}
-
-void funk2_reader__reinit(funk2_reader_t* this) {
-  f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
   {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}

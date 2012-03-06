@@ -23,6 +23,7 @@
 #define F2__TRICOLOR_SET__H
 
 #include "f2_f2ptr_set.h"
+#include "f2_defragmenter.h"
 
 // tricolor
 

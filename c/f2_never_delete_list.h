@@ -22,6 +22,8 @@
 #ifndef F2__NEVER_DELETE_LIST__H
 #define F2__NEVER_DELETE_LIST__H
 
+#include "f2_defragmenter.h"
+
 typedef struct funk2_never_delete_list_s {
   u64    alloc_num;
   u64    used_num;

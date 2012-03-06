@@ -40,6 +40,7 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 #include "f2_tricolor_set.h"
 #include "f2_memorypool.h"
 #include "f2_protected_alloc_array.h"
+#include "f2_defragmenter.h"
 
 // garbage_collector_block_header
 

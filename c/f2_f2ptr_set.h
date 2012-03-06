@@ -33,6 +33,8 @@ typedef struct funk2_f2ptr_set_node_s funk2_f2ptr_set_node_t;
 #ifndef F2__F2PTR_SET__H
 #define F2__F2PTR_SET__H
 
+#include "f2_defragmenter.h"
+
 struct funk2_f2ptr_set_node_s {
   f2ptr_t                 element;
   funk2_f2ptr_set_node_t* next;

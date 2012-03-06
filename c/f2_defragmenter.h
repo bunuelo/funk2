@@ -30,6 +30,7 @@ typedef struct funk2_defragmenter_s funk2_defragmenter_t;
 #define F2__DEFRAGMENTER__H
 
 #include "f2_heap.h"
+#include "f2_hash.h"
 
 #define position_hash__bit_num (17ull)
 

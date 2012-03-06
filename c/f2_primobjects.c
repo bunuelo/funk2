@@ -1376,6 +1376,9 @@ void f2__primobjects__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
+}
+
+void f2__primobjects__post_reinitialize_globalvars() {
   // primobject
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.is_type__symbol = new__symbol(cause, symbol_str);}
@@ -1548,10 +1551,10 @@ void f2__primobjects__reinitialize_globalvars() {
   
 }
 
-
 void f2__primobjects__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
   
   f2__primobjects__reinitialize_globalvars();
+  f2__primobjects__post_reinitialize_globalvars();
 }
 

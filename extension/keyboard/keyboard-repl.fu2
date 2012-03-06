@@ -29,6 +29,7 @@
 				  [buffer_max_y                    0]
 				  [saving_x_column_during_movement nil]
 				  [saved_x_column                  0]
+				  [debug	                   nil]
 				  line_array]
   [new []
        [= line_array [new array 1]]

@@ -623,6 +623,15 @@ void f2__primobject__stream__reinitialize_globalvars() {
   __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
 
 
+}
+
+void f2__primobject__stream__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjectstream", "", &f2__primobject__stream__reinitialize_globalvars);
+  
+  f2__primobject__stream__reinitialize_globalvars();
+  
+  f2ptr cause = initial_cause();
+  
   // stream
   
   initialize_primobject_12_slot(stream, cmutex, stream_type, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, character_byte_index, line_number, column_number);
@@ -654,14 +663,5 @@ void f2__primobject__stream__reinitialize_globalvars() {
   f2__primcfunk__init__1(stream__getc,               this);
   f2__primcfunk__init__1(stream__rewind, this);
   f2__primcfunk__init__2(stream__rewind_to_length, this, length);
-}
-
-void f2__primobject__stream__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjectstream", "", &f2__primobject__stream__reinitialize_globalvars);
-  
-  f2__primobject__stream__reinitialize_globalvars();
-  
-  f2ptr cause = initial_cause();
-  
 }
 

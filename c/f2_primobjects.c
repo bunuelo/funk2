@@ -1368,8 +1368,15 @@ void f2__primobjects__reinitialize_globalvars() {
   __size_2d__symbol          = new__symbol(cause, "size_2d");
   __event__symbol            = new__symbol(cause, "event");
   __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");
+}
 
 
+void f2__primobjects__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
+  
+  f2__primobjects__reinitialize_globalvars();
+  f2ptr cause = initial_cause();
+  
   // primobject
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.is_type__symbol = new__symbol(cause, symbol_str);}
@@ -1539,15 +1546,6 @@ void f2__primobjects__reinitialize_globalvars() {
   // bytecode_event
   
   initialize_primobject_2_slot(bytecode_event, bytecode, context);
-  
-}
-
-
-void f2__primobjects__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
-  
-  f2__primobjects__reinitialize_globalvars();
-  f2ptr cause = initial_cause();
   
 }
 

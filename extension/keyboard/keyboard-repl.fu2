@@ -352,6 +352,8 @@
 
 [deftypefunk keyboard_editor execute press_f1 []
   [have this print_debug '<F1> pressed.  Entering debug mode.']
+  [sleep 1]
+  [have this print_debug '                                   ']
   [= debug t]]
 
 [deftypefunk keyboard_editor execute press_ctrl_c []

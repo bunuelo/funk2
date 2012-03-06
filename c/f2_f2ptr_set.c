@@ -225,9 +225,9 @@ void funk2_f2ptr_set__defragmenter__fix_pointers(funk2_f2ptr_set_t* this, funk2_
   funk2_f2ptr_set__init(this);
   {
     u64 i;
-    u64 bin_num = 1ull << temp_this->bin_power;
+    u64 bin_num = 1ull << temp_this.bin_power;
     for (i = 0; i < bin_num; i ++) {
-      funk2_f2ptr_set_node_t* iter = temp_this->bin[i];
+      funk2_f2ptr_set_node_t* iter = temp_this.bin[i];
       while (iter) {
 	f2ptr element = iter->element.data;
 	element = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, element);

@@ -220,17 +220,23 @@ s64 funk2_f2ptr_set__load_from_buffer(funk2_f2ptr_set_t* this, u8* buffer) {
 }
 
 void funk2_f2ptr_set__defragmenter__fix_pointers(funk2_f2ptr_set_t* this, funk2_defragmenter_t* defragmenter) {
-  u64 i;
-  u64 bin_num = 1ull << this->bin_power;
-  for (i = 0; i < bin_num; i ++) {
-    funk2_f2ptr_set_node_t* iter = this->bin[i];
-    while (iter) {
-      f2ptr element = iter->element.data;
-      element = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, element);
-      iter->element.data = element;
-      iter = iter->next;
+  funk2_f2ptr_set_t temp_this;
+  memcpy(&temp_this, this, sizeof(this));
+  funk2_f2ptr_set__init(this);
+  {
+    u64 i;
+    u64 bin_num = 1ull << this->bin_power;
+    for (i = 0; i < bin_num; i ++) {
+      funk2_f2ptr_set_node_t* iter = this->bin[i];
+      while (iter) {
+	f2ptr element = iter->element.data;
+	element = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, element);
+	funk2_f2ptr_set__add(this, element);
+	iter = iter->next;
+      }
     }
   }
+  funk2_f2ptr_set__destroy(&temp_this);
 }
 
 

@@ -190,7 +190,10 @@
 [deftypefunk keyboard_editor execute press_enter []
   [if [and [== cursor_y buffer_max_y]
 	   [== cursor_x [get [get this current_line] length]]]
-      [if [get this input]
+      [if [let [[input [get this input]]]
+	    [if debug
+		[have this print_debug 'input: ' input]]
+	    input]
 	  [= done t]]]
   [if [not done]
       [have this insert_enter_char]]]
@@ -347,7 +350,8 @@
   [keyboard_editor-press_and_insert_char_key this standard-terminal key]]
 
 [deftypefunk keyboard_editor execute press_f1 []
-  ]
+  [terminal_format standard-terminal '\nrepl: [F1] entering debug mode.']
+  [= debug t]]
 
 [deftypefunk keyboard_editor execute press_ctrl_c []
   [terminal_format standard-terminal '\nrepl: exiting funk2.']
@@ -384,6 +388,7 @@
 		    [[eq key `key:tab]              [have this press_tab]]
 		    [[eq key `key:backspace]        [have this press_backspace]]
 		    [[eq key `key:delete]           [have this press_delete]]
+		    [[eq key `key:ctrl_d]           [have this press_delete]]
 		    [[eq key `key:insert]           [have this press_insert]]
 		    [[eq key `key:escape]           [have this press_escape]]
 		    [[eq key `key:up]               [have this press_up]]

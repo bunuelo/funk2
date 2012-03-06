@@ -624,7 +624,7 @@ void f2__primobject__stream__reinitialize_globalvars() {
 }
 
 void f2__primobject__stream__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__stream", "", &f2__primobject__stream__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-stream", "", &f2__primobject__stream__reinitialize_globalvars);
   
   f2__primobject__stream__reinitialize_globalvars();
   

@@ -53,7 +53,7 @@ u64 funk2_f2ptr_set__element_count(funk2_f2ptr_set_t* this) {
 }
 
 void funk2_f2ptr_set__double_size(funk2_f2ptr_set_t* this) {
-  u64                old_bin_power = this->bin_power;
+  u64                      old_bin_power = this->bin_power;
   funk2_f2ptr_set_node_t** old_bin       = this->bin;
   this->bin_power ++;
   this->bin = (funk2_f2ptr_set_node_t**)from_ptr(f2__malloc(sizeof(funk2_f2ptr_set_node_t*) << (this->bin_power)));
@@ -119,10 +119,10 @@ void funk2_f2ptr_set__remove_and_add_to(funk2_f2ptr_set_t* this, f2ptr element, 
 }
 
 void* funk2_f2ptr_set__mapc(funk2_f2ptr_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data) {
-  u64                bin_num      = 1ull << this->bin_power;
+  u64                      bin_num      = 1ull << this->bin_power;
   funk2_f2ptr_set_node_t** bin          = this->bin;
-  boolean_t          stop         = boolean__false;
-  void*              return_value = NULL;
+  boolean_t                stop         = boolean__false;
+  void*                    return_value = NULL;
   u64 i;
   for (i = 0; i < bin_num; i ++) {
     funk2_f2ptr_set_node_t* iter = bin[i];
@@ -218,6 +218,23 @@ s64 funk2_f2ptr_set__load_from_buffer(funk2_f2ptr_set_t* this, u8* buffer) {
   }
   return (s64)(buffer_iter - buffer);
 }
+
+void funk2_f2ptr_set__defragmenter__fix_pointers(funk2_f2ptr_set_t* this, funk2_defragmenter_t* defragmenter) {
+  u64 i;
+  u64 bin_num = 1ull << this->bin_power;
+  for (i = 0; i < bin_num; i ++) {
+    funk2_f2ptr_set_node_t* iter = this->bin[i];
+    while (iter) {
+      f2ptr element = iter->element;
+      element = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, element);
+      iter->element = element;
+      iter = iter->next;
+    }
+  }
+}
+
+
+// tests
 
 void funk2_f2ptr_set__print(funk2_f2ptr_set_t* this) {
   printf("\n[f2ptr_set");

@@ -200,6 +200,8 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment);
   }
   
+  funk2_garbage_collector__defragmenter__fix_pointers(&(__funk2.garbage_collector), this);
+  
   //funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
   //funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");

@@ -135,3 +135,7 @@ s64 funk2_tricolor_set__load_from_buffer(funk2_tricolor_set_t* this, u8* buffer)
   return (s64)(buffer_iter - buffer);
 }
 
+void funk2_tricolor_set__defragmenter__fix_pointers(funk2_tricolor_set_t* this, funk2_defragmenter_t* defragmenter) {
+  funk2_f2ptr_set__defragmenter__fix_pointers(&(this->grey_set),  defragmenter);
+  funk2_f2ptr_set__defragmenter__fix_pointers(&(this->white_set), defragmenter);
+}

@@ -89,3 +89,12 @@ s64 funk2_never_delete_list__load_from_buffer(funk2_never_delete_list_t* this, u
   return (s64)(buffer_iter - buffer);
 }
 
+void funk2_never_delete_list__defragmenter__fix_pointers(funk2_never_delete_list_t* this, funk2_defragmenter_t* defragmenter) {
+  u64 index;
+  for (index = 0; index < used_num; index ++) {
+    f2ptr exp = this->data[index];
+    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    this->data[index] = exp;
+  }
+}
+

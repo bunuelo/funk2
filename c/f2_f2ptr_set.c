@@ -221,7 +221,7 @@ s64 funk2_f2ptr_set__load_from_buffer(funk2_f2ptr_set_t* this, u8* buffer) {
 
 void funk2_f2ptr_set__defragmenter__fix_pointers(funk2_f2ptr_set_t* this, funk2_defragmenter_t* defragmenter) {
   funk2_f2ptr_set_t temp_this;
-  memcpy(&temp_this, this, sizeof(this));
+  memcpy(&temp_this, this, sizeof(temp_this));
   funk2_f2ptr_set__init(this);
   {
     u64 i;

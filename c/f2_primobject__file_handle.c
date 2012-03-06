@@ -222,6 +222,9 @@ void f2__primobject__file_handle__reinitialize_globalvars() {
   
   // file_handle
   
+  initialize_primobject_1_slot(file_handle,
+			       file_descriptor);
+  
   {char* symbol_str = "close"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(file_handle__close, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk = never_gc(cfunk);}
   {char* symbol_str = "nonblocking-set"; __funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__symbol = new__symbol(cause, symbol_str);}
@@ -243,11 +246,6 @@ void f2__primobject__file_handle__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-file_handle", "", &f2__primobject__file_handle__reinitialize_globalvars);
   
   f2__primobject__file_handle__reinitialize_globalvars();
-  
-  // file_handle
-  
-  initialize_primobject_1_slot(file_handle,
-			       file_descriptor);
   
 }
 

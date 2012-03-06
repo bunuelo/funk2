@@ -1368,8 +1368,8 @@ void f2__primobjects__reinitialize_globalvars() {
   __size_2d__symbol          = new__symbol(cause, "size_2d");
   __event__symbol            = new__symbol(cause, "event");
   __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");
-  
-  
+
+
   // primobject
   
   {char* symbol_str = "is_type"; __funk2.globalenv.object_type.primobject.is_type__symbol = new__symbol(cause, symbol_str);}
@@ -1391,39 +1391,66 @@ void f2__primobjects__reinitialize_globalvars() {
   
   // compound_object 
   
+  initialize_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
   
   // place
   
+  initialize_primobject_1_slot(place, thing);
 
   // cons 
+  
+  initialize_primobject_2_slot(cons, car, cdr);
   
   {char* symbol_str = "length"; __funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__length, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cons__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__funk = never_gc(cfunk);}
-
   
   // doublelink
+  
+  initialize_primobject_3_slot(doublelink, prev, next, value);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_doublelink.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(doublelink__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_doublelink.terminal_print_with_frame__funk = never_gc(cfunk);}
   
-
   // imagination_link
   
+  initialize_primobject_5_slot(imagination_link, next, name, value, trace, imagination_frame);
   
   // cfunk
+  
+  initialize_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  
+  f2__primcfunk__init__3(cfunk__apply, x, y, z);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cfunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // metrocfunk
   
+  initialize_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  
+  f2__primcfunk__init__3(metrocfunk__apply, x, y, z);
+  
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(metrocfunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
   // funk
+  
+  initialize_primobject_10_slot(funk,
+				name,
+				body_bytecodes,
+				args,
+				demetropolized_body,
+				body,
+				env,
+				machine_code,
+				is_funktional,
+				has_no_side_effects,
+				documentation);
+  
+  f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk = never_gc(cfunk);}
@@ -1434,6 +1461,10 @@ void f2__primobjects__reinitialize_globalvars() {
   
   
   // metro
+  
+  initialize_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
+  
+  f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
   
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__name, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk = never_gc(cfunk);}
@@ -1481,11 +1512,15 @@ void f2__primobjects__reinitialize_globalvars() {
   
   // exception
   
+  initialize_primobject_2_slot(exception, tag, value);
+  
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_exception.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(exception__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_exception.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
   // bytecode
+  
+  initialize_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
   
   {char* symbol_str = "as-graphviz_label"; __funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bytecode__as__graphviz_label, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__funk = never_gc(cfunk);}
@@ -1494,13 +1529,16 @@ void f2__primobjects__reinitialize_globalvars() {
   
   
   // size_2d
-
+  
+  initialize_primobject_2_slot(size_2d, x, y);
   
   // event
-
+  
+  initialize_primobject_4_slot(event, node_id, event_id, event_type, data);
   
   // bytecode_event
-
+  
+  initialize_primobject_2_slot(bytecode_event, bytecode, context);
   
 }
 
@@ -1510,93 +1548,6 @@ void f2__primobjects__initialize() {
   
   f2__primobjects__reinitialize_globalvars();
   f2ptr cause = initial_cause();
-  
-  // primobject
-  
-  
-  // compound_object 
-  
-  initialize_primobject_3_slot(compound_object, compound_object_type, frame, part_frame);
-  
-  // place
-  
-  initialize_primobject_1_slot(place, thing);
-
-  // cons 
-  
-  initialize_primobject_2_slot(cons, car, cdr);
-  
-  
-  // doublelink
-  
-  initialize_primobject_3_slot(doublelink, prev, next, value);
-  
-  
-  // imagination_link
-  
-  initialize_primobject_5_slot(imagination_link, next, name, value, trace, imagination_frame);
-  
-  // cfunk
-  
-  initialize_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
-  
-  f2__primcfunk__init__3(cfunk__apply, x, y, z);
-  
-  
-  // metrocfunk
-  
-  initialize_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
-  
-  f2__primcfunk__init__3(metrocfunk__apply, x, y, z);
-  
-  
-  // funk
-  
-  initialize_primobject_10_slot(funk,
-				name,
-				body_bytecodes,
-				args,
-				demetropolized_body,
-				body,
-				env,
-				machine_code,
-				is_funktional,
-				has_no_side_effects,
-				documentation);
-  
-  f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
-  
-  
-  // metro
-  
-  initialize_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
-  
-  f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
-  
-  
-  // exception
-  
-  initialize_primobject_2_slot(exception, tag, value);
-  
-  
-  // bytecode
-  
-  initialize_primobject_4_slot(bytecode, command, arg0, arg1, arg2);
-  
-  
-  // size_2d
-  
-  initialize_primobject_2_slot(size_2d, x, y);
-  
-  
-  // event
-  
-  initialize_primobject_4_slot(event, node_id, event_id, event_type, data);
-  
-  
-  // bytecode_event
-  
-  initialize_primobject_2_slot(bytecode_event, bytecode, context);
   
 }
 

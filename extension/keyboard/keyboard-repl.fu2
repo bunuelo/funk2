@@ -186,7 +186,10 @@
   [let [[stringlist nil]]
     [dotimes [i [get this line_num]]
       [= stringlist [cons [get this line [- buffer_max_y i]] stringlist]]]
-    [have [format nil '[' [stringlist-intersperse stringlist '\n'] ']'] read]]]
+    [let [[total_input_string [format nil '[' [stringlist-intersperse stringlist '\n'] ']']]]
+      [if debug
+	  [have this print_debug 'total_input_string: "' total_input_string '"']]
+      [have total_input_string read]]]]
 
 [deftypefunk keyboard_editor execute press_enter []
   [if [and [== cursor_y buffer_max_y]

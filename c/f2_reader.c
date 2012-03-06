@@ -1201,7 +1201,6 @@ def_pcfunk1(stream__try_read, stream,
 
 
 void funk2_reader__init(funk2_reader_t* this) {
-  f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
 }
 

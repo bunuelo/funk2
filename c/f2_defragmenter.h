@@ -19,6 +19,13 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__DEFRAGMENTER__TYPES__H
+#define F2__DEFRAGMENTER__TYPES__H
+
+typedef struct funk2_defragmenter_s funk2_defragmenter_t;
+
+#endif // F2__DEFRAGMENTER__TYPES__H
+
 #ifndef F2__DEFRAGMENTER__H
 #define F2__DEFRAGMENTER__H
 
@@ -26,11 +33,11 @@
 
 #define position_hash__bit_num (17ull)
 
-typedef struct funk2_defragmenter_s {
+struct funk2_defragmenter_s {
   u64          total_defragmentation_count;
   boolean_t    need_defragmentation;
   funk2_hash_t new_old_memory_position_hash[memory_pool_num];
-} funk2_defragmenter_t;
+};
 
 void  funk2_defragmenter__init                         (funk2_defragmenter_t* this);
 void  funk2_defragmenter__destroy                      (funk2_defragmenter_t* this);

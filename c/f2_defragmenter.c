@@ -83,6 +83,9 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
 
 
 f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* this, f2ptr exp) {
+  if (exp == nil) {
+    return nil;
+  }
   s64 pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_hash_t* new_old_memory_position_hash = &(this->new_old_memory_position_hash[pool_index]);

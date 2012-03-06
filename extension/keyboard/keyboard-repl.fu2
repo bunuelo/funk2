@@ -351,7 +351,7 @@
   [keyboard_editor-press_and_insert_char_key this standard-terminal key]]
 
 [deftypefunk keyboard_editor execute press_f1 []
-  [terminal_format standard-terminal '\nrepl: [F1] entering debug mode.']
+  [have this print_debug '<F1> pressed.  Entering debug mode.']
   [= debug t]]
 
 [deftypefunk keyboard_editor execute press_ctrl_c []

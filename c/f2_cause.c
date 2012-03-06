@@ -478,14 +478,15 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__cause__reinitialize_globalvars() {
+void f2__cause__pre_reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   __cause__symbol = new__symbol(cause, "cause");
 }
 
-void f2__cause__initialize() {
-  f2__cause__reinitialize_globalvars();
-  funk2_module_registration__add_module(&(__funk2.module_registration), "cause", "", &f2__cause__reinitialize_globalvars);
+
+void f2__cause__reinitialize_globalvars() {
+  f2__cause__pre_reinitialize_globalvars();
+
   f2ptr cause = initial_cause();
   
   //--
@@ -530,5 +531,11 @@ void f2__cause__initialize() {
   
   f2__primcfunk__init__0(cause);
   
+}
+
+
+void f2__cause__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "cause", "", &f2__cause__reinitialize_globalvars);
+  f2__cause__reinitialize_globalvars();
 }
 

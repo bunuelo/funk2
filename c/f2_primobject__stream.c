@@ -613,7 +613,7 @@ f2ptr f2stream__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__stream__reinitialize_globalvars() {
+void f2__primobject__stream__pre_reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   __stream__symbol             = new__symbol(cause, "stream");
@@ -625,10 +625,8 @@ void f2__primobject__stream__reinitialize_globalvars() {
 
 }
 
-void f2__primobject__stream__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjectstream", "", &f2__primobject__stream__reinitialize_globalvars);
-  
-  f2__primobject__stream__reinitialize_globalvars();
+void f2__primobject__stream__reinitialize_globalvars() {
+  f2__primobject__stream__pre_reinitialize_globalvars();
   
   f2ptr cause = initial_cause();
   
@@ -663,5 +661,13 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init__1(stream__getc,               this);
   f2__primcfunk__init__1(stream__rewind, this);
   f2__primcfunk__init__2(stream__rewind_to_length, this, length);
+}
+
+
+void f2__primobject__stream__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjectstream", "", &f2__primobject__stream__reinitialize_globalvars);
+  
+  f2__primobject__stream__reinitialize_globalvars();
+  
 }
 

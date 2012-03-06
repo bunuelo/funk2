@@ -1349,7 +1349,7 @@ def_pcfunk2(bytecode_event__new, bytecode, context,
 
 // **
 
-void f2__primobjects__reinitialize_globalvars() {
+void f2__primobjects__pre_reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   __compound_object__symbol  = new__symbol(cause, "compound_object");
@@ -1371,10 +1371,9 @@ void f2__primobjects__reinitialize_globalvars() {
 }
 
 
-void f2__primobjects__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
+void f2__primobjects__reinitialize_globalvars() {
+  f2__primobjects__pre_reinitialize_globalvars();
   
-  f2__primobjects__reinitialize_globalvars();
   f2ptr cause = initial_cause();
   
   // primobject
@@ -1547,5 +1546,12 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_2_slot(bytecode_event, bytecode, context);
   
+}
+
+
+void f2__primobjects__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars);
+  
+  f2__primobjects__reinitialize_globalvars();
 }
 

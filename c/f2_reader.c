@@ -1201,10 +1201,6 @@ def_pcfunk1(stream__try_read, stream,
 
 
 void funk2_reader__init(funk2_reader_t* this) {
-  
-}
-
-void funk2_reader__reinit(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
   {
@@ -1352,6 +1348,11 @@ void funk2_reader__reinit(funk2_reader_t* this) {
   {this->char__symbol_escape           = f2char__new(cause, '\\'); char* str = "char:symbol_escape";           environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_escape);}
   {this->char__symbol_key              = f2char__new(cause, ':');  char* str = "char:symbol_key";              environment__add_var_value(cause, global_environment(), new__symbol(cause, str), this->char__symbol_key);}
   
+}
+
+void funk2_reader__reinit(funk2_reader_t* this) {
+  f2ptr cause = f2_reader_c__cause__new(initial_cause());
+  
   {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
@@ -1482,15 +1483,16 @@ void funk2_reader__destroy(funk2_reader_t* this) {
 
 // **
 
-void f2__reader__pre_reinitialize_globalvars() {
-  funk2_reader__init(&(__funk2.reader));
+void f2__reader__reinitialize_globalvars() {
+  funk2_reader__reinit(&(__funk2.reader));
 }
 
-
-void f2__reader__reinitialize_globalvars() {
-  f2__reader__pre_reinitialize_globalvars();
+void f2__reader__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars);
   
-  funk2_reader__reinit(&(__funk2.reader));
+  funk2_reader__init(&(__funk2.reader));
+  
+  f2__reader__reinitialize_globalvars();
   
   f2__primcfunk__init__1(exp__contains_comma,                   this);
   f2__primcfunk__init__1(exp__contains_cdr_comma,               this);
@@ -1498,12 +1500,5 @@ void f2__reader__reinitialize_globalvars() {
   f2__primcfunk__init__1(exp__comma_filter_backquoted,          this);
   f2__primcfunk__init__1(stream__skip_whitespace,               stream);
   f2__primcfunk__init__1(stream__try_read,                      stream);
-}
-
-
-void f2__reader__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars);
-  
-  f2__reader__reinitialize_globalvars();
 }
 

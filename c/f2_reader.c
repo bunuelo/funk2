@@ -1481,6 +1481,123 @@ void funk2_reader__reinit(funk2_reader_t* this) {
 void funk2_reader__destroy(funk2_reader_t* this) {
 }
 
+void funk2_reader__defragment__fix_pointers(funk2_reader_t* this, funk2_defragmenter_t* defragmenter) {
+  this->end_parens_exception                    = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->end_parens_exception);
+  this->end_parens_exception__symbol            = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->end_parens_exception__symbol);
+  this->unmatched_begin_paren_exception         = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->unmatched_begin_paren_exception);
+  this->array_end_parens_exception              = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->array_end_parens_exception);
+  this->array_end_parens_exception__symbol      = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->array_end_parens_exception__symbol);
+  this->doublelink_end_parens_exception         = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->doublelink_end_parens_exception);
+  this->doublelink_end_parens_exception__symbol = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->doublelink_end_parens_exception__symbol);
+  this->end_of_file_exception                   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->end_of_file_exception);
+  this->end_of_file_exception__symbol           = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->end_of_file_exception__symbol);
+  this->invalid_argument_type_exception         = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->invalid_argument_type_exception);
+  this->illegal_escape_reader_metro_exception   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->illegal_escape_reader_metro_exception);
+  this->could_not_read_type_exception           = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->could_not_read_type_exception);
+  this->could_not_read_type_exception__symbol   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->could_not_read_type_exception__symbol);
+  this->no_character_waiting_exception          = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->no_character_waiting_exception);
+  this->no_character_waiting_exception__symbol  = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->no_character_waiting_exception__symbol);
+  
+  this->char__decimal_point = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__decimal_point);
+  this->char__minus_sign    = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__minus_sign);
+  
+  this->char__space     = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__space);
+  this->char__tab       = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__tab);
+  this->char__newline   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__newline);
+  this->char__return    = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__return);
+  this->char__backspace = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__backspace);
+  
+  this->char__0 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__0);
+  this->char__1 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__1);
+  this->char__2 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__2);
+  this->char__3 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__3);
+  this->char__4 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__4);
+  this->char__5 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__5);
+  this->char__6 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__6);
+  this->char__7 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__7);
+  this->char__8 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__8);
+  this->char__9 = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__9);
+
+  this->char__lowercase_a = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_a);
+  this->char__lowercase_b = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_b);
+  this->char__lowercase_c = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_c);
+  this->char__lowercase_d = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_d);
+  this->char__lowercase_e = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_e);
+  this->char__lowercase_f = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_f);
+  this->char__lowercase_g = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_g);
+  this->char__lowercase_h = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_h);
+  this->char__lowercase_i = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_i);
+  this->char__lowercase_j = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_j);
+  this->char__lowercase_k = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_k);
+  this->char__lowercase_l = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_l);
+  this->char__lowercase_m = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_m);
+  this->char__lowercase_n = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_n);
+  this->char__lowercase_o = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_o);
+  this->char__lowercase_p = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_p);
+  this->char__lowercase_q = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_q);
+  this->char__lowercase_r = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_r);
+  this->char__lowercase_s = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_s);
+  this->char__lowercase_t = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_t);
+  this->char__lowercase_u = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_u);
+  this->char__lowercase_v = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_v);
+  this->char__lowercase_w = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_w);
+  this->char__lowercase_x = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_x);
+  this->char__lowercase_y = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_y);
+  this->char__lowercase_z = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__lowercase_z);
+  
+  this->char__uppercase_a = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_a);
+  this->char__uppercase_b = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_b);
+  this->char__uppercase_c = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_c);
+  this->char__uppercase_d = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_d);
+  this->char__uppercase_e = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_e);
+  this->char__uppercase_f = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_f);
+  this->char__uppercase_g = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_g);
+  this->char__uppercase_h = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_h);
+  this->char__uppercase_i = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_i);
+  this->char__uppercase_j = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_j);
+  this->char__uppercase_k = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_k);
+  this->char__uppercase_l = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_l);
+  this->char__uppercase_m = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_m);
+  this->char__uppercase_n = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_n);
+  this->char__uppercase_o = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_o);
+  this->char__uppercase_p = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_p);
+  this->char__uppercase_q = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_q);
+  this->char__uppercase_r = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_r);
+  this->char__uppercase_s = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_s);
+  this->char__uppercase_t = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_t);
+  this->char__uppercase_u = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_u);
+  this->char__uppercase_v = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_v);
+  this->char__uppercase_w = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_w);
+  this->char__uppercase_x = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_x);
+  this->char__uppercase_y = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_y);
+  this->char__uppercase_z = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__uppercase_z);
+
+  this->char__left_paren              = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__left_paren);
+  this->char__right_paren             = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__right_paren);
+  this->char__array_left_paren        = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__array_left_paren);
+  this->char__array_right_paren       = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__array_right_paren);
+  this->char__doublelink_right_paren  = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__doublelink_right_paren);
+  this->char__doublelink_left_paren   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__doublelink_left_paren);
+  this->char__quote                   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__quote);
+  this->char__backquote               = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__backquote);
+  this->char__comma                   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__comma);
+  this->char__cdr_comma               = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__cdr_comma);
+  this->char__funktion                = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__funktion);
+  this->char__escape                  = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__escape);
+  this->char__escape_hex              = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__escape_hex);
+  this->char__escape_hex_char         = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__escape_hex_char);
+  this->char__escape_char             = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__escape_char);
+  this->char__escape_larva            = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__escape_larva);
+  this->char__string_quote            = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__string_quote);
+  this->char__string_escape_newline   = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__string_escape_newline);
+  this->char__string_escape_return    = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__string_escape_return);
+  this->char__string_escape_tab       = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__string_escape_tab);
+  this->char__string_escape_backspace = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__string_escape_backspace);
+  this->char__symbol_quote            = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__symbol_quote);
+  this->char__symbol_escape           = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__symbol_escape);
+  this->char__symbol_key              = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, this->char__symbol_key);
+}
+
 // **
 
 void f2__reader__reinitialize_globalvars() {

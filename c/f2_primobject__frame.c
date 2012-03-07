@@ -995,7 +995,10 @@ void f2__primobject_frame__pre_reinitialize_globalvars() {
 
 void f2__primobject_frame__reinitialize_globalvars() {
   f2__primobject_frame__pre_reinitialize_globalvars();
+}
 
+
+void f2__primobject_frame__post_reinitialize_globalvars() {
   f2__primcfunk__init(frame__add_var_value);
   f2__primcfunk__init(frame__lookup_var_value);
   f2__primcfunk__init(frame__var_value__set);
@@ -1055,9 +1058,9 @@ void f2__primobject_frame__reinitialize_globalvars() {
   
 }
 
-
 void f2__primobject_frame__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-frame", "", &f2__primobject_frame__reinitialize_globalvars);
   f2__primobject_frame__reinitialize_globalvars();
-  
+  f2__primobject_frame__post_reinitialize_globalvars();
 }
 

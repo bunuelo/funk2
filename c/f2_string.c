@@ -843,9 +843,9 @@ void f2__string__reinitialize_globalvars() {
 }
 
 void f2__string__initialize() {
-  f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "string", "", &f2__string__reinitialize_globalvars);
+  
+  f2ptr cause = initial_cause();
   
   f2__string__reinitialize_globalvars();
   

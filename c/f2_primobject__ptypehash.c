@@ -437,15 +437,15 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__ptypehash__pre_reinitialize_globalvars() {
+void f2__primobject__ptypehash__reinitialize_globalvars() {
   __ptypehash__symbol = new__symbol(initial_cause(), "ptypehash");
 }
 
-void f2__primobject__ptypehash__reinitialize_globalvars() {
-  f2__primobject__ptypehash__pre_reinitialize_globalvars();
-}
-
-void f2__primobject__ptypehash__post_reinitialize_globalvars() {
+void f2__primobject__ptypehash__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-ptypehash", "", &f2__primobject__ptypehash__reinitialize_globalvars);
+  
+  f2__primobject__ptypehash__reinitialize_globalvars();
+  
   environment__add_var_value(initial_cause(), global_environment(), __ptypehash__symbol, nil);
   
   f2ptr cause = initial_cause();
@@ -488,11 +488,6 @@ void f2__primobject__ptypehash__post_reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptypehash__as__frame, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__funk = never_gc(cfunk);}
-}
-
-void f2__primobject__ptypehash__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-ptypehash", "", &f2__primobject__ptypehash__reinitialize_globalvars);
-  f2__primobject__ptypehash__reinitialize_globalvars();
-  f2__primobject__ptypehash__post_reinitialize_globalvars();
+  
 }
 

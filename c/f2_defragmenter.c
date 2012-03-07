@@ -204,6 +204,7 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   }
   
   funk2_garbage_collector__defragmenter__fix_pointers(&(__funk2.garbage_collector), this);
+  funk2_reader__defragment__fix_pointers(&(__funk2.reader), this);
   
   //funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
   //funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
@@ -240,8 +241,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     
     funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
   }
-  
-  funk2_reader__defragment__fix_pointers(&(__funk2.reader), this);
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {

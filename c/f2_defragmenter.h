@@ -47,6 +47,11 @@ f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* th
 void  funk2_defragmenter__memory_pool__fix_pointers    (funk2_defragmenter_t* this, u64 pool_index);
 void  funk2_defragmenter__handle                       (funk2_defragmenter_t* this);
 
+#define defragmenter__fix_pointer(fix_variable) {			\
+    (fix_variable) = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), fix_variable); \
+  }
+
+
 // **
 
 void f2__defragmenter__reinitialize_globalvars();

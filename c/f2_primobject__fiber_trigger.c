@@ -183,6 +183,43 @@ void f2__primobject__fiber_trigger__reinitialize_globalvars() {
   __fiber_trigger__symbol = new__symbol(initial_cause(), "fiber_trigger");
 }
 
+void f2__primobject__fiber_trigger__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__fiber_trigger__symbol);
+  
+  
+  // -- initialize --
+  
+  // fiber_trigger
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(fiber_trigger, cmutex, waiting_fiber_set);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__trigger);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__add_waiting_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__add_waiting_fiber_and_remove_from_scheduler);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.add_waiting_fiber_and_remove_from_scheduler__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk);
+}
+
 void f2__primobject__fiber_trigger__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars);
   

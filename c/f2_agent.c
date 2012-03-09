@@ -41,11 +41,14 @@ void f2__agent__reinitialize_globalvars() {
 }
 
 void f2__agent__defragmenter__fix_pointers() {
-  defragmenter__fix_pointer(__agent__symbol);
-  
+  // -- initialize --
   
   // agent
   initialize_primobject_1_slot__defragmenter__fix_pointers(agent, fiber);
+
+
+  // -- reinitialize --
+  defragmenter__fix_pointer(__agent__symbol);
 }
 
 void f2__agent__initialize() {

@@ -300,10 +300,31 @@ def_pcfunk3(graphviz__labelled_edge, label, left_node, right_node,
 void f2__graphviz__reinitialize_globalvars() {
 }
 
+void f2__graphviz__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__digraph);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__node_color);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__edge_color);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__node);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__box_node);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__edge_tail_head);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__edge);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__exp__as__label);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__exp__as__name);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__edge_name);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__raw_labelled_edge);
+  f2__primcfunk__init__defragment__fix_pointers(graphviz__labelled_edge);
+  
+  
+}
+
 void f2__graphviz__initialize() {
   //f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "graphviz", "", &f2__graphviz__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "graphviz", "", &f2__graphviz__reinitialize_globalvars, &f2__graphviz__defragment__fix_pointers);
   
   f2__graphviz__reinitialize_globalvars();
   

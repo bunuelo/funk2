@@ -103,8 +103,20 @@ void f2__primobject_object__reinitialize_globalvars() {
   __object__symbol = new__symbol(initial_cause(), "object");
 }
 
+void f2__primobject_object__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__object__symbol);
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__new);
+  
+}
+
 void f2__primobject_object__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_object", "", &f2__primobject_object__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_object", "", &f2__primobject_object__reinitialize_globalvars, &f2__primobject_object__defragment__fix_pointers);
   
   f2__primobject_object__reinitialize_globalvars();
   

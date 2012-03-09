@@ -1553,11 +1553,11 @@ void f2__primobjects__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(metro__body__set, this, cfunk);
+  f2__primcfunk__init__defragment__fix_pointers(metro__body__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(metro__env, this, cfunk);
+  f2__primcfunk__init__defragment__fix_pointers(metro__env);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__symbol);

@@ -200,7 +200,7 @@ void f2__primobject_environment__defragment__fix_pointers() {
   initialize_primobject_3_slot__defragment__fix_pointers(environment, frame, parent_env, desc);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(environment__new, frame, parent_env, desc, cfunk);
+  f2__primcfunk__init__defragment__fix_pointers(environment__new);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__symbol);

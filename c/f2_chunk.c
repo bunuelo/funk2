@@ -133,10 +133,25 @@ f2ptr f2chunk__primobject_type__new_aux(f2ptr cause) {
 void f2__chunk__reinitialize_globalvars() {
 }
 
+void f2__chunk__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  
+  // -- initialize --
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.save__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__save);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.save__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(chunk__load);
+  
+}
+
 void f2__chunk__initialize() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "chunk", "", &f2__chunk__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "chunk", "", &f2__chunk__reinitialize_globalvars, &f2__chunk__defragment__fix_pointers);
   
   f2__chunk__reinitialize_globalvars();
   

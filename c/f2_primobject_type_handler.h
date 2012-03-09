@@ -35,7 +35,6 @@
 #include "f2_primobject__circular_buffer.h"
 #include "f2_primobject__traced_cmutex.h"
 #include "f2_bug.h"
-#include "f2_agent.h"
 #include "f2_primobject__hash.h"
 #include "f2_cause.h"
 #include "f2_primobject__largeinteger.h"
@@ -48,7 +47,6 @@
 #include "f2_processor.h"
 #include "f2_scheduler.h"
 #include "f2_terminal_print.h"
-#include "f2_knowledge.h"
 #include "f2_natural_language.h"
 #include "f2_partial_order.h"
 #include "f2_dlfcn.h"
@@ -122,7 +120,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__list__slot_t                             primobject_type_list;
   funk2_object_type__doublelinklist__slot_t                   primobject_type_doublelinklist;
   funk2_object_type__circular_buffer__slot_t                  primobject_type_circular_buffer;
-  funk2_object_type__agent__slot_t                            primobject_type_agent;
   funk2_object_type__hash__slot_t                             primobject_type_hash;
   funk2_object_type__cause__slot_t                            primobject_type_cause;
   funk2_object_type__largeinteger__slot_t                     primobject_type_largeinteger;
@@ -153,7 +150,6 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__matrix__slot_t                           primobject_type_matrix;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
-  funk2_object_type__knowledge__slot_t                        primobject_type_knowledge;
   funk2_object_type__clause__slot_t                           primobject_type_clause;
   funk2_object_type__wh_rank_shift_clause__slot_t             primobject_type_wh_rank_shift_clause;
   funk2_object_type__noun_group__slot_t                       primobject_type_noun_group;

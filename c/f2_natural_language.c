@@ -1188,31 +1188,31 @@ void f2__natural_langauge__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__insert_after, this, node);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__insert_after);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__insert_below_no_children, this, node);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__insert_below_no_children);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__add_child, this, node);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__add_child);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__child_of_type_node, this, type);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__child_of_type_node);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_node, this, type);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_node);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_with_true_property_node, this, type, property);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_with_true_property_node);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_with_true_property__set, this, type, property, value);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_with_true_property__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__funk);
   
   
@@ -1225,7 +1225,7 @@ void f2__natural_langauge__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(parse_tree__new_copy, this);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree__new_copy);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__funk);
   
   

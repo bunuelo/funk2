@@ -745,9 +745,76 @@ void f2__package__reinitialize_globalvars() {
   __package__symbol           = new__symbol(cause, "package");
 }
 
+void f2__package__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__source_expression__symbol);
+  defragment__fix_pointer(__source__symbol);
+  defragment__fix_pointer(__package__symbol);
+  
+  // -- initialize --
+  
+  // source_expression
+  
+  initialize_primobject_6_slot__defragment__fix_pointers(source_expression,
+							 body, first_line, last_line, first_column, last_column, subexpressions);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(source_expression__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk);
+  
+  // source
+  
+  initialize_primobject_1_slot__defragment__fix_pointers(source,
+							 code);
+  
+  f2__primcfunk__init__defragment__fix_pointers(source__load);
+  
+  f2__primcfunk__init__defragment__fix_pointers(source__eval);
+  
+  // package
+  
+  initialize_primobject_11_slot__defragment__fix_pointers(package,
+							  pathname,
+							  name,
+							  package_dependencies,
+							  source_dependencies,
+							  load_cmutex,
+							  load_fiber,
+							  object_types_defined_set,
+							  loaded_all_dependencies_time,
+							  documentation,
+							  binary_dependencies,
+							  dynamic_library_dependencies);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package__dependency_graph);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.terminal_print_with_frame__funk);
+  
+  // pathname
+  
+  f2__primcfunk__init__defragment__fix_pointers(pathname__concat);
+  f2__primcfunk__init__defragment__fix_pointers(pathnamelist__concat);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__is_absolute);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__directory_pathname);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__scan_for_filenames);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__scan_for_filenames_by_extension);
+  f2__primcfunk__init__defragment__fix_pointers(current_working_directory);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__as__absolute_pathname);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__stat);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__exists);
+  f2__primcfunk__init__defragment__fix_pointers(pathname__rename);
+  f2__primcfunk__init__defragment__fix_pointers(getenv);
+  
+}
+
 void f2__package__initialize() {
   f2__package__reinitialize_globalvars();
-  funk2_module_registration__add_module(&(__funk2.module_registration), "package", "", &f2__cause__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "package", "", &f2__cause__reinitialize_globalvars, &f2__package__defragment__fix_pointers);
   f2ptr cause = initial_cause();
   
   //--

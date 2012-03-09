@@ -49,7 +49,7 @@ void funk2_module_registration_node__reinitialize(funk2_module_registration_node
   (*(this->reinitialize_function))();
 }
 
-void funk2_module_registration_node__defragmenter__fix_pointers(funk2_module_registration_node_t* this) {
+void funk2_module_registration_node__defragment__fix_pointers(funk2_module_registration_node_t* this) {
   (*(this->defragmenter_fix_pointers_function))();
 }
 
@@ -95,11 +95,11 @@ void funk2_module_registration__reinitialize_all_modules(funk2_module_registrati
   }
 }
 
-void funk2_module_registration__defragmenter__fix_pointers(funk2_module_registration_t* this) {
+void funk2_module_registration__defragment__fix_pointers(funk2_module_registration_t* this) {
   funk2_module_registration_node_t* iter = this->module_list;
   while (iter) {
     status("defragmenter fixing pointers in module [%s] -- '%s'", iter->name, iter->description);
-    funk2_module_registration_node__defragmenter__fix_pointers(iter);
+    funk2_module_registration_node__defragment__fix_pointers(iter);
     status("done with defragmenter fixing pointers in module [%s]", iter->name);
     iter = iter->next;
   }

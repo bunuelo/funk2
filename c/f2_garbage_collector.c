@@ -411,14 +411,14 @@ void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, 
   f2__free(to_ptr(this->temporary_load_buffer));
 }
 
-void funk2_garbage_collector__defragmenter__fix_pointers(funk2_garbage_collector_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t* this, funk2_defragmenter_t* defragmenter) {
   {
     s64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_pool__defragmenter__fix_pointers(&(this->gc_pool[pool_index]), defragmenter);
+      funk2_garbage_collector_pool__defragment__fix_pointers(&(this->gc_pool[pool_index]), defragmenter);
     }
   }
-  funk2_never_delete_list__defragmenter__fix_pointers(&(this->never_delete_list), defragmenter);
+  funk2_never_delete_list__defragment__fix_pointers(&(this->never_delete_list), defragmenter);
 }
 
 // **

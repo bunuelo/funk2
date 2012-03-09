@@ -48,11 +48,11 @@ void f2__agent__defragment__fix_pointers() {
 
 
   // -- reinitialize --
-  defragmenter__fix_pointer(__agent__symbol);
+  defragment__fix_pointer(__agent__symbol);
 }
 
 void f2__agent__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "agent", "", &f2__agent__reinitialize_globalvars, &f2__agent__defragmenter__fix_pointers);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "agent", "", &f2__agent__reinitialize_globalvars, &f2__agent__defragment__fix_pointers);
   
   f2__agent__reinitialize_globalvars();
   

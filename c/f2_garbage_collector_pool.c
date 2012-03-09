@@ -131,12 +131,12 @@ s64 funk2_garbage_collector_mutation_buffer__load_from_buffer(funk2_garbage_coll
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_mutation_buffer__defragmenter__fix_pointers(funk2_garbage_collector_mutation_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(funk2_garbage_collector_mutation_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -244,12 +244,12 @@ s64 funk2_garbage_collector_no_more_references_buffer__load_from_buffer(funk2_ga
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_no_more_references_buffer__defragmenter__fix_pointers(funk2_garbage_collector_no_more_references_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(funk2_garbage_collector_no_more_references_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -357,12 +357,12 @@ s64 funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(funk2_garba
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_protected_f2ptr_buffer__defragmenter__fix_pointers(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -465,12 +465,12 @@ s64 funk2_garbage_collector_other_grey_buffer__load_from_buffer(funk2_garbage_co
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_other_grey_buffer__defragmenter__fix_pointers(funk2_garbage_collector_other_grey_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(funk2_garbage_collector_other_grey_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -870,15 +870,15 @@ s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_pool__defragmenter__fix_pointers(funk2_garbage_collector_pool_t* this, funk2_defragmenter_t* defragmenter) {
-  funk2_tricolor_set__defragmenter__fix_pointers(                               &(this->tricolor_set),             defragmenter);
-  funk2_garbage_collector_mutation_buffer__defragmenter__fix_pointers(          &(this->other_mutations),          defragmenter);
-  funk2_garbage_collector_no_more_references_buffer__defragmenter__fix_pointers(&(this->other_no_more_references), defragmenter);
-  funk2_garbage_collector_protected_f2ptr_buffer__defragmenter__fix_pointers(   &(this->other_protected_f2ptr),    defragmenter);
+void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collector_pool_t* this) {
+  funk2_tricolor_set__defragment__fix_pointers(                               &(this->tricolor_set),             defragmenter);
+  funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(          &(this->other_mutations),          defragmenter);
+  funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(&(this->other_no_more_references), defragmenter);
+  funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(   &(this->other_protected_f2ptr),    defragmenter);
   {
     u64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_other_grey_buffer__defragmenter__fix_pointers(&(this->other_grey_buffer[pool_index]), defragmenter);
+      funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(&(this->other_grey_buffer[pool_index]), defragmenter);
     }
   }
 }

@@ -221,10 +221,48 @@ void f2__primobject__file_handle__reinitialize_globalvars() {
   __file_handle__symbol = new__symbol(cause, "file_handle");
 }
 
+void f2__primobject__file_handle__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__file_handle__symbol);
+  
+  // -- initialize --
+  
+  // file_handle
+  
+  initialize_primobject_1_slot__defragment__fix_pointers(file_handle,
+							 file_descriptor);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_handle__close);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_handle__nonblocking__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_handle__try_read_byte);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_handle__write);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_handle__send);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_handle__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk);
+  
+}
+
 void f2__primobject__file_handle__initialize() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "file_handle", "", &f2__primobject__file_handle__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "file_handle", "", &f2__primobject__file_handle__reinitialize_globalvars, &f2__primobject__file_handle__defragment__fix_pointers);
   
   f2__primobject__file_handle__reinitialize_globalvars();
   
@@ -248,35 +286,3 @@ void f2__primobject__file_handle__initialize() {
   
 }
 
-void f2__primobject__file_handle__defragment__fix_pointers(funk2_defragmenter_t* defragmenter) {
-  
-  // file_handle
-  
-  initialize_primobject_1_slot__defragment__fix_pointers(file_handle,
-							 file_descriptor);
-  
-  f2__primcfunk__init__defragment__fix_pointers(file_handle__close);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__symbol);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.close__funk);
-  
-  f2__primcfunk__init__defragment__fix_pointers(file_handle__nonblocking__set);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__symbol);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.nonblocking__set__funk);
-  
-  f2__primcfunk__init__defragment__fix_pointers(file_handle__try_read_byte);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__symbol);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.try_read_byte__funk);
-  
-  f2__primcfunk__init__defragment__fix_pointers(file_handle__write);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__symbol);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.write__funk);
-  
-  f2__primcfunk__init__defragment__fix_pointers(file_handle__send);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__symbol);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.send__funk);
-  
-  f2__primcfunk__init__defragment__fix_pointers(file_handle__terminal_print_with_frame);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__symbol);
-  defragmenter__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_file_handle.terminal_print_with_frame__funk);
-  
-}

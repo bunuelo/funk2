@@ -203,7 +203,7 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment);
   }
   
-  funk2_garbage_collector__defragmenter__fix_pointers(&(__funk2.garbage_collector), this);
+  funk2_garbage_collector__defragment__fix_pointers(&(__funk2.garbage_collector), this);
   //funk2_reader__defragment__fix_pointers(&(__funk2.reader), this);
   //f2__primobject__file_handle__defragment__fix_pointers(this);
   

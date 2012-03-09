@@ -68,7 +68,7 @@ s64  funk2_garbage_collector_mutation_buffer__calculate_save_size               
 void funk2_garbage_collector_mutation_buffer__save_to_stream                     (funk2_garbage_collector_mutation_buffer_t* this, int fd);
 u64  funk2_garbage_collector_mutation_buffer__save_to_buffer                     (funk2_garbage_collector_mutation_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_mutation_buffer__load_from_stream                   (funk2_garbage_collector_mutation_buffer_t* this, int fd);
-void funk2_garbage_collector_mutation_buffer__defragmenter__fix_pointers         (funk2_garbage_collector_mutation_buffer_t* this, funk2_defragmenter_t* defragmenter);
+void funk2_garbage_collector_mutation_buffer__defragment__fix_pointers           (funk2_garbage_collector_mutation_buffer_t* this);
 
 // garbage_collector_no_more_references_buffer
 
@@ -87,7 +87,7 @@ s64  funk2_garbage_collector_no_more_references_buffer__calculate_save_size     
 void funk2_garbage_collector_no_more_references_buffer__save_to_stream                               (funk2_garbage_collector_no_more_references_buffer_t* this, int fd);
 u64  funk2_garbage_collector_no_more_references_buffer__save_to_buffer                               (funk2_garbage_collector_no_more_references_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_no_more_references_buffer__load_from_stream                             (funk2_garbage_collector_no_more_references_buffer_t* this, int fd);
-void funk2_garbage_collector_no_more_references_buffer__defragmenter__fix_pointers                   (funk2_garbage_collector_no_more_references_buffer_t* this, funk2_defragmenter_t* defragmenter);
+void funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers                     (funk2_garbage_collector_no_more_references_buffer_t* this);
 
 // garbage_collector_protected_f2ptr_buffer
 
@@ -105,7 +105,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__flush_no_more_references_kn
 void funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream                               (funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd);
 u64  funk2_garbage_collector_protected_f2ptr_buffer__save_to_buffer                               (funk2_garbage_collector_protected_f2ptr_buffer_t* this, u8* initial_buffer);
 void funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream                             (funk2_garbage_collector_protected_f2ptr_buffer_t* this, int fd);
-void funk2_garbage_collector_protected_f2ptr_buffer__defragmenter__fix_pointers                   (funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_defragmenter_t* defragmenter);
+void funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers                     (funk2_garbage_collector_protected_f2ptr_buffer_t* this);
 
 // garbage_collector_other_grey_buffer
 
@@ -115,15 +115,15 @@ struct funk2_garbage_collector_other_grey_buffer_s {
   f2ptr_t* data;
 };
 
-void funk2_garbage_collector_other_grey_buffer__init                      (funk2_garbage_collector_other_grey_buffer_t* this);
-void funk2_garbage_collector_other_grey_buffer__destroy                   (funk2_garbage_collector_other_grey_buffer_t* this);
-void funk2_garbage_collector_other_grey_buffer__know_of_other_grey        (funk2_garbage_collector_other_grey_buffer_t* this, f2ptr exp);
-void funk2_garbage_collector_other_grey_buffer__flush_other_greys         (funk2_garbage_collector_other_grey_buffer_t* this, funk2_garbage_collector_pool_t* pool);
-s64  funk2_garbage_collector_other_grey_buffer__calculate_save_size       (funk2_garbage_collector_other_grey_buffer_t* this);
-void funk2_garbage_collector_other_grey_buffer__save_to_stream            (funk2_garbage_collector_other_grey_buffer_t* this, int fd);
-u64  funk2_garbage_collector_other_grey_buffer__save_to_buffer            (funk2_garbage_collector_other_grey_buffer_t* this, u8* initial_buffer);
-void funk2_garbage_collector_other_grey_buffer__load_from_stream          (funk2_garbage_collector_other_grey_buffer_t* this, int fd);
-void funk2_garbage_collector_other_grey_buffer__defragmenter__fix_pointers(funk2_garbage_collector_other_grey_buffer_t* this, funk2_defragmenter_t* defragmenter);
+void funk2_garbage_collector_other_grey_buffer__init                    (funk2_garbage_collector_other_grey_buffer_t* this);
+void funk2_garbage_collector_other_grey_buffer__destroy                 (funk2_garbage_collector_other_grey_buffer_t* this);
+void funk2_garbage_collector_other_grey_buffer__know_of_other_grey      (funk2_garbage_collector_other_grey_buffer_t* this, f2ptr exp);
+void funk2_garbage_collector_other_grey_buffer__flush_other_greys       (funk2_garbage_collector_other_grey_buffer_t* this, funk2_garbage_collector_pool_t* pool);
+s64  funk2_garbage_collector_other_grey_buffer__calculate_save_size     (funk2_garbage_collector_other_grey_buffer_t* this);
+void funk2_garbage_collector_other_grey_buffer__save_to_stream          (funk2_garbage_collector_other_grey_buffer_t* this, int fd);
+u64  funk2_garbage_collector_other_grey_buffer__save_to_buffer          (funk2_garbage_collector_other_grey_buffer_t* this, u8* initial_buffer);
+void funk2_garbage_collector_other_grey_buffer__load_from_stream        (funk2_garbage_collector_other_grey_buffer_t* this, int fd);
+void funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(funk2_garbage_collector_other_grey_buffer_t* this);
 
 // garbage_collector_pool
 
@@ -176,7 +176,7 @@ void      funk2_garbage_collector_pool__create_save_buffer                      
 void      funk2_garbage_collector_pool__save_buffer_to_stream                    (funk2_garbage_collector_pool_t* this, int fd);
 void      funk2_garbage_collector_pool__load_from_stream                         (funk2_garbage_collector_pool_t* this, int fd);
 s64       funk2_garbage_collector_pool__load_from_buffer                         (funk2_garbage_collector_pool_t* this, u8* buffer);
-void      funk2_garbage_collector_pool__defragmenter__fix_pointers               (funk2_garbage_collector_pool_t* this, funk2_defragmenter_t* defragmenter);
+void      funk2_garbage_collector_pool__defragment__fix_pointers                 (funk2_garbage_collector_pool_t* this);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

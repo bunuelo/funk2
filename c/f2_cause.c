@@ -483,9 +483,76 @@ void f2__cause__reinitialize_globalvars() {
   __cause__symbol = new__symbol(cause, "cause");
 }
 
+void f2__cause__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointers(__cause__symbol);
+  
+  // -- initialize --
+  
+  // cause
+  
+  initialize_primobject_15_slot__defragment__fix_pointers(cause,
+							  fibers_cmutex,
+							  fibers,
+							  frame,
+							  allocate_traced_arrays,
+							  bytecode_tracing_on,
+							  memory_tracing_on,
+							  imagination_stack,
+							  bytecode_branch_callbacks,
+							  bytecode_funk_callbacks,
+							  bytecode_tracer_callbacks,
+							  bytecode_endfunk_callbacks,
+							  complete_funk_callbacks,
+							  read_other_memory_callbacks,
+							  write_other_memory_callbacks,
+							  critics);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__type_var_defined);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__var_defined);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__type_var_value__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__var_value__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.define__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__define);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__define__funk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__lookup);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__lookup__funk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(cause);
+  
+  
+}
+
 void f2__cause__initialize() {
   f2__cause__reinitialize_globalvars();
-  funk2_module_registration__add_module(&(__funk2.module_registration), "cause", "", &f2__cause__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "cause", "", &f2__cause__reinitialize_globalvars, &f2__cause__defragment__fix_pointers);
   f2ptr cause = initial_cause();
   
   //--

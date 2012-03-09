@@ -623,6 +623,60 @@ void f2__primobject__stream__reinitialize_globalvars() {
   __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
 }
 
+void f2__primobject__stream__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__stream__symbol);
+  defragment__fix_pointer(__file_stream__symbol);
+  defragment__fix_pointer(__socket_stream__symbol);
+  defragment__fix_pointer(__string_stream__symbol);
+  defragment__fix_pointer(__text_window_stream__symbol);
+  
+  
+  // -- initialize --
+  
+  // stream
+  
+  initialize_primobject_12_slot__defragment__fix_pointers(stream, cmutex, stream_type, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, character_byte_index, line_number, column_number);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__symbol);
+  f2__primcfunk__init__(stream__try_read_byte);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol);
+  f2__primcfunk__init__(stream__try_read_character);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__symbol);
+  f2__primcfunk__init__(stream__rewind);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__symbol);
+  f2__primcfunk__init__(stream__rewind_to_length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__(stream__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_stream__new);
+  f2__primcfunk__init__defragment__fix_pointers(socket_stream__new);
+  f2__primcfunk__init__defragment__fix_pointers(string_stream__new);
+  f2__primcfunk__init__defragment__fix_pointers(string_stream);
+  f2__primcfunk__init__defragment__fix_pointers(stream__new_open_file);
+  f2__primcfunk__init__defragment__fix_pointers(stream__close);
+  f2__primcfunk__init__defragment__fix_pointers(stream__file_mode__rdonly);
+  f2__primcfunk__init__defragment__fix_pointers(stream__file_mode__creat);
+  f2__primcfunk__init__defragment__fix_pointers(stream__file_mode__rdwr);
+  f2__primcfunk__init__defragment__fix_pointers(stream__nonblocking__set);
+  f2__primcfunk__init__defragment__fix_pointers(stream__ungetc);
+  f2__primcfunk__init__defragment__fix_pointers(stream__try_read_byte);
+  f2__primcfunk__init__defragment__fix_pointers(stream__try_read_character);
+  f2__primcfunk__init__defragment__fix_pointers(stream__getc);
+  f2__primcfunk__init__defragment__fix_pointers(stream__rewind);
+  f2__primcfunk__init__defragment__fix_pointers(stream__rewind_to_length);
+}
+
 void f2__primobject__stream__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-stream", "", &f2__primobject__stream__reinitialize_globalvars);
   

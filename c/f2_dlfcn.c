@@ -594,10 +594,70 @@ void f2__dlfcn__reinitialize_globalvars() {
   }
 }
 
+void f2__dlfcn__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__supported);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__dlopen);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__dlerror);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__dlsym);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__dlclose);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__rtld_lazy);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__rtld_now);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__rtld_global);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__rtld_local);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__rtld_nodelete);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn__rtld_noload);
+  
+  
+  // dlfcn_dynamic_library
+  
+  init_frame_object__4_slot__defragment__fix_pointers(dlfcn_dynamic_library, pointer, filename, stat, pointer_symbol_hash);
+  
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library__new_open);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.lookup_symbol__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library__lookup_symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.lookup_symbol__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.close__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library__close);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.close__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.changed_on_disk__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library__changed_on_disk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library.changed_on_disk__funk);
+  
+  
+  // dlfcn_dynamic_library_handler
+  
+  init_frame_object__3_slot__defragment__fix_pointers(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library_handler__dynamic_library);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.dynamic_library__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.unload_dynamic_library__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library_handler__unload_dynamic_library);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.unload_dynamic_library__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.unload_changed__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(dlfcn_dynamic_library_handler__unload_changed);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_dlfcn_dynamic_library_handler.unload_changed__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(global_dlfcn_dynamic_library);
+  f2__primcfunk__init__defragment__fix_pointers(global_dlfcn_dynamic_library__lookup_symbol);
+  f2__primcfunk__init__defragment__fix_pointers(global_dlfcn_dynamic_library__unload_dynamic_library);
+  f2__primcfunk__init__defragment__fix_pointers(global_dlfcn_dynamic_library__unload_changed);
+  
+}
+
 void f2__dlfcn__initialize() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars, &f2__dlfcn__defragment__fix_pointers);
   
   f2__dlfcn__reinitialize_globalvars();
   

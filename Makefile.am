@@ -327,7 +327,6 @@ lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
 #bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
-  c/f2_agent.c \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \

@@ -366,25 +366,25 @@ void f2__core_extension__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(core_extension__new);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension__initialize);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension__destroy);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension__assure_initialized);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension__assure_destroyed);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension__changed_on_disk);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__funk);
   
   
   // core_extension_handler
@@ -393,21 +393,21 @@ void f2__core_extension__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__new);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__add_new_core_extension);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__lookup_core_extension);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__unload_changed);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__reset_to_boot_state);
-  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk);
   
   
   // global_core_extension_handler

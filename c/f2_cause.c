@@ -486,7 +486,7 @@ void f2__cause__reinitialize_globalvars() {
 void f2__cause__defragment__fix_pointers() {
   // -- reinitialize --
   
-  defragment__fix_pointers(__cause__symbol);
+  defragment__fix_pointer(__cause__symbol);
   
   // -- initialize --
   

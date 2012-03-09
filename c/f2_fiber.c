@@ -955,7 +955,7 @@ void f2__fiber__defragment__fix_pointers() {
 							 argument_frame);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.funk_name__symbol);
-  f2__primcfunk__init__defragent__fix_pointers(fiber_stack_trace_block__funk_name);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__funk_name);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.funk_name__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__string__symbol);

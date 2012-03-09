@@ -441,8 +441,77 @@ void f2__primobject__ptypehash__reinitialize_globalvars() {
   __ptypehash__symbol = new__symbol(initial_cause(), "ptypehash");
 }
 
+void f2__primobject__ptypehash__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__ptypehash__symbol);
+  
+  
+  // -- initialize --
+  
+  // ptypehash
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(ptypehash, write_cmutex, key_count, bin_num_power, bin_array);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.contains__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__contains);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.contains__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_keyvalue_pair__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__an_arbitrary_keyvalue_pair);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_keyvalue_pair__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_key__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__an_arbitrary_key);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_key__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__an_arbitrary_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.an_arbitrary_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__copy);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.keys__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__keys);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.keys__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.values__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__values);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.values__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__add);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.add__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__remove);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.remove__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__copy_from);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.copy_from__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__lookup);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.lookup__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__is_empty);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.is_empty__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__as__frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.as__frame__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptypehash__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__funk);
+}
+
 void f2__primobject__ptypehash__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-ptypehash", "", &f2__primobject__ptypehash__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-ptypehash", "", &f2__primobject__ptypehash__reinitialize_globalvars, &f2__primobject__ptypehash__defragment__fix_pointers);
   
   f2__primobject__ptypehash__reinitialize_globalvars();
   

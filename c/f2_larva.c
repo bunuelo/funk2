@@ -111,9 +111,16 @@ void f2__larva__reinitialize_globalvars() {
   
 }
 
+void f2__larva__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // -- initialize --
+  
+  
+}
 
 void f2__larva__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "larva", "", &f2__larva__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "larva", "", &f2__larva__reinitialize_globalvars, &f2__larva__defragment__fix_pointers);
   
   f2__larva__reinitialize_globalvars();
   //f2ptr cause = initial_cause();

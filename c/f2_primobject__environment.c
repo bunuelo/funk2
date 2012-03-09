@@ -32,6 +32,16 @@ void funk2_primobject__environment__reinit(funk2_primobject__environment_t* this
   this->current_environment__symbol = new__symbol(initial_cause(), "current_environment");
 }
 
+void funk2_primobject__environment__defragment__fix_pointers(funk2_primobject__environment_t* this) {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(this->environment__symbol);
+  defragment__fix_pointer(this->current_environment__symbol);
+  
+  
+  // -- initialize --
+}
+
 void funk2_primobject__environment__destroy(funk2_primobject__environment_t* this) {
 }
 
@@ -173,6 +183,42 @@ void f2__primobject_environment__reinitialize_globalvars() {
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
   
   __environment__symbol = new__symbol(initial_cause(), "environment");
+}
+
+void f2__primobject_environment__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  funk2_primobject__environment__defragment__fix_pointers(&(__funk2.primobject__environment));
+  
+  defragment__fix_pointer(__environment__symbol);
+  
+  
+  // -- initialize --
+  
+  // environment
+  
+  initialize_primobject_3_slot__defragment__fix_pointers(environment, frame, parent_env, desc);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__new, frame, parent_env, desc, cfunk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__add_type_var_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__lookup_type_var_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__type_var_value__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__funk);
+  
 }
 
 void f2__primobject_environment__initialize() {

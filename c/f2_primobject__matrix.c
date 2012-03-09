@@ -175,10 +175,40 @@ void f2__primobject__matrix__reinitialize_globalvars() {
   __matrix__symbol = new__symbol(cause, "matrix");
 }
 
+void f2__primobject__matrix__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__matrix__symbol);
+  
+  
+  // -- initialize --
+  
+  // matrix
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(matrix,
+							 mutate_cmutex,
+							 zero_value,
+							 column_row_ptypehash,
+							 row_column_ptypehash);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(matrix__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(matrix__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(matrix__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__funk);
+  
+}
+
 void f2__primobject__matrix__initialize() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "matrix", "", &f2__primobject__matrix__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "matrix", "", &f2__primobject__matrix__reinitialize_globalvars, &f2__primobject__matrix__defragment__fix_pointers);
   
   f2__primobject__matrix__reinitialize_globalvars();
   

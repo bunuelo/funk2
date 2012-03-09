@@ -1397,35 +1397,35 @@ void f2__primobjects__defragment__fix_pointers() {
   // primobject
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.is_type__symbol);
-  f2__primcfunk__init__(primobject__is_type);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__is_type);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.is_type__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.object_type__symbol);
-  f2__primcfunk__init__(primobject__object_type);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__object_type);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.object_type__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.object_type__set__symbol);
-  f2__primcfunk__init__(primobject__object_type__set);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__object_type__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.object_type__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slots__symbol);
-  f2__primcfunk__init__(primobject__dynamic_slots);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__dynamic_slots);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slots__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slots__set__symbol);
-  f2__primcfunk__init__(primobject__dynamic_slots__set);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__dynamic_slots__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slots__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.add_dynamic_slot_type_value__symbol);
-  f2__primcfunk__init__(primobject__add_dynamic_slot_type_value);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__add_dynamic_slot_type_value);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.add_dynamic_slot_type_value__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slot_type_value__symbol);
-  f2__primcfunk__init__(primobject__dynamic_slot_type_value);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__dynamic_slot_type_value);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slot_type_value__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slots__set__symbol);
-  f2__primcfunk__init__(primobject__dynamic_slot_type_value__set);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__dynamic_slot_type_value__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__funk);
   
   // compound_object 
@@ -1441,11 +1441,11 @@ void f2__primobjects__defragment__fix_pointers() {
   initialize_primobject_2_slot__defragment__fix_pointers(cons, car, cdr);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol);
-  f2__primcfunk__init__(cons__length);
+  f2__primcfunk__init__defragment__fix_pointers(cons__length);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(cons__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(cons__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__funk);
   
   // doublelink
@@ -1453,7 +1453,7 @@ void f2__primobjects__defragment__fix_pointers() {
   initialize_primobject_3_slot__defragment__fix_pointers(doublelink, prev, next, value);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_doublelink.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(doublelink__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(doublelink__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_doublelink.terminal_print_with_frame__funk);
   
   // imagination_link
@@ -1464,20 +1464,20 @@ void f2__primobjects__defragment__fix_pointers() {
   
   initialize_primobject_6_slot__defragment__fix_pointers(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
   
-  f2__primcfunk__init__(cfunk__apply);
+  f2__primcfunk__init__defragment__fix_pointers(cfunk__apply);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(cfunk__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(cfunk__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cfunk.terminal_print_with_frame__funk);
   
   // metrocfunk
   
   initialize_primobject_6_slot__defragment__fix_pointers(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
   
-  f2__primcfunk__init__(metrocfunk__apply);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__apply);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(metrocfunk__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__funk);
   
   
@@ -1495,18 +1495,18 @@ void f2__primobjects__defragment__fix_pointers() {
 							  has_no_side_effects,
 							  documentation);
   
-  f2__primcfunk__init__(funk__new);
+  f2__primcfunk__init__defragment__fix_pointers(funk__new);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol);
-  f2__primcfunk__init__(funk__new_copy);
+  f2__primcfunk__init__defragment__fix_pointers(funk__new_copy);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__symbol);
-  f2__primcfunk__init__(funk__optimize);
+  f2__primcfunk__init__defragment__fix_pointers(funk__optimize);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(funk__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(funk__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__funk);
   
   
@@ -1514,90 +1514,90 @@ void f2__primobjects__defragment__fix_pointers() {
   
   initialize_primobject_10_slot__defragment__fix_pointers(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
   
-  f2__primcfunk__init__(metro__new);
+  f2__primcfunk__init__defragment__fix_pointers(metro__new);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol);
-  f2__primcfunk__init__(metro__name);
+  f2__primcfunk__init__defragment__fix_pointers(metro__name);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__symbol);
-  f2__primcfunk__init__(metro__name__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__name__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__symbol);
-  f2__primcfunk__init__(metro__body_bytecodes);
+  f2__primcfunk__init__defragment__fix_pointers(metro__body_bytecodes);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__symbol);
-  f2__primcfunk__init__(metro__body_bytecodes__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__body_bytecodes__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.args__symbol);
-  f2__primcfunk__init__(metro__args);
+  f2__primcfunk__init__defragment__fix_pointers(metro__args);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__symbol);
-  f2__primcfunk__init__(metro__args__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__args__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__symbol);
-  f2__primcfunk__init__(metro__demetropolized_body);
+  f2__primcfunk__init__defragment__fix_pointers(metro__demetropolized_body);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__symbol);
-  f2__primcfunk__init__(metro__demetropolized_body__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__demetropolized_body__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__symbol);
-  f2__primcfunk__init__(metro__body);
+  f2__primcfunk__init__defragment__fix_pointers(metro__body);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__symbol);
-  f2__primcfunk__init__(metro__body__set, this, cfunk);
+  f2__primcfunk__init__defragment__fix_pointers(metro__body__set, this, cfunk);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__symbol);
-  f2__primcfunk__init__(metro__env, this, cfunk);
+  f2__primcfunk__init__defragment__fix_pointers(metro__env, this, cfunk);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__symbol);
-  f2__primcfunk__init__(metro__env__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__env__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.env__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__symbol);
-  f2__primcfunk__init__(metro__machine_code);
+  f2__primcfunk__init__defragment__fix_pointers(metro__machine_code);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__symbol);
-  f2__primcfunk__init__(metro__machine_code__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__machine_code__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.machine_code__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__symbol);
-  f2__primcfunk__init__(metro__is_funktional);
+  f2__primcfunk__init__defragment__fix_pointers(metro__is_funktional);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__symbol);
-  f2__primcfunk__init__(metro__is_funktional__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__is_funktional__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.is_funktional__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__symbol);
-  f2__primcfunk__init__(metro__has_no_side_effects);
+  f2__primcfunk__init__defragment__fix_pointers(metro__has_no_side_effects);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__set__symbol);
-  f2__primcfunk__init__(metro__has_no_side_effects__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__has_no_side_effects__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.has_no_side_effects__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__symbol);
-  f2__primcfunk__init__(metro__documentation);
+  f2__primcfunk__init__defragment__fix_pointers(metro__documentation);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__symbol);
-  f2__primcfunk__init__(metro__documentation__set);
+  f2__primcfunk__init__defragment__fix_pointers(metro__documentation__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.documentation__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(metro__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(metro__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.terminal_print_with_frame__funk);
   
   
@@ -1606,7 +1606,7 @@ void f2__primobjects__defragment__fix_pointers() {
   initialize_primobject_2_slot__defragment__fix_pointers(exception, tag, value);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_exception.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(exception__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(exception__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_exception.terminal_print_with_frame__funk);
   
   
@@ -1615,11 +1615,11 @@ void f2__primobjects__defragment__fix_pointers() {
   initialize_primobject_4_slot__defragment__fix_pointers(bytecode, command, arg0, arg1, arg2);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__symbol);
-  f2__primcfunk__init__(bytecode__as__graphviz_label);
+  f2__primcfunk__init__defragment__fix_pointers(bytecode__as__graphviz_label);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_bytecode.as__graphviz_label__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__(bytecode__terminal_print_with_frame);
+  f2__primcfunk__init__defragment__fix_pointers(bytecode__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_bytecode.terminal_print_with_frame__funk);
   
   

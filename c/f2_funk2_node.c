@@ -497,8 +497,17 @@ void f2__funk2_node__reinitialize_globalvars() {
   
 }
 
+void f2__funk2_node__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(funk2_node_handler__known_node_info);
+  
+}
+
 void f2__funk2_node__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "funk2_node", "", &f2__funk2_node__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "funk2_node", "", &f2__funk2_node__reinitialize_globalvars, &f2__funk2_node__defragment__fix_pointers);
   
   f2__funk2_node__reinitialize_globalvars();
   //f2ptr cause = f2_funk2_node_c__cause__new(initial_cause(), nil, nil);

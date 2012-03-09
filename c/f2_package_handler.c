@@ -154,7 +154,7 @@ void f2__package_handler__defragment__fix_pointers() {
 
 void f2__package_handler__initialize() {
   f2__package_handler__reinitialize_globalvars();
-  funk2_module_registration__add_module(&(__funk2.module_registration), "package_handler", "", &f2__cause__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "package_handler", "", &f2__cause__reinitialize_globalvars, &f2__package_handler__defragment__fix_pointers);
   f2ptr cause = initial_cause();
   
   // package_handler

@@ -871,14 +871,14 @@ s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_
 }
 
 void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collector_pool_t* this) {
-  funk2_tricolor_set__defragment__fix_pointers(                               &(this->tricolor_set),             defragmenter);
-  funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(          &(this->other_mutations),          defragmenter);
-  funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(&(this->other_no_more_references), defragmenter);
-  funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(   &(this->other_protected_f2ptr),    defragmenter);
+  funk2_tricolor_set__defragment__fix_pointers(                               &(this->tricolor_set));
+  funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(          &(this->other_mutations));
+  funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(&(this->other_no_more_references));
+  funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(   &(this->other_protected_f2ptr));
   {
     u64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(&(this->other_grey_buffer[pool_index]), defragmenter);
+      funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(&(this->other_grey_buffer[pool_index]));
     }
   }
 }

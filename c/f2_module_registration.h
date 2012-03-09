@@ -23,15 +23,19 @@
 #define F2__MODULE_REGISTRATION__H
 
 typedef void (*funk2_module_registration_reinitialize_function_ptr_t)();
+typedef void (*funk2_module_registration_defragment_fix_pointers_function_ptr_t)();
 
 typedef struct funk2_module_registration_node_s {
-  char*                                                 name;
-  char*                                                 description;
-  funk2_module_registration_reinitialize_function_ptr_t reinitialize_function;
-  struct funk2_module_registration_node_s*              next;
+  char*                                                            name;
+  char*                                                            description;
+  funk2_module_registration_reinitialize_function_ptr_t            reinitialize_function;
+  funk2_module_registration_defragment_fix_pointers_function_ptr_t defragment_fix_pointers_function;
+  struct funk2_module_registration_node_s*                         next;
 } funk2_module_registration_node_t;
 
-void funk2_module_registration_node__init(funk2_module_registration_node_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function);
+void funk2_module_registration_node__init(funk2_module_registration_node_t* this, char* name, char* description,
+					  funk2_module_registration_reinitialize_function_ptr_t            reinitialize_function,
+					  funk2_module_registration_defragment_fix_pointers_function_ptr_t defragment_fix_pointers_function);
 void funk2_module_registration_node__destroy(funk2_module_registration_node_t* this);
 
 typedef struct funk2_module_registration_s {
@@ -39,10 +43,13 @@ typedef struct funk2_module_registration_s {
   funk2_module_registration_node_t* end_of_module_list;
 } funk2_module_registration_t;
 
-void funk2_module_registration__init(funk2_module_registration_t* this);
-void funk2_module_registration__destroy(funk2_module_registration_t* this);
-void funk2_module_registration__add_module(funk2_module_registration_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function);
+void funk2_module_registration__init                    (funk2_module_registration_t* this);
+void funk2_module_registration__destroy                 (funk2_module_registration_t* this);
+void funk2_module_registration__add_module              (funk2_module_registration_t* this, char* name, char* description,
+							 funk2_module_registration_reinitialize_function_ptr_t            reinitialize_function,
+							 funk2_module_registration_defragment_fix_pointers_function_ptr_t defragment_fix_pointers_function);
 void funk2_module_registration__reinitialize_all_modules(funk2_module_registration_t* this);
+void funk2_module_registration__defragment__fix_pointers(funk2_module_registration_t* this);
 
 // **
 

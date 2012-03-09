@@ -239,9 +239,9 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
       }
       
     }
-    
-    funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   }
+  
+  funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {

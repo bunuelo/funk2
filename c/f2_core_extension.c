@@ -352,13 +352,78 @@ def_pcfunk0(global_core_extension_handler__reset_to_boot_state,
 void f2__core_extension__reinitialize_globalvars() {
   //f2ptr cause = initial_cause();
   
-  //environment__add_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"), f2__core_extension_handler__new(cause));
+}
+
+void f2__core_extension__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  // core_extension
+  
+  init_frame_object__4_slot__defragment__fix_pointers(core_extension, name, filename, initialized_time_stamp_cmutex, initialized_time_stamp);
+  
+  f2__primcfunk__init__defragment__fix_pointers(core_extension__new);
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension__initialize);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.initialize__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension__destroy);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.destroy__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension__assure_initialized);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_initialized__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension__assure_destroyed);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.assure_destroyed__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension__changed_on_disk);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension.changed_on_disk__funk;
+  
+  
+  // core_extension_handler
+  
+  init_frame_object__1_slot__defragment__fix_pointers(core_extension_handler, core_extension_name_hash);
+  
+  f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__new);
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__add_new_core_extension);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.add_new_core_extension__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__lookup_core_extension);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.lookup_core_extension__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__unload_changed);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.unload_changed__funk;
+  
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__symbol;
+  f2__primcfunk__init__defragment__fix_pointers(core_extension_handler__reset_to_boot_state);
+  __funk2.globalenv.object_type.primobject.primobject_type_core_extension_handler.reset_to_boot_state__funk;
+  
+  
+  // global_core_extension_handler
+  
+  f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__add_new_core_extension);
+  f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__lookup_core_extension);
+  f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__unload_changed);
+  f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__reset_to_boot_state);
+  
+  
 }
 
 void f2__core_extension__initialize_module() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension", "", &f2__core_extension__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension", "", &f2__core_extension__reinitialize_globalvars, &f2__core_extension__defragment__fix_pointers);
   
   f2__core_extension__reinitialize_globalvars();
   

@@ -116,8 +116,17 @@ void f2__graph_cluster__reinitialize_globalvars() {
   //f2ptr cause = initial_cause();
 }
 
+void f2__graph_cluster__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(graph__cluster);
+  
+}
+
 void f2__graph_cluster__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "graph_cluster", "", &f2__graph_cluster__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "graph_cluster", "", &f2__graph_cluster__reinitialize_globalvars, &f2__graph_cluster__defragment__fix_pointers);
   
   f2__graph_cluster__reinitialize_globalvars();
   //f2ptr cause = initial_cause();

@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-// physical_sim_object
+// physical_sim_object: this object is an example prototype
 
 def_frame_object__global__4_slot(physical_sim_object, position, velocity, mass, shape);
 
@@ -31,8 +31,17 @@ def_frame_object__global__4_slot(physical_sim_object, position, velocity, mass, 
 void f2__frame_objects__reinitialize_globalvars() {
 }
 
+void f2__frame_objects__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  init_frame_object__4_slot__defragment__fix_pointers(physical_sim_object, position, velocity, mass, shape);
+  
+}
+
 void f2__frame_objects__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "frame_objects", "", &f2__frame_objects__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "frame_objects", "", &f2__frame_objects__reinitialize_globalvars, &f2__frame_objects__defragment__fix_pointers);
   
   f2__frame_objects__reinitialize_globalvars();
   

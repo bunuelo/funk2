@@ -72,8 +72,25 @@ void f2__partial_order__reinitialize_globalvars() {
   __partial_order_node__symbol = new__symbol(cause, "partial_order_node");
 }
 
+void f2__partial_order__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__partial_order_node__symbol);
+  
+  
+  // -- initialize --
+  
+  // partial_order_node
+  initialize_primobject_1_slot__defragment__fix_pointers(partial_order_node, label);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_partial_order_node.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(partial_order_node__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_partial_order_node.terminal_print_with_frame__funk);
+  
+}
+
 void f2__partial_order__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "partial_order", "", &f2__partial_order__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "partial_order", "", &f2__partial_order__reinitialize_globalvars, &f2__partial_order__defragment__fix_pointers);
   
   f2__partial_order__reinitialize_globalvars();
   f2ptr cause = initial_cause();

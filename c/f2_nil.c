@@ -97,7 +97,7 @@ void f2__nil__defragment__fix_pointers() {
 }
 
 void f2__nil__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "nil", "the unique object", &f2__nil__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "nil", "the unique object", &f2__nil__reinitialize_globalvars, &f2__nil__defragment__fix_pointers);
   
   f2__nil__reinitialize_globalvars();
   

@@ -3042,8 +3042,86 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
 }
 
+void f2__bytecodes__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__funk2.bytecode.bytecode__jump_funk__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__funk__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__array__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__cons__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__consp__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__car__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__cdr__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__car__set__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__cdr__set__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__array_elt__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__set__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__swap__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__push__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__push_constant__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__copy__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__lookup__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__define__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__type_var__mutate__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__globalize_type_var__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__jump__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__if_jump__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__else_jump__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__nop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__debug__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__tracer__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__endfunk__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__compile__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__yield__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__newenv__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__machine_code__symbol);
+  
+  // logic
+  defragment__fix_pointer(__funk2.bytecode.bytecode__eq__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__not__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__and__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__or__symbol);
+  
+  // math
+  defragment__fix_pointer(__funk2.bytecode.bytecode__add__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__negative__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__subtract__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__multiply__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__inverse__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__divide__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__modulo__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__increment__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__decrement__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__numerically_equals__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__less_than__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__greater_than__symbol);
+  
+  // block
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_push__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_enter__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_define_rest_argument__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_define_argument__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_define_last_argument__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_exit_and_pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_exit_and_no_pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_eval_args_begin__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_eval_args_next__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_eval_args_end__symbol);
+  
+  
+  // -- initialize --
+  
+  // exceptions
+  
+  defragment__fix_pointer(__funk2.bytecode.expression_not_funkable__exception__tag);
+  defragment__fix_pointer(__funk2.bytecode.expression_not_funkable__exception);
+  
+}
+
 void f2__bytecodes__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "bytecodes", "", &f2__bytecodes__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "bytecodes", "", &f2__bytecodes__reinitialize_globalvars, &f2__bytecodes__defragment__fix_pointers);
   
   f2__bytecodes__reinitialize_globalvars();
   

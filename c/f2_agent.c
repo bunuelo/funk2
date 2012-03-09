@@ -40,8 +40,16 @@ void f2__agent__reinitialize_globalvars() {
   __agent__symbol = new__symbol(cause, "agent");
 }
 
+void f2__agent__defragmenter__fix_pointers() {
+  defragmenter__fix_pointer(__agent__symbol);
+  
+  
+  // agent
+  initialize_primobject_1_slot__defragmenter__fix_pointers(agent, fiber);
+}
+
 void f2__agent__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "agent", "", &f2__agent__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "agent", "", &f2__agent__reinitialize_globalvars, &f2__agent__defragmenter__fix_pointers);
   
   f2__agent__reinitialize_globalvars();
   

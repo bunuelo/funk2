@@ -113,7 +113,7 @@ void f2__primobject_object_type__defragment__fix_pointers() {
   
   // -- initialize --
   
-  f2__primcfunk__init__defragment__fix_pointer(object_type__new);
+  f2__primcfunk__init__defragment__fix_pointers(object_type__new);
 }
 
 void f2__primobject_object_type__initialize() {

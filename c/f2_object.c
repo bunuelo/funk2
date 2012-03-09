@@ -709,8 +709,42 @@ void f2__object__reinitialize_globalvars() {
   //f2ptr cause = initial_cause(); //f2_object_c__cause__new(initial_cause(), nil, global_environment());
 }
 
+void f2__object__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__get);
+  f2__primcfunk__init__defragment__fix_pointers(object__get__apply);
+  f2__primcfunk__init__defragment__fix_pointers(object__set);
+  f2__primcfunk__init__defragment__fix_pointers(object__set__apply);
+  f2__primcfunk__init__defragment__fix_pointers(object__execute);
+  f2__primcfunk__init__defragment__fix_pointers(object__execute__apply);
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__eq);
+  defragment__fix_pointer(__funk2.object.object__eq__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__eq_hash_value);
+  defragment__fix_pointer(__funk2.object.object__eq_hash_value__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__equals);
+  defragment__fix_pointer(__funk2.object.object__equals__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__equals_hash_value);
+  defragment__fix_pointer(__funk2.object.object__equals_hash_value__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.object.object__equals_hash_value__loop_free__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(object__type);
+  f2__primcfunk__init__defragment__fix_pointers(object__slot__type_funk);
+  f2__primcfunk__init__defragment__fix_pointers(object__inherits_from);
+  f2__primcfunk__init__defragment__fix_pointers(object__property_scan);
+  
+}
+
 void f2__object__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "object", "", &f2__object__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "object", "", &f2__object__reinitialize_globalvars, &f2__object__defragment__fix_pointers);
   
   f2__string__reinitialize_globalvars();
   

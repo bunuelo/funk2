@@ -79,6 +79,23 @@ f2ptr f2nil__primobject_type__new(f2ptr cause) {
 void f2__nil__reinitialize_globalvars() {
 }
 
+void f2__nil__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.nil_type.as__string__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(nil__as__string);
+  defragment__fix_pointer(__funk2.globalenv.object_type.nil_type.as__string__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.nil_type.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(nil__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.nil_type.terminal_print_with_frame__funk);
+  
+  
+}
+
 void f2__nil__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "nil", "the unique object", &f2__nil__reinitialize_globalvars);
   

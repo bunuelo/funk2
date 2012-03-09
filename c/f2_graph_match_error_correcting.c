@@ -536,7 +536,7 @@ void f2__graph_match_error_correcting__reinitialize_globalvars() {
 void f2__graph_match_error_correcting__defragment__fix_pointers() {
   // -- reinitialize --
   
-  __graph_edit_sequence__symbol;
+  defragment__fix_pointer(__graph_edit_sequence__symbol);
   
   
   // -- initialize --
@@ -548,9 +548,9 @@ void f2__graph_match_error_correcting__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__add_mapping);
   f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__combine);
   
-  __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__symbol;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__terminal_print_with_frame);
-  __funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk;
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk);
   
   // graph_decomposition_lattice
   f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms);

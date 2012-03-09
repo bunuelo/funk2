@@ -221,7 +221,7 @@ void f2__primobject__fiber_trigger__defragment__fix_pointers() {
 }
 
 void f2__primobject__fiber_trigger__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars, &f2__primobject__fiber_trigger__defragment__fix_pointers);
   
   f2__primobject__fiber_trigger__reinitialize_globalvars();
   

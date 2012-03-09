@@ -121,6 +121,37 @@ void f2__package_handler__reinitialize_globalvars() {
   __package_handler__symbol = new__symbol(cause, "package_handler");
 }
 
+void f2__package_handler__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__package_handler__symbol);
+  
+  
+  // -- initialize --
+  
+  // package_handler
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(package_handler,
+							 package_frame,
+							 package_search_paths);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package_handler.lookup_package__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package_handler__lookup_package);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package_handler.lookup_package__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package_handler.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package_handler__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package_handler.terminal_print_with_frame__funk);
+  
+  
+  // global_package_handler
+  
+  f2__primcfunk__init__defragment__fix_pointers(global_package_handler);
+  f2__primcfunk__init__defragment__fix_pointers(global_package_handler__lookup_package);
+  
+  
+}
+
 void f2__package_handler__initialize() {
   f2__package_handler__reinitialize_globalvars();
   funk2_module_registration__add_module(&(__funk2.module_registration), "package_handler", "", &f2__cause__reinitialize_globalvars);

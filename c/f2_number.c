@@ -103,14 +103,39 @@ void funk2_number_globalvars__init(funk2_number_globalvars_t* this) {
   this->modulo__symbol                  = new__symbol(cause, "modulo");
 }
 
+void funk2_number_globalvars__defragment__fix_pointers(funk2_number_globalvars_t* this) {
+  defragment__fix_pointer(this->as__double__symbol);
+  defragment__fix_pointer(this->multiplied_by__symbol);
+  defragment__fix_pointer(this->divided_by__symbol);
+  defragment__fix_pointer(this->plus__symbol);
+  defragment__fix_pointer(this->minus__symbol);
+  defragment__fix_pointer(this->is_greater_than__symbol);
+  defragment__fix_pointer(this->is_less_than__symbol);
+  defragment__fix_pointer(this->is_numerically_equal_to__symbol);
+  defragment__fix_pointer(this->square_root__symbol);
+  defragment__fix_pointer(this->modulo__symbol);
+}
+
 // **
 
 void f2__number__reinitialize_globalvars() {
   funk2_number_globalvars__init(&(__funk2.number_globalvars));
 }
 
+void f2__number__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  funk2_number_globalvars__defragment__fix_pointers(&(__funk2.number_globalvars));
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(is_greater_than);
+  f2__primcfunk__init__defragment__fix_pointers(is_less_than);
+  
+}
+
 void f2__number__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "number", "", &f2__number__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "number", "", &f2__number__reinitialize_globalvars, &f2__number__defragment__fix_pointers);
   
   f2__number__reinitialize_globalvars();
   

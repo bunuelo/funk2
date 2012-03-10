@@ -1512,7 +1512,7 @@ void f2__primobjects__defragment__fix_pointers() {
   
   // metro
   
-  initialize_primobject_10_slot__defragment__fix_pointers(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
+  initialize_primobject_1_slot__defragment__fix_pointers(metro, funk);
   
   //f2__primcfunk__init__defragment__fix_pointers(metro__new);
   
@@ -1735,7 +1735,7 @@ void f2__primobjects__initialize() {
   
   // metro
   
-  initialize_primobject_10_slot(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
+  initialize_primobject_1_slot(metro, funk);
   
   f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
   

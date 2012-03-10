@@ -61,10 +61,15 @@ funk2_system_file_handle_t* funk2_system_file_handler__get_system_file_handle_by
 void f2__system_file_handler__reinitialize_globalvars() {
 }
 
+void f2__system_file_handler__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+}
+
 void f2__system_file_handler__initialize() {
   //f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "system_file_handler", "", &f2__system_file_handler__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "system_file_handler", "", &f2__system_file_handler__reinitialize_globalvars, &f2__system_file_handler__defragment__fix_pointers);
   
   f2__system_file_handler__reinitialize_globalvars();
   

@@ -60,7 +60,7 @@ void  funk2_f2ptr_set__save_to_stream          (funk2_f2ptr_set_t* this, int fd)
 u64   funk2_f2ptr_set__save_to_buffer          (funk2_f2ptr_set_t* this, u8* initial_buffer);
 void  funk2_f2ptr_set__load_from_stream        (funk2_f2ptr_set_t* this, int fd);
 s64   funk2_f2ptr_set__load_from_buffer        (funk2_f2ptr_set_t* this, u8* buffer);
-void  funk2_f2ptr_set__defragment__fix_pointers(funk2_f2ptr_set_t* this, funk2_defragmenter_t* defragmenter);
+void  funk2_f2ptr_set__defragment__fix_pointers(funk2_f2ptr_set_t* this);
 
   // tests
 

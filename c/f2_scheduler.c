@@ -413,8 +413,54 @@ void f2__scheduler__reinitialize_globalvars() {
   __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
 }
 
+void f2__scheduler__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__processor__symbol);
+  defragment__fix_pointer(__scheduler__symbol);
+  
+  defragment__fix_pointer(__funk2.operating_system.scheduler__symbol);
+  defragment__fix_pointer(__funk2.operating_system.scheduler);
+  
+
+  // -- initialize --
+
+  // scheduler
+  
+  initialize_primobject_1_slot__defragment__fix_pointers(scheduler, processors);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler__active_fibers);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler__processor_with_fewest_fibers);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler__add_fiber_to_least_used_processor);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__active_fibers);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__this_processor);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__add_fiber_serial);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__add_fiber_parallel);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__add_fiber);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__remove_fiber);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__complete_fiber);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__processor_thread_current_fiber);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__current_fiber);
+  f2__primcfunk__init__defragment__fix_pointers(global_scheduler__contains_active_fiber);
+  
+  f2__primcfunk__init__defragment__fix_pointers(this__fiber);
+}
+
 void f2__scheduler__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars, &f2__scheduler__defragment__fix_pointers);
   
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   f2__scheduler__initialize_global_symbolic_vars();

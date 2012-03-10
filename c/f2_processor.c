@@ -602,8 +602,56 @@ void f2__processor__reinitialize_globalvars() {
   __processor__symbol = new__symbol(cause, "processor");
 }
 
+void f2__processor__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  // processor
+  
+  initialize_primobject_7_slot__defragment__fix_pointers(processor,
+							 scheduler,
+							 processor_thread,
+							 active_fibers_scheduler_cmutex,
+							 active_fibers,
+							 active_fibers_iter,
+							 pool_index,
+							 desc);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__add_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__remove_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__current_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__increment_current_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__reset_current_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__active_fibers__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__active_fibers__contains);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk);
+}
+
 void f2__processor__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars, &f2__processor__defragment__fix_pointers);
   f2__processor__reinitialize_globalvars();
   
   f2ptr cause = f2_processor_c__cause__new(initial_cause());

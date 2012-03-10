@@ -1424,7 +1424,7 @@ void f2__primobjects__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primobject__dynamic_slot_type_value);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slot_type_value__funk);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slots__set__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__symbol);
   f2__primcfunk__init__defragment__fix_pointers(primobject__dynamic_slot_type_value__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__funk);
   
@@ -1659,7 +1659,7 @@ void f2__primobjects__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(primobject__add_dynamic_slot_type_value, this, slot_type, slot_name, value, cfunk); __funk2.globalenv.object_type.primobject.add_dynamic_slot_type_value__funk = never_gc(cfunk);}
   {char* symbol_str = "dynamic_slot_type_value"; __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(primobject__dynamic_slot_type_value, this, slot_type, slot_name, no_such_slot_value, cfunk); __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__funk = never_gc(cfunk);}
-  {char* symbol_str = "dynamic_slot_type_value-set"; __funk2.globalenv.object_type.primobject.dynamic_slots__set__symbol = new__symbol(cause, symbol_str);}
+  {char* symbol_str = "dynamic_slot_type_value-set"; __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__5_arg(primobject__dynamic_slot_type_value__set, this, slot_type, slot_name, value, no_such_slot_value, cfunk); __funk2.globalenv.object_type.primobject.dynamic_slot_type_value__set__funk = never_gc(cfunk);}
   
   // compound_object 

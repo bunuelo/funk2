@@ -147,7 +147,7 @@ struct funk2_reader_s {
 
 void funk2_reader__init                    (funk2_reader_t* this);
 void funk2_reader__destroy                 (funk2_reader_t* this);
-void funk2_reader__defragment__fix_pointers(funk2_reader_t* this, funk2_defragmenter_t* defragmenter);
+void funk2_reader__defragment__fix_pointers(funk2_reader_t* this);
 
 f2ptr f2__stream__try_read(f2ptr cause, f2ptr stream);
 

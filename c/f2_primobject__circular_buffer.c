@@ -158,9 +158,9 @@ void f2__primobject_circular_buffer__defragment__fix_pointers() {
   
   initialize_primobject_4_slot__defragment__fix_pointers(circular_buffer, access_cmutex, start, end, bin_array);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(circular_buffer__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(circular_buffer__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__symbol);
   f2__primcfunk__init__defragment__fix_pointers(circular_buffer__pop);

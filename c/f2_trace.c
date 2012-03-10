@@ -37,8 +37,17 @@ void f2__trace__reinitialize_globalvars() {
   {char *str = "do_not_remember"; __funk2.trace.do_not_remember__symbol = new__symbol(initial_cause(), str);}
 }
 
+void f2__trace__defragment__fix_pointers() {
+  // -- reintialize --
+  
+  defragment__fix_pointer(__funk2.trace.do_not_remember__symbol);
+  
+  
+  // -- initialize --
+}
+
 void f2__trace__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "trace", "", &f2__trace__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "trace", "", &f2__trace__reinitialize_globalvars, &f2__trace__defragment__fix_pointers);
   
   f2__trace__reinitialize_globalvars();
   

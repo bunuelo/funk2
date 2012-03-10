@@ -107,7 +107,6 @@ void f2__initialize() {
   f2__garbage_collector__initialize();
   f2__defragmenter__initialize();
   f2__frame_objects__initialize();
-  f2__agent__initialize();
   f2__primobject_hash__initialize();
   f2__dlfcn__initialize();
   f2__cause__initialize();
@@ -128,7 +127,6 @@ void f2__initialize() {
   f2__graph_match_error_correcting__initialize();
   f2__terminal_print__initialize();
   f2__nil__initialize();
-  f2__knowledge__initialize();
   f2__natural_language__initialize();
   f2__partial_order__initialize();
   f2__core_extension_funk__initialize();

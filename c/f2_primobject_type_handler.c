@@ -266,8 +266,22 @@ void f2__primobject_type_handler__reinitialize_globalvars() {
   __funk2.primobject_type_handler.type_hash = type_hash;
 }
 
+void f2__primobject_type_handler__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__funk2.primobject_type_handler.type_hash);
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(add_type);
+  f2__primcfunk__init__defragment__fix_pointers(lookup_type);
+  f2__primcfunk__init__defragment__fix_pointers(system__types);
+  f2__primcfunk__init__defragment__fix_pointers(system__type_names);
+}
+
 void f2__primobject_type_handler__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars, &f2__primobject_type_handler__defragment__fix_pointers);
   
   f2__primobject_type_handler__reinitialize_globalvars();
   

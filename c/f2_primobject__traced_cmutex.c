@@ -172,8 +172,42 @@ void f2__primobject__traced_cmutex__reinitialize_globalvars() {
   __traced_cmutex__symbol = new__symbol(initial_cause(), "traced_cmutex");
 }
 
+void f2__primobject__traced_cmutex__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__traced_cmutex__symbol);
+  
+  
+  // -- initialize --
+
+  // traced_cmutex
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(traced_cmutex, cmutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_cmutex__unlock);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.unlock__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_cmutex__trylock);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.trylock__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_cmutex__is_locked);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.is_locked__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_cmutex__lock_stack_trace);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.lock_stack_trace__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_cmutex__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_traced_cmutex.terminal_print_with_frame__funk);
+  
+}
+
 void f2__primobject__traced_cmutex__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-traced_cmutex", "", &f2__primobject__traced_cmutex__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-traced_cmutex", "", &f2__primobject__traced_cmutex__reinitialize_globalvars, &f2__primobject__traced_cmutex__defragment__fix_pointers);
   
   f2__primobject__traced_cmutex__reinitialize_globalvars();
   

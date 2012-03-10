@@ -144,7 +144,6 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode_trace__print_depth = 3;
   
   this->expression_not_funkable__exception__tag = -1;
-  this->expression_not_funkable__exception      = -1;
   
   this->push_pop_value_difference           = 0;
   this->push_pop_iter_difference            = 0;
@@ -3039,7 +3038,6 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__block_eval_args_end__symbol        = new__symbol(cause, "block_eval_args_end");
   
   __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
-  __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
 }
 
 void f2__bytecodes__defragment__fix_pointers() {
@@ -3116,7 +3114,6 @@ void f2__bytecodes__defragment__fix_pointers() {
   // exceptions
   
   defragment__fix_pointer(__funk2.bytecode.expression_not_funkable__exception__tag);
-  defragment__fix_pointer(__funk2.bytecode.expression_not_funkable__exception);
   
 }
 
@@ -3130,7 +3127,5 @@ void f2__bytecodes__initialize() {
   // exceptions
   
   __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
-  __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
-  environment__add_var_value(cause, global_environment(), __funk2.bytecode.expression_not_funkable__exception__tag, __funk2.bytecode.expression_not_funkable__exception);
 }
 

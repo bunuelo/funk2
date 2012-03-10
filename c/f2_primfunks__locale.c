@@ -87,8 +87,22 @@ void f2__primfunks__locale__reinitialize_globalvars() {
   //f2ptr cause = f2_primfunks__locale_c__cause__new(initial_cause(), nil, nil);
 }
 
+void f2__primfunks__locale__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+
+  f2__primcfunk__init__defragment__fix_pointers(locale__setlocale);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_all);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_collate);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_ctype);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_messages);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_monetary);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_numeric);
+  f2__primcfunk__init__defragment__fix_pointers(locale__lc_time);
+}
+
 void f2__primfunks__locale__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__locale", "", &f2__primfunks__locale__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__locale", "", &f2__primfunks__locale__reinitialize_globalvars, &f2__primfunks__locale__defragment__fix_pointers);
   
   f2__primfunks__locale__reinitialize_globalvars();
   

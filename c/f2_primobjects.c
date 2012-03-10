@@ -1495,7 +1495,7 @@ void f2__primobjects__defragment__fix_pointers() {
 							  has_no_side_effects,
 							  documentation);
   
-  f2__primcfunk__init__defragment__fix_pointers(funk__new);
+  //f2__primcfunk__init__defragment__fix_pointers(funk__new);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol);
   f2__primcfunk__init__defragment__fix_pointers(funk__new_copy);
@@ -1514,7 +1514,7 @@ void f2__primobjects__defragment__fix_pointers() {
   
   initialize_primobject_10_slot__defragment__fix_pointers(metro, name, body_bytecodes, args, demetropolized_body, body, env, machine_code, is_funktional, has_no_side_effects, documentation);
   
-  f2__primcfunk__init__defragment__fix_pointers(metro__new);
+  //f2__primcfunk__init__defragment__fix_pointers(metro__new);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol);
   f2__primcfunk__init__defragment__fix_pointers(metro__name);

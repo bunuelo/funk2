@@ -297,7 +297,7 @@ void f2__virtual_processor_handler__defragment__fix_pointers() {
   // -- initialize --
   
   f2__primcfunk__init__defragment__fix_pointers(global_virtual_processor_handler__hardware_affinities_enabled);
-  f2__primcfunk__init__defragment__fix_pointers(global_virtual_processor_handler__set_hardware_affinities_enabled, enable_hardware_affinities);
+  f2__primcfunk__init__defragment__fix_pointers(global_virtual_processor_handler__set_hardware_affinities_enabled);
 }
 
 void f2__virtual_processor_handler__initialize() {

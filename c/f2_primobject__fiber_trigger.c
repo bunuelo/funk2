@@ -195,9 +195,9 @@ void f2__primobject__fiber_trigger__defragment__fix_pointers() {
   
   initialize_primobject_2_slot__defragment__fix_pointers(fiber_trigger, cmutex, waiting_fiber_set);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trigger__symbol);
   f2__primcfunk__init__defragment__fix_pointers(fiber_trigger__trigger);

@@ -91,6 +91,7 @@ f2ptr f2stream__primobject_type__new_aux(f2ptr cause);
 // **
 
 void f2__primobject__stream__reinitialize_globalvars();
+void f2__primobject__stream__defragment__fix_pointers();
 void f2__primobject__stream__initialize();
 
 #endif // F2__PRIMOBJECT__STREAM__H

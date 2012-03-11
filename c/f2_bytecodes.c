@@ -430,6 +430,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
   }
   status("f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg bug: cannot_funk_unfunkable_funktion.");
+  f2__print(cause, funktion);
   f2ptr bug_frame = f2__frame__new(cause, nil);
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "cannot_funk_unfunkable_funktion"));
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funktion"), funktion);

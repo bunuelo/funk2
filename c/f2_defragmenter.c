@@ -206,7 +206,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   }
   
   funk2_garbage_collector__defragment__fix_pointers(&(__funk2.garbage_collector), this);
-  //funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
   
@@ -240,7 +239,8 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     }
   }
   
-  funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+  //funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
+  //funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {

@@ -105,12 +105,28 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
       }
     }
   }
+#define DEBUG_VIRTUAL_PROCESSOR
   if (! (virtual_processor_thread->exit)) {
     funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
     this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
     f2ptr     cause      = nil;
+#ifdef DEBUG_VIRTUAL_PROCESSOR
+    if (! raw__scheduler__is_type(cause, __funk2.operating_system.scheduler)) {
+      error(nil, "funk2_virtual_processor__execute_next_bytecodes: scheduler type assertion failure.");
+    }
+#endif // DEBUG_VIRTUAL_PROCESSOR
     f2ptr     processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+#ifdef DEBUG_VIRTUAL_PROCESSOR
+    if (! raw__array__is_type(cause, processors)) {
+      error(nil, "funk2_virtual_processor__execute_next_bytecodes: array type assertion failure.");
+    }
+#endif // DEBUG_VIRTUAL_PROCESSOR
     f2ptr     processor  = raw__array__elt(cause, processors, this->index);
+#ifdef DEBUG_VIRTUAL_PROCESSOR
+    if (! raw__processor__is_type(cause, processor)) {
+      error(nil, "funk2_virtual_processor__execute_next_bytecodes: processor type assertion failure.");
+    }
+#endif // DEBUG_VIRTUAL_PROCESSOR
     { // assert processor has correct index.
       int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
       if (pool_index != this->index) {

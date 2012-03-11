@@ -580,7 +580,13 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  resume_gc();
 	} else {
 	  char status_msg[1024];
-	  snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
+	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
+	    f2ptr larva      = f2fiber__value(fiber, cause);
+	    u64   larva_type = raw__larva__larva_type(cause, larva);
+	    snprintf(status_msg, 1023, "larva type (" u64__fstr ") found in fiber and fiber has no critics, so doing nothing.", larva_type);
+	  } else {
+	    snprintf(status_msg, 1023, "larva found in fiber (but is not larva now) and fiber has no critics, so doing nothing.");
+	  }
 	  status(status_msg);
 	}
       }

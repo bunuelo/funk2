@@ -183,6 +183,7 @@ f2ptr f2bool__new(uint raw_value);
 // **
 
 void f2__globalenv__reinitialize_globalvars();
+void f2__globalenv__defragment__fix_pointers();
 void f2__globalenv__initialize();
 
 #endif // F2__GLOBALENV__H

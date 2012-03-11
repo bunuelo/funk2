@@ -543,7 +543,7 @@ void f2__graph_match_error_correcting__defragment__fix_pointers() {
   
   // graph_edit_sequence
   initialize_primobject_3_slot__defragment__fix_pointers(graph_edit_sequence, operations, cost, isomorphism);
-  f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__new);
+  //f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__new);
   f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__add);
   f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__add_mapping);
   f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__combine);

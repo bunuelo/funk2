@@ -1533,9 +1533,9 @@ void f2__primobject__redblacktree__defragment__fix_pointers() {
   
   initialize_primobject_4_slot__defragment__fix_pointers(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(redblacktree__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(redblacktree__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__symbol);
   f2__primcfunk__init__defragment__fix_pointers(redblacktree__insert);
@@ -1601,9 +1601,9 @@ void f2__primobject__redblacktree__defragment__fix_pointers() {
   
   initialize_primobject_5_slot__defragment__fix_pointers(redblacktree_node, parent, left, right, color, count_key_ptypehash);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(redblacktree_node__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__funk);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(redblacktree_node__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(redblacktree_node__terminal_print_with_frame);

@@ -580,12 +580,17 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  resume_gc();
 	} else {
 	  char status_msg[1024];
-	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
-	    f2ptr larva      = f2fiber__value(fiber, cause);
-	    u64   larva_type = raw__larva__larva_type(cause, larva);
-	    snprintf(status_msg, 1023, "larva type (" u64__fstr ") found in fiber and fiber has no critics, so doing nothing.", larva_type);
+	  if (raw__bug__is_type(cause, f2fiber__value(fiber, cause))) {
+	    f2ptr bug      = f2fiber__value(fiber, cause);
+	    f2ptr bug_type = f2__bug__bug_type(cause, bug);
+	    if (raw__integer__is_type(cause, bug_type)) {
+	      u64 bug_type__i = f2integer__i(bug_type, cause);
+	      snprintf(status_msg, 1023, "bug type (" u64__fstr ") found in fiber and fiber has no critics, so doing nothing.", bug_type__i);
+	    } else {
+	      snprintf(status_msg, 1023, "larva found in fiber (but bug_type is not integer) and fiber has no critics, so doing nothing.");
+	    }
 	  } else {
-	    snprintf(status_msg, 1023, "larva found in fiber (but is not larva now) and fiber has no critics, so doing nothing.");
+	    snprintf(status_msg, 1023, "larva found in fiber (but is not bug now) and fiber has no critics, so doing nothing.");
 	  }
 	  status(status_msg);
 	}

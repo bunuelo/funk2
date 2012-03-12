@@ -209,6 +209,8 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
   
+  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug.img");
+  
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
@@ -270,7 +272,6 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
     }
   }
   funk2_defragmenter__defragment(this);
-  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug.img");
   status("");
   status("***********************************");
   status("**** DONE WITH DEFRAGMENTATION ****");

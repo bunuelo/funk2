@@ -270,6 +270,7 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
     }
   }
   funk2_defragmenter__defragment(this);
+  funk2_memory__save_image_to_file(&(__funk2.memory), "defragment.img");
   status("");
   status("***********************************");
   status("**** DONE WITH DEFRAGMENTATION ****");
@@ -292,7 +293,6 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
   if (this->need_defragmentation) {
     funk2_defragmenter__stop_everything_and_defragment(this);
-    funk2_memory__save_image_to_file(&(__funk2.memory), "defragment.img");
   }
 }
 

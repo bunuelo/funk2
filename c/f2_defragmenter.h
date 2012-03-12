@@ -45,6 +45,7 @@ void  funk2_defragmenter__destroy                      (funk2_defragmenter_t* th
 void  funk2_defragmenter__memory_pool__move_memory     (funk2_defragmenter_t* this, u64 pool_index);
 f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* this, f2ptr exp);
 void  funk2_defragmenter__memory_pool__fix_pointers    (funk2_defragmenter_t* this, u64 pool_index);
+void  funk2_defragmenter__defragment                   (funk2_defragmenter_t* this);
 void  funk2_defragmenter__handle                       (funk2_defragmenter_t* this);
 
 #define defragment__fix_pointer(fix_variable) {				\

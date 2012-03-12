@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -449,6 +449,9 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
+  
+  funk2_defragmenter__defragment(&(__funk2.defragmenter));
+  
   // note: we do not collect garbage here.
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {

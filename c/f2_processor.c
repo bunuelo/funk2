@@ -74,7 +74,7 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 	f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
       }
       if (! processor_assignment_scheduler_cmutex__failed_to_lock) {
-	f2cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+	f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
       }
       f2__this__fiber__yield(cause);
       //raw__fast_spin_sleep_yield();

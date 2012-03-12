@@ -209,7 +209,7 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
   
-  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug.img");
+  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-1.img");
   
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
@@ -228,6 +228,20 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
 		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
 		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	      } break;
+	      case ptype_scheduler_cmutex: {
+		ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+		funk2_processor_mutex__init(scheduler_cmutex_block->m);
+		if (scheduler_cmutex_block->locked_state) {
+		  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+		}
+	      } break;
+	      case ptype_cmutex: {
+		ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+		funk2_processor_mutex__init(cmutex_block->m);
+		if (cmutex_block->locked_state) {
+		  funk2_processor_mutex__lock(cmutex_block->m);
+		}
+	      } break;
 	      default:
 		break;
 	      }
@@ -241,13 +255,19 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     }
   }
   
+  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-2.img");
+
   //f2__globalenv__defragment__fix_pointers();
   //f2__primobject__file_handle__defragment__fix_pointers();
   //f2__primobject__stream__defragment__fix_pointers();
   
-  //funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
+  funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   
-  //funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-3.img");
+
+  funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+
+  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-4.img");
 }
 
 void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* this) {

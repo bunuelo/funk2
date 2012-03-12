@@ -248,47 +248,50 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
 }
 
+void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* this) {
+  status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
+  
+  // stop and reinitialize system (but don't restart)
+  funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
+  funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
+  __funk2.memory.bootstrapping_mode = boolean__true;
+  //__funk2.user_thread_controller.please_wait = boolean__true;
+  //funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
+  
+  status("");
+  status("*******************************");
+  status("**** DOING DEFRAGMENTATION ****");
+  status("*******************************");
+  status("");
+  {
+    int index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+    }
+  }
+  funk2_defragmenter__defragment(this);
+  status("");
+  status("***********************************");
+  status("**** DONE WITH DEFRAGMENTATION ****");
+  status("***********************************");
+  status("");
+  {
+    int index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+    }
+  }
+  this->need_defragmentation = boolean__false;
+  this->total_defragmentation_count ++;
+  
+  funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
+  __funk2.memory.bootstrapping_mode = boolean__false;
+  //__funk2.user_thread_controller.please_wait = boolean__false;
+}
+
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
   if (this->need_defragmentation) {
-    status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
-    
-    // stop and reinitialize system (but don't restart)
-    funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
-    funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
-    __funk2.memory.bootstrapping_mode = boolean__true;
-    //__funk2.user_thread_controller.please_wait = boolean__true;
-    //funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
-    
-    status("");
-    status("*******************************");
-    status("**** DOING DEFRAGMENTATION ****");
-    status("*******************************");
-    status("");
-    {
-      int index;
-      for (index = 0; index < memory_pool_num; index ++) {
-	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
-      }
-    }
-    funk2_defragmenter__defragment(this);
-    status("");
-    status("***********************************");
-    status("**** DONE WITH DEFRAGMENTATION ****");
-    status("***********************************");
-    status("");
-    {
-      int index;
-      for (index = 0; index < memory_pool_num; index ++) {
-	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
-      }
-    }
-    this->need_defragmentation = boolean__false;
-    this->total_defragmentation_count ++;
-    
-    funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
-    __funk2.memory.bootstrapping_mode = boolean__false;
-    //__funk2.user_thread_controller.please_wait = boolean__false;
-    
+    funk2_defragmenter__stop_everything_and_defragment(this);
   }
 }
 

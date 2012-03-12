@@ -209,8 +209,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
   
-  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-1.img");
-  
   {
     funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
     
@@ -255,19 +253,14 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     }
   }
   
-  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-2.img");
-
   //f2__globalenv__defragment__fix_pointers();
   //f2__primobject__file_handle__defragment__fix_pointers();
   //f2__primobject__stream__defragment__fix_pointers();
   
   funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   
-  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-3.img");
+  //funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
 
-  funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
-
-  funk2_memory__save_image_to_file(&(__funk2.memory), "img/defragment-debug-4.img");
 }
 
 void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* this) {

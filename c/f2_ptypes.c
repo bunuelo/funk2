@@ -23,8 +23,6 @@
 
 #include "funk2.h"
 
-#define F2__PTYPE__TYPE_CHECK
-
 void print_cmutex_error(int retval) {
   switch (retval) {
   case EINVAL: error(nil, "error unlocking ptype_cmutex: cmutex is not initialized.");              break;

@@ -1914,6 +1914,8 @@ void f2__compile__initialize() {
   environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize_full__symbol,                nil);
   environment__add_var_value(cause, global_environment(), __funk2.compile.raw__compile__symbol,                          nil);
   
+  __funk2.compile.wrong_argument_number__bcs = nil;
+  
   f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
   
 }

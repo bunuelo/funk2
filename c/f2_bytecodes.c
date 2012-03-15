@@ -373,7 +373,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       f2ptr name = f2__core_extension_funk__name(funktion, cause);
       u8*   name__utf8_str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 name__utf8_length = f2symbol__utf8_length(name, cause);
+	u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
 	name__utf8_str = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
 	raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
 	name__utf8_str[name__utf8_length] = 0;

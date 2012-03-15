@@ -342,18 +342,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2cfunk__name(funktion, cause);
-      u8*   str;
+      u8*   name__str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)from_ptr(f2__malloc(str_len + 1));
-	raw__symbol__str_copy(cause, name, str);
-	str[str_len] = 0;
+	u64 name__length = f2symbol__length(name, cause);
+	name__str = (u8*)from_ptr(f2__malloc(name__length + 1));
+	raw__symbol__str_copy(cause, name, name__str);
+	name__str[name__length] = 0;
       } else {
-	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
-	strcpy((char*)str, "<none>");
+	name__str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
+	strcpy((char*)name__str, "<none>");
       }
-      bytecode_status("executing cfunk name=|%s|", str);
-      f2__free(to_ptr(str));
+      bytecode_status("executing cfunk name=|%s|", name__str);
+      f2__free(to_ptr(name__str));
     }
 #endif // DEBUG_BYTECODES
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
@@ -371,18 +371,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2__core_extension_funk__name(funktion, cause);
-      u8*   str;
+      u8*   name__str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)from_ptr(f2__malloc(str_len + 1));
-	raw__symbol__str_copy(cause, name, str);
-	str[str_len] = 0;
+	u64 name__length = f2symbol__length(name, cause);
+	name__str = (u8*)from_ptr(f2__malloc(name__length + 1));
+	raw__symbol__str_copy(cause, name, name__str);
+	name__str[name__length] = 0;
       } else {
-	str = (u8*)from_ptr(malloc(strlen("<none>") + 1));
-	strcpy((char*)str, "<none>");
+	name__str = (u8*)from_ptr(malloc(strlen("<none>") + 1));
+	strcpy((char*)name__str, "<none>");
       }
-      bytecode_status("executing core_extension_funk name=|%s|", str);
-      f2__free(to_ptr(str));
+      bytecode_status("executing core_extension_funk name=|%s|", name__str);
+      f2__free(to_ptr(name__str));
     }
 #endif // DEBUG_BYTECODES
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
@@ -404,18 +404,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = raw__metro__name(cause, funktion);
-      u8*   str;
+      u8*   name__str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)from_ptr(f2__malloc(str_len + 1));
-	raw__symbol__str_copy(cause, name, str);
-	str[str_len] = 0;
+	u64 name__length = f2symbol__length(name, cause);
+	name__str = (u8*)from_ptr(f2__malloc(name__length + 1));
+	raw__symbol__str_copy(cause, name, name__str);
+	name__str[name__length] = 0;
       } else {
-	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
-	strcpy((char*)str, "<none>");
+	name__str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
+	strcpy((char*)name__str, "<none>");
       }
-      bytecode_status("executing metro name=|%s|", str);
-      f2__free(to_ptr(str));
+      bytecode_status("executing metro name=|%s|", name__str);
+      f2__free(to_ptr(name__str));
     }
 #endif // DEBUG_BYTECODES
     f2fiber__env__set(fiber, cause, raw__metro__env(cause, funktion));

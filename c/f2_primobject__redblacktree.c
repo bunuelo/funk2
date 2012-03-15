@@ -402,7 +402,7 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(f2ptr c
 
 f2ptr raw__redblacktree_node__simple_binary_insert_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
+  //debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif
   f2ptr new_node                       = nil;
   f2ptr this__count_key_ptypehash      = f2__redblacktree_node__count_key_ptypehash(cause, this);
@@ -869,7 +869,7 @@ void raw__redblacktree_node__replace_node(f2ptr cause, f2ptr dest, f2ptr src) {
     f2__redblacktree_node__parent__set(cause, src__right, dest);
   }
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(raw__redblacktree_node__is_valid(cause, dest), nil, "raw__redblacktree_node__replace_node assertion failure: raw__redblacktree_node__is_valid(cause, dest).");
+  //debug__assert(raw__redblacktree_node__is_valid(cause, dest), nil, "raw__redblacktree_node__replace_node assertion failure: raw__redblacktree_node__is_valid(cause, dest).");
 #endif
 }
 
@@ -953,8 +953,8 @@ void raw__redblacktree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
   }
   f2__redblacktree_node__color__set(cause, node1, node2__color);
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(raw__redblacktree_node__is_valid(cause, node1), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node1).");
-  debug__assert(raw__redblacktree_node__is_valid(cause, node2), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node2).");
+  //debug__assert(raw__redblacktree_node__is_valid(cause, node1), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node1).");
+  //debug__assert(raw__redblacktree_node__is_valid(cause, node2), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node2).");
 #endif
 }
 

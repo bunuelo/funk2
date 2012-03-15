@@ -315,14 +315,15 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
+	str = (u8*)from_ptr(f2__malloc(str_len + 1));
 	raw__symbol__str_copy(cause, name, str);
 	str[str_len] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
+	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
 	strcpy((char*)str, "<none>");
       }
       bytecode_status("executing funk name=|%s| body_bcs=%s machine_code=%s", str, body_bcs ? "<not nil>" : "nil", machine_code ? "<not nil>" : "nil");
+      f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
     if (raw__larva__is_type(cause, body_bcs)) {
@@ -344,14 +345,15 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
+	str = (u8*)from_ptr(f2__malloc(str_len + 1));
 	raw__symbol__str_copy(cause, name, str);
 	str[str_len] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
+	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
 	strcpy((char*)str, "<none>");
       }
       bytecode_status("executing cfunk name=|%s|", str);
+      f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
@@ -372,14 +374,15 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
+	str = (u8*)from_ptr(f2__malloc(str_len + 1));
 	raw__symbol__str_copy(cause, name, str);
 	str[str_len] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
+	str = (u8*)from_ptr(malloc(strlen("<none>") + 1));
 	strcpy((char*)str, "<none>");
       }
       bytecode_status("executing core_extension_funk name=|%s|", str);
+      f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
@@ -404,14 +407,15 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
+	str = (u8*)from_ptr(f2__malloc(str_len + 1));
 	raw__symbol__str_copy(cause, name, str);
 	str[str_len] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
+	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
 	strcpy((char*)str, "<none>");
       }
       bytecode_status("executing metro name=|%s|", str);
+      f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
     f2fiber__env__set(fiber, cause, raw__metro__env(cause, funktion));
@@ -1622,14 +1626,16 @@ int f2__fiber__bytecode__lookup(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr v
     u8* var_str;
     if (raw__symbol__is_type(cause, var)) {
       var_len = raw__symbol__length(cause, var);
-      var_str = alloca(var_len + 1);
+      var_str = (u8*)from_ptr(f2__malloc(var_len + 1));
       raw__symbol__str_copy(cause, var, var_str);
       var_str[var_len] = 0;
     } else {
-      var_str = (u8*)"<non-symbol>";
+      var_str = (u8*)from_ptr(f2__malloc(strlen("<non-symbol>") + 1));
+      strcpy((char*)var_str, "<non-symbol>");
     }
     f2ptr env = f2fiber__env(fiber, cause);
     bytecode_status("bytecode lookup beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
+    f2__free(to_ptr(var_str));
   }
 #endif // DEBUG_BYTECODES  
   f2ptr fiber_value = f2__fiber__lookup_type_variable_value(cause, fiber, type, var);

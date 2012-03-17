@@ -117,6 +117,7 @@ def_pcfunk1(file_handle__try_read_byte, this,
 
 ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* data) {
   if (! raw__file_handle__is_type(cause, this)) {
+    status("raw__file_handle__write type error."); fflush(stdout);
     {
       f2ptr type = f2__object__type(cause, this);
       if (type == nil) {
@@ -129,18 +130,19 @@ ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* d
 	status("raw__file_handle__write type error: type is |%s|.", type__utf8_str); fflush(stdout);
 	f2__free(to_ptr(type__utf8_str));
       } else {
+	status("raw__file_handle__write type error: cannot print type (not symbol)."); fflush(stdout);
 	f2ptr type__type = f2__object__type(cause, type);
 	if (type__type == nil) {
-	  status("raw__file_handle__write type error: cannot print type (not symbol).  type__type is Nil."); fflush(stdout);
+	  status("raw__file_handle__write type error: type__type is Nil."); fflush(stdout);
 	} else if (raw__symbol__is_type(cause, type__type)) {
 	  u64 type__type__utf8_length = raw__symbol__utf8_length(cause, type__type);
 	  u8* type__type__utf8_str    = (u8*)from_ptr(f2__malloc(sizeof(u8) * type__type__utf8_length));
 	  raw__symbol__utf8_str_copy(cause, type__type, type__type__utf8_str);
 	  type__type__utf8_str[type__type__utf8_length] = 0;
-	  status("raw__file_handle__write type error: cannot print type (not symbol).  type__type is |%s|.", type__type__utf8_str); fflush(stdout);
+	  status("raw__file_handle__write type error: type__type is |%s|.", type__type__utf8_str); fflush(stdout);
 	  f2__free(to_ptr(type__type__utf8_str));
 	} else {
-	  status("raw__file_handle__write type error: cannot print type (not symbol).  cannot print type__type (not symbol)."); fflush(stdout);
+	  status("raw__file_handle__write type error: cannot print type__type (not symbol)."); fflush(stdout);
 	}
       }
     }

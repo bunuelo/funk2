@@ -1503,23 +1503,16 @@ f2ptr f2graph_decomposition_lattice__primobject_type__new_aux(f2ptr cause) {
 void f2__graph__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __graph_node__symbol                       = new__symbol(cause, "graph_node");
-  __graph_edge__symbol                       = new__symbol(cause, "graph_edge");
-  __graph__symbol                            = new__symbol(cause, "graph");
-  __graph_isomorphism__symbol                = new__symbol(cause, "graph_isomorphism");
-  __graph_decomposition_lattice_node__symbol = new__symbol(cause, "graph_decomposition_lattice_node");
-  __graph_decomposition_lattice__symbol      = new__symbol(cause, "graph_decomposition_lattice");
+  reinitialize_primobject(graph_node);
+  reinitialize_primobject(graph_edge);
+  reinitialize_primobject(graph);
+  reinitialize_primobject(graph_isomorphism);
+  reinitialize_primobject(graph_decomposition_lattice_node);
+  reinitialize_primobject(graph_decomposition_lattice);
 }
 
 void f2__graph__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__graph_node__symbol);
-  defragment__fix_pointer(__graph_edge__symbol);
-  defragment__fix_pointer(__graph__symbol);
-  defragment__fix_pointer(__graph_isomorphism__symbol);
-  defragment__fix_pointer(__graph_decomposition_lattice_node__symbol);
-  defragment__fix_pointer(__graph_decomposition_lattice__symbol);
   
   
   // -- initialize --

@@ -27,10 +27,6 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
   }
   ptype_t ptype = f2ptype__raw(this, cause);
   switch (ptype) {
-  case ptype_free_memory:
-  case ptype_newly_allocated:
-    error(nil, "shouldn't ever see this object ptype.");
-    return nil;
   case ptype_integer:
     return new__symbol(cause, "integer");
   case ptype_double:
@@ -73,6 +69,13 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
     return f2larva__new(cause, 1, nil);
   case ptype_larva:
     return new__symbol(cause, "larva");
+  // we shouldn't see anything else
+  case ptype_free_memory:
+  case ptype_newly_allocated:
+  default:
+    status("shouldn't ever see this object ptype (" u64__fstr ")", (u64)ptype);
+    error(nil, "shouldn't ever see this object ptype.");
+    return nil;
   }
   return f2larva__new(cause, 1, nil);
 }

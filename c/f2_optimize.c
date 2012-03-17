@@ -4808,25 +4808,18 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count) {
 void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __optimize_bytecode__symbol   = new__symbol(cause, "optimize_bytecode");
-  __optimize_chunk__symbol      = new__symbol(cause, "optimize_chunk");
-  __optimize_transition__symbol = new__symbol(cause, "optimize_transition");
-  __optimize_data__symbol       = new__symbol(cause, "optimize_data");
-  __optimize_fiber__symbol      = new__symbol(cause, "optimize_fiber");
-  __optimize_context__symbol    = new__symbol(cause, "optimize_context");
+  reintialize_primobject(optimize_bytecode);
+  reintialize_primobject(optimize_chunk);
+  reintialize_primobject(optimize_transition);
+  reintialize_primobject(optimize_data);
+  reintialize_primobject(optimize_fiber);
+  reintialize_primobject(optimize_context);
 }
 
 void f2__optimize__defragment__fix_pointers() {
   // -- reinitialize --
-
-  defragment__fix_pointer(__optimize_bytecode__symbol);
-  defragment__fix_pointer(__optimize_chunk__symbol);
-  defragment__fix_pointer(__optimize_transition__symbol);
-  defragment__fix_pointer(__optimize_data__symbol);
-  defragment__fix_pointer(__optimize_fiber__symbol);
-  defragment__fix_pointer(__optimize_context__symbol);
   
-
+  
   // -- initialize --
   
   // optimize_bytecode

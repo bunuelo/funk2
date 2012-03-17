@@ -740,17 +740,15 @@ def_pcfunk1(getenv, environment_variable,
 
 void f2__package__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __source_expression__symbol = new__symbol(cause, "source_expression");
-  __source__symbol            = new__symbol(cause, "source");
-  __package__symbol           = new__symbol(cause, "package");
+  
+  reinitialize_primobject(source_expression);
+  reinitialize_primobject(source);
+  reinitialize_primobject(package);
 }
 
 void f2__package__defragment__fix_pointers() {
   // -- reinitialize --
   
-  defragment__fix_pointer(__source_expression__symbol);
-  defragment__fix_pointer(__source__symbol);
-  defragment__fix_pointer(__package__symbol);
   
   // -- initialize --
   

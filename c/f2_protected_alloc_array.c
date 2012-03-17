@@ -281,7 +281,7 @@ void funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(funk2_prot
 	funk2_protected_alloc_array_t* protected_alloc_array = used_fiber_hash__protected_alloc_array_array[index];
 	defragment__fix_pointer(fiber);
 	funk2_protected_alloc_array__defragment__fix_pointers(protected_alloc_array);
-	funk2_hash__add(&(this->used_fiber_hash), (u64)fiber, protected_alloc_array);
+	funk2_hash__add(&(this->used_fiber_hash), (u64)fiber, (u64)to_ptr(protected_alloc_array));
       }
     }
     f2__free(to_ptr(used_fiber_hash__fiber_array));

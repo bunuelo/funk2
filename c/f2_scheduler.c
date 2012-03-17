@@ -419,8 +419,8 @@ void f2__this__fiber__yield(f2ptr cause) {
 void f2__scheduler__initialize_global_symbolic_vars() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
-  __processor__symbol = new__symbol(cause, "processor");
-  __scheduler__symbol = new__symbol(cause, "scheduler");
+  reinitialize_primobject(processor);
+  reinitialize_primobject(scheduler);
 }
 
 void f2__scheduler__reinitialize_globalvars() {
@@ -434,9 +434,6 @@ void f2__scheduler__reinitialize_globalvars() {
 
 void f2__scheduler__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__processor__symbol);
-  defragment__fix_pointer(__scheduler__symbol);
   
   funk2_operating_system__defragment__fix_pointers(&(__funk2.operating_system));
   

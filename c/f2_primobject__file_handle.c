@@ -119,7 +119,9 @@ ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* d
   if (! raw__file_handle__is_type(cause, this)) {
     {
       f2ptr type = f2__object__type(cause, this);
-      if (raw__symbol__is_type(cause, type)) {
+      if (type == nil) {
+	status("raw__file_handle__write type error: type is Nil."); fflush(stdout);
+      } else if (raw__symbol__is_type(cause, type)) {
 	u64 type__utf8_length = raw__symbol__utf8_length(cause, type);
 	u8* type__utf8_str    = (u8*)from_ptr(f2__malloc(sizeof(u8) * type__utf8_length));
 	raw__symbol__utf8_str_copy(cause, type, type__utf8_str);

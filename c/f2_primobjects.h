@@ -1244,11 +1244,12 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
   initialize_primobject_funk(name, type);    \
   initialize_primobject_funk(name, new);
 
-#define initialize_primobject_common__defragment__fix_pointers(name)   \
-  initialize_primobject_funk__defragment__fix_pointers(name, is_type); \
-  initialize_primobject_funk__defragment__fix_pointers(name, type);    \
-  initialize_primobject_funk__defragment__fix_pointers(name, new);
-
+#define initialize_primobject_common__defragment__fix_pointers(name) {  \
+    __##name##__symbol = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), __##name##__symbol); \
+    initialize_primobject_funk__defragment__fix_pointers(name, is_type); \
+    initialize_primobject_funk__defragment__fix_pointers(name, type);	\
+    initialize_primobject_funk__defragment__fix_pointers(name, new);	\
+  }
 
 #define initialize_primobject_slot(name, slot_name)	\
   initialize_primobject_funk(name, slot_name);		\

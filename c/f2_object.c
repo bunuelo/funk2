@@ -24,7 +24,7 @@
 #define F2__DEBUG__OBJECT__TYPE
 
 #if defined(F2__DEBUG__OBJECT__TYPE)
-#  define object_type_status(msg, rest...) status("[object_type]" msg, ## rest)
+#  define object_type_status(msg, rest...) status("[object_type] " msg, ## rest)
 #else
 #  define object_type_status(msg, rest...)
 #endif // F2__DEBUG__OBJECT__TYPE
@@ -73,7 +73,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
       object_type_status("array (1)");
       f2ptr primobject_type_name = f2primobject__object_type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
-      if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
+      if (raw__eq(cause, primobject_type_name, __funk2.primobject__frame.frame__symbol)) {
 	object_type_status("array (2)");
 	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);
 	if (test_get_type) {

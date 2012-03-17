@@ -449,6 +449,8 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
+  funk2_defragmenter__stop_everything_and_defragment(&(__funk2.defragmenter));
+  
   // note: we do not collect garbage here.
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {

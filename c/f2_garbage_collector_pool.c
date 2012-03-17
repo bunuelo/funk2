@@ -875,6 +875,7 @@ void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collec
   funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(          &(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(&(this->other_no_more_references));
   funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(   &(this->other_protected_f2ptr));
+  funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(           &(this->protected_alloc_array_fiber_hash));
   {
     u64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {

@@ -118,13 +118,12 @@ def_pcfunk1(global_package_handler__lookup_package, name,
 
 void f2__package_handler__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __package_handler__symbol = new__symbol(cause, "package_handler");
+  
+  reinitialize_primobject(package_handler);
 }
 
 void f2__package_handler__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__package_handler__symbol);
   
   
   // -- initialize --

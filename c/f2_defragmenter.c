@@ -41,6 +41,60 @@ void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
   }
 }
 
+void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* this, u64 pool_index) {
+  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+  while(iter < end_of_blocks) {
+    if (iter->used) {
+      ptype_block_t* block = (ptype_block_t*)iter;
+      switch(block->block.ptype) {
+      case ptype_scheduler_cmutex: {
+	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	funk2_processor_mutex__destroy(scheduler_cmutex_block->m);
+      } break;
+      case ptype_cmutex: {
+	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	funk2_processor_mutex__destroy(cmutex_block->m);
+      } break;
+      default:
+	break;
+      }
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  release__assert(iter == end_of_blocks, nil, "funk2_defragmenter__memory_pool__destroy_memblocks test failure: (end_of_blocks != iter) failure.");
+}
+
+void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t* this, u64 pool_index) {
+  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+  while(iter < end_of_blocks) {
+    if (iter->used) {
+      ptype_block_t* block = (ptype_block_t*)iter;
+      switch(block->block.ptype) {
+      case ptype_scheduler_cmutex: {
+	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	funk2_processor_mutex__init(scheduler_cmutex_block->m);
+	if (scheduler_cmutex_block->locked_state) {
+	  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+	}
+      } break;
+      case ptype_cmutex: {
+	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	funk2_processor_mutex__init(cmutex_block->m);
+	if (cmutex_block->locked_state) {
+	  funk2_processor_mutex__lock(cmutex_block->m);
+	}
+      } break;
+      default:
+	break;
+      }
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  release__assert(iter == end_of_blocks, nil, "funk2_defragmenter__memory_pool__destroy_memblocks test failure: (end_of_blocks != iter) failure.");
+}
+
 void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u64 pool_index) {
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr, pool_index);
   
@@ -180,12 +234,43 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }
 
+void funk2_defragmenter__reinitialize_symbol_hash(funk2_defragmenter_t* this) {
+  funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
+  
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      {
+	funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+	funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+	while(iter < end_of_blocks) {
+	  if (iter->used) {
+	    ptype_block_t* block = (ptype_block_t*)iter;
+	    switch(block->block.ptype) {
+	    case ptype_symbol: {
+	      f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
+	      funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
+	    } break;
+	    default:
+	      break;
+	    }
+	  }
+	  iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+	}
+	release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+      }
+    }
+  }
+}
+
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   {
     s64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_defragmenter__memory_pool__move_memory(this, pool_index);
+      funk2_defragmenter__memory_pool__destroy_memblocks(   this, pool_index);
+      funk2_defragmenter__memory_pool__move_memory(         this, pool_index);
+      funk2_defragmenter__memory_pool__initialize_memblocks(this, pool_index);
     }
   }
   //funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
@@ -207,51 +292,7 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   funk2_garbage_collector__defragment__fix_pointers(&(__funk2.garbage_collector), this);
   
-  status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
-  
-  {
-    funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
-    
-    {
-      s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	{
-	  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
-	  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
-	  while(iter < end_of_blocks) {
-	    if (iter->used) {
-	      ptype_block_t* block = (ptype_block_t*)iter;
-	      switch(block->block.ptype) {
-	      case ptype_symbol: {
-		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
-		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-	      } break;
-	      case ptype_scheduler_cmutex: {
-		ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-		funk2_processor_mutex__init(scheduler_cmutex_block->m);
-		if (scheduler_cmutex_block->locked_state) {
-		  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
-		}
-	      } break;
-	      case ptype_cmutex: {
-		ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
-		funk2_processor_mutex__init(cmutex_block->m);
-		if (cmutex_block->locked_state) {
-		  funk2_processor_mutex__lock(cmutex_block->m);
-		}
-	      } break;
-	      default:
-		break;
-	      }
-	    }
-	    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-	  }
-	  release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
-	}
-      }
-      
-    }
-  }
+  funk2_defragmenter__reinitialize_symbol_hash(this);
   
   //f2__reader__defragment__fix_pointers();
   //f2__globalenv__defragment__fix_pointers();

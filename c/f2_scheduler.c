@@ -50,6 +50,25 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
   }
 }
 
+void funk2_operating_system__defragment__fix_pointers(funk2_operating_system_t* this) {
+  defragment__fix_pointer(this->scheduler__symbol);
+  defragment__fix_pointer(this->scheduler);
+  {
+    int index;
+    for (index = 0; index < memory_pool_num; index++) {
+      {
+	funk2_operating_system_current_fiber_cons_t* iter = this->current_fiber_stack[index];
+	while (iter) {
+	  funk2_operating_system_current_fiber_cons_t* next = iter->next;
+	  defragment__fix_pointer(iter->current_fiber);
+	  iter = next;
+	}
+      }
+    }
+  }
+}
+
+
 void funk2_operating_system__push_current_fiber(funk2_operating_system_t* this, u64 pool_index, f2ptr current_fiber) {
   funk2_operating_system_current_fiber_cons_t* cons = (funk2_operating_system_current_fiber_cons_t*)from_ptr(f2__malloc(sizeof(funk2_operating_system_current_fiber_cons_t)));
   cons->current_fiber = current_fiber;
@@ -419,10 +438,8 @@ void f2__scheduler__defragment__fix_pointers() {
   defragment__fix_pointer(__processor__symbol);
   defragment__fix_pointer(__scheduler__symbol);
   
-  defragment__fix_pointer(__funk2.operating_system.scheduler__symbol);
-  defragment__fix_pointer(__funk2.operating_system.scheduler);
+  funk2_operating_system__defragment__fix_pointers(&(__funk2.operating_system));
   
-
   // -- initialize --
 
   // scheduler

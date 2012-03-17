@@ -798,20 +798,13 @@ f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause) {
 void f2__fiber__reinitialize_globalvars() {
   f2ptr cause = f2_fiber_c__cause__new(initial_cause());
   
-  // initialize type symbols
-  
-  // fiber
-  __fiber__symbol = new__symbol(cause, "fiber");
-  
-  // fiber_stack_trace
-  __fiber_stack_trace__symbol = new__symbol(cause, "fiber_stack_trace");
-  
-  // fiber_stack_trace_block
-  __fiber_stack_trace_block__symbol = new__symbol(cause, "fiber_stack_trace_block");
+  // reinitialize type symbols
+  reinitialize_primobject(fiber);
+  reinitialize_primobject(fiber_stack_trace);
+  reinitialize_primobject(fiber_stack_trace_block);
   
   
-  
-  // initialize fiber register symbols
+  // reinitialize fiber register symbols
   __fiber__program_counter_reg__symbol = new__symbol(cause, "program_counter");
   __fiber__iter_reg__symbol            = new__symbol(cause, "iter");
   __fiber__env_reg__symbol             = new__symbol(cause, "env");
@@ -819,24 +812,13 @@ void f2__fiber__reinitialize_globalvars() {
   __fiber__return_reg__symbol          = new__symbol(cause, "return");
   __fiber__value_reg__symbol           = new__symbol(cause, "value");
   
-  // initialize other misc. symbols
+  // reinitialize other misc. symbols
   __fiber__environment_critics__symbol = new__symbol(cause, "-environment_critics-");
   
 }
 
 void f2__fiber__defragment__fix_pointers() {
   // -- reinitialize --
-
-  // initialize type symbols
-  
-  // fiber
-  defragment__fix_pointer(__fiber__symbol);
-  
-  // fiber_stack_trace
-  defragment__fix_pointer(__fiber_stack_trace__symbol);
-  
-  // fiber_stack_trace_block
-  defragment__fix_pointer(__fiber_stack_trace_block__symbol);
   
   // initialize fiber register symbols
   defragment__fix_pointer(__fiber__program_counter_reg__symbol);

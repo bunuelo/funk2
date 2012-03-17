@@ -180,13 +180,13 @@ f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__fiber_trigger__reinitialize_globalvars() {
-  __fiber_trigger__symbol = new__symbol(initial_cause(), "fiber_trigger");
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(fiber_trigger);
 }
 
 void f2__primobject__fiber_trigger__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__fiber_trigger__symbol);
   
   
   // -- initialize --

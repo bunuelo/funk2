@@ -530,13 +530,12 @@ def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms,
 
 void f2__graph_match_error_correcting__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __graph_edit_sequence__symbol = new__symbol(cause, "graph_edit_sequence");
+  
+  reinitialize_primobject(graph_edit_sequence);
 }
 
 void f2__graph_match_error_correcting__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__graph_edit_sequence__symbol);
   
   
   // -- initialize --

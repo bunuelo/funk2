@@ -629,12 +629,6 @@ void f2__primobject__stream__reinitialize_globalvars() {
 void f2__primobject__stream__defragment__fix_pointers() {
   // -- reinitialize --
   
-  //defragment__fix_pointer(__stream__symbol);
-  //defragment__fix_pointer(__file_stream__symbol);
-  //defragment__fix_pointer(__socket_stream__symbol);
-  //defragment__fix_pointer(__string_stream__symbol);
-  //defragment__fix_pointer(__text_window_stream__symbol);
-  
   
   // -- initialize --
   

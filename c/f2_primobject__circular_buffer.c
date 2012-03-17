@@ -150,8 +150,6 @@ void f2__primobject_circular_buffer__reinitialize_globalvars() {
 void f2__primobject_circular_buffer__defragment__fix_pointers() {
   // -- reinitialize --
   
-  //defragment__fix_pointer(__circular_buffer__symbol);
-  
   
   // -- initialize --
   

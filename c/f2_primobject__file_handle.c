@@ -247,13 +247,13 @@ f2ptr f2file_handle__primobject_type__new_aux(f2ptr cause) {
 
 void f2__primobject__file_handle__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __file_handle__symbol = new__symbol(cause, "file_handle");
+  
+  reinitialize_primobject(file_handle);
 }
 
 void f2__primobject__file_handle__defragment__fix_pointers() {
   // -- reinitialize --
   
-  defragment__fix_pointer(__file_handle__symbol);
   
   // -- initialize --
   
@@ -291,7 +291,7 @@ void f2__primobject__file_handle__defragment__fix_pointers() {
 void f2__primobject__file_handle__initialize() {
   f2ptr cause = initial_cause();
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "file_handle", "", &f2__primobject__file_handle__reinitialize_globalvars, &f2__primobject__file_handle__defragment__fix_pointers);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-file_handle", "", &f2__primobject__file_handle__reinitialize_globalvars, &f2__primobject__file_handle__defragment__fix_pointers);
   
   f2__primobject__file_handle__reinitialize_globalvars();
   

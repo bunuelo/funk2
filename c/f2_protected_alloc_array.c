@@ -289,7 +289,7 @@ void funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(funk2_prot
   }
   {
     u64 index;
-    for (index = 0; index < extra_array_buffer__count; index ++) {
+    for (index = 0; index < this->extra_array_buffer__count; index ++) {
       funk2_protected_alloc_array_t* extra_array_buffer = this->extra_array_buffer[index];
       funk2_protected_alloc_array__defragment__fix_pointers(extra_array_buffer);
     }

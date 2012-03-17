@@ -117,6 +117,19 @@ def_pcfunk1(file_handle__try_read_byte, this,
 
 ssize_t raw__file_handle__write(f2ptr cause, f2ptr this, s64 data__length, u8* data) {
   if (! raw__file_handle__is_type(cause, this)) {
+    {
+      f2ptr type = f2__object__type(cause, this);
+      if (raw__symbol__is_type(cause, type)) {
+	u64 type__utf8_length = raw__symbol__utf8_length(cause, type);
+	u8* type__utf8_str    = (u8*)from_ptr(f2__malloc(sizeof(u8) * type__utf8_length));
+	raw__symbol__utf8_str_copy(cause, type, type__utf8_str);
+	type__utf8_str[type__utf8_length] = 0;
+	status("raw__file_handle__write type error: type is |%s|.", type__utf8_str); fflush(stdout);
+	f2__free(to_ptr(type__utf8_str));
+      } else {
+	status("raw__file_handle__write type error: cannot print type (not symbol)."); fflush(stdout);
+      }
+    }
     error(nil, "file_handle-writef error: this is not file_handle.");
   }
   f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);

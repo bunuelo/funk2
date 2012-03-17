@@ -169,13 +169,11 @@ f2ptr f2traced_cmutex__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__traced_cmutex__reinitialize_globalvars() {
-  __traced_cmutex__symbol = new__symbol(initial_cause(), "traced_cmutex");
+  reinitialize_primobject(traced_cmutex);
 }
 
 void f2__primobject__traced_cmutex__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__traced_cmutex__symbol);
   
   
   // -- initialize --

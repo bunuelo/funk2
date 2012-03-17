@@ -1238,6 +1238,10 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
     __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk); \
   }
 
+#define reinitialize_primobject(name) {			\
+    __##name##__symbol = new__symbol(cause, #name);	\
+  }
+
 
 #define initialize_primobject_common(name)   \
   initialize_primobject_funk(name, is_type); \

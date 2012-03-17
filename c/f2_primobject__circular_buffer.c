@@ -143,7 +143,8 @@ f2ptr f2circular_buffer__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject_circular_buffer__reinitialize_globalvars() {
-  __circular_buffer__symbol = new__symbol(initial_cause(), "circular_buffer");
+  reinitialize_primobject(circular_buffer);
+  //__circular_buffer__symbol = new__symbol(initial_cause(), "circular_buffer");
 }
 
 void f2__primobject_circular_buffer__defragment__fix_pointers() {

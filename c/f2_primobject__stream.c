@@ -618,21 +618,22 @@ f2ptr f2stream__primobject_type__new_aux(f2ptr cause) {
 void f2__primobject__stream__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
-  __stream__symbol             = new__symbol(cause, "stream");
-  __file_stream__symbol        = new__symbol(cause, "file_stream");
-  __socket_stream__symbol      = new__symbol(cause, "socket_stream");
-  __string_stream__symbol      = new__symbol(cause, "string_stream");
-  __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
+  reinitialize_primobject(stream);
+  reinitialize_primobject(file_stream);
+  reinitialize_primobject(socket_stream);
+  reinitialize_primobject(string_stream);
+  reinitialize_primobject(text_window_stream);
+  
 }
 
 void f2__primobject__stream__defragment__fix_pointers() {
   // -- reinitialize --
   
-  defragment__fix_pointer(__stream__symbol);
-  defragment__fix_pointer(__file_stream__symbol);
-  defragment__fix_pointer(__socket_stream__symbol);
-  defragment__fix_pointer(__string_stream__symbol);
-  defragment__fix_pointer(__text_window_stream__symbol);
+  //defragment__fix_pointer(__stream__symbol);
+  //defragment__fix_pointer(__file_stream__symbol);
+  //defragment__fix_pointer(__socket_stream__symbol);
+  //defragment__fix_pointer(__string_stream__symbol);
+  //defragment__fix_pointer(__text_window_stream__symbol);
   
   
   // -- initialize --

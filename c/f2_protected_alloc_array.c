@@ -139,7 +139,7 @@ void funk2_protected_alloc_array__touch_all(funk2_protected_alloc_array_t* this,
   }
 }
 
-void funk2_protected_alloc_array__defragment__fix_pointers(protected_alloc_array_t* this) {
+void funk2_protected_alloc_array__defragment__fix_pointers(funk2_protected_alloc_array_t* this) {
   u64 index;
   for (index = 0; index < this->used_num; index ++) {
     defragment__fix_pointer(this->data[index].data);

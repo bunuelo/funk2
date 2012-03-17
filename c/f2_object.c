@@ -21,58 +21,87 @@
 
 #include "funk2.h"
 
+#define F2__DEBUG__OBJECT__TYPE
+
+#if defined(F2__DEBUG__OBJECT__TYPE
+#  define object_type_status(msg, rest...) status("[object_type]" msg, ## rest)
+#else
+#  define object_type_status(msg, rest...)
+#endif // F2__DEBUG__OBJECT__TYPE
+
 f2ptr f2__object__type(f2ptr cause, f2ptr this) {
   if (! this) {
+    object_type_status("nil");
     return nil;
   }
   ptype_t ptype = f2ptype__raw(this, cause);
   switch (ptype) {
   case ptype_integer:
+    object_type_status("integer");
     return new__symbol(cause, "integer");
   case ptype_double:
+    object_type_status("double");
     return new__symbol(cause, "double");
   case ptype_float:
+    object_type_status("float");
     return new__symbol(cause, "float");
   case ptype_pointer:
+    object_type_status("pointer");
     return new__symbol(cause, "pointer");
   case ptype_scheduler_cmutex:
+    object_type_status("scheduler_cmutex");
     return new__symbol(cause, "scheduler_cmutex");
   case ptype_cmutex:
+    object_type_status("cmutex");
     return new__symbol(cause, "cmutex");
   case ptype_char:
+    object_type_status("char");
     return new__symbol(cause, "char");
   case ptype_string:
+    object_type_status("string");
     return new__symbol(cause, "string");
   case ptype_symbol:
+    object_type_status("symbol");
     return new__symbol(cause, "symbol");
   case ptype_chunk:
+    object_type_status("chunk");
     return new__symbol(cause, "chunk");
   case ptype_simple_array:
   case ptype_traced_array:
+    object_type_status("array (0)");
     if (raw__primobject__is_type(cause, this)) {
+      object_type_status("array (1)");
       f2ptr primobject_type_name = f2primobject__object_type(this, cause);
       //printf("\nprimobject_type_name: "); f2__print(cause, primobject_type_name); fflush(stdout);
       if (primobject_type_name == __funk2.primobject__frame.frame__symbol) {
+	object_type_status("array (2)");
 	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);
 	if (test_get_type) {
+	  object_type_status("array (3)");
 	  primobject_type_name = test_get_type;
 	}
       }
       return primobject_type_name;
     } else {
+      object_type_status("array (4)");
       if (ptype == ptype_simple_array) {
+	object_type_status("array (5)");
 	return new__symbol(cause, "simple_array");
       } else if (ptype == ptype_traced_array) {
+	object_type_status("array (6)");
 	return new__symbol(cause, "traced_array");
       }
     }
+    object_type_status("array (7)");
     return f2larva__new(cause, 1, nil);
   case ptype_larva:
+    object_type_status("larva");
     return new__symbol(cause, "larva");
   // we shouldn't see anything else
   case ptype_free_memory:
   case ptype_newly_allocated:
   default:
+    object_type_status("<unknown>");
     status("shouldn't ever see this object ptype (" u64__fstr ")", (u64)ptype);
     error(nil, "shouldn't ever see this object ptype.");
     return nil;

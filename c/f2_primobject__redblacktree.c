@@ -1516,15 +1516,14 @@ f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__redblacktree__reinitialize_globalvars() {
-  __redblacktree__symbol      = new__symbol(initial_cause(), "redblacktree");
-  __redblacktree_node__symbol = new__symbol(initial_cause(), "redblacktree_node");
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(redblacktree);
+  reinitialize_primobject(redblacktree_node);
 }
 
 void f2__primobject__redblacktree__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__redblacktree__symbol);
-  defragment__fix_pointer(__redblacktree_node__symbol);
   
   
   // -- initialize --

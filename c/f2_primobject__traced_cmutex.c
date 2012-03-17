@@ -169,6 +169,8 @@ f2ptr f2traced_cmutex__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__traced_cmutex__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
   reinitialize_primobject(traced_cmutex);
 }
 

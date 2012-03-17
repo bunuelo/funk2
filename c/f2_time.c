@@ -1088,15 +1088,13 @@ f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
 
 void f2__time__reinitialize_globalvars() {
   f2ptr cause = nil;
-  __time__symbol          = new__symbol(cause, "time");
-  __relative_time__symbol = new__symbol(cause, "relative_time");
+  
+  reinitialize_primobject(time);
+  reinitialize_primobject(relative_time);
 }
 
 void f2__time__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__time__symbol);
-  defragment__fix_pointer(__relative_time__symbol);
   
   
   // -- initialize --

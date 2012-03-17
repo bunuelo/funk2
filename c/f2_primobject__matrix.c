@@ -172,13 +172,12 @@ f2ptr f2matrix__primobject_type__new_aux(f2ptr cause) {
 
 void f2__primobject__matrix__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __matrix__symbol = new__symbol(cause, "matrix");
+  
+  reinitialize_primobject(matrix);
 }
 
 void f2__primobject__matrix__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__matrix__symbol);
   
   
   // -- initialize --

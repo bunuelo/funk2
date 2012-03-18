@@ -449,7 +449,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
-  //funk2_defragmenter__defragment(&(__funk2.defragmenter));
+  funk2_defragmenter__defragment(&(__funk2.defragmenter));
   
   funk2_memory__debug_memory_test(this, 1);
   //funk2_memory__print_gc_stats(this);

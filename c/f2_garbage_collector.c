@@ -411,7 +411,7 @@ void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, 
   f2__free(to_ptr(this->temporary_load_buffer));
 }
 
-void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t* this) {
   {
     s64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -428,7 +428,9 @@ void f2__garbage_collector__reinitialize_globalvars() {
 
 void f2__garbage_collector__defragment__fix_pointers() {
   // -- reinitialize --
-
+  
+  funk2_garbage_collector__defragment__fix_pointers(&(__funk2.garbage_collector));
+  
   // -- initialize --
   
   f2__primcfunk__init__defragment__fix_pointers(garbage_collector__user_signal_garbage_collect_now);

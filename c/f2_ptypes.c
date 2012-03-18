@@ -5773,8 +5773,8 @@ void f2__ptypes__defragment__fix_pointers() {
   // -- initialize --
   
   funk2_ptypes__defragment__fix_pointers(&(__funk2.ptypes));
-
-
+  
+  
   // ptype
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.is_type__symbol);

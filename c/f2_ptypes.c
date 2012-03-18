@@ -7111,10 +7111,6 @@ void f2__ptypes__initialize() {
   funk2_ptypes__init(&(__funk2.ptypes));
 }
 
-void f2__ptypes__defragment__fix_pointers() {
-  funk2_ptypes__defragment__fix_pointers(&(__funk2.ptypes));
-}
-
 void f2__ptypes__destroy() {
   funk2_ptypes__destroy(&(__funk2.ptypes));
 }

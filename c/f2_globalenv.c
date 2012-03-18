@@ -105,6 +105,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   
     funk2_memory__debug_memory_test(&(__funk2.memory), 1);
 
+  f2__primobject__file_handle__reinitialize_globalvars();
   f2__primobject__stream__reinitialize_globalvars();
   
     funk2_memory__debug_memory_test(&(__funk2.memory), 1);

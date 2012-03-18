@@ -5722,11 +5722,43 @@ void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garba
 //   or = 18  sextillion
 
 
+void funk2_symbol_hash__defragment__fix_pointers(funk2_symbol_hash_t* this) {
+  funk2_symbol_hash__reinit(this);
+  
+  {
+    s64 pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      {
+	funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+	funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+	while(iter < end_of_blocks) {
+	  if (iter->used) {
+	    ptype_block_t* block = (ptype_block_t*)iter;
+	    switch(block->block.ptype) {
+	    case ptype_symbol: {
+	      f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
+	      funk2_symbol_hash__add_symbol(this, block_f2ptr);
+	    } break;
+	    default:
+	      break;
+	    }
+	  }
+	  iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+	}
+	release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
+      }
+    }
+  }
+}
 
 // ptypes
 
 void funk2_ptypes__init(funk2_ptypes_t* this) {
   funk2_symbol_hash__init(&(this->symbol_hash));
+}
+
+void funk2_ptypes__defragment__fix_pointers(funk2_ptypes_t* this) {
+  funk2_symbol_hash__defragment__fix_pointers(&(this->symbol_hash));
 }
 
 void funk2_ptypes__destroy(funk2_ptypes_t* this) {
@@ -5735,6 +5767,874 @@ void funk2_ptypes__destroy(funk2_ptypes_t* this) {
 
 
 // **
+
+void f2__ptypes__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  funk2_ptypes__defragment__fix_pointers(&(__funk2.ptypes));
+
+
+  // ptype
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.raw__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__raw);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.raw__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__cause);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__cause__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__set__funk);
+  
+  // integer
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.i__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__i);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.i__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.as__double__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__as__double);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.as__double__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__as__pointer);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.as__pointer__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__multiplied_by);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.multiplied_by__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.divided_by__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__divided_by);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.divided_by__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.plus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__plus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.plus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.minus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__minus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.minus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__is_greater_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_greater_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__is_less_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_less_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__is_numerically_equal_to);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_numerically_equal_to__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.square_root__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__square_root);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.square_root__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.modulo__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__modulo);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.modulo__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(integer__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.terminal_print_with_frame__funk);
+  
+  // double
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.d__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__d);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.d__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.as__double__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__as__double);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.as__double__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__multiplied_by);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.multiplied_by__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.divided_by__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__divided_by);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.divided_by__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.plus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__plus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.plus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.minus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__minus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.minus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__is_greater_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_greater_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_less_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__is_less_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_less_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__is_numerically_equal_to);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.is_numerically_equal_to__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.square_root__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__square_root);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.square_root__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_sine__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__radian_sine);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_sine__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_arcsine__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__radian_arcsine);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_arcsine__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_cosine__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__radian_cosine);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_cosine__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_arccosine__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__radian_arccosine);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_arccosine__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_tangent__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__radian_tangent);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_tangent__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_arctangent__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__radian_arctangent);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.radian_arctangent__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.power__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__power);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.power__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.modulo__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__modulo);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.modulo__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(double__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_double.terminal_print_with_frame__funk);
+  
+  // float
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.f__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__f);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.f__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.as__double__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__as__double);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.as__double__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__multiplied_by);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.multiplied_by__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.divided_by__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__divided_by);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.divided_by__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.plus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__plus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.plus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.minus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__minus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.minus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__is_greater_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_greater_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_less_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__is_less_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_less_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__is_numerically_equal_to);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.is_numerically_equal_to__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.square_root__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__square_root);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.square_root__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(float__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_float.terminal_print_with_frame__funk);
+  
+  // pointer
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.p__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__p);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.p__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.plus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__plus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.plus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.minus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__minus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.minus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__is_greater_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_greater_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__is_less_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_less_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__is_numerically_equal_to);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.is_numerically_equal_to__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pointer__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.terminal_print_with_frame__funk);
+  
+  // scheduler_cmutex
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__funk);
+  
+  // cmutex
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.unlock__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__unlock);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.unlock__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.trylock__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__trylock);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.trylock__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.is_locked__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__is_locked);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.is_locked__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__eq);
+  defragment__fix_pointer(__funk2.)globalenv.object_type.ptype.ptype_cmutex.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cmutex__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__funk);
+  
+  // char
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.ch__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__ch);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.ch__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.string__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__string);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.string__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(char__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.terminal_print_with_frame__funk);
+  
+  // string
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.terminal_print_with_frame__funk);
+  
+  // symbol
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.terminal_print_with_frame__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.as__string__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(symbol__as__string);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_symbol.as__string__funk);
+  
+  // chunk
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit8__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit8__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit8__elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit16__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit16__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit16__elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit32__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit32__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit32__elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit64__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bit64__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__cfunk_jump);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bytecode_jump);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__funk);
+  
+  // simple_array
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__funk);
+  
+  // traced_array
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__tracing_on);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__tracing_on__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__tracing_on__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__trace);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__trace__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__trace__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__imagination_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__imagination_frame__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__imagination_frame__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__mutate_funks);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__mutate_funks__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__mutate_funks__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__read_funks__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__read_funks);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__read_funks__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__read_funks__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__elt__read_funks__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.elt__read_funks__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(traced_array__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_traced_array.terminal_print_with_frame__funk);
+  
+  // larva
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.larva_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__larva_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.larva_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.bug__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__bug);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.bug__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(larva__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__funk);
+  
+  // gensym
+  f2__primcfunk__init__defragment__fix_pointers(gensym);
+  
+}
 
 void f2__ptypes__initialize__object_slots() {
   f2ptr cause = initial_cause();
@@ -6202,8 +7102,17 @@ void f2__ptypes__initialize__object_slots() {
 
 // initialize ptypes
 
+void f2__ptypes__reinitialize_globalvars() {
+}
+
 void f2__ptypes__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "ptypes", "", &f2__ptypes__reinitialize_globalvars, &f2__ptypes__defragment__fix_pointers);
+  
   funk2_ptypes__init(&(__funk2.ptypes));
+}
+
+void f2__ptypes__defragment__fix_pointers() {
+  funk2_ptypes__defragment__fix_pointers(&(__funk2.ptypes));
 }
 
 void f2__ptypes__destroy() {

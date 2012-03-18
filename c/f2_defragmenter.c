@@ -234,35 +234,6 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }
 
-void funk2_defragmenter__reinitialize_symbol_hash(funk2_defragmenter_t* this) {
-  funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
-  
-  {
-    s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      {
-	funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
-	funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
-	while(iter < end_of_blocks) {
-	  if (iter->used) {
-	    ptype_block_t* block = (ptype_block_t*)iter;
-	    switch(block->block.ptype) {
-	    case ptype_symbol: {
-	      f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
-	      funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-	    } break;
-	    default:
-	      break;
-	    }
-	  }
-	  iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-	}
-	release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
-      }
-    }
-  }
-}
-
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   {
@@ -290,16 +261,15 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment);
   }
   
-  funk2_garbage_collector__defragment__fix_pointers(&(__funk2.garbage_collector), this);
+  funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   
   funk2_defragmenter__reinitialize_symbol_hash(this);
+  
   
   //f2__reader__defragment__fix_pointers();
   //f2__globalenv__defragment__fix_pointers();
   //f2__primobject__file_handle__defragment__fix_pointers();
   //f2__primobject__stream__defragment__fix_pointers();
-  
-  funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   
   //funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
 

@@ -109,14 +109,24 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   
     funk2_memory__debug_memory_test(&(__funk2.memory), 1);
 
-  this->stdin_stream__symbol  = new__symbol(cause, "stdin");
-  this->stdin_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDIN_FILENO)));
-  environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
-  
+  {
+    this->stdin_stream__symbol  = new__symbol(cause, "stdin");
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+    f2ptr file_handle = f2__file_handle__new(cause, f2integer__new(cause, STDIN_FILENO));
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+    this->stdin_stream = f2__file_stream__new(cause, file_handle);
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+    environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
+  }
+
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   this->stdout_stream__symbol  = new__symbol(cause, "stdout");
   this->stdout_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDOUT_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stdout_stream__symbol, this->stdout_stream);
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   this->stderr_stream__symbol  = new__symbol(cause, "stderr");
   this->stderr_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDERR_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stderr_stream__symbol, this->stderr_stream);

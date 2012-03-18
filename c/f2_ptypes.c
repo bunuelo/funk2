@@ -6199,7 +6199,7 @@ void f2__ptypes__defragment__fix_pointers() {
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.eq__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cmutex__eq);
-  defragment__fix_pointer(__funk2.)globalenv.object_type.ptype.ptype_cmutex.eq__funk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.eq__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.eq_hash_value__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cmutex__eq_hash_value);

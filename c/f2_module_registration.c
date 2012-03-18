@@ -86,13 +86,11 @@ void funk2_module_registration__add_module(funk2_module_registration_t* this, ch
 }
 
 void funk2_module_registration__reinitialize_all_modules(funk2_module_registration_t* this) {
-  funk2_memory__debug_memory_test(&(__funk2.memory), 1);
   funk2_module_registration_node_t* iter = this->module_list;
   while (iter) {
     status("reinitializing module [%s] -- '%s'", iter->name, iter->description);
     funk2_module_registration_node__reinitialize(iter);
     status("done reinitializing module [%s]", iter->name);
-    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
     iter = iter->next;
   }
 }

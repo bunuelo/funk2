@@ -24,10 +24,16 @@
 void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   char* symbol_str;
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   symbol_str = "globalenv:f2_globalenv.c";              this->f2_globalenv_c__cause__symbol              = new__symbol(initial_cause(), symbol_str);
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   f2ptr cause = f2_globalenv_c__cause__new(initial_cause());
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   symbol_str = "globalenv:f2_bytecodes.c";              this->f2_bytecodes_c__cause__symbol              = new__symbol(cause, symbol_str);
   symbol_str = "globalenv:f2_ansi.c";                   this->f2_ansi_c__cause__symbol                   = new__symbol(cause, symbol_str);
   symbol_str = "globalenv:f2_compile.c";                this->f2_compile_c__cause__symbol                = new__symbol(cause, symbol_str);
@@ -97,8 +103,12 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->bytecode_less_than__symbol          = new__symbol(cause, "bytecode:less_than");
   this->bytecode_greater_than__symbol       = new__symbol(cause, "bytecode:greater_than");
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   f2__primobject__stream__reinitialize_globalvars();
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   this->stdin_stream__symbol  = new__symbol(cause, "stdin");
   this->stdin_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDIN_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
@@ -111,6 +121,8 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->stderr_stream = f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, STDERR_FILENO)));
   environment__add_var_value(cause, global_environment(), this->stderr_stream__symbol, this->stderr_stream);
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
+
   this->type__symbol = new__symbol(cause, "type");
   
   this->trace_all_compiles__symbol = new__symbol(cause, "-trace_all_compiles-");
@@ -147,6 +159,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   
   this->terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   
+    funk2_memory__debug_memory_test(&(__funk2.memory), 1);
 }
 
 void funk2_globalenv__defragment__fix_pointers(funk2_globalenv_t* this) {

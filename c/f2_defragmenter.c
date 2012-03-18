@@ -263,9 +263,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
   
-  funk2_defragmenter__reinitialize_symbol_hash(this);
-  
-  
   //f2__reader__defragment__fix_pointers();
   //f2__globalenv__defragment__fix_pointers();
   //f2__primobject__file_handle__defragment__fix_pointers();

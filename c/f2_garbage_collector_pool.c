@@ -884,3 +884,7 @@ void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collec
   }
 }
 
+boolean_t funk2_garbage_collector_pool__memblock_color_is_valid(funk2_garbage_collector_pool_t* this, funk2_memblock_t* memblock) {
+  
+  return boolean__true;
+}

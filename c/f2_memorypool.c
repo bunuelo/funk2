@@ -497,6 +497,21 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
   return found_invalid;
 }
 
+boolean_t funk2_memorypool__check_all_gc_colors_valid(funk2_memorypool_t* this, funk2_memory_t* memory, funk2_garbage_collector_pool_* garbage_collector_pool) {
+  boolean_t         found_invalid = boolean__false;
+  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+  while(iter < end_of_blocks) {
+    if (! funk2_garbage_collector_pool__memblock_color_is_valid(garbage_collector_pool, to_ptr(iter))) {
+      status("funk2_memory__check_all_gc_colors_valid error: found color inconsistency for memblock.");
+      found_invalid = boolean__true;
+      error(nil, "funk2_memory__check_all_gc_colors_valid error: found color inconsistency for memblock.");
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  return found_invalid;
+}
+
 void funk2_memorypool__compress_for_saving(funk2_memorypool_t* this) {
   status("funk2_memorypool__save_to_stream: compressing memorypool.");
   u64 compressed_length = 0;

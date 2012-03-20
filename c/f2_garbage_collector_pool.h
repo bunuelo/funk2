@@ -177,6 +177,7 @@ void      funk2_garbage_collector_pool__save_buffer_to_stream                   
 void      funk2_garbage_collector_pool__load_from_stream                         (funk2_garbage_collector_pool_t* this, int fd);
 s64       funk2_garbage_collector_pool__load_from_buffer                         (funk2_garbage_collector_pool_t* this, u8* buffer);
 void      funk2_garbage_collector_pool__defragment__fix_pointers                 (funk2_garbage_collector_pool_t* this);
+boolean_t funk2_garbage_collector_pool__memblock_color_is_valid                  (funk2_garbage_collector_pool_t* this, funk2_memblock_t* memblock);
 
 #endif // F2__GARBAGE_COLLECTOR_POOL__H
 

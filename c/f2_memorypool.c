@@ -497,7 +497,7 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
   return found_invalid;
 }
 
-boolean_t funk2_memorypool__check_all_gc_colors_valid(funk2_memorypool_t* this, funk2_memory_t* memory, funk2_garbage_collector_pool_* garbage_collector_pool) {
+boolean_t funk2_memorypool__check_all_gc_colors_valid(funk2_memorypool_t* this, funk2_memory_t* memory, funk2_garbage_collector_pool_t* garbage_collector_pool) {
   boolean_t         found_invalid = boolean__false;
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);

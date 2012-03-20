@@ -105,7 +105,7 @@ void              funk2_memorypool__free_used_block                             
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree          (funk2_memorypool_t* this, f2size_t byte_num);
 u64               funk2_memorypool__maximum_block__byte_num                        (funk2_memorypool_t* this);
 boolean_t         funk2_memorypool__check_all_memory_pointers_valid_in_memory      (funk2_memorypool_t* this, funk2_memory_t* memory);
-boolean_t         funk2_memorypool__check_all_gc_colors_valid                      (funk2_memorypool_t* this, funk2_memory_t* memory, funk2_garbage_collector_pool_* garbage_collector_pool);
+boolean_t         funk2_memorypool__check_all_gc_colors_valid                      (funk2_memorypool_t* this, funk2_memory_t* memory, funk2_garbage_collector_pool_t* garbage_collector_pool);
 void              funk2_memorypool__compress_for_saving                            (funk2_memorypool_t* this);
 void              funk2_memorypool__write_compressed_to_stream                     (funk2_memorypool_t* this, int fd);
 void              funk2_memorypool__decompress_and_free_compressed_data_for_loading(funk2_memorypool_t* this);

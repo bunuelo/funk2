@@ -21,16 +21,6 @@
 
 #include "funk2.h"
 
-// garbage_collector_block_header
-
-void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this) {
-  this->tricolor = funk2_tricolor__grey;
-}
-
-void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this) {
-}
-
-
 // garbage_collector_mutation_buffer
 
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this) {

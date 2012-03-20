@@ -23,7 +23,6 @@
 #define F2__GARBAGE_COLLECTOR_POOL__TYPES__H
 
 typedef enum   funk2_garbage_collector_tricolor_e                  funk2_garbage_collector_tricolor_t;
-typedef struct funk2_garbage_collector_block_header_s              funk2_garbage_collector_block_header_t;
 typedef struct funk2_garbage_collector_set_s                       funk2_garbage_collector_set_t;
 typedef struct funk2_garbage_collector_mutation_buffer_s           funk2_garbage_collector_mutation_buffer_t;
 typedef struct funk2_garbage_collector_no_more_references_buffer_s funk2_garbage_collector_no_more_references_buffer_t;
@@ -42,15 +41,7 @@ typedef struct funk2_garbage_collector_pool_s                      funk2_garbage
 #include "f2_protected_alloc_array.h"
 #include "f2_defragmenter.h"
 #include "f2_memblock.h"
-
-// garbage_collector_block_header
-
-struct funk2_garbage_collector_block_header_s {
-  funk2_tricolor_t tricolor : 2;
-} __attribute__((__packed__));
-
-void funk2_garbage_collector_block_header__init   (funk2_garbage_collector_block_header_t* this);
-void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this);
+#include "f2_garbage_collector_block_header.h"
 
 // garbage_collector_mutation_buffer
 

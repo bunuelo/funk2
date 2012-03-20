@@ -354,6 +354,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
   c/f2_garbage_collector.c \
+  c/f2_garbage_collector_block_header.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
   c/f2_gmodule.c \

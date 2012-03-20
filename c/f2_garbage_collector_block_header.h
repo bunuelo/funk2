@@ -29,6 +29,8 @@ typedef struct funk2_garbage_collector_block_header_s funk2_garbage_collector_bl
 #ifndef F2__GARBAGE_COLLECTOR_BLOCK_HEADER__H
 #define F2__GARBAGE_COLLECTOR_BLOCK_HEADER__H
 
+#include "f2_tricolor_set.h"
+
 // garbage_collector_block_header
 
 struct funk2_garbage_collector_block_header_s {

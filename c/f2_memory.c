@@ -734,16 +734,6 @@ boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   return found_invalid;
 }
 
-boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
-  boolean_t found_invalid = boolean__false;
-  int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("scanning pool %d for invalid memory pointers.", pool_index);
-    found_invalid |= funk2_memorypool__check_all_memory_pointers_valid_in_memory(&(this->pool[pool_index]), this);
-  }
-  return found_invalid;
-}
-
 boolean_t funk2_memory__check_all_gc_colors_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;
   int pool_index;

@@ -168,7 +168,7 @@
 			[error load-error [format nil 'load error: could not open "' filename '" for reading.']]
 		      [let [[result [with-new-cause [cause-define source-filename filename]
 						    [print 'in load1 debug 0']
-						    [terminal_repl-io file-stream standard-output]
+						    [terminal_repl-io file-stream standard-terminal]
 						    [print 'in load1 debug 1']
 						    ]]]
 			[stream-close file-stream]

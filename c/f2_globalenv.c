@@ -104,6 +104,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
     this->stdin_stream__symbol = new__symbol(cause, "stdin");
     f2ptr file_handle = f2__file_handle__new(cause, f2integer__new(cause, STDIN_FILENO));
     this->stdin_stream = f2__file_stream__new(cause, file_handle);
+    never_gc(this->stdin_stream);
     environment__add_var_value(cause, global_environment(), this->stdin_stream__symbol,  this->stdin_stream);
   }
 
@@ -111,6 +112,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
     this->stdout_stream__symbol = new__symbol(cause, "stdout");
     f2ptr file_handle = f2__file_handle__new(cause, f2integer__new(cause, STDOUT_FILENO));
     this->stdout_stream = f2__file_stream__new(cause, file_handle);
+    never_gc(this->stdout_stream);
     environment__add_var_value(cause, global_environment(), this->stdout_stream__symbol, this->stdout_stream);
   }
   
@@ -118,6 +120,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
     this->stderr_stream__symbol = new__symbol(cause, "stderr");
     f2ptr file_handle = f2__file_handle__new(cause, f2integer__new(cause, STDERR_FILENO));
     this->stderr_stream = f2__file_stream__new(cause, file_handle);
+    never_gc(this->stderr_stream);
     environment__add_var_value(cause, global_environment(), this->stderr_stream__symbol, this->stderr_stream);
   }
   

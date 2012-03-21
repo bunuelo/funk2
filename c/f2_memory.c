@@ -341,6 +341,9 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, in
   while (1) {
     f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(this, pool_index, byte_num);
     if (funk2_memblock_f2ptr) {
+      if (funk2_memblock_f2ptr == 24231) {
+	error(nil, "found 24231.");
+      }
       return funk2_memblock_f2ptr;
     }
     raw__fast_spin_sleep_yield();

@@ -141,7 +141,6 @@ void funk2_tricolor_set__defragment__fix_pointers(funk2_tricolor_set_t* this) {
 }
 
 funk2_tricolor_t funk2_tricolor_set__element_color(funk2_tricolor_set_t* this, f2ptr element) {
-  f2ptr_set_t* white_set = &(this->white_set);
   if (funk2_f2ptr_set__contains(&(this->white_set), element)) {
     return funk2_tricolor__white;
   } else if (funk2_f2ptr_set__contains(&(this->grey_set), element)) {

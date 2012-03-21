@@ -516,7 +516,8 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
 void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t to_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
   if (! block->used) {
-    error(nil, "funk2_garbage_collector_pool__change_used_exp_color fatal error: found reference to unused element (" f2ptr__fstr ") (" u64__fstr ").", exp, (u64)exp);
+    status("funk2_garbage_collector_pool__change_used_exp_color fatal error: found reference to unused element (" f2ptr__fstr ") (" u64__fstr ").", exp, (u64)exp);
+    error(nil, "funk2_garbage_collector_pool__change_used_exp_color fatal error: found reference to unused element.");
   }
   funk2_tricolor_t from_tricolor = block->gc.tricolor;
   // not processor_thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.

@@ -127,6 +127,7 @@
 												 read-exp]]]]]
 	    [t                             [= read_successful t]]]]
     [print 'in terminal_repl-io debug 2']
+    [print read-exp]
     [if [equals read-exp `[exit]]
 	`repl-exit
       [let [[eval-exp [if [eq standard-input input-stream]
@@ -168,7 +169,7 @@
 			[error load-error [format nil 'load error: could not open "' filename '" for reading.']]
 		      [let [[result [with-new-cause [cause-define source-filename filename]
 						    [print 'in load1 debug 0']
-						    [terminal_repl-io file-stream standard-terminal]
+						    [terminal_repl-io file-stream nil]
 						    [print 'in load1 debug 1']
 						    ]]]
 			[stream-close file-stream]

@@ -875,6 +875,14 @@ void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collec
 }
 
 boolean_t funk2_garbage_collector_pool__memblock_color_is_valid(funk2_garbage_collector_pool_t* this, funk2_memblock_t* memblock) {
-  
+  f2ptr            memblock_f2ptr    = __ptr_to_f2ptr(this->pool_index, to_ptr(memblock));
+  funk2_tricolor_t memblock_tricolor = memblock->gc.tricolor;
+  funk2_tricolor_t gc_tricolor       = funk2_tricolor_set__element_color(&(this->tricolor_set), memblock_f2ptr);
+  if (memblock_tricolor != gc_tricolor) {
+    status("funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor (" u64__fstr ") != gc_tricolor (" u64__fstr ").");
+    error(nil, "funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor != gc_tricolor.");
+    return boolean__false;
+  }
   return boolean__true;
 }
+

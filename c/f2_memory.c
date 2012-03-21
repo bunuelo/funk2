@@ -738,7 +738,7 @@ boolean_t funk2_memory__check_all_gc_colors_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    status("scanning pool %d for invalid memory pointers.", pool_index);
+    status("scanning pool %d for invalid garbage collector colors.", pool_index);
     found_invalid |= funk2_memorypool__check_all_gc_colors_valid(&(this->pool[pool_index]), this, &(__funk2.garbage_collector.gc_pool[pool_index]));
   }
   return found_invalid;

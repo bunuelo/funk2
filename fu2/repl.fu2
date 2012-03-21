@@ -173,8 +173,10 @@
       [cause-define standard-input stdin]]
   [print [cons `load filenames]]
   [mapc [funk [filename]
+	      [print [cons `load [cons filename nil]]]
 	      [load1 filename]]
-	filenames]]
+	filenames]
+  [print 'load done']]
 
 [defunk parload [:rest filenames]
   [print [cons `parload filenames]]

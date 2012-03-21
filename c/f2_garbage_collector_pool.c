@@ -515,6 +515,9 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
 
 void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t to_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  if (! block->used) {
+    error(nil, "funk2_garbage_collector_pool__change_used_exp_color fatal error: found reference to unused element.");
+  }
   funk2_tricolor_t from_tricolor = block->gc.tricolor;
   // not processor_thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.
   funk2_tricolor_set__change_element_color(&(this->tricolor_set), exp, from_tricolor, to_tricolor);
@@ -861,6 +864,7 @@ s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_
 }
 
 void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collector_pool_t* this) {
+  status("funk2_garbage_collector_pool[" u64__fstr "] defragment: fixing pointers.", this->pool_index);
   funk2_tricolor_set__defragment__fix_pointers(                               &(this->tricolor_set));
   funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(          &(this->other_mutations));
   funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(&(this->other_no_more_references));
@@ -872,6 +876,7 @@ void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collec
       funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(&(this->other_grey_buffer[pool_index]));
     }
   }
+  status("funk2_garbage_collector_pool[" u64__fstr "] defragment: fixing pointers done.", this->pool_index);
 }
 
 boolean_t funk2_garbage_collector_pool__memblock_color_is_valid(funk2_garbage_collector_pool_t* this, funk2_memblock_t* memblock) {

@@ -412,6 +412,7 @@ void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, 
 }
 
 void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector defragment: fixing pointers.");
   {
     s64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
@@ -419,6 +420,7 @@ void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t
     }
   }
   funk2_never_delete_list__defragment__fix_pointers(&(this->never_delete_list));
+  status("funk2_garbage_collector defragment: fixing pointers done.");
 }
 
 // **

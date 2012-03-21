@@ -879,7 +879,7 @@ boolean_t funk2_garbage_collector_pool__memblock_color_is_valid(funk2_garbage_co
   funk2_tricolor_t memblock_tricolor = memblock->gc.tricolor;
   funk2_tricolor_t gc_tricolor       = funk2_tricolor_set__element_color(&(this->tricolor_set), memblock_f2ptr);
   if (memblock_tricolor != gc_tricolor) {
-    status("funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor (" u64__fstr ") != gc_tricolor (" u64__fstr ").");
+    status("funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor (" u64__fstr ") != gc_tricolor (" u64__fstr ").", (u64)memblock_tricolor, (u64)gc_tricolor);
     error(nil, "funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor != gc_tricolor.");
     return boolean__false;
   }

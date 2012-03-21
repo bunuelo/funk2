@@ -154,6 +154,7 @@
   [terminal_repl]]
 
 [defunk load1 [filename]
+  [print 'beginning load1']
   [with-new-cause [cause-define cause-name      `load1]
 		  [cause-define source-filename filename]
 		  [let [[file-stream [stream-new_open_file filename [stream-file_mode-rdonly]]]]
@@ -164,6 +165,7 @@
 						    ]]]
 			[stream-close file-stream]
 			[memory-debug_assert_valid]
+			[print 'ending load1']
 			result]]]]]
 
 [defunk load [:rest filenames]

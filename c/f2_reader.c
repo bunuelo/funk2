@@ -151,13 +151,22 @@ f2ptr f2__stream__try_read_impossibility(f2ptr cause, f2ptr stream) {
   }
   if (raw__exception__is_type(cause, first_char) &&
       raw__eq(cause, f2exception__tag(first_char, cause), __funk2.reader.end_of_file_exception__symbol)) {
-    status("raw_read() note: eof_except.");
+    status("f2__stream__try_read_impossibility() note: end_of_file_exception.");
     return __funk2.reader.end_of_file_exception;
   }
   // check all imposibilities for first_char
-  if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}
-  if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren))      {return __funk2.reader.array_end_parens_exception;}
-  if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {return __funk2.reader.doublelink_end_parens_exception;}
+  if (raw__eq(cause, first_char, __funk2.reader.char__right_paren)) {
+    status("f2__stream__try_read_impossibility() note: end_parens_exception.");
+    return __funk2.reader.end_parens_exception;
+  }
+  if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren)) {
+    status("f2__stream__try_read_impossibility() note: array_end_parens_exception.");
+    return __funk2.reader.array_end_parens_exception;
+  }
+  if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {
+    status("f2__stream__try_read_impossibility() note: doublelink_end_parens_exception.");
+    return __funk2.reader.doublelink_end_parens_exception;
+  }
   f2__stream__ungetc(cause, stream, first_char);
   return __funk2.reader.could_not_read_type_exception;
 }

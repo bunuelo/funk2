@@ -1352,44 +1352,28 @@ def_pcfunk2(bytecode_event__new, bytecode, context,
 void f2__primobjects__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  __compound_object__symbol  = new__symbol(cause, "compound_object");
-  __primobject__symbol       = new__symbol(cause, "primobject");
-  __place__symbol            = new__symbol(cause, "place");
-  __cons__symbol             = new__symbol(cause, "cons");
-  __doublelink__symbol       = new__symbol(cause, "doublelink");
-  __imagination_link__symbol = new__symbol(cause, "imagination_link");
-  __cfunk__symbol            = new__symbol(cause, "cfunk");
-  __metrocfunk__symbol       = new__symbol(cause, "metrocfunk");
-  __funk__symbol             = new__symbol(cause, "funk");
-  __metro__symbol            = new__symbol(cause, "metro");
-  __exception__symbol        = new__symbol(cause, "exception");
-  __bytecode__symbol         = new__symbol(cause, "bytecode");
-  __bug__symbol              = new__symbol(cause, "bug");
-  __size_2d__symbol          = new__symbol(cause, "size_2d");
-  __event__symbol            = new__symbol(cause, "event");
-  __bytecode_event__symbol   = new__symbol(cause, "bytecode_event");
+  reinitialize_primobject(compound_object);
+  reinitialize_primobject(primobject);
+  reinitialize_primobject(place);
+  reinitialize_primobject(cons);
+  reinitialize_primobject(doublelink);
+  reinitialize_primobject(imagination_link);
+  reinitialize_primobject(cfunk);
+  reinitialize_primobject(metrocfunk);
+  reinitialize_primobject(funk);
+  reinitialize_primobject(metro);
+  reinitialize_primobject(exception);
+  reinitialize_primobject(bytecode);
+  reinitialize_primobject(bug);
+  reinitialize_primobject(size_2d);
+  reinitialize_primobject(event);
+  reinitialize_primobject(bytecode_event);
 }
 
 
 void f2__primobjects__defragment__fix_pointers() {
   // -- reinitialize --
   
-  defragment__fix_pointer(__compound_object__symbol);
-  defragment__fix_pointer(__primobject__symbol);
-  defragment__fix_pointer(__place__symbol);
-  defragment__fix_pointer(__cons__symbol);
-  defragment__fix_pointer(__doublelink__symbol);
-  defragment__fix_pointer(__imagination_link__symbol);
-  defragment__fix_pointer(__cfunk__symbol);
-  defragment__fix_pointer(__metrocfunk__symbol);
-  defragment__fix_pointer(__funk__symbol);
-  defragment__fix_pointer(__metro__symbol);
-  defragment__fix_pointer(__exception__symbol);
-  defragment__fix_pointer(__bytecode__symbol);
-  defragment__fix_pointer(__bug__symbol);
-  defragment__fix_pointer(__size_2d__symbol);
-  defragment__fix_pointer(__event__symbol);
-  defragment__fix_pointer(__bytecode_event__symbol);
   
   
   // -- initialize --

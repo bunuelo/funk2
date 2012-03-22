@@ -76,7 +76,7 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
       if (raw__eq(cause, primobject_type_name, __funk2.primobject__frame.frame__symbol)) {
 	object_type_status("array (2)");
 	f2ptr test_get_type = f2__frame__lookup_var_value(cause, this, __funk2.globalenv.type__symbol, nil);
-	if (test_get_type) {
+	if (test_get_type != nil) {
 	  object_type_status("array (3)");
 	  primobject_type_name = test_get_type;
 	}

@@ -29,7 +29,7 @@
   f2ptr frame_object__slot__symbol__var(name, funk_name); \
   f2ptr frame_object__slot__funk__var(name, funk_name)
 
-#define def_frame_object__slot__global_vars(name, slot_name) \
+#define def_frame_object__slot__global_vars(name, slot_name)   \
   def_frame_object__symbol_funk__global_vars(name, slot_name); \
   def_frame_object__symbol_funk__global_vars(name, slot_name##__set);
 
@@ -1360,8 +1360,12 @@
   def_f2frame_object__primobject_type__new__26_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26)
   
 
-#define init_frame_object__funk(name, funk_name) \
+#define init_frame_object__funk(name, funk_name)			\
   {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = new__symbol(cause, symbol_str);} \
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame_object__funk__pcfunkvar(name, funk_name), this, cfunk); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
+
+#define reinit_frame_object__funk(name, funk_name)			\
+  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame_object__funk__pcfunkvar(name, funk_name), this, cfunk); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
 
 #define init_frame_object__funk__defragment__fix_pointers(name, funk_name) { \
@@ -1374,6 +1378,10 @@
   init_frame_object__funk(name, is_type); \
   init_frame_object__funk(name, type)
 
+#define reinit_frame_object__sans_slots(name)	\
+  reinit_frame_object__funk(name, is_type); \
+  reinit_frame_object__funk(name, type)
+
 #define init_frame_object__sans_slots__defragment__fix_pointers(name)	\
   init_frame_object__funk__defragment__fix_pointers(name, is_type);	\
   init_frame_object__funk__defragment__fix_pointers(name, type)
@@ -1385,6 +1393,10 @@
   init_frame_object__funk(name, slot_name);		\
   init_frame_object__funk(name, slot_name##__set)
 
+#define reinit_frame_object__slot(name, slot_name)	\
+  reinit_frame_object__funk(name, slot_name);		\
+  reinit_frame_object__funk(name, slot_name##__set)
+
 #define init_frame_object__slot__defragment__fix_pointers(name, slot_name) \
   init_frame_object__funk__defragment__fix_pointers(name, slot_name);	\
   init_frame_object__funk__defragment__fix_pointers(name, slot_name##__set)
@@ -1393,6 +1405,9 @@
 #define init_frame_object__0_slot(name) \
   init_frame_object__sans_slots(name);
 
+#define reinit_frame_object__0_slot(name) \
+  reinit_frame_object__sans_slots(name);
+
 #define init_frame_object__0_slot__defragment__fix_pointers(name) \
   init_frame_object__sans_slots__defragment__fix_pointers(name);
 
@@ -1400,6 +1415,10 @@
 #define init_frame_object__1_slot(name, slot_1) \
   init_frame_object__0_slot(name);		\
   init_frame_object__slot(name, slot_1);
+
+#define reinit_frame_object__1_slot(name, slot_1) \
+  reinit_frame_object__0_slot(name);		\
+  reinit_frame_object__slot(name, slot_1);
 
 #define init_frame_object__1_slot__defragment__fix_pointers(name, slot_1) \
   init_frame_object__0_slot__defragment__fix_pointers(name);		\
@@ -1410,6 +1429,10 @@
   init_frame_object__1_slot(name, slot_1) \
   init_frame_object__slot(name, slot_2);
 
+#define reinit_frame_object__2_slot(name, slot_1, slot_2) \
+  reinit_frame_object__1_slot(name, slot_1) \
+  reinit_frame_object__slot(name, slot_2);
+
 #define init_frame_object__2_slot__defragment__fix_pointers(name, slot_1, slot_2) \
   init_frame_object__1_slot__defragment__fix_pointers(name, slot_1) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_2);
@@ -1418,6 +1441,10 @@
 #define init_frame_object__3_slot(name, slot_1, slot_2, slot_3) \
   init_frame_object__2_slot(name, slot_1, slot_2) \
   init_frame_object__slot(name, slot_3);
+
+#define reinit_frame_object__3_slot(name, slot_1, slot_2, slot_3) \
+  reinit_frame_object__2_slot(name, slot_1, slot_2) \
+  reinit_frame_object__slot(name, slot_3);
 
 #define init_frame_object__3_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3) \
   init_frame_object__2_slot__defragment__fix_pointers(name, slot_1, slot_2) \
@@ -1428,6 +1455,10 @@
   init_frame_object__3_slot(name, slot_1, slot_2, slot_3) \
   init_frame_object__slot(name, slot_4);
 
+#define reinit_frame_object__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  reinit_frame_object__3_slot(name, slot_1, slot_2, slot_3) \
+  reinit_frame_object__slot(name, slot_4);
+
 #define init_frame_object__4_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4) \
   init_frame_object__3_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_4);
@@ -1436,6 +1467,10 @@
 #define init_frame_object__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
   init_frame_object__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   init_frame_object__slot(name, slot_5);
+
+#define reinit_frame_object__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  reinit_frame_object__4_slot(name, slot_1, slot_2, slot_3, slot_4) \
+  reinit_frame_object__slot(name, slot_5);
 
 #define init_frame_object__5_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
   init_frame_object__4_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4) \
@@ -1446,6 +1481,10 @@
   init_frame_object__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5)	\
   init_frame_object__slot(name, slot_6);
 
+#define reinit_frame_object__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  reinit_frame_object__5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5)	\
+  reinit_frame_object__slot(name, slot_6);
+
 #define init_frame_object__6_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
   init_frame_object__5_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5)	\
   init_frame_object__slot__defragment__fix_pointers(name, slot_6);
@@ -1454,6 +1493,10 @@
 #define init_frame_object__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
   init_frame_object__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
   init_frame_object__slot(name, slot_7);
+
+#define reinit_frame_object__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  reinit_frame_object__6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  reinit_frame_object__slot(name, slot_7);
 
 #define init_frame_object__7_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
   init_frame_object__6_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
@@ -1464,6 +1507,10 @@
   init_frame_object__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
   init_frame_object__slot(name, slot_8);
 
+#define reinit_frame_object__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  reinit_frame_object__7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  reinit_frame_object__slot(name, slot_8);
+
 #define init_frame_object__8_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
   init_frame_object__7_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_8);
@@ -1472,6 +1519,10 @@
 #define init_frame_object__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
   init_frame_object__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
   init_frame_object__slot(name, slot_9);
+
+#define reinit_frame_object__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  reinit_frame_object__8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  reinit_frame_object__slot(name, slot_9);
 
 #define init_frame_object__9_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
   init_frame_object__8_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
@@ -1482,6 +1533,10 @@
   init_frame_object__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
   init_frame_object__slot(name, slot_10);
 
+#define reinit_frame_object__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  reinit_frame_object__9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  reinit_frame_object__slot(name, slot_10);
+
 #define init_frame_object__10_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
   init_frame_object__9_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_10);
@@ -1490,6 +1545,10 @@
 #define init_frame_object__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
   init_frame_object__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
   init_frame_object__slot(name, slot_11);
+
+#define reinit_frame_object__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  reinit_frame_object__10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  reinit_frame_object__slot(name, slot_11);
 
 #define init_frame_object__11_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
   init_frame_object__10_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
@@ -1500,6 +1559,10 @@
   init_frame_object__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
   init_frame_object__slot(name, slot_12);
 
+#define reinit_frame_object__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  reinit_frame_object__11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  reinit_frame_object__slot(name, slot_12);
+
 #define init_frame_object__12_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
   init_frame_object__11_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_12);
@@ -1508,6 +1571,10 @@
 #define init_frame_object__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
   init_frame_object__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
   init_frame_object__slot(name, slot_13);
+
+#define reinit_frame_object__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  reinit_frame_object__12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  reinit_frame_object__slot(name, slot_13);
 
 #define init_frame_object__13_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
   init_frame_object__12_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
@@ -1518,6 +1585,10 @@
   init_frame_object__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
   init_frame_object__slot(name, slot_14);
 
+#define reinit_frame_object__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  reinit_frame_object__13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  reinit_frame_object__slot(name, slot_14);
+
 #define init_frame_object__14_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
   init_frame_object__13_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_14);
@@ -1526,6 +1597,10 @@
 #define init_frame_object__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
   init_frame_object__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
   init_frame_object__slot(name, slot_15);
+
+#define reinit_frame_object__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  reinit_frame_object__14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  reinit_frame_object__slot(name, slot_15);
 
 #define init_frame_object__15_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
   init_frame_object__14_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
@@ -1536,6 +1611,10 @@
   init_frame_object__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
   init_frame_object__slot(name, slot_16);
 
+#define reinit_frame_object__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  reinit_frame_object__15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  reinit_frame_object__slot(name, slot_16);
+
 #define init_frame_object__16_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
   init_frame_object__15_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_16);
@@ -1544,6 +1623,10 @@
 #define init_frame_object__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
   init_frame_object__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
   init_frame_object__slot(name, slot_17);
+
+#define reinit_frame_object__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  reinit_frame_object__16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  reinit_frame_object__slot(name, slot_17);
 
 #define init_frame_object__17_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
   init_frame_object__16_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
@@ -1554,6 +1637,10 @@
   init_frame_object__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
   init_frame_object__slot(name, slot_18);
 
+#define reinit_frame_object__18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  reinit_frame_object__17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  reinit_frame_object__slot(name, slot_18);
+
 #define init_frame_object__18_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
   init_frame_object__17_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_18);
@@ -1562,6 +1649,10 @@
 #define init_frame_object__19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
   init_frame_object__18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
   init_frame_object__slot(name, slot_19);
+
+#define reinit_frame_object__19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  reinit_frame_object__18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  reinit_frame_object__slot(name, slot_19);
 
 #define init_frame_object__19_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
   init_frame_object__18_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
@@ -1572,6 +1663,10 @@
   init_frame_object__19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
   init_frame_object__slot(name, slot_20);
 
+#define reinit_frame_object__20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
+  reinit_frame_object__19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  reinit_frame_object__slot(name, slot_20);
+
 #define init_frame_object__20_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
   init_frame_object__19_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_20);
@@ -1580,6 +1675,10 @@
 #define init_frame_object__21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
   init_frame_object__20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
   init_frame_object__slot(name, slot_21);
+
+#define reinit_frame_object__21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
+  reinit_frame_object__20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
+  reinit_frame_object__slot(name, slot_21);
 
 #define init_frame_object__21_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
   init_frame_object__20_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
@@ -1590,6 +1689,10 @@
   init_frame_object__21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
   init_frame_object__slot(name, slot_22);
 
+#define reinit_frame_object__22_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
+  reinit_frame_object__21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
+  reinit_frame_object__slot(name, slot_22);
+
 #define init_frame_object__22_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
   init_frame_object__21_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_22);
@@ -1598,6 +1701,10 @@
 #define init_frame_object__23_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
   init_frame_object__22_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
   init_frame_object__slot(name, slot_23);
+
+#define reinit_frame_object__23_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
+  reinit_frame_object__22_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
+  reinit_frame_object__slot(name, slot_23);
 
 #define init_frame_object__23_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
   init_frame_object__22_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
@@ -1608,6 +1715,10 @@
   init_frame_object__23_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
   init_frame_object__slot(name, slot_24);
 
+#define reinit_frame_object__24_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
+  reinit_frame_object__23_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
+  reinit_frame_object__slot(name, slot_24);
+
 #define init_frame_object__24_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
   init_frame_object__23_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_24);
@@ -1617,6 +1728,10 @@
   init_frame_object__24_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
   init_frame_object__slot(name, slot_25);
 
+#define reinit_frame_object__25_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \
+  reinit_frame_object__24_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
+  reinit_frame_object__slot(name, slot_25);
+
 #define init_frame_object__25_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \
   init_frame_object__24_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
   init_frame_object__slot__defragment__fix_pointers(name, slot_25);
@@ -1625,6 +1740,10 @@
 #define init_frame_object__26_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26) \
   init_frame_object__25_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \
   init_frame_object__slot(name, slot_26);
+
+#define reinit_frame_object__26_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26) \
+  reinit_frame_object__25_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \
+  reinit_frame_object__slot(name, slot_26);
 
 #define init_frame_object__26_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26) \
   init_frame_object__25_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \

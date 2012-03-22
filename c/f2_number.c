@@ -91,6 +91,7 @@ f2ptr f2__number__modulo(f2ptr cause, f2ptr this, f2ptr that) {
 
 void funk2_number_globalvars__init(funk2_number_globalvars_t* this) {
   f2ptr cause = initial_cause();
+  
   this->as__double__symbol              = new__symbol(cause, "as-double");
   this->multiplied_by__symbol           = new__symbol(cause, "multiplied_by");
   this->divided_by__symbol              = new__symbol(cause, "divided_by");

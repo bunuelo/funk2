@@ -478,6 +478,11 @@ f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__core_extension_funk__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  // core_extension_funk
+  
+  reinit_frame_object__6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
 }
 
 void f2__core_extension_funk__defragment__fix_pointers() {
@@ -555,9 +560,9 @@ void f2__core_extension_funk__defragment__fix_pointers() {
 }
 
 void f2__core_extension_funk__initialize() {
-  f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension_funk", "", &f2__core_extension_funk__reinitialize_globalvars, &f2__core_extension_funk__defragment__fix_pointers);
+  
+  f2ptr cause = initial_cause();
   
   f2__core_extension_funk__reinitialize_globalvars();
   

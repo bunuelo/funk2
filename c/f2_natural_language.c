@@ -956,6 +956,137 @@ f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__natural_language__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  // clause
+  
+  reinit_frame_object__13_slot(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
+  
+  
+  // wh_rank_shift_clause
+  
+  reinit_frame_object__1_slot(wh_rank_shift_clause, symbols);
+  
+  
+  // noun_group
+  
+  reinit_frame_object__18_slot(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two, question);
+  
+  
+  // preposition_group
+  
+  reinit_frame_object__9_slot(preposition_group, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+  
+  
+  // adjective_group
+  
+  reinit_frame_object__8_slot(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
+  
+  
+  // verb_group
+  
+  reinit_frame_object__15_slot(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
+  
+  
+  // combination_group
+  
+  reinit_frame_object__3_slot(combination_group, symbols, transitive, preposition);
+  
+  
+  // adjective_word
+  
+  reinit_frame_object__3_slot(adjective_word, symbols, superlative, comparative);
+  
+  
+  // adverb_word
+  
+  reinit_frame_object__5_slot(adverb_word, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+  
+  
+  // binder_word
+  
+  reinit_frame_object__1_slot(binder_word, symbols);
+  
+  
+  // classifier_word
+  
+  reinit_frame_object__1_slot(classifier_word, symbols);
+  
+  
+  // determiner_word
+  
+  reinit_frame_object__12_slot(determiner_word, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+  
+  
+  // noun_word
+  
+  reinit_frame_object__7_slot(noun_word, symbols, singular, plural, mass, possessive, time_unit, time_specific);
+  
+  
+  // number_word
+  
+  reinit_frame_object__3_slot(number_word, symbols, singular, plural);
+  
+  
+  // number_determiner_word
+  
+  reinit_frame_object__5_slot(number_determiner_word, symbols, than_modifier, as_as_modifier, at_modifier, alone);
+  
+  
+  // ordinal_word
+  
+  reinit_frame_object__1_slot(ordinal_word, symbols);
+  
+  
+  // preposition_word
+  
+  reinit_frame_object__3_slot(preposition_word, symbols, combination_first, combination_second);
+  
+  
+  // pronoun_word
+  
+  reinit_frame_object__10_slot(pronoun_word, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+  
+  
+  // proper_noun_word
+  
+  reinit_frame_object__3_slot(proper_noun_word, symbols, singular, plural);
+  
+  
+  // particle_word
+  
+  reinit_frame_object__1_slot(particle_word, symbols);
+  
+  
+  // question_adjunct_word
+  
+  reinit_frame_object__1_slot(question_adjunct_word, symbols);
+  
+  
+  // thing_pronoun_word
+  
+  reinit_frame_object__1_slot(thing_pronoun_word, symbols);
+  
+  
+  // infinitive_helper_word
+  
+  reinit_frame_object__1_slot(infinitive_helper_word, symbols);
+  
+  
+  // verb_word
+  
+  reinit_frame_object__23_slot(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, ing, en, infinitive, past, present, Main, takes_particle, transitive, transitive_two, takes_to_object, takes_subject_to_object);
+  
+  
+  // parse_tree_node
+  
+  reinit_frame_object__6_slot(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
+  
+  
+  // parse_tree
+  
+  reinit_frame_object__2_slot(parse_tree, root_node, current_node);
+  
 }
 
 void f2__natural_langauge__defragment__fix_pointers() {
@@ -1233,9 +1364,9 @@ void f2__natural_langauge__defragment__fix_pointers() {
 }
 
 void f2__natural_language__initialize() {
-  f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "natural_language", "", &f2__natural_language__reinitialize_globalvars, &f2__natural_langauge__defragment__fix_pointers);
+  
+  f2ptr cause = initial_cause();
   
   f2__natural_language__reinitialize_globalvars();
   

@@ -592,6 +592,16 @@ void f2__dlfcn__reinitialize_globalvars() {
   } else {
     raw__dlfcn_dynamic_library_handler__reinit(cause, dynamic_library_handler);
   }
+
+  // dlfcn_dynamic_library
+  
+  reinit_frame_object__4_slot(dlfcn_dynamic_library, pointer, filename, stat, pointer_symbol_hash);
+  
+  
+  // dlfcn_dynamic_library_handler
+  
+  reinit_frame_object__3_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
+  
 }
 
 void f2__dlfcn__defragment__fix_pointers() {

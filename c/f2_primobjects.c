@@ -1374,7 +1374,7 @@ void f2__primobjects__reinitialize_globalvars() {
 void f2__primobjects__defragment__fix_pointers() {
   // -- reinitialize --
   
-  
+  defragment__fix_pointer(__primobject__symbol);
   
   // -- initialize --
   

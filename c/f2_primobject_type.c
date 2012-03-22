@@ -136,7 +136,7 @@ def_pcfunk2(primobject_type__has_parent_type, this, type_name,
 	    return f2__primobject_type__has_parent_type(this_cause, this, type_name));
 
 void f2__primobject_type__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_string_c__cause__new(initial_cause(), nil, global_environment());
+  f2ptr cause = initial_cause();
   
   reinit_frame_object__2_slot(primobject_type, parents, documentation);
   

@@ -184,9 +184,20 @@ f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
     f2ptr exp;
     while (1) {
       exp = f2__stream__try_read(cause, stream);
-      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {return seq;} // successfully read end of list
-      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {return __funk2.reader.unmatched_begin_paren_exception;}
-      if (raw__exception__is_type(cause, exp)) {return exp;} // other exceptions should be propagated
+      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {
+	status("f2__stream__try_read_list note: successfully read end of list.");
+	return seq;
+      }
+      if (raw__exception__is_type(cause, exp) &&
+	  raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {
+	status("f2__stream__try_read_list note: unmatched begin paren exception.");
+	return __funk2.reader.unmatched_begin_paren_exception;
+      }
+      if (raw__exception__is_type(cause, exp)) {
+	// other exceptions should be propagated
+	status("f2__stream__try_read_list note: other exception being propogated.");
+	return exp;
+      }
       new_cons = f2cons__new(cause, exp, nil);
       if (seq) {
 	f2cons__cdr__set(iter, cause, new_cons);

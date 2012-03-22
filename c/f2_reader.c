@@ -184,7 +184,8 @@ f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
     f2ptr exp;
     while (1) {
       exp = f2__stream__try_read(cause, stream);
-      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {
+      if (raw__exception__is_type(cause, exp) &&
+	  raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {
 	status("f2__stream__try_read_list note: successfully read end of list.");
 	return seq;
       }
@@ -1377,10 +1378,17 @@ void funk2_reader__init(funk2_reader_t* this) {
 void funk2_reader__reinit(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
-  {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  {char* str = "reader:doublelink_end_parens-exception";       this->doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  this->end_parens_exception__symbol = new__symbol(cause, "reader:end_parens-exception");
+  this->array_end_parens_exception__symbol = new__symbol(cause, "reader:array_end_parens-exception");
+  this->doublelink_end_parens_exception__symbol = new__symbol(cause, "reader:doublelink_end_parens-exception");
+  this->end_of_file_exception__symbol = new__symbol(cause, "reader:end_of_file-exception");
+  this->could_not_read_type_exception__symbol = new__symbol(cause, "reader:could_not_read_type-exception");
+  this->no_character_waiting_exception__symbol = new__symbol(cause, "reader:no_character_waiting-exception");
+  
+  {char* str = "reader:end_parens-exception";            this->end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:unmatched_begin_paren-exception"; this->unmatched_begin_paren_exception = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:array_end_parens-exception";      this->array_end_parens_exception      = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:doublelink_end_parens-exception"; this->doublelink_end_parens_exception = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {
     char* str = "reader:end_of_file-exception";
     f2ptr symbol = new__symbol(cause, str);

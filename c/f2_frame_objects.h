@@ -1365,8 +1365,7 @@
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame_object__funk__pcfunkvar(name, funk_name), this, cfunk); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
 
 #define reinit_frame_object__funk(name, funk_name)			\
-  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = new__symbol(cause, symbol_str);} \
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(frame_object__funk__pcfunkvar(name, funk_name), this, cfunk); frame_object__slot__funk__var(name, funk_name) = never_gc(cfunk);}
+  {char* symbol_str = #funk_name; frame_object__slot__symbol__var(name, funk_name) = new__symbol(cause, symbol_str);}
 
 #define init_frame_object__funk__defragment__fix_pointers(name, funk_name) { \
     frame_object__slot__symbol__var(name, funk_name) = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), frame_object__slot__symbol__var(name, funk_name)); \

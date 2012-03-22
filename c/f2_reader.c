@@ -22,6 +22,12 @@
 #include "funk2.h"
 #include <stdio.h>
 
+#ifdef DEBUG_READER
+#  define reader_status(msg, rest...) status(msg, ## rest)
+#else
+#  define reader_status(msg, rest...)
+#endif
+
 boolean_t raw__exp__contains_comma(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
@@ -151,20 +157,20 @@ f2ptr f2__stream__try_read_impossibility(f2ptr cause, f2ptr stream) {
   }
   if (raw__exception__is_type(cause, first_char) &&
       raw__eq(cause, f2exception__tag(first_char, cause), __funk2.reader.end_of_file_exception__symbol)) {
-    status("f2__stream__try_read_impossibility() note: end_of_file_exception.");
+    reader_status("f2__stream__try_read_impossibility() note: end_of_file_exception.");
     return __funk2.reader.end_of_file_exception;
   }
   // check all imposibilities for first_char
   if (raw__eq(cause, first_char, __funk2.reader.char__right_paren)) {
-    status("f2__stream__try_read_impossibility() note: end_parens_exception.");
+    reader_status("f2__stream__try_read_impossibility() note: end_parens_exception.");
     return __funk2.reader.end_parens_exception;
   }
   if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren)) {
-    status("f2__stream__try_read_impossibility() note: array_end_parens_exception.");
+    reader_status("f2__stream__try_read_impossibility() note: array_end_parens_exception.");
     return __funk2.reader.array_end_parens_exception;
   }
   if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {
-    status("f2__stream__try_read_impossibility() note: doublelink_end_parens_exception.");
+    reader_status("f2__stream__try_read_impossibility() note: doublelink_end_parens_exception.");
     return __funk2.reader.doublelink_end_parens_exception;
   }
   f2__stream__ungetc(cause, stream, first_char);
@@ -186,17 +192,17 @@ f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
       exp = f2__stream__try_read(cause, stream);
       if (raw__exception__is_type(cause, exp) &&
 	  raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {
-	status("f2__stream__try_read_list note: successfully read end of list.");
+	reader_status("f2__stream__try_read_list note: successfully read end of list.");
 	return seq;
       }
       if (raw__exception__is_type(cause, exp) &&
 	  raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {
-	status("f2__stream__try_read_list note: unmatched begin paren exception.");
+	reader_status("f2__stream__try_read_list note: unmatched begin paren exception.");
 	return __funk2.reader.unmatched_begin_paren_exception;
       }
       if (raw__exception__is_type(cause, exp)) {
 	// other exceptions should be propagated
-	status("f2__stream__try_read_list note: other exception being propogated.");
+	reader_status("f2__stream__try_read_list note: other exception being propogated.");
 	return exp;
       }
       new_cons = f2cons__new(cause, exp, nil);

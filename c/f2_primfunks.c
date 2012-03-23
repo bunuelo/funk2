@@ -1761,16 +1761,16 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   }
   ptype_t ptype = f2ptype__raw(exp, cause);
   switch(ptype) {
-  case ptype_integer:          return raw__integer__eq_hash_value(        cause, exp);
-  case ptype_double:           return raw__double__eq_hash_value(         cause, exp);
-  case ptype_float:            return raw__float__eq_hash_value(          cause, exp);
-  case ptype_pointer:          return raw__pointer__eq_hash_value(        cause, exp);
+  case ptype_integer:          return raw__integer__eq_hash_value(         cause, exp);
+  case ptype_double:           return raw__double__eq_hash_value(          cause, exp);
+  case ptype_float:            return raw__float__eq_hash_value(           cause, exp);
+  case ptype_pointer:          return raw__pointer__eq_hash_value(         cause, exp);
   case ptype_scheduler_cmutex: return raw__scheduler_cmutex__eq_hash_value(cause, exp);
   case ptype_cmutex:           return raw__cmutex__eq_hash_value(          cause, exp);
-  case ptype_char:             return raw__char__eq_hash_value(           cause, exp);
-  case ptype_string:           return raw__string__eq_hash_value(         cause, exp);
-  case ptype_symbol:           return raw__symbol__eq_hash_value(         cause, exp);
-  case ptype_chunk:            return raw__chunk__eq_hash_value(          cause, exp);
+  case ptype_char:             return raw__char__eq_hash_value(            cause, exp);
+  case ptype_string:           return raw__string__eq_hash_value(          cause, exp);
+  case ptype_symbol:           return raw__symbol__eq_hash_value(          cause, exp);
+  case ptype_chunk:            return raw__chunk__eq_hash_value(           cause, exp);
   case ptype_simple_array:
   case ptype_traced_array: {
     if (raw__primobject__is_type(cause, exp) &&

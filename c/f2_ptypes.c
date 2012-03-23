@@ -1752,7 +1752,7 @@ void funk2_ptypes__destroy(funk2_ptypes_t* this) {
 
 // **
 
-void f2__ptypes_object_slots__defragment__fix_pointers() {
+void f2__ptypes__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
   

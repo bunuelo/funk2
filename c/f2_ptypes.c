@@ -209,7 +209,6 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
 
 
 
-
 // double
 
 f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {

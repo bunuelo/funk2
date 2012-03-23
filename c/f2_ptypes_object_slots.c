@@ -79,12 +79,13 @@ f2ptr f2ptype__primobject_type__new(f2ptr cause) {
 // integer
 
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_integer);
 }
+
 f2ptr f2__integer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__integer__is_type(cause, x));}
 def_pcfunk1(integer__is_type, this,
 	    "",
@@ -491,10 +492,10 @@ f2ptr f2integer__primobject_type__new(f2ptr cause) {
 // double
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_double);
 }
 f2ptr f2__double__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__double__is_type(cause, x));}
@@ -979,10 +980,10 @@ f2ptr f2double__primobject_type__new(f2ptr cause) {
 // float
 
 boolean_t raw__float__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_float);
 }
 f2ptr f2__float__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__float__is_type(cause, x));}
@@ -1332,10 +1333,10 @@ f2ptr f2float__primobject_type__new(f2ptr cause) {
 // pointer
 
 boolean_t raw__pointer__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_pointer);
 }
 f2ptr f2__pointer__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__pointer__is_type(cause, x));}
@@ -1539,10 +1540,10 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause) {
 // scheduler_cmutex
 
 boolean_t raw__scheduler_cmutex__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_scheduler_cmutex);
 }
 f2ptr f2__scheduler_cmutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__scheduler_cmutex__is_type(cause, x));}
@@ -1704,10 +1705,10 @@ f2ptr f2scheduler_cmutex__primobject_type__new(f2ptr cause) {
 // cmutex
 
 boolean_t raw__cmutex__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_cmutex);
 }
 f2ptr f2__cmutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cmutex__is_type(cause, x));}
@@ -1926,10 +1927,10 @@ f2ptr f2cmutex__primobject_type__new(f2ptr cause) {
 // char
 
 boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_char);
 }
 f2ptr f2__char__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__char__is_type(cause, x));}
@@ -2131,10 +2132,10 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
 // string
 
 boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_string);
 }
 f2ptr f2__string__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__string__is_type(cause, x));}
@@ -2587,10 +2588,10 @@ void raw__symbol__str_copy(f2ptr cause, f2ptr this, funk2_character_t* str) {
 }
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_symbol);
 }
 f2ptr f2__symbol__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__symbol__is_type(cause, x));}
@@ -3034,10 +3035,10 @@ f2ptr f2__chunk__new(f2ptr cause, f2ptr length) {
 }
 
 boolean_t raw__chunk__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if ((!cause) || (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if ((!cause) || (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_chunk);
 }
 f2ptr f2__chunk__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__chunk__is_type(cause, x));}
@@ -3511,10 +3512,10 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause) {
 // simple_array
 
 boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_simple_array);
 }
 f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__simple_array__is_type(cause, x));}
@@ -3677,10 +3678,10 @@ f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
 // traced_array
 
 boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_traced_array);
 }
 f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__traced_array__is_type(cause, x));}
@@ -3918,10 +3919,10 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
 // larva
 
 boolean_t raw__larva__is_type(f2ptr cause, f2ptr x) {
-  check_wait_politely();
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-#endif // F2__PTYPE__TYPE_CHECK
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_larva);
 }
 f2ptr f2__larva__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__larva__is_type(cause, x));}

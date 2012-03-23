@@ -423,6 +423,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_protected_alloc_array.c \
   c/f2_ptype.c \
   c/f2_ptypes.c \
+  c/f2_ptypes_object_slots.c \
   c/f2_reader.c \
   c/f2_redblacktree.c \
   c/f2_simple_repl.c \

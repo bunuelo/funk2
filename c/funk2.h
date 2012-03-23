@@ -84,6 +84,7 @@
 #include "f2_ptype.h"
 #include "f2_ptypes.h"
 #include "f2_ptypes_memory.h"
+#include "f2_ptypes_object_slots.h"
 #include "f2_primes.h"
 #include "f2_primfunks.h"
 #include "f2_primfunks__errno.h"

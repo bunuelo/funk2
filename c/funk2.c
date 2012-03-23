@@ -90,7 +90,7 @@ void f2__initialize() {
   f2__primfunks__locale__initialize();
   f2__ansi__initialize();
   f2__termios__initialize();
-  f2__ptypes__initialize__object_slots();
+  f2__ptypes_object_slots__initialize();
   f2__primobject__dynamic_library__initialize();
   f2__gmodule__initialize();
   f2__string__initialize();

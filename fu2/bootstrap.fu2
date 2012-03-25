@@ -83,6 +83,7 @@
 		   [have trigger trigger]
 		   nil]]
 	       
+	       [print 'bootstrap.fu2: debug 0']
 	       ]]]
 
 

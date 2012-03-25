@@ -49,7 +49,7 @@ ptr raw__dlfcn__dlopen_ex(u8* filename, int flag) {
 
 f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   int filename__utf8_length = raw__string__utf8_length(cause, filename);
-  u8* filename__utf8_str    = (u8*)alloca(filename__utf8_length + 1);
+  u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
   raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
   filename__utf8_str[filename__utf8_length] = 0;
   int raw_flag = flag ? f2integer__i(flag, cause) : (RTLD_LAZY | RTLD_GLOBAL);
@@ -65,11 +65,13 @@ f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
 															new__symbol(cause, "dlfcn-dlerror"), new__string(cause, dlerror_string)))));
   }
   status("f2__dlfcn__dlopen: successfully loaded library, \"%s\".", filename__utf8_str);
-  return f2pointer__new(cause, result);
+  f2ptr dynamic_library_pointer = f2pointer__new(cause, result);
+  f2__free(to_ptr(filename__utf8_str));
+  return dynamic_library_pointer;
 }
 
 f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
-  assert_argument_type(       string, filename);
+  assert_argument_type(       string,  filename);
   assert_argument_type_or_nil(integer, flag);
   return raw__dlfcn__dlopen(cause, filename, flag);
 }
@@ -567,12 +569,7 @@ def_pcfunk1(global_dlfcn_dynamic_library__unload_dynamic_library, filename,
 
 f2ptr f2__global_dlfcn_dynamic_library__unload_changed(f2ptr cause) {
   f2ptr dlfcn_dynamic_library_handler = assert_value(f2__global_dlfcn_dynamic_library_handler(cause));
-  if (raw__larva__is_type(cause, dlfcn_dynamic_library_handler)) {
-    return dlfcn_dynamic_library_handler;
-  }
-  if (! raw__dlfcn_dynamic_library_handler__is_type(cause, dlfcn_dynamic_library_handler)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_handler);
   return f2__dlfcn_dynamic_library_handler__unload_changed(cause, dlfcn_dynamic_library_handler);
 }
 def_pcfunk0(global_dlfcn_dynamic_library__unload_changed,
@@ -592,7 +589,7 @@ void f2__dlfcn__reinitialize_globalvars() {
   } else {
     raw__dlfcn_dynamic_library_handler__reinit(cause, dynamic_library_handler);
   }
-
+  
   // dlfcn_dynamic_library
   
   reinit_frame_object__4_slot(dlfcn_dynamic_library, pointer, filename, stat, pointer_symbol_hash);
@@ -606,7 +603,7 @@ void f2__dlfcn__reinitialize_globalvars() {
 
 void f2__dlfcn__defragment__fix_pointers() {
   // -- reinitialize --
-
+  
   // -- initialize --
   
   f2__primcfunk__init__defragment__fix_pointers(dlfcn__supported);
@@ -665,9 +662,9 @@ void f2__dlfcn__defragment__fix_pointers() {
 }
 
 void f2__dlfcn__initialize() {
-  f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars, &f2__dlfcn__defragment__fix_pointers);
+  
+  f2ptr cause = initial_cause();
   
   f2__dlfcn__reinitialize_globalvars();
   

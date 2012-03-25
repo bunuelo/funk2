@@ -135,12 +135,8 @@
 	  filenames]
     a_file_was_loaded]]
 
-[print 'bootstrap-package.fu2: debug 0']
-
 [deftypefunk symbol get is-defined []
   [not [is-type `bug [shelter [eval this]]]]]
-
-[print 'bootstrap-package.fu2: debug 1']
 
 [set [global_package_handler] package_search_paths `['built-in/alien/'
 						     'built-in/ansi/'

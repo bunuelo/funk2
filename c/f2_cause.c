@@ -480,13 +480,12 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
 
 void f2__cause__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  __cause__symbol = new__symbol(cause, "cause");
+  
+  reinitialize_primobject(cause);
 }
 
 void f2__cause__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__cause__symbol);
   
   // -- initialize --
   

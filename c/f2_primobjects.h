@@ -425,12 +425,19 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
 
 #define def_primobject_static_slot(name, slot_number, slot_name) \
-  defprimobject__static_slot(name##__##slot_name, slot_number); \
-   \
-  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {return f2##name##__##slot_name(x, cause);} \
+  defprimobject__static_slot(name##__##slot_name, slot_number);	 \
+  								 \
+  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {		\
+    assert_argument_type(name, x);					\
+    return f2##name##__##slot_name(x, cause);				\
+  }									\
   def_pcfunk1(name##__##slot_name, x, "Returns this " #name "'s " #slot_name " slot value.", return f2__##name##__##slot_name(this_cause, x)); \
-   \
-  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y) {f2##name##__##slot_name##__set(x, cause, y); return nil;} \
+  									\
+  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y) { \
+    assert_argument_type(name, x);					\
+    f2##name##__##slot_name##__set(x, cause, y);			\
+    return nil;								\
+  }									\
   def_pcfunk2(name##__##slot_name##__set, x, y, "Sets this " #name "'s " #slot_name " slot value.", return f2__##name##__##slot_name##__set(this_cause, x, y));
 
 

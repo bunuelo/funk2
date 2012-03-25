@@ -135,7 +135,8 @@
 	  filenames]
     a_file_was_loaded]]
 
-[deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
+[deftypefunk symbol get is-defined []
+  [not [is-type `bug [shelter [eval this]]]]]
 
 [set [global_package_handler] package_search_paths `['built-in/alien/'
 						     'built-in/ansi/'

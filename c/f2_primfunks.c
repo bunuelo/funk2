@@ -1788,6 +1788,7 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_free_memory:
   case ptype_newly_allocated: 
   default:
+    status("raw__eq_hash_value error: found invalid ptype (" u64__fstr ")", (u64)ptype);
     error(nil, "raw__eq_hash_value error: found invalid ptype.");
     break;
   }

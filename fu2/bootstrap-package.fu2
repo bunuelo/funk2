@@ -432,9 +432,13 @@
 
 
 [defunk require-package [:rest names]
+  [print 'require-package: debug 0']
   [let [[load_if_modified_before_time [time]]]
+    [print 'require-package: debug 1']
     [global_core_extension_handler-unload_changed]
+    [print 'require-package: debug 2']
     [global_dlfcn_dynamic_library-unload_changed]
+    [print 'require-package: debug 3']
     [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
 
 [defmetro require [:rest names]

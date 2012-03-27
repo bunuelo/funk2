@@ -47,6 +47,7 @@ f2ptr raw__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name) 
 				   new__symbol(cause, "this"),         this,
 				   new__symbol(cause, "package_name"), name));
   }
+  assert_argument_type(package, package);
   return package;
 }
 

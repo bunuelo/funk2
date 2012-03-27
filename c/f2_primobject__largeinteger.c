@@ -1428,8 +1428,6 @@ void f2__primobject_largeinteger__defragment__fix_pointers() {
   
   // -- initialize --
   
-  f2ptr cause = initial_cause();
-  
   // largeinteger
   
   initialize_primobject_2_slot__defragment__fix_pointers(largeinteger, is_negative, integer_array);

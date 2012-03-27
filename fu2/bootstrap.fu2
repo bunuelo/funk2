@@ -64,14 +64,20 @@
   `[reload_all_package_definitions]
   
   [eval `[prog [print 'bootstrap.fu2: debug 0']
-	       [require number
-			ansi
-			mutex
-			math
-			basic_bug_responses
-			keyboard-repl]
-	       
-	       [print 'bootstrap.fu2: debug 1']
+	       [require number]
+	       [print 'bootstrap.fu2: debug 0.1']
+	       [require ansi]
+	       [print 'bootstrap.fu2: debug 0.2']
+	       [require mutex]
+	       [print 'bootstrap.fu2: debug 0.3']
+	       [require math]
+	       [print 'bootstrap.fu2: debug 0.4']
+	       [require basic_bug_responses]
+	       [print 'bootstrap.fu2: debug 0.5']
+	       [require keyboard-repl]
+	       [print 'bootstrap.fu2: debug 1']]]
+  
+  [eval `[prog [print 'bootstrap.fu2: debug 2']
 	       
 	       [defunk backup_repl []
 		 [let* [[trigger [new fiber_trigger]]
@@ -86,8 +92,10 @@
 		   [have trigger trigger]
 		   nil]]
 	       
-	       [print 'bootstrap.fu2: debug 2']
-	       ]]]
+	       [print 'bootstrap.fu2: debug 3']
+	       ]]
+  [print 'bootstrap.fu2: debug 4']
+  ]
 
 
 

@@ -53,6 +53,7 @@ f2ptr raw__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name) 
 
 f2ptr f2__package_handler__lookup_package(f2ptr cause, f2ptr this, f2ptr name) {
   assert_argument_type(package_handler, this);
+  assert_argument_type(symbol,          name);
   return raw__package_handler__lookup_package(cause, this, name);
 }
 def_pcfunk2(package_handler__lookup_package, this, name,

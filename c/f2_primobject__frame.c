@@ -998,15 +998,13 @@ void f2__primobject_frame__reinitialize_globalvars() {
   
   funk2_primobject__frame__reinit(&(__funk2.primobject__frame));
   
-  __frame__symbol = new__symbol(cause, "frame");
+  reinitialize_primobject(frame);
 }
 
 void f2__primobject_frame__defragment__fix_pointers() {
   // -- reinitialize --
   
   funk2_primobject__frame__defragment__fix_pointers(&(__funk2.primobject__frame));
-  
-  defragment__fix_pointer(__frame__symbol);
   
   
   // -- initialize --

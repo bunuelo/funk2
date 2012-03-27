@@ -182,15 +182,13 @@ f2ptr f2environment__primobject_type__new_aux(f2ptr cause) {
 void f2__primobject_environment__reinitialize_globalvars() {
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
   
-  __environment__symbol = new__symbol(initial_cause(), "environment");
+  reinitialize_primobject(environment);
 }
 
 void f2__primobject_environment__defragment__fix_pointers() {
   // -- reinitialize --
   
   funk2_primobject__environment__defragment__fix_pointers(&(__funk2.primobject__environment));
-  
-  defragment__fix_pointer(__environment__symbol);
   
   
   // -- initialize --

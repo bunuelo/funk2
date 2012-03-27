@@ -204,7 +204,7 @@ f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
   while(keyvalue_pair_iter) {
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
-    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair, cause);
+    f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair,      cause);
     if (raw__eq(cause, key, keyvalue_pair__key)) {
       f2cmutex__unlock(f2ptypehash__write_cmutex(this, cause), cause);
       return keyvalue_pair;
@@ -438,13 +438,11 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__ptypehash__reinitialize_globalvars() {
-  __ptypehash__symbol = new__symbol(initial_cause(), "ptypehash");
+  reinitialize_primobject(ptypehash);
 }
 
 void f2__primobject__ptypehash__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__ptypehash__symbol);
   
   
   // -- initialize --

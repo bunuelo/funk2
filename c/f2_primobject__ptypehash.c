@@ -438,6 +438,8 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject__ptypehash__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
   reinitialize_primobject(ptypehash);
 }
 

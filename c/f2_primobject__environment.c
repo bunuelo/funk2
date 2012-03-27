@@ -180,6 +180,8 @@ f2ptr f2environment__primobject_type__new_aux(f2ptr cause) {
 // **
 
 void f2__primobject_environment__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
   
   reinitialize_primobject(environment);

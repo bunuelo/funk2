@@ -1422,14 +1422,58 @@ f2ptr f2largeinteger__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
+void f2__primobject_largeinteger__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  f2ptr cause = initial_cause();
+  
+  // largeinteger
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(largeinteger, is_negative, integer_array);
+  
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__less_than);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__greater_than);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__add);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__negative);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__subtract);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__bitshift_left);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__bitshift_right);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__multiply_largeinteger);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__quotient_and_remainder);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__divide);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__modulo);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__print);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__greatest_common_factor);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__square_root);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__prime_factor_indices);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__as__double);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__multiplied_by);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__divided_by);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__plus);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__minus);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__is_greater_than);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__is_less_than);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__is_numerically_equal_to);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(largeinteger__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk);
+  
+}
+
 void f2__primobject_largeinteger__reinitialize_globalvars() {
-  __largeinteger__symbol = new__symbol(initial_cause(), "largeinteger");
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(largeinteger);
 }
 
 void f2__primobject_largeinteger__initialize() {
-  f2__primobject_largeinteger__reinitialize_globalvars();
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-largeinteger", "", &f2__primobject_largeinteger__reinitialize_globalvars, &f2__primobject_largeinteger__defragment__fix_pointers);
   
-  environment__add_var_value(initial_cause(), global_environment(), __largeinteger__symbol, nil);
+  f2__primobject_largeinteger__reinitialize_globalvars();
   
   f2ptr cause = initial_cause();
   

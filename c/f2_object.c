@@ -796,7 +796,7 @@ void f2__object__reinitialize_globalvars() {
 void f2__object__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "object", "", &f2__object__reinitialize_globalvars, &f2__object__defragment__fix_pointers);
   
-  f2__string__reinitialize_globalvars();
+  f2__object__reinitialize_globalvars();
   
 }
 

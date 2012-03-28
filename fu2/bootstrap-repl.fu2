@@ -1098,7 +1098,7 @@
 [defunk memory-debug_assert_valid []
   [if memory:debug
     [prog [terminal_format standard-terminal '\nmemory-debug_assert_valid: Asserting memory valid...']
-	  [memory-debug_assert_valid]
+	  [memory-assert_valid]
 	  [terminal_format standard-terminal '  Memory is valid.']
 	  nil]]]
 

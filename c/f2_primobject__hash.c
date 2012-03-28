@@ -376,9 +376,9 @@ void f2__primobject_hash__defragment__fix_pointers() {
   
   initialize_primobject_6_slot__defragment__fix_pointers(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(hash__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(hash__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__symbol);
   f2__primcfunk__init__defragment__fix_pointers(hash__slot_names);

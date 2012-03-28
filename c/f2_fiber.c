@@ -965,16 +965,6 @@ void f2__fiber__initialize() {
   f2__fiber__reinitialize_globalvars();
   f2ptr cause = f2_fiber_c__cause__new(initial_cause());
   
-  environment__add_var_value(cause, global_environment(), __fiber__program_counter_reg__symbol,     nil);
-  environment__add_var_value(cause, global_environment(), __fiber__iter_reg__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __fiber__env_reg__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), __fiber__args_reg__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __fiber__return_reg__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), __fiber__value_reg__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __fiber__environment_critics__symbol,     nil);
-  //environment__add_var_value(cause, global_environment(), __fiber__execute_bytecode__cause__symbol, nil);
-
-
   // fiber
   
   initialize_primobject_27_slot(fiber,

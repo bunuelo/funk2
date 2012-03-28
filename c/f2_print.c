@@ -289,7 +289,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
     if (stream) {raw__stream__writef(cause, stream, "*");} width ++;
   } else {
     if (exp == nil) {
-      f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
+      f2__write__ansi_color(cause, stream, print__ansi__nil__foreground, use_ansi_colors, use_html);
       if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__left_paren, cause));} width ++;
       if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
       f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);

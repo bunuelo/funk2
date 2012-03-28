@@ -99,7 +99,7 @@
 	      "on-trigger" "or"
 	      "package" "parc" "parcar" "parlet" "parog" "partimes" "pause" "prog" "put"
 	      "quote"
-	      "require" "resume"
+	      "reload" "require" "resume"
 	      "set" "set-apply" "shelter" "semantic-lookup_set" "semantic-lookup_set-apply" "semantic-add" "semantic-add-apply" "semantic-remove" "semantic-remove-apply"
 	      "type-get" "type-set" "type-execute" "type-have" "type-get-apply" "type-set-apply" "type-execute-apply" "type-have-apply"
 	      "wait-for-trigger" "while" "with" "with-new-cause"

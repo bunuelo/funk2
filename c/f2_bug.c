@@ -115,16 +115,8 @@ f2ptr f2bug__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__bug__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  __bug__symbol = new__symbol(cause, "bug");
-}
-
 void f2__bug__defragment__fix_pointers() {
   // -- reinitialize --
-  
-  defragment__fix_pointer(__bug__symbol);
   
   
   // -- initialize --
@@ -142,6 +134,11 @@ void f2__bug__defragment__fix_pointers() {
   
 }
 
+void f2__bug__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(bug);
+}
 
 void f2__bug__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "bug", "", &f2__bug__reinitialize_globalvars, &f2__bug__defragment__fix_pointers);

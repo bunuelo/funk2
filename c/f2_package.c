@@ -812,7 +812,7 @@ void f2__package__defragment__fix_pointers() {
 
 void f2__package__initialize() {
   f2__package__reinitialize_globalvars();
-  funk2_module_registration__add_module(&(__funk2.module_registration), "package", "", &f2__cause__reinitialize_globalvars, &f2__package__defragment__fix_pointers);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "package", "", &f2__package__reinitialize_globalvars, &f2__package__defragment__fix_pointers);
   f2ptr cause = initial_cause();
   
   //--

@@ -1093,7 +1093,7 @@
 			 [funk-new_with_name ,name ,args
 					     @body]]]]
 
-[globalize memory:debug nil]
+[globalize memory:debug t]
 
 [defunk memory-debug_assert_valid []
   [if memory:debug

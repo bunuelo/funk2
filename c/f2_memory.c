@@ -758,6 +758,8 @@ void funk2_memory__memory_test(funk2_memory_t* this) {
 f2ptr f2__memory__assert_valid(f2ptr cause) {
   f2ptr return_result = nil;
   funk2_processor_mutex__lock(&(__funk2.garbage_collector.do_collection_mutex));
+  funk2_memory__memory_test(&(__funk2.memory));
+  /*
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     f2ptr result = raw__memorypool__assert_valid(cause, pool_index);
@@ -767,6 +769,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
     }
   }
  f2__memory__assert_valid__return_goto:
+  */
   funk2_processor_mutex__unlock(&(__funk2.garbage_collector.do_collection_mutex));
   return return_result;
 }

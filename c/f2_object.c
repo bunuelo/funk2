@@ -737,10 +737,6 @@ def_pcfunk2(object__property_scan, object, property_funk,
 
 // **
 
-void f2__object__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_object_c__cause__new(initial_cause(), nil, global_environment());
-}
-
 void f2__object__defragment__fix_pointers() {
   // -- reinitialize --
 
@@ -775,6 +771,17 @@ void f2__object__defragment__fix_pointers() {
   
 }
 
+void f2__object__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                           this, that,      cfunk); __funk2.object.object__eq__funk                           = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,            cfunk); __funk2.object.object__eq_hash_value__funk                = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,                       this, that,      cfunk); __funk2.object.object__equals__funk                       = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value,            this,            cfunk); __funk2.object.object__equals_hash_value__funk            = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this, node_hash, cfunk); __funk2.object.object__equals_hash_value__loop_free__funk = cfunk;}
+  
+}
+
 void f2__object__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "object", "", &f2__object__reinitialize_globalvars, &f2__object__defragment__fix_pointers);
   
@@ -787,11 +794,11 @@ void f2__object__initialize() {
   f2__primcfunk__init__2_and_rest(object__execute,        this, slot, args);
   f2__primcfunk__init__3(         object__execute__apply, this, slot, args);
   
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                           this, that,      cfunk); __funk2.object.object__eq__funk                           = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,            cfunk); __funk2.object.object__eq_hash_value__funk                = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,                       this, that,      cfunk); __funk2.object.object__equals__funk                       = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value,            this,            cfunk); __funk2.object.object__equals_hash_value__funk            = never_gc(cfunk);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this, node_hash, cfunk); __funk2.object.object__equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                           this, that,      cfunk); __funk2.object.object__eq__funk                           = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,            cfunk); __funk2.object.object__eq_hash_value__funk                = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,                       this, that,      cfunk); __funk2.object.object__equals__funk                       = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__equals_hash_value,            this,            cfunk); __funk2.object.object__equals_hash_value__funk            = cfunk;}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals_hash_value__loop_free, this, node_hash, cfunk); __funk2.object.object__equals_hash_value__loop_free__funk = cfunk;}
   
   f2__primcfunk__init__1(object__type,            this);
   f2__primcfunk__init__3(object__slot__type_funk, this, slot_type, slot_name);

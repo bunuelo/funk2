@@ -772,8 +772,7 @@ void f2__object__defragment__fix_pointers() {
 }
 
 void f2__object__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-
+  
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__eq,                           this, that,      cfunk); __funk2.object.object__eq__funk                           = cfunk;}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(object__eq_hash_value,                this,            cfunk); __funk2.object.object__eq_hash_value__funk                = cfunk;}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(object__equals,                       this, that,      cfunk); __funk2.object.object__equals__funk                       = cfunk;}

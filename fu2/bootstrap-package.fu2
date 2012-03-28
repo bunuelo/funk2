@@ -349,10 +349,13 @@
       [set package loaded_all_dependencies_time [time]]]]]
 
 [defunk package-load_if_modified_before [name before_time checked_package_hash dependencies_are_sticky]
+  [print 'package-load_if_modified_before: debug 0']
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
+  [print 'package-load_if_modified_before: debug 1']
   [if [not [get checked_package_hash contains name]]
-      [prog [have checked_package_hash add name t]
+      [prog [print 'package-load_if_modified_before: debug 1']
+	    [have checked_package_hash add name t]
 	    [let [[package             [lookup-package name]]
 		  [loaded_a_dependency nil]
 		  [package_was_loaded  nil]]
@@ -471,8 +474,8 @@
     [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
 
 [defmetro require [:rest names]
-  [print `[require @names]]
-  `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]
+  `[prog [print [quote ,`[require @names]]]
+	 [require-package @[mapcar [funk [name] `[quote ,name]] names]]]]
 
 
 [defunk reload-package [:rest names]

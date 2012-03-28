@@ -367,14 +367,61 @@ f2ptr f2hash__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
+void f2__primobject_hash__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // -- initialize --
+  
+  // hash
+  
+  initialize_primobject_6_slot__defragment__fix_pointers(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__slot_names);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.add__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__add);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.add__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.remove__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__remove);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.remove__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__lookup);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.as__frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__as__frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.as__frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(hash);
+  
+}
+
 void f2__primobject_hash__reinitialize_globalvars() {
-  __hash__symbol = new__symbol(initial_cause(), "hash");
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(hash);
 }
 
 void f2__primobject_hash__initialize() {
-  f2__primobject_hash__reinitialize_globalvars();
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-hash", "", &f2__primobject_hash__reinitialize_globalvars, &f2__primobject_hash__defragment__fix_pointers);
   
-  environment__add_var_value(initial_cause(), global_environment(), __hash__symbol, nil);
+  f2__primobject_hash__reinitialize_globalvars();
   
   f2ptr cause = initial_cause();
   

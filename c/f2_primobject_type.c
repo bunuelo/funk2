@@ -135,12 +135,8 @@ def_pcfunk2(primobject_type__has_parent_type, this, type_name,
 	    "check if this primobject is type or has parent type of the type_name specified.",
 	    return f2__primobject_type__has_parent_type(this_cause, this, type_name));
 
-void f2__primobject_type__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinit_frame_object__2_slot(primobject_type, parents, documentation);
-  
-}
+
+// **
 
 void f2__primobject_type__defragment__fix_pointers() {
   // -- reinitialize --
@@ -159,10 +155,7 @@ void f2__primobject_type__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primobject_type__has_parent_type);
 }
 
-void f2__primobject_type__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type", "", &f2__primobject_type__reinitialize_globalvars, &f2__primobject_type__defragment__fix_pointers);
-  
-  f2__string__reinitialize_globalvars();
+void f2__primobject_type__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // primobject_type
@@ -175,6 +168,12 @@ void f2__primobject_type__initialize() {
   f2__primcfunk__init__3(primobject_type__lookup_slot_type_funk, this, slot_type, slot_name);
   f2__primcfunk__init__2(primobject_type__type_funk__keys,       this, slot_type);
   f2__primcfunk__init__2(primobject_type__has_parent_type,       this, type_name);
+}
+
+void f2__primobject_type__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type", "", &f2__primobject_type__reinitialize_globalvars, &f2__primobject_type__defragment__fix_pointers);
+  
+  f2__primobject_type__reinitialize_globalvars();
 }
 
 

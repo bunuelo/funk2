@@ -660,7 +660,7 @@ void f2__primobject__stream__defragment__fix_pointers() {
 }
 
 void f2__primobject__stream__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
+  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   // stream
   
@@ -689,6 +689,13 @@ void f2__primobject__stream__reinitialize_globalvars() {
   f2__primcfunk__init(stream__nonblocking__set);
   f2__primcfunk__init__2(stream__ungetc, this, character);
   f2__primcfunk__init__1(stream__getc,   this);
+  
+  
+  reinitialize_primobject(file_stream);
+  reinitialize_primobject(socket_stream);
+  reinitialize_primobject(string_stream);
+  reinitialize_primobject(text_window_stream);
+  
 }
 
 void f2__primobject__stream__initialize() {

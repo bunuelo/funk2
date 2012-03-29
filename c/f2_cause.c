@@ -541,10 +541,16 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause);
 }
 
-void f2__cause__reinitialize_globalvars() {
+void f2__cause__preinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   reinitialize_primobject(cause);
+}
+  
+void f2__cause__reinitialize_globalvars() {
+  f2__cause__preinitialize_globalvars();
+  
+  f2ptr cause = initial_cause();
   
   //--
   

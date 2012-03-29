@@ -179,12 +179,6 @@ f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__fiber_trigger__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(fiber_trigger);
-}
-
 void f2__primobject__fiber_trigger__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -220,13 +214,7 @@ void f2__primobject__fiber_trigger__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk);
 }
 
-void f2__primobject__fiber_trigger__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars, &f2__primobject__fiber_trigger__defragment__fix_pointers);
-  
-  f2__primobject__fiber_trigger__reinitialize_globalvars();
-  
-  environment__add_var_value(initial_cause(), global_environment(), __fiber_trigger__symbol, nil);
-  
+void f2__primobject__fiber_trigger__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // fiber_trigger
@@ -246,6 +234,11 @@ void f2__primobject__fiber_trigger__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure, this, traced_cmutex, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_trigger__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_trigger.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject__fiber_trigger__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-fiber_trigger", "", &f2__primobject__fiber_trigger__reinitialize_globalvars, &f2__primobject__fiber_trigger__defragment__fix_pointers);
   
+  f2__primobject__fiber_trigger__reinitialize_globalvars();
 }
 

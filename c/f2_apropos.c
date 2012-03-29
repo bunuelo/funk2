@@ -77,10 +77,6 @@ def_pcfunk1(apropos, find_string,
 
 // **
 
-void f2__apropos__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_apropos_c__cause__new(initial_cause(), nil, global_environment());
-}
-
 void f2__apropos__defragment__fix_pointers() {
   // -- reinitialize --
 
@@ -90,11 +86,13 @@ void f2__apropos__defragment__fix_pointers() {
   
 }
 
+void f2__apropos__reinitialize_globalvars() {
+  f2__primcfunk__init(apropos);
+}
+
 void f2__apropos__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "apropos", "", &f2__apropos__reinitialize_globalvars, &f2__apropos__defragment__fix_pointers);
   
   f2__apropos__reinitialize_globalvars();
-  
-  f2__primcfunk__init(apropos);
 }
 

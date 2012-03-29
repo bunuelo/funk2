@@ -109,7 +109,7 @@ void f2__primfunks__locale__reinitialize_globalvars() {
 }
 
 void f2__primfunks__locale__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__locale", "", &f2__primfunks__locale__reinitialize_globalvars, &f2__primfunks__locale__defragment__fix_pointers);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks-locale", "", &f2__primfunks__locale__reinitialize_globalvars, &f2__primfunks__locale__defragment__fix_pointers);
   
   f2__primfunks__locale__reinitialize_globalvars();
 }

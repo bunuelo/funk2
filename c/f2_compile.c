@@ -1779,49 +1779,6 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
 
 // **
 
-void f2__compile__reinitialize_globalvars() {
-  f2ptr cause = f2_compile_c__cause__new(initial_cause());
-  
-  {char* str = "compile:cause-compiled_from"; __funk2.compile.cause__compiled_from__symbol = new__symbol(cause, str);}
-  {char* str = "compile:exception";           __funk2.compile.compile__exception           = new__symbol(cause, str);}
-  
-  {char* str = "compile:f2__compile__funk";                     __funk2.compile.f2__compile__funk__symbol                     = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__metro";                    __funk2.compile.f2__compile__metro__symbol                    = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__if";                       __funk2.compile.f2__compile__if__symbol                       = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__if_exp";                   __funk2.compile.f2__compile__if_exp__symbol                   = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__while";                    __funk2.compile.f2__compile__while__symbol                    = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__while_exp";                __funk2.compile.f2__compile__while_exp__symbol                = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__return";                   __funk2.compile.f2__compile__return__symbol                   = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__return_exp";               __funk2.compile.f2__compile__return_exp__symbol               = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__rawcode";                  __funk2.compile.f2__compile__rawcode__symbol                  = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__lookup_funkvar_exp";       __funk2.compile.f2__compile__lookup_funkvar_exp__symbol       = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__eval_args";                __funk2.compile.f2__compile__eval_args__symbol                = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__eval_args__current_arg";   __funk2.compile.f2__compile__eval_args__current_arg__symbol   = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__define_funk_exp";          __funk2.compile.f2__compile__define_funk_exp__symbol          = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__define_exp";               __funk2.compile.f2__compile__define_exp__symbol               = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__mutate_exp";               __funk2.compile.f2__compile__mutate_exp__symbol               = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__mutatefunk_exp";           __funk2.compile.f2__compile__mutatefunk_exp__symbol           = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__globalize_var_exp";        __funk2.compile.f2__compile__globalize_var_exp__symbol        = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__globalize_funkvar_exp";    __funk2.compile.f2__compile__globalize_funkvar_exp__symbol    = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__apply_exp";                __funk2.compile.f2__compile__apply_exp__symbol                = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__funkvar_call";             __funk2.compile.f2__compile__funkvar_call__symbol             = new__symbol(cause, str);}
-  {char* str = "compile:raw__apply_metro";                      __funk2.compile.raw__apply_metro__symbol                      = new__symbol(cause, str);}
-  {char* str = "compile:raw__apply_funk";                       __funk2.compile.raw__apply_funk__symbol                       = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__backquote_exp";            __funk2.compile.f2__compile__backquote_exp__symbol            = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__backquote_append_exp";     __funk2.compile.f2__compile__backquote_append_exp__symbol     = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__special_symbol_exp";       __funk2.compile.f2__compile__special_symbol_exp__symbol       = new__symbol(cause, str);}
-  {char* str = "compile:f2__compile__cons_exp";                 __funk2.compile.f2__compile__cons_exp__symbol                 = new__symbol(cause, str);}
-  {char* str = "compile:f2__demetropolize__special_symbol_exp"; __funk2.compile.f2__demetropolize__special_symbol_exp__symbol = new__symbol(cause, str);}
-  {char* str = "compile:f2__demetropolize__funkvar_call";       __funk2.compile.f2__demetropolize__funkvar_call__symbol       = new__symbol(cause, str);}
-  {char* str = "compile:f2__demetropolize_once";                __funk2.compile.f2__demetropolize_once__symbol                = new__symbol(cause, str);}
-  {char* str = "compile:f2__demetropolize_full";                __funk2.compile.f2__demetropolize_full__symbol                = new__symbol(cause, str);}
-  {char* str = "compile:raw__compile";                          __funk2.compile.raw__compile__symbol                          = new__symbol(cause, str);}
-  
-  {char* str = "debug_funk_call";                               __funk2.compile.debug_funk_call__symbol                       = new__symbol(cause, str);}
-  
-  __funk2.compile.wrong_argument_number__bcs = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
-}
-
 void f2__compile__defragment__fix_pointers() {
   // -- reinitialize --
 
@@ -1872,6 +1829,51 @@ void f2__compile__defragment__fix_pointers() {
   
 }
 
+void f2__compile__reinitialize_globalvars() {
+  f2ptr cause = f2_compile_c__cause__new(initial_cause());
+  
+  {char* str = "compile:cause-compiled_from"; __funk2.compile.cause__compiled_from__symbol = new__symbol(cause, str);}
+  {char* str = "compile:exception";           __funk2.compile.compile__exception           = new__symbol(cause, str);}
+  
+  {char* str = "compile:f2__compile__funk";                     __funk2.compile.f2__compile__funk__symbol                     = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__metro";                    __funk2.compile.f2__compile__metro__symbol                    = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__if";                       __funk2.compile.f2__compile__if__symbol                       = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__if_exp";                   __funk2.compile.f2__compile__if_exp__symbol                   = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__while";                    __funk2.compile.f2__compile__while__symbol                    = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__while_exp";                __funk2.compile.f2__compile__while_exp__symbol                = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__return";                   __funk2.compile.f2__compile__return__symbol                   = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__return_exp";               __funk2.compile.f2__compile__return_exp__symbol               = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__rawcode";                  __funk2.compile.f2__compile__rawcode__symbol                  = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__lookup_funkvar_exp";       __funk2.compile.f2__compile__lookup_funkvar_exp__symbol       = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__eval_args";                __funk2.compile.f2__compile__eval_args__symbol                = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__eval_args__current_arg";   __funk2.compile.f2__compile__eval_args__current_arg__symbol   = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__define_funk_exp";          __funk2.compile.f2__compile__define_funk_exp__symbol          = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__define_exp";               __funk2.compile.f2__compile__define_exp__symbol               = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__mutate_exp";               __funk2.compile.f2__compile__mutate_exp__symbol               = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__mutatefunk_exp";           __funk2.compile.f2__compile__mutatefunk_exp__symbol           = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__globalize_var_exp";        __funk2.compile.f2__compile__globalize_var_exp__symbol        = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__globalize_funkvar_exp";    __funk2.compile.f2__compile__globalize_funkvar_exp__symbol    = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__apply_exp";                __funk2.compile.f2__compile__apply_exp__symbol                = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__funkvar_call";             __funk2.compile.f2__compile__funkvar_call__symbol             = new__symbol(cause, str);}
+  {char* str = "compile:raw__apply_metro";                      __funk2.compile.raw__apply_metro__symbol                      = new__symbol(cause, str);}
+  {char* str = "compile:raw__apply_funk";                       __funk2.compile.raw__apply_funk__symbol                       = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__backquote_exp";            __funk2.compile.f2__compile__backquote_exp__symbol            = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__backquote_append_exp";     __funk2.compile.f2__compile__backquote_append_exp__symbol     = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__special_symbol_exp";       __funk2.compile.f2__compile__special_symbol_exp__symbol       = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__cons_exp";                 __funk2.compile.f2__compile__cons_exp__symbol                 = new__symbol(cause, str);}
+  {char* str = "compile:f2__demetropolize__special_symbol_exp"; __funk2.compile.f2__demetropolize__special_symbol_exp__symbol = new__symbol(cause, str);}
+  {char* str = "compile:f2__demetropolize__funkvar_call";       __funk2.compile.f2__demetropolize__funkvar_call__symbol       = new__symbol(cause, str);}
+  {char* str = "compile:f2__demetropolize_once";                __funk2.compile.f2__demetropolize_once__symbol                = new__symbol(cause, str);}
+  {char* str = "compile:f2__demetropolize_full";                __funk2.compile.f2__demetropolize_full__symbol                = new__symbol(cause, str);}
+  {char* str = "compile:raw__compile";                          __funk2.compile.raw__compile__symbol                          = new__symbol(cause, str);}
+  
+  {char* str = "debug_funk_call";                               __funk2.compile.debug_funk_call__symbol                       = new__symbol(cause, str);}
+  
+  __funk2.compile.wrong_argument_number__bcs = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
+  
+  f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
+}
+
 void f2__compile__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "compile", "", &f2__compile__reinitialize_globalvars, &f2__compile__defragment__fix_pointers);
   
@@ -1879,44 +1881,8 @@ void f2__compile__initialize() {
   
   f2ptr cause = f2_compile_c__cause__new(initial_cause());
   
-  environment__add_var_value(cause, global_environment(), __funk2.compile.cause__compiled_from__symbol, nil);
   environment__add_var_value(cause, global_environment(), __funk2.compile.compile__exception, f2exception__new(cause, __funk2.compile.compile__exception, nil));
   
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__funk__symbol,                     nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__metro__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__if__symbol,                       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__rawcode__symbol,                  nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__while__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__while_exp__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__return__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__return_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__if_exp__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__lookup_funkvar_exp__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__eval_args__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__eval_args__current_arg__symbol,   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__define_funk_exp__symbol,          nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__define_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__mutate_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__mutatefunk_exp__symbol,           nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__globalize_var_exp__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__globalize_funkvar_exp__symbol,    nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__apply_exp__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__funkvar_call__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.raw__apply_metro__symbol,                      nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.raw__apply_funk__symbol,                       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__backquote_exp__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__backquote_append_exp__symbol,     nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__special_symbol_exp__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__cons_exp__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize__special_symbol_exp__symbol, nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize__funkvar_call__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize_once__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize_full__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.raw__compile__symbol,                          nil);
-  
   __funk2.compile.wrong_argument_number__bcs = nil;
-  
-  f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
-  
 }
 

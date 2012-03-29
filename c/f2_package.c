@@ -738,14 +738,6 @@ def_pcfunk1(getenv, environment_variable,
 
 // **
 
-void f2__package__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(source_expression);
-  reinitialize_primobject(source);
-  reinitialize_primobject(package);
-}
-
 void f2__package__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -810,9 +802,7 @@ void f2__package__defragment__fix_pointers() {
   
 }
 
-void f2__package__initialize() {
-  f2__package__reinitialize_globalvars();
-  funk2_module_registration__add_module(&(__funk2.module_registration), "package", "", &f2__package__reinitialize_globalvars, &f2__package__defragment__fix_pointers);
+void f2__package__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   //--
@@ -868,6 +858,11 @@ void f2__package__initialize() {
   f2__primcfunk__init__1(pathname__exists,                          filename);
   f2__primcfunk__init__2(pathname__rename,                          old_filename, new_filename);
   f2__primcfunk__init__1(getenv,                                    environment_variable);
+}
+
+void f2__package__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "package", "", &f2__package__reinitialize_globalvars, &f2__package__defragment__fix_pointers);
   
+  f2__package__reinitialize_globalvars();
 }
 

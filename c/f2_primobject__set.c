@@ -488,16 +488,6 @@ void f2__primobject_set__defragment__fix_pointers() {
 void f2__primobject_set__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  reinitialize_primobject(set);
-}
-
-void f2__primobject_set__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-set", "", &f2__primobject_set__reinitialize_globalvars, &f2__primobject_set__defragment__fix_pointers);
-  
-  f2__primobject_set__reinitialize_globalvars();
-  
-  f2ptr cause = initial_cause();
-  
   // set
   
   initialize_primobject_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array);
@@ -526,6 +516,11 @@ void f2__primobject_set__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__an_arbitrary_element, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_set.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(set__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject_set__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-set", "", &f2__primobject_set__reinitialize_globalvars, &f2__primobject_set__defragment__fix_pointers);
   
+  f2__primobject_set__reinitialize_globalvars();
 }
 

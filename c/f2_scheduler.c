@@ -423,15 +423,6 @@ void f2__scheduler__initialize_global_symbolic_vars() {
   reinitialize_primobject(scheduler);
 }
 
-void f2__scheduler__reinitialize_globalvars() {
-  f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
-  
-  f2__scheduler__initialize_global_symbolic_vars();
-  
-  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
-  __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
-}
-
 void f2__scheduler__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -473,10 +464,9 @@ void f2__scheduler__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(this__fiber);
 }
 
-void f2__scheduler__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars, &f2__scheduler__defragment__fix_pointers);
-  
+void f2__scheduler__reinitialize_globalvars() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
+  
   f2__scheduler__initialize_global_symbolic_vars();
   
   // scheduler
@@ -492,10 +482,32 @@ void f2__scheduler__initialize() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk = never_gc(cfunk);}
   
+  f2__primcfunk__init__0(global_scheduler__active_fibers);
+  f2__primcfunk__init__0(global_scheduler__this_processor);
+  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,               fiber);
+  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel,             fiber);
+  f2__primcfunk__init__1(global_scheduler__add_fiber,                      fiber);
+  f2__primcfunk__init__1(global_scheduler__remove_fiber,                   fiber);
+  f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber);
+  f2__primcfunk__init__1(global_scheduler__processor_thread_current_fiber, pool_index);
+  f2__primcfunk__init__0(global_scheduler__current_fiber);
+  f2__primcfunk__init__1(global_scheduler__contains_active_fiber,          fiber);
+  
+  f2__primcfunk__init__0(this__fiber);
+  
+  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
+  __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+}
+
+void f2__scheduler__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "scheduler", "", &f2__scheduler__reinitialize_globalvars, &f2__scheduler__defragment__fix_pointers);
+  
+  f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
+  f2__scheduler__initialize_global_symbolic_vars();
+  
   // allocate scheduler and processors
   
   f2ptr processors = raw__array__new(cause, scheduler_processor_num);
-  
   f2ptr scheduler = f2scheduler__new(cause, processors);
   
   int i;
@@ -511,26 +523,9 @@ void f2__scheduler__initialize() {
     raw__array__elt__set(cause, processors, i, processor);
   }
   
-  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
-  
   environment__add_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol, scheduler);
   
-  __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
-  
   f2__scheduler__reinitialize_globalvars();
-  
-  f2__primcfunk__init__0(global_scheduler__active_fibers);
-  f2__primcfunk__init__0(global_scheduler__this_processor);
-  f2__primcfunk__init__1(global_scheduler__add_fiber_serial,               fiber);
-  f2__primcfunk__init__1(global_scheduler__add_fiber_parallel,             fiber);
-  f2__primcfunk__init__1(global_scheduler__add_fiber,                      fiber);
-  f2__primcfunk__init__1(global_scheduler__remove_fiber,                   fiber);
-  f2__primcfunk__init__1(global_scheduler__complete_fiber,                 fiber);
-  f2__primcfunk__init__1(global_scheduler__processor_thread_current_fiber, pool_index);
-  f2__primcfunk__init__0(global_scheduler__current_fiber);
-  f2__primcfunk__init__1(global_scheduler__contains_active_fiber,          fiber);
-  
-  f2__primcfunk__init__0(this__fiber);
 }
 
 void f2__scheduler__destroy() {

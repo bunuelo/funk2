@@ -416,20 +416,16 @@ void f2__this__fiber__yield(f2ptr cause) {
 
 // **
 
-void f2__scheduler__initialize_global_symbolic_vars() {
-  f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
-  
-  reinitialize_primobject(processor);
-  reinitialize_primobject(scheduler);
-}
-
 void f2__scheduler__defragment__fix_pointers() {
   // -- reinitialize --
   
   funk2_operating_system__defragment__fix_pointers(&(__funk2.operating_system));
   
   // -- initialize --
-
+  
+  defragment__fix_pointer(__funk2.operating_system.scheduler__symbol);
+  
+  
   // scheduler
   
   initialize_primobject_1_slot__defragment__fix_pointers(scheduler, processors);
@@ -464,6 +460,15 @@ void f2__scheduler__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(this__fiber);
 }
 
+void f2__scheduler__initialize_global_symbolic_vars() {
+  f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
+  
+  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
+  
+  reinitialize_primobject(processor);
+  reinitialize_primobject(scheduler);
+}
+
 void f2__scheduler__reinitialize_globalvars() {
   f2ptr cause = f2_scheduler_c__cause__new(initial_cause());
   
@@ -495,8 +500,7 @@ void f2__scheduler__reinitialize_globalvars() {
   
   f2__primcfunk__init__0(this__fiber);
   
-  __funk2.operating_system.scheduler__symbol = new__symbol(cause, "scheduler:global_scheduler");
-  __funk2.operating_system.scheduler         = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+  __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
 }
 
 void f2__scheduler__initialize() {

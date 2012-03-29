@@ -607,12 +607,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 
 // **
 
-void f2__processor__reinitialize_globalvars() {
-  f2ptr cause = f2_processor_c__cause__new(initial_cause());
-  
-  __processor__symbol = new__symbol(cause, "processor");
-}
-
 void f2__processor__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
@@ -661,10 +655,7 @@ void f2__processor__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk);
 }
 
-void f2__processor__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars, &f2__processor__defragment__fix_pointers);
-  f2__processor__reinitialize_globalvars();
-  
+void f2__processor__reinitialize_globalvars() {
   f2ptr cause = f2_processor_c__cause__new(initial_cause());
   
   
@@ -695,6 +686,12 @@ void f2__processor__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__active_fibers__contains, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__processor__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars, &f2__processor__defragment__fix_pointers);
+  
+  f2__processor__reinitialize_globalvars();
 }
 
 void f2__processor__destroy() {

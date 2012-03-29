@@ -592,7 +592,7 @@ void f2__primfunks__errno__reinitialize_globalvars() {
 }
 
 void f2__primfunks__errno__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__errno", "", &f2__primfunks__errno__reinitialize_globalvars, &f2__primfunks__errno__defragment__fix_pointers);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks-errno", "", &f2__primfunks__errno__reinitialize_globalvars, &f2__primfunks__errno__defragment__fix_pointers);
   
   f2__primfunks__errno__reinitialize_globalvars();
 }

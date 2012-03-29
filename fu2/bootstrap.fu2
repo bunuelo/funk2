@@ -63,38 +63,25 @@
   [load_necessary_builtin_package_definitions]
   `[reload_all_package_definitions]
   
-  [eval `[prog [print 'bootstrap.fu2: debug 0']
-	       [require number]
-	       [print 'bootstrap.fu2: debug 0.1']
-	       [require ansi]
-	       [print 'bootstrap.fu2: debug 0.2']
-	       [require mutex]
-	       [print 'bootstrap.fu2: debug 0.3']
-	       [require math]
-	       [print 'bootstrap.fu2: debug 0.4']
-	       [require basic_bug_responses]
-	       [print 'bootstrap.fu2: debug 0.5']
-	       [require keyboard-repl]
-	       [print 'bootstrap.fu2: debug 1']]]
+  [eval `[require number
+		  ansi
+		  mutex
+		  math
+		  basic_bug_responses
+		  keyboard-repl]]
   
-  [eval `[prog [print 'bootstrap.fu2: debug 2']
-	       
-	       [defunk backup_repl []
-		 [let* [[trigger [new fiber_trigger]]
-			[fiber   [fiber [funk [] 
-					      [cause-define cause-name `backup_repl]
-					      [wait-for-trigger trigger]
-					      [repl]]
-					nil]]]
-		   [set fiber paused t]
-		   [while [global_scheduler-contains_active_fiber fiber]
-		     [millisleep 100]]
-		   [have trigger trigger]
-		   nil]]
-	       
-	       [print 'bootstrap.fu2: debug 3']
-	       ]]
-  [print 'bootstrap.fu2: debug 4']
+  [eval `[defunk backup_repl []
+	   [let* [[trigger [new fiber_trigger]]
+		  [fiber   [fiber [funk [] 
+					[cause-define cause-name `backup_repl]
+					[wait-for-trigger trigger]
+					[repl]]
+				  nil]]]
+	     [set fiber paused t]
+	     [while [global_scheduler-contains_active_fiber fiber]
+	       [millisleep 100]]
+	     [have trigger trigger]
+	     nil]]]
   ]
 
 

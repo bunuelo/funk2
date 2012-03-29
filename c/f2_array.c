@@ -662,11 +662,6 @@ f2ptr f2array__primobject_type__new(f2ptr cause) {
 
 // **
 
-void f2__array__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
-  
-}
-
 void f2__array__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -771,11 +766,7 @@ void f2__array__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.array.terminal_print_with_frame__funk);
 }
 
-void f2__array__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "array", "", &f2__array__reinitialize_globalvars, &f2__array__defragment__fix_pointers);
-  
-  f2__array__reinitialize_globalvars();
-  
+void f2__array__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // array
@@ -829,7 +820,12 @@ void f2__array__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__read_funks__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__read_funks__set__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.array.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.array.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__array__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "array", "", &f2__array__reinitialize_globalvars, &f2__array__defragment__fix_pointers);
   
+  f2__array__reinitialize_globalvars();
 }
 
 

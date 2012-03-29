@@ -1715,25 +1715,20 @@ def_pcfunk1(exp__printable_value, this,
 
 // **
 
-void f2__print__reinitialize_globalvars() {
-}
-
 void f2__print__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
   
   f2__primcfunk__init__defragment__fix_pointers(exp__printable_value);
-  
+}
+
+void f2__print__reinitialize_globalvars() {
+  f2__primcfunk__init__1(exp__printable_value, this);
 }
 
 void f2__print__initialize() {
-  //f2ptr cause = initial_cause();
-  
   funk2_module_registration__add_module(&(__funk2.module_registration), "print", "", &f2__print__reinitialize_globalvars, &f2__print__defragment__fix_pointers);
   
   f2__print__reinitialize_globalvars();
-  
-  f2__primcfunk__init__1(exp__printable_value, this);
-  
 }
 

@@ -420,10 +420,6 @@ def_pcfunk0(f2__errno__exdev,
 	    "",
 	    return f2integer__new(this_cause, EXDEV));
 
-void f2__primfunks__errno__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks__errno_c__cause__new(initial_cause(), nil, nil);
-}
-
 void f2__primfunks__errno__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
@@ -511,11 +507,7 @@ void f2__primfunks__errno__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(f2__errno__exdev);
 }
 
-void f2__primfunks__errno__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__errno", "", &f2__primfunks__errno__reinitialize_globalvars, &f2__primfunks__errno__defragment__fix_pointers);
-  
-  f2__primfunks__errno__reinitialize_globalvars();
-  
+void f2__primfunks__errno__reinitialize_globalvars() {
   f2__primcfunk__init(f2__errno);
   
   f2__primcfunk__init(f2__errno__e2big);
@@ -597,6 +589,12 @@ void f2__primfunks__errno__initialize() {
   f2__primcfunk__init(f2__errno__etxtbsy);
   f2__primcfunk__init(f2__errno__ewouldblock);
   f2__primcfunk__init(f2__errno__exdev);
+}
+
+void f2__primfunks__errno__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__errno", "", &f2__primfunks__errno__reinitialize_globalvars, &f2__primfunks__errno__defragment__fix_pointers);
+  
+  f2__primfunks__errno__reinitialize_globalvars();
 }
 
   

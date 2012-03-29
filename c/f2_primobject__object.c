@@ -100,6 +100,10 @@ f2ptr object__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var
 // end of object
 
 void f2__primobject_object__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  __object__symbol = new__symbol(cause, "object");
+  
   f2__primcfunk__init(object__new);
 }
 
@@ -119,7 +123,5 @@ void f2__primobject_object__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_object", "", &f2__primobject_object__reinitialize_globalvars, &f2__primobject_object__defragment__fix_pointers);
   
   f2__primobject_object__reinitialize_globalvars();
-  
-  environment__add_var_value(initial_cause(), global_environment(), __object__symbol, nil);
 }
 

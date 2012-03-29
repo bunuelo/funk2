@@ -839,9 +839,6 @@ f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__string__reinitialize_globalvars() {
-}
-
 void f2__string__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
@@ -896,12 +893,8 @@ void f2__string__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.multiply__funk);
 }
 
-void f2__string__initialize() {
+void f2__string__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "string", "", &f2__string__reinitialize_globalvars, &f2__string__defragment__fix_pointers);
-  
-  f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init__1(stringlist__concat,      this);
   f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string);
@@ -932,6 +925,11 @@ void f2__string__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
   {char* str = "multiply"; __funk2.globalenv.object_type.ptype.ptype_string.multiply__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__multiply, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.multiply__funk = never_gc(cfunk);}
+}
+
+void f2__string__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "string", "", &f2__string__reinitialize_globalvars, &f2__string__defragment__fix_pointers);
   
+  f2__string__reinitialize_globalvars();
 }
 

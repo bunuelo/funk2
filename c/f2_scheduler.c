@@ -423,8 +423,6 @@ void f2__scheduler__defragment__fix_pointers() {
   
   // -- initialize --
   
-  defragment__fix_pointer(__funk2.operating_system.scheduler__symbol);
-  
   
   // scheduler
   

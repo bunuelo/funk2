@@ -544,6 +544,10 @@ void f2__cause__defragment__fix_pointers() {
 void f2__cause__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
+  reinitialize_primobject(cause);
+  
+  //--
+  
   // cause
   
   initialize_primobject_15_slot(cause,

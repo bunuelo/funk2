@@ -17,8 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[memory-debug_assert_valid]
-
 [defunk stream-try_read_source_expression [this]
   [let [[first_line   [get this line_number]]
 	[first_column [get this column_number]]]
@@ -32,8 +30,6 @@
 	  [stream-skip_whitespace this]
 	  [new source_expression body first_line last_line first_column last_column subexpressions]]]]]]
 
-[memory-debug_assert_valid]
-
 [defunk source-read [this]
   [let [[code [get this code]]]
     [let [[code_stream        [string_stream-new [string-concat code ' '] 0]]
@@ -46,8 +42,6 @@
 	    [= source_expressions [cons read_result source_expressions]]]]]
       [reverse source_expressions]]]]
 
-[memory-debug_assert_valid]
-
 [defunk source-eval [this]
   [mapc [funk [source_expression]
 	      [let [[eval_result [with-new-cause [cause-define source_expression source_expression]
@@ -58,18 +52,12 @@
 		      [bug bug]]]]]
 	[source-read this]]]
 
-[memory-debug_assert_valid]
-
 [globalize file_loaded_modification_time_hash [hash]]
 
 [globalize -global_source_path- `['./' '/var/lib/funk2/']]
 
-[memory-debug_assert_valid]
-
 [defunk filename-is_global [filename]
   [equals [get filename substring 0 1] '/']]
-
-[memory-debug_assert_valid]
 
 [defunk package_filename-stat [this]
   [if [filename-is_global this]
@@ -89,8 +77,6 @@
 	  [bug result]
 	stat]]]]
 
-[memory-debug_assert_valid]
-
 [defunk package_filename-to_absolute_pathname [this]
   [if [filename-is_global this]
       this
@@ -109,8 +95,6 @@
 	  [bug result]
 	successful_full_filename]]]]
 
-[memory-debug_assert_valid]
-
 [defunk filename-load [this]
   [with-new-cause [cause-define source-filename this]
 		  [cause-define cause-name      `filename-load]
@@ -126,8 +110,6 @@
 		      [have file_loaded_modification_time_hash add this time_of_last_modification]]]]
   nil]
 
-[memory-debug_assert_valid]
-
 [defunk filename-load_if_modified [this]
   [let [[file_was_loaded nil]]
     [let [[last_loaded_modification_time [have file_loaded_modification_time_hash lookup this]]]
@@ -139,14 +121,10 @@
 		[= file_was_loaded t]]]]
     file_was_loaded]]
 
-[memory-debug_assert_valid]
-
 [defunk package_filename-load [:rest filenames]
   [mapc [funk [filename]
 	      [filename-load filename]]
 	filenames]]
-
-[memory-debug_assert_valid]
 
 [defunk load-if-modified [:rest filenames]
   [let [[a_file_was_loaded nil]]
@@ -157,12 +135,8 @@
 	  filenames]
     a_file_was_loaded]]
 
-[memory-debug_assert_valid]
-
 [deftypefunk symbol get is-defined []
   [not [is-type `bug [shelter [eval this]]]]]
-
-[memory-debug_assert_valid]
 
 [set [global_package_handler] package_search_paths `['built-in/alien/'
 						     'built-in/ansi/'
@@ -289,8 +263,6 @@
 						     'test/xmlrpc-test/'
 						     ]]
 
-[memory-debug_assert_valid]
-
 [defmetro defpackage [name :rest dependencies]
   [print `[defpackage ,name]]
   [let [[package_dependencies         nil]
@@ -321,25 +293,17 @@
 									       [conslist @dynamic_library_dependencies]
 									       ]]]]
 
-[memory-debug_assert_valid]
-
 [defunk package_names []
   [get [get [global_package_handler] package_frame] keys]]
 
-[memory-debug_assert_valid]
-
 [defunk lookup-package [name]
   [global_package_handler-lookup_package name]]
-
-[memory-debug_assert_valid]
 
 [defmetro package [name]
   `[lookup-package [quote ,name]]]
 
 [defmetro package-defined [name]
   `[not [null [package ,name]]]]
-
-[memory-debug_assert_valid]
 
 [defunk pathnames-all_fpkg_filenames [this]
   [let [[fpkg_filenames nil]]
@@ -360,16 +324,12 @@
     fpkg_filenames]]
 
 
-[memory-debug_assert_valid]
-
 [defunk reload_all_package_definitions []
   [mapc [funk [filename]
 	      [memory-debug_assert_valid]
 	      [package_filename-load filename]]
 	[pathnames-all_fpkg_filenames [get [global_package_handler] package_search_paths]]]
   [memory-debug_assert_valid]]
-
-[memory-debug_assert_valid]
 
 [defunk package-load [name]
   [let [[load_if_modified_before_time [time]]]
@@ -386,8 +346,6 @@
 				  [have [get package object_types_defined_set] add object_type_defined]]
 			    cause-object_types_defined]]
       [set package loaded_all_dependencies_time [time]]]]]
-
-[memory-debug_assert_valid]
 
 [defunk package-load_if_modified_before [name before_time checked_package_hash dependencies_are_sticky]
   [if [null checked_package_hash]
@@ -437,8 +395,6 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
-[memory-debug_assert_valid]
-
 [defunk packages-load_if_modified_before [names before_time checked_package_hash dependencies_are_sticky]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
@@ -472,13 +428,9 @@
     [apply &join load_fibers]
     loaded_a_dependency]]
 
-[memory-debug_assert_valid]
-
 [defmetro load-package [name]
   `[package-load [quote ,name]]]
 
-
-[memory-debug_assert_valid]
 
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
@@ -486,21 +438,15 @@
     [global_dlfcn_dynamic_library-unload_changed]
     [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
 
-[memory-debug_assert_valid]
-
 [defmetro require [:rest names]
   `[prog [print [quote ,`[require @names]]]
 	 [require-package @[mapcar [funk [name] `[quote ,name]] names]]]]
-
-[memory-debug_assert_valid]
 
 [defunk reload-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
     [global_core_extension_handler-unload_changed]
     [global_dlfcn_dynamic_library-unload_changed]
     [packages-load_if_modified_before names load_if_modified_before_time nil nil]]]
-
-[memory-debug_assert_valid]
 
 [defmetro reload [:rest names]
   `[reload-package @[mapcar [funk [name] `[quote ,name]] names]]]

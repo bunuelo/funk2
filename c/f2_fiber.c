@@ -795,28 +795,6 @@ f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__fiber__reinitialize_globalvars() {
-  f2ptr cause = f2_fiber_c__cause__new(initial_cause());
-  
-  // reinitialize type symbols
-  reinitialize_primobject(fiber);
-  reinitialize_primobject(fiber_stack_trace);
-  reinitialize_primobject(fiber_stack_trace_block);
-  
-  
-  // reinitialize fiber register symbols
-  __fiber__program_counter_reg__symbol = new__symbol(cause, "program_counter");
-  __fiber__iter_reg__symbol            = new__symbol(cause, "iter");
-  __fiber__env_reg__symbol             = new__symbol(cause, "env");
-  __fiber__args_reg__symbol            = new__symbol(cause, "args");
-  __fiber__return_reg__symbol          = new__symbol(cause, "return");
-  __fiber__value_reg__symbol           = new__symbol(cause, "value");
-  
-  // reinitialize other misc. symbols
-  __fiber__environment_critics__symbol = new__symbol(cause, "-environment_critics-");
-  
-}
-
 void f2__fiber__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -955,14 +933,9 @@ void f2__fiber__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__funk);
-  
-  
 }
 
-void f2__fiber__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "fiber", "", &f2__fiber__reinitialize_globalvars, &f2__fiber__defragment__fix_pointers);
-  
-  f2__fiber__reinitialize_globalvars();
+void f2__fiber__reinitialize_globalvars() {
   f2ptr cause = f2_fiber_c__cause__new(initial_cause());
   
   // fiber
@@ -1053,5 +1026,22 @@ void f2__fiber__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
+  // reinitialize fiber register symbols
+  __fiber__program_counter_reg__symbol = new__symbol(cause, "program_counter");
+  __fiber__iter_reg__symbol            = new__symbol(cause, "iter");
+  __fiber__env_reg__symbol             = new__symbol(cause, "env");
+  __fiber__args_reg__symbol            = new__symbol(cause, "args");
+  __fiber__return_reg__symbol          = new__symbol(cause, "return");
+  __fiber__value_reg__symbol           = new__symbol(cause, "value");
+  
+  // reinitialize other misc. symbols
+  __fiber__environment_critics__symbol = new__symbol(cause, "-environment_critics-");
+  
+}
+
+void f2__fiber__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "fiber", "", &f2__fiber__reinitialize_globalvars, &f2__fiber__defragment__fix_pointers);
+  
+  f2__fiber__reinitialize_globalvars();
 }
 

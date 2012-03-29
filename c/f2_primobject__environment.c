@@ -184,7 +184,22 @@ void f2__primobject_environment__reinitialize_globalvars() {
   
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
   
-  reinitialize_primobject(environment);
+  // environment
+  
+  initialize_primobject_3_slot(environment, frame, parent_env, desc);
+  
+  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_environment.new__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(environment__new, frame, parent_env, desc, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(environment__add_type_var_value, this, type, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__funk = never_gc(cfunk);}
+  {char* symbol_str = "lookup_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(environment__lookup_type_var_value, this, type, var, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__funk = never_gc(cfunk);}
+  {char* symbol_str = "type_var_value-set"; __funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__4_arg(environment__type_var_value__set, this, type, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  //reinitialize_primobject(environment);
 }
 
 void f2__primobject_environment__defragment__fix_pointers() {
@@ -232,22 +247,6 @@ void f2__primobject_environment__initialize() {
   
   funk2_primobject__environment__init(&(__funk2.primobject__environment));
   
-  f2ptr cause = initial_cause();
-  
-  // environment
-  
-  initialize_primobject_3_slot(environment, frame, parent_env, desc);
-  
-  {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_environment.new__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(environment__new, frame, parent_env, desc, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "add_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__4_arg(environment__add_type_var_value, this, type, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__funk = never_gc(cfunk);}
-  {char* symbol_str = "lookup_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__3_arg(environment__lookup_type_var_value, this, type, var, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__funk = never_gc(cfunk);}
-  {char* symbol_str = "type_var_value-set"; __funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__4_arg(environment__type_var_value__set, this, type, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__funk = never_gc(cfunk);}
   
 }
 

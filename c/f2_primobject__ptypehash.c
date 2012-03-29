@@ -437,7 +437,16 @@ f2ptr f2ptypehash__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
+void f2__primobject__ptypehash__preinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(ptypehash);
+
+}
+
 void f2__primobject__ptypehash__reinitialize_globalvars() {
+  f2__primobject__ptypehash__preinitialize_globalvars();
+  
   f2ptr cause = initial_cause();
   
   // ptypehash
@@ -479,10 +488,6 @@ void f2__primobject__ptypehash__reinitialize_globalvars() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptypehash__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_ptypehash.terminal_print_with_frame__funk = never_gc(cfunk);}
   
-  //f2ptr cause = initial_cause();
-  
-  //reinitialize_primobject(ptypehash);
-
 }
 
 void f2__primobject__ptypehash__defragment__fix_pointers() {

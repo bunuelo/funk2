@@ -353,9 +353,6 @@ def_pcfunk0(defragmenter__total_defragmentation_count,
 
 // **
 
-void f2__defragmenter__reinitialize_globalvars() {
-}
-
 void f2__defragmenter__defragment__fix_pointers() {
   // -- reinitialize --
 
@@ -366,12 +363,14 @@ void f2__defragmenter__defragment__fix_pointers() {
   
 }
 
-void f2__defragmenter__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "defragmenter", "", &f2__defragmenter__reinitialize_globalvars, &f2__defragmenter__defragment__fix_pointers);
-  f2__defragmenter__reinitialize_globalvars();
-  
+void f2__defragmenter__reinitialize_globalvars() {
   f2__primcfunk__init__0(defragmenter__signal_start);
   f2__primcfunk__init__0(defragmenter__total_defragmentation_count);
+}
+
+void f2__defragmenter__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "defragmenter", "", &f2__defragmenter__reinitialize_globalvars, &f2__defragmenter__defragment__fix_pointers);
   
+  f2__defragmenter__reinitialize_globalvars();
 }
 

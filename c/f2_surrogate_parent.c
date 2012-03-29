@@ -284,9 +284,6 @@ def_pcfunk0(surrogate_parent__check_return_value,
 
 // **
 
-void f2__surrogate_parent__reinitialize_globalvars() {
-}
-
 void f2__surrogate_parent__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -296,13 +293,14 @@ void f2__surrogate_parent__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(surrogate_parent__check_return_value);
 }
 
+void f2__surrogate_parent__reinitialize_globalvars() {
+  f2__primcfunk__init__1(surrogate_parent__start_system_command, command);
+  f2__primcfunk__init__0(surrogate_parent__check_return_value);
+}
+
 void f2__surrogate_parent__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "surrogate_parent", "", &f2__surrogate_parent__reinitialize_globalvars, &f2__surrogate_parent__defragment__fix_pointers);
   
   f2__surrogate_parent__reinitialize_globalvars();
-  
-  f2__primcfunk__init__1(surrogate_parent__start_system_command, command);
-  f2__primcfunk__init__0(surrogate_parent__check_return_value);
-  
 }
 

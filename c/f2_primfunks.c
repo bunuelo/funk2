@@ -1882,11 +1882,6 @@ def_pcfunk0(memory__assert_valid,
 
 // **
 
-void f2__primcfunks__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
-  
-}
-
 void f2__primcfunks__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
@@ -2183,11 +2178,7 @@ void f2__primcfunks__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(memory__assert_valid);
 }
 
-void f2__primcfunks__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__reinitialize_globalvars, &f2__primcfunks__defragment__fix_pointers);
-  
-  f2__primcfunks__reinitialize_globalvars();
-  
+void f2__primcfunks__reinitialize_globalvars() {
   // system
   
   f2__primcfunk__init__0(system__node_id);
@@ -2478,7 +2469,12 @@ void f2__primcfunks__initialize() {
   
   f2__primcfunk__init__0(memory__test);
   f2__primcfunk__init__0(memory__assert_valid);
+}
+
+void f2__primcfunks__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__reinitialize_globalvars, &f2__primcfunks__defragment__fix_pointers);
   
+  f2__primcfunks__reinitialize_globalvars();
 }
 
 

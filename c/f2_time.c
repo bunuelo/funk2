@@ -1086,13 +1086,6 @@ f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__time__reinitialize_globalvars() {
-  f2ptr cause = nil;
-  
-  reinitialize_primobject(time);
-  reinitialize_primobject(relative_time);
-}
-
 void f2__time__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -1175,12 +1168,8 @@ void f2__time__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__funk);
 }
 
-void f2__time__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars, &f2__time__defragment__fix_pointers);
-  
-  f2__time__reinitialize_globalvars();
-  
-  f2ptr cause = nil;
+void f2__time__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
   
   f2__primcfunk__init__0(nanoseconds_since_1970);
 
@@ -1248,7 +1237,11 @@ void f2__time__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(relative_time__as__graphviz_label, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(relative_time__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__time__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars, &f2__time__defragment__fix_pointers);
   
-  
+  f2__time__reinitialize_globalvars();
 }
 

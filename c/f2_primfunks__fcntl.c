@@ -89,10 +89,6 @@ f2ptr f2__fcntl__o_rdwr(f2ptr cause)      {return f2integer__new(cause, O_RDWR);
 
 // **
 
-void f2__primfunks__fcntl__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks__fcntl_c__cause__new(initial_cause(), nil, nil);
-}
-
 void f2__primfunks__fcntl__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -142,11 +138,7 @@ void f2__primfunks__fcntl__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_rdwr);
 }
 
-void f2__primfunks__fcntl__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__fcntl", "", &f2__primfunks__fcntl__reinitialize_globalvars, &f2__primfunks__fcntl__defragment__fix_pointers);
-  
-  f2__primfunks__fcntl__reinitialize_globalvars();
-  
+void f2__primfunks__fcntl__reinitialize_globalvars() {
   f2__primcfunk__init(f2__fcntl);
   f2__primcfunk__init(f2__fcntl__getfd);
   f2__primcfunk__init(f2__fcntl__setfd);
@@ -189,6 +181,12 @@ void f2__primfunks__fcntl__initialize() {
   f2__primcfunk__init(f2__fcntl__o_rdonly);
   f2__primcfunk__init(f2__fcntl__o_wronly);
   f2__primcfunk__init(f2__fcntl__o_rdwr);
+}
+
+void f2__primfunks__fcntl__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__fcntl", "", &f2__primfunks__fcntl__reinitialize_globalvars, &f2__primfunks__fcntl__defragment__fix_pointers);
+  
+  f2__primfunks__fcntl__reinitialize_globalvars();
 }
 
   

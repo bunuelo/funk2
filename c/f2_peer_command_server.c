@@ -578,11 +578,6 @@ def_pcfunk0(peer_command_server__active_client_info,
 
 // **
 
-void f2__peer_command_server__reinitialize_globalvars() {
-  //f2ptr cause = f2_peer_command_server_c__cause__new(initial_cause(), nil, nil);
-  
-}
-
 void f2__peer_command_server__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -593,14 +588,14 @@ void f2__peer_command_server__defragment__fix_pointers() {
   
 }
 
+void f2__peer_command_server__reinitialize_globalvars() {
+  f2__primcfunk__init(peer_command_server__active_client_info);
+}
+
 void f2__peer_command_server__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "peer_command_server", "", &f2__peer_command_server__reinitialize_globalvars, &f2__peer_command_server__defragment__fix_pointers);
   
   f2__peer_command_server__reinitialize_globalvars();
-  //f2ptr cause = f2_peer_command_server_c__cause__new(initial_cause(), nil, nil);
-  
-  f2__primcfunk__init(peer_command_server__active_client_info);
-  
 }
 
 void f2__peer_command_server__destroy() {

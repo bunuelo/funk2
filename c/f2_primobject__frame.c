@@ -1016,8 +1016,6 @@ void f2__primobject_frame__reinitialize_globalvars() {
   
   funk2_primobject__frame__init(&(__funk2.primobject__frame));
   
-  f2ptr cause = initial_cause();
-  
   // frame
   
   initialize_primobject_2_slot(frame, new_type_cmutex, type_ptypehash);

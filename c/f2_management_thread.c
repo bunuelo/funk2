@@ -317,9 +317,6 @@ def_pcfunk2(management_thread__check_command_uid_finished, uid, user_result_plac
 
 // **
 
-void f2__management_thread__reinitialize_globalvars() {
-}
-
 void f2__management_thread__defragment__fix_pointers() {
   // -- reinitialize --
 
@@ -332,14 +329,16 @@ void f2__management_thread__defragment__fix_pointers() {
   
 }
 
-void f2__management_thread__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "management_thread", "", &f2__management_thread__reinitialize_globalvars, &f2__management_thread__defragment__fix_pointers);
-  
-  f2__management_thread__reinitialize_globalvars();
-  
+void f2__management_thread__reinitialize_globalvars() {
   f2__primcfunk__init__1(management_thread__add_save_memory_image_command, filename);
   f2__primcfunk__init__1(management_thread__add_load_memory_image_command, filename);
   f2__primcfunk__init__1(management_thread__add_exit_command,              value);
   f2__primcfunk__init__2(management_thread__check_command_uid_finished,    uid, user_result_place);
+}
+
+void f2__management_thread__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "management_thread", "", &f2__management_thread__reinitialize_globalvars, &f2__management_thread__defragment__fix_pointers);
+  
+  f2__management_thread__reinitialize_globalvars();
 }
 

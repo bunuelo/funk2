@@ -1515,13 +1515,6 @@ f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__redblacktree__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(redblacktree);
-  reinitialize_primobject(redblacktree_node);
-}
-
 void f2__primobject__redblacktree__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -1609,12 +1602,8 @@ void f2__primobject__redblacktree__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__funk);
 }
 
-void f2__primobject__redblacktree__initialize() {
+void f2__primobject__redblacktree__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__redblacktree", "", &f2__primobject__redblacktree__reinitialize_globalvars, &f2__primobject__redblacktree__defragment__fix_pointers);
-  
-  f2__primobject__redblacktree__reinitialize_globalvars();
   
   // redblacktree
   
@@ -1668,6 +1657,7 @@ void f2__primobject__redblacktree__initialize() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk = never_gc(cfunk);}
   
+  
   // redblacktree_node
   
   initialize_primobject_5_slot(redblacktree_node, parent, left, right, color, count_key_ptypehash);
@@ -1677,6 +1667,11 @@ void f2__primobject__redblacktree__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject__redblacktree__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-redblacktree", "", &f2__primobject__redblacktree__reinitialize_globalvars, &f2__primobject__redblacktree__defragment__fix_pointers);
   
+  f2__primobject__redblacktree__reinitialize_globalvars();
 }
 

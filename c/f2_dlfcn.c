@@ -706,6 +706,8 @@ void f2__dlfcn__initialize() {
   
   f2__dlfcn__reinitialize_globalvars();
   
+  f2ptr cause = initial_cause();
+  
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
 }
 

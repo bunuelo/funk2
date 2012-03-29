@@ -59,9 +59,6 @@ def_pcfunk0(simple_repl,
 
 // **
 
-void f2__simple_repl__reinitialize_globalvars() {
-}
-
 void f2__simple_repl__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -70,12 +67,14 @@ void f2__simple_repl__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(simple_repl);
 }
 
+void f2__simple_repl__reinitialize_globalvars() {
+  f2__primcfunk__init__0(simple_repl);
+}
+
 void f2__simple_repl__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "simple_repl", "", &f2__simple_repl__reinitialize_globalvars, &f2__simple_repl__defragment__fix_pointers);
   
   f2__simple_repl__reinitialize_globalvars();
-  
-  f2__primcfunk__init__0(simple_repl);
 }
 
 

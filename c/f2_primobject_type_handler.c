@@ -255,15 +255,6 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
 
 // **
 
-void f2__primobject_type_handler__reinitialize_globalvars() {
-  f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
-  f2ptr type_hash = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
-  if (raw__larva__is_type(cause, type_hash)) {
-    type_hash = nil;
-  }
-  __funk2.primobject_type_handler.type_hash = type_hash;
-}
-
 void f2__primobject_type_handler__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -278,6 +269,20 @@ void f2__primobject_type_handler__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(system__type_names);
 }
 
+void f2__primobject_type_handler__reinitialize_globalvars() {
+  f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
+  f2ptr type_hash = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
+  if (raw__larva__is_type(cause, type_hash)) {
+    type_hash = nil;
+  }
+  __funk2.primobject_type_handler.type_hash = type_hash;
+
+  f2__primcfunk__init__2(add_type,    type_name, type);
+  f2__primcfunk__init__1(lookup_type, type_name);
+  f2__primcfunk__init__0(system__types);
+  f2__primcfunk__init__0(system__type_names);
+}
+
 void f2__primobject_type_handler__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars, &f2__primobject_type_handler__defragment__fix_pointers);
   
@@ -287,11 +292,5 @@ void f2__primobject_type_handler__initialize() {
   
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"), nil);
   __funk2.primobject_type_handler.type_hash = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
-  
-  f2__primcfunk__init__2(add_type,    type_name, type);
-  f2__primcfunk__init__1(lookup_type, type_name);
-  f2__primcfunk__init__0(system__types);
-  f2__primcfunk__init__0(system__type_names);
-  
 }
 

@@ -189,11 +189,6 @@ def_pcfunk1(prime, prime_index,
 
 // **
 
-void f2__primes__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  funk2_primes__reinit(&(__funk2.primes), cause);
-}
-
 void f2__primes__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -206,16 +201,22 @@ void f2__primes__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(prime);
 }
 
-void f2__primes__initialize() {
+void f2__primes__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  funk2_primes__init(&(__funk2.primes), cause);
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primes", "", &f2__primes__reinitialize_globalvars, &f2__primes__defragment__fix_pointers);
-  
-  f2__primes__reinitialize_globalvars();
+  funk2_primes__reinit(&(__funk2.primes), cause);
   
   f2__primcfunk__init__1(prime_array__new, prime_count);
   f2__primcfunk__init__2(prime_array__new_by_extension, this, prime_count);
   f2__primcfunk__init__1(prime, prime_index);
+}
+
+void f2__primes__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primes", "", &f2__primes__reinitialize_globalvars, &f2__primes__defragment__fix_pointers);
+  
+  f2ptr cause = initial_cause();
+  funk2_primes__init(&(__funk2.primes), cause);
+  
+  f2__primes__reinitialize_globalvars();
 }
 

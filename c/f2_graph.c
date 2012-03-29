@@ -1500,17 +1500,6 @@ f2ptr f2graph_decomposition_lattice__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__graph__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(graph_node);
-  reinitialize_primobject(graph_edge);
-  reinitialize_primobject(graph);
-  reinitialize_primobject(graph_isomorphism);
-  reinitialize_primobject(graph_decomposition_lattice_node);
-  reinitialize_primobject(graph_decomposition_lattice);
-}
-
 void f2__graph__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -1610,10 +1599,7 @@ void f2__graph__defragment__fix_pointers() {
   
 }
 
-void f2__graph__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "graph", "", &f2__graph__reinitialize_globalvars, &f2__graph__defragment__fix_pointers);
-  
-  f2__graph__reinitialize_globalvars();
+void f2__graph__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // graph_node
@@ -1696,6 +1682,11 @@ void f2__graph__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__graph__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "graph", "", &f2__graph__reinitialize_globalvars, &f2__graph__defragment__fix_pointers);
   
+  f2__graph__reinitialize_globalvars();
 }
 

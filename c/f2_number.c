@@ -119,10 +119,6 @@ void funk2_number_globalvars__defragment__fix_pointers(funk2_number_globalvars_t
 
 // **
 
-void f2__number__reinitialize_globalvars() {
-  funk2_number_globalvars__init(&(__funk2.number_globalvars));
-}
-
 void f2__number__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -135,12 +131,16 @@ void f2__number__defragment__fix_pointers() {
   
 }
 
+void f2__number__reinitialize_globalvars() {
+  funk2_number_globalvars__init(&(__funk2.number_globalvars));
+  
+  f2__primcfunk__init__2(is_greater_than, this, that);
+  f2__primcfunk__init__2(is_less_than,    this, that);
+}
+
 void f2__number__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "number", "", &f2__number__reinitialize_globalvars, &f2__number__defragment__fix_pointers);
   
   f2__number__reinitialize_globalvars();
-  
-  f2__primcfunk__init__2(is_greater_than, this, that);
-  f2__primcfunk__init__2(is_less_than,    this, that);
 }
 

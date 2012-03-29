@@ -28,14 +28,6 @@ def_frame_object__global__4_slot(physical_sim_object, position, velocity, mass, 
 
 // **
 
-void f2__frame_objects__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  // physical_sim_object
-  
-  reinit_frame_object__4_slot(physical_sim_object, position, velocity, mass, shape);
-}
-
 void f2__frame_objects__defragment__fix_pointers() {
   // -- reinitialize --
 
@@ -45,16 +37,17 @@ void f2__frame_objects__defragment__fix_pointers() {
   
 }
 
-void f2__frame_objects__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "frame_objects", "", &f2__frame_objects__reinitialize_globalvars, &f2__frame_objects__defragment__fix_pointers);
-  
-  f2__frame_objects__reinitialize_globalvars();
-  
+void f2__frame_objects__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // physical_sim_object
   
   init_frame_object__4_slot(physical_sim_object, position, velocity, mass, shape);
+}
+
+void f2__frame_objects__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "frame_objects", "", &f2__frame_objects__reinitialize_globalvars, &f2__frame_objects__defragment__fix_pointers);
   
+  f2__frame_objects__reinitialize_globalvars();
 }
 

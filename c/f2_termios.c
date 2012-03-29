@@ -107,11 +107,6 @@ def_pcfunk0(termios__canon,
 
 // **
 
-void f2__termios__reinitialize_globalvars() {
-  //f2ptr cause = f2_termios_c__cause__new(initial_cause());
-  // set global (funk2_t) __funk2 variables
-}
-
 void f2__termios__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
@@ -124,17 +119,19 @@ void f2__termios__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(termios__canon);
 }
 
-void f2__termios__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "termios", "", &f2__termios__reinitialize_globalvars, &f2__termios__defragment__fix_pointers);
-  
-  f2__termios__reinitialize_globalvars();
-  
+void f2__termios__reinitialize_globalvars() {
   f2__primcfunk__init(termios__width);
   f2__primcfunk__init(termios__height);
   f2__primcfunk__init(termios__noecho);
   f2__primcfunk__init(termios__echo);
   f2__primcfunk__init(termios__nocanon);
   f2__primcfunk__init(termios__canon);
+}
+
+void f2__termios__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "termios", "", &f2__termios__reinitialize_globalvars, &f2__termios__defragment__fix_pointers);
+  
+  f2__termios__reinitialize_globalvars();
 }
 
 

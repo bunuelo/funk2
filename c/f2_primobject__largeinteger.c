@@ -1465,16 +1465,6 @@ void f2__primobject_largeinteger__defragment__fix_pointers() {
 void f2__primobject_largeinteger__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  reinitialize_primobject(largeinteger);
-}
-
-void f2__primobject_largeinteger__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-largeinteger", "", &f2__primobject_largeinteger__reinitialize_globalvars, &f2__primobject_largeinteger__defragment__fix_pointers);
-  
-  f2__primobject_largeinteger__reinitialize_globalvars();
-  
-  f2ptr cause = initial_cause();
-  
   // largeinteger
   
   initialize_primobject_2_slot(largeinteger, is_negative, integer_array);
@@ -1505,6 +1495,11 @@ void f2__primobject_largeinteger__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(largeinteger__terminal_print_with_frame, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_largeinteger.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject_largeinteger__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-largeinteger", "", &f2__primobject_largeinteger__reinitialize_globalvars, &f2__primobject_largeinteger__defragment__fix_pointers);
   
+  f2__primobject_largeinteger__reinitialize_globalvars();
 }
 

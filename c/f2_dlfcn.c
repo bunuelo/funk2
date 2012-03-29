@@ -580,27 +580,6 @@ def_pcfunk0(global_dlfcn_dynamic_library__unload_changed,
 
 // **
 
-void f2__dlfcn__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  f2ptr dynamic_library_handler = f2__global_dlfcn_dynamic_library_handler(cause);
-  if ((dynamic_library_handler == nil) || raw__larva__is_type(cause, dynamic_library_handler)) {
-    environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
-  } else {
-    raw__dlfcn_dynamic_library_handler__reinit(cause, dynamic_library_handler);
-  }
-  
-  // dlfcn_dynamic_library
-  
-  reinit_frame_object__4_slot(dlfcn_dynamic_library, pointer, filename, stat, pointer_symbol_hash);
-  
-  
-  // dlfcn_dynamic_library_handler
-  
-  reinit_frame_object__3_slot(dlfcn_dynamic_library_handler, dlfcn_dynamic_library_pointer_hash, dlfcn_dynamic_library_filename_hash, search_pathnames);
-  
-}
-
 void f2__dlfcn__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -661,12 +640,16 @@ void f2__dlfcn__defragment__fix_pointers() {
   
 }
 
-void f2__dlfcn__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars, &f2__dlfcn__defragment__fix_pointers);
-  
+void f2__dlfcn__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
-  f2__dlfcn__reinitialize_globalvars();
+  f2ptr dynamic_library_handler = f2__global_dlfcn_dynamic_library_handler(cause);
+  if ((dynamic_library_handler == nil) || raw__larva__is_type(cause, dynamic_library_handler)) {
+    environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
+  } else {
+    raw__dlfcn_dynamic_library_handler__reinit(cause, dynamic_library_handler);
+  }
+  
   
   f2__primcfunk__init__0(dlfcn__supported);
   f2__primcfunk__init__2(dlfcn__dlopen, filename, flag);
@@ -715,7 +698,14 @@ void f2__dlfcn__initialize() {
   f2__primcfunk__init__1(global_dlfcn_dynamic_library__unload_dynamic_library, filename);
   f2__primcfunk__init__0(global_dlfcn_dynamic_library__unload_changed);
   
-  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
   
+}
+
+void f2__dlfcn__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "dlfcn", "", &f2__dlfcn__reinitialize_globalvars, &f2__dlfcn__defragment__fix_pointers);
+  
+  f2__dlfcn__reinitialize_globalvars();
+  
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "-dlfcn_dynamic_library_handler-"), f2__dlfcn_dynamic_library_handler__new(cause, nil));
 }
 

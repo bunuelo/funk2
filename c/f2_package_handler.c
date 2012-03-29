@@ -118,12 +118,6 @@ def_pcfunk1(global_package_handler__lookup_package, name,
 
 // **
 
-void f2__package_handler__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(package_handler);
-}
-
 void f2__package_handler__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -153,11 +147,8 @@ void f2__package_handler__defragment__fix_pointers() {
   
 }
 
-void f2__package_handler__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "package_handler", "", &f2__package_handler__reinitialize_globalvars, &f2__package_handler__defragment__fix_pointers);
+void f2__package_handler__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  f2__package_handler__reinitialize_globalvars();
   
   // package_handler
   
@@ -175,5 +166,10 @@ void f2__package_handler__initialize() {
   
   f2__primcfunk__init__0(global_package_handler);
   f2__primcfunk__init__1(global_package_handler__lookup_package, name);
+}
+
+void f2__package_handler__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "package_handler", "", &f2__package_handler__reinitialize_globalvars, &f2__package_handler__defragment__fix_pointers);
   
+  f2__package_handler__reinitialize_globalvars();
 }  

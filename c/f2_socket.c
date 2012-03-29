@@ -572,10 +572,6 @@ def_pcfunk4(f2__recv, fd, pointer, byte_num, flags,
 	    return f2__recv(this_cause, fd, pointer, byte_num, flags));
 
 
-void f2__socket__reinitialize_globalvars() {
-  //f2ptr cause = f2_socket_c__cause__new(initial_cause(), nil, nil);
-}
-
 void f2__socket__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
@@ -640,11 +636,7 @@ void f2__socket__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(f2__recv);
 }
 
-void f2__socket__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "socket", "", &f2__socket__reinitialize_globalvars, &f2__socket__defragment__fix_pointers);
-  
-  f2__socket__reinitialize_globalvars();
-  
+void f2__socket__reinitialize_globalvars() {
   f2__primcfunk__init(f2__inaddr_any);
   
   f2__primcfunk__init(f2__socket);
@@ -703,6 +695,12 @@ void f2__socket__initialize() {
   
   f2__primcfunk__init(f2__chunk__recv);
   f2__primcfunk__init(f2__recv);
+}
+
+void f2__socket__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "socket", "", &f2__socket__reinitialize_globalvars, &f2__socket__defragment__fix_pointers);
+  
+  f2__socket__reinitialize_globalvars();
 }
 
   

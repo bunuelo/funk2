@@ -657,6 +657,13 @@ void f2__primobject__stream__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(stream__nonblocking__set);
   f2__primcfunk__init__defragment__fix_pointers(stream__ungetc);
   f2__primcfunk__init__defragment__fix_pointers(stream__getc);
+
+
+  defragment__fix_pointer(__file_stream__symbol);
+  defragment__fix_pointer(__socket_stream__symbol);
+  defragment__fix_pointer(__string_stream__symbol);
+  defragment__fix_pointer(__text_window_stream__symbol);
+  
 }
 
 void f2__primobject__stream__reinitialize_globalvars() {
@@ -691,10 +698,10 @@ void f2__primobject__stream__reinitialize_globalvars() {
   f2__primcfunk__init__1(stream__getc,   this);
   
   
-  reinitialize_primobject(file_stream);
-  reinitialize_primobject(socket_stream);
-  reinitialize_primobject(string_stream);
-  reinitialize_primobject(text_window_stream);
+  __file_stream__symbol        = new__symbol(cause, "file_stream");
+  __socket_stream__symbol      = new__symbol(cause, "socket_stream");
+  __string_stream__symbol      = new__symbol(cause, "string_stream");
+  __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
   
 }
 

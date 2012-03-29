@@ -615,17 +615,6 @@ f2ptr f2stream__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__stream__reinitialize_globalvars() {
-  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
-  
-  reinitialize_primobject(stream);
-  reinitialize_primobject(file_stream);
-  reinitialize_primobject(socket_stream);
-  reinitialize_primobject(string_stream);
-  reinitialize_primobject(text_window_stream);
-  
-}
-
 void f2__primobject__stream__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -670,11 +659,7 @@ void f2__primobject__stream__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(stream__getc);
 }
 
-void f2__primobject__stream__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-stream", "", &f2__primobject__stream__reinitialize_globalvars, &f2__primobject__stream__defragment__fix_pointers);
-  
-  f2__primobject__stream__reinitialize_globalvars();
-  
+void f2__primobject__stream__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // stream
@@ -704,5 +689,11 @@ void f2__primobject__stream__initialize() {
   f2__primcfunk__init(stream__nonblocking__set);
   f2__primcfunk__init__2(stream__ungetc, this, character);
   f2__primcfunk__init__1(stream__getc,   this);
+}
+
+void f2__primobject__stream__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-stream", "", &f2__primobject__stream__reinitialize_globalvars, &f2__primobject__stream__defragment__fix_pointers);
+  
+  f2__primobject__stream__reinitialize_globalvars();
 }
 

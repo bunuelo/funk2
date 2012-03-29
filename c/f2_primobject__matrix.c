@@ -170,12 +170,6 @@ f2ptr f2matrix__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__matrix__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(matrix);
-}
-
 void f2__primobject__matrix__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -204,12 +198,8 @@ void f2__primobject__matrix__defragment__fix_pointers() {
   
 }
 
-void f2__primobject__matrix__initialize() {
+void f2__primobject__matrix__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "matrix", "", &f2__primobject__matrix__reinitialize_globalvars, &f2__primobject__matrix__defragment__fix_pointers);
-  
-  f2__primobject__matrix__reinitialize_globalvars();
   
   // matrix
   
@@ -225,6 +215,11 @@ void f2__primobject__matrix__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(matrix__elt__set, this, column, row, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.elt__set__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(matrix__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_matrix.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject__matrix__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "matrix", "", &f2__primobject__matrix__reinitialize_globalvars, &f2__primobject__matrix__defragment__fix_pointers);
   
+  f2__primobject__matrix__reinitialize_globalvars();
 }
 

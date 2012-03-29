@@ -4805,17 +4805,6 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count) {
 
 // **
 
-void f2__optimize__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(optimize_bytecode);
-  reinitialize_primobject(optimize_chunk);
-  reinitialize_primobject(optimize_transition);
-  reinitialize_primobject(optimize_data);
-  reinitialize_primobject(optimize_fiber);
-  reinitialize_primobject(optimize_context);
-}
-
 void f2__optimize__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -4920,17 +4909,10 @@ void f2__optimize__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(optimize_context__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk);
-  
-  
-  
 }
 
-void f2__optimize__initialize() {
+void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "optimize", "", &f2__optimize__reinitialize_globalvars, &f2__optimize__defragment__fix_pointers);
-  
-  f2__optimize__reinitialize_globalvars();
   
   // optimize_bytecode
   
@@ -5020,7 +5002,11 @@ void f2__optimize__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__optimize__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "optimize", "", &f2__optimize__reinitialize_globalvars, &f2__optimize__defragment__fix_pointers);
   
-  
+  f2__optimize__reinitialize_globalvars();
 }
 

@@ -477,14 +477,6 @@ f2ptr f2core_extension_funk__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__core_extension_funk__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  // core_extension_funk
-  
-  reinit_frame_object__6_slot(core_extension_funk, core_extension_name, name, cname, args_cname, is_funktional_cname, documentation_cname);
-}
-
 void f2__core_extension_funk__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -555,17 +547,10 @@ void f2__core_extension_funk__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__symbol);
   f2__primcfunk__init__defragment__fix_pointers(core_extension_funk__documentation);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__funk);
-  
-  
 }
 
-void f2__core_extension_funk__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension_funk", "", &f2__core_extension_funk__reinitialize_globalvars, &f2__core_extension_funk__defragment__fix_pointers);
-  
+void f2__core_extension_funk__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  f2__core_extension_funk__reinitialize_globalvars();
-  
   
   // core_extension_funk
   
@@ -617,6 +602,11 @@ void f2__core_extension_funk__initialize() {
   
   {char* symbol_str = "documentation"; __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(core_extension_funk__documentation, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_core_extension_funk.documentation__funk = never_gc(cfunk);}
+}
+
+void f2__core_extension_funk__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension_funk", "", &f2__core_extension_funk__reinitialize_globalvars, &f2__core_extension_funk__defragment__fix_pointers);
   
+  f2__core_extension_funk__reinitialize_globalvars();
 }
 

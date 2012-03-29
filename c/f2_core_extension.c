@@ -349,20 +349,6 @@ def_pcfunk0(global_core_extension_handler__reset_to_boot_state,
 
 // **
 
-void f2__core_extension__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  // core_extension
-  
-  reinit_frame_object__4_slot(core_extension, name, filename, initialized_time_stamp_cmutex, initialized_time_stamp);
-  
-  
-  // core_extension_handler
-  
-  reinit_frame_object__1_slot(core_extension_handler, core_extension_name_hash);
-  
-}
-
 void f2__core_extension__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -425,17 +411,10 @@ void f2__core_extension__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__lookup_core_extension);
   f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__unload_changed);
   f2__primcfunk__init__defragment__fix_pointers(global_core_extension_handler__reset_to_boot_state);
-  
-  
 }
 
-void f2__core_extension__initialize_module() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension", "", &f2__core_extension__reinitialize_globalvars, &f2__core_extension__defragment__fix_pointers);
-  
+void f2__core_extension__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  f2__core_extension__reinitialize_globalvars();
-  
   
   // core_extension
   
@@ -484,10 +463,14 @@ void f2__core_extension__initialize_module() {
   f2__primcfunk__init__1(global_core_extension_handler__lookup_core_extension,  name);
   f2__primcfunk__init__0(global_core_extension_handler__unload_changed);
   f2__primcfunk__init__0(global_core_extension_handler__reset_to_boot_state);
+}
+
+void f2__core_extension__initialize_module() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "core_extension", "", &f2__core_extension__reinitialize_globalvars, &f2__core_extension__defragment__fix_pointers);
   
-  
+  f2__core_extension__reinitialize_globalvars();
+
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-core_extension_handler-"), f2__core_extension_handler__new(cause));
-  
 }
 
 

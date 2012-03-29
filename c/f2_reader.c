@@ -1638,10 +1638,6 @@ void funk2_reader__defragment__fix_pointers(funk2_reader_t* this) {
 
 // **
 
-void f2__reader__reinitialize_globalvars() {
-  funk2_reader__reinit(&(__funk2.reader));
-}
-
 void f2__reader__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -1658,12 +1654,8 @@ void f2__reader__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(stream__try_read);
 }
 
-void f2__reader__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars, &f2__reader__defragment__fix_pointers);
-  
-  funk2_reader__init(&(__funk2.reader));
-  
-  f2__reader__reinitialize_globalvars();
+void f2__reader__reinitialize_globalvars() {
+  funk2_reader__reinit(&(__funk2.reader));
   
   f2__primcfunk__init__1(exp__contains_comma,                   this);
   f2__primcfunk__init__1(exp__contains_cdr_comma,               this);
@@ -1671,5 +1663,13 @@ void f2__reader__initialize() {
   f2__primcfunk__init__1(exp__comma_filter_backquoted,          this);
   f2__primcfunk__init__1(stream__skip_whitespace,               stream);
   f2__primcfunk__init__1(stream__try_read,                      stream);
+}
+
+void f2__reader__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars, &f2__reader__defragment__fix_pointers);
+  
+  funk2_reader__init(&(__funk2.reader));
+  
+  f2__reader__reinitialize_globalvars();
 }
 

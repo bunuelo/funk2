@@ -425,9 +425,6 @@ void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t
 
 // **
 
-void f2__garbage_collector__reinitialize_globalvars() {
-}
-
 void f2__garbage_collector__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -440,12 +437,14 @@ void f2__garbage_collector__defragment__fix_pointers() {
   
 }
 
+void f2__garbage_collector__reinitialize_globalvars() {
+  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now);
+  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count);
+}
+
 void f2__garbage_collector__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "garbage_collector", "", &f2__garbage_collector__reinitialize_globalvars, &f2__garbage_collector__defragment__fix_pointers);
   
   f2__garbage_collector__reinitialize_globalvars();
-  
-  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now);
-  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count);
 }
 

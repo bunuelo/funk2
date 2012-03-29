@@ -42,7 +42,7 @@ void f2__initialize() {
   // ** 
   {
     {
-      f2__primobjects__reinitialize_globalvars();
+      f2__primobjects__preinitialize_globalvars();
       f2__cause__reinitialize_globalvars();
       f2__primobject__ptypehash__preinitialize_globalvars(); 
       f2__primobject_frame__preinitialize_globalvars();

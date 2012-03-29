@@ -1349,28 +1349,6 @@ def_pcfunk2(bytecode_event__new, bytecode, context,
 
 // **
 
-void f2__primobjects__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  reinitialize_primobject(compound_object);
-  reinitialize_primobject(primobject);
-  reinitialize_primobject(place);
-  reinitialize_primobject(cons);
-  reinitialize_primobject(doublelink);
-  reinitialize_primobject(imagination_link);
-  reinitialize_primobject(cfunk);
-  reinitialize_primobject(metrocfunk);
-  reinitialize_primobject(funk);
-  reinitialize_primobject(metro);
-  reinitialize_primobject(exception);
-  reinitialize_primobject(bytecode);
-  reinitialize_primobject(bug);
-  reinitialize_primobject(size_2d);
-  reinitialize_primobject(event);
-  reinitialize_primobject(bytecode_event);
-}
-
-
 void f2__primobjects__defragment__fix_pointers() {
   // -- reinitialize --
   
@@ -1621,10 +1599,29 @@ void f2__primobjects__defragment__fix_pointers() {
   
 }
 
-void f2__primobjects__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars, &f2__primobjects__defragment__fix_pointers);
+void f2__primobjects__preinitialize_globalvars() {
+  f2ptr cause = initial_cause();
   
-  f2__primobjects__reinitialize_globalvars();
+  reinitialize_primobject(compound_object);
+  reinitialize_primobject(primobject);
+  reinitialize_primobject(place);
+  reinitialize_primobject(cons);
+  reinitialize_primobject(doublelink);
+  reinitialize_primobject(imagination_link);
+  reinitialize_primobject(cfunk);
+  reinitialize_primobject(metrocfunk);
+  reinitialize_primobject(funk);
+  reinitialize_primobject(metro);
+  reinitialize_primobject(exception);
+  reinitialize_primobject(bytecode);
+  reinitialize_primobject(bug);
+  reinitialize_primobject(size_2d);
+  reinitialize_primobject(event);
+  reinitialize_primobject(bytecode_event);
+}
+
+
+void f2__primobjects__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // primobject
@@ -1797,5 +1794,12 @@ void f2__primobjects__initialize() {
   
   initialize_primobject_2_slot(bytecode_event, bytecode, context);
   
+}
+
+
+void f2__primobjects__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjects", "", &f2__primobjects__reinitialize_globalvars, &f2__primobjects__defragment__fix_pointers);
+  
+  f2__primobjects__reinitialize_globalvars();
 }
 

@@ -1789,8 +1789,9 @@ declare_primobject_2_slot(bytecode_event, bytecode, context);
 
 // end of objects
 
-extern void f2__primobjects__reinitialize_globalvars();
-extern void f2__primobjects__initialize();
+void f2__primobjects__preinitialize_globalvars();
+void f2__primobjects__reinitialize_globalvars();
+void f2__primobjects__initialize();
 
 #endif // F2__PRIMOBJECTS__H
 

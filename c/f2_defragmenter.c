@@ -133,7 +133,7 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
     funk2_heap__insert(free_memory_heap, (funk2_heap_node_t*)new_iter);
   }
   
-  funk2_memorypool__shrink_last_free_block(memorypool, memblock__minimum_size + 1024);
+  funk2_memorypool__shrink_last_free_block(memorypool, F2__INITIAL_MEMORY);
   
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr " done.", pool_index);
 }

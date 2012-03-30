@@ -313,9 +313,6 @@ void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t
   if (byte_num < memblock__minimum_size) {
     error(nil, "funk2_memorypool__shrink_last_free_block fatal error: cannot attempt to resize block to size smmaller than memblock__minimum_size.");
   }
-  if (byte_num < F2__INITIAL_MEMORY) {
-    byte_num = F2__INITIAL_MEMORY;
-  }
   funk2_memblock_t* old_end_of_blocks       = funk2_memorypool__end_of_blocks(this);
   u64               old_last_block_byte_num = this->last_block_byte_num; 
   if (old_last_block_byte_num > byte_num) {
@@ -323,10 +320,11 @@ void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t
     if (! last_block->used) {
       funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)last_block); 
       {
+	u64 byte_num_diff = (old_last_block_byte_num - byte_num);
 	funk2_memblock__byte_num(last_block) = byte_num;
-	this->total_free_memory       -= (old_last_block_byte_num - byte_num);
-      	this->total_global_memory     -= (old_last_block_byte_num - byte_num);
-	this->dynamic_memory.byte_num -= (old_last_block_byte_num - byte_num);
+	this->total_free_memory       -= byte_num_diff;
+      	this->total_global_memory     -= byte_num_diff;
+	this->dynamic_memory.byte_num -= byte_num_diff;
 	this->last_block_byte_num      = byte_num;
 	this->end_of_blocks            = funk2_memorypool__end_of_blocks(this);
       }

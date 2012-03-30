@@ -505,6 +505,9 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   status(  "funk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename);
   printf("\n\n"); fflush(stdout);
   
+  // in order to not exit at this point, we need to shut down all pthreads, see f2_defragment.c:stop_everthing_and_defragment.
+  exit(0);
+  
   return boolean__false;
 }
 

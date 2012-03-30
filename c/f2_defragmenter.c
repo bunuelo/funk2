@@ -312,8 +312,6 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
   funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
   funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
   __funk2.memory.bootstrapping_mode = boolean__true;
-  //__funk2.user_thread_controller.please_wait = boolean__true;
-  //funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
   
   status("");
   status("*******************************");
@@ -343,7 +341,6 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
   
   funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
   __funk2.memory.bootstrapping_mode = boolean__false;
-  //__funk2.user_thread_controller.please_wait = boolean__false;
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {

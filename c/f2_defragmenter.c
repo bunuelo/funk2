@@ -248,6 +248,16 @@ void* funk2_defragmenter__defragment__parallel_phase_one(void* memorypool_pointe
   return NULL;
 }
 
+void* funk2_defragmenter__defragment__parallel_phase_two(void* memorypool_pointer) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_pointer;
+  u64 pool_index = memorypool->pool_index;
+  {
+    funk2_defragmenter__memory_pool__fix_pointers(&(__funk2.defragmenter), pool_index);
+    status("funk2_defragmenter__defragment: parallel phase one done.  pool_index=" u64__fstr, pool_index);
+  }
+  return NULL;
+}
+
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: parallel phase one.");
@@ -276,12 +286,29 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   //  }
   //}
   
+  status("funk2_defragmenter__defragment: parallel phase two.");
   {
-    s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_defragmenter__memory_pool__fix_pointers(this, pool_index);
+    pthread_t pool_thread[memory_pool_num];
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_two, (void*)(&(__funk2.memory.pool[pool_index])));
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(pool_thread[pool_index], NULL);
+      }
     }
   }
+
+  //{
+  //  s64 pool_index;
+  //  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  //    funk2_defragmenter__memory_pool__fix_pointers(this, pool_index);
+  //  }
+  //}
   
   {
     f2ptr global_environment                = __funk2.memory.global_environment_f2ptr;

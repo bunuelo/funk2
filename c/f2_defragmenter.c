@@ -235,17 +235,46 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }
 
+
+void* funk2_defragmenter__defragment__parallel_phase_one(void* memorypool_pointer) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_pointer;
+  u64 pool_index = memorypool->pool_index;
+  {
+    funk2_defragmenter__memory_pool__destroy_memblocks(   &(__funk2.defragmenter), pool_index);
+    funk2_defragmenter__memory_pool__move_memory(         &(__funk2.defragmenter), pool_index);
+    funk2_defragmenter__memory_pool__initialize_memblocks(&(__funk2.defragmenter), pool_index);
+    status("funk2_defragmenter__defragment: parallel phase one done.  pool_index=" u64__fstr, pool_index);
+  }
+  return NULL;
+}
+
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
+  status("funk2_defragmenter__defragment: parallel phase one.");
   {
-    s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_defragmenter__memory_pool__destroy_memblocks(   this, pool_index);
-      funk2_defragmenter__memory_pool__move_memory(         this, pool_index);
-      funk2_defragmenter__memory_pool__initialize_memblocks(this, pool_index);
+    pthread_t pool_thread[memory_pool_num];
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_one, (void*)(&(__funk2.memory.pool[pool_index])));
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(pool_thread[pool_index], NULL);
+      }
     }
   }
-  //funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
+  
+  //{
+  //  s64 pool_index;
+  //  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  //    funk2_defragmenter__memory_pool__destroy_memblocks(   this, pool_index);
+  //    funk2_defragmenter__memory_pool__move_memory(         this, pool_index);
+  //    funk2_defragmenter__memory_pool__initialize_memblocks(this, pool_index);
+  //  }
+  //}
   
   {
     s64 pool_index;
@@ -253,7 +282,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
       funk2_defragmenter__memory_pool__fix_pointers(this, pool_index);
     }
   }
-  //funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
   
   {
     f2ptr global_environment                = __funk2.memory.global_environment_f2ptr;
@@ -263,13 +291,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   }
   
   funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
-  
-  //f2__reader__defragment__fix_pointers();
-  //f2__globalenv__defragment__fix_pointers();
-  //f2__primobject__file_handle__defragment__fix_pointers();
-  //f2__primobject__stream__defragment__fix_pointers();
-  
-  //funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
 
 }
 

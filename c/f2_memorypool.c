@@ -321,10 +321,11 @@ void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t
       funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)last_block); 
       {
 	funk2_memblock__byte_num(last_block) = byte_num;
-	this->total_free_memory   -= (old_last_block_byte_num - byte_num);
-      	this->total_global_memory -= (old_last_block_byte_num - byte_num);
-	this->last_block_byte_num  = byte_num;
-	this->end_of_blocks        = funk2_memorypool__end_of_blocks(this);
+	this->total_free_memory       -= (old_last_block_byte_num - byte_num);
+      	this->total_global_memory     -= (old_last_block_byte_num - byte_num);
+	this->dynamic_memory.byte_num -= (old_last_block_byte_num - byte_num);
+	this->last_block_byte_num      = byte_num;
+	this->end_of_blocks            = funk2_memorypool__end_of_blocks(this);
       }
       funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)last_block);
     }

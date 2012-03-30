@@ -313,7 +313,7 @@ void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t
   funk2_memblock_t* old_end_of_blocks       = funk2_memorypool__end_of_blocks(this);
   u64               old_last_block_byte_num = this->last_block_byte_num; 
   if (old_last_block_byte_num > byte_num) {
-    funk2_memblocK_t* last_block = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - old_last_block_byte_num);
+    funk2_memblock_t* last_block = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - old_last_block_byte_num);
     if (! last_block->used) {
       funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)last_block); 
       {

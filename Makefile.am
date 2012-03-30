@@ -93,6 +93,10 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags)
 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 
+if NEED_REALTIME_LINK
+realtime_linker_flags = -lrt
+endif
+
 if XMLRPC_SUPPORTED
 xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
 xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
@@ -549,7 +553,7 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(realtime_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)

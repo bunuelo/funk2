@@ -21,7 +21,7 @@
 
 #include "funk2.h"
 
-#define F2__DEBUG__OBJECT__TYPE
+//#define F2__DEBUG__OBJECT__TYPE
 
 #if defined(F2__DEBUG__OBJECT__TYPE)
 #  define object_type_status(msg, rest...) status("[object_type] " msg, ## rest)

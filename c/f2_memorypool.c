@@ -313,8 +313,8 @@ void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t
   if (byte_num < memblock__minimum_size) {
     error(nil, "funk2_memorypool__shrink_last_free_block fatal error: cannot attempt to resize block to size smmaller than memblock__minimum_size.");
   }
-  if (byte_num < f2ptr_block__max_value) {
-    byte_num = f2ptr_block__max_value;
+  if (byte_num < (10ull << f2ptr_block__bit_num)) {
+    byte_num = (10ull << f2ptr_block__bit_num);
   }
   funk2_memblock_t* old_end_of_blocks       = funk2_memorypool__end_of_blocks(this);
   u64               old_last_block_byte_num = this->last_block_byte_num; 

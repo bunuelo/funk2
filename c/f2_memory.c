@@ -798,6 +798,9 @@ void f2__memory__defragment__fix_pointers() {
   
   // -- initialize --
   
+  defragment__fix_pointer(__funk2.memory.global_environment_f2ptr);
+  __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(__funk2.memory.global_environment_f2ptr);
+  
   f2__primcfunk__init__defragment__fix_pointers(memory__pool__maximum_block__byte_num);
   
 }

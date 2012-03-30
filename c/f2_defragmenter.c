@@ -294,13 +294,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     }
   }
 
-  {
-    f2ptr global_environment                = __funk2.memory.global_environment_f2ptr;
-    global_environment                      = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, global_environment);
-    __funk2.memory.global_environment_f2ptr = global_environment;
-    __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment);
-  }
-  
   funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
 
 }

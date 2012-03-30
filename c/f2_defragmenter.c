@@ -277,15 +277,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     }
   }
   
-  //{
-  //  s64 pool_index;
-  //  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-  //    funk2_defragmenter__memory_pool__destroy_memblocks(   this, pool_index);
-  //    funk2_defragmenter__memory_pool__move_memory(         this, pool_index);
-  //    funk2_defragmenter__memory_pool__initialize_memblocks(this, pool_index);
-  //  }
-  //}
-  
   status("funk2_defragmenter__defragment: parallel phase two.");
   {
     pthread_t pool_thread[memory_pool_num];
@@ -303,13 +294,6 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     }
   }
 
-  //{
-  //  s64 pool_index;
-  //  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-  //    funk2_defragmenter__memory_pool__fix_pointers(this, pool_index);
-  //  }
-  //}
-  
   {
     f2ptr global_environment                = __funk2.memory.global_environment_f2ptr;
     global_environment                      = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, global_environment);

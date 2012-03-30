@@ -17,6 +17,9 @@
 /* Define if we have support for GTK+ */
 #undef F2__GTK_SUPPORTED
 
+/* Have clock_gettime support */
+#undef F2__HAVE_CLOCK_GETTIME
+
 /* Define if we have support for LIBAVCODEC */
 #undef F2__LIBAVCODEC_SUPPORTED
 

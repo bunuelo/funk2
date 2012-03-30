@@ -133,6 +133,8 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
     funk2_heap__insert(free_memory_heap, (funk2_heap_node_t*)new_iter);
   }
   
+  funk2_memorypool__shrink_last_free_block(memorypool, memblock__minimum_size + 1024);
+  
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr " done.", pool_index);
 }
 
@@ -293,9 +295,9 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
       }
     }
   }
-
+  
+  status("funk2_defragmenter__defragment: fixing all module pointers.");
   funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
-
 }
 
 void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* this) {

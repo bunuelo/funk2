@@ -99,6 +99,7 @@ void              funk2_memorypool__memory_test__all_known_types                
 void              funk2_memorypool__memory_test                                    (funk2_memorypool_t* this);
 f2ptr              raw__memorypool__assert_valid                                   (f2ptr cause, s64 pool_index);
 void              funk2_memorypool__change_total_memory_available                  (funk2_memorypool_t* this, f2size_t byte_num);
+void              funk2_memorypool__shrink_last_free_block                         (funk2_memorypool_t* this, f2size_t byte_num);
 void              funk2_memorypool__free_memory_heap__insert                       (funk2_memorypool_t* this, funk2_memblock_t* block);
 u8                funk2_memorypool__defragment_free_memory_blocks_in_place         (funk2_memorypool_t* this);
 void              funk2_memorypool__free_used_block                                (funk2_memorypool_t* this, funk2_memblock_t* block);

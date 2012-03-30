@@ -309,6 +309,24 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   funk2_memorypool__debug_memory_test(this, 2);
 }
 
+void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t byte_num) {
+  funk2_memblock_t* old_end_of_blocks       = funk2_memorypool__end_of_blocks(this);
+  u64               old_last_block_byte_num = this->last_block_byte_num; 
+  if (old_last_block_byte_num > byte_num) {
+    funk2_memblocK_t* last_block = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - old_last_block_byte_num);
+    if (! last_block->used) {
+      funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)last_block); 
+      {
+	funk2_memblock__byte_num(last_block) = byte_num;
+	this->total_free_memory   -= (old_last_block_byte_num - byte_num);
+      	this->total_global_memory -= (old_last_block_byte_num - byte_num);
+	this->last_block_byte_num = byte_num;
+      }
+      funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)last_block);
+    }
+  }
+}
+
 void funk2_memorypool__free_memory_heap__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
 }

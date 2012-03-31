@@ -186,7 +186,9 @@
 						     agent_body]
   [new [initial-mindmon_world
 	initial-name]
+       [print 'mindmon_blocks_world_agent: debug 0']
        [construct mindmon_agent initial-mindmon_world initial-name]
+       [print 'mindmon_blocks_world_agent: debug 1']
        
        [= blocks_world_reflective_mind [new blocks_world_reflective_mind]]
        [= agent_body                   [new mindmon_blocks_world_agent_body this]]

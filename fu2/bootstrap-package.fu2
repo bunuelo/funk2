@@ -449,5 +449,6 @@
     [packages-load_if_modified_before names load_if_modified_before_time nil nil]]]
 
 [defmetro reload [:rest names]
-  `[reload-package @[mapcar [funk [name] `[quote ,name]] names]]]
+  `[prog [print [quote ,`[require @names]]]
+	 [reload-package @[mapcar [funk [name] `[quote ,name]] names]]]]
 

@@ -23,10 +23,15 @@
        [terminal_format standard-terminal '\nreflective_mind: creating new mind.']
        [construct traced_mind]
        
+       [print 'reflective_mind: debug 0']
        [type-have reflective_mind this create_resources]
+       [print 'reflective_mind: debug 1']
        [type-have reflective_mind this create_knowledge]
+       [print 'reflective_mind: debug 2']
        [type-have reflective_mind this connect_knowledge_reflection]
+       [print 'reflective_mind: debug 3']
        [type-have reflective_mind this create_builtin_actions]
+       [print 'reflective_mind: debug 4']
        
        [let [[end_of_physical_type_changes_trigger [get [get this resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	 [fiber [funk []
@@ -35,6 +40,7 @@
 			[have [get this ready_for_physical_world_step_trigger] trigger]]]
 		nil]]
        
+       [print 'reflective_mind: debug 5']
        ]]
 
 [deftypefunk reflective_mind execute create_resources []

@@ -191,7 +191,9 @@
        [print 'mindmon_blocks_world_agent: debug 1']
        
        [= blocks_world_reflective_mind [new blocks_world_reflective_mind]]
+       [print 'mindmon_blocks_world_agent: debug 2']
        [= agent_body                   [new mindmon_blocks_world_agent_body this]]
+       [print 'mindmon_blocks_world_agent: debug 3']
        ]]
 
 [deftypefunk mindmon_blocks_world_agent get gripper []

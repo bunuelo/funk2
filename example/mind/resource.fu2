@@ -48,11 +48,15 @@
        [= fiber                       [fiber [funk []
 						   [cause-enable_reactive_critics [this-cause]]
 						   
+						   [print 'resource: debug 0']
+
 						   'Turn on appropriate causal tracing.'
 						   [cause-define semantic_frame-trace_add                            t]
 						   [cause-define semantic_frame-trace_remove                         t]
 						   [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
 						   [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
+						   
+						   [print 'resource: debug 1']
 						   
 						   [= name         initial-name]
 						   [= agency       nil]  'We set this when the resource is added to an agency.'
@@ -67,9 +71,13 @@
 						   [cause-define mind-name      nil]
 						   [cause-define cause-resource this]
 						   [cause-define this-resource  this]
+						   [print 'resource: debug 1']
 						   [have resource_initializing_mutex lock]
+						   [print 'resource: debug 2']
 						   [have resource_initializing_mutex unlock]
+						   [print 'resource: debug 3']
 						   [have fiber_starting_mutex unlock]
+						   [print 'resource: debug 4']
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
 						       [sleep 1]
@@ -85,8 +93,10 @@
 											     [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]
 											     [= waiting_to_be_added_to_mind nil]]]]]]]]]]]]
 						   [= initialized t]
+						   [print 'resource: debug 5']
 						   [have this think_to_self 'Resource Initialized.']
 						   [while [not done]
+						     [print 'resource: debug 6']
 						     [have active_mutex lock]
 						     [if [not active]
 							 [prog [fiber [funk []

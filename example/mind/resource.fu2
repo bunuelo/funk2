@@ -43,12 +43,15 @@
 			   [finished_trigger  [new fiber_trigger]]]
   [new [initial-name initial-active_funk]
        [terminal_format standard-terminal '\ncreating ' initial-name ' resource.']
+       [print 'resource: debug 0']
        [= resource_initializing_mutex [new mutex]] [have resource_initializing_mutex lock]
+       [print 'resource: debug 1']
        [= fiber_starting_mutex        [new mutex]] [have fiber_starting_mutex        lock]
+       [print 'resource: debug 2']
        [= fiber                       [fiber [funk []
 						   [cause-enable_reactive_critics [this-cause]]
 						   
-						   [print 'resource: debug 0']
+						   [print 'resource-fiber: debug 0']
 
 						   'Turn on appropriate causal tracing.'
 						   [cause-define semantic_frame-trace_add                            t]
@@ -56,7 +59,7 @@
 						   [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
 						   [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
 						   
-						   [print 'resource: debug 1']
+						   [print 'resource-fiber: debug 1']
 						   
 						   [= name         initial-name]
 						   [= agency       nil]  'We set this when the resource is added to an agency.'
@@ -71,13 +74,13 @@
 						   [cause-define mind-name      nil]
 						   [cause-define cause-resource this]
 						   [cause-define this-resource  this]
-						   [print 'resource: debug 1']
+						   [print 'resource-fiber: debug 1']
 						   [have resource_initializing_mutex lock]
-						   [print 'resource: debug 2']
+						   [print 'resource-fiber: debug 2']
 						   [have resource_initializing_mutex unlock]
-						   [print 'resource: debug 3']
+						   [print 'resource-fiber: debug 3']
 						   [have fiber_starting_mutex unlock]
-						   [print 'resource: debug 4']
+						   [print 'resource-fiber: debug 4']
 						   [let [[waiting_to_be_added_to_mind t]]
 						     [while waiting_to_be_added_to_mind
 						       [sleep 1]
@@ -116,9 +119,13 @@
 						     ]
 						   [have this think_to_self 'Resource Done.']]
 					     nil]]
+       [print 'resource: debug 3']
        [have resource_initializing_mutex unlock]
+       [print 'resource: debug 4']
        [have fiber_starting_mutex lock]
+       [print 'resource: debug 5']
        [have fiber_starting_mutex unlock]
+       [print 'resource: debug 6']
        this]]
 
 [deftypefunk resource get local_time []

@@ -219,7 +219,7 @@
 		      [=   successful_activation t]
 		      [have active_mutex unlock]
 		      `[print [format nil 'resource-wait_to_activate: ' name ' debug 5']]
-		      `[print [format nil 'resource-wait_to_activate: ' name ' debug 5.2 active_mutex-is_locked=' [get active_mutex is_locked]]]
+		      [print [format nil 'resource-wait_to_activate: ' name ' debug 5.2 active_mutex-is_locked=' [get active_mutex is_locked]]]
 		      ]
 	      [let [[wait_mutex [new mutex]]]
 		`[print [format nil 'resource-wait_to_activate: ' name ' debug 6']]

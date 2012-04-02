@@ -59,7 +59,7 @@
 			   [funk []
 				 [fiber [funk []
 					      [terminal_format standard-terminal '\nuser: deliberative action activator waiting to call "' [get action as-string] '."']
-					      [have action wait_to_call]]
+					      [have action external_wait_to_call]]
 					nil]]
 			   nil]]]
 	     [have [get [get mindmon_agent mind] plan_actions]

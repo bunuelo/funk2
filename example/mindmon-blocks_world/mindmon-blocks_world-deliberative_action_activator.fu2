@@ -71,10 +71,6 @@
        [have window show_all]]]
 
 
-[deftypefunk mindmon_blocks_world_deliberative_action_activator_window execute activate_resource [layer_name agency_name resource_name :rest args]
-  [let [[activate_resource [get [get mindmon_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
-    [have-apply activate_resource command `[,layer_name ,agency_name ,resource_name @args]]]]
-
 
 
 'mindmon_blocks_world_deliberative_action_activator'

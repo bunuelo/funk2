@@ -26,7 +26,7 @@
 def_primobject_4_slot(traced_cmutex, cmutex, fiber_with_lock, lock_stack, fibers_waiting_for_lock);
 
 f2ptr f2__traced_cmutex__new(f2ptr cause) {
-  f2ptr cmutex                   = f2cmutex__new(cause);
+  f2ptr cmutex                  = f2cmutex__new(cause);
   f2ptr fiber_with_lock         = nil;
   f2ptr lock_stack              = nil;
   f2ptr fibers_waiting_for_lock = f2__ptypehash__new(cause);

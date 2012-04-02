@@ -1709,14 +1709,21 @@ boolean_t raw__cmutex__is_type(f2ptr cause, f2ptr x) {
   //#ifdef F2__PTYPE__TYPE_CHECK
   //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
   //#endif // F2__PTYPE__TYPE_CHECK
-  return (x && f2ptype__raw(x, cause) == ptype_cmutex);
+  return ((x != nil) &&
+	  (f2ptype__raw(x, cause) == ptype_cmutex));
 }
-f2ptr f2__cmutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cmutex__is_type(cause, x));}
+f2ptr f2__cmutex__is_type(f2ptr cause, f2ptr x) {
+  assert_argument_type(cmutex, this);
+  return f2bool__new(raw__cmutex__is_type(cause, x));
+}
 def_pcfunk1(cmutex__is_type, x,
 	    "",
 	    return f2__cmutex__is_type(this_cause, x));
 
-f2ptr f2__cmutex__type(f2ptr cause, f2ptr x) {return new__symbol(cause, "cmutex");}
+f2ptr f2__cmutex__type(f2ptr cause, f2ptr x) {
+  assert_argument_type(cmutex, this);
+  return new__symbol(cause, "cmutex");
+}
 def_pcfunk1(cmutex__type, x,
 	    "",
 	    return f2__cmutex__type(this_cause, x));
@@ -1766,6 +1773,7 @@ boolean_t raw__cmutex__trylock(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__cmutex__trylock(f2ptr cause, f2ptr this) {
+  assert_argument_type(cmutex, this);
   return f2bool__new(raw__cmutex__trylock(cause, this));
 }
 def_pcfunk1(cmutex__trylock, this,
@@ -1777,6 +1785,7 @@ boolean_t raw__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(cmutex, this);
   return f2bool__new(raw__cmutex__eq(cause, this, that));
 }
 def_pcfunk2(cmutex__eq, this, that,
@@ -1787,12 +1796,17 @@ u64 raw__cmutex__eq_hash_value(f2ptr cause, f2ptr this) {
   return ((u64)this);
 }
 
-f2ptr f2__cmutex__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__cmutex__eq_hash_value(cause, this));}
+f2ptr f2__cmutex__eq_hash_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(cmutex, this);
+  return f2integer__new(cause, raw__cmutex__eq_hash_value(cause, this));
+}
 def_pcfunk1(cmutex__eq_hash_value, this,
 	    "",
 	    return f2__cmutex__eq_hash_value(this_cause, this));
 
-boolean_t raw__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that) {return raw__cmutex__eq(cause, this, that);}
+boolean_t raw__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__cmutex__eq(cause, this, that);
+}
 
 f2ptr f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(cmutex, this);

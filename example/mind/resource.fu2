@@ -100,6 +100,7 @@
 						   [have this think_to_self 'Resource Initialized.']
 						   [while [not done]
 						     [print [format nil 'resource-fiber: ' initial-name ' debug 7']]
+						     [print [format nil 'resource-fiber: ' initial-name ' debug 7.2 active_mutex-locked=' [get active_mutex is_locked]]]
 						     [have active_mutex lock]
 						     [print [format nil 'resource-fiber: ' initial-name ' debug 8']]
 						     [if [not active]

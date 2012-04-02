@@ -20,16 +20,11 @@
 
 [deframe blocks_world_reflective_mind [reflective_mind] []
   [new []
-       [print 'blocks_world_reflective_mind: debug 0']
        [construct reflective_mind]
        
-       [print 'blocks_world_reflective_mind: debug 1']
        [type-have blocks_world_reflective_mind this create_resources]
-       [print 'blocks_world_reflective_mind: debug 2']
        [type-have blocks_world_reflective_mind this create_builtin_goals]
-       [print 'blocks_world_reflective_mind: debug 3']
        [type-have blocks_world_reflective_mind this create_builtin_actions]
-       [print 'blocks_world_reflective_mind: debug 4']
        [type-have blocks_world_reflective_mind this create_builtin_plans]
        
        [terminal_format standard-terminal '\nblocks_world_reflective_mind: created.']

@@ -121,7 +121,7 @@ def_pcfunk2(fiber_trigger__add_waiting_fiber_and_remove_from_scheduler, this, fi
 
 f2ptr raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber) {
   printf("\nraw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure: debug 0\n"); fflush(stdout);
-  f2ptr this__cmutex = f2__fiber_trigger__cmutex(cause, this);
+  f2ptr this__cmutex = assert_value(f2__fiber_trigger__cmutex(cause, this));
   raw__cmutex__lock(cause, this__cmutex);
   printf("\nraw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure: debug 1\n"); fflush(stdout);
   f2ptr lock_failure = raw__traced_cmutex__trylock(cause, traced_cmutex);

@@ -187,15 +187,51 @@ f2ptr f2list__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject_list__reinitialize_globalvars() {
-  __list__symbol = new__symbol(initial_cause(), "list");
+void f2__primobject_list__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // list
+  
+  initialize_primobject_3_slot__defragment__fix_pointers(list, write_cmutex, length, cons_cells);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.add__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__add);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.add__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.lookup__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__lookup);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.lookup__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.car__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__car);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.car__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.cdr__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__cdr);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.cdr__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(list__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__funk);
+  
+  
+  // -- initialize --
+  
 }
 
-void f2__primobject_list__initialize() {
-  f2__primobject_list__reinitialize_globalvars();
-  
-  environment__add_var_value(initial_cause(), global_environment(), __list__symbol, nil);
-  
+void f2__primobject_list__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // list
@@ -218,6 +254,11 @@ void f2__primobject_list__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(list__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.equals_hash_value__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(list__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_list.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject_list__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-list", "", &f2__primobject_list__reinitialize_globalvars, &f2__primobject_list__defragment__fix_pointers);
   
+  f2__primobject_list__reinitialize_globalvars();
 }
 

@@ -601,9 +601,3 @@ void f2__cause__initialize() {
   f2__cause__reinitialize_globalvars();
 }
 
-void f2__cause__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "cause", "", &f2__cause__reinitialize_globalvars);
-  f2__cause__reinitialize_globalvars();
-  f2__cause__post_reinitialize_globalvars();
-}
-

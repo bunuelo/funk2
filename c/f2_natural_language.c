@@ -955,16 +955,282 @@ f2ptr f2parse_tree__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__natural_language__reinitialize_globalvars() {
+void f2__natural_langauge__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  // clause
+  
+  init_frame_object__13_slot__defragment__fix_pointers(clause, symbols, secondary, imperative, declarative, question, yes_no, wh, particle, transitive, transitive_two, subject_to_object, to_object, unmatched_relative_reference);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_clause.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(clause__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_clause.new__funk);
+  
+  
+  // wh_rank_shift_clause
+  
+  init_frame_object__1_slot__defragment__fix_pointers(wh_rank_shift_clause, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(wh_rank_shift_clause__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_wh_rank_shift_clause.new__funk);
+  
+  
+  // noun_group
+  
+  init_frame_object__18_slot__defragment__fix_pointers(noun_group, symbols, determiner, ordinal, number, adjectives, classifiers, noun, qualifiers, definite, indefinite, quantifier, singular, plural, mass, object, object_one, object_two, question);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(noun_group__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_noun_group.new__funk);
+  
+  
+  // preposition_group
+  
+  init_frame_object__9_slot__defragment__fix_pointers(preposition_group, symbols, complement, locational_object, adjunct, agent, question, missing_up_relative, missing_up_question, relative_preposition_group);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(preposition_group__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_preposition_group.new__funk);
+  
+  
+  // adjective_group
+  
+  init_frame_object__8_slot__defragment__fix_pointers(adjective_group, symbols, complement, qualifier, adjunct, than, as, comparitive, question);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(adjective_group__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_adjective_group.new__funk);
+  
+  
+  // verb_group
+  
+  init_frame_object__15_slot__defragment__fix_pointers(verb_group, symbols, imperative, en, ing, to, todel, tense, be, passive, negative, auxiliary, not_only_auxiliary, singular, plural, takes_particle);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(verb_group__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_verb_group.new__funk);
+  
+  
+  // combination_group
+  
+  init_frame_object__3_slot__defragment__fix_pointers(combination_group, symbols, transitive, preposition);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(combination_group__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_combination_group.new__funk);
+  
+  
+  // adjective_word
+  
+  init_frame_object__3_slot__defragment__fix_pointers(adjective_word, symbols, superlative, comparative);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(adjective_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_adjective_word.new__funk);
+  
+  
+  // adverb_word
+  
+  init_frame_object__5_slot__defragment__fix_pointers(adverb_word, symbols, adverb_modifier, verb_modifier, preposition_modifier, clause_modifier);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(adverb_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_adverb_word.new__funk);
+  
+  
+  // binder_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(binder_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(binder_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_binder_word.new__funk);
+  
+  
+  // classifier_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(classifier_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(classifier_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_classifier_word.new__funk);
+  
+  
+  // determiner_word
+  
+  init_frame_object__12_slot__defragment__fix_pointers(determiner_word, symbols, indefinite, question, definite, demonstrative, quantifier, incomplete_of, negative, no_number, singular, plural, mass);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(determiner_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_determiner_word.new__funk);
+  
+  
+  // noun_word
+  
+  init_frame_object__7_slot__defragment__fix_pointers(noun_word, symbols, singular, plural, mass, possessive, time_unit, time_specific);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(noun_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_noun_word.new__funk);
+  
+  
+  // number_word
+  
+  init_frame_object__3_slot__defragment__fix_pointers(number_word, symbols, singular, plural);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_number_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(number_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_number_word.new__funk);
+  
+  
+  // number_determiner_word
+  
+  init_frame_object__5_slot__defragment__fix_pointers(number_determiner_word, symbols, than_modifier, as_as_modifier, at_modifier, alone);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(number_determiner_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_number_determiner_word.new__funk);
+  
+  
+  // ordinal_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(ordinal_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ordinal_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_ordinal_word.new__funk);
+  
+  
+  // preposition_word
+  
+  init_frame_object__3_slot__defragment__fix_pointers(preposition_word, symbols, combination_first, combination_second);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(preposition_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_preposition_word.new__funk);
+  
+  
+  // pronoun_word
+  
+  init_frame_object__10_slot__defragment__fix_pointers(pronoun_word, symbols, singular, plural, first_person_singular, possessive, subject, object, demonstrative, relative_clause, question);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(pronoun_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_pronoun_word.new__funk);
+  
+  
+  // proper_noun_word
+  
+  init_frame_object__3_slot__defragment__fix_pointers(proper_noun_word, symbols, singular, plural);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(proper_noun_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_proper_noun_word.new__funk);
+  
+  
+  // particle_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(particle_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(particle_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_particle_word.new__funk);
+  
+  
+  // question_adjunct_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(question_adjunct_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(question_adjunct_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_question_adjunct_word.new__funk);
+  
+  
+  // thing_pronoun_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(thing_pronoun_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(thing_pronoun_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_thing_pronoun_word.new__funk);
+  
+  
+  // infinitive_helper_word
+  
+  init_frame_object__1_slot__defragment__fix_pointers(infinitive_helper_word, symbols);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(infinitive_helper_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_infinitive_helper_word.new__funk);
+  
+  
+  // verb_word
+  
+  init_frame_object__23_slot__defragment__fix_pointers(verb_word, symbols, auxiliary, be, Do, have, will, modal, negative, question_auxiliary, third_person_singular, plural, first_person_singular, ing, en, infinitive, past, present, Main, takes_particle, transitive, transitive_two, takes_to_object, takes_subject_to_object);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(verb_word__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_verb_word.new__funk);
+  
+  
+  // parse_tree_node
+  
+  init_frame_object__6_slot__defragment__fix_pointers(parse_tree_node, parse_object, parent_node, previous_node, next_node, first_child_node, last_child_node);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__insert_after);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_after__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__insert_below_no_children);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.insert_below_no_children__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__add_child);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.add_child__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__child_of_type_node);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.child_of_type_node__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_node);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_node__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_with_true_property_node);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property_node__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree_node__containing_type_with_true_property__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree_node.containing_type_with_true_property__set__funk);
+  
+  
+  // parse_tree
+  
+  init_frame_object__2_slot__defragment__fix_pointers(parse_tree, root_node, current_node);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(parse_tree__new_copy);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__funk);
+  
+  
+  
 }
 
-void f2__natural_language__initialize() {
+void f2__natural_language__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "natural_language", "", &f2__natural_language__reinitialize_globalvars);
-  
-  f2__natural_language__reinitialize_globalvars();
-  
   
   // clause
   
@@ -1188,7 +1454,11 @@ void f2__natural_language__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__0_arg(parse_tree__new, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new__funk = never_gc(cfunk);}
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(parse_tree__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_parse_tree.new_copy__funk = never_gc(cfunk);}
+}
+
+void f2__natural_language__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "natural_language", "", &f2__natural_language__reinitialize_globalvars, &f2__natural_langauge__defragment__fix_pointers);
   
-  
+  f2__natural_language__reinitialize_globalvars();
 }
 

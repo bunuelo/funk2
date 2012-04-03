@@ -77,15 +77,22 @@ def_pcfunk1(apropos, find_string,
 
 // **
 
+void f2__apropos__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(apropos);
+  
+}
+
 void f2__apropos__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_apropos_c__cause__new(initial_cause(), nil, global_environment());
+  f2__primcfunk__init(apropos);
 }
 
 void f2__apropos__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "apropos", "", &f2__apropos__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "apropos", "", &f2__apropos__reinitialize_globalvars, &f2__apropos__defragment__fix_pointers);
   
   f2__apropos__reinitialize_globalvars();
-  
-  f2__primcfunk__init(apropos);
 }
 

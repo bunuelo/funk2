@@ -572,15 +572,71 @@ def_pcfunk4(f2__recv, fd, pointer, byte_num, flags,
 	    return f2__recv(this_cause, fd, pointer, byte_num, flags));
 
 
-void f2__socket__reinitialize_globalvars() {
-  //f2ptr cause = f2_socket_c__cause__new(initial_cause(), nil, nil);
+void f2__socket__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+
+  f2__primcfunk__init__defragment__fix_pointers(f2__inaddr_any);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket);
+  f2__primcfunk__init__defragment__fix_pointers(f2__accept);
+  f2__primcfunk__init__defragment__fix_pointers(f2__connect);
+  f2__primcfunk__init__defragment__fix_pointers(f2__bind);
+  f2__primcfunk__init__defragment__fix_pointers(f2__getsockname);
+  f2__primcfunk__init__defragment__fix_pointers(f2__listen);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_unix);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_local);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_inet);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_inet6);
+
+#ifndef F2__CYGWIN
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_ipx);
+#endif
+
+#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_netlink);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_x25);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_ax25);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_atmpvc);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_packet);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__sock_packet);
+#endif
+
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__pf_appletalk);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__sock_dgram);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__sock_seqpacket);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__sock_raw);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__sock_rdm);
+  f2__primcfunk__init__defragment__fix_pointers(f2__socket__sock_stream);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__gethostbyname);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__h_errno);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__h_errno__host_not_found);
+  f2__primcfunk__init__defragment__fix_pointers(f2__h_errno__no_address);
+  f2__primcfunk__init__defragment__fix_pointers(f2__h_errno__no_recovery);
+  f2__primcfunk__init__defragment__fix_pointers(f2__h_errno__try_again);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__hostent__h_name);
+  f2__primcfunk__init__defragment__fix_pointers(f2__hostent__h_aliases);
+  f2__primcfunk__init__defragment__fix_pointers(f2__hostent__h_addrtype);
+  f2__primcfunk__init__defragment__fix_pointers(f2__hostent__h_length);
+  f2__primcfunk__init__defragment__fix_pointers(f2__hostent__h_addr_list);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__sockaddr_in__sin_family);
+  f2__primcfunk__init__defragment__fix_pointers(f2__sockaddr_in__sin_port);
+  f2__primcfunk__init__defragment__fix_pointers(f2__sockaddr_in__sin_addr);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__chunk__send);
+  f2__primcfunk__init__defragment__fix_pointers(f2__send);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__chunk__recv);
+  f2__primcfunk__init__defragment__fix_pointers(f2__recv);
 }
 
-void f2__socket__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "socket", "", &f2__socket__reinitialize_globalvars);
-  
-  f2__socket__reinitialize_globalvars();
-  
+void f2__socket__reinitialize_globalvars() {
   f2__primcfunk__init(f2__inaddr_any);
   
   f2__primcfunk__init(f2__socket);
@@ -639,6 +695,12 @@ void f2__socket__initialize() {
   
   f2__primcfunk__init(f2__chunk__recv);
   f2__primcfunk__init(f2__recv);
+}
+
+void f2__socket__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "socket", "", &f2__socket__reinitialize_globalvars, &f2__socket__defragment__fix_pointers);
+  
+  f2__socket__reinitialize_globalvars();
 }
 
   

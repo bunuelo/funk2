@@ -74,7 +74,7 @@ f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 	f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
       }
       if (! processor_assignment_scheduler_cmutex__failed_to_lock) {
-	f2cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+	f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
       }
       f2__this__fiber__yield(cause);
       //raw__fast_spin_sleep_yield();
@@ -580,7 +580,18 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  resume_gc();
 	} else {
 	  char status_msg[1024];
-	  snprintf(status_msg, 1023, "larva found in fiber and fiber has no critics, so doing nothing.");
+	  if (raw__bug__is_type(cause, f2fiber__value(fiber, cause))) {
+	    f2ptr bug      = f2fiber__value(fiber, cause);
+	    f2ptr bug_type = f2__bug__bug_type(cause, bug);
+	    if (raw__integer__is_type(cause, bug_type)) {
+	      u64 bug_type__i = f2integer__i(bug_type, cause);
+	      snprintf(status_msg, 1023, "bug type (" u64__fstr ") found in fiber and fiber has no critics, so doing nothing.", bug_type__i);
+	    } else {
+	      snprintf(status_msg, 1023, "larva found in fiber (but bug_type is not integer) and fiber has no critics, so doing nothing.");
+	    }
+	  } else {
+	    snprintf(status_msg, 1023, "larva found in fiber (but is not bug now) and fiber has no critics, so doing nothing.");
+	  }
 	  status(status_msg);
 	}
       }
@@ -596,16 +607,55 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 
 // **
 
-void f2__processor__reinitialize_globalvars() {
-  f2ptr cause = f2_processor_c__cause__new(initial_cause());
+void f2__processor__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
   
-  __processor__symbol = new__symbol(cause, "processor");
+  // processor
+  
+  initialize_primobject_7_slot__defragment__fix_pointers(processor,
+							 scheduler,
+							 processor_thread,
+							 active_fibers_scheduler_cmutex,
+							 active_fibers,
+							 active_fibers_iter,
+							 pool_index,
+							 desc);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__add_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__remove_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.remove_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__current_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.current_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__increment_current_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.increment_current_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__reset_current_active_fiber);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.reset_current_active_fiber__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__active_fibers__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__active_fibers__contains);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(processor__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk);
 }
 
-void f2__processor__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars);
-  f2__processor__reinitialize_globalvars();
-  
+void f2__processor__reinitialize_globalvars() {
   f2ptr cause = f2_processor_c__cause__new(initial_cause());
   
   
@@ -636,6 +686,12 @@ void f2__processor__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__active_fibers__contains, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_processor.active_fibers__contains__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_processor.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__processor__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "processor", "", &f2__processor__reinitialize_globalvars, &f2__processor__defragment__fix_pointers);
+  
+  f2__processor__reinitialize_globalvars();
 }
 
 void f2__processor__destroy() {

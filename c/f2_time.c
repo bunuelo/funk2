@@ -1086,18 +1086,90 @@ f2ptr f2relative_time__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__time__reinitialize_globalvars() {
-  f2ptr cause = nil;
-  __time__symbol          = new__symbol(cause, "time");
-  __relative_time__symbol = new__symbol(cause, "relative_time");
+void f2__time__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+
+  f2__primcfunk__init__defragment__fix_pointers(nanoseconds_since_1970);
+
+#ifndef F2__CYGWIN
+  f2__primcfunk__init__defragment__fix_pointers(processor_thread__execution_nanoseconds);
+  f2__primcfunk__init__defragment__fix_pointers(funk2__execution_nanoseconds);
+#endif // F2__CYGWIN
+
+
+  // time
+  
+  initialize_primobject_1_slot__defragment__fix_pointers(time, nanoseconds_since_1970);
+  initialize_primobject_funk__defragment__fix_pointers(time, equals);
+  initialize_primobject_funk__defragment__fix_pointers(time, years);
+  initialize_primobject_funk__defragment__fix_pointers(time, months);
+  initialize_primobject_funk__defragment__fix_pointers(time, days);
+  initialize_primobject_funk__defragment__fix_pointers(time, hours);
+  initialize_primobject_funk__defragment__fix_pointers(time, minutes);
+  initialize_primobject_funk__defragment__fix_pointers(time, seconds);
+  initialize_primobject_funk__defragment__fix_pointers(time, milliseconds);
+  initialize_primobject_funk__defragment__fix_pointers(time, microseconds);
+  initialize_primobject_funk__defragment__fix_pointers(time, nanoseconds);
+  initialize_primobject_funk__defragment__fix_pointers(time, is_less_than);
+  initialize_primobject_funk__defragment__fix_pointers(time, is_greater_than);
+  initialize_primobject_funk__defragment__fix_pointers(time, is_numerically_equal_to);
+  initialize_primobject_funk__defragment__fix_pointers(time, minus);
+  initialize_primobject_funk__defragment__fix_pointers(time, plus);
+  initialize_primobject_funk__defragment__fix_pointers(time, abbreviated_weekday_name);
+  initialize_primobject_funk__defragment__fix_pointers(time, weekday_name);
+  initialize_primobject_funk__defragment__fix_pointers(time, abbreviated_month_name);
+  initialize_primobject_funk__defragment__fix_pointers(time, month_name);
+  initialize_primobject_funk__defragment__fix_pointers(time, date_and_time_string);
+  initialize_primobject_funk__defragment__fix_pointers(time, day_of_week);
+  initialize_primobject_funk__defragment__fix_pointers(time, day_of_year);
+  initialize_primobject_funk__defragment__fix_pointers(time, is_daylight_savings_time);
+  initialize_primobject_funk__defragment__fix_pointers(time, timezone);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_time.as__graphviz_label__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(time__as__graphviz_label);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_time.as__graphviz_label__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(time__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_time.terminal_print_with_frame__funk);
+  
+  
+  // relative_time
+  
+  initialize_primobject_1_slot__defragment__fix_pointers(relative_time, total_nanoseconds);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, equals);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, is_past);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, days);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, hours);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, minutes);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, seconds);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, milliseconds);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, microseconds);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, nanoseconds);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, is_less_than);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, is_greater_than);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, is_numerically_equal_to);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, plus);
+  initialize_primobject_funk__defragment__fix_pointers(relative_time, minus);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(relative_time__as__string);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__string__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(relative_time__as__graphviz_label);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(relative_time__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__funk);
 }
 
-void f2__time__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars);
-  
-  f2__time__reinitialize_globalvars();
-  
-  f2ptr cause = nil;
+void f2__time__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
   
   f2__primcfunk__init__0(nanoseconds_since_1970);
 
@@ -1165,7 +1237,11 @@ void f2__time__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(relative_time__as__graphviz_label, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.as__graphviz_label__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(relative_time__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_relative_time.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__time__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars, &f2__time__defragment__fix_pointers);
   
-  
+  f2__time__reinitialize_globalvars();
 }
 

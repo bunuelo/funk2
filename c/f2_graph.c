@@ -1500,21 +1500,106 @@ f2ptr f2graph_decomposition_lattice__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__graph__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
+void f2__graph__defragment__fix_pointers() {
+  // -- reinitialize --
   
-  __graph_node__symbol                       = new__symbol(cause, "graph_node");
-  __graph_edge__symbol                       = new__symbol(cause, "graph_edge");
-  __graph__symbol                            = new__symbol(cause, "graph");
-  __graph_isomorphism__symbol                = new__symbol(cause, "graph_isomorphism");
-  __graph_decomposition_lattice_node__symbol = new__symbol(cause, "graph_decomposition_lattice_node");
-  __graph_decomposition_lattice__symbol      = new__symbol(cause, "graph_decomposition_lattice");
+  
+  // -- initialize --
+  
+  // graph_node
+  initialize_primobject_1_slot__defragment__fix_pointers(graph_node, label);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph_node__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_node.terminal_print_with_frame__funk);
+  
+  // graph_edge
+  initialize_primobject_3_slot__defragment__fix_pointers(graph_edge, label, left_node, right_node);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph_edge__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_edge.terminal_print_with_frame__funk);
+  
+  // graph
+  initialize_primobject_5_slot__defragment__fix_pointers(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
+  
+  f2__primcfunk__init__defragment__fix_pointers(graph__nodes);
+  f2__primcfunk__init__defragment__fix_pointers(graph__edges);
+  f2__primcfunk__init__defragment__fix_pointers(graph__add_node);
+  f2__primcfunk__init__defragment__fix_pointers(graph__add_new_node);
+  f2__primcfunk__init__defragment__fix_pointers(graph__add_edge);
+  f2__primcfunk__init__defragment__fix_pointers(graph__add_new_edge);
+  f2__primcfunk__init__defragment__fix_pointers(graph__node_count);
+  f2__primcfunk__init__defragment__fix_pointers(graph__contains_node);
+  f2__primcfunk__init__defragment__fix_pointers(graph__nodes_with_label);
+  f2__primcfunk__init__defragment__fix_pointers(graph__contains_node_label);
+  f2__primcfunk__init__defragment__fix_pointers(graph__contains_edge);
+  f2__primcfunk__init__defragment__fix_pointers(graph__contains);
+  f2__primcfunk__init__defragment__fix_pointers(graph__lookup_nodes_with_label);
+  f2__primcfunk__init__defragment__fix_pointers(graph__random_nonempty_strict_subgraph);
+  f2__primcfunk__init__defragment__fix_pointers(graph__minus);
+  f2__primcfunk__init__defragment__fix_pointers(graph__copy);
+  f2__primcfunk__init__defragment__fix_pointers(graph__copy_with_node_label);
+  f2__primcfunk__init__defragment__fix_pointers(graph__node_isomorphisms);
+  f2__primcfunk__init__defragment__fix_pointers(graph__edges_with_label_between_nodes);
+  f2__primcfunk__init__defragment__fix_pointers(graph__edges_between_nodes);
+  f2__primcfunk__init__defragment__fix_pointers(graph__as__dot_code);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph__connected_node_sets);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph.connected_node_sets__funk);
+
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph.contains_cycle__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph__contains_cycle);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph.contains_cycle__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph.terminal_print_with_frame__funk);
+  
+  // graph_list
+  f2__primcfunk__init__defragment__fix_pointers(graph_list__union);
+  
+  // graph_isomorphism
+  initialize_primobject_2_slot__defragment__fix_pointers(graph_isomorphism, right_node_left_node_hash, left_node_right_node_hash);
+  
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__add_mapping);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__mapping_count);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__is_disjoint_with);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__map_left_to_right);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__map_right_to_left);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__union);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__as__frame);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph_isomorphism__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_isomorphism.terminal_print_with_frame__funk);
+  
+  // graph_decomposition_lattice_node
+  initialize_primobject_5_slot__defragment__fix_pointers(graph_decomposition_lattice_node, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set);
+  
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice_node__combine_children_isomorphisms);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice_node__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice_node.terminal_print_with_frame__funk);
+  
+  // graph_decomposition_lattice
+  initialize_primobject_7_slot__defragment__fix_pointers(graph_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
+  
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__add_node);
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__decompose_graph_with_root_graph);
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__decompose_graph);
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__subgraph_isomorphisms);
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__subgraph_max_isomorphisms);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__funk);
+  
 }
 
-void f2__graph__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "graph", "", &f2__graph__reinitialize_globalvars);
-  
-  f2__graph__reinitialize_globalvars();
+void f2__graph__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // graph_node
@@ -1597,6 +1682,11 @@ void f2__graph__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(graph_decomposition_lattice__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_graph_decomposition_lattice.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__graph__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "graph", "", &f2__graph__reinitialize_globalvars, &f2__graph__defragment__fix_pointers);
   
+  f2__graph__reinitialize_globalvars();
 }
 

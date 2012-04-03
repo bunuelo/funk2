@@ -107,7 +107,7 @@
        [= define_globally_menu_item [gtk-menu_item-new 'Define Globally']]
        [have define_globally_menu_item signal_connect 'activate'
 	     [funk []
-		   [get mindmon_define_object_dialog resource `resource]]
+		   [new mindmon_define_object_dialog resource `resource]]
 	     nil]
        [have resource_menu append define_globally_menu_item]
        

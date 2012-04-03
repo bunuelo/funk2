@@ -139,6 +139,13 @@ void funk2_protected_alloc_array__touch_all(funk2_protected_alloc_array_t* this,
   }
 }
 
+void funk2_protected_alloc_array__defragment__fix_pointers(funk2_protected_alloc_array_t* this) {
+  u64 index;
+  for (index = 0; index < this->used_num; index ++) {
+    defragment__fix_pointer(this->data[index].data);
+  }
+}
+
 
 // funk2_protected_alloc_array_fiber_hash
 
@@ -242,3 +249,50 @@ void funk2_protected_alloc_array_fiber_hash__touch_all(funk2_protected_alloc_arr
 			funk2_protected_alloc_array__touch_all(protected_alloc_array, garbage_collector_pool);
 			);
 }
+
+void funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(funk2_protected_alloc_array_fiber_hash_t* this) {
+  {
+    u64                             used_fiber_hash__key_count                   = this->used_fiber_hash.key_count;
+    f2ptr*                          used_fiber_hash__fiber_array                 = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * used_fiber_hash__key_count));
+    funk2_protected_alloc_array_t** used_fiber_hash__protected_alloc_array_array = (funk2_protected_alloc_array_t**)from_ptr(f2__malloc(sizeof(funk2_protected_alloc_array_t*) * used_fiber_hash__key_count));
+    {
+      u64 index = 0;
+      funk2_hash__iteration(&(this->used_fiber_hash), key, value,
+			    f2ptr                          fiber                 = key;
+			    funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(value);
+			    {
+			      used_fiber_hash__fiber_array[index]                 = fiber;
+			      used_fiber_hash__protected_alloc_array_array[index] = protected_alloc_array;
+			    }
+			    index ++;
+			    );
+    }
+    {
+      u64 index;
+      for (index = 0; index < used_fiber_hash__key_count; index ++) {
+	f2ptr fiber = used_fiber_hash__fiber_array[index];
+	funk2_hash__remove(&(this->used_fiber_hash), (u64)fiber);
+      }
+    }
+    {
+      u64 index;
+      for (index = 0; index < used_fiber_hash__key_count; index ++) {
+	f2ptr                          fiber                 = used_fiber_hash__fiber_array[index];
+	funk2_protected_alloc_array_t* protected_alloc_array = used_fiber_hash__protected_alloc_array_array[index];
+	defragment__fix_pointer(fiber);
+	funk2_protected_alloc_array__defragment__fix_pointers(protected_alloc_array);
+	funk2_hash__add(&(this->used_fiber_hash), (u64)fiber, (u64)to_ptr(protected_alloc_array));
+      }
+    }
+    f2__free(to_ptr(used_fiber_hash__fiber_array));
+    f2__free(to_ptr(used_fiber_hash__protected_alloc_array_array));
+  }
+  {
+    u64 index;
+    for (index = 0; index < this->extra_array_buffer__count; index ++) {
+      funk2_protected_alloc_array_t* extra_array_buffer = this->extra_array_buffer[index];
+      funk2_protected_alloc_array__defragment__fix_pointers(extra_array_buffer);
+    }
+  }
+}
+

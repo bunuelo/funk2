@@ -402,7 +402,7 @@ f2ptr raw__redblacktree_node__maximum_not_greater_than_or_equal_to__node(f2ptr c
 
 f2ptr raw__redblacktree_node__simple_binary_insert_key(f2ptr cause, f2ptr this, f2ptr key, f2ptr value_funk, f2ptr value_comparison_funk) {
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
+  //debug__assert(!raw__redblacktree_node__contains_node(cause, this, new_node), nil, "raw__redblacktree_node__simple_binary_insert failed: node already exists in root.");
 #endif
   f2ptr new_node                       = nil;
   f2ptr this__count_key_ptypehash      = f2__redblacktree_node__count_key_ptypehash(cause, this);
@@ -869,7 +869,7 @@ void raw__redblacktree_node__replace_node(f2ptr cause, f2ptr dest, f2ptr src) {
     f2__redblacktree_node__parent__set(cause, src__right, dest);
   }
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(raw__redblacktree_node__is_valid(cause, dest), nil, "raw__redblacktree_node__replace_node assertion failure: raw__redblacktree_node__is_valid(cause, dest).");
+  //debug__assert(raw__redblacktree_node__is_valid(cause, dest), nil, "raw__redblacktree_node__replace_node assertion failure: raw__redblacktree_node__is_valid(cause, dest).");
 #endif
 }
 
@@ -953,8 +953,8 @@ void raw__redblacktree_node__swap_nodes(f2ptr cause, f2ptr node1, f2ptr node2) {
   }
   f2__redblacktree_node__color__set(cause, node1, node2__color);
 #ifdef DEBUG_REDBLACKTREE
-  debug__assert(raw__redblacktree_node__is_valid(cause, node1), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node1).");
-  debug__assert(raw__redblacktree_node__is_valid(cause, node2), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node2).");
+  //debug__assert(raw__redblacktree_node__is_valid(cause, node1), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node1).");
+  //debug__assert(raw__redblacktree_node__is_valid(cause, node2), nil, "raw__redblacktree_node__swap_node assertion failure: raw__redblacktree_node__is_valid(cause, node2).");
 #endif
 }
 
@@ -1515,17 +1515,95 @@ f2ptr f2redblacktree__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__redblacktree__reinitialize_globalvars() {
-  __redblacktree__symbol      = new__symbol(initial_cause(), "redblacktree");
-  __redblacktree_node__symbol = new__symbol(initial_cause(), "redblacktree_node");
+void f2__primobject__redblacktree__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+
+  // redblacktree
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(redblacktree, mutate_mutex, head, value_funk, value_comparison_funk);
+  
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(redblacktree__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__insert);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.insert__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__remove);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.remove__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.lookup_key_count__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__lookup_key_count);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.lookup_key_count__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.contains__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__contains);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.contains__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__minimum);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__maximum);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__minimum_not_less_than__node);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__node__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__minimum_not_less_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.minimum_not_less_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than_or_equal_to__node__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__maximum_not_greater_than_or_equal_to__node);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than_or_equal_to__node__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than_or_equal_to__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__maximum_not_greater_than_or_equal_to);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.maximum_not_greater_than_or_equal_to__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__leaves);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__size);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.size__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.is_empty__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__is_empty);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.is_empty__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__leaves_within_range);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.leaves_within_range__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk);
+  
+  // redblacktree_node
+  
+  initialize_primobject_5_slot__defragment__fix_pointers(redblacktree_node, parent, left, right, color, count_key_ptypehash);
+  
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(redblacktree_node__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(redblacktree_node__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__funk);
 }
 
-void f2__primobject__redblacktree__initialize() {
+void f2__primobject__redblacktree__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__redblacktree", "", &f2__primobject__redblacktree__reinitialize_globalvars);
-  
-  f2__primobject__redblacktree__reinitialize_globalvars();
   
   // redblacktree
   
@@ -1579,6 +1657,7 @@ void f2__primobject__redblacktree__initialize() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree.terminal_print_with_frame__funk = never_gc(cfunk);}
   
+  
   // redblacktree_node
   
   initialize_primobject_5_slot(redblacktree_node, parent, left, right, color, count_key_ptypehash);
@@ -1588,6 +1667,11 @@ void f2__primobject__redblacktree__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(redblacktree_node__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_redblacktree_node.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__primobject__redblacktree__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-redblacktree", "", &f2__primobject__redblacktree__reinitialize_globalvars, &f2__primobject__redblacktree__defragment__fix_pointers);
   
+  f2__primobject__redblacktree__reinitialize_globalvars();
 }
 

@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -23,7 +23,9 @@
 
 // funk2_module_registration_node
 
-void funk2_module_registration_node__init(funk2_module_registration_node_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
+void funk2_module_registration_node__init(funk2_module_registration_node_t* this, char* name, char* description,
+					  funk2_module_registration_reinitialize_function_ptr_t            reinitialize_function,
+					  funk2_module_registration_defragment_fix_pointers_function_ptr_t defragment_fix_pointers_function) {
   {
     int name__length = strlen(name);
     this->name = (char*)from_ptr(f2__malloc(name__length + 1));
@@ -34,7 +36,8 @@ void funk2_module_registration_node__init(funk2_module_registration_node_t* this
     this->description = (char*)from_ptr(f2__malloc(description__length + 1));
     memcpy(this->description, description, description__length + 1);
   }
-  this->reinitialize_function = reinitialize_function;
+  this->reinitialize_function            = reinitialize_function;
+  this->defragment_fix_pointers_function = defragment_fix_pointers_function;
 }
 
 void funk2_module_registration_node__destroy(funk2_module_registration_node_t* this) {
@@ -45,6 +48,11 @@ void funk2_module_registration_node__destroy(funk2_module_registration_node_t* t
 void funk2_module_registration_node__reinitialize(funk2_module_registration_node_t* this) {
   (*(this->reinitialize_function))();
 }
+
+void funk2_module_registration_node__defragment__fix_pointers(funk2_module_registration_node_t* this) {
+  (*(this->defragment_fix_pointers_function))();
+}
+
 
 // funk2_module_registration
 
@@ -63,9 +71,11 @@ void funk2_module_registration__destroy(funk2_module_registration_t* this) {
   }
 }
 
-void funk2_module_registration__add_module(funk2_module_registration_t* this, char* name, char* description, funk2_module_registration_reinitialize_function_ptr_t reinitialize_function) {
+void funk2_module_registration__add_module(funk2_module_registration_t* this, char* name, char* description,
+					   funk2_module_registration_reinitialize_function_ptr_t            reinitialize_function,
+					   funk2_module_registration_defragment_fix_pointers_function_ptr_t defragment_fix_pointers_function) {
   funk2_module_registration_node_t* new_node = (funk2_module_registration_node_t*)from_ptr(f2__malloc(sizeof(funk2_module_registration_node_t)));
-  funk2_module_registration_node__init(new_node, name, description, reinitialize_function);
+  funk2_module_registration_node__init(new_node, name, description, reinitialize_function, defragment_fix_pointers_function);
   new_node->next = NULL;
   if (this->end_of_module_list) {
     this->end_of_module_list->next = new_node;
@@ -81,6 +91,16 @@ void funk2_module_registration__reinitialize_all_modules(funk2_module_registrati
     status("reinitializing module [%s] -- '%s'", iter->name, iter->description);
     funk2_module_registration_node__reinitialize(iter);
     status("done reinitializing module [%s]", iter->name);
+    iter = iter->next;
+  }
+}
+
+void funk2_module_registration__defragment__fix_pointers(funk2_module_registration_t* this) {
+  funk2_module_registration_node_t* iter = this->module_list;
+  while (iter) {
+    status("defragmenter fixing pointers in module [%s] -- '%s'", iter->name, iter->description);
+    funk2_module_registration_node__defragment__fix_pointers(iter);
+    status("done with defragmenter fixing pointers in module [%s]", iter->name);
     iter = iter->next;
   }
 }

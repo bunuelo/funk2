@@ -50,8 +50,19 @@ void f2__primobject__dynamic_library__reinitialize_globalvars() {
   __dynamic_library__symbol = new__symbol(cause, "dynamic_library");
 }
 
+void f2__primobject__dynamic_library__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__dynamic_library__symbol);
+  
+  
+  // -- initialize --
+  
+  
+}
+
 void f2__primobject__dynamic_library__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__dynamic_library", "", &f2__primobject__dynamic_library__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject__dynamic_library", "", &f2__primobject__dynamic_library__reinitialize_globalvars, &f2__primobject__dynamic_library__defragment__fix_pointers);
   
   f2__primobject__dynamic_library__reinitialize_globalvars();
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);

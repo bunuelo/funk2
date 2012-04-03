@@ -662,34 +662,117 @@ f2ptr f2array__primobject_type__new(f2ptr cause) {
 
 // **
 
-void f2__array__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks_c__cause__new(initial_cause());
+void f2__array__defragment__fix_pointers() {
+  // -- reinitialize --
   
+  
+  
+  // -- initialize --
+  
+  
+  // array
+  
+  f2__primcfunk__init__defragment__fix_pointers(array);
+  f2__primcfunk__init__defragment__fix_pointers(array__as__conslist);
+  
+  // array
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__is_type);
+  defragment__fix_pointer( __funk2.globalenv.object_type.array.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__tracing_on__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__tracing_on);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__tracing_on__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__tracing_on__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__tracing_on__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__tracing_on__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__trace__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__trace);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__trace__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__trace__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__trace__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__trace__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__imagination_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__imagination_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__imagination_frame__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__imagination_frame__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__imagination_frame__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__imagination_frame__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__mutate_funks__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__mutate_funks);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__mutate_funks__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__mutate_funks__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__mutate_funks__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__mutate_funks__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__read_funks__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__read_funks);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__read_funks__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__read_funks__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__read_funks__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__read_funks__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.terminal_print_with_frame__funk);
 }
 
-void f2__array__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "array", "", &f2__array__reinitialize_globalvars);
-  
-  f2__array__reinitialize_globalvars();
-  
+void f2__array__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // array
   
-  //f2__funktional_primcfunk__init__1(array__is_type,                     exp, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__1(           array__new_1d,                      length, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__0_and_rest(  array,                              elts);
-  //f2__funktional_primcfunk__init__1(array__length,                      this, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__1(           array__hash_value,                  this, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__2(           array__elt,                         this, index, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__3(           array__elt__set,                    this, index, value, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__2(           array__elt__tracing_on,             this, index, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__3(           array__elt__tracing_on__set,        this, index, value, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__2(           array__elt__trace,                  this, index, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__3(           array__elt__trace__set,             this, index, value, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__2(           array__elt__imagination_frame,      this, index, "(cfunk defined in f2_array.c)");
-  //f2__primcfunk__init__3(           array__elt__imagination_frame__set, this, index, value, "(cfunk defined in f2_array.c)");
-  f2__primcfunk__init__1(           array__as__conslist,                 this);
+  f2__primcfunk__init__0_and_rest(array,               elts);
+  f2__primcfunk__init__1(         array__as__conslist, this);
   
   // array
   
@@ -737,7 +820,12 @@ void f2__array__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__read_funks__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__read_funks__set__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.array.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.array.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__array__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "array", "", &f2__array__reinitialize_globalvars, &f2__array__defragment__fix_pointers);
   
+  f2__array__reinitialize_globalvars();
 }
 
 

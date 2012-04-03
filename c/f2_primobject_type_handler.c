@@ -187,7 +187,6 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "list";                             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                             f2list__primobject_type__new_aux(cause));}
   {char* type_name = "doublelinklist";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2doublelinklist__primobject_type__new_aux(cause));}
   {char* type_name = "circular_buffer";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2circular_buffer__primobject_type__new_aux(cause));}
-  {char* type_name = "agent";                            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                            f2agent__primobject_type__new(cause));}
   {char* type_name = "hash";                             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                             f2hash__primobject_type__new_aux(cause));}
   {char* type_name = "cause";                            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                            f2cause__primobject_type__new_aux(cause));}
   {char* type_name = "largeinteger";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2largeinteger__primobject_type__new_aux(cause));}
@@ -221,7 +220,6 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {
   {char* type_name = "physical_sim_object";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2physical_sim_object__primobject_type__new(cause));}
   {char* type_name = "terminal_print_frame";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2terminal_print_frame__primobject_type__new_aux(cause));}
-  {char* type_name = "knowledge";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2knowledge__primobject_type__new_aux(cause));}
   {char* type_name = "clause";                        funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                        f2clause__primobject_type__new_aux(cause));}
   {char* type_name = "wh_rank_shift_clause";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2wh_rank_shift_clause__primobject_type__new_aux(cause));}
   {char* type_name = "noun_group";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2noun_group__primobject_type__new_aux(cause));}
@@ -257,6 +255,20 @@ void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_t
 
 // **
 
+void f2__primobject_type_handler__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__funk2.primobject_type_handler.type_hash);
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(add_type);
+  f2__primcfunk__init__defragment__fix_pointers(lookup_type);
+  f2__primcfunk__init__defragment__fix_pointers(system__types);
+  f2__primcfunk__init__defragment__fix_pointers(system__type_names);
+}
+
 void f2__primobject_type_handler__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobject_type_handler_c__cause__new(initial_cause(), nil, global_environment());
   f2ptr type_hash = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
@@ -264,10 +276,15 @@ void f2__primobject_type_handler__reinitialize_globalvars() {
     type_hash = nil;
   }
   __funk2.primobject_type_handler.type_hash = type_hash;
+
+  f2__primcfunk__init__2(add_type,    type_name, type);
+  f2__primcfunk__init__1(lookup_type, type_name);
+  f2__primcfunk__init__0(system__types);
+  f2__primcfunk__init__0(system__type_names);
 }
 
 void f2__primobject_type_handler__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_type_handler", "", &f2__primobject_type_handler__reinitialize_globalvars, &f2__primobject_type_handler__defragment__fix_pointers);
   
   f2__primobject_type_handler__reinitialize_globalvars();
   
@@ -275,11 +292,5 @@ void f2__primobject_type_handler__initialize() {
   
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"), nil);
   __funk2.primobject_type_handler.type_hash = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, "-primobject_type_hash-"));
-  
-  f2__primcfunk__init__2(add_type,    type_name, type);
-  f2__primcfunk__init__1(lookup_type, type_name);
-  f2__primcfunk__init__0(system__types);
-  f2__primcfunk__init__0(system__type_names);
-  
 }
 

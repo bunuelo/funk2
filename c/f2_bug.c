@@ -115,17 +115,24 @@ f2ptr f2bug__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__bug__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
+void f2__bug__defragment__fix_pointers() {
+  // -- reinitialize --
   
-  __bug__symbol = new__symbol(cause, "bug");
+  
+  // -- initialize --
+  
+  // bug
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(bug, bug_type, frame);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_bug.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(bug__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_bug.terminal_print_with_frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(bug__pretty_print);
 }
 
-
-void f2__bug__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "bug", "", &f2__bug__reinitialize_globalvars);
-  
-  f2__bug__reinitialize_globalvars();
+void f2__bug__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // bug
@@ -136,6 +143,11 @@ void f2__bug__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(bug__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_bug.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   f2__primcfunk__init__1(bug__pretty_print, this);
+}
+
+void f2__bug__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "bug", "", &f2__bug__reinitialize_globalvars, &f2__bug__defragment__fix_pointers);
   
+  f2__bug__reinitialize_globalvars();
 }
 

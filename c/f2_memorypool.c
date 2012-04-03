@@ -309,6 +309,30 @@ void funk2_memorypool__change_total_memory_available(funk2_memorypool_t* this, f
   funk2_memorypool__debug_memory_test(this, 2);
 }
 
+void funk2_memorypool__shrink_last_free_block(funk2_memorypool_t* this, f2size_t byte_num) {
+  if (byte_num < memblock__minimum_size) {
+    error(nil, "funk2_memorypool__shrink_last_free_block fatal error: cannot attempt to resize block to size smmaller than memblock__minimum_size.");
+  }
+  funk2_memblock_t* old_end_of_blocks       = funk2_memorypool__end_of_blocks(this);
+  u64               old_last_block_byte_num = this->last_block_byte_num; 
+  if (old_last_block_byte_num > byte_num) {
+    funk2_memblock_t* last_block = (funk2_memblock_t*)(((u8*)old_end_of_blocks) - old_last_block_byte_num);
+    if (! last_block->used) {
+      funk2_heap__remove(&(this->free_memory_heap), (funk2_heap_node_t*)last_block); 
+      {
+	u64 byte_num_diff = (old_last_block_byte_num - byte_num);
+	funk2_memblock__byte_num(last_block) = byte_num;
+	this->total_free_memory       -= byte_num_diff;
+      	this->total_global_memory     -= byte_num_diff;
+	this->dynamic_memory.byte_num -= byte_num_diff;
+	this->last_block_byte_num      = byte_num;
+	this->end_of_blocks            = funk2_memorypool__end_of_blocks(this);
+      }
+      funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)last_block);
+    }
+  }
+}
+
 void funk2_memorypool__free_memory_heap__insert(funk2_memorypool_t* this, funk2_memblock_t* block) {
   funk2_heap__insert(&(this->free_memory_heap), (funk2_heap_node_t*)block);
 }
@@ -492,6 +516,21 @@ boolean_t funk2_memorypool__check_all_memory_pointers_valid_in_memory(funk2_memo
       error(nil, "funk2_memory__check_all_memory_pointers_valid error: found invalid memblock.");
     }
     found_invalid |= funk2_memblock__check_all_memory_pointers_valid_in_memory(iter, memory);
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  return found_invalid;
+}
+
+boolean_t funk2_memorypool__check_all_gc_colors_valid(funk2_memorypool_t* this, funk2_memory_t* memory, funk2_garbage_collector_pool_t* garbage_collector_pool) {
+  boolean_t         found_invalid = boolean__false;
+  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->dynamic_memory.ptr));
+  funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(this->dynamic_memory.ptr)) + this->total_global_memory);
+  while(iter < end_of_blocks) {
+    if (! funk2_garbage_collector_pool__memblock_color_is_valid(garbage_collector_pool, iter)) {
+      status("funk2_memory__check_all_gc_colors_valid error: found color inconsistency for memblock.");
+      found_invalid = boolean__true;
+      error(nil, "funk2_memory__check_all_gc_colors_valid error: found color inconsistency for memblock.");
+    }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
   return found_invalid;

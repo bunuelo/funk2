@@ -547,18 +547,57 @@ def_pcfunk6(ansi__stream__bordered_rectangle, stream, x0, y0, x1, y1, background
 
 // **
 
-void f2__ansi__reinitialize_globalvars() {
-  //f2ptr cause = f2_ansi_c__cause__new(initial_cause());
-  // set global (funk2_t) __funk2 variables
+void f2__ansi__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__write);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__print_code);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__reset);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__bold);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__half_bright);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__underscore);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__blink);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__reverse_video);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__normal_intensity);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__underline_off);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__blink_off);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__reverse_video_off);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__black_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__red_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__green_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__brown_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__blue_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__magenta_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__cyan_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__white_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__underscore_with_default_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__underscore_off_with_default_foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__black_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__red_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__green_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__brown_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__blue_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__magenta_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__cyan_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__white_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__default_background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__clear_screen);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__clear_keyboard_leds);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__set_scroll_lock_led);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__set_num_lock_led);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__set_caps_lock_led);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__move_cursor);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__beep);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__foreground);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__background);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__rectangle);
+  f2__primcfunk__init__defragment__fix_pointers(ansi__stream__bordered_rectangle);
 }
 
-void f2__ansi__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "ansi", "", &f2__ansi__reinitialize_globalvars);
-  
-  //f2ptr cause = f2_ansi_c__cause__new(initial_cause());
-  
-  f2__ansi__reinitialize_globalvars();
-  
+void f2__ansi__reinitialize_globalvars() {
   f2__primcfunk__init(ansi__stream__write);
   f2__primcfunk__init(ansi__stream__print_code);
   f2__primcfunk__init(ansi__stream__reset);
@@ -601,6 +640,12 @@ void f2__ansi__initialize() {
   f2__primcfunk__init(ansi__stream__background);
   f2__primcfunk__init(ansi__stream__rectangle);
   f2__primcfunk__init(ansi__stream__bordered_rectangle);
+}
+
+void f2__ansi__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "ansi", "", &f2__ansi__reinitialize_globalvars, &f2__ansi__defragment__fix_pointers);
+  
+  f2__ansi__reinitialize_globalvars();
 }
 
 

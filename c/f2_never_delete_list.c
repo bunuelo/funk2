@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -89,12 +89,12 @@ s64 funk2_never_delete_list__load_from_buffer(funk2_never_delete_list_t* this, u
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_never_delete_list__defragmenter__fix_pointers(funk2_never_delete_list_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_never_delete_list__defragment__fix_pointers(funk2_never_delete_list_t* this) {
   u64 used_num = this->used_num;
   u64 index;
   for (index = 0; index < used_num; index ++) {
     f2ptr exp = this->data[index];
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index] = exp;
   }
 }

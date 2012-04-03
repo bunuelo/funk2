@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2008 Bo Morgan.
+'Copyright (c) 2007-2012 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -19,6 +19,3 @@
 
 [globalize math:pi 3.141592653589793] `[23846264338327950288]
 [globalize pi      math:pi]
-
-
-

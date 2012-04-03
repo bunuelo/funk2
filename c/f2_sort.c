@@ -230,17 +230,27 @@ def_pcfunk2(conslist__sort, this, comparison_funk,
 
 // **
 
-void f2__sort__reinitialize_globalvars() {
+void f2__sort__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(sort_integer_array);
+  f2__primcfunk__init__defragment__fix_pointers(array__quicksort);
+  f2__primcfunk__init__defragment__fix_pointers(array__sort);
+  f2__primcfunk__init__defragment__fix_pointers(conslist__sort);
 }
 
-void f2__sort__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "sort", "", &f2__sort__reinitialize_globalvars);
-  
-  f2__sort__reinitialize_globalvars();
-  
+void f2__sort__reinitialize_globalvars() {
   f2__primcfunk__init__1(sort_integer_array, this);
   f2__primcfunk__init__2(array__quicksort, this, comparison_funk);
   f2__primcfunk__init__2(array__sort, this, comparison_funk);
   f2__primcfunk__init__2(conslist__sort, this, comparison_funk);
+}
+
+void f2__sort__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "sort", "", &f2__sort__reinitialize_globalvars, &f2__sort__defragment__fix_pointers);
+  
+  f2__sort__reinitialize_globalvars();
 }
 

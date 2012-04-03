@@ -19,36 +19,26 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#ifndef F2__GARBAGE_COLLECTOR_BLOCK_HEADER__TYPES__H
+#define F2__GARBAGE_COLLECTOR_BLOCK_HEADER__TYPES__H
 
-// agent
+typedef struct funk2_garbage_collector_block_header_s funk2_garbage_collector_block_header_t;
 
-def_primobject_1_slot(agent, fiber);
+#endif // F2__GARBAGE_COLLECTOR_BLOCK_HEADER__TYPES__H
 
-f2ptr f2__agent__new(f2ptr cause, f2ptr fiber) {return f2agent__new(cause, fiber);}
-def_pcfunk1(agent__new, fiber,
-	    "",
-	    return f2__agent__new(this_cause, fiber));
+#ifndef F2__GARBAGE_COLLECTOR_BLOCK_HEADER__H
+#define F2__GARBAGE_COLLECTOR_BLOCK_HEADER__H
 
+#include "f2_tricolor_set.h"
 
+// garbage_collector_block_header
 
-// **
+struct funk2_garbage_collector_block_header_s {
+  funk2_tricolor_t tricolor : 2;
+} __attribute__((__packed__));
 
-void f2__agent__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
-  __agent__symbol = new__symbol(cause, "agent");
-}
+void funk2_garbage_collector_block_header__init   (funk2_garbage_collector_block_header_t* this);
+void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this);
 
-void f2__agent__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "agent", "", &f2__agent__reinitialize_globalvars);
-  
-  f2__agent__reinitialize_globalvars();
-  
-  f2ptr cause = initial_cause();
-  
-  // agent
-  initialize_primobject_1_slot(agent, fiber);
-}
-
+#endif // F2__GARBAGE_COLLECTOR_BLOCK_HEADER__H
 

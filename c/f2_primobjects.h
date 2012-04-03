@@ -425,12 +425,19 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 
 
 #define def_primobject_static_slot(name, slot_number, slot_name) \
-  defprimobject__static_slot(name##__##slot_name, slot_number); \
-   \
-  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {return f2##name##__##slot_name(x, cause);} \
+  defprimobject__static_slot(name##__##slot_name, slot_number);	 \
+  								 \
+  f2ptr f2__##name##__##slot_name(f2ptr cause, f2ptr x) {		\
+    assert_argument_type(name, x);					\
+    return f2##name##__##slot_name(x, cause);				\
+  }									\
   def_pcfunk1(name##__##slot_name, x, "Returns this " #name "'s " #slot_name " slot value.", return f2__##name##__##slot_name(this_cause, x)); \
-   \
-  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y) {f2##name##__##slot_name##__set(x, cause, y); return nil;} \
+  									\
+  f2ptr f2__##name##__##slot_name##__set(f2ptr cause, f2ptr x, f2ptr y) { \
+    assert_argument_type(name, x);					\
+    f2##name##__##slot_name##__set(x, cause, y);			\
+    return nil;								\
+  }									\
   def_pcfunk2(name##__##slot_name##__set, x, y, "Sets this " #name "'s " #slot_name " slot value.", return f2__##name##__##slot_name##__set(this_cause, x, y));
 
 
@@ -1232,125 +1239,287 @@ f2ptr f2primobject__primobject_type__new(f2ptr cause);
 #define initialize_primobject_funk(name, funk_name) \
   initialize_primobject_funk__0_arg(name, funk_name);
 
+#define initialize_primobject_funk__defragment__fix_pointers(name, funk_name) { \
+    __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__symbol); \
+    f2__primcfunk__init__defragment__fix_pointers(name##__##funk_name); \
+    __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), __funk2.globalenv.object_type.primobject.primobject_type_##name.funk_name##__funk); \
+  }
+
+#define reinitialize_primobject(name) {			\
+    __##name##__symbol = new__symbol(cause, #name);	\
+  }
+
+
 #define initialize_primobject_common(name)   \
+  reinitialize_primobject(name)		     \
   initialize_primobject_funk(name, is_type); \
-  initialize_primobject_funk(name, type); \
+  initialize_primobject_funk(name, type);    \
   initialize_primobject_funk(name, new);
 
-#define initialize_primobject_slot(name, slot_name) \
-  initialize_primobject_funk(name, slot_name); \
+#define initialize_primobject_common__defragment__fix_pointers(name) {  \
+    __##name##__symbol = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), __##name##__symbol); \
+    initialize_primobject_funk__defragment__fix_pointers(name, is_type); \
+    initialize_primobject_funk__defragment__fix_pointers(name, type);	\
+    initialize_primobject_funk__defragment__fix_pointers(name, new);	\
+  }
+
+#define initialize_primobject_slot(name, slot_name)	\
+  initialize_primobject_funk(name, slot_name);		\
   initialize_primobject_funk(name, slot_name##__set);
+
+#define initialize_primobject_slot__defragment__fix_pointers(name, slot_name) \
+  initialize_primobject_funk__defragment__fix_pointers(name, slot_name); \
+  initialize_primobject_funk__defragment__fix_pointers(name, slot_name##__set);
+
 
 #define initialize_primobject_0_slot(name) \
   initialize_primobject_common(name);
+
+#define initialize_primobject_0_slot__defragment__fix_pointers(name) \
+  initialize_primobject_common__defragment__fix_pointers(name);
+
 
 #define initialize_primobject_1_slot(name, slot_1) \
   initialize_primobject_0_slot(name); \
   initialize_primobject_slot(name, slot_1);
 
+#define initialize_primobject_1_slot__defragment__fix_pointers(name, slot_1) \
+  initialize_primobject_0_slot__defragment__fix_pointers(name); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_1);
+
+
 #define initialize_primobject_2_slot(name, slot_1, slot_2) \
   initialize_primobject_1_slot(name, slot_1); \
   initialize_primobject_slot(name, slot_2);
+
+#define initialize_primobject_2_slot__defragment__fix_pointers(name, slot_1, slot_2) \
+  initialize_primobject_1_slot__defragment__fix_pointers(name, slot_1); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_2);
+
 
 #define initialize_primobject_3_slot(name, slot_1, slot_2, slot_3) \
   initialize_primobject_2_slot(name, slot_1, slot_2); \
   initialize_primobject_slot(name, slot_3);
 
+#define initialize_primobject_3_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3) \
+  initialize_primobject_2_slot__defragment__fix_pointers(name, slot_1, slot_2); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_3);
+
+
 #define initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4) \
   initialize_primobject_3_slot(name, slot_1, slot_2, slot_3); \
   initialize_primobject_slot(name, slot_4);
+
+#define initialize_primobject_4_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4) \
+  initialize_primobject_3_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_4);
+
 
 #define initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
   initialize_primobject_4_slot(name, slot_1, slot_2, slot_3, slot_4); \
   initialize_primobject_slot(name, slot_5);
 
+#define initialize_primobject_5_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5) \
+  initialize_primobject_4_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_5);
+
+
 #define initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
   initialize_primobject_5_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
   initialize_primobject_slot(name, slot_6);
+
+#define initialize_primobject_6_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6) \
+  initialize_primobject_5_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_6);
+
 
 #define initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
   initialize_primobject_6_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
   initialize_primobject_slot(name, slot_7);
 
+#define initialize_primobject_7_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7) \
+  initialize_primobject_6_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_7);
+
+
 #define initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
   initialize_primobject_7_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
   initialize_primobject_slot(name, slot_8);
+
+#define initialize_primobject_8_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8) \
+  initialize_primobject_7_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_8);
+
 
 #define initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
   initialize_primobject_8_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
   initialize_primobject_slot(name, slot_9);
 
+#define initialize_primobject_9_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9) \
+  initialize_primobject_8_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_9);
+
+
 #define initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
   initialize_primobject_9_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
   initialize_primobject_slot(name, slot_10);
+
+#define initialize_primobject_10_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10) \
+  initialize_primobject_9_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_10);
+
 
 #define initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
   initialize_primobject_10_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
   initialize_primobject_slot(name, slot_11);
 
+#define initialize_primobject_11_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11) \
+  initialize_primobject_10_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_11);
+
+
 #define initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
   initialize_primobject_11_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
   initialize_primobject_slot(name, slot_12);
+
+#define initialize_primobject_12_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12) \
+  initialize_primobject_11_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_12);
+
 
 #define initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
   initialize_primobject_12_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
   initialize_primobject_slot(name, slot_13);
 
+#define initialize_primobject_13_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13) \
+  initialize_primobject_12_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_13);
+
+
 #define initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
   initialize_primobject_13_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
   initialize_primobject_slot(name, slot_14);
+
+#define initialize_primobject_14_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14) \
+  initialize_primobject_13_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_14);
+
 
 #define initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
   initialize_primobject_14_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
   initialize_primobject_slot(name, slot_15);
 
+#define initialize_primobject_15_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15) \
+  initialize_primobject_14_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_15);
+
+
 #define initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
   initialize_primobject_15_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
   initialize_primobject_slot(name, slot_16);
+
+#define initialize_primobject_16_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16) \
+  initialize_primobject_15_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_16);
+
 
 #define initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
   initialize_primobject_16_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
   initialize_primobject_slot(name, slot_17);
 
+#define initialize_primobject_17_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17) \
+  initialize_primobject_16_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_17);
+
+
 #define initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
   initialize_primobject_17_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
   initialize_primobject_slot(name, slot_18);
+
+#define initialize_primobject_18_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18) \
+  initialize_primobject_17_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_18);
+
 
 #define initialize_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
   initialize_primobject_18_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
   initialize_primobject_slot(name, slot_19);
 
+#define initialize_primobject_19_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19) \
+  initialize_primobject_18_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_19);
+
+
 #define initialize_primobject_20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
   initialize_primobject_19_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
   initialize_primobject_slot(name, slot_20);
+
+#define initialize_primobject_20_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20) \
+  initialize_primobject_19_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_20);
+
 
 #define initialize_primobject_21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
   initialize_primobject_20_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20); \
   initialize_primobject_slot(name, slot_21);
 
+#define initialize_primobject_21_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21) \
+  initialize_primobject_20_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_21);
+
+
 #define initialize_primobject_22_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
   initialize_primobject_21_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21); \
   initialize_primobject_slot(name, slot_22);
+
+#define initialize_primobject_22_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22) \
+  initialize_primobject_21_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_22);
+
 
 #define initialize_primobject_23_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
   initialize_primobject_22_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22); \
   initialize_primobject_slot(name, slot_23);
 
+#define initialize_primobject_23_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23) \
+  initialize_primobject_22_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_23);
+
+
 #define initialize_primobject_24_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
   initialize_primobject_23_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23); \
   initialize_primobject_slot(name, slot_24);
+
+#define initialize_primobject_24_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24) \
+  initialize_primobject_23_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_24);
+
 
 #define initialize_primobject_25_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \
   initialize_primobject_24_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24); \
   initialize_primobject_slot(name, slot_25);
 
+#define initialize_primobject_25_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25) \
+  initialize_primobject_24_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_25);
+
+
 #define initialize_primobject_26_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26) \
   initialize_primobject_25_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25); \
   initialize_primobject_slot(name, slot_26);
 
+#define initialize_primobject_26_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26) \
+  initialize_primobject_25_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_26);
+
+
 #define initialize_primobject_27_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26, slot_27) \
   initialize_primobject_26_slot(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26); \
   initialize_primobject_slot(name, slot_27);
+
+#define initialize_primobject_27_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26, slot_27) \
+  initialize_primobject_26_slot__defragment__fix_pointers(name, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13, slot_14, slot_15, slot_16, slot_17, slot_18, slot_19, slot_20, slot_21, slot_22, slot_23, slot_24, slot_25, slot_26); \
+  initialize_primobject_slot__defragment__fix_pointers(name, slot_27);
 
 
 
@@ -1621,7 +1790,7 @@ declare_primobject_2_slot(bytecode_event, bytecode, context);
 
 // end of objects
 
-void f2__primobjects__pre_reinitialize_globalvars();
+void f2__primobjects__preinitialize_globalvars();
 void f2__primobjects__reinitialize_globalvars();
 void f2__primobjects__initialize();
 

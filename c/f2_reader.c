@@ -22,6 +22,12 @@
 #include "funk2.h"
 #include <stdio.h>
 
+#ifdef DEBUG_READER
+#  define reader_status(msg, rest...) status(msg, ## rest)
+#else
+#  define reader_status(msg, rest...)
+#endif
+
 boolean_t raw__exp__contains_comma(f2ptr cause, f2ptr this) {
   if (raw__cons__is_type(cause, this)) {
     f2ptr car = f2cons__car(this, cause);
@@ -149,11 +155,24 @@ f2ptr f2__stream__try_read_impossibility(f2ptr cause, f2ptr stream) {
   if (raw__exception__is_type(cause, first_char)) {
     return first_char;
   }
-  if (raw__exception__is_type(cause, first_char) && raw__eq(cause, f2exception__tag(first_char, cause), __funk2.reader.end_of_file_exception__symbol)) {status("raw_read() note: eof_except."); return __funk2.reader.end_of_file_exception;}
+  if (raw__exception__is_type(cause, first_char) &&
+      raw__eq(cause, f2exception__tag(first_char, cause), __funk2.reader.end_of_file_exception__symbol)) {
+    reader_status("f2__stream__try_read_impossibility() note: end_of_file_exception.");
+    return __funk2.reader.end_of_file_exception;
+  }
   // check all imposibilities for first_char
-  if (raw__eq(cause, first_char, __funk2.reader.char__right_paren))            {return __funk2.reader.end_parens_exception;}
-  if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren))      {return __funk2.reader.array_end_parens_exception;}
-  if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {return __funk2.reader.doublelink_end_parens_exception;}
+  if (raw__eq(cause, first_char, __funk2.reader.char__right_paren)) {
+    reader_status("f2__stream__try_read_impossibility() note: end_parens_exception.");
+    return __funk2.reader.end_parens_exception;
+  }
+  if (raw__eq(cause, first_char, __funk2.reader.char__array_right_paren)) {
+    reader_status("f2__stream__try_read_impossibility() note: array_end_parens_exception.");
+    return __funk2.reader.array_end_parens_exception;
+  }
+  if (raw__eq(cause, first_char, __funk2.reader.char__doublelink_right_paren)) {
+    reader_status("f2__stream__try_read_impossibility() note: doublelink_end_parens_exception.");
+    return __funk2.reader.doublelink_end_parens_exception;
+  }
   f2__stream__ungetc(cause, stream, first_char);
   return __funk2.reader.could_not_read_type_exception;
 }
@@ -171,9 +190,21 @@ f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
     f2ptr exp;
     while (1) {
       exp = f2__stream__try_read(cause, stream);
-      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {return seq;} // successfully read end of list
-      if (raw__exception__is_type(cause, exp) && raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {return __funk2.reader.unmatched_begin_paren_exception;}
-      if (raw__exception__is_type(cause, exp)) {return exp;} // other exceptions should be propagated
+      if (raw__exception__is_type(cause, exp) &&
+	  raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_parens_exception__symbol)) {
+	reader_status("f2__stream__try_read_list note: successfully read end of list.");
+	return seq;
+      }
+      if (raw__exception__is_type(cause, exp) &&
+	  raw__eq(cause, f2exception__tag(exp, cause), __funk2.reader.end_of_file_exception__symbol)) {
+	reader_status("f2__stream__try_read_list note: unmatched begin paren exception.");
+	return __funk2.reader.unmatched_begin_paren_exception;
+      }
+      if (raw__exception__is_type(cause, exp)) {
+	// other exceptions should be propagated
+	reader_status("f2__stream__try_read_list note: other exception being propogated.");
+	return exp;
+      }
       new_cons = f2cons__new(cause, exp, nil);
       if (seq) {
 	f2cons__cdr__set(iter, cause, new_cons);
@@ -1353,10 +1384,17 @@ void funk2_reader__init(funk2_reader_t* this) {
 void funk2_reader__reinit(funk2_reader_t* this) {
   f2ptr cause = f2_reader_c__cause__new(initial_cause());
   
-  {char* str = "reader:end_parens-exception";                  this->end_parens_exception                  = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  {char* str = "reader:unmatched_begin_paren-exception";       this->unmatched_begin_paren_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  {char* str = "reader:array_end_parens-exception";            this->array_end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
-  {char* str = "reader:doublelink_end_parens-exception";       this->doublelink_end_parens_exception       = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  this->end_parens_exception__symbol = new__symbol(cause, "reader:end_parens-exception");
+  this->array_end_parens_exception__symbol = new__symbol(cause, "reader:array_end_parens-exception");
+  this->doublelink_end_parens_exception__symbol = new__symbol(cause, "reader:doublelink_end_parens-exception");
+  this->end_of_file_exception__symbol = new__symbol(cause, "reader:end_of_file-exception");
+  this->could_not_read_type_exception__symbol = new__symbol(cause, "reader:could_not_read_type-exception");
+  this->no_character_waiting_exception__symbol = new__symbol(cause, "reader:no_character_waiting-exception");
+  
+  {char* str = "reader:end_parens-exception";            this->end_parens_exception            = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:unmatched_begin_paren-exception"; this->unmatched_begin_paren_exception = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:array_end_parens-exception";      this->array_end_parens_exception      = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
+  {char* str = "reader:doublelink_end_parens-exception"; this->doublelink_end_parens_exception = environment__safe_lookup_var_value(cause, global_environment(), new__symbol(cause, str));}
   {
     char* str = "reader:end_of_file-exception";
     f2ptr symbol = new__symbol(cause, str);
@@ -1481,18 +1519,143 @@ void funk2_reader__reinit(funk2_reader_t* this) {
 void funk2_reader__destroy(funk2_reader_t* this) {
 }
 
+void funk2_reader__defragment__fix_pointers(funk2_reader_t* this) {
+  defragment__fix_pointer(this->end_parens_exception);
+  defragment__fix_pointer(this->end_parens_exception__symbol);
+  defragment__fix_pointer(this->unmatched_begin_paren_exception);
+  defragment__fix_pointer(this->array_end_parens_exception);
+  defragment__fix_pointer(this->array_end_parens_exception__symbol);
+  defragment__fix_pointer(this->doublelink_end_parens_exception);
+  defragment__fix_pointer(this->doublelink_end_parens_exception__symbol);
+  defragment__fix_pointer(this->end_of_file_exception);
+  defragment__fix_pointer(this->end_of_file_exception__symbol);
+  defragment__fix_pointer(this->invalid_argument_type_exception);
+  defragment__fix_pointer(this->illegal_escape_reader_metro_exception);
+  defragment__fix_pointer(this->could_not_read_type_exception);
+  defragment__fix_pointer(this->could_not_read_type_exception__symbol);
+  defragment__fix_pointer(this->no_character_waiting_exception);
+  defragment__fix_pointer(this->no_character_waiting_exception__symbol);
+  
+  defragment__fix_pointer(this->char__decimal_point);
+  defragment__fix_pointer(this->char__minus_sign);
+  
+  defragment__fix_pointer(this->char__space);
+  defragment__fix_pointer(this->char__tab);
+  defragment__fix_pointer(this->char__newline);
+  defragment__fix_pointer(this->char__return);
+  defragment__fix_pointer(this->char__backspace);
+  
+  defragment__fix_pointer(this->char__0);
+  defragment__fix_pointer(this->char__1);
+  defragment__fix_pointer(this->char__2);
+  defragment__fix_pointer(this->char__3);
+  defragment__fix_pointer(this->char__4);
+  defragment__fix_pointer(this->char__5);
+  defragment__fix_pointer(this->char__6);
+  defragment__fix_pointer(this->char__7);
+  defragment__fix_pointer(this->char__8);
+  defragment__fix_pointer(this->char__9);
+
+  defragment__fix_pointer(this->char__lowercase_a);
+  defragment__fix_pointer(this->char__lowercase_b);
+  defragment__fix_pointer(this->char__lowercase_c);
+  defragment__fix_pointer(this->char__lowercase_d);
+  defragment__fix_pointer(this->char__lowercase_e);
+  defragment__fix_pointer(this->char__lowercase_f);
+  defragment__fix_pointer(this->char__lowercase_g);
+  defragment__fix_pointer(this->char__lowercase_h);
+  defragment__fix_pointer(this->char__lowercase_i);
+  defragment__fix_pointer(this->char__lowercase_j);
+  defragment__fix_pointer(this->char__lowercase_k);
+  defragment__fix_pointer(this->char__lowercase_l);
+  defragment__fix_pointer(this->char__lowercase_m);
+  defragment__fix_pointer(this->char__lowercase_n);
+  defragment__fix_pointer(this->char__lowercase_o);
+  defragment__fix_pointer(this->char__lowercase_p);
+  defragment__fix_pointer(this->char__lowercase_q);
+  defragment__fix_pointer(this->char__lowercase_r);
+  defragment__fix_pointer(this->char__lowercase_s);
+  defragment__fix_pointer(this->char__lowercase_t);
+  defragment__fix_pointer(this->char__lowercase_u);
+  defragment__fix_pointer(this->char__lowercase_v);
+  defragment__fix_pointer(this->char__lowercase_w);
+  defragment__fix_pointer(this->char__lowercase_x);
+  defragment__fix_pointer(this->char__lowercase_y);
+  defragment__fix_pointer(this->char__lowercase_z);
+  
+  defragment__fix_pointer(this->char__uppercase_a);
+  defragment__fix_pointer(this->char__uppercase_b);
+  defragment__fix_pointer(this->char__uppercase_c);
+  defragment__fix_pointer(this->char__uppercase_d);
+  defragment__fix_pointer(this->char__uppercase_e);
+  defragment__fix_pointer(this->char__uppercase_f);
+  defragment__fix_pointer(this->char__uppercase_g);
+  defragment__fix_pointer(this->char__uppercase_h);
+  defragment__fix_pointer(this->char__uppercase_i);
+  defragment__fix_pointer(this->char__uppercase_j);
+  defragment__fix_pointer(this->char__uppercase_k);
+  defragment__fix_pointer(this->char__uppercase_l);
+  defragment__fix_pointer(this->char__uppercase_m);
+  defragment__fix_pointer(this->char__uppercase_n);
+  defragment__fix_pointer(this->char__uppercase_o);
+  defragment__fix_pointer(this->char__uppercase_p);
+  defragment__fix_pointer(this->char__uppercase_q);
+  defragment__fix_pointer(this->char__uppercase_r);
+  defragment__fix_pointer(this->char__uppercase_s);
+  defragment__fix_pointer(this->char__uppercase_t);
+  defragment__fix_pointer(this->char__uppercase_u);
+  defragment__fix_pointer(this->char__uppercase_v);
+  defragment__fix_pointer(this->char__uppercase_w);
+  defragment__fix_pointer(this->char__uppercase_x);
+  defragment__fix_pointer(this->char__uppercase_y);
+  defragment__fix_pointer(this->char__uppercase_z);
+
+  defragment__fix_pointer(this->char__left_paren);
+  defragment__fix_pointer(this->char__right_paren);
+  defragment__fix_pointer(this->char__array_left_paren);
+  defragment__fix_pointer(this->char__array_right_paren);
+  defragment__fix_pointer(this->char__doublelink_right_paren);
+  defragment__fix_pointer(this->char__doublelink_left_paren);
+  defragment__fix_pointer(this->char__quote);
+  defragment__fix_pointer(this->char__backquote);
+  defragment__fix_pointer(this->char__comma);
+  defragment__fix_pointer(this->char__cdr_comma);
+  defragment__fix_pointer(this->char__funktion);
+  defragment__fix_pointer(this->char__escape);
+  defragment__fix_pointer(this->char__escape_hex);
+  defragment__fix_pointer(this->char__escape_hex_char);
+  defragment__fix_pointer(this->char__escape_char);
+  defragment__fix_pointer(this->char__escape_larva);
+  defragment__fix_pointer(this->char__string_quote);
+  defragment__fix_pointer(this->char__string_escape_newline);
+  defragment__fix_pointer(this->char__string_escape_return);
+  defragment__fix_pointer(this->char__string_escape_tab);
+  defragment__fix_pointer(this->char__string_escape_backspace);
+  defragment__fix_pointer(this->char__symbol_quote);
+  defragment__fix_pointer(this->char__symbol_escape);
+  defragment__fix_pointer(this->char__symbol_key);
+}
+
 // **
+
+void f2__reader__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  funk2_reader__defragment__fix_pointers(&(__funk2.reader));
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(exp__contains_comma);
+  f2__primcfunk__init__defragment__fix_pointers(exp__contains_cdr_comma);
+  f2__primcfunk__init__defragment__fix_pointers(exp__contains_cdr_comma_at_this_level);
+  f2__primcfunk__init__defragment__fix_pointers(exp__comma_filter_backquoted);
+  f2__primcfunk__init__defragment__fix_pointers(stream__skip_whitespace);
+  f2__primcfunk__init__defragment__fix_pointers(stream__try_read);
+}
 
 void f2__reader__reinitialize_globalvars() {
   funk2_reader__reinit(&(__funk2.reader));
-}
-
-void f2__reader__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars);
-  
-  funk2_reader__init(&(__funk2.reader));
-  
-  f2__reader__reinitialize_globalvars();
   
   f2__primcfunk__init__1(exp__contains_comma,                   this);
   f2__primcfunk__init__1(exp__contains_cdr_comma,               this);
@@ -1500,5 +1663,13 @@ void f2__reader__initialize() {
   f2__primcfunk__init__1(exp__comma_filter_backquoted,          this);
   f2__primcfunk__init__1(stream__skip_whitespace,               stream);
   f2__primcfunk__init__1(stream__try_read,                      stream);
+}
+
+void f2__reader__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "reader", "", &f2__reader__reinitialize_globalvars, &f2__reader__defragment__fix_pointers);
+  
+  funk2_reader__init(&(__funk2.reader));
+  
+  f2__reader__reinitialize_globalvars();
 }
 

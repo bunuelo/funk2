@@ -1078,16 +1078,63 @@ def_pcfunk2(exp__terminal_stream_print__thread_unsafe, this, stream,
 
 // **
 
-void f2__terminal_print__reinitialize_globalvars() {
+void f2__terminal_print__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  // terminal_print_frame
+  
+  init_frame_object__26_slot__defragment__fix_pointers(terminal_print_frame,
+						       cmutex,
+						       testing,
+						       testing_max_x_constraint,
+						       testing_max_height_constraint,
+						       testing_x_offset,
+						       stream,
+						       indent_distance,
+						       max_x,
+						       max_height,
+						       max_size,
+						       use_ansi_codes,
+						       use_html_codes,
+						       x,
+						       height,
+						       size,
+						       left_extent,
+						       right_extent,
+						       already_printed_hash,
+						       use_one_line,
+						       failed_max_x_constraint,
+						       failed_max_height_constraint,
+						       failed_max_size_constraint,
+						       resize_to_fit,
+						       max_nanoseconds_for_resize,
+						       print_as_frame_hash,
+						       escape_sequence);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__new_copy);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_terminal_print_frame.new_copy__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__new);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__write_color__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__write_string__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__can_print_expression_on_one_line__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__expression_x_offset__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__prepare_for_printing__thread_unsafe);
+  
+  
+  f2__primcfunk__init__defragment__fix_pointers(exp__terminal_print_with_frame__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(exp__terminal_stream_print__thread_unsafe);
+  
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__write_ansi__move__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_print_frame__write_ansi__show_cursor__thread_unsafe);
 }
 
-void f2__terminal_print__initialize() {
+void f2__terminal_print__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "terminal_print", "", &f2__terminal_print__reinitialize_globalvars);
-  
-  f2__terminal_print__reinitialize_globalvars();
-  
   
   // terminal_print_frame
   
@@ -1137,6 +1184,11 @@ void f2__terminal_print__initialize() {
   f2__primcfunk__init__3(terminal_print_frame__write_ansi__move__thread_unsafe,        this, x, y);
   f2__primcfunk__init__1(terminal_print_frame__write_ansi__hide_cursor__thread_unsafe, this);
   f2__primcfunk__init__1(terminal_print_frame__write_ansi__show_cursor__thread_unsafe, this);
+}
+
+void f2__terminal_print__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "terminal_print", "", &f2__terminal_print__reinitialize_globalvars, &f2__terminal_print__defragment__fix_pointers);
   
+  f2__terminal_print__reinitialize_globalvars();
 }
 

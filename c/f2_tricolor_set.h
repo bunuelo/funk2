@@ -42,21 +42,22 @@ struct funk2_tricolor_set_s {
   funk2_f2ptr_set_t grey_set;
 };
 
-void  funk2_tricolor_set__init                      (funk2_tricolor_set_t* this);
-void  funk2_tricolor_set__destroy                   (funk2_tricolor_set_t* this);
-u64   funk2_tricolor_set__white_set__element_count  (funk2_tricolor_set_t* this);
-u64   funk2_tricolor_set__grey_set__element_count   (funk2_tricolor_set_t* this);
-void  funk2_tricolor_set__add_element               (funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t color);
-void  funk2_tricolor_set__remove_element            (funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t current_color);
-void  funk2_tricolor_set__change_element_color      (funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t from_color, funk2_tricolor_t to_color);
-void* funk2_tricolor_set__white_set__mapc           (funk2_tricolor_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
-void* funk2_tricolor_set__grey_set__mapc            (funk2_tricolor_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
-s64   funk2_tricolor_set__calculate_save_size       (funk2_tricolor_set_t* this);
-void  funk2_tricolor_set__save_to_stream            (funk2_tricolor_set_t* this, int fd);
-u64   funk2_tricolor_set__save_to_buffer            (funk2_tricolor_set_t* this, u8* initial_buffer);
-void  funk2_tricolor_set__load_from_stream          (funk2_tricolor_set_t* this, int fd);
-s64   funk2_tricolor_set__load_from_buffer          (funk2_tricolor_set_t* this, u8* buffer);
-void  funk2_tricolor_set__defragmenter__fix_pointers(funk2_tricolor_set_t* this, funk2_defragmenter_t* defragmenter);
+void             funk2_tricolor_set__init                    (funk2_tricolor_set_t* this);
+void             funk2_tricolor_set__destroy                 (funk2_tricolor_set_t* this);
+u64              funk2_tricolor_set__white_set__element_count(funk2_tricolor_set_t* this);
+u64              funk2_tricolor_set__grey_set__element_count (funk2_tricolor_set_t* this);
+void             funk2_tricolor_set__add_element             (funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t color);
+void             funk2_tricolor_set__remove_element          (funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t current_color);
+void             funk2_tricolor_set__change_element_color    (funk2_tricolor_set_t* this, f2ptr element, funk2_tricolor_t from_color, funk2_tricolor_t to_color);
+void*            funk2_tricolor_set__white_set__mapc         (funk2_tricolor_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+void*            funk2_tricolor_set__grey_set__mapc          (funk2_tricolor_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+s64              funk2_tricolor_set__calculate_save_size     (funk2_tricolor_set_t* this);
+void             funk2_tricolor_set__save_to_stream          (funk2_tricolor_set_t* this, int fd);
+u64              funk2_tricolor_set__save_to_buffer          (funk2_tricolor_set_t* this, u8* initial_buffer);
+void             funk2_tricolor_set__load_from_stream        (funk2_tricolor_set_t* this, int fd);
+s64              funk2_tricolor_set__load_from_buffer        (funk2_tricolor_set_t* this, u8* buffer);
+void             funk2_tricolor_set__defragment__fix_pointers(funk2_tricolor_set_t* this);
+funk2_tricolor_t funk2_tricolor_set__element_color           (funk2_tricolor_set_t* this, f2ptr element);
 
 #endif // F2__TRICOLOR_SET__H
 

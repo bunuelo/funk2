@@ -24,7 +24,7 @@
 //gboolean g_module_supported();
 boolean_t raw__gmodule__supported() {
 #ifdef F2__GMODULE__SUPPORTED
-  return (boolean_t)g_module_supported();
+  return (g_module_supported() ? boolean__true : boolean__false);
 #else
   return boolean__false;
 #endif
@@ -208,16 +208,23 @@ def_pcfunk0(gmodule__error,
 
 // **
 
-void f2__gmodule__reinitialize_globalvars() {
-  //f2ptr cause = initial_cause(); //f2_gmodule_c__cause__new(initial_cause(), nil, nil);
+void f2__gmodule__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__supported);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__build_path);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__open);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__name);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__make_resident);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__close);
+  f2__primcfunk__init__defragment__fix_pointers(gmodule__error);
   
 }
 
-void f2__gmodule__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "gmodule", "", &f2__gmodule__reinitialize_globalvars);
-  
-  f2__gmodule__reinitialize_globalvars();
-  
+void f2__gmodule__reinitialize_globalvars() {
   f2__primcfunk__init__0(gmodule__supported);
   f2__primcfunk__init__2(gmodule__build_path, directory, module_name);
   f2__primcfunk__init__2(gmodule__open, filename, flags);
@@ -226,5 +233,11 @@ void f2__gmodule__initialize() {
   f2__primcfunk__init__1(gmodule__make_resident, module);
   f2__primcfunk__init__1(gmodule__close, module);
   f2__primcfunk__init__0(gmodule__error);
+}
+
+void f2__gmodule__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "gmodule", "", &f2__gmodule__reinitialize_globalvars, &f2__gmodule__defragment__fix_pointers);
+  
+  f2__gmodule__reinitialize_globalvars();
 }
 

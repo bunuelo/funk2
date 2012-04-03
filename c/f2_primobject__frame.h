@@ -165,7 +165,7 @@ f2ptr f2frame__primobject_type__new_aux(f2ptr cause);
 
 // **
 
-void f2__primobject_frame__pre_reinitialize_globalvars();
+void f2__primobject_frame__preinitialize_globalvars();
 void f2__primobject_frame__reinitialize_globalvars();
 void f2__primobject_frame__initialize();
 

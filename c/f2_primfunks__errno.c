@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -420,15 +420,94 @@ def_pcfunk0(f2__errno__exdev,
 	    "",
 	    return f2integer__new(this_cause, EXDEV));
 
-void f2__primfunks__errno__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks__errno_c__cause__new(initial_cause(), nil, nil);
+void f2__primfunks__errno__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__e2big);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eacces);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eaddrinuse);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eaddrnotavail);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eafnosupport);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eagain);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ealready);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ebadf);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ebadmsg);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ebusy);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ecanceled);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__echild);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__econnaborted);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__econnrefused);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__econnreset);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__edeadlk);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__edestaddrreq);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__edom);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__edquot);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eexist);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__efault);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__efbig);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ehostunreach);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eidrm);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eilseq);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__einprogress);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eintr);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__einval);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eio);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eisconn);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eisdir);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eloop);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__emfile);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__emlink);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__emsgsize);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__emultihop);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enametoolong);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enetdown);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enetreset);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enetunreach);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enfile);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enobufs);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enodata);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enodev);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enoent);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enoexec);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enolock);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enolink);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enomem);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enomsg);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enoprotoopt);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enospc);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enosr);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enostr);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enosys);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enotconn);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enotdir);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enotempty);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enotsock);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enotsup);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enotty);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__enxio);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eopnotsupp);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eoverflow);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eperm);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__epipe);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eproto);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eprotonosupport);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__eprototype);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__erange);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__erofs);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__espipe);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__esrch);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__estale);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__etime);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__etimeout);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__etxtbsy);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__ewouldblock);
+  f2__primcfunk__init__defragment__fix_pointers(f2__errno__exdev);
 }
 
-void f2__primfunks__errno__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__errno", "", &f2__primfunks__errno__reinitialize_globalvars);
-  
-  f2__primfunks__errno__reinitialize_globalvars();
-  
+void f2__primfunks__errno__reinitialize_globalvars() {
   f2__primcfunk__init(f2__errno);
   
   f2__primcfunk__init(f2__errno__e2big);
@@ -510,6 +589,12 @@ void f2__primfunks__errno__initialize() {
   f2__primcfunk__init(f2__errno__etxtbsy);
   f2__primcfunk__init(f2__errno__ewouldblock);
   f2__primcfunk__init(f2__errno__exdev);
+}
+
+void f2__primfunks__errno__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks-errno", "", &f2__primfunks__errno__reinitialize_globalvars, &f2__primfunks__errno__defragment__fix_pointers);
+  
+  f2__primfunks__errno__reinitialize_globalvars();
 }
 
   

@@ -839,15 +839,62 @@ f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__string__reinitialize_globalvars() {
+void f2__string__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+
+  f2__primcfunk__init__defragment__fix_pointers(stringlist__concat);
+  f2__primcfunk__init__defragment__fix_pointers(stringlist__intersperse);
+  f2__primcfunk__init__defragment__fix_pointers(stringlist__rawcode);
+  
+  f2__primcfunk__init__defragment__fix_pointers(exp__as__string);
+  
+  f2__primcfunk__init__defragment__fix_pointers(string__load);
+  f2__primcfunk__init__defragment__fix_pointers(string__replace_all);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.as__symbol__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__as__symbol);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.save__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__save);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.save__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.split__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__split);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.split__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.contains__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__contains);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.contains__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.substring__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__substring);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.substring__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.is_less_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__is_less_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.is_less_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__is_greater_than);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.is_greater_than__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.lowercase__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__lowercase);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.lowercase__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.uppercase__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__uppercase);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.multiply__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__multiply);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.multiply__funk);
 }
 
-void f2__string__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "string", "", &f2__string__reinitialize_globalvars);
-  
+void f2__string__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  f2__string__reinitialize_globalvars();
   
   f2__primcfunk__init__1(stringlist__concat,      this);
   f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string);
@@ -878,6 +925,11 @@ void f2__string__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
   {char* str = "multiply"; __funk2.globalenv.object_type.ptype.ptype_string.multiply__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__multiply, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.multiply__funk = never_gc(cfunk);}
+}
+
+void f2__string__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "string", "", &f2__string__reinitialize_globalvars, &f2__string__defragment__fix_pointers);
   
+  f2__string__reinitialize_globalvars();
 }
 

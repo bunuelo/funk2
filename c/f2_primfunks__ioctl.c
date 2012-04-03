@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -47,20 +47,32 @@ def_pcfunk0(f2__ioctl__siocoutq,
 #endif
 
 
-void f2__primfunks__ioctl__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks__ioctl_c__cause__new(initial_cause(), nil, nil);
+// **
+
+void f2__primfunks__ioctl__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__ioctl__int);
+  
+#ifndef F2__CYGWIN
+  f2__primcfunk__init__defragment__fix_pointers(f2__ioctl__siocinq);
+  f2__primcfunk__init__defragment__fix_pointers(f2__ioctl__siocoutq);
+#endif
 }
 
-void f2__primfunks__ioctl__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__ioctl", "", &f2__primfunks__ioctl__reinitialize_globalvars);
-  
-  f2__primfunks__ioctl__reinitialize_globalvars();
-  
+void f2__primfunks__ioctl__reinitialize_globalvars() {
   f2__primcfunk__init(f2__ioctl__int);
   
 #ifndef F2__CYGWIN
   f2__primcfunk__init(f2__ioctl__siocinq);
   f2__primcfunk__init(f2__ioctl__siocoutq);
 #endif
+}
+
+void f2__primfunks__ioctl__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks-ioctl", "", &f2__primfunks__ioctl__reinitialize_globalvars, &f2__primfunks__ioctl__defragment__fix_pointers);
+  
+  f2__primfunks__ioctl__reinitialize_globalvars();
 }
 

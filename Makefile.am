@@ -93,13 +93,17 @@ dynamic_library_linker_flags = $(dlfcn_linker_flags)
 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 
+if NEED_REALTIME_LINK
+realtime_linker_flags = -lrt
+endif
+
 if XMLRPC_SUPPORTED
 xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
 xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
 xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
 endif
 
-debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 -DF2__PROCESSOR_MUTEX__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__PTYPE__TYPE_CHECK -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
+debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 #-DF2__PROCESSOR_MUTEX__DEBUG -DF2__DEBUG__OBJECT__TYPE -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
 
 optimize_flags = 
 
@@ -327,7 +331,6 @@ lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
 #bin_PROGRAMS    = bin/funk2-static
 
 lib_libfunk2_la_SOURCES = \
-  c/f2_agent.c \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
@@ -355,6 +358,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_funk2_node.c \
   c/f2_funktional.c \
   c/f2_garbage_collector.c \
+  c/f2_garbage_collector_block_header.c \
   c/f2_garbage_collector_pool.c \
   c/f2_globalenv.c \
   c/f2_gmodule.c \
@@ -365,7 +369,6 @@ lib_libfunk2_la_SOURCES = \
   c/f2_hash.c \
   c/f2_heap.c \
   c/f2_html.c \
-  c/f2_knowledge.c \
   c/f2_larva.c \
   c/f2_load.c \
   c/f2_malloc.c \
@@ -424,6 +427,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_protected_alloc_array.c \
   c/f2_ptype.c \
   c/f2_ptypes.c \
+  c/f2_ptypes_object_slots.c \
   c/f2_reader.c \
   c/f2_redblacktree.c \
   c/f2_simple_repl.c \
@@ -549,7 +553,7 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(realtime_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)

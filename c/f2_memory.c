@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -247,8 +247,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
 f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool_index, f2size_t byte_num) {
   f2size_t blocked_byte_num = (((byte_num - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
 #ifdef DEBUG_MEMORY
-  f2ptr fiber = raw__global_scheduler__processor_thread_current_fiber(pool_index);
-  if ((! funk2_garbage_collector_pool__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index]), fiber)) &&
+  if ((! funk2_garbage_collector_pool__in_protected_region(&(__funk2.garbage_collector.gc_pool[pool_index]))) &&
       (! this->bootstrapping_mode)) {
     error(nil, "funk2_memory__funk2_memblock_f2ptr__try_new used without protection outside of bootstrapping mode.");
   }
@@ -449,6 +448,14 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
+  
+  printf("\nfunk2_memory__save_image_to_file: defragmenting memory."); fflush(stdout);
+  status(  "funk2_memory__save_image_to_file: defragmenting memory.");
+  funk2_defragmenter__defragment(&(__funk2.defragmenter));
+  
+  funk2_memory__debug_memory_test(this, 1);
+  //funk2_memory__print_gc_stats(this);
+  
   // note: we do not collect garbage here.
   int fd = open(filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
@@ -497,6 +504,10 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   printf("\nfunk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename); fflush(stdout);
   status(  "funk2_memory__save_image_to_file: save bootstrap memory image, %s, complete.", filename);
   printf("\n\n"); fflush(stdout);
+  
+  // in order to not exit at this point, we need to shut down all pthreads, see f2_defragment.c:stop_everthing_and_defragment.
+  exit(0);
+  
   return boolean__false;
 }
 
@@ -726,17 +737,30 @@ boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   return found_invalid;
 }
 
+boolean_t funk2_memory__check_all_gc_colors_valid(funk2_memory_t* this) {
+  boolean_t found_invalid = boolean__false;
+  int pool_index;
+  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    status("scanning pool %d for invalid garbage collector colors.", pool_index);
+    found_invalid |= funk2_memorypool__check_all_gc_colors_valid(&(this->pool[pool_index]), this, &(__funk2.garbage_collector.gc_pool[pool_index]));
+  }
+  return found_invalid;
+}
+
 void funk2_memory__memory_test(funk2_memory_t* this) {
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_memorypool__memory_test(&(this->pool[pool_index]));
   }
   funk2_memory__check_all_memory_pointers_valid(this);
+  funk2_memory__check_all_gc_colors_valid(this);
 }
 
 f2ptr f2__memory__assert_valid(f2ptr cause) {
   f2ptr return_result = nil;
   funk2_processor_mutex__lock(&(__funk2.garbage_collector.do_collection_mutex));
+  funk2_memory__memory_test(&(__funk2.memory));
+  /*
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     f2ptr result = raw__memorypool__assert_valid(cause, pool_index);
@@ -746,6 +770,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
     }
   }
  f2__memory__assert_valid__return_goto:
+  */
   funk2_processor_mutex__unlock(&(__funk2.garbage_collector.do_collection_mutex));
   return return_result;
 }
@@ -765,12 +790,25 @@ void f2__memory__preinitialize() {
 void f2__memory__reinitialize_globalvars() {
   //f2ptr cause = f2_memory_c__cause__new(initial_cause());
   
+  f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
+}
+
+void f2__memory__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // -- initialize --
+  
+  defragment__fix_pointer(__funk2.memory.global_environment_f2ptr);
+  __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(__funk2.memory.global_environment_f2ptr);
+  
+  f2__primcfunk__init__defragment__fix_pointers(memory__pool__maximum_block__byte_num);
+  
 }
 
 void f2__memory__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "memory", "", &f2__memory__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "memory", "", &f2__memory__reinitialize_globalvars, &f2__memory__defragment__fix_pointers);
   
-  f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
+  f2__memory__reinitialize_globalvars();
 }
 
 void f2__memory__destroy() {

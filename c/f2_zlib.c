@@ -262,15 +262,22 @@ def_pcfunk1(chunk__inflate, this,
 
 // **
 
+void f2__zlib__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(chunk__deflate);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__inflate);
+}
+
 void f2__zlib__reinitialize_globalvars() {
+  f2__primcfunk__init__1(chunk__deflate, this);
+  f2__primcfunk__init__1(chunk__inflate, this);
 }
 
 void f2__zlib__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "zlib", "", &f2__zlib__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "zlib", "", &f2__zlib__reinitialize_globalvars, &f2__zlib__defragment__fix_pointers);
   
   f2__zlib__reinitialize_globalvars();
-  
-  f2__primcfunk__init__1(chunk__deflate, this);
-  f2__primcfunk__init__1(chunk__inflate, this);
 }
 

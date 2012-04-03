@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -46,26 +46,27 @@ struct funk2_f2ptr_set_s {
   funk2_f2ptr_set_node_t** bin;
 } __attribute__((__packed__));
 
-void  funk2_f2ptr_set__init                      (funk2_f2ptr_set_t* this);
-void  funk2_f2ptr_set__destroy                   (funk2_f2ptr_set_t* this);
-u64   funk2_f2ptr_set__element_count             (funk2_f2ptr_set_t* this);
-u64   funk2_f2ptr_set__element_bin_index         (funk2_f2ptr_set_t* this, f2ptr element);
-void  funk2_f2ptr_set__double_size               (funk2_f2ptr_set_t* this);
-void  funk2_f2ptr_set__add                       (funk2_f2ptr_set_t* this, f2ptr element);
-void  funk2_f2ptr_set__remove                    (funk2_f2ptr_set_t* this, f2ptr element);
-void  funk2_f2ptr_set__remove_and_add_to         (funk2_f2ptr_set_t* this, f2ptr element, funk2_f2ptr_set_t* to_f2ptr_set);
-void* funk2_f2ptr_set__mapc                      (funk2_f2ptr_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
-s64   funk2_f2ptr_set__calculate_save_size       (funk2_f2ptr_set_t* this);
-void  funk2_f2ptr_set__save_to_stream            (funk2_f2ptr_set_t* this, int fd);
-u64   funk2_f2ptr_set__save_to_buffer            (funk2_f2ptr_set_t* this, u8* initial_buffer);
-void  funk2_f2ptr_set__load_from_stream          (funk2_f2ptr_set_t* this, int fd);
-s64   funk2_f2ptr_set__load_from_buffer          (funk2_f2ptr_set_t* this, u8* buffer);
-void  funk2_f2ptr_set__defragmenter__fix_pointers(funk2_f2ptr_set_t* this, funk2_defragmenter_t* defragmenter);
+void      funk2_f2ptr_set__init                    (funk2_f2ptr_set_t* this);
+void      funk2_f2ptr_set__destroy                 (funk2_f2ptr_set_t* this);
+u64       funk2_f2ptr_set__element_count           (funk2_f2ptr_set_t* this);
+u64       funk2_f2ptr_set__element_bin_index       (funk2_f2ptr_set_t* this, f2ptr element);
+void      funk2_f2ptr_set__double_size             (funk2_f2ptr_set_t* this);
+void      funk2_f2ptr_set__add                     (funk2_f2ptr_set_t* this, f2ptr element);
+void      funk2_f2ptr_set__remove                  (funk2_f2ptr_set_t* this, f2ptr element);
+void      funk2_f2ptr_set__remove_and_add_to       (funk2_f2ptr_set_t* this, f2ptr element, funk2_f2ptr_set_t* to_f2ptr_set);
+boolean_t funk2_f2ptr_set__contains                (funk2_f2ptr_set_t* this, f2ptr element);
+void*     funk2_f2ptr_set__mapc                    (funk2_f2ptr_set_t* this, void(* mapc_funk)(f2ptr element, void** user_data, boolean_t* stop, void** return_value), void** user_data);
+s64       funk2_f2ptr_set__calculate_save_size     (funk2_f2ptr_set_t* this);
+void      funk2_f2ptr_set__save_to_stream          (funk2_f2ptr_set_t* this, int fd);
+u64       funk2_f2ptr_set__save_to_buffer          (funk2_f2ptr_set_t* this, u8* initial_buffer);
+void      funk2_f2ptr_set__load_from_stream        (funk2_f2ptr_set_t* this, int fd);
+s64       funk2_f2ptr_set__load_from_buffer        (funk2_f2ptr_set_t* this, u8* buffer);
+void      funk2_f2ptr_set__defragment__fix_pointers(funk2_f2ptr_set_t* this);
 
-  // tests
+// tests
 
-void  funk2_f2ptr_set__print(funk2_f2ptr_set_t* this);
-void  funk2_f2ptr_set__test();
+void funk2_f2ptr_set__print(funk2_f2ptr_set_t* this);
+void funk2_f2ptr_set__test();
 
 #define funk2_f2ptr_set__iteration(this, element, body) {		\
     funk2_f2ptr_set_t*       funk2_f2ptr_set__iteration__this            = this; \

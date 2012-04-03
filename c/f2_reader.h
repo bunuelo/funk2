@@ -145,11 +145,13 @@ struct funk2_reader_s {
   f2ptr char__symbol_key;
 };
 
-void funk2_reader__init(funk2_reader_t* this);
-void funk2_reader__destroy(funk2_reader_t* this);
+void funk2_reader__init                    (funk2_reader_t* this);
+void funk2_reader__destroy                 (funk2_reader_t* this);
+void funk2_reader__defragment__fix_pointers(funk2_reader_t* this);
 
 f2ptr f2__stream__try_read(f2ptr cause, f2ptr stream);
 
+void f2__reader__defragment__fix_pointers();
 void f2__reader__initialize();
 
 #endif // F2__READER__H

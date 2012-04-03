@@ -59,7 +59,7 @@
 			   [funk []
 				 [fiber [funk []
 					      [terminal_format standard-terminal '\nuser: deliberative action activator waiting to call "' [get action as-string] '."']
-					      [have action wait_to_call]]
+					      [have action external_wait_to_call]]
 					nil]]
 			   nil]]]
 	     [have [get [get mindmon_agent mind] plan_actions]
@@ -70,10 +70,6 @@
        [have window add vbox]
        [have window show_all]]]
 
-
-[deftypefunk mindmon_blocks_world_deliberative_action_activator_window execute activate_resource [layer_name agency_name resource_name :rest args]
-  [let [[activate_resource [get [get mindmon_agent mind] resource `builtin_reactive `neural_plug `activate_resource]]]
-    [have-apply activate_resource command `[,layer_name ,agency_name ,resource_name @args]]]]
 
 
 

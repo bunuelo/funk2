@@ -23,6 +23,7 @@
 #define F2__OBJECT__TYPES__H
 
 #include "f2_global.h"
+#include "f2_ptypes_object_slots.h"
 
 typedef struct funk2_object_s {
   f2ptr object__eq_hash_value__funk;

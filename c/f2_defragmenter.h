@@ -40,12 +40,19 @@ struct funk2_defragmenter_s {
   funk2_hash_t new_old_memory_position_hash[memory_pool_num];
 };
 
-void  funk2_defragmenter__init                         (funk2_defragmenter_t* this);
-void  funk2_defragmenter__destroy                      (funk2_defragmenter_t* this);
-void  funk2_defragmenter__memory_pool__move_memory     (funk2_defragmenter_t* this, u64 pool_index);
-f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* this, f2ptr exp);
-void  funk2_defragmenter__memory_pool__fix_pointers    (funk2_defragmenter_t* this, u64 pool_index);
-void  funk2_defragmenter__handle                       (funk2_defragmenter_t* this);
+void  funk2_defragmenter__init                          (funk2_defragmenter_t* this);
+void  funk2_defragmenter__destroy                       (funk2_defragmenter_t* this);
+void  funk2_defragmenter__memory_pool__move_memory      (funk2_defragmenter_t* this, u64 pool_index);
+f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr (funk2_defragmenter_t* this, f2ptr exp);
+void  funk2_defragmenter__memory_pool__fix_pointers     (funk2_defragmenter_t* this, u64 pool_index);
+void  funk2_defragmenter__defragment                    (funk2_defragmenter_t* this);
+void  funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* this);
+void  funk2_defragmenter__handle                        (funk2_defragmenter_t* this);
+
+#define defragment__fix_pointer(fix_variable) {				\
+    (fix_variable) = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), fix_variable); \
+  }
+
 
 // **
 

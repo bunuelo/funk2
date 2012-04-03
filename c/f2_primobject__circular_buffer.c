@@ -142,15 +142,34 @@ f2ptr f2circular_buffer__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject_circular_buffer__reinitialize_globalvars() {
-  __circular_buffer__symbol = new__symbol(initial_cause(), "circular_buffer");
+void f2__primobject_circular_buffer__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  // circular_buffer
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(circular_buffer, access_cmutex, start, end, bin_array);
+  
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(circular_buffer__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(circular_buffer__pop);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.pop__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(circular_buffer__add);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(circular_buffer__is_empty);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__funk);
 }
 
-void f2__primobject_circular_buffer__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_circular_buffer", "", &f2__primobject_circular_buffer__reinitialize_globalvars);
-  
-  f2__primobject_circular_buffer__reinitialize_globalvars();
-  
+void f2__primobject_circular_buffer__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   // circular_buffer
@@ -165,5 +184,11 @@ void f2__primobject_circular_buffer__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__add, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.add__funk = never_gc(cfunk);}
   {char* symbol_str = "is_empty"; __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(circular_buffer__is_empty, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_circular_buffer.is_empty__funk = never_gc(cfunk);}
+}
+
+void f2__primobject_circular_buffer__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_circular_buffer", "", &f2__primobject_circular_buffer__reinitialize_globalvars, &f2__primobject_circular_buffer__defragment__fix_pointers);
+  
+  f2__primobject_circular_buffer__reinitialize_globalvars();
 }
 

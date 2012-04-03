@@ -1779,6 +1779,56 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
 
 // **
 
+void f2__compile__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  defragment__fix_pointer(__funk2.compile.cause__compiled_from__symbol);
+  defragment__fix_pointer(__funk2.compile.compile__exception);
+  
+  defragment__fix_pointer(__funk2.compile.f2__compile__funk__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__metro__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__if__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__if_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__while__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__while_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__return__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__return_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__rawcode__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__lookup_funkvar_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__eval_args__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__eval_args__current_arg__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__define_funk_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__define_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__mutate_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__mutatefunk_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__globalize_var_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__globalize_funkvar_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__apply_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__funkvar_call__symbol);
+  defragment__fix_pointer(__funk2.compile.raw__apply_metro__symbol);
+  defragment__fix_pointer(__funk2.compile.raw__apply_funk__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__backquote_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__backquote_append_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__special_symbol_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__cons_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__demetropolize__special_symbol_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__demetropolize__funkvar_call__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__demetropolize_once__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__demetropolize_full__symbol);
+  defragment__fix_pointer(__funk2.compile.raw__compile__symbol);
+  
+  defragment__fix_pointer(__funk2.compile.debug_funk_call__symbol);
+  
+  defragment__fix_pointer(__funk2.compile.wrong_argument_number__bcs);
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(wrong_argument_number__bcs__set);
+  
+  
+}
+
 void f2__compile__reinitialize_globalvars() {
   f2ptr cause = f2_compile_c__cause__new(initial_cause());
   
@@ -1820,53 +1870,19 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "debug_funk_call";                               __funk2.compile.debug_funk_call__symbol                       = new__symbol(cause, str);}
   
   __funk2.compile.wrong_argument_number__bcs = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
+  
+  f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
 }
 
 void f2__compile__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "compile", "", &f2__compile__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "compile", "", &f2__compile__reinitialize_globalvars, &f2__compile__defragment__fix_pointers);
   
   f2__compile__reinitialize_globalvars();
   
   f2ptr cause = f2_compile_c__cause__new(initial_cause());
   
-  environment__add_var_value(cause, global_environment(), __funk2.compile.cause__compiled_from__symbol, nil);
   environment__add_var_value(cause, global_environment(), __funk2.compile.compile__exception, f2exception__new(cause, __funk2.compile.compile__exception, nil));
   
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__funk__symbol,                     nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__metro__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__if__symbol,                       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__rawcode__symbol,                  nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__while__symbol,                    nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__while_exp__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__return__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__return_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__if_exp__symbol,                   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__lookup_funkvar_exp__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__eval_args__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__eval_args__current_arg__symbol,   nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__define_funk_exp__symbol,          nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__define_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__mutate_exp__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__mutatefunk_exp__symbol,           nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__globalize_var_exp__symbol,        nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__globalize_funkvar_exp__symbol,    nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__apply_exp__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__funkvar_call__symbol,             nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.raw__apply_metro__symbol,                      nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.raw__apply_funk__symbol,                       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__backquote_exp__symbol,            nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__backquote_append_exp__symbol,     nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__special_symbol_exp__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__compile__cons_exp__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize__special_symbol_exp__symbol, nil);
-  //environment__add_var_value(cause, global_environment(), __f2__demetropolize__cons_exp__symbol,           nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize__funkvar_call__symbol,       nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize_once__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.f2__demetropolize_full__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __funk2.compile.raw__compile__symbol,                          nil);
-  
-  //f2__primcfunk__init__1(string__to_symbol, this, "convert any string to a new symbol.  for any two strings that are equal, the symbols returned by this function will be eq.");
-  f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
-  
+  __funk2.compile.wrong_argument_number__bcs = nil;
 }
 

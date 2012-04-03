@@ -93,8 +93,18 @@ void f2__primobject_tensor__reinitialize_globalvars() {
   __tensor__symbol = new__symbol(initial_cause(), "tensor");
 }
 
+void f2__primobject_tensor__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__tensor__symbol);
+  
+  
+  // -- initialize --
+  
+}
+
 void f2__primobject_tensor__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_tensor", "", &f2__primobject_tensor__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject_tensor", "", &f2__primobject_tensor__reinitialize_globalvars, &f2__primobject_tensor__defragment__fix_pointers);
   
   f2__primobject_tensor__reinitialize_globalvars();
   

@@ -83,14 +83,10 @@ ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
 f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
 
-f2ptr f2ptype__primobject_type__new(f2ptr cause);
-
 // integer
 
 f2ptr pfunk2__f2integer__new(f2ptr cause, s64 i);
 s64   pfunk2__f2integer__i(f2ptr this, f2ptr cause);
-
-f2ptr f2integer__primobject_type__new(f2ptr cause);
 
 boolean_t raw__integer__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__integer__is_type(f2ptr cause, f2ptr exp);
@@ -121,8 +117,6 @@ f2ptr  f2__integer__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr numbe
 
 f2ptr  pfunk2__f2double__new(f2ptr cause, double d);
 double pfunk2__f2double__d(f2ptr this, f2ptr cause);
-
-f2ptr f2double__primobject_type__new(f2ptr cause);
 
 boolean_t raw__double__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__double__is_type(f2ptr cause, f2ptr exp);
@@ -156,8 +150,6 @@ f2ptr  f2__double__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number
 f2ptr pfunk2__f2float__new(f2ptr cause, float f);
 float pfunk2__f2float__f(f2ptr this, f2ptr cause);
 
-f2ptr f2float__primobject_type__new(f2ptr cause);
-
 boolean_t raw__float__is_type(f2ptr cause, f2ptr exp);
 f2ptr      f2__float__is_type(f2ptr cause, f2ptr exp);
 
@@ -190,8 +182,6 @@ f2ptr  f2__float__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr number)
 f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p);
 ptr   pfunk2__f2pointer__p(f2ptr this, f2ptr cause);
 
-f2ptr f2pointer__primobject_type__new(f2ptr cause);
-
 boolean_t raw__pointer__is_type(f2ptr cause, f2ptr exp);
 f2ptr f2__pointer__is_type(f2ptr cause, f2ptr exp);
 
@@ -218,8 +208,6 @@ void             pfunk2__f2scheduler_cmutex__lock(f2ptr this, f2ptr cause);
 void             pfunk2__f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause);
 int              pfunk2__f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause);
 
-f2ptr f2scheduler_cmutex__primobject_type__new(f2ptr cause);
-
 f2ptr      f2__scheduler_cmutex__new(f2ptr cause);
 
 boolean_t raw__scheduler_cmutex__is_type(f2ptr cause, f2ptr exp);
@@ -242,8 +230,6 @@ boolean_t        pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause);
 void             pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause);
 void             pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause);
 int              pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause);
-
-f2ptr f2cmutex__primobject_type__new(f2ptr cause);
 
 f2ptr      f2__cmutex__new(f2ptr cause);
 boolean_t raw__cmutex__is_locked(f2ptr cause, f2ptr this);
@@ -273,8 +259,6 @@ f2ptr      f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr             pfunk2__f2char__new(f2ptr cause, funk2_character_t ch);
 funk2_character_t pfunk2__f2char__ch(f2ptr this, f2ptr cause);
 
-f2ptr f2char__primobject_type__new(f2ptr cause);
-
 boolean_t         raw__char__is_type      (f2ptr cause, f2ptr exp);
 f2ptr              f2__char__is_type      (f2ptr cause, f2ptr exp);
 funk2_character_t raw__char__ch           (f2ptr cause, f2ptr this);
@@ -295,8 +279,6 @@ u64               pfunk2__f2string__length       (f2ptr this, f2ptr cause);
 funk2_character_t pfunk2__f2string__elt          (f2ptr this, int index, f2ptr cause);
 void              pfunk2__f2string__str_copy     (f2ptr this, f2ptr cause, funk2_character_t* str);
 u64               pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
-
-f2ptr f2string__primobject_type__new(f2ptr cause);
 
 boolean_t         raw__string__is_type (f2ptr cause, f2ptr exp);
 f2ptr              f2__string__is_type (f2ptr cause, f2ptr exp);
@@ -331,8 +313,6 @@ u64               pfunk2__f2symbol__length(f2ptr this, f2ptr cause);
 funk2_character_t pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause);
 u64               pfunk2__f2symbol__eq_hash_value(f2ptr this, f2ptr cause);
 void              pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str);
-
-f2ptr f2symbol__primobject_type__new(f2ptr cause);
 
 boolean_t raw__symbol__is_type(f2ptr cause, f2ptr x);
 f2ptr      f2__symbol__is_type(f2ptr cause, f2ptr x);
@@ -378,8 +358,6 @@ int   pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr fiber);
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags);
 f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int flags);
 
-f2ptr f2chunk__primobject_type__new(f2ptr cause);
-
 f2ptr     raw__chunk__new              (f2ptr cause, u64 length);
 f2ptr      f2__chunk__new              (f2ptr cause, f2ptr length);
 boolean_t raw__chunk__is_type          (f2ptr cause, f2ptr exp);
@@ -423,8 +401,6 @@ u64   pfunk2__f2simple_array__length(f2ptr this, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
-f2ptr f2simple_array__primobject_type__new(f2ptr cause);
-
 boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x);
 f2ptr      f2__simple_array__is_type(f2ptr cause, f2ptr x);
 f2ptr      f2__simple_array__new(f2ptr cause, f2ptr length);
@@ -467,8 +443,6 @@ f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2pt
 f2ptr pfunk2__f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
-f2ptr f2traced_array__primobject_type__new(f2ptr cause);
-
 boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x);
 f2ptr f2__traced_array__new(f2ptr cause, f2ptr length);
@@ -508,8 +482,6 @@ f2ptr pfunk2__f2larva__new(f2ptr cause, u32 larva_type, f2ptr bug);
 u32   pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause);
 f2ptr pfunk2__f2larva__bug(f2ptr this, f2ptr cause);
 
-f2ptr f2larva__primobject_type__new(f2ptr cause);
-
 u32   raw__larva__larva_type(f2ptr cause, f2ptr this);
 f2ptr  f2__larva__larva_type(f2ptr cause, f2ptr this);
 
@@ -529,22 +501,6 @@ boolean_t raw__larva__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
-// type slot funk accessors
-
-f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__double__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__scheduler_cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-
 f2ptr raw__gensym(f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string);
 f2ptr  f2__gensym(f2ptr cause, f2ptr initial_string);
 
@@ -562,533 +518,6 @@ void f2__ptypes__destroy();
 
 #ifndef F2__PTYPES__OBJECT_TYPES
 #define F2__PTYPES__OBJECT_TYPES
-
-// integer
-
-typedef struct funk2_object_type__integer__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr i__symbol;
-  f2ptr i__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr as__double__symbol;
-  f2ptr as__double__funk;
-  f2ptr as__pointer__symbol;
-  f2ptr as__pointer__funk;
-  f2ptr as__integer__symbol;
-  f2ptr as__integer__funk;
-  f2ptr multiplied_by__symbol;
-  f2ptr multiplied_by__funk;
-  f2ptr divided_by__symbol;
-  f2ptr divided_by__funk;
-  f2ptr plus__symbol;
-  f2ptr plus__funk;
-  f2ptr minus__symbol;
-  f2ptr minus__funk;
-  f2ptr is_greater_than__symbol;
-  f2ptr is_greater_than__funk;
-  f2ptr is_less_than__symbol;
-  f2ptr is_less_than__funk;
-  f2ptr is_numerically_equal_to__symbol;
-  f2ptr is_numerically_equal_to__funk;
-  f2ptr square_root__symbol;
-  f2ptr square_root__funk;
-  f2ptr modulo__symbol;
-  f2ptr modulo__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__integer__slot_t;
-
-// double
-
-typedef struct funk2_object_type__double__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr d__symbol;
-  f2ptr d__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr as__double__symbol;
-  f2ptr as__double__funk;
-  f2ptr multiplied_by__symbol;
-  f2ptr multiplied_by__funk;
-  f2ptr divided_by__symbol;
-  f2ptr divided_by__funk;
-  f2ptr plus__symbol;
-  f2ptr plus__funk;
-  f2ptr minus__symbol;
-  f2ptr minus__funk;
-  f2ptr is_greater_than__symbol;
-  f2ptr is_greater_than__funk;
-  f2ptr is_less_than__symbol;
-  f2ptr is_less_than__funk;
-  f2ptr is_numerically_equal_to__symbol;
-  f2ptr is_numerically_equal_to__funk;
-  f2ptr square_root__symbol;
-  f2ptr square_root__funk;
-  f2ptr radian_sine__symbol;
-  f2ptr radian_sine__funk;
-  f2ptr radian_arcsine__symbol;
-  f2ptr radian_arcsine__funk;
-  f2ptr radian_cosine__symbol;
-  f2ptr radian_cosine__funk;
-  f2ptr radian_arccosine__symbol;
-  f2ptr radian_arccosine__funk;
-  f2ptr radian_tangent__symbol;
-  f2ptr radian_tangent__funk;
-  f2ptr radian_arctangent__symbol;
-  f2ptr radian_arctangent__funk;
-  f2ptr power__symbol;
-  f2ptr power__funk;
-  f2ptr modulo__symbol;
-  f2ptr modulo__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__double__slot_t;
-
-// float
-
-typedef struct funk2_object_type__float__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr f__symbol;
-  f2ptr f__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr as__double__symbol;
-  f2ptr as__double__funk;
-  f2ptr multiplied_by__symbol;
-  f2ptr multiplied_by__funk;
-  f2ptr divided_by__symbol;
-  f2ptr divided_by__funk;
-  f2ptr plus__symbol;
-  f2ptr plus__funk;
-  f2ptr minus__symbol;
-  f2ptr minus__funk;
-  f2ptr is_greater_than__symbol;
-  f2ptr is_greater_than__funk;
-  f2ptr is_less_than__symbol;
-  f2ptr is_less_than__funk;
-  f2ptr is_numerically_equal_to__symbol;
-  f2ptr is_numerically_equal_to__funk;
-  f2ptr square_root__symbol;
-  f2ptr square_root__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__float__slot_t;
-
-// pointer
-
-typedef struct funk2_object_type__pointer__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr p__symbol;
-  f2ptr p__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr plus__symbol;
-  f2ptr plus__funk;
-  f2ptr minus__symbol;
-  f2ptr minus__funk;
-  f2ptr is_greater_than__symbol;
-  f2ptr is_greater_than__funk;
-  f2ptr is_less_than__symbol;
-  f2ptr is_less_than__funk;
-  f2ptr is_numerically_equal_to__symbol;
-  f2ptr is_numerically_equal_to__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__pointer__slot_t;
-
-// scheduler_cmutex
-
-typedef struct funk2_object_type__scheduler_cmutex__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__scheduler_cmutex__slot_t;
-
-// cmutex
-
-typedef struct funk2_object_type__cmutex__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr is_locked__symbol;
-  f2ptr is_locked__funk;
-  f2ptr unlock__symbol;
-  f2ptr unlock__funk;
-  f2ptr trylock__symbol;
-  f2ptr trylock__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__cmutex__slot_t;
-
-// char
-
-typedef struct funk2_object_type__char__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr ch__symbol;
-  f2ptr ch__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr string__symbol;
-  f2ptr string__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__char__slot_t;
-
-// string
-
-typedef struct funk2_object_type__string__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr elt__symbol;
-  f2ptr elt__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-  // defined in f2_string.c
-  f2ptr as__symbol__symbol;
-  f2ptr as__symbol__funk;
-  f2ptr save__symbol;
-  f2ptr save__funk;
-  f2ptr split__symbol;
-  f2ptr split__funk;
-  f2ptr contains__symbol;
-  f2ptr contains__funk;
-  f2ptr substring__symbol;
-  f2ptr substring__funk;
-  f2ptr is_less_than__symbol;
-  f2ptr is_less_than__funk;
-  f2ptr is_greater_than__symbol;
-  f2ptr is_greater_than__funk;
-  f2ptr lowercase__symbol;
-  f2ptr lowercase__funk;
-  f2ptr uppercase__symbol;
-  f2ptr uppercase__funk;
-  f2ptr multiply__symbol;
-  f2ptr multiply__funk;
-} funk2_object_type__string__slot_t;
-
-// symbol
-
-typedef struct funk2_object_type__symbol__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr elt__symbol;
-  f2ptr elt__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-  f2ptr as__string__symbol;
-  f2ptr as__string__funk;
-} funk2_object_type__symbol__slot_t;
-
-// chunk
-
-typedef struct funk2_object_type__chunk__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr new_copy__symbol;
-  f2ptr new_copy__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr bit8__elt__symbol;
-  f2ptr bit8__elt__funk;
-  f2ptr bit8__elt__set__symbol;
-  f2ptr bit8__elt__set__funk;
-  f2ptr bit16__elt__symbol;
-  f2ptr bit16__elt__funk;
-  f2ptr bit16__elt__set__symbol;
-  f2ptr bit16__elt__set__funk;
-  f2ptr bit32__elt__symbol;
-  f2ptr bit32__elt__funk;
-  f2ptr bit32__elt__set__symbol;
-  f2ptr bit32__elt__set__funk;
-  f2ptr bit64__elt__symbol;
-  f2ptr bit64__elt__funk;
-  f2ptr bit64__elt__set__symbol;
-  f2ptr bit64__elt__set__funk;
-  f2ptr cfunk_jump__symbol;
-  f2ptr cfunk_jump__funk;
-  f2ptr bytecode_jump__symbol;
-  f2ptr bytecode_jump__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-  f2ptr save__symbol;
-  f2ptr save__funk;
-} funk2_object_type__chunk__slot_t;
-
-// simple_array
-
-typedef struct funk2_object_type__simple_array__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr new_copy__symbol;
-  f2ptr new_copy__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr elt__symbol;
-  f2ptr elt__funk;
-  f2ptr elt__set__symbol;
-  f2ptr elt__set__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__simple_array__slot_t;
-
-// traced_array
-
-typedef struct funk2_object_type__traced_array__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr elt__symbol;
-  f2ptr elt__funk;
-  f2ptr elt__set__symbol;
-  f2ptr elt__set__funk;
-  f2ptr elt__tracing_on__symbol;
-  f2ptr elt__tracing_on__funk;
-  f2ptr elt__tracing_on__set__symbol;
-  f2ptr elt__tracing_on__set__funk;
-  f2ptr elt__trace__symbol;
-  f2ptr elt__trace__funk;
-  f2ptr elt__trace__set__symbol;
-  f2ptr elt__trace__set__funk;
-  f2ptr elt__imagination_frame__symbol;
-  f2ptr elt__imagination_frame__funk;
-  f2ptr elt__imagination_frame__set__symbol;
-  f2ptr elt__imagination_frame__set__funk;
-  f2ptr elt__mutate_funks__symbol;
-  f2ptr elt__mutate_funks__funk;
-  f2ptr elt__mutate_funks__set__symbol;
-  f2ptr elt__mutate_funks__set__funk;
-  f2ptr elt__read_funks__symbol;
-  f2ptr elt__read_funks__funk;
-  f2ptr elt__read_funks__set__symbol;
-  f2ptr elt__read_funks__set__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__traced_array__slot_t;
-
-// larva
-
-typedef struct funk2_object_type__larva__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr larva_type__symbol;
-  f2ptr larva_type__funk;
-  f2ptr bug__symbol;
-  f2ptr bug__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__larva__slot_t;
-
-
-
-typedef struct funk2_ptype_object_types_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr raw__symbol;
-  f2ptr raw__funk;
-  f2ptr cause__symbol;
-  f2ptr cause__funk;
-  f2ptr cause__set__symbol;
-  f2ptr cause__set__funk;
-  funk2_object_type__integer__slot_t          ptype_integer;
-  funk2_object_type__double__slot_t           ptype_double;
-  funk2_object_type__float__slot_t            ptype_float;
-  funk2_object_type__pointer__slot_t          ptype_pointer;
-  funk2_object_type__scheduler_cmutex__slot_t ptype_scheduler_cmutex;
-  funk2_object_type__cmutex__slot_t           ptype_cmutex;
-  funk2_object_type__char__slot_t             ptype_char;
-  funk2_object_type__string__slot_t           ptype_string;
-  funk2_object_type__symbol__slot_t           ptype_symbol;
-  funk2_object_type__chunk__slot_t            ptype_chunk;
-  funk2_object_type__simple_array__slot_t     ptype_simple_array;
-  funk2_object_type__traced_array__slot_t     ptype_traced_array;
-  funk2_object_type__larva__slot_t            ptype_larva;
-} funk2_ptype_object_types_t;
-
 
 typedef struct funk2_symbol_hash_node_s funk2_symbol_hash_node_t;
 typedef struct funk2_symbol_hash_s      funk2_symbol_hash_t;
@@ -1120,6 +549,7 @@ f2ptr funk2_symbol_hash__lookup_symbol                         (funk2_symbol_has
 f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, funk2_character_t* str);
 f2ptr funk2_symbol_hash__lookup_or_create_symbol               (funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, funk2_character_t* str);
 void  funk2_symbol_hash__touch_all_symbols                     (funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector);
+f2ptr funk2_symbol_hash__generate_new_random_symbol            (funk2_symbol_hash_t* this, int pool_index, f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string);
 
 // ptypes
 

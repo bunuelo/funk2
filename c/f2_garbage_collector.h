@@ -67,7 +67,7 @@ void      funk2_garbage_collector__handle                        (funk2_garbage_
 s64       funk2_garbage_collector__calculate_save_size           (funk2_garbage_collector_t* this);
 void      funk2_garbage_collector__save_to_stream                (funk2_garbage_collector_t* this, int fd);
 void      funk2_garbage_collector__load_from_stream              (funk2_garbage_collector_t* this, int fd);
-void      funk2_garbage_collector__defragmenter__fix_pointers    (funk2_garbage_collector_t* this, funk2_defragmenter_t* defragmenter);
+void      funk2_garbage_collector__defragment__fix_pointers      (funk2_garbage_collector_t* this);
 
 #define pause_gc()  funk2_garbage_collector__signal_enter_protected_region(&(__funk2.garbage_collector), __FILE__, __LINE__)
 #define resume_gc() funk2_garbage_collector__signal_exit_protected_region( &(__funk2.garbage_collector), __FILE__, __LINE__)

@@ -451,16 +451,20 @@ def_pcfunk3(xmlrpc__apply, url, funkname, arguments,
 
 // **
 
+void f2__xmlrpc__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(xmlrpc__apply);
+}
+
 void f2__xmlrpc__reinitialize_globalvars() {
+  f2__primcfunk__init__3(xmlrpc__apply, url, funkname, arguments);
 }
 
 void f2__xmlrpc__initialize() {
-  //f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "xmlrpc", "", &f2__xmlrpc__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "xmlrpc", "", &f2__xmlrpc__reinitialize_globalvars, &f2__xmlrpc__defragment__fix_pointers);
   
   f2__xmlrpc__reinitialize_globalvars();
-  
-  f2__primcfunk__init__3(xmlrpc__apply, url, funkname, arguments);
 }
 

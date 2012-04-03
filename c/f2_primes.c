@@ -147,6 +147,16 @@ void funk2_primes__init(funk2_primes_t* this, f2ptr cause) {
   funk2_primes__reinit(this, cause);
 }
 
+void funk2_primes__defragment__fix_pointers(funk2_primes_t* this) {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(this->prime_array__symbol);
+  defragment__fix_pointer(this->prime_array);
+  
+  // -- initialize --
+  
+}
+
 void funk2_primes__destroy(funk2_primes_t* this) {
 }
 
@@ -179,21 +189,34 @@ def_pcfunk1(prime, prime_index,
 
 // **
 
-void f2__primes__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  funk2_primes__reinit(&(__funk2.primes), cause);
+void f2__primes__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  funk2_primes__defragment__fix_pointers(&(__funk2.primes));
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(prime_array__new);
+  f2__primcfunk__init__defragment__fix_pointers(prime_array__new_by_extension);
+  f2__primcfunk__init__defragment__fix_pointers(prime);
 }
 
-void f2__primes__initialize() {
+void f2__primes__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  funk2_primes__init(&(__funk2.primes), cause);
   
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primes", "", &f2__primes__reinitialize_globalvars);
-  
-  f2__primes__reinitialize_globalvars();
+  funk2_primes__reinit(&(__funk2.primes), cause);
   
   f2__primcfunk__init__1(prime_array__new, prime_count);
   f2__primcfunk__init__2(prime_array__new_by_extension, this, prime_count);
   f2__primcfunk__init__1(prime, prime_index);
+}
+
+void f2__primes__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primes", "", &f2__primes__reinitialize_globalvars, &f2__primes__defragment__fix_pointers);
+  
+  f2ptr cause = initial_cause();
+  funk2_primes__init(&(__funk2.primes), cause);
+  
+  f2__primes__reinitialize_globalvars();
 }
 

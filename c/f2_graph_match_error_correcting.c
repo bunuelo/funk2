@@ -528,17 +528,29 @@ def_pcfunk3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms,
 
 // **
 
-void f2__graph_match_error_correcting__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  __graph_edit_sequence__symbol = new__symbol(cause, "graph_edit_sequence");
+void f2__graph_match_error_correcting__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  // graph_edit_sequence
+  initialize_primobject_3_slot__defragment__fix_pointers(graph_edit_sequence, operations, cost, isomorphism);
+  //f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__new);
+  f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__add);
+  f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__add_mapping);
+  f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__combine);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(graph_edit_sequence__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_graph_edit_sequence.terminal_print_with_frame__funk);
+  
+  // graph_decomposition_lattice
+  f2__primcfunk__init__defragment__fix_pointers(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms);
 }
 
-void f2__graph_match_error_correcting__initialize() {
+void f2__graph_match_error_correcting__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "graph_match_error_correcting", "", &f2__graph_match_error_correcting__reinitialize_globalvars);
-  
-  f2__graph_match_error_correcting__reinitialize_globalvars();
   
   // graph_edit_sequence
   initialize_primobject_3_slot(graph_edit_sequence, operations, cost, isomorphism);
@@ -552,6 +564,11 @@ void f2__graph_match_error_correcting__initialize() {
   
   // graph_decomposition_lattice
   f2__primcfunk__init__3(graph_decomposition_lattice__error_correcting_subgraph_isomorphisms, this, graph, cost_function);
+}
+
+void f2__graph_match_error_correcting__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "graph_match_error_correcting", "", &f2__graph_match_error_correcting__reinitialize_globalvars, &f2__graph_match_error_correcting__defragment__fix_pointers);
   
+  f2__graph_match_error_correcting__reinitialize_globalvars();
 }
 

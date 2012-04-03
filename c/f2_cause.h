@@ -126,7 +126,7 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause);
 
 // **
 
-void f2__cause__pre_reinitialize_globalvars();
+void f2__cause__preinitialize_globalvars();
 void f2__cause__reinitialize_globalvars();
 void f2__cause__initialize();
 

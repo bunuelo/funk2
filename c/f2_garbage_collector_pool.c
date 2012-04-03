@@ -21,16 +21,6 @@
 
 #include "funk2.h"
 
-// garbage_collector_block_header
-
-void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this) {
-  this->tricolor = funk2_tricolor__grey;
-}
-
-void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this) {
-}
-
-
 // garbage_collector_mutation_buffer
 
 void funk2_garbage_collector_mutation_buffer__init(funk2_garbage_collector_mutation_buffer_t* this) {
@@ -131,12 +121,12 @@ s64 funk2_garbage_collector_mutation_buffer__load_from_buffer(funk2_garbage_coll
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_mutation_buffer__defragmenter__fix_pointers(funk2_garbage_collector_mutation_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(funk2_garbage_collector_mutation_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -244,12 +234,12 @@ s64 funk2_garbage_collector_no_more_references_buffer__load_from_buffer(funk2_ga
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_no_more_references_buffer__defragmenter__fix_pointers(funk2_garbage_collector_no_more_references_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(funk2_garbage_collector_no_more_references_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -357,12 +347,12 @@ s64 funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(funk2_garba
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_protected_f2ptr_buffer__defragmenter__fix_pointers(funk2_garbage_collector_protected_f2ptr_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(funk2_garbage_collector_protected_f2ptr_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -465,12 +455,12 @@ s64 funk2_garbage_collector_other_grey_buffer__load_from_buffer(funk2_garbage_co
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_other_grey_buffer__defragmenter__fix_pointers(funk2_garbage_collector_other_grey_buffer_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(funk2_garbage_collector_other_grey_buffer_t* this) {
   u64 count = this->count;
   u64 index;
   for (index = 0; index < count; index ++) {
     f2ptr exp = this->data[index].data;
-    exp = funk2_defragmenter__memory_pool__lookup_new_f2ptr(defragmenter, exp);
+    defragment__fix_pointer(exp);
     this->data[index].data = exp;
   }
 }
@@ -525,6 +515,10 @@ void funk2_garbage_collector_pool__remove_unused_exp(funk2_garbage_collector_poo
 
 void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector_pool_t* this, f2ptr exp, funk2_tricolor_t to_tricolor) {
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(exp));
+  if (! block->used) {
+    status("funk2_garbage_collector_pool__change_used_exp_color fatal error: found reference to unused element (" f2ptr__fstr ") (" u64__fstr ").", exp, (u64)exp);
+    error(nil, "funk2_garbage_collector_pool__change_used_exp_color fatal error: found reference to unused element.");
+  }
   funk2_tricolor_t from_tricolor = block->gc.tricolor;
   // not processor_thread safe, but don't need to mutex because this is only ever done by the one processor thread that owns this pool.
   funk2_tricolor_set__change_element_color(&(this->tricolor_set), exp, from_tricolor, to_tricolor);
@@ -870,16 +864,33 @@ s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_
   return (s64)(buffer_iter - buffer);
 }
 
-void funk2_garbage_collector_pool__defragmenter__fix_pointers(funk2_garbage_collector_pool_t* this, funk2_defragmenter_t* defragmenter) {
-  funk2_tricolor_set__defragmenter__fix_pointers(                               &(this->tricolor_set),             defragmenter);
-  funk2_garbage_collector_mutation_buffer__defragmenter__fix_pointers(          &(this->other_mutations),          defragmenter);
-  funk2_garbage_collector_no_more_references_buffer__defragmenter__fix_pointers(&(this->other_no_more_references), defragmenter);
-  funk2_garbage_collector_protected_f2ptr_buffer__defragmenter__fix_pointers(   &(this->other_protected_f2ptr),    defragmenter);
+void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collector_pool_t* this) {
+  status("funk2_garbage_collector_pool[" u64__fstr "] defragment: fixing pointers.", this->pool_index);
+  funk2_tricolor_set__defragment__fix_pointers(                               &(this->tricolor_set));
+  funk2_garbage_collector_mutation_buffer__defragment__fix_pointers(          &(this->other_mutations));
+  funk2_garbage_collector_no_more_references_buffer__defragment__fix_pointers(&(this->other_no_more_references));
+  funk2_garbage_collector_protected_f2ptr_buffer__defragment__fix_pointers(   &(this->other_protected_f2ptr));
+  funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(           &(this->protected_alloc_array_fiber_hash));
   {
     u64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_other_grey_buffer__defragmenter__fix_pointers(&(this->other_grey_buffer[pool_index]), defragmenter);
+      funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(&(this->other_grey_buffer[pool_index]));
     }
   }
+  status("funk2_garbage_collector_pool[" u64__fstr "] defragment: fixing pointers done.", this->pool_index);
+}
+
+boolean_t funk2_garbage_collector_pool__memblock_color_is_valid(funk2_garbage_collector_pool_t* this, funk2_memblock_t* memblock) {
+  if (memblock->used) {
+    f2ptr            memblock_f2ptr    = __ptr_to_f2ptr(this->pool_index, to_ptr(memblock));
+    funk2_tricolor_t memblock_tricolor = memblock->gc.tricolor;
+    funk2_tricolor_t gc_tricolor       = funk2_tricolor_set__element_color(&(this->tricolor_set), memblock_f2ptr);
+    if (memblock_tricolor != gc_tricolor) {
+      status("funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor (" u64__fstr ") != gc_tricolor (" u64__fstr ").", (u64)memblock_tricolor, (u64)gc_tricolor);
+      error(nil, "funk2_garbage_collector_pool__memblock_color_is_valid assertion invalid: memblock_tricolor != gc_tricolor.");
+      return boolean__false;
+    }
+  }
+  return boolean__true;
 }
 

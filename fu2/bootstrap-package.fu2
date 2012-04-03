@@ -135,7 +135,8 @@
 	  filenames]
     a_file_was_loaded]]
 
-[deftypefunk symbol get is-defined [] [not [is-type `bug [shelter [eval this]]]]]
+[deftypefunk symbol get is-defined []
+  [not [is-type `bug [shelter [eval this]]]]]
 
 [set [global_package_handler] package_search_paths `['built-in/alien/'
 						     'built-in/ansi/'
@@ -263,6 +264,7 @@
 						     ]]
 
 [defmetro defpackage [name :rest dependencies]
+  [print `[defpackage ,name]]
   [let [[package_dependencies         nil]
 	[source_dependencies          nil]
 	[documentation                nil]
@@ -320,7 +322,6 @@
 			[= iter [cdr iter]]]]]]
 	  this]
     fpkg_filenames]]
-
 
 
 [defunk reload_all_package_definitions []
@@ -394,7 +395,6 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
-
 [defunk packages-load_if_modified_before [names before_time checked_package_hash dependencies_are_sticky]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
@@ -402,9 +402,11 @@
 	 [load_fibers         [mapcar [funk [name]
 					    [fiber [funk []
 							 [let [[package [lookup-package name]]]
-							   [if [get [get package dependency_graph] contains_cycle]
-							       [error bug_type     `tried_to_load_package_that_has_dependency_cycle
-								      package_name name]]
+							   [let [[dependency_graph [get package dependency_graph]]]
+							     [let [[contains_cycle [get dependency_graph contains_cycle]]]
+							       [if contains_cycle
+								   [error bug_type     `tried_to_load_package_that_has_dependency_cycle
+									  package_name name]]]]
 							   [while [have [get package load_cmutex] trylock]
 							     [millisleep 100]]
 							   [let [[load_fiber [get package load_fiber]]]
@@ -437,8 +439,8 @@
     [packages-load_if_modified_before names load_if_modified_before_time nil t]]]
 
 [defmetro require [:rest names]
-  `[require-package @[mapcar [funk [name] `[quote ,name]] names]]]
-
+  `[prog [print [quote ,`[require @names]]]
+	 [require-package @[mapcar [funk [name] `[quote ,name]] names]]]]
 
 [defunk reload-package [:rest names]
   [let [[load_if_modified_before_time [time]]]
@@ -447,5 +449,6 @@
     [packages-load_if_modified_before names load_if_modified_before_time nil nil]]]
 
 [defmetro reload [:rest names]
-  `[reload-package @[mapcar [funk [name] `[quote ,name]] names]]]
+  `[prog [print [quote ,`[reload @names]]]
+	 [reload-package @[mapcar [funk [name] `[quote ,name]] names]]]]
 

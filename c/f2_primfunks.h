@@ -31,22 +31,37 @@
 #define def_pcfunk__symbolvar(name)          __symbol__##name
 #define def_pcfunk__symbolvar_string(name)   "primfunk:" #name
 #define def_pcfunk__symbolvar__define(name)  f2ptr def_pcfunk__symbolvar(name) = nil
-#define def_pcfunk__symbolvar__init(name)    if(!def_pcfunk__symbolvar(name)) {def_pcfunk__symbolvar(name) = new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name));}
+#define def_pcfunk__symbolvar__init(name)    def_pcfunk__symbolvar(name) = new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name));
+#define def_pcfunk__symbolvar__init__defragment__fix_pointers(name) {	\
+    if(def_pcfunk__symbolvar(name) != nil) {				\
+      def_pcfunk__symbolvar(name) = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), def_pcfunk__symbolvar(name)); \
+    }									\
+  }
 #define def_pcfunk__this_symbol__define(name)	    \
-   f2ptr this_symbol = def_pcfunk__symbolvar(name); \
-   this_symbol = this_symbol;
+  f2ptr this_symbol = def_pcfunk__symbolvar(name);  \
+  this_symbol = this_symbol;
 
 #define def_pcfunk__documentation_variable(name)                     __documentation__##name
 #define def_pcfunk__documentation_variable__define(name, doc_string) u8* def_pcfunk__documentation_variable(name) = (u8*)""
 #define def_pcfunk__documentation_variable__init(name, doc_string)   {def_pcfunk__documentation_variable(name) = (u8*)(doc_string);}
 
-#define def_pcfunk__is_funktional_variable(name)                   __is_funktional__##name
-#define def_pcfunk__is_funktional_variable__define(name)           f2ptr def_pcfunk__is_funktional_variable(name) = nil
-#define def_pcfunk__is_funktional_variable__init(name, doc_string) if(!def_pcfunk__is_funktional_variable(name)) {def_pcfunk__is_funktional_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
+#define def_pcfunk__is_funktional_variable(name)                     __is_funktional__##name
+#define def_pcfunk__is_funktional_variable__define(name)             f2ptr def_pcfunk__is_funktional_variable(name) = nil
+#define def_pcfunk__is_funktional_variable__init(name, doc_string)   def_pcfunk__is_funktional_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);
+#define def_pcfunk__is_funktional_variable__init__defragment__fix_pointers(name) { \
+    if(def_pcfunk__is_funktional_variable(name) != nil) {		\
+      def_pcfunk__is_funktional_variable(name) = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), def_pcfunk__is_funktional_variable(name)); \
+    }									\
+  }
 
-#define def_pcfunk__has_side_effects_variable(name)                   __has_side_effects__##name
-#define def_pcfunk__has_side_effects_variable__define(name)           f2ptr def_pcfunk__has_side_effects_variable(name) = nil
-#define def_pcfunk__has_side_effects_variable__init(name, doc_string) if(!def_pcfunk__has_side_effects_variable(name)) {def_pcfunk__has_side_effects_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);}
+#define def_pcfunk__has_side_effects_variable(name)                     __has_side_effects__##name
+#define def_pcfunk__has_side_effects_variable__define(name)             f2ptr def_pcfunk__has_side_effects_variable(name) = nil
+#define def_pcfunk__has_side_effects_variable__init(name, doc_string)   def_pcfunk__has_side_effects_variable(name) = f2string__new(initial_cause(), strlen(doc_string), (u8*)doc_string);
+#define def_pcfunk__has_side_effects_variable__init__defragment__fix_pointers(name) { \
+    if(def_pcfunk__has_side_effects_variable(name) != nil) {		\
+      def_pcfunk__has_side_effects_variable(name) = funk2_defragmenter__memory_pool__lookup_new_f2ptr(&(__funk2.defragmenter), def_pcfunk__has_side_effects_variable(name)); \
+    }									\
+  }
 
 
 #define PCFUNK__PROPOGATE_THIS_CAUSE
@@ -591,7 +606,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) != 2) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 2, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     def_body;								\
   }
@@ -602,7 +617,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) < 2) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 2, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     f2ptr def_var2 = f2cons__cdr(simple_args__iter, this_cause);	\
     def_body;								\
@@ -614,7 +629,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) != 3) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 3, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     def_body;								\
@@ -626,7 +641,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) < 3) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 3, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     f2ptr def_var3 = f2cons__cdr(simple_args__iter, this_cause);	\
@@ -639,7 +654,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) != 4) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 4, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var3 = f2cons__car(simple_args__iter, this_cause); \
@@ -652,7 +667,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) < 4) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 4, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var3 = f2cons__car(simple_args__iter, this_cause); \
@@ -666,7 +681,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) != 5) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 5, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var3 = f2cons__car(simple_args__iter, this_cause); \
@@ -680,7 +695,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) < 5) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 5, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var3 = f2cons__car(simple_args__iter, this_cause); \
@@ -695,7 +710,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) != 6) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 6, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var3 = f2cons__car(simple_args__iter, this_cause); \
@@ -710,7 +725,7 @@
     def_pcfunk__this_cause__define(def_name);				\
     def_pcfunk__this_symbol__define(def_name);				\
     if(!simple_args || raw__simple_length(this_cause, simple_args) < 6) {return f2__argument_number_check_failure__larva__new(this_cause, this_symbol, 6, simple_args);} \
-    f2ptr simple_args__iter = simple_args;                                f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
+    f2ptr simple_args__iter = simple_args;                          f2ptr def_var0 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var1 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var2 = f2cons__car(simple_args__iter, this_cause); \
     simple_args__iter = f2cons__cdr(simple_args__iter, this_cause); f2ptr def_var3 = f2cons__car(simple_args__iter, this_cause); \
@@ -719,6 +734,13 @@
     f2ptr def_var6 = f2cons__cdr(simple_args__iter, this_cause);	\
     def_body;								\
   }
+
+
+#define f2__primcfunk__init__defragment__fix_pointers(def_name)		\
+  def_pcfunk__symbolvar__init__defragment__fix_pointers(def_name);	\
+  def_pcfunk__is_funktional_variable__init__defragment__fix_pointers(def_name); \
+  def_pcfunk__has_side_effects_variable__init__defragment__fix_pointers(def_name);
+
 
 #define f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, cfunk_args_code) \
   f2ptr c_cfunk_var = nil;						\

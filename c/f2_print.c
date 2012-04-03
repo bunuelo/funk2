@@ -289,7 +289,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
     if (stream) {raw__stream__writef(cause, stream, "*");} width ++;
   } else {
     if (exp == nil) {
-      f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
+      f2__write__ansi_color(cause, stream, print__ansi__nil__foreground, use_ansi_colors, use_html);
       if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__left_paren, cause));} width ++;
       if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
       f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
@@ -549,8 +549,8 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		int write_car_with_space = 0;
 		if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__left_paren, cause));} indent_space_num ++; available_width --;
 		while (iter) {
-		  cdr = f2cons__cdr(iter, cause);
-		  f2ptr car = f2cons__car(iter, cause);
+		  cdr       = assert_value(f2__cons__cdr(cause, iter));
+		  f2ptr car = assert_value(f2__cons__car(cause, iter));
 		  if (write_car_with_space) {
 		    //int car__try_wide = try_wide;
 		    
@@ -1308,7 +1308,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	      {
 		f2ptr slot_iter = get_keys;
 		while (slot_iter) {
-		  f2ptr slot_name  = f2cons__car(slot_iter, cause);
+		  f2ptr slot_name  = assert_value(f2__cons__car(cause, slot_iter));
 		  if (! raw__eq(cause, slot_name, __funk2.globalenv.type__symbol)) {
 		    if (raw__symbol__is_type(cause, slot_name)) {
 		      u64 slot_name__length = f2symbol__length(slot_name, cause);
@@ -1334,7 +1334,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 		    }
 		    keyvalue_pairs = f2cons__new(cause, f2cons__new(cause, slot_name, slot_value), keyvalue_pairs);
 		  }
-		  slot_iter = f2cons__cdr(slot_iter, cause);
+		  slot_iter = assert_value(f2__cons__cdr(cause, slot_iter));
 		}
 	      }
 	      {
@@ -1715,17 +1715,20 @@ def_pcfunk1(exp__printable_value, this,
 
 // **
 
+void f2__print__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(exp__printable_value);
+}
+
 void f2__print__reinitialize_globalvars() {
+  f2__primcfunk__init__1(exp__printable_value, this);
 }
 
 void f2__print__initialize() {
-  //f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "print", "", &f2__print__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "print", "", &f2__print__reinitialize_globalvars, &f2__print__defragment__fix_pointers);
   
   f2__print__reinitialize_globalvars();
-  
-  f2__primcfunk__init__1(exp__printable_value, this);
-  
 }
 

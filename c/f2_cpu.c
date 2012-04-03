@@ -93,17 +93,26 @@ def_pcfunk0(cpu__total_cpu_usage,
 
 // **
 
-void f2__cpu__reinitialize_globalvars() {
+void f2__cpu__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(cpu__user_cpu_usage);
+  f2__primcfunk__init__defragment__fix_pointers(cpu__system_cpu_usage);
+  f2__primcfunk__init__defragment__fix_pointers(cpu__total_cpu_usage);
+  
 }
 
-void f2__cpu__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "cpu", "", &f2__cpu__reinitialize_globalvars);
-  
-  f2__cpu__reinitialize_globalvars();
-  
+void f2__cpu__reinitialize_globalvars() {
   f2__primcfunk__init__0(cpu__user_cpu_usage);
   f2__primcfunk__init__0(cpu__system_cpu_usage);
   f2__primcfunk__init__0(cpu__total_cpu_usage);
+}
+
+void f2__cpu__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "cpu", "", &f2__cpu__reinitialize_globalvars, &f2__cpu__defragment__fix_pointers);
   
+  f2__cpu__reinitialize_globalvars();
 }
 

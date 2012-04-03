@@ -49,6 +49,11 @@
 
 [primfunk:memory__assert_valid]
 
+`[primfunk:defragmenter__signal_start]
+`[yield]
+
+`[primfunk:memory__assert_valid]
+
 [primfunk:load 'fu2/primfunks.fu2']
 [primfunk:load 'fu2/primfunks-array.fu2']
 [primfunk:load 'fu2/primfunks-apropos.fu2']
@@ -1078,22 +1083,22 @@
 		     exit_status exit_status]]]]]]
 
 [defmetro defmetro [name args :rest body]
-  [terminal_format standard-terminal '\n' `[defmetro ,name ,args]]
-  `[globalize-funk ,name [metro-new_with_name ,name ,args
-					      @body]]]
+  `[prog [terminal_format standard-terminal '\n' [quote ,`[defmetro ,name ,args]]]
+	 [globalize-funk ,name [metro-new_with_name ,name ,args
+						    @body]]]]
 
 [defmetro defunk [name args :rest body]
-  [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
-  `[globalize-funk ,name
-		   [funk-new_with_name ,name ,args
-				       @body]]]
+  `[prog [terminal_format standard-terminal '\n' [quote ,`[defunk ,name ,args]]]
+	 [globalize-funk ,name
+			 [funk-new_with_name ,name ,args
+					     @body]]]]
 
 [globalize memory:debug nil]
 
 [defunk memory-debug_assert_valid []
   [if memory:debug
-    [prog [terminal_format standard-terminal '\nfilename-load: Asserting memory valid...']
-	  [memory-debug_assert_valid]
+    [prog [terminal_format standard-terminal '\nmemory-debug_assert_valid: Asserting memory valid...']
+	  [memory-assert_valid]
 	  [terminal_format standard-terminal '  Memory is valid.']
 	  nil]]]
 
@@ -1133,10 +1138,6 @@
 		 'funkϩ: done compiling fu2/bootstrap-repl.fu2.' '\n'
 		 'funkϩ: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
 
-`[primfunk:memory_image__save 'img/bootstrap-repl.img']
-
-
-'These management commands don\'t actually execute until this file reaches EOF.'
 [management_thread-add_save_memory_image_command 'img/bootstrap-repl.img']
 [management_thread-add_exit_command 0]
 

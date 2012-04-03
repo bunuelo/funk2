@@ -72,25 +72,27 @@ def_pcfunk0(system__clear_signal__sigint,
 	    return f2__system__clear_signal__sigint(this_cause));
 
 
-void f2__signal__reinitialize_globalvars() {
-  //f2ptr cause =
-  f2_signal_c__cause__new(initial_cause());
+// **
+
+void f2__signal__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
   
+  f2__primcfunk__init__defragment__fix_pointers(system__received_signal__sigint);
+  f2__primcfunk__init__defragment__fix_pointers(system__clear_signal__sigint);
+}
+
+void f2__signal__reinitialize_globalvars() {
+  f2__primcfunk__init__0(system__received_signal__sigint);
+  f2__primcfunk__init__0(system__clear_signal__sigint);
 }
 
 void f2__signal__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "signal", "", &f2__signal__reinitialize_globalvars);
-  
-  //f2ptr cause =
-  f2_signal_c__cause__new(initial_cause());
+  funk2_module_registration__add_module(&(__funk2.module_registration), "signal", "", &f2__signal__reinitialize_globalvars, &f2__signal__defragment__fix_pointers);
   
   f2__signal__reinitialize_globalvars();
   
   signal(SIGINT,  funk2_receive_signal);
   signal(SIGSEGV, funk2_receive_signal);
-
-  f2__primcfunk__init__0(system__received_signal__sigint);
-  f2__primcfunk__init__0(system__clear_signal__sigint);
-
 }
 

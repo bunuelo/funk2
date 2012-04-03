@@ -151,7 +151,6 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__block_eval_args_end__execution_count;
   
   f2ptr expression_not_funkable__exception__tag;
-  f2ptr expression_not_funkable__exception;
   
   int push_pop_value_difference;
   int push_pop_iter_difference;

@@ -49,7 +49,7 @@ void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* 
     exit(-1);
   }
   new_memory->ptr = ((new_memory->raw_ptr + f2ptr_block__max_value) >> f2ptr_block__bit_num) << f2ptr_block__bit_num;
-  if (old_memory->byte_num > byte_num) {
+  if (old_memory->byte_num < byte_num) {
     memset(((u8*)from_ptr(new_memory->ptr)) + old_memory->byte_num, 0, byte_num - (old_memory->byte_num));
   }
   new_memory->byte_num = byte_num;

@@ -795,51 +795,149 @@ f2ptr f2fiber_stack_trace_block__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
+void f2__fiber__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // initialize fiber register symbols
+  defragment__fix_pointer(__fiber__program_counter_reg__symbol);
+  defragment__fix_pointer(__fiber__iter_reg__symbol);
+  defragment__fix_pointer(__fiber__env_reg__symbol);
+  defragment__fix_pointer(__fiber__args_reg__symbol);
+  defragment__fix_pointer(__fiber__return_reg__symbol);
+  defragment__fix_pointer(__fiber__value_reg__symbol);
+  
+  // initialize other misc. symbols
+  defragment__fix_pointer(__fiber__environment_critics__symbol);
+  
+  
+  // -- initialize --
+  
+  // fiber
+  
+  initialize_primobject_27_slot__defragment__fix_pointers(fiber,
+							  program_counter,
+							  stack,
+							  iter,
+							  env,
+							  args,
+							  return_reg,
+							  value,
+							  trace,
+							  cause_reg_cmutex,
+							  cause_reg,
+							  keep_undead,
+							  is_zombie,
+							  parent_fiber,
+							  parent_env,
+							  execute_cmutex,
+							  paused,
+							  last_executed_time,
+							  sleep_until_time,
+							  execution_nanoseconds,
+							  bytecode_count,
+							  processor_assignment_scheduler_cmutex,
+							  processor_assignment_index,
+							  should_quit,
+							  exit_cmutex,
+							  exit_status,
+							  bug_trigger,
+							  complete_trigger);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__do_sleep_until_time);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__sleep_for_nanoseconds);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__is_complete);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__quit);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.quit__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.stack_trace__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__stack_trace);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.stack_trace__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.wait_for_either_complete_or_encounter_bug__without_yield__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__wait_for_either_complete_or_encounter_bug__without_yield);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.wait_for_either_complete_or_encounter_bug__without_yield__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(fiber__print_stack_trace); 
+  
+  
+  // fiber_stack_trace
+  
+  initialize_primobject_1_slot__defragment__fix_pointers(fiber_stack_trace,
+							 stack);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.as__string__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__as__string);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.as__string__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.next__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__next);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.next__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.first__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__first);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.first__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.print__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__print);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.print__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.as__printable__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__as__printable);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.as__printable__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.terminal_print_with_frame__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.blocks__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace__blocks);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace.blocks__funk);
+  
+  
+  // fiber_stack_trace_block
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(fiber_stack_trace_block,
+							 funk,
+							 argument_frame);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.funk_name__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__funk_name);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.funk_name__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__string__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__as__string);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.as__string__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.printable_argument_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__printable_argument_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.printable_argument_frame__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.print__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__print);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.print__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber_stack_trace_block__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__funk);
+}
+
 void f2__fiber__reinitialize_globalvars() {
   f2ptr cause = f2_fiber_c__cause__new(initial_cause());
   
-  // initialize type symbols
-  
-  // fiber
-  __fiber__symbol = new__symbol(cause, "fiber");
-  
-  // fiber_stack_trace
-  __fiber_stack_trace__symbol = new__symbol(cause, "fiber_stack_trace");
-  
-  // fiber_stack_trace_block
-  __fiber_stack_trace_block__symbol = new__symbol(cause, "fiber_stack_trace_block");
-  
-  
-  
-  // initialize fiber register symbols
-  __fiber__program_counter_reg__symbol = new__symbol(cause, "program_counter");
-  __fiber__iter_reg__symbol            = new__symbol(cause, "iter");
-  __fiber__env_reg__symbol             = new__symbol(cause, "env");
-  __fiber__args_reg__symbol            = new__symbol(cause, "args");
-  __fiber__return_reg__symbol          = new__symbol(cause, "return");
-  __fiber__value_reg__symbol           = new__symbol(cause, "value");
-  
-  // initialize other misc. symbols
-  __fiber__environment_critics__symbol = new__symbol(cause, "-environment_critics-");
-  
-}
-
-void f2__fiber__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "fiber", "", &f2__fiber__reinitialize_globalvars);
-  
-  f2__fiber__reinitialize_globalvars();
-  f2ptr cause = f2_fiber_c__cause__new(initial_cause());
-  
-  environment__add_var_value(cause, global_environment(), __fiber__program_counter_reg__symbol,     nil);
-  environment__add_var_value(cause, global_environment(), __fiber__iter_reg__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __fiber__env_reg__symbol,                 nil);
-  environment__add_var_value(cause, global_environment(), __fiber__args_reg__symbol,                nil);
-  environment__add_var_value(cause, global_environment(), __fiber__return_reg__symbol,              nil);
-  environment__add_var_value(cause, global_environment(), __fiber__value_reg__symbol,               nil);
-  environment__add_var_value(cause, global_environment(), __fiber__environment_critics__symbol,     nil);
-  //environment__add_var_value(cause, global_environment(), __fiber__execute_bytecode__cause__symbol, nil);
-
-
   // fiber
   
   initialize_primobject_27_slot(fiber,
@@ -928,5 +1026,22 @@ void f2__fiber__initialize() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(fiber_stack_trace_block__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber_stack_trace_block.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
+  // reinitialize fiber register symbols
+  __fiber__program_counter_reg__symbol = new__symbol(cause, "program_counter");
+  __fiber__iter_reg__symbol            = new__symbol(cause, "iter");
+  __fiber__env_reg__symbol             = new__symbol(cause, "env");
+  __fiber__args_reg__symbol            = new__symbol(cause, "args");
+  __fiber__return_reg__symbol          = new__symbol(cause, "return");
+  __fiber__value_reg__symbol           = new__symbol(cause, "value");
+  
+  // reinitialize other misc. symbols
+  __fiber__environment_critics__symbol = new__symbol(cause, "-environment_critics-");
+  
+}
+
+void f2__fiber__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "fiber", "", &f2__fiber__reinitialize_globalvars, &f2__fiber__defragment__fix_pointers);
+  
+  f2__fiber__reinitialize_globalvars();
 }
 

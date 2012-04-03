@@ -19,31 +19,14 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__KNOWLEDGE__TYPES__H
-#define F2__KNOWLEDGE__TYPES__H
+#include "funk2.h"
 
-typedef struct funk2_object_type__knowledge__slot_s funk2_object_type__knowledge__slot_t;
-struct funk2_object_type__knowledge__slot_s {
-  f2ptr new__symbol;
-  f2ptr new__funk;
-};
+// garbage_collector_block_header
 
+void funk2_garbage_collector_block_header__init(funk2_garbage_collector_block_header_t* this) {
+  this->tricolor = funk2_tricolor__grey;
+}
 
-#endif // F2__KNOWLEDGE__TYPES__H
-
-#ifndef F2__KNOWLEDGE__H
-#define F2__KNOWLEDGE__H
-
-// knowledge
-
-declare_frame_object_1_slot(knowledge,
-			    object);
-
-f2ptr f2knowledge__primobject_type__new_aux(f2ptr cause);
-
-// **
-
-void f2__knowledge__initialize();
-
-#endif // F2__KNOWLEDGE__H
+void funk2_garbage_collector_block_header__destroy(funk2_garbage_collector_block_header_t* this) {
+}
 

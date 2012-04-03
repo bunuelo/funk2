@@ -144,7 +144,6 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode_trace__print_depth = 3;
   
   this->expression_not_funkable__exception__tag = -1;
-  this->expression_not_funkable__exception      = -1;
   
   this->push_pop_value_difference           = 0;
   this->push_pop_iter_difference            = 0;
@@ -316,14 +315,15 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       u8*   str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
-	raw__symbol__str_copy(cause, name, str);
+	str = (u8*)from_ptr(f2__malloc(str_len + 1));
+	raw__symbol__utf8_str_copy(cause, name, str);
 	str[str_len] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
+	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
 	strcpy((char*)str, "<none>");
       }
       bytecode_status("executing funk name=|%s| body_bcs=%s machine_code=%s", str, body_bcs ? "<not nil>" : "nil", machine_code ? "<not nil>" : "nil");
+      f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
     if (raw__larva__is_type(cause, body_bcs)) {
@@ -342,17 +342,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2cfunk__name(funktion, cause);
-      u8*   str;
+      u8*   name__utf8_str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
-	raw__symbol__str_copy(cause, name, str);
-	str[str_len] = 0;
+	u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
+	name__utf8_str = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
+	raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
+	name__utf8_str[name__utf8_length] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
-	strcpy((char*)str, "<none>");
+	name__utf8_str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
+	strcpy((char*)name__utf8_str, "<none>");
       }
-      bytecode_status("executing cfunk name=|%s|", str);
+      bytecode_status("executing cfunk name=|%s|", name__utf8_str);
+      f2__free(to_ptr(name__utf8_str));
     }
 #endif // DEBUG_BYTECODES
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
@@ -370,17 +371,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2__core_extension_funk__name(funktion, cause);
-      u8*   str;
+      u8*   name__utf8_str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
-	raw__symbol__str_copy(cause, name, str);
-	str[str_len] = 0;
+	u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
+	name__utf8_str = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
+	raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
+	name__utf8_str[name__utf8_length] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
-	strcpy((char*)str, "<none>");
+	name__utf8_str = (u8*)from_ptr(malloc(strlen("<none>") + 1));
+	strcpy((char*)name__utf8_str, "<none>");
       }
-      bytecode_status("executing core_extension_funk name=|%s|", str);
+      bytecode_status("executing core_extension_funk name=|%s|", name__utf8_str);
+      f2__free(to_ptr(name__utf8_str));
     }
 #endif // DEBUG_BYTECODES
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
@@ -402,17 +404,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = raw__metro__name(cause, funktion);
-      u8*   str;
+      u8*   name__utf8_str;
       if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)alloca(str_len + 1);
-	raw__symbol__str_copy(cause, name, str);
-	str[str_len] = 0;
+	u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
+	name__utf8_str = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
+	raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
+	name__utf8_str[name__utf8_length] = 0;
       } else {
-	str = (u8*)alloca(strlen("<none>") + 1);
-	strcpy((char*)str, "<none>");
+	name__utf8_str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
+	strcpy((char*)name__utf8_str, "<none>");
       }
-      bytecode_status("executing metro name=|%s|", str);
+      bytecode_status("executing metro name=|%s|", name__utf8_str);
+      f2__free(to_ptr(name__utf8_str));
     }
 #endif // DEBUG_BYTECODES
     f2fiber__env__set(fiber, cause, raw__metro__env(cause, funktion));
@@ -429,6 +432,16 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     } else {
       return 1;
     }
+  }
+  { // debugging code
+    if (raw__chunk__is_type(cause, funktion)) {
+      status("f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg bug: cannot_funk_unfunkable_funktion (saving chunk to 'larva_18.chunk'.");
+      raw__chunk__save(cause, funktion, new__string(cause, "larva_18.chunk"));
+    } else {
+      status("f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg bug: cannot_funk_unfunkable_funktion.");
+      f2__print(cause, funktion);
+    }
+    error(nil, "f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg bug: cannot_funk_unfunkable_funktion.");
   }
   f2ptr bug_frame = f2__frame__new(cause, nil);
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "cannot_funk_unfunkable_funktion"));
@@ -1609,18 +1622,20 @@ int f2__fiber__bytecode__lookup(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr v
   __funk2.bytecode.bytecode__lookup__execution_count ++;
 #ifdef DEBUG_BYTECODES
   {
-    u64 var_len;
-    u8* var_str;
+    u64 var__utf8_length;
+    u8* var__utf8_str;
     if (raw__symbol__is_type(cause, var)) {
-      var_len = raw__symbol__length(cause, var);
-      var_str = alloca(var_len + 1);
-      raw__symbol__str_copy(cause, var, var_str);
-      var_str[var_len] = 0;
+      var__utf8_length = raw__symbol__utf8_length(cause, var);
+      var__utf8_str = (u8*)from_ptr(f2__malloc(var__utf8_length + 1));
+      raw__symbol__utf8_str_copy(cause, var, var__utf8_str);
+      var__utf8_str[var__utf8_length] = 0;
     } else {
-      var_str = (u8*)"<non-symbol>";
+      var__utf8_str = (u8*)from_ptr(f2__malloc(strlen("<non-symbol>") + 1));
+      strcpy((char*)var__utf8_str, "<non-symbol>");
     }
     f2ptr env = f2fiber__env(fiber, cause);
-    bytecode_status("bytecode lookup beginning.  var=%s env=%s", var_str, env ? "<non-nil>" : "nil");
+    bytecode_status("bytecode lookup beginning.  var=%s env=%s", var__utf8_str, env ? "<non-nil>" : "nil");
+    f2__free(to_ptr(var__utf8_str));
   }
 #endif // DEBUG_BYTECODES  
   f2ptr fiber_value = f2__fiber__lookup_type_variable_value(cause, fiber, type, var);
@@ -3039,11 +3054,87 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__block_eval_args_end__symbol        = new__symbol(cause, "block_eval_args_end");
   
   __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
-  __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
+}
+
+void f2__bytecodes__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(__funk2.bytecode.bytecode__jump_funk__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__funk__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__array__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__cons__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__consp__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__car__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__cdr__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__car__set__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__cdr__set__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__array_elt__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__set__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__swap__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__push__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__push_constant__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__copy__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__lookup__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__define__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__type_var__mutate__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__globalize_type_var__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__jump__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__if_jump__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__else_jump__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__nop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__debug__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__tracer__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__endfunk__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__compile__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__yield__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__newenv__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__machine_code__symbol);
+  
+  // logic
+  defragment__fix_pointer(__funk2.bytecode.bytecode__eq__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__not__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__and__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__or__symbol);
+  
+  // math
+  defragment__fix_pointer(__funk2.bytecode.bytecode__add__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__negative__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__subtract__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__multiply__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__inverse__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__divide__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__modulo__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__increment__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__decrement__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__numerically_equals__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__less_than__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__greater_than__symbol);
+  
+  // block
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_push__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_enter__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_define_rest_argument__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_define_argument__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_define_last_argument__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_exit_and_pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_exit_and_no_pop__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_eval_args_begin__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_eval_args_next__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__block_eval_args_end__symbol);
+  
+  
+  // -- initialize --
+  
+  // exceptions
+  
+  defragment__fix_pointer(__funk2.bytecode.expression_not_funkable__exception__tag);
+  
 }
 
 void f2__bytecodes__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "bytecodes", "", &f2__bytecodes__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "bytecodes", "", &f2__bytecodes__reinitialize_globalvars, &f2__bytecodes__defragment__fix_pointers);
   
   f2__bytecodes__reinitialize_globalvars();
   
@@ -3052,7 +3143,5 @@ void f2__bytecodes__initialize() {
   // exceptions
   
   __funk2.bytecode.expression_not_funkable__exception__tag = new__symbol(cause, "expression-not-funkable");
-  __funk2.bytecode.expression_not_funkable__exception      = f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, nil);
-  environment__add_var_value(cause, global_environment(), __funk2.bytecode.expression_not_funkable__exception__tag, __funk2.bytecode.expression_not_funkable__exception);
 }
 

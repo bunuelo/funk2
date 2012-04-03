@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2008 Bo Morgan.
+// Copyright (c) 2007-2012 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -89,15 +89,56 @@ f2ptr f2__fcntl__o_rdwr(f2ptr cause)      {return f2integer__new(cause, O_RDWR);
 
 // **
 
-void f2__primfunks__fcntl__reinitialize_globalvars() {
-  //f2ptr cause = f2_primfunks__fcntl_c__cause__new(initial_cause(), nil, nil);
+void f2__primfunks__fcntl__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__getfd);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__setfd);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__getfl);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__setfl);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_dupfd);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_getfd);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_setfd);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_getfl);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_setfl);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_getown);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_setown);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_getlk);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_setlk);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__f_setlkw);
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_append);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_creat);
+  
+#ifndef F2__CYGWIN
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_async);
+#endif
+  
+#ifndef F2__APPLE
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_direct);	
+#endif
+  
+#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_largefile);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_noatime);
+#endif
+  
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_directory);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_excl);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_noctty);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_nofollow);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_nonblock);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_sync);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_trunc);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_rdonly);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_wronly);
+  f2__primcfunk__init__defragment__fix_pointers(f2__fcntl__o_rdwr);
 }
 
-void f2__primfunks__fcntl__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks__fcntl", "", &f2__primfunks__fcntl__reinitialize_globalvars);
-  
-  f2__primfunks__fcntl__reinitialize_globalvars();
-  
+void f2__primfunks__fcntl__reinitialize_globalvars() {
   f2__primcfunk__init(f2__fcntl);
   f2__primcfunk__init(f2__fcntl__getfd);
   f2__primcfunk__init(f2__fcntl__setfd);
@@ -140,6 +181,12 @@ void f2__primfunks__fcntl__initialize() {
   f2__primcfunk__init(f2__fcntl__o_rdonly);
   f2__primcfunk__init(f2__fcntl__o_wronly);
   f2__primcfunk__init(f2__fcntl__o_rdwr);
+}
+
+void f2__primfunks__fcntl__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks-fcntl", "", &f2__primfunks__fcntl__reinitialize_globalvars, &f2__primfunks__fcntl__defragment__fix_pointers);
+  
+  f2__primfunks__fcntl__reinitialize_globalvars();
 }
 
   

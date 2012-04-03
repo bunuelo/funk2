@@ -289,18 +289,22 @@ def_pcfunk1(global_virtual_processor_handler__set_hardware_affinities_enabled, h
 
 // **
 
+void f2__virtual_processor_handler__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(global_virtual_processor_handler__hardware_affinities_enabled);
+  f2__primcfunk__init__defragment__fix_pointers(global_virtual_processor_handler__set_hardware_affinities_enabled);
+}
+
 void f2__virtual_processor_handler__reinitialize_globalvars() {
+  f2__primcfunk__init__0(global_virtual_processor_handler__hardware_affinities_enabled);
+  f2__primcfunk__init__1(global_virtual_processor_handler__set_hardware_affinities_enabled, enable_hardware_affinities);
 }
 
 void f2__virtual_processor_handler__initialize() {
-  //f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "virtual_processor_handler", "", &f2__virtual_processor_handler__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "virtual_processor_handler", "", &f2__virtual_processor_handler__reinitialize_globalvars, &f2__virtual_processor_handler__defragment__fix_pointers);
   
   f2__virtual_processor_handler__reinitialize_globalvars();
-  
-  f2__primcfunk__init__0(global_virtual_processor_handler__hardware_affinities_enabled);
-  f2__primcfunk__init__1(global_virtual_processor_handler__set_hardware_affinities_enabled, enable_hardware_affinities);
-  
 }
 

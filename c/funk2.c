@@ -42,22 +42,10 @@ void f2__initialize() {
   // ** 
   {
     {
-      {
-	funk2_module_registration__add_module(&(__funk2.module_registration), "(primobjects)", "", &f2__primobjects__reinitialize_globalvars);
-	f2__primobjects__reinitialize_globalvars();
-      }
-      {
-	funk2_module_registration__add_module(&(__funk2.module_registration), "(cause)", "", &f2__cause__reinitialize_globalvars);
-	f2__cause__reinitialize_globalvars();
-      }
-      {
-	funk2_module_registration__add_module(&(__funk2.module_registration), "(primobject-ptypehash)", "", &f2__primobject__ptypehash__reinitialize_globalvars);
-	f2__primobject__ptypehash__reinitialize_globalvars(); 
-      }
-      {
-	funk2_module_registration__add_module(&(__funk2.module_registration), "(primobject-frame)", "", &f2__primobject_frame__reinitialize_globalvars);
-	f2__primobject_frame__reinitialize_globalvars();
-      }
+      f2__primobjects__preinitialize_globalvars();
+      f2__cause__preinitialize_globalvars();
+      f2__primobject__ptypehash__preinitialize_globalvars(); 
+      f2__primobject_frame__preinitialize_globalvars();
     }
     f2__primobject_environment__initialize();
     f2__globalenv__initialize();
@@ -99,11 +87,10 @@ void f2__initialize() {
   f2__scheduler__initialize();
   f2__funk2_node__initialize();
   f2__peer_command_server__initialize();
-  f2__primfunks__ioctl__initialize();
   f2__primfunks__locale__initialize();
   f2__ansi__initialize();
   f2__termios__initialize();
-  f2__ptypes__initialize__object_slots();
+  f2__ptypes_object_slots__initialize();
   f2__primobject__dynamic_library__initialize();
   f2__gmodule__initialize();
   f2__string__initialize();
@@ -119,7 +106,6 @@ void f2__initialize() {
   f2__garbage_collector__initialize();
   f2__defragmenter__initialize();
   f2__frame_objects__initialize();
-  f2__agent__initialize();
   f2__primobject_hash__initialize();
   f2__dlfcn__initialize();
   f2__cause__initialize();
@@ -140,7 +126,6 @@ void f2__initialize() {
   f2__graph_match_error_correcting__initialize();
   f2__terminal_print__initialize();
   f2__nil__initialize();
-  f2__knowledge__initialize();
   f2__natural_language__initialize();
   f2__partial_order__initialize();
   f2__core_extension_funk__initialize();

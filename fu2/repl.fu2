@@ -160,7 +160,7 @@
 		    [if [null file-stream]
 			[error load-error [format nil 'load error: could not open "' filename '" for reading.']]
 		      [let [[result [with-new-cause [cause-define source-filename filename]
-						    [terminal_repl-io file-stream nil nil nil]
+						    [terminal_repl-io file-stream nil]
 						    ]]]
 			[stream-close file-stream]
 			[memory-debug_assert_valid]

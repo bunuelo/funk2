@@ -32,6 +32,16 @@ void funk2_primobject__environment__reinit(funk2_primobject__environment_t* this
   this->current_environment__symbol = new__symbol(initial_cause(), "current_environment");
 }
 
+void funk2_primobject__environment__defragment__fix_pointers(funk2_primobject__environment_t* this) {
+  // -- reinitialize --
+  
+  defragment__fix_pointer(this->environment__symbol);
+  defragment__fix_pointer(this->current_environment__symbol);
+  
+  
+  // -- initialize --
+}
+
 void funk2_primobject__environment__destroy(funk2_primobject__environment_t* this) {
 }
 
@@ -169,22 +179,16 @@ f2ptr f2environment__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject_environment__reinitialize_globalvars() {
+void f2__primobject_environment__preinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
   funk2_primobject__environment__reinit(&(__funk2.primobject__environment));
   
-  __environment__symbol = new__symbol(initial_cause(), "environment");
+  reinitialize_primobject(environment);
 }
 
-void f2__primobject_environment__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-environment", "", &f2__primobject_environment__reinitialize_globalvars);
-  
-  f2__primobject_environment__reinitialize_globalvars();
-  
-  global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause(), nil),
-					     nil,
-					     new__symbol(initial_cause(), "global_environment")));
-  
-  funk2_primobject__environment__init(&(__funk2.primobject__environment));
+void f2__primobject_environment__reinitialize_globalvars() {
+  f2__primobject_environment__preinitialize_globalvars();
   
   f2ptr cause = initial_cause();
   
@@ -203,5 +207,54 @@ void f2__primobject_environment__initialize() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(environment__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__funk = never_gc(cfunk);}
   
+}
+
+void f2__primobject_environment__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  funk2_primobject__environment__defragment__fix_pointers(&(__funk2.primobject__environment));
+  
+  
+  // -- initialize --
+  
+  // environment
+  
+  initialize_primobject_3_slot__defragment__fix_pointers(environment, frame, parent_env, desc);
+  
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.new__symbol);
+  //f2__primcfunk__init__defragment__fix_pointers(environment__new);
+  //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__add_type_var_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.add_type_var_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__lookup_type_var_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.lookup_type_var_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__type_var_value__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.type_var_value__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(environment__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_environment.terminal_print_with_frame__funk);
+  
+}
+
+void f2__primobject_environment__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-environment", "", &f2__primobject_environment__reinitialize_globalvars, &f2__primobject_environment__defragment__fix_pointers);
+  
+  f2__primobject_environment__preinitialize_globalvars();
+  
+  global_environment__set(f2environment__new(initial_cause(), f2__frame__new(initial_cause(), nil),
+					     nil,
+					     new__symbol(initial_cause(), "global_environment")));
+  
+  funk2_primobject__environment__init(&(__funk2.primobject__environment));
+  
+  f2__primobject_environment__reinitialize_globalvars();
+
 }
 

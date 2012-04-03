@@ -153,6 +153,16 @@ AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol])
 
+AC_CHECK_LIB(rt,clock_gettime, [need_realtime_link_in_makefile=1], [need_realtime_link_in_makefile=0])
+AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)
+if test $need_realtime_link_in_makefile == 1
+then
+  AC_MSG_NOTICE([Need to Link to RealTime Library to use clock_gettime.])
+  AC_DEFINE(F2__HAVE_CLOCK_GETTIME, 1, Have clock_gettime support)
+else
+  AC_MSG_ERROR([*** Funk2 requires the clock_gettime function in order to measure process and thread execution times.])
+fi
+
 # checks for opengl
 AX_CHECK_GL
 AX_CHECK_GLU

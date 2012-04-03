@@ -108,9 +108,9 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
   if (! (virtual_processor_thread->exit)) {
     funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
     this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
-    f2ptr     cause      = nil;
-    f2ptr     processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
-    f2ptr     processor  = raw__array__elt(cause, processors, this->index);
+    f2ptr cause      = nil;
+    f2ptr processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+    f2ptr processor  = raw__array__elt(cause, processors, this->index);
     { // assert processor has correct index.
       int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
       if (pool_index != this->index) {

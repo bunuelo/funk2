@@ -4805,23 +4805,114 @@ f2ptr f2__funk__optimize(f2ptr cause, f2ptr this, f2ptr maximum_loop_count) {
 
 // **
 
-void f2__optimize__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
+void f2__optimize__defragment__fix_pointers() {
+  // -- reinitialize --
   
-  __optimize_bytecode__symbol   = new__symbol(cause, "optimize_bytecode");
-  __optimize_chunk__symbol      = new__symbol(cause, "optimize_chunk");
-  __optimize_transition__symbol = new__symbol(cause, "optimize_transition");
-  __optimize_data__symbol       = new__symbol(cause, "optimize_data");
-  __optimize_fiber__symbol      = new__symbol(cause, "optimize_fiber");
-  __optimize_context__symbol    = new__symbol(cause, "optimize_context");
+  
+  // -- initialize --
+  
+  // optimize_bytecode
+  
+  initialize_primobject_3_slot__defragment__fix_pointers(optimize_bytecode,
+							 optimize_context,
+							 sequence,
+							 execution_count);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_bytecode.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_bytecode__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_bytecode.terminal_print_with_frame__funk);
+  
+  
+  // optimize_chunk
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(optimize_chunk,
+							 bytecode_sequence,
+							 transition);
+  
+  f2__primcfunk__init__defragment__fix_pointers(optimize_chunk__new_from_bytecodes);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_chunk__as__bytecodes);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.as__bytecodes__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_chunk__possible_optimized_funk_bytecodes);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.possible_optimized_funk_bytecodes__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_chunk__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_chunk.terminal_print_with_frame__funk);
+  
+  
+  
+  // optimize_transition
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(optimize_transition,
+							 transition_type,
+							 next_chunk,
+							 true_chunk,
+							 false_chunk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_transition__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_transition.terminal_print_with_frame__funk);
+  
+  
+  // optimize_data
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(optimize_data,
+							 optimize_context,
+							 name,
+							 data_type,
+							 args);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_data__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_data.terminal_print_with_frame__funk);
+  
+  
+  // optimize_fiber
+  
+  initialize_primobject_13_slot__defragment__fix_pointers(optimize_fiber,
+							  optimize_context,
+							  parent_branched_fiber,
+							  branch_condition_data,
+							  true_child_branched_fiber,
+							  false_child_branched_fiber,
+							  data_side_effects,
+							  stack,
+							  value,
+							  iter,
+							  program_counter,
+							  args,
+							  return_reg,
+							  env);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_fiber__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_fiber.terminal_print_with_frame__funk);
+  
+  
+  // optimize_context
+  
+  initialize_primobject_9_slot__defragment__fix_pointers(optimize_context,
+							 maximum_loop_count,
+							 optimize_bytecode_sequence_hash,
+							 initial_fiber,
+							 active_fiber_set,
+							 branched_fiber_set,
+							 finished_fiber_set,
+							 evaluated_data_set,
+							 defined_data_set,
+							 optimized_bytecodes);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(optimize_context__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk);
 }
 
-void f2__optimize__initialize() {
+void f2__optimize__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
-  
-  funk2_module_registration__add_module(&(__funk2.module_registration), "optimize", "", &f2__optimize__reinitialize_globalvars);
-  
-  f2__optimize__reinitialize_globalvars();
   
   // optimize_bytecode
   
@@ -4911,7 +5002,11 @@ void f2__optimize__initialize() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(optimize_context__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_optimize_context.terminal_print_with_frame__funk = never_gc(cfunk);}
+}
+
+void f2__optimize__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "optimize", "", &f2__optimize__reinitialize_globalvars, &f2__optimize__defragment__fix_pointers);
   
-  
+  f2__optimize__reinitialize_globalvars();
 }
 

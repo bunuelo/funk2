@@ -67,6 +67,7 @@ void      funk2_protected_alloc_array__signal_enter_protected_region(funk2_prote
 void      funk2_protected_alloc_array__signal_exit_protected_region (funk2_protected_alloc_array_t* this, char* source_filename, int source_line_num);
 boolean_t funk2_protected_alloc_array__in_protected_region          (funk2_protected_alloc_array_t* this);
 void      funk2_protected_alloc_array__touch_all                    (funk2_protected_alloc_array_t* this, funk2_garbage_collector_pool_t* garbage_collector_pool);
+void      funk2_protected_alloc_array__defragment__fix_pointers     (funk2_protected_alloc_array_t* this);
 
 
 // funk2_protected_alloc_array_fiber_hash
@@ -89,6 +90,7 @@ void                           funk2_protected_alloc_array_fiber_hash__signal_en
 void                           funk2_protected_alloc_array_fiber_hash__signal_exit_protected_region    (funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber, char* source_filename, int source_line_num);
 boolean_t                      funk2_protected_alloc_array_fiber_hash__in_protected_region             (funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber);
 void                           funk2_protected_alloc_array_fiber_hash__touch_all                       (funk2_protected_alloc_array_fiber_hash_t* this, funk2_garbage_collector_pool_t* garbage_collector_pool);
+void                           funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers        (funk2_protected_alloc_array_fiber_hash_t* this);
 
 
 #endif // F2__PROTECTED_ALLOC_ARRAY__H

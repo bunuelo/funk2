@@ -354,16 +354,18 @@ f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
     s64 rewind_length__i = f2integer__i(rewind_length, cause);
     f2stream__rewind_length__set(this, cause, f2integer__new(cause, rewind_length__i + 1));
   }
-  if ((byte != nil) &&
-      f2integer__i(byte, cause) == f2char__ch(__funk2.reader.char__newline, cause)) {
-    f2ptr line_num    = f2__stream__line_number(cause, this);
-    u64   line_num__i = f2integer__i(line_num, cause);
-    f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i + 1));
-    f2__stream__column_number__set(cause, this, f2integer__new(cause, 1));
-  } else {
-    f2ptr column_num    = f2__stream__column_number(cause, this);
-    u64   column_num__i = f2integer__i(column_num, cause);
-    f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num__i + 1));
+  if (raw__integer__is_type(cause, byte)) {
+    if ((byte != nil) &&
+	f2integer__i(byte, cause) == f2char__ch(__funk2.reader.char__newline, cause)) {
+      f2ptr line_num    = f2__stream__line_number(cause, this);
+      u64   line_num__i = f2integer__i(line_num, cause);
+      f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i + 1));
+      f2__stream__column_number__set(cause, this, f2integer__new(cause, 1));
+    } else {
+      f2ptr column_num    = f2__stream__column_number(cause, this);
+      u64   column_num__i = f2integer__i(column_num, cause);
+      f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num__i + 1));
+    }
   }
   return byte;
 }
@@ -613,22 +615,59 @@ f2ptr f2stream__primobject_type__new_aux(f2ptr cause) {
 
 // **
 
-void f2__primobject__stream__pre_reinitialize_globalvars() {
-  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
+void f2__primobject__stream__defragment__fix_pointers() {
+  // -- reinitialize --
   
-  __stream__symbol             = new__symbol(cause, "stream");
-  __file_stream__symbol        = new__symbol(cause, "file_stream");
-  __socket_stream__symbol      = new__symbol(cause, "socket_stream");
-  __string_stream__symbol      = new__symbol(cause, "string_stream");
-  __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
+  
+  // -- initialize --
+  
+  // stream
+  
+  initialize_primobject_12_slot__defragment__fix_pointers(stream, cmutex, stream_type, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, character_byte_index, line_number, column_number);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(stream__try_read_byte);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_byte__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(stream__try_read_character);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.try_read_character__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(stream__rewind);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(stream__rewind_to_length);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.rewind_to_length__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(stream__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_stream.terminal_print_with_frame__funk);
+  
+  f2__primcfunk__init__defragment__fix_pointers(file_stream__new);
+  f2__primcfunk__init__defragment__fix_pointers(socket_stream__new);
+  f2__primcfunk__init__defragment__fix_pointers(string_stream__new);
+  f2__primcfunk__init__defragment__fix_pointers(string_stream);
+  f2__primcfunk__init__defragment__fix_pointers(stream__new_open_file);
+  f2__primcfunk__init__defragment__fix_pointers(stream__close);
+  f2__primcfunk__init__defragment__fix_pointers(stream__file_mode__rdonly);
+  f2__primcfunk__init__defragment__fix_pointers(stream__file_mode__creat);
+  f2__primcfunk__init__defragment__fix_pointers(stream__file_mode__rdwr);
+  f2__primcfunk__init__defragment__fix_pointers(stream__nonblocking__set);
+  f2__primcfunk__init__defragment__fix_pointers(stream__ungetc);
+  f2__primcfunk__init__defragment__fix_pointers(stream__getc);
 
 
+  defragment__fix_pointer(__file_stream__symbol);
+  defragment__fix_pointer(__socket_stream__symbol);
+  defragment__fix_pointer(__string_stream__symbol);
+  defragment__fix_pointer(__text_window_stream__symbol);
+  
 }
 
 void f2__primobject__stream__reinitialize_globalvars() {
-  f2__primobject__stream__pre_reinitialize_globalvars();
-  
-  f2ptr cause = initial_cause();
+  f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
   
   // stream
   
@@ -655,12 +694,21 @@ void f2__primobject__stream__reinitialize_globalvars() {
   f2__primcfunk__init(stream__file_mode__creat);
   f2__primcfunk__init(stream__file_mode__rdwr);
   f2__primcfunk__init(stream__nonblocking__set);
-  f2__primcfunk__init__2(stream__ungetc,             this, character);
-  f2__primcfunk__init__1(stream__try_read_byte,      this);
-  f2__primcfunk__init__1(stream__try_read_character, this);
-  f2__primcfunk__init__1(stream__getc,               this);
-  f2__primcfunk__init__1(stream__rewind, this);
-  f2__primcfunk__init__2(stream__rewind_to_length, this, length);
+  f2__primcfunk__init__2(stream__ungetc, this, character);
+  f2__primcfunk__init__1(stream__getc,   this);
+  
+  
+  __file_stream__symbol        = new__symbol(cause, "file_stream");
+  __socket_stream__symbol      = new__symbol(cause, "socket_stream");
+  __string_stream__symbol      = new__symbol(cause, "string_stream");
+  __text_window_stream__symbol = new__symbol(cause, "text_window_stream");
+  
+}
+
+void f2__primobject__stream__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primobject-stream", "", &f2__primobject__stream__reinitialize_globalvars, &f2__primobject__stream__defragment__fix_pointers);
+  
+  f2__primobject__stream__reinitialize_globalvars();
 }
 
 

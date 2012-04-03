@@ -41,6 +41,60 @@ void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
   }
 }
 
+void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* this, u64 pool_index) {
+  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+  while(iter < end_of_blocks) {
+    if (iter->used) {
+      ptype_block_t* block = (ptype_block_t*)iter;
+      switch(block->block.ptype) {
+      case ptype_scheduler_cmutex: {
+	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	funk2_processor_mutex__destroy(scheduler_cmutex_block->m);
+      } break;
+      case ptype_cmutex: {
+	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	funk2_processor_mutex__destroy(cmutex_block->m);
+      } break;
+      default:
+	break;
+      }
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  release__assert(iter == end_of_blocks, nil, "funk2_defragmenter__memory_pool__destroy_memblocks test failure: (end_of_blocks != iter) failure.");
+}
+
+void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t* this, u64 pool_index) {
+  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
+  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
+  while(iter < end_of_blocks) {
+    if (iter->used) {
+      ptype_block_t* block = (ptype_block_t*)iter;
+      switch(block->block.ptype) {
+      case ptype_scheduler_cmutex: {
+	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
+	funk2_processor_mutex__init(scheduler_cmutex_block->m);
+	if (scheduler_cmutex_block->locked_state) {
+	  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+	}
+      } break;
+      case ptype_cmutex: {
+	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
+	funk2_processor_mutex__init(cmutex_block->m);
+	if (cmutex_block->locked_state) {
+	  funk2_processor_mutex__lock(cmutex_block->m);
+	}
+      } break;
+      default:
+	break;
+      }
+    }
+    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
+  }
+  release__assert(iter == end_of_blocks, nil, "funk2_defragmenter__memory_pool__destroy_memblocks test failure: (end_of_blocks != iter) failure.");
+}
+
 void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u64 pool_index) {
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr, pool_index);
   
@@ -72,11 +126,14 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
       iter = (funk2_memblock_t*)(((u8*)iter) + iter__byte_num);
     }
     u64 last_free_block__byte_num = (u64)(((u8*)end_of_blocks) - ((u8*)new_iter));
+    memset(new_iter, 0, last_free_block__byte_num); // zero free block entirely before init.
     funk2_memblock__init(new_iter, last_free_block__byte_num, 0);
     funk2_memblock__previous_byte_num(new_iter) = previous_new_iter__byte_num;
     memorypool->last_block_byte_num = last_free_block__byte_num;
     funk2_heap__insert(free_memory_heap, (funk2_heap_node_t*)new_iter);
   }
+  
+  funk2_memorypool__shrink_last_free_block(memorypool, F2__INITIAL_MEMORY);
   
   status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr " done.", pool_index);
 }
@@ -180,110 +237,110 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
   status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }
 
+
+void* funk2_defragmenter__defragment__parallel_phase_one(void* memorypool_pointer) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_pointer;
+  u64 pool_index = memorypool->pool_index;
+  {
+    funk2_defragmenter__memory_pool__destroy_memblocks(   &(__funk2.defragmenter), pool_index);
+    funk2_defragmenter__memory_pool__move_memory(         &(__funk2.defragmenter), pool_index);
+    funk2_defragmenter__memory_pool__initialize_memblocks(&(__funk2.defragmenter), pool_index);
+    status("funk2_defragmenter__defragment: parallel phase one done.  pool_index=" u64__fstr, pool_index);
+  }
+  return NULL;
+}
+
+void* funk2_defragmenter__defragment__parallel_phase_two(void* memorypool_pointer) {
+  funk2_memorypool_t* memorypool = (funk2_memorypool_t*)memorypool_pointer;
+  u64 pool_index = memorypool->pool_index;
+  {
+    funk2_defragmenter__memory_pool__fix_pointers(&(__funk2.defragmenter), pool_index);
+    status("funk2_defragmenter__defragment: parallel phase one done.  pool_index=" u64__fstr, pool_index);
+  }
+  return NULL;
+}
+
 void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
+  status("funk2_defragmenter__defragment: parallel phase one.");
   {
-    s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_defragmenter__memory_pool__move_memory(this, pool_index);
-    }
-  }
-  
-  {
-    s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_defragmenter__memory_pool__fix_pointers(this, pool_index);
-    }
-  }
-  
-  {
-    f2ptr global_environment                = __funk2.memory.global_environment_f2ptr;
-    global_environment                      = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, global_environment);
-    __funk2.memory.global_environment_f2ptr = global_environment;
-    __funk2.memory.global_environment_ptr   = raw__f2ptr_to_ptr(global_environment);
-  }
-  
-  funk2_garbage_collector__defragmenter__fix_pointers(&(__funk2.garbage_collector), this);
-  
-  //funk2_user_thread_controller__defragment__move_memory(&(__funk2.user_thread_controller));
-  //funk2_user_thread_controller__defragment__fix_pointers(&(__funk2.user_thread_controller));
-  status("funk2_defragmenter__defragment: reinitializing all global variables in funk core.");
-  
-  {
-    funk2_symbol_hash__reinit(&(__funk2.ptypes.symbol_hash));
-    
+    pthread_t pool_thread[memory_pool_num];
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-	{
-	  funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
-	  funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));
-	  while(iter < end_of_blocks) {
-	    if (iter->used) {
-	      ptype_block_t* block = (ptype_block_t*)iter;
-	      switch(block->block.ptype) {
-	      case ptype_symbol: {
-		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(&(__funk2.memory), to_ptr(block));
-		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
-	      } break;
-	      default:
-		break;
-	      }
-	    }
-	    iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
-	  }
-	  release__assert(iter == end_of_blocks, nil, "memory_test: (end_of_blocks != iter) failure.");
-	}
+	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_one, (void*)(&(__funk2.memory.pool[pool_index])));
       }
-      
     }
-    
-    funk2_module_registration__reinitialize_all_modules(&(__funk2.module_registration));
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(pool_thread[pool_index], NULL);
+      }
+    }
   }
   
+  status("funk2_defragmenter__defragment: parallel phase two.");
+  {
+    pthread_t pool_thread[memory_pool_num];
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_two, (void*)(&(__funk2.memory.pool[pool_index])));
+      }
+    }
+    {
+      s64 pool_index;
+      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_join(pool_thread[pool_index], NULL);
+      }
+    }
+  }
+  
+  status("funk2_defragmenter__defragment: fixing all module pointers.");
+  funk2_module_registration__defragment__fix_pointers(&(__funk2.module_registration));
+}
+
+void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* this) {
+  status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
+  
+  // stop and reinitialize system (but don't restart)
+  funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
+  funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
+  __funk2.memory.bootstrapping_mode = boolean__true;
+  
+  status("");
+  status("*******************************");
+  status("**** DOING DEFRAGMENTATION ****");
+  status("*******************************");
+  status("");
+  {
+    int index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+    }
+  }
+  funk2_defragmenter__defragment(this);
+  status("");
+  status("***********************************");
+  status("**** DONE WITH DEFRAGMENTATION ****");
+  status("***********************************");
+  status("");
+  {
+    int index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+    }
+  }
+  this->need_defragmentation = boolean__false;
+  this->total_defragmentation_count ++;
+  
+  funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
+  __funk2.memory.bootstrapping_mode = boolean__false;
 }
 
 void funk2_defragmenter__handle(funk2_defragmenter_t* this) {
   if (this->need_defragmentation) {
-    status("funk2_defragmenter__handle asking all user processor threads to wait_politely so that we can begin defragmenting.");
-    
-    // stop and reinitialize system (but don't restart)
-    funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
-    funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
-    __funk2.memory.bootstrapping_mode = boolean__true;
-    //__funk2.user_thread_controller.please_wait = boolean__true;
-    //funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
-    
-    status("");
-    status("*******************************");
-    status("**** DOING DEFRAGMENTATION ****");
-    status("*******************************");
-    status("");
-    {
-      int index;
-      for (index = 0; index < memory_pool_num; index ++) {
-	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
-      }
-    }
-    funk2_defragmenter__defragment(this);
-    status("");
-    status("***********************************");
-    status("**** DONE WITH DEFRAGMENTATION ****");
-    status("***********************************");
-    status("");
-    {
-      int index;
-      for (index = 0; index < memory_pool_num; index ++) {
-	status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
-      }
-    }
-    this->need_defragmentation = boolean__false;
-    this->total_defragmentation_count ++;
-    
-    funk2_virtual_processor_handler__start_virtual_processors(&(__funk2.virtual_processor_handler));
-    __funk2.memory.bootstrapping_mode = boolean__false;
-    //__funk2.user_thread_controller.please_wait = boolean__false;
-    
+    funk2_defragmenter__stop_everything_and_defragment(this);
   }
 }
 
@@ -320,15 +377,24 @@ def_pcfunk0(defragmenter__total_defragmentation_count,
 
 // **
 
+void f2__defragmenter__defragment__fix_pointers() {
+  // -- reinitialize --
+
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(defragmenter__signal_start);
+  f2__primcfunk__init__defragment__fix_pointers(defragmenter__total_defragmentation_count);
+  
+}
+
 void f2__defragmenter__reinitialize_globalvars() {
+  f2__primcfunk__init__0(defragmenter__signal_start);
+  f2__primcfunk__init__0(defragmenter__total_defragmentation_count);
 }
 
 void f2__defragmenter__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "defragmenter", "", &f2__defragmenter__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "defragmenter", "", &f2__defragmenter__reinitialize_globalvars, &f2__defragmenter__defragment__fix_pointers);
+  
   f2__defragmenter__reinitialize_globalvars();
-  
-  f2__primcfunk__init__0(defragmenter__signal_start);
-  f2__primcfunk__init__0(defragmenter__total_defragmentation_count);
-  
 }
 

@@ -411,27 +411,40 @@ void funk2_garbage_collector__load_from_stream(funk2_garbage_collector_t* this, 
   f2__free(to_ptr(this->temporary_load_buffer));
 }
 
-void funk2_garbage_collector__defragmenter__fix_pointers(funk2_garbage_collector_t* this, funk2_defragmenter_t* defragmenter) {
+void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t* this) {
+  status("funk2_garbage_collector defragment: fixing pointers.");
   {
     s64 pool_index;
     for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-      funk2_garbage_collector_pool__defragmenter__fix_pointers(&(this->gc_pool[pool_index]), defragmenter);
+      funk2_garbage_collector_pool__defragment__fix_pointers(&(this->gc_pool[pool_index]));
     }
   }
-  funk2_never_delete_list__defragmenter__fix_pointers(&(this->never_delete_list), defragmenter);
+  funk2_never_delete_list__defragment__fix_pointers(&(this->never_delete_list));
+  status("funk2_garbage_collector defragment: fixing pointers done.");
 }
 
 // **
 
+void f2__garbage_collector__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  funk2_garbage_collector__defragment__fix_pointers(&(__funk2.garbage_collector));
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(garbage_collector__user_signal_garbage_collect_now);
+  f2__primcfunk__init__defragment__fix_pointers(garbage_collector__total_garbage_collection_count);
+  
+}
+
 void f2__garbage_collector__reinitialize_globalvars() {
+  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now);
+  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count);
 }
 
 void f2__garbage_collector__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "garbage_collector", "", &f2__garbage_collector__reinitialize_globalvars);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "garbage_collector", "", &f2__garbage_collector__reinitialize_globalvars, &f2__garbage_collector__defragment__fix_pointers);
   
   f2__garbage_collector__reinitialize_globalvars();
-  
-  f2__primcfunk__init__0(garbage_collector__user_signal_garbage_collect_now);
-  f2__primcfunk__init__0(garbage_collector__total_garbage_collection_count);
 }
 

@@ -1712,21 +1712,21 @@ boolean_t raw__cmutex__is_type(f2ptr cause, f2ptr x) {
   return ((x != nil) &&
 	  (f2ptype__raw(x, cause) == ptype_cmutex));
 }
-f2ptr f2__cmutex__is_type(f2ptr cause, f2ptr x) {
+f2ptr f2__cmutex__is_type(f2ptr cause, f2ptr this) {
   assert_argument_type(cmutex, this);
-  return f2bool__new(raw__cmutex__is_type(cause, x));
+  return f2bool__new(raw__cmutex__is_type(cause, this));
 }
-def_pcfunk1(cmutex__is_type, x,
+def_pcfunk1(cmutex__is_type, this,
 	    "",
-	    return f2__cmutex__is_type(this_cause, x));
+	    return f2__cmutex__is_type(this_cause, this));
 
-f2ptr f2__cmutex__type(f2ptr cause, f2ptr x) {
+f2ptr f2__cmutex__type(f2ptr cause, f2ptr this) {
   assert_argument_type(cmutex, this);
   return new__symbol(cause, "cmutex");
 }
-def_pcfunk1(cmutex__type, x,
+def_pcfunk1(cmutex__type, this,
 	    "",
-	    return f2__cmutex__type(this_cause, x));
+	    return f2__cmutex__type(this_cause, this));
 
 f2ptr f2__cmutex__new(f2ptr cause) {return f2cmutex__new(cause);}
 def_pcfunk0(cmutex__new,

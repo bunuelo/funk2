@@ -710,12 +710,3 @@ void f2__primobject__stream__initialize() {
   
   f2__primobject__stream__reinitialize_globalvars();
 }
-
-
-void f2__primobject__stream__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primobjectstream", "", &f2__primobject__stream__reinitialize_globalvars);
-  
-  f2__primobject__stream__reinitialize_globalvars();
-  
-}
-

@@ -175,6 +175,20 @@
 					     '</p>']]
 	  this]
 	[let [[this [new htmldoc_post]]]
+	  [set this title       'Public Wiki Funk2 Programming Tutorial Created!']
+	  [set this date        'January 16th, 2012']
+	  [set this author      'Bo Morgan']
+	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this entry       [string-prog '<p>'
+					     'The new <a href=https://github.com/bunuelo/funk2/wiki>Funk2 Wiki</a> on GitHub has up-to-date tutorials on downloading, installing, and learning to program in Funk2!'
+					     'This tutorial is meant as a place for users to share their solutions to problems they have faced when programming with the Funk2 programming language.'
+					     'A Lisp-like introductory programming tutorial introduces the language.'
+					     'Many other practical necessities for using the language are also included, such as package management, parallel process management, and even an introduction to causal reflective tracing!'
+					     'Please take a look, try out the examples, and give the authors feedback on what you would still like to see!'
+					     'Also, the Wiki is meant as a public democratic place where users can share their own experiences and expertise, so please exercise your right to contribute.'
+					     '</p>']]
+	  this]
+	[let [[this [new htmldoc_post]]]
 	  [set this title       'Fiber triggers added as efficient process control']
 	  [set this date        'February 19th, 2011']
 	  [set this author      'Bo Morgan']

@@ -160,14 +160,19 @@
 
 [defunk generate_all_posts []
   [list [let [[this [new htmldoc_post]]]
-	  [set this title       'Welcome to the official Funk2 Website!']
-	  [set this date        'February 19th, 2011']
+	  [set this title       'Defragmenter Optimizes Funk2 Memory Efficiency by 40x!']
+	  [set this date        'April 3rd, 2012']
 	  [set this author      'Bo Morgan']
 	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
-	  [set this entry       [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
-					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
-					'Funk2 is primary meant as a novel artificial intelligence research tool for developing massive heterogeneous AI systems.'
-					'We expect our novel ways of reflectively controlling massive parallel systems to be useful to many diverse fields of computational application and theoretical modelling.']]
+	  [set this entry       [string-prog '<p>'
+					     '<a href="https://en.wikipedia.org/wiki/Memory_fragmentation">Memory fragmentation</a> limits the lifetime of programs that allocate and free memory throughout their run-time.'
+					     'Funk2 now implements a defragmenter that runs before saving any compiled memory image.'
+					     'A defragmenter is difficult to implement in a programming language, such as C or C++ because as used memory is consolidated, every memory pointer in the entire running program must be corrected to reflect all new memory blocks positions.'
+					     'Funk2 now handles this "pointer fixing" behind the scenes by keeping track of all Funk2 pointer references and fixing them automatically.'
+					     'This effectively removes any fragmentation-based lifetime limitation of any Funk2 program.'
+					     'The current implementation introduces a 40x optimization for saved memory images.'
+					     'See this article on defragmentation problems in <a href="https://en.wikipedia.org/wiki/C_dynamic_memory_allocation#Heap-based">heap-based dynamic C/C++ memory allocators</a>, e.g. malloc and free (C) or new[] and delete (C++).'
+					     '</p>']]
 	  this]
 	[let [[this [new htmldoc_post]]]
 	  [set this title       'Fiber triggers added as efficient process control']
@@ -369,6 +374,16 @@
 	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
 	  [set this entry       [string-prog 'Funk2 is the programming language that supports building large cognitive architectures, and a preliminary demonstration of the <a href="http://neuromin.de/rct/moral_compass.html">Moral Compass</a> cognitive architecture was invited to be presented last week at Seed Magazine\'s head office in New York.'
 					     'Read more about our visit on <a href="http://seedmediagroup.com/index.php/blog/some-reflective-common-sense-thoughts1/">Seed Media Group\'s blog</a>!']]
+	  this]
+	[let [[this [new htmldoc_post]]]
+	  [set this title       'Welcome to the official Funk2 Website!']
+	  [set this date        'May 12th, 2010']
+	  [set this author      'Bo Morgan']
+	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this entry       [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
+					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
+					'Funk2 is primary meant as a novel artificial intelligence research tool for developing massive heterogeneous AI systems.'
+					'We expect our novel ways of reflectively controlling massive parallel systems to be useful to many diverse fields of computational application and theoretical modelling.']]
 	  this]
 	]]
 

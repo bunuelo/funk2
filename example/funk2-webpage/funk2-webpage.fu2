@@ -147,7 +147,7 @@
 	  [set this title       'Defragmenter Optimizes Funk2 Memory Efficiency by 40x!']
 	  [set this date        'April 3rd, 2012']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>'
 					     '<a href="https://en.wikipedia.org/wiki/Memory_fragmentation">Memory fragmentation</a> limits the lifetime of programs that allocate and free memory throughout their run-time.'
 					     'Funk2 now implements a defragmenter that runs before saving any compiled memory image.'
@@ -163,7 +163,7 @@
 	  [set this title       'Public Wiki Funk2 Programming Tutorial Created!']
 	  [set this date        'January 16th, 2012']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>'
 					     'The new <a href=https://github.com/bunuelo/funk2/wiki>Funk2 Wiki</a> on GitHub has up-to-date tutorials on downloading, installing, and learning to program in Funk2!'
 					     'This tutorial is meant as a place for users to share their solutions to problems they have faced when programming with the Funk2 programming language.'
@@ -178,7 +178,7 @@
 	  [set this title       'Fiber triggers added as efficient process control']
 	  [set this date        'February 19th, 2011']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>Process triggers are a new Funk2 core object that allows for multiple parallel processes to wait for a specific trigger signal object to be triggered by a controlling process.'
 					     'The following is a simple example that defines a global trigger named <tt>my-trigger</tt>.'
 					     'Next, we enter a <tt>dotimes</tt> loop that loops ten times and creates ten parallel <tt>fiber</tt>s (funk2 processes).'
@@ -209,7 +209,7 @@
 	  [set this title       'Cairo support added for vector graphics rendering']
 	  [set this date        'February 19th, 2011']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>You can now export screen renderings to PDF, SVG, postscript (PS) or PNG files from within the Funk2 programming language by includinig the Cairo package (i.e. <tt>[require cairo]</tt>).'
 					     'An example Cairo application can be seen in the <tt>cairo-test</tt> directory included in the <tt>example</tt> directory in the source code.'
 					     'The cairo test example can be included and run by typing, <tt>[require cairo]</tt>, followed by, <tt>[cairo-test]</tt>, which should output a test file for each available file format.'
@@ -221,7 +221,7 @@
 	  [set this title       'Natural language processing']
 	  [set this date        'October 7th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>A basic natural language toolkit has been added to the Funk2 programming language.'
 					     'A basic English dictionary and parser have been included for defining verbs and argument structures that can be used for adding knowledge and natural language control to cognitive architectures.'
 					     'A new built-in package can be required with the <tt>[require natural_language]</tt> command.'
@@ -232,7 +232,7 @@
 	  [set this title       'Layered cognitive architecture']
 	  [set this date        'September 4th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>A basic cognitive architecture has been included as an example package.  This includes definitions for <emph>mind</emph>, <emph>mental_layer</emph>, <emph>agency</emph>, and <emph>resource</emph> objects.'
 					     'These basic mental primitives can be included by requiring the <emph>mind</emph> package (i.e. <tt>[require mind]</tt>).'
 					     'Also, when building a mind, using these architectural primitives, it is useful to see an overview of your mental model by using the new <emph>mindmon</emph> utility, which provides a graphical user interface to the mind.'
@@ -243,7 +243,7 @@
 	  [set this title       'GTK support added for creating graphical user intefaces (GUIs)']
 	  [set this date        'June 23rd, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>You can now create graphical applications within the Funk2 programming language by includinig the GTK package (i.e. <tt>[require gtk]</tt>).'
 					     'An example GTK application can be seen in the <tt>gtk-test</tt> directory included in the <tt>example</tt> directory in the source code.'
 					     '</p>']]
@@ -253,7 +253,7 @@
 	  [set this title       'Package manager']
 	  [set this date        'June 23rd, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p>A new package manager has been added to the Funk2 programming language.'
 					     'A number of built-in packages are included in the default bootstrap image, and there is now a growing number of example packages that can be found in the example directory, included with Funk2 source code.'
 					     'You can now use the [require package-name] command in order to load a package and all of its dependencies.'
@@ -264,7 +264,7 @@
 	  [set this title       'Call for Collaboration to Build Artificial Intelligence']
 	  [set this date        'May 12st, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<h3>All programs fail, so let us embrace this failure and write systems that react to failure through reflection:</h3>'
 					     '<blockquote>'
 					     '  <p>&#8220;Reflection is the business of man; a sense of his state is his first duty: but who remembereth himself in joy? Is it not in mercy then that sorrow is allotted unto us?&#8221;&#8212;William&nbsp;Shakespeare</p>'
@@ -280,7 +280,7 @@
 	  [set this title       'Causal tracing of Funk completion events']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'The funk object is as universal to Funk2 as the lambda object is to Lisp or Python.'
 					     'Causally tracing funk execution and completion events allows us a powerful and intricate reflective tool.'
 					     'These numerous and intricate events are compiled into graphs and other representations for both debugging as well as planning in order to avoid software failures.'
@@ -293,7 +293,7 @@
 	  [set this title       'Funk2 remote interface to IsisWorld']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<a href="http://web.media.mit.edu/~dustin/simulator_setup/">IsisWorld</a> is another core research effort supported by the <a href="http://mmp.mit.edu">Mind Machine Project</a> that we are using to collaborate in developing reflective social commonsense reasoning cognitive models of humans.  '
 					     'Agents in IsisWorld are controlled through an XML-RPC interface.  '
 					     'The most recent IsisWorld interface in now included in the default distribution of Funk2 in order that AI researchers around the world can contribute to this large open software development and research project.']]
@@ -303,7 +303,7 @@
 	  [set this title       'XML-RPC client library built on fast xmlrpc-c library']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'Funk2 is written in pure C, which makes incorporating the fastest libraries easy.'
 					     '<a href="http://xmlrpc-c.sourceforge.net/">Xmlrpc-c</a> is a lightweight implementation of this very abstract remote procedure call (RPC) protocol.'
 					     'The <a href="www.xmlrpc.com">XML-RPC protocol</a> is an XML representation communicated through HTTP and is supported by <a href="http://www.xmlrpc.com/directory/1568/implementations">all popular languages</a>.'
@@ -316,7 +316,7 @@
 	  [set this title       'Simple node and edge variable graph matching library completed']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'Procedural traces in Funk2 are labeled directed graphs.  '
 					     'These graphs are very large and difficult to visualize because of their size and complexity.  '
 					     'We are developing algorithms for simplifying the process of finding and recognizing critical patterns in these reflective traces.  '
@@ -330,7 +330,7 @@
 	  [set this title       'Compiles on Windows XP under CygWin']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'A port of Funk2 has been made to the CygWin platform, which now enables Microsoft Windows users to join the Funk2 distributed programming effort!'
 					     'We have not completed a binary distribution package for the Windows operating system yet, but developers should have few problems compiling and installing Funk2 from source.'
 					     'Please see the Funk2 <a href=/download/>download</a> page in order to download the latest source package.']]
@@ -340,7 +340,7 @@
 	  [set this title       'MacOS X Binaries available for 10.5 and 10.6']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'Binary packages for the Apple Macintosh operating system X (MacOS X) are now available!  '
 					     'Please see the Funk2 <a href=/download/>download</a> page in order to download the latest MacOS X binary package for Funk2.']]
 	  this]
@@ -349,7 +349,7 @@
 	  [set this title       'GraphViz graph visualization completed']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<a href="http://www.graphviz.org/">GraphViz</a> is an open, free and fast graph visualization tool for labeled directed graphs.  '
 					     'We have included a very fast GraphViz compiler in Funk2 for generating and viewing our causal reflective traces.  '
 					     'See our <a href="/example/graphviz">GraphViz example</a> for how this new facility of Funk2 can be used.  ']]
@@ -359,7 +359,7 @@
 	  [set this title       'Successfully stress tested 1000 parallel fibers for 1 day!']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'Fibers are to Funk2 as threads are to a C or Java application.  '
 					     'Funk2 is an abstract simulation of an operating system built out of Funk2 traceable memory.  '
 					     'Each Funk2 processor is an abstract object representing each processor core in it\'s host machine.  '
@@ -375,7 +375,7 @@
 	  [set this title       'Funk2 used to teach 35 students &#8220;Block\'s World&#8221; planning in Marvin Minsky\'s Society of Mind class']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'Funk2 is largely inspired by Marvin Minsky\'s theory that the ability of humans to quickly adapt and switch between reflective representations and processes is a metacognitive problem of reflective control.'
 					     'His book, <u>Society of Mind</u>, organizes and describes in surprisingly both dense and understandable English the hundreds of different types of reasoning that a human performs.'
 					     'In his most recent book, <u>The Emotion Machine</u>, Prof. Minsky tells a story about how what we normally call &#8220;emotions&#8221; are actually self-reflective forms of control processes for switching between ways of thinking.'
@@ -387,7 +387,7 @@
 	  [set this title       'Funk2 presented at Seed Magazine in New York']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog 'Funk2 is the programming language that supports building large cognitive architectures, and a preliminary demonstration of the <a href="http://neuromin.de/rct/moral_compass.html">Moral Compass</a> cognitive architecture was invited to be presented last week at Seed Magazine\'s head office in New York.'
 					     'Read more about our visit on <a href="http://seedmediagroup.com/index.php/blog/some-reflective-common-sense-thoughts1/">Seed Media Group\'s blog</a>!']]
 	  this]
@@ -396,7 +396,7 @@
 	  [set this title       'Welcome to the official Funk2 Website!']
 	  [set this date        'May 12th, 2010']
 	  [set this author      'Bo Morgan']
-	  [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+	  [set this author_link 'http://rct.media.mit.edu/person/neptune/']
 	  [set this entry       [string-prog '<p><strong>Funk2</strong> is a free, open, programming language designed for causal reflective tracing and monitoring of complex control systems.  '
 					'This project is developed by the <a href=http://rct.media.mit.edu/rct>Reflective Commonsense Thinking</a> group at the <a href=http://www.media.mit.edu>MIT Media Lab</a>.'
 					'Funk2 is primary meant as a novel artificial intelligence research tool for developing massive heterogeneous AI systems.'

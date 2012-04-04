@@ -302,7 +302,7 @@ def_ceframe4(gtk_extension, gdk_color, pixel, red, green, blue);
 f2ptr f2__gdk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
   return f2gdk_color__new(cause, pixel, red, green, blue);
 }
-export_cefunk1(gdk_color__new, pointer, 0, "Returns a new gdk_color object.");
+export_cefunk4(gdk_color__new, pixel, red, green, blue, 0, "Returns a new gdk_color object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -440,7 +440,7 @@ def_ceframe2(gtk_extension, gtk_callback, funk, args);
 f2ptr f2__gtk_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
   return f2gtk_callback__new(cause, funk, args);
 }
-export_cefunk1(gtk_callback__new, pointer, 0, "Returns a new gtk_callback object.");
+export_cefunk2(gtk_callback__new, funk, args, 0, "Returns a new gtk_callback object.");
 
 
 // gtk_text_range
@@ -451,7 +451,7 @@ def_ceframe2(gtk_extension, gtk_text_range, start, end);
 f2ptr f2__gtk_text_range__new(f2ptr cause, f2ptr start, f2ptr end) {
   return f2gtk_text_range__new(cause, start, end);
 }
-export_cefunk1(gtk_text_range__new, pointer, 0, "Returns a new gtk_text_range object.");
+export_cefunk2(gtk_text_range__new, start, end, 0, "Returns a new gtk_text_range object.");
 
 
 // gtk_progress_bar

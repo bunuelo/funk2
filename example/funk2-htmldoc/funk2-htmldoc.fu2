@@ -38,11 +38,13 @@
 	       '<!-- end content -->']]
 
 [deftypefunk htmldoc_post execute compile [context]
-  [let [[html_code [htmldoc_page context [get this page_content]]]]
-    [shelter [mkdir [string-concat [get context root_dir] 'post']]]
-    [shelter [mkdir [string-concat [get context root_dir] 'post/' [get this name]]]]
-    [have html_code save [string-concat [get context root_dir] 'post/' [get this name] '/index.html']]
-    nil]]
+  [if [null [get this name]]
+      [terminal_format standard-terminal '\nhtmldoc warning: post cannot be compiled because no name exists.']
+    [let [[html_code [htmldoc_page context [get this page_content]]]]
+      [shelter [mkdir [string-concat [get context root_dir] 'post']]]
+      [shelter [mkdir [string-concat [get context root_dir] 'post/' [get this name]]]]
+      [have html_code save [string-concat [get context root_dir] 'post/' [get this name] '/index.html']]
+      nil]]]
 
 
 
@@ -346,6 +348,13 @@
 	      [terminal_format standard-terminal '\nhtmldoc: compiling example \'' [get example name] '\'.']
 	      [have example compile this]]
 	[get this examples]]
+  nil]
+
+[deftypefunk htmldoc_context execute compile_posts []
+  [mapc [funk [post]
+	      [terminal_format standard-terminal '\nhtmldoc: compiling post \'' [get post name] '\'.']
+	      [have post compile this]]
+	[get this posts]]
   nil]
 
 [deftypefunk htmldoc_context execute compile_css []

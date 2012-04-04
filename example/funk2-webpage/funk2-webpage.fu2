@@ -489,6 +489,7 @@
   [print 'compiling funk2 tabs']          [have context compile_tabs]
   [print 'compiling funk2 documentation'] [compile_funk2_documentation context]
   [print 'compiling funk2 examples']      [have context compile_examples]
+  [print 'compiling funk2 posts']         [have context compile_posts]
   [print 'compiling funk2 images']        [compile_funk2_images        context]
   [print 'done compiling']
   nil]]
@@ -550,6 +551,7 @@
   [defunk funk2_documentation-save            []                                                          [funk2_documentation_front_page-save] [compile_funk2_documentation    context]]
   [defunk funk2_download-save                 [] [have [get context tab `Download]      compile context]]
   [defunk funk2_examples-save                 [] [have context compile_examples]]
+  [defunk funk2_posts-save                    [] [have context compile_posts]]
   [defunk funk2_images-save                   []                                                          [compile_funk2_images           context]]
   
   ]

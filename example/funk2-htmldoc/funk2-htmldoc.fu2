@@ -27,7 +27,9 @@
 	       '<div id="content">'
 	       '  <div class="post">'
 	       [stringlist-concat `['<h1 class="title">' ,[get this title] '</h1>']]
-	       [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get this date] ' by ' ,[get this author] '</small></p>']]
+	       [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get this date] ' by ' ,[if [get this author_link]
+												       [string-concat '<a href="' [get this author_link] '">' [get this author] '</a>']
+												     [get this author]] '</small></p>']]
 	       '    <div class="entry">'
 	       '      <p>'
 	       [get this entry]

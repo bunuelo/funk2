@@ -80,7 +80,14 @@
 [defunk funk2_documentation-content [context]
   [string-prog '<h1>Documentation</h1>'
 	       ''
-	       '<p>Please see the new <a href=https://github.com/bunuelo/funk2/wiki>Funk2 Wiki</a> on GitHub for tutorials on downloading, installation, and programming techniques!</p>'
+	       '<p>'
+	       '  Please see the new <a href=https://github.com/bunuelo/funk2/wiki>Funk2 Wiki</a> on GitHub for tutorials on downloading, installation, and programming techniques!'
+	       '</p>'
+	       ''
+	       '<p>'
+	       '  Below, you will find a cross-reference for all packages and objects that are included in the default Funk2 distribution.'
+	       '  This page is automatically generated using the reflective features of the Funk2 programming language.'
+	       '</p>'
 	       ''
 	       [get context documentation_overview_content]]]
 

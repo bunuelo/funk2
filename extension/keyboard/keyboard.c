@@ -24,11 +24,22 @@
 
 def_ceframe1(termios, termios, chunk);
 
-f2ptr raw__termios__new(f2ptr cause, struct termios* opts) {
-  return f2termios__new(cause, f2chunk__new(cause, sizeof(*opts), (u8*)opts));
+f2ptr raw__termios__new(f2ptr cause, f2ptr chunk) {
+  return f2termios__new(cause, chunk);
 }
 
-void raw__termios__copy_termios(f2ptr cause, f2ptr this, struct termios* dest) {
+f2ptr f2__termios__new(f2ptr cause, f2ptr chunk) {
+  assert_argument_type(chunk, chunk);
+  return raw__termios__new(cause, chunk);
+}
+export_cefunk1(termios__new, chunk, 0, "Return a new termios object.");
+
+
+f2ptr raw__termios__new_from_c_struct(f2ptr cause, struct termios* opts) {
+  return raw__termios__new(cause, f2chunk__new(cause, sizeof(*opts), (u8*)opts));
+}
+
+void raw__termios__c_struct_copy(f2ptr cause, f2ptr this, struct termios* dest) {
   f2ptr chunk = raw__termios__chunk(cause, this);
   raw__chunk__str_copy(cause, chunk, (u8*)dest);
 }
@@ -46,14 +57,14 @@ f2ptr f2__keyboard__current_mode(f2ptr cause) {
   if (res != 0) {
     return f2larva__new(cause, 12351, nil);
   }
-  return raw__termios__new(cause, &opts);
+  return raw__termios__new_from_c_struct(cause, &opts);
 }
 export_cefunk0(keyboard__current_mode, 0, "Return a termios struct containing the current standard input device attributes.");
 
 
 f2ptr raw__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
   struct termios opts;
-  raw__termios__copy_termios(cause, termios, &opts);
+  raw__termios__c_struct_copy(cause, termios, &opts);
   int res = tcsetattr(STDIN_FILENO, TCSANOW, &opts);
   if (res != 0) {
     return f2larva__new(cause, 12353, nil);

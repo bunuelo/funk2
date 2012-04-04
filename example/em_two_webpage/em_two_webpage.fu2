@@ -554,7 +554,7 @@
        [set this title       'Semantic Representations of Reflection Events']
        [set this date        'March 12th, 2011']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+       [set this author_link 'http://rct.media.mit.edu/person/neptune/']
        [set this entry       [string-prog '<p>'
 					  'Models of mind that accomplish reasoning tasks have different functional information processes that causally interact often in unpredictably complicated ways.  '
 					  'Because the Moral Compass model is a reflective model, it traces its own executive functions and creates representations of the causal interactions between these different information processes that it can then use to think about its own thinking.  '
@@ -567,7 +567,7 @@
        [set this title       'Physical Commonsense Simulation of Parents and Children in a Kitchen']
        [set this date        'January 11th, 2011']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+       [set this author_link 'http://rct.media.mit.edu/person/neptune/']
        [set this entry       [string-prog '<p>Seymour Papert said, "You cannot think about thinking without thinking about thinking about something", warning against building models of cognitive processes that are not attached to concrete behaviors of the intelligent system.'
 					  'Toward this end, we have chosen to first focus on a rigid-body physical simulation of parents and children in the context of basic cooking tasks in a kitchen environment.'
 					  'We chose parents and children because we feel that major parts of social and moral learning develops during early stages involving these familiar social relationships.'
@@ -581,7 +581,7 @@
        [set this title       'Tracing of Information Flow and Causality in Large Heterogeneous Parallel Systems']
        [set this date        'September 1st, 2010']
        [set this author      'Bo Morgan']
-       [set this author_link 'http://rct.media.mit.edu/rct/bo_morgan.html']
+       [set this author_link 'http://rct.media.mit.edu/person/neptune/']
        [set this entry       [string-prog '<p>In order to find biological and behavioral correlations to the types of complex models that are necessary for describing social and moral cognition, we need new ways for computers to simulate and monitor information flow and causality throughout any Funk2 cognitive models.'
 					  'The human brain is often believed to be many different types of complicated heterogenous processes, so the question becomes: how do we both simulate models at this level of complexity as well as determine whether these models are good or bad explanations of what is happening at a biological level?'
 					  'Toward this end, we\'ve recently completed a stable version of the Funk2 programming language that allows intricate quantitative monitoring of large heterogenous parallel systems.'

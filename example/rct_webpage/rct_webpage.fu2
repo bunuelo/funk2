@@ -377,6 +377,7 @@
 
 [defunk rct-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
+       [set this name        'welcome']
        [set this title       'First Post']
        [set this date        'March 25th, 2011']
        [set this author      'Bo Morgan']

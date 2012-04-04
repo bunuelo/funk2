@@ -22,11 +22,9 @@
 
 [deframe htmldoc_post [frame] [name title date author author_link entry]]
 
-[deftypefunk htmldoc_post get page_content []
-  [string-prog '<!-- start content -->'
-	       '<div id="content">'
-	       '  <div class="post">'
-	       [stringlist-concat `['<h1 class="title">' ,[get this title] '</h1>']]
+[deftypefunk htmldoc_post get post_code []
+  [string-prog '  <div class="post">'
+	       [stringlist-concat `['<h1 class="title"><a name=post_' ,[get this name] ' href=/post/' ,[get this name] '/>' ,[get this title] '</a></h1>']]
 	       [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get this date] ' by ' ,[if [get this author_link]
 												       [string-concat '<a href="' [get this author_link] '">' [get this author] '</a>']
 												     [get this author]] '</small></p>']]
@@ -35,7 +33,12 @@
 	       [get this entry]
 	       '      </p>'
 	       '    </div>'
-	       '  </div>'
+	       '  </div>']]
+
+[deftypefunk htmldoc_post get page_content []
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
+	       [get this post_code]
 	       '</div>'
 	       '<!-- end content -->']]
 
@@ -241,21 +244,9 @@
 	[get this documentation_packages]]]
 
 [deftypefunk htmldoc_context get all_posts_content []
-  [string-prog [stringlist-prog [let [[index 0]]
-				  [mapcar [funk [post]
-						[= index [+ index 1]]
-						[string-prog '<div class="post">'
-							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] ' href=/post/' ,[get post name] '/>' ,[get post title] '</a></h1>']]
-							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[if [get post author_link]
-																		     [string-concat '<a href="' [get post author_link] '">' [get post author] '</a>']
-																		   [get post author]] '</small></p>']]
-							     '  <div class="entry">'
-							     [get post entry]
-							     [prog '<p class="links"><a href="#" class="more">Read More</a> &nbsp;&nbsp;&nbsp; <a href="#" class="comments">No Comments</a></p>'
-								   '']
-							     '  </div>'
-							     '</div>']]
-					  [get this posts]]]]
+  [string-prog [stringlist-prog [mapcar [funk [post]
+					      [get post post_code]]
+					[get this posts]]]
 	       ]]
 
 [deftypefunk htmldoc_context get documentation_overview_content []
@@ -1156,7 +1147,7 @@
 				[stringlist-prog [let [[index 0]]
 						   [mapcar [funk [post]
 								 [= index [+ index 1]]
-								 [string-concat '<li><a href="/news/#post' [exp-as-string index] '">' [get post title] '</a></li>']]
+								 [string-concat '<li><a href="/news/#post_' [get post name] '">' [get post title] '</a></li>']]
 							   [get context posts]]]]
 				'					</ul>'
 				'				</li>']

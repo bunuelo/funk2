@@ -43,6 +43,7 @@ def_ceframe2(gtk_extension, g_object, gtk_session, pointer);
 f2ptr f2__g_object__new(f2ptr cause, f2ptr pointer) {
   return f2g_object__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(g_object__new, pointer, 0, "Returns a new g_object object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -65,6 +66,7 @@ def_ceframe2(gtk_extension, gtk_widget, gtk_session, pointer);
 f2ptr f2__gtk_widget__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_widget__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_widget__new, pointer, 0, "Returns a new gtk_widget object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -95,6 +97,7 @@ def_ceframe2(gtk_extension, gtk_box, gtk_session, pointer);
 f2ptr f2__gtk_box__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_box__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_box__new, pointer, 0, "Returns a new gtk_box object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -125,6 +128,7 @@ def_ceframe2(gtk_extension, gtk_text_buffer, gtk_session, pointer);
 f2ptr f2__gtk_text_buffer__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_text_buffer__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_text_buffer__new, pointer, 0, "Returns a new gtk_text_buffer object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -154,6 +158,7 @@ def_ceframe2(gtk_extension, gtk_label, gtk_session, pointer);
 f2ptr f2__gtk_label__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_label__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_label__new, pointer, 0, "Returns a new gtk_label object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -183,6 +188,7 @@ def_ceframe2(gtk_extension, gtk_scale, gtk_session, pointer);
 f2ptr f2__gtk_scale__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_scale__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_scale__new, pointer, 0, "Returns a new gtk_scale object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -213,6 +219,7 @@ def_ceframe2(gtk_extension, gtk_entry, gtk_session, pointer);
 f2ptr f2__gtk_entry__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_entry__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_entry__new, pointer, 0, "Returns a new gtk_entry object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -243,6 +250,7 @@ def_ceframe2(gtk_extension, gtk_image, gtk_session, pointer);
 f2ptr f2__gtk_image__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_image__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_image__new, pointer, 0, "Returns a new gtk_image object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -271,6 +279,7 @@ def_ceframe2(gtk_extension, gtk_text_iter, gtk_session, chunk);
 f2ptr f2__gtk_text_iter__new(f2ptr cause, f2ptr chunk) {
   return f2gtk_text_iter__new(cause, f2__gtk__session_symbol(cause), chunk);
 }
+export_cefunk1(gtk_text_iter__new, pointer, 0, "Returns a new gtk_text_iter object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -288,12 +297,12 @@ boolean_t raw__gtk_text_iter__is_from_this_session(f2ptr cause, f2ptr this) {
 
 // gdk_color
 
-//def_frame_object__global__4_slot(gdk_color, pixel, red, green, blue);
 def_ceframe4(gtk_extension, gdk_color, pixel, red, green, blue);
 
 f2ptr f2__gdk_color__new(f2ptr cause, f2ptr pixel, f2ptr red, f2ptr green, f2ptr blue) {
   return f2gdk_color__new(cause, pixel, red, green, blue);
 }
+export_cefunk1(gdk_color__new, pointer, 0, "Returns a new gdk_color object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -379,6 +388,7 @@ def_ceframe2(gtk_extension, gdk_pixbuf, gtk_session, pointer);
 f2ptr f2__gdk_pixbuf__new(f2ptr cause, f2ptr pointer) {
   return f2gdk_pixbuf__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gdk_pixbuf__new, pointer, 0, "Returns a new gdk_pixbuf object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -407,6 +417,7 @@ def_ceframe2(gtk_extension, gtk_text_mark, gtk_session, pointer);
 f2ptr f2__gtk_text_mark__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_text_mark__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_text_mark__new, pointer, 0, "Returns a new gtk_text_mark object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -429,6 +440,7 @@ def_ceframe2(gtk_extension, gtk_callback, funk, args);
 f2ptr f2__gtk_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
   return f2gtk_callback__new(cause, funk, args);
 }
+export_cefunk1(gtk_callback__new, pointer, 0, "Returns a new gtk_callback object.");
 
 
 // gtk_text_range
@@ -439,6 +451,7 @@ def_ceframe2(gtk_extension, gtk_text_range, start, end);
 f2ptr f2__gtk_text_range__new(f2ptr cause, f2ptr start, f2ptr end) {
   return f2gtk_text_range__new(cause, start, end);
 }
+export_cefunk1(gtk_text_range__new, pointer, 0, "Returns a new gtk_text_range object.");
 
 
 // gtk_progress_bar
@@ -449,6 +462,7 @@ def_ceframe2(gtk_extension, gtk_progress_bar, gtk_session, pointer);
 f2ptr f2__gtk_progress_bar__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_progress_bar__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_progress_bar__new, pointer, 0, "Returns a new gtk_progress_bar object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -477,6 +491,7 @@ def_ceframe2(gtk_extension, gtk_menu, gtk_session, pointer);
 f2ptr f2__gtk_menu__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_menu__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_menu__new, pointer, 0, "Returns a new gtk_menu object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -505,6 +520,7 @@ def_ceframe2(gtk_extension, gtk_menu_bar, gtk_session, pointer);
 f2ptr f2__gtk_menu_bar__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_menu_bar__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_menu_bar__new, pointer, 0, "Returns a new gtk_menu_bar object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -533,6 +549,7 @@ def_ceframe2(gtk_extension, gtk_check_button, gtk_session, pointer);
 f2ptr f2__gtk_check_button__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_check_button__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_check_button__new, pointer, 0, "Returns a new gtk_check_button object.");
 
 #if defined(F2__GTK__SUPPORTED)
 
@@ -561,6 +578,7 @@ def_ceframe2(gtk_extension, gtk_file_chooser_dialog, gtk_session, pointer);
 f2ptr f2__gtk_file_chooser_dialog__new(f2ptr cause, f2ptr pointer) {
   return f2gtk_file_chooser_dialog__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
+export_cefunk1(gtk_file_chooser_dialog__new, pointer, 0, "Returns a new gtk_file_chooser_dialog object.");
 
 #if defined(F2__GTK__SUPPORTED)
 

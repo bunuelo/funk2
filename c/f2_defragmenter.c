@@ -255,7 +255,7 @@ void* funk2_defragmenter__defragment__parallel_phase_two(void* memorypool_pointe
   u64 pool_index = memorypool->pool_index;
   {
     funk2_defragmenter__memory_pool__fix_pointers(&(__funk2.defragmenter), pool_index);
-    status("funk2_defragmenter__defragment: parallel phase one done.  pool_index=" u64__fstr, pool_index);
+    status("funk2_defragmenter__defragment: parallel phase two done.  pool_index=" u64__fstr, pool_index);
   }
   return NULL;
 }

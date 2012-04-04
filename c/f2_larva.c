@@ -63,7 +63,12 @@ f2ptr f2__larva__caught_invalid_value__new(f2ptr cause, f2ptr source_filename, f
       iter = f2__cons__cdr(cause, iter);
       if (iter != nil) {
 	f2ptr additional_arg_value = f2__cons__car(cause, iter);
-	f2__frame__add_var_value(cause, bug_frame, additional_arg_name, additional_arg_value);
+	if (raw__larva__is_type(cause, additional_arg_value)) {
+	  f2ptr additional_arg_value__bug = f2__bug__new_from_larva(cause, additional_arg_value);
+	  f2__frame__add_var_value(cause, bug_frame, additional_arg_name, additional_arg_value__bug);
+	} else {
+	  f2__frame__add_var_value(cause, bug_frame, additional_arg_name, additional_arg_value);
+	}
 	iter = f2__cons__cdr(cause, iter);
       } else {
 	f2__frame__add_var_value(cause, bug_frame, additional_arg_name, new__symbol(cause, "<no-bug-argument-value>"));

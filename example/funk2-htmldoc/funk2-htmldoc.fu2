@@ -243,7 +243,7 @@
 				  [mapcar [funk [post]
 						[= index [+ index 1]]
 						[string-prog '<div class="post">'
-							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] '>' ,[get post title] '</a></h1>']]
+							     [stringlist-concat `['<h1 class="title"><a name=post' ,[exp-as-string index] ' href=/post/' [get post name] '/>' ,[get post title] '</a></h1>']]
 							     [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get post date] ' by ' ,[if [get post author_link]
 																		     [string-concat '<a href="' [get post author_link] '">' [get post author] '</a>']
 																		   [get post author]] '</small></p>']]

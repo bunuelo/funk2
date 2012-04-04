@@ -493,6 +493,7 @@
   [defunk rct_root_page-save     [] [have context compile_root_page]]
   [defunk rct_about-save         [] [have [get context tab `About]        compile context]]
   [defunk rct_news-save          [] [have [get context tab `News]         compile context]]
+  [defunk rct_posts-save         [] [have context compile_posts]]
   [defunk rct_publications-save  [] [have [get context tab `Publications] compile context]]
   [defunk rct_people-save        [] [have context compile_people]]
   [defunk rct_projects-save      [] [have context compile_projects]]
@@ -506,6 +507,8 @@
     [rct_root_page-save]
     [rct_people-save]
     [rct_projects-save]
+    [rct_news-save]
+    [rct_posts-save]
     [rct_tabs-save]]
   
   ]

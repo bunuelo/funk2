@@ -17,8 +17,36 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe htmldoc_post    [frame] [title date author author_link entry]]
 
+'htmldoc_post'
+
+[deframe htmldoc_post [frame] [name title date author author_link entry]]
+
+[deftypefunk htmldoc_post get page_content []
+  [string-prog '<!-- start content -->'
+	       '<div id="content">'
+	       '  <div class="post">'
+	       [stringlist-concat `['<h1 class="title">' ,[get this title] '</h1>']]
+	       [stringlist-concat `['<p class="byline"><small>Posted on ' ,[get this date] ' by ' ,[get this author] '</small></p>']]
+	       '    <div class="entry">'
+	       '      <p>'
+	       [get this entry]
+	       '      </p>'
+	       '    </div>'
+	       '  </div>'
+	       '</div>'
+	       '<!-- end content -->']]
+
+[deftypefunk htmldoc_post execute compile [context]
+  [let [[html_code [htmldoc_page context [get this page_content]]]]
+    [shelter [mkdir [string-concat [get context root_dir] 'post']]]
+    [shelter [mkdir [string-concat [get context root_dir] 'post/' [get this name]]]]
+    [have html_code save [string-concat [get context root_dir] 'post/' [get this name] '/index.html']]
+    nil]]
+
+
+
+'htmldoc_example'
 
 [deframe htmldoc_example [frame] [name title date author entry]]
 

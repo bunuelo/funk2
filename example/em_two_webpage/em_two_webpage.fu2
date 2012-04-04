@@ -683,6 +683,7 @@
   [print 'compiling em_two tabs']          [have context compile_tabs]
   [print 'compiling em_two documentation'] [compile_em_two_documentation context]
   [print 'compiling em_two examples']      [have context compile_examples]
+  [print 'compiling em_two posts']         [have context compile_posts]
   [print 'compiling em_two images']        [compile_em_two_images        context]
   [print 'done compiling']
   nil]]
@@ -748,6 +749,7 @@
     [defunk em_two_documentation-save [] [have [get context tab `Documentation] compile context] [compile_em_two_documentation context]]
     [defunk em_two_download-save      [] [have [get context tab `Download]      compile context]]
     [defunk em_two_examples-save      [] [have context compile_examples]]
+    [defunk em_two_posts-save         [] [have context compile_posts]]
     [defunk em_two_images-save        []                                                         [compile_em_two_images        context]]
     
     ]]

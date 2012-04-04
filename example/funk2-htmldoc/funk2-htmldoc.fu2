@@ -1266,10 +1266,12 @@
 
 [defunk htmldoc_code_section [code]
   [string-prog '<tt>'
+	       '<div style="overflow:scroll;">'
 	       [have [have [have [have code replace_all '\n' '<br>\n']
 				 replace_all '-' '&#x2011;']
 			   replace_all '\t' '        ']
 		     replace_all ' ' '&nbsp;']
+	       '</div>'
 	       '</tt>']]
 
 '<h3>Bulleted List:</h3>'

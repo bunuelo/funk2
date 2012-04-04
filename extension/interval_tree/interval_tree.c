@@ -1699,7 +1699,7 @@ f2ptr f2__interval_tree_node__add_intervals_containing_value_to_list(f2ptr cause
   return raw__interval_tree_node__add_intervals_containing_value_to_list(cause, this, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
 }
 export_cefunk7(interval_tree_node__add_intervals_containing_value_to_list, this, value, list, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, 0,
-	    "Adds intervals from this interval_tree_node that contain the given value to the given list.");
+	       "Adds intervals from this interval_tree_node that contain the given value to the given list.");
 
 
 f2ptr raw__interval_tree_node__overlapping_elements(f2ptr cause, f2ptr this) {
@@ -1718,9 +1718,8 @@ f2ptr f2__interval_tree_node__overlapping_elements(f2ptr cause, f2ptr this) {
   assert_argument_type(interval_tree_node, this);
   return raw__interval_tree_node__overlapping_elements(cause, this);
 }
-def_pcfunk1(interval_tree_node__overlapping_elements, this,
-	    "Returns a new list containing the interval elements that overlap this node's center_value.",
-	    return f2__interval_tree_node__overlapping_elements(this_cause, this));
+export_cefunk1(interval_tree_node__overlapping_elements, this, 0,
+	       "Returns a new list containing the interval elements that overlap this node's center_value.");
 
 
 f2ptr raw__interval_tree_node__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

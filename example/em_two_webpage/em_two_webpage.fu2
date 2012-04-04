@@ -584,6 +584,7 @@
 
 [defunk em_two-generate_all_posts []
   `[,[let [[this [new htmldoc_post]]]
+       [set this name        'semantic_reflection_events']
        [set this title       'Semantic Representations of Reflection Events']
        [set this date        'March 12th, 2011']
        [set this author      'Bo Morgan']
@@ -596,6 +597,7 @@
 					  ]]
        this]
     ,[let [[this [new htmldoc_post]]]
+       [set this name        'physical_commonsense_simulation']
        [set this title       'Physical Commonsense Simulation of Parents and Children in a Kitchen']
        [set this date        'January 11th, 2011']
        [set this author      'Bo Morgan']
@@ -609,6 +611,7 @@
 					  ]]
        this]
     ,[let [[this [new htmldoc_post]]]
+       [set this name        'tracing_causality']
        [set this title       'Tracing of Information Flow and Causality in Large Heterogeneous Parallel Systems']
        [set this date        'September 1st, 2010']
        [set this author      'Bo Morgan']

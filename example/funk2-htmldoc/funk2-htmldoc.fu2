@@ -530,7 +530,7 @@
 	       ''
 	       '.post {'
 	       '	padding-bottom: 15px;'
-	       '	line-height: 200%;'
+	       '	line-height: 100%;'
 	       '}'
 	       ''
 	       '.post h1 {'

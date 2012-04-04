@@ -22,7 +22,7 @@
 #include "keyboard.h"
 
 
-def_ceframe1(termios, termios, chunk);
+def_ceframe1(keyboard, termios, chunk);
 
 f2ptr raw__termios__new(f2ptr cause, f2ptr chunk) {
   return f2termios__new(cause, chunk);

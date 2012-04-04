@@ -1266,7 +1266,7 @@
 
 [defunk htmldoc_code_section [code]
   [string-prog '<tt>'
-	       '<div height:800px;line-height:100%;style="overflow:scroll;">'
+	       '<div style="height:800px;line-height:100%;overflow:scroll;">'
 	       '<small>'
 	       [have [have [have [have code replace_all '\n' '<br>\n']
 				 replace_all '-' '&#x2011;']

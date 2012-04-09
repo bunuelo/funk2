@@ -1,5 +1,5 @@
-funk2 (2.13.0.2011.12.06-1) unstable; urgency=low
+funk2 (2.15.0.2012.03.30)   unstable; urgency=low
 
-  * Initial release (Closes: #94269)
+  * Initial upload into Debian.
 
- -- Bo Morgan <bo@mit.edu>  Tue, 21 Feb 2012 10:33:13 -0800
+ -- Bo Morgan <bo@mit.edu>  Fri, 30 Mar 2012 15:11:26 -0700

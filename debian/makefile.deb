@@ -24,12 +24,7 @@ tar.gz: export
 changelog-write_new:
 	echo "funk2 ($(version_tag))   unstable; urgency=low" >  $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
-	echo "  * version 2.14 (Closes: #94269)"              >> $(export_dir)debian/changelog
-	echo ""                                               >> $(export_dir)debian/changelog
-	echo "  * version 2.15 (Closes: #100884)"             >> $(export_dir)debian/changelog
-	echo ""                                               >> $(export_dir)debian/changelog
-	echo "    Defragmenter added."                        >> $(export_dir)debian/changelog
-	echo ""                                               >> $(export_dir)debian/changelog
+	echo "  * Initial upload into Debian."                >> $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog
 	echo " -- Bo Morgan <bo@mit.edu>  $(date)"            >> $(export_dir)debian/changelog
 	echo ""                                               >> $(export_dir)debian/changelog

@@ -164,8 +164,8 @@ else
 fi
 
 # checks for opengl
-AX_CHECK_GL
-AX_CHECK_GLU
+#AX_CHECK_GL
+#AX_CHECK_GLU
 
 # Check to see if -pthread or -lpthread is needed.  Prefer the former.
 # In case the pthread.h system header is not found, this test will fail.

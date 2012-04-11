@@ -167,8 +167,24 @@ fi
 AX_CHECK_GL
 AX_CHECK_GLU
 
-# checks for pthread
-ACX_PTHREAD
+# Check to see if -pthread or -lpthread is needed.  Prefer the former.
+# In case the pthread.h system header is not found, this test will fail.
+XPCFLAGS=""
+CFLAGS="$CFLAGS -pthread"
+AC_LINK_IFELSE(
+ [AC_LANG_PROGRAM(
+  [#include <pthread.h>
+   void *g(void *d) { return NULL; }],
+  [pthread_t t; pthread_create(&t,NULL,g,NULL);])],
+ [XPCFLAGS=" -Wc,-pthread"],
+ [CFLAGS="$save_CFLAGS" LIBS="-lpthread $LIBS"
+  AC_LINK_IFELSE(
+   [AC_LANG_PROGRAM(
+    [#include <pthread.h>
+     void *g(void *d) { return NULL; }],
+    [pthread_t t; pthread_create(&t,NULL,g,NULL);])],
+   [],
+   [AC_MSG_ERROR([Pthreads are required to build funk2])])])
 
 # atomic builtins are required for threading support.
 AC_MSG_CHECKING(for GCC atomic builtins)

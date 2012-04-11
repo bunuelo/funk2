@@ -17,6 +17,8 @@ export:
 	mkdir -p $(deb_create_dir)
 	git clone .. $(export_dir_name)
 	rm -Rf $(export_dir).git
+	# Remove non-free GPL source files.
+	rm -f $(export_dir)m4/acx_pthread.m4
 
 tar.gz: export
 	cd $(export_dir)..; tar cf $(package_rootname).tar $(package_rootname); gzip $(package_rootname).tar

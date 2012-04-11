@@ -1,5 +1,5 @@
 ;; 
-;; Copyright (c) 2007 Bo Morgan.
+;; Copyright (c) 2007-2012 Bo Morgan.
 ;; All rights reserved.
 ;; 
 ;; Author: Bo Morgan

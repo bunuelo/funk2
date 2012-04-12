@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: phdthesis.aux
+A level-1 auxiliary file: frontbackmatter/dirtytitlepage.aux
+A level-1 auxiliary file: frontbackmatter/titlepage.aux
+A level-1 auxiliary file: frontbackmatter/titleback.aux
+A level-1 auxiliary file: frontbackmatter/dedication.aux
+A level-1 auxiliary file: frontbackmatter/abstract.aux
+A level-1 auxiliary file: frontbackmatter/publication.aux
+A level-1 auxiliary file: frontbackmatter/acknowledgments.aux
+A level-1 auxiliary file: frontbackmatter/contents.aux
+A level-1 auxiliary file: chapters/learning_to_accomplish_goals.aux
+A level-1 auxiliary file: chapters/problems_to_solve.aux
+A level-1 auxiliary file: chapters/theory_and_alternatives.aux
+A level-1 auxiliary file: chapters/a_system.aux
+A level-1 auxiliary file: chapters/experiments.aux
+A level-1 auxiliary file: chapters/results.aux
+A level-1 auxiliary file: chapters/discussion.aux
+A level-1 auxiliary file: chapters/future.aux
+A level-1 auxiliary file: chapters/appendix_the_code.aux
+A level-1 auxiliary file: frontbackmatter/bibliography.aux
+The style file: agsm.bst
+A level-1 auxiliary file: frontbackmatter/colophon.aux
+A level-1 auxiliary file: frontbackmatter/declaration.aux
+Reallocated field_info (elt_size=4) to 10136 items from 5000.
+Database file #1: bibliography.bib
+Warning--I didn't find a database entry for "weber:2011"
+Warning--empty booktitle in ancona:1998
+You've used 213 entries,
+            2909 wiz_defined-function locations,
+            1746 strings with 36782 characters,
+and the built_in function-call counts, 751434 in all, are:
+= -- 119886
+> -- 10773
+< -- 44
++ -- 55612
+- -- 3241
+* -- 63560
+:= -- 152569
+add.period$ -- 213
+call.type$ -- 213
+change.case$ -- 2959
+chr.to.int$ -- 206
+cite$ -- 214
+duplicate$ -- 4106
+empty$ -- 7940
+format.name$ -- 4006
+if$ -- 135631
+int.to.chr$ -- 12
+int.to.str$ -- 0
+missing$ -- 220
+newline$ -- 643
+num.names$ -- 2259
+pop$ -- 1111
+preamble$ -- 1
+purify$ -- 3195
+quote$ -- 0
+skip$ -- 3512
+stack$ -- 0
+substring$ -- 166664
+swap$ -- 1059
+text.length$ -- 3026
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 818
+warning$ -- 1
+while$ -- 4886
+width$ -- 0
+write$ -- 2854
+(There were 2 warnings)

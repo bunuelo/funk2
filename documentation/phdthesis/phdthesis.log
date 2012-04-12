@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.12.23)  11 APR 2012 11:35
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.12.23)  12 APR 2012 09:00
 entering extended mode
  %&-line parsing enabled.
 **phdthesis
@@ -719,6 +719,13 @@ Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
 (/usr/share/texmf-texlive/tex/latex/oberdiek/makerobust.sty
 Package: makerobust 2006/03/18 v1.0 Making a macro robust (HO)
 )
+(/usr/share/texmf-texlive/tex/latex/type1cm/type1cm.sty
+Package: type1cm 2002/09/05 v0.04 BlueSky/Y&Y Type1 CM font definitions (DPC, p
+atched RF)
+)
+(/usr/share/texmf-texlive/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2006/07/14 v1.1d eso-pic (RN)
+)
 \abcd=\skip114
 
 (/usr/share/texmf-texlive/tex/latex/listings/lstlang1.sty
@@ -751,15 +758,15 @@ File: lstlang3.sty 2004/09/05 1.3 listings language file
 (/usr/share/texmf-texlive/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 182.
-Package hyperref Info: Option `linktocpage' set `true' on input line 182.
-Package hyperref Info: Option `breaklinks' set `true' on input line 182.
-Package hyperref Info: Option `pageanchor' set `true' on input line 182.
-Package hyperref Info: Option `plainpages' set `false' on input line 182.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 182.
+Package hyperref Info: Option `colorlinks' set `true' on input line 204.
+Package hyperref Info: Option `linktocpage' set `true' on input line 204.
+Package hyperref Info: Option `breaklinks' set `true' on input line 204.
+Package hyperref Info: Option `pageanchor' set `true' on input line 204.
+Package hyperref Info: Option `plainpages' set `false' on input line 204.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 204.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 182.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 182.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 204.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 204.
  (./phdthesis.aux
 (./frontbackmatter/dirtytitlepage.aux) (./frontbackmatter/titlepage.aux)
 (./frontbackmatter/titleback.aux) (./frontbackmatter/dedication.aux)
@@ -773,29 +780,29 @@ Package hyperref Info: Option `hypertexnames' set `true' on input line 182.
 (./frontbackmatter/colophon.aux) (./frontbackmatter/declaration.aux))
 \openout1 = `phdthesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 191.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 191.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 213.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 213.
 
 
 (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 191.
-LaTeX Font Info:    ... okay on input line 191.
-LaTeX Font Info:    Try loading font information for T1+pplj on input line 191.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Try loading font information for T1+pplj on input line 213.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/t1pplj.fd
@@ -803,12 +810,12 @@ File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 191.
+LaTeX Info: Redefining \subref on input line 213.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count135
-Package hyperref Info: Link coloring ON on input line 191.
+Package hyperref Info: Link coloring ON on input line 213.
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
@@ -818,8 +825,8 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count136
 )
-LaTeX Info: Redefining \ref on input line 191.
-LaTeX Info: Redefining \pageref on input line 191.
+LaTeX Info: Redefining \ref on input line 213.
+LaTeX Info: Redefining \pageref on input line 213.
  (./phdthesis.out)
 (./phdthesis.out)
 \@outlinefile=\write3
@@ -839,7 +846,7 @@ LaTeX Info: Redefining \pageref on input line 191.
 \MPnumerator=\count141
 \everyMPtoPDFconversion=\toks35
 )
-LaTeX Info: Redefining \microtypecontext on input line 191.
+LaTeX Info: Redefining \microtypecontext on input line 213.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -860,10 +867,10 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
 )
-[1
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+]
 \openout2 = `frontbackmatter/titlepage.aux'.
 
 
@@ -1047,7 +1054,7 @@ Overfull \hbox (2.23967pt too wide) in paragraph at lines 114--114
  []
 
 
-Overfull \hbox (9.65065pt too wide) in paragraph at lines 118--118
+Overfull \hbox (9.10315pt too wide) in paragraph at lines 118--118
  [][] []\T1/pplj/m/n/10.95 (-20) Models of Story and Lan-guage Un-der-stand-ing
  []  
  []
@@ -1065,30 +1072,30 @@ Overfull \hbox (14.58983pt too wide) in paragraph at lines 144--144
  []
 
 [15]
-Overfull \hbox (27.26234pt too wide) in paragraph at lines 151--151
+Overfull \hbox (26.71484pt too wide) in paragraph at lines 151--151
  [][] []\T1/pplj/m/n/10.95 (-20) Perceptual Sup-port of Phys-i-cal Knowl-edge [
 ]  
  []
 
 
-Overfull \hbox (8.57191pt too wide) in paragraph at lines 154--154
+Overfull \hbox (9.11942pt too wide) in paragraph at lines 154--154
  [][] []\T1/pplj/m/n/10.95 (-20) Details of In-fer-ring the Ef-fects of a Plan 
 []  
  []
 
 
-Overfull \hbox (23.93117pt too wide) in paragraph at lines 159--159
+Overfull \hbox (24.47867pt too wide) in paragraph at lines 159--159
  [][] []\T1/pplj/m/n/10.95 (-20) Databases and Knowl-edge Rep-re-sen-ta-tion []
   
  []
 
 
-Overfull \hbox (6.18706pt too wide) in paragraph at lines 167--167
+Overfull \hbox (5.91331pt too wide) in paragraph at lines 167--167
  [][] []\T1/pplj/m/n/10.95 (-20) Working in a World of Build-ing Blocks []  
  []
 
 
-Overfull \hbox (1.80984pt too wide) in paragraph at lines 175--175
+Overfull \hbox (2.35735pt too wide) in paragraph at lines 175--175
  [][] []\T1/pplj/m/n/10.95 (-20) General Par-al-lelism and Con-cur-rency []  
  []
 
@@ -1098,7 +1105,7 @@ Overfull \hbox (3.4901pt too wide) in paragraph at lines 178--178
  []
 
 [16]
-Overfull \hbox (1.5582pt too wide) in paragraph at lines 188--188
+Overfull \hbox (1.28445pt too wide) in paragraph at lines 188--188
  [][] []\T1/pplj/m/n/10.95 (-20) The So-cial Util-ity of Moral Rea-son-ing []  
 
  []
@@ -1116,7 +1123,7 @@ c-
  []
 
 
-Overfull \hbox (4.29237pt too wide) in paragraph at lines 207--207
+Overfull \hbox (4.83987pt too wide) in paragraph at lines 207--207
  [][] []\T1/pplj/m/n/10.95 (-20) Applications to Ed-u-ca-tion and Men-tal Healt
 h []  
  []
@@ -1158,7 +1165,7 @@ Overfull \hbox (1.19588pt too wide) in paragraph at lines 29--29
 [18
 
 ]
-Overfull \hbox (21.47954pt too wide) in paragraph at lines 43--43
+Overfull \hbox (22.02704pt too wide) in paragraph at lines 43--43
  [][] []\T1/pplj/m/n/10.95 (-20) A math-e-mat-i-cal the-ory of com-mu-ni-ca-tio
 n []  
  []
@@ -1761,12 +1768,7 @@ Package natbib Warning: There were undefined citations.
 (./chapters/a_system.aux) (./chapters/experiments.aux) (./chapters/results.aux)
 (./chapters/discussion.aux) (./chapters/future.aux)
 (./chapters/appendix_the_code.aux) (./frontbackmatter/bibliography.aux)
-(./frontbackmatter/colophon.aux) (./frontbackmatter/declaration.aux)
-
-Package mparhack Warning: Marginpars may have changed.
-(mparhack)                Rerun to get them right.
-
-)
+(./frontbackmatter/colophon.aux) (./frontbackmatter/declaration.aux))
 
  *File List*
 scrreprt.cls    2009/07/24 v3.04a KOMA-Script document class (report)
@@ -1863,6 +1865,9 @@ titlesec.sty    2007/08/12 v2.8 Sectioning titles
 prelim2e.sty    2009/05/29 v1.3 prelim2e Package (MS)
 everyshi.sty    2001/05/15 v3.00 EveryShipout Package (MS)
 makerobust.sty    2006/03/18 v1.0 Making a macro robust (HO)
+ type1cm.sty    2002/09/05 v0.04 BlueSky/Y&Y Type1 CM font definitions (DPC, pa
+tched RF)
+ eso-pic.sty    2006/07/14 v1.1d eso-pic (RN)
 lstlang1.sty    2004/09/05 1.3 listings language file
 lstlang2.sty    2004/09/05 1.3 listings language file
 lstlang3.sty    2004/09/05 1.3 listings language file
@@ -1949,16 +1954,13 @@ frontbackmatter/declaration.tex
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 18978 strings out of 493848
- 291265 string characters out of 1152822
- 983841 words of memory out of 3000000
- 19743 multiletter control sequences out of 15000+50000
- 78651 words of font info for 382 fonts, out of 3000000 for 9000
+ 19164 strings out of 493848
+ 294577 string characters out of 1152822
+ 986691 words of memory out of 3000000
+ 19918 multiletter control sequences out of 15000+50000
+ 82139 words of font info for 386 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  56i,14n,67p,601b,3067s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
@@ -1978,9 +1980,9 @@ xlive/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-texlive/
 fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/p
 alatino/uplr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatino/uplri8a.p
 fb></usr/share/texmf-texlive/fonts/type1/urw/symbol/usyr.pfb>
-Output written on phdthesis.pdf (131 pages, 1742391 bytes).
+Output written on phdthesis.pdf (131 pages, 1752122 bytes).
 PDF statistics:
  4030 PDF objects out of 4296 (max. 8388607)
  1598 named destinations out of 1728 (max. 500000)
- 62046 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 62558 words of extra memory for PDF output out of 74296 (max. 10000000)
 

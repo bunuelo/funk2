@@ -112,6 +112,35 @@
 %\MakeRobustCommand\caption@xref 
 \makeatother 
 
+
+% BEGIN DRAFT WATERMARK CODE
+%
+% This code is from
+% http://filoxus.blogspot.com/2008_01_01_archive.html
+%
+% Thanks to the ``Daily rant: A random blog about everything, mostly
+% programming''
+
+\usepackage{graphicx}
+\usepackage{type1cm}
+\usepackage{eso-pic}
+\usepackage{color}
+
+\makeatletter
+\AddToShipoutPicture{%
+            \setlength{\@tempdimb}{.5\paperwidth}%
+            \setlength{\@tempdimc}{.5\paperheight}%
+            \setlength{\unitlength}{1pt}%
+            \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){%
+        \makebox(0,0){\rotatebox{45}{\textcolor[gray]{0.75}%
+        {\fontsize{6cm}{6cm}\selectfont{DRAFT}}}}%
+            }%
+}
+\makeatother
+
+% END DRAFT WATERMARK CODE
+
+
 %*******************************************************            
 %\usepackage[section,below]{placeins} <--- not everybody wants this
 %\usepackage[all]{hypcap} <--- does not work with MiKTeX 2.6

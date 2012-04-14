@@ -2,27 +2,28 @@
 \vspace {-10\cftbeforechapskip }
 \select@language {american}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces The AI-environment model}}{5}{figure.caption.9}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces The AI-environment model}}{6}{figure.caption.9}
 \contentsline {figure}{\numberline {2}{\ignorespaces The state-action model}}{6}{figure.caption.10}
-\contentsline {figure}{\numberline {3}{\ignorespaces The multiple AI environment model}}{6}{figure.caption.12}
+\contentsline {figure}{\numberline {3}{\ignorespaces The multiple AI environment model}}{7}{figure.caption.12}
 \contentsline {figure}{\numberline {4}{\ignorespaces Frame-based relational representation}}{7}{figure.caption.13}
-\contentsline {figure}{\numberline {5}{\ignorespaces A reflective event representation}}{7}{figure.caption.14}
-\contentsline {figure}{\numberline {6}{\ignorespaces Collections of frames used as perceptual input to AI}}{8}{figure.caption.15}
-\contentsline {figure}{\numberline {7}{\ignorespaces The partially observable state model}}{8}{figure.caption.16}
-\contentsline {figure}{\numberline {8}{\ignorespaces The state of the environment is only partially observable}}{8}{figure.caption.17}
-\contentsline {figure}{\numberline {9}{\ignorespaces The AI has an abstract physical model of the environment}}{9}{figure.caption.18}
-\contentsline {figure}{\numberline {10}{\ignorespaces A physical goal representation}}{9}{figure.caption.19}
-\contentsline {figure}{\numberline {11}{\ignorespaces Learning to plan four step cycle}}{10}{figure.caption.20}
-\contentsline {figure}{\numberline {12}{\ignorespaces The reflective learning cycle}}{10}{figure.caption.21}
-\contentsline {figure}{\numberline {13}{\ignorespaces Goal-oriented action hypothesis knowledge}}{11}{figure.caption.22}
-\contentsline {figure}{\numberline {14}{\ignorespaces Action precondition goal occurrence hypotheses}}{12}{figure.caption.23}
+\contentsline {figure}{\numberline {5}{\ignorespaces A reflective event representation}}{8}{figure.caption.14}
+\contentsline {figure}{\numberline {6}{\ignorespaces Collections of frames used as perceptual input to AI}}{9}{figure.caption.15}
+\contentsline {figure}{\numberline {7}{\ignorespaces The partially observable state model}}{9}{figure.caption.16}
+\contentsline {figure}{\numberline {8}{\ignorespaces The state of the environment is only partially observable}}{9}{figure.caption.17}
+\contentsline {figure}{\numberline {9}{\ignorespaces The AI has an abstract physical model of the environment}}{10}{figure.caption.18}
+\contentsline {figure}{\numberline {10}{\ignorespaces A physical goal representation}}{10}{figure.caption.19}
+\contentsline {figure}{\numberline {11}{\ignorespaces Learning to plan four step cycle}}{11}{figure.caption.20}
+\contentsline {figure}{\numberline {12}{\ignorespaces The reflective learning cycle}}{11}{figure.caption.21}
+\contentsline {figure}{\numberline {13}{\ignorespaces Goal-oriented action hypothesis knowledge}}{12}{figure.caption.22}
+\contentsline {figure}{\numberline {14}{\ignorespaces Action precondition goal occurrence hypotheses}}{13}{figure.caption.23}
 \contentsline {figure}{\numberline {15}{\ignorespaces Action precondition trans-frame hypotheses}}{13}{figure.caption.24}
-\contentsline {figure}{\numberline {16}{\ignorespaces A trans-frame for an event}}{13}{figure.caption.25}
-\contentsline {figure}{\numberline {17}{\ignorespaces Goal occurrence physical hypotheses}}{13}{figure.caption.26}
+\contentsline {figure}{\numberline {16}{\ignorespaces A trans-frame for an event}}{14}{figure.caption.25}
+\contentsline {figure}{\numberline {17}{\ignorespaces Goal occurrence physical hypotheses}}{14}{figure.caption.26}
 \contentsline {figure}{\numberline {18}{\ignorespaces A partially-ordered plan with serial and parallel components}}{14}{figure.caption.27}
-\contentsline {figure}{\numberline {19}{\ignorespaces Inferring the effects of a plan}}{14}{figure.caption.28}
+\contentsline {figure}{\numberline {19}{\ignorespaces Inferring the effects of a plan}}{15}{figure.caption.28}
 \contentsline {figure}{\numberline {20}{\ignorespaces A few planning machine operations}}{15}{figure.caption.29}
-\contentsline {figure}{\numberline {21}{\ignorespaces Planning machine reflective knowledge}}{15}{figure.caption.30}
+\contentsline {figure}{\numberline {21}{\ignorespaces Planning machine reflective knowledge}}{16}{figure.caption.30}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {22}{\ignorespaces Concurrent parallel reflection efficiency}}{17}{figure.caption.31}
 \addvspace {10\p@ }

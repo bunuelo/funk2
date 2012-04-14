@@ -8,6 +8,7 @@ A level-1 auxiliary file: frontbackmatter/abstract.aux
 A level-1 auxiliary file: frontbackmatter/publication.aux
 A level-1 auxiliary file: frontbackmatter/acknowledgments.aux
 A level-1 auxiliary file: frontbackmatter/contents.aux
+A level-1 auxiliary file: chapters/preface.aux
 A level-1 auxiliary file: chapters/learning_to_accomplish_goals.aux
 A level-1 auxiliary file: chapters/problems_to_solve.aux
 A level-1 auxiliary file: chapters/theory_and_alternatives.aux
@@ -27,7 +28,7 @@ Warning--I didn't find a database entry for "weber:2011"
 Warning--empty booktitle in ancona:1998
 You've used 213 entries,
             2909 wiz_defined-function locations,
-            1746 strings with 36782 characters,
+            1747 strings with 36802 characters,
 and the built_in function-call counts, 751434 in all, are:
 = -- 119886
 > -- 10773

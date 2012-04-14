@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.12.23)  12 APR 2012 09:00
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.12.23)  13 APR 2012 17:50
 entering extended mode
  %&-line parsing enabled.
 **phdthesis
@@ -758,15 +758,15 @@ File: lstlang3.sty 2004/09/05 1.3 listings language file
 (/usr/share/texmf-texlive/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 204.
-Package hyperref Info: Option `linktocpage' set `true' on input line 204.
-Package hyperref Info: Option `breaklinks' set `true' on input line 204.
-Package hyperref Info: Option `pageanchor' set `true' on input line 204.
-Package hyperref Info: Option `plainpages' set `false' on input line 204.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 204.
+Package hyperref Info: Option `colorlinks' set `true' on input line 211.
+Package hyperref Info: Option `linktocpage' set `true' on input line 211.
+Package hyperref Info: Option `breaklinks' set `true' on input line 211.
+Package hyperref Info: Option `pageanchor' set `true' on input line 211.
+Package hyperref Info: Option `plainpages' set `false' on input line 211.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 211.
 
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 204.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 204.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 211.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 211.
  (./phdthesis.aux
 (./frontbackmatter/dirtytitlepage.aux) (./frontbackmatter/titlepage.aux)
 (./frontbackmatter/titleback.aux) (./frontbackmatter/dedication.aux)
@@ -780,29 +780,29 @@ Package hyperref Info: Option `hypertexnames' set `true' on input line 204.
 (./frontbackmatter/colophon.aux) (./frontbackmatter/declaration.aux))
 \openout1 = `phdthesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 213.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 213.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 220.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 220.
 
 
 (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 213.
-LaTeX Font Info:    ... okay on input line 213.
-LaTeX Font Info:    Try loading font information for T1+pplj on input line 213.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 220.
+LaTeX Font Info:    ... okay on input line 220.
+LaTeX Font Info:    Try loading font information for T1+pplj on input line 220.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/t1pplj.fd
@@ -810,12 +810,12 @@ File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 213.
+LaTeX Info: Redefining \subref on input line 220.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count135
-Package hyperref Info: Link coloring ON on input line 213.
+Package hyperref Info: Link coloring ON on input line 220.
 
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
@@ -825,8 +825,8 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count136
 )
-LaTeX Info: Redefining \ref on input line 213.
-LaTeX Info: Redefining \pageref on input line 213.
+LaTeX Info: Redefining \ref on input line 220.
+LaTeX Info: Redefining \pageref on input line 220.
  (./phdthesis.out)
 (./phdthesis.out)
 \@outlinefile=\write3
@@ -846,7 +846,7 @@ LaTeX Info: Redefining \pageref on input line 213.
 \MPnumerator=\count141
 \everyMPtoPDFconversion=\toks35
 )
-LaTeX Info: Redefining \microtypecontext on input line 213.
+LaTeX Info: Redefining \microtypecontext on input line 220.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -884,7 +884,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<gfx/model-6.pdf, id=747, 437.635pt x 612.2875pt>
+<gfx/model-6.pdf, id=747, 468.52641pt x 477.38853pt>
 File: gfx/model-6.pdf Graphic file (type pdf)
  <use gfx/model-6.pdf>
 [3 <./gfx/model-6.pdf>])
@@ -1214,27 +1214,27 @@ Class scrreprt Warning: \float@addtolists detected!
 
 
 
-] [4] <gfx/agent_environment.pdf, id=1110, 271.0125pt x 307.1475pt>
+] [4] <gfx/agent_environment.pdf, id=1118, 271.0125pt x 307.1475pt>
 File: gfx/agent_environment.pdf Graphic file (type pdf)
 
 <use gfx/agent_environment.pdf>
-<gfx/state_action.pdf, id=1113, 433.62pt x 216.81pt>
+<gfx/state_action.pdf, id=1121, 433.62pt x 216.81pt>
 File: gfx/state_action.pdf Graphic file (type pdf)
 
 <use gfx/state_action.pdf>
 Package acronym Info: Label `acro:FSM' newly defined as it shall be overridden
 although it is yet undefined on input line 156.
  [5 <./gfx/agent_environment.pdf>]
-<gfx/multiple_agent_environment.pdf, id=1129, 451.6875pt x 307.1475pt>
+<gfx/multiple_agent_environment.pdf, id=1137, 451.6875pt x 307.1475pt>
 File: gfx/multiple_agent_environment.pdf Graphic file (type pdf)
 
 <use gfx/multiple_agent_environment.pdf>
-<gfx/frame_representation.pdf, id=1134, 271.0125pt x 162.6075pt>
+<gfx/frame_representation.pdf, id=1142, 271.0125pt x 162.6075pt>
 File: gfx/frame_representation.pdf Graphic file (type pdf)
 
 <use gfx/frame_representation.pdf> [6 <./gfx/state_action.pdf> <./gfx/multiple_
 agent_environment.pdf>]
-<gfx/reflective_event_representation.pdf, id=1154, 867.24pt x 560.0925pt>
+<gfx/reflective_event_representation.pdf, id=1162, 867.24pt x 560.0925pt>
 File: gfx/reflective_event_representation.pdf Graphic file (type pdf)
 
 <use gfx/reflective_event_representation.pdf>
@@ -1243,7 +1243,7 @@ Overfull \hbox (29.43306pt too wide) in paragraph at lines 219--220
  []
 
 [7 <./gfx/frame_representation.pdf> <./gfx/reflective_event_representation.pdf>
-] <gfx/frame_perception.pdf, id=1173, 632.3625pt x 271.0125pt>
+] <gfx/frame_perception.pdf, id=1181, 632.3625pt x 271.0125pt>
 File: gfx/frame_perception.pdf Graphic file (type pdf)
 
 <use gfx/frame_perception.pdf>
@@ -1251,28 +1251,28 @@ Overfull \hbox (19.9567pt too wide) in paragraph at lines 241--242
  [] 
  []
 
-<gfx/partially_observable.pdf, id=1176, 469.755pt x 307.1475pt>
+<gfx/partially_observable.pdf, id=1184, 469.755pt x 307.1475pt>
 File: gfx/partially_observable.pdf Graphic file (type pdf)
 
 <use gfx/partially_observable.pdf>
-<gfx/partial_frame_perception.pdf, id=1178, 361.35pt x 289.08pt>
+<gfx/partial_frame_perception.pdf, id=1186, 361.35pt x 289.08pt>
 File: gfx/partial_frame_perception.pdf Graphic file (type pdf)
 
 <use gfx/partial_frame_perception.pdf> [8 <./gfx/frame_perception.pdf> <./gfx/p
 artially_observable.pdf> <./gfx/partial_frame_perception.pdf>]
-<gfx/environment_perception_physical.pdf, id=1216, 487.8225pt x 361.35pt>
+<gfx/environment_perception_physical.pdf, id=1224, 487.8225pt x 361.35pt>
 File: gfx/environment_perception_physical.pdf Graphic file (type pdf)
 
 <use gfx/environment_perception_physical.pdf>
-<gfx/goal_state.pdf, id=1219, 505.89pt x 343.2825pt>
+<gfx/goal_state.pdf, id=1227, 505.89pt x 343.2825pt>
 File: gfx/goal_state.pdf Graphic file (type pdf)
  <use gfx/goal_state.pdf>
-<gfx/learning_to_plan-four_step_cycle.pdf, id=1222, 361.35pt x 216.81pt>
+<gfx/learning_to_plan-four_step_cycle.pdf, id=1230, 361.35pt x 216.81pt>
 File: gfx/learning_to_plan-four_step_cycle.pdf Graphic file (type pdf)
 
 <use gfx/learning_to_plan-four_step_cycle.pdf> [9 <./gfx/environment_perception
 _physical.pdf> <./gfx/goal_state.pdf>]
-<gfx/learning_to_plan.pdf, id=1248, 831.105pt x 451.6875pt>
+<gfx/learning_to_plan.pdf, id=1256, 831.105pt x 451.6875pt>
 File: gfx/learning_to_plan.pdf Graphic file (type pdf)
 
 <use gfx/learning_to_plan.pdf>
@@ -1281,7 +1281,7 @@ Overfull \hbox (29.43306pt too wide) in paragraph at lines 340--343
  []
 
 [10 <./gfx/learning_to_plan-four_step_cycle.pdf> <./gfx/learning_to_plan.pdf>]
-<gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf, id=1276, 668.4975p
+<gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf, id=1284, 668.4975p
 t x 271.0125pt>
 File: gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf Graphic file (
 type pdf)
@@ -1293,7 +1293,7 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 400--401
 
 [11 <./gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf>]
 <gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf, id=
-1295, 831.105pt x 451.6875pt>
+1303, 831.105pt x 451.6875pt>
 File: gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf
  Graphic file (type pdf)
 
@@ -1304,7 +1304,7 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 426--429
  []
 
 
-<gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf, id=1298,
+<gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf, id=1306,
  831.105pt x 343.2825pt>
 File: gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf Grap
 hic file (type pdf)
@@ -1314,10 +1314,10 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 446--447
  [] 
  []
 
-<gfx/transframe.pdf, id=1301, 578.16pt x 162.6075pt>
+<gfx/transframe.pdf, id=1309, 578.16pt x 162.6075pt>
 File: gfx/transframe.pdf Graphic file (type pdf)
  <use gfx/transframe.pdf>
-<gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf, id=1304, 849.1
+<gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf, id=1312, 849.1
 725pt x 451.6875pt>
 File: gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf Graphic fi
 le (type pdf)
@@ -1327,7 +1327,7 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 470--471
  [] 
  []
 
-<gfx/serial_and_parallel_plan.pdf, id=1307, 831.105pt x 252.945pt>
+<gfx/serial_and_parallel_plan.pdf, id=1315, 831.105pt x 252.945pt>
 File: gfx/serial_and_parallel_plan.pdf Graphic file (type pdf)
 
 <use gfx/serial_and_parallel_plan.pdf>
@@ -1342,7 +1342,7 @@ Overfull \hbox (8.68347pt too wide) in paragraph at lines 494--498
 a partially-ordered
  []
 
-<gfx/infer_plan_effects.pdf, id=1320, 1065.9825pt x 650.43pt>
+<gfx/infer_plan_effects.pdf, id=1328, 1065.9825pt x 650.43pt>
 File: gfx/infer_plan_effects.pdf Graphic file (type pdf)
 
 <use gfx/infer_plan_effects.pdf>
@@ -1350,14 +1350,14 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 505--507
  [] 
  []
 
-<gfx/planning_machine_operations.pdf, id=1324, 542.025pt x 686.565pt>
+<gfx/planning_machine_operations.pdf, id=1332, 542.025pt x 686.565pt>
 File: gfx/planning_machine_operations.pdf Graphic file (type pdf)
 
 <use gfx/planning_machine_operations.pdf> [13 <./gfx/learning_to_plan-3-action_
 precondition_transframe_hypotheses.pdf> <./gfx/transframe.pdf> <./gfx/learning_
 to_plan-4-goal_occurrence_physical_hypotheses.pdf>] [14 <./gfx/serial_and_paral
 lel_plan.pdf> <./gfx/infer_plan_effects.pdf>]
-<gfx/planning_machine_reflective_knowledge.pdf, id=1370, 975.645pt x 415.5525pt
+<gfx/planning_machine_reflective_knowledge.pdf, id=1378, 975.645pt x 415.5525pt
 >
 File: gfx/planning_machine_reflective_knowledge.pdf Graphic file (type pdf)
  <use gfx/planning_machine_reflective_knowledge.pdf>
@@ -1377,7 +1377,7 @@ e_knowledge.pdf>]
 ]
 Chapter 2.
 
-<gfx/concurrent_parallel_reflection_efficiency.pdf, id=1401, 704.6325pt x 234.8
+<gfx/concurrent_parallel_reflection_efficiency.pdf, id=1409, 704.6325pt x 234.8
 775pt>
 File: gfx/concurrent_parallel_reflection_efficiency.pdf Graphic file (type pdf)
 
@@ -1399,7 +1399,7 @@ o d -e l l i n g i n -t e l -l i -g e n c e|
  []
 
 
-<gfx/problem_complexity_versus_algorithm_adaptability.pdf, id=1419, 415.5525pt 
+<gfx/problem_complexity_versus_algorithm_adaptability.pdf, id=1427, 415.5525pt 
 x 361.35pt>
 File: gfx/problem_complexity_versus_algorithm_adaptability.pdf Graphic file (ty
 pe pdf)
@@ -1410,14 +1410,14 @@ pe pdf)
 
 
 ] [20 <./gfx/problem_complexity_versus_algorithm_adaptability.pdf>] [21]
-[22] <gfx/feedback_control.pdf, id=1509, 397.485pt x 234.8775pt>
+[22] <gfx/feedback_control.pdf, id=1517, 397.485pt x 234.8775pt>
 File: gfx/feedback_control.pdf Graphic file (type pdf)
 
 <use gfx/feedback_control.pdf> [23]
 Package acronym Info: Label `acro:GPS' newly defined as it shall be overridden
 although it is yet undefined on input line 280.
 
-<gfx/difference_engine_feedback_control.pdf, id=1529, 578.16pt x 433.62pt>
+<gfx/difference_engine_feedback_control.pdf, id=1537, 578.16pt x 433.62pt>
 File: gfx/difference_engine_feedback_control.pdf Graphic file (type pdf)
 
 <use gfx/difference_engine_feedback_control.pdf> [24 <./gfx/feedback_control.pd
@@ -1426,11 +1426,11 @@ f> <./gfx/difference_engine_feedback_control.pdf>]
 Package natbib Warning: Citation `weber:2011' on page 25 undefined on input lin
 e 320.
 
-[25] <gfx/reinforcement_learning.pdf, id=1566, 271.0125pt x 307.1475pt>
+[25] <gfx/reinforcement_learning.pdf, id=1574, 271.0125pt x 307.1475pt>
 File: gfx/reinforcement_learning.pdf Graphic file (type pdf)
 
 <use gfx/reinforcement_learning.pdf>
-<gfx/perception_categorization.pdf, id=1569, 451.6875pt x 271.0125pt>
+<gfx/perception_categorization.pdf, id=1577, 451.6875pt x 271.0125pt>
 File: gfx/perception_categorization.pdf Graphic file (type pdf)
 
 <use gfx/perception_categorization.pdf> [26 <./gfx/reinforcement_learning.pdf> 
@@ -1439,7 +1439,7 @@ Package acronym Info: Label `acro:RMDP' newly defined as it shall be overridden
 
 although it is yet undefined on input line 423.
 
-<gfx/objective_description.pdf, id=1600, 271.0125pt x 307.1475pt>
+<gfx/objective_description.pdf, id=1608, 271.0125pt x 307.1475pt>
 File: gfx/objective_description.pdf Graphic file (type pdf)
 
 <use gfx/objective_description.pdf> [27 <./gfx/objective_description.pdf>]
@@ -1541,7 +1541,7 @@ Overfull \hbox (16.83957pt too wide) in paragraph at lines 118--118
  o -g r a m -m i n g l a n -g u a g e| 
  []
 
-[50] <gfx/physical_perception.pdf, id=2335, 813.0375pt x 776.9025pt>
+[50] <gfx/physical_perception.pdf, id=2343, 813.0375pt x 776.9025pt>
 File: gfx/physical_perception.pdf Graphic file (type pdf)
 
 <use gfx/physical_perception.pdf> [51]
@@ -1574,7 +1574,7 @@ Overfull \hbox (11.7985pt too wide) in paragraph at lines 5--5
 [] t i m e s y m -b o l i c c o n -
  []
 
-<gfx/blocks_world_screenshot-1.pdf, id=2369, 642.4pt x 481.8pt>
+<gfx/blocks_world_screenshot-1.pdf, id=2377, 642.4pt x 481.8pt>
 File: gfx/blocks_world_screenshot-1.pdf Graphic file (type pdf)
 
 <use gfx/blocks_world_screenshot-1.pdf>
@@ -1592,7 +1592,7 @@ Overfull \hbox (65.6821pt too wide) in alignment at lines 32--32
  []
 
 [55 <./gfx/blocks_world_screenshot-1.pdf>] [56] [57]
-<gfx/mindmon-isis_world-screenshot-1.png, id=2392, 745.184pt x 780.35359pt>
+<gfx/mindmon-isis_world-screenshot-1.png, id=2400, 745.184pt x 780.35359pt>
 File: gfx/mindmon-isis_world-screenshot-1.png Graphic file (type png)
 
 <use gfx/mindmon-isis_world-screenshot-1.png>
@@ -1646,7 +1646,7 @@ Overfull \hbox (1.89069pt too wide) in paragraph at lines 266--267
 een learned
  []
 
-[72] <gfx/communication_theory.pdf, id=2512, 794.97pt x 216.81pt>
+[72] <gfx/communication_theory.pdf, id=2520, 794.97pt x 216.81pt>
 File: gfx/communication_theory.pdf Graphic file (type pdf)
 
 <use gfx/communication_theory.pdf>) [73 <./gfx/communication_theory.pdf>]
@@ -1964,25 +1964,27 @@ Here is how much of TeX's memory you used:
  714 hyphenation exceptions out of 8191
  56i,14n,67p,601b,3067s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
-ve/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-texlive/fonts/type1/public/a
-msfonts/euler/euex10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
-euler/eufm10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/euler/eu
-fm7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/euler/eurb10.pfb>
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/euler/eurm7.pfb></usr/share/texmf
--texlive/fonts/type1/public/amsfonts/euler/eusm10.pfb></usr/share/texmf-texlive
-/fonts/type1/public/fpl/fplbj8a.pfb></usr/share/texmf-texlive/fonts/type1/publi
-c/fpl/fplrc8a.pfb></usr/share/texmf-texlive/fonts/type1/public/fpl/fplrij8a.pfb
-></usr/share/texmf-texlive/fonts/type1/public/bera/fvmr8a.pfb></usr/share/texmf
--texlive/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-texlive/
-fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/p
-alatino/uplr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatino/uplri8a.p
-fb></usr/share/texmf-texlive/fonts/type1/urw/symbol/usyr.pfb>
-Output written on phdthesis.pdf (131 pages, 1752122 bytes).
+ve/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
+cmsy7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/euler/euex10.pf
+b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/euler/eufm7.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/euler/eurb10.pfb></usr/share/texmf-texli
+ve/fonts/type1/public/amsfonts/euler/eurm10.pfb></usr/share/texmf-texlive/fonts
+/type1/public/amsfonts/euler/eurm7.pfb></usr/share/texmf-texlive/fonts/type1/pu
+blic/amsfonts/euler/eusm10.pfb></usr/share/texmf-texlive/fonts/type1/public/fpl
+/fplbj8a.pfb></usr/share/texmf-texlive/fonts/type1/public/fpl/fplrc8a.pfb></usr
+/share/texmf-texlive/fonts/type1/public/fpl/fplrij8a.pfb></usr/share/texmf-texl
+ive/fonts/type1/public/bera/fvmr8a.pfb></usr/share/texmf-texlive/fonts/type1/pu
+blic/amsfonts/latxfont/lcircle1.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/symbols/msam10.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatin
+o/uplb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatino/uplr8a.pfb></us
+r/share/texmf-texlive/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texmf-te
+xlive/fonts/type1/urw/symbol/usyr.pfb>
+Output written on phdthesis.pdf (131 pages, 1777366 bytes).
 PDF statistics:
- 4030 PDF objects out of 4296 (max. 8388607)
+ 4040 PDF objects out of 4296 (max. 8388607)
  1598 named destinations out of 1728 (max. 500000)
  62558 words of extra memory for PDF output out of 74296 (max. 10000000)
 

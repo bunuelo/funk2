@@ -24,38 +24,39 @@ phdthesis.pdf: \
   chapters/discussion.tex \
   chapters/future.tex \
   chapters/appendix_the_code.tex \
-  gfx/objective_description.pdf \
   gfx/agent_environment.pdf \
-  gfx/multiple_agent_environment.pdf \
-  gfx/reinforcement_learning.pdf \
-  gfx/perception_categorization.pdf \
-  gfx/problem_complexity_versus_algorithm_adaptability.pdf \
-  gfx/feedback_control.pdf \
-  gfx/difference_engine_feedback_control.pdf \
-  gfx/state_action.pdf \
-  gfx/partially_observable.pdf \
-  gfx/environment_perception_physical.pdf \
-  gfx/frame_representation.pdf \
-  gfx/frame_perception.pdf \
-  gfx/physical_perception.pdf \
-  gfx/goal_state.pdf \
-  gfx/reflective_event_representation.pdf \
-  gfx/communication_theory.pdf \
-  gfx/learning_to_plan.pdf \
-  gfx/transframe.pdf \
-  gfx/serial_and_parallel_plan.pdf \
-  gfx/infer_plan_effects.pdf \
-  gfx/planning_machine_operations.pdf \
-  gfx/planning_machine_reflective_knowledge.pdf \
   gfx/blocks_world_screenshot-1.pdf \
-  gfx/mindmon-isis_world-screenshot-1.pdf \
+  gfx/communication_theory.pdf \
+  gfx/concurrent_parallel_reflection_efficiency.pdf \
+  gfx/difference_engine_feedback_control.pdf \
+  gfx/environment_perception_physical.pdf \
+  gfx/feedback_control.pdf \
+  gfx/frame_perception.pdf \
+  gfx/frame_representation.pdf \
+  gfx/goal_state.pdf \
+  gfx/infer_plan_effects.pdf \
   gfx/ladder_state_machine.pdf \
+  gfx/learning_to_plan.pdf \
   gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf \
   gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf \
   gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf \
   gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf \
   gfx/learning_to_plan-four_step_cycle.pdf \
-  gfx/concurrent_parallel_reflection_efficiency.pdf
+  gfx/mindmon-isis_world-screenshot-1.pdf \
+  gfx/model-6.pdf \
+  gfx/multiple_agent_environment.pdf \
+  gfx/objective_description.pdf \
+  gfx/partially_observable.pdf \
+  gfx/perception_categorization.pdf \
+  gfx/physical_perception.pdf \
+  gfx/planning_machine_operations.pdf \
+  gfx/planning_machine_reflective_knowledge.pdf \
+  gfx/problem_complexity_versus_algorithm_adaptability.pdf \
+  gfx/reflective_event_representation.pdf \
+  gfx/reinforcement_learning.pdf \
+  gfx/serial_and_parallel_plan.pdf \
+  gfx/state_action.pdf \
+  gfx/transframe.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis
@@ -65,7 +66,7 @@ phdthesis.pdf: \
 	neato $< -Tpdf > $@
 
 %.pdf: %.dot makefile
-	dot -Txdot $< | dot2tex -c -ftikz -tmath > temp.tex
+	dot -Txdot $< | dot2tex -c -ftikz -traw > temp.tex
 	pdflatex temp.tex
 	rm -f temp.tex
 	mv -f temp.pdf $@

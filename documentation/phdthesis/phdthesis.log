@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.12.23)  13 APR 2012 18:13
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.4.14)  22 APR 2012 17:04
 entering extended mode
  %&-line parsing enabled.
 **phdthesis
@@ -772,9 +772,10 @@ Package hyperref Info: Option `hypertexnames' set `true' on input line 211.
 (./frontbackmatter/titleback.aux) (./frontbackmatter/dedication.aux)
 (./frontbackmatter/abstract.aux) (./frontbackmatter/publication.aux)
 (./frontbackmatter/acknowledgments.aux) (./frontbackmatter/contents.aux)
-(./chapters/preface.aux) (./chapters/learning_to_accomplish_goals.aux)
-(./chapters/problems_to_solve.aux) (./chapters/theory_and_alternatives.aux)
-(./chapters/a_system.aux) (./chapters/experiments.aux) (./chapters/results.aux)
+(./chapters/preface.aux) (./chapters/causality.aux)
+(./chapters/learning_to_accomplish_goals.aux) (./chapters/problems_to_solve.aux
+) (./chapters/theory_and_alternatives.aux) (./chapters/a_system.aux)
+(./chapters/experiments.aux) (./chapters/results.aux)
 (./chapters/discussion.aux) (./chapters/future.aux)
 (./chapters/appendix_the_code.aux) (./frontbackmatter/bibliography.aux)
 (./frontbackmatter/colophon.aux) (./frontbackmatter/declaration.aux))
@@ -884,7 +885,7 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 
-<gfx/model-6.pdf, id=747, 468.52641pt x 477.38853pt>
+<gfx/model-6.pdf, id=755, 468.52641pt x 477.38853pt>
 File: gfx/model-6.pdf Graphic file (type pdf)
  <use gfx/model-6.pdf>
 [3 <./gfx/model-6.pdf>])
@@ -946,41 +947,47 @@ LaTeX Font Info:    Font shape `T1/pplj/m/sl' in size <10.95> not available
 
 
 (./frontbackmatter/contents.tex (./phdthesis.toc
-Overfull \hbox (25.93071pt too wide) in paragraph at lines 12--12
+Overfull \hbox (21.01714pt too wide) in paragraph at lines 7--7
+ [][] []\T1/pplj/m/n/10.95 (-20) Reality as the Ex-pe-ri-ence of Be-ing in the 
+Mo-ment []  
+ []
+
+
+Overfull \hbox (25.93071pt too wide) in paragraph at lines 14--14
  [][] []\T1/pplj/m/n/10.95 (-20) Introducing Re-flec-tion Early in the Pro-cess
  []  
  []
 
 
-Overfull \hbox (4.78255pt too wide) in paragraph at lines 22--22
+Overfull \hbox (4.78255pt too wide) in paragraph at lines 24--24
  [][] []\T1/pplj/m/n/10.95 (-20) Physical Goal Oc-cur-rence Hy-pothe-ses []  
  []
 
 
-Overfull \hbox (6.51125pt too wide) in paragraph at lines 24--24
+Overfull \hbox (6.51125pt too wide) in paragraph at lines 26--26
  [][] []\T1/pplj/m/n/10.95 (-20) Partially-Ordered Plan Rep-re-sen-ta-tion []  
 
  []
 
 
-Overfull \hbox (16.56186pt too wide) in paragraph at lines 28--28
+Overfull \hbox (16.56186pt too wide) in paragraph at lines 30--30
  [][] []\T1/pplj/m/n/10.95 (-20) Planning Ma-chine Re-flec-tive Knowl-edge []  
 
  []
 
 
-Overfull \hbox (2.0836pt too wide) in paragraph at lines 32--32
+Overfull \hbox (2.35735pt too wide) in paragraph at lines 34--34
  [][] []\T1/pplj/m/n/10.95 (-20) General Par-al-lelism and Con-cur-rency []  
  []
 
 
-Overfull \hbox (31.1861pt too wide) in paragraph at lines 42--42
+Overfull \hbox (30.6386pt too wide) in paragraph at lines 44--44
  [][] []\T1/pplj/m/n/10.95 (-20) Two Pop-u-lar Ap-proaches to Mod-elling In-tel
 -li-gence []  
  []
 
 
-Overfull \hbox (12.20746pt too wide) in paragraph at lines 43--43
+Overfull \hbox (11.65996pt too wide) in paragraph at lines 45--45
  [][] []\T1/pplj/m/n/10.95 (-20) Adaptability in Com-plex En-vi-ron-ments []  
  []
 
@@ -1017,31 +1024,31 @@ File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 
 
 ]
-Overfull \hbox (51.81183pt too wide) in paragraph at lines 51--51
+Overfull \hbox (51.81183pt too wide) in paragraph at lines 53--53
  [][] []\T1/pplj/m/n/10.95 (-20) Shades of Be-lief as De-bug-ging Meta-Knowledg
 e []  
  []
 
 
-Overfull \hbox (35.50668pt too wide) in paragraph at lines 57--57
+Overfull \hbox (35.23294pt too wide) in paragraph at lines 59--59
  [][] []\T1/pplj/m/n/10.95 (-20) Planning and Act-ing in In-com-plete Do-mains 
 []  
  []
 
 
-Overfull \hbox (29.23674pt too wide) in paragraph at lines 58--58
+Overfull \hbox (28.963pt too wide) in paragraph at lines 60--60
  [][] []\T1/pplj/m/n/10.95 (-20) Assuming a Cor-rect Model of En-vi-ron-ment []
   
  []
 
 
-Overfull \hbox (0.79987pt too wide) in paragraph at lines 64--64
+Overfull \hbox (0.79987pt too wide) in paragraph at lines 66--66
  [][] []\T1/pplj/m/n/10.95 (-20) Categorizing Per-cep-tions and Ac-tions based 
 
  []
 
 
-Overfull \hbox (1.85014pt too wide) in paragraph at lines 66--66
+Overfull \hbox (2.12389pt too wide) in paragraph at lines 68--68
  [][] []\T1/pplj/m/n/10.95 (-20) The Ob-jec-tive Mod-elling As-sump-tion []  
  []
 
@@ -1049,81 +1056,81 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
 [14]
-Overfull \hbox (2.23967pt too wide) in paragraph at lines 114--114
+Overfull \hbox (2.23967pt too wide) in paragraph at lines 116--116
  [][] []\T1/pplj/m/n/10.95 (-20) Self-Conscious Reflection---Models of Learn- 
  []
 
 
-Overfull \hbox (9.10315pt too wide) in paragraph at lines 118--118
+Overfull \hbox (9.65065pt too wide) in paragraph at lines 120--120
  [][] []\T1/pplj/m/n/10.95 (-20) Models of Story and Lan-guage Un-der-stand-ing
  []  
  []
 
 
-Overfull \hbox (66.54678pt too wide) in paragraph at lines 121--121
+Overfull \hbox (66.54678pt too wide) in paragraph at lines 123--123
  [][] []\T1/pplj/m/n/10.95 (-20) Evaluating Mod-els of Learn-ing by Self-Explan
 ation []  
  []
 
 
-Overfull \hbox (14.58983pt too wide) in paragraph at lines 144--144
+Overfull \hbox (14.58983pt too wide) in paragraph at lines 146--146
  [][] []\T1/pplj/m/n/10.95 (-20) Methods for Fo-cus-ing Re-flec-tive Trac-ing [
 ]  
  []
 
 [15]
-Overfull \hbox (26.71484pt too wide) in paragraph at lines 151--151
+Overfull \hbox (27.26234pt too wide) in paragraph at lines 153--153
  [][] []\T1/pplj/m/n/10.95 (-20) Perceptual Sup-port of Phys-i-cal Knowl-edge [
 ]  
  []
 
 
-Overfull \hbox (9.11942pt too wide) in paragraph at lines 154--154
+Overfull \hbox (9.11942pt too wide) in paragraph at lines 156--156
  [][] []\T1/pplj/m/n/10.95 (-20) Details of In-fer-ring the Ef-fects of a Plan 
 []  
  []
 
 
-Overfull \hbox (24.47867pt too wide) in paragraph at lines 159--159
+Overfull \hbox (24.47867pt too wide) in paragraph at lines 161--161
  [][] []\T1/pplj/m/n/10.95 (-20) Databases and Knowl-edge Rep-re-sen-ta-tion []
   
  []
 
 
-Overfull \hbox (5.91331pt too wide) in paragraph at lines 167--167
+Overfull \hbox (6.18706pt too wide) in paragraph at lines 169--169
  [][] []\T1/pplj/m/n/10.95 (-20) Working in a World of Build-ing Blocks []  
  []
 
 
-Overfull \hbox (2.35735pt too wide) in paragraph at lines 175--175
+Overfull \hbox (2.35735pt too wide) in paragraph at lines 177--177
  [][] []\T1/pplj/m/n/10.95 (-20) General Par-al-lelism and Con-cur-rency []  
  []
 
 
-Overfull \hbox (3.4901pt too wide) in paragraph at lines 178--178
+Overfull \hbox (3.4901pt too wide) in paragraph at lines 180--180
  [][] []\T1/pplj/m/n/10.95 (-20) Comparison be-tween Learned Re-ac-tions and 
  []
 
 [16]
-Overfull \hbox (1.28445pt too wide) in paragraph at lines 188--188
+Overfull \hbox (1.5582pt too wide) in paragraph at lines 190--190
  [][] []\T1/pplj/m/n/10.95 (-20) The So-cial Util-ity of Moral Rea-son-ing []  
 
  []
 
 
-Overfull \hbox (10.95404pt too wide) in paragraph at lines 200--200
+Overfull \hbox (10.95404pt too wide) in paragraph at lines 202--202
  [][] []\T1/pplj/m/n/10.95 (-20) A Six Layer Or-ga-ni-za-tion of My The-ory [] 
  
  []
 
 
-Overfull \hbox (0.1537pt too wide) in paragraph at lines 202--202
+Overfull \hbox (0.1537pt too wide) in paragraph at lines 204--204
  [][] []\T1/pplj/m/n/10.95 (-20) Recursive Loops and In-fi-nite Re-cur-sive Tra
 c- 
  []
 
 
-Overfull \hbox (4.83987pt too wide) in paragraph at lines 207--207
+Overfull \hbox (4.83987pt too wide) in paragraph at lines 209--209
  [][] []\T1/pplj/m/n/10.95 (-20) Applications to Ed-u-ca-tion and Men-tal Healt
 h []  
  []
@@ -1133,31 +1140,31 @@ h []
 \openout4 = `phdthesis.toc'.
 
  [17] (./phdthesis.lof
-Overfull \hbox (4.26637pt too wide) in paragraph at lines 9--9
+Overfull \hbox (4.54012pt too wide) in paragraph at lines 10--10
  [][] []\T1/pplj/m/n/10.95 (-20) Frame-based re-la-tional rep-re-sen-ta-tion []
   
  []
 
 
-Overfull \hbox (31.0485pt too wide) in paragraph at lines 18--18
+Overfull \hbox (31.0485pt too wide) in paragraph at lines 19--19
  [][] []\T1/pplj/m/n/10.95 (-20) Goal-oriented ac-tion hy-poth-e-sis knowl-edge
  []  
  []
 
 
-Overfull \hbox (10.92836pt too wide) in paragraph at lines 26--26
+Overfull \hbox (10.92836pt too wide) in paragraph at lines 27--27
  [][] []\T1/pplj/m/n/10.95 (-20) Planning ma-chine re-flec-tive knowl-edge []  
 
  []
 
 
-Overfull \hbox (11.40912pt too wide) in paragraph at lines 28--28
+Overfull \hbox (11.68286pt too wide) in paragraph at lines 29--29
  [][] []\T1/pplj/m/n/10.95 (-20) Concurrent par-al-lel re-flec-tion ef-fi-cienc
 y []  
  []
 
 
-Overfull \hbox (1.19588pt too wide) in paragraph at lines 30--30
+Overfull \hbox (1.19588pt too wide) in paragraph at lines 31--31
  [][] []\T1/pplj/m/n/10.95 (-20) Problem com-plex-ity ver-sus al-go-rithm adapt
 - 
  []
@@ -1165,7 +1172,7 @@ Overfull \hbox (1.19588pt too wide) in paragraph at lines 30--30
 [18
 
 ]
-Overfull \hbox (22.02704pt too wide) in paragraph at lines 44--44
+Overfull \hbox (22.02704pt too wide) in paragraph at lines 45--45
  [][] []\T1/pplj/m/n/10.95 (-20) A math-e-mat-i-cal the-ory of com-mu-ni-ca-tio
 n []  
  []
@@ -1216,35 +1223,51 @@ Class scrreprt Warning: \float@addtolists detected!
 
 
 ] [4]
+\openout2 = `chapters/causality.aux'.
+
+ (./chapters/causality.tex
+Chapter 2.
+
+Overfull \hbox (12.03174pt too wide) in paragraph at lines 21--21
+ |[]\T1/pplj/m/sc/10.95 (-20) r e -a l -i t y a s t h e e x -p e -r i -e n c e 
+o f b e -i n g i n t h e m o -m e n t| 
+ []
+
+) [5
+
+
+
+]
 \openout2 = `chapters/learning_to_accomplish_goals.aux'.
 
- (./chapters/learning_to_accomplish_goals.tex
-Chapter 2.
-[5
+ (./chapters/learning_to_accomplish_goals.tex [6
 
 
 
-] <gfx/agent_environment.pdf, id=1123, 271.0125pt x 307.1475pt>
+
+]
+Chapter 3.
+[7] <gfx/agent_environment.pdf, id=1141, 271.0125pt x 307.1475pt>
 File: gfx/agent_environment.pdf Graphic file (type pdf)
 
 <use gfx/agent_environment.pdf>
-<gfx/state_action.pdf, id=1126, 433.62pt x 216.81pt>
+<gfx/state_action.pdf, id=1144, 433.62pt x 216.81pt>
 File: gfx/state_action.pdf Graphic file (type pdf)
 
 <use gfx/state_action.pdf>
 Package acronym Info: Label `acro:FSM' newly defined as it shall be overridden
 although it is yet undefined on input line 100.
- [6 <./gfx/agent_environment.pdf> <./gfx/state_action.pdf>] <gfx/multiple_agent
-_environment.pdf, id=1147, 451.6875pt x 307.1475pt>
+ [8 <./gfx/agent_environment.pdf> <./gfx/state_action.pdf>] <gfx/multiple_agent
+_environment.pdf, id=1165, 451.6875pt x 307.1475pt>
 File: gfx/multiple_agent_environment.pdf Graphic file (type pdf)
 
 <use gfx/multiple_agent_environment.pdf>
-<gfx/frame_representation.pdf, id=1152, 271.0125pt x 162.6075pt>
+<gfx/frame_representation.pdf, id=1170, 271.0125pt x 162.6075pt>
 File: gfx/frame_representation.pdf Graphic file (type pdf)
 
-<use gfx/frame_representation.pdf> [7 <./gfx/multiple_agent_environment.pdf> <.
+<use gfx/frame_representation.pdf> [9 <./gfx/multiple_agent_environment.pdf> <.
 /gfx/frame_representation.pdf>]
-<gfx/reflective_event_representation.pdf, id=1172, 867.24pt x 560.0925pt>
+<gfx/reflective_event_representation.pdf, id=1190, 867.24pt x 560.0925pt>
 File: gfx/reflective_event_representation.pdf Graphic file (type pdf)
 
 <use gfx/reflective_event_representation.pdf>
@@ -1252,7 +1275,7 @@ Overfull \hbox (29.43306pt too wide) in paragraph at lines 163--164
  [] 
  []
 
-<gfx/frame_perception.pdf, id=1175, 632.3625pt x 271.0125pt>
+<gfx/frame_perception.pdf, id=1193, 632.3625pt x 271.0125pt>
 File: gfx/frame_perception.pdf Graphic file (type pdf)
 
 <use gfx/frame_perception.pdf>
@@ -1260,28 +1283,28 @@ Overfull \hbox (19.9567pt too wide) in paragraph at lines 185--186
  [] 
  []
 
-<gfx/partially_observable.pdf, id=1178, 469.755pt x 307.1475pt>
+<gfx/partially_observable.pdf, id=1196, 469.755pt x 307.1475pt>
 File: gfx/partially_observable.pdf Graphic file (type pdf)
 
-<use gfx/partially_observable.pdf> [8 <./gfx/reflective_event_representation.pd
-f>] <gfx/partial_frame_perception.pdf, id=1190, 361.35pt x 289.08pt>
+<use gfx/partially_observable.pdf> [10 <./gfx/reflective_event_representation.p
+df>] <gfx/partial_frame_perception.pdf, id=1208, 361.35pt x 289.08pt>
 File: gfx/partial_frame_perception.pdf Graphic file (type pdf)
 
 <use gfx/partial_frame_perception.pdf>
-<gfx/environment_perception_physical.pdf, id=1194, 487.8225pt x 361.35pt>
+<gfx/environment_perception_physical.pdf, id=1212, 487.8225pt x 361.35pt>
 File: gfx/environment_perception_physical.pdf Graphic file (type pdf)
 
-<use gfx/environment_perception_physical.pdf> [9 <./gfx/frame_perception.pdf> <
-./gfx/partially_observable.pdf> <./gfx/partial_frame_perception.pdf>]
-<gfx/goal_state.pdf, id=1231, 505.89pt x 343.2825pt>
+<use gfx/environment_perception_physical.pdf> [11 <./gfx/frame_perception.pdf> 
+<./gfx/partially_observable.pdf> <./gfx/partial_frame_perception.pdf>]
+<gfx/goal_state.pdf, id=1250, 505.89pt x 343.2825pt>
 File: gfx/goal_state.pdf Graphic file (type pdf)
  <use gfx/goal_state.pdf>
-<gfx/learning_to_plan-four_step_cycle.pdf, id=1234, 361.35pt x 216.81pt>
+<gfx/learning_to_plan-four_step_cycle.pdf, id=1253, 361.35pt x 216.81pt>
 File: gfx/learning_to_plan-four_step_cycle.pdf Graphic file (type pdf)
 
-<use gfx/learning_to_plan-four_step_cycle.pdf> [10 <./gfx/environment_perceptio
+<use gfx/learning_to_plan-four_step_cycle.pdf> [12 <./gfx/environment_perceptio
 n_physical.pdf> <./gfx/goal_state.pdf>]
-<gfx/learning_to_plan.pdf, id=1260, 831.105pt x 451.6875pt>
+<gfx/learning_to_plan.pdf, id=1279, 831.105pt x 451.6875pt>
 File: gfx/learning_to_plan.pdf Graphic file (type pdf)
 
 <use gfx/learning_to_plan.pdf>
@@ -1289,8 +1312,8 @@ Overfull \hbox (29.43306pt too wide) in paragraph at lines 284--287
  [] 
  []
 
-[11 <./gfx/learning_to_plan-four_step_cycle.pdf> <./gfx/learning_to_plan.pdf>]
-<gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf, id=1289, 668.4975p
+[13 <./gfx/learning_to_plan-four_step_cycle.pdf> <./gfx/learning_to_plan.pdf>]
+<gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf, id=1307, 668.4975p
 t x 271.0125pt>
 File: gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf Graphic file (
 type pdf)
@@ -1300,9 +1323,9 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 344--345
  [] 
  []
 
-[12 <./gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf>]
+[14 <./gfx/learning_to_plan-1-goal_oriented_action_hypotheses.pdf>]
 <gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf, id=
-1307, 831.105pt x 451.6875pt>
+1325, 831.105pt x 451.6875pt>
 File: gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pdf
  Graphic file (type pdf)
 
@@ -1313,7 +1336,7 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 370--373
  []
 
 
-<gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf, id=1310,
+<gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf, id=1328,
  831.105pt x 343.2825pt>
 File: gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf Grap
 hic file (type pdf)
@@ -1323,10 +1346,10 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 390--391
  [] 
  []
 
-<gfx/transframe.pdf, id=1313, 578.16pt x 162.6075pt>
+<gfx/transframe.pdf, id=1331, 578.16pt x 162.6075pt>
 File: gfx/transframe.pdf Graphic file (type pdf)
  <use gfx/transframe.pdf>
-<gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf, id=1316, 849.1
+<gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf, id=1334, 849.1
 725pt x 451.6875pt>
 File: gfx/learning_to_plan-4-goal_occurrence_physical_hypotheses.pdf Graphic fi
 le (type pdf)
@@ -1336,9 +1359,9 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 414--415
  [] 
  []
 
-[13 <./gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pd
+[15 <./gfx/learning_to_plan-2-action_precondition_goal_occurrence_hypotheses.pd
 f> <./gfx/learning_to_plan-3-action_precondition_transframe_hypotheses.pdf>]
-<gfx/serial_and_parallel_plan.pdf, id=1337, 831.105pt x 252.945pt>
+<gfx/serial_and_parallel_plan.pdf, id=1355, 831.105pt x 252.945pt>
 File: gfx/serial_and_parallel_plan.pdf Graphic file (type pdf)
 
 <use gfx/serial_and_parallel_plan.pdf>
@@ -1346,7 +1369,7 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 431--434
  [] 
  []
 
-<gfx/infer_plan_effects.pdf, id=1340, 1065.9825pt x 650.43pt>
+<gfx/infer_plan_effects.pdf, id=1358, 1065.9825pt x 650.43pt>
 File: gfx/infer_plan_effects.pdf Graphic file (type pdf)
 
 <use gfx/infer_plan_effects.pdf>
@@ -1354,14 +1377,14 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 449--451
  [] 
  []
 
-[14 <./gfx/transframe.pdf> <./gfx/learning_to_plan-4-goal_occurrence_physical_h
+[16 <./gfx/transframe.pdf> <./gfx/learning_to_plan-4-goal_occurrence_physical_h
 ypotheses.pdf> <./gfx/serial_and_parallel_plan.pdf>]
-<gfx/planning_machine_operations.pdf, id=1368, 542.025pt x 686.565pt>
+<gfx/planning_machine_operations.pdf, id=1386, 542.025pt x 686.565pt>
 File: gfx/planning_machine_operations.pdf Graphic file (type pdf)
 
-<use gfx/planning_machine_operations.pdf> [15 <./gfx/infer_plan_effects.pdf> <.
+<use gfx/planning_machine_operations.pdf> [17 <./gfx/infer_plan_effects.pdf> <.
 /gfx/planning_machine_operations.pdf>]
-<gfx/planning_machine_reflective_knowledge.pdf, id=1387, 975.645pt x 415.5525pt
+<gfx/planning_machine_reflective_knowledge.pdf, id=1406, 975.645pt x 415.5525pt
 >
 File: gfx/planning_machine_reflective_knowledge.pdf Graphic file (type pdf)
  <use gfx/planning_machine_reflective_knowledge.pdf>
@@ -1369,14 +1392,14 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 503--504
  [] 
  []
 
-) [16 <./gfx/planning_machine_reflective_knowledge.pdf>]
+) [18 <./gfx/planning_machine_reflective_knowledge.pdf>]
 \openout2 = `chapters/problems_to_solve.aux'.
 
 
 (./chapters/problems_to_solve.tex
-Chapter 3.
+Chapter 4.
 
-<gfx/concurrent_parallel_reflection_efficiency.pdf, id=1409, 704.6325pt x 234.8
+<gfx/concurrent_parallel_reflection_efficiency.pdf, id=1428, 704.6325pt x 234.8
 775pt>
 File: gfx/concurrent_parallel_reflection_efficiency.pdf Graphic file (type pdf)
 
@@ -1385,17 +1408,17 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 29--30
  [] 
  []
 
-[17
+[19
 
 
 
 
- <./gfx/concurrent_parallel_reflection_efficiency.pdf>]) [18]
+ <./gfx/concurrent_parallel_reflection_efficiency.pdf>]) [20]
 \openout2 = `chapters/theory_and_alternatives.aux'.
 
 
 (./chapters/theory_and_alternatives.tex
-Chapter 4.
+Chapter 5.
 
 Overfull \hbox (22.79164pt too wide) in paragraph at lines 21--21
  |[]\T1/pplj/m/sc/10.95 (-20) t w o p o p -u -l a r a p -p r o a c h e s t o m 
@@ -1403,61 +1426,61 @@ o d -e l l i n g i n -t e l -l i -g e n c e|
  []
 
 
-<gfx/problem_complexity_versus_algorithm_adaptability.pdf, id=1427, 415.5525pt 
+<gfx/problem_complexity_versus_algorithm_adaptability.pdf, id=1445, 415.5525pt 
 x 361.35pt>
 File: gfx/problem_complexity_versus_algorithm_adaptability.pdf Graphic file (ty
 pe pdf)
  <use gfx/problem_complexity_versus_algorithm_adaptability.pdf>
-[19
+[21
 
 
 
 
-] [20 <./gfx/problem_complexity_versus_algorithm_adaptability.pdf>] [21]
-[22] <gfx/feedback_control.pdf, id=1517, 397.485pt x 234.8775pt>
+] [22 <./gfx/problem_complexity_versus_algorithm_adaptability.pdf>] [23]
+[24] <gfx/feedback_control.pdf, id=1536, 397.485pt x 234.8775pt>
 File: gfx/feedback_control.pdf Graphic file (type pdf)
 
-<use gfx/feedback_control.pdf> [23]
+<use gfx/feedback_control.pdf> [25]
 Package acronym Info: Label `acro:GPS' newly defined as it shall be overridden
 although it is yet undefined on input line 280.
 
-<gfx/difference_engine_feedback_control.pdf, id=1537, 578.16pt x 433.62pt>
+<gfx/difference_engine_feedback_control.pdf, id=1555, 578.16pt x 433.62pt>
 File: gfx/difference_engine_feedback_control.pdf Graphic file (type pdf)
 
-<use gfx/difference_engine_feedback_control.pdf> [24 <./gfx/feedback_control.pd
+<use gfx/difference_engine_feedback_control.pdf> [26 <./gfx/feedback_control.pd
 f> <./gfx/difference_engine_feedback_control.pdf>]
 
-Package natbib Warning: Citation `weber:2011' on page 25 undefined on input lin
+Package natbib Warning: Citation `weber:2011' on page 27 undefined on input lin
 e 320.
 
-[25] <gfx/reinforcement_learning.pdf, id=1574, 271.0125pt x 307.1475pt>
+[27] <gfx/reinforcement_learning.pdf, id=1592, 271.0125pt x 307.1475pt>
 File: gfx/reinforcement_learning.pdf Graphic file (type pdf)
 
 <use gfx/reinforcement_learning.pdf>
-<gfx/perception_categorization.pdf, id=1577, 451.6875pt x 271.0125pt>
+<gfx/perception_categorization.pdf, id=1595, 451.6875pt x 271.0125pt>
 File: gfx/perception_categorization.pdf Graphic file (type pdf)
 
-<use gfx/perception_categorization.pdf> [26 <./gfx/reinforcement_learning.pdf> 
+<use gfx/perception_categorization.pdf> [28 <./gfx/reinforcement_learning.pdf> 
 <./gfx/perception_categorization.pdf>]
 Package acronym Info: Label `acro:RMDP' newly defined as it shall be overridden
 
 although it is yet undefined on input line 423.
 
-<gfx/objective_description.pdf, id=1608, 271.0125pt x 307.1475pt>
+<gfx/objective_description.pdf, id=1626, 271.0125pt x 307.1475pt>
 File: gfx/objective_description.pdf Graphic file (type pdf)
 
-<use gfx/objective_description.pdf> [27 <./gfx/objective_description.pdf>]
+<use gfx/objective_description.pdf> [29 <./gfx/objective_description.pdf>]
 Overfull \hbox (12.63976pt too wide) in paragraph at lines 503--503
  |[]\T1/pplj/m/sc/10.95 (-20) t h e l a y -e r e d `` m o d e l [] 6 '' t h e -
 o r y f o r o r -g a -n i z -i n g r e -
  []
 
-[28] [29] [30]
+[30] [31] [32]
 Overfull \hbox (69.46858pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[31] [32]
+[33] [34]
 Overfull \hbox (33.4537pt too wide) in paragraph at lines 640--641
 \T1/pplj/m/n/10.95 (-20) nite hori-zon model, such that to-tal re-ward is $[][]
  []$. 
@@ -1468,9 +1491,9 @@ Overfull \hbox (69.46858pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[33] [34]
+[35] [36]
 
-LaTeX Warning: Reference `causal_tracing_of_failure-section' on page 35 undefin
+LaTeX Warning: Reference `causal_tracing_of_failure-section' on page 37 undefin
 ed on input line 715.
 
 
@@ -1478,12 +1501,12 @@ Overfull \hbox (69.46858pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[35] [36]
+[37] [38]
 Overfull \hbox (69.46858pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[37]
+[39]
 Overfull \hbox (3.18336pt too wide) in paragraph at lines 796--796
  |[]\T1/pplj/m/it/10.95 MultiAI Re-in-force-ment Learn-ing with Self- and Other
 - Mod-
@@ -1495,12 +1518,12 @@ Overfull \hbox (14.01276pt too wide) in paragraph at lines 884--900
 at-ment to im-prove self-awareness
  []
 
-[38]
+[40]
 Overfull \hbox (69.46858pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[39] [40] [41]
+[41] [42] [43]
 Overfull \hbox (5.91068pt too wide) in paragraph at lines 957--957
  |[]\T1/pplj/m/it/10.95 Visual Pro-gram-ming Lan-guages for Psy-co-log-i-cal St
 udy of Com-
@@ -1512,30 +1535,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 971--971
  -t e -g r a -t i o n o f m u l -
  []
 
-[42]
+[44]
 Overfull \hbox (115.02846pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[43] [44]
+[45] [46]
 Overfull \hbox (9.66925pt too wide) in paragraph at lines 1035--1036
 [][][]\T1/pplj/m/n/10.95 (-20) Carbonell et al.[][] ([][]1995[][]) dis-cuss pla
 n-ning and learn-ing in PRODIGY,
  []
 
-) [45] [46
+) [47] [48
 
 
 
-] [47
+] [49
 
 
-] [48]
+] [50]
 \openout2 = `chapters/a_system.aux'.
 
  (./chapters/a_system.tex
-Chapter 5.
-[49
+Chapter 6.
+[51
 
 
 
@@ -1545,10 +1568,10 @@ Overfull \hbox (16.83957pt too wide) in paragraph at lines 118--118
  o -g r a m -m i n g l a n -g u a g e| 
  []
 
-[50] <gfx/physical_perception.pdf, id=2343, 813.0375pt x 776.9025pt>
+[52] <gfx/physical_perception.pdf, id=2361, 813.0375pt x 776.9025pt>
 File: gfx/physical_perception.pdf Graphic file (type pdf)
 
-<use gfx/physical_perception.pdf> [51]
+<use gfx/physical_perception.pdf> [53]
 
 Package tabularx Warning: X Columns too narrow (table too wide)
 (tabularx)                 on input line 207.
@@ -1558,27 +1581,27 @@ Overfull \hbox (61.22188pt too wide) in alignment at lines 207--207
 [][][][][][][] 
  []
 
-[52 <./gfx/physical_perception.pdf>]
+[54 <./gfx/physical_perception.pdf>]
 
-LaTeX Warning: Marginpar on page 53 moved.
+LaTeX Warning: Marginpar on page 55 moved.
 
-) [53]
+) [55]
 \openout2 = `chapters/experiments.aux'.
 
- (./chapters/experiments.tex [54
+ (./chapters/experiments.tex [56
 
 
 
 
 ]
-Chapter 6.
+Chapter 7.
 
 Overfull \hbox (11.7985pt too wide) in paragraph at lines 5--5
  |[]\T1/pplj/m/sc/10.95 (-20) b l o c k s w o r l d a s a s i m -p l e r e a l 
 [] t i m e s y m -b o l i c c o n -
  []
 
-<gfx/blocks_world_screenshot-1.pdf, id=2377, 642.4pt x 481.8pt>
+<gfx/blocks_world_screenshot-1.pdf, id=2395, 642.4pt x 481.8pt>
 File: gfx/blocks_world_screenshot-1.pdf Graphic file (type pdf)
 
 <use gfx/blocks_world_screenshot-1.pdf>
@@ -1595,8 +1618,8 @@ Overfull \hbox (65.6821pt too wide) in alignment at lines 32--32
 [][][][] 
  []
 
-[55 <./gfx/blocks_world_screenshot-1.pdf>] [56] [57]
-<gfx/mindmon-isis_world-screenshot-1.png, id=2400, 745.184pt x 780.35359pt>
+[57 <./gfx/blocks_world_screenshot-1.pdf>] [58] [59]
+<gfx/mindmon-isis_world-screenshot-1.png, id=2419, 745.184pt x 780.35359pt>
 File: gfx/mindmon-isis_world-screenshot-1.png Graphic file (type png)
 
 <use gfx/mindmon-isis_world-screenshot-1.png>
@@ -1604,32 +1627,32 @@ Overfull \hbox (0.9803pt too wide) in paragraph at lines 187--193
  [] 
  []
 
-[58 <./gfx/mindmon-isis_world-screenshot-1.png (PNG copy)>]
+[60 <./gfx/mindmon-isis_world-screenshot-1.png (PNG copy)>]
 Overfull \hbox (153.0084pt too wide) has occurred while \output is active
  []|[]|
  []
 
-[59]) [60] [61
+[61]) [62] [63
 
 
-
-
-
-] [62]
-\openout2 = `chapters/results.aux'.
-
- (./chapters/results.tex
-Chapter 7.
-) [63
 
 
 
 ] [64]
+\openout2 = `chapters/results.aux'.
+
+ (./chapters/results.tex
+Chapter 8.
+) [65
+
+
+
+] [66]
 \openout2 = `chapters/discussion.aux'.
 
  (./chapters/discussion.tex
-Chapter 8.
-) [65
+Chapter 9.
+) [67
 
 
 
@@ -1637,34 +1660,45 @@ Chapter 8.
 ]
 \openout2 = `chapters/future.aux'.
 
- (./chapters/future.tex [66
+ (./chapters/future.tex [68
 
 
 
 
 ]
-Chapter 9.
-[67] [68] [69] [70] [71]
+Chapter 10.
+
+Overfull \hbox (0.84937pt too wide) in paragraph at lines 2--2
+[]\chapterNumber 10 
+ []
+
+[69] [70] [71] [72] [73]
 Overfull \hbox (1.89069pt too wide) in paragraph at lines 266--267
 []\T1/pplj/m/n/10.95 (-20) Learned Re-ac-tive Think-ing: pro-cesses that have b
 een learned
  []
 
-[72] <gfx/communication_theory.pdf, id=2520, 794.97pt x 216.81pt>
+[74] <gfx/communication_theory.pdf, id=2538, 794.97pt x 216.81pt>
 File: gfx/communication_theory.pdf Graphic file (type pdf)
 
-<use gfx/communication_theory.pdf>) [73 <./gfx/communication_theory.pdf>]
-[74
+<use gfx/communication_theory.pdf>
+Overfull \hbox (0.10432pt too wide) in paragraph at lines 346--346
+ |[]\T1/pplj/m/sc/10.95 (-7) a p -p l i -c a -t i o n s t o e d -u -c a -t i o 
+n a n d m e n -t a l h e a l t h| 
+ []
+
+) [75 <./gfx/communication_theory.pdf>] [76
 
 
 
-] [75
+] [77
 
 
-] [76]
+] [78]
 \openout2 = `chapters/appendix_the_code.aux'.
 
- (./chapters/appendix_the_code.tex
+
+(./chapters/appendix_the_code.tex
 Appendix A.
 LaTeX Font Info:    Try loading font information for T1+fvm on input line 8.
 (/usr/share/texmf-texlive/tex/latex/bera/t1fvm.fd
@@ -1672,11 +1706,11 @@ File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
 (Font)              scaled to size 9.30756pt on input line 8.
- [77
+ [79
 
 
 
-] [78]
+] [80]
 Overfull \hbox (72.0039pt too wide) in paragraph at lines 124--126
 [][][][] 
  []
@@ -1686,68 +1720,68 @@ Overfull \hbox (72.0039pt too wide) in paragraph at lines 138--140
 [][][][] 
  []
 
-[79] [80] [81] [82] [83] [84] [85] [86] [87] [88] [89] [90] [91]) [92]
+[81] [82] [83] [84] [85] [86] [87] [88] [89] [90] [91] [92] [93]) [94]
 \openout2 = `frontbackmatter/bibliography.aux'.
 
 
-(./frontbackmatter/bibliography.tex (./phdthesis.bbl [93
+(./frontbackmatter/bibliography.tex (./phdthesis.bbl [95
 
 
 
 
 
 
-] [94]
+] [96]
 Underfull \hbox (badness 4899) in paragraph at lines 176--178
 []\T1/pplj/m/n/10.95 (+20) Cooper, R. (2002), \T1/pplj/m/it/10.95 Mod-elling hi
 gh-level cog-ni-tive pro-cesses\T1/pplj/m/n/10.95 (+20) ,
  []
 
-[95]
+[97]
 Underfull \hbox (badness 1394) in paragraph at lines 246--249
 []\T1/pplj/m/n/10.95 (+20) Davis, R. (1980), \T1/pplj/m/it/10.95 Meta-Rules: Re
 a-son-ing about Con-trol\T1/pplj/m/n/10.95 (+20) , Mas-
  []
 
-[96]
+[98]
 Underfull \hbox (badness 2027) in paragraph at lines 381--384
 []\T1/pplj/m/n/10.95 (+20) Guestrin, C., Lagoudakis, M. & Parr, R. (2002), Co-o
 r-di-
  []
 
-[97] [98]
+[99] [100]
 Underfull \hbox (badness 1867) in paragraph at lines 518--521
 []\T1/pplj/m/n/10.95 (+20) Langley, P. (2005), An adap-tive ar-chi-tec-ture for
  phys-i-cal
  []
 
-[99] [100]
+[101] [102]
 Underfull \hbox (badness 10000) in paragraph at lines 690--693
 []\T1/pplj/m/n/10.95 (+20) Mirvis, P. (2008), `Ex-ec-u-tive De-vel-op-ment Thro
 ugh
  []
 
-[101] [102] [103] [104]
+[103] [104] [105] [106]
 Underfull \hbox (badness 2310) in paragraph at lines 948--951
 []\T1/pplj/m/n/10.95 (+20) Schubert, L. (2005), Some KR&R Re-quire-ments for Se
 lf-
  []
 
-[105] [106] [107]
+[107] [108] [109]
 Overfull \hbox (0.99771pt too wide) in paragraph at lines 1187--1191
 \T1/pplj/m/n/10.95 (-20) algorithms', \T1/pplj/m/it/10.95 Information Theory, I
 EEE Transactions on \T1/pplj/b/n/10.95 51\T1/pplj/m/n/10.95 (-20) (7), 2282--
  []
 
-)) [108]
+)) [110]
 \openout2 = `frontbackmatter/colophon.aux'.
 
- (./frontbackmatter/colophon.tex) [109
+ (./frontbackmatter/colophon.tex) [111
 
 
 
 
-] [110
+] [112
 
 
 
@@ -1755,7 +1789,7 @@ EEE Transactions on \T1/pplj/b/n/10.95 51\T1/pplj/m/n/10.95 (-20) (7), 2282--
 \openout2 = `frontbackmatter/declaration.aux'.
 
 
-(./frontbackmatter/declaration.tex) [111
+(./frontbackmatter/declaration.tex) [113
 
 
 
@@ -1768,9 +1802,9 @@ Package natbib Warning: There were undefined citations.
 (./frontbackmatter/dedication.aux) (./frontbackmatter/abstract.aux)
 (./frontbackmatter/publication.aux) (./frontbackmatter/acknowledgments.aux)
 (./frontbackmatter/contents.aux) (./chapters/preface.aux)
-(./chapters/learning_to_accomplish_goals.aux) (./chapters/problems_to_solve.aux
-) (./chapters/theory_and_alternatives.aux) (./chapters/a_system.aux)
-(./chapters/experiments.aux) (./chapters/results.aux)
+(./chapters/causality.aux) (./chapters/learning_to_accomplish_goals.aux)
+(./chapters/problems_to_solve.aux) (./chapters/theory_and_alternatives.aux)
+(./chapters/a_system.aux) (./chapters/experiments.aux) (./chapters/results.aux)
 (./chapters/discussion.aux) (./chapters/future.aux)
 (./chapters/appendix_the_code.aux) (./frontbackmatter/bibliography.aux)
 (./frontbackmatter/colophon.aux) (./frontbackmatter/declaration.aux))
@@ -1909,6 +1943,7 @@ frontbackmatter/contents.tex
  ot1zplm.fd    2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
   t1cmss.fd    1999/05/25 v2.5h Standard LaTeX font definitions
 chapters/preface.tex
+chapters/causality.tex
 chapters/learning_to_accomplish_goals.tex
 gfx/agent_environment.pdf
 gfx/state_action.pdf
@@ -1962,10 +1997,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 19178 strings out of 493848
- 294846 string characters out of 1152822
+ 19200 strings out of 493848
+ 295275 string characters out of 1152823
  986684 words of memory out of 3000000
- 19925 multiletter control sequences out of 15000+50000
+ 19936 multiletter control sequences out of 15000+50000
  82139 words of font info for 386 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  56i,14n,67p,601b,3067s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1988,9 +2023,9 @@ c/amsfonts/symbols/msam10.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatin
 o/uplb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatino/uplr8a.pfb></us
 r/share/texmf-texlive/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texmf-te
 xlive/fonts/type1/urw/symbol/usyr.pfb>
-Output written on phdthesis.pdf (131 pages, 1777479 bytes).
+Output written on phdthesis.pdf (133 pages, 1781926 bytes).
 PDF statistics:
- 4040 PDF objects out of 4296 (max. 8388607)
- 1598 named destinations out of 1728 (max. 500000)
- 62558 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 4059 PDF objects out of 4296 (max. 8388607)
+ 1602 named destinations out of 1728 (max. 500000)
+ 62574 words of extra memory for PDF output out of 74296 (max. 10000000)
 

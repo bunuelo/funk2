@@ -15,6 +15,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
+  chapters/causality.tex \
   chapters/learning_to_accomplish_goals.tex \
   chapters/problems_to_solve.tex \
   chapters/theory_and_alternatives.tex \
@@ -74,8 +75,9 @@ phdthesis.pdf: \
 %.pdf: %.png makefile
 	pngtopnm $< > $<.pnm
 	pnmtops $<.pnm > $<.ps
-	pstopdf --resolution=print --convert $<.ps
-	mv -f $<.pdf $@
+	epstopdf $<.ps -o $@
+	#pstopdf --resolution=print --convert $<.ps
+	#mv -f $<.pdf $@
 #	rm -f $<.pnm
 #	rm -f $<.ps
 

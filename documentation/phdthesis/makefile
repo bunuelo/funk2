@@ -12,10 +12,11 @@ phdthesis.pdf: \
   frontbackmatter/declaration.tex \
   frontbackmatter/dedication.tex \
   frontbackmatter/dirtytitlepage.tex \
+  frontbackmatter/preface.tex \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/causality.tex \
+  chapters/the_real_process.tex \
   chapters/learning_to_accomplish_goals.tex \
   chapters/problems_to_solve.tex \
   chapters/theory_and_alternatives.tex \

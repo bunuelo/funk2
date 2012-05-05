@@ -64,7 +64,7 @@
 \newcommand{\myDepartment}{Media Lab\xspace}
 \newcommand{\myUni}{\protect{Massachusetts Institute of Technology}\xspace}
 \newcommand{\myLocation}{Cambridge\xspace}
-\newcommand{\myTime}{August 2011\xspace}
+\newcommand{\myTime}{May 2012\xspace}
 \newcommand{\myVersion}{Version 0.1\xspace}
 %*******************************************************
 % Packages with options that might require adjustments
@@ -127,14 +127,26 @@
 \usepackage{color}
 
 \makeatletter
-\AddToShipoutPicture{%
-            \setlength{\@tempdimb}{.5\paperwidth}%
-            \setlength{\@tempdimc}{.5\paperheight}%
-            \setlength{\unitlength}{1pt}%
-            \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){%
-        \makebox(0,0){\rotatebox{45}{\textcolor[gray]{0.75}%
-        {\fontsize{6cm}{6cm}\selectfont{DRAFT}}}}%
-            }%
+\AddToShipoutPicture{
+  \setlength{\@tempdimb}{.5\paperwidth}
+  \setlength{\@tempdimc}{.5\paperheight}
+  \setlength{\unitlength}{1pt}
+  \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){
+    \makebox(0,0){
+      \rotatebox{45}{
+        \makebox(-72,0){
+          \vspace{3cm}\textcolor[gray]{0.875}{{\fontsize{3cm}{3cm}\selectfont{UNOFFICIAL}}}
+        }
+      }
+    }
+    \makebox(0,0){
+      \rotatebox{45}{
+        \makebox(-72,0){
+          \vspace{-6cm}\textcolor[gray]{0.875}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
+        }
+      }
+    }
+  }
 }
 \makeatother
 
@@ -184,7 +196,7 @@
     belowcaptionskip=.75\baselineskip,
     %numberbychapter=false
     %frame=L
-} 
+}
 
 % ********************************************************************
 % Where to look for graphics
@@ -237,17 +249,17 @@
 \cleardoublepage\include{frontbackmatter/acknowledgments}
 \pagestyle{scrheadings}
 \cleardoublepage\include{frontbackmatter/contents}
+\cleardoublepage\include{frontbackmatter/preface}
 %*******************************************************
 % Mainmatter
 %*******************************************************
 \pagenumbering{arabic}
-\include{chapters/preface}
-\cleardoublepage\part{Introduction}
+\cleardoublepage\part{Reflectively Learning to Accomplish Goals}
 \include{chapters/the_real_process}
 \include{chapters/learning_to_accomplish_goals}
 \include{chapters/problems_to_solve}
 \include{chapters/theory_and_alternatives}
-\cleardoublepage\part{My Approach}
+\cleardoublepage\part{An Implementation}
 \include{chapters/a_system}
 \include{chapters/experiments}
 \cleardoublepage\part{Conclusion}

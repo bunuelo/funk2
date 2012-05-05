@@ -1,22 +1,325 @@
 %************************************************
-\chapter{The Real Process}\label{ch:the_real_process}
+\chapter{The Real Process}
+\label{ch:the_real_process}
 %************************************************
 
-In this dissertation I will describe a reasoning process for
-reflectively learning to accomplish goals.  I will not attempt to give
-a complete description of a general problem domain nor a complete
-description of a general problem solver.  My work here leaves the
-unmodellable aspects of reality as known to be just that.  The process
-of reasoning includes using models as useful tools of thought with the
-clear understanding that these models are not real.  Here I will focus
-on a positive description of the real processes of being, perceiving,
-acting, abstracting, making decisions, and reflectively thinking about
-the causal results of those decisions.  While I will give examples in
-terms of a working model implementation of the real processes that I
-am attempting to describe, I will not confuse the clear black and
-white lines that are necessary in building such an implementation with
-the reality of my focus which I have chosen to be categorized in this
-way as exemplary of such a process.
+In this dissertation I will focus on a description of the reasoning
+process that reflectively learns to accomplish goals.  I will not
+attempt to give a complete representation for a general problem domain
+nor a complete description of a general problem solver.  My work here
+leaves the unmodellable aspects of reality as known to be just that.
+Reasoning is a process that uses models as useful tools with the clear
+understanding that these models are not fundamentally real.  Thus, my
+dissertation will focus on a positive description of the real
+processes of being, perceiving, acting, creating causal models,
+deliberating about plans, and reflectively debugging causal models
+when failures result from their use.  I will give clear examples in
+terms of a working model implementation, aware of the clear
+distinction between a model and the fact of reality itself.  I have
+categorized my focus only as an example of the computational
+description.  Further, and critically important for the advancement of
+the field of AI, when describing reflective thinking, it is imperative
+to have an explicit awareness of reason being limited to manipulating
+only the artificial.  I will therefore refer to an AI model as simply
+an ``AI'' with the shared understanding that I am referring to a
+model.
 
-\section{Reality as the Experience of Being in the Moment}
+\section{Meaningful Description}
+
+A meaningful description references something real.  Words and
+language have meaning only in this way.  The ability of words to
+reference other words allows the possibility of creating a referential
+cycle in language.  An illusion of meaning is possible in such a cycle
+because all of the words have a referent; however, because all
+references within such a cycle are kept within language and do not
+refer to anything real, there is no meaning to such a purely
+artificial construct.  It is imperative that I avoid presenting such
+an illusion of meaning in this dissertation.  To allow for a
+meaningful description, I must first outline my conception of reality,
+to which my description may refer.  I must ground my description of
+reflective thinking in a concept that is not in terms of symbols so
+that something outside of language may be the real referent.  This
+last step is necessary in allowing me to avoid creating a cyclical
+illusion of meaning.  In the next section I will describe my
+conception of reality, to which my description of reflective thinking
+will refer.
+
+\section{Qualities of Duration}
+
+\cite{bergson:1910}, in his seminal \underline{Time and Free Will},
+discusses reality as heterogeneous qualities of Duration.  Qualities
+of Duration will serve as my conception of reality for my description
+of the real process of reflective thinking.  Qualities of Duration are
+the dynamic experience or consciousness of being, heterogeneous
+qualities that are neither distinct nor separate.  It is a trick to
+describe Bergson's conception of the qualities of Duration because
+these qualities exist, independent of their being symbolized.  For
+example, when I look at a tree, I may say that the tree has green
+leaves and a brown trunk; the symbols, green and brown, refer to the
+qualities of Duration, which I am really seeing.  When I focus
+carefully on the reality of my situation, I see that the leaves and
+trunk could be described by a greater combination of various greens,
+yellows, grays, browns and reds.  As I introduce more symbolic
+references in my description of reality, there is a growing danger of
+losing my focus on describing something real.  The danger is in
+creating a meaningless cycle of symbols referring to symbols.  For
+example, if I were to get stuck in a tangent, defining more clearly
+what I mean by the symbol green or brown by using more symbols, then I
+will never again see or talk about reality.  In order to avoid the
+danger of cyclic symbolic reference in my model, I will continue to
+relate the parts of my model to the real process of reflective
+thinking, which exists as qualities of Duration.
+
+\section{Order of Space}
+
+Qualities of Duration may be symbolized in a homogeneous medium
+without quality.  Bergson calls this medium Space, allowing symbolic
+references to qualities of Duration to be related.  He does not use
+one to derive the other, but quality and order coexist with neither
+Duration being a derivative of Space nor Space containing the
+fundamental qualities of Duration.  He goes through painstaking
+efforts to leave room in his description for reality.  He makes the
+necessary concession that a description of something real is only
+meaningful in that its description leaves room for reality to exist
+independently of its own description.  Our work is meant to be
+similarly respectful in our description of the real process of
+reflectively learning to accomplish goals.
+
+\section{Limitations of Symbolic Thought}
+
+The process of obtaining or creating a symbol is not accessible to
+deliberation.  It is critical to understand that a deliberative
+process is limited to manipulating symbols in Space.  Neither symbols
+nor Space are real; instead, symbols and the relationships that order
+them in Space are artificial creations and constructions of an
+intelligent mind.  An intelligent mind deliberates about reality; it
+does not reason in terms of reality.
+
+There are some approaches to AI that are confused in their insistence
+on numerical representations.  Many current popular approaches
+consider probabilistic representations as fundamental to the process
+of thinking.  Others insist that artificial neural networks are more
+realistic descriptions of the real process of thinking.  Many
+arguments against symbolic representations for thinking are orthogonal
+in aim.  I see these approaches to AI as sub-symbolic.  My focus will
+be, not to describe sub-symbolic processes as in probabilistic and
+connectionist approaches, but to describe the process of deliberative
+thinking and reflective control.
+
+One defense of neural networks is that they can deal with numerical
+intensities of stimuli, such as temperature, pressure, or weight.  In
+the next section, (Section~\ref{section:intensities_of_qualities}), I
+will describe my approach to how a deliberative process deals with
+intensities of qualities of Duration.  Further, in order to dismiss
+remaining confusion regarding how numerical representations relate to
+the deliberative process in my model, the subsequent section
+(Section~\ref{section:numerical_representation}) will explicitly
+discuss my approach to thinking using numerical representations.
+These issues of intensity and numerical representations are not
+fundamental to my model but are included for the reader that
+traditionally thinks of these issues as fundamental to thinking.  The
+following two sections make explicit the relationship between my model
+and those models.
+
+\section{Intensities of Qualities}
+\label{section:intensities_of_qualities}
+
+\cite{bergson:1910} makes a key distinction between comparisons of
+``extensive'' quantities and comparisons of ``intensive'' quantities.
+Extensive quantities are Spatial comparisons.  Extensive quantities
+are between two symbolic references that share a containment
+relationship in terms of their referents: one symbolic referent is
+contained by another symbolic referent in Space.  For example, one
+body may be said to be larger than another in terms of its Spatial
+extent.  Intensive quantities are more subtle and an example is in
+terms of pain, which can be said to be more or less intense.  Bergson
+makes the point that intensive quantities are similar to neither
+numerically nor Spatially extensive containment relationships but,
+instead, refer to different fundamental qualities of Duration.  For
+example, a pain that has no intensity is not a pain at all; a pain
+that has a mild intensity may be equivalently referred to as an
+irritation or an itch; a pain of high intensity may be equivalently
+referred to as a sharp pain or a throbbing pain.  Bergson argues that
+these intensities of quality are actually very different from
+extensive quantities in that they are not greater than or less than
+one another in the sense of a containment relationship.  For example,
+a very intense pain, such as a shooting pain or a throbbing pain, does
+not in any sense contain a lesser mild pain, such as an irritation or
+an itch.  He shows this same pattern with detailed descriptions of
+other qualities that are often thought of as having comparable
+intensities: heat and cold; light; pressure; sound; pitch; aesthetic
+feelings, such as grace and beauty in music, poetry and art; emotions,
+such as rage and fear; moral feelings, such as pity; affective
+sensations, including pleasure, pain and disgust.  The point that
+Bergson makes in each of these examples is that the apparent
+relationships of greater than or less than with respect to intensity
+are actually artificial Spatial arrangements of different fundamental
+qualities of Duration.
+
+There are some approaches to AI that consider numerical
+representations to be primitive to the process of deliberation.  I
+will discuss a few of these approaches that consider numerical
+quantities as fundamental after my next section where I will first
+introduce my understanding of counting and how counting leads to
+numerical representations in a deliberate process.
+
+\section{Numerical Representation}
+\label{section:numerical_representation}
+
+\cite{bergson:1910} show the derivation of all numerical
+representations as requiring an accompanying extension in Space.  For
+example, in referring to the individual sheep in a flock of sleep, he
+explains the process of counting:
+
+% pg. 75-77
+\begin{quote}
+Number may be defined in general as a collection of units, or,
+speaking more exactly, as the synthesis of the one and the
+many\ldots
+
+No doubt we can count the sheep in a flock and say that there are
+fifty, although they are all different from one another and are easily
+recognized by the shepherd: but the reason is that we agree in that
+case to neglect their individual differences and to take into account
+only what they have in common.  On the other hand, as soon as we fix
+our attention on the particular features of objects or individuals, we
+can of course make an enumeration of them, but not a total\ldots
+
+Hence we may conclude that the idea of number implies the simple
+intuition of a multiplicity of parts or units, which are absolutely
+alike.
+
+And yet they must be somehow distinct from one another, since
+otherwise they would merge into a single unit.  Let us assume that all
+the sheep in the flock are identical; they differ at least by the
+position which they occupy in space, otherwise they would not form a
+flock.
+\end{quote}
+
+Bergson's last point here illustrates his idea that numbers are always
+derived from symbols situated in Space.  Therefore, a model for
+deliberative thinking based directly on the symbols required cannot be
+more complicated than a model based on a numerical representation.  A
+number is, after all, the reified constructive result of a Spatial
+organization of symbolic references to reality, specific real sheep in
+Bergson's explanation.  The explicit implication is, therefore, that,
+in building an AI that is capable of reflective thought, the internal
+constructive processes of model building and the internal use of
+numerical representations must be explicitly available for inspection
+by the AI itself.  Here, I employ Occam's razor to simplify the loop
+of reflective representation in order to ease building the first
+proof-of-concept examples of AIs capable of reflective thinking.
+
+\section{Perceptions and Actions}
+
+Many AI systems make explicit distinctions between perceptions and
+actions as inputs and outputs to and from a control system.  Often,
+these perceptions refer to the physical senses, such as vision,
+audition, taste, touch, and proprioception, while actions often refer
+to various forms of muscular effort.  My approach is different from
+many other approaches in that real perceptions and real actions are
+not clearly distinct categories because they are real qualities of
+Duration, prior to being symbolized or arranged in Space.  In my
+model, real perceptions and actions cannot be manipulated by the
+deliberative process.  A mind deliberately manipulates symbolic
+references to perceptions as well as actions, i.e. artificial symbolic
+references to real actions that are in the real process of currently
+being performed and symbolic references to real perceptions that are
+in the real process of currently being perceived.
+
+\section{Time as Space}
+
+Symbolic references to actions and perceptions can be ordered
+spatially.  These symbolic relationships can be reified and treated
+symbolically in further ordered spatial relationships.  Bergson
+explains time as a form of Space:
+
+% pg. 98
+\begin{quote}
+Now, if space is to be defined as the homogeneous, it seems that
+inversely every homogeneous and unbounded medium will be space.  For,
+homogeneity here consisting in the absence of every quality, it is
+hard to see how two forms of the homogeneous could be distinguished
+from one another.  Nevertheless it is generally agreed to regard time
+as an unbounded medium, different from space but homogeneous like the
+latter: the homogeneous is thus supposed to take two forms, according
+as its contents co-exist or follow one another.  It is true that, when
+we make time a homogeneous medium in which conscious states unfold
+themselves, we take it to be given all at once, which amounts to
+saying that we abstract it from duration.  This simple consideration
+ought to warn us that we are thus unwittingly falling back upon space,
+and really giving up time.
+\end{quote}
+
+Time is an artificial creation, an arrangement of symbols in Space.
+Understanding time to be artificial is important because this leaves
+the real heterogeneous qualities of Duration and the real homogeneous
+Space as, respectfully, neither distinct nor separate.  Here we avoid
+defining the real qualities of Duration in terms of artificial
+symbols, avoiding the creation of a referential cycle.  In avoiding
+this cycle, we sidestep a potential illusion of meaning by being clear
+in our understanding of time as an artificial tool of thought.
+
+In my model, symbolic perceptions and actions that refer to the real
+qualities of Duration are put into an artificial Spatial arrangement
+that I refer to as time.  To be clear, the processes that create
+symbols and put these symbols into Space are both basic parts of my
+model of reflective thinking.
+
+\section{Implicit Processes and Reflective Symbols}
+
+
+
+\section{Cause and Effect}
+
+Paramount to an understanding of causal reflective reasoning is an
+awareness of the fundamental limitations of symbolic thought.  Without
+such an awareness, one is tempted to trace causal models of reality
+back to the real cause of the model itself.  
+
+\section{Goals}
+
+Deliberative reasoning is the process of reasoning about how to
+accomplish goals.  
+
+
+
+\section{Leftovers...}
+
+\section{Awareness of Effort}
+
+Bergson would refer to efforts as fundamental qualities of Duration.
+For example,What I am referring to as action is what Bergson would
+call effort.  To Bergson, all effort
+
+% pg. 20
+\begin{quote}
+If there is a phenomenon which seems to be presented immediately to
+consciousness under the form of quantity or at least of magnitude, it
+is undoubtedly muscular effort.  We picture to out minds a psychic
+force imprisoned in the soul like the winds in the cave of Aeolus, and
+only waiting for an opportunity to burst forth: our will is supposed
+to watch over this force and from time to time to open a passage for
+it, regulating the outflow by the effect which it is desired to
+produce.  If we consider the matter carefully, we shall see that this
+somewhat crude conception of effort plays a large part in our belief
+in intensive magnitudes.
+\end{quote}
+
+He goes on to argue that an awareness of muscular effort is solely due
+to proprioceptive feedback from muscles contracting.  Further, he
+describes phantom limb patients that feel that they are expending
+effort and he hypothesizes that they must be moving a limb
+\emph{somewhere} and they must be getting sensory feedback from it,
+even though it is obviously in this case not a physical limb.
+
+What appears symbolically to the deliberative mind about willful
+actions is similar in category to the afferent symbolic information
+that is traditionally considered perceptual.
+
+
+
+
+
+
 

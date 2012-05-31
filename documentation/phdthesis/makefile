@@ -17,7 +17,6 @@ phdthesis.pdf: \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
   chapters/the_focus.tex \
-  chapters/education_and_science.tex \
   chapters/learning_to_accomplish_goals.tex \
   chapters/problems_to_solve.tex \
   chapters/theory_and_alternatives.tex \
@@ -26,6 +25,8 @@ phdthesis.pdf: \
   chapters/results.tex \
   chapters/discussion.tex \
   chapters/future.tex \
+  chapters/science.tex \
+  chapters/education.tex \
   chapters/appendix_the_code.tex \
   gfx/agent_environment.pdf \
   gfx/blocks_world_screenshot-1.pdf \

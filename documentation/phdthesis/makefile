@@ -17,7 +17,7 @@ phdthesis.pdf: \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
   chapters/the_real_and_the_artificial.tex \
-  chapters/knowledge.tex \
+  chapters/learning_causal_hypotheses.tex \
   chapters/thinking.tex \
   chapters/learning_to_accomplish_goals.tex \
   chapters/problems_to_solve.tex \

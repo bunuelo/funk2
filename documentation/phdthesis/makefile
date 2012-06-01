@@ -16,7 +16,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/reality.tex \
+  chapters/the_real_and_the_artificial.tex \
   chapters/knowledge.tex \
   chapters/thinking.tex \
   chapters/learning_to_accomplish_goals.tex \

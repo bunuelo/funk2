@@ -3,38 +3,48 @@
 \label{chapter:the_real_and_the_artificial}
 %************************************************
 
-In this dissertation I will focus on a description of thinking that
-reflectively learns to accomplish goals.  Reflectively learning to
-accomplish goals includes not only accomplishing physical goals but
-also an arbitrary number of layers of distinct classes of causal
-knowledge goals.  I will describe my implementation, which is a
-layered cognitive architecture, including a physical layer and two
-layers of reflective thinking.  I will demonstrate learning from
-physical feedback through the two reflective layers, updating two
-necessarily distinct classes of causal knowledge.  In conclusion, I
-will describe an inductive method as theoretical grounding for a
-future implementation that includes an arbitrary number of optimizing
-layers of thinking.
+In this dissertation I focus on a description of thinking that
+reflectively learns to accomplish goals.  In
+\autoref{part:theory_of_mind}, I will begin with the paradoxical task
+of describing reality, that which actually exists.  After describing
+something real to think about, I will describe how a model of
+reflective thinking necessarily implies an infinite number of layers
+of reflection above this initial actual existence.
+
+Non-reflective AI models learn by correcting one immediate cause of a
+failure; however, given a layered model, I describe new opportunities
+for considering one failure to also be failures in the reflective
+layers ``above'' and ``below'' the original failure, resulting in an
+arbitrary number of reflective learning opportunities from a single
+failure.
+
+In \autoref{part:the_implementation}, I will describe an example of a
+computational implementation of reflective thinking.  The
+implementation is a layered cognitive architecture with three working
+layers.  I will focus on a very simple physical block stacking problem
+domain as a tool for explaining simply, through examples, the layered
+classes of reflective learning.  In describing the working model
+implementation, I will maintain an awareness of the explicit
+distinction between a model and reality.  I have categorized my focus
+only as an example of the computational description.
+
+The theory of mind has important relationships to science and
+education, but these are not within the narrow scope of this thesis;
+for the interested, I have included a brief discussion of the
+relationship between theories of mind and science in
+\autoref{chapter:science} and a brief discussion of the relationship
+between a theory of mind and education in \autoref{chapter:education}.
 
 I will not attempt to give a complete representation for a general
 problem domain nor a complete description of a general problem solver.
 My work here leaves the unmodellable aspects of reality as known to be
 just that.  Thinking uses models as useful tools with the clear
-understanding that these models are not fundamentally real.  Thus, my
-dissertation will focus on positive qualities of being, perceiving,
-acting, reflectively creating causal models and plans, and
-reflectively debugging multiple layers of causal models when failures
-result from their use.
-
-I will give clear examples in terms of a working model implementation,
-aware of the explicit distinction between a model and reality.  I have
-categorized my focus only as an example of the computational
-description.  Further, and critically important for the advancement of
-the field of AI, when describing reflective thinking, it is imperative
-to have an explicit awareness of thinking being limited to
-manipulating the artificial.  I will therefore refer to an AI model as
-simply an ``AI'' with the shared understanding that I am referring to
-a model.
+understanding that these models are not fundamentally real.  Further,
+and critically important for the advancement of the field of AI, when
+describing reflective thinking, it is imperative to have an explicit
+awareness of thinking being limited to manipulating the artificial.  I
+will therefore refer to an AI model as simply an ``AI'' with the
+shared understanding that I am referring to a model.
 
 \section{Meaningful Description}
 
@@ -56,10 +66,10 @@ my description ultimately must refer.  A description of reflective
 thinking referring to an \emph{a~priori} concept that has not been
 derived in terms of symbols allows for something to remain outside of
 language as the real referent.  This last step avoids the creation of
-a cyclical, self-referential tautology as only an illusion of meaning
-in the model.  In the next section I will describe the necessary
-conception of reality to which my description of reflective thinking
-will refer.
+a cyclical, self-referential tautology and prevents illusions from
+becoming meaningful parts of the model.  In the next section I will
+describe the necessary conception of reality to which my description
+of reflective thinking will refer.
 
 \section{Qualities of Duration}
 
@@ -83,12 +93,12 @@ reality, a growing danger of losing focus on something real emerges,
 creating a cycle of symbols seemingly referring exclusively to
 symbols.  For example, the motivation to tangentially define more
 clearly what I mean by the symbol green or brown by using more symbols
-results in a circularity from which there is no exit, and therefore,
-within which I will never again be able to see or talk about any real
-tree as the referent.  In order to avoid the danger of purely cyclic
-symbolic reference in my model, I will continue to relate the parts of
-my model to real reflective thinking, which exists as qualities of
-Duration.
+results in a circularity from which there is no exit, and therefore, a
+false dilemma from which I will never again be able to see or talk
+about any real tree as the referent.  In order to avoid the danger of
+purely cyclic symbolic references in my model, I will continue to
+relate the parts of my model to real reflective thinking, which exists
+as qualities of Duration.
 
 \section{Consciousness, Awareness, and Experience}
 
@@ -152,9 +162,9 @@ goals.
 \label{section:the_artificiality_of_duration_and_space}
 
 Duration and Space are the fundamental duality that forms the basis of
-my model of reality.  Duration and Space exist, pre-reflectively,
-prior to symbols being created from the qualities of Duration and
-prior to these symbolic references being related in Space.  Note the
+my model of reality.  Thus this duality exists pre-reflectively, prior
+to symbols being created from the qualities of Duration and prior to
+these symbolic references being related in Space.  Note the
 fundamental contradiction of intentionally describing reality only in
 artificial terms.  For example, if Space has no quality and is not
 itself composed of qualities of Duration, to what is the symbol
@@ -163,12 +173,14 @@ potential for an absence of quality, the potential for itself as not
 really existing; thus, it is the logical necessity of the negative
 implication of positive existence, to which no real alternative can be
 assigned.  Again, my model will explicitly maintain an awareness of
-this fundamental and irresolvable contradiction.  Thus, I begin my
-description in the middle, the \emph{in medias res} of an underived
-time and space, maintaining an explicit awareness that descriptions
-are only tools for reflection.  Duration and Space are not
-placeholders for reality; they are useful, intermediate fictions that
-I use here to describe an ongoing reality, the activity of being.
+this implicit, fundamental and irresolvable contradiction.  Thus, my
+description will appear to begin of something in the middle, the
+\emph{in medias res} of an underived time and space, maintaining an
+explicit awareness that descriptions are only tools for reflection.
+Duration and Space are not placeholders for reality; they are useful,
+intermediate fictions that I use here to artificially and statically
+describe the dynamic ongoing reality, the activity of being, that
+which is not artificial.
 
 \section{Spatial Reflection}
 
@@ -190,26 +202,26 @@ reflection is a form of actual reflection.
 
 My model includes three layers of ongoing dynamic activity.  I will
 use the phrase \emph{physical layer} to refer to the pre-reflective
-layer of activities that exists prior to any subsequent reflective
-thinking layers necessarily existing.  The physical layer is the only
+layer of activities that exists necessarily prior to any subsequent
+reflective thinking layers.  The physical layer is the only
 pre-reflective layer of activity in my model.  Therefore, a clear line
-is drawn between those activities that symbolize and Spatially arrange
-as being circumscribed and not included in what I will refer to as
-physical activity.  Note that in most AI models, there is a
-distinction between the mind and the body or the environment.  In my
-model, all activities that exist are part of the mind.  The real
-mental activities that I am referring to by my model are not an object
-that is viewed subjectively.  Critical to an understanding of the
-goals of objective science is that the creation of object and subject
-distinctions is part of the willful activities of the mind; because
-this understanding is so critical to an advancement of scientific
-understanding, I will clarify the mental derivation of objective
-science in \autoref{chapter:science}.  As the creation of object and
-subject relationships is a relatively advanced mental activity and not
-key to my thesis, I will discuss this as future research in
-\autoref{chapter:future}, which would be a promising place to extend
-my model to include ideas like physical bodies and other subjective
-and objective environmental perspectives.
+is drawn between the physical layer and those activities that
+symbolize and Spatially arrange symbols.  Thus, they are not included
+in what I will refer to as physical activity.  Note that in most AI
+models, there is a distinction between the mind and the body or the
+environment.  In my model, \emph{all} activities that exist are part
+of the mind.  The real mental activities that I am referring to in my
+model are not an object that is viewed subjectively.  Critical to an
+understanding of the goals of objective science is that the creation
+of object and subject distinctions is part of the willful activities
+of the mind; because this understanding is so critical to an
+advancement of scientific understanding, I will clarify the mental
+derivation of objective science in \autoref{chapter:science}.  Because
+the creation of object and subject relationships is a relatively
+advanced mental activity and not key to my thesis, I will discuss this
+as future research in \autoref{chapter:future}, which would be a
+promising place to extend my model to include ideas like physical
+bodies and other subjective and objective environmental perspectives.
 
 \section{Orders of Reflective Layers}
 
@@ -228,23 +240,25 @@ thinking activities; remember that physical activities are
 pre-reflective, so physical reflection is not itself a physical
 activity.
 
-The first-order reflective layer does not create symbols or Spatial
-arrangements that refer to its own activities with one exception:
-Spatial reflection.  The first-order reflective layer has the
-\emph{a~priori} ability to reify its own actively maintained Spatial
-relationships between symbols that refer to physical activities.  The
-lack of the ability for the first-order reflective layer to refer to
-its own symbolically creative or Spatially manipulative activities
-clarifies my model by keeping clear distinctions between each class of
-causal knowledge in each subsequent reflective layer of thinking.
-Before describing distinctions between classes of causal models, I
-will spend the next few sections describing the composition of
-temporal transitions and causal hypotheses.
+Obviously, the first-order reflective layer cannot create symbols or
+Spatial arrangements that refer to its own activities, with one
+exception: Spatial reflection.  The first-order reflective layer has
+the \emph{a~priori} ability to maintain its own actively reified
+Spatial relationships as existing between symbols that refer to
+physical activities.  The lack of the ability for the first-order
+reflective layer to refer to its own symbolically creative or
+Spatially manipulative activities clarifies my model by keeping clear
+distinctions between each class of causal knowledge in each subsequent
+reflective layer of thinking.  Before describing distinctions between
+classes of causal models, I will spend the next few sections
+describing the composition of temporal transitions and causal
+hypotheses.
 
 Reflection over the activity of the first-order reflective layer
-creates a second layer of reflection and thinking.  Clearly deriving
-and describing this second layer of reflective thinking, which implies
-an arbitrary number of layers, is the focus of this dissertation.
+necessarily creates a second layer of reflection and thinking.  Thus,
+clearly deriving and describing this second layer of reflective
+thinking additionally necessitates an implicit and arbitrary number of
+layers.  This condition is the focus of this dissertation.
 \cite{minsky:2006} describes a six-layer reflective model of thinking
 about thinking.  The first three layers of my model and
 implementation, including these two layers of reflective thinking, can
@@ -376,17 +390,17 @@ thinking.
 \section{Temporal Reflection}
 
 Spatial arrangements of symbols can be used to represent a past
-through memory and subsequently project a ``future'', through
-imaginative action, thus constructing a derivative conception of time.
-The past and the future, therefore, remain artificial constructions
-that are actively maintained as Spatial relationships in the present.
-I will refer to the reification of Spatial relationships that order
-the past and the future as \emph{temporal reflection}.  Sequential
-time is created through temporal reflection.  Temporal reflection is a
-form of Spatial reflection.  Like Spatial reflection, temporal
-reflection is also a form of actual reflection, symbolizing the active
-maintenance of a temporal Spatial relationship between static symbolic
-references.
+through memory and subsequently project an analogous ``future'',
+through imaginative action, thus constructing a derivative conception
+of time.  The past and the future, therefore, remain artificial
+constructions that are actively maintained as Spatial relationships in
+the present.  I will refer to the reification of Spatial relationships
+that order the past and the future as \emph{temporal reflection}.
+Sequential time is created through temporal reflection.  Temporal
+reflection is a form of Spatial reflection.  Like Spatial reflection,
+temporal reflection is also a form of actual reflection, symbolizing
+the active maintenance of a temporal Spatial relationship between
+static symbolic references.
 
 \section{Simultaneity and Transition}
 

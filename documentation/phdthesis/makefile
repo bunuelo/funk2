@@ -26,6 +26,7 @@ phdthesis.pdf: \
   chapters/theory_and_alternatives.tex \
   chapters/a_system.tex \
   chapters/experiments.tex \
+  chapters/other_reflective_theories.tex \
   chapters/results.tex \
   chapters/discussion.tex \
   chapters/future.tex \

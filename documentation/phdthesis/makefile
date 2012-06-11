@@ -21,6 +21,7 @@ phdthesis.pdf: \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/from_theory_to_implementation.tex \
+  chapters/artificial_activities_in_duration.tex \
   chapters/learning_to_accomplish_goals.tex \
   chapters/problems_to_solve.tex \
   chapters/theory_and_alternatives.tex \

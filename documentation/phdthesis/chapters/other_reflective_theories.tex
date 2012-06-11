@@ -7,30 +7,26 @@
 \label{backreference:self_reflective_self_conscious}
 
 \cite{minsky:2006} describes a six-layer reflective model of mind,
-\emph{\mbox{Model-6}: The Emotion Machine}.  It is common in the field of AI
-to consider a model of mind to exist as part of a larger relationship
-between an object and a subject.  Minsky's description of \mbox{Model-6}
-includes thinking activities with the implication that there are other
-activities that exist outside of the mind, called physical activities.
-\mbox{Model-6} is an internal subject explicitly in a relationship with
-external physical objects, such as a body or an environment.
+\emph{\mbox{Model-6}: The Emotion Machine}.  Minsky's description of
+\mbox{Model-6} includes thinking activities that control other
+activities, referred to as a \emph{problem domain}, that exist outside
+of the mind.  \mbox{Model-6} is an internal subject actually
+subjective in relation to other actual external physical objects, such
+as a body or an environment.
 
-\mbox{Model-6}'s ``problem domain'' and both lower ``reactive'' layers
+\mbox{Model-6}'s problem domain and both lower ``reactive'' layers
 roughly map to the activities in the pre-symbolic physical or
-$\text{reflective}^0$ layer of my model.
-
-The ``deliberative'' layer of Minsky's model can be roughly mapped to
-the first-order reflective thinking layer in my model, but this is
-only very approximate because Minsky's deliberative layer is not
-limited to reasoning about causal models of the physical world as is
-this layer in my model.  In both of our models, this layer makes plans
-using causal models that include references to physical activities.
-
-Minsky's ``reflective'' layer roughly maps to the union of all of the
-reflective layers in my model that are equal to or greater than order
-two.  In both models, this layer responds to failures in planning or
-plan execution, calling upon higher orders of causal models to guide a
-debugging response.
+$\text{reflective}^0$ layer of my model.  The ``deliberative'' layer
+of Minsky's model can be roughly mapped to the first-order reflective
+thinking layer in my model, but this is only very approximate because
+Minsky's deliberative layer is not limited to reasoning about causal
+models of the physical world as is this layer in my model.  In both of
+our models, this layer makes plans using causal models that include
+references to physical activities.  Minsky's ``reflective'' layer
+roughly maps to the union of all of the reflective layers in my model
+that are equal to or greater than order two.  In both models, this
+layer responds to failures in planning or plan execution, calling upon
+higher orders of causal models to guide a debugging response.
 
 \begin{figure}[bth]
 \begin{align*}
@@ -64,33 +60,60 @@ would obviously be absurd in the present context.  I use the set
 notation only to show a picture of roughly how to think about the
 mapping between the theories and not to subsequently formally prove
 anything about the relationship between our models by using the rules
-of mathematical set theory, despite how cool that would be.
+of mathematical set theory.
 
 Above Minsky's reflective layer are the ``self-reflective'' and
 ``self-conscious'' layers of reflective thinking.  I have not
 implemented these layers because they are not simple extensions upward
-in my model.  I will discuss how I see these layers being implemented
-in terms of my model in \autoref{section:model_6_future_research}.
+in my model.  I describe how I see these layers being implemented in
+\autoref{section:model_6_future_research} as future research.
 
-\section{HACKER and EM-TWO}
+\section{HACKER}
 
 A good precedent for reflective debugging responses to catalogs of
 failures is HACKER, one of the first reflective planning and debugging
-models, written by \cite{sussman:1973}.  \cite{singh:2005} provided
-\emph{EM-TWO}, a most recent example of an extension of HACKER that
-reasons about a more complicated three-dimensional physical and social
-block building domain.
+models, written by \cite{sussman:1973}.  [complete]
 
-\section{Mind as Subject}
+\section{EM-ONE}
+
+\cite{singh:2005} provided \emph{EM-ONE}, a most recent example of an
+extension of HACKER that reasons about a more complicated
+three-dimensional physical and social block building domain.
+[complete]
+
+\section{Mind as Subjective to Objects}
+
+My theory cannot be said to have an external problem domain, a source
+of perceptions and actions for the mind.  In my theory, the mind
+creates its own symbolic perceptions, which it would have no reason to
+do without a pre-existing symbolized goal, also of its own creation.
+In other words, because my theory includes everything that actually
+exists, my theory does not assume any objective or subjective
+perspectives or the inherent devastating limitation of this modelling
+assumption, to never be able to create symbols that are meaningful in
+the sense that they reference the actual ongoing activity in Duration,
+reality.
+
+Under the subjective modelling assumption, all perceptions and actions
+are artificial symbols that have been created in the mind of the
+programmer of the problem domain.  Thus, the meaning of the symbol
+that the AI receives also has been provided by the programmer.  In my
+theory, if there is a problem domain, it has been created by the mind.
+In my model, the meaning of symbols is created by the mind in terms of
+goals of its own creation.  This is a critical point that releasing
+the model from external goals, the fact that the model creates its own
+goals, opens the potential for explicitly making a note of this so
+that these actions can be responsibly debugged if they lead to
+failures.
 
 Considering minds to be in a subjective relationship with a world of
 objects is in the traditional view, being implicit in the assumptions
-of Model-6, HACKER, and EM-TWO.  Thus, in this view, the AI is only
-part of a larger existence outside of itself.  This is a subtle but
-important distinction between my model and these models: my model and
-these models are not equal in scope.  My model of mind includes the
-creation of explicit references to reality, everything that actually
-exists.
+of Model-6, HACKER, EM-TWO, and many other obviously useful theories.
+Thus, in this view, the AI is only part of a larger existence outside
+of itself.  This is a subtle but important distinction between my
+model and these models: my model and these models are not equal in
+scope.  My model of mind includes the creation of explicit references
+to reality, everything that actually exists.
 
 My model is not a subject in relation to objects, but instead inverts
 this paradigm, being eventually responsible for creating object and
@@ -105,6 +128,6 @@ Seeing a model of mind as subjected to objects robs the AI from ever
 modelling an awareness of the responsibility for this distinction as
 its own creation.  In other words, reducing the mind to a subjective
 role eliminates the potential for modelling the mind's reflection on
-its own activities that are responsible for the creation of that
-primitive object and subject distinction.
+its own activities that are responsible for the creation of that very
+primitive object and subject distinction, the self.
 

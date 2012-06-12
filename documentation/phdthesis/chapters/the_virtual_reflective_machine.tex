@@ -1,13 +1,45 @@
 %************************************************
-\chapter{The Computational Substrate}
-\label{chapter:the_computational_substrate}
+\chapter{The Virtual Reflective Machine}
+\label{chapter:the_virtual_reflective_machine}
 %************************************************
 
-My implementation is an operating system that allows parallel and
-concurrent scheduling of Lisp-like programs.  I use this substrate as
-a simulator for the activities in Duration.  Because this simulation
-is a shared memory architecture, any of these simulations can be
-designed to refer to other, potentially concurrent simulations.
+\newcommand{\FibR}{$\text{Fib}^r$ }
+\section{\FibR}
+
+My implementation is based on a virtual machine that allows parallel
+and concurrent scheduling of Lisp-like programs.  I refer to this
+virtual machine as \FibR, pronouced ``fiber.''  The purpose of \FibR
+is to provide a simulation of the actual dynamic qualities of
+Duration, the activities in Duration that actually exist.  Of course,
+in simulation we are limited to constructing the artificial.  I
+clarify that computers cannot generate their own meaning for symbols
+in \autoref{section:digital_reflection}; briefly, it is because they
+are based on an unchanging combinational device, which limits the
+potential meaning of actual computational reflection to a tautology.
+The only meaning of the symbols of my simulation are in the eyes of
+the beholder.  Under these clear terms, I have nonetheless implemented
+my model with the hopes that it may help others to see the utility of
+my theory, especially in its simulated form.
+
+\section{Lisp-like Programming Language}
+
+\FibR includes a Lisp-like programming language.
+
+The most primitive component of the \FibR system is an object called a
+\emph{fiber}.
+
+\section{Concurrent Memory Allocation Pools}
+
+\FibR works off of a multiple pool memory allocation system that
+allows separate pools for each concurrent virtual processor,
+eliminating the need for many lock situations that occur with shared
+memory pools.
+
+\section{Garbage Collection}
+
+
+
+\section{Layered Cognitive Architecture}
 
 On this computational substrate, I have built a layered cognitive
 architecture that is inspired by Minsky's description of the bottom

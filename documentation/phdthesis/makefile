@@ -16,13 +16,13 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/the_computational_substrate.tex \
   chapters/the_real_and_the_artificial.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
   chapters/from_theory_to_implementation.tex \
+  chapters/the_virtual_reflective_machine.tex \
   chapters/learning_to_accomplish_goals.tex \
   chapters/problems_to_solve.tex \
   chapters/theory_and_alternatives.tex \

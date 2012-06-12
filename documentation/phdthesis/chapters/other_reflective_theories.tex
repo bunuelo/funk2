@@ -7,32 +7,33 @@
 \label{backreference:self_reflective_self_conscious}
 
 \cite{minsky:2006} describes a six-layer reflective model of mind,
-\emph{\mbox{Model-6}: The Emotion Machine}.  Minsky's description of
-\mbox{Model-6} includes thinking activities that control other
-activities, referred to as a \emph{problem domain}, that exist outside
-of the mind.  \mbox{Model-6} is an internal subject actually
-subjective in relation to other actual external physical objects, such
-as a body or an environment.
-
-\mbox{Model-6}'s problem domain and both lower ``reactive'' layers
-roughly map to the activities in the pre-symbolic physical or
+\emph{\mbox{Model-6}: The Emotion Machine}.  Minsky's model reflects
+over a \emph{physical simulation} that provides an interface to an
+external world with sensors and actuators for controlling a physical
+body.  \mbox{Model-6} has two reactive layers, built-in and learned,
+that I have found useful for organizing my implementation.  Although
+these layers are not key my theory, I have found them good for
+organizing the interface between an objective physical simulation and
+the lower boundary of the first-order reflective layer of my model.
+The combination of the physical simulation and both reactive layers of
+\mbox{Model-6} map to activities in the pre-symbolic physical or
 $\text{reflective}^0$ layer of my model.  The ``deliberative'' layer
 of Minsky's model can be roughly mapped to the first-order reflective
 thinking layer in my model, but this is only very approximate because
 Minsky's deliberative layer is not limited to reasoning about causal
-models of the physical world as is this layer in my model.  In both of
-our models, this layer makes plans using causal models that include
-references to physical activities.  Minsky's ``reflective'' layer
-roughly maps to the union of all of the reflective layers in my model
-that are equal to or greater than order two.  In both models, this
-layer responds to failures in planning or plan execution, calling upon
-higher orders of causal models to guide a debugging response.
+models of the physical simulation as is this layer in my model.  In
+both of our models, this layer makes plans using causal models that
+include references to physical activities.  Minsky's ``reflective''
+layer roughly maps to the union of all of the reflective layers in my
+model that are equal to or greater than order two.  In both models,
+this layer responds to failures in planning or plan execution, calling
+upon higher orders of causal models to guide a debugging response.
 
 \begin{figure}[bth]
 \begin{align*}
 \left.
   \begin{array}{l}
-    \text{Minsky's Problem Domain}\\
+    \text{Minsky's Physical Simulation}\\
     \text{Minsky's Built-in Reactive Layer}\\
     \text{Minsky's Learned Reactive Layer}\\
   \end{array}
@@ -45,28 +46,78 @@ higher orders of causal models to guide a debugging response.
 \label{figure:model_6_as_reflective_order_notation}
 \end{figure}
 
-\autoref{figure:model_6_as_reflective_order_notation} gives a pseudo
-mathematical picture of how Minsky's layers map to my
-$\text{reflective}^n$ order notation.  Despite my use of set theoretic
-mathematical notation, I do not mean to imply that the activities that
-can be thought of as layers are actually sets of anything specific,
-especially not symbols, since the physical layer refers to activities,
-but these are not symbolic or discrete or separate or even static by
-definition.  I think the set theoretic notation is a useful tool for
-thinking as long as we don't require it to imply everything included
-in the mathematical definitions, specifically, the derivation of sets
-by the potentially infinite enumeration of discrete elements, which
-would obviously be absurd in the present context.  I use the set
-notation only to show a picture of roughly how to think about the
-mapping between the theories and not to subsequently formally prove
-anything about the relationship between our models by using the rules
-of mathematical set theory.
+\autoref{figure:model_6_as_reflective_order_notation} shows how
+Minsky's layers map to my $\text{reflective}^n$ order notation.
+Despite my use of set theoretic mathematical notation, I do not mean
+to imply that the activities that can be thought of as layers are
+actually sets of anything specific, especially not symbols, since the
+physical layer refers to activities, but these are not symbolic or
+discrete or separate or even static by definition.  I think the set
+theoretic notation is a useful tool for thinking as long as we don't
+require it to imply everything included in the mathematical
+definitions, specifically, the derivation of sets by the potentially
+infinite enumeration of discrete elements, which would obviously be
+absurd in the present context.  I use the set notation only to show a
+picture of roughly how to think about the mapping between the theories
+and not to subsequently formally prove anything about the relationship
+between our models by using the rules of mathematical set theory.
 
 Above Minsky's reflective layer are the ``self-reflective'' and
 ``self-conscious'' layers of reflective thinking.  I have not
 implemented these layers because they are not simple extensions upward
 in my model.  I describe how I see these layers being implemented in
 \autoref{section:model_6_future_research} as future research.
+
+\section{Metareasoning}
+
+\cite{cox_and_raja:2008} present a reflective theory of mind that they
+refer to as \emph{metareasoning}.  The metareasoning model they
+present begins with a ``ground level'', which roughly corresponds to
+my physical, $\text{reflective}^0$, layer.  They then describe how a
+second level, the ``object level'', is a control loop that receives
+perceptions from the ground level, processes these, and sends
+actionable commands back to the ground level.  Their object level
+roughly corresponds with my first-order reflective layer.  They then
+proceed to a third level, which completes two cascaded control loops:
+one controlling the ground level with another controlling the object
+level.  This third level is called the ``meta-level''.  Cox and Raja's
+meta-level roughly corresponds to my second-order reflective layer.
+Here he explains what happens when the object level fails in either
+the creation or execution of a plan:
+\begin{quote}
+When reasoning fails at some task, it may involve the explanation of
+the causal contributions of failure and the diagnosis of the object-
+level reasoning process.
+\end{quote}
+Cox and Raja explain how debugging causal models of the reasoning
+process itself is a form of metareasoning, or second-order reflective
+thinking.  My model has a separate distinct class of causal model for
+each layer of reflective thinking, so learning physical causal models
+is a distinct activity from learning first-order reflective thinking
+causal models.  My implementation demonstrates how two distinct layers
+of causal models allow not only learning to act but also learning to
+think about acting.
+
+\section{Interior Grounding}
+
+\cite{minsky:2005} describes an evolutionary reflective theory of mind
+that he calls \emph{interior grounding}.  Interior grounding states
+that each layer of reflective thinking could be genetically
+predestined to each have different and specific types of useful ways
+of thinking.  Minsky rejects the \emph{physical grounding hypothesis},
+which stipulates that thoughts must necessarily develop from the
+lowest layer first and only subsequently to the higher layers of
+thinking.
+
+In terms of my model, activities in the mind can create and manipulate
+symbolic arrangements without these symbols necessarily referring to
+the physical layer of activity.  My theory does not conflict with
+modelling different developmental stages of minds or genetic
+differences between minds.  My implementation begins the simulation in
+a specific physical state, where the reflective layers of the mind are
+already all actively thinking with explicit sets of pre-existing
+knowledge, such as plans.  My model learns new knowledge and debugs
+the knowledge it already has as the simulation proceeds.
 
 \section{HACKER}
 
@@ -80,54 +131,4 @@ models, written by \cite{sussman:1973}.  [complete]
 extension of HACKER that reasons about a more complicated
 three-dimensional physical and social block building domain.
 [complete]
-
-\section{Mind as Subjective to Objects}
-
-My theory cannot be said to have an external problem domain, a source
-of perceptions and actions for the mind.  In my theory, the mind
-creates its own symbolic perceptions, which it would have no reason to
-do without a pre-existing symbolized goal, also of its own creation.
-In other words, because my theory includes everything that actually
-exists, my theory does not assume any objective or subjective
-perspectives or the inherent devastating limitation of this modelling
-assumption, to never be able to create symbols that are meaningful in
-the sense that they reference the actual ongoing activity in Duration,
-reality.
-
-Under the subjective modelling assumption, all perceptions and actions
-are artificial symbols that have been created in the mind of the
-programmer of the problem domain.  Thus, the meaning of the symbol
-that the AI receives also has been provided by the programmer.  In my
-theory, if there is a problem domain, it has been created by the mind.
-In my model, the meaning of symbols is created by the mind in terms of
-goals of its own creation.  This is a critical point that releasing
-the model from external goals, the fact that the model creates its own
-goals, opens the potential for explicitly making a note of this so
-that these actions can be responsibly debugged if they lead to
-failures.
-
-Considering minds to be in a subjective relationship with a world of
-objects is in the traditional view, being implicit in the assumptions
-of Model-6, HACKER, EM-TWO, and many other obviously useful theories.
-Thus, in this view, the AI is only part of a larger existence outside
-of itself.  This is a subtle but important distinction between my
-model and these models: my model and these models are not equal in
-scope.  My model of mind includes the creation of explicit references
-to reality, everything that actually exists.
-
-My model is not a subject in relation to objects, but instead inverts
-this paradigm, being eventually responsible for creating object and
-subject abstractions while viewing itself through these abstractions.
-The explicit inclusion of references to the pre-symbolic activities in
-my model allows my model to have an arbitrary number of layers that
-reference the ongoing activity of the mind, while maintaining an
-adaptive relationship with the given ongoing activities of itself,
-everything that actually exists.
-
-Seeing a model of mind as subjected to objects robs the AI from ever
-modelling an awareness of the responsibility for this distinction as
-its own creation.  In other words, reducing the mind to a subjective
-role eliminates the potential for modelling the mind's reflection on
-its own activities that are responsible for the creation of that very
-primitive object and subject distinction, the self.
 

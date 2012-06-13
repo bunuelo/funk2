@@ -21,16 +21,10 @@ phdthesis.pdf: \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
+  chapters/other_reflective_theories.tex \
   chapters/from_theory_to_implementation.tex \
   chapters/the_virtual_reflective_machine.tex \
-  chapters/learning_to_accomplish_goals.tex \
-  chapters/problems_to_solve.tex \
-  chapters/theory_and_alternatives.tex \
-  chapters/a_system.tex \
-  chapters/experiments.tex \
-  chapters/other_reflective_theories.tex \
-  chapters/results.tex \
-  chapters/discussion.tex \
+  chapters/other_models.tex \
   chapters/future.tex \
   chapters/science.tex \
   chapters/education.tex \

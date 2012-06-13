@@ -24,7 +24,7 @@ phdthesis.pdf: \
   chapters/other_reflective_theories.tex \
   chapters/from_theory_to_implementation.tex \
   chapters/the_virtual_reflective_machine.tex \
-  chapters/other_models.tex \
+  chapters/related_implementations.tex \
   chapters/future.tex \
   chapters/science.tex \
   chapters/education.tex \

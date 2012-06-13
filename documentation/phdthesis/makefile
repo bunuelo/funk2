@@ -21,7 +21,7 @@ phdthesis.pdf: \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
-  chapters/other_reflective_theories.tex \
+  chapters/related_theories.tex \
   chapters/from_theory_to_implementation.tex \
   chapters/the_substrate_for_accountable_layered_systems.tex \
   chapters/related_implementations.tex \

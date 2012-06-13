@@ -67,7 +67,8 @@ phdthesis.pdf: \
   gfx/reinforcement_learning.pdf \
   gfx/serial_and_parallel_plan.pdf \
   gfx/state_action.pdf \
-  gfx/transframe.pdf
+  gfx/transframe.pdf \
+  gfx/fibermon_many_fibers.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

@@ -7,16 +7,16 @@
 \label{backreference:self_reflective_self_conscious}
 
 \cite{minsky:2006} describes a six-layer reflective model of mind,
-\emph{\mbox{Model-6}: The Emotion Machine}.  Minsky's model reflects
+\emph{{\mbox{Model-6}}: The Emotion Machine}.  Minsky's model reflects
 over a \emph{physical simulation} that provides an interface to an
 external world with sensors and actuators for controlling a physical
-body.  \mbox{Model-6} has two reactive layers, built-in and learned,
+body.  {\mbox{Model-6}} has two reactive layers, built-in and learned,
 that I have found useful for organizing my implementation.  Although
 these layers are not key, I have found them good for organizing the
 interface between an objective physical simulation and the lower
 boundary of the first-order reflective layer of my model.  The
 combination of the physical simulation and both reactive layers of
-\mbox{Model-6} map to activities in the pre-symbolic physical or
+{\mbox{Model-6}} map to activities in the pre-symbolic physical or
 $\text{reflective}^0$ layer of my model.  The ``deliberative'' layer
 of Minsky's model maps to the first-order reflective thinking layer in
 my model, but this is only very approximate because Minsky's
@@ -58,7 +58,7 @@ require it to imply everything included in the mathematical
 definitions, specifically, the derivation of sets by the potentially
 infinite enumeration of discrete elements, which would obviously be
 absurd in the present context.  I use the set notation only to show a
-picture of how to think about the mapping between the theories and not
+picture of how to think about the mapping between the models and not
 to subsequently formally prove anything about the relationship between
 our models by using the rules of mathematical set theory.
 
@@ -70,7 +70,7 @@ in my model.  I describe how I see these layers being implemented in
 
 \section{Metareasoning}
 
-\cite{cox_and_raja:2008} present a reflective theory of mind that they
+\cite{cox_and_raja:2008} present a reflective model of mind that they
 refer to as \emph{metareasoning}.  The metareasoning model they
 present begins with a ``ground level'', which corresponds to my
 physical, $\text{reflective}^0$, layer.  They then describe how a
@@ -81,26 +81,44 @@ corresponds with my first-order reflective layer.  They then proceed
 to a third level, which completes two cascaded control loops: one
 controlling the ground level with another controlling the object
 level.  This third level is called the ``meta-level''.  Cox and Raja's
-meta-level corresponds to my second-order reflective layer.  Here he
-explains what happens when the object level fails in either the
-creation or execution of a plan:
+meta-level corresponds to my second-order reflective layer, but Cox
+and Raja's model might be interpretted to limit the meta-level to
+thinking about the object level, which is not true of my
+$\text{reflective}^2$ layer in the sense that this layer can symbolize
+any of the activities in the layers below it.
+\begin{figure}[bth]
+\begin{align*}
+\text{Cox and Raja's Ground Level } &{\approx} \text{ reflective}^0 \\
+\text{Cox and Raja's Object Level } &{\approx} \text{ reflective}^1 \\
+\text{Cox and Raja's Meta-Level }   &{\approx} \text{ reflective}^2 \\
+\text{Cox and Raja's $\text{Meta}^2$-Level } &{\approx} \text{ reflective}^3 \\
+\text{Cox and Raja's $\text{Meta}^n$-Level } &{\approx} \text{ reflective}^{(n+1)} \\
+\end{align*}
+\caption{The lower levels of Cox and Raja's metareasoning model mapped
+  to my $\text{reflective}^n$ order notation.}
+\label{figure:metareasoning_as_reflective_order_notation}
+\end{figure}
+\autoref{figure:metareasoning_as_reflective_order_notation} shows how
+Cox and Raja's levels map to my $\text{reflective}^n$ order notation.
+Here they explain what happens when the object level fails in either
+the creation or execution of a plan:
 \begin{quote}
 When reasoning fails at some task, it may involve the explanation of
 the causal contributions of failure and the diagnosis of the object-
 level reasoning process.
 \end{quote}
 Cox and Raja explain how debugging causal models of the reasoning
-process itself is a form of metareasoning, or second-order reflective
-thinking.  My model has a separate distinct class of causal model for
-each layer of reflective thinking, so learning physical causal models
-is a distinct activity from learning first-order reflective thinking
-causal models.  My implementation demonstrates how two distinct layers
-of causal models allow not only learning to act but also learning to
-think about acting.
+process itself is a form of meta-level reasoning, or second-order
+reflective thinking.  My model has a separate distinct class of causal
+model for each layer of reflective thinking, so learning physical
+causal models is a distinct activity from learning first-order
+reflective thinking causal models.  My implementation demonstrates how
+two distinct layers of causal models allow not only learning to act
+but also learning to think about acting.
 
 \section{Interior Grounding}
 
-\cite{minsky:2005} describes an evolutionary reflective theory of mind
+\cite{minsky:2005} describes an evolutionary reflective model of mind
 that he calls \emph{interior grounding}.  Interior grounding states
 that each layer of reflective thinking could be genetically
 predestined to each have different and specific types of useful ways
@@ -111,7 +129,7 @@ thinking.
 
 In terms of my model, activities in the mind can create and manipulate
 symbolic arrangements without these symbols necessarily referring to
-the physical layer of activity.  My theory does not conflict with
+the physical layer of activity.  My model does not conflict with
 modelling different developmental stages of minds or genetic
 differences between minds.  My implementation begins the simulation in
 a specific physical state, where the reflective layers of the mind are

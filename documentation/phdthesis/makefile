@@ -16,14 +16,16 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
+  chapters/in_medias_res.tex \
   chapters/the_real_and_the_artificial.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/an_example.tex \
   chapters/problematic_interpretations.tex \
-  chapters/related_theories.tex \
-  chapters/from_theory_to_implementation.tex \
+  chapters/related_models.tex \
+  chapters/from_model_to_simulation.tex \
+  chapters/from_simulation_to_implementation.tex \
   chapters/the_substrate_for_accountable_layered_systems.tex \
   chapters/related_implementations.tex \
   chapters/future.tex \

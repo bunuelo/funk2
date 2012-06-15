@@ -20,6 +20,7 @@ phdthesis.pdf: \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
+  chapters/an_example.tex \
   chapters/problematic_interpretations.tex \
   chapters/related_theories.tex \
   chapters/from_theory_to_implementation.tex \

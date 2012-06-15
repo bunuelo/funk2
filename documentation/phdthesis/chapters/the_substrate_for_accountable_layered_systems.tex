@@ -8,30 +8,28 @@
 
 My implementation is based on a virtual machine that allows parallel
 and concurrent scheduling of Lisp-like programs.  I refer to this
-virtual machine as \emph{SALS}, the ``substrate for accountable
-layered systems,'' the focus of my thesis.  The purpose of SALS is to
+virtual machine as \emph{SALS}, the substrate for accountable layered
+systems, the focus of this dissertation.  The purpose of SALS is to
 provide a simulation of the actual dynamic qualities of Duration, the
 activities in Duration that actually exist.  I have previously
 explained why computers cannot create meaningful symbolic references
 to reality, beyond the purely tautological, in
 \autoref{section:digital_reflection}.  If this simulation creates
-symbols, they are in the eyes of the beholder.
+symbols, they are only in the eyes of the beholder.
 
-In this dissertation, I am focusing on explaining how SALS
-demonstrates reflective learning in two distinct causal classes of
-knowledge from a single physical expectation failure.  In my
-description of the implementation, I will follow a similar outline to
-that of the theory described in \autoref{part:theory_of_mind}.
-Similarly, I must begin with the activities in Duration, so I will
-describe how SALS simulates the activities in Duration.  I will
-explain the symbolization of these activities in the context of a
-block building physical simulation.  I will describe how causal models
-are learned.  I will give examples of how causal models are put
-together into plan objects that are simple serial and parallel SALS
-programs.  I will explain how a plan may begin executing and fail.
-Finally, I will describe how the expectation failure response updates
-causal models in both reflective layers.  This, in total, shows how
-learning how to plan is simulated by SALS.
+In this dissertation, I am focusing on how SALS demonstrates
+reflective learning in two distinct causal classes of knowledge from a
+single physical expectation failure.  I must begin my description with
+the dynamic activities in Duration.  Thus, first, I will describe how
+SALS simulates the activities in Duration.  I will explain the
+symbolization of these activities in the context of a block building
+physical simulation.  I will describe how causal models are learned.
+I will give examples of how causal models are put together into plan
+objects that are simple serial and parallel SALS programs.  I will
+explain how a plan may begin executing and fail.  Finally, I will
+describe how the expectation failure response updates causal models in
+both reflective layers.  This, in total, shows how learning how to
+plan is simulated by SALS.
 
 \section{Fibers Simulate Activities}
 
@@ -50,6 +48,43 @@ compiling a single Lisp-like expression in SALS can lead to the
 creation and destruction of hundreds of fibers of activity.  Fibers
 are generally useful in programs that could use an extra perspective
 on a problem.
+
+\section{Symbols and Simulated Symbols}
+
+It becomes important at this point to keep track of the layer of
+artificiality that results when one simulates thinking.  The danger is
+in losing an awareness of the difference between what one is thinking
+and what a simulation is simulating as thought.  For example, a
+programmer types symbols to express commands to the computer in a
+programming language.  These symbols have meaning to the programmer.
+The computer continually repeats the same symbolic manipulation
+function, the combinational device.  So, when the simulation appears
+to create new symbols by manipulating the symbols contained within its
+programming, this is an illusion.  The observer of output from the
+simulation may create new symbols, but the machine only has meaning in
+terms of the symbols of its programming.
+
+Therefore, I will use an asterisk notation for referring to different
+classes of simulated artificiality.  For example, I will continue to
+use, simply, the term symbol to refer to the symbols that are actually
+reflectively symbolized in order to refer to the activities in
+Duration.  These are the symbols that the programmer uses to refer to
+the activities of Duration, which gives meaning to the program.  The
+programmer then writes a program that simulates the symbolization of
+simulated activities in Duration.  When I am referring to the
+simulation of the process of symbolization, I will refer to this as a
+simulated symbol, or a \emph{symbol*}.  A symbol* is a spatial
+arrangement of symbols that have been provided in the programming of
+the machine.  I will refer to the creation of this Spatial arrangement
+as the creation of a symbol*.
+
+Now that I have described the difference between the symbols the
+programmer types and the symbols* that the AI simulates as being
+created, the first goal of my description of the implementation is to
+describe how SALS simulates the creation of a symbol.  The rest of
+this chapter will cover the creation of a symbol*, but first, I must
+discuss how the activities in Duration begin simulating by programming
+lists of symbols into SALS' interactive programming language.
 
 \section{Programming Language}
 
@@ -110,7 +145,34 @@ The {\tt parog} expression is one way to easily start a number of
 parallel fibers to simultaneously execute a number of different tasks
 and wait for these tasks to complete.
 
-\section{Fibers and Futures}
+\section{Fibers Create Objects}
+
+SALS includes an object type system.  Every expression in SALS,
+besides {\tt nil}, has an object type.  Objects in SALS are in most
+cases based on a frame knowledge representation.  Objects have three
+main classes of functionality: {\tt get}, {\tt set}, and {\tt have}.
+The meaningful uses of these types of functionality are as follows:
+\begin{itemize}
+\item {\tt [get <object> <slot-name>]}
+
+The object-oriented {\tt get} command retrieves the value from the
+named slot of the object's frame.
+\item {\tt [set <object> <slot-name> <new-value>]}
+
+The object-oriented {\tt set} command mutates the value at the named
+slot of the object's frame to be the given new value.
+\item {\tt [have <object> <slot-name> <arguments>]}
+
+The object-oriented {\tt have} command performs other types of
+activities that are not simple frame slot accessors and mutators.  The
+{\tt have} commands sometimes involve complex mutations or other
+side-effects.
+\end{itemize}
+
+
+
+
+\section{Creating Parallel Fibers}
 
 The {\tt apply} operator is the normal way for a SALS program to
 evaluate a given function with arguments:
@@ -134,10 +196,10 @@ SALS includes a tool named \emph{FiberMon}, shown in
 \autoref{figure:fibermon_many_fibers}, that helps the programmer to
 introspect on all fibers currently in the simulation scheduler.
 Fibers may be easily removed or added to the scheduler, which enables
-efficient scheduler optimizations to be implemented at arbitrarily
-high levels of the language.  If any bugs arise in any parallel fiber,
-that fiber shows up in red in the monitoring application, so that it
-may be inspected and debugged by hand.
+efficient scheduler optimizations to be implemented at the highest
+levels of the language.  If any bugs arise in any parallel fiber, that
+fiber shows up in red in the monitoring application, so that it may be
+inspected and debugged by hand.
 \begin{figure}[bth]
   \center
   \includegraphics[width=10cm]{gfx/fibermon_many_fibers}
@@ -171,9 +233,49 @@ The {\tt pause} and {\tt resume} commands are extremely efficient for
 managing large simulations in which most fibers will be inactive at
 any given time, but they are a little cumbersome, so I have written a
 lightweight and helpful \emph{fiber trigger} object, which I will
-explain next.
+explain after explaining one more object that is used to program fiber
+triggers.
+
+\section{Mutual Exclusion}
+
+SALS provides a primitive object called a \emph{mutex} for handling
+the mutually exclusive access to resources.  A mutex object has two
+possible states: locked and unlocked.  If the mutex object is unlocked
+then when a fiber tries to locks the mutex, the mutex switches to the
+locked state and the fiber continues execution.  If the mutex object
+is already locked when a fiber tries to lock the mutex, the fiber will
+pause until the mutex is unlocked, at which point the mutex will be
+locked and the waiting fiber will resume execution.  Mutexes are used
+for protecting shared resources from being used by more than one fiber
+at a time.
+
+Mutexes are a special type of object that must be supported by the
+hardware of a concurrent computer.  Almost every parallel programming
+language has a mutex construct that derives from this hardware mutex.
+So, mutexes are common to parallel programming, but they are
+notoriously difficult to debug, resulting in bugs affectionately
+referred to as ``race conditions'' or ``deadlocks''.  In order to help
+with debugging these types of problems, mutexes in SALS keep track of
+which fibers are waiting for the lock or holding the lock.  I have
+found this extra information invaluable in debugging complicated mutex
+related bugs.
 
 \section{Fiber Triggers}
+
+The fiber trigger organizes sets of paused fibers so that they can be
+woken up at the same time.  Basically, the fiber trigger is an object
+that provides a useful abstraction for controlling fiber execution
+that combines a mutex with the {\tt pause} and {\tt resume} commands.
+
+A fiber can be added to the resume set of a fiber trigger by using the
+{\tt wait-for-trigger} command as in the following example:
+\begin{equation*}
+\text{\tt [wait-for-trigger <fiber-trigger>]}
+\end{equation*}
+The {\tt wait-for-trigger} command atomically pauses the current fiber
+and then adds the fiber to resume queue of the fiber trigger object.  The fiber trigger object provides a mutex object 
+
+\section{leftovers...}
 
 \section{Fiber Complete and Bug Found Triggers}
 

@@ -1,0 +1,209 @@
+%************************************************
+\chapter{Learning from Success and Failure}
+\label{chapter:learning_from_success_and_failure}
+%************************************************
+
+\section{Plan Execution}
+
+First-order reflective thinking creates causal hypotheses that
+describe how physical resources may cause transitions between physical
+perceptions and goals.  Additional first-order reflective thinking
+activities combine these causal hypotheses into plans that are
+supposed to accomplish or avoid goals, given their preferential
+arrangement.  After a plan is created, its sequential instructions for
+activating or suppressing the resources contained in the causal slots
+of the hypotheses can be traversed and the causal resource that has
+been referenced can be put into the appropriate activated or
+suppressed Spatial arrangement.  I will refer to this sequential
+process of traversing through a plan and following its activation or
+suppression instructions as \emph{execution}.
+
+\section{Plan Instructions}
+
+In general, plans can include a variety of different types of
+instructions.  Plans are theoretically \emph{Turing complete} or
+\emph{computationally universal} in the sense that they include a set
+of instructions that can simulate any single-tape Turing machine.
+Since simulating a Turing machine requires infinite memory, my
+implementation includes plan instructions that are practically only
+\emph{linear bounded automaton complete} because they are limited by
+the finite memory of any given computer.
+
+I've previously discussed the necessity of using activate and suppress
+instructions that relate resources.  One instruction that has only
+been implicitly introduced at this point in my description is the
+model's ability to Spatially arrange a sequence of instructions, which
+I will refer to as the \emph{program} instruction.  There is also an
+instruction that allows the Spatial arrangement of concurrent
+instructions in the model, which I will refer to as the \emph{parallel
+  program} instruction.  The program and parallel program instructions
+allow for the arrangement of hierarchies of planned sequential and
+parallel program executions.
+
+I will give a more detailed description of plan instructions in
+\autoref{part:the_implementation}, but for now I will focus on
+describing how failures can lead not only to learning better
+first-order causal hypotheses for predicting physical goals from
+physical resources and perceptions but also to learning better
+second-order causal hypotheses for predicting first-order goals, such
+as the creation of a plan that will not fail when it is executed.
+
+\section{Failures and Success}
+
+There are many types of failures that can occur during the execution
+of plans.  Each different type of failure that occurs may have
+different types of activities that, reflectively, will appear as the
+causal result of the failure; actively halting the plan execution
+allows for a debugging response activity to occur at the layer above
+the failed plan.  I will refer to the execution of a plan that results
+in no failures as a \emph{successful execution}.  Plans may be
+considered to exhibit various types of success only in the sense that
+they have avoided the various types of execution failures.
+
+\section{Activation Failure}
+
+If we imagine that two plans are executing concurrently, I will refer
+to the simultaneous activation and suppression of a resource as an
+\emph{activation failure}.  An activation failure can also occur if
+two plans attempt to simultaneously activate the same resource.  When
+an \emph{activation failure} occurs, one possible response is to
+create a new plan to accomplish the combined goals of the two plans,
+but which includes the two plans as executing in sequential order.
+
+\section{Compiling Plans to Resources}
+
+I've discussed previously how the instructions in plans can be
+sequentially interpreted as one form of execution.  When a plan is
+found to fail when executed concurrently with other plans, it is
+sometimes helpful to consider the execution of a specific plan to be a
+resource in itself.  I will refer to the process of turning the
+execution of a specific plan into a new resource as \emph{compiling}.
+With the ability to compile plans to resources, we have another
+possible solution to activation failures.  For example, if one of the
+conflicting plans is shorter or less critical than the other, the
+shorter plan can be compiled into a resource that is inhibited
+whenever the longer plan is executing.
+
+\section{Expectation Failure}
+
+As a plan executes, the results of resource activations can be found
+to not match currently symbolized perceptions.  This failure of a
+causal hypothesis to correctly predict the transitional results of a
+resource activation I will refer to as an \emph{expectation failure}.
+The most obvious response to an expectation failure is to correct the
+causal hypotheses in the first-order reflective layer that predict
+physical perceptions.  The correction of physical causal hypotheses
+involves both eliminating the causal hypotheses that made the
+incorrect prediction and creating new causal hypotheses that correctly
+predict in light of the new transition between physical perceptions.
+
+\section{Learning Below and Above the Failure}
+
+Correcting the physical causal hypotheses that lead to expectation
+failures will ensure that the same type of failure will never be
+planned again.  This is useful.  Nevertheless, given reflective
+layers, the implementation can still be improved in at least two ways.
+Assuming that the causal hypotheses in the first-order reflective
+layer have failed, we can also consider corrections that can be made
+both ``below'' and ``above'' the failure.
+
+For example, the causal hypotheses in the first-order reflective layer
+are based on symbols that refer to activities in the physical layer.
+Since, as already discussed, there necessarily are no symbols in the
+physical layer, the only allowed descriptions of physical activities
+must be created by first-order symbolization activities.  Thus, one
+way to create more refined causal hypotheses that describe physical
+activities is to create more refined symbols that refer these physical
+activities.  This parenthetical ability to refine symbolic references
+of an otherwise undefined activity is a critical feature of a
+reflective model of mind.  Despite the fact that the refinement of
+symbolic references occurs in the same layer as the failed causal
+hypothesis, I will refer to this form of learning as being
+\emph{below} the failure because it changes references to the layer
+below the failure.
+
+Alternatively, we can focus on learning in the layers above the
+failure.  The second-order reflective layer can think about the
+planning activities in the first-order reflective layer that created
+the plan that failed.  Causal models of planning activities that lead
+to successful or failed plans can be used by the second-order
+reflective thinking layer to better plan sequences of planning
+activities.  The second-order reflective layer considers first-order
+activities as resources that create plans that, when executed, result
+in either successfully or unsuccessfully accomplishing physical goals.
+I will refer to correcting causal hypotheses in the layers above the
+failure as learning \emph{above} the failure.
+
+Learning above the failure is logistically difficult because of the
+arbitrary amount of time that may have passed between the creative
+activities that result in plans and the sometimes much later execution
+of the plan that results in failure.  This thesis and its
+implementation are exclusively focused on this type of learning.  In
+other words, the failure becomes above the failure in response to an
+expectation failure.
+
+\section{First-order Reflective Thinking Activities}
+
+I've previously described physical goals that are symbolic references
+to physical activities that can be preferentially ordered.  The
+first-order reflective layer activities create causal hypotheses and
+put these together into plans.  This leads me to a critical point: I
+have been purposefully vague in describing the types of plans that are
+created by the first-order reflective layer.  In my model of mind, I
+have artificially divided the ongoing activities in Duration into
+layers.  Despite my division, which allows talking about orders of
+reflective thinking that build layers of abstractions upon other
+abstractions, in reality, all of these symbols or Spatial arrangements
+only exist actively, not specifically prioritized statically as
+discrete and separate components of action.  Thus, all layers of
+activity in my model are given the appearance of being
+\emph{in~media~res} as ongoing, inseparable, and simultaneously active
+qualities of Duration.  So, while physical goals may be willfully
+symbolized by the first-order thinking activities, the first-order
+thinking activities are also willfully making plans.  Thus, the types
+of plans that this activity creates are undefined by priority in this
+sense.  Reflectively, from the perspective of second-order reflective
+thinking, we may see clear causal hypotheses that give a reasonable
+understanding of the first-order reflective layer activities, but
+these activities are seen as ``causal'' only in retrospect and not in
+execution.  Thus the idea of causal can be understood as introducing a
+separate and reflective point of view to the idea of execution.  Thus,
+the results of planning activities in the first-order reflective
+thinking layer can be reflectively learned by the second-order
+reflective thinking layer.
+
+\section{First-order Reflective Thinking Goals}
+
+The second-order reflective layer learns causal hypotheses of the
+given first-order reflective layer activities.  For example, the
+second-order reflective layer may symbolize the existence of a plan
+that later results in successful execution as a positive first-order
+reflective thinking goal.  Similarly, the second-order reflective
+layer may symbolize the existence of a plan that later results in
+failure as a negative first-order reflective thinking goal.  It is
+important to understand that first-order thinking activities are not
+limited to only making a specific type of plan, such as a plan that is
+expected to result in a successful execution.
+
+To keep the modelling process from becoming tautologically
+meaningless, it is necessary for it to allow first-order reflective
+thinking to remain undefined as pre-reflective willful activities in
+Duration.  The utility in this type of thinking appears necessarily
+because it allows for the creation of some worst possible plan so that
+other plans may be compared and made as different as possible from
+this worst case scenario.  There are many creative and potentially
+useful planning techniques that have been described in the AI
+literature.  Many of these techniques are based on analogical
+abstractions that have reasonable explanations of utility only in
+retrospect by reflectively creating a causal hypothesis in which the
+result is the symbolic goal of the existence of a successful plan.
+
+My reflective model does not limit first-order planning activities to
+being subsequently recognized by the second-order reflective layer as
+one symbolic type or another.  This emphasizes the ability of the
+second-order reflective layer to create causal hypotheses and
+willfully create first-order reflective thinking goals that inform the
+second-order creation of plans for first-order thinking resources to
+create more successful plans for accomplishing willfully symbolized
+physical goals.
+

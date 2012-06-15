@@ -44,7 +44,6 @@
 \documentclass[ twoside,openright,titlepage,fleqn,numbers=noenddot,headinclude,%1headlines,footinclude
                 11pt,letterpaper,BCOR5mm,cleardoublepage=empty,abstractoff % <--- obsolete, remove (todo)
                 ]{scrreprt}
-
 % ********************************************************************
 % Development Stuff
 % ********************************************************************
@@ -113,6 +112,16 @@
 \makeatother 
 
 
+% BEGIN FIBR EXPRESSION CODE
+\usepackage{amsthm}
+\newtheorem{expression}{Expression}[section]
+
+
+
+% END FIBR EXPRESSION CODE
+
+
+
 % BEGIN DRAFT WATERMARK CODE
 %
 % This code is from
@@ -132,18 +141,23 @@
   \setlength{\@tempdimc}{.5\paperheight}
   \setlength{\unitlength}{1pt}
   \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){
+%    \makebox(0,0){
+%      \rotatebox{45}{
+%        \makebox(-72,0){
+%          \vspace{3cm}\textcolor[gray]{0.875}{{\fontsize{3cm}{3cm}\selectfont{UNOFFICIAL}}}
+%        }
+%      }
+%    }
+%    \makebox(0,0){
+%      \rotatebox{45}{
+%        \makebox(-72,0){
+%          \vspace{-6cm}\textcolor[gray]{0.875}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
+%        }
+%      }
+%    }
     \makebox(0,0){
       \rotatebox{45}{
-        \makebox(-72,0){
-          \vspace{3cm}\textcolor[gray]{0.875}{{\fontsize{3cm}{3cm}\selectfont{UNOFFICIAL}}}
-        }
-      }
-    }
-    \makebox(0,0){
-      \rotatebox{45}{
-        \makebox(-72,0){
-          \vspace{-6cm}\textcolor[gray]{0.875}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
-        }
+        \vspace{-6cm}\textcolor[gray]{0.9375}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
       }
     }
   }
@@ -210,7 +224,7 @@
     % uncomment the following line if you want to have black links (e.g., for printing)
     %colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV,% 
     breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
-    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=0,%
     hypertexnames=true, pdfhighlight=/O,%hyperfootnotes=true,%nesting=true,%frenchlinks,%
     urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,%
     %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
@@ -219,7 +233,7 @@
     pdfsubject={},%
     pdfkeywords={},%
     pdfcreator={pdfLaTeX},%
-    pdfproducer={LaTeX with hyperref and classicthesis}%
+    pdfproducer={LaTeX, hyperref, classicthesis, LibreDraw, and GraphViz}%
 }
 
 %********************************************************************
@@ -254,17 +268,28 @@
 % Mainmatter
 %*******************************************************
 \pagenumbering{arabic}
-\cleardoublepage\part{Reflectively Learning to Accomplish Goals}
-\include{chapters/the_real_process}
-\include{chapters/learning_to_accomplish_goals}
-\include{chapters/problems_to_solve}
-\include{chapters/theory_and_alternatives}
-\cleardoublepage\part{An Implementation}
-\include{chapters/a_system}
-\include{chapters/experiments}
-\cleardoublepage\part{Conclusion}
-\include{chapters/results}
-\include{chapters/discussion}
+\cleardoublepage\part{Model of Mind}\label{part:model_of_mind}
+\include{chapters/the_real_and_the_artificial}
+\include{chapters/learning_causal_hypotheses}
+\include{chapters/layers_of_reflective_thinking}
+\include{chapters/learning_from_success_and_failure}
+\include{chapters/an_example}
+\include{chapters/problematic_interpretations}
+\include{chapters/related_models}
+\include{chapters/from_model_to_simulation}
+\cleardoublepage\part{Simulation}\label{part:simulation}
+\include{chapters/learning_search_heuristics}
+\include{chapters/from_simulation_to_implementation}
+\cleardoublepage\part{The Implementation}\label{part:the_implementation}
+\include{chapters/the_substrate_for_accountable_layered_systems}
+\include{chapters/related_implementations}
+%\include{chapters/learning_to_accomplish_goals}
+%\include{chapters/problems_to_solve}
+%\include{chapters/theory_and_alternatives}
+%\include{chapters/a_system}
+%\include{chapters/experiments}
+\cleardoublepage\part{Conclusion}\label{part:conclusion}
+%\include{chapters/results}
 \include{chapters/future}
 
 % 1. models of cognition intro
@@ -282,7 +307,9 @@
 %*******************************************************
 \appendix
 \cleardoublepage\part{Appendix}
-\include{chapters/appendix_the_code}
+\include{chapters/science}
+\include{chapters/education}
+\include{chapters/the_code}
 %*******************************************************
 % Other Stuff in the Back
 %*******************************************************

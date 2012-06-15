@@ -16,16 +16,20 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/the_real_process.tex \
-  chapters/learning_to_accomplish_goals.tex \
-  chapters/problems_to_solve.tex \
-  chapters/theory_and_alternatives.tex \
-  chapters/a_system.tex \
-  chapters/experiments.tex \
-  chapters/results.tex \
-  chapters/discussion.tex \
+  chapters/the_real_and_the_artificial.tex \
+  chapters/learning_causal_hypotheses.tex \
+  chapters/layers_of_reflective_thinking.tex \
+  chapters/learning_from_success_and_failure.tex \
+  chapters/an_example.tex \
+  chapters/problematic_interpretations.tex \
+  chapters/related_theories.tex \
+  chapters/from_theory_to_implementation.tex \
+  chapters/the_substrate_for_accountable_layered_systems.tex \
+  chapters/related_implementations.tex \
   chapters/future.tex \
-  chapters/appendix_the_code.tex \
+  chapters/science.tex \
+  chapters/education.tex \
+  chapters/the_code.tex \
   gfx/agent_environment.pdf \
   gfx/blocks_world_screenshot-1.pdf \
   gfx/communication_theory.pdf \
@@ -58,7 +62,8 @@ phdthesis.pdf: \
   gfx/reinforcement_learning.pdf \
   gfx/serial_and_parallel_plan.pdf \
   gfx/state_action.pdf \
-  gfx/transframe.pdf
+  gfx/transframe.pdf \
+  gfx/fibermon_many_fibers.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

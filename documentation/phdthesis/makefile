@@ -16,7 +16,6 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/an_example.tex \
   chapters/the_physical_layer.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \

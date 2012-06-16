@@ -16,12 +16,11 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/in_medias_res.tex \
+  chapters/an_example.tex \
   chapters/the_real_and_the_artificial.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
-  chapters/an_example.tex \
   chapters/problematic_interpretations.tex \
   chapters/related_models.tex \
   chapters/from_model_to_simulation.tex \

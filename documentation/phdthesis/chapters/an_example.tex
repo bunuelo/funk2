@@ -1,69 +1,47 @@
 %************************************************
-\chapter{An Example}
+\chapter{\emph{an example}}
 \label{chapter:an_example}
 %************************************************
 
-In this chapter, I will describe a scenario where learning occurs at
-multiple reflective layers.
+\begin{figure}[bth]
+\includegraphics[width=10cm]{gfx/blocks_world_example_failure} \\ \medskip
+\caption{A failure to stack two blocks.}
+\label{figure:example_of_failure}
+\end{figure}
 
-\section{The \emph{in media res}}
-
-There is a table.  The table has some blocks on it.  The blocks are
+I begin my explanation of my thesis by describing the example
+situation pictured in \autoref{figure:example_of_failure}:
+\begin{quote}
+There is a table.  Some blocks are on the table.  The blocks are of
 different shapes and colors.  One of the blocks is a green triangle.
-Another block is a red square.  There is a hand that can move around,
-picking up, and putting down blocks.  One can think of plans for the
-hand to follow to arrange the blocks into different types of goal
-configurations.  For example, one can think of trying to stack two of
-the blocks.  More specifically, one can think of trying to stack the
-red square on the green triangle.  If one knows how triangles and
-squares interact, then one would know that triangles do not provide
-good support surfaces, and squares will fall off if attempts are made
-to stack them on top.  If one had the knowledge of the physical
-interactions, then one would not make this plan.  But, in this
-example, this plan exists in ones mind because one does not have this
-knowledge of how triangles and squares physically interact.  In this
-case, one thinks that this plan should succeed.  If one were to
-execute this plan, moving the hand, picking up and putting down
-blocks, one would find that the red square falls off of the green
-triangle.  This would be an unexpected outcome that would cause the
-plan to fail.  When the plan fails, there is physical knowledge to be
-learned: putting the red square on the green triangle results in the
-red square being on the table.  There is also knowledge to be learned
-about how one uses plans.  For example, imagine that one has been told
-two plans for how to stack blocks; each of these plans is learned from
-a different source, a different friend.  One of the plans is for
-stacking a red square on top of a green triangle, while the other plan
-has the opposite approach of stacking the triangle on the square.  One
-of these plans will fail and the other will succeed.  Which one to use
-is a matter of being good at thinking, not physically acting.
+Another block is a blue square.  A hand can move around, picking up
+and putting down blocks.  Plans can be made for the hand to arrange
+the blocks into different configurations.  Plans can be followed that
+can result in failures.  For example, putting the square on top of the
+triangle might fail to stack the two blocks because the square might
+fall off of the triangle.  These failures can be thought of as
+learning opportunities.  Through failures, better models of the
+physical world can be learned.  Also through failures, better models
+of planning can be learned.  Learning different planning strategies
+for different physical situations is a reflective form of learning.
+My thesis is to describe SALS, the implementation of a model of
+layered reflective learning.
+\end{quote}
+I begin with a non-technical description of the model in plain
+English.  Next, I transition to thinking of the model as a simulation.
+I use mathematical set notation to describe the model as a simulation.
+Finally, I describe how this mathematical simulation is automated on a
+concurrent computer, SALS, the substrate for accountable layered
+systems.
 
+At the end of \autoref{part:the_model}, I explain the modelling
+assumptions that I make in transitioning to the mathematical notation
+of \autoref{part:simulating_the_model}.  Using this notation, I
+explain how this model can be used to reduce the complexity of search
+algorithms.  In \autoref{part:the_implementation}, I give an
+explanation of how this simulation in implemented in SALS.  Finally,
+in conclusion, I discuss promising directions for future research in
+not only AI but also the other cognitive sciences, giving a plan for
+how I see this model being extended to exhibit arbitrary
+self-reflective strata.
 
-
-
-
-
-
-
-For example, one can think of trying to stack two of the blocks.  More
-specifically, one can think of trying to stack the red square on the
-green triangle.  If one knows how triangles and squares interact, then
-one would know that triangles do not provide good support surfaces;
-squares will fall off if attempts are made to stack them on top.  If
-there was an awareness of this knowledge, this plan would not be
-further considered.  But, in this example, there is not an awareness
-of this knowledge, and this plan is considered as potentially useful
-for stacking the red square block on top of the green triangle.  In
-this case, one thinks that this plan should succeed.  If one were to
-follow this plan, moving the hand, picking up and putting down blocks,
-one would find that the red square falls off of the green triangle.
-This would be an unexpected outcome that would cause the plan to fail.
-When the plan fails, there is physical knowledge to be learned:
-putting the red square on the green triangle results in the red square
-being on the table.  There is also knowledge to be learned about how
-one uses plans.  For example, imagine that one has been told two plans
-for how to stack blocks; each of these plans is learned from a
-different source, a different friend.  One of the plans is for
-stacking a red square on top of a green triangle, while the other plan
-has the opposite approach of stacking the triangle on the square.  One
-of these plans will fail and the other will succeed.  Which one to use
-is a matter of being good at thinking, not physically acting.

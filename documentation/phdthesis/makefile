@@ -16,7 +16,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
-  chapters/representing_the_dynamic.tex \
+  chapters/the_dynamic_and_the_static.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \

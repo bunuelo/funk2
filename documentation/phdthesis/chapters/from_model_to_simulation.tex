@@ -43,15 +43,82 @@ simulation from modelling those assumptions.
 
 \section{Sets of Activities}
 
-It is useful to assume that the activities in Duration exist as a
-subset of things among all of the possible things that could possibly
-exist.  In order to create a set of activities to include in the
-simulation model, symbolic references must be enumerated that refer to
-the activities in Duration that are to be simulated.  It is necessary
-here to focus on an example.
+\begin{figure}[bth]
+\includegraphics[width=10cm]{gfx/blocks_world_simulation} \\ \medskip
+\caption{An example for simulation.}
+\label{figure:blocks_world_simulation}
+\end{figure}
 
+I will begin with a relatively simple model of the activities in
+Duration in order to explain the simulation process.  I will explain
+the process of simulation before explaining the more detailed
+assumptions that I have used in my simulation of the model of mind.
+One of the simplest mathematical models is a \emph{set} of symbols.  I
+will first describe the simulation model as the mathematical set, $S$,
+the state.  Here is an example of a possible symbolization of the
+activities shown in \autoref{figure:blocks_world_simulation}:
+\begin{equation}
+\label{equation:example_initial_state}
+S = \left\{
+      \begin{array}{l}
+        \text{{\tt Block-1-sitting-on-Table-1}}, \\
+        \text{{\tt Block-2-sitting-on-Table-1}}, \\
+        \text{{\tt Gripper-1-hovering-above-Table-1}}\\
+      \end{array}
+    \right\}
+\end{equation}
+
+During the simulation, the state, $S$, changes.  The simulation
+process is a discrete stepwise activity that results in different
+symbols being contained in the state set, $S$.  I will now describe a
+notation for referring to the different states that result from a
+simulation process.
+
+\section{Changes in State}
+
+Equations~\ref{equation:simulate_first}
+and~\ref{equation:simulate_last} show a notation for referring to the
+state of a simulation after a number of simulation steps, $n$.
+\begin{align}
+\label{equation:simulate_first}
+S[0] &= \text{\emph{The Initial State}} \\
+\label{equation:simulate_last}
+S[n] &= \text{simulate}~S[n-1]
+\end{align}
+Equation~\ref{equation:simulate_first} defines $S[0]$ to be the
+initial representation of the activities in Duration that are being
+simulated; an example of the initial state was given previously in
+Equation~\ref{equation:example_initial_state}.
+Equation~\ref{equation:simulate_last} introduces an explicit reference
+to the activity of simulation with the symbol ``simulate.''  Because I
+have not yet defined this activity, these equations still have a
+reference to the actual dynamic activity of simulation.  I use this
+notation to discuss how the state, $S$, changes during the actual
+process of simulation.  I will use the notation in
+Equation~\ref{equation:simulate_n_steps} to refer to the state of the
+simulation after $n$ actual steps of simulation activity:
+\begin{equation}
+\label{equation:simulate_n_steps}
+S[n] = \text{simulate}^n~S[0]
+\end{equation}
 
 \section{Leftovers...}
+
+\section{Changing states is simulation}
+
+For example, if one writes down the state, $S$, on paper, these
+symbols can be perceived and manipulated, creating a new set of
+symbols, representing the next state, that can be written down as the
+next state.  The activity that changes the current state into the next
+state is simulation.
+
+\section{Universal Set}
+
+$\mathcal{S}$
+
+In order to simulate represent the possible symbols that can be
+contained within world over time, I use a universal set, $U$.
+
 
 \section{Examples of Activity in the Physical Layer}
 

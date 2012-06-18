@@ -1,6 +1,6 @@
 %************************************************
-\chapter{From Model to Simulation}
-\label{chapter:from_model_to_simulation}
+\chapter{Introducing Simulation}
+\label{chapter:introducing_simulation}
 %************************************************
 
 \section{The End of the Model}
@@ -41,6 +41,101 @@ symbolically in the simulation model.  Each assumption made in
 symbolizing the ongoing activities in Duration restricts the
 simulation from modelling those assumptions.
 
+\section{Mathematical Simulation}
+
+\begin{figure}[bth]
+{
+  
+\newdimen\digitwidth
+\settowidth\digitwidth{0}
+\def~{\hspace{\digitwidth}}
+
+\def\divrule#1#2{%
+\noalign{\moveright#1\digitwidth%
+\vbox{\hrule width#2\digitwidth}}}
+
+%101\,\begin{tabular}[b]{@{}r@{}}
+%10010 \\ \hline
+%\big)\begin{tabular}[t]{@{}l@{}}
+%1011110 \\
+%101 \\ \divrule{0}{7}
+%~~~111 \\
+%~~~101 \\ \divrule{3}{4}
+%~~~~100
+%\end{tabular}
+%\end{tabular}
+
+\begin{aenumerate}
+\item \begin{tabular}{l}
+        \hline \\
+        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+        {
+          37\,\begin{tabular}[b]{@{}r@{}}
+          \\ \hline
+          \big)\begin{tabular}[t]{@{}l@{}}
+          517 \\
+          \end{tabular}
+          \end{tabular}
+        }
+      \end{tabular}
+\item \begin{tabular}{l}
+        \hline \\
+        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+        {
+          37\,\begin{tabular}[b]{@{}r@{}}
+          \\ \hline
+          \big)\begin{tabular}[t]{@{}l@{}}
+          517 \\
+          101 \\ \divrule{0}{7}
+          ~~~111 \\
+          ~~~101 \\ \divrule{3}{4}
+          ~~~~100
+          \end{tabular}
+          \end{tabular}
+        }
+      \end{tabular}
+\item \begin{tabular}{l}
+        \hline \\
+        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+        {
+          37\,\begin{tabular}[b]{@{}r@{}}
+          \\ \hline
+          \big)\begin{tabular}[t]{@{}l@{}}
+          517 \\
+          101 \\ \divrule{0}{7}
+          ~~~111 \\
+          ~~~101 \\ \divrule{3}{4}
+          ~~~~100
+          \end{tabular}
+          \end{tabular}
+        }
+      \end{tabular}
+\item \begin{tabular}{l}
+        \hline \\
+        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+        {
+          37\,\begin{tabular}[b]{@{}r@{}}
+          ? \\ \hline
+          \big)\begin{tabular}[t]{@{}l@{}}
+          517 \\
+          101 \\ \divrule{0}{7}
+          ~~~111 \\
+          ~~~101 \\ \divrule{3}{4}
+          ~~~~100
+          \end{tabular}
+          \end{tabular}
+        }
+        \\ \hline
+      \end{tabular}
+\end{aenumerate}
+
+}
+
+\caption{Mathematical Focus.}
+\label{figure:mathematical_simulation}
+\end{figure}
+
+
 \section{Sets of Activities}
 
 \begin{figure}[bth]
@@ -63,7 +158,9 @@ S = \left\{
       \begin{array}{l}
         \text{{\tt Block-1-sitting-on-Table-1}}, \\
         \text{{\tt Block-2-sitting-on-Table-1}}, \\
-        \text{{\tt Gripper-1-hovering-above-Table-1}}\\
+        \text{{\tt Block-1-sitting-on-Table-1}}, \\
+        \text{{\tt Gripper-1-being-above-Table-1}}, \\
+        \text{{\tt Gripper-1-moving-left}}
       \end{array}
     \right\}
 \end{equation}
@@ -74,7 +171,7 @@ symbols being contained in the state set, $S$.  I will now describe a
 notation for referring to the different states that result from a
 simulation process.
 
-\section{Changes in State}
+\section{Simulation States}
 
 Equations~\ref{equation:simulate_first}
 and~\ref{equation:simulate_last} show a notation for referring to the
@@ -102,14 +199,65 @@ simulation after $n$ actual steps of simulation activity:
 S[n] = \text{simulate}^n~S[0]
 \end{equation}
 
-\section{Differences in State}
+\section{State Transitions}
 
 \begin{figure}[bth]
-\includegraphics[width=10cm]{gfx/blocks_world_gripper_above_block}
+\includegraphics[width=10cm]{gfx/blocks_world_gripper_over_block}
 \caption{An example future state of simulation.}
-\label{figure:blocks_world_gripper_above_block}
+\label{figure:blocks_world_gripper_over_block}
 \end{figure}
+\autoref{figure:blocks_world_gripper_over_block} shows an example of
+the next state of the simulation, $S[1]$.
+Equation~\ref{equation:example_next_state} gives an example
+description of the next state of the simulation model:
+\begin{equation}
+\label{equation:example_next_state}
+S[1] =
+  \left\{
+    \begin{array}{l}
+      \text{{\tt Block-1-sitting-on-Table-1}}, \\
+      \text{{\tt Block-2-sitting-on-Table-1}}, \\
+      \text{{\tt Gripper-1-hovering-above-Table-1}}, \\
+      \text{{\tt Gripper-1-hovering-above-Block-1}}
+    \end{array}
+  \right\}
+\end{equation}
 
+Now, in order to begin to describe the activity of simulation, we must
+explicitly represent the transition, $T$, from one state to another.
+I refer to the resulting change to the state of the simulation as a
+\emph{state transition}.  The transition, $T[n]$, necessarily consists
+two sets that keep track of changes, the \emph{add} set and the
+\emph{remove} set, as shown in
+Equation~\ref{equation:state_transition}:
+\begin{equation}
+\label{equation:state_transition}
+T[n] = \{T_\text{add}[n], ~T_\text{remove}[n]\}
+\end{equation}
+Equations~\ref{equation:predictive_state_transition}
+through~\ref{equation:transframe_last} give a definition of the
+transition, $T[n]$, in terms of the states, $S[n]$ and $S[n+1]$:
+\begin{align}
+\label{equation:predictive_state_transition}
+                    S[n+1] & = S[n] ~{\cup}~ T_\text{add}[n] ~{\setminus}~ T_\text{remove}[n] \\
+         T_\text{remove}[n] & ~{\subset}~ S[n] \\
+         T_\text{remove}[n] & ~{\not\subset}~ S[n+1] \\
+            T_\text{add}[n] & ~{\subset}~ S[n+1] \\
+\label{equation:transframe_last}
+            T_\text{add}[n] & ~{\not\subset}~ S[n]
+\end{align}
+Equations~\ref{equation:state_transition_first}
+and~\ref{equation:state_transition_last} give the state transition,
+$T[n]$, for every step of the simulation:
+\begin{align}
+  \label{equation:state_transition_first}
+     T_\text{add}[n] &= S[n+1] ~{\setminus}~ S[n] \\
+  \label{equation:state_transition_last}
+  T_\text{remove}[n] &= S[n]   ~{\setminus}~ S[n+1]
+\end{align}
+Equation~\ref{equation:predictive_state_transition} shows the
+predictive potential for knowing the transition, $T[n]$, given the
+current state, $S[n]$.
 
 
 \section{Leftovers...}
@@ -139,3 +287,4 @@ situations are for the reader's understanding, these example
 situations are not included in my model; these are descriptions of the
 activity in the physical layer of my model, which does not have
 symbols in it.
+

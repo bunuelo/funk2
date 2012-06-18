@@ -22,7 +22,7 @@ phdthesis.pdf: \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
   chapters/related_models.tex \
-  chapters/from_model_to_simulation.tex \
+  chapters/introducing_simulation.tex \
   chapters/from_simulation_to_implementation.tex \
   chapters/the_substrate_for_accountable_layered_systems.tex \
   chapters/related_implementations.tex \

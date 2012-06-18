@@ -3,13 +3,11 @@
 \label{chapter:introducing_simulation}
 %************************************************
 
-\section{The End of the Model}
-
 My description of the model of mind in plain non-technical English is
-now complete.  The rest of this part will extend the model that I have
-completed describing in English into the assumptions of simulation
-that I will need for beginning a mathematical description in
-\autoref{part:simulation}.
+now complete.  The rest of this dissertation will extend the model
+that I have completed describing in English into the assumptions of
+simulation that I will need for the mathematical evaluation in this
+part.
 
 There is a difference between a model of mind and a simulation of a
 model of mind.  I have presented my model of mind in plain English in
@@ -39,102 +37,7 @@ The activities in my model are prior to their symbolization, so
 assumptions are necessary for referring to these activities
 symbolically in the simulation model.  Each assumption made in
 symbolizing the ongoing activities in Duration restricts the
-simulation from modelling those assumptions.
-
-\section{Mathematical Simulation}
-
-\begin{figure}[bth]
-{
-  
-\newdimen\digitwidth
-\settowidth\digitwidth{0}
-\def~{\hspace{\digitwidth}}
-
-\def\divrule#1#2{%
-\noalign{\moveright#1\digitwidth%
-\vbox{\hrule width#2\digitwidth}}}
-
-%101\,\begin{tabular}[b]{@{}r@{}}
-%10010 \\ \hline
-%\big)\begin{tabular}[t]{@{}l@{}}
-%1011110 \\
-%101 \\ \divrule{0}{7}
-%~~~111 \\
-%~~~101 \\ \divrule{3}{4}
-%~~~~100
-%\end{tabular}
-%\end{tabular}
-
-\begin{aenumerate}
-\item \begin{tabular}{l}
-        \hline \\
-        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-        {
-          37\,\begin{tabular}[b]{@{}r@{}}
-          \\ \hline
-          \big)\begin{tabular}[t]{@{}l@{}}
-          517 \\
-          \end{tabular}
-          \end{tabular}
-        }
-      \end{tabular}
-\item \begin{tabular}{l}
-        \hline \\
-        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-        {
-          37\,\begin{tabular}[b]{@{}r@{}}
-          \\ \hline
-          \big)\begin{tabular}[t]{@{}l@{}}
-          517 \\
-          101 \\ \divrule{0}{7}
-          ~~~111 \\
-          ~~~101 \\ \divrule{3}{4}
-          ~~~~100
-          \end{tabular}
-          \end{tabular}
-        }
-      \end{tabular}
-\item \begin{tabular}{l}
-        \hline \\
-        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-        {
-          37\,\begin{tabular}[b]{@{}r@{}}
-          \\ \hline
-          \big)\begin{tabular}[t]{@{}l@{}}
-          517 \\
-          101 \\ \divrule{0}{7}
-          ~~~111 \\
-          ~~~101 \\ \divrule{3}{4}
-          ~~~~100
-          \end{tabular}
-          \end{tabular}
-        }
-      \end{tabular}
-\item \begin{tabular}{l}
-        \hline \\
-        Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
-        {
-          37\,\begin{tabular}[b]{@{}r@{}}
-          ? \\ \hline
-          \big)\begin{tabular}[t]{@{}l@{}}
-          517 \\
-          101 \\ \divrule{0}{7}
-          ~~~111 \\
-          ~~~101 \\ \divrule{3}{4}
-          ~~~~100
-          \end{tabular}
-          \end{tabular}
-        }
-        \\ \hline
-      \end{tabular}
-\end{aenumerate}
-
-}
-
-\caption{Mathematical Focus.}
-\label{figure:mathematical_simulation}
-\end{figure}
-
+simulation model from being a model of those assumptions.
 
 \section{Sets of Activities}
 
@@ -258,6 +161,82 @@ $T[n]$, for every step of the simulation:
 Equation~\ref{equation:predictive_state_transition} shows the
 predictive potential for knowing the transition, $T[n]$, given the
 current state, $S[n]$.
+
+\section{Mathematical Simulation}
+
+Now that I've explained a notation for discussing the simulation
+model, I am going to focus on solving a mathematical problem as an
+example of explicitly symbolizing reflective thinking in a simulation.
+
+\begin{figure}[bth]
+\center
+\begin{tabular}{|l|}
+\hline \\
+Solve this equation: \\
+{
+  37\,\begin{tabular}[b]{@{}r@{}}
+  \\ \hline
+  \big)\begin{tabular}[t]{@{}l@{}}
+  517 \\
+  \end{tabular}
+  \end{tabular}
+} \\
+\\ \hline
+\end{tabular}
+\caption{Mathematical Focus.}
+\label{figure:mathematical_simulation}
+\end{figure}
+
+
+\begin{figure}[bth]
+\center
+\begin{tabular}{|l|}
+\hline \\
+Solve this equation: \\
+{
+  37\,\begin{tabular}[b]{@{}r@{}}
+  \\ \hline
+  \big)\begin{tabular}[t]{@{}l@{}}
+  517 \\
+  101 \\ \longdivisionrule{0}{7}
+  ~~~111 \\
+  ~~~101 \\ \longdivisionrule{3}{4}
+  ~~~~100
+  \end{tabular}
+  \end{tabular}
+} \\
+\\ \hline
+\end{tabular}
+\vspace{5mm}
+\caption{Mathematical Focus.}
+\label{figure:mathematical_simulation}
+\end{figure}
+
+
+\begin{figure}[bth]
+\center
+\begin{tabular}{|l|}
+\hline \\
+Solve this equation: ~~~~~~~~~~~~~~~~~~~~~~~~~~\\
+{
+  37\,\begin{tabular}[b]{@{}r@{}}
+  ? \\ \hline
+  \big)\begin{tabular}[t]{@{}l@{}}
+  517 \\
+  101 \\ \longdivisionrule{0}{7}
+  ~~~111 \\
+  ~~~101 \\ \longdivisionrule{3}{4}
+  ~~~~100
+  \end{tabular}
+  \end{tabular}
+} \\
+\\ \hline
+\end{tabular}
+\vspace{5mm}
+\caption{Mathematical Focus.}
+\label{figure:mathematical_simulation}
+\end{figure}
+
 
 
 \section{Leftovers...}

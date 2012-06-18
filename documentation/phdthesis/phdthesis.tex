@@ -236,6 +236,47 @@
     pdfproducer={LaTeX, hyperref, classicthesis, LibreDraw, and GraphViz}%
 }
 
+
+
+
+
+
+
+
+% BEGIN LONG DIVISION DIGIT SPACING
+
+\newdimen\digitwidth
+\settowidth\digitwidth{0}
+\def~{\hspace{\digitwidth}}
+
+\def\longdivisionrule#1#2{%
+\noalign{\moveright#1\digitwidth%
+\vbox{\hrule width#2\digitwidth}}}
+
+%101\,\begin{tabular}[b]{@{}r@{}}
+%10010 \\ \hline
+%\big)\begin{tabular}[t]{@{}l@{}}
+%1011110 \\
+%101 \\ \longdivisionrule{0}{7}
+%~~~111 \\
+%~~~101 \\ \longdivisionrule{3}{4}
+%~~~~100
+%\end{tabular}
+%\end{tabular}
+
+% END LONG DIVISION DIGIT SPACING
+
+
+
+
+
+
+
+
+
+
+
+
 %********************************************************************
 % Hyphenation
 %*******************************************************
@@ -268,6 +309,7 @@
 % Mainmatter
 %*******************************************************
 \pagenumbering{arabic}
+\include{chapters/introduction}
 \cleardoublepage\part{The Model}\label{part:the_model}
 \include{chapters/the_dynamic_and_the_static}
 \include{chapters/learning_causal_hypotheses}

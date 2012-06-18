@@ -16,6 +16,7 @@ phdthesis.pdf: \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
+  chapters/introduction.tex \
   chapters/the_dynamic_and_the_static.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \

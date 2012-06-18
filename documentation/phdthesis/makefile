@@ -27,6 +27,7 @@ phdthesis.pdf: \
   chapters/from_simulation_to_implementation.tex \
   chapters/the_substrate_for_accountable_layered_systems.tex \
   chapters/related_implementations.tex \
+  chapters/evaluation.tex \
   chapters/future.tex \
   chapters/science.tex \
   chapters/education.tex \

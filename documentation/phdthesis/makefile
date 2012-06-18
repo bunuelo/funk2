@@ -24,7 +24,9 @@ phdthesis.pdf: \
   chapters/problematic_interpretations.tex \
   chapters/related_models.tex \
   chapters/introducing_simulation.tex \
-  chapters/from_simulation_to_implementation.tex \
+  chapters/learning_search_heuristics.tex \
+  chapters/related_simulations.tex \
+  chapters/introducing_implementation.tex \
   chapters/the_substrate_for_accountable_layered_systems.tex \
   chapters/related_implementations.tex \
   chapters/evaluation.tex \

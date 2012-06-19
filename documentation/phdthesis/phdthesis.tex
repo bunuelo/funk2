@@ -244,7 +244,7 @@
 
 
 % BEGIN LONG DIVISION DIGIT SPACING
-
+%
 \newdimen\digitwidth
 \settowidth\digitwidth{0}
 \def~{\hspace{\digitwidth}}
@@ -263,12 +263,15 @@
 %~~~~100
 %\end{tabular}
 %\end{tabular}
-
+%
 % END LONG DIVISION DIGIT SPACING
 
 
-
-
+% BEGIN EQUATION SECTION NUMBERING
+%
+%\numberwithin{equation}{section}
+%
+% END EQUATION SECTION NUMBERING
 
 
 
@@ -317,7 +320,7 @@
 \include{chapters/learning_from_success_and_failure}
 \include{chapters/problematic_interpretations}
 \include{chapters/related_models}
-\cleardoublepage\part{Simulation}\label{part:simulation}
+\cleardoublepage\part{The Simulation}\label{part:the_simulation}
 \include{chapters/introducing_simulation}
 \include{chapters/learning_search_heuristics}
 \include{chapters/related_simulations}

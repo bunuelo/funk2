@@ -194,40 +194,52 @@ of the world and a representation for the changes that actions
 perform.  Given these models, the physical world can be simulated
 according to different plans.  \cite{fikes:1972} describe an action
 representation, called ``STRIPS'', that uses a representation called a
-\emph{trans-frame}.  In the STRIPS model, the world is a set of
-symbols.  A trans-frame is composed of two sets: one for the removals
-from the world and one for the additions to the world.  A trans-frame
-represents a change between two states of the world.
+\emph{transframe}.  In the STRIPS model, the world is a set of
+symbols.  A transframe is composed of two sets: one for the removals
+from the world and one for the additions to the world.  A transframe
+represents a change between two states of the world.  In a symbolic
+relational domain, the state space is a set of symbolic relationships
+rather than just symbols.  Here is an example of a symbolic
+relationship that could exist in a relational domain: {\tt [block-1
+    is-on block-2]}.  Here is an example of a transframe for the world
+in a relational domain: \emph{remove} {\tt [block-1 on table-1]} and
+\emph{add} {\tt [block-1 on block-2]}.  In predicting the effects of
+an action on the world, STRIPS considers one transframe for each
+action.  transframes can also be dependent on the current state of the
+world.  Although many function approximation methods could be used, in
+my simulation model I have addressed the problem of learning to
+predict the correct transframes in the terms of \cite{mitchell:1982}'s
+``hypothesis space'' lattices, which provide a simple and
+understandable formulation of the category hypothesis learning
+problem, given labelled examples.  For an example of an action whose
+effects are dependent on the state of the physical world, imagine that
+an additional element is added to the block building example:
+\begin{quote}
+The square block has been bolted down to the table.  The gripper
+reaches and tries to grab the square block.  However, because the
+block is bolted down to the table, the gripper does not pick up the
+block.
+\end{quote}
 
-In a symbolic relational domain, the state space is a set of symbolic
-relationships rather than just symbols.  Here is an example of a
-symbolic relationship that could exist in a relational domain: {\tt
-  [block-1 is-on block-2]}.  Here is an example of a trans-frame for
-the world in a relational domain: \emph{remove} {\tt [block-1 on
-    table-1]} and \emph{add} {\tt [block-1 on block-2]}.
+This example demonstrates a different transframe than for if the block
+was not glued to the table, then we could imagine that then the block
+would then be in the gripper's grip.  Actions are dependent on the
+physical world in this block building domain.  In everyday life,
+imagine eating a sandwich; if it is not your sandwich, eating it would
+have completely different effects than if it was your sandwich.
+Results of actions have a dependence on the physical world.  A
+decision based on the physical world has been used to predict which
+transframe is appropriate for predict the effects of the action,
+simulating the action.
 
-In predicting the effects of an action on the world, STRIPS considers
-one effect for each action.  Trans-frames can also be dependent on the
-current state of the world.  Although many function approximation
-methods could be used, in my simulation model I have addressed the
-problem of learning to predict the correct trans-frames in the terms
-of \cite{mitchell:1982}'s ``hypothesis space'' lattices, which provide
-a simple and understandable formulation of the category hypothesis
-learning problem.
+\section{Plans Depend on Hypotheses}
 
-let's say, if the block is glued down to the table, and we can see that.
-then we can execute the grab action from when the gripper is above the block, and the block won't be removed from the table.
-so, that's a different transframe than for if the block was not glued to the table, then we could imagine that then the block would then be in the gripper's grip.
-so, two different transframes for the same action.
-so, actions are dependent on the physical world in blocks world.
-in the real world, you can imagine eating a sandwich, and if it's not your sandwich it would have completely different effects than if it was your sandwich.
-obviously, actions have a depdence on the physical world.
+Which hypotheses are used for predicting the effects of actions in a
+planning search are an important piece of information to associate
+with the resulting plans for debugging them when they later end up
+failing.
 
-so, let me go through briefly, once we have predicted the effects of our actions.
-we can basically predict, we have used a decision based on the physical world to predict which transframe is appropriate for simulating this action.
-so, what that allows us to do is to have causal dependencies between the knowledge used for generating the decision, and the actual future state of the world that has been derived from that.
-so, the current imaginary state of the world through the decision knowledge to the future state of the world has these causal relationships.
-so, along time here, what i've drawn is basically as the algorithm is simulating forward knowledge is dependent on certain things in the past but not necessarily in a temporal order it really depends on when the decision was made, what knowledge the decision was based on, and what knowledge that ended up creating.
+Along time here, what i've drawn is basically as the algorithm is simulating forward knowledge is dependent on certain things in the past but not necessarily in a temporal order it really depends on when the decision was made, what knowledge the decision was based on, and what knowledge that ended up creating.
 you can imagine something being learned far in the past, and the decision that uses that learning process may be done far in the future.
 
 the problem becomes when we get a bug in the system.

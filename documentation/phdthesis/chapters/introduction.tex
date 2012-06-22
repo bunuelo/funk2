@@ -133,17 +133,49 @@ of possible actions that may lead away from this state.  We can move
 left; we can stop; we can move right.  We can imagine what the
 possible future states would be after each action.  In an imagined
 future state, the gripper may be in a different position.  We can
-continue this process.  This is the explosion of the combinatorial
-search.
+continue this process.  An example of a combinatorial explosion
+resulting of a planning search is shown in
+Figure~\ref{figure:combinatorial_explosion_example}.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
+\caption{Combinatorial explosion in planning as search.}
+\label{figure:combinatorial_explosion_example}
+\end{figure}
 
-every single step if it has the same number of actions becomes this exponential search problem, which really slows the algorithm down.
-so, this process goes on as much as we can computationally afford, and then you end up moving closer to making your, finding your goal state in this large space of all possible alternatives.
-what we can do over this search process, is develop heuristics.
-so, basically, we have weightings, so for every action that we can take from each state, we basically have a very myopic kind of not necessarily myopic but an algorithm that will spit out a number that ranks all of these different search paths.
-so, if we think heuristically that moving red blocks before moving green blocks is a good idea, we don't exactly have a proof for it, but we can program that in as a heuristic, then the search path will more likely going along those paths.
-and it ends up reducing the branching of the search tree.
-that's what we really want to do when we attack the search problem is if we reduce the branching factor, we basically reduce the search problem.
-so, here's the path that we might take, given that we've only gone along the preferred heuristic paths.
+If every considered state in a search has the same number of possible
+actions, this search becomes an exponential search problem.  The
+number of actions from each state is the \emph{branch factor} of the
+search.  Exponential searches quickly become intractable, even in
+state spaces with a reasonable number of actions.  For example, games
+of chess are played to 20 levels deep with about 30 moves from each
+state.  Thus, expanding this search tree gives $30^{20}$, or $3 \times
+10^{29}$ plans.  If there were one billion computers that each
+processed one billion plans per second in parallel, this search would
+still take over ten thousand years to complete, and that is just to
+play the first move!  The fastest algorithms include good heuristics,
+e.g. a count of the number of pieces on the board for each player,
+etc.
+
+\section{Heuristics}
+
+When a problem is exponential, it progresses for as long as can be
+afforded computationally, and then it stops, often not able to find an
+answer in the given time or space limitations.  As this search
+progresses, it traverses the state space, hopefully finding the goal
+state in this large space of all possible alternatives.
+\emph{Heuristics} are one way to alleviate the exponential growth of
+the search tree.  Heuristics provide weightings over the search tree
+that give a metric of distance to a completed plan.  Beam search is an
+example of a heuristically weighted search that has a finite number of
+plans that it considers, forgetting the rest.  As used in beam search,
+a heuristic is a function that defines an ordering on search paths.
+For example, a heuristic function could define that moving red blocks
+before moving green blocks is a good idea.  The algorithm uses this
+information to guide the search, reducing the branch factor of the
+search tree, reducing the search problem.
+
+here is the path that we might take, given that we've only gone along the preferred heuristic paths.
 the green one would be our solution.
 so, that's a plan.
 that's part of the problem.

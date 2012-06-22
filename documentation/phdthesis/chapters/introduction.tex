@@ -5,12 +5,12 @@
 
 In this dissertation, I present the substrate for accountable layered systems.
 I have focused on building this substrate for doing reflective thinking on a large scale in learning systems.  \cite{singh:2005}'s example of reflective architectures is a good precedent.
-I will go over the contributions of this thesis.
+The contributions of this thesis are:
 
 \begin{itemize}
-\item The Substrate
-\item The Simulation
-\item The Model
+\item The Substrate,
+\item The Simulation, and
+\item The Model.
 \end{itemize}
   
 \section{The Substrate Contribution}
@@ -44,18 +44,19 @@ begin doing this kind of research.
 
 \section{The Simulation Contribution}
 
-My second thesis contribution is a mathematical description of a
-simulation that gives an answer to the following questions: How do we
-do credit assignment for learning?  When you have all of these
-processes interacting, solving a problem, which may be a complicated
-parallel system in itself, how do we trace the credit for our
-decisions that we have made in performing actions?  What knowledge was
-that decision based on?  How do we trace that backwards in time in an
-efficient way?  How do algorithms currently assign credit backwards in
-time and how does this model relate to these methods?  By describing
-the mathematical simulation, I will evaluate how this model's ability
-to learn not only at the ground level but also at the knowledge
-manipulation level improves over just ground learning performance.
+My second thesis contribution is an example of a mathematical
+simulation model that gives answers for the following questions: How
+do we assign credit to the planning process and learn to plan?  When
+many processes are interacting, solving a problem, maybe a complicated
+parallel system in itself, how is credit traced for our decisions that
+we have made in performing actions?  How do we learn what knowledge is
+good or bad at solving different types of problems?  How do we trace
+causal relationships back to the point that models of planning can be
+learned?  How do algorithms currently assign credit backwards in time
+and how does this model relate to these methods?  I will evaluate the
+how well this model is able to learn not only at the ground level but
+also at the knowledge manipulation level improves over just ground
+learning performance.
 
 I will evaluate this simulation as a potential path around the
 combinatorial search explosion problem.  There is a certain ``curse of
@@ -65,27 +66,29 @@ such as logical relationships.  Large systems that have logical
 relationships, hundreds of thousands, millions of relationships, fail
 because there is this explosion of combinatorial search.  I describe
 the simulation as a path around the search problem, anything that
-involves search.  The details of the simulation model are the basis of
-the computational substrate.
+involves search can be improved by heuristic learning.  The details of
+the simulation model are the basis of the computational substrate.
 
 \section{The Modelling Contribution}
 
 My third thesis contribution is a reflective model of mind that gives
-a description of how to think about learning to control.  There are
-many models for learning to control.  I describe a model that has not
-been explored by many of the current machine learning disciplines.
-This model of mind is the basis of the mathematical simulation.
+a description of how to think about thinking reflectively.  There are
+many models for reflective thinking.  I will compare this model to
+other related layered, reflective, and metacognitive models of mind.
+I describe a model that has not been explored by many of the current
+machine learning disciplines.  This model of mind is the basis of the
+mathematical simulation.
 
 \section{Document Overview}
 
-The focus of the dissertation will be on a description of the learning
-to control problem.  I describe control in terms of layers of
-reflective credit assignment because I think this simplifies
-understanding the learning to control problem.  I will focus on how
-credit assignment is done at the level of the planning activities.  I
-will then describe multiple experimental implementations of this
-reflective model of mind, simulations of controlling two different
-physical domains of varying complexity.
+The focus of the dissertation will be on a description of the
+reflective learning to control problem.  I describe control in terms
+of layers of reflective credit assignment because I think this
+simplifies understanding the learning to control problem.  I will
+focus on how credit assignment is done at the level of the planning
+activities.  I will then describe multiple experimental
+implementations of this reflective model of mind, simulations of
+controlling two different physical domains of varying complexity.
 
 \section{Programming}
 
@@ -133,13 +136,13 @@ of possible actions that may lead away from this state.  We can move
 left; we can stop; we can move right.  We can imagine what the
 possible future states would be after each action.  In an imagined
 future state, the gripper may be in a different position.  We can
-continue this process.  An example of a combinatorial explosion
+continue this process.  An example of the combinatorial growth
 resulting of a planning search is shown in
 Figure~\ref{figure:combinatorial_explosion_example}.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
-\caption{Combinatorial explosion in planning as search.}
+\caption{Combinatorial growth in planning as search.}
 \label{figure:combinatorial_explosion_example}
 \end{figure}
 
@@ -174,26 +177,44 @@ For example, a heuristic function could define that moving red blocks
 before moving green blocks is a good idea.  The algorithm uses this
 information to guide the search, reducing the branch factor of the
 search tree, reducing the search problem.
+Figure~\ref{figure:combinatorial_explosion_example_with_heuristics}
+shows the same exponential growth example with heuristic weightings
+overlayed in light blue.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/combinatorial_explosion_example_with_heuristics}
+\caption{Exponential growth example with heuristics.}
+\label{figure:combinatorial_explosion_example_with_heuristics}
+\end{figure}
 
-here is the path that we might take, given that we've only gone along the preferred heuristic paths.
-the green one would be our solution.
-so, that's a plan.
-that's part of the problem.
-how do we represent actions?
-so, each of these specific actions needs to be represented in a way so that we can use it to simulate the physical world.
-so, there are examples, STRIPs use a formulation called "trans-frames" which is basically, given a representation of the state of the world, a transframe is a list of additions and a list of removals from the world.
-and so, if you have this basic relational domain, block-1 is on block-2.
-one transframe might say, remove block-1 from on block-2 from our knowledge of the world, and add block-2 on top of table, something like that, changing the world through transframes.
-the problem that STRIPs has in imagining the effects of actions on the world is that this requires you, basically, it doesn't consider the current state of the world.
-so, basically, given an action it will change the world in this given way.
-you add these things.
-you remove these things.
-so, if we want to make this simulation dependent on the current state of the world, we have to somehow make a decision in terms of, what is the current state of the world, and what should the transframe be given this action.
-there are many ways to solve that problem.
-one simple one is to enumerate all possible actions and state spaces and say there's a different transframe for each one of those.
-that's an inefficient way of doing that.
+\section{Representing Actions}
 
-so, in the blocks world, we can imagine transframes that are dependent on the current state of the world by,
+The planning as search problem assumes that we have a representation
+of the world and a representation for the changes that actions
+perform.  Given these models, the physical world can be simulated
+according to different plans.  \cite{fikes:1972} describe an action
+representation, called ``STRIPS'', that uses a representation called a
+\emph{trans-frame}.  In the STRIPS model, the world is a set of
+symbols.  A trans-frame is composed of two sets: one for the removals
+from the world and one for the additions to the world.  A trans-frame
+represents a change between two states of the world.
+
+In a symbolic relational domain, the state space is a set of symbolic
+relationships rather than just symbols.  Here is an example of a
+symbolic relationship that could exist in a relational domain: {\tt
+  [block-1 is-on block-2]}.  Here is an example of a trans-frame for
+the world in a relational domain: \emph{remove} {\tt [block-1 on
+    table-1]} and \emph{add} {\tt [block-1 on block-2]}.
+
+In predicting the effects of an action on the world, STRIPS considers
+one effect for each action.  Trans-frames can also be dependent on the
+current state of the world.  Although many function approximation
+methods could be used, in my simulation model I have addressed the
+problem of learning to predict the correct trans-frames in the terms
+of \cite{mitchell:1982}'s ``hypothesis space'' lattices, which provide
+a simple and understandable formulation of the category hypothesis
+learning problem.
+
 let's say, if the block is glued down to the table, and we can see that.
 then we can execute the grab action from when the gripper is above the block, and the block won't be removed from the table.
 so, that's a different transframe than for if the block was not glued to the table, then we could imagine that then the block would then be in the gripper's grip.

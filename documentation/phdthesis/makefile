@@ -37,6 +37,7 @@ phdthesis.pdf: \
   gfx/agent_environment.pdf \
   gfx/blocks_world_screenshot-1.pdf \
   gfx/combinatorial_explosion_example.pdf \
+  gfx/combinatorial_explosion_example_with_heuristics.pdf \
   gfx/communication_theory.pdf \
   gfx/concurrent_parallel_reflection_efficiency.pdf \
   gfx/difference_engine_feedback_control.pdf \

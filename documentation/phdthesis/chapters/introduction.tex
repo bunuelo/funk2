@@ -93,25 +93,24 @@ controlling two different physical domains of varying complexity.
 \section{Programming}
 
 An example problem domain called the block building domain is shown in
-Figure~\ref{figure:example_problem_domain}.  In this case, we have two
+\autoref{figure:example_problem_domain}.  In this case, we have two
 blocks.  They have relationships with the objects in the room, such as
 the table.  The goal state is the stack of {\tt Block-2} on top of
 {\tt Block-1}.  The goal is to get the physical world to exist in this
 sort of configuration.
+\autoref{figure:example_program} shows an example of a program that a
+programmer might write to move this gripper around in this block
+building domain.  In this program, the gripper has very simple
+symbolic commands: {\tt move-right}, {\tt grab}, {\tt move-left}, {\tt
+  drop}.  One can imagine that this program might mean to pick up the
+green block and put it on the blue block.  This is what programming
+is, very abstractly.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/blocks_world_example-1}
 \caption{An example problem domain.}
 \label{figure:example_problem_domain}
 \end{figure}
-
-Figure~\ref{figure:example_program} shows an example of a program that
-a programmer might write to move this gripper around in this block
-building domain.  In this program, the gripper has very simple
-symbolic commands: {\tt move-right}, {\tt grab}, {\tt move-left}, {\tt
-  drop}.  One can imagine that this program might mean to pick up the
-green block and put it on the blue block.  This is what programming
-is, very abstractly.
 \begin{figure}
 \center
 \begin{tabular}{l}
@@ -138,14 +137,13 @@ possible future states would be after each action.  In an imagined
 future state, the gripper may be in a different position.  We can
 continue this process.  An example of the combinatorial growth
 resulting of a planning search is shown in
-Figure~\ref{figure:combinatorial_explosion_example}.
+\autoref{figure:combinatorial_explosion_example}.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
 \caption{Combinatorial growth in planning as search.}
 \label{figure:combinatorial_explosion_example}
 \end{figure}
-
 If every considered state in a search has the same number of possible
 actions, this search becomes an exponential search problem.  The
 number of actions from each state is the \emph{branch factor} of the
@@ -177,9 +175,9 @@ For example, a heuristic function could define that moving red blocks
 before moving green blocks is a good idea.  The algorithm uses this
 information to guide the search, reducing the branch factor of the
 search tree, reducing the search problem.
-Figure~\ref{figure:combinatorial_explosion_example_with_heuristics}
-shows the same exponential growth example with heuristic weightings
-overlayed in light blue.
+\autoref{figure:combinatorial_explosion_example_with_heuristics} shows
+the same exponential growth example with heuristic weightings
+overlayed with blue arrows.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/combinatorial_explosion_example_with_heuristics}
@@ -193,27 +191,28 @@ The planning as search problem assumes that we have a representation
 of the world and a representation for the changes that actions
 perform.  Given these models, the physical world can be simulated
 according to different plans.  \cite{fikes:1972} describe an action
-representation, called ``STRIPS'', that uses a representation called a
-\emph{transframe}.  In the STRIPS model, the world is a set of
-symbols.  A transframe is composed of two sets: one for the removals
-from the world and one for the additions to the world.  A transframe
-represents a change between two states of the world.  In a symbolic
-relational domain, the state space is a set of symbolic relationships
-rather than just symbols.  Here is an example of a symbolic
-relationship that could exist in a relational domain: {\tt [block-1
-    is-on block-2]}.  Here is an example of a transframe for the world
-in a relational domain: \emph{remove} {\tt [block-1 on table-1]} and
-\emph{add} {\tt [block-1 on block-2]}.  In predicting the effects of
-an action on the world, STRIPS considers one transframe for each
-action.  transframes can also be dependent on the current state of the
-world.  Although many function approximation methods could be used, in
-my simulation model I have addressed the problem of learning to
-predict the correct transframes in the terms of \cite{mitchell:1982}'s
-``hypothesis space'' lattices, which provide a simple and
-understandable formulation of the category hypothesis learning
-problem, given labelled examples.  For an example of an action whose
-effects are dependent on the state of the physical world, imagine that
-an additional element is added to the block building example:
+representation, called ``STRIPS'', that includes an object called a
+\emph{transframe} for simulating actions.  In the STRIPS model, the
+world is a set of symbols.  A transframe is composed of two sets: one
+for the removals from the world and one for the additions to the
+world.  A transframe represents a change between two states of the
+world.  In a symbolic relational domain, the state space is a set of
+symbolic relationships rather than just symbols.  Here is an example
+of a symbolic relationship that could exist in a relational domain:
+{\tt [block-1 is-on block-2]}.  Here is an example of a transframe for
+the world in a relational domain: \emph{remove} {\tt [block-1 on
+    table-1]} and \emph{add} {\tt [block-1 on block-2]}.  In
+predicting the effects of an action on the world, STRIPS considers one
+transframe for each action.  Transframes can also be dependent on the
+current state of the world.  Although many function approximation
+methods could be used, in my simulation model I have addressed the
+problem of learning to predict the correct transframes in the terms of
+\cite{mitchell:1982}'s ``hypothesis space'' lattices, which provide a
+simple and understandable formulation of the category hypothesis
+learning problem, given labelled examples.  For an example of an
+action whose effects are dependent on the state of the physical world,
+imagine that an additional element is added to the block building
+example:
 \begin{quote}
 The square block has been bolted down to the table.  The gripper
 reaches and tries to grab the square block.  However, because the
@@ -227,26 +226,49 @@ would then be in the gripper's grip.  Actions are dependent on the
 physical world in this block building domain.  In everyday life,
 imagine eating a sandwich; if it is not your sandwich, eating it would
 have completely different effects than if it was your sandwich.
-Results of actions have a dependence on the physical world.  A
-decision based on the physical world has been used to predict which
-transframe is appropriate for predict the effects of the action,
-simulating the action.
+Results of actions have a dependence on the physical world.  The
+physical state space informs sets of hypotheses that can be used to
+support assumptions, thus, the creation of new knowledge from an
+absence of knowledge, given the listed assumptions.  The arrows in the
+picture are the assumptions that allow the creation of the knowledge.
 
 \section{Plans Depend on Hypotheses}
 
 Which hypotheses are used for predicting the effects of actions in a
 planning search are an important piece of information to associate
-with the resulting plans for debugging them when they later end up
-failing.
+with the resulting plans for debugging plans when they later end up
+failing.  \autoref{figure:dependency_traces} shows a picture of
+dependency traces with knowledge creation events being pictured as
+shapes on a time line.  These pieces of knowledge have arrows between
+them that represent the derivation dependencies of each knowledge
+creating decision.  The circles in the picture represent the symbolic
+states of the world that are used to create hypotheses, which are
+represented by squares.  If any hypothesis is used to derive another
+hypothesis, these dependencies give a credit assignment path that
+jumps back arbitrary distances in time.  Notice in the picture that
+knowledge is dependent on certain things in the past but not
+necessarily in a strict temporal order, making sometimes large jumps
+backward in time.  If a hypothesis is derived from a number of other
+hypotheses, possibly far in the past, and this hypothesis fails in
+action, each one of these traced dependencies represents a learning
+opportunity.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/dependency_traces}
+\caption{Dependency traces.}
+\label{figure:dependency_traces}
+\end{figure}
 
-Along time here, what i've drawn is basically as the algorithm is simulating forward knowledge is dependent on certain things in the past but not necessarily in a temporal order it really depends on when the decision was made, what knowledge the decision was based on, and what knowledge that ended up creating.
-you can imagine something being learned far in the past, and the decision that uses that learning process may be done far in the future.
+\section{Finding a Bug}
 
-the problem becomes when we get a bug in the system.
-so, imagine that this is a plan that has been created over time.
-we've imagined simulating the world and we've developed this plan.
-when we're executing this plan, which has these sorts of causal relationships back in time, we hit a bug in the execution in the plan.
-that's what this red dot here symbolizes.
+The credit assignment problem arises when a bug occurs in some part of
+the system.  For example, plans can fail to accomplish what they have
+been previously hypothesized to accomplish.  The plan hypothesis is
+dependent on the hypotheses of the knowledge that was used to derive
+this knowledge.  The red dot in
+\autoref{figure:tracing_bug_dependencies} symbolizes a bug found in a
+plan.
+
 so, basically, what traditional temporal learning algorithms will do, they go back to the previous time step or the previous action, and they say, this is what's responsible for this, we should relearn the preconditions and postconditions for this action, we should recategorize the world for this action, we should focus on this action, and maybe the one before it, and we can kind of continue this process backwards in time.
 reinforcement learning has a temporal difference algorithm that does this.
 it is a pretty standard reinforcement learning algorithm.
@@ -258,6 +280,8 @@ this is a different approach.
 this doesn't go back in time to the previous action.
 this goes back causally through the provenance of the knowledge.
 so, in this case we can follow this blue path, and since we know that this faulty piece of knowledge came from that way back piece in time, we can actually go back and we specifically focus on that decision that was possibly even in a planning process.
+
+
 
 so, i'm talking about reflection.
 reflection is an overused word in this field.

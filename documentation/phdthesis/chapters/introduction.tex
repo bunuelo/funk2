@@ -3,9 +3,12 @@
 \label{chapter:introduction}
 %************************************************
 
-In this dissertation, I present the substrate for accountable layered systems.
-I have focused on building this substrate for doing reflective thinking on a large scale in learning systems.  \cite{singh:2005}'s example of reflective architectures is a good precedent.
-The contributions of this thesis are:
+In this dissertation I present the substrate for accountable layered
+systems.  I have focused on building this substrate for doing
+reflective thinking on a large scale in learning systems, using
+{\mbox{\citeauthor{singh:2005}'s~\citeyearpar{singh:2005}}} example of
+reflective architectures as the precedent.  The contributions of this
+thesis are:
 
 \begin{itemize}
 \item The Substrate,
@@ -15,17 +18,17 @@ The contributions of this thesis are:
   
 \section{The Substrate Contribution}
 
-My primary thesis contribution is the substrate.  The substrate is a
-system for developing large software applications, practical systems.
-This enables parallel and concurrent process control.  When you have
-hundreds of parallel processes, you can pause these processes.  When
-they get bugs, you can look at them; they are paused state machines.
-There are intricate thread control operations for these processes.
-When they sleep, they are removed from the scheduler, focusing
-computational resources.  Thousands of sleeping processes can
-efficiently be "triggered" awake.  The primary point of the system is
-that when running many different problem solvers at the same time, it
-becomes convenient to trace the interactions between those problem
+My primary thesis contribution is the substrate, a system for
+developing large software applications, which enables parallel and
+concurrent process control.  When there are hundreds of parallel
+processes, they can be paused.  When they encounter bugs, you can
+examine them in this paused state.  There are intricate thread control
+operations for these processes.  When they ``sleep'', they are removed
+from the scheduler, allowing the substrate to focus computational
+resources.  When required, thousands of sleeping processes can
+efficiently be ``triggered'' awake.  The primary point of the system
+is that when running many different problem solvers at the same time,
+it becomes convenient to trace the interactions between those problem
 solvers.  Thus, all of the memory in this substrate allows tracing all
 memory allocation and mutation.  It is a frame based system.  Many AI
 systems are implemented in an object-oriented or frame-based
@@ -37,74 +40,86 @@ program.  There are layered cognitive architecture structural
 primitives included in the language.  If you want to build a ``layer''
 which contains ``agencies'' which contain ``resources'' which exist as
 ``minds'' which control ``physical worlds'', all of those primitives
-already exist in this substrate.  This substrate serves as an
-extensible platform for continuing research on this implementation of
-reflective thinking.  You can download this open-source software and
-begin doing this kind of research.
+already exist in this substrate.  This substrate, which can be
+downloaded as open-source software, serves as an extensible platform
+for continuing research on this implementation of reflective thinking.
 
 \section{The Simulation Contribution}
 
 My second thesis contribution is an example of a mathematical
 simulation model that gives answers for the following questions: How
 do we assign credit to the planning process and learn to plan?  When
-many processes are interacting, solving a problem, maybe a complicated
-parallel system in itself, how is credit traced for our decisions that
-we have made in performing actions?  How do we learn what knowledge is
-good or bad at solving different types of problems?  How do we trace
-causal relationships back to the point that models of planning can be
+many individual processes interact in the solution of a common
+problem, for example, controlling a complicated parallel system, the
+first question is how credit is traced for decisions that have been
+made in performing actions?  How do we learn what particular knowledge
+is either good or bad at solving different types of problems?  How do
+we trace dependencies back to the point that models of planning can be
 learned?  How do algorithms currently assign credit backwards in time
-and how does this model relate to these methods?  I will evaluate the
-how well this model is able to learn not only at the ground level but
-also at the knowledge manipulation level improves over just ground
-learning performance.
+and how does this model relate to these methods?  In this thesis, I
+evaluate how well this model is able to learn, not only at the ground
+level but also at the hypothesis manipulation level, improving the
+ground learning performance.
 
 I will evaluate this simulation as a potential path around the
-combinatorial search explosion problem.  There is a certain ``curse of
-dimensionality'', so if you approach a large domain with many
-dimensions, you try to generalize the state space in abstract terms,
-such as logical relationships.  Large systems that have logical
-relationships, hundreds of thousands, millions of relationships, fail
-because there is this explosion of combinatorial search.  I describe
-the simulation as a path around the search problem, anything that
-involves search can be improved by heuristic learning.  The details of
-the simulation model are the basis of the computational substrate.
+exponential search explosion problem.  There is a certain ``curse of
+dimensionality,'' which limits a search algorithm from considering a
+exponentially vanishing percentage of the possible search paths as the
+length of the paths is increased.  The simulations are often defined
+in abstract terms, such as logical relationships, in order to make
+abstract simulations of large domains.  Large systems that have
+logical relationships require search algorithms to evaluate the
+implications of the declarative forms.  These systems fail because
+there is this explosion of exponential search.  In analyzing the
+simulation, the curse of dimensionality is reduced through layers of
+planned heuristic learning.  My main point is that anything that
+involves search can be improved by being in terms of a simulation of
+reflective learning.  The details of the simulation model are the
+basis of the computational substrate that allows for this improvement.
 
 \section{The Modelling Contribution}
 
 My third thesis contribution is a reflective model of mind that gives
 a description of how to think about thinking reflectively.  There are
-many models for reflective thinking.  I will compare this model to
+many models for reflective thinking, and I will compare the model to
 other related layered, reflective, and metacognitive models of mind.
-I describe a model that has not been explored by many of the current
-machine learning disciplines.  This model of mind is the basis of the
+The model I describe here has not been explored by many of the current
+machine learning disciplines.  This model will be the basis of
 mathematical simulation.
 
 \section{Document Overview}
 
-The focus of the dissertation will be on a description of the
-reflective learning to control problem.  I describe control in terms
-of layers of reflective credit assignment because I think this
-simplifies understanding the learning to control problem.  I will
-focus on how credit assignment is done at the level of the planning
-activities.  I will then describe multiple experimental
-implementations of this reflective model of mind, simulations of
-controlling two different physical domains of varying complexity.
+In {\mbox{\autoref{part:the_model}}} I will describe the model that is
+used as the basis of both the mathematical simulation and the
+computational implementations, described in
+{\mbox{Parts~\ref{part:the_simulation}}}
+{\mbox{and~\ref{part:the_implementation}}}, respectively.
+
+The focus of the dissertation will be a description of the reflective
+problem of learning to control.  I describe control in terms of layers
+of reflective credit assignment because I think this simplifies
+understanding the problem of learning to control.  I will focus on how
+credit assignment is done first at the level of planning activities
+and then describe multiple experimental implementations of the
+reflective model of mind, simulations of controlling two different
+physical domains of varying complexity.
 
 \section{Programming}
 
 An example problem domain called the block building domain is shown in
-\autoref{figure:example_problem_domain}.  In this case, we have two
-blocks.  They have relationships with the objects in the room, such as
-the table.  The goal state is the stack of {\tt Block-2} on top of
-{\tt Block-1}.  The goal is to get the physical world to exist in this
-sort of configuration.
-\autoref{figure:example_program} shows an example of a program that a
-programmer might write to move this gripper around in this block
-building domain.  In this program, the gripper has very simple
-symbolic commands: {\tt move-right}, {\tt grab}, {\tt move-left}, {\tt
-  drop}.  One can imagine that this program might mean to pick up the
-green block and put it on the blue block.  This is what programming
-is, very abstractly.
+{\mbox{\autoref{figure:example_problem_domain}}}.  In this case, we
+have two blocks, which have relationships with the objects in the
+room, such as the table.  The goal state is the stack of {\tt Block-2}
+on top of {\tt Block-1}.  The goal is to get the physical world to
+exist in this particular configuration.
+{\mbox{\autoref{figure:example_program}}} shows an example of a
+program that a programmer might write to move this gripper around in
+this block building domain.  In this program, the gripper has very
+simple symbolic commands: {\tt move-right}, {\tt grab}, {\tt
+  move-left}, {\tt drop}.  One can imagine that this program might
+intend to pick up the green block and put it on the blue block.  In a
+very abstract sense, this is what ``programming'' actually consists
+of.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/blocks_world_example-1}
@@ -129,19 +144,19 @@ is, very abstractly.
 \section{State Space Planning}
 
 State space planning can be thought of as automatic programming.
-Planning is when the computer writes the program itself.  In a simple
-planning as search algorithm, there is an initial state with a number
-of possible actions that may lead away from this state.  We can move
-left; we can stop; we can move right.  We can imagine what the
-possible future states would be after each action.  In an imagined
+Planning refers to the computer's ability to write its own program.
+In a simple planning as search algorithm, there is an initial state
+with a number of possible actions that may lead away from this state.
+We can move left; we can stop; we can move right.  We can imagine what
+the possible future states would be after each action.  In an imagined
 future state, the gripper may be in a different position.  We can
-continue this process.  An example of the combinatorial growth
-resulting of a planning search is shown in
-\autoref{figure:combinatorial_explosion_example}.
+continue this process.  An example of the exponential growth resulting
+of a planning search is shown in
+{\mbox{\autoref{figure:combinatorial_explosion_example}}}.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
-\caption{Combinatorial growth in planning as search.}
+\caption{Exponential growth in planning as search.}
 \label{figure:combinatorial_explosion_example}
 \end{figure}
 If every considered state in a search has the same number of possible
@@ -161,22 +176,25 @@ etc.
 \section{Heuristics}
 
 When a problem is exponential, it progresses for as long as can be
-afforded computationally, and then it stops, often not able to find an
-answer in the given time or space limitations.  As this search
-progresses, it traverses the state space, hopefully finding the goal
-state in this large space of all possible alternatives.
-\emph{Heuristics} are one way to alleviate the exponential growth of
-the search tree.  Heuristics provide weightings over the search tree
-that give a metric of distance to a completed plan.  Beam search is an
-example of a heuristically weighted search that has a finite number of
-plans that it considers, forgetting the rest.  As used in beam search,
-a heuristic is a function that defines an ordering on search paths.
-For example, a heuristic function could define that moving red blocks
-before moving green blocks is a good idea.  The algorithm uses this
-information to guide the search, reducing the branch factor of the
-search tree, reducing the search problem.
-\autoref{figure:combinatorial_explosion_example_with_heuristics} shows
-the same exponential growth example with heuristic weightings
+afforded computationally, traversing the state space, hopefully
+finding the goal state in this large space of all possible
+alternatives, but then stops, usually not able to find the required
+answer to the problem in the given time or space limitations.
+\emph{Heuristics} are one way to alleviate the problematic exponential
+growth of the search tree.  In order to search more efficiently,
+heuristics provide weightings over the search tree that give a metric
+of distance to a completed plan.  Beam search is an example of a
+heuristically weighted search that has a finite number of plans that
+it considers, forgetting the rest.  As used in beam search, a
+heuristic is a function that defines an ordering on search paths.  A
+heuristic function defines whether or not a given plan will
+successfully accomplish the goal, also, a heuristic gives a metric of
+the planning time required until a plan is created that will
+accomplish the goal.  The algorithm uses this information to guide the
+search, reducing the branch factor of the search tree, reducing the
+search problem.
+{\mbox{\autoref{figure:combinatorial_explosion_example_with_heuristics}}}
+shows the same exponential growth example with heuristic weightings
 overlayed with blue arrows.
 \begin{figure}
 \center
@@ -207,51 +225,39 @@ transframe for each action.  Transframes can also be dependent on the
 current state of the world.  Although many function approximation
 methods could be used, in my simulation model I have addressed the
 problem of learning to predict the correct transframes in the terms of
-\cite{mitchell:1982}'s ``hypothesis space'' lattices, which provide a
-simple and understandable formulation of the category hypothesis
-learning problem, given labelled examples.  For an example of an
-action whose effects are dependent on the state of the physical world,
-imagine that an additional element is added to the block building
-example:
-\begin{quote}
-The square block has been bolted down to the table.  The gripper
-reaches and tries to grab the square block.  However, because the
-block is bolted down to the table, the gripper does not pick up the
-block.
-\end{quote}
+{\mbox{\citeauthor{mitchell:1982}'s~\citeyearpar{mitchell:1982}}}
+``hypothesis space'' lattices, which provide a simple and
+understandable formulation of the category hypothesis learning
+problem, given labelled examples.  Hypothetical models are learned to
+predict the effects of actions.  The physical state space informs sets
+of hypotheses that can be used to support assumptions, thus, the
+creation of new knowledge from an absence of knowledge, given the
+listed assumptions.  The arrows in the picture are the assumptions
+that allow the creation of the knowledge.
 
-This example demonstrates a different transframe than for if the block
-was not glued to the table, then we could imagine that then the block
-would then be in the gripper's grip.  Actions are dependent on the
-physical world in this block building domain.  In everyday life,
-imagine eating a sandwich; if it is not your sandwich, eating it would
-have completely different effects than if it was your sandwich.
-Results of actions have a dependence on the physical world.  The
-physical state space informs sets of hypotheses that can be used to
-support assumptions, thus, the creation of new knowledge from an
-absence of knowledge, given the listed assumptions.  The arrows in the
-picture are the assumptions that allow the creation of the knowledge.
+\section{Learning to Plan for Successful Execution}
 
-\section{Plans Depend on Hypotheses}
-
-Which hypotheses are used for predicting the effects of actions in a
-planning search are an important piece of information to associate
-with the resulting plans for debugging plans when they later end up
-failing.  \autoref{figure:dependency_traces} shows a picture of
-dependency traces with knowledge creation events being pictured as
-shapes on a time line.  These pieces of knowledge have arrows between
-them that represent the derivation dependencies of each knowledge
-creating decision.  The circles in the picture represent the symbolic
-states of the world that are used to create hypotheses, which are
-represented by squares.  If any hypothesis is used to derive another
-hypothesis, these dependencies give a credit assignment path that
-jumps back arbitrary distances in time.  Notice in the picture that
-knowledge is dependent on certain things in the past but not
-necessarily in a strict temporal order, making sometimes large jumps
-backward in time.  If a hypothesis is derived from a number of other
-hypotheses, possibly far in the past, and this hypothesis fails in
-action, each one of these traced dependencies represents a learning
-opportunity.
+Dependency traces for a hypothesized successful plan creation compose
+an important set of knowledge to associate with a plan for debugging
+the planning process when, later, it is realized that the plan fails
+to execute.  {\mbox{\autoref{figure:dependency_traces}}} shows a
+picture of dependency traces with hypothesis creation events being
+pictured as shapes on a time line.  These hypotheses have arrows
+between them that represent the derivation dependencies of each
+hypothesis creating decision.  The circles in the picture represent
+the symbolic states of the world that are used to create hypotheses,
+which are represented by squares.  If any hypothesis is used to derive
+another hypothesis, these dependencies give a credit assignment path
+that is able to jump back retrospectively an arbitrary distance in
+time as well as between reflective layers.  Notice in the picture that
+the circle on the far left is a dependency of a square block, but
+these two events are not necessarily consecutive in time.  If a
+hypothesis is derived from a number of other hypotheses, possibly far
+in the past, and this hypothesis fails in action, each one of these
+traced dependencies represents a learning opportunity.  Every
+additional layer of reflective control in the model, represents
+another hypothetical learning opportunity, leading to more efficient
+search toward plans that succeed in execution.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/dependency_traces}
@@ -262,66 +268,114 @@ opportunity.
 \section{Finding a Bug}
 
 The credit assignment problem arises when a bug occurs in some part of
-the system.  For example, plans can fail to accomplish what they have
-been previously hypothesized to accomplish.  The plan hypothesis is
-dependent on the hypotheses of the knowledge that was used to derive
-this knowledge.  The red dot in
-\autoref{figure:tracing_bug_dependencies} symbolizes a bug found in a
-plan.
+the system.  For example, plans can fail physically to accomplish what
+they have been previously hypothesized to accomplish.  There are many
+knowledge dependency algorithms that work at this physical knowledge
+level.  In this thesis, I present a layered reflective knowledge
+representation for propagating failures to knowledge manipulation
+actions as well as physical actions.
+{\mbox{\autoref{figure:tracing_bug_dependencies}}} represents a bug
+found in a planning hypothesis.  For example, the planning hypothesis
+could be that some certain planning activity leads from one type of
+plan to a plan that will successfully complete execution without
+failing.  Failure propagates through reflective layers of goals and
+distinct classes of hypotheses.  Bugs are propagated through every
+reflective layer and each reflective layer is presented with a
+different learning opportunity.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/tracing_bug_dependencies}
+\caption{Tracing bug dependencies.}
+\label{figure:tracing_bug_dependencies}
+\end{figure}
 
-so, basically, what traditional temporal learning algorithms will do, they go back to the previous time step or the previous action, and they say, this is what's responsible for this, we should relearn the preconditions and postconditions for this action, we should recategorize the world for this action, we should focus on this action, and maybe the one before it, and we can kind of continue this process backwards in time.
-reinforcement learning has a temporal difference algorithm that does this.
-it is a pretty standard reinforcement learning algorithm.
-this is pretty standard.
-you can make hierarchies of actions.
-you can make longer spans in time.
-the basic theory is that you back to the previous timestep, what action was happening?, and then you can go to the timestep before that action.
-this is a different approach.
-this doesn't go back in time to the previous action.
-this goes back causally through the provenance of the knowledge.
-so, in this case we can follow this blue path, and since we know that this faulty piece of knowledge came from that way back piece in time, we can actually go back and we specifically focus on that decision that was possibly even in a planning process.
+\section{Comparing Temporal and Reflective Learning}
 
+A reflective learning algorithm implies arbitrarily better learning
+algorithms, including one-shot learning algorithms.  In many domains,
+the opportunity to learn is rare.  When the cost of failure is high,
+it is important to learn as much as possible from each failure.
 
+I will refer to machine learning algorithms that learn by assigning
+credit for failures to the temporally previous action as
+\emph{temporal learning} algorithms.  Contemporary temporal learning
+algorithms are relatively advanced, some even have relational
+object-oriented models of actions and the world.  Temporal learning
+algorithms learn by assign credit for a failure to the previous time
+step or the previous action.  A reinforcement learning algorithm that
+learns in this immediately temporal sense is called the \emph{temporal
+  difference learning} algorithm as described by
+\cite*{kaelbling:1996}.  In temporal learning, the previous action is
+considered in the context of the previous physical state of the world.
+Preconditions and postconditions for the action are updated.  In other
+words, the categories of the world are updated for this action, given
+the unexpected reward or punishment, a failure in expectations.  In
+the temporal difference learning algorithm, there is a process of
+focusing on each previous action and state combination in temporal
+order to assign credit for failures.  Temporal learning algorithms
+assign credit back in time from action to action.
 
-so, i'm talking about reflection.
-reflection is an overused word in this field.
-it's kind of diffisult to read the literature
-pattie maes, not to just throw out her name because she works here, but she actually has a really good paper that describes about 30 different types of definitions for reflection that are grounded in the computer science literature.
-i'm going to go through three of them.
-one of them she doesn't talk about because its not computational reflection, and this is actually the one that i'm focusing on in this phd.
-reflection is, basically, in a laymans psychological term, is what i'm trying to model here.
-so, reflection is the act of perceiving acting and otherwise controlling your basic deliberative thought process.
-so, if you have a thought process that is going through this planning process, weighing decisions, making plans, and trying to accomplishg goals, that's what i'm calling a deliberative thought process.
-so, the process that is optimizing that, for example, learning heuristics for the search, would be a reflective process.
-so, what reacts to the bugs and relearns the planning processes and does the sort of causal tracing.
-that's the high level kind of meta-congitive definition of reflection that i'm trying to focus on.
-there's two other places where reflection is used.
-one of which i'm going to continue to call reflection, but i'll usually note when it is this type.
-computational reflection is simply there's a lot of different types of computational reflection and i would point you to pattie maes work on that to understand it more.
-there's a procedural reflection, which involves a meta-circular evaluator which i haven't built, but i'm basically doing something similar in that I have an interpretter that will give you events as it interprets the program.
-its a bytecode interpretter and it is a compiled language, but i basically can do this tracing of a process as it runs creating events relatively efficiently.
-i'm referring to that as computational reflection because that's not a very high level idea.
-that's basically just as a process runs, you can see the events that are happening.  low level events, high level events, whatever.
-and those are all pretty much the foundation for the rest of the whole system, which we can then build causal tracing out of.
-which is a specific type of tracing that has to do with making decisions that are learned from the environment
-and this involves, i'll get into this, but it involves making hypotheses keeping track of how those hypotheses are supporting each of those pieces of knowledge and if that knowledge is then used for other decisions.
-so, i've gone into this a little bit.
-i don't need to go into this too much.
-the different between temporal learning and causal learning.
-basically, if you go back to previous time steps just because they happened before that's called temporal learning.
-there are a lot of those types of algorithms that currently exist.
-the causal learning hasn't been done too much, and so this would help a lot of the traditional types of learning systesm.
-right, and i've gone through the example where if the block was glued to the table and you did fail, you could go back to the decision that was created, so basically, debugging the decision that made that plan.
-so planning systems do need this information.
-planning systems don't currently keep track of this information.
-so, provenance and causal learning.
-so, every decision that is supported by a hypothesis, well, basically, every decision is supported by a hypothesis, so if we were to learn a category from the environment that would predict the effects of our actions, then the knowledge that is generated from that contains these references to the hypotheses that were used to create that decision.
-and so, if we do find a bug in the future, we can focus on those specific actions.
-and each of these will have specific types of debugging responses.
-depending on which actions they are referring to.
+Reflective learning algorithms have a temporal learning algorithm
+within each necessarily distinct layer of knowledge.  Reflective
+learning can take advantage of concurrent processors for each separate
+layer of activity.  Let $m$ be the number of reflective layers in a
+learning algorithm with each layer on a concurrent processor.  If
+there is a memory of actions and the state of the world for the
+previous $n$ time steps, a temporal learning algorithm spends $O(n)$
+time relearning the effects of the previous $n$ actions.  The
+reflective algorithm also spends $O(n)$ time but relearns the effects
+of $n*m$ actions, where $m$ is limited by memory and processors.
+Also, if $n$ is $1$, this problem reduces to $1$ learning opportunity
+for the temporal learning algorithm and $m$ learning opportunities for
+the reflective learning algorithm.
+{\mbox{\autoref{figure:learning_complexities}}} shows a comparison of the time
+and space complexities of temporal and reflective learning algorithms
+as well as the number of learning opportunities afforded by one
+failure.
+\begin{figure}
+\center
+\begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{3cm}}
+Learning Algorithm & Time   & Space    & One-shot Learning Opportunities \\
+\hline
+Temporal           & $O(n)$ & $O(n)$   & $n$   \\
+Reflective         & $O(n)$ & $O(n*m)$ & $n*m$ \\
+\end{tabular}
+\caption{Temporal and reflective learning complexities with one-shot learning opportunities.}
+\label{figure:learning_complexities}
+\end{figure}
 
-i'm talking a lot about hypotheses.
-i'm talking a lot about decisions.
+\section{Reflection}
+
+The term reflection is a commonly used word in computer science and
+AI.  The idea is extremely simple and is the focus of this thesis,
+but, because of its simplicity, it is a widely applicable idea.  In
+fact, \cite{maes:1988} distinguishes over 30 different types of
+\emph{computational reflection}, grounded in the computer science
+literature.  The type of computational reflection that I introduce in
+this dissertation is not included in Maes' overview, although the
+implementation of this model is based on many of the forms of
+computational reflection that Maes does describe, e.g. procedural
+reflection, type reflection, frame reflection, and others.  She does
+not mention the type of reflection that I am focused on in this thesis
+because it was not, at the time, commonly considered computational.
+The type of reflection that I have modelled is a psychological type of
+reflection, the ability to think about thinking in addition to the
+ground problem.  This psychological form of reflection is the focus of
+this thesis.
+
+In terms of this model, reflection is the ability to perceive, act,
+and plan mental activities.  A planning process is a type of mental
+activity, weighing decisions, making plans, and trying to accomplish
+goals.  A process that optimizes this planning activity by, for
+example, learning heuristics for the planning search, is an example of
+a reflective process.  In general, this layered reflective model
+learns in reaction to bugs and relearns the planning processes through
+dependency tracing for credit assignment.  This model is similar to
+current models of \emph{metacognition}, which I will discuss as
+related research.
+
+\section{Hypotheses and Decisions}
+
 let me just go through a simple example of what a decision is because this becomes very confusing very quickly if we don't ground that idea out.
 this dog looks hungry should i feed him?
 he may bite me.
@@ -558,7 +612,7 @@ we can have responses that are other processes that immediately begin running co
 
 My thesis is SALS, a computational simulation of a model of learning
 in multiple reflective layers.
-\autoref{figure:example_problem_domain} shows an example block
+{\mbox{\autoref{figure:example_problem_domain}}} shows an example block
 stacking problem domain.  I begin my explanation with a description of
 the example problem domain:
 \begin{quote}
@@ -612,16 +666,17 @@ opportunities from a single failure.
 \section{Document Overview}
 
 I begin with a non-technical description of the model in plain
-English.  At the end of \autoref{part:the_model}, I explain the
-modelling assumptions that I make in transitioning to the mathematical
-notation of \autoref{part:simulating_the_model}.  Using this notation,
-I explain how this model can be used to reduce the complexity of
-search algorithms.  In \autoref{part:the_implementation}, I give an
-explanation of how this simulation is automated on a concurrent
-computer, the thesis implementation, SALS, the substrate for
-accountable layered systems.  In conclusion, in
-\autoref{part:conclusion}, I discuss promising directions for future
-research in not only AI but also the other cognitive sciences.
+English.  At the end of {\mbox{\autoref{part:the_model}}}, I explain
+the modelling assumptions that I make in transitioning to the
+mathematical notation of {\mbox{\autoref{part:simulating_the_model}}}.
+Using this notation, I explain how this model can be used to reduce
+the complexity of search algorithms.  In
+{\mbox{\autoref{part:the_implementation}}}, I give an explanation of
+how this simulation is automated on a concurrent computer, the thesis
+implementation, SALS, the substrate for accountable layered systems.
+In conclusion, in {\mbox{\autoref{part:conclusion}}}, I discuss
+promising directions for future research in not only AI but also the
+other cognitive sciences.
 
 
 

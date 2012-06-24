@@ -23,7 +23,7 @@ phdthesis.pdf: \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
   chapters/related_models.tex \
-  chapters/introducing_simulation.tex \
+  chapters/the_simulation.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/introducing_implementation.tex \
@@ -39,6 +39,7 @@ phdthesis.pdf: \
   gfx/combinatorial_explosion_example.pdf \
   gfx/combinatorial_explosion_example_with_heuristics.pdf \
   gfx/dependency_traces.pdf \
+  gfx/tracing_bug_dependencies.pdf \
   gfx/communication_theory.pdf \
   gfx/concurrent_parallel_reflection_efficiency.pdf \
   gfx/difference_engine_feedback_control.pdf \

@@ -58,6 +58,7 @@ phdthesis.pdf: \
   gfx/learning_to_plan-four_step_cycle.pdf \
   gfx/mindmon-isis_world-screenshot-1.pdf \
   gfx/model-6.pdf \
+  gfx/simulation_example_state.pdf \
   gfx/multiple_agent_environment.pdf \
   gfx/objective_description.pdf \
   gfx/partially_observable.pdf \

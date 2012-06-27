@@ -1,0 +1,87 @@
+digraph G {
+  
+  // physical
+  node [fillcolor = white, color = "#000000", style = filled];
+  edge [color = "#000000"];
+  
+  object_1 [texlbl = "$\begin{matrix} \text{object $\omega$} \\ \text{(physical)} \end{matrix}$"];
+  property_1 [texlbl = "$\begin{matrix} \text{property $\sigma$} \\ \text{(physical)} \end{matrix}$"];
+  property_2 [texlbl = "$\begin{matrix} \text{property $\gamma$} \\ \text{(physical)} \end{matrix}$"];
+  
+  object_1_relation_2_property_2 [shape=box,style=filled,label="relation $\epsilon$",height=.1,width=.1];
+  object_1 -> object_1_relation_2_property_2 -> property_2;
+  
+  object_1_relation_1_property_1 [shape=box,style=filled,label="relation $\delta$",height=.1,width=.1] ;
+  object_1 -> object_1_relation_1_property_1 -> property_1;
+  
+  
+  // reflective
+  node [fillcolor = white, color = "#0000CC", style = filled];
+  edge [color = "#0000CC"];
+  I_deliberative [texlbl = "$\begin{matrix} \text{I} \\ \text{(reflective)} \end{matrix}$"];
+  
+  
+  I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="want",height=.1,width=.1] ;
+  I_deliberative -> I_want_object_1_relation_1_property_1 -> object_1_relation_1_property_1;
+  
+  I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="avoid",height=.1,width=.1] ;
+  I_deliberative -> I_avoid_object_1_relation_2_property_2 -> object_1_relation_2_property_2;
+  
+  
+  // reflective^2
+  node [fillcolor = white, color = "#008800", style = filled];
+  edge [color = "#008800"];
+  I_reflective [texlbl = "$\begin{matrix} \text{I} \\ \text{(reflective}^2\text{)} \end{matrix}$"];
+  
+  
+  I_focus_on_I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="focus-on",height=.1,width=.1] ;
+  I_reflective -> I_focus_on_I_want_object_1_relation_1_property_1 -> I_want_object_1_relation_1_property_1;
+  
+  I_ignore_I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="ignore",height=.1,width=.1] ;
+  I_reflective -> I_ignore_I_want_object_1_relation_1_property_1 -> I_want_object_1_relation_1_property_1;
+  
+  I_focus_on_I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="focus-on",height=.1,width=.1] ;
+  I_reflective -> I_focus_on_I_avoid_object_1_relation_2_property_2 -> I_avoid_object_1_relation_2_property_2;
+  
+  I_ignore_I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="ignore",height=.1,width=.1] ;
+  I_reflective -> I_ignore_I_avoid_object_1_relation_2_property_2 -> I_avoid_object_1_relation_2_property_2;
+  
+  
+  // self reflective
+  node [fillcolor = white, color = "#CC0000", style = filled];
+  edge [color = "#CC0000"];
+  I_self_reflective [texlbl = "$\begin{matrix} \text{I} \\ \text{(self reflective)} \end{matrix}$"];
+  
+  
+  I_would_focus_on_I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="would",height=.1,width=.1] ;
+  I_self_reflective -> I_would_focus_on_I_want_object_1_relation_1_property_1 -> I_focus_on_I_want_object_1_relation_1_property_1;
+  
+  I_would_not_focus_on_I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="would-not",height=.1,width=.1] ;
+  I_self_reflective -> I_would_not_focus_on_I_want_object_1_relation_1_property_1 -> I_focus_on_I_want_object_1_relation_1_property_1;
+  
+  I_would_focus_on_I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="would",height=.1,width=.1] ;
+  I_self_reflective -> I_would_focus_on_I_avoid_object_1_relation_2_property_2 -> I_focus_on_I_avoid_object_1_relation_2_property_2;
+  
+  I_would_not_focus_on_I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="would-not",height=.1,width=.1] ;
+  I_self_reflective -> I_would_not_focus_on_I_avoid_object_1_relation_2_property_2 -> I_focus_on_I_avoid_object_1_relation_2_property_2;
+  
+  
+  // self-other^2 reflection
+  node [fillcolor = white, color = "#CC00CC", style = filled];
+  edge [color = "#CC00CC"];
+  imprimer [texlbl = "$\begin{matrix} \text{imprimer} \\ \text{(self}^2\text{ reflective)} \end{matrix}$"]; 
+  
+  
+  imprimer_praise_I_would_focus_on_I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="praise",height=.1,width=.1] ;
+  imprimer -> imprimer_praise_I_would_focus_on_I_want_object_1_relation_1_property_1 -> I_would_focus_on_I_want_object_1_relation_1_property_1;
+  
+  imprimer_scold_I_would_not_focus_on_I_want_object_1_relation_1_property_1 [shape=box,style=filled,label="scold",height=.1,width=.1] ;
+  imprimer -> imprimer_scold_I_would_not_focus_on_I_want_object_1_relation_1_property_1 -> I_would_not_focus_on_I_want_object_1_relation_1_property_1;
+  
+  imprimer_praise_I_would_focus_on_I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="praise",height=.1,width=.1] ;
+  imprimer -> imprimer_praise_I_would_focus_on_I_avoid_object_1_relation_2_property_2 -> I_would_focus_on_I_avoid_object_1_relation_2_property_2;
+  
+  imprimer_scold_I_would_not_focus_on_I_avoid_object_1_relation_2_property_2 [shape=box,style=filled,label="scold",height=.1,width=.1] ;
+  imprimer -> imprimer_scold_I_would_not_focus_on_I_avoid_object_1_relation_2_property_2 -> I_would_not_focus_on_I_avoid_object_1_relation_2_property_2;
+  
+}

@@ -43,9 +43,9 @@ simulation model from being a model of those assumptions because only
 the symbolic result of those assumptions is available for the
 simulation of the activity of reflection.
 
-\section{Static Sets of Dynamic Activities}
+\section{Representing Dynamic Activities as a Set}
 
-\begin{figure}[bth]
+\begin{figure}
 \includegraphics[width=10cm]{gfx/blocks_world_simulation}
 \caption{An example for simulation.}
 \label{figure:blocks_world_simulation}
@@ -55,20 +55,19 @@ I will begin with one of the simplest mathematical models, a
 \emph{set} of symbols, to model of the activities in Duration.  I will
 first describe the simulation model as the mathematical set, $S$, the
 state.  Here is an example of a possible symbolization of the
-activities shown in \autoref{figure:blocks_world_simulation}:
+activities shown in {\mbox{\autoref{figure:blocks_world_simulation}}}:
 \begin{equation}
 \label{equation:example_initial_state}
 S =
   \left\{
     \begin{array}{l}
-      \text{{\tt Block-1-sitting-on-Table-1}}, \\
-      \text{{\tt Block-2-sitting-on-Table-1}}, \\
-      \text{{\tt Gripper-1-being-above-Table-1}}, \\
-      \text{{\tt Gripper-1-moving-left}}
+      \text{{\tt{Gripper-1}}}, \\
+      \text{{\tt{Block-1}}}, \\
+      \text{{\tt{Block-2}}}, \\
+      \text{{\tt{Table-1}}}
     \end{array}
   \right\}
 \end{equation}
-
 At any given point in the simulation, the state, $S$, is static, but
 the simulation can have different static states at different time
 steps, $n$, giving a number of static states, $S[n]$.  The simulation
@@ -104,6 +103,95 @@ simulation after $n$ actual steps of simulation activity:
 \label{equation:simulate_n_steps}
 S[n] = \text{\emph{simulate}}^n~S[0]
 \end{equation}
+
+\section{Representing Continuous Space as a Set of 3-Tuples}
+
+The activities in Duration are symbolized in the layer above, while
+these symbolic activities are in different actively ordered Spatial
+relationships, which can also be symbolized by the layer above.  I
+will use a 3-tuple to represent the activity of a Spatial relationship
+in the simulation.  Reconsidering the activities shown in
+{\mbox{\autoref{figure:blocks_world_simulation}}}, the state could be
+represented by the set of 3-tuples shown in
+{\mbox{\autoref{equation:example_stricly_ordered_set_initial_state}}}.
+\begin{equation}
+\label{equation:example_stricly_ordered_set_initial_state}
+S =
+  \left\{
+    \begin{array}{l}
+      (\text{\tt{Block-1}},   ~\text{\tt{sitting-on}},  ~\text{\tt{Table-1}}), \\
+      (\text{\tt{Block-2}},   ~\text{\tt{sitting-on}},  ~\text{\tt{Table-1}}), \\
+      (\text{\tt{Gripper-1}}, ~\text{\tt{being-above}}, ~\text{\tt{Table-1}}), \\
+      (\text{\tt{Gripper-1}}, ~\text{\tt{moving}},      ~\text{\tt{left}})
+    \end{array}
+  \right\}
+\end{equation}
+
+\section{Defining a Graph}
+
+A set of 3-tuples can be thought of as a graph with labelled nodes and
+edges.  Because the graph provides a clear notation for referring to
+types of Spatial arrangements of activities, the notation of
+{\mbox{\cite{messmer:1995}}} is used to define a labelled graph in
+{\mbox{Definition~\ref{definition:graph_first}}} and a labelled
+subgraph in {\mbox{Definition~\ref{definition:graph_last}}}.
+
+\begin{definition}
+\label{definition:graph_first}
+\emph{
+A graph $G$ is the 4-tuple $(V, ~e, ~\mu, ~\nu)$, where
+\begin{itemize}
+\item $V$ is the set of vertices,
+\item $E ~{\subseteq}~ V ~{\times}~ V$ is the set of edges,
+\item $\mu : V \mapsto \ell_V$ is a function assigning labels to the vertices,
+\item $\nu : E \mapsto \ell_E$ is a function assigning labels to the edges.
+\end{itemize}
+}\end{definition} \noindent In this definition, the edges are
+directed, i.e. there is an edge from $v_1$ to $v_2$ if
+$(v_1,v_2){\in}E$.  The empty graph, i.e. the graph with an empty set
+of vertices will be denoted by $\emptyset$.
+
+\begin{definition}
+\label{definition:graph_last}
+\emph{
+Given a graph $G = (V, e, \mu, \nu)$, a \emph{subgraph} of $G$ is a
+graph $G_s = (V_s, e_s, \mu_s, \nu_s)$ such that
+\begin{enumerate}
+\item $V_s {\subseteq} V$
+\item $E_s = E \cap (V_s {\times} V_s)$
+\item $\mu_s$ and $\nu_s$ are the restrictions of $\mu$ and $\nu$ respectively, i.e.
+\begin{align*}
+\mu_s(v) &= {\left\{
+               \begin{array}{ll}
+                 \mu(v)           & \text{if }v {\in} V_s \\
+                 \text{undefined} & \text{otherwise}
+               \end{array}
+             \right.} \\
+\nu_s(e) &= {\left\{
+               \begin{array}{ll}
+                 \nu(e)           & \text{if }e {\in} E_s \\
+                 \text{undefined} & \text{otherwise}
+               \end{array}
+             \right.}
+\end{align*}
+\end{enumerate}
+}\end{definition} \noindent From this definition it is easy to see
+that, given a graph $G$, any subset of its vertices each uniquely
+defines a subgraph of $G$.  The notation $G_s ~{\subseteq}~ G$ is used
+to indicate that $G_s$ is a subgraph of $G$.
+
+\section{Representing Continuous Space as a Graph}
+
+\begin{figure}
+\includegraphics[width=10cm]{gfx/simulation_example_state}
+\caption{A graph representation of a state space.}
+\label{figure:simulation_example_state}
+\end{figure}
+
+%\begin{definition}\emph{
+
+%}\end{definition}
+
 
 %\section{The Mistake of Including Dynamic Activity in the Simulation Model}
 
@@ -267,23 +355,25 @@ Equation~\ref{equation:existence_of_symbol}:
 \label{equation:no_symbols_in_layer_zero_last}
 \end{align}
 
-\section{Simulating Space}
+\section{Representing Space}
 
 The activity of maintaining a Spatial relationship, $r_i$, occurs in
 the $\text{reflective}^i$ layer.  Spatial relationships are able to
 arrange any symbol* that exists in the layer
 above, the set $X_{i+1}^*$.
 Equations~\ref{equation:define_space_activity_first}
-through~\ref{equation:define_space_activity_right} define how symbols
+through~\ref{equation:define_space_activity_that} define how symbols
 are Spatially arranged, $r_i$, from the layer below:
 \begin{align}
 \label{equation:define_space_activity_first}
-              r_i &= \text{\emph{Spatial relationship activity in} reflective}^i\text{\emph{ layer}} \\
-              r_i &\in L_i \\
-\label{equation:define_space_activity_left}
- \text{left}(r_i) &\in X_{i+1}^* \\
-\label{equation:define_space_activity_right}
-\text{right}(r_i) &\in X_{i+1}^*
+                      r_i &= \text{\emph{Spatial relationship activity in} reflective}^i\text{\emph{ layer}} \\
+                      r_i &\in L_i \\
+\label{equation:define_space_activity_this}
+         \text{this}(r_i) &\in X_{i+1}^* \\
+\label{equation:define_space_activity_relation_type}
+\text{relation-type}(r_i) &\in X_{i+1}^* \\
+\label{equation:define_space_activity_that}
+         \text{that}(r_i) &\in X_{i+1}^*
 \end{align}
 Equations~\ref{equation:define_space_activity_left}
 and~\ref{equation:define_space_activity_right} define the {\tt left}
@@ -305,22 +395,22 @@ Lisp programming language.  So, the simulated relationship, $r_i$,
 allows for representing any relational computer science object in this
 sense.
 
-%\section{Simulating the Transition}
-%
-%Equations~\ref{equation:define_transition_activity_first}
-%through~\ref{equation:define_transition_activity_future} define a
-%transition, $t_i$:
-%\begin{align}
-%\label{equation:define_transition_activity_first}
-%               t_i &= \text{\emph{Transition activity in the} reflective}^i\text{\emph{ layer}} \\
-%               t_i &\in L_i \\
-%\label{equation:define_transition_activity_past}
-%  \text{past}(t_i, n) &\in \mathcal{X}_{i+1}^*[n] \\
-%\label{equation:define_transition_activity_future}
-%\text{future}(t_i, n) &\in \mathcal{X}_{i+1}^*[n]
-%\end{align}
+\section{Representing the Transition}
 
-\section{Simulating the Hypothesis}
+Equations~\ref{equation:define_transition_activity_first}
+through~\ref{equation:define_transition_activity_future} define a
+transition, $t_i$:
+\begin{align}
+\label{equation:define_transition_activity_first}
+               t_i &= \text{\emph{Transition activity in the} reflective}^i\text{\emph{ layer}} \\
+               t_i &\in L_i \\
+\label{equation:define_transition_activity_past}
+  \text{past}(t_i, n) &\in X_{i+1}^* \\
+\label{equation:define_transition_activity_future}
+\text{future}(t_i, n) &\in X_{i+1}^*
+\end{align}
+
+\section{Representing the Hypothesis}
 
 Equations~\ref{equation:define_hypothesis_activity_first}
 through~\ref{equation:define_hypothesis_activity_result} define a
@@ -337,19 +427,55 @@ hypothesis, $h_i$:
    \text{result}(h_i) &\in X_{i+1}^*
 \end{align}
 
+\section{Representing Existence and Non-existence}
+
+When the $\text{reflective}^1$ layer symbolizes physical activities, a
+causal hypothesis can be created in the $\text{reflective}^2$ layer
+that puts a reference to the ``non-existence'' of the symbol activity
+in the past slot and the ``existence'' of the symbol in the future
+slot.  The present cause can be any of the current activities in
+either the $\text{reflective}^0$ or $\text{reflective}^1$ layers.
+{\mbox{Equations~\ref{equation:define_creation_activity_first}}}
+{\mbox{through~\ref{equation:define_creation_activity_existence}}}
+show a representation for the simulation of the creation activity that
+creates the existence of an activity in the layer below from the
+``non-existence'' of the activity.
+\begin{align}
+\label{equation:define_creation_activity_first}
+                      c_i &= \text{\emph{Creation activity in the} reflective}^i\text{\emph{ layer}} \\
+                      c_i &\in L_i \\
+\label{equation:define_creation_activity_cause}
+        \text{cause}(c_i) &\in X_{i+1}^* \\
+\label{equation:define_creation_activity_non_existence}
+\text{non-existence}(c_i) &\in X_{i+1}^* \\
+\label{equation:define_creation_activity_existence}
+    \text{existence}(c_i) &\in X_{i+1}^*
+\end{align}
+
+\section{Representing Knowledge of Symbolic Existence}
+
+
+\section{Simulating Goals}
+
+Activities in Duration can be symbolized as goals.  The symbolization
+of a goal in the $\text{reflective}^i$ layer can be simulated by the
+symbolic simulated activity, $g_i$.
+
+\section{leftovers...}
+
 \section{Simulating the Transframe}
 
 Equations~\ref{equation:define_transframe_activity_first}
 through~\ref{equation:define_transframe_activity_remove} define a
-transframe, $t_i$:
+transframe, $\text{trans}_i$:
 \begin{align}
 \label{equation:define_transframe_activity_first}
-                  t_i &= \text{\emph{Transframe activity in the} reflective}^i\text{\emph{ layer}} \\
-                  t_i &\in L_i \\
+                  \text{trans}_i &= \text{\emph{Transframe activity in the} reflective}^i\text{\emph{ layer}} \\
+                  \text{trans}_i &\in L_i \\
 \label{equation:define_transframe_activity_add}
-   \text{add}(t_i) &\in X_{i+1}^* \\
+   \text{add}(\text{trans}_i) &\in X_{i+1}^* \\
 \label{equation:define_transframe_activity_remove}
-\text{remove}(t_i) &\in X_{i+1}^*
+\text{remove}(\text{trans}_i) &\in X_{i+1}^*
 \end{align}
 
 %\section{Simulating the Plan}

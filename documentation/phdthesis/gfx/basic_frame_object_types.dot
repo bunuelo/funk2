@@ -3,26 +3,39 @@ digraph G {
   node [fillcolor = white, color = "#000000", style = filled];
   edge [color = "#000000"];
   
-  gripper_1 [texlbl = "{\tt{Gripper-1}}"];
-  block_1   [texlbl = "{\tt{Block-1}}"];
-  block_2   [texlbl = "{\tt{Block-2}}"];
-  table_1   [texlbl = "{\tt{Table-1}}"];
-  left      [texlbl = "{\tt{left}}"];
+  node_type     [texlbl = "$\text{\tt{type}}^*$"];
+  node_symbol   [texlbl = "$\text{\tt{symbol}}^*$"];
+  node_goal     [texlbl = "$\text{\tt{goal}}^*$"];
+  node_percept  [texlbl = "$\text{\tt{percept}}^*$"];
+  node_resource [texlbl = "$\text{\tt{resource}}^*$"];
   
-  gripper_1_being_above_table_1 [shape=box,style=filled,label="{\tt{being-above}}"];
-  gripper_1 -> gripper_1_being_above_table_1 [arrowhead=none];
-  gripper_1_being_above_table_1 -> table_1;
+  node_symbol_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_symbol -> node_symbol_type_node_type [arrowhead=none];
+  node_symbol_type_node_type -> node_type;
   
-  gripper_1_moving_left [shape=box,style=filled,label="{\tt{moving}}"];
-  gripper_1 -> gripper_1_moving_left [arrowhead=none];
-  gripper_1_moving_left -> left;
+  node_goal_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_goal -> node_goal_type_node_type [arrowhead=none];
+  node_goal_type_node_type -> node_type;
   
-  block_1_sitting_on_table_1 [shape=box,style=filled,label="{\tt{sitting-on}}"];
-  block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
-  block_1_sitting_on_table_1 -> table_1;
+  node_goal_parent_node_symbol [shape=box,style=filled,label="$\text{\tt{parent}}^*$"];
+  node_goal -> node_goal_parent_node_symbol [arrowhead=none];
+  node_goal_parent_node_symbol -> node_symbol;
   
-  block_2_sitting_on_table_1 [shape=box,style=filled,label="{\tt{sitting-on}}"];
-  block_2 -> block_2_sitting_on_table_1 [arrowhead=none];
-  block_2_sitting_on_table_1 -> table_1;
+  node_percept_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_percept -> node_percept_type_node_type [arrowhead=none];
+  node_percept_type_node_type -> node_type;
+  
+  node_percept_parent_node_symbol [shape=box,style=filled,label="$\text{\tt{parent}}^*$"];
+  node_percept -> node_percept_parent_node_symbol [arrowhead=none];
+  node_percept_parent_node_symbol -> node_symbol;
+  
+  node_resource_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_resource -> node_resource_type_node_type [arrowhead=none];
+  node_resource_type_node_type -> node_type;
+  
+  node_resource_parent_node_symbol [shape=box,style=filled,label="$\text{\tt{parent}}^*$"];
+  node_resource -> node_resource_parent_node_symbol [arrowhead=none];
+  node_resource_parent_node_symbol -> node_symbol;
+  
   
 }

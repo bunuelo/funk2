@@ -59,6 +59,7 @@ phdthesis.pdf: \
   gfx/mindmon-isis_world-screenshot-1.pdf \
   gfx/model-6.pdf \
   gfx/simulation_example_state.pdf \
+  gfx/simulation_reflective_1_example_state.pdf \
   gfx/simulation_example_state_graph.pdf \
   gfx/basic_frame_object_types.pdf \
   gfx/multiple_agent_environment.pdf \

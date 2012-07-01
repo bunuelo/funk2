@@ -211,42 +211,164 @@ through a given edge label, $\ell_e$, as defined in
 v_1.\ell_e = \{v_2 ~:~ (v_1, v_2) \in S_E \wedge \ell_e \in \mu[(v_1, v_2)]\}
 \end{equation}
 
-\section{Frame Object Types}
+\section{Representing Reflective Thinking Activity}
 
-In order to allow for object-oriented types of frames in the
-simulation state, I will use the edge label ``{\tt{type}}''.  For
-example, {\mbox{\autoref{equation:frame_type_symbol}}} states that
-$x^*$ is a symbolic type of activity:
+Reflective thinking exists as activities in Duration alongside the
+physical activities that have just been described.  I will use now
+introduce the first symbolic reference to reflective thinking to the
+model.  Note that I have not introduced any symbolic physical activity
+to the model.  Having no symbolic references in the physical layer of
+the simulation is important for keeping the representation for
+physical activity as simply any labelled graph, a natural form for
+object-oriented representations common to many computer programs as
+well as a very general theoretical form for thinking about
+high-dimensional spaces of sensor data.
+
+I will use the symbol {\tt reflective-1} to refer to the activity of
+the first-order reflective layer.  This symbol is grounded in the
+activity in Duration that currently actually exists.  This symbol does
+not refer the simulated activities in Duration in the simulation
+model.  This symbol is grounded in the understanding of the model of
+mind.  The reflective activity is primarily focusing on the rest of
+the simulation state, everything that existed before the
+{\tt{reflective-1}} node was added to the simulation state graph.
+
+{\mbox{\autoref{figure:simulation_reflective_1_example_state}}}
+
+\begin{figure}
+\includegraphics[width=10cm]{gfx/simulation_reflective_1_example_state}
+\caption{The {\tt reflective-1} activity focused on physical activity.}
+\label{figure:simulation_reflective_1_example_state}
+\end{figure}
+
+
+\section{Representing Static Frame Object Types}
+
+In order to allow for static object-oriented representations for the
+reflective thinking layers to manipulate, types of frames in the
+simulation state, I will use the static edge label
+``$\text{\tt{type}}^*$''.  For example,
+{\mbox{\autoref{equation:frame_type_symbol}}} states that $x^*$ is a
+symbolic type of activity:
 \begin{equation}
 \label{equation:frame_type_symbol}
-x^*.\text{\tt{type}} = \{\text{\tt{symbol}}\}
+x^*.\text{\tt{type}}^* = \{\text{\tt{symbol}}^*\}
 \end{equation}
-Because there are a number of different frame object types that are
-created by the model, the simulation state includes a representation
-for a simple ontology for these frame types.  I use the edge label
-``{\tt{parent}}'' to represent the inheritance structure of a frame
-type.  For example, {\mbox{\autoref{equation:goal_parent_symbol}}}
-defines that the object type ``{\tt{goal}}'' is a type of
-``{\tt{symbol}}'' frame object:
+Because there are a number of different static frame object types that
+are created and manipulated by the model, the simulation state
+includes a representation for a simple ontology for these frame types.
+I use the edge label ``$\text{\tt{parent}}^*$'' to represent the
+inheritance structure of a frame type.  For example,
+{\mbox{\autoref{equation:goal_parent_symbol}}} defines that the object
+type ``$\text{\tt{goal}}^*$'' is a type of ``$\text{\tt{symbol}}^*$''
+frame object:
 \begin{equation}
 \label{equation:goal_parent_symbol}
-  \text{\tt{goal}}.\text{\tt{parent}} = \{\text{\tt{symbol}}\}
+  \text{\tt{goal}}^*.\text{\tt{parent}}^* = \{\text{\tt{symbol}}^*\}
 \end{equation}
 Further, types of objects are explicitly represented as type objects
 as in {\mbox{\autoref{equation:frame_type_type}}}.
 \begin{align}
 \label{equation:frame_type_type}
-  \text{\tt{symbol}}.\text{\tt{type}} &= \{\text{\tt{type}}\} \\
-    \text{\tt{goal}}.\text{\tt{type}} &= \{\text{\tt{type}}\}
+  \text{\tt{symbol}}^*.\text{\tt{type}}^* &= \{\text{\tt{type}}^*\} \\
+    \text{\tt{goal}}^*.\text{\tt{type}}^* &= \{\text{\tt{type}}^*\}
 \end{align}
 The inheritance structure of some basic frame object types in the
 simulation model are shown in
 {\mbox{\autoref{figure:basic_frame_object_types}}}.
 \begin{figure}
 \includegraphics[width=10cm]{gfx/basic_frame_object_types}
-\caption{Basic frame object types.}
+\caption{Basic static frame object types.}
 \label{figure:basic_frame_object_types}
 \end{figure}
+
+\section{Representing Grounded Symbolic Referents}
+
+Given the example simulation state shown in
+{\mbox{\autoref{figure:simulation_example_state}}}, symbolic referents
+can be thought of as subgraphs of this given representation of the
+dynamic structure.  These subgraph referents may be said to exist or
+not exist in the state graph, $S$, of the simulation.  Because the
+simulation state graph, $S$, represents everything that actually
+exists, these symbolic referent subgraphs cannot be part of this
+structure.  For example, the static symbol,
+$\text{\tt{Gripper-1-being-above-Block-1}}^*$, may refer to the
+following subgraph, $G$, which may or may not exist in the simulation
+state graph, $S$:
+\begin{align}
+       G &= (G_V, ~G_E, ~G_\mu) \\
+     G_V &= {\left\{
+               \begin{array}{l}
+                 \text{\tt{Gripper-1}}, \\
+                 \text{\tt{Block-1}}
+               \end{array}
+             \right\}} \\
+     G_E &= {\left\{
+               \begin{array}{l}
+                 (\text{\tt{Gripper-1}}, \text{\tt{Block-1}})
+               \end{array}
+             \right\}} \\
+G_\mu(\overrightarrow{e}) &=
+  {\left\{
+     \begin{array}{ll}
+       \{\text{\tt{being-above}}\} & \text{if }\overrightarrow{e} = (\text{\tt{Gripper-1}}, \text{\tt{Block-1}}) \\
+       \text{undefined} & \text{otherwise}
+     \end{array}
+   \right.}
+\end{align}
+
+\begin{align}
+     \text{\tt{graph}}.\text{\tt{type}} &= \text{\tt{type}} \\
+\text{\tt{graph-edge}}.\text{\tt{type}} &= \text{\tt{type}}
+\end{align}
+
+\begin{align}
+  e.\text{\tt{type}} &= \{\text{\tt{graph-edge}}\} \\
+  e.\text{\tt{tail}} &= \{\text{\tt{Gripper-1}}\} \\
+  e.\text{\tt{head}} &= \{\text{\tt{Block-1}}\} \\
+ e.\text{\tt{label}} &= \{\text{\tt{being-above}}\} \\
+  G.\text{\tt{type}} &= \{\text{\tt{graph}}\} \\
+  G.\text{\tt{node}} &= \{\text{\tt{Gripper-1}}, \text{\tt{Block-1}}\} \\
+  G.\text{\tt{edge}} &= \{e\}
+\end{align}
+
+\section{The Problem of Non-existent Symbolic Referents}
+
+A symbol is a reference to the dynamic activities in Duration that
+actually exist.  The static symbol is said to be perceived when its
+referent actively exists.  The dynamic referent is necessarily
+separate from the static symbol, even though both positively exist as
+dynamic activities.  The static symbol can be arranged in static
+Spatial orders by the reflective thinking layers.  The fact that the
+referent for a symbol exists in Duration, means that the symbol is
+currently actively perceived in Duration.  Because the state, $S$, of
+the simulation represents all dynamic activity in Duration that
+exists, the referential structure of an unperceived symbol cannot be
+explicitly represented in this state.  The simulation model must then
+have an absolutely contradictory component: the state of those things
+that do not exist.
+
+\section{Representing Simultaneity and Transition}
+
+Once some basic objects, such as $\text{\tt{goal}}^*$,
+$\text{\tt{percept}}^*$, and $\text{\tt{resource}}^*$, have been
+defined, simultaneities can be represented as objects that refer to a
+collection of these basic objects that exist simultaneously.
+\begin{equation}
+\text{\tt{simultaneity}}^*.\text{\tt{type}}^* = \{\text{\tt{type}}^*\} \\
+\end{equation}
+\begin{align}
+    x^*.\text{\tt{type}}^* &= \{\text{\tt{simultaneity}}^*\} \\
+x^*.\text{\tt{contains}}^* &=
+  \left\{
+    \begin{array}{l}
+      \text{\tt{Block-1-sitting-on-Table-1}}^*, \\
+      \text{\tt{Block-2-sitting-on-Table-1}}^*, \\
+      \text{\tt{Gripper-1-being-above-Table-1}}^*, \\
+      \text{\tt{Gripper-1-moving-left}}^*
+    \end{array}
+  \right\}
+\end{align}
 
 \section{Simulated Existence}
 

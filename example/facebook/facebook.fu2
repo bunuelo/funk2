@@ -21,11 +21,12 @@
 					uid
 					webpage
 					name
-					[favorite_musicians `undefined]
-					[favorite_books     `undefined]
-					[favorite_movies    `undefined]
-					[favorite_tv_shows  `undefined]
-					[friend_uids        `undefined]]
+					[favorite_musicians  `undefined]
+					[favorite_books      `undefined]
+					[favorite_movies     `undefined]
+					[favorite_tv_shows   `undefined]
+					[favorite_activities `undefined]
+					[friend_uids         `undefined]]
   [new [initial-facebook initial-uid]
        [= facebook initial-facebook]
        [= uid      initial-uid]
@@ -111,6 +112,18 @@
 					[get [car [string-split str '"']] as-symbol]]
 				  [cdr [string-split webpage_favorites_tv_shows 'title="']]]]]]
   favorite_tv_shows]
+
+[deftypefunk facebook_user_profile get webpage_favorites_activities []
+  [car [string-split [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Activities</div>']]
+		     '<div class="labelContainer">Other</div>']]]
+
+[deftypefunk facebook_user_profile get favorite_activities []
+  [if [eq `undefined favorite_activities]
+      [let [[webpage_favorites_activities [get this webpage_favorites_activities]]]
+	[= favorite_activities [mapcar [funk [str]
+					[get [car [string-split str '"']] as-symbol]]
+				  [cdr [string-split webpage_favorites_activities 'title="']]]]]]
+  favorite_activities]
 
 
 

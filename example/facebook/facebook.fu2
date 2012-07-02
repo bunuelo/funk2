@@ -51,9 +51,9 @@
 [deftypefunk facebook_user_profile get name []
   [if [null name]
       [let [[webpage [get this webpage]]]
-	[= name [have [car [string-split [cadr [string-split webpage '<title>']]
-					 '</title>']]
-		      replace_all ' | Facebook' '']]]]
+	[= name [get [have [car [string-split [cadr [string-split webpage '<title>']]
+					      '</title>']]
+			   replace_all ' | Facebook' ''] as-symbol]]]]
   name]
 
 [deftypefunk facebook_user_profile get webpage_favorites []

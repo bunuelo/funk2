@@ -81,7 +81,7 @@
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']
   [let [[facebook [new facebook]]]
-    [let [[user_profile_1 [new facebook_user_profile facebook 'people/Steve-Johnson/559579148']]]
+    [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]]
       [terminal_format standard-terminal '\nfacebook sample user profile created.']
       
       user_profile_1

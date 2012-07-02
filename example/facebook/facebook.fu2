@@ -26,6 +26,7 @@
 					[favorite_movies     `undefined]
 					[favorite_tv_shows   `undefined]
 					[favorite_activities `undefined]
+					[favorite_others     `undefined]
 					[friend_uids         `undefined]]
   [new [initial-facebook initial-uid]
        [= facebook initial-facebook]
@@ -124,6 +125,17 @@
 					[get [car [string-split str '"']] as-symbol]]
 				  [cdr [string-split webpage_favorites_activities 'title="']]]]]]
   favorite_activities]
+
+[deftypefunk facebook_user_profile get webpage_favorites_others []
+  [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Other</div>']]]
+
+[deftypefunk facebook_user_profile get favorite_others []
+  [if [eq `undefined favorite_others]
+      [let [[webpage_favorites_others [get this webpage_favorites_others]]]
+	[= favorite_others [mapcar [funk [str]
+					[get [car [string-split str '"']] as-symbol]]
+				  [cdr [string-split webpage_favorites_others 'title="']]]]]]
+  favorite_others]
 
 
 

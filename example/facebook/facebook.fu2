@@ -84,5 +84,7 @@
     [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]]
       [terminal_format standard-terminal '\nfacebook sample user profile created.']
       
-      user_profile_1
-      ]]]
+      [globalize facebook       facebook]
+      [globalize user_profile_1 user_profile_1]
+      
+      nil]]]

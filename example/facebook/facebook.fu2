@@ -50,7 +50,7 @@
 
 [deftypefunk facebook_user_profile execute download_profile_webpage []
   [let [[temp_filename [get facebook temp_filename]]]
-    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
+    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
 
 [deftypefunk facebook_user_profile get webpage []
   [if [null webpage]
@@ -146,12 +146,12 @@
 
 
 
-[deframe facebook [frame] [url local_directory user_uids profile_uid_hash]
+[deframe facebook [frame] [[url             'http://facebook.com/']
+			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
+			   [local_directory '/home/neptune-unencrypted/Desktop/facebook/']
+			   profile_uid_hash]
   [new []
-       [= url              'http://facebook.com/']
-       [= local_directory  '/home/neptune-unencrypted/Desktop/facebook/']
        [= profile_uid_hash [new ptypehash]]
-       [= user_uids        nil]
        
        [system [string-concat 'mkdir -p ' local_directory]]
        [system [string-concat 'mkdir -p ' [get this profile_directory]]]

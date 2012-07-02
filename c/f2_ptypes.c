@@ -28,7 +28,7 @@ void print_cmutex_error(int retval) {
   case EINVAL: error(nil, "error unlocking ptype_cmutex: cmutex is not initialized.");              break;
   case EFAULT: error(nil, "error unlocking ptype_cmutex: cmutex is an invalid pointer.");           break;
   case EPERM:  error(nil, "error unlocking ptype_cmutex: the calling thread does not own cmutex."); break;
-  default:     error(nil, "error unlocking ptype_cmutex: unknown error.");                         break;
+  default:     error(nil, "error unlocking ptype_cmutex: unknown error.");                          break;
   }
 }
 

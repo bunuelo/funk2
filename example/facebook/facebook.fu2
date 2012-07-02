@@ -17,7 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe facebook_user_profile [frame] [facebook uid webpage name friend_urls]
+[deframe facebook_user_profile [frame] [facebook
+					uid
+					webpage
+					name
+					[favorite_musicians `undefined]
+					[friend_uids        `undefined]]
   [new [initial-facebook initial-uid]
        [= facebook initial-facebook]
        [= uid      initial-uid]
@@ -44,10 +49,12 @@
   webpage]
 
 [deftypefunk facebook_user_profile get name []
-  [let [[webpage [get this webpage]]]
-    [have [car [string-split [cadr [string-split webpage '<title>']]
-			     '</title>']]
-	  replace_all ' | Facebook' '']]]
+  [if [null name]
+      [let [[webpage [get this webpage]]]
+	[= name [have [car [string-split [cadr [string-split webpage '<title>']]
+					 '</title>']]
+		      replace_all ' | Facebook' '']]]]
+  name]
 
 [deftypefunk facebook_user_profile get webpage_favorites []
   [let [[webpage [get this webpage]]]
@@ -57,11 +64,13 @@
   [car [string-split [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Music</div>']]
 		     '<div class="labelContainer">Books</div>']]]
 
-[deftypefunk facebook_user_profile get favorite_music []
-  [let [[webpage_favorites_music [get this webpage_favorites_music]]]
-    [mapcar [funk [str]
-		  [car [string-split str '"']]]
-	    [cdr [string-split webpage_favorites_music 'title="']]]]]
+[deftypefunk facebook_user_profile get favorite_musicians []
+  [if [eq `undefined favorite_musicians]
+      [let [[webpage_favorites_music [get this webpage_favorites_music]]]
+	[= favorite_musicians [mapcar [funk [str]
+					    [get [car [string-split str '"']] as-symbol]]
+				      [cdr [string-split webpage_favorites_music 'title="']]]]]]
+  favorite_musicians]
 
 
 

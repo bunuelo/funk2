@@ -34,7 +34,7 @@
 
 [deftypefunk facebook_user_profile execute download_profile_webpage []
   [let [[temp_filename [get facebook temp_filename]]]
-    [system 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' suburl]]]
+    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' suburl]]]]
 
 [deframe facebook [frame] [url local_directory user_urls profile_url_hash]
   [new []
@@ -62,8 +62,14 @@
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
-	
-	[print dirs]]]]]
+	[let [[filtered_dirs nil]]
+	  [let [[profile_directory [get this profile_directory]]]
+	    [mapc [funk [dir]
+			[if [not [equals dir '']]
+			    [let [[subdir [have dir replace_all profile_directory '']]]
+			      [= filtered_dirs [cons subdir filtered_dirs]]]]]
+		  dirs]]
+	  [print filtered_dirs]]]]]]
 
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']

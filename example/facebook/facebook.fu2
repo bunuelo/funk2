@@ -19,7 +19,7 @@
 
 [deframe facebook_user_profile [frame] [suburl name friend_urls]]
 
-[deframe facebook [frame] [url local_directory user_urls]
+[deframe facebook [frame] [url local_directory user_urls profiles]
   [new []
        [= url             'http://facebook.com/']
        [= local_directory '/home/neptune-unencrypted/Desktop/facebook/']
@@ -27,12 +27,9 @@
        
        [system [string-concat 'mkdir -p ' local_directory]]
        [system [string-concat 'mkdir -p ' [get this profile_directory]]]
-       [let [[temp_filename [get this temp_filename]]]
-	 [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' temp_filename]]
-	 [let [[dirstr [string-load temp_filename]]]
-	   [system [string-concat 'rm -f ' temp_filename]]
-	   [let [[dirs [string-split dirstr '\n']]]
-	     [print dirs]]]]
+       
+       [have this load_profiles]
+       
        nil]]
 
 [deftypefunk facebook get profile_directory []
@@ -41,7 +38,15 @@
 [deftypefunk facebook get temp_filename []
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
 
-[deftypefunk facebook 
+[deftypefunk facebook execute load_profiles []
+  [let [[temp_filename [get this temp_filename]]]
+    [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' temp_filename]]
+    [let [[dirstr [string-load temp_filename]]]
+      [system [string-concat 'rm -f ' temp_filename]]
+      [let [[dirs [string-split dirstr '\n']]]
+	
+	[print dirs]]]]]
+
 
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']

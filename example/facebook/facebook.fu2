@@ -17,9 +17,20 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deframe facebook_user_profile [frame] [suburl name friend_urls]]
+
+[deframe facebook [frame] [url local_directory user_urls]
+  [new []
+       [= url             'http://facebook.com/']
+       [= local_directory '/home/neptune-unencrypted/Desktop/facebook/']
+       [= user_urls       nil]
+       
+       nil]]
+
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']
-  
-  
-  
-  nil]
+  [let [[facebook [new facebook]]]
+    [terminal_format standard-terminal '\nfacebook object created.']
+    
+    facebook
+    ]]

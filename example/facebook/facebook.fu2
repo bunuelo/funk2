@@ -17,6 +17,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defunk directory_string-as-facebook_url_string [this]
+  [have this replace_all '__dirslash__' '/']]
+
+[defunk facebook_url_string-as-directory_string [this]
+  [have this replace_all '/' '__dirslash__']]
+
 [deframe facebook_user_profile [frame] [facebook
 					uid
 					webpage
@@ -44,7 +50,7 @@
 
 [deftypefunk facebook_user_profile execute download_profile_webpage []
   [let [[temp_filename [get facebook temp_filename]]]
-    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
+    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' [directory_string-as-facebook_url_string [get uid as-string]]]]]]
 
 [deftypefunk facebook_user_profile get webpage []
   [if [null webpage]
@@ -116,7 +122,7 @@
 
 [deftypefunk facebook_user_profile get webpage_favorites_activities []
   [car [string-split [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Activities</div>']]
-		     '<div class="labelContainer">Other</div>']]]
+		     '<th class="label">Other</th>']]]
 
 [deftypefunk facebook_user_profile get favorite_activities []
   [if [eq `undefined favorite_activities]
@@ -127,14 +133,15 @@
   favorite_activities]
 
 [deftypefunk facebook_user_profile get webpage_favorites_others []
-  [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Other</div>']]]
+  [cadr [string-split [get this webpage_favorites] '<th class="label">Other</th>']]]
 
 [deftypefunk facebook_user_profile get favorite_others []
   [if [eq `undefined favorite_others]
       [let [[webpage_favorites_others [get this webpage_favorites_others]]]
 	[= favorite_others [mapcar [funk [str]
-					[get [car [string-split str '"']] as-symbol]]
-				  [cdr [string-split webpage_favorites_others 'title="']]]]]]
+					 [car [string-split [cadr [string-split str '">']] '</a>']]]
+				   [cdr [string-split [cadr [string-split webpage_favorites_others '<span class="visible">']]
+						      '<a href="']]]]]]
   favorite_others]
 
 
@@ -161,7 +168,7 @@
 
 [deftypefunk facebook execute load_profiles []
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'ls -1d ' [get this profile_directory] '*/*/* > ' temp_filename]]
+    [system [string-concat 'ls -1d ' [get this profile_directory] '* > ' temp_filename]]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
@@ -169,7 +176,7 @@
 	  [mapc [funk [dir]
 		      [if [not [equals dir '']]
 			  [let [[subdir [have dir replace_all profile_directory '']]]
-			    [let [[uid [get subdir as-symbol]]]
+			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
 			      [have profile_uid_hash add uid [new facebook_user_profile this uid]]]]]]
 		dirs]]
 	]]]]
@@ -177,10 +184,13 @@
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']
   [let [[facebook [new facebook]]]
-    [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]]
+    [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]
+	  [user_profile_2 [new facebook_user_profile facebook `steve.johnson.1420354]]]
+      
       [terminal_format standard-terminal '\nfacebook sample user profile created.']
       
       [globalize facebook       facebook]
       [globalize user_profile_1 user_profile_1]
+      [globalize user_profile_2 user_profile_2]
       
       nil]]]

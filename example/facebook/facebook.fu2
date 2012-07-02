@@ -27,7 +27,14 @@
        
        [system [string-concat 'mkdir -p ' local_directory]]
        [system [string-concat 'mkdir -p ' [get this profile_directory]]]
-       [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' [get this temp_filename]]]
+       [let [[temp_filename [get this temp_filename]]]
+	 [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' temp_filename]]
+	 [let [[dirstr [string-load temp_filename]]]
+	   [system [string-concat 'rm -f ' temp_filename]]
+	   [terminal_format standard-terminal
+			    '\n*** profile suburls begin ***\n'
+			    dirstr
+			    '\n*** profile suburls end ***\n']]]
        
        nil]]
 
@@ -35,7 +42,9 @@
   [string-concat local_directory 'profile/']]
 
 [deftypefunk facebook get temp_filename []
-  '/tmp/facebook.tmp']
+  [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
+
+[deftypefunk facebook 
 
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']

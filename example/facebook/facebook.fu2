@@ -34,7 +34,8 @@
 					[favorite_tv_shows   `undefined]
 					[favorite_activities `undefined]
 					[favorite_others     `undefined]
-					[friend_uids         `undefined]]
+					[friend_uids         `undefined]
+					relationship_partner_uid]
   [new [initial-facebook initial-uid]
        [= facebook initial-facebook]
        [= uid      initial-uid]
@@ -160,6 +161,24 @@
   favorite_others]
 
 
+[deftypefunk facebook_user_profile get relationship_partner_uid []
+  [if [null relationship_partner_uid]
+      [= relationship_partner_uid [let [[login_webpage [get this login_webpage]]]
+				    [get [car [string-split [cadr [string-split login_webpage 'In a relationship with <a href="http://www.facebook.com/']]
+							    '"']] as-symbol]]]]
+  relationship_partner_uid]
+
+[deftypefunk facebook_user_profile execute print []
+  [terminal_format standard-terminal
+		   '\nName                    : ' [shelter [get this name]]
+		   '\nFavorite Musicians      : ' [shelter [get this favorite_musicians]]
+		   '\nFavorite Books          : ' [shelter [get this favorite_books]]
+		   '\nFavorite Movies         : ' [shelter [get this favorite_movies]]
+		   '\nFavorite TV Shows       : ' [shelter [get this favorite_tv_shows]]
+		   '\nFavorite Activities     : ' [shelter [get this favorite_activities]]
+		   '\nFavorite Others         : ' [shelter [get this favorite_others]]
+		   '\nRelationship Partner UID: ' [shelter [get this relationship_partner_uid]]
+		   '\n']]
 
 [deframe facebook [frame] [[url             'http://facebook.com/']
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']

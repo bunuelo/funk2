@@ -25,6 +25,9 @@
        [= local_directory '/home/neptune-unencrypted/Desktop/facebook/']
        [= user_urls       nil]
        
+       [system [string-concat 'mkdir -p ' local_directory]]
+       
+       
        nil]]
 
 [defunk facebook-test []

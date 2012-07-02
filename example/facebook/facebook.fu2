@@ -18,10 +18,12 @@
  rights to redistribute these changes.'
 
 [defunk directory_string-as-facebook_url_string [this]
-  [have this replace_all '__dirslash__' '/']]
+  [have [have this replace_all '__dirslash__' '/']
+	replace_all            '__question__' '?']]
 
 [defunk facebook_url_string-as-directory_string [this]
-  [have this replace_all '/' '__dirslash__']]
+  [have [have this replace_all '/' '__dirslash__']
+	replace_all            '?' '__question__']]
 
 [deframe facebook_user_profile [frame] [facebook
 					uid
@@ -155,11 +157,10 @@
   [if [eq `undefined favorite_others]
       [let [[public_webpage_favorites_others [get this public_webpage_favorites_others]]]
 	[= favorite_others [mapcar [funk [str]
-					 [car [string-split [cadr [string-split str '">']] '</a>']]]
+					 [get [car [string-split [cadr [string-split str '">']] '</a>']] as-symbol]]
 				   [cdr [string-split [cadr [string-split public_webpage_favorites_others '<span class="visible">']]
 						      '<a href="']]]]]]
   favorite_others]
-
 
 [deftypefunk facebook_user_profile get relationship_partner_uid []
   [if [null relationship_partner_uid]
@@ -168,16 +169,34 @@
 							    '"']] as-symbol]]]]
   relationship_partner_uid]
 
+[deftypefunk facebook_user_profile get webpage_friends []
+  [let [[login_webpage [get this login_webpage]]]
+    [car [string-split [cadr [string-split login_webpage 'Friends</div>']]
+		       'fsl fcg">About']]]]
+
+[deftypefunk facebook_user_profile get friend_uids []
+  [if [eq `undefined friend_uids]
+      [= friend_uids [let [[webpage_friends [get this webpage_friends]]]
+		       [mapcar [funk [str]
+				     [get [car [string-split str '">']] as-symbol]]
+			       [cdr [string-split webpage_friends '<a href="http://www.facebook.com/']]]]]]
+  friend_uids]
+
+[defunk filter_bug [exp]
+  [if [is-type `bug exp]
+      nil
+    exp]]
+
 [deftypefunk facebook_user_profile execute print []
   [terminal_format standard-terminal
-		   '\nName                    : ' [shelter [get this name]]
-		   '\nFavorite Musicians      : ' [shelter [get this favorite_musicians]]
-		   '\nFavorite Books          : ' [shelter [get this favorite_books]]
-		   '\nFavorite Movies         : ' [shelter [get this favorite_movies]]
-		   '\nFavorite TV Shows       : ' [shelter [get this favorite_tv_shows]]
-		   '\nFavorite Activities     : ' [shelter [get this favorite_activities]]
-		   '\nFavorite Others         : ' [shelter [get this favorite_others]]
-		   '\nRelationship Partner UID: ' [shelter [get this relationship_partner_uid]]
+		   '\nName                    : ' [filter_bug [shelter [get this name]]]
+		   '\nFavorite Musicians      : ' [filter_bug [shelter [get this favorite_musicians]]]
+		   '\nFavorite Books          : ' [filter_bug [shelter [get this favorite_books]]]
+		   '\nFavorite Movies         : ' [filter_bug [shelter [get this favorite_movies]]]
+		   '\nFavorite TV Shows       : ' [filter_bug [shelter [get this favorite_tv_shows]]]
+		   '\nFavorite Activities     : ' [filter_bug [shelter [get this favorite_activities]]]
+		   '\nFavorite Others         : ' [filter_bug [shelter [get this favorite_others]]]
+		   '\nRelationship Partner UID: ' [filter_bug [shelter [get this relationship_partner_uid]]]
 		   '\n']]
 
 [deframe facebook [frame] [[url             'http://facebook.com/']

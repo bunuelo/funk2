@@ -26,9 +26,16 @@
        [= user_urls       nil]
        
        [system [string-concat 'mkdir -p ' local_directory]]
-       
+       [system [string-concat 'mkdir -p ' [get this profile_directory]]]
+       [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' [get this temp_filename]]]
        
        nil]]
+
+[deftypefunk facebook get profile_directory []
+  [string-concat local_directory 'profile/']]
+
+[deftypefunk facebook get temp_filename []
+  '/tmp/facebook.tmp']
 
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']

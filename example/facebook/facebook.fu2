@@ -22,6 +22,7 @@
 					webpage
 					name
 					[favorite_musicians `undefined]
+					[favorite_books     `undefined]
 					[friend_uids        `undefined]]
   [new [initial-facebook initial-uid]
        [= facebook initial-facebook]
@@ -71,6 +72,18 @@
 					    [get [car [string-split str '"']] as-symbol]]
 				      [cdr [string-split webpage_favorites_music 'title="']]]]]]
   favorite_musicians]
+
+[deftypefunk facebook_user_profile get webpage_favorites_books []
+  [car [string-split [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Books</div>']]
+		     '<div class="labelContainer">Movies</div>']]]
+
+[deftypefunk facebook_user_profile get favorite_books []
+  [if [eq `undefined favorite_books]
+      [let [[webpage_favorites_books [get this webpage_favorites_books]]]
+	[= favorite_books [mapcar [funk [str]
+					[get [car [string-split str '"']] as-symbol]]
+				  [cdr [string-split webpage_favorites_books 'title="']]]]]]
+  favorite_books]
 
 
 

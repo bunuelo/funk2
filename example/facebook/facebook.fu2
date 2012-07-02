@@ -31,11 +31,8 @@
 	 [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' temp_filename]]
 	 [let [[dirstr [string-load temp_filename]]]
 	   [system [string-concat 'rm -f ' temp_filename]]
-	   [terminal_format standard-terminal
-			    '\n*** profile suburls begin ***\n'
-			    dirstr
-			    '\n*** profile suburls end ***\n']]]
-       
+	   [let [[dirs [string-split dirstr '\n']]]
+	     [print dirs]]]]
        nil]]
 
 [deftypefunk facebook get profile_directory []

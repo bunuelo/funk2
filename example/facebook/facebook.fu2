@@ -43,14 +43,14 @@
        nil]]
 
 [deftypefunk facebook_user_profile get profile_directory []
-  [string-concat [get facebook profile_directory] [get uid as-string] '/']]
+  [string-concat [get facebook profile_directory] [facebook_url_string-as-directory_string [get uid as-string]] '/']]
 
 [deftypefunk facebook_user_profile get profile_webpage_filename []
   [string-concat [get this profile_directory] 'webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_profile_webpage []
   [let [[temp_filename [get facebook temp_filename]]]
-    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' [directory_string-as-facebook_url_string [get uid as-string]]]]]]
+    [system [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
 
 [deftypefunk facebook_user_profile get webpage []
   [if [null webpage]

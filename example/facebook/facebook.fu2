@@ -43,6 +43,28 @@
 	    [= webpage [string-load [get this profile_webpage_filename]]]]]
   webpage]
 
+[deftypefunk facebook_user_profile get name []
+  [let [[webpage [get this webpage]]]
+    [have [car [string-split [cadr [string-split webpage '<title>']]
+			     '</title>']]
+	  replace_all ' | Facebook' '']]]
+
+[deftypefunk facebook_user_profile get webpage_favorites []
+  [let [[webpage [get this webpage]]]
+    [cadr [string-split webpage 'class="uiHeaderTitle">Favorites</h3>']]]]
+
+[deftypefunk facebook_user_profile get webpage_favorites_music []
+  [car [string-split [cadr [string-split [get this webpage_favorites] '<div class="labelContainer">Music</div>']]
+		     '<div class="labelContainer">Books</div>']]]
+
+[deftypefunk facebook_user_profile get favorite_music []
+  [let [[webpage_favorites_music [get this webpage_favorites_music]]]
+    [mapcar [funk [str]
+		  [car [string-split str '"']]]
+	    [cdr [string-split webpage_favorites_music 'title="']]]]]
+
+
+
 [deframe facebook [frame] [url local_directory user_uids profile_uid_hash]
   [new []
        [= url              'http://facebook.com/']

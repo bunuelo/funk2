@@ -216,7 +216,14 @@
 	    [= all_friends_webpage [string-load [get this all_friends_webpage_filename]]]]]
   all_friends_webpage]
 
-'<div class="fbProfileBrowser"'
+[deftypefunk facebook_user_profile get all_friend_uids []
+  [mapcar [funk [str]
+		[get [car [string-split str '">']] as-symbol]]
+	  [cdr [string-split [car [string-split [cadr [string-split [cadr [string-split [get this all_friends_webpage]
+											'<div class="fbProfileBrowser"']]
+								    '<div class="profileBrowserGrid">']]
+						'--></code>']]
+			     'href="http://www.facebook.com/']]]]
 
 [defunk filter_bug [exp]
   [if [is-type `bug exp]
@@ -239,6 +246,7 @@
 		 'Name                    : ' [filter_bug_as_string [shelter [get this name]]]                     '\n'
 		 'Relationship Partner UID: ' [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\n'
 		 'Top Friend UIDs         : ' [filter_bug_as_string [shelter [get this top_friend_uids]]]          '\n'
+		 'All Friend UIDs         : ' [filter_bug_as_string [shelter [get this all_friend_uids]]]          '\n'
 		 'Favorite Musicians      : ' [filter_bug_as_string [shelter [get this favorite_musicians]]]       '\n'
 		 'Favorite Books          : ' [filter_bug_as_string [shelter [get this favorite_books]]]           '\n'
 		 'Favorite Movies         : ' [filter_bug_as_string [shelter [get this favorite_movies]]]          '\n'
@@ -255,6 +263,7 @@
 		 [filter_bug_as_string [shelter [get this name]]]                     '\t'
 		 [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\t'
 		 [filter_bug_as_string [shelter [get this top_friend_uids]]]          '\t'
+		 [filter_bug_as_string [shelter [get this all_friend_uids]]]          '\t'
 		 [filter_bug_as_string [shelter [get this favorite_musicians]]]       '\t'
 		 [filter_bug_as_string [shelter [get this favorite_books]]]           '\t'
 		 [filter_bug_as_string [shelter [get this favorite_movies]]]          '\t'
@@ -270,7 +279,8 @@
   [string-save [get this as-tsv_row] [get this tsv_filename]]]
 
 [deftypefunk facebook_user_profile get expand_uids []
-  [filter_bug [shelter [get this top_friend_uids]]]]
+  [append [filter_bug [shelter [get this top_friend_uids]]]
+	  [filter_bug [shelter [get this all_friend_uids]]]]]
 
 [deftypefunk facebook_user_profile execute expand []
   [if [not [pathname-exists [get this tsv_filename]]]

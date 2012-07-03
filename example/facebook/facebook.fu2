@@ -25,6 +25,26 @@
   [have [have this replace_all '/' '__dirslash__']
 	replace_all            '?' '__question__']]
 
+[defunk string-quote_protect [this]
+  [have this replace_all '"' '\\"']]
+
+[defunk facebook_wget [user_agent cookies_filename url filename]
+  [system [print [string-concat 'wget'
+				[if user_agent
+				    [string-concat ' --user-agent="' [string-quote_protect user_agent] '"']
+				  '']
+				[if cookies_filename
+				    [string-concat ' --load-cookies "' [string-quote_protect cookies_filename] '"']
+				  '']
+				' -O "' [string-quote_protect filename] '"'
+				' "' [string-quote_protect url] '"']]]]]
+
+
+
+
+
+
+
 [deframe facebook_user_profile [frame] [facebook
 					uid
 					public_webpage
@@ -70,10 +90,24 @@
   [string-concat [get this profile_directory] 'login_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_profile_public_webpage []
-  [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_public_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
+  [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
+	[cookies_filename nil]
+	[url              [string-concat 'http://www.facebook.com/' [get uid as-string]]]
+	[filename         [get this profile_public_webpage_filename]]]
+    [facebook_wget_with_options user_agent cookies_filename url filename]]]
 
 [deftypefunk facebook_user_profile execute download_profile_login_webpage []
-  [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this profile_login_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
+  [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
+	[cookies_filename [get facebook cookies_file]]
+	[url              [string-concat 'http://www.facebook.com/' [get uid as-string]]]
+	[filename         [get this profile_login_webpage_filename]]]
+    [facebook_wget_with_options user_agent cookies_filename url filename]]]
+
+`[deftypefunk facebook_user_profile execute download_profile_public_webpage []
+   [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_public_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
+
+`[deftypefunk facebook_user_profile execute download_profile_login_webpage []
+   [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this profile_login_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
 
 [deftypefunk facebook_user_profile get public_webpage []
   [if [null public_webpage]
@@ -207,7 +241,14 @@
   [string-concat [get this profile_directory] 'all_friends_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_all_friends_webpage []
-  [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this all_friends_webpage_filename] ' "' [get this all_friends_link] '"']]]]
+  [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
+	[cookies_filename [get facebook cookies_file]]
+	[url              [get this all_friends_link]]
+	[filename         [get this all_friends_webpage_filename]]]
+    [facebook_wget_with_options user_agent cookies_filename url filename]]]
+
+`[deftypefunk facebook_user_profile execute download_all_friends_webpage []
+   [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this all_friends_webpage_filename] ' "' [get this all_friends_link] '"']]]]
 
 [deftypefunk facebook_user_profile get all_friends_webpage []
   [if [null all_friends_webpage]

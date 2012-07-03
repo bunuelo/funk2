@@ -133,10 +133,10 @@ be referred to with a dot notation, $\mathring{G}=V {\cup} \ell_E$.
 \item $E_s ~{\subseteq}~ V_s {\times} V_s$,
 \item $\mu_s$ is the restriction of $\mu$, i.e.
 \begin{align*}
-\mu_s(\overrightarrow{e}) &\subseteq
+\mu_s(e) &\subseteq
    {\left\{
       \begin{array}{ll}
-        \mu(\overrightarrow{e})     & \text{if }\overrightarrow{e} {\in} E_s \\
+        \mu(e)     & \text{if }e {\in} E_s \\
         \text{undefined} & \text{otherwise}
       \end{array}
     \right.}
@@ -181,13 +181,13 @@ is defined to be a graph in
                \end{array}
              \right\}} \\
 \label{equation:define_graph_state_last}
-S_\mu(\overrightarrow{e}) &=
+S_\mu(e) &=
   {\left\{
      \begin{array}{ll}
-       \{\text{\tt{being-above}}\} & \text{if }\overrightarrow{e} = (\text{\tt{Gripper-1}}, \text{\tt{Table-1}}) \\
-       \{\text{\tt{sitting-on}}\}  & \text{if }\overrightarrow{e} = (\text{\tt{Block-1}}, \text{\tt{Table-1}}) ~{\vee}~ \\
-                                   & \text{~~ }\overrightarrow{e} = (\text{\tt{Block-2}}, \text{\tt{Table-1}}) \\
-       \{\text{\tt{moving}}\}      & \text{if }\overrightarrow{e} = (\text{\tt{Gripper-1}}, \text{\tt{left}}) \\
+       \{\text{\tt{being-above}}\} & \text{if }e = (\text{\tt{Gripper-1}}, \text{\tt{Table-1}}) \\
+       \{\text{\tt{sitting-on}}\}  & \text{if }e = (\text{\tt{Block-1}}, \text{\tt{Table-1}}) ~{\vee}~ \\
+                                   & \text{~~ }e = (\text{\tt{Block-2}}, \text{\tt{Table-1}}) \\
+       \{\text{\tt{moving}}\}      & \text{if }e = (\text{\tt{Gripper-1}}, \text{\tt{left}}) \\
        \text{undefined} & \text{otherwise}
      \end{array}
    \right.}
@@ -224,13 +224,13 @@ object-oriented representations common to many computer programs as
 well as a very general theoretical form for thinking about
 high-dimensional spaces of sensor data.
 
-I will use the symbol {\tt reflective-1} to refer to the activity of
-the first-order reflective layer.  This symbol is grounded in the
-activity in Duration that currently actually exists.  This symbol does
-not refer the simulated activities in Duration in the simulation
-model.  This symbol is grounded in the understanding of the model of
-mind.  The reflective activity is primarily reflecting on the rest of
-the simulation state, everything that existed before the
+I will use the symbol {\tt $\text{reflective}^1$} to refer to the
+activity of the first-order reflective layer.  This symbol is grounded
+in the activity in Duration that currently actually exists.  This
+symbol does not refer the simulated activities in Duration in the
+simulation model.  This symbol is grounded in the understanding of the
+model of mind.  The reflective activity is primarily reflecting on the
+rest of the simulation state, everything that existed before the
 {\tt{reflective-1}} node was added to the simulation state graph.
 {\mbox{\autoref{figure:simulation_reflective_1_example_state}}} shows
 how the {\tt reflective-1} symbolic dynamic activity is in a
@@ -249,10 +249,36 @@ continuous Spatial arrangement with the physical layer of activities.
 
 The inseparable dynamic physical activities in Duration are
 represented by a subgraph of the entire simulation state graph, $S$.
-\begin{equation}
-  \mathcal{P} = \{v ~:~ (\text{\tt{reflective-1}}, v) \in S_E \wedge \text{\tt{reflecting-on}} \in \mu[(\text{\tt{reflective-1}}, v)]\}
-\end{equation}
-
+{\mbox{Equations~\ref{equation:physical_activity_nodes_first}}}
+{\mbox{and~\ref{equation:physical_activity_nodes_last}}} define the
+set of nodes, $\mathcal{P}_V$, in the physical activity subgraph.
+\begin{align}
+\label{equation:physical_activity_nodes_first}
+  \mathcal{P}_V &= \{v ~:~ (\text{\tt{reflective-1}}, v) \in S_E \wedge \text{\tt{reflecting-on}} \in \mu[(\text{\tt{reflective-1}}, v)]\} \\
+\label{equation:physical_activity_nodes_last}
+                &= \text{\tt{reflective-1}}.\text{\tt{reflecting-on}}
+\end{align}
+Notice that the physical activity subgraph is defined in terms of the
+representation of the dynamic $\text{reflective}^1$ activity,
+{\tt{reflective-1}}.  Given the nodes, $\mathcal{P}_V$, of the
+physical activity subgraph,
+{\mbox{Equations~\ref{equation:physical_activity_graph_first}}}
+{\mbox{through~\ref{equation:physical_activity_graph_last}}} define
+the physical activity subgraph, $\mathcal{P}$.
+\begin{align}
+\label{equation:physical_activity_graph_first}
+                        \mathcal{P} &= (\mathcal{P}_V, \mathcal{P}_E, \mathcal{P}_\mu) \\
+                      \mathcal{P}_V &= \text{\tt{reflective-1}}.\text{\tt{reflecting-on}} \\
+                      \mathcal{P}_E &= (\mathcal{P}_V \times \mathcal{P}_V) \cap S_E \\
+\label{equation:physical_activity_graph_last}
+\mathcal{P}_\mu(e) &=
+   {\left\{
+      \begin{array}{ll}
+        S_\mu(e) & \text{if }e {\in} \mathcal{P}_E \\
+        \text{undefined}          & \text{otherwise}
+      \end{array}
+    \right.}
+\end{align}
 
 \section{Representing Static Frame Object Types}
 
@@ -320,10 +346,10 @@ state graph, $S$:
                  (\text{\tt{Gripper-1}}, \text{\tt{Block-1}})
                \end{array}
              \right\}} \\
-G_\mu(\overrightarrow{e}) &=
+G_\mu(e) &=
   {\left\{
      \begin{array}{ll}
-       \{\text{\tt{being-above}}\} & \text{if }\overrightarrow{e} = (\text{\tt{Gripper-1}}, \text{\tt{Block-1}}) \\
+       \{\text{\tt{being-above}}\} & \text{if }e = (\text{\tt{Gripper-1}}, \text{\tt{Block-1}}) \\
        \text{undefined} & \text{otherwise}
      \end{array}
    \right.}
@@ -452,10 +478,10 @@ through~\ref{equation:define_space_activity_last} define how symbols
 are statically Spatially arranged, $e^*$:
 \begin{align}
 \label{equation:define_space_activity_first}
-        {S_E}^* &= \left\{\overrightarrow{e} : \overrightarrow{e}{\in}S_E \wedge (v_1, v_2) {\in} {X^*}^2\right\}, ~\text{\emph{Static Spatial relationships}} \\
-      \overrightarrow{e}^* &\in {S_E}^* \\
+        {S_E}^* &= \left\{e : e{\in}S_E \wedge (v_1, v_2) {\in} {X^*}^2\right\}, ~\text{\emph{Static Spatial relationships}} \\
+      e^* &\in {S_E}^* \\
 \label{equation:define_space_activity_last}
-      \overrightarrow{e}^* &= (v_1^*, ~v_2^*)
+      e^* &= (v_1^*, ~v_2^*)
 \end{align}
 Spatial relationships can refer to other Spatial relationships from
 the same layer because the activity of the Spatial relationship is in

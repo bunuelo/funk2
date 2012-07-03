@@ -289,7 +289,8 @@
 	    [mapc [funk [uid]
 			[if [not [get facebook contains_uid uid]]
 			    [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
-				  [new facebook_user_profile facebook uid]]]]
+				  [if [is-type `bug [shelter [new facebook_user_profile facebook uid]]]
+				      [print '*** ERROR CREATING USER PROFILE ***']]]]]
 		  [get this expand_uids]]]]
   nil]
 

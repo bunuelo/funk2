@@ -43,6 +43,8 @@ digraph G {
     
     reflective_1 [texlbl = "{\huge{\tt{reflective-1}}}"];
     
+    // nodes
+
     reflective_1_reflecting_on_gripper_1 [shape=box,style=filled,label="{\huge{\tt{reflecting-on}}}"];
     reflective_1 -> reflective_1_reflecting_on_gripper_1 [arrowhead=none];
     reflective_1_reflecting_on_gripper_1 -> gripper_1 [style="-triangle 45"];
@@ -62,5 +64,6 @@ digraph G {
     reflective_1_reflecting_on_left [shape=box,style=filled,label="{\huge{\tt{reflecting-on}}}"];
     reflective_1 -> reflective_1_reflecting_on_left [arrowhead=none];
     reflective_1_reflecting_on_left -> left [style="-triangle 45"];
+
   }
 }

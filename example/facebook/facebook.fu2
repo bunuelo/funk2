@@ -29,7 +29,7 @@
   [have this replace_all '"' '\\"']]
 
 [defunk facebook_wget [user_agent cookies_filename url filename]
-  [system [print [string-concat 'wget'
+  [let [[command [string-concat 'wget'
 				[if user_agent
 				    [string-concat ' --user-agent="' [string-quote_protect user_agent] '"']
 				  '']
@@ -37,7 +37,9 @@
 				    [string-concat ' --load-cookies "' [string-quote_protect cookies_filename] '"']
 				  '']
 				' -O "' [string-quote_protect filename] '"'
-				' "' [string-quote_protect url] '"']]]]]
+				' "' [string-quote_protect url] '"']]]
+    [terminal_format standard-terminal '\nsystem: ' command '\n']
+    [system command]]]
 
 
 

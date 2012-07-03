@@ -228,6 +228,9 @@
 		 [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
 		 ]]
 
+[deftypefunk facebook_user_profile execute generate_tsv []
+  [string-save [get this as-tsv_row] expand_filename]]
+
 [deftypefunk facebook_user_profile get expand_filename []
   [string-concat [get this profile_directory] 'expand.tsv']]
 
@@ -238,7 +241,7 @@
   [let [[expand_filename [get this expand_filename]]]
     [if [not [pathname-exists expand_filename]]
 	[prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
-	      [string-save [get this as-tsv_row] expand_filename]
+	      [have this generate_tsv]
 	      [mapc [funk [uid]
 			  [if [not [get facebook contains_uid uid]]
 			      [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
@@ -289,6 +292,14 @@
 			      [have profile_uid_hash add uid [new facebook_user_profile this uid]]]]]]
 		dirs]]
 	]]]]
+
+[deftypefunk facebook execute generate_all_tsv []
+  [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']
+  [mapc [funk [user_profile]
+	      [have user_profile generate_tsv]]
+	[get this user_profiles]]
+  [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
+  nil]
 
 [deftypefunk facebook execute expand []
   [terminal_format standard-terminal '\nFacebook beginning expansion.']

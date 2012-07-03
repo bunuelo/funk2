@@ -45,7 +45,7 @@
 	  nil
 	[if [get result contains 'Security Check Required']
 	    [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
-		  [print 'Security Check Required']
+		  [print 'Security Check']
 		  nil]
 	  result]]]]]
 

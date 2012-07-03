@@ -183,6 +183,10 @@
 			       [cdr [string-split webpage_friends '<a href="http://www.facebook.com/']]]]]]
   top_friend_uids]
 
+[deftypefunk facebook_user_profile get all_friends_link []
+  [let [[login_webpage [get this login_webpage]]]
+    [cadr [string-split login_webpage '<span class="text">Friends</span><span class="count">']]]]
+
 [defunk filter_bug [exp]
   [if [is-type `bug exp]
       nil

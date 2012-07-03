@@ -39,7 +39,15 @@
 				' -O "' [string-quote_protect filename] '"'
 				' "' [string-quote_protect url] '"']]]
     [terminal_format standard-terminal '\nsystem: ' command '\n']
-    [system command]]]
+    [system command]
+    [let [[result [shelter [string-load filename]]]]
+      [if [is-type `bug result]
+	  nil
+	[if [get result contains 'Security Check Required']
+	    [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
+		  [print 'Security Check Required']
+		  nil]
+	  result]]]]]
 
 
 

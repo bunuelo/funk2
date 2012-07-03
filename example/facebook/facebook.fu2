@@ -44,6 +44,7 @@
        
        [system [string-concat 'mkdir -p ' [get this profile_directory]]]
        
+       [have facebook add_user_profile this]
        nil]]
 
 [deftypefunk facebook_user_profile get profile_directory []
@@ -243,6 +244,9 @@
        [have this load_profiles]
        
        nil]]
+
+[deftypefunk facebook execute add_user_profile [user_profile]
+  [have profile_uid_hash add [get user_profile uid] user_profile]]
 
 [deftypefunk facebook get contains_uid [uid]
   [get profile_uid_hash contains uid]]

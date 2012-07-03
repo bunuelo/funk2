@@ -225,7 +225,7 @@
 		 [filter_bug_as_string [shelter [get this favorite_movies]]]          '\t'
 		 [filter_bug_as_string [shelter [get this favorite_tv_shows]]]        '\t'
 		 [filter_bug_as_string [shelter [get this favorite_activities]]]      '\t'
-		 [filter_bug_as_string [shelter [get this favorite_others]]]
+		 [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
 		 ]]
 
 [deftypefunk facebook_user_profile get expand_filename []

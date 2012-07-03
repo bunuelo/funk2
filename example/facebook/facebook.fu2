@@ -200,7 +200,8 @@
       '']]]
 
 [deftypefunk facebook_user_profile get as-string []
-  [string-concat 'Name                    : ' [filter_bug_as_string [shelter [get this name]]]                     '\n'
+  [string-concat 'UID                     : ' [get uid as-string]                                                  '\n'
+		 'Name                    : ' [filter_bug_as_string [shelter [get this name]]]                     '\n'
 		 'Favorite Musicians      : ' [filter_bug_as_string [shelter [get this favorite_musicians]]]       '\n'
 		 'Favorite Books          : ' [filter_bug_as_string [shelter [get this favorite_books]]]           '\n'
 		 'Favorite Movies         : ' [filter_bug_as_string [shelter [get this favorite_movies]]]          '\n'

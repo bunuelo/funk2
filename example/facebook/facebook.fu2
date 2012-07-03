@@ -228,25 +228,24 @@
 		 [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
 		 ]]
 
-[deftypefunk facebook_user_profile execute generate_tsv []
-  [string-save [get this as-tsv_row] expand_filename]]
+[deftypefunk facebook_user_profile get tsv_filename []
+  [string-concat [get this profile_directory] 'brief.tsv']]
 
-[deftypefunk facebook_user_profile get expand_filename []
-  [string-concat [get this profile_directory] 'expand.tsv']]
+[deftypefunk facebook_user_profile execute generate_tsv []
+  [string-save [get this as-tsv_row] [get this tsv_filename]]]
 
 [deftypefunk facebook_user_profile get expand_uids []
   [filter_bug [shelter [get this top_friend_uids]]]]
 
 [deftypefunk facebook_user_profile execute expand []
-  [let [[expand_filename [get this expand_filename]]]
-    [if [not [pathname-exists expand_filename]]
-	[prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
-	      [have this generate_tsv]
-	      [mapc [funk [uid]
-			  [if [not [get facebook contains_uid uid]]
-			      [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
-				    [new facebook_user_profile facebook uid]]]]
-		    [get this expand_uids]]]]]
+  [if [not [pathname-exists [get this tsv_filename]]]
+      [prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
+	    [have this generate_tsv]
+	    [mapc [funk [uid]
+			[if [not [get facebook contains_uid uid]]
+			    [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
+				  [new facebook_user_profile facebook uid]]]]
+		  [get this expand_uids]]]]
   nil]
 
 [deframe facebook [frame] [[url             'http://facebook.com/']

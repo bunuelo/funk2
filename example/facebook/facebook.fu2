@@ -202,20 +202,34 @@
 [deftypefunk facebook_user_profile get as-string []
   [string-concat 'UID                     : ' [get uid as-string]                                                  '\n'
 		 'Name                    : ' [filter_bug_as_string [shelter [get this name]]]                     '\n'
+		 'Relationship Partner UID: ' [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\n'
+		 'Top Friend UIDs         : ' [filter_bug_as_string [shelter [get this top_friend_uids]]]          '\n'
 		 'Favorite Musicians      : ' [filter_bug_as_string [shelter [get this favorite_musicians]]]       '\n'
 		 'Favorite Books          : ' [filter_bug_as_string [shelter [get this favorite_books]]]           '\n'
 		 'Favorite Movies         : ' [filter_bug_as_string [shelter [get this favorite_movies]]]          '\n'
 		 'Favorite TV Shows       : ' [filter_bug_as_string [shelter [get this favorite_tv_shows]]]        '\n'
 		 'Favorite Activities     : ' [filter_bug_as_string [shelter [get this favorite_activities]]]      '\n'
 		 'Favorite Others         : ' [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
-		 'Relationship Partner UID: ' [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\n'
-		 'Top Friend UIDs         : ' [filter_bug_as_string [shelter [get this top_friend_uids]]]          '\n']]
+		 ]]
 
 [deftypefunk facebook_user_profile execute print []
   [terminal_format standard-terminal [get this as-string]]]
 
+[deftypefunk facebook_user_profile get as-tsv_row []
+  [string-concat [get uid as-string]                                                  '\t'
+		 [filter_bug_as_string [shelter [get this name]]]                     '\t'
+		 [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\t'
+		 [filter_bug_as_string [shelter [get this top_friend_uids]]]          '\t'
+		 [filter_bug_as_string [shelter [get this favorite_musicians]]]       '\t'
+		 [filter_bug_as_string [shelter [get this favorite_books]]]           '\t'
+		 [filter_bug_as_string [shelter [get this favorite_movies]]]          '\t'
+		 [filter_bug_as_string [shelter [get this favorite_tv_shows]]]        '\t'
+		 [filter_bug_as_string [shelter [get this favorite_activities]]]      '\t'
+		 [filter_bug_as_string [shelter [get this favorite_others]]]
+		 ]]
+
 [deftypefunk facebook_user_profile get expand_filename []
-  [string-concat [get this profile_directory] 'expand.txt']]
+  [string-concat [get this profile_directory] 'expand.tsv']]
 
 [deftypefunk facebook_user_profile get expand_uids []
   [filter_bug [shelter [get this top_friend_uids]]]]
@@ -224,7 +238,7 @@
   [let [[expand_filename [get this expand_filename]]]
     [if [not [pathname-exists expand_filename]]
 	[prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
-	      [string-save [get this as-string] expand_filename]
+	      [string-save [get this as-tsv_row] expand_filename]
 	      [mapc [funk [uid]
 			  [if [not [get facebook contains_uid uid]]
 			      [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]

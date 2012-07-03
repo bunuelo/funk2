@@ -42,13 +42,24 @@
        [= facebook initial-facebook]
        [= uid      initial-uid]
        
-       [system [string-concat 'mkdir -p ' [get this profile_directory]]]
+       [have this assure_profile_directory_exists] 
        
        [have facebook add_user_profile this]
        nil]]
 
-[deftypefunk facebook_user_profile get profile_directory []
+[deftypefunk facebook_user_profile get profile_directory_without_slash []
   [string-concat [get facebook profile_directory] [facebook_url_string-as-directory_string [get uid as-string]] '/']]
+
+[deftypefunk facebook_user_profile get profile_directory_exists []
+  [pathname-exists [get this profile_directory_without_slash]]]
+
+[deftypefunk facebook_user_profile execute assure_profile_directory_exists []
+  [if [not [get this profile_directory_exists]]
+      [system [string-concat 'mkdir -p ' [get this profile_directory]]]]
+  nil]
+
+[deftypefunk facebook_user_profile get profile_directory []
+  [string-concat [get this profile_directory_without_slash] '/']]
 
 [deftypefunk facebook_user_profile get profile_public_webpage_filename []
   [string-concat [get this profile_directory] 'public_webpage.html']]

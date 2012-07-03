@@ -203,7 +203,7 @@
   [if [eq `undefined favorite_others]
       [let [[public_webpage_favorites_others [get this public_webpage_favorites_others]]]
 	[= favorite_others [mapcar [funk [str]
-					 [get [car [string-split [cadr [string-split str '">']] '</a>']] as-symbol]]
+					 [get [car [string-split [cadr [string-split str '"']] '</a>']] as-symbol]]
 				   [cdr [string-split [cadr [string-split public_webpage_favorites_others '<span class="visible">']]
 						      '<a href="']]]]]]
   favorite_others]
@@ -224,7 +224,7 @@
   [if [eq `undefined top_friend_uids]
       [= top_friend_uids [let [[webpage_friends [get this webpage_friends]]]
 		       [mapcar [funk [str]
-				     [get [car [string-split str '">']] as-symbol]]
+				     [get [car [string-split str '"']] as-symbol]]
 			       [cdr [string-split webpage_friends '<a href="http://www.facebook.com/']]]]]]
   top_friend_uids]
 
@@ -233,7 +233,7 @@
       [= all_friends_link [let [[login_webpage [get this login_webpage]]]
 			    [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div id="pagelet_timeline_friends_nav_top"']]
 									 '<a class="tab" href="']]
-						     '">']]
+						     '"']]
 				  replace_all '&amp;' '&']]]]
   all_friends_link]
 

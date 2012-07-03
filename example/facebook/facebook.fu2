@@ -325,7 +325,7 @@
 
 [deftypefunk facebook execute load_profiles []
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'ls -1 ' [get this profile_directory] ' > ' temp_filename]]
+    [system [string-concat 'ls -1 ' [get this profile_directory] ' > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]

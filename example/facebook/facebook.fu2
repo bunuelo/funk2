@@ -218,7 +218,7 @@
 
 [deftypefunk facebook_user_profile get all_friend_uids []
   [mapcar [funk [str]
-		[get [car [string-split str '">']] as-symbol]]
+		[get [car [string-split str '"']] as-symbol]]
 	  [cdr [string-split [car [string-split [cadr [string-split [cadr [string-split [get this all_friends_webpage]
 											'<div class="fbProfileBrowser"']]
 								    '<div class="profileBrowserGrid">']]

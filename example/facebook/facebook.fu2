@@ -247,6 +247,9 @@
 [deftypefunk facebook get contains_uid [uid]
   [get profile_uid_hash contains uid]]
 
+[deftypefunk facebook get user_profiles []
+  [get profile_uid_hash values]]
+
 [deftypefunk facebook get profile_directory []
   [string-concat local_directory 'profile/']]
 
@@ -267,6 +270,14 @@
 			      [have profile_uid_hash add uid [new facebook_user_profile this uid]]]]]]
 		dirs]]
 	]]]]
+
+[deftypefunk facebook execute expand []
+  [terminal_format standard-terminal '\nFacebook beginning expansion.']
+  [mapc [funk [user_profile]
+	      [have user_profile expand]]
+	[get this user_profiles]]
+  [terminal_format standard-terminal '\nFacebook done with expansion.']
+  nil]
 
 [defunk facebook-test []
   [terminal_format standard-terminal '\nfacebook-test.']

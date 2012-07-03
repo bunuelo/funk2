@@ -187,18 +187,48 @@
       nil
     exp]]
 
+[defunk filter_bug_as_string [exp]
+  [let [[filtered_exp [filter_bug exp]]]
+    [if filtered_exp
+	[if [is-type `cons filtered_exp]
+	    [stringlist-intersperse [mapcar [funk [exp]
+						  [get exp as-string]]
+					    filtered_exp]
+				    ', ']
+	  [get filtered_exp as-string]]
+      '']]]
+
+[deftypefunk facebook_user_profile get as-string []
+  [string-concat 'Name                    : ' [filter_bug_as_string [shelter [get this name]]]                     '\n'
+		 'Favorite Musicians      : ' [filter_bug_as_string [shelter [get this favorite_musicians]]]       '\n'
+		 'Favorite Books          : ' [filter_bug_as_string [shelter [get this favorite_books]]]           '\n'
+		 'Favorite Movies         : ' [filter_bug_as_string [shelter [get this favorite_movies]]]          '\n'
+		 'Favorite TV Shows       : ' [filter_bug_as_string [shelter [get this favorite_tv_shows]]]        '\n'
+		 'Favorite Activities     : ' [filter_bug_as_string [shelter [get this favorite_activities]]]      '\n'
+		 'Favorite Others         : ' [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
+		 'Relationship Partner UID: ' [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\n'
+		 'Top Friend UIDs         : ' [filter_bug_as_string [shelter [get this top_friend_uids]]]          '\n']]
+
 [deftypefunk facebook_user_profile execute print []
-  [terminal_format standard-terminal
-		   '\nName                    : ' [filter_bug [shelter [get this name]]]
-		   '\nFavorite Musicians      : ' [filter_bug [shelter [get this favorite_musicians]]]
-		   '\nFavorite Books          : ' [filter_bug [shelter [get this favorite_books]]]
-		   '\nFavorite Movies         : ' [filter_bug [shelter [get this favorite_movies]]]
-		   '\nFavorite TV Shows       : ' [filter_bug [shelter [get this favorite_tv_shows]]]
-		   '\nFavorite Activities     : ' [filter_bug [shelter [get this favorite_activities]]]
-		   '\nFavorite Others         : ' [filter_bug [shelter [get this favorite_others]]]
-		   '\nRelationship Partner UID: ' [filter_bug [shelter [get this relationship_partner_uid]]]
-		   '\nTop Friend UIDs         : ' [filter_bug [shelter [get this top_friend_uids]]]
-		   '\n']]
+  [terminal_format standard-terminal [get this as-string]]]
+
+[deftypefunk facebook_user_profile get expand_filename []
+  [string-concat [get this profile_directory] 'expand.txt']]
+
+[deftypefunk facebook_user_profile get expand_uids []
+  [filter_bug [shelter [get this top_friend_uids]]]]
+
+[deftypefunk facebook_user_profile execute expand []
+  [let [[expand_filename [get this expand_filename]]]
+    [if [not [pathname-exists expand_filename]]
+	[prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
+	      [string-save [get this as-string] expand_filename]
+	      [mapc [funk [uid]
+			  [if [not [get facebook contains_uid uid]]
+			      [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
+				    [new facebook_user_profile facebook uid]]]]
+		    [get this expand_uids]]]]]
+  nil]
 
 [deframe facebook [frame] [[url             'http://facebook.com/']
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
@@ -213,6 +243,9 @@
        [have this load_profiles]
        
        nil]]
+
+[deftypefunk facebook get contains_uid [uid]
+  [get profile_uid_hash contains uid]]
 
 [deftypefunk facebook get profile_directory []
   [string-concat local_directory 'profile/']]

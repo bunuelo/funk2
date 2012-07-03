@@ -50,14 +50,14 @@
        nil]]
 
 [deftypefunk facebook_user_profile get profile_directory_without_slash []
-  [string-concat [get facebook profile_directory] [facebook_url_string-as-directory_string [get uid as-string]] '/']]
+  [string-concat [get facebook profile_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
 
 [deftypefunk facebook_user_profile get profile_directory_exists []
   [pathname-exists [get this profile_directory_without_slash]]]
 
 [deftypefunk facebook_user_profile execute assure_profile_directory_exists []
   [if [not [get this profile_directory_exists]]
-      [system [string-concat 'mkdir -p ' [get this profile_directory]]]]
+      [system [string-concat 'mkdir -p "' [get this profile_directory] '"']]]
   nil]
 
 [deftypefunk facebook_user_profile get profile_directory []
@@ -301,8 +301,8 @@
   [new []
        [= profile_uid_hash [new ptypehash]]
        
-       [system [string-concat 'mkdir -p ' local_directory]]
-       [system [string-concat 'mkdir -p ' [get this profile_directory]]]
+       [system [string-concat 'mkdir -p "' local_directory '"']]
+       [system [string-concat 'mkdir -p "' [get this profile_directory] '"']]
        
        [have this load_profiles]
        

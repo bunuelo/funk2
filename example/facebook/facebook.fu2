@@ -46,7 +46,7 @@
        
        [have this assure_profile_directory_exists] 
        
-       [have facebook add_user_profile this]
+       [have facebook add_user_uid uid]
        nil]]
 
 [deftypefunk facebook_user_profile get profile_directory_without_slash []
@@ -297,9 +297,9 @@
 [deframe facebook [frame] [[url             'http://facebook.com/']
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
 			   [local_directory '/home/neptune-unencrypted/Desktop/facebook/']
-			   profile_uid_hash]
+			   profile_uid_set]
   [new []
-       [= profile_uid_hash [new ptypehash]]
+       [= profile_uid_set [new set]]
        
        [system [string-concat 'mkdir -p "' local_directory '"']]
        [system [string-concat 'mkdir -p "' [get this profile_directory] '"']]
@@ -308,14 +308,14 @@
        
        nil]]
 
-[deftypefunk facebook execute add_user_profile [user_profile]
-  [have profile_uid_hash add [get user_profile uid] user_profile]]
+[deftypefunk facebook execute add_user_uid [user_uid]
+  [have profile_uid_set add user_uid]]
 
 [deftypefunk facebook get contains_uid [uid]
-  [get profile_uid_hash contains uid]]
+  [get profile_uid_set contains uid]]
 
-[deftypefunk facebook get user_profiles []
-  [get profile_uid_hash values]]
+[deftypefunk facebook get user_uids []
+  [get profile_uid_set elements]]
 
 [deftypefunk facebook get profile_directory []
   [string-concat local_directory 'profile/']]
@@ -334,23 +334,23 @@
 		      [if [not [equals dir '']]
 			  [let [[subdir [have dir replace_all profile_directory '']]]
 			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
-			      [have profile_uid_hash add uid [new facebook_user_profile this uid]]]]]]
+			      [have profile_uid_set add uid]]]]]
 		dirs]]
 	]]]]
 
 [deftypefunk facebook execute generate_all_tsv []
   [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']
-  [mapc [funk [user_profile]
-	      [have user_profile generate_tsv]]
-	[get this user_profiles]]
+  [mapc [funk [user_uid]
+	      [have [new facebook_user_profile this user_uid] generate_tsv]]
+	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
   nil]
 
 [deftypefunk facebook execute expand []
   [terminal_format standard-terminal '\nFacebook beginning expansion.']
-  [mapc [funk [user_profile]
-	      [have user_profile expand]]
-	[get this user_profiles]]
+  [mapc [funk [user_uid]
+	      [have [new facebook_user_profile this user_uid] expand]]
+	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done with expansion.']
   nil]
 

@@ -29,6 +29,7 @@
 					uid
 					public_webpage
 					login_webpage
+					all_friends_webpage
 					name
 					[favorite_musicians  `undefined]
 					[favorite_books      `undefined]
@@ -208,6 +209,14 @@
 [deftypefunk facebook_user_profile execute download_all_friends_webpage []
   [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this all_friends_webpage_filename] ' "' [get this all_friends_link] '"']]]]
 
+[deftypefunk facebook_user_profile get all_friends_webpage []
+  [if [null all_friends_webpage]
+      [prog [if [not [pathname-exists [get this all_friends_webpage_filename]]]
+		[have this download_all_friends_webpage]]
+	    [= all_friends_webpage [string-load [get this all_friends_webpage_filename]]]]]
+  all_friends_webpage]
+
+'<div class="fbProfileBrowser"'
 
 [defunk filter_bug [exp]
   [if [is-type `bug exp]

@@ -100,6 +100,7 @@
   [string-concat [get this profile_directory] 'login_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_profile_public_webpage []
+  [terminal_format standard-terminal '\nDownloading public webpage ' [get this uid]]
   [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
 	[cookies_filename nil]
 	[url              [string-concat 'http://www.facebook.com/' [get uid as-string]]]
@@ -107,6 +108,7 @@
     [facebook_wget user_agent cookies_filename url filename]]]
 
 [deftypefunk facebook_user_profile execute download_profile_login_webpage []
+  [terminal_format standard-terminal '\nDownloading login webpage ' [get this uid]]
   [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
 	[cookies_filename [get facebook cookies_file]]
 	[url              [string-concat 'http://www.facebook.com/' [get uid as-string]]]
@@ -251,6 +253,7 @@
   [string-concat [get this profile_directory] 'all_friends_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_all_friends_webpage []
+  [terminal_format standard-terminal '\nDownloading all friends webpage ' [get this uid]]
   [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
 	[cookies_filename [get facebook cookies_file]]
 	[url              [get this all_friends_link]]

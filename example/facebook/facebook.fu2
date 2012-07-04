@@ -49,12 +49,6 @@
 		  nil]
 	  result]]]]]
 
-
-
-
-
-
-
 [deframe facebook_user_profile [frame] [facebook
 					uid
 					public_webpage
@@ -242,11 +236,14 @@
 
 [deftypefunk facebook_user_profile get all_friends_link []
   [if [null all_friends_link]
-      [= all_friends_link [let [[login_webpage [get this login_webpage]]]
-			    [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div id="pagelet_timeline_friends_nav_top"']]
-									 '<a class="tab" href="']]
-						     '"']]
-				  replace_all '&amp;' '&']]]]
+      [let [[parse_result [shelter [let [[login_webpage [get this login_webpage]]]
+				     [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div id="pagelet_timeline_friends_nav_top"']]
+										  '<a class="tab" href="']]
+							      '"']]
+					   replace_all '&amp;' '&']]]]]
+	[if [not [is-type `bug parse_result]]
+	    [= all_friends_link parse_result]
+	  [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_link error: *** ERROR PARSING ALL_FRIENDS_LINK ***\n']]]]
   all_friends_link]
 
 [deftypefunk facebook_user_profile get all_friends_webpage_filename []
@@ -254,11 +251,15 @@
 
 [deftypefunk facebook_user_profile execute download_all_friends_webpage []
   [terminal_format standard-terminal '\nDownloading all friends webpage ' [get this uid]]
-  [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
-	[cookies_filename [get facebook cookies_file]]
-	[url              [get this all_friends_link]]
-	[filename         [get this all_friends_webpage_filename]]]
-    [facebook_wget user_agent cookies_filename url filename]]]
+  [let [[all_friends_link [get this all_friends_link]]]
+    [if [is-type `string all_friends_link]
+	[let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
+	      [cookies_filename [get facebook cookies_file]]
+	      [url              all_friends_link]
+	      [filename         [get this all_friends_webpage_filename]]]
+	  [facebook_wget user_agent cookies_filename url filename]]
+      [prog [terminal_format standard-terminal '\nfacebook_user_profile-execute-download_all_friends_webpage error: *** ERROR DOWNLOADING ALL FRIENDS WEBPAGE ***\n']
+	    nil]]]]
 
 `[deftypefunk facebook_user_profile execute download_all_friends_webpage []
    [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this all_friends_webpage_filename] ' "' [get this all_friends_link] '"']]]]

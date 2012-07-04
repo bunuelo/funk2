@@ -43,8 +43,8 @@
     [let [[result [shelter [string-load filename]]]]
       [if [is-type `bug result]
 	  nil
-	[if [or [have result contains '<title>Security Check Required | Facebook</title>']
-		[have result contains '<title>Sicherheitskontrolle erforderlich</title>'
+	[if [or [have result contains 'Security Check Required']
+		[have result contains 'Sicherheitskontrolle erforderlich']]
 	    [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
 		  [print 'Security Check Required']
 		  nil]

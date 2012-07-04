@@ -50,6 +50,16 @@
 		  nil]
 	  result]]]]]
 
+[defunk facebook_login_wget [user_agent cookies_filename url filename]
+  [let [[result [facebook_wget user_agent cookies_filename url filename]]]
+    [if [is-type `string result]
+	[if [have result contains 'Forgot your password?']
+	    [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
+		  [terminal_format standard-terminal '\nfacebook_login_wget error: *** COOKIES NOT WORKING FOR LOGGING IN ***']
+		  nil]
+	  result]]]]
+
+
 [deframe facebook_user_profile [frame] [facebook
 					uid
 					public_webpage
@@ -108,7 +118,7 @@
 	[cookies_filename [get facebook cookies_file]]
 	[url              [string-concat 'http://www.facebook.com/' [get uid as-string]]]
 	[filename         [get this profile_login_webpage_filename]]]
-    [facebook_wget user_agent cookies_filename url filename]]]
+    [facebook_login_wget user_agent cookies_filename url filename]]]
 
 `[deftypefunk facebook_user_profile execute download_profile_public_webpage []
    [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_public_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
@@ -120,7 +130,7 @@
   [if [null public_webpage]
       [prog [if [not [pathname-exists [get this profile_public_webpage_filename]]]
 		[have this download_profile_public_webpage]]
-	    [let [[load_file_result [string-load [get this profile_public_webpage_filename]]]]
+	    [let [[load_file_result [shelter [string-load [get this profile_public_webpage_filename]]]]]
 	      [if [not [is-type `bug load_file_result]]
 		  [= public_webpage load_file_result]
 		[terminal_format standard-terminal '\nfacebook_user_profile-get-public_webpage error: ' [get this uid] ' *** ERROR LOADING PUBLIC WEBPAGE FILE ***']]]]]
@@ -130,7 +140,7 @@
   [if [null login_webpage]
       [prog [if [not [pathname-exists [get this profile_login_webpage_filename]]]
 		[have this download_profile_login_webpage]]
-	    [let [[load_file_result [string-load [get this profile_login_webpage_filename]]]]
+	    [let [[load_file_result [shelter [string-load [get this profile_login_webpage_filename]]]]]
 	      [if [not [is-type `bug load_file_result]]
 		  [= login_webpage load_file_result]
 		[terminal_format standard-terminal '\nfacebook_user_profile-get-login_webpage error: ' [get this uid] ' *** ERROR LOADING LOGIN WEBPAGE FILE ***']]]]]
@@ -264,7 +274,7 @@
 	      [cookies_filename [get facebook cookies_file]]
 	      [url              all_friends_link]
 	      [filename         [get this all_friends_webpage_filename]]]
-	  [facebook_wget user_agent cookies_filename url filename]]
+	  [facebook_login_wget user_agent cookies_filename url filename]]
       [prog [terminal_format standard-terminal '\nfacebook_user_profile-execute-download_all_friends_webpage error: ' [get this uid] ' *** ERROR DOWNLOADING ALL FRIENDS WEBPAGE ***']
 	    nil]]]]
 

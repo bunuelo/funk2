@@ -326,6 +326,12 @@
 [deftypefunk facebook_user_profile get tsv_filename []
   [string-concat [get this profile_directory] 'brief.tsv']]
 
+[deftypefunk facebook_user_profile execute download []
+  [terminal_format standard-terminal '\nDownloading ' [get this uid]]
+  [get this public_webpage]
+  [get this login_webpage]
+  [get this all_friends_webpage]]
+
 [deftypefunk facebook_user_profile execute generate_tsv []
   [terminal_format standard-terminal '\nGenerating tsv ' [get this uid]]
   [string-save [get this as-tsv_row] [get this tsv_filename]]]
@@ -389,6 +395,14 @@
 			      [have profile_uid_set add uid]]]]]
 		dirs]]
 	]]]]
+
+[deftypefunk facebook execute download_all []
+  [terminal_format standard-terminal '\nFacebook beginning to download all.']
+  [mapc [funk [user_uid]
+	      [have [new facebook_user_profile this user_uid] download]]
+	[get this user_uids]]
+  [terminal_format standard-terminal '\nFacebook done downloading all.']
+  nil]
 
 [deftypefunk facebook execute generate_all_tsv []
   [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']

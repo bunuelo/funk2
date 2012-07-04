@@ -327,6 +327,7 @@
   [string-concat [get this profile_directory] 'brief.tsv']]
 
 [deftypefunk facebook_user_profile execute generate_tsv []
+  [terminal_format standard-terminal '\nGenerating tsv ' [get this uid]]
   [string-save [get this as-tsv_row] [get this tsv_filename]]]
 
 [deftypefunk facebook_user_profile get expand_uids []

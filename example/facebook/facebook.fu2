@@ -243,7 +243,7 @@
 					   replace_all '&amp;' '&']]]]]
 	[if [not [is-type `bug parse_result]]
 	    [= all_friends_link parse_result]
-	  [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_link error: ' [get this uid] ' *** ERROR PARSING ALL_FRIENDS_LINK ***\n']]]]
+	  [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_link error: ' [get this uid] ' *** ERROR PARSING ALL_FRIENDS_LINK ***']]]]
   all_friends_link]
 
 [deftypefunk facebook_user_profile get all_friends_webpage_filename []
@@ -258,7 +258,7 @@
 	      [url              all_friends_link]
 	      [filename         [get this all_friends_webpage_filename]]]
 	  [facebook_wget user_agent cookies_filename url filename]]
-      [prog [terminal_format standard-terminal '\nfacebook_user_profile-execute-download_all_friends_webpage error: ' [get this uid] ' *** ERROR DOWNLOADING ALL FRIENDS WEBPAGE ***\n']
+      [prog [terminal_format standard-terminal '\nfacebook_user_profile-execute-download_all_friends_webpage error: ' [get this uid] ' *** ERROR DOWNLOADING ALL FRIENDS WEBPAGE ***']
 	    nil]]]]
 
 `[deftypefunk facebook_user_profile execute download_all_friends_webpage []
@@ -271,7 +271,7 @@
 	    [let [[load_file_result [shelter [string-load [get this all_friends_webpage_filename]]]]]
 	      [if [not [is-type `bug load_file_result]]
 		  [= all_friends_webpage load_file_result]
-		[terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_webpage error: ' [get this uid] ' *** ERROR LOADING ALL FRIENDS WEBPAGE FILE ***\n']]]]]
+		[terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_webpage error: ' [get this uid] ' *** ERROR LOADING ALL FRIENDS WEBPAGE FILE ***']]]]]
   all_friends_webpage]
 
 [deftypefunk facebook_user_profile get all_friend_uids []

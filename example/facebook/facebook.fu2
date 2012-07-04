@@ -29,7 +29,7 @@
   [have this replace_all '"' '\\"']]
 
 [defunk facebook_wget [user_agent cookies_filename url filename]
-  [let [[command [string-concat 'wget'
+  [let [[command [string-concat 'tsocks wget'
 				[if user_agent
 				    [string-concat ' --user-agent="' [string-quote_protect user_agent] '"']
 				  '']
@@ -43,9 +43,9 @@
     [let [[result [shelter [string-load filename]]]]
       [if [is-type `bug result]
 	  nil
-	[if [get result contains 'Security Check Required']
+	[if [get result contains '<title>Security Check Required | Facebook</title>']
 	    [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
-		  [print 'Security Check']
+		  [print 'Security Check Required']
 		  nil]
 	  result]]]]]
 

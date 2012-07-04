@@ -211,6 +211,23 @@ through a given edge label, $\ell_e$, as defined in
 v_1.\ell_e = \{v_2 ~:~ (v_1, v_2) \in S_E \wedge \ell_e \in \mu[(v_1, v_2)]\}
 \end{equation}
 
+\section{Simulated Existence}
+
+Activities in continuous Space actually exist.  Once we have
+considered the activities in Duration to be the set of symbols, $S$,
+we have assumed static representations for the actual dynamic.  The
+dynamic does not have terms to help us in representing.  Therefore,
+the question of existence becomes a question of whether or not a
+symbol is in the set that is the current state of the simulation, $S$.
+Equation~\ref{equation:exists} shows a definition of {\tt exists},
+defined as the subgraph relationship between any state, $x$,
+represented as a labelled graph, and the currently simulated state
+graph, $S$:
+\begin{equation}
+\label{equation:exists}
+\text{exists}(x) \longleftrightarrow x ~{\subseteq}~ S
+\end{equation}
+
 \section{Representing Reflective Thinking Activity}
 
 Reflective thinking exists as activities in Duration alongside the
@@ -307,11 +324,11 @@ the physical activity subgraph, $\mathcal{P}$.
 
 \section{Defining N Layers of Reflective Thinking Activities}
 
-The layers of reflective activity are inductively defined by naming
-the physical activity subgraph as $\text{reflective}^0$ thinking
-activity, $\mathcal{R}^0$.  Then, the subgraph of each layer,
-$\mathcal{R}^n$, of $\text{reflective}^n$ thinking activity is defined
-in
+Layers of reflective activity are defined inductively, beginning with
+$\text{reflective}^0$ layer of activity, $\mathcal{R}^0$, as the
+initial given physical activity, $\mathcal{P}$.  Then, each subsequent
+layer of $\text{reflective}^{n+1}$ thinking activity,
+$\mathcal{R}^{n+1}$, is defined in terms of $\mathcal{R}^n$ in
 {\mbox{Equations~\ref{equation:define_reflective_n_activity_graph_first}}}
 {\mbox{through~\ref{equation:define_reflective_n_activity_graph_last}}}.
 \begin{align}
@@ -330,10 +347,141 @@ in
 \label{equation:define_reflective_n_activity_graph_last}
 \end{align}
 
+\section{Representing Symbolic Reference}
 
-\section{Symbolic References to Physical Activities}
+In order to describe symbolization, a representation for a simulated
+symbol must be defined.  A symbol is the most interesting object in
+the model because it functions as a static reference to the dynamic,
+while being fundamentally dynamic itself.  There are two primary
+features of a symbolic reference:
+\begin{itemize}
+\item A symbol functions as a static reference and, thus, can be
+  ordered in Spatial arrangements that function as static orderings.
+\item A symbol is fundamentally dynamic and, thus, exists as dynamic
+  activities in a referential dynamic continuous Spatial relationship
+  with other dynamic activities in Duration.
+\end{itemize}
+A symbol is actively maintained in Duration, so the existence of a
+simulated symbol in the simulation model would need to be added to the
+set of all simulated activities in Duration.  The set of symbols* in
+layer $n$ is defined to be $X^{*n}$.
+{\mbox{Equations~\ref{equation:define_symbol_first}}}
+{\mbox{through~\ref{equation:define_symbol_last}}} define a symbol*
+and referent structure:
+\begin{align}
+\label{equation:define_symbol_first}
+                                     X^{*n} &\subset \mathcal{R}^n \\
+                                     x^{*n} &\in X^{*n} \\
+\label{equation:define_symbol_last}
+                            x^{*n}.referent &\subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V \\
+\end{align}
+Each symbol*, $x^{*n}$, has a referent, $\rho(x^{*n})$, a subgraph of
+the simulated activities in Duration, $S$.
+{\mbox{Equations~\ref{equation:define_symbol_referent_graph_first}}}
+{\mbox{through~\ref{equation:define_symbol_referent_graph_last}}}
+define the referent subgraph for a symbol*:
+\begin{align}
+\label{equation:define_symbol_referent_graph_first}
+                               \rho(x^{*n}) &= (\rho_V(x^{*n}), \rho_E(x^{*n}), \rho_\mu(x^{*n})) \\
+                             \rho_V(x^{*n}) &= x^{*n}.referent \\
+                             \rho_E(x^{*n}) &= (\rho_V(x^{*n}) \times \rho_V(x^{*n})) \cap S_E \\
+\label{equation:define_symbol_referent_graph_last}
+                        \rho_\mu(x^{*n})(e) &= {\left\{
+                                                 \begin{array}{ll}
+                                                   S_\mu(e)          & \text{if }e {\in} \rho_E(x^{*n}) \\
+                                                   \text{undefined} & \text{otherwise}
+                                                 \end{array}
+                                               \right.}
+\end{align}
+
+\section{leftovers...}
+
+\section{Symbols and Empty Referent Sets}
+
+Symbols are defined in terms of their referents.  If an activity does
+not have a symbolic referent, then it is not a symbolic activity.  The
+following equation expresses the logical definition that symbols
+cannot have empty referent sets:
+\begin{equation*}
+\rho(x^*) \neq \emptyset
+\end{equation*}
+
+\section{Representing Static Space}
+
+In order to refer to a simulated ordered static Spatial relationship,
+I will use an astrisk superscript, a Spatial* relationship.
+Therefore, symbols* are arranged in Space*.  Using this asterisk
+notation, it should be easier to keep track of what parts of the
+simulation are of the actual dynamic and which are of the static, the
+asterisk referring to the static components.
+
+The activity of maintaining a static Spatial relationship, $e^*$,
+statically arranges symbols*, $X^*$.
+Equations~\ref{equation:define_space_activity_first}
+through~\ref{equation:define_space_activity_last} define how symbols
+are statically Spatially arranged, $e^*$:
+\begin{align}
+\label{equation:define_space_activity_first}
+        {S_E}^* &= \left\{e : e{\in}S_E \wedge (v_1, v_2) {\in} {X^*}^2\right\}, ~\text{\emph{Static Spatial relationships}} \\
+      e^* &\in {S_E}^* \\
+\label{equation:define_space_activity_last}
+      e^* &= (v_1^*, ~v_2^*)
+\end{align}
+Spatial relationships can refer to other Spatial relationships from
+the same layer because the activity of the Spatial relationship is in
+the layer below the symbols that it arranges, so one arrangement can
+be symbolized and referred to by another arrangement from the same
+layer.
+
+\section{Representing a Transition}
+
+In order for a thinking activity in the $\text{reflective}^1$ layer to
+refer to types of Spatial arrangements, must also be statically
+symbolic as well.  In the graph representation this means that not
+only do the vertices of an edge need to be static symbols but also, in
+order for this Space to be accessible to thinking, the edge labels
+need to be static symbols as well.
+
+\begin{align}
+\text{\tt{future}}^* &\in \mu((x^*, x.\text{future}^*)) \\
+  \text{\tt{past}}^* &\in \mu((x^*, x.\text{past}^*)) 
+\end{align}
 
 
+
+\section{Representing Spatial Reflection}
+
+Spatial* arrangements of symbols* can be represented as a graph* in or
+above the simulated $\text{reflective}^2$ layer, where Spatial*
+relationship edge activities in the $\text{reflective}^0$ layer order
+symbolic vertex activities in the $\text{reflective}^1$ layer.  The
+$\text{reflective}^2$ layer can symbolize these edge and vertex
+activities, which provides the $\text{reflective}^2$ layer symbolic
+labels for referring to useful parts of these graph structures in the
+layers below.
+
+\begin{definition}
+\label{definition:graph_first}
+\emph{
+A graph $G$ is the 4-tuple $(V, ~E, ~\mu, ~\nu)$, where
+\begin{itemize}
+\item $V$ is the set of vertices,
+\item $E ~{\subseteq}~ V ~{\times}~ V$ is the set of edges,
+\item $\mu : V \mapsto \ell_V$ is a function assigning a label to each vertex,
+\item $\nu : E \mapsto {\ell_E}^*$ is a function assigning a set of labels to each edge.
+\end{itemize}
+}\end{definition} \noindent
+
+
+
+
+
+
+
+
+
+
+\section{leftovers....}
 
 \section{Representing Static Frame Object Types}
 
@@ -463,129 +611,8 @@ x^*.\text{\tt{contains}}^* &=
   \right\}
 \end{align}
 
-\section{Simulated Existence}
 
-Activities in continuous Space actually exist.  Once we have
-considered the activities in Duration to be the set of symbols, $S$,
-we have assumed static representations for the actual dynamic.  The
-dynamic does not have terms to help us in representing.  Therefore,
-the question of existence becomes a question of whether or not a
-symbol is in the set that is the current state of the simulation, $S$.
-Equation~\ref{equation:exists} shows a definition of {\tt exists},
-defined as the subgraph relationship between any state, $x$,
-represented as a labelled graph, and the currently simulated state
-graph, $S$:
-\begin{equation}
-\label{equation:exists}
-\text{exists}(x) \longleftrightarrow x ~{\subseteq}~ S
-\end{equation}
-
-\section{Representing Symbolic Reference}
-
-In order to describe symbolization, a representation for a simulated
-symbol must be defined.  A symbol is the most interesting object in
-the model because it functions as a static reference to the dynamic,
-while being fundamentally dynamic itself.  There are two primary
-features of a symbolic reference:
-\begin{itemize}
-\item A symbol functions as a static reference and, thus, can be
-  ordered in Spatial arrangements that function as static orderings.
-\item A symbol is fundamentally dynamic and, thus, exists as dynamic
-  activities in a referential dynamic continuous Spatial relationship
-  with other dynamic activities in Duration.
-\end{itemize}
-A symbol is actively maintained in Duration, so the existence of a
-simulated symbol in the simulation model would need to be added to the
-set of all simulated activities in Duration.  The symbol*, $x^*$, has
-a referent, $\rho(x^*)$, a subgraph of the simulated activities in
-Duration, $S$, in Equations~\ref{equation:symbolization_first}
-and~\ref{equation:symbolization_last}:
-\begin{align}
-\label{equation:symbolization_first}
-                                       X^* &\equiv \text{\emph{The set of symbols*}} \\
-                                       x^* &\in X^* \\
-                                 \rho(x^*) &\subseteq S \\
- \forall_{x{\in}\mathring{S}} x{\in}\rho(x^*) &\rightarrow (x^*, x) \subseteq S_E \wedge \text{\tt{referent}} \in S_\mu((x^*, x))
-\label{equation:symbolization_last}
-\end{align}
-
-Symbols are defined in terms of their referents.  If an activity does
-not have a symbolic referent, then it is not a symbolic activity.  The
-following equation expresses the logical definition that symbols
-cannot have empty referent sets:
-\begin{equation*}
-\rho(x^*) \neq \emptyset
-\end{equation*}
-
-\section{Representing Static Space}
-
-In order to refer to a simulated ordered static Spatial relationship,
-I will use an astrisk superscript, a Spatial* relationship.
-Therefore, symbols* are arranged in Space*.  Using this asterisk
-notation, it should be easier to keep track of what parts of the
-simulation are of the actual dynamic and which are of the static, the
-asterisk referring to the static components.
-
-The activity of maintaining a static Spatial relationship, $e^*$,
-statically arranges symbols*, $X^*$.
-Equations~\ref{equation:define_space_activity_first}
-through~\ref{equation:define_space_activity_last} define how symbols
-are statically Spatially arranged, $e^*$:
-\begin{align}
-\label{equation:define_space_activity_first}
-        {S_E}^* &= \left\{e : e{\in}S_E \wedge (v_1, v_2) {\in} {X^*}^2\right\}, ~\text{\emph{Static Spatial relationships}} \\
-      e^* &\in {S_E}^* \\
-\label{equation:define_space_activity_last}
-      e^* &= (v_1^*, ~v_2^*)
-\end{align}
-Spatial relationships can refer to other Spatial relationships from
-the same layer because the activity of the Spatial relationship is in
-the layer below the symbols that it arranges, so one arrangement can
-be symbolized and referred to by another arrangement from the same
-layer.
-
-\section{Representing a Transition}
-
-In order for a thinking activity in the $\text{reflective}^1$ layer to
-refer to types of Spatial arrangements, must also be statically
-symbolic as well.  In the graph representation this means that not
-only do the vertices of an edge need to be static symbols but also, in
-order for this Space to be accessible to thinking, the edge labels
-need to be static symbols as well.
-
-\begin{align}
-\text{\tt{future}}^* &\in \mu((x^*, x.\text{future}^*)) \\
-  \text{\tt{past}}^* &\in \mu((x^*, x.\text{past}^*)) 
-\end{align}
-
-
-
-\section{Representing Spatial Reflection}
-
-Spatial* arrangements of symbols* can be represented as a graph* in or
-above the simulated $\text{reflective}^2$ layer, where Spatial*
-relationship edge activities in the $\text{reflective}^0$ layer order
-symbolic vertex activities in the $\text{reflective}^1$ layer.  The
-$\text{reflective}^2$ layer can symbolize these edge and vertex
-activities, which provides the $\text{reflective}^2$ layer symbolic
-labels for referring to useful parts of these graph structures in the
-layers below.
-
-\begin{definition}
-\label{definition:graph_first}
-\emph{
-A graph $G$ is the 4-tuple $(V, ~E, ~\mu, ~\nu)$, where
-\begin{itemize}
-\item $V$ is the set of vertices,
-\item $E ~{\subseteq}~ V ~{\times}~ V$ is the set of edges,
-\item $\mu : V \mapsto \ell_V$ is a function assigning a label to each vertex,
-\item $\nu : E \mapsto {\ell_E}^*$ is a function assigning a set of labels to each edge.
-\end{itemize}
-}\end{definition} \noindent
-
-
-
-
+\section{leftovers...}
 
 \section{Tautological Symbolic Reference}
 

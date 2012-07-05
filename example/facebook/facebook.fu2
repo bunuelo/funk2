@@ -541,15 +541,16 @@
 
 [deftypefunk facebook execute download_all []
   [terminal_format standard-terminal '\nFacebook beginning to download all.']
-  [parc [funk [user_uid]
-	      [have [new facebook_user_profile this user_uid] download]]
-	[get this user_uids]]
+  [partimesc 16
+	     [funk [user_uid]
+		   [have [new facebook_user_profile this user_uid] download]]
+	     [get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done downloading all.']
   nil]
 
 [deftypefunk facebook execute generate_all_tsv []
   [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']
-  [parc [funk [user_uid]
+  [mapc [funk [user_uid]
 	      [have [new facebook_user_profile this user_uid] generate_tsv]]
 	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
@@ -557,7 +558,7 @@
 
 [deftypefunk facebook execute expand_all []
   [terminal_format standard-terminal '\nFacebook beginning expansion of all profiles.']
-  [parc [funk [user_uid]
+  [mapc [funk [user_uid]
 	      [terminal_format standard-terminal '\nfacebook: considering expanding ' user_uid]
 	      [have [new facebook_user_profile this user_uid] expand]]
 	[get this user_uids]]

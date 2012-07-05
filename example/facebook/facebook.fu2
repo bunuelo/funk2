@@ -79,24 +79,17 @@
        [= facebook initial-facebook]
        [= uid      initial-uid]
        
-       [have this assure_profile_directory_exists] 
-       
        [have facebook add_user_uid uid]
        nil]]
 
 [deftypefunk facebook_user_profile get profile_directory_without_slash []
-  [string-concat [get facebook profile_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
+  [get facebook profile_directory_without_slash uid]]
 
 [deftypefunk facebook_user_profile get profile_directory_exists []
-  [pathname-exists [get this profile_directory_without_slash]]]
-
-[deftypefunk facebook_user_profile execute assure_profile_directory_exists []
-  [if [not [get this profile_directory_exists]]
-      [system [string-concat 'mkdir -p "' [get this profile_directory] '"']]]
-  nil]
+  [get facebook profile_directory_exists uid]]
 
 [deftypefunk facebook_user_profile get profile_directory []
-  [string-concat [get this profile_directory_without_slash] '/']]
+  [get facebook profile_directory uid]]
 
 [deftypefunk facebook_user_profile get profile_public_webpage_filename []
   [string-concat [get this profile_directory] 'public_webpage.html']]
@@ -402,27 +395,48 @@
 		  [get this expand_uids]]]]
   nil]
 
+
+'facebook'
+
 [deframe facebook [frame] [[url             'http://facebook.com/']
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
 			   [local_directory '/home/neptune-unencrypted/Desktop/facebook/']
-			   profile_uid_set]
+			   cached_profile_uid_hash]
   [new []
-       [= profile_uid_set [new set]]
+       [= cached_profile_uid_hash [new ptypehash]]
        
        [system [string-concat 'mkdir -p "' local_directory '"']]
        [system [string-concat 'mkdir -p "' [get this profile_directory] '"']]
        
-       [have this load_profiles]
+       `[have this load_profiles]
        
        nil]]
 
-[deftypefunk facebook execute add_user_uid [user_uid]
-  [have profile_uid_set add user_uid]]
+[deftypefunk facebook get profile_directory_without_slash [uid]
+  [string-concat [get this profile_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
+
+[deftypefunk facebook get profile_directory [uid]
+  [string-concat [get this profile_directory_without_slash uid] '/']]
+
+[deftypefunk facebook get profile_directory_exists [uid]
+  [pathname-exists [get this profile_directory_without_slash uid]]]
+
+[deftypefunk facebook execute add_user_uid [uid]
+  [if [not [get this profile_directory_exists uid]]
+      [system [string-concat 'mkdir -p "' [get this profile_directory uid] '"']]]
+  [have cached_profile_uid_hash add uid t]
+  nil]
 
 [deftypefunk facebook get contains_uid [uid]
-  [get profile_uid_set contains uid]]
+  [let [[have_cached_result [get cached_profile_uid_hash contains uid]]]
+    [if have_cached_result
+	[have cached_profile_uid_hash lookup uid]
+      [let [[actual_result [get this profile_directory_exists uid]]]
+	[have cached_profile_uid_hash add uid actual_result]
+	actual_result]]]]
 
 [deftypefunk facebook get user_uids []
+  [have this load_profiles]
   [get profile_uid_set elements]]
 
 [deftypefunk facebook get profile_directory []
@@ -431,12 +445,26 @@
 [deftypefunk facebook get temp_filename []
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
 
+[deftypefunk facebook execute random_uid []
+  [let [[temp_filename [get this temp_filename]]]
+    [system [string-concat 'ls -1 ' [get this profile_directory] ' > "' temp_filename '"']]
+    [let [[dirstr [string-load temp_filename]]]
+      [system [string-concat 'rm -f ' temp_filename]]
+      [let [[dirs [string-split dirstr '\n']]]
+	[let [[profile_directory [get this profile_directory]]]
+	  [let [[dir [elt dirs [random [- [length dirs] 1]]]]]
+	    [let [[subdir [have dir replace_all profile_directory '']]]
+	      [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
+		[have profile_uid_set add uid]
+		uid]]]]]]]]
+
 [deftypefunk facebook execute load_profiles []
   [let [[temp_filename [get this temp_filename]]]
     [system [string-concat 'ls -1 ' [get this profile_directory] ' > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
+	[terminal_format standard-terminal '\nfacebook: loading ' [- [length dirs] 1] ' profiles.']
 	[let [[profile_directory [get this profile_directory]]]
 	  [mapc [funk [dir]
 		      [if [not [equals dir '']]
@@ -462,21 +490,29 @@
   [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
   nil]
 
-[deftypefunk facebook execute expand []
-  [terminal_format standard-terminal '\nFacebook beginning expansion.']
+[deftypefunk facebook execute expand_all []
+  [terminal_format standard-terminal '\nFacebook beginning expansion of all profiles.']
   [mapc [funk [user_uid]
 	      [have [new facebook_user_profile this user_uid] expand]]
 	[get this user_uids]]
-  [terminal_format standard-terminal '\nFacebook done with expansion.']
+  [terminal_format standard-terminal '\nFacebook done with expansion of all profiles.']
   nil]
 
-[defunk facebook-test []
-  [terminal_format standard-terminal '\nfacebook-test.']
+[deftypefunk facebook execute expand_random [iteration_count]
+  [terminal_format standard-terminal '\nFacebook beginning expansion of ' iteration_count ' randomly selected profiles.']
+  [dotimes [i iteration_count]
+    [let [[user_uid [get this random_uid]]]
+      [have [new facebook_user_profile this user_uid] expand]]]
+  [terminal_format standard-terminal '\nFacebook done with expansion of ' iteration_count ' randomly selected profiles.']
+  nil]
+
+[defunk facebook-init []
+  [terminal_format standard-terminal '\nfacebook-init.']
   [let [[facebook [new facebook]]]
     [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]
 	  [user_profile_2 [new facebook_user_profile facebook `steve.johnson.1420354]]]
       
-      [terminal_format standard-terminal '\nfacebook sample user profile created.']
+      [terminal_format standard-terminal '\ntwo facebook sample user profiles created.']
       
       [globalize facebook       facebook]
       [globalize user_profile_1 user_profile_1]

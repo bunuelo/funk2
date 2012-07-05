@@ -364,9 +364,16 @@
 
 [deftypefunk facebook_user_profile execute download []
   [terminal_format standard-terminal '\nDownloading ' [get this uid]]
-  [get this public_webpage]
-  [get this login_webpage]
-  [get this all_friends_webpage]]
+  [let [[result [shelter [get this public_webpage]]]]
+    [if [is-type `bug result]
+	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading public_webpage for ' uid]]]
+  [let [[result [shelter [get this login_webpage]]]]
+    [if [is-type `bug result]
+	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading login_webpage for ' uid]]]
+  [let [[result [shelter [get this all_friends_webpage]]]]
+    [if [is-type `bug result]
+	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading all_friends_webpage for ' uid]]]]
+
 
 [deftypefunk facebook_user_profile execute generate_tsv []
   [terminal_format standard-terminal '\nGenerating tsv ' [get this uid]]

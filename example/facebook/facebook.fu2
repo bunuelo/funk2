@@ -405,6 +405,7 @@
 [deframe facebook [frame] [[url             'http://facebook.com/']
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
 			   [local_directory '/home/neptune-unencrypted/Desktop/facebook/']
+			   profiles_loaded
 			   cached_profile_uid_hash]
   [new []
        [= cached_profile_uid_hash [new ptypehash]]
@@ -440,7 +441,7 @@
 	actual_result]]]]
 
 [deftypefunk facebook get user_uids []
-  [have this load_profiles]
+  [have this assure_profiles_loaded]
   [get cached_profile_uid_hash keys]]
 
 [deftypefunk facebook get profile_directory []
@@ -450,17 +451,9 @@
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
 
 [deftypefunk facebook get random_uid []
-  [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'ls -1 ' [get this profile_directory] ' > "' temp_filename '"']]
-    [let [[dirstr [string-load temp_filename]]]
-      [system [string-concat 'rm -f ' temp_filename]]
-      [let [[dirs [string-split dirstr '\n']]]
-	[let [[profile_directory [get this profile_directory]]]
-	  [let [[dir [elt dirs [random [- [length dirs] 1]]]]]
-	    [let [[subdir [have dir replace_all profile_directory '']]]
-	      [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
-		[have cached_profile_uid_hash add uid t]
-		uid]]]]]]]]
+  [have this assure_profiles_loaded]
+  [let [[uids [get cached_profile_uid_hash keys]]]
+    [elt uids [random [length uids]]]]]
 
 [deftypefunk facebook execute load_profiles []
   [let [[temp_filename [get this temp_filename]]]
@@ -476,7 +469,12 @@
 			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
 			      [have cached_profile_uid_hash add uid t]]]]]
 		dirs]]
+	[= profiles_loaded t]
 	]]]]
+
+[deftypefunk facebook execute assure_profiles_loaded []
+  [if [not profiles_loaded]
+      [have this load_profiles]]]
 
 [deftypefunk facebook execute download_all []
   [terminal_format standard-terminal '\nFacebook beginning to download all.']

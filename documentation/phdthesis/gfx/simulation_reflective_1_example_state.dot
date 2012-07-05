@@ -1,7 +1,7 @@
 digraph G {
 
   subgraph cluster_0 {
-    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
+    label = "{\\huge{The Physical Layer}}";
     //labelloc = "b";
     color=black;
     
@@ -42,7 +42,7 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
     
-    reflective_1 [texlbl = "{\huge$\text{\tt{reflective}}^1$}"];
+    reflective_1 [texlbl = "{\huge{\tt{reflective-1}}}"];
     
     // node references
     
@@ -60,7 +60,7 @@ digraph G {
     
     // reflective_1_edge_1: Block-1 sitting-on Table-1
     
-    reflective_1_edge_1 [texlbl = "{\huge$\mathcal{R}^1_{e_1}$}"];
+    reflective_1_edge_1 [texlbl = "{\huge{\tt{reflective-1-edge-1}}}"];
     
     reflective_1_edge_reflective_1_edge_1 [shape=box,style=filled,label="{\huge{\tt{edge}}}"];
     reflective_1 -> reflective_1_edge_reflective_1_edge_1 [arrowhead=none];
@@ -80,7 +80,7 @@ digraph G {
         
     // reflective_1_edge_2: Gripper-1 being-above Table-1
     
-    reflective_1_edge_2 [texlbl = "{\huge$\mathcal{R}^1_{e_2}$}"];
+    reflective_1_edge_2 [texlbl = "{\huge{\tt{reflective-1-edge-2}}}"];
     
     reflective_1_edge_reflective_1_edge_2 [shape=box,style=filled,label="{\huge{\tt{edge}}}"];
     reflective_1 -> reflective_1_edge_reflective_1_edge_2 [arrowhead=none];

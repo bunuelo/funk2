@@ -274,74 +274,6 @@ line, or even an infinitely finely interpolated multidimensional
 Space.  If some prior physical activity can be represented as a graph,
 then this simulation of reflective thinking is equally applicable.
 
-\section{Representing a Graph in the State}
-
-One of the basic capabilities of the reflective simulation is the
-ability to create a reference, $x$, to an arbitrary subgraph of
-activity, $G$, in the simulation state, $S$.
-{\mbox{Equations~\ref{equation:graph_representation_in_state_first}}}
-{\mbox{through~\ref{equation:graph_representation_in_state_last}}}
-show a definition of a graph representation within the state graph.
-\begin{align}
-\label{equation:graph_representation_in_state_first}
-                                         G &\subset S \\
-                        x.\text{\tt{node}} &= G_V \\
-                    \forall e \in G_E, x_e &\in x.\text{\tt{edge}} \\
-   \forall_{e \in G_E}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{tail}} &= \{e_{v_1}\} \\
-   \forall_{e \in G_E}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{head}} &= \{e_{v_2}\} \\
-\label{equation:graph_representation_in_state_last}
-  \forall_{e \in G_E}, x_e.\text{\tt{label}} &= G_\rho(e)
-\end{align}
-
-\section{The First-order Reflective Focus}
-
-Once there is given physical activity defined in the state graph, $S$,
-the first-order reflective activity is a dynamic reference to this
-given activity.  Here, I introduce the first symbolic references to
-this dynamic first-order reflective activity,
-$\text{\tt{reflective}}^1$.  This symbol functions as a representation
-of the physical activity that is the current subgraph focus,
-$\mathcal{R}^0$, of first-order reflection.
-{\mbox{Equations~\ref{equation:first_order_reflection_representation_in_state_first}}}
-{\mbox{through~\ref{equation:first_order_reflection_representation_in_state_last}}}
-define the first-order reflective focus on the given physical
-activity.
-\begin{align}
-\label{equation:first_order_reflection_representation_in_state_first}
-                                                                \mathcal{R}^0 &\subset S \\
-                                    \text{\tt{reflective}}^1.\text{\tt{node}} &= \mathcal{R}^0_V \\
-                    \forall e \in \mathcal{R}^0_E, \text{\tt{reflective}}^1_e &\in \text{\tt{reflective}}^1.\text{\tt{edge}} \\
-   \forall_{e \in \mathcal{R}^0_E}, e = (e_{v_1}, e_{v_2}) \wedge \text{\tt{reflective}}^1_e.\text{\tt{tail}} &= \{e_{v_1}\} \\
-   \forall_{e \in \mathcal{R}^0_E}, e = (e_{v_1}, e_{v_2}) \wedge \text{\tt{reflective}}^1_e.\text{\tt{head}} &= \{e_{v_2}\} \\
-\label{equation:first_order_reflection_representation_in_state_last}
-  \forall_{e \in \mathcal{R}^0_E}, \text{\tt{reflective}}^1_e.\text{\tt{label}} &= \mathcal{R}^0_\rho(e)
-\end{align}
-{\mbox{\autoref{figure:simulation_reflective_1_example_state}}} shows
-how the $\text{\tt reflective}^1$ symbolic dynamic activity is in a
-continuous Spatial arrangement with the physical layer of activities.
-\begin{figure}
-\includegraphics[width=12cm]{gfx/simulation_reflective_1_example_state}
-\caption[The $\text{\tt reflective}^1$ activity focused on physical
-  activity.]{The $\text{\tt reflective}^1$ activity focused on
-  $\text{reflective}^0$ activity, where black and blue colors
-  distinguish $\text{reflective}^0$ and $\text{reflective}^1$ layers
-  of Spatial arrangements of activities, respectively.}
-\label{figure:simulation_reflective_1_example_state}
-\end{figure}
-
-\section{A Visualization of a Reflective Relationship}
-
-
-\begin{figure}
-\includegraphics[width=12cm]{gfx/reflective_relationship_visualization}
-\caption{A reflective relationship visualization.}
-\label{figure:reflective_relationship_visualization}
-\end{figure}
-
-
-
-\section{leftovers...}
-
 \section{Defining N Layers of Reflective Thinking Activities}
 
 Layers of reflective activity are defined inductively, beginning with
@@ -355,17 +287,89 @@ $\mathcal{R}^{n+1}$, is defined in terms of $\mathcal{R}^n$ in
 \label{equation:define_reflective_n_activity_graph_first}
                                         \mathcal{R}^0 &= \mathcal{P} \\
                                      \mathcal{R}^{n+1}_V &\subset S_V \setminus \bigcup_{k=0}^n\mathcal{R}^k_V \\
-                          \text{\tt{reflective}}^{n+1} &\in \mathcal{R}^{n+1}_V \\
-\text{\tt{reflective}}^{n+1}.\text{\tt{reflecting-on}} &= \bigcup_{k=0}^n\mathcal{R}^k_V \\
                                    \mathcal{R}^{n+1}_E &= (\mathcal{R}^{n+1}_V \times \mathcal{R}^{n+1}_V) \cap S_E \\
+\label{equation:define_reflective_n_activity_graph_last}
                               \mathcal{R}^{n+1}_\mu(e) &= {\left\{
                                                             \begin{array}{ll}
                                                               S_\mu(e)          & \text{if }e {\in} \mathcal{R}^{n+1}_E \\
                                                               \text{undefined} & \text{otherwise}
                                                             \end{array}
                                                           \right.}
-\label{equation:define_reflective_n_activity_graph_last}
 \end{align}
+
+\section{Representing a Graph in the State}
+
+One of the basic capabilities of the reflective simulation is the
+ability to create a reference, $x$, to an arbitrary subgraph of
+activity, $\Psi(x)$, in the simulation state, $S$.
+{\mbox{Equations~\ref{equation:first_order_reflection_representation_in_state_first}}}
+{\mbox{through~\ref{equation:first_order_reflection_representation_in_state_last}}}
+show a definition of a graph representation within the state graph.
+\begin{align}
+\label{equation:first_order_reflection_representation_in_state_first}
+                                                                    \Psi(x) &\subset S \\
+                                                         x.\text{\tt{node}} &= \Psi_V(x) \\
+                                               \forall e \in \Psi_E(x), x_e &\in x.\text{\tt{edge}} \\
+   \forall_{e \in \Psi_E(x)}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{tail}} &= \{e_{v_1}\} \\
+   \forall_{e \in \Psi_E(x)}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{head}} &= \{e_{v_2}\} \\
+\label{equation:first_order_reflection_representation_in_state_last}
+                              \forall_{e \in \Psi_E(x)}, x_e.\text{\tt{label}} &= \Psi_\rho(x)(e)
+\end{align}
+
+\section{Representing Reflective Focus}
+
+Once there is given physical activity defined in the state graph, $S$,
+the first-order reflective activity is a dynamic reference to this
+given activity.  Here, I introduce the first symbolic references to
+this dynamic first-order reflective activity,
+$\text{\tt{reflective}}^n$.
+{\mbox{Equations~\ref{equation:reflective_symbol_in_state_first}}}
+{\mbox{and~\ref{equation:reflective_symbol_in_state_last}}} define the
+reflective focus on the given activity.
+\begin{align}
+\label{equation:reflective_symbol_in_state_first}
+        \text{\tt{reflective}}^n &\in \mathcal{R}^n_V, \text{~for $n \geq 1$} \\
+\label{equation:reflective_symbol_in_state_last}
+  \Psi(\text{\tt{reflective}}^n) &\subset S \setminus \bigcup_{k=n}^\infty\mathcal{R}^k_V
+\end{align}
+{\mbox{\autoref{figure:simulation_reflective_1_example_state}}} shows
+how the $\text{\tt reflective}^1$ symbolic dynamic activity is in a
+continuous Spatial arrangement with the physical layer of activities.
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/simulation_reflective_1_example_state}
+\caption[The $\text{\tt reflective}^1$ activity focused on physical
+  activity.]{The $\text{\tt reflective}^1$ activity focused on
+  $\text{reflective}^0$ activity, where black and blue colors
+  distinguish $\text{reflective}^0$ and $\text{reflective}^1$ layers
+  of Spatial arrangements of activities, respectively.}
+\label{figure:simulation_reflective_1_example_state}
+\end{figure}
+
+\section{A Visualization of a Reflective Relationship}
+
+The reflective graph structure in
+{\mbox{\autoref{figure:simulation_reflective_1_example_state}}} is
+messy and confusing in its full structural detail.  In order to
+simplify the visual representation of a reflective relationship, I
+will sometimes use a trapezoidal edge-like visual in order to present
+the same complicated relationship structure in a simpler way.
+{\mbox{\autoref{figure:reflective_relationship_visualization}}} shows
+a simpler visualization of the same example reflective relationship.
+\begin{figure}
+\center
+\includegraphics[width=8cm]{gfx/reflective_relationship_visualization}
+\caption[A reflective relationship visualization.]{A reflective
+  relationship visualization, where the trapezoid is a visual
+  representation, a shorthand, for the same reflective relationship
+  depicted in
+  {\mbox{\autoref{figure:simulation_reflective_1_example_state}}}.
+  Note that the subgraph, $\Psi$, of the state graph, $S$, is not
+  itself a symbol in the state graph.}
+\label{figure:reflective_relationship_visualization}
+\end{figure}
+
+\section{leftovers...}
 
 \section{Representing Symbolic Reference}
 
@@ -390,10 +394,10 @@ layer $n$ is defined to be $X^{*n}$.
 and referent structure:
 \begin{align}
 \label{equation:define_symbol_first}
-                                     X^{*n} &\subset \mathcal{R}^n \\
-                                     x^{*n} &\in X^{*n} \\
+           X^{*n} &= \text{\tt{reflective}}^n.\text{\tt{symbol}} \\
+           x^{*n} &\in X^{*n} \\
 \label{equation:define_symbol_last}
-                            x^{*n}.referent &\subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V \\
+  x^{*n}.referent &\subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V \\
 \end{align}
 Each symbol*, $x^{*n}$, has a referent, $\rho(x^{*n})$, a subgraph of
 the simulated activities in Duration, $S$.
@@ -413,6 +417,8 @@ define the referent subgraph for a symbol*:
                                                  \end{array}
                                                \right.}
 \end{align}
+
+
 
 \section{leftovers...}
 

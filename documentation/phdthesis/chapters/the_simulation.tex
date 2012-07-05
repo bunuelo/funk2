@@ -252,18 +252,6 @@ model of mind.  The reflective activity is primarily reflecting on the
 rest of the simulation state, everything that existed before the
 $\text{\tt{reflective}}^1$ node was added to the simulation state
 graph.
-{\mbox{\autoref{figure:simulation_reflective_1_example_state}}} shows
-how the $\text{\tt reflective}^1$ symbolic dynamic activity is in a
-continuous Spatial arrangement with the physical layer of activities.
-\begin{figure}
-\includegraphics[width=12cm]{gfx/simulation_reflective_1_example_state}
-\caption[The $\text{\tt reflective}^1$ activity focused on physical
-  activity.]{The $\text{\tt reflective}^1$ activity focused on
-  $\text{reflective}^0$ activity, where black and blue colors
-  distinguish $\text{reflective}^0$ and $\text{reflective}^1$ layers
-  of Spatial arrangements of activities, respectively.}
-\label{figure:simulation_reflective_1_example_state}
-\end{figure}
 
 \section{Physical Activity is Any Prior Existing Graph}
 
@@ -286,41 +274,73 @@ line, or even an infinitely finely interpolated multidimensional
 Space.  If some prior physical activity can be represented as a graph,
 then this simulation of reflective thinking is equally applicable.
 
-\section{Defining the Physical Activity Subgraph}
+\section{Representing a Graph in the State}
 
-The inseparable dynamic physical activities in Duration are
-represented by a subgraph of the entire simulation state graph, $S$.
-{\mbox{Equations~\ref{equation:physical_activity_nodes_first}}}
-{\mbox{and~\ref{equation:physical_activity_nodes_last}}} define the
-set of nodes, $\mathcal{P}_V$, in the physical activity subgraph.
+One of the basic capabilities of the reflective simulation is the
+ability to create a reference, $x$, to an arbitrary subgraph of
+activity, $G$, in the simulation state, $S$.
+{\mbox{Equations~\ref{equation:graph_representation_in_state_first}}}
+{\mbox{through~\ref{equation:graph_representation_in_state_last}}}
+show a definition of a graph representation within the state graph.
 \begin{align}
-\label{equation:physical_activity_nodes_first}
-  \mathcal{P}_V &= \{v ~:~ (\text{\tt{reflective}}^1, v) \in S_E \wedge \text{\tt{reflecting-on}} \in \mu[(\text{\tt{reflective}}^1, v)]\} \\
-\label{equation:physical_activity_nodes_last}
-                &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}}
+\label{equation:graph_representation_in_state_first}
+                                         G &\subset S \\
+                        x.\text{\tt{node}} &= G_V \\
+                    \forall e \in G_E, x_e &\in x.\text{\tt{edge}} \\
+   \forall_{e \in G_E}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{tail}} &= \{e_{v_1}\} \\
+   \forall_{e \in G_E}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{head}} &= \{e_{v_2}\} \\
+\label{equation:graph_representation_in_state_last}
+  \forall_{e \in G_E}, x_e.\text{\tt{label}} &= G_\rho(e)
 \end{align}
-Notice that the physical activity subgraph is defined in terms of the
-representation of the dynamic $\text{reflective}^1$ activity,
-$\text{\tt{reflective}}^1$.  Given the nodes, $\mathcal{P}_V$, of the
-physical activity subgraph,
-{\mbox{Equations~\ref{equation:physical_activity_graph_first}}}
-{\mbox{through~\ref{equation:physical_activity_graph_last}}} define
-the physical activity subgraph, $\mathcal{P}$.
+
+\section{The First-order Reflective Focus}
+
+Once there is given physical activity defined in the state graph, $S$,
+the first-order reflective activity is a dynamic reference to this
+given activity.  Here, I introduce the first symbolic references to
+this dynamic first-order reflective activity,
+$\text{\tt{reflective}}^1$.  This symbol functions as a representation
+of the physical activity that is the current subgraph focus,
+$\mathcal{R}^0$, of first-order reflection.
+{\mbox{Equations~\ref{equation:first_order_reflection_representation_in_state_first}}}
+{\mbox{through~\ref{equation:first_order_reflection_representation_in_state_last}}}
+define the first-order reflective focus on the given physical
+activity.
 \begin{align}
-\label{equation:physical_activity_graph_first}
-           \text{\tt{reflective}}^1 &\in \mathcal{R}^1_V \\
-                        \mathcal{P} &= (\mathcal{P}_V, \mathcal{P}_E, \mathcal{P}_\mu) \\
-                      \mathcal{P}_V &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}} \\
-                      \mathcal{P}_E &= (\mathcal{P}_V \times \mathcal{P}_V) \cap S_E \\
-\label{equation:physical_activity_graph_last}
-\mathcal{P}_\mu(e) &=
-   {\left\{
-      \begin{array}{ll}
-        S_\mu(e) & \text{if }e {\in} \mathcal{P}_E \\
-        \text{undefined}          & \text{otherwise}
-      \end{array}
-    \right.}
+\label{equation:first_order_reflection_representation_in_state_first}
+                                                                \mathcal{R}^0 &\subset S \\
+                                    \text{\tt{reflective}}^1.\text{\tt{node}} &= \mathcal{R}^0_V \\
+                    \forall e \in \mathcal{R}^0_E, \text{\tt{reflective}}^1_e &\in \text{\tt{reflective}}^1.\text{\tt{edge}} \\
+   \forall_{e \in \mathcal{R}^0_E}, e = (e_{v_1}, e_{v_2}) \wedge \text{\tt{reflective}}^1_e.\text{\tt{tail}} &= \{e_{v_1}\} \\
+   \forall_{e \in \mathcal{R}^0_E}, e = (e_{v_1}, e_{v_2}) \wedge \text{\tt{reflective}}^1_e.\text{\tt{head}} &= \{e_{v_2}\} \\
+\label{equation:first_order_reflection_representation_in_state_last}
+  \forall_{e \in \mathcal{R}^0_E}, \text{\tt{reflective}}^1_e.\text{\tt{label}} &= \mathcal{R}^0_\rho(e)
 \end{align}
+{\mbox{\autoref{figure:simulation_reflective_1_example_state}}} shows
+how the $\text{\tt reflective}^1$ symbolic dynamic activity is in a
+continuous Spatial arrangement with the physical layer of activities.
+\begin{figure}
+\includegraphics[width=12cm]{gfx/simulation_reflective_1_example_state}
+\caption[The $\text{\tt reflective}^1$ activity focused on physical
+  activity.]{The $\text{\tt reflective}^1$ activity focused on
+  $\text{reflective}^0$ activity, where black and blue colors
+  distinguish $\text{reflective}^0$ and $\text{reflective}^1$ layers
+  of Spatial arrangements of activities, respectively.}
+\label{figure:simulation_reflective_1_example_state}
+\end{figure}
+
+\section{A Visualization of a Reflective Relationship}
+
+
+\begin{figure}
+\includegraphics[width=12cm]{gfx/reflective_relationship_visualization}
+\caption{A reflective relationship visualization.}
+\label{figure:reflective_relationship_visualization}
+\end{figure}
+
+
+
+\section{leftovers...}
 
 \section{Defining N Layers of Reflective Thinking Activities}
 
@@ -395,6 +415,42 @@ define the referent subgraph for a symbol*:
 \end{align}
 
 \section{leftovers...}
+
+\section{Representing Reflection on the Physical Activity Subgraph}
+
+The inseparable dynamic physical activities in Duration are
+represented by a subgraph of the entire simulation state graph, $S$.
+{\mbox{Equations~\ref{equation:physical_activity_nodes_first}}}
+{\mbox{and~\ref{equation:physical_activity_nodes_last}}} define the
+set of nodes, $\mathcal{P}_V$, in the physical activity subgraph.
+\begin{align}
+\label{equation:physical_activity_nodes_first}
+  \mathcal{P}_V &= \{v ~:~ (\text{\tt{reflective}}^1, v) \in S_E \wedge \text{\tt{reflecting-on}} \in \mu[(\text{\tt{reflective}}^1, v)]\} \\
+\label{equation:physical_activity_nodes_last}
+                &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}}
+\end{align}
+Notice that the physical activity subgraph is defined in terms of the
+representation of the dynamic $\text{reflective}^1$ activity,
+$\text{\tt{reflective}}^1$.  Given the nodes, $\mathcal{P}_V$, of the
+physical activity subgraph,
+{\mbox{Equations~\ref{equation:physical_activity_graph_first}}}
+{\mbox{through~\ref{equation:physical_activity_graph_last}}} define
+the physical activity subgraph, $\mathcal{P}$.
+\begin{align}
+\label{equation:physical_activity_graph_first}
+           \text{\tt{reflective}}^1 &\in \mathcal{R}^1_V \\
+                        \mathcal{P} &= (\mathcal{P}_V, \mathcal{P}_E, \mathcal{P}_\mu) \\
+                      \mathcal{P}_V &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}} \\
+                      \mathcal{P}_E &= (\mathcal{P}_V \times \mathcal{P}_V) \cap S_E \\
+\label{equation:physical_activity_graph_last}
+\mathcal{P}_\mu(e) &=
+   {\left\{
+      \begin{array}{ll}
+        S_\mu(e) & \text{if }e {\in} \mathcal{P}_E \\
+        \text{undefined}          & \text{otherwise}
+      \end{array}
+    \right.}
+\end{align}
 
 \section{Symbols and Empty Referent Sets}
 

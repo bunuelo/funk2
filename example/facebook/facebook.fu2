@@ -258,7 +258,7 @@
 										  '<a class="tab" href="']]
 							      '"']]
 					   replace_all '&amp;' '&']]]]]
-	[if [is-type `bug result]
+	[if [is-type `bug parse_result]
 	    [prog [= parse_result [shelter [let [[login_webpage [get this login_webpage]]]
 					     [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div class="relationshipSection">']]
 											  '<span class="fcg"><a href="']]

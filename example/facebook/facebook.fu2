@@ -86,20 +86,20 @@
        [have facebook add_user_uid uid]
        nil]]
 
-[deftypefunk facebook_user_profile get profile_directory_without_slash []
-  [get facebook profile_directory_without_slash uid]]
+[deftypefunk facebook_user_profile get user_profile_directory_without_slash []
+  [get facebook user_profile_directory_without_slash uid]]
 
-[deftypefunk facebook_user_profile get profile_directory_exists []
-  [get facebook profile_directory_exists uid]]
+[deftypefunk facebook_user_profile get user_profile_directory_exists []
+  [get facebook user_profile_directory_exists uid]]
 
-[deftypefunk facebook_user_profile get profile_directory []
-  [get facebook profile_directory uid]]
+[deftypefunk facebook_user_profile get user_profile_directory []
+  [get facebook user_profile_directory uid]]
 
 [deftypefunk facebook_user_profile get profile_public_webpage_filename []
-  [string-concat [get this profile_directory] 'public_webpage.html']]
+  [string-concat [get this user_profile_directory] 'public_webpage.html']]
 
 [deftypefunk facebook_user_profile get profile_login_webpage_filename []
-  [string-concat [get this profile_directory] 'login_webpage.html']]
+  [string-concat [get this user_profile_directory] 'login_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_profile_public_webpage []
   [terminal_format standard-terminal '\nDownloading public webpage ' [get this uid]]
@@ -260,18 +260,18 @@
 							      '"']]
 					   replace_all '&amp;' '&']]]]]
 	[if [is-type `bug parse_result]
-	    [prog [= parse_result [shelter [let [[login_webpage [get this login_webpage]]]
-					     [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div class="relationshipSection">']]
-											  '<span class="fcg"><a href="']]
-								      '"']]
-						   replace_all '&amp;' '&']]]]]]
+	    [= parse_result [shelter [let [[login_webpage [get this login_webpage]]]
+				       [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div class="relationshipSection">']]
+										    '<span class="fcg"><a href="']]
+								'"']]
+					     replace_all '&amp;' '&']]]]]
 	[if [not [is-type `bug parse_result]]
 	    [= all_friends_link parse_result]
 	  [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_link error: ' [get this uid] ' *** ERROR PARSING ALL_FRIENDS_LINK ***']]]]
   all_friends_link]
 
 [deftypefunk facebook_user_profile get all_friends_webpage_filename []
-  [string-concat [get this profile_directory] 'all_friends_webpage.html']]
+  [string-concat [get this user_profile_directory] 'all_friends_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_all_friends_webpage []
   [terminal_format standard-terminal '\nDownloading all friends webpage ' [get this uid]]
@@ -359,7 +359,7 @@
 		 ]]
 
 [deftypefunk facebook_user_profile get tsv_filename []
-  [string-concat [get this profile_directory] 'brief.tsv']]
+  [string-concat [get this user_profile_directory] 'brief.tsv']]
 
 [deftypefunk facebook_user_profile execute download []
   [terminal_format standard-terminal '\nDownloading ' [get this uid]]
@@ -425,18 +425,18 @@
        
        nil]]
 
-[deftypefunk facebook get profile_directory_without_slash [uid]
+[deftypefunk facebook get user_profile_directory_without_slash [uid]
   [string-concat [get this profile_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
 
-[deftypefunk facebook get profile_directory [uid]
-  [string-concat [get this profile_directory_without_slash uid] '/']]
+[deftypefunk facebook get user_profile_directory [uid]
+  [string-concat [get this user_profile_directory_without_slash uid] '/']]
 
-[deftypefunk facebook get profile_directory_exists [uid]
-  [pathname-exists [get this profile_directory_without_slash uid]]]
+[deftypefunk facebook get user_profile_directory_exists [uid]
+  [pathname-exists [get this user_profile_directory_without_slash uid]]]
 
 [deftypefunk facebook execute add_user_uid [uid]
-  [if [not [get this profile_directory_exists uid]]
-      [system [string-concat 'mkdir -p "' [get this profile_directory uid] '"']]]
+  [if [not [get this user_profile_directory_exists uid]]
+      [system [string-concat 'mkdir -p "' [get this user_profile_directory uid] '"']]]
   [have cached_profile_uid_hash add uid t]
   nil]
 
@@ -444,7 +444,7 @@
   [let [[have_cached_result [get cached_profile_uid_hash contains uid]]]
     [if have_cached_result
 	[have cached_profile_uid_hash lookup uid]
-      [let [[actual_result [get this profile_directory_exists uid]]]
+      [let [[actual_result [get this user_profile_directory_exists uid]]]
 	[have cached_profile_uid_hash add uid actual_result]
 	actual_result]]]]
 

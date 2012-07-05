@@ -316,7 +316,7 @@ show a definition of a graph representation within the state graph.
                               \forall_{e \in \Psi_E(x)}, x_e.\text{\tt{label}} &= \Psi_\rho(x)(e)
 \end{align}
 
-\section{Representing Reflective Focus}
+\section{Representing the Reflective Focus}
 
 Once there is given physical activity defined in the state graph, $S$,
 the first-order reflective activity is a dynamic reference to this
@@ -398,23 +398,16 @@ and referent structure:
 \label{equation:define_symbol_last}
   x^{*n}.referent &\subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V \\
 \end{align}
-Each symbol*, $x^{*n}$, has a referent, $\rho(x^{*n})$, a subgraph of
-the simulated activities in Duration, $S$.
+Each symbol*, $x^{*n}$, has a reflective focus, $\Psi(x^{*n})$, a
+subgraph of the simulated activities in Duration, $S$.
 {\mbox{Equations~\ref{equation:define_symbol_referent_graph_first}}}
 {\mbox{through~\ref{equation:define_symbol_referent_graph_last}}}
 define the referent subgraph for a symbol*:
 \begin{align}
 \label{equation:define_symbol_referent_graph_first}
-                               \rho(x^{*n}) &= (\rho_V(x^{*n}), \rho_E(x^{*n}), \rho_\mu(x^{*n})) \\
-                             \rho_V(x^{*n}) &= x^{*n}.referent \\
-                             \rho_E(x^{*n}) &= (\rho_V(x^{*n}) \times \rho_V(x^{*n})) \cap S_E \\
+  \Psi(x^{*n}) &\subset S \\
 \label{equation:define_symbol_referent_graph_last}
-                        \rho_\mu(x^{*n})(e) &= {\left\{
-                                                 \begin{array}{ll}
-                                                   S_\mu(e)          & \text{if }e {\in} \rho_E(x^{*n}) \\
-                                                   \text{undefined} & \text{otherwise}
-                                                 \end{array}
-                                               \right.}
+  \Psi(x^{*n}) &\subset S
 \end{align}
 
 

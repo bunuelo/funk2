@@ -247,7 +247,7 @@
 					     [get [car [string-split str '"']] as-symbol]]
 				       [cdr [string-split webpage_friends '<a href="http://www.facebook.com/']]]]]]]
 	[if [is-type `bug result]
-	    [prog [terminal_format standard-terminal '\nfacebook_user_profile-get-top_friend_uids bug: ' result]
+	    [prog `[terminal_format standard-terminal '\nfacebook_user_profile-get-top_friend_uids bug: ' result]
 		  nil]
 	  [= top_friend_uids result]]]]
   top_friend_uids]
@@ -307,7 +307,7 @@
 							      '--></code>']]
 					   'href="http://www.facebook.com/']]]]]
     [if [is-type `bug result]
-	[prog [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friend_uids bug: ' result]
+	[prog `[terminal_format standard-terminal '\nfacebook_user_profile-get-all_friend_uids bug: ' result]
 	      nil]
       result]]]
 

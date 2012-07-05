@@ -508,6 +508,9 @@
   [terminal_format standard-terminal '\nFacebook done with expansion of ' iteration_count ' randomly selected profiles.']
   nil]
 
+[deftypefunk facebook execute expand []
+  [have this expand_all]]
+
 [defunk facebook-init []
   [terminal_format standard-terminal '\nfacebook-init.']
   [let [[facebook [new facebook]]]

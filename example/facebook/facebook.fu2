@@ -437,7 +437,7 @@
 
 [deftypefunk facebook get user_uids []
   [have this load_profiles]
-  [get profile_uid_set elements]]
+  [get cached_profile_uid_hash keys]]
 
 [deftypefunk facebook get profile_directory []
   [string-concat local_directory 'profile/']]
@@ -445,7 +445,7 @@
 [deftypefunk facebook get temp_filename []
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
 
-[deftypefunk facebook execute random_uid []
+[deftypefunk facebook get random_uid []
   [let [[temp_filename [get this temp_filename]]]
     [system [string-concat 'ls -1 ' [get this profile_directory] ' > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
@@ -455,7 +455,7 @@
 	  [let [[dir [elt dirs [random [- [length dirs] 1]]]]]
 	    [let [[subdir [have dir replace_all profile_directory '']]]
 	      [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
-		[have profile_uid_set add uid]
+		[have cached_profile_uid_hash add uid t]
 		uid]]]]]]]]
 
 [deftypefunk facebook execute load_profiles []
@@ -470,7 +470,7 @@
 		      [if [not [equals dir '']]
 			  [let [[subdir [have dir replace_all profile_directory '']]]
 			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
-			      [have profile_uid_set add uid]]]]]
+			      [have cached_profile_uid_hash add uid t]]]]]
 		dirs]]
 	]]]]
 

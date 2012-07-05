@@ -61,6 +61,7 @@ phdthesis.pdf: \
   gfx/simulation_example_state.pdf \
   gfx/simulation_reflective_1_example_state.pdf \
   gfx/reflective_relationship_visualization.pdf \
+  gfx/example_symbolic_reference_to_physical_activity.pdf \
   gfx/simulation_example_state_graph.pdf \
   gfx/basic_frame_object_types.pdf \
   gfx/multiple_agent_environment.pdf \

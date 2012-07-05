@@ -389,26 +389,22 @@ simulated symbol in the simulation model would need to be added to the
 set of all simulated activities in Duration.  The set of symbols* in
 layer $n$ is defined to be $X^{*n}$.
 {\mbox{Equations~\ref{equation:define_symbol_first}}}
-{\mbox{through~\ref{equation:define_symbol_last}}} define a symbol*
-and referent structure:
+{\mbox{and~\ref{equation:define_symbol_last}}} define layered sets of
+symbols*:
 \begin{align}
 \label{equation:define_symbol_first}
            X^{*n} &= \text{\tt{reflective}}^n.\text{\tt{symbol}} \\
-           x^{*n} &\in X^{*n} \\
 \label{equation:define_symbol_last}
-  x^{*n}.referent &\subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V \\
+           x^{*n} &\in X^{*n}
 \end{align}
 Each symbol*, $x^{*n}$, has a reflective focus, $\Psi(x^{*n})$, a
 subgraph of the simulated activities in Duration, $S$.
-{\mbox{Equations~\ref{equation:define_symbol_referent_graph_first}}}
-{\mbox{through~\ref{equation:define_symbol_referent_graph_last}}}
-define the referent subgraph for a symbol*:
-\begin{align}
-\label{equation:define_symbol_referent_graph_first}
-  \Psi(x^{*n}) &\subset S \\
-\label{equation:define_symbol_referent_graph_last}
-  \Psi(x^{*n}) &\subset S
-\end{align}
+{\mbox{Equation~\ref{equation:define_symbol_referent_graph}}} defines
+the referent subgraph, $\Psi(x^{*n})$, for a symbol*, $x^{*n}$:
+\begin{equation}
+\label{equation:define_symbol_referent_graph}
+  \Psi(x^{*n}) \subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V
+\end{equation}
 
 
 

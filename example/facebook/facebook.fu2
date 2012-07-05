@@ -504,6 +504,7 @@
 [deftypefunk facebook execute expand_all []
   [terminal_format standard-terminal '\nFacebook beginning expansion of all profiles.']
   [mapc [funk [user_uid]
+	      [terminal_format standard-terminal '\nfacebook: considering expanding ' user_uid]
 	      [have [new facebook_user_profile this user_uid] expand]]
 	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done with expansion of all profiles.']

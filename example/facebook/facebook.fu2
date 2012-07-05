@@ -469,6 +469,7 @@
 			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
 			      [have cached_profile_uid_hash add uid t]]]]]
 		dirs]]
+	[terminal_format standard-terminal '\nfacebook: done loading profiles.']
 	[= profiles_loaded t]
 	]]]]
 

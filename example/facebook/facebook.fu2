@@ -29,26 +29,30 @@
   [have this replace_all '"' '\\"']]
 
 [defunk facebook_wget [user_agent cookies_filename url filename]
-  [let [[command [string-concat 'tsocks wget'
-				[if user_agent
-				    [string-concat ' --user-agent="' [string-quote_protect user_agent] '"']
-				  '']
-				[if cookies_filename
-				    [string-concat ' --load-cookies "' [string-quote_protect cookies_filename] '"']
-				  '']
-				' -O "' [string-quote_protect filename] '"'
-				' "' [string-quote_protect url] '"']]]
-    [terminal_format standard-terminal '\nsystem: ' command '\n']
-    [system command]
-    [let [[result [shelter [string-load filename]]]]
-      [if [is-type `bug result]
-	  nil
-	[if [or [have result contains 'Security Check Required']
-		[have result contains 'Sicherheitskontrolle erforderlich']]
-	    [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
-		  [terminal_format standard-terminal '\nfacebook_wget error: *** SECURITY CHECK REQUIRED ***']
-		  nil]
-	  result]]]]]
+  [if [pathname-exists [string-concat filename '.failed_security_check']]
+      [prog [terminal_format standard-terminal '\nfacebook_wget warning: skipping because of ' [string-concat filename '.failed_security_check']]
+	    nil]
+    [let [[command [string-concat 'tsocks wget'
+				  [if user_agent
+				      [string-concat ' --user-agent="' [string-quote_protect user_agent] '"']
+				    '']
+				  [if cookies_filename
+				      [string-concat ' --load-cookies "' [string-quote_protect cookies_filename] '"']
+				    '']
+				  ' -O "' [string-quote_protect filename] '"'
+				  ' "' [string-quote_protect url] '"']]]
+      [terminal_format standard-terminal '\nsystem: ' command '\n']
+      [system command]
+      [let [[result [shelter [string-load filename]]]]
+	[if [is-type `bug result]
+	    nil
+	  [if [or [have result contains 'Security Check Required']
+		  [have result contains 'Sicherheitskontrolle erforderlich']]
+	      [prog [system [string-concat 'rm "' [string-quote_protect filename] '"']]
+		    [string-save 'Security Check Required' [string-concat filename '.failed_security_check']]
+		    [terminal_format standard-terminal '\nfacebook_wget error: *** SECURITY CHECK REQUIRED ***']
+		    nil]
+	    result]]]]]]
 
 [defunk facebook_login_wget [user_agent cookies_filename url filename]
   [let [[result [facebook_wget user_agent cookies_filename url filename]]]

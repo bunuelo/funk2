@@ -23,8 +23,9 @@ phdthesis.pdf: \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
   chapters/related_models.tex \
-  chapters/graph_notation.tex \
   chapters/the_simulation.tex \
+  chapters/graph_notation.tex \
+  chapters/reflective_symbolization.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/the_implementation.tex \

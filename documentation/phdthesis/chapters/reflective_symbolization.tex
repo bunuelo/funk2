@@ -1,0 +1,334 @@
+%************************************************
+\chapter{Reflective Symbolization}
+\label{chapter:reflective_symbolization}
+%************************************************
+
+\section{Representing Reflective Thinking Activity}
+
+Reflective thinking exists as activities in Duration alongside the
+physical activities that have just been described.  I will refer to
+the subgraph that represents the $\text{reflective}^1$ thinking
+activities as $\mathcal{R}^1$.  The first symbolic reference to
+reflective thinking is now introduced to this layer of the model.
+Note that I have not introduced any specific symbolic physical
+activity to the model.  The block example is just that, an example.
+Having no symbolic references in the physical layer of the simulation
+is important for keeping the representation for the reflective focus
+as any labelled graph, which subsequently allows for reflection over
+itself, whatever the specific graph representation of reflective
+thinking that will now be described.  This is a key point.
+
+I will use the symbol {\tt $\text{reflective}^1$} to refer to the
+activity of the first-order reflective layer.  This symbol is grounded
+in the activity in Duration that currently actually exists.  This
+symbol does not refer the simulated activities in Duration in the
+simulation model.  This symbol is grounded in the understanding of the
+model of mind.  The reflective activity is primarily reflecting on the
+rest of the simulation state, everything that existed before the
+$\text{\tt{reflective}}^1$ node was added to the simulation state
+graph.
+
+\section{Physical Activity is Any Prior Existing Graph}
+
+Prior to this symbol existing in the simulation state graph, there
+have been no other specific symbols introduced.  This graph of
+physical activities must necessarily exist prior to reflectively
+thinking about it.  Because this prior activity is defined to be
+\emph{any} graph, what remains in order to build $n$ layers of
+reflective thinking activity is to define a reflective planning
+activity that reflects upon this prior activity.  Therefore,
+subsequently, no matter what the reflective thinking description, this
+reflective thinking activity can be duplicated in $n$ reflective
+layers that will reflectively think about any given graph
+representation of activity.  Allowing the physical activity to a be an
+undescribed graph is important in order to allow this recursion.
+Notice that the physical activity is not necessarily composed of
+anything resembling objects as graphs are a very general
+representation that could just as easily represent one single number
+line, or even an infinitely finely interpolated multidimensional
+Space.  If some prior physical activity can be represented as a graph,
+then this simulation of reflective thinking is equally applicable.
+
+\section{Defining N Layers of Reflective Thinking Activities}
+
+Layers of reflective activity are defined inductively, beginning with
+$\text{reflective}^0$ layer of activity, $\mathcal{R}^0$, as the
+initial given physical activity, $\mathcal{P}$.  Then, each subsequent
+layer of $\text{reflective}^{n+1}$ thinking activity,
+$\mathcal{R}^{n+1}$, is defined in terms of $\mathcal{R}^n$ in
+{\mbox{Equations~\ref{equation:define_reflective_n_activity_graph_first}}}
+{\mbox{through~\ref{equation:define_reflective_n_activity_graph_last}}}.
+\begin{align}
+\label{equation:define_reflective_n_activity_graph_first}
+                                        \mathcal{R}^0 &= \mathcal{P} \\
+                                     \mathcal{R}^{n+1}_V &\subset S_V \setminus \bigcup_{k=0}^n\mathcal{R}^k_V \\
+                                   \mathcal{R}^{n+1}_E &= (\mathcal{R}^{n+1}_V \times \mathcal{R}^{n+1}_V) \cap S_E \\
+\label{equation:define_reflective_n_activity_graph_last}
+                              \mathcal{R}^{n+1}_\mu(e) &= {\left\{
+                                                            \begin{array}{ll}
+                                                              S_\mu(e)          & \text{if }e {\in} \mathcal{R}^{n+1}_E \\
+                                                              \text{undefined} & \text{otherwise}
+                                                            \end{array}
+                                                          \right.}
+\end{align}
+
+\section{Representing a Graph in the State}
+
+One of the basic capabilities of the reflective simulation is the
+ability to create a reference, $x$, to an arbitrary subgraph of
+activity, $\Psi(x)$, in the simulation state, $S$.
+{\mbox{Equations~\ref{equation:first_order_reflection_representation_in_state_first}}}
+{\mbox{through~\ref{equation:first_order_reflection_representation_in_state_last}}}
+show a definition of a graph representation within the state graph.
+\begin{align}
+\label{equation:first_order_reflection_representation_in_state_first}
+                                                                    \Psi(x) &\subset S \\
+                                                         x.\text{\tt{node}} &= \Psi_V(x) \\
+                                               \forall e \in \Psi_E(x), x_e &\in x.\text{\tt{edge}} \\
+   \forall_{e \in \Psi_E(x)}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{tail}} &= \{e_{v_1}\} \\
+   \forall_{e \in \Psi_E(x)}, e = (e_{v_1}, e_{v_2}) \wedge x_e.\text{\tt{head}} &= \{e_{v_2}\} \\
+\label{equation:first_order_reflection_representation_in_state_last}
+                              \forall_{e \in \Psi_E(x)}, x_e.\text{\tt{label}} &= \Psi_\rho(x)(e)
+\end{align}
+
+\section{Representing the Reflective Focus}
+
+Once there is given physical activity defined in the state graph, $S$,
+the first-order reflective activity is a dynamic reference to this
+given activity.  Here, I introduce the first symbolic references to
+this dynamic first-order reflective activity,
+$\text{\tt{reflective}}^n$.
+{\mbox{Equations~\ref{equation:reflective_symbol_in_state_first}}}
+{\mbox{and~\ref{equation:reflective_symbol_in_state_last}}} define the
+reflective focus on the given activity.
+\begin{align}
+\label{equation:reflective_symbol_in_state_first}
+        \text{\tt{reflective}}^n &\in \mathcal{R}^n_V, \text{~for $n \geq 1$} \\
+\label{equation:reflective_symbol_in_state_last}
+  \Psi(\text{\tt{reflective}}^n) &\subset S \setminus \bigcup_{k=n}^\infty\mathcal{R}^k_V
+\end{align}
+{\mbox{\autoref{figure:simulation_reflective_1_example_state}}} shows
+how the $\text{\tt reflective}^1$ symbolic dynamic activity is in a
+continuous Spatial arrangement with the physical layer of activities.
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/simulation_reflective_1_example_state}
+\caption[The $\text{\tt reflective}^1$ activity focused on physical
+  activity.]{The $\text{\tt reflective}^1$ activity focused on
+  $\text{reflective}^0$ activity, where black and blue colors
+  distinguish $\text{reflective}^0$ and $\text{reflective}^1$ layers
+  of Spatial arrangements of activities, respectively.}
+\label{figure:simulation_reflective_1_example_state}
+\end{figure}
+
+\section{A Visualization of a Reflective Relationship}
+
+When reflective graph structures, as in
+{\mbox{\autoref{figure:simulation_reflective_1_example_state}}}, get
+to be larger, they can be confusing when shown in full structural
+detail.  In order to simplify the visual representation of a
+reflective relationship, I will sometimes use a trapezoidal edge-like
+visual in order to present the same complicated relationship structure
+in a simpler way.
+{\mbox{\autoref{figure:reflective_relationship_visualization}}} shows
+a simpler visualization of the same example reflective relationship.
+\begin{figure}
+\center
+\includegraphics[width=8cm]{gfx/reflective_relationship_visualization}
+\caption[A reflective relationship visualization.]{A reflective
+  relationship visualization, where the trapezoid is a visual
+  representation, a shorthand, for the same reflective relationship
+  depicted in
+  {\mbox{\autoref{figure:simulation_reflective_1_example_state}}}.
+  Note that the subgraph, $\Psi$, of the state graph, $S$, is not
+  itself a symbol in the state graph.}
+\label{figure:reflective_relationship_visualization}
+\end{figure}
+
+\section{Representing Symbolic Reference}
+
+In order to describe symbolization, a representation for a simulated
+symbol must be defined.  A symbol is the most interesting object in
+the model because it functions as a static reference to the dynamic,
+while being fundamentally dynamic itself.  There are two primary
+features of a symbolic reference:
+\begin{itemize}
+\item A symbol functions as a static reference and, thus, can be
+  ordered in Spatial arrangements that function as static orderings.
+\item A symbol is fundamentally dynamic and, thus, exists as dynamic
+  activities in a referential dynamic continuous Spatial relationship
+  with other dynamic activities in Duration.
+\end{itemize}
+A symbol is actively maintained in Duration, so the existence of a
+simulated symbol in the simulation model would need to be added to the
+set of all simulated activities in Duration.  The set of symbols* in
+layer $n$ is defined to be $X^{*n}$.
+{\mbox{Equations~\ref{equation:define_symbol_first}}}
+{\mbox{and~\ref{equation:define_symbol_last}}} define layered sets of
+symbols*:
+\begin{align}
+\label{equation:define_symbol_first}
+           X^{*n} &= \text{\tt{reflective}}^n.\text{\tt{symbol}} \\
+\label{equation:define_symbol_last}
+           x^{*n} &\in X^{*n}
+\end{align}
+Each symbol*, $x^{*n}$, has a reflective focus, $\Psi(x^{*n})$, a
+subgraph of the simulated activities in Duration, $S$.
+{\mbox{Equation~\ref{equation:define_symbol_referent_graph}}} defines
+the referent subgraph, $\Psi(x^{*n})$, for a symbol*, $x^{*n}$:
+\begin{equation}
+\label{equation:define_symbol_referent_graph}
+  \Psi(x^{*n}) \subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V
+\end{equation}
+
+\section{Representing Symbolic Perception and Memory}
+
+{\mbox{\autoref{figure:example_symbolic_reference_to_physical_activity}}}
+shows an example of a symbol*, $x_1^*$, in the first-order reflective
+layer.  Notice that $\Psi(x_1^*)$ is a subgraph of
+$\Psi(\text{\tt{reflective}}^1)$.  When a symbolic reflective
+reference is contained within the reflective focus, the symbol is said
+to be a \emph{symbolic perception}.
+{\mbox{\autoref{figure:example_symbolic_memory}}} shows a symbolic
+reflective reference, $x_2^*$, to the physical layer of activity that
+is not perceived because it is not contained within the first-order
+reflective focus.  When a symbol is not contained within the
+reflective focus, this is referred to as a \emph{symbolic memory}.
+Note that the physical, $\text{reflective}^0$ layer of activity
+includes all physical activity, including not only current symbolic
+perceptions but also symbolic memories.  In this sense, as the AI
+changes reflective focus, the perceived dynamic physical activity
+changes.
+\begin{figure}
+\center
+\includegraphics[height=10cm]{gfx/example_symbolic_reference_to_physical_activity}
+\caption{Example of a perceived first-order symbolic reference to the
+  physical layer of activity,
+  i.e. $\Psi(x_1^*)\subseteq\Psi(\text{\tt{reflective}}^1)$.}
+\label{figure:example_symbolic_reference_to_physical_activity}
+\end{figure}
+\begin{figure}
+\center
+\includegraphics[height=10cm]{gfx/example_symbolic_memory}
+\caption{Example of a non-perceived symbol, or symbolic memory,
+  i.e. $\Psi(x_2^*)\not\subseteq\Psi(\text{\tt{reflective}}^1)$.}
+\label{figure:example_symbolic_memory}
+\end{figure}
+
+\section{Representing Static Space}
+
+Spatial arrangements of static symbols are created by the reflective
+thinking layers.  Static symbols are not contained within the physical
+layer, but these symbols are used to represent transitions from the
+past to the future, which are in turn used to create relationships
+between causes and effects that are used for planning.  Thinking
+activities use these Spatial arrangements of symbols to think about
+the given activities of the physical layer as well as planning in the
+first-order reflective layer.
+
+\section{Representing Simultaneities and Transitions}
+
+As {\mbox{\autoref{equation:define_symbol_referent_graph}}} states,
+each reflective thinking layer can create static symbolic references
+to activities in the layers below as well as any static symbolic
+activities in or below that layer.  Simultaneities and transitions are
+the basis for representing concurrent and sequential event knowledge.
+It is a type of static Spatial arrangement between static symbolic
+references.  Simultaneities and transitions can be arranged into
+sequences back in time, forward in time, as well as organizing time
+into binary trees for efficient recall.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/two_example_grounded_symbolic_references}
+\caption[Two example symbolic references.]{Two example grounded symbolic references, $x_1^*$ and $x_2^*$.}
+\label{figure:two_example_grounded_symbolic_references}
+\end{figure}
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/example_transition}
+\caption[An example of a transition between simultaneities.]{An
+  example of a transition between simultaneities of first-order static
+  symbolic references, $x_1^*$ and $x_2^*$.}
+\label{figure:example_transition}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+\section{leftovers...}
+
+\section{Tautological Symbolic Reference}
+
+{\mbox{Equations~\ref{equation:tautological_reference_first}}}
+{\mbox{through~\ref{equation:tautological_reference_last}}} give an
+example of a symbol*, $x^*$, that tautologically references its own
+symbolization activity:
+\begin{align}
+\label{equation:tautological_reference_first}
+\rho(x^*) &= (V_x, ~E_x, ~\mu_x, ~\nu_x) \\
+ V_{x^*}   &= \{v_1\} \\
+ E_{x^*}   &= \emptyset \\
+ \mu_{x^*} &= v : \{v_1\} ~{\mapsto}~ \{x^*\} \\
+\label{equation:tautological_reference_last}
+            \nu_{x^*} &= e : \emptyset ~{\mapsto}~ \emptyset
+\end{align}
+Tautological references are meaningless.  In a model that is
+symbolizing and perceiving the world in terms of symbols, tautological
+symbolic references always have the potential for being active
+perceptions because the existence of a tautological symbol implies
+that its referent, itself, is active.  When symbols are used for
+perception, tautological references are at best distracting and at
+worst render a model meaningless.
+
+Because a tautological reference removes all utility from symbols* in
+the simulation model, it is important that avoiding tautological
+references is the default behavior.  In order to easily avoid
+tautological references, I define an ordering for symbolic references
+that keeps references from ever becoming purely tautological.
+
+
+
+
+\section{leftovers...}
+
+\section{Simulation States}
+
+At any given point in the simulation, the state, $S$, is static, but
+the simulation can have different static states at different time
+steps, $n$, giving a number of static states, $S[n]$.  The simulation
+process is a discrete stepwise activity.  The simulation step is the
+dynamic activity that is not part of the state, $S$, of the simulation
+model.  I will now describe a notation for referring to the different
+states that result from a simulation process.
+
+Equations~\ref{equation:simulate_first}
+and~\ref{equation:simulate_last} show a notation for referring to the
+state of a simulation after a number of simulation steps, $n$.
+\begin{align}
+\label{equation:simulate_first}
+S[0] &= \text{\emph{The Initial State}} \\
+\label{equation:simulate_last}
+S[n] &= \text{\emph{simulate}}~S[n-1]
+\end{align}
+Equation~\ref{equation:simulate_first} defines $S[0]$ to be
+the initial representation of the activities in Duration that are
+being simulated; an example of the initial state was given previously
+in Equation~\ref{equation:example_initial_state}.
+Equation~\ref{equation:simulate_last} introduces an explicit reference
+to the activity of simulation with the symbol ``simulate.''  Because I
+have not yet defined this activity, these equations still have a
+reference to the actual dynamic activity of simulation.  I use this
+notation to discuss how the state, $S$, changes during the
+actual process of simulation.  I will use the notation in
+Equation~\ref{equation:simulate_n_steps} to refer to the state of the
+simulation after $n$ actual steps of simulation activity:
+\begin{equation}
+\label{equation:simulate_n_steps}
+S[n] = \text{\emph{simulate}}^n~S[0]
+\end{equation}

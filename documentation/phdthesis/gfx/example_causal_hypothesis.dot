@@ -8,55 +8,13 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
         
-    // x_1^*
-    
-    x_1 [texlbl = "{\huge{\tt{x-1*}}}"];
-    
-    // perception*
-    
-    perception [texlbl = "{\huge{\tt{perception*}}}"];
-    
-    x_1_is_a_perception [shape=box,style=filled,label="{\huge{\tt{is-a*}}}"];
-    x_1 -> x_1_is_a_perception [arrowhead=none];
-    x_1_is_a_perception -> perception [style="-triangle 45"];
-    
-    x_1_is_not_a_perception [shape=box,style=filled,label="{\huge{\tt{is-not-a*}}}"];
-    x_1 -> x_1_is_not_a_perception [arrowhead=none];
-    x_1_is_not_a_perception -> perception [style="-triangle 45"];
-    
-    x_2_is_a_perception [shape=box,style=filled,label="{\huge{\tt{is-a*}}}"];
-    x_2 -> x_2_is_a_perception [arrowhead=none];
-    x_2_is_a_perception -> perception [style="-triangle 45"];
-    
-    x_2_is_not_a_perception [shape=box,style=filled,label="{\huge{\tt{is-not-a*}}}"];
-    x_2 -> x_2_is_not_a_perception [arrowhead=none];
-    x_2_is_not_a_perception -> perception [style="-triangle 45"];
-    
-    // x_2^*
-    
-    x_2 [texlbl = "{\huge{\tt{x-2*}}}"];
-    
     // t_1^*
     
     t_1 [texlbl = "{\huge{\tt{t-1*}}}"];
-    t_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    t_1 -> t_1_reflecting [style=dashed,arrowhead=none];
-    t_1_reflecting -> x_1 [style="-triangle 45,dashed"];
-    t_1_reflecting -> x_1_is_a_perception [style="-triangle 45,dashed"];
-    t_1_reflecting -> x_2 [style="-triangle 45,dashed"];
-    t_1_reflecting -> x_2_is_not_a_perception [style="-triangle 45,dashed"];
-    t_1_reflecting -> perception [style="-triangle 45,dashed"];
     
     // t_2^*
     
     t_2 [texlbl = "{\huge{\tt{t-2*}}}"];
-    t_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    t_2 -> t_2_reflecting [style=dashed,arrowhead=none];
-    t_2_reflecting -> x_1 [style="-triangle 45,dashed"];
-    t_2_reflecting -> x_1_is_not_a_perception [style="-triangle 45,dashed"];
-    t_2_reflecting -> x_2 [style="-triangle 45,dashed"];
-    t_2_reflecting -> x_2_is_a_perception [style="-triangle 45,dashed"];
-    t_2_reflecting -> perception [style="-triangle 45,dashed"];
     
     
     // reflective_1
@@ -70,6 +28,18 @@ digraph G {
     reflective_1_future_t_2 [shape=box,style=filled,label="{\huge{\tt{future*}}}"];
     reflective_1 -> reflective_1_future_t_2 [arrowhead=none];
     reflective_1_future_t_2 -> t_2 [style="-triangle 45"];
-
+    
+    // trans_1^*
+    
+    trans_1 [texlbl = "{\huge{\tt{trans-1*}}}"];
+    
+    trans_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    trans_1 -> trans_1_reflecting [style=dashed,arrowhead=none];
+    trans_1_reflecting -> reflective_1 [style="-triangle 45,dashed"];
+    trans_1_reflecting -> reflective_1_past_t_1 [style="-triangle 45,dashed"];
+    trans_1_reflecting -> t_1 [style="-triangle 45,dashed"];
+    trans_1_reflecting -> reflective_1_future_t_2 [style="-triangle 45,dashed"];
+    trans_1_reflecting -> t_2 [style="-triangle 45,dashed"];
+    
   }
 }

@@ -588,3 +588,14 @@
       [globalize user_profile_2 user_profile_2]
       
       nil]]]
+
+[defunk facebook-save_download_all_image []
+  [= user-boot-commands `[[prog [facebook-init]
+				[have facebook download_all]]]]
+  [save_memory_image 'img/bootstrap-download_all.img']]
+
+[defunk facebook-save_expand_image []
+  [= user-boot-commands `[[prog [facebook-init]
+				[have facebook expand]]]]
+  [save_memory_image 'img/bootstrap-download_all.img']]
+

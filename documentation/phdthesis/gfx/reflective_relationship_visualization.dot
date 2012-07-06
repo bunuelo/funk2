@@ -35,12 +35,12 @@ digraph G {
     // node references
     
     reflective_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    reflective_1 -> reflective_1_reflecting [arrowhead=none];
-    reflective_1_reflecting -> gripper_1 [style="-triangle 45"];
-    reflective_1_reflecting -> block_1 [style="-triangle 45"];
-    reflective_1_reflecting -> table_1 [style="-triangle 45"];
-    reflective_1_reflecting -> gripper_1_being_above_table_1 [style="-triangle 45"];
-    reflective_1_reflecting -> block_1_sitting_on_table_1 [style="-triangle 45"];
+    reflective_1 -> reflective_1_reflecting [style=dashed,arrowhead=none];
+    reflective_1_reflecting -> gripper_1 [style="-triangle 45,dashed"];
+    reflective_1_reflecting -> block_1 [style="-triangle 45,dashed"];
+    reflective_1_reflecting -> table_1 [style="-triangle 45,dashed"];
+    reflective_1_reflecting -> gripper_1_being_above_table_1 [style="-triangle 45,dashed"];
+    reflective_1_reflecting -> block_1_sitting_on_table_1 [style="-triangle 45,dashed"];
     
   }
 }

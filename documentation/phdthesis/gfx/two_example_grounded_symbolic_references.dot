@@ -8,14 +8,9 @@ digraph G {
     node [fillcolor = white, color = "#000000", style = filled];
     edge [color = "#000000"];
     
-    //gripper_1 [texlbl = "{\huge{\tt{Gripper-1}}}"];
     block_1   [texlbl = "{\huge{\tt{Block-1}}}"];
     block_2   [texlbl = "{\huge{\tt{Block-2}}}"];
     table_1   [texlbl = "{\huge{\tt{Table-1}}}"];
-    
-    //gripper_1_being_above_table_1 [shape=box,label="{\huge{\tt{being-above}}}"];
-    //gripper_1 -> gripper_1_being_above_table_1 [arrowhead=none];
-    //gripper_1_being_above_table_1 -> table_1 [style="-triangle 45"];
     
     block_1_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
     block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
@@ -39,65 +34,19 @@ digraph G {
     
     x_1 [texlbl = "{\huge{\tt{x-1*}}}"];
     x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    x_1 -> x_1_reflecting [arrowhead=none];
-    x_1_reflecting -> block_1 [style="-triangle 45"];
-    x_1_reflecting -> table_1 [style="-triangle 45"];
-    x_1_reflecting -> block_1_sitting_on_table_1 [style="-triangle 45"];
-    
-    // perception*
-    
-    perception [texlbl = "{\huge{\tt{perception*}}}"];
-    
-    x_1_is_perception [shape=box,style=filled,label="{\huge{\tt{is*}}}"];
-    x_1 -> x_1_is_perception [arrowhead=none];
-    x_1_is_perception -> perception [style="-triangle 45"];
-    
-    x_1_is_not_perception [shape=box,style=filled,label="{\huge{\tt{is-not*}}}"];
-    x_1 -> x_1_is_not_perception [arrowhead=none];
-    x_1_is_not_perception -> perception [style="-triangle 45"];
-    
-    x_2_is_perception [shape=box,style=filled,label="{\huge{\tt{is*}}}"];
-    x_2 -> x_2_is_perception [arrowhead=none];
-    x_2_is_perception -> perception [style="-triangle 45"];
-    
-    x_2_is_not_perception [shape=box,style=filled,label="{\huge{\tt{is-not*}}}"];
-    x_2 -> x_2_is_not_perception [arrowhead=none];
-    x_2_is_not_perception -> perception [style="-triangle 45"];
+    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
+    x_1_reflecting -> block_1 [style="-triangle 45,dashed"];
+    x_1_reflecting -> table_1 [style="-triangle 45,dashed"];
+    x_1_reflecting -> block_1_sitting_on_table_1 [style="-triangle 45,dashed"];
     
     // x_2^*
     
     x_2 [texlbl = "{\huge{\tt{x-2*}}}"];
     x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    x_2 -> x_2_reflecting [arrowhead=none];
-    x_2_reflecting -> block_2 [style="-triangle 45"];
-    x_2_reflecting -> table_1 [style="-triangle 45"];
-    x_2_reflecting -> block_2_sitting_on_table_1 [style="-triangle 45"];
+    x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
+    x_2_reflecting -> block_2 [style="-triangle 45,dashed"];
+    x_2_reflecting -> table_1 [style="-triangle 45,dashed"];
+    x_2_reflecting -> block_2_sitting_on_table_1 [style="-triangle 45,dashed"];
     
-    // t_1^*
-    
-    t_1 [texlbl = "{\huge{\tt{t-1*}}}"];
-    t_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    t_1 -> t_1_reflecting [arrowhead=none];
-    t_1_reflecting -> x_1 [style="-triangle 45"];
-    t_1_reflecting -> x_1_is_perception [style="-triangle 45"];
-    t_1_reflecting -> x_2 [style="-triangle 45"];
-    t_1_reflecting -> x_2_is_not_perception [style="-triangle 45"];
-    t_1_reflecting -> perception [style="-triangle 45"];
-    
-    // t_2^*
-    
-    t_2 [texlbl = "{\huge{\tt{t-2*}}}"];
-    t_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    t_2 -> t_2_reflecting [arrowhead=none];
-    t_2_reflecting -> x_1 [style="-triangle 45"];
-    t_2_reflecting -> x_1_is_not_perception [style="-triangle 45"];
-    t_2_reflecting -> x_2 [style="-triangle 45"];
-    t_2_reflecting -> x_2_is_perception [style="-triangle 45"];
-    t_2_reflecting -> perception [style="-triangle 45"];
-    
-    t_1_transition_t_2 [shape=box,style=filled,label="{\huge{\tt{transition*}}}"];
-    t_1 -> t_1_transition_t_2 [arrowhead=none];
-    t_1_transition_t_2 -> t_2 [style="-triangle 45"];
-
   }
 }

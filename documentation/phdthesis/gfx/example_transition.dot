@@ -1,0 +1,64 @@
+digraph G {
+
+  subgraph cluster_0 {
+    label = "{\\huge{The Physical Layer}}";
+    color=black;
+    
+    // physical
+    node [fillcolor = white, color = "#000000", style = filled];
+    edge [color = "#000000"];
+    
+    gripper_1 [texlbl = "{\huge{\tt{Gripper-1}}}"];
+    block_1   [texlbl = "{\huge{\tt{Block-1}}}"];
+    block_2   [texlbl = "{\huge{\tt{Block-2}}}"];
+    table_1   [texlbl = "{\huge{\tt{Table-1}}}"];
+    
+    gripper_1_being_above_table_1 [shape=box,label="{\huge{\tt{being-above}}}"];
+    gripper_1 -> gripper_1_being_above_table_1 [arrowhead=none];
+    gripper_1_being_above_table_1 -> table_1 [style="-triangle 45"];
+    
+    block_1_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+    block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
+    block_1_sitting_on_table_1 -> table_1 [style="-triangle 45"];
+    
+    block_2_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+    block_2 -> block_2_sitting_on_table_1 [arrowhead=none];
+    block_2_sitting_on_table_1 -> table_1 [style="-triangle 45"];
+    
+  }
+  
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+    
+    reflective_1 [texlbl = "{\huge{\tt{reflective-1}}}"];
+    
+    // reflective_1 reflective relationship
+    
+    reflective_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    reflective_1 -> reflective_1_reflecting [arrowhead=none];
+    reflective_1_reflecting -> gripper_1 [style="-triangle 45"];
+    reflective_1_reflecting -> block_1 [style="-triangle 45"];
+    reflective_1_reflecting -> table_1 [style="-triangle 45"];
+    reflective_1_reflecting -> gripper_1_being_above_table_1 [style="-triangle 45"];
+    reflective_1_reflecting -> block_1_sitting_on_table_1 [style="-triangle 45"];
+    
+    // x_2^*
+    
+    x_2 [texlbl = "{\huge{\tt{x-2*}}}"];
+    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_2 -> x_2_reflecting [arrowhead=none];
+    x_2_reflecting -> block_2 [style="-triangle 45"];
+    x_2_reflecting -> table_1 [style="-triangle 45"];
+    x_2_reflecting -> block_2_sitting_on_table_1 [style="-triangle 45"];
+    
+    reflective_1_symbol_x_2 [shape=box,label="{\huge{\tt{symbol}}}"];
+    reflective_1 -> reflective_1_symbol_x_2 [arrowhead=none];
+    reflective_1_symbol_x_2 -> x_2 [style="-triangle 45"];
+    
+  }
+}

@@ -309,7 +309,7 @@
 						    'href="http://www.facebook.com/']]]]]]
     [if [is-type `bug result]
 	[prog [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friend_uids error: ' [get this uid] ' *** ERROR PARSING ALL FRIEND UIDS ***']
-	      nil]
+	      [bug result]]
       result]]]
 
 [defunk filter_bug [exp]

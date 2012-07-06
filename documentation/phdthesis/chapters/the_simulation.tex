@@ -405,81 +405,40 @@ the referent subgraph, $\Psi(x^{*n})$, for a symbol*, $x^{*n}$:
 \label{equation:define_symbol_referent_graph}
   \Psi(x^{*n}) \subseteq X^{*n} \cup \bigcup_{k=0}^{n-1}\mathcal{R}^k_V
 \end{equation}
+
+\section{Representing Symbolic Perception and Memory}
+
 {\mbox{\autoref{figure:example_symbolic_reference_to_physical_activity}}}
 shows an example of a symbol*, $x_1^*$, in the first-order reflective
 layer.  Notice that $\Psi(x_1^*)$ is a subgraph of
 $\Psi(\text{\tt{reflective}}^1)$.  When a symbolic reflective
 reference is contained within the reflective focus, the symbol is said
 to be a \emph{symbolic perception}.
-\begin{figure}
-\center
-\includegraphics[width=8cm]{gfx/example_symbolic_reference_to_physical_activity}
-\caption{Example of a perceived first-order symbolic reference to the
-  physical layer of activity.}
-\label{figure:example_symbolic_reference_to_physical_activity}
-\end{figure}
 {\mbox{\autoref{figure:example_symbolic_memory}}} shows a symbolic
-reflective reference to the physical layer of activity that is not
-perceived because it is not contained within the first-order
+reflective reference, $x_2^*$, to the physical layer of activity that
+is not perceived because it is not contained within the first-order
 reflective focus.  When a symbol is not contained within the
 reflective focus, this is referred to as a \emph{symbolic memory}.
+Note that the physical, $\text{reflective}^0$ layer of activity
+includes all physical activity, including not only current symbolic
+perceptions but also symbolic memories.  In this sense, as the AI
+changes reflective focus, the perceived dynamic physical activity
+changes.
 \begin{figure}
 \center
-\includegraphics[width=8cm]{gfx/example_symbolic_memory}
+\includegraphics[height=10cm]{gfx/example_symbolic_reference_to_physical_activity}
+\caption{Example of a perceived first-order symbolic reference to the
+  physical layer of activity,
+  i.e. $\Psi(x_1^*)\subseteq\Psi(\text{\tt{reflective}}^1)$.}
+\label{figure:example_symbolic_reference_to_physical_activity}
+\end{figure}
+\begin{figure}
+\center
+\includegraphics[height=10cm]{gfx/example_symbolic_memory}
 \caption{Example of a non-perceived symbol, or symbolic memory,
-  first-order symbolic reference to the physical layer of activity.}
+  i.e. $\Psi(x_2^*)\not\subseteq\Psi(\text{\tt{reflective}}^1)$.}
 \label{figure:example_symbolic_memory}
 \end{figure}
-
-
-
-\section{leftovers...}
-
-\section{Representing Reflection on the Physical Activity Subgraph}
-
-The inseparable dynamic physical activities in Duration are
-represented by a subgraph of the entire simulation state graph, $S$.
-{\mbox{Equations~\ref{equation:physical_activity_nodes_first}}}
-{\mbox{and~\ref{equation:physical_activity_nodes_last}}} define the
-set of nodes, $\mathcal{P}_V$, in the physical activity subgraph.
-\begin{align}
-\label{equation:physical_activity_nodes_first}
-  \mathcal{P}_V &= \{v ~:~ (\text{\tt{reflective}}^1, v) \in S_E \wedge \text{\tt{reflecting-on}} \in \mu[(\text{\tt{reflective}}^1, v)]\} \\
-\label{equation:physical_activity_nodes_last}
-                &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}}
-\end{align}
-Notice that the physical activity subgraph is defined in terms of the
-representation of the dynamic $\text{reflective}^1$ activity,
-$\text{\tt{reflective}}^1$.  Given the nodes, $\mathcal{P}_V$, of the
-physical activity subgraph,
-{\mbox{Equations~\ref{equation:physical_activity_graph_first}}}
-{\mbox{through~\ref{equation:physical_activity_graph_last}}} define
-the physical activity subgraph, $\mathcal{P}$.
-\begin{align}
-\label{equation:physical_activity_graph_first}
-           \text{\tt{reflective}}^1 &\in \mathcal{R}^1_V \\
-                        \mathcal{P} &= (\mathcal{P}_V, \mathcal{P}_E, \mathcal{P}_\mu) \\
-                      \mathcal{P}_V &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}} \\
-                      \mathcal{P}_E &= (\mathcal{P}_V \times \mathcal{P}_V) \cap S_E \\
-\label{equation:physical_activity_graph_last}
-\mathcal{P}_\mu(e) &=
-   {\left\{
-      \begin{array}{ll}
-        S_\mu(e) & \text{if }e {\in} \mathcal{P}_E \\
-        \text{undefined}          & \text{otherwise}
-      \end{array}
-    \right.}
-\end{align}
-
-\section{Symbols and Empty Referent Sets}
-
-Symbols are defined in terms of their referents.  If an activity does
-not have a symbolic referent, then it is not a symbolic activity.  The
-following equation expresses the logical definition that symbols
-cannot have empty referent sets:
-\begin{equation*}
-\rho(x^*) \neq \emptyset
-\end{equation*}
 
 \section{Representing Static Space}
 
@@ -507,6 +466,10 @@ the same layer because the activity of the Spatial relationship is in
 the layer below the symbols that it arranges, so one arrangement can
 be symbolized and referred to by another arrangement from the same
 layer.
+
+
+
+\section{leftovers...}
 
 \section{Representing a Transition}
 
@@ -557,6 +520,52 @@ A graph $G$ is the 4-tuple $(V, ~E, ~\mu, ~\nu)$, where
 
 
 \section{leftovers....}
+
+\section{Representing Reflection on the Physical Activity Subgraph}
+
+The inseparable dynamic physical activities in Duration are
+represented by a subgraph of the entire simulation state graph, $S$.
+{\mbox{Equations~\ref{equation:physical_activity_nodes_first}}}
+{\mbox{and~\ref{equation:physical_activity_nodes_last}}} define the
+set of nodes, $\mathcal{P}_V$, in the physical activity subgraph.
+\begin{align}
+\label{equation:physical_activity_nodes_first}
+  \mathcal{P}_V &= \{v ~:~ (\text{\tt{reflective}}^1, v) \in S_E \wedge \text{\tt{reflecting-on}} \in \mu[(\text{\tt{reflective}}^1, v)]\} \\
+\label{equation:physical_activity_nodes_last}
+                &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}}
+\end{align}
+Notice that the physical activity subgraph is defined in terms of the
+representation of the dynamic $\text{reflective}^1$ activity,
+$\text{\tt{reflective}}^1$.  Given the nodes, $\mathcal{P}_V$, of the
+physical activity subgraph,
+{\mbox{Equations~\ref{equation:physical_activity_graph_first}}}
+{\mbox{through~\ref{equation:physical_activity_graph_last}}} define
+the physical activity subgraph, $\mathcal{P}$.
+\begin{align}
+\label{equation:physical_activity_graph_first}
+           \text{\tt{reflective}}^1 &\in \mathcal{R}^1_V \\
+                        \mathcal{P} &= (\mathcal{P}_V, \mathcal{P}_E, \mathcal{P}_\mu) \\
+                      \mathcal{P}_V &= \text{\tt{reflective}}^1.\text{\tt{reflecting-on}} \\
+                      \mathcal{P}_E &= (\mathcal{P}_V \times \mathcal{P}_V) \cap S_E \\
+\label{equation:physical_activity_graph_last}
+\mathcal{P}_\mu(e) &=
+   {\left\{
+      \begin{array}{ll}
+        S_\mu(e) & \text{if }e {\in} \mathcal{P}_E \\
+        \text{undefined}          & \text{otherwise}
+      \end{array}
+    \right.}
+\end{align}
+
+\section{Symbols and Empty Referent Sets}
+
+Symbols are defined in terms of their referents.  If an activity does
+not have a symbolic referent, then it is not a symbolic activity.  The
+following equation expresses the logical definition that symbols
+cannot have empty referent sets:
+\begin{equation*}
+\rho(x^*) \neq \emptyset
+\end{equation*}
 
 \section{Representing Static Frame Object Types}
 

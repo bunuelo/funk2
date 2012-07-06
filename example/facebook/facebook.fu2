@@ -64,21 +64,21 @@
 	  result]]]]
 
 
-[deframe facebook_webpage [frame] [facebook
-				   uid
-				   public_webpage
-				   login_webpage
-				   all_friends_webpage
-				   name
-				   [favorite_musicians  `undefined]
-				   [favorite_books      `undefined]
-				   [favorite_movies     `undefined]
-				   [favorite_tv_shows   `undefined]
-				   [favorite_activities `undefined]
-				   [favorite_others     `undefined]
-				   [top_friend_uids     `undefined]
-				   relationship_partner_uid
-				   all_friends_link]
+[deframe facebook_user_profile [frame] [facebook
+					uid
+					public_webpage
+					login_webpage
+					all_friends_webpage
+					name
+					[favorite_musicians  `undefined]
+					[favorite_books      `undefined]
+					[favorite_movies     `undefined]
+					[favorite_tv_shows   `undefined]
+					[favorite_activities `undefined]
+					[favorite_others     `undefined]
+					[top_friend_uids     `undefined]
+					relationship_partner_uid
+					all_friends_link]
   [new [initial-facebook initial-uid]
        [= facebook initial-facebook]
        [= uid      initial-uid]
@@ -86,22 +86,22 @@
        [have facebook add_user_uid uid]
        nil]]
 
-[deftypefunk facebook_webpage get webpage_directory_without_slash []
-  [get facebook webpage_directory_without_slash uid]]
+[deftypefunk facebook_user_profile get user_know_of_directory_without_slash []
+  [get facebook user_know_of_directory_without_slash uid]]
 
-[deftypefunk facebook_webpage get webpage_directory_exists []
-  [get facebook webpage_directory_exists uid]]
+[deftypefunk facebook_user_profile get user_know_of_directory_exists []
+  [get facebook user_know_of_directory_exists uid]]
 
-[deftypefunk facebook_webpage get webpage_directory []
-  [get facebook webpage_directory uid]]
+[deftypefunk facebook_user_profile get user_know_of_directory []
+  [get facebook user_know_of_directory uid]]
 
-[deftypefunk facebook_webpage get profile_public_webpage_filename []
-  [string-concat [get this webpage_directory] 'public_webpage.html']]
+[deftypefunk facebook_user_profile get profile_public_webpage_filename []
+  [string-concat [get this user_know_of_directory] 'public_webpage.html']]
 
-[deftypefunk facebook_webpage get profile_login_webpage_filename []
-  [string-concat [get this webpage_directory] 'login_webpage.html']]
+[deftypefunk facebook_user_profile get profile_login_webpage_filename []
+  [string-concat [get this user_know_of_directory] 'login_webpage.html']]
 
-[deftypefunk facebook_webpage execute download_profile_public_webpage []
+[deftypefunk facebook_user_profile execute download_profile_public_webpage []
   [terminal_format standard-terminal '\nDownloading public webpage ' [get this uid]]
   [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
 	[cookies_filename nil]
@@ -109,7 +109,7 @@
 	[filename         [get this profile_public_webpage_filename]]]
     [facebook_wget user_agent cookies_filename url filename]]]
 
-[deftypefunk facebook_webpage execute download_profile_login_webpage []
+[deftypefunk facebook_user_profile execute download_profile_login_webpage []
   [terminal_format standard-terminal '\nDownloading login webpage ' [get this uid]]
   [let [[user_agent       'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1']
 	[cookies_filename [get facebook cookies_file]]
@@ -117,33 +117,33 @@
 	[filename         [get this profile_login_webpage_filename]]]
     [facebook_login_wget user_agent cookies_filename url filename]]]
 
-`[deftypefunk facebook_webpage execute download_profile_public_webpage []
+`[deftypefunk facebook_user_profile execute download_profile_public_webpage []
    [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" -O ' [get this profile_public_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
 
-`[deftypefunk facebook_webpage execute download_profile_login_webpage []
+`[deftypefunk facebook_user_profile execute download_profile_login_webpage []
    [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this profile_login_webpage_filename] ' http://www.facebook.com/' [get uid as-string]]]]]
 
-[deftypefunk facebook_webpage get public_webpage []
+[deftypefunk facebook_user_profile get public_webpage []
   [if [null public_webpage]
       [prog [if [not [pathname-exists [get this profile_public_webpage_filename]]]
 		[have this download_profile_public_webpage]]
 	    [let [[load_file_result [shelter [string-load [get this profile_public_webpage_filename]]]]]
 	      [if [not [is-type `bug load_file_result]]
 		  [= public_webpage load_file_result]
-		[terminal_format standard-terminal '\nfacebook_webpage-get-public_webpage error: ' [get this uid] ' *** ERROR LOADING PUBLIC WEBPAGE FILE ***']]]]]
+		[terminal_format standard-terminal '\nfacebook_user_profile-get-public_webpage error: ' [get this uid] ' *** ERROR LOADING PUBLIC WEBPAGE FILE ***']]]]]
   public_webpage]
 
-[deftypefunk facebook_webpage get login_webpage []
+[deftypefunk facebook_user_profile get login_webpage []
   [if [null login_webpage]
       [prog [if [not [pathname-exists [get this profile_login_webpage_filename]]]
 		[have this download_profile_login_webpage]]
 	    [let [[load_file_result [shelter [string-load [get this profile_login_webpage_filename]]]]]
 	      [if [not [is-type `bug load_file_result]]
 		  [= login_webpage load_file_result]
-		[terminal_format standard-terminal '\nfacebook_webpage-get-login_webpage error: ' [get this uid] ' *** ERROR LOADING LOGIN WEBPAGE FILE ***']]]]]
+		[terminal_format standard-terminal '\nfacebook_user_profile-get-login_webpage error: ' [get this uid] ' *** ERROR LOADING LOGIN WEBPAGE FILE ***']]]]]
   login_webpage]
 
-[deftypefunk facebook_webpage get name []
+[deftypefunk facebook_user_profile get name []
   [if [null name]
       [let [[public_webpage [get this public_webpage]]]
 	[= name [get [have [car [string-split [cadr [string-split public_webpage '<title>']]
@@ -151,15 +151,15 @@
 			   replace_all ' | Facebook' ''] as-symbol]]]]
   name]
 
-[deftypefunk facebook_webpage get public_webpage_favorites []
+[deftypefunk facebook_user_profile get public_webpage_favorites []
   [let [[public_webpage [get this public_webpage]]]
     [cadr [string-split public_webpage 'class="uiHeaderTitle">Favorites</h3>']]]]
 
-[deftypefunk facebook_webpage get public_webpage_favorites_music []
+[deftypefunk facebook_user_profile get public_webpage_favorites_music []
   [car [string-split [cadr [string-split [get this public_webpage_favorites] '<div class="labelContainer">Music</div>']]
 		     '<div class="labelContainer">Books</div>']]]
 
-[deftypefunk facebook_webpage get favorite_musicians []
+[deftypefunk facebook_user_profile get favorite_musicians []
   [if [eq `undefined favorite_musicians]
       [let [[public_webpage_favorites_music [get this public_webpage_favorites_music]]]
 	[= favorite_musicians [mapcar [funk [str]
@@ -167,11 +167,11 @@
 				      [cdr [string-split public_webpage_favorites_music 'title="']]]]]]
   favorite_musicians]
 
-[deftypefunk facebook_webpage get public_webpage_favorites_books []
+[deftypefunk facebook_user_profile get public_webpage_favorites_books []
   [car [string-split [cadr [string-split [get this public_webpage_favorites] '<div class="labelContainer">Books</div>']]
 		     '<div class="labelContainer">Movies</div>']]]
 
-[deftypefunk facebook_webpage get favorite_books []
+[deftypefunk facebook_user_profile get favorite_books []
   [if [eq `undefined favorite_books]
       [let [[public_webpage_favorites_books [get this public_webpage_favorites_books]]]
 	[= favorite_books [mapcar [funk [str]
@@ -179,11 +179,11 @@
 				  [cdr [string-split public_webpage_favorites_books 'title="']]]]]]
   favorite_books]
 
-[deftypefunk facebook_webpage get public_webpage_favorites_movies []
+[deftypefunk facebook_user_profile get public_webpage_favorites_movies []
   [car [string-split [cadr [string-split [get this public_webpage_favorites] '<div class="labelContainer">Movies</div>']]
 		     '<div class="labelContainer">Television</div>']]]
 
-[deftypefunk facebook_webpage get favorite_movies []
+[deftypefunk facebook_user_profile get favorite_movies []
   [if [eq `undefined favorite_movies]
       [let [[public_webpage_favorites_movies [get this public_webpage_favorites_movies]]]
 	[= favorite_movies [mapcar [funk [str]
@@ -192,11 +192,11 @@
   favorite_movies]
 
 
-[deftypefunk facebook_webpage get public_webpage_favorites_tv_shows []
+[deftypefunk facebook_user_profile get public_webpage_favorites_tv_shows []
   [car [string-split [cadr [string-split [get this public_webpage_favorites] '<div class="labelContainer">Television</div>']]
 		     '<div class="labelContainer">Activities</div>']]]
 
-[deftypefunk facebook_webpage get favorite_tv_shows []
+[deftypefunk facebook_user_profile get favorite_tv_shows []
   [if [eq `undefined favorite_tv_shows]
       [let [[public_webpage_favorites_tv_shows [get this public_webpage_favorites_tv_shows]]]
 	[= favorite_tv_shows [mapcar [funk [str]
@@ -204,11 +204,11 @@
 				  [cdr [string-split public_webpage_favorites_tv_shows 'title="']]]]]]
   favorite_tv_shows]
 
-[deftypefunk facebook_webpage get public_webpage_favorites_activities []
+[deftypefunk facebook_user_profile get public_webpage_favorites_activities []
   [car [string-split [cadr [string-split [get this public_webpage_favorites] '<div class="labelContainer">Activities</div>']]
 		     '<th class="label">Other</th>']]]
 
-[deftypefunk facebook_webpage get favorite_activities []
+[deftypefunk facebook_user_profile get favorite_activities []
   [if [eq `undefined favorite_activities]
       [let [[public_webpage_favorites_activities [get this public_webpage_favorites_activities]]]
 	[= favorite_activities [mapcar [funk [str]
@@ -216,10 +216,10 @@
 				  [cdr [string-split public_webpage_favorites_activities 'title="']]]]]]
   favorite_activities]
 
-[deftypefunk facebook_webpage get public_webpage_favorites_others []
+[deftypefunk facebook_user_profile get public_webpage_favorites_others []
   [cadr [string-split [get this public_webpage_favorites] '<th class="label">Other</th>']]]
 
-[deftypefunk facebook_webpage get favorite_others []
+[deftypefunk facebook_user_profile get favorite_others []
   [if [eq `undefined favorite_others]
       [let [[public_webpage_favorites_others [get this public_webpage_favorites_others]]]
 	[= favorite_others [mapcar [funk [str]
@@ -228,31 +228,31 @@
 						      '<a href="']]]]]]
   favorite_others]
 
-[deftypefunk facebook_webpage get relationship_partner_uid []
+[deftypefunk facebook_user_profile get relationship_partner_uid []
   [if [null relationship_partner_uid]
       [= relationship_partner_uid [let [[login_webpage [get this login_webpage]]]
 				    [get [car [string-split [cadr [string-split login_webpage 'In a relationship with <a href="http://www.facebook.com/']]
 							    '"']] as-symbol]]]]
   relationship_partner_uid]
 
-[deftypefunk facebook_webpage get webpage_friends []
+[deftypefunk facebook_user_profile get webpage_friends []
   [let [[login_webpage [get this login_webpage]]]
     [car [string-split [cadr [string-split login_webpage 'Friends</div>']]
 		       'fsl fcg">About']]]]
 
-[deftypefunk facebook_webpage get top_friend_uids []
+[deftypefunk facebook_user_profile get top_friend_uids []
   [if [eq `undefined top_friend_uids]
       [let [[result [shelter [let [[webpage_friends [get this webpage_friends]]]
 			       [mapcar [funk [str]
 					     [get [car [string-split str '"']] as-symbol]]
 				       [cdr [string-split webpage_friends '<a href="http://www.facebook.com/']]]]]]]
 	[if [is-type `bug result]
-	    [prog `[terminal_format standard-terminal '\nfacebook_webpage-get-top_friend_uids bug: ' result]
+	    [prog `[terminal_format standard-terminal '\nfacebook_user_profile-get-top_friend_uids bug: ' result]
 		  [= top_friend_uids nil]]
 	  [= top_friend_uids result]]]]
   top_friend_uids]
 
-[deftypefunk facebook_webpage get all_friends_link []
+[deftypefunk facebook_user_profile get all_friends_link []
   [if [null all_friends_link]
       [let [[parse_result [shelter [let [[login_webpage [get this login_webpage]]]
 				     [have [car [string-split [cadr [string-split [cadr [string-split login_webpage '<div id="pagelet_timeline_friends_nav_top"']]
@@ -267,13 +267,13 @@
 					     replace_all '&amp;' '&']]]]]
 	[if [not [is-type `bug parse_result]]
 	    [= all_friends_link parse_result]
-	  [terminal_format standard-terminal '\nfacebook_webpage-get-all_friends_link error: ' [get this uid] ' *** ERROR PARSING ALL_FRIENDS_LINK ***']]]]
+	  [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_link error: ' [get this uid] ' *** ERROR PARSING ALL_FRIENDS_LINK ***']]]]
   all_friends_link]
 
-[deftypefunk facebook_webpage get all_friends_webpage_filename []
-  [string-concat [get this webpage_directory] 'all_friends_webpage.html']]
+[deftypefunk facebook_user_profile get all_friends_webpage_filename []
+  [string-concat [get this user_know_of_directory] 'all_friends_webpage.html']]
 
-[deftypefunk facebook_webpage execute download_all_friends_webpage []
+[deftypefunk facebook_user_profile execute download_all_friends_webpage []
   [terminal_format standard-terminal '\nDownloading all friends webpage ' [get this uid]]
   [let [[all_friends_link [get this all_friends_link]]]
     [if [is-type `string all_friends_link]
@@ -282,24 +282,24 @@
 	      [url              all_friends_link]
 	      [filename         [get this all_friends_webpage_filename]]]
 	  [facebook_login_wget user_agent cookies_filename url filename]]
-      [prog [terminal_format standard-terminal '\nfacebook_webpage-execute-download_all_friends_webpage error: ' [get this uid] ' *** ERROR DOWNLOADING ALL FRIENDS WEBPAGE ***']
+      [prog [terminal_format standard-terminal '\nfacebook_user_profile-execute-download_all_friends_webpage error: ' [get this uid] ' *** ERROR DOWNLOADING ALL FRIENDS WEBPAGE ***']
 	    nil]]]]
 
-`[deftypefunk facebook_webpage execute download_all_friends_webpage []
+`[deftypefunk facebook_user_profile execute download_all_friends_webpage []
    [system [print [string-concat 'wget --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:13.0) Gecko/20100101 Firefox/13.0.1" --load-cookies ' [get facebook cookies_file] ' -O ' [get this all_friends_webpage_filename] ' "' [get this all_friends_link] '"']]]]
 
-[deftypefunk facebook_webpage get all_friends_webpage []
+[deftypefunk facebook_user_profile get all_friends_webpage []
   [if [null all_friends_webpage]
       [prog [if [not [pathname-exists [get this all_friends_webpage_filename]]]
 		[have this download_all_friends_webpage]]
 	    [let [[load_file_result [shelter [string-load [get this all_friends_webpage_filename]]]]]
 	      [if [not [is-type `bug load_file_result]]
 		  [= all_friends_webpage load_file_result]
-		[prog [terminal_format standard-terminal '\nfacebook_webpage-get-all_friends_webpage error: ' [get this uid] ' *** ERROR LOADING ALL FRIENDS WEBPAGE FILE ***']
+		[prog [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friends_webpage error: ' [get this uid] ' *** ERROR LOADING ALL FRIENDS WEBPAGE FILE ***']
 		      [bug load_file_result]]]]]]
   all_friends_webpage]
 
-[deftypefunk facebook_webpage get all_friend_uids []
+[deftypefunk facebook_user_profile get all_friend_uids []
   [let [[result [shelter [mapcar [funk [str]
 				       [get [car [string-split str '"']] as-symbol]]
 				 [cdr [string-split [car [string-split [cadr [string-split [cadr [string-split [get this all_friends_webpage]
@@ -308,7 +308,7 @@
 								       '--></code>']]
 						    'href="http://www.facebook.com/']]]]]]
     [if [is-type `bug result]
-	[prog [terminal_format standard-terminal '\nfacebook_webpage-get-all_friend_uids error: ' [get this uid] ' *** ERROR PARSING ALL FRIEND UIDS ***']
+	[prog [terminal_format standard-terminal '\nfacebook_user_profile-get-all_friend_uids error: ' [get this uid] ' *** ERROR PARSING ALL FRIEND UIDS ***']
 	      [bug result]]
       result]]]
 
@@ -328,7 +328,7 @@
 	  [get filtered_exp as-string]]
       '']]]
 
-[deftypefunk facebook_webpage get as-string []
+[deftypefunk facebook_user_profile get as-string []
   [string-concat 'UID                     : ' [get uid as-string]                                                  '\n'
 		 'Name                    : ' [filter_bug_as_string [shelter [get this name]]]                     '\n'
 		 'Relationship Partner UID: ' [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\n'
@@ -342,10 +342,10 @@
 		 'Favorite Others         : ' [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
 		 ]]
 
-[deftypefunk facebook_webpage execute print []
+[deftypefunk facebook_user_profile execute print []
   [terminal_format standard-terminal [get this as-string]]]
 
-[deftypefunk facebook_webpage get as-tsv_row []
+[deftypefunk facebook_user_profile get as-tsv_row []
   [string-concat [get uid as-string]                                                  '\t'
 		 [filter_bug_as_string [shelter [get this name]]]                     '\t'
 		 [filter_bug_as_string [shelter [get this relationship_partner_uid]]] '\t'
@@ -359,31 +359,31 @@
 		 [filter_bug_as_string [shelter [get this favorite_others]]]          '\n'
 		 ]]
 
-[deftypefunk facebook_webpage get tsv_filename []
-  [string-concat [get this webpage_directory] 'brief.tsv']]
+[deftypefunk facebook_user_profile get tsv_filename []
+  [string-concat [get this user_know_of_directory] 'brief.tsv']]
 
-[deftypefunk facebook_webpage execute download []
+[deftypefunk facebook_user_profile execute download []
   [terminal_format standard-terminal '\nDownloading ' [get this uid]]
   [let [[result [shelter [get this public_webpage]]]]
     [if [is-type `bug result]
-	[terminal_format standard-terminal '\nfacebook_webpage-execute-download warning: error downloading public_webpage for ' uid]]]
+	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading public_webpage for ' uid]]]
   [let [[result [shelter [get this login_webpage]]]]
     [if [is-type `bug result]
-	[terminal_format standard-terminal '\nfacebook_webpage-execute-download warning: error downloading login_webpage for ' uid]]]
+	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading login_webpage for ' uid]]]
   [let [[result [shelter [get this all_friends_webpage]]]]
     [if [is-type `bug result]
-	[terminal_format standard-terminal '\nfacebook_webpage-execute-download warning: error downloading all_friends_webpage for ' uid]]]]
+	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading all_friends_webpage for ' uid]]]]
 
 
-[deftypefunk facebook_webpage execute generate_tsv []
+[deftypefunk facebook_user_profile execute generate_tsv []
   [terminal_format standard-terminal '\nGenerating tsv ' [get this uid]]
   [string-save [get this as-tsv_row] [get this tsv_filename]]]
 
-[deftypefunk facebook_webpage get expand_uids []
+[deftypefunk facebook_user_profile get expand_uids []
   [append [filter_bug [get this top_friend_uids]]
 	  [filter_bug [get this all_friend_uids]]]]
 
-[deftypefunk facebook_webpage get tsv_file_needs_to_be_regenerated []
+[deftypefunk facebook_user_profile get tsv_file_needs_to_be_regenerated []
   [or [not [pathname-exists [get this tsv_filename]]]
       [let [[tsv_filename_stat         [pathname-stat [get this tsv_filename]]]
 	    [public_filename_stat      [if [pathname-exists [get this profile_public_webpage_filename]]
@@ -403,14 +403,14 @@
 		   [let [[html_time [have all_friends_filename_stat lookup `time_of_last_modification]]]
 		     [> html_time tsv_time]]]]]]]]
 
-[deftypefunk facebook_webpage execute expand []
+[deftypefunk facebook_user_profile execute expand []
   [if [get this tsv_file_needs_to_be_regenerated]
       [prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
 	    [have this generate_tsv]
 	    [mapc [funk [uid]
 			[if [not [get facebook contains_uid uid]]
 			    [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
-				  [if [is-type `bug [shelter [new facebook_webpage facebook uid]]]
+				  [if [is-type `bug [shelter [new facebook_user_profile facebook uid]]]
 				      [print '*** ERROR CREATING USER PROFILE ***']]]]]
 		  [get this expand_uids]]]]
   nil]
@@ -421,30 +421,30 @@
 [deframe facebook [frame] [[url             'http://facebook.com/']
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
 			   [local_directory '/home/neptune-unencrypted/Desktop/facebook/']
-			   incoming_webpages_loaded
+			   profiles_loaded
 			   cached_profile_uid_hash]
   [new []
        [= cached_profile_uid_hash [new ptypehash]]
        
        [system [string-concat 'mkdir -p "' local_directory '"']]
-       [system [string-concat 'mkdir -p "' [get this profile_directory] '"']]
+       [system [string-concat 'mkdir -p "' [get this know_of_directory] '"']]
        
        `[have this load_profiles]
        
        nil]]
 
-[deftypefunk facebook get webpage_directory_without_slash [uid]
-  [string-concat [get this profile_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
+[deftypefunk facebook get user_know_of_directory_without_slash [uid]
+  [string-concat [get this know_of_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
 
-[deftypefunk facebook get webpage_directory [uid]
-  [string-concat [get this webpage_directory_without_slash uid] '/']]
+[deftypefunk facebook get user_know_of_directory [uid]
+  [string-concat [get this user_know_of_directory_without_slash uid] '/']]
 
-[deftypefunk facebook get webpage_directory_exists [uid]
-  [pathname-exists [get this webpage_directory_without_slash uid]]]
+[deftypefunk facebook get user_know_of_directory_exists [uid]
+  [pathname-exists [get this user_know_of_directory_without_slash uid]]]
 
 [deftypefunk facebook execute add_user_uid [uid]
-  [if [not [get this webpage_directory_exists uid]]
-      [system [string-concat 'mkdir -p "' [get this webpage_directory uid] '"']]]
+  [if [not [get this user_know_of_directory_exists uid]]
+      [system [string-concat 'mkdir -p "' [get this user_know_of_directory uid] '"']]]
   [have cached_profile_uid_hash add uid t]
   nil]
 
@@ -452,7 +452,7 @@
   [let [[have_cached_result [get cached_profile_uid_hash contains uid]]]
     [if have_cached_result
 	[have cached_profile_uid_hash lookup uid]
-      [let [[actual_result [get this webpage_directory_exists uid]]]
+      [let [[actual_result [get this user_know_of_directory_exists uid]]]
 	[have cached_profile_uid_hash add uid actual_result]
 	actual_result]]]]
 
@@ -460,8 +460,8 @@
   [have this assure_profiles_loaded]
   [get cached_profile_uid_hash keys]]
 
-[deftypefunk facebook get profile_directory []
-  [string-concat local_directory 'profile/']]
+[deftypefunk facebook get know_of_directory []
+  [string-concat local_directory 'know_of/']]
 
 [deftypefunk facebook get temp_filename []
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
@@ -473,15 +473,15 @@
 
 [deftypefunk facebook execute load_profiles []
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'ls -1 ' [get this profile_directory] ' > "' temp_filename '"']]
+    [system [string-concat 'ls -1 ' [get this know_of_directory] ' > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
 	[terminal_format standard-terminal '\nfacebook: loading ' [- [length dirs] 1] ' profiles.']
-	[let [[profile_directory [get this profile_directory]]]
+	[let [[know_of_directory [get this know_of_directory]]]
 	  [mapc [funk [dir]
 		      [if [not [equals dir '']]
-			  [let [[subdir [have dir replace_all profile_directory '']]]
+			  [let [[subdir [have dir replace_all know_of_directory '']]]
 			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
 			      [have cached_profile_uid_hash add uid t]]]]]
 		dirs]]
@@ -542,7 +542,7 @@
 [deftypefunk facebook execute download_all []
   [terminal_format standard-terminal '\nFacebook beginning to download all.']
   [mapc [funk [user_uid]
-	      [have [new facebook_webpage this user_uid] download]]
+	      [have [new facebook_user_profile this user_uid] download]]
 	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done downloading all.']
   nil]
@@ -550,7 +550,7 @@
 [deftypefunk facebook execute generate_all_tsv []
   [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']
   [mapc [funk [user_uid]
-	      [have [new facebook_webpage this user_uid] generate_tsv]]
+	      [have [new facebook_user_profile this user_uid] generate_tsv]]
 	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
   nil]
@@ -559,7 +559,7 @@
   [terminal_format standard-terminal '\nFacebook beginning expansion of all profiles.']
   [mapc [funk [user_uid]
 	      [terminal_format standard-terminal '\nfacebook: considering expanding ' user_uid]
-	      [have [new facebook_webpage this user_uid] expand]]
+	      [have [new facebook_user_profile this user_uid] expand]]
 	[get this user_uids]]
   [terminal_format standard-terminal '\nFacebook done with expansion of all profiles.']
   nil]
@@ -568,7 +568,7 @@
   [terminal_format standard-terminal '\nFacebook beginning expansion of ' iteration_count ' randomly selected profiles.']
   [dotimes [i iteration_count]
     [let [[user_uid [get this random_uid]]]
-      [have [new facebook_webpage this user_uid] expand]]]
+      [have [new facebook_user_profile this user_uid] expand]]]
   [terminal_format standard-terminal '\nFacebook done with expansion of ' iteration_count ' randomly selected profiles.']
   nil]
 
@@ -578,14 +578,14 @@
 [defunk facebook-init []
   [terminal_format standard-terminal '\nfacebook-init.']
   [let [[facebook [new facebook]]]
-    [let [[webpage_1 [new facebook_webpage facebook `people/Steve-Johnson/559579148]]
-	  [webpage_2 [new facebook_webpage facebook `steve.johnson.1420354]]]
+    [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]
+	  [user_profile_2 [new facebook_user_profile facebook `steve.johnson.1420354]]]
       
       [terminal_format standard-terminal '\ntwo facebook sample user profiles created.']
       
       [globalize facebook       facebook]
-      [globalize webpage_1 webpage_1]
-      [globalize webpage_2 webpage_2]
+      [globalize user_profile_1 user_profile_1]
+      [globalize user_profile_2 user_profile_2]
       
       nil]]]
 

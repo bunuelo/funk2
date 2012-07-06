@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd /home/neptune/Desktop/facebook/profile/
+cd /home/neptune/Desktop/facebook/
+
 echo -n "Know of Profile          : "; ls -1 know_of/ | wc -l
 echo -n "Tried Downloading Profile: "; ls -1 tried_downloading/ | wc -l
 echo -n "Downloaded Public Page   : "; ls -1 tried_downloading/*/public_webpage.html | wc -l

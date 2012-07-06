@@ -385,7 +385,7 @@
   [let [[result [shelter [get this all_friends_webpage]]]]
     [if [is-type `bug result]
 	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading all_friends_webpage for ' uid]]]
-  [system 'mv "' [string-quote_protect [get this user_know_of_directory]] '" "' [string-quote_protect [get this user_tried_downloading_directory]] '"']
+  [system [string-concat 'mv "' [string-quote_protect [get this user_know_of_directory]] '" "' [string-quote_protect [get this user_tried_downloading_directory]] '"']]
   nil]
 
 

@@ -387,8 +387,16 @@
   [string-save [get this as-tsv_row] [get this tsv_filename]]]
 
 [deftypefunk facebook_user_profile get expand_uids []
-  [append [filter_bug [get this top_friend_uids]]
-	  [filter_bug [get this all_friend_uids]]]]
+  [let [[top_friend_uids [shelter [get this top_friend_uids]]]
+	[all_friend_uids [shelter [get this all_friend_uids]]]]
+    [if [is-type `bug top_friend_uids]
+	[prog [terminal_format standard-terminal '\nfacebook_user_profile-get-expand_uids error: error getting top_friend_uids for ' [get this uid] '.']
+	      [= top_friend_uids nil]]]
+    [if [is-type `bug all_friend_uids]
+	[prog [terminal_format standard-terminal '\nfacebook_user_profile-get-expand_uids error: error getting all_friend_uids for ' [get this uid] '.']
+	      [= all_friend_uids nil]]]
+    [append top_friend_uids
+	    all_friend_uids]]]
 
 [deftypefunk facebook_user_profile get tsv_file_needs_to_be_regenerated []
   [or [not [pathname-exists [get this tsv_filename]]]

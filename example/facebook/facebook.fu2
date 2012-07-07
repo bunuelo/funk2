@@ -421,7 +421,8 @@
 			    [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
 				  [if [is-type `bug [shelter [new facebook_user_profile facebook `know-of uid]]]
 				      [print '*** ERROR CREATING USER PROFILE ***']]]]]
-		  [get this expand_uids]]]]
+		  [get this expand_uids]]
+	    [system [string-concat 'mv "' [string-quote_protect [get this user_local_location_directory]] '" "' [string-quote_protect [get this user_local_location_directory `tried-expanding]] '"']]]]
   nil]
 
 

@@ -378,7 +378,7 @@
   [let [[result [shelter [get this all_friends_webpage]]]]
     [if [is-type `bug result]
 	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading all_friends_webpage for ' uid]]]
-  [system [string-concat 'mv "' [string-quote_protect [get this user_local_location_directory]] '" "' [string-quote_protect [get this user_local_location_directory `tried-downloading]] '"']]
+  [system [string-concat 'mv "' [string-quote_protect [get this user_local_location_directory]] '" "' [string-quote_protect [get facebook user_local_location_directory `tried-downloading]] '"']]
   nil]
 
 
@@ -422,7 +422,7 @@
 				  [if [is-type `bug [shelter [new facebook_user_profile facebook `know-of uid]]]
 				      [print '*** ERROR CREATING USER PROFILE ***']]]]]
 		  [get this expand_uids]]
-	    [system [string-concat 'mv "' [string-quote_protect [get this user_local_location_directory]] '" "' [string-quote_protect [get this user_local_location_directory `tried-expanding]] '"']]]]
+	    [system [string-concat 'mv "' [string-quote_protect [get this user_local_location_directory]] '" "' [string-quote_protect [get facebook user_local_location_directory `tried-expanding]] '"']]]]
   nil]
 
 

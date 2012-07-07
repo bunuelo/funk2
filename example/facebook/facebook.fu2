@@ -591,7 +591,7 @@
 
 [deftypefunk facebook execute expand_all []
   [terminal_format standard-terminal '\nFacebook beginning expansion of all profiles.']
-  [mapc [funk [user_uid]
+  [parc [funk [user_uid]
 	      [have [new facebook_user_profile this `tried-downloading user_uid] expand]]
 	[get this local_location_user_uids `tried-downloading]]
   [terminal_format standard-terminal '\nFacebook done with expansion of all profiles.']

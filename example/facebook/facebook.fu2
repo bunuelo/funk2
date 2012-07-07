@@ -64,7 +64,10 @@
 	  result]]]]
 
 
+'facebook_user_profile'
+
 [deframe facebook_user_profile [frame] [facebook
+					local_location
 					uid
 					public_webpage
 					login_webpage
@@ -79,39 +82,29 @@
 					[top_friend_uids     `undefined]
 					relationship_partner_uid
 					all_friends_link]
-  [new [initial-facebook initial-uid]
-       [= facebook initial-facebook]
-       [= uid      initial-uid]
+  [new [initial-facebook initial-local_location initial-uid]
+       [= facebook       initial-facebook]
+       [= local_location initial-local_location]
+       [= uid            initial-uid]
        
-       [have facebook add_user_uid uid]
+       [have facebook add_local_location_user_uid local_location uid]
        nil]]
 
-[deftypefunk facebook_user_profile get user_know_of_directory_without_slash []
-  [get facebook user_know_of_directory_without_slash uid]]
+[deftypefunk facebook_user_profile get user_local_location_directory_without_slash []
+  [get facebook user_local_location_directory_without_slash local_location uid]]
 
-[deftypefunk facebook_user_profile get user_know_of_directory_exists []
-  [get facebook user_know_of_directory_exists uid]]
+[deftypefunk facebook_user_profile get user_local_location_directory_exists []
+  [get facebook user_local_location_directory_exists local_location uid]]
 
-[deftypefunk facebook_user_profile get user_know_of_directory []
-  [get facebook user_know_of_directory uid]]
-
-
-[deftypefunk facebook_user_profile get user_tried_downloading_directory_without_slash []
-  [get facebook user_tried_downloading_directory_without_slash uid]]
-
-[deftypefunk facebook_user_profile get user_tried_downloading_directory_exists []
-  [get facebook user_tried_downloading_directory_exists uid]]
-
-[deftypefunk facebook_user_profile get user_tried_downloading_directory []
-  [get facebook user_tried_downloading_directory uid]]
-
+[deftypefunk facebook_user_profile get user_local_location_directory []
+  [get facebook user_local_location_directory local_location uid]]
 
 
 [deftypefunk facebook_user_profile get profile_public_webpage_filename []
-  [string-concat [get this user_know_of_directory] 'public_webpage.html']]
+  [string-concat [get this user_local_location_directory] 'public_webpage.html']]
 
 [deftypefunk facebook_user_profile get profile_login_webpage_filename []
-  [string-concat [get this user_know_of_directory] 'login_webpage.html']]
+  [string-concat [get this user_local_location_directory] 'login_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_profile_public_webpage []
   [terminal_format standard-terminal '\nDownloading public webpage ' [get this uid]]
@@ -283,7 +276,7 @@
   all_friends_link]
 
 [deftypefunk facebook_user_profile get all_friends_webpage_filename []
-  [string-concat [get this user_know_of_directory] 'all_friends_webpage.html']]
+  [string-concat [get this user_local_location_directory] 'all_friends_webpage.html']]
 
 [deftypefunk facebook_user_profile execute download_all_friends_webpage []
   [terminal_format standard-terminal '\nDownloading all friends webpage ' [get this uid]]
@@ -372,7 +365,7 @@
 		 ]]
 
 [deftypefunk facebook_user_profile get tsv_filename []
-  [string-concat [get this user_know_of_directory] 'brief.tsv']]
+  [string-concat [get this user_local_location_directory] 'brief.tsv']]
 
 [deftypefunk facebook_user_profile execute download []
   [terminal_format standard-terminal '\nDownloading ' [get this uid]]
@@ -385,7 +378,7 @@
   [let [[result [shelter [get this all_friends_webpage]]]]
     [if [is-type `bug result]
 	[terminal_format standard-terminal '\nfacebook_user_profile-execute-download warning: error downloading all_friends_webpage for ' uid]]]
-  [system [string-concat 'mv "' [string-quote_protect [get this user_know_of_directory]] '" "' [string-quote_protect [get this user_tried_downloading_directory]] '"']]
+  [system [string-concat 'mv "' [string-quote_protect [get this user_local_location_directory]] '" "' [string-quote_protect [get this user_local_location_directory `tried-downloading]] '"']]
   nil]
 
 
@@ -422,9 +415,9 @@
       [prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
 	    [have this generate_tsv]
 	    [mapc [funk [uid]
-			[if [not [get facebook contains_uid uid]]
+			[if [not [get facebook contains_local_location_uid `know-of uid]]
 			    [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
-				  [if [is-type `bug [shelter [new facebook_user_profile facebook uid]]]
+				  [if [is-type `bug [shelter [new facebook_user_profile facebook `know-of uid]]]
 				      [print '*** ERROR CREATING USER PROFILE ***']]]]]
 		  [get this expand_uids]]]]
   nil]
@@ -436,84 +429,76 @@
 			   [cookies_file    '/home/neptune/Desktop/cookies.txt']
 			   [local_directory '/home/neptune-unencrypted/Desktop/facebook/']
 			   profiles_loaded
-			   cached_profile_uid_hash]
+			   cached_location_profile_uid_hash_hash]
   [new []
-       [= cached_profile_uid_hash [new ptypehash]]
+       [= cached_location_profile_uid_hash_hash [new ptypehash]]
        
        [system [string-concat 'mkdir -p "' local_directory '"']]
-       [system [string-concat 'mkdir -p "' [get this know_of_directory] '"']]
-       [system [string-concat 'mkdir -p "' [get this tried_downloading_directory] '"']]
-       
-       `[have this load_profiles]
+       [system [string-concat 'mkdir -p "' [get this local_location_directory `know-of]           '"']]
+       [system [string-concat 'mkdir -p "' [get this local_location_directory `tried-downloading] '"']]
        
        nil]]
 
-[deftypefunk facebook get user_know_of_directory_without_slash [uid]
-  [string-concat [get this know_of_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
+[deftypefunk facebook get cached_location_profile_uid_hash [local_location]
+  [let [[cached_location_profile_uid_hash [get cached_location_profile_uid_hash_hash local_location]]]
+    [if [null cached_location_profile_uid_hash]
+	[prog [= cached_location_profile_uid_hash [new ptypehash]]
+	      [have cached_location_profile_uid_hash_hash add local_location cached_location_profile_uid_hash]]]
+    cached_location_profile_uid_hash]]
 
-[deftypefunk facebook get user_know_of_directory [uid]
-  [string-concat [get this user_know_of_directory_without_slash uid] '/']]
+[deftypefunk facebook get user_local_location_directory_without_slash [local_location uid]
+  [string-concat [get this local_location_directory local_location] [facebook_url_string-as-directory_string [get uid as-string]]]]
 
-[deftypefunk facebook get user_know_of_directory_exists [uid]
-  [pathname-exists [get this user_know_of_directory_without_slash uid]]]
+[deftypefunk facebook get user_local_location_directory [local_location uid]
+  [string-concat [get this user_local_location_directory_without_slash local_location uid] '/']]
 
-
-[deftypefunk facebook get user_tried_downloading_directory_without_slash [uid]
-  [string-concat [get this tried_downloading_directory] [facebook_url_string-as-directory_string [get uid as-string]]]]
-
-[deftypefunk facebook get user_tried_downloading_directory [uid]
-  [string-concat [get this user_tried_downloading_directory_without_slash uid] '/']]
-
-[deftypefunk facebook get user_tried_downloading_directory_exists [uid]
-  [pathname-exists [get this user_tried_downloading_directory_without_slash uid]]]
+[deftypefunk facebook get user_local_location_directory_exists [local_location uid]
+  [pathname-exists [get this user_local_location_directory_without_slash local_location uid]]]
 
 
-
-[deftypefunk facebook execute add_user_uid [uid]
-  [if [not [get this user_know_of_directory_exists uid]]
-      [system [string-concat 'mkdir -p "' [get this user_know_of_directory uid] '"']]]
-  [have cached_profile_uid_hash add uid t]
+[deftypefunk facebook execute add_local_location_user_uid [local_location uid]
+  [if [not [get this user_local_location_directory_exists local_location uid]]
+      [system [string-concat 'mkdir -p "' [get this user_local_location_directory local_location uid] '"']]]
+  [have [get this cached_location_profile_uid_hash local_location] add uid t]
   nil]
 
-[deftypefunk facebook get contains_uid [uid]
-  [let [[have_cached_result [get cached_profile_uid_hash contains uid]]]
-    [if have_cached_result
-	[have cached_profile_uid_hash lookup uid]
-      [let [[actual_result [get this user_know_of_directory_exists uid]]]
-	[have cached_profile_uid_hash add uid actual_result]
-	actual_result]]]]
+[deftypefunk facebook get contains_local_location_uid [local_location uid]
+  [let [[cached_profile_uid_hash [get this cached_location_profile_uid_hash local_location]]]
+    [let [[have_cached_result [get cached_profile_uid_hash contains uid]]]
+      [if have_cached_result
+	  [have cached_profile_uid_hash lookup uid]
+	[let [[actual_result [get this user_local_location_directory_exists local_location uid]]]
+	  [have cached_profile_uid_hash add uid actual_result]
+	  actual_result]]]]]
 
-[deftypefunk facebook get user_uids []
-  [have this assure_profiles_loaded]
-  [get cached_profile_uid_hash keys]]
+[deftypefunk facebook get local_location_user_uids [local_location]
+  [have this assure_local_location_profiles_loaded local_location]
+  [get [get this cached_location_profile_uid_hash local_location] keys]]
 
-[deftypefunk facebook get know_of_directory []
-  [string-concat local_directory 'know_of/']]
-
-[deftypefunk facebook get tried_downloading_directory []
-  [string-concat local_directory 'tried_downloading/']]
+[deftypefunk facebook get local_location_directory [local_location]
+  [string-concat local_directory [get local_location as-string] '/']]
 
 [deftypefunk facebook get temp_filename []
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
 
-[deftypefunk facebook get random_uid []
-  [have this assure_profiles_loaded]
-  [let [[uids [get cached_profile_uid_hash keys]]]
+[deftypefunk facebook get random_local_location_uid [local_location]
+  [have this assure_local_profiles_loaded local_location]
+  [let [[uids [get [get this cached_location_profile_uid_hash local_location] keys]]]
     [elt uids [random [length uids]]]]]
 
-[deftypefunk facebook execute load_profiles []
+[deftypefunk facebook execute load_local_location_profiles [local_location]
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'ls -1 ' [get this know_of_directory] ' > "' temp_filename '"']]
+    [system [string-concat 'ls -1 ' [get this local_location_directory local_location] ' > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
 	[terminal_format standard-terminal '\nfacebook: loading ' [- [length dirs] 1] ' profiles.']
-	[let [[know_of_directory [get this know_of_directory]]]
+	[let [[local_location_directory [get this local_location_directory local_location]]]
 	  [mapc [funk [dir]
 		      [if [not [equals dir '']]
-			  [let [[subdir [have dir replace_all know_of_directory '']]]
+			  [let [[subdir [have dir replace_all local_location_directory '']]]
 			    [let [[uid [get [directory_string-as-facebook_url_string subdir] as-symbol]]]
-			      [have cached_profile_uid_hash add uid t]]]]]
+			      [have [get this cached_location_profile_uid_hash local_location] add uid t]]]]]
 		dirs]]
 	[terminal_format standard-terminal '\nfacebook: done loading profiles.']
 	[= profiles_loaded t]
@@ -573,7 +558,7 @@
   [terminal_format standard-terminal '\nFacebook beginning to download all.']
   [parc [funk [user_uid]
 	      [have [new facebook_user_profile this user_uid] download]]
-	[get this user_uids]]
+	[get this local_location_user_uids `know-of]]
   [terminal_format standard-terminal '\nFacebook done downloading all.']
   nil]
 
@@ -581,7 +566,7 @@
   [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']
   [mapc [funk [user_uid]
 	      [have [new facebook_user_profile this user_uid] generate_tsv]]
-	[get this user_uids]]
+	[get this local_location_user_uids `tried-downloading]]
   [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
   nil]
 
@@ -590,14 +575,14 @@
   [mapc [funk [user_uid]
 	      [terminal_format standard-terminal '\nfacebook: considering expanding ' user_uid]
 	      [have [new facebook_user_profile this user_uid] expand]]
-	[get this user_uids]]
+	[get this local_location_user_uids `tried-downloading]]
   [terminal_format standard-terminal '\nFacebook done with expansion of all profiles.']
   nil]
 
 [deftypefunk facebook execute expand_random [iteration_count]
   [terminal_format standard-terminal '\nFacebook beginning expansion of ' iteration_count ' randomly selected profiles.']
   [dotimes [i iteration_count]
-    [let [[user_uid [get this random_uid]]]
+    [let [[user_uid [get this random_local_location_uid `tried-downloading]]]
       [have [new facebook_user_profile this user_uid] expand]]]
   [terminal_format standard-terminal '\nFacebook done with expansion of ' iteration_count ' randomly selected profiles.']
   nil]

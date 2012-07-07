@@ -8,38 +8,74 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
         
-    // t_1^*
+    // x_1^*
     
-    t_1 [texlbl = "{\huge{\tt{t-1*}}}"];
+    x_1 [texlbl = "{\huge{\tt{x-1*}}}"];
     
-    // t_2^*
+    // x_2^*
     
-    t_2 [texlbl = "{\huge{\tt{t-2*}}}"];
+    x_2 [texlbl = "{\huge{\tt{x-2*}}}"];
+    
+    // x_3^*
+    
+    x_3 [texlbl = "{\huge{\tt{x-3*}}}"];
+    
+    // simult_1^*
+    
+    simult_1 [texlbl = "{\huge{\tt{simult-1*}}}"];
+    
+    simult_1_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_1 -> simult_1_percept_x_1 [arrowhead=none];
+    simult_1_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+    simult_1_not_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{not-percept*}}}"];
+    simult_1 -> simult_1_not_percept_x_2 [arrowhead=none];
+    simult_1_not_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // simult_2^*
+    
+    simult_2 [texlbl = "{\huge{\tt{simult-2*}}}"];
+    
+    simult_2_not_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{not-percept*}}}"];
+    simult_2 -> simult_2_not_percept_x_1 [arrowhead=none];
+    simult_2_not_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+    simult_2_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_2 -> simult_2_percept_x_2 [arrowhead=none];
+    simult_2_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // simult_3^*
+    
+    simult_3 [texlbl = "{\huge{\tt{simult-3*}}}"];
+    
+    simult_3_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_3 -> simult_3_percept_x_2 [arrowhead=none];
+    simult_3_percept_x_2 -> x_3 [style="-triangle 45"];
     
     
-    // reflective_1
-    
-    reflective_1 [texlbl = "{\huge{$\text{\tt{reflective}}^{1*}$}}"];
-    
-    reflective_1_past_t_1 [shape=box,style=filled,label="{\huge{\tt{past*}}}"];
-    reflective_1 -> reflective_1_past_t_1 [arrowhead=none];
-    reflective_1_past_t_1 -> t_1 [style="-triangle 45"];
-
-    reflective_1_future_t_2 [shape=box,style=filled,label="{\huge{\tt{future*}}}"];
-    reflective_1 -> reflective_1_future_t_2 [arrowhead=none];
-    reflective_1_future_t_2 -> t_2 [style="-triangle 45"];
-    
-    // trans_1^*
+    // trans_1
     
     trans_1 [texlbl = "{\huge{\tt{trans-1*}}}"];
     
-    trans_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    trans_1 -> trans_1_reflecting [style=dashed,arrowhead=none];
-    trans_1_reflecting -> reflective_1 [style="-triangle 45,dashed"];
-    trans_1_reflecting -> reflective_1_past_t_1 [style="-triangle 45,dashed"];
-    trans_1_reflecting -> t_1 [style="-triangle 45,dashed"];
-    trans_1_reflecting -> reflective_1_future_t_2 [style="-triangle 45,dashed"];
-    trans_1_reflecting -> t_2 [style="-triangle 45,dashed"];
+    trans_1_past_simult_1 [shape=box,style=filled,label="{\huge{\tt{past*}}}"];
+    trans_1 -> trans_1_past_simult_1 [arrowhead=none];
+    trans_1_past_simult_1 -> simult_1 [style="-triangle 45"];
+    
+    trans_1_future_simult_2 [shape=box,style=filled,label="{\huge{\tt{future*}}}"];
+    trans_1 -> trans_1_future_simult_2 [arrowhead=none];
+    trans_1_future_simult_2 -> simult_2 [style="-triangle 45"];
+    
+    // h_1^*
+    
+    h_1 [texlbl = "{\huge{\tt{h-1*}}}"];
+    
+    h_1_effect_trans_1 [shape=box,style=filled,label="{\huge{\tt{effect*}}}"];
+    h_1 -> h_1_effect_trans_1 [arrowhead=none];
+    h_1_effect_trans_1 -> trans_1 [style="-triangle 45"];
+    
+    h_1_cause_trans_1 [shape=box,style=filled,label="{\huge{\tt{cause*}}}"];
+    h_1 -> h_1_cause_trans_1 [arrowhead=none];
+    h_1_cause_trans_1 -> simult_3 [style="-triangle 45"];
     
   }
 }

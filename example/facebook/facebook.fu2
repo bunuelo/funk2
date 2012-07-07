@@ -443,7 +443,7 @@
        nil]]
 
 [deftypefunk facebook get cached_location_profile_uid_hash [local_location]
-  [let [[cached_location_profile_uid_hash [get cached_location_profile_uid_hash_hash local_location]]]
+  [let [[cached_location_profile_uid_hash [have cached_location_profile_uid_hash_hash lookup local_location]]]
     [if [null cached_location_profile_uid_hash]
 	[prog [= cached_location_profile_uid_hash [new ptypehash]]
 	      [have cached_location_profile_uid_hash_hash add local_location cached_location_profile_uid_hash]]]

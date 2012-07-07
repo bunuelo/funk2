@@ -23,7 +23,7 @@ phdthesis.pdf: \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
   chapters/related_models.tex \
-  chapters/the_simulation.tex \
+  chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
   chapters/reflective_symbolization.tex \
   chapters/causal_hypotheses.tex \

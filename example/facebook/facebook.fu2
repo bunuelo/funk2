@@ -412,10 +412,12 @@
 
 [deftypefunk facebook_user_profile execute expand []
   [if [get this tsv_file_needs_to_be_regenerated]
-      [prog [terminal_format standard-terminal '\nExpanding ' [get this uid]]
+      [prog [terminal_format standard-terminal '\nExpanding ' [get this local_location] ' '  [get this uid]]
 	    [have this generate_tsv]
 	    [mapc [funk [uid]
-			[if [not [get facebook contains_local_location_uid `know-of uid]]
+			[if [and [not [get facebook contains_local_location_uid `know-of           uid]]
+				 [not [get facebook contains_local_location_uid `tried-downloading uid]]
+				 [not [get facebook contains_local_location_uid `tried-expanding   uid]]]
 			    [prog [terminal_format standard-terminal '\nKnow of new UID: ' uid]
 				  [if [is-type `bug [shelter [new facebook_user_profile facebook `know-of uid]]]
 				      [print '*** ERROR CREATING USER PROFILE ***']]]]]
@@ -436,6 +438,7 @@
        [system [string-concat 'mkdir -p "' local_directory '"']]
        [system [string-concat 'mkdir -p "' [get this local_location_directory `know-of]           '"']]
        [system [string-concat 'mkdir -p "' [get this local_location_directory `tried-downloading] '"']]
+       [system [string-concat 'mkdir -p "' [get this local_location_directory `tried-expanding]   '"']]
        
        nil]]
 
@@ -481,11 +484,6 @@
 [deftypefunk facebook get temp_filename []
   [string-concat local_directory 'facebook-' [get [get [time] nanoseconds_since_1970] as-string] '.tmp']]
 
-[deftypefunk facebook get random_local_location_uid [local_location]
-  [have this assure_local_profiles_loaded local_location]
-  [let [[uids [get [get this cached_location_profile_uid_hash local_location] keys]]]
-    [elt uids [random [length uids]]]]]
-
 [deftypefunk facebook execute load_local_location_profiles [local_location]
   [let [[temp_filename [get this temp_filename]]]
     [system [string-concat 'ls -1 ' [get this local_location_directory local_location] ' > "' temp_filename '"']]
@@ -504,9 +502,9 @@
 	[= profiles_loaded t]
 	]]]]
 
-[deftypefunk facebook execute assure_profiles_loaded []
+[deftypefunk facebook execute assure_local_location_profiles_loaded [local_location]
   [if [not profiles_loaded]
-      [have this load_profiles]]]
+      [have this load_local_location_profiles local_location]]]
 
 [defunk partimesc [count funk seq]
   [if [or [not [is-type `integer count]]
@@ -557,7 +555,7 @@
 [deftypefunk facebook execute download_all []
   [terminal_format standard-terminal '\nFacebook beginning to download all.']
   [parc [funk [user_uid]
-	      [have [new facebook_user_profile this user_uid] download]]
+	      [have [new facebook_user_profile this `know-of user_uid] download]]
 	[get this local_location_user_uids `know-of]]
   [terminal_format standard-terminal '\nFacebook done downloading all.']
   nil]
@@ -565,7 +563,7 @@
 [deftypefunk facebook execute generate_all_tsv []
   [terminal_format standard-terminal '\nFacebook beginning to generate all tsv files.']
   [mapc [funk [user_uid]
-	      [have [new facebook_user_profile this user_uid] generate_tsv]]
+	      [have [new facebook_user_profile this `tried-downloading user_uid] generate_tsv]]
 	[get this local_location_user_uids `tried-downloading]]
   [terminal_format standard-terminal '\nFacebook done generating all tsv files.']
   nil]
@@ -574,17 +572,9 @@
   [terminal_format standard-terminal '\nFacebook beginning expansion of all profiles.']
   [mapc [funk [user_uid]
 	      [terminal_format standard-terminal '\nfacebook: considering expanding ' user_uid]
-	      [have [new facebook_user_profile this user_uid] expand]]
+	      [have [new facebook_user_profile this `tried-downloading user_uid] expand]]
 	[get this local_location_user_uids `tried-downloading]]
   [terminal_format standard-terminal '\nFacebook done with expansion of all profiles.']
-  nil]
-
-[deftypefunk facebook execute expand_random [iteration_count]
-  [terminal_format standard-terminal '\nFacebook beginning expansion of ' iteration_count ' randomly selected profiles.']
-  [dotimes [i iteration_count]
-    [let [[user_uid [get this random_local_location_uid `tried-downloading]]]
-      [have [new facebook_user_profile this user_uid] expand]]]
-  [terminal_format standard-terminal '\nFacebook done with expansion of ' iteration_count ' randomly selected profiles.']
   nil]
 
 [deftypefunk facebook execute expand []
@@ -593,14 +583,14 @@
 [defunk facebook-init []
   [terminal_format standard-terminal '\nfacebook-init.']
   [let [[facebook [new facebook]]]
-    [let [[user_profile_1 [new facebook_user_profile facebook `people/Steve-Johnson/559579148]]
-	  [user_profile_2 [new facebook_user_profile facebook `steve.johnson.1420354]]]
+    [let [[user_profile_1 `[new facebook_user_profile facebook `know-of `people/Steve-Johnson/559579148]]
+	  [user_profile_2 `[new facebook_user_profile facebook `know-of `steve.johnson.1420354]]]
       
-      [terminal_format standard-terminal '\ntwo facebook sample user profiles created.']
+      `[terminal_format standard-terminal '\ntwo facebook sample user profiles created.']
       
       [globalize facebook       facebook]
-      [globalize user_profile_1 user_profile_1]
-      [globalize user_profile_2 user_profile_2]
+      `[globalize user_profile_1 user_profile_1]
+      `[globalize user_profile_2 user_profile_2]
       
       nil]]]
 

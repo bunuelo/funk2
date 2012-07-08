@@ -215,8 +215,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_primobject_type_handler__add_builtin_frame_objects(    &(this->primobject_type_handler), cause);
   
   // try to load the user bootstrap image
-  if ((command_line.bootstrap_image_filename == NULL) ||
-      funk2_memory__load_image_from_file(&(__funk2.memory), command_line.bootstrap_image_filename)) {
+  if ((__funk2.command_line.bootstrap_image_filename == NULL) ||
+      funk2_memory__load_image_from_file(&(__funk2.memory), __funk2.command_line.bootstrap_image_filename)) {
     // try to load the local bootstrap image
     if (funk2_memory__load_image_from_file(&(__funk2.memory), compile__bootstrap_img__filename)) {
       // try to load the default system-wide bootstrap image
@@ -239,7 +239,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
       status("warning: loading \"%s\" instead of loading \"%s\" because we are in a compile directory.", compile__bootstrap_repl_img__filename, install__bootstrap_img__filename);
     }
   } else {
-    status("funk2 note: loading user bootstrap image \'%s\'.", command_line.bootstrap_image_filename);
+    status("funk2 note: loading user bootstrap image \'%s\'.", __funk2.command_line.bootstrap_image_filename);
   }
   
   cause = f2__cause__new_with_inherited_properties(cause, nil);

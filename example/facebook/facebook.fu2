@@ -617,10 +617,10 @@
 [defunk facebook-save_download_all_image []
   [= user-boot-commands `[[prog [facebook-init]
 				[have facebook download_all]]]]
-  [save_memory_image 'img/bootstrap-download_all.img']]
+  [save_memory_image 'img/bootstrap-facebook-download_all.img']]
 
 [defunk facebook-save_expand_image []
   [= user-boot-commands `[[prog [facebook-init]
 				[have facebook expand]]]]
-  [save_memory_image 'img/bootstrap-expand.img']]
+  [save_memory_image 'img/bootstrap-facebook-expand_all.img']]
 

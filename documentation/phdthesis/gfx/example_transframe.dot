@@ -1,0 +1,57 @@
+digraph G {
+  
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+    // x_1^*
+    
+    x_1 [texlbl = "{\huge{\tt{x-1*}}}"];
+    
+    // x_2^*
+    
+    x_2 [texlbl = "{\huge{\tt{x-2*}}}"];
+    
+    // simult_1^*
+    
+    simult_1 [texlbl = "{\huge{\tt{simult-1*}}}"];
+    
+    simult_1_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_1 -> simult_1_percept_x_1 [arrowhead=none];
+    simult_1_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+    simult_1_not_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{not-percept*}}}"];
+    simult_1 -> simult_1_not_percept_x_2 [arrowhead=none];
+    simult_1_not_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // simult_2^*
+    
+    simult_2 [texlbl = "{\huge{\tt{simult-2*}}}"];
+    
+    simult_2_not_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{not-percept*}}}"];
+    simult_2 -> simult_2_not_percept_x_1 [arrowhead=none];
+    simult_2_not_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+    simult_2_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_2 -> simult_2_percept_x_2 [arrowhead=none];
+    simult_2_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    
+    // transframe_1
+    
+    transframe_1 [texlbl = "{\huge{\tt{transframe-1*}}}"];
+    
+    transframe_1_past_simult_1 [shape=box,style=filled,label="{\huge{\tt{past*}}}"];
+    transframe_1 -> transframe_1_past_simult_1 [arrowhead=none];
+    transframe_1_past_simult_1 -> simult_1 [style="-triangle 45"];
+
+    transframe_1_future_simult_2 [shape=box,style=filled,label="{\huge{\tt{future*}}}"];
+    transframe_1 -> transframe_1_future_simult_2 [arrowhead=none];
+    transframe_1_future_simult_2 -> simult_2 [style="-triangle 45"];
+
+  }
+}

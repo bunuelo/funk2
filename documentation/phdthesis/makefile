@@ -69,6 +69,7 @@ phdthesis.pdf: \
   gfx/two_example_grounded_symbolic_references.pdf \
   gfx/example_simultaneity.pdf \
   gfx/example_transition.pdf \
+  gfx/example_transframe.pdf \
   gfx/example_causal_hypothesis.pdf \
   gfx/simulation_example_state_graph.pdf \
   gfx/basic_frame_object_types.pdf \

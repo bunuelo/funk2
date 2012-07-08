@@ -951,9 +951,7 @@
 			  join_fiber  this
 			  stack_trace [get fiber stack_trace]]]]]
 	      [t
-	       [print [frame bug_type    `fiber-sheltered_join-unknown-fiber-exit-status
-			     join_fiber  this
-			     exit_status exit_status]]
+	       [print `fiber-sheltered_join-unknown-fiber-exit-status]
 	       `[error bug_type    `fiber-sheltered_join-unknown-fiber-exit-status
 		       join_fiber  this
 		       exit_status exit_status]]]]]

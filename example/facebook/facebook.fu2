@@ -513,7 +513,7 @@
 
 [deftypefunk facebook execute load_local_location_profiles [local_location]
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'find ' [get this local_location_directory local_location] ' -maxdepth 1 | head -1000 > "' temp_filename '"']]
+    [system [string-concat 'find ' [get this local_location_directory local_location] ' -maxdepth 1 | head -100 > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]

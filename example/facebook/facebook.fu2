@@ -622,5 +622,5 @@
 [defunk facebook-save_expand_image []
   [= user-boot-commands `[[prog [facebook-init]
 				[have facebook expand]]]]
-  [save_memory_image 'img/bootstrap-download_all.img']]
+  [save_memory_image 'img/bootstrap-expand.img']]
 

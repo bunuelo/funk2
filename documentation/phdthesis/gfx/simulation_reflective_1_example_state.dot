@@ -1,11 +1,11 @@
 digraph G {
 
   subgraph cluster_0 {
-    label = "{\\huge{The Physical Layer}}";
+    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
     //labelloc = "b";
     color=black;
     
-    // physical
+    // reflective^0
     node [fillcolor = white, color = "#000000", style = filled];
     edge [color = "#000000"];
     
@@ -42,21 +42,21 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
     
-    reflective_1 [texlbl = "{\huge{\tt{reflective-1}}}"];
+    reflective_1 [texlbl = "{\huge{\tt{reflective-1*}}}"];
     
     // node references
     
     reflective_1_node_gripper_1 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep="0.02",margin="0.11,0.055";
     reflective_1 -> reflective_1_node_gripper_1 [arrowhead=none];
-    reflective_1_node_gripper_1 -> gripper_1 [style="-triangle 45"];
+    reflective_1_node_gripper_1 -> gripper_1 [style="-triangle 45,dashed",color=red];
     
     reflective_1_node_block_1 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep=0.02];
     reflective_1 -> reflective_1_node_block_1 [arrowhead=none];
-    reflective_1_node_block_1 -> block_1 [style="-triangle 45"];
+    reflective_1_node_block_1 -> block_1 [style="-triangle 45,dashed",color=red];
     
     reflective_1_node_table_1 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep=0.02];
     reflective_1 -> reflective_1_node_table_1 [arrowhead=none];
-    reflective_1_node_table_1 -> table_1 [style="-triangle 45"];
+    reflective_1_node_table_1 -> table_1 [style="-triangle 45,dashed",color=red];
     
     // reflective_1_edge_1: Block-1 sitting-on Table-1
     
@@ -68,15 +68,15 @@ digraph G {
         
     reflective_1_edge_1_tail_block_1 [shape=box,style=filled,label="{\huge{\tt{tail}}}"];
     reflective_1_edge_1 -> reflective_1_edge_1_tail_block_1 [arrowhead=none];
-    reflective_1_edge_1_tail_block_1 -> block_1 [style="-triangle 45"];
+    reflective_1_edge_1_tail_block_1 -> block_1 [style="-triangle 45,dashed",color=red];
         
     reflective_1_edge_1_head_table_1 [shape=box,style=filled,label="{\huge{\tt{head}}}"];
     reflective_1_edge_1 -> reflective_1_edge_1_head_table_1 [arrowhead=none];
-    reflective_1_edge_1_head_table_1 -> table_1 [style="-triangle 45"];
+    reflective_1_edge_1_head_table_1 -> table_1 [style="-triangle 45,dashed",color=red];
         
     reflective_1_edge_1_label_table_1 [shape=box,style=filled,label="{\huge{\tt{label}}}"];
     reflective_1_edge_1 -> reflective_1_edge_1_label_table_1 [arrowhead=none];
-    reflective_1_edge_1_label_table_1 -> block_1_sitting_on_table_1 [style="-triangle 45"];
+    reflective_1_edge_1_label_table_1 -> block_1_sitting_on_table_1 [style="-triangle 45,dashed",color=red];
         
     // reflective_1_edge_2: Gripper-1 being-above Table-1
     
@@ -88,15 +88,15 @@ digraph G {
         
     reflective_1_edge_2_tail_block_2 [shape=box,style=filled,label="{\huge{\tt{tail}}}"];
     reflective_1_edge_2 -> reflective_1_edge_2_tail_block_2 [arrowhead=none];
-    reflective_1_edge_2_tail_block_2 -> gripper_1 [style="-triangle 45"];
+    reflective_1_edge_2_tail_block_2 -> gripper_1 [style="-triangle 45,dashed",color=red];
         
     reflective_1_edge_2_head_table_1 [shape=box,style=filled,label="{\huge{\tt{head}}}"];
     reflective_1_edge_2 -> reflective_1_edge_2_head_table_1 [arrowhead=none];
-    reflective_1_edge_2_head_table_1 -> table_1 [style="-triangle 45"];
+    reflective_1_edge_2_head_table_1 -> table_1 [style="-triangle 45,dashed",color=red];
         
     reflective_1_edge_2_label_table_1 [shape=box,style=filled,label="{\huge{\tt{label}}}"];
     reflective_1_edge_2 -> reflective_1_edge_2_label_table_1 [arrowhead=none];
-    reflective_1_edge_2_label_table_1 -> gripper_1_being_above_table_1 [style="-triangle 45"];
+    reflective_1_edge_2_label_table_1 -> gripper_1_being_above_table_1 [style="-triangle 45,dashed",color=red];
         
     
   }

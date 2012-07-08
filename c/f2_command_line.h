@@ -27,8 +27,8 @@ typedef struct funk2_command_line_s {
   char**    argv;
   char*     load_source_filename;
   char*     user_command;
+  char*     bootstrap_image_filename;
   int       peer_command_server__port_num;
-  char*     swap_directory;
   boolean_t no_repl;
   boolean_t no_boot;
 } funk2_command_line_t;

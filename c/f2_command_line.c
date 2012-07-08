@@ -22,29 +22,33 @@
 #include "funk2.h"
 
 void f2__print_usage() {
-  printf("\n\nfunk2: causally reflective programming language"
+  printf("\n\nfunk2: causally reflective parallel programming language"
 	 "\n"
-	 "\n  funk2 [-x <command>] [-p <portnum>] [--swap-directory <swap-directory>] [<source.fu2>]"
+	 "\n  funk2"
+	 "\n  funk2 <source.fu2>"
+	 "\n  funk2 -x <command>"
+	 "\n  funk2 -i <bootstrap-image>"
 	 "\n"
 	 "\n    <source.fu2>"
 	 "\n"
-	 "\n        A user supplied filename of file from which to read and execute source"
-	 "\n        code after booting and before exiting."
+	 "\n        A user supplied filename of file from which to read and"
+	 "\n        execute source code after booting and before exiting."
 	 "\n"
-	 "\n    -x <command>  [:default [repl]]"
+	 "\n    -x <command>"
 	 "\n"
-	 "\n        A user supplied command to execute after booting and before exiting."
+	 "\n        A user supplied command to execute after booting and before"
+	 "\n        exiting."
 	 "\n"
-	 "\n    -p <portnum>  [:default 22222 :try anything from 22222 to 23221]"
+	 "\n    -i <bootstrap-image>"
 	 "\n"
-	 "\n        The localhost peer-command-server port number.  Each copy of funk2"
-	 "\n        sharing a network interface must be able to allocate a unique"
-	 "\n        peer-command-server port number."
+	 "\n        The bootstrap image to load before parsing any other"
+	 "\n        commands.  This option is useful for scripting Funk2 programs"
+	 "\n        without needing to recompile."
 	 "\n"
-	 "\n    --swap-directory <swap-directory>  [:default ./f2swp/ :try /tmp/]"
-	 "\n        "
-	 "\n        local filesystem directory for storing swap files which should have an"
-	 "\n        absolute minimum of 2 gigabytes of free space."
+	 "\n    -p <portnum>"
+	 "\n"
+	 "\n        The localhost peer-command-server port number."
+	 "\n"
 	 "\n\n");
 }
 
@@ -110,7 +114,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->load_source_filename            = NULL;
   this->user_command                    = NULL;
   this->peer_command_server__port_num   = 22222;
-  this->swap_directory                  = NULL;
+  this->bootstrap_image_filename        = NULL;
   this->no_repl                         = boolean__false;
   this->no_boot                         = boolean__false;
   
@@ -134,13 +138,13 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
 	parse_error = boolean__true;
 	break;
       }
-    } else if (strcmp(argv[index], "--swap-directory") == 0) {
+    } else if (strcmp(argv[index], "-i") == 0) {
       index ++;
       if (index >= argc) {
 	parse_error = boolean__true;
 	break;
       }
-      this->swap_directory = argv[index];
+      this->bootstrap_image_filename = argv[index];
     } else if (strcmp(argv[index], "--no-repl") == 0) {
       this->no_repl = boolean__true;
     } else if (strcmp(argv[index], "--no-boot") == 0) {

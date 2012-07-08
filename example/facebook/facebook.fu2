@@ -581,9 +581,10 @@
 
 [deftypefunk facebook execute download_all []
   [terminal_format standard-terminal '\nFacebook beginning to download all.']
-  [parc [funk [user_uid]
-	      [have [new facebook_user_profile this `know-of user_uid] download]]
-	[get this local_location_user_uids `know-of]]
+  [partimesc 32
+	     [funk [user_uid]
+		   [have [new facebook_user_profile this `know-of user_uid] download]]
+	     [get this local_location_user_uids `know-of]]
   [terminal_format standard-terminal '\nFacebook done downloading all.']
   nil]
 

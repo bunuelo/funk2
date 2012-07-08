@@ -507,7 +507,7 @@
 
 [deftypefunk facebook execute load_local_location_profiles [local_location]
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'ls -1 ' [get this local_location_directory local_location] ' > "' temp_filename '"']]
+    [system [string-concat 'find ' [get this local_location_directory local_location] ' -maxdepth 1 | head -1000 > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
@@ -616,11 +616,13 @@
 
 [defunk facebook-save_download_all_image []
   [= user-boot-commands `[[prog [facebook-init]
-				[have facebook download_all]]]]
+				[have facebook download_all]
+				[quit]]]]
   [save_memory_image 'img/bootstrap-facebook-download_all.img']]
 
 [defunk facebook-save_expand_image []
   [= user-boot-commands `[[prog [facebook-init]
-				[have facebook expand]]]]
+				[have facebook expand]
+				[quit]]]]
   [save_memory_image 'img/bootstrap-facebook-expand_all.img']]
 

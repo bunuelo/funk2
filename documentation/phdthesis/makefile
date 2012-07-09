@@ -26,7 +26,7 @@ phdthesis.pdf: \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
   chapters/reflective_symbolization.tex \
-  chapters/causal_hypotheses.tex \
+  chapters/first_order_reflective_thinking.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/the_implementation.tex \
@@ -70,6 +70,7 @@ phdthesis.pdf: \
   gfx/example_simultaneity.pdf \
   gfx/example_transition.pdf \
   gfx/example_transframe.pdf \
+  gfx/example_causal_knowledge.pdf \
   gfx/example_causal_hypothesis.pdf \
   gfx/simulation_example_state_graph.pdf \
   gfx/basic_frame_object_types.pdf \

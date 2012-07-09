@@ -41,17 +41,17 @@ digraph G {
     simult_2_percept_x_2 -> x_2 [style="-triangle 45"];
     
     
-    // trans_1
+    // transition_1
     
-    trans_1 [texlbl = "{\huge{\tt{trans-1*}}}"];
+    transition_1 [texlbl = "{\huge{\tt{transition-1*}}}"];
     
-    trans_1_past_simult_1 [shape=box,style=filled,label="{\huge{\tt{past*}}}"];
-    trans_1 -> trans_1_past_simult_1 [arrowhead=none];
-    trans_1_past_simult_1 -> simult_1 [style="-triangle 45"];
-
-    trans_1_future_simult_2 [shape=box,style=filled,label="{\huge{\tt{future*}}}"];
-    trans_1 -> trans_1_future_simult_2 [arrowhead=none];
-    trans_1_future_simult_2 -> simult_2 [style="-triangle 45"];
+    transition_1_past_simult_1 [shape=box,style=filled,label="{\huge{\tt{past*}}}"];
+    transition_1 -> transition_1_past_simult_1 [arrowhead=none];
+    transition_1_past_simult_1 -> simult_1 [style="-triangle 45"];
+    
+    transition_1_future_simult_2 [shape=box,style=filled,label="{\huge{\tt{future*}}}"];
+    transition_1 -> transition_1_future_simult_2 [arrowhead=none];
+    transition_1_future_simult_2 -> simult_2 [style="-triangle 45"];
 
   }
 }

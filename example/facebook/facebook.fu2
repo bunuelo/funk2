@@ -513,7 +513,7 @@
 
 [deftypefunk facebook execute load_local_location_profiles [local_location]
   [let [[temp_filename [get this temp_filename]]]
-    [system [string-concat 'find ' [get this local_location_directory local_location] ' -maxdepth 1 | head -100 > "' temp_filename '"']]
+    [system [string-concat 'find ' [get this local_location_directory local_location] ' -maxdepth 1 | head -64 > "' temp_filename '"']]
     [let [[dirstr [string-load temp_filename]]]
       [system [string-concat 'rm -f ' temp_filename]]
       [let [[dirs [string-split dirstr '\n']]]
@@ -581,10 +581,9 @@
 
 [deftypefunk facebook execute download_all []
   [terminal_format standard-terminal '\nFacebook beginning to download all.']
-  [partimesc 32
-	     [funk [user_uid]
-		   [have [new facebook_user_profile this `know-of user_uid] download]]
-	     [get this local_location_user_uids `know-of]]
+  [parc [funk [user_uid]
+	      [have [new facebook_user_profile this `know-of user_uid] download]]
+	[get this local_location_user_uids `know-of]]
   [terminal_format standard-terminal '\nFacebook done downloading all.']
   nil]
 

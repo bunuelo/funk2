@@ -26,7 +26,7 @@ phdthesis.pdf: \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
   chapters/reflective_symbolization.tex \
-  chapters/first_order_reflective_thinking.tex \
+  chapters/grounded_knowledge_representation.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/the_implementation.tex \

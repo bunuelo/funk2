@@ -10,6 +10,7 @@ digraph G {
     
     gripper_1 [texlbl = "{\huge{\tt{Gripper-1}}}"];
     block_1   [texlbl = "{\huge{\tt{Block-1}}}"];
+    block_2   [texlbl = "{\huge{\tt{Block-2}}}"];
     table_1   [texlbl = "{\huge{\tt{Table-1}}}"];
     
     gripper_1_dropping_block_1 [shape=box,label="{\huge{\tt{dropping}}}"];
@@ -19,6 +20,10 @@ digraph G {
     block_1_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
     block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
     block_1_sitting_on_table_1 -> table_1 [style="-triangle 45"];
+    
+    block_2_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+    block_2 -> block_2_sitting_on_table_1 [arrowhead=none];
+    block_2_sitting_on_table_1 -> table_1 [style="-triangle 45"];
     
   }
   
@@ -72,29 +77,29 @@ digraph G {
     simult_7 -> simult_7_percept_x_2 [arrowhead=none];
     simult_7_percept_x_2 -> x_3 [style="-triangle 45"];
     
-    // transframe_2
+    // transition_2
     
-    transframe_2 [texlbl = "{\huge{\tt{transframe-2*}}}"];
+    transition_2 [texlbl = "{\huge{\tt{transition-2*}}}"];
     
-    transframe_2_past_simult_4 [shape=box,style=filled,label="{\huge{\tt{remove*}}}"];
-    transframe_2 -> transframe_2_past_simult_4 [arrowhead=none];
-    transframe_2_past_simult_4 -> simult_4 [style="-triangle 45"];
+    transition_2_past_simult_4 [shape=box,style=filled,label="{\huge{\tt{remove*}}}"];
+    transition_2 -> transition_2_past_simult_4 [arrowhead=none];
+    transition_2_past_simult_4 -> simult_4 [style="-triangle 45"];
     
-    transframe_2_future_simult_6 [shape=box,style=filled,label="{\huge{\tt{add*}}}"];
-    transframe_2 -> transframe_2_future_simult_6 [arrowhead=none];
-    transframe_2_future_simult_6 -> simult_6 [style="-triangle 45"];
+    transition_2_future_simult_6 [shape=box,style=filled,label="{\huge{\tt{add*}}}"];
+    transition_2 -> transition_2_future_simult_6 [arrowhead=none];
+    transition_2_future_simult_6 -> simult_6 [style="-triangle 45"];
     
-    // h_1^*
+    // knowledge_1^*
     
-    h_1 [texlbl = "{\huge{\tt{h-1*}}}"];
+    knowledge_1 [texlbl = "{\huge{\tt{knowledge-1*}}}"];
     
-    h_1_effect_transframe_2 [shape=box,style=filled,label="{\huge{\tt{effect*}}}"];
-    h_1 -> h_1_effect_transframe_2 [arrowhead=none];
-    h_1_effect_transframe_2 -> transframe_2 [style="-triangle 45"];
+    knowledge_1_effect_transition_2 [shape=box,style=filled,label="{\huge{\tt{effect*}}}"];
+    knowledge_1 -> knowledge_1_effect_transition_2 [arrowhead=none];
+    knowledge_1_effect_transition_2 -> transition_2 [style="-triangle 45"];
     
-    h_1_cause_transframe_2 [shape=box,style=filled,label="{\huge{\tt{cause*}}}"];
-    h_1 -> h_1_cause_transframe_2 [arrowhead=none];
-    h_1_cause_transframe_2 -> simult_7 [style="-triangle 45"];
+    knowledge_1_cause_transition_2 [shape=box,style=filled,label="{\huge{\tt{cause*}}}"];
+    knowledge_1 -> knowledge_1_cause_transition_2 [arrowhead=none];
+    knowledge_1_cause_transition_2 -> simult_7 [style="-triangle 45"];
     
   }
 }

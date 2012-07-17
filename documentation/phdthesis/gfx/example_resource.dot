@@ -1,22 +1,5 @@
 digraph G {
 
-  subgraph cluster_0 {
-    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
-    color=black;
-    
-    // physical
-    node [fillcolor = white, color = "#000000", style = filled];
-    edge [color = "#000000"];
-    
-    block_1   [texlbl = "{\huge{\tt{Block}}}"];
-    table_1   [texlbl = "{\huge{\tt{Table}}}"];
-    
-    block_1_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
-    block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
-    block_1_sitting_on_table_1 -> table_1 [style="-triangle 45"];
-    
-  }
-  
   subgraph cluster_1 {
     label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
     color=blue

@@ -34,60 +34,41 @@ X =
   \right\}
 \end{equation}
 
-\section{Representing Continuous Space as a Set of 3-Tuples}
+\section{A Graph Representation}
 
 The activities in Duration exist in a continuous Spatial arrangement
 that is symbolized and ordered by the reflective thinking layers.  In
 order to simulate this continuous homogenous Space, a discrete static
 representation must be included in the state of the simulation model.
-A 3-tuple can be used to represent the activity of a Spatial
-relationship in the simulation.  Reconsidering the activities shown in
-{\mbox{\autoref{figure:blocks_world_simulation}}}, the state could be
-represented by the set of 3-tuples shown in
-{\mbox{\autoref{equation:example_stricly_ordered_set_initial_state}}}.
-\begin{equation}
-\label{equation:example_stricly_ordered_set_initial_state}
-\text{triples}(S) =
-  \left\{
-    \begin{array}{l}
-      (\text{\tt{Block-1}},   ~\text{\tt{sitting-on}},  ~\text{\tt{Table-1}}), \\
-      (\text{\tt{Block-2}},   ~\text{\tt{sitting-on}},  ~\text{\tt{Table-1}}), \\
-      (\text{\tt{Gripper-1}}, ~\text{\tt{being-above}}, ~\text{\tt{Table-1}}), \\
-      (\text{\tt{Gripper-1}}, ~\text{\tt{moving}},      ~\text{\tt{left}})
-    \end{array}
-  \right\}
-\end{equation}
-
-\section{A Graph Representation}
-
-A set of 3-tuples can be thought of as a graph of nodes with labelled
-edges.  Because the graph provides a clear notation for referring to
-types of Spatial arrangements of activities, a modified notation
-originally from {\mbox{\cite{messmer:1995}}} is used to define a
-labelled graph in {\mbox{Definition~\ref{definition:graph_first}}} and
-a labelled subgraph in
-{\mbox{Definition~\ref{definition:graph_last}}}.
+A graph of labelled nodes and edges can be used to represent the
+activity of a Spatial relationship in the simulation.  Because the
+graph provides a clear notation for referring to types of Spatial
+arrangements of activities, a modified notation originally from
+{\mbox{\cite{messmer:1995}}} is used to define a labelled graph in
+{\mbox{Definition~\ref{definition:graph_first}}} and a labelled
+subgraph in {\mbox{Definition~\ref{definition:graph_last}}}.
 
 \begin{definition}
 \label{definition:graph_first}
 \emph{
-A graph $G$ is the 3-tuple $(V, ~E, ~\mu)$, where
+A graph $G$ is the 4-tuple $(V, ~E, ~\mu, ~\nu)$, where
 \begin{itemize}
 \item $V$ is the set of vertices,
 \item $E ~{\subseteq}~ V ~{\times}~ V$ is the set of edges,
-\item $\mu : E \mapsto \{\ell_E\}$ is a function assigning a set of labels to each edge.
+\item $\mu : V \mapsto \{\ell_V\}$ is a function assigning a set of labels to each vertex.
+\item $\nu : E \mapsto \{\ell_E\}$ is a function assigning a set of labels to each edge.
 \end{itemize}
 }\end{definition} \noindent In this definition, the edges are
 directed, i.e. there is an edge from $v_1$ to $v_2$ if $(v_1,
 v_2){\in}E$.  The empty graph, i.e. the graph with an empty set of
 vertices will be denoted by $\emptyset$.  The union of the set of
-vertices with the set of labels referred to by $\mu$ will be sometimes
-be referred to with a dot notation, $\mathring{G}=V {\cup} \ell_E$.
+labels referred to by $\mu$ and $\nu$ will be sometimes be referred to
+with a dot notation, $\mathring{G}=\ell_V {\cup} \ell_E$.
 
 \begin{definition}
 \label{definition:graph_last}
-\emph{ Given a graph $G = (V, E, \mu)$, a \emph{subgraph} of $G$ is a
-  graph $G_s = (V_s, E_s, \mu_s)$ such that
+\emph{ Given a graph $G = (V, E, \mu, \nu)$, a \emph{subgraph} of $G$
+  is a graph $G_s = (V_s, E_s, \mu_s, \nu_s)$ such that
 \begin{enumerate}
 \item $V_s ~{\subseteq}~ V$
 \item $E_s ~{\subseteq}~ V_s {\times} V_s$,
@@ -96,7 +77,17 @@ be referred to with a dot notation, $\mathring{G}=V {\cup} \ell_E$.
 \mu_s(e) &\subseteq
    {\left\{
       \begin{array}{ll}
-        \mu(e)     & \text{if }e {\in} E_s \\
+        \mu(v)           & \text{if }v {\in} V_s \\
+        \text{undefined} & \text{otherwise}
+      \end{array}
+    \right.}
+\end{align*}
+\item $\nu_s$ is the restriction of $\nu$, i.e.
+\begin{align*}
+\nu_s(e) &\subseteq
+   {\left\{
+      \begin{array}{ll}
+        \nu(e)     & \text{if }e {\in} E_s \\
         \text{undefined} & \text{otherwise}
       \end{array}
     \right.}
@@ -108,53 +99,87 @@ subset of its edges uniquely defines a subgraph of $G$.  The notation
 $G_s ~{\subseteq}~ G$ is used to indicate that $G_s$ is a subgraph of
 $G$.
 
+\section{Graph Isomorphism}
+
+\begin{definition}
+\label{definition:graph_isomorphism}
+{\emph{A bijective function $f : V \mapsto V^\prime$ is a \emph{graph
+      isomorphism} from a graph $G = \{V, E, \mu, \nu\}$ to a graph
+    $G^\prime = \{V^\prime, E^\prime, \mu^\prime, \nu^\prime\}$ if:
+\begin{enumerate}
+\item $\mu(v) = \mu^\prime(f(v))$ for all $v \in V$.
+\item For any edge $e\ =\ (v_1,\ v_2)\ \in\ E$ there exists an edge
+  $e^\prime\ =\ (f(v_1),\ f(v_2))\ \in\ E^\prime$ such that
+  $\nu(e)\ =\ \nu^\prime(e^\prime)$, and for any
+  $e^\prime\ =\ (v^\prime_1,\ v^\prime_2)\ \in\ E^\prime$ there exists
+  an edge $e\ =\ (f^{-1}(v^\prime_1),\ f^{-1}(v^\prime_2))\ \in\ E$
+  such that $\nu^\prime(e^\prime)\ =\ \nu(e)$.
+\end{enumerate}
+}}\end{definition}
+
 \section{Representing Continuous Space as a Graph}
 
-{\mbox{\autoref{figure:simulation_example_state}}} shows the example
-simulation state state, initially presented in
-{\mbox{\autoref{equation:example_stricly_ordered_set_initial_state}}},
-as a set of 3-tuples, represented as a graph.  Graph notation will be
-used to describe the activities in Duration and continuous Space,
-which exist before they are symbolized and discretely ordered by the
-$\text{reflective}^1$ layer.  The simulation model state space, $S$,
-is defined to be a graph in
+{\mbox{\autoref{figure:simulation_example_state}}} shows an example of
+the simulation state state represented as a graph.  Graph notation
+will be used to describe the activities in Duration and continuous
+Space, which exist before they are symbolized and discretely ordered
+by the $\text{reflective}^1$ layer.  The simulation model state space,
+$S$, is defined to be a graph in
 {\mbox{Equations~\ref{equation:define_graph_state_first}}}
 {\mbox{through~\ref{equation:define_graph_state_last}}}.
 \begin{align}
 \label{equation:define_graph_state_first}
-       S &= (S_V, ~S_E, ~S_\mu) \\
+       S &= (S_V, ~S_E, ~S_\mu, ~S_\nu) \\
+     S_V &= \{v_1, ~v_2, ~v_3, ~v_4, ~v_5, ~v_6, ~v_7, ~v_8, ~v_9\} \\
      S_V &= {\left\{
                \begin{array}{l}
-                 \text{\tt{Gripper-1}}, \\
-                 \text{\tt{Block-1}}, \\
-                 \text{\tt{Block-2}}, \\
-                 \text{\tt{Table-1}}, \\
-                 \text{\tt{left}}
+                 \text{\tt{Gripper}}, ~\text{\tt{Block}}, ~\text{\tt{Table}}, \\
+                 \text{\tt{gripper-1}}, ~\text{\tt{block-1}}, ~\text{\tt{gripper-1}}, \\
+                 \text{\tt{table-1}}, ~\text{\tt{left}}
                \end{array}
              \right\}} \\
      S_E &= {\left\{
                \begin{array}{l}
-                 (\text{\tt{Gripper-1}}, \text{\tt{Table-1}}), \\
-                 (\text{\tt{Block-1}}, \text{\tt{Table-1}}), \\
-                 (\text{\tt{Block-2}}, \text{\tt{Table-1}}), \\
-                 (\text{\tt{Gripper-1}}, \text{\tt{left}})
+                 (v_1, v_5), ~(v_1, v_4), ~(v_1, v_9), ~(v_2, v_4), \\
+                 (v_2, v_6), ~(v_3, v_4), ~(v_3, v_7), ~(v_4, v_8)
                \end{array}
              \right\}} \\
-\label{equation:define_graph_state_last}
-S_\mu(e) &=
+S_\mu(v) &=
   {\left\{
      \begin{array}{ll}
-       \{\text{\tt{being-above}}\} & \text{if }e = (\text{\tt{Gripper-1}}, \text{\tt{Table-1}}) \\
-       \{\text{\tt{sitting-on}}\}  & \text{if }e = (\text{\tt{Block-1}}, \text{\tt{Table-1}}) ~{\vee}~ \\
-                                   & \text{~~ }e = (\text{\tt{Block-2}}, \text{\tt{Table-1}}) \\
-       \{\text{\tt{moving}}\}      & \text{if }e = (\text{\tt{Gripper-1}}, \text{\tt{left}}) \\
-       \text{undefined} & \text{otherwise}
+       \{\text{\tt{Gripper}}\}   & \text{if }v = v_1 \\
+       \{\text{\tt{Block}}\}     & \text{if }v = v_2 ~{\vee}~ \\
+                                 & \text{~ } v = v_3 \\
+       \{\text{\tt{Table}}\}     & \text{if }v = v_4 \\
+       \{\text{\tt{gripper-1}}\} & \text{if }v = v_5 \\
+       \{\text{\tt{block-1}}\}   & \text{if }v = v_6 \\
+       \{\text{\tt{block-2}}\}   & \text{if }v = v_7 \\
+       \{\text{\tt{table-1}}\}   & \text{if }v = v_8 \\
+       \{\text{\tt{left}}\}      & \text{if }v = v_9 \\
+       \text{undefined}          & \text{otherwise}
+     \end{array}
+   \right.} \\
+\label{equation:define_graph_state_last}
+S_\nu(e) &=
+  {\left\{
+     \begin{array}{ll}
+       \{\text{\tt{name}}\}        & \text{if }e = (v_1, v_5) ~{\vee}~ \\
+                                   & \text{if }e = (v_2, v_6) ~{\vee}~ \\
+                                   & \text{if }e = (v_3, v_7) ~{\vee}~ \\
+                                   & \text{~ } e = (v_4, v_8) \\
+       \{\text{\tt{being-above}}\} & \text{if }e = (v_1, v_4) \\
+       \{\text{\tt{moving}}\}      & \text{if }e = (v_1, v_9) \\
+       \{\text{\tt{sitting-on}}\}  & \text{if }e = (v_2, v_4) ~{\vee}~ \\
+                                   & \text{~ } e = (v_3, v_4) \\
+       \text{undefined}            & \text{otherwise}
      \end{array}
    \right.}
 \end{align}
 \begin{figure}
-\includegraphics[width=10cm]{gfx/simulation_example_state}
-\caption[A labelled graph representation of a state space.]{A labelled graph representation of a state space, where circles represent nodes, and squares represent edges.}
+\includegraphics[width=12cm]{gfx/simulation_example_state}
+\caption[A labelled graph representation of a state space.]{A labelled
+  graph representation of a state space, where circles represent
+  nodes, and squares represent edges.}
 \label{figure:simulation_example_state}
 \end{figure}
 
@@ -168,7 +193,7 @@ through a given edge label, $\ell_e$, as defined in
 {\mbox{\autoref{equation:frame_dot_notation}}}.
 \begin{equation}
 \label{equation:frame_dot_notation}
-v_1.\ell_e = \{v_2 ~:~ (v_1, v_2) \in S_E \wedge \ell_e \in \mu[(v_1, v_2)]\}
+v_1.\ell_e = \{v_2 ~:~ (v_1, v_2) \in S_E \wedge \ell_e \in \nu[(v_1, v_2)]\}
 \end{equation}
 
 \section{Simulated Existence}
@@ -196,33 +221,33 @@ graph, $S$:
 %\begin{definition}
 %\label{definition:graph_first}
 %\emph{
-%A graph $G$ is the 4-tuple $(V, ~E, ~\mu, ~\nu)$, where
+%A graph $G$ is the 4-tuple $(V, ~E, ~\nu, ~\nu)$, where
 %\begin{itemize}
 %\item $V$ is the set of vertices,
 %\item $E ~{\subseteq}~ V ~{\times}~ V$ is the set of edges,
-%\item $\mu : V \mapsto \ell_V$ is a function assigning a label to each vertex,
+%\item $\nu : V \mapsto \ell_V$ is a function assigning a label to each vertex,
 %\item $\nu : E \mapsto \{\ell_E\}$ is a function assigning a set of labels to each edge.
 %\end{itemize}
 %}\end{definition} \noindent In this definition, the edges are
 %directed, i.e. there is an edge from $v_1$ to $v_2$ if $(v_1,
 %v_2){\in}E$.  The empty graph, i.e. the graph with an empty set of
 %vertices will be denoted by $\emptyset$.  The union of the sets of
-%labels referred to by $\mu$ and $\nu$ will be sometimes be referred to
+%labels referred to by $\nu$ and $\nu$ will be sometimes be referred to
 %with a dot notation, $\mathring{G}=\ell_V {\cup} \ell_E$.
 %
 %\begin{definition}
 %\label{definition:graph_last}
-%\emph{ Given a graph $G = (V, e, \mu, \nu)$, a \emph{subgraph} of $G$
-%  is a graph $G_s = (V_s, e_s, \mu_s, \nu_s)$ such that
+%\emph{ Given a graph $G = (V, e, \nu, \nu)$, a \emph{subgraph} of $G$
+%  is a graph $G_s = (V_s, e_s, \nu_s, \nu_s)$ such that
 %\begin{enumerate}
 %\item $V_s ~{\subseteq}~ V$
 %\item $E_s ~{\subseteq}~ V_s {\times} V_s$,
-%\item $\mu_s$ and $\nu_s$ are the restrictions of $\mu$ and $\nu$,
+%\item $\nu_s$ and $\nu_s$ are the restrictions of $\nu$ and $\nu$,
 %  respectively, i.e.
 %\begin{align*}
-%\mu_s(v) &=         {\left\{
+%\nu_s(v) &=         {\left\{
 %                       \begin{array}{ll}
-%                         \mu(v)           & \text{if }v {\in} V_s \\
+%                         \nu(v)           & \text{if }v {\in} V_s \\
 %                         \text{undefined} & \text{otherwise}
 %                       \end{array}
 %                     \right.} \\

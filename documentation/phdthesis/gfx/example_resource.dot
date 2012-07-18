@@ -8,57 +8,33 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
         
-    // x_1^*
+    // resource_1^*
     
-    x1_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
-    x1_table_1   [texlbl = "{\huge{\tt{Table}}}",color=red];
+    x1_gripper_1   [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    x1_left   [texlbl = "{\huge{\tt{left}}}",color=red];
     
-    x1_block_1_sitting_on_x1_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
-    x1_block_1 -> x1_block_1_sitting_on_x1_table_1 [arrowhead=none,color=red];
-    x1_block_1_sitting_on_x1_table_1 -> x1_table_1 [style="-triangle 45",color=red];
+    x1_gripper_1_moving_x1_left [shape=box,style=filled,label="{\huge{\tt{moving}}}",color=red];
+    x1_gripper_1 -> x1_gripper_1_moving_x1_left [arrowhead=none,color=red];
+    x1_gripper_1_moving_x1_left -> x1_left [style="-triangle 45",color=red];
     
-    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
-    x_1_reflecting -> x1_block_1 [style="-triangle 45,dashed", color=red];
-    x_1_reflecting -> x1_table_1 [style="-triangle 45,dashed", color=red];
-    x_1_reflecting -> x1_block_1_sitting_on_x1_table_1 [style="-triangle 45,dashed", color=red];
-    
-    // x_2^*
-    
-    x2_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
-    x2_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
-    
-    x2_block_2_sitting_on_x2_block_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
-    x2_block_2 -> x2_block_2_sitting_on_x2_block_1 [arrowhead=none,color=red];
-    x2_block_2_sitting_on_x2_block_1 -> x2_block_1 [style="-triangle 45",color=red];
-    
-    x_2 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
-    x_2_reflecting -> x2_block_2 [style="-triangle 45,dashed", color=red];
-    x_2_reflecting -> x2_block_1 [style="-triangle 45,dashed", color=red];
-    x_2_reflecting -> x2_block_2_sitting_on_x2_block_1 [style="-triangle 45,dashed", color=red];
-    
-    // simult_1^*
-    
-    simult_1 [texlbl = "{\huge{\tt{Simultaneity*}}}"];
-    
-    simult_1_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
-    simult_1 -> simult_1_percept_x_1 [arrowhead=none];
-    simult_1_percept_x_1 -> x_1 [style="-triangle 45"];
-    
-    simult_1_not_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{not-percept}}}"];
-    simult_1 -> simult_1_not_percept_x_2 [arrowhead=none];
-    simult_1_not_percept_x_2 -> x_2 [style="-triangle 45"];
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    resource_1 -> resource_1_reflecting [style=dashed,arrowhead=none];
+    resource_1_reflecting -> x1_gripper_1 [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> x1_left [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> x1_gripper_1_moving_x1_left [style="-triangle 45,dashed", color=red];
     
     // reflective^1
     
     reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
     
-    reflective_1_present_simult_1 [shape=box,style=filled,label="{\huge{\tt{present}}}"];
-    reflective_1 -> reflective_1_present_simult_1 [arrowhead=none];
-    reflective_1_present_simult_1 -> simult_1 [style="-triangle 45"];
+    reflective_1_resource_resource_1 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_resource_resource_1 [arrowhead=none];
+    reflective_1_resource_resource_1 -> resource_1 [style="-triangle 45"];
+    
+    reflective_1_symbol_resource_1 [shape=box,style=filled,label="{\huge{\tt{symbol}}}"];
+    reflective_1 -> reflective_1_symbol_resource_1 [arrowhead=none];
+    reflective_1_symbol_resource_1 -> resource_1 [style="-triangle 45"];
     
     
   }

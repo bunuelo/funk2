@@ -25,8 +25,9 @@ phdthesis.pdf: \
   chapters/related_models.tex \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
-  chapters/reflective_symbolization.tex \
+  chapters/symbolic_representation.tex \
   chapters/grounded_knowledge.tex \
+  chapters/hypothetical_knowledge.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/the_implementation.tex \

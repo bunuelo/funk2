@@ -10,37 +10,39 @@
 \emph{Model\nobreakdash-6: The Emotion Machine}.  Minsky's model
 reflects over a \emph{physical simulation} that provides an interface
 to an external world with sensors and actuators for controlling a
-physical body.  {\mbox{Model-6}} has two reactive layers, built-in and
-learned, that I have found useful for organizing my implementation.
-Although these layers are not key to my reflective model, I have found
-them good for organizing the interface between an objective physical
-simulation and the lower boundary of the first-order reflective layer
-of my model.  The combination of the physical simulation and both
-reactive layers of {\mbox{Model-6}} correspond to activities in the
-pre-symbolic physical or $\text{reflective}^0$ layer of my model.  The
-``deliberative'' layer of Minsky's model maps to the first-order
-reflective thinking layer in my model, but this is only very
-approximate because Minsky's deliberative layer is not limited to
-reasoning about causal models of the physical simulation as in my
-model.  In both of our models, this layer makes plans using causal
-models that include references to physical activities.  Minsky's
-``reflective'' layer maps to the union of all of the reflective layers
-in my model that are equal to or greater than order two.  In both
-models, this layer responds to failures in planning or plan execution,
-calling upon higher orders of causal models to guide a debugging
-response.
+physical body.  The physical simulation of {\mbox{Model-6}}
+corresponds to activities in the pre-symbolic physical or
+$\text{reflective}^0$ layer of my model.  {\mbox{Model-6}} has two
+reactive layers, built-in and learned, that are parts of the
+$\text{reflective}^1$ layer of my model, organizing built-in and
+compiled plan resources, respectively.  The ``deliberative'' layer of
+Minsky's model also maps to the first-order reflective thinking layer
+in my model, but this is only very approximate because Minsky's
+deliberative layer is not limited to reasoning about causal models of
+the physical simulation as in my model.  In both of our models, this
+layer makes plans using causal models that include references to
+physical activities.  In my model, I have placed an emphasis on a
+recursive definition of the $\text{reflective}^1$ layer of my model.
+In terms of Model\nobreakdash-6, the built-in reactive, learned
+reactive, and deliberative layers are designed to be recursively
+applied to themselves, resulting in $n$ duplications of each of these
+layers.  Minsky's reflective layer maps to the union of all of the
+reflective layers in my model that are equal to or greater than order
+two.  In both models, this layer responds to failures in planning or
+plan execution, calling upon higher orders of causal models to guide a
+debugging response.
 
 \begin{figure}[bth]
 \begin{align*}
+\text{Minsky's Physical Simulation}~ &{\approx} \text{ reflective}^0 \\
 \left.
   \begin{array}{l}
-    \text{Minsky's Physical Simulation}\\
-    \text{Minsky's Built-in Reactive Layer}\\
-    \text{Minsky's Learned Reactive Layer}\\
+    \text{Minsky's $n^{\text{th}}$ Built-in Reactive Layer} \\
+    \text{Minsky's $n^{\text{th}}$ Learned Reactive Layer} \\
+    \text{Minsky's $n^{\text{th}}$ Deliberative Layer}
   \end{array}
-\right\}                            &{\approx} \text{ reflective}^0 \\
-\text{Minsky's Deliberative Layer } &{\approx} \text{ reflective}^1 \\
-\text{Minsky's Reflective Layer }   &{\approx} \bigcup_{n=2}^{\infty}{\text{reflective}^n}
+\right\}                             &{\approx} \text{ reflective}^n \text{ for $n \geq 1$}\\
+\text{Minsky's Reflective Layer}~    &{\approx} \bigcup_{n=2}^{\infty}{\text{reflective}^n}
 \end{align*}
 \caption{The lower layers of Model-6 mapped to the suggested
   $\text{reflective}^n$ order notation.}
@@ -67,6 +69,37 @@ Above Minsky's reflective layer are the ``self-reflective'' and
 implemented these layers because they are not simple extensions upward
 in my model.  I describe how I see these layers being implemented in
 \autoref{section:model_6_future_research} as future research.
+
+\section{Interior Grounding}
+
+\cite{minsky:2005} describes an evolutionary reflective model of mind
+that he calls \emph{interior grounding}.  Interior grounding states
+that each layer of reflective thinking could be genetically
+predestined to each have different and specific types of useful ways
+of thinking.  Minsky rejects the \emph{physical grounding hypothesis},
+which stipulates that thoughts must necessarily develop from the
+lowest layer first and only subsequently to the higher layers of
+thinking.
+
+In terms of my model, activities in the mind can create and manipulate
+symbolic arrangements without these symbols necessarily referring to
+the physical layer of activity.  My model does not conflict with
+modelling different developmental stages of minds or genetic
+differences between minds; the implementation begins the simulation in
+a specific physical state, where the reflective layers of the mind are
+already all actively thinking with explicit sets of pre-existing
+knowledge, such as plans.  My model learns new knowledge and debugs
+the knowledge it already has as the simulation proceeds.
+
+In terms of Model\nobreakdash-6, each reflective layer of my model can
+be considered to have a unique built-in reactive layer, which makes
+room for these genetic dispositions that Minsky describes as the basis
+for interior grounding.  Also, my use of the term grounding is
+consistent in the sense that dynamic activity is the grounding for
+symbolic references in each layer of activity of my model, so this
+grounding need not begin by reasoning about physical activity, growing
+from lower layers to higher layers, but may instead begin reasoning
+about any layer at any given height in the model.
 
 \section{Metareasoning}
 
@@ -115,27 +148,6 @@ causal models is a distinct activity from learning first-order
 reflective thinking causal models.  The implementation demonstrates
 how two distinct layers of causal models allow not only learning to
 act but also learning to think about acting.
-
-\section{Interior Grounding}
-
-\cite{minsky:2005} describes an evolutionary reflective model of mind
-that he calls \emph{interior grounding}.  Interior grounding states
-that each layer of reflective thinking could be genetically
-predestined to each have different and specific types of useful ways
-of thinking.  Minsky rejects the \emph{physical grounding hypothesis},
-which stipulates that thoughts must necessarily develop from the
-lowest layer first and only subsequently to the higher layers of
-thinking.
-
-In terms of my model, activities in the mind can create and manipulate
-symbolic arrangements without these symbols necessarily referring to
-the physical layer of activity.  My model does not conflict with
-modelling different developmental stages of minds or genetic
-differences between minds; the implementation begins the simulation in
-a specific physical state, where the reflective layers of the mind are
-already all actively thinking with explicit sets of pre-existing
-knowledge, such as plans.  My model learns new knowledge and debugs
-the knowledge it already has as the simulation proceeds.
 
 \section{Propagators}
 

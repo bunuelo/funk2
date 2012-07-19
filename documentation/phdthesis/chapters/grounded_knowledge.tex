@@ -256,3 +256,74 @@ example of a perceptual event that has an associated transframe.
 \label{figure:example_transframe}
 \end{figure}
 
+\section{Resources}
+
+Each reflective thinking layer in the model has a set of built-in
+resources.  These built-in resources correspond to what
+\cite{minsky:2006} refers to as the built-in reactive resources.
+Resources can be in activated or suppressed Spatial arrangements.
+These activated and suppressed relationships can lead to logical
+conflicts, which can be debugged by tracing the causal dependencies of
+the creation of these Spatial arrangements.  Before discussing these
+causal dependencies, the learned hypothetical knowledge that is used
+for creating the plans whose execution creates these Spatial
+arrangements must first be described.
+{\mbox{Equation~\ref{equation:define_resource_set_first}}}
+{\mbox{through~\ref{equation:define_resource_set_last}}} defines the
+action resources in each $\text{reflective}^n$ layer.
+\begin{align}
+\label{equation:define_resource_set_first}
+                                       A^{n*} &\equiv \text{\emph{$\text{Reflective}^n$ action resources.}} \\
+\text{\tt{reflective}}^n.\text{\tt{resource}} &= A^{n*} \\
+\label{equation:define_resource_set_last}
+                                       a^{n*} &\in A^{n*}
+\end{align}
+{\mbox{\autoref{figure:example_resource}}} shows an example of four resources, each displaying a different activation or suppression Spatial relationship:
+\begin{enumerate}
+\item An example of an activation relationship.
+\item An example of a suppression relationship.
+\item An example of an idle resource in neither an activation not a
+  suppression relationship.
+\item An example of a resource in simultaneous, conflicting,
+  activation and suppression relationships.
+\end{enumerate}
+\begin{figure}
+\center
+\includegraphics[width=8cm]{gfx/example_resource_conflict}
+\caption[Four examples of resource activation and suppression Spatial
+  relationships.]{Four examples of resource activation and suppression
+  Spatial relationships: (1) activation, (2) suppression, (3) idle,
+  and (4) conflict.}
+\label{figure:example_resource_conflict}
+\end{figure}
+
+
+\section{Resource Activation Events}
+
+Activation events keep track of the start and end simultaneities for
+the activation of each resource.  Activation and suppression events
+are similar to symbolic perceptual events, except that they are based
+on the activation and suppression relationships that are caused by the
+execution of plans rathar than the isomorphic perceptions from the
+layers below.  Although, the cause of resource events are different
+from perceptual events, they still have a basis in the grounded
+knowledge terms of their start and end simultaneities and the
+transframes that are computed from these factual pieces of
+information.  The perceptual simultaneities and transframes that are
+related to perceptual and resource events are are factual and not
+based on hypotheses.
+
+{\mbox{\autoref{figure:example_resource}}} shows an example of a
+resource in the first-order reflective thinking layer with an
+activation event.
+\begin{figure}
+\center
+\includegraphics[width=8cm]{gfx/example_resource}
+\caption[An example of a first-order reflective resource with an
+  activation event.]{An example of a first-order reflective resource
+  with an activation event, related to grounded factual start and end
+  perceptual simultaneities as well as a grounded factual transframe.
+  Unperceived symbols are omitted for clarity.}
+\label{figure:example_resource}
+\end{figure}
+

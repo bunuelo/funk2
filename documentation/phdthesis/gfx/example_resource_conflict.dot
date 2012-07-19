@@ -1,0 +1,33 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+    // activation_1^*
+    
+    activation_1 [texlbl = "{\huge{\tt{Activation*}}}"];
+    
+    // resource_1
+    
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    
+    resource_1_activation_activation_1 [shape=box,style=filled,label="{\huge{\tt{activation}}}"];
+    resource_1 -> resource_1_activation_activation_1 [arrowhead=none];
+    resource_1_activation_activation_1 -> activation_1 [style="-triangle 45"];
+    
+    // reflective^1
+    
+    reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_1_event_resource_1 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_event_resource_1 [arrowhead=none];
+    reflective_1_event_resource_1 -> resource_1 [style="-triangle 45"];
+    
+    
+  }
+}

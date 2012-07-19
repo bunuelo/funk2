@@ -72,6 +72,7 @@ phdthesis.pdf: \
   gfx/example_transition.pdf \
   gfx/example_resource_conflict.pdf \
   gfx/example_resource.pdf \
+  gfx/example_second_order_resource.pdf \
   gfx/example_transframe.pdf \
   gfx/example_causal_knowledge.pdf \
   gfx/example_causal_hypothesis.pdf \

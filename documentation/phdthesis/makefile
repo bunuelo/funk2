@@ -67,6 +67,7 @@ phdthesis.pdf: \
   gfx/reflective_relationship_visualization.pdf \
   gfx/example_symbolic_reference_to_physical_activity.pdf \
   gfx/example_symbolic_memory.pdf \
+  gfx/example_second_order_symbol.pdf \
   gfx/two_example_grounded_symbolic_references.pdf \
   gfx/example_simultaneity.pdf \
   gfx/example_transition.pdf \

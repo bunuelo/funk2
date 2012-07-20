@@ -1,35 +1,153 @@
 digraph G {
 
+  //subgraph cluster_0 {
+  //  label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
+  //  //labelloc = "b";
+  //  color=black;
+  //  
+  //  // reflective^0
+  //  node [fillcolor = white, color = "#000000", style = filled];
+  //  edge [color = "#000000"];
+  //  
+  //  physical_block   [texlbl = "{\huge{\tt{Block}}}"];
+  //  physical_table   [texlbl = "{\huge{\tt{Table}}}"];
+  //  
+  //  physical_block_sitting_on_physical_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+  //  physical_block -> physical_block_sitting_on_physical_table [arrowhead=none];
+  //  physical_block_sitting_on_physical_table -> physical_table [style="-triangle 45"];
+  //}
+  
   subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    labelloc = "t";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+    
+    
+    reflective1_block   [texlbl = "{\huge{\tt{Block}}}"];
+    
+    //reflective1_block_redarrow_physical_block [shape=box,style=filled,label="{\huge{\tt{isomorphic}}}",color=red];
+    //reflective1_block -> reflective1_block_redarrow_physical_block [arrowhead=none,style=dashed,color=red];
+    //reflective1_block_redarrow_physical_block -> physical_block [style="-triangle 45,dashed",color=red];
+    
+    reflective1_table   [texlbl = "{\huge{\tt{Table}}}"];
+    
+    //reflective1_table_redarrow_physical_table [shape=box,style=filled,label="{\huge{\tt{isomorphic}}}",color=red];
+    //reflective1_table -> reflective1_table_redarrow_physical_table [arrowhead=none,style=dashed,color=red];
+    //reflective1_table_redarrow_physical_table -> physical_table [style="-triangle 45,dashed",color=red];
+
+
+    // reflective1_node1
+    
+    reflective1_node1 [texlbl = "{\huge{\tt{Node}}}"];
+
+    reflective1_node1_label_reflective1_block [shape=box,label="{\huge{\tt{label}}}"];
+    reflective1_node1 -> reflective1_node1_label_reflective1_block [arrowhead=none];
+    reflective1_node1_label_reflective1_block -> reflective1_block [style="-triangle 45"];
+    
+
+    // reflective1_node2
+    
+    reflective1_node2 [texlbl = "{\huge{\tt{Node}}}"];
+    
+    reflective1_node2_label_reflective1_table [shape=box,label="{\huge{\tt{label}}}"];
+    reflective1_node2 -> reflective1_node2_label_reflective1_table [arrowhead=none];
+    reflective1_node2_label_reflective1_table -> reflective1_table [style="-triangle 45"];
+    
+    
+    
+    reflective1_sitting_on  [texlbl = "{\huge{\tt{sitting-on}}}"];
+    
+    //reflective1_sitting_on_redarrow_physical_block [shape=box,style=filled,label="{\huge{\tt{isomorphic}}}",color=red];
+    //reflective1_sitting_on -> reflective1_sitting_on_redarrow_physical_block [arrowhead=none,style=dashed,color=red];
+    //reflective1_sitting_on_redarrow_physical_block -> physical_block_sitting_on_physical_table [style="-triangle 45,dashed",color=red];
+
+
+    reflective1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective1_x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    
+    reflective1_symbol_reflective1_x_1 [shape=box,style=filled,label="{\huge{\tt{symbol}}}",nodesep="0.02"];
+    reflective1 -> reflective1_symbol_reflective1_x_1 [arrowhead=none];
+    reflective1_symbol_reflective1_x_1 -> reflective1_x_1 [style="-triangle 45"];
+    
+    // node references
+    
+    reflective1_x_1_node_reflective1_node1 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep=0.02];
+    reflective1_x_1 -> reflective1_x_1_node_reflective1_node1 [arrowhead=none];
+    reflective1_x_1_node_reflective1_node1 -> reflective1_node1 [style="-triangle 45"];
+    
+    reflective1_x_1_node_reflective1_node2 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep=0.02];
+    reflective1_x_1 -> reflective1_x_1_node_reflective1_node2 [arrowhead=none];
+    reflective1_x_1_node_reflective1_node2 -> reflective1_node2 [style="-triangle 45"];
+    
+    // reflective1_x_1_edge_1: Block-1 sitting-on Table-1
+    
+    reflective1_x_1_edge_1 [texlbl = "{\huge{\tt{Edge}}}"];
+    
+    reflective1_x_1_edge_reflective1_x_1_edge_1 [shape=box,style=filled,label="{\huge{\tt{edge}}}"];
+    reflective1_x_1 -> reflective1_x_1_edge_reflective1_x_1_edge_1 [arrowhead=none];
+    reflective1_x_1_edge_reflective1_x_1_edge_1 -> reflective1_x_1_edge_1 [style="-triangle 45"];
+        
+    reflective1_x_1_edge_1_tail_reflective1_node1 [shape=box,style=filled,label="{\huge{\tt{tail}}}"];
+    reflective1_x_1_edge_1 -> reflective1_x_1_edge_1_tail_reflective1_node1 [arrowhead=none];
+    reflective1_x_1_edge_1_tail_reflective1_node1 -> reflective1_node1 [style="-triangle 45"];
+        
+    reflective1_x_1_edge_1_head_reflective1_node2 [shape=box,style=filled,label="{\huge{\tt{head}}}"];
+    reflective1_x_1_edge_1 -> reflective1_x_1_edge_1_head_reflective1_node2 [arrowhead=none];
+    reflective1_x_1_edge_1_head_reflective1_node2 -> reflective1_node2 [style="-triangle 45"];
+        
+    reflective1_x_1_edge_1_label_reflective1_node2 [shape=box,style=filled,label="{\huge{\tt{label}}}"];
+    reflective1_x_1_edge_1 -> reflective1_x_1_edge_1_label_reflective1_node2 [arrowhead=none];
+    reflective1_x_1_edge_1_label_reflective1_node2 -> reflective1_sitting_on [style="-triangle 45"];
+        
+    //reflective1_x_1_edge_1 -> physical_block_reflective1_sitting_on_physical_table [style="-triangle 45,dashed",color=red]
+
+
+  }
+
+  subgraph cluster_2 {
     label = "{\\huge{The $\\text{Reflective}^2$ Layer}}";
+    labelloc = "t";
     color="#007F00"
     
     // reflective
     node [fillcolor = white, color = "#007F00", style = filled];
     edge [color = "#007F00"];
-        
+    
+    reflective2_node1 [texlbl = "{\huge{\tt{Symbol*}}}",color=red];
+    reflective2_node2 [texlbl = "{\huge{\tt{Edge}}}",color=red];
+    reflective2_node3 [texlbl = "{\huge{\tt{sitting-on}}}",color=red];
+    
+    reflective2_node1_relation_reflective2_node2 [shape=box,style=filled,label="{\huge{\tt{edge}}}",color=red];
+    reflective2_node1 -> reflective2_node1_relation_reflective2_node2 [arrowhead=none,color=red];
+    reflective2_node1_relation_reflective2_node2 -> reflective2_node2 [style="-triangle 45",color=red];
+    
+    reflective2_node2_relation_reflective2_node3 [shape=box,style=filled,label="{\huge{\tt{label}}}",color=red];
+    reflective2_node2 -> reflective2_node2_relation_reflective2_node3 [arrowhead=none,color=red];
+    reflective2_node2_relation_reflective2_node3 -> reflective2_node3 [style="-triangle 45",color=red];
+    
+    reflective [texlbl = "{\huge{\tt{Reflective}}}"];
+    
     // x_1^*
-    
-    x2_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
-    x2_table_1   [texlbl = "{\huge{\tt{Table}}}",color=red];
-    
-    x2_block_2_sitting_on_x2_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
-    x2_block_2 -> x2_block_2_sitting_on_x2_table_1 [arrowhead=none,color=red];
-    x2_block_2_sitting_on_x2_table_1 -> x2_table_1 [style="-triangle 45",color=red];
     
     x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
     x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
     x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
-    x_1_reflecting -> x2_block_2 [style="-triangle 45,dashed", color=red];
-    x_1_reflecting -> x2_table_1 [style="-triangle 45,dashed", color=red];
-    x_1_reflecting -> x2_block_2_sitting_on_x2_table_1 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> reflective2_node1 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> reflective2_node1_relation_reflective2_node2 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> reflective2_node2 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> reflective2_node2_relation_reflective2_node3 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> reflective2_node3 [style="-triangle 45,dashed", color=red];
     
-    // reflective^2
+    reflective_symbol_x_1 [shape=box,label="{\huge{\tt{symbol}}}"];
+    reflective -> reflective_symbol_x_1 [arrowhead=none];
+    reflective_symbol_x_1 -> x_1 [style="-triangle 45"];
     
-    reflective_2 [texlbl = "{\huge{\tt{Reflective}}}"];
-    
-    reflective_2_symbol_x_1 [shape=box,style=filled,label="{\huge{\tt{symbol}}}"];
-    reflective_2 -> reflective_2_symbol_x_1 [arrowhead=none];
-    reflective_2_symbol_x_1 -> x_1 [style="-triangle 45"];
+
   }
+
 }

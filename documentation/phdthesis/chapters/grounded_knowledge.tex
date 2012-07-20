@@ -303,7 +303,6 @@ Spatial relationship:
 \label{figure:example_resource_conflict}
 \end{figure}
 
-
 \section{Resource Activation Events}
 
 Activation events keep track of the start and end simultaneities for
@@ -325,6 +324,45 @@ clear distinctions between what is factual and what is hypothetical
 knowledge in the model.  Only in this way may the hypothetical
 counterfactual underpinnings of knowledge be debugged when they turn
 out to be wrong.
+Equations\ \ref{equation:define_precondition_postcondition_first}
+through\ \ref{equation:define_precondition_postcondition_last} define
+the factual positive and negative preconditions, $\text{pre}^{+}$ and
+$\text{pre}^{-}$, as well as positive and negative postconditions,
+$\text{post}^{+}$ and $\text{post}^{-}$, for each activation event,
+$a^{n*}_\epsilon$, of a given resource action, $a^{n*}$.
+\begin{align}
+\label{equation:define_precondition_postcondition_first}
+                                   a^{n*} &\in A^{n*} \\
+                           a^{n*}_\epsilon &\in a^{n*}.\text{\tt{activation}} \\
+   \text{pre}^{+}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
+                                                   t^* \in a^{n*}_\epsilon.\text{\tt{start}} ~\wedge~ \\
+                                                   ~~x^* \in t^*.\text{\tt{percept}}
+                                                 \end{array}\right\} \\
+   \text{pre}^{-}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
+                                                   t^* \in a^{n*}_\epsilon.\text{\tt{start}} ~\wedge~ \\
+                                                   ~~x^* \in t^*.\text{\tt{not-percept}}
+                                                 \end{array}\right\} \\
+  \text{post}^{+}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
+                                                   t^* \in a^{n*}_\epsilon.\text{\tt{end}} ~\wedge~ \\
+                                                   ~~x^* \in t^*.\text{\tt{percept}}
+                                                 \end{array}\right\} \\
+\label{equation:define_precondition_postcondition_last}
+  \text{post}^{-}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
+                                                   t^* \in a^{n*}_\epsilon.\text{\tt{end}} ~\wedge~ \\
+                                                   ~~x^* \in t^*.\text{\tt{not-percept}}
+                                                 \end{array}\right\} \\
+\end{align}
+Equations\ \ref{equation:define_delta_first}
+and\ \ref{equation:define_delta_last} define the factual positive and
+negative transframe changes, $\Delta^{+}$ and $\Delta^{-}$, between
+the preconditions and the postconditions for each resource activation
+event, $a^{n*}_\epsilon$.
+\begin{align}
+\label{equation:define_delta_first}
+       \Delta^{+}(a^{n*}_\epsilon) &= \text{post}^{+}(a^{n*}_\epsilon) \setminus \text{pre}^{+}(a^{n*}_\epsilon) \\
+\label{equation:define_delta_last}
+       \Delta^{-}(a^{n*}_\epsilon) &= \text{post}^{-}(a^{n*}_\epsilon) \setminus \text{pre}^{-}(a^{n*}_\epsilon)
+\end{align}
 \begin{figure}
 \center
 \includegraphics[width=8cm]{gfx/example_resource}
@@ -338,13 +376,3 @@ out to be wrong.
 \label{figure:example_resource}
 \end{figure}
 
-\section{Second-order Resources}
-
-\begin{figure}
-\center
-\includegraphics[width=8cm]{gfx/example_second_order_resource}
-\caption[An example of a second-order reflective resource with an
-  activation event.]{An example of a second-order reflective resource
-  with an activation event.}
-\label{figure:example_second_order_resource}
-\end{figure}

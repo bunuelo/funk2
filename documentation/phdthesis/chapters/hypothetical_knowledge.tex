@@ -11,6 +11,27 @@ how hypothetical causal models are abstracted from this factual
 knowledge in order to create counterfactual knowledge, which keeps
 this factual references so that it can be debugged when it is wrong.
 
+\cite{mitchell:1997} presents a general formalism for learning
+hypotheses from sets of ground truth examples.  He describes a
+function approximation approach to the discrimination problem of
+predicting a binary value given a set of binary features.  In order to
+keep his model of learning as general as possible, he introduces the
+concept of a \emph{hypothesis space}, a given language for describing
+hypotheses.  For example, a simple hypothesis space over a set of
+binary inputs that are used to predict a binary target feature would
+be the \emph{conjunctive hypothesis space}.  The conjunctive
+hypothesis space consists of all logical conjunctions of the input
+features.  For example, the confjunctive hypothesis space over three
+input variables is shown in
+{\mbox{\autoref{figure:example_conjunctive_hypothesis_space}}}.
+\begin{figure}
+\center
+\includegraphics[width=8cm]{gfx/example_conjunctive_hypothesis_space}
+\caption[An example of a conjunctive hypothesis space.]{An example of
+  a conjunctive hypothesis space.}
+\label{figure:example_conjunctive_hypothesis_space}
+\end{figure}
+
 
 \section{leftovers...}
 

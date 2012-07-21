@@ -76,6 +76,7 @@ phdthesis.pdf: \
   gfx/example_second_order_resource.pdf \
   gfx/example_transframe.pdf \
   gfx/example_conjunctive_hypothesis_space.pdf \
+  gfx/example_conjunctive_version_space.pdf \
   gfx/example_causal_knowledge.pdf \
   gfx/example_causal_hypothesis.pdf \
   gfx/simulation_example_state_graph.pdf \

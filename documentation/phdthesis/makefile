@@ -75,6 +75,7 @@ phdthesis.pdf: \
   gfx/example_resource.pdf \
   gfx/example_second_order_resource.pdf \
   gfx/example_transframe.pdf \
+  gfx/example_hypothesis.pdf \
   gfx/example_conjunctive_hypothesis_space.pdf \
   gfx/example_conjunctive_version_space.pdf \
   gfx/example_causal_knowledge.pdf \
@@ -94,7 +95,8 @@ phdthesis.pdf: \
   gfx/serial_and_parallel_plan.pdf \
   gfx/state_action.pdf \
   gfx/transframe.pdf \
-  gfx/fibermon_many_fibers.pdf
+  gfx/fibermon_many_fibers.pdf \
+  gfx/magritte_pipe.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

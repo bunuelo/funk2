@@ -4,20 +4,26 @@ digraph G {
   edge [color = "#000000"];
         
   nil [texlbl = "\emph{True}"];
-  A [texlbl = "$A$"];
-  B [texlbl = "$B$"];
-  C [texlbl = "$C$"];
-  D [texlbl = "$D$"];
+  subgraph cluster_1 {
+    //label = "Specific Boundary Set";
+    A [texlbl = "$A$"];
+    B [texlbl = "$B$"];
+    C [texlbl = "$C$"];
+    D [texlbl = "$D$"];
+  }
   AB [texlbl = "$A \wedge B$"];
   AC [texlbl = "$A \wedge C$"];
   AD [texlbl = "$A \wedge D$"];
   BC [texlbl = "$B \wedge C$"];
   BD [texlbl = "$B \wedge D$"];
   CD [texlbl = "$C \wedge D$"];
-  ABC [texlbl = "$A \wedge B \wedge C$"];
-  ABD [texlbl = "$A \wedge B \wedge D$"];
-  ACD [texlbl = "$A \wedge C \wedge D$"];
-  BCD [texlbl = "$B \wedge C \wedge D$"];
+  subgraph cluster_2 {
+    //label = "General Boundary Set";
+    ABC [texlbl = "$A \wedge B \wedge C$"];
+    ABD [texlbl = "$A \wedge B \wedge D$"];
+    ACD [texlbl = "$A \wedge C \wedge D$"];
+    BCD [texlbl = "$B \wedge C \wedge D$"];
+  }
   ABCD [texlbl = "$A \wedge B \wedge C \wedge D$"];
   
   nil -> A [style="-triangle 45"];

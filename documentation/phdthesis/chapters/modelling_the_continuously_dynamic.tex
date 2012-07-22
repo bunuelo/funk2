@@ -3,50 +3,34 @@
 \label{chapter:modelling_the_continuously_dynamic}
 %************************************************
 
+\vspace{5mm}
+\begin{center}
+You can't find love in a dictionary. \\ \medskip
+    --- \cite{dennett:2009}
+\end{center}
+\vspace{5mm}
+
 In this dissertation the focus will be a description of thinking that
-reflectively learns to accomplish goals.  I begin by describing a
-clear distinction between dynamic continuity and static arrangements
-of symbols, which are \emph{the} fundamental key distinctions in my
-model.  The model of reflective thinking grows quickly within this
-initial foundational conception, which, as it begins reflectively,
-leads necessarily and naturally to the goals of this dissertation.
-This part will give a non-technical understanding of my reflective
-model of mind, which is the basis of the mathematical simulation and
-the computational implementation.
-
-I will not attempt to give a complete representation for a general
-problem domain nor a complete description of a general problem solver.
-My work here leaves the unmodellable as known to be just that.
-Thinking as a dynamic activity uses models as useful tools with the
-clear understanding that these models are static.  Further, and
-critically important for the advancement of the field of AI, when
-describing reflective thinking, it is imperative to have an explicit
-awareness of thinking being limited to manipulating the static.  I
-will therefore refer to an AI model as simply an ``AI'' with the
-shared understanding that I am referring to a static model.
-
-Non-reflective AI models learn by correcting one immediate cause of a
-failure; however, given a layered model, I describe new opportunities
-for considering one failure to also be failures in the reflective
-layers ``above'' and ``below'' the original failure, resulting in an
-arbitrary number of reflective learning opportunities from a single
-failure.
+reflectively learns to accomplish goals.  \autoref{part:the_model}
+begins with a clear distinction between dynamic continuity and static
+arrangements of symbols, which are \emph{the} fundamental key
+distinctions in my model.  The model of reflective thinking grows
+quickly within this initial foundational conception, and leads
+necessarily and naturally to the goals of this dissertation.
 
 In \autoref{part:the_simulation}, the simulation, I will describe an
 example of a mathematical description of the model, which I will use
 to evaluate the model in terms of the performance of a search
 algorithm implemented in a reflective simulation.
 
-In \autoref{part:the_implementation}, the implementation, I will
-describe an example of a computational implementation of reflective
-thinking.  The implementation is a layered cognitive architecture with
-three working layers.  I will focus on a very simple physical block
-stacking problem domain as a tool for explaining simply, through
+In \autoref{part:the_implementation}, the implementation, an example
+of a computational implementation of reflective thinking will be
+described.  The implementation is a layered cognitive architecture
+with three working layers.  I will focus on a very simple physical
+block stacking problem domain as a tool for explaining simply, through
 examples, the layered classes of reflective learning.  In describing
 the working model implementation, I will maintain an awareness of the
 explicit distinction between a static model and the dynamic referent.
-I have categorized my focus in this way only as an example of the
-computational description.
 
 \section{Symbols and Continuity}
 
@@ -64,18 +48,16 @@ following two basic questions:
 \item What is continuous space?
 \item What is the activity that fills this space?
 \end{enumerate}
-Answers to these questions abound.  I do not mean to promote the
-foolish thought that I have \emph{the} correct or generally useful
-answer to these questions.  A useful answer to these questions depends
-on ones own goals.  My goal is to build an AI model that makes
-arbitrarily greater improvements given \emph{any} non-reflective
-goal-oriented learning algorithm.  In other words, my AI must be able
-to abstract and use models of its own continuously dynamic reasoning
-activities.  My goal hinges on my AI's ability to deal with the
-inherent contradiction in answering these two basic and simple
-questions for itself.  If it is understood that any answer must be
-based on language, then it becomes obvious that there is no general or
-final answer that can be predetermined for as yet unknown goals.  Many
+Answers to these questions abound, depending on the goals of the
+responder.  My goal is to build an AI model that makes arbitrarily
+greater improvements given \emph{any} non-reflective goal-oriented
+learning algorithm.  In other words, my AI must be able to abstract
+and use models of its own continuously dynamic reasoning activities.
+The goal hinges on the AI's ability to deal with the inherent
+contradiction in answering these two basic and simple questions for
+itself.  If it is understood that any answer must be based on
+language, then it becomes obvious that there is no general or final
+answer that can be predetermined for as yet unknown goals.  Many
 philosophers, scientists, and spiritualists have provided different
 answers to these questions in order to accomplish different goals.
 Here are some caricatured answers to these two questions that
@@ -96,7 +78,7 @@ apparently have very different explanatory goals:
   All beings are part of this energy that flows among and between us
   without any separations actually existing.  We call this God, the
   energy that is in each and every one of us that contains all time
-  and space, life and death, in one spiritual experiential existence.
+  and space, life and death, in one experiential existence.
 \item {\bf{Philosopher:}} The continuous amorphous perceptual
   experience is the real dynamic ongoing activity of being in the
   present, from which all discrete perceptions are abstracted.  From
@@ -108,23 +90,33 @@ Each of these caricatures, presents a very different model of the
 continuously dynamic activity in continuous space.  The key idea to
 understand here is that each of these models \emph{describes but is
   not equivalent to} this common continuous space and the dynamic
-activities that exist within it.  The different descriptions that are
+activities that exist within it.  \cite{magritte:1919} visually
+explains this point with his ``Treason of Images'' reproduced in
+\autoref{figure:magritte_pipe}.  The different descriptions that are
 used are good for different goals, but they are all similar in that
 they are all based on symbols.  They are all necessarily discrete
 descriptions of something that is not fundamentally discrete.  The
 physicist uses an infinite number of symbols to describe this
-continuity.  It is important to understand that using an infinite
-number of symbols does not make the model actually continuous.  A
-model that includes an infinite number of symbols, like the
-mathematician's real number line, does not magically make this model
-not fundamentally discrete and symbolic.
+continuity.  A model that includes an infinite number of symbols, like
+the mathematician's real number line, does not magically make this
+model not symbolic.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/magritte_pipe}
+\caption[``The Treason of Images'' (``This is not a pipe'') by
+  \cite{magritte:1919} is an image of a pipe.]{``The Treason of
+  Images'' (``This is not a pipe'') by \cite{magritte:1919} is an
+  image of a pipe.  The symbolic image is not equivalent to its actual
+  referent, which is neither symbolic nor an image.}
+\label{figure:magritte_pipe}
+\end{figure}
 
 Models are all intentionally created, based on discrete symbols, in
 order to reference and describe this continuous space of continuously
-dynamic activities.  A reflective AI, therefore, must explicitly be
-based on the relationship between its own goals and the problem of
-creating relevant models of its own dynamic activity.  In other words,
-a reflective AI, must explicitly be programmed to learn when a given
+dynamic activities.  A reflective AI, therefore, must be based on the
+relationship between its own goals and the problem of creating
+relevant models of its own dynamic activity.  In other words, a
+reflective AI, must explicitly be programmed to learn when a given
 model is good or bad for accomplishing its own goals.  A reflective AI
 would be able to question the utility of these caricatured models of
 physicists, spiritualists, and philosophers, based on whether or not
@@ -133,16 +125,20 @@ they help it to accomplish its own goals.
 \section{Dynamically Grounded Description}
 
 A grounded description references the dynamic.  Symbols, words and
-language, have grounding only in this way.  The further ability of
-symbols to also reference other symbols allows the additional
-possibility of creating a referential circularity in the static model.
-An illusion of a primitive grounding is possible in such a cycle
-because all of the symbols have a referent; however, because all
-references within such a closed cycle appear to be exclusively kept
-within the static model and do not seem any longer to refer to
-anything dynamic, there is a danger of there being no meaning other
-than circularity to such a purely static construct.  Again, symbols
-are tools for modelling and are useful only if the circularity is not
+language refer to undifferentiated amorphous perceptions or ongoing
+general experience and have grounding only in this way and create the
+tools with which the undifferentiated can be manipulated, understood,
+or communicated.
+
+The further ability of symbols to also reference other symbols allows
+the additional possibility of creating a referential circularity in a
+static model.  An illusion of a primitive grounding is possible in
+such a cycle because all of the symbols have a referent; however,
+because all references within such a closed cycle appear to be
+exclusively kept within the static model and do not seem any longer to
+refer to anything dynamic, there is a danger of there being no meaning
+other than circularity to such a purely static construct.  Symbols are
+tools for modelling and are useful only if the circularity is not
 mistaken for a grounded reference.  Thus, I strictly avoid presenting
 such illusions of grounding as primitive in this dissertation.  To
 allow for grounded descriptions, I will first outline my conception of
@@ -210,11 +206,11 @@ symbolizing ongoing activities.
 \section{Order of Space}
 
 Activities in Duration may be symbolized in a homogeneous medium
-without activity.  Bergson calls this medium Space, allowing symbolic
-references to activities in Duration to be related.  This is the
-primary fundamental distinction in both the mathematical simulation
-and computer implementation of reflective thinking.  Of major
-importance is the fact that one does not derive the other, but
+without activity.  \cite{bergson:1910} calls this medium Space,
+allowing symbolic references to activities in Duration to be related.
+This is the primary fundamental distinction in both the mathematical
+simulation and computer implementation of reflective thinking.  Of
+major importance is the fact that one does not derive the other, but
 activity and order coexist with neither Duration being a derivative of
 Space nor Space containing the fundamental activities in Duration.
 Obviously, Bergson has gone through painstaking efforts to leave room

@@ -154,30 +154,49 @@ example of a counterfactual transframe.
 
 \section{Plan Operators}
 
+Plans are composed of four basic types of plan operators.
+\begin{enumerate}
+\item The \emph{resource activation operator} references a
+  counterfactual transframe, which includes specific resource
+  activation dependencies as well as specific hypothesis dependencies.
+\item The \emph{resource suppression operator} references a resource
+  that should be suppressed when this operator is executed.
+\item The \emph{sequential program operator} temporally orders two
+  other plan operators.
+\item The \emph{parallel program operator} arranges two other plan
+  operators to be executed simultaneously.
+\end{enumerate}
 {\mbox{\autoref{figure:example_plan_operators}}} shows an example of a
-plan with four basic plan operators: (1) the resource activation
-operator, (2) the resource suppression operator, (3) the sequential
-program operator, and (4) the parallel program operator.
+plan with four composable plan operators, while
+{\mbox{\autoref{figure:example_plan}}} shows a more detailed example
+of a two-step plan.
 \begin{figure}
-\hspace*{-4cm}\includegraphics[width=18cm]{gfx/example_plan_operators}
-\caption[An example of a plan with four basic plan operators.]{An
+\centering
+\includegraphics[width=12cm]{gfx/example_plan_operators}
+\caption[An example of a plan with four composable plan operators.]{An
   example of a plan with four basic plan operators: (1) the resource
   activation operator, (2) the resource suppression operator, (3) the
   sequential program operator, and (4) the parallel program operator.}
 \label{figure:example_plan_operators}
 \end{figure}
-
-
-
-\section{Counterfactual Plans}
-
-{\mbox{\autoref{figure:example_plan}}} shows an example of a plan.
 \begin{figure}
 \hspace*{-4cm}\includegraphics[width=18cm]{gfx/example_plan}
-\caption[An example of a plan.]{An example of a plan.}
+\caption[An example of a two-step plan.]{An example of a two-step
+  plan.}
 \label{figure:example_plan}
 \end{figure}
 
+\section{A Planner}
+
+The first-order reflective thinking layer makes plans in order to make
+plans that will accomplish symbolic physical goals when executed.
+{\mbox{\autoref{figure:example_planner}}} shows an example of a
+planner.
+\begin{figure}
+\includegraphics[width=10cm]{gfx/example_planner}
+\caption[An example of a planner.]{An example of a planner.}
+\label{figure:example_planner}
+\end{figure}
 
 \section{Counterfactual Simultaneities}
 

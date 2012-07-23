@@ -1,0 +1,56 @@
+digraph G {
+
+  subgraph cluster_0 {
+    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
+    color=black;
+    
+    // physical
+    node [fillcolor = white, color = "#000000", style = filled];
+    edge [color = "#000000"];
+    
+    reflective0_gripper [texlbl = "{\huge{\tt{Gripper}}}"];
+    reflective0_block   [texlbl = "{\huge{\tt{Block}}}"];
+    reflective0_table   [texlbl = "{\huge{\tt{Table}}}"];
+    
+    reflective0_gripper_being_above_reflective0_table [shape=box,label="{\huge{\tt{being-above}}}"];
+    reflective0_gripper -> reflective0_gripper_being_above_reflective0_table [arrowhead=none];
+    reflective0_gripper_being_above_reflective0_table -> reflective0_table [style="-triangle 45"];
+    
+    reflective0_block_sitting_on_reflective0_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+    reflective0_block -> reflective0_block_sitting_on_reflective0_table [arrowhead=none];
+    reflective0_block_sitting_on_reflective0_table -> reflective0_table [style="-triangle 45"];
+    
+  }
+  
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+    
+    block [texlbl = "{\huge{\tt{Block}}}",color=red];
+    table [texlbl = "{\huge{\tt{Table}}}",color=red];
+    
+    block_sitting_on_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
+    block -> block_sitting_on_table [arrowhead=none,color=red];
+    block_sitting_on_table -> table [style="-triangle 45",color=red];
+    
+    reflective [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    // x_1^*
+    
+    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
+    x_1_reflecting -> block [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> table [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> block_sitting_on_table [style="-triangle 45,dashed", color=red];
+    
+    reflective_symbol_x_1 [shape=box,label="{\huge{\tt{symbol}}}"];
+    reflective -> reflective_symbol_x_1 [arrowhead=none];
+    reflective_symbol_x_1 -> x_1 [style="-triangle 45"];
+    
+  }
+}

@@ -78,6 +78,7 @@ phdthesis.pdf: \
   gfx/example_hypothesis.pdf \
   gfx/example_conjunctive_hypothesis_space.pdf \
   gfx/example_conjunctive_version_space.pdf \
+  gfx/example_counterfactual_simultaneity.pdf \
   gfx/example_causal_knowledge.pdf \
   gfx/example_causal_hypothesis.pdf \
   gfx/simulation_example_state_graph.pdf \

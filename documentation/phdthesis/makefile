@@ -79,6 +79,7 @@ phdthesis.pdf: \
   gfx/example_conjunctive_hypothesis_space.pdf \
   gfx/example_conjunctive_version_space.pdf \
   gfx/example_counterfactual_transframe.pdf \
+  gfx/example_plan_operators.pdf \
   gfx/example_plan.pdf \
   gfx/example_counterfactual_simultaneity.pdf \
   gfx/example_causal_knowledge.pdf \

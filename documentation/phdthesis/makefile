@@ -32,7 +32,7 @@ phdthesis.pdf: \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/introducing_computation.tex \
-  chapters/the_substrate_for_accountable_layered_systems.tex \
+  chapters/computational_activities_in_duration.tex \
   chapters/related_implementations.tex \
   chapters/evaluation.tex \
   chapters/future.tex \

@@ -31,7 +31,7 @@ phdthesis.pdf: \
   chapters/the_planner_and_plan_knowledge.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
-  chapters/the_implementation.tex \
+  chapters/introducing_computation.tex \
   chapters/the_substrate_for_accountable_layered_systems.tex \
   chapters/related_implementations.tex \
   chapters/evaluation.tex \

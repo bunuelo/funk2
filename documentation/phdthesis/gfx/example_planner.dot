@@ -1,27 +1,5 @@
 digraph G {
 
-  subgraph cluster_0 {
-    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
-    color=black;
-    
-    // physical
-    node [fillcolor = white, color = "#000000", style = filled];
-    edge [color = "#000000"];
-    
-    reflective0_gripper [texlbl = "{\huge{\tt{Gripper}}}"];
-    reflective0_block   [texlbl = "{\huge{\tt{Block}}}"];
-    reflective0_table   [texlbl = "{\huge{\tt{Table}}}"];
-    
-    reflective0_gripper_being_above_reflective0_table [shape=box,label="{\huge{\tt{being-above}}}"];
-    reflective0_gripper -> reflective0_gripper_being_above_reflective0_table [arrowhead=none];
-    reflective0_gripper_being_above_reflective0_table -> reflective0_table [style="-triangle 45"];
-    
-    reflective0_block_sitting_on_reflective0_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
-    reflective0_block -> reflective0_block_sitting_on_reflective0_table [arrowhead=none];
-    reflective0_block_sitting_on_reflective0_table -> reflective0_table [style="-triangle 45"];
-    
-  }
-  
   subgraph cluster_1 {
     label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
     color=blue
@@ -30,27 +8,68 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
     
-    block [texlbl = "{\huge{\tt{Block}}}",color=red];
-    table [texlbl = "{\huge{\tt{Table}}}",color=red];
     
-    block_sitting_on_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
-    block -> block_sitting_on_table [arrowhead=none,color=red];
-    block_sitting_on_table -> table [style="-triangle 45",color=red];
+    // goal_1
+
+    goal_1 [texlbl = "{\huge{\tt{Goal}}}"];
     
-    reflective [texlbl = "{\huge{\tt{Reflective}}}"];
+    // goal_2
+
+    goal_2 [texlbl = "{\huge{\tt{Goal}}}"];
     
-    // x_1^*
+    // plan_1
+
+    plan_1 [texlbl = "{\huge{\tt{Plan}}}"];
     
-    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
-    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
-    x_1_reflecting -> block [style="-triangle 45,dashed", color=red];
-    x_1_reflecting -> table [style="-triangle 45,dashed", color=red];
-    x_1_reflecting -> block_sitting_on_table [style="-triangle 45,dashed", color=red];
+    // plan_2
+
+    plan_2 [texlbl = "{\huge{\tt{Plan}}}"];
     
-    reflective_symbol_x_1 [shape=box,label="{\huge{\tt{symbol}}}"];
-    reflective -> reflective_symbol_x_1 [arrowhead=none];
-    reflective_symbol_x_1 -> x_1 [style="-triangle 45"];
+    // plan_3
+
+    plan_3 [texlbl = "{\huge{\tt{Plan}}}"];
+    
+    // plan_4
+
+    plan_4 [texlbl = "{\huge{\tt{Plan}}}"];
+    
+
+    // planner_1
+
+    planner_1 [texlbl = "{\huge{\tt{Planner}}}"];
+    
+    planner_1_focus_plan_1 [shape=box,label="{\huge{\tt{focus}}}"];
+    planner_1 -> planner_1_focus_plan_1 [arrowhead=none];
+    planner_1_focus_plan_1 -> plan_1 [style="-triangle 45"];
+    
+    planner_1_execute_plan_2 [shape=box,label="{\huge{\tt{execute}}}"];
+    planner_1 -> planner_1_execute_plan_2 [arrowhead=none];
+    planner_1_execute_plan_2 -> plan_2 [style="-triangle 45"];
+    
+    planner_1_register_a_plan_3 [shape=box,label="{\huge{\tt{register-a}}}"];
+    planner_1 -> planner_1_register_a_plan_3 [arrowhead=none];
+    planner_1_register_a_plan_3 -> plan_3 [style="-triangle 45"];
+    
+    planner_1_register_b_plan_4 [shape=box,label="{\huge{\tt{register-b}}}"];
+    planner_1 -> planner_1_register_b_plan_4 [arrowhead=none];
+    planner_1_register_b_plan_4 -> plan_4 [style="-triangle 45"];
+    
+    planner_1_positive_goal_goal_1 [shape=box,label="{\huge{\tt{positive-goal}}}"];
+    planner_1 -> planner_1_positive_goal_goal_1 [arrowhead=none];
+    planner_1_positive_goal_goal_1 -> goal_1 [style="-triangle 45"];
+    
+    planner_1_negative_goal_goal_2 [shape=box,label="{\huge{\tt{negative-goal}}}"];
+    planner_1 -> planner_1_negative_goal_goal_2 [arrowhead=none];
+    planner_1_negative_goal_goal_2 -> goal_2 [style="-triangle 45"];
+    
+
+    // reflective_1
+
+    reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_1_planner_planner_1 [shape=box,label="{\huge{\tt{planner}}}"];
+    reflective_1 -> reflective_1_planner_planner_1 [arrowhead=none];
+    reflective_1_planner_planner_1 -> planner_1 [style="-triangle 45"];
     
   }
 }

@@ -72,8 +72,9 @@ phdthesis.pdf: \
   gfx/two_example_grounded_symbolic_references.pdf \
   gfx/example_simultaneity.pdf \
   gfx/example_transition.pdf \
-  gfx/example_resource_conflict.pdf \
   gfx/example_resource.pdf \
+  gfx/example_resource_conflict.pdf \
+  gfx/example_resource_activation.pdf \
   gfx/example_second_order_resource.pdf \
   gfx/example_transframe.pdf \
   gfx/example_hypothesis.pdf \

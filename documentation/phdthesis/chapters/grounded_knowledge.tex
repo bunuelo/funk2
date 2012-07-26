@@ -59,10 +59,10 @@ $\text{reflective}^n$ layer of thinking activity.
 \begin{equation}
 \label{equation:define_reflective_n_present_simultaneity}
 \begin{array}{l}
- x^* \in \text{\tt{reflective}}^n.\text{\tt{present}} \longrightarrow \\
+ (t \in \text{\tt{reflective}}^n.\text{\tt{present}}) \longrightarrow \\
 \begin{array}{l}
-\text{\makebox[4cm][r]{    $x^*.\text{\tt{percept}}$}}= \mathcal{P}^{n*} ~\wedge~ \\
-\text{\makebox[4cm][r]{$x^*.\text{\tt{not-percept}}$}}= \overline{\mathcal{P}}^{n*}
+\text{\makebox[4cm][r]{    $(t.\text{\tt{percept}}$}}= \mathcal{P}^{n*}) ~\wedge~ \\
+\text{\makebox[4cm][r]{$(t.\text{\tt{not-percept}}$}}= \overline{\mathcal{P}}^{n*})
 \end{array}
 \end{array}
 \end{equation}
@@ -103,7 +103,7 @@ reflective layer.
 \label{equation:reflective_n_temporal_ordering_first}
 \left(\begin{array}{l}
   x^* \in \text{\tt{reflective}}^n.\text{\tt{time}} ~\wedge~ \\
-  ~~t_1^* \in x^*.\text{\tt{past}} ~\wedge~ t_2^* \in x^*.\text{\tt{future}}
+  ~~t_1 \in x^*.\text{\tt{past}} ~\wedge~ t_2 \in x^*.\text{\tt{future}}
 \end{array}\right) &\longrightarrow t_1 \stackrel{n}{<} t_2 \\
 \label{equation:reflective_n_temporal_ordering_last}
 (t_1 \stackrel{n}{<} t_2 ~\wedge~ t_2 \stackrel{n}{<} t_3) &\longrightarrow t_1 \stackrel{n}{<} t_3
@@ -113,18 +113,18 @@ defines the separate set of ordered simultaneities within each
 $\text{reflective}^n$ layer.
 \begin{equation}
 \label{equation:reflective_n_temporally_ordered_set}
- T^{n*} = \left\{t^* : 
+ T^n = \left\{t : 
 \begin{array}{l}
   x^* \in \text{\tt{reflective}}^n.\text{\tt{time}} ~\wedge~ \\
-  ~~(t^* \in x^*.\text{\tt{past}} ~\vee~ t^* \in x^*.\text{\tt{future}})
+  ~~(t \in x^*.\text{\tt{past}} ~\vee~ t \in x^*.\text{\tt{future}})
 \end{array}\right\}
 \end{equation}
 {\mbox{Equation~\ref{equation:define_time_connected_full_ordering}}}
-defines each set of temporally ordered simultaneities, $T^{n*}$, is a
+defines each set of temporally ordered simultaneities, $T^n$, is a
 connected and fully ordered sequence.
 \begin{equation}
 \label{equation:define_time_connected_full_ordering}
-(t^*_1 \in T^{n*} \wedge t^*_2 \in T^{n*}) \longrightarrow (t^*_1 \stackrel{n}{<} t^*_2 \vee t^*_2 \stackrel{n}{<} t^*_1 \vee t^*_1 = t^*_2)
+(t_1 \in T^n \wedge t_2 \in T^n) \longrightarrow (t_1 \stackrel{n}{<} t_2 \vee t_2 \stackrel{n}{<} t_1 \vee t_1 = t_2)
 \end{equation}
 {\mbox{\autoref{figure:example_transition}}} shows an example of how
 three simultaneities can be represented in a simulation state graph as
@@ -143,11 +143,11 @@ temporally ordered using two transition relationships.
 
 {\mbox{Equation~\ref{equation:define_perceived}}} defines a
 ``perceived'' Spatial relationship for each reflective layer that can
-exist between a temporal simultaneity, $t^*$, and a static symbolic
+exist between a temporal simultaneity, $t$, and a static symbolic
 reference, $x^*$, to the layers below.
 \begin{equation}
 \label{equation:define_perceived}
-\text{perceived}^n(t^*, x^*) = (t^* \in T^{n*} ~\wedge~ x^* \in t^*.\text{\tt{percept}})
+\text{perceived}^n(t, x^*) = (t \in T^n ~\wedge~ x^* \in t.\text{\tt{percept}})
 \end{equation}
 {\mbox{Equation~\ref{equation:define_event_start}}} defines the start
 times for perceptual events in each reflective layer.  A perceptual
@@ -156,21 +156,21 @@ immediately transitioned from not being perceived.
 \begin{equation}
 \label{equation:define_event_start}
 \begin{array}{l}
-  \text{start}^n(t^*, x^*) = \\
+  \text{start}^n(t, x^*) = \\
   ~~\left(
   \begin{array}{l}
-  \text{perceived}^n(t^*, x^*) ~\wedge~ \\
+  \text{perceived}^n(t, x^*) ~\wedge~ \\
   ~~\left[
   \begin{array}{l}
-  \forall_{t_1^* \in T^{n*}}, \\
+  \forall_{t_1 \in T^n}, \\
   ~~\left(\begin{array}{l}
             \left[\begin{array}{l}
-                    t_1^* \stackrel{n}{<} t^* ~\wedge~ \\
-                    ~~\text{perceived}^n(t_1^*, x^*)\end{array}\right] \longrightarrow \\
-            ~~\exists_{t_2^* \in T^{n*}}, \\
+                    t_1 \stackrel{n}{<} t ~\wedge~ \\
+                    ~~\text{perceived}^n(t_1, x^*)\end{array}\right] \longrightarrow \\
+            ~~\exists_{t_2 \in T^n}, \\
             ~~~~\left[\begin{array}{l}
-                        t_1^* \stackrel{n}{<} t_2^* \stackrel{n}{<} t^* ~\wedge~ \\
-                        ~~\neg\text{perceived}^n(t_2^*, x^*)\end{array}\right]\end{array}\right)
+                        t_1 \stackrel{n}{<} t_2 \stackrel{n}{<} t ~\wedge~ \\
+                        ~~\neg\text{perceived}^n(t_2, x^*)\end{array}\right]\end{array}\right)
   \end{array}
   \right]
   \end{array}\right)
@@ -183,21 +183,21 @@ transition to not being perceived at the subsequent time.
 \begin{equation}
 \label{equation:define_event_end}
 \begin{array}{l}
-  \text{end}^n(t^*, x^*) = \\
+  \text{end}^n(t, x^*) = \\
   ~~\left(
   \begin{array}{l}
-  \text{perceived}^n(t^*, x^*) ~\wedge~ \\
+  \text{perceived}^n(t, x^*) ~\wedge~ \\
   ~~\left[
   \begin{array}{l}
-  \forall_{t_1^* \in T^{n*}}, \\
+  \forall_{t_1 \in T^n}, \\
   ~~\left(\begin{array}{l}
             \left[\begin{array}{l}
-                    t^* \stackrel{n}{<} t_1^* ~\wedge~ \\
-                    ~~\text{perceived}^n(t_1^*, x^*)\end{array}\right] \longrightarrow \\
-            ~~\exists_{t_2^* \in T^{n*}}, \\
+                    t \stackrel{n}{<} t_1 ~\wedge~ \\
+                    ~~\text{perceived}^n(t_1, x^*)\end{array}\right] \longrightarrow \\
+            ~~\exists_{t_2 \in T^n}, \\
             ~~~~\left[\begin{array}{l}
-                        t^* \stackrel{n}{<} t_2^* \stackrel{n}{<} t_1^* ~\wedge~ \\
-                        ~~\neg\text{perceived}^n(t_2^*, x^*)\end{array}\right]\end{array}\right)
+                        t \stackrel{n}{<} t_2 \stackrel{n}{<} t_1 ~\wedge~ \\
+                        ~~\neg\text{perceived}^n(t_2, x^*)\end{array}\right]\end{array}\right)
   \end{array}
   \right]
   \end{array}\right)
@@ -219,15 +219,15 @@ factual knowledge.
 perceptual event in the $n^{\text{th}}$-order reflective layer.
 \begin{align}
 \label{equation:define_perceptual_event_first}
-                                         e^* &\in \text{\tt{reflective}}^n.\text{\tt{event}} \\
-                      e^*.\text{\tt{symbol}} &= \{x^*\} \\
-                       e^*.\text{\tt{start}} &= \{t^*_\text{start}\} \\
-                         e^*.\text{\tt{end}} &= \{t^*_\text{end}\} \\
-                             t^*_\text{start} &\in \{t^* : t^* \in T^{n*} \wedge \text{start}^n(t^*, x^*)\} \\
-                               t^*_\text{end} &\in \{t^* : t^* \in T^{n*} \wedge \text{end}^n(t^*, x^*)\} \\
-                             t^*_\text{start} &\stackrel{n}{<} t^*_\text{end} \\
+                                         e &\in \text{\tt{reflective}}^n.\text{\tt{event}} \\
+                      e.\text{\tt{symbol}} &= \{x^*\} \\
+                       e.\text{\tt{start}} &= \{t_\text{start}\} \\
+                         e.\text{\tt{end}} &= \{t_\text{end}\} \\
+                             t_\text{start} &\in \{t : t \in T^n \wedge \text{start}^n(t, x^*)\} \\
+                               t_\text{end} &\in \{t : t \in T^n \wedge \text{end}^n(t, x^*)\} \\
+                             t_\text{start} &\stackrel{n}{<} t_\text{end} \\
 \label{equation:define_perceptual_event_last}
- \neg\exists_{t^* \in T^{n*}}, [t^*_\text{start} &\stackrel{n}{<} t^* \stackrel{n}{<} t^*_\text{end} \wedge \text{end}^n(t^*, x^*)]
+ \neg\exists_{t \in T^n}, [t_\text{start} &\stackrel{n}{<} t \stackrel{n}{<} t_\text{end} \wedge \text{end}^n(t, x^*)]
 \end{align}
 
 \section{Event Transframes}
@@ -278,9 +278,12 @@ action resources in each $\text{reflective}^n$ layer.
 \label{equation:define_resource_set_last}
                                        a^{n*} &\in A^{n*}
 \end{align}
-{\mbox{\autoref{figure:example_resource}}} shows an example of four
-resources, each displaying a different activation or suppression
-Spatial relationship:
+{\mbox{\autoref{figure:example_resource}}} shows an example of a
+first-order reflective resource, a symbolic reference to the
+$\text{reflective}^0$ layer of dynamic physical activity.
+{\mbox{\autoref{figure:example_resource_conflict}}} shows an example
+of four resources, each displaying a different activation or
+suppression Spatial relationship:
 \begin{enumerate}
 \item An example of an activation relationship.
 \item An example of a suppression relationship.
@@ -289,6 +292,14 @@ Spatial relationship:
 \item An example of a resource in simultaneous, conflicting,
   activation and suppression relationships.
 \end{enumerate}
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/example_resource}
+\caption[An example of a first-order reflective resource.]{An example
+  of a first-order reflective resource that refers to the dynamic
+  activity in the $\text{reflective}^0$ layer of physical activity.}
+\label{figure:example_resource}
+\end{figure}
 \begin{figure}
 \center
 \includegraphics[width=12cm]{gfx/example_resource_conflict}
@@ -316,14 +327,14 @@ knowledge terms of their start and end simultaneities and the
 transframes that are computed from these factual pieces of
 information.  The perceptual simultaneities and transframes that are
 related to perceptual and resource events are factual and not based on
-hypotheses.  {\mbox{\autoref{figure:example_resource}}} shows an
-example of a resource in the first-order reflective thinking layer
-with a completed activation event.  Causal hypotheses are derived from
-this type of factual resource information.  It is important to keep
-clear distinctions between what is factual and what is hypothetical
-knowledge in the model.  Only in this way may the hypothetical
-counterfactual underpinnings of knowledge be debugged when they turn
-out to be wrong.
+hypotheses.  {\mbox{\autoref{figure:example_resource_activation}}}
+shows an example of a resource in the first-order reflective thinking
+layer with a completed activation event.  Causal hypotheses are
+derived from this type of factual resource information.  It is
+important to keep clear distinctions between what is factual and what
+is hypothetical knowledge in the model.  Only in this way may the
+hypothetical counterfactual underpinnings of knowledge be debugged
+when they turn out to be wrong.
 Equations\ \ref{equation:define_precondition_postcondition_first}
 through\ \ref{equation:define_precondition_postcondition_last} define
 the factual positive and negative preconditions, $\text{pre}^{+}$ and
@@ -335,21 +346,21 @@ $a^{n*}_\epsilon$, of a given resource action, $a^{n*}$.
                                    a^{n*} &\in A^{n*} \\
                            a^{n*}_\epsilon &\in a^{n*}.\text{\tt{activation}} \\
    \text{pre}^{+}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
-                                                   t^* \in a^{n*}_\epsilon.\text{\tt{start}} ~\wedge~ \\
-                                                   ~~x^* \in t^*.\text{\tt{percept}}
+                                                   t \in a^{n*}_\epsilon.\text{\tt{start}} ~\wedge~ \\
+                                                   ~~x^* \in t.\text{\tt{percept}}
                                                  \end{array}\right\} \\
    \text{pre}^{-}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
-                                                   t^* \in a^{n*}_\epsilon.\text{\tt{start}} ~\wedge~ \\
-                                                   ~~x^* \in t^*.\text{\tt{not-percept}}
+                                                   t \in a^{n*}_\epsilon.\text{\tt{start}} ~\wedge~ \\
+                                                   ~~x^* \in t.\text{\tt{not-percept}}
                                                  \end{array}\right\} \\
   \text{post}^{+}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
-                                                   t^* \in a^{n*}_\epsilon.\text{\tt{end}} ~\wedge~ \\
-                                                   ~~x^* \in t^*.\text{\tt{percept}}
+                                                   t \in a^{n*}_\epsilon.\text{\tt{end}} ~\wedge~ \\
+                                                   ~~x^* \in t.\text{\tt{percept}}
                                                  \end{array}\right\} \\
 \label{equation:define_precondition_postcondition_last}
   \text{post}^{-}(a^{n*}_\epsilon) &= \left\{x^* : \begin{array}{l}
-                                                   t^* \in a^{n*}_\epsilon.\text{\tt{end}} ~\wedge~ \\
-                                                   ~~x^* \in t^*.\text{\tt{not-percept}}
+                                                   t \in a^{n*}_\epsilon.\text{\tt{end}} ~\wedge~ \\
+                                                   ~~x^* \in t.\text{\tt{not-percept}}
                                                  \end{array}\right\} \\
 \end{align}
 Equations\ \ref{equation:define_delta_first}
@@ -365,7 +376,7 @@ event, $a^{n*}_\epsilon$.
 \end{align}
 \begin{figure}
 \center
-\includegraphics[width=8cm]{gfx/example_resource}
+\includegraphics[width=8cm]{gfx/example_resource_activation}
 \caption[An example of a first-order reflective resource with an
   activation event.]{An example of a first-order reflective resource
   with an activation event, related to grounded factual start and end
@@ -373,6 +384,6 @@ event, $a^{n*}_\epsilon$.
   Unperceived symbols are omitted for clarity.  Collections of factual
   resource activation events such as this are the basis of the
   subsequently abstracted hypothetical and counterfactual knowledge.}
-\label{figure:example_resource}
+\label{figure:example_resource_activation}
 \end{figure}
 

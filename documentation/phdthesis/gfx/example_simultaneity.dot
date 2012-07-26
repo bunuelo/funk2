@@ -57,9 +57,9 @@ digraph G {
     x_2_reflecting -> x2_block_1 [style="-triangle 45,dashed", color=red];
     x_2_reflecting -> x2_block_2_sitting_on_x2_block_1 [style="-triangle 45,dashed", color=red];
     
-    // simult_1^*
+    // simult_1
     
-    simult_1 [texlbl = "{\huge{\tt{Simultaneity*}}}"];
+    simult_1 [texlbl = "{\huge{\tt{Simultaneity}}}"];
     
     simult_1_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
     simult_1 -> simult_1_percept_x_1 [arrowhead=none];

@@ -8,19 +8,19 @@ digraph G {
     node [fillcolor = white, color = "#0000CC", style = filled];
     edge [color = "#0000CC"];
         
-    // t_1^*
+    // t_1
     
-    t_1 [texlbl = "{\huge{\tt{Simultaneity*}}}"];
+    t_1 [texlbl = "{\huge{\tt{Simultaneity}}}"];
     
-    // activation_1^*
+    // activation_1
     
-    activation_1 [texlbl = "{\huge{\tt{Activation*}}}"]; 
+    activation_1 [texlbl = "{\huge{\tt{Activation}}}"]; 
 
     activation_1_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
     activation_1 -> activation_1_activation_t_1 [arrowhead=none];
     activation_1_activation_t_1 -> t_1 [style="-triangle 45"];
 
-    // resource_1
+    // resource_1^*
     
     resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
     
@@ -28,15 +28,15 @@ digraph G {
     resource_1 -> resource_1_activation_activation_1 [arrowhead=none];
     resource_1_activation_activation_1 -> activation_1 [style="-triangle 45"];
     
-    // suppression_1^*
+    // suppression_1
     
-    suppression_1 [texlbl = "{\huge{\tt{Suppression*}}}"];
+    suppression_1 [texlbl = "{\huge{\tt{Suppression}}}"];
     
     suppression_1_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
     suppression_1 -> suppression_1_activation_t_1 [arrowhead=none];
     suppression_1_activation_t_1 -> t_1 [style="-triangle 45"];
 
-    // resource_2
+    // resource_2^*
     
     resource_2 [texlbl = "{\huge{\tt{Resource*}}}"];
     
@@ -44,27 +44,27 @@ digraph G {
     resource_2 -> resource_2_activation_suppression_1 [arrowhead=none];
     resource_2_activation_suppression_1 -> suppression_1 [style="-triangle 45"];
     
-    // resource_3
+    // resource_3^*
     
     resource_3 [texlbl = "{\huge{\tt{Resource*}}}"];
     
-    // activation_2^*
+    // activation_2
     
-    activation_2 [texlbl = "{\huge{\tt{Activation*}}}"];
+    activation_2 [texlbl = "{\huge{\tt{Activation}}}"];
     
     activation_2_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
     activation_2 -> activation_2_activation_t_1 [arrowhead=none];
     activation_2_activation_t_1 -> t_1 [style="-triangle 45"];
 
-    // suppression_2^*
+    // suppression_2
     
-    suppression_2 [texlbl = "{\huge{\tt{Suppression*}}}"];
+    suppression_2 [texlbl = "{\huge{\tt{Suppression}}}"];
     
     suppression_2_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
     suppression_2 -> suppression_2_activation_t_1 [arrowhead=none];
     suppression_2_activation_t_1 -> t_1 [style="-triangle 45"];
 
-    // resource_4
+    // resource_4^*
     
     resource_4 [texlbl = "{\huge{\tt{Resource*}}}"];
     

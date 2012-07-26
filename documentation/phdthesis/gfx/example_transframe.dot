@@ -87,9 +87,9 @@ digraph G {
     x_3_reflecting -> x3_block_1 [style="-triangle 45,dashed", color=red];
     x_3_reflecting -> x3_block_2_sitting_on_x3_block_1 [style="-triangle 45,dashed", color=red];
     
-    // t_1^*
+    // t_1
     
-    t_1 [texlbl = "{\huge{\tt{Simultaneity*}}}"];
+    t_1 [texlbl = "{\huge{\tt{Simultaneity}}}"];
     
     t_1_percept_x_4 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
     t_1 -> t_1_percept_x_4 [arrowhead=none];
@@ -103,9 +103,9 @@ digraph G {
     //t_1 -> t_1_not_percept_x_3 [arrowhead=none];
     //t_1_not_percept_x_3 -> x_3 [style="-triangle 45"];
     
-    //// t_2^*
+    //// t_2
     //
-    //t_2 [texlbl = "{\huge{\tt{Simultaneity*}}}"];
+    //t_2 [texlbl = "{\huge{\tt{Simultaneity}}}"];
     //
     ////t_2_percept_x_4 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
     ////t_2 -> t_2_percept_x_4 [arrowhead=none];
@@ -119,9 +119,9 @@ digraph G {
     //t_2 -> t_2_not_percept_x_3 [arrowhead=none];
     //t_2_not_percept_x_3 -> x_3 [style="-triangle 45"];
     
-    // t_3^*
+    // t_3
     
-    t_3 [texlbl = "{\huge{\tt{Simultaneity*}}}"];
+    t_3 [texlbl = "{\huge{\tt{Simultaneity}}}"];
     
     t_3_percept_x_4 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
     t_3 -> t_3_percept_x_4 [arrowhead=none];
@@ -135,25 +135,25 @@ digraph G {
     t_3 -> t_3_percept_x_3 [arrowhead=none];
     t_3_percept_x_3 -> x_3 [style="-triangle 45"];
     
-    // remove_1^*
+    // remove_1
     
-    remove_1 [texlbl = "{\huge{\tt{Remove*}}}"];
+    remove_1 [texlbl = "{\huge{\tt{Remove}}}"];
     
     remove_1_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
     remove_1 -> remove_1_percept_x_2 [arrowhead=none];
     remove_1_percept_x_2 -> x_2 [style="-triangle 45"];
     
-    // add_1^*
+    // add_1
     
-    add_1 [texlbl = "{\huge{\tt{Add*}}}"];
+    add_1 [texlbl = "{\huge{\tt{Add}}}"];
     
     add_1_percept_x_3 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
     add_1 -> add_1_percept_x_3 [arrowhead=none];
     add_1_percept_x_3 -> x_3 [style="-triangle 45"];
     
-    // transframe_1^*
+    // transframe_1
     
-    transframe_1 [texlbl = "{\huge{\tt{Transframe*}}}"];
+    transframe_1 [texlbl = "{\huge{\tt{Transframe}}}"];
     
     transframe_1_past_remove_1 [shape=box,style=filled,label="{\huge{\tt{remove}}}"];
     transframe_1 -> transframe_1_past_remove_1 [arrowhead=none];
@@ -163,9 +163,9 @@ digraph G {
     transframe_1 -> transframe_1_future_add_1 [arrowhead=none];
     transframe_1_future_add_1 -> add_1 [style="-triangle 45"];
     
-    // e_1^*
+    // e_1
     
-    e_1 [texlbl = "{\huge{\tt{Event*}}}"];
+    e_1 [texlbl = "{\huge{\tt{Event}}}"];
     
     e_1_symbol_x_4 [shape=box,style=filled,label="{\huge{\tt{symbol}}}"];
     e_1 -> e_1_symbol_x_4 [arrowhead=none];

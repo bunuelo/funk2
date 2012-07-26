@@ -35,15 +35,15 @@ plan is simulated by SALS.
 
 \section{The Global Environment}
 
-In SALS, the simulation state graph, $S$, becomes the global
-environment.  The global environment is SALS' static representation of
-the dynamic activities in Duration.  The previous part described the
-simulation state as the mathematical representation for the mind.  I
-previously defined this simulation state graph to represent all
+In SALS, the simulation state graph, $S$, becomes the \emph{global
+  environment}.  The global environment is SALS' static representation
+of the dynamic activities in Duration.  The previous part described
+the simulation state as the mathematical representation for the mind.
+I previously defined this simulation state graph to represent all
 subgraphs that actually exist in
 Equation\ \ref{equation:define_exists}, reproduced here:
 \begin{equation*}
-\text{exists}(G) \longleftrightarrow G ~{\subseteq}~ S
+\text{exists}(G) \longleftrightarrow (G ~{\subseteq}~ S)
 \end{equation*}
 Environments are hierarchical structures that have two parts: (1) a
 frame containing slots containing variable definitions, and (2) a
@@ -51,26 +51,39 @@ reference to a parent environment.  The global environment is a
 special environment because it is the only environment that has no
 parent environment.  The entire SALS computational implementation is
 contained within the static global environment or its directed
-references.  {\mbox{\autoref{figure:example_global_environment}}}
-shows an example global environment with its reference to a frame
-object.
-\begin{figure}
-\center
-\includegraphics[width=12cm]{gfx/example_global_environment}
-\caption[An example of a global environment.]{An example of a global
-  environment with its reference to a frame object.}
-\label{figure:example_global_environment}
-\end{figure}
+references.
+
+\section{The Global Scheduler}
+
+SALS is able to take advantage of multi-core and multi-processor
+hardware, which makes it a concurrent processing system.  SALS
+explicitly represents these hardware processors in an object called
+the \emph{global scheduler}.  The global scheduler is contained in the
+global environment frame under the slot name {\tt global-scheduler}.
+The global scheduler object contains references to a number of
+processors that reflect the number of actual hardware processors in
+the current system.  For example, the implementation has been
+successfully tested on 1 through 32 processors, although most of the
+demonstration simulations were computed using a machine with two
+processors, each with 4 cores, which appears as 8 concurrent
+processors within SALS.
 
 \section{Fibers Simulate Activities}
 
-SALS introduces an object that represents a parallel process, the
-\emph{fiber}.  Fibers are the fundamental element for simulating
-concurrent activity in SALS.  SALS begins the simulation with only
-one fiber that serves a predefined ``boot-up'' function that starts
-all of the other concurrent fibers that are necessary for simulating
-the mind.  Fibers are the discrete elements that I have used as a
-model of the concurrent, actually inseparable, activities in Duration.
+SALS introduces an object that represents a virtual machine that can
+run user programs, the \emph{fiber}.  Fibers are the fundamental
+element for simulating parallel user programs in SALS.  Each
+concurrent processor contains references to a collection of fibers
+that it is responsible for simulating.  Fibers execute bytecode
+programs.  In each concurrent processor's execution cycle, it runs a
+given finite number of bytecodes for each of its fibers, simulating
+parallel execution.
+
+SALS begins the simulation with only one fiber that serves a
+predefined ``boot-up'' function that starts all of the other
+concurrent fibers that are necessary for simulating the mind.  Fibers
+are the discrete elements that I have used as a model of the
+concurrent, actually inseparable, activities in Duration.
 
 My simulation of mind uses hundreds of thousands of fibers in order to
 demonstrate two layers of reflective learning.  Fibers are often very
@@ -78,32 +91,58 @@ short-lived processes; for example, not execution, but simply
 compiling a single Lisp-like expression in SALS can lead to the
 creation and destruction of hundreds of fibers of activity.  Fibers
 are generally useful in programs that could use an extra perspective
-on a problem.
+on a problem.  {\mbox{\autoref{figure:example_global_environment}}}
+shows an example global environment, containing the global scheduler,
+concurrent processors, and parallel executing user-programmable fiber
+objects.
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/example_global_environment}
+\caption[An example of a global environment with concurrent processors
+  and parallel fibers.]{An example of a global environment with its
+  frame object and a definition of the global scheduler object.  The
+  global scheduler contains references to concurrent processors, which
+  organize the parallel fibers, virtual machines that execute user
+  programs.}
+\label{figure:example_global_environment}
+\end{figure}
 
-\section{Symbols and Simulated Symbols}
+\section{Stepping the Simulation State}
 
-It becomes important at this point to keep track of the layer of
-modelling that results when one simulates thinking.  The danger is in
-losing an awareness of the difference between what one is thinking and
-what a simulation is simulating as thought.  For example, a programmer
-types symbols to express commands to the computer in a programming
-language.  These symbols have grounding for the programmer.  The
-computer continually repeats the same symbolic manipulation function,
-the combinational device.  So, when the simulation appears to create
-new symbols by manipulating the symbols contained within its
-programming, this is an illusion.  The observer of output from the
-simulation may create new symbols, but the computational process only
-has grounding in terms of the symbols of its programming.  Therefore,
-I will use the previously introduced asterisk notation for referring
-to different classes of simulated modelling.
+For the purposes of description and evaluation of the complexity of my
+implementation of the reflective simulation, I assume that each
+concurrent processor executes at the same speed and steps the
+simulation forward at the same time.  Given a simulation state graph,
+$S$, all of the concurrent processors step the simulation forward to
+the next simulation state graph.
+Equations\ \ref{equation:define_simulation_step_first}
+and\ \ref{equation:define_simulation_step_last} define the initial
+simulation state and recursive definition of the step function that
+computationally creates the next simulation state graph.
+\begin{align}
+\label{equation:define_simulation_step_first}
+    S[0] &\equiv \text{\emph{Initial simulation state graph}} \\
+\label{equation:define_simulation_step_last}
+  S[n+1] &= \text{step}(S[n])
+\end{align}
+Note that until this point, I have not previously introduced a
+computational step function for the simulation state.  I have
+previously defined the temporal transitions that compose $n$ layers of
+distinct temporal orderings, one for each reflective layer in the
+model, but these layers of temporal transition representations are
+within the static state of the mind.  This computational step function
+allows all of the previously described static structures to change to
+new static representations.  The computational step function does not
+exist within the mind, and the mind does not have any access to
+symbolizing these different simulation state graphs that are now
+introduced in the computational implementation.
 
-Now that I have described the difference between the symbols the
-programmer types and the symbols* that the AI simulates as being
-created, the first goal of my description of the implementation is to
-describe how SALS simulates the creation of a symbol.  The rest of
-this chapter will cover the creation of a symbol*, but first, I must
-discuss how the activities in Duration begin simulating by programming
-lists of symbols into SALS' interactive programming language.
+Causally traced procedural reflection is the key component that allows
+SALS to monitor changes to its own simulation state graph
+representation.  Before discussing how procedural reflection must be
+embedded into the definition of SALS' fundamental memory
+representation, I must first briefly describe how fibers are
+programmed in order to simulate simple non-reflective programs.
 
 \section{Programming Language}
 
@@ -188,9 +227,6 @@ activities that are not simple frame slot accessors and mutators.  The
 side-effects.
 \end{itemize}
 
-
-
-
 \section{Creating Parallel Fibers}
 
 The {\tt apply} operator is the normal way for a SALS program to
@@ -211,14 +247,15 @@ through the fiber object.
 
 \section{Monitoring Simulated Activities}
 
-SALS includes a tool named \emph{FiberMon}, shown in
-\autoref{figure:fibermon_many_fibers}, that helps the programmer to
-introspect on all fibers currently in the simulation scheduler.
-Fibers may be easily removed or added to the scheduler, which enables
-efficient scheduler optimizations to be implemented at the highest
-levels of the language.  If any bugs arise in any parallel fiber, that
-fiber shows up in red in the monitoring application, so that it may be
-inspected and debugged by hand.
+SALS includes a tool named \emph{FiberMon} that is written in the SALS
+programming language.  FiberMon helps the programmer to introspect on
+all fibers currently in the simulation scheduler and is shown in
+\autoref{figure:fibermon_many_fibers}.  Fibers may be easily removed
+or added to the scheduler, which enables efficient scheduler
+optimizations to be implemented at the highest levels of the language.
+If any bugs arise in any parallel fiber, that fiber shows up in red in
+the monitoring application, so that it may be inspected and debugged
+by hand.
 \begin{figure}[bth]
   \center
   \includegraphics[width=10cm]{gfx/fibermon_many_fibers}
@@ -294,7 +331,34 @@ A fiber can be added to the resume set of a fiber trigger by using the
 The {\tt wait-for-trigger} command atomically pauses the current fiber
 and then adds the fiber to resume queue of the fiber trigger object.
 
-%\section{leftovers...}
+\section{leftovers...}
+
+\section{Symbols and Simulated Symbols}
+
+It becomes important at this point to keep track of the layer of
+modelling that results when one simulates thinking.  The danger is in
+losing an awareness of the difference between what one is thinking and
+what a simulation is simulating as thought.  For example, a programmer
+types symbols to express commands to the computer in a programming
+language.  These symbols have grounding for the programmer.  The
+computer continually repeats the same symbolic manipulation function,
+the combinational device.  So, when the simulation appears to create
+new symbols by manipulating the symbols contained within its
+programming, this is an illusion.  The observer of output from the
+simulation may create new symbols, but the computational process only
+has grounding in terms of the symbols of its programming.  Therefore,
+I will use the previously introduced asterisk notation for referring
+to different classes of simulated modelling.
+
+Now that I have described the difference between the symbols the
+programmer types and the symbols* that the AI simulates as being
+created, the first goal of my description of the implementation is to
+describe how SALS simulates the creation of a symbol.  The rest of
+this chapter will cover the creation of a symbol*, but first, I must
+discuss how the activities in Duration begin simulating by programming
+lists of symbols into SALS' interactive programming language.
+
+
 %
 %\section{Fiber Complete and Bug Found Triggers}
 %

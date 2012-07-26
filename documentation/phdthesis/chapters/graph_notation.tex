@@ -204,13 +204,13 @@ we have assumed static representations for the actual dynamic.  The
 dynamic does not have terms to help us in representing.  Therefore,
 the question of existence becomes a question of whether or not a
 symbol is in the set that is the current state of the simulation, $S$.
-Equation~\ref{equation:exists} shows a definition of {\tt exists},
-defined as the subgraph relationship between any state, $x$,
-represented as a labelled graph, and the currently simulated state
-graph, $S$:
+Equation~\ref{equation:define_exists} shows a definition of {\tt
+  exists}, defined as the subgraph relationship between any state,
+$G$, represented as a labelled graph, and the currently simulated
+state graph, $S$:
 \begin{equation}
-\label{equation:exists}
-\text{exists}(x) \longleftrightarrow x ~{\subseteq}~ S
+\label{equation:define_exists}
+\text{exists}(G) \longleftrightarrow G ~{\subseteq}~ S
 \end{equation}
 
 

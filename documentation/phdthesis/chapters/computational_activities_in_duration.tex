@@ -33,6 +33,35 @@ describe how the expectation failure response updates causal models in
 both reflective layers.  This, in total, shows how learning how to
 plan is simulated by SALS.
 
+\section{The Global Environment}
+
+In SALS, the simulation state graph, $S$, becomes the global
+environment.  The global environment is SALS' static representation of
+the dynamic activities in Duration.  The previous part described the
+simulation state as the mathematical representation for the mind.  I
+previously defined this simulation state graph to represent all
+subgraphs that actually exist in
+Equation\ \ref{equation:define_exists}, reproduced here:
+\begin{equation*}
+\text{exists}(G) \longleftrightarrow G ~{\subseteq}~ S
+\end{equation*}
+Environments are hierarchical structures that have two parts: (1) a
+frame containing slots containing variable definitions, and (2) a
+reference to a parent environment.  The global environment is a
+special environment because it is the only environment that has no
+parent environment.  The entire SALS computational implementation is
+contained within the static global environment or its directed
+references.  {\mbox{\autoref{figure:example_global_environment}}}
+shows an example global environment with its reference to a frame
+object.
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/example_global_environment}
+\caption[An example of a global environment.]{An example of a global
+  environment with its reference to a frame object.}
+\label{figure:example_global_environment}
+\end{figure}
+
 \section{Fibers Simulate Activities}
 
 SALS introduces an object that represents a parallel process, the

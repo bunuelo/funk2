@@ -23,9 +23,9 @@ digraph G {
     
     //counterfactual_transframe_3 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Counterfactual-}}}\\\text{\huge{\tt{Transframe}}}\end{array}$"];
     
-    // resource_1
+    // resource_1^*
 
-    resource_1 [texlbl = "{\huge{\tt{Resource}}}"];
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
     
     // activation_operator_1
     

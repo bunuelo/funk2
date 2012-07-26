@@ -243,18 +243,18 @@ digraph G {
     hypothesis_space_2_general_hypothesis_4 -> hypothesis_4 [style="-triangle 45"];
     
 
-    // resource_1
+    // resource_1^*
     
-    resource_1 [texlbl = "{\huge{\tt{Resource}}}"];
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
     
     resource_1_hypothesis_space_hypothesis_space_1 [shape=box,style=filled,label="{\huge{\tt{hypothesis-space}}}"];
     resource_1 -> resource_1_hypothesis_space_hypothesis_space_1 [arrowhead=none];
     resource_1_hypothesis_space_hypothesis_space_1 -> hypothesis_space_1 [style="-triangle 45"];
     
 
-    // resource_2
+    // resource_2^*
     
-    resource_2 [texlbl = "{\huge{\tt{Resource}}}"];
+    resource_2 [texlbl = "{\huge{\tt{Resource*}}}"];
     
     resource_2_hypothesis_space_hypothesis_space_2 [shape=box,style=filled,label="{\huge{\tt{hypothesis-space}}}"];
     resource_2 -> resource_2_hypothesis_space_hypothesis_space_2 [arrowhead=none];

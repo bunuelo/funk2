@@ -26,19 +26,19 @@ digraph G {
     
     // x_3^*
     
+    x3_gripper_2 [texlbl = "{\huge{\tt{Gripper}}}",color=red];
     x3_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
-    x3_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
     
-    x3_block_2_sitting_on_x3_block_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
-    x3_block_2 -> x3_block_2_sitting_on_x3_block_1 [arrowhead=none,color=red];
-    x3_block_2_sitting_on_x3_block_1 -> x3_block_1 [style="-triangle 45",color=red];
+    x3_gripper_2_holding_x3_block_1 [shape=box,style=filled,label="{\huge{\tt{holding}}}",color=red];
+    x3_gripper_2 -> x3_gripper_2_holding_x3_block_1 [arrowhead=none,color=red];
+    x3_gripper_2_holding_x3_block_1 -> x3_block_1 [style="-triangle 45",color=red];
     
     x_3 [texlbl = "{\huge{\tt{Symbol*}}}"];
     x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
     x_3 -> x_3_reflecting [style=dashed,arrowhead=none];
-    x_3_reflecting -> x3_block_2 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> x3_gripper_2 [style="-triangle 45,dashed", color=red];
     x_3_reflecting -> x3_block_1 [style="-triangle 45,dashed", color=red];
-    x_3_reflecting -> x3_block_2_sitting_on_x3_block_1 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> x3_gripper_2_holding_x3_block_1 [style="-triangle 45,dashed", color=red];
     
     // t_1
     
@@ -102,7 +102,19 @@ digraph G {
     
     // resource_1^*
     
+    resource1_gripper_1 [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    resource1_grab      [texlbl = "{\huge{\tt{grab}}}",color=red];
+    
+    resource1_gripper_1_executing_resource1_grab [shape=box,style=filled,label="{\huge{\tt{executing}}}",color=red];
+    resource1_gripper_1 -> resource1_gripper_1_executing_resource1_grab [arrowhead=none,color=red];
+    resource1_gripper_1_executing_resource1_grab -> resource1_grab [style="-triangle 45",color=red];
+    
     resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    resource_1 -> resource_1_reflecting [style=dashed,arrowhead=none,constraint=false];
+    resource_1_reflecting -> resource1_gripper_1 [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> resource1_grab [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> resource1_gripper_1_executing_resource1_grab [style="-triangle 45,dashed", color=red];
     
     resource_1_activation_activation_1 [shape=box,style=filled,label="{\huge{\tt{activation}}}"];
     resource_1 -> resource_1_activation_activation_1 [arrowhead=none];

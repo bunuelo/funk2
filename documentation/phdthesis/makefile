@@ -33,6 +33,7 @@ phdthesis.pdf: \
   chapters/related_simulations.tex \
   chapters/introducing_computation.tex \
   chapters/computational_activities_in_duration.tex \
+  chapters/procedurally_traceable_graph_object.tex \
   chapters/related_implementations.tex \
   chapters/evaluation.tex \
   chapters/future.tex \

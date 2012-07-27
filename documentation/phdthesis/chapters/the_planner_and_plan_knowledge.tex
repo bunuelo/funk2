@@ -157,11 +157,82 @@ thinking layers of order two or greater:
   included in the ``analogy'' package of the implementation, but is
   not included in my proof of concept demonstrative example.
 \end{itemize}
-\cite{singh:2003, singh:2005a} describe a variety of first-order and
-second-order reflective resources, many of which assume an object
-oriented social model, but some of which could help to augment the
-more basic $n$ layers of reflective thinking in this model.
 
+\section{Critical Failure Heuristics}
+
+\cite{sussman:1973} introduced the idea of a critical planning
+heuristic, which is based upon a logical search and pattern
+recognition algorithm.  Building on this work, \cite{singh:2003,
+  singh:2005a} describe a variety of critical first-order and
+second-order reflective resources, many of which assume a logical
+search over an object oriented social model.  I have taken painstaking
+efforts to not introduce any logical problem solving into my
+algorithm, so that each basic step in my planner takes a predictable
+constant time complexity, $O(1)$.  This allows all critical and
+logical search algorithms in my model to be implemented in a way that
+is reflected upon and optimized by the critical learning algorithm
+itself.  \cite{minsky:2006} describes a ``critic-selector'' algorithm
+as follows:
+\begin{quote}
+Each Critic ... can recognize a certain species of ``Problem Type.''
+When a Critic sees enough evidence that you now are facing its type of
+problem, then that Critic will activate what we shall call a
+``Selector,'' which tries to start up a set of resources that it has
+learned is likely to act as a Way to Think that may help in this
+situation.
+\end{quote}
+I use critics in my model to predict different types of reflective
+plan execution failures.
+
+\section{Planning Failures}
+
+Planning may fail in a number of different ways in a reflective
+layered system.  Note that while planning may fail, the
+$\text{reflective}^0$ physical layer of activity does not include the
+concept of failure because this layer contains neither symbolic
+perceptions, actions, nor goals.  The physical layer is the given,
+goals are symbolized in the first-order reflective layer, so this
+layer of activity is the first layer that may fail to accomplish its
+own created goals.
+
+The most common type of failure that is discussed in the literature is
+an expectation failure.  This is the type of failure that I
+demonstrate in the implementation.  \cite{cox:2007a} discusses a
+number of different self-reflective failures in story understanding
+that are based on a logical search algorithm.  My model is more basic
+than most approaches to implementing artificial reflective thinking
+because it carefully avoids any logical resolution search algorithm
+that operates behind the scenes.  Although, this model does not have a
+predefined object-oriented (or subject-oriented) view of problem
+solving, there are still a variety of interesting types of plan
+failure that occur at this level of reflective debugging.  I have
+discussed two types of first-order plan execution failures, here
+listed as critical failures followed by a selective response:
+\begin{itemize}
+\item {\tt expectation-failure} $\longrightarrow$ \\
+      {\tt refine-resource-transframe-hypotheses}
+\item {\tt activation-conflict-failure} $\longrightarrow$ \\
+      {\tt create-parallel-suppression-plan}
+\item {\tt failure-to-distinguish-predictions} $\longrightarrow$ \\
+      {\tt refine-symbolic-perceptions-and-resources}
+\item {\tt failure-to-distinguish-predictions} $\longrightarrow$ \\
+      {\tt create-probabilistic-hypothesis}
+\item {\tt activation-failure} $\longrightarrow$ \\
+      {\tt create-new-symbolic-resources}
+\end{itemize}
+
+\section{Factual Plan Failure Knowledge}
+
+When the planner executes a plan, the plan may encounter a bug, or a
+failure.  This failure is a symbolic tag that becomes a property of
+the plan.  {\mbox{\autoref{figure:example_plan_failure}}} shows an
+example of plans with symbolic failure properties.
+\begin{figure}
+\includegraphics[width=12cm]{gfx/example_plan_failure}
+\caption[An example of plans with symbolic failure properties.]{An
+  example of plans with symbolic failure properties.}
+\label{figure:example_plan_failure}
+\end{figure}
 
 %\section{Counterfactual Simultaneities}
 %

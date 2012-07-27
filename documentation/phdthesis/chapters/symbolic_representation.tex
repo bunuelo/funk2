@@ -265,3 +265,68 @@ representation.
   more complex actually existent activity in this layer.}
 \label{figure:example_second_order_symbol}
 \end{figure}
+
+\section{Representing Symbolic Resources}
+
+Each reflective thinking layer in the model has a set of built-in
+resources.  These built-in resources correspond to what
+\cite{minsky:2006} refers to as the built-in reactive resources.
+Resources can be in activated or suppressed Spatial arrangements.
+These activated and suppressed relationships can lead to logical
+conflicts, a type of activation failure.
+
+Because the simulation is of actual dynamic reflective thinking and
+not of a simulation of an already symbolic control system, how to
+think about resources in my system appears as something like a
+cooperation between the physical layer and the first-order reflective
+resources.  The set of resources, $A^{n*}$, is a subset of the
+symbols, $X^{n*}$, in any given layer.  They are symbolic references
+to the lower layers of continuous dynamic activity.
+{\mbox{\autoref{figure:example_resource}}} shows an example of a
+first-order reflective resource, a symbolic reference to the
+$\text{reflective}^0$ layer of dynamic physical activity.
+{\mbox{Equation~\ref{equation:define_resource_set_first}}}
+{\mbox{through~\ref{equation:define_resource_set_last}}} define a
+symbolic $\text{resource}^*$, $a^{n*}$, in the simulation state graph,
+$S$.
+\begin{align}
+\label{equation:define_resource_set_first}
+                                       A^{n*} &\equiv \text{\emph{$\text{Reflective}^n$ action resources.}} \\
+                                       A^{n*} &\subseteq X^{n*} \\
+\text{\tt{reflective}}^n.\text{\tt{resource}} &= A^{n*} \\
+\label{equation:define_resource_set_last}
+                                       a^{n*} &\in A^{n*}
+\end{align}
+{\mbox{\autoref{figure:example_resource_conflict}}} shows an example
+of four resources, each displaying a different activation or
+suppression Spatial relationship:
+\begin{enumerate}
+\item An example of an activation relationship.
+\item An example of a suppression relationship.
+\item An example of an idle resource in neither an activation nor a
+  suppression relationship.
+\item An example of a resource in simultaneous, conflicting,
+  activation and suppression relationships.
+\end{enumerate}
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/example_resource}
+\caption[An example of a first-order reflective resource.]{An example
+  of a first-order reflective resource that refers to the dynamic
+  activity in the $\text{reflective}^0$ layer of physical activity.}
+\label{figure:example_resource}
+\end{figure}
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/example_resource_conflict}
+\caption[Four examples of resource activation and suppression Spatial
+  relationships.]{Four examples of resource activation and suppression
+  Spatial relationships: (1) activation, (2) suppression, (3) idle,
+  and (4) conflict.  Note that all of these activation and suppression
+  events have the same starting simultaneity and no ending.  In
+  general, activation and suppression events may be historical
+  memories, and do not necessarily imply present activation,
+  suppression, or conflict.}
+\label{figure:example_resource_conflict}
+\end{figure}
+

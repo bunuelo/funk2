@@ -7,7 +7,8 @@
 
 \section{Plan Operators}
 
-Plans are composed of four basic types of plan operators.
+In the implementation, plans are composed of four basic types of plan
+operators.
 \begin{enumerate}
 \item The \emph{resource activation operator} references a
   counterfactual transframe, which includes specific resource
@@ -225,16 +226,36 @@ listed as critical failures followed by a selective response:
 
 \section{Factual Plan Failure Knowledge}
 
-When the planner executes a plan, the plan may encounter a bug, or a
-failure.  This failure is a symbolic tag that becomes a property of
-the plan.  {\mbox{\autoref{figure:example_plan_failure}}} shows an
-example of plans with symbolic failure properties.
+When the planner executes a plan, the plan may encounter a bug, a
+failure.  Failed plans, failed counterfactual knowledge, and their
+untrue hypothesis dependencies are not immediately discarded in a
+reflective learning algorithm as is the case with non-reflective
+learning algorithms.  These pieces of knowledge are used to learn what
+types of plans are more prone to specific types of failure.  Given a
+plan failure structure, different failures can be predicted from given
+factual plan structures.
+{\mbox{\autoref{figure:example_plan_failure}}} shows an example of a
+one-step plan with a factual expectation failure structure.
 \begin{figure}
-\includegraphics[width=12cm]{gfx/example_plan_failure}
-\caption[An example of plans with symbolic failure properties.]{An
-  example of plans with symbolic failure properties.}
+\hspace*{-4cm}\includegraphics[width=18cm]{gfx/example_plan_failure}
+\caption[An example of a one-step plan with a factual expectation
+  failure.]{An example of a one-step plan with a factual expectation
+  failure, where the gripper is expected to pick up the block, but the
+  factual transframe shows that nothing actually happens in this case
+  of execution.  This could be due, for example, to the block being
+  glued to the table or some other unconsidered hypothesis.}
 \label{figure:example_plan_failure}
 \end{figure}
+
+\section{Learned Critical Failure Heuristics}
+
+\begin{figure}
+\includegraphics[width=10cm]{gfx/example_critical_failure_heuristic}
+\caption[An example of a critical failure heuristic.]{An example of a
+  critical failure heuristic.}
+\label{figure:example_critical_failure_heuristic}
+\end{figure}
+
 
 %\section{Counterfactual Simultaneities}
 %

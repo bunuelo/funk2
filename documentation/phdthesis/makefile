@@ -86,6 +86,7 @@ phdthesis.pdf: \
   gfx/example_plan.pdf \
   gfx/example_planner.pdf \
   gfx/example_plan_failure.pdf \
+  gfx/example_critical_failure_heuristic.pdf \
   gfx/example_counterfactual_simultaneity.pdf \
   gfx/example_causal_knowledge.pdf \
   gfx/example_causal_hypothesis.pdf \

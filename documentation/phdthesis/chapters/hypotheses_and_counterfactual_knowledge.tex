@@ -140,15 +140,56 @@ hypothesis space.
 \label{figure:example_hypothesis}
 \end{figure}
 
+\section{Decisions with Hypothesis Dependencies}
+
+Hypothesis spaces are learned in order to predict counterfactual
+transframes from factual preconditions and factual transframes.
+However, when the time comes to make a prediction of a counterfactual
+future, given factual preconditions, often the hypothesis spaces will
+predict a number of potential outcomes with uncertainty.  This
+uncertainty arises because, assuming that the choice of hypothesis
+language allows for the expression of the correct hypothesis, not
+enough factual examples have been seen in order to reduce the space to
+this correct hypothesis.  Mitchell explains that if all of the current
+possible hypotheses in the hypothesis space predict the same outcome,
+this is guarenteed to be the correct outcome, again assuming that the
+correct hypothesis is expressible in the hypothesis language.
+However, often it is the case that the hypotheses make different
+predictions.  If hypotheses are assumed to be equally likely, then
+they can be counted and a probabilistic ratio can be computed.  I do
+not make the assumption of equal likelihood of hypotheses, but some
+assumption must be made in order for a decision to be made as to the
+counterfactual outcome.
+
+The important point is that when a decision is made, counterfactual
+knowledge is created that depends on a specific subset of the
+hypotheses in the hypothesis space remaining true.  In the
+implementation, callbacks on the hypothesis-version-space learning
+algorithm are used to propogate the removal of a hypothesis to the
+counterfactual knowledge during learning and refining the hypothesis
+space due to new factual knowledge.  This is only part of the response
+to what will be later discussed as a type of \emph{expectation
+  failure}, which creates a memory of the factual plan failure event
+in addition to the refinement of the hypothesis space.
+
 \section{Counterfactual Transframes}
 
+When a counterfactual transframe is decidedly created based on
+specific subsets of hypotheses in different hypothesis spaces, these
+are kept track of as \emph{hypothesis dependencies} for each
+counterfactual transframe.  Further, counterfactual transframes depend
+on the future activation of a given set of resources.  These
+\emph{activation dependencies} are also part of a counterfactual
+transframe.
 {\mbox{\autoref{figure:example_counterfactual_transframe}}} shows an
-example of a counterfactual transframe.
+example of a counterfactual transframe with a hypothesis dependency as
+well as an activation dependency.
 \begin{figure}
 \center
 \includegraphics[width=12cm]{gfx/example_counterfactual_transframe}
 \caption[An example of a counterfactual transframe.]{An example of a
-  counterfactual transframe.}
+  counterfactual transframe with a hypothesis dependency as well as an
+  activation dependency.}
 \label{figure:example_counterfactual_transframe}
 \end{figure}
 

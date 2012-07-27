@@ -26,7 +26,7 @@ phdthesis.pdf: \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
   chapters/symbolic_representation.tex \
-  chapters/grounded_knowledge.tex \
+  chapters/grounded_factual_knowledge.tex \
   chapters/hypothetical_knowledge.tex \
   chapters/the_planner_and_plan_knowledge.tex \
   chapters/learning_search_heuristics.tex \

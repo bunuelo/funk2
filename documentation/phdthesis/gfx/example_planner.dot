@@ -9,13 +9,13 @@ digraph G {
     edge [color = "#0000CC"];
     
     
-    // goal_1
+    // goal_1^*
 
-    goal_1 [texlbl = "{\huge{\tt{Goal}}}"];
+    goal_1 [texlbl = "{\huge{\tt{Goal*}}}"];
     
-    // goal_2
+    // goal_2^*
 
-    goal_2 [texlbl = "{\huge{\tt{Goal}}}"];
+    goal_2 [texlbl = "{\huge{\tt{Goal*}}}"];
     
     // plan_1
 

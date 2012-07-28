@@ -28,7 +28,7 @@ phdthesis.pdf: \
   chapters/symbolic_representation.tex \
   chapters/grounded_factual_knowledge.tex \
   chapters/hypotheses_and_counterfactual_knowledge.tex \
-  chapters/the_planner_and_plan_knowledge.tex \
+  chapters/the_planing_machine.tex \
   chapters/learning_search_heuristics.tex \
   chapters/related_simulations.tex \
   chapters/introducing_computation.tex \

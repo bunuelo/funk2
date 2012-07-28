@@ -7,13 +7,24 @@ In this dissertation I present the substrate for accountable layered
 systems.  I have focused on building this substrate for doing
 reflective thinking on a large scale in learning systems, using
 {\mbox{\citeauthor{singh:2005b}'s~\citeyearpar{singh:2005b}}} example
-of reflective architectures as the precedent.  The contributions of
+of reflective architectures as the precedent.  My approach focuses on
+a purely procedural approach that does not assume any logical search
+algorithms that work behind-the-scenes without a reflective learning
+focus.  Without increasing the computational time complexity of basic
+search, this approach learns to search in $n$ concurrent layers of
+goal-oriented optimization, learning to plan physical actions, while
+concurrently learning to plan planning actions, etc.  Physical
+activities are presented as analogous to thinking activities, allowing
+a recursive application of the model to itself.  The contributions of
 this thesis are:
 
 \begin{itemize}
-\item The Substrate
-\item The Simulation
-\item The Model
+\item \emph{The Model}: A philosophical basis for avoiding tautologies
+  while thinking about a grounded model of reflection.
+\item \emph{The Simulation}: A mathematical basis in graph theory for
+  representing a simulation of the model.
+\item \emph{The Substrate}: A computational implementation of three
+  working layers of the simulation in a block building domain.
 \end{itemize}
   
 \section{The Substrate}

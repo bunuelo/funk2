@@ -1,6 +1,6 @@
 %************************************************
-\chapter{The Planner and Plan Knowledge}
-\label{chapter:the_planner_and_plan_knowledge}
+\chapter{The Planning Machine}
+\label{chapter:the_planning_machine}
 %************************************************
 
 
@@ -34,7 +34,7 @@ of a two-step plan.
 \label{figure:example_plan_operators}
 \end{figure}
 \begin{figure}
-\hspace*{-4cm}\includegraphics[width=18cm]{gfx/example_plan}
+\hspace*{-2cm}\includegraphics[width=18cm]{gfx/example_plan}
 \caption[An example of a two-step plan.]{An example of a two-step
   plan.}
 \label{figure:example_plan}
@@ -168,12 +168,12 @@ recognition algorithm.  Building on this work, \cite{singh:2003,
 second-order reflective resources, many of which assume a logical
 search over an object oriented social model.  I have taken painstaking
 efforts to not introduce any logical problem solving into my
-algorithm, so that each basic step in my planner takes a predictable
-constant time complexity, $O(1)$.  This allows all critical and
-logical search algorithms in my model to be implemented in a way that
-is reflected upon and optimized by the critical learning algorithm
-itself.  \cite{minsky:2006} describes a ``critic-selector'' algorithm
-as follows:
+algorithm, so that each basic step in my planner that compose more
+complex planning actions takes a predictable constant time complexity,
+$O(1)$.  This allows all critical and logical search algorithms in my
+model to be implemented in a way that is reflected upon and optimized
+by the critical learning algorithm itself.  \cite{minsky:2006}
+describes a ``critic-selector'' algorithm as follows:
 \begin{quote}
 Each Critic ... can recognize a certain species of ``Problem Type.''
 When a Critic sees enough evidence that you now are facing its type of
@@ -247,12 +247,14 @@ one-step plan with a factual expectation failure structure.
 \label{figure:example_plan_failure}
 \end{figure}
 
-\section{Learned Critical Failure Heuristics}
+\section{Planning Machine Perceptions}
 
+{\mbox{\autoref{figure:example_critical_failure_heuristic}}} shows an
+example of planning machine symbolic perceptions.
 \begin{figure}
-\includegraphics[width=10cm]{gfx/example_critical_failure_heuristic}
-\caption[An example of a critical failure heuristic.]{An example of a
-  critical failure heuristic.}
+\includegraphics[width=14cm]{gfx/example_critical_failure_heuristic}
+\caption[An example of planning machine symbolic perceptions.]{An
+  example of planning machine symbolic perceptions.}
 \label{figure:example_critical_failure_heuristic}
 \end{figure}
 

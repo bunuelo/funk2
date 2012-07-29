@@ -13,12 +13,6 @@ systems, the focus of this dissertation.  The purpose of SALS is to
 provide a simulation of the actual dynamic activities in Duration, the
 activities in Duration that actually exist.
 
-%I have previously
-%explained why computers cannot create grounded symbolic references to
-%the dynamic, beyond the purely cyclic, in
-%\autoref{section:digital_reflection}.  If this simulation creates
-%symbols, they are only in the eyes of the beholder.
-
 In this dissertation, I am focusing on how SALS demonstrates
 reflective learning in two distinct causal classes of knowledge from a
 single physical expectation failure.  I must begin my description with
@@ -32,6 +26,37 @@ explain how a plan may begin executing and fail.  Finally, I will
 describe how the expectation failure response updates causal models in
 both reflective layers.  This, in total, shows how learning how to
 plan is simulated by SALS.
+
+\section{The Funk Virtual Operating System}
+
+The virtual concurrent machine and operating system underlying SALS is
+called \emph{Funk} for two reasons: (1) the ``slap'' style of bass
+guitar playing \cite[]{graham:1969, johnson:1984}, which emphasizes
+the fundamentals of the dynamic actual ongoing, and (2) the focus on
+reflective tracing of concurrent procedural ``funktions'' as opposed
+to purely declarative or logical approaches, which have no means of
+optimizing the underlying search problem.  In this dissertation, I
+focus on the implementation of second-order reflective thinking within
+this virtual operating system.  In order to come to this point, a very
+general underlying substrate has been programmed, which will largely
+not be discussed.  To briefly give an idea of the complexity of the
+implementation, the following table gives quantification of the size
+of the SALS codebase:
+
+\vspace{5mm}
+\begin{tabular}{lr}
+Lines of C code:             &    141,138 \\
+Lines of Funk code:          &     50,346 \\
+Total lines of code:         &    192,868 \\
+Total characters of code:    & 10,117,671
+\end{tabular}
+\vspace{5mm}
+
+The project is small compared to other virtual operating systems and
+programming languages, but represents a non-trivial effort toward a
+fully reflective parallel and concurrent virtual operating system for
+implementing large-scale practical applications, such as word
+processors, web browsers, as well as scientific data processing tools.
 
 \section{The Global Environment}
 
@@ -258,7 +283,7 @@ the monitoring application, so that it may be inspected and debugged
 by hand.
 \begin{figure}[bth]
   \center
-  \includegraphics[width=10cm]{gfx/fibermon_many_fibers}
+  \includegraphics[width=11cm]{gfx/fibermon_many_fibers}
   \caption[FiberMon application monitoring many fibers]{FiberMon
     application monitoring hundreds of parallel fibers, simulated
     activities in Duration, executing on eight different physical
@@ -331,6 +356,33 @@ A fiber can be added to the resume set of a fiber trigger by using the
 The {\tt wait-for-trigger} command atomically pauses the current fiber
 and then adds the fiber to resume queue of the fiber trigger object.
 
+\section{Fiber Complete and Bug-Found Triggers}
+
+Fibers have two primary ways of completing their execution: by (1)
+successfully reaching the end of their execution task, or by (2)
+encountering a bug.  Each fiber has a special fiber trigger for each
+of these two possible events: (1) a {\tt complete} trigger, and (2) a
+{\tt bug-found} trigger.  When a parallel fiber is created, further
+parallel fibers can be created in order to listen for one or both of
+these triggers.  Within the internals of the Funk operating system, an
+object called a \emph{larva} is created when a C function encounters
+an error.  A larva object is similar to an exception in other
+programming languages such as C++ or Java.  The larva object
+propagates up the C execution stack until it reaches the {\tt value}
+register of the Funk virtual operating system fiber object.  The Funk
+virtual operating system never sees the larva object because when the
+C code detects a larva object in the {\tt value} register of the
+virtual machine represented by the fiber object, the larva object is
+immediately converted to a bug object and the fiber is also
+immediately paused by the C code.  When a bug is encountered the {\tt
+  bug-found} trigger is triggered, and a reflective parallel fiber can
+respond and inspect the paused fiber that contains the bug in its {\tt
+  value} register.  Larva and bugs are very versatile frame-based
+objects, so they can pass an arbitrary amount of information from the
+depths of the C code internals of the virtual machine to the very
+abstract reflective thinking capabilities of the SALS first-order
+reflective learning-to-act and second-order reflective
+learning-to-plan systems.
 
 %\section{leftovers...}
 
@@ -359,9 +411,6 @@ and then adds the fiber to resume queue of the fiber trigger object.
 %discuss how the activities in Duration begin simulating by programming
 %lists of symbols into SALS' interactive programming language.
 
-%
-%\section{Fiber Complete and Bug Found Triggers}
-%
 %get fiber triggers from fiber objects.
 %
 %execution complete versus bug found.

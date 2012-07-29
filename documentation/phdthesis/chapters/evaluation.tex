@@ -3,3 +3,32 @@
 \label{chapter:evaulation}
 %************************************************
 
+
+\section{Streaming Constant-Time Symbolization}
+
+In {\mbox{\autoref{part:the_simulation}}}, I define a symbolic
+represenation to be a subgraph of the dynamic activity in the layers
+below the static symbolic reference.  In general, this definition
+becomes a subgraph isomorphism problem.  An algorithmic solution to
+subgraph isomorphism is known to be an NP-complete problem, requiring
+search.  Because my approach requires every activity in the
+implementation to take a constant, $O(1)$, time, the symbolic
+perception activity must also be composed of constant time components.
+The way that this problem is handled in my architecture is by
+considering the symbolic perception problem as a
+\emph{planning-to-perceive} problem \cite[]{pryorcollins:1995}.  In my
+proof-of-concept implementation, I only use graphs that are of a low
+enough complexity in order to be bounded by a known constant upper
+time boundary.  My implementation only creates new symbols for
+those subgraphs that are below the size of four nodes and four edges.
+I have hard-coded one two types of symbolic perceptions at the
+second-order reflective level that focuses on plans in the focus and
+execution registers.
+
+In general, the subgraph isomorphism for specific symbolic perceptions
+from the layers below becomes a planning problem for each newly
+created symbol.  This allows the planning machine to create plans that
+are compiled into parallel resources that can note the perception of
+each newly created symbol, based on the reflective copy of the
+physical knowledge-base.
+

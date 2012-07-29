@@ -93,6 +93,7 @@ phdthesis.pdf: \
   gfx/example_global_environment.pdf \
   gfx/implemented_mindmon.pdf \
   gfx/implemented_physical_knowledge.pdf \
+  gfx/implemented_semantic_event_knowledge_base.pdf \
   gfx/implemented_first_order_resource_activator.pdf \
   gfx/simulation_example_state_graph.pdf \
   gfx/basic_frame_object_types.pdf \

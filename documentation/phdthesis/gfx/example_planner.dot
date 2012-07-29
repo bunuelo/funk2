@@ -36,7 +36,7 @@ digraph G {
 
     // planner_1
 
-    planner_1 [texlbl = "{\huge{\tt{Planner}}}"];
+    planner_1 [texlbl = "{\huge{\tt{Planning-Machine}}}"];
     
     planner_1_focus_plan_1 [shape=box,label="{\huge{\tt{focus}}}"];
     planner_1 -> planner_1_focus_plan_1 [arrowhead=none];
@@ -67,7 +67,7 @@ digraph G {
 
     reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
     
-    reflective_1_planner_planner_1 [shape=box,label="{\huge{\tt{planner}}}"];
+    reflective_1_planner_planner_1 [shape=box,label="{\huge{\tt{planning-machine}}}"];
     reflective_1 -> reflective_1_planner_planner_1 [arrowhead=none];
     reflective_1_planner_planner_1 -> planner_1 [style="-triangle 45"];
     

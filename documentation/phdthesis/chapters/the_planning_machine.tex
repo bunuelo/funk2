@@ -40,24 +40,24 @@ of a two-step plan.
 \label{figure:example_plan}
 \end{figure}
 
-\section{A Planner}
+\section{A Planning Machine}
 
 The first-order reflective thinking layer makes plans in order to make
 plans that will accomplish symbolic physical goals when executed.
 {\mbox{\autoref{figure:example_planner}}} shows an example of a
-planner.  In the model, a planner is a simple computational machine
-with different registers that creates and manipulates plan objects.
-The operations of a first-order planner can be seen as symbolic
-resources in the second-order reflective thinking layer.  In general,
-planning operations can be any kind of dynamic activity of the
-first-order reflective thinking layer.  Because the model is not yet
-advanced enough to abstract objects and their subjective perspectives,
-this planning machine the resources in the second-order reflective
-layer resemble the simple symbolic actions of a RISC processor, which
-are like the symbolic bytecodes of a virtual machine.  The simplest
-symbolic resources in the second-order reflective layer are the
-following list of actions that simply move plans between the different
-registers of the planning machine:
+planning machine.  In the model, a planning machine is a simple
+computational machine with different registers that creates and
+manipulates plan objects.  The operations of a first-order planning
+machine can be seen as symbolic resources in the second-order
+reflective thinking layer.  In general, planning operations can be any
+kind of dynamic activity of the first-order reflective thinking layer.
+Because the model is not yet advanced enough to abstract objects and
+their subjective perspectives, this planning machine the resources in
+the second-order reflective layer resemble the simple symbolic actions
+of a RISC processor, which are like the symbolic bytecodes of a
+virtual machine.  The simplest symbolic resources in the second-order
+reflective layer are the following list of actions that simply move
+plans between the different registers of the planning machine:
 \begin{itemize}
 \item {\tt focus-on-register-a*}: Copy the plan in {\tt register-a} to
   the {\tt focus} register.
@@ -78,19 +78,21 @@ registers of the planning machine:
 \end{itemize}
 \begin{figure}
 \includegraphics[width=12cm]{gfx/example_planner}
-\caption[An example of a planner.]{An example of a planner.}
+\caption[An example of a planning machine.]{An example of a planning
+  machine.}
 \label{figure:example_planner}
 \end{figure}
-The planner's execution register is a special register that holds the
-plan that is currently executing.  As the planner is like a virtual
-machine, plans are like computer programs for this virtual machine.
-The planner has a number of activities that create plans that
-accomplish or avoid the current goals in the {\tt positive-goal} and
-{\tt negative-goal} slots of the planner.  These activities are seen
-as symbolic resources that can be used to accomplish planning goals by
-the second-order reflective thinking layer.  Some of these plan
-creation and manipulation resources in the second-order reflective
-thinking layer are as follows:
+The planning machine's execution register is a special register that
+holds the plan that is currently executing.  As the planning machine
+is like a virtual machine, plans are like computer programs for this
+virtual machine.  The planning machine has a number of activities that
+create plans that accomplish or avoid the current goals in the {\tt
+  positive-goal} and {\tt negative-goal} slots of the planning
+machine.  These activities are seen as symbolic resources that can be
+used to accomplish planning goals by the second-order reflective
+thinking layer.  Some of these plan creation and manipulation
+resources in the second-order reflective thinking layer are as
+follows:
 \begin{itemize}
 \item {\tt create-empty-plan*}: Create new plan with no operators and
   place in the {\tt focus} register.
@@ -119,19 +121,19 @@ thinking layer are as follows:
 \end{itemize}
 These first-order reflective planning operators can be used by the
 second-order reflective layer in order to make second-order plans that
-control the first-order planner.
+control the first-order planning machine.
 
 \section{Symbolizing Goals}
 
-Positive and negative first-order planner goals are symbolized from
-the $\text{reflective}^0$ layer of physical activity.  Note the
-bottom-up type of goal-oriented control in the model.  Also, because
-reflective thinking layers are thought of as running concurrently in
-the model, there is no necessary priority for devoting thinking
-resources to any specific layer of thinking as more important than
-another.  The implementation includes built-in goals that have already
-been symbolized as positive goals that are included as part of the
-first-order reflective planner.
+Positive and negative first-order planning machine goals are
+symbolized from the $\text{reflective}^0$ layer of physical activity.
+Note the bottom-up type of goal-oriented control in the model.  Also,
+because reflective thinking layers are thought of as running
+concurrently in the model, there is no necessary priority for devoting
+thinking resources to any specific layer of thinking as more important
+than another.  The implementation includes built-in goals that have
+already been symbolized as positive goals that are included as part of
+the first-order reflective planning machine.
 
 \section{Second-order Resources}
 
@@ -141,10 +143,13 @@ Although not included in the implementation, here is a list of
 examples of symbolic resources that could exist in the reflective
 thinking layers of order two or greater:
 \begin{itemize}
+\item {\tt complete-execution*}: Copy the plan in the {\tt focus}
+  register to the {\tt execute} register and wait for the plan to
+  complete execution, resulting in either failures or success.
 \item {\tt refine-symbolic-perception*}: Create a new symbol that
   divides the currently perceived symbols into smaller subgraphs of
   dynamic activity that may be helpful for accomplishing or avoiding
-  the positive and negative goals currently in the planner.
+  the positive and negative goals currently in the planning machine.
 \item {\tt refine-symbolic-resource*}: Create a new symbol that refers
   to a subgraph of the current symbolic resource references.
 \item {\tt create-type-perception*}: Create a new symbol that refers
@@ -168,12 +173,13 @@ recognition algorithm.  Building on this work, \cite{singh:2003,
 second-order reflective resources, many of which assume a logical
 search over an object oriented social model.  I have taken painstaking
 efforts to not introduce any logical problem solving into my
-algorithm, so that each basic step in my planner that compose more
-complex planning actions takes a predictable constant time complexity,
-$O(1)$.  This allows all critical and logical search algorithms in my
-model to be implemented in a way that is reflected upon and optimized
-by the critical learning algorithm itself.  \cite{minsky:2006}
-describes a ``critic-selector'' algorithm as follows:
+algorithm, so that each basic step in my planning machine that compose
+more complex planning actions takes a predictable constant time
+complexity, $O(1)$.  This allows all critical and logical search
+algorithms in my model to be implemented in a way that is reflected
+upon and optimized by the critical learning algorithm itself.
+\cite{minsky:2006} describes a ``critic-selector'' algorithm as
+follows:
 \begin{quote}
 Each Critic ... can recognize a certain species of ``Problem Type.''
 When a Critic sees enough evidence that you now are facing its type of
@@ -216,8 +222,6 @@ listed as critical failures followed by a selective response:
       {\tt create-parallel-suppression-plan}
 \item {\tt failure-to-distinguish-predictions} $\longrightarrow$ \\
       {\tt refine-symbolic-perceptions-and-resources}
-\item {\tt failure-to-distinguish-predictions} $\longrightarrow$ \\
-      {\tt create-probabilistic-hypothesis}
 \item {\tt exhausted-hypothesis-space} $\longrightarrow$ \\
       {\tt generalize-hypothesis-language}
 \item {\tt activation-failure} $\longrightarrow$ \\
@@ -226,18 +230,21 @@ listed as critical failures followed by a selective response:
 
 \section{Factual Plan Failure Knowledge}
 
-When the planner executes a plan, the plan may encounter a bug, a
-failure.  Failed plans, failed counterfactual knowledge, and their
-untrue hypothesis dependencies are not immediately discarded in a
-reflective learning algorithm as is the case with non-reflective
-learning algorithms.  These pieces of knowledge are used to learn what
-types of plans are more prone to specific types of failure.  Given a
-plan failure structure, different failures can be predicted from given
-factual plan structures.
+When the planning machine executes a plan, the plan may encounter a
+bug, a failure.  Failed plans, failed counterfactual knowledge, and
+their untrue hypothesis dependencies are not immediately discarded in
+a reflective learning algorithm as is the case with non-reflective
+learning algorithms.  These failure events are factual knowledge about
+the actual use of counterfactual knowledge.  Factual failure knowledge
+is used to learn hypothetical knowledge about what plan structures in
+the context of current physical perceptions are prone to specific
+types of failure.  Given a factual plan failure event, different
+symbolic types of failure can be predicted from given plan structures
+in the context of the layers below the planning machine.
 {\mbox{\autoref{figure:example_plan_failure}}} shows an example of a
 one-step plan with a factual expectation failure structure.
 \begin{figure}
-\hspace*{-4cm}\includegraphics[width=18cm]{gfx/example_plan_failure}
+\hspace*{-3cm}\includegraphics[width=16cm]{gfx/example_plan_failure}
 \caption[An example of a one-step plan with a factual expectation
   failure.]{An example of a one-step plan with a factual expectation
   failure, where the gripper is expected to pick up the block, but the
@@ -247,75 +254,36 @@ one-step plan with a factual expectation failure structure.
 \label{figure:example_plan_failure}
 \end{figure}
 
-\section{Planning Machine Perceptions}
+\section{Prediction of Failure Based on Plan Structure}
 
+The second-order reflective thinking layer creates symbolic references
+to both the first-order reflective thinking layer as well as the
+physical layer of activities.  Resources in the second-order
+reflective thinking layer control the activities in layers below,
+including the planning machine's manipulation of plan structures.
+Second-order hypothesis spaces are learned in order to predict the
+transitional effects of first-order reflective planning machine
+activities.  The second-order hypothesis spaces contain hypothetical
+knowledge about the actual factual use of counterfactual knowledge.
+While goals in the second-order reflective thinking layer can be
+specifically about physical activities, the power of second-order
+reflective goals comes from considering goals that are abstracted from
+this physical layer of activity.  For example, a second-order
+reflective thinking goal could be to control the planning machine in
+order to work against the first-order goals.  The first-order planning
+machine activities can be thought of as plans being executed by the
+second-order planning machine.
 {\mbox{\autoref{figure:example_critical_failure_heuristic}}} shows an
 example of planning machine symbolic perceptions.
 \begin{figure}
-\includegraphics[width=14cm]{gfx/example_critical_failure_heuristic}
-\caption[An example of planning machine symbolic perceptions.]{An
-  example of planning machine symbolic perceptions.}
+\includegraphics[width=10cm]{gfx/example_critical_failure_heuristic}
+\caption[An example of a second-order counterfactual transframe
+  predicting a plan execution failure.]{An example of a second-order
+  counterfactual transframe predicting a plan execution failure.  In
+  this example, a plan that hypothesizes the creation of a stack of
+  blocks with a square block stacked on top of a triangle block is
+  predicted to lead to an expectation failure if it were to be
+  executed.}
 \label{figure:example_critical_failure_heuristic}
 \end{figure}
-
-
-%\section{Counterfactual Simultaneities}
-%
-%Learned hypothetical transframes allow the creation of hypothetical
-%future simultaneities that depend on two things: (1) action resources
-%to be activated, and (2) sets of resource specific general and
-%resource specific transframe hypotheses continuing to be consistent
-%with factual knowledge.
-%{\mbox{\autoref{figure:example_counterfactual_simultaneity}}} shows an
-%example of a counterfactual simultaneity.
-%\begin{figure}
-%\center
-%\includegraphics[width=12cm]{gfx/example_counterfactual_simultaneity}
-%\caption[An example of a counterfactual simultaneity.]{An example of a
-%  counterfactual simultaneity.}
-%\label{figure:example_counterfactual_simultaneity}
-%\end{figure}
-
-
-%\section{Causal Knowledge}
-
-%Now that a separate temporal sequence for each reflective layer has
-%been defined, this factual grounded knowledge can be abstracted into
-%hypothetical causal models that are useful for planning toward goals
-%in a counterfactual future.
-
-
-
-%{\mbox{\autoref{figure:example_causal_knowledge}}} shows an example of
-%causal knowledge.
-%\begin{figure}
-%\center
-%\includegraphics[width=12cm]{gfx/example_causal_knowledge}
-%\caption[An example of a causal knowledge.]{An example of causal
-%  knowledge, $\text{\tt{knowledge}}_1^*$, where the simultaneity,
-%  $\text{\tt{simult}}_7^*$, is known to be the cause of the
-%  transframe, $\text{\tt{transition}}_2^*$.  Negative perceptions are
-%  omitted here for to reduce visual clutter.}
-%\label{figure:example_causal_knowledge}
-%\end{figure}
-
-%\section{Representing Causal Hypotheses}
-
-%{\mbox{\autoref{figure:example_causal_hypothesis}}} shows an example
-%of a causal hypothesis, $h_1^*$, where the simultaneity,
-%$\text{\tt{simult}}_7^*$, is hypothesized to be the cause of the
-%transframe, $\text{\tt{transframe}}_2^*$.  In other words, the gripper
-%dropping the block causes the block to be sitting on the table.
-%\begin{figure}
-%\center
-%\includegraphics[width=8cm]{gfx/example_causal_hypothesis}
-%\caption[An example of a causal hypothesis.]{An example of a causal
-%  hypothesis, $h_1^*$, where the simultaneity,
-%  $\text{\tt{simult}}_7^*$, is hypothesized to be the cause of the
-%  transframe, $\text{\tt{transframe}}_2^*$.  In other words, the
-%  gripper dropping the block causes the block to be sitting on the
-%  table.}
-%\label{figure:example_causal_hypothesis}
-%\end{figure}
-
 

@@ -36,16 +36,16 @@ plan is simulated by SALS.
 \section{The Global Environment}
 
 In SALS, the simulation state graph, $S$, becomes the \emph{global
-  environment}.  The global environment is SALS' static representation
-of the dynamic activities in Duration.  The previous part described
-the simulation state as the mathematical representation for the mind.
-I previously defined this simulation state graph to represent all
-subgraphs that actually exist in
+  environment}.  The global environment is SALS' static graph
+representation of the dynamic activities in Duration.  The previous
+part described the simulation state as the mathematical representation
+for the mind.  I previously defined this simulation state graph to
+represent all subgraphs that actually exist in
 Equation\ \ref{equation:define_exists}, reproduced here:
 \begin{equation*}
 \text{exists}(G) \longleftrightarrow (G ~{\subseteq}~ S)
 \end{equation*}
-Environments are hierarchical structures that have two parts: (1) a
+Environments are organized into hierarchies that have two parts: (1) a
 frame containing slots containing variable definitions, and (2) a
 reference to a parent environment.  The global environment is a
 special environment because it is the only environment that has no

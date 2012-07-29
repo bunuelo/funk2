@@ -91,6 +91,7 @@ phdthesis.pdf: \
   gfx/example_causal_knowledge.pdf \
   gfx/example_causal_hypothesis.pdf \
   gfx/example_global_environment.pdf \
+  gfx/implemented_mindmon.pdf \
   gfx/implemented_physical_knowledge.pdf \
   gfx/implemented_first_order_resource_activator.pdf \
   gfx/simulation_example_state_graph.pdf \

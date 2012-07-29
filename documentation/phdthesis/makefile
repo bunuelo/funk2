@@ -34,6 +34,7 @@ phdthesis.pdf: \
   chapters/introducing_computation.tex \
   chapters/computational_activities_in_duration.tex \
   chapters/causally_reflective_procedural_tracing.tex \
+  chapters/the_mind_monitor_application.tex \
   chapters/related_implementations.tex \
   chapters/evaluation.tex \
   chapters/future.tex \

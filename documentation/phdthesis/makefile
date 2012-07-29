@@ -94,6 +94,7 @@ phdthesis.pdf: \
   gfx/implemented_mindmon.pdf \
   gfx/implemented_physical_knowledge.pdf \
   gfx/implemented_reflective_knowledge.pdf \
+  gfx/implemented_planning_machine_knowledge.pdf \
   gfx/implemented_semantic_event_knowledge_base.pdf \
   gfx/implemented_first_order_resource_activator.pdf \
   gfx/implemented_first_order_plan_activator.pdf \

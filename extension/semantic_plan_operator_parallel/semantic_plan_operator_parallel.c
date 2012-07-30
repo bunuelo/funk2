@@ -78,8 +78,19 @@ f2ptr f2__semantic_plan_operator_parallel__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_plan_operator_parallel__type, thing, 0, "Returns the specific type of object that this semantic_plan_operator_parallel is.");
 
 
+f2ptr raw__semantic_plan_operator_parallel__plan_operator__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "plan_operator"));
+}
+
+f2ptr f2__semantic_plan_operator_parallel__plan_operator__lookup_set(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_plan_operator_parallel, this);
+  return raw__semantic_plan_operator_parallel__plan_operator__lookup_set(cause, this);
+}
+export_cefunk1(semantic_plan_operator_parallel__plan_operator__lookup_set, this, 0, "Returns the set of plan_operators.");
+
+
 f2ptr raw__semantic_plan_operator_parallel__plan_operator__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "plan_operator"), that);
 }
 
 f2ptr f2__semantic_plan_operator_parallel__plan_operator__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -91,7 +102,7 @@ export_cefunk2(semantic_plan_operator_parallel__plan_operator__add, this, that, 
 
 
 f2ptr raw__semantic_plan_operator_parallel__plan_operator__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "plan_operator"), that);
 }
 
 f2ptr f2__semantic_plan_operator_parallel__plan_operator__remove(f2ptr cause, f2ptr this, f2ptr that) {
@@ -102,30 +113,6 @@ f2ptr f2__semantic_plan_operator_parallel__plan_operator__remove(f2ptr cause, f2
 export_cefunk2(semantic_plan_operator_parallel__plan_operator__remove, this, that, 0, "");
 
 
-f2ptr raw__semantic_plan_operator_parallel__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_plan_operator_parallel__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_plan_operator_parallel, this);
-  assert_argument_type(semantic_plan_operator_parallel, that);
-  return raw__semantic_plan_operator_parallel__preposition__in__add(cause, this, that);
-}
-export_cefunk2(semantic_plan_operator_parallel__preposition__in__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_plan_operator_parallel__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_plan_operator_parallel__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_plan_operator_parallel, this);
-  assert_argument_type(semantic_plan_operator_parallel, that);
-  return raw__semantic_plan_operator_parallel__preposition__in__remove(cause, this, that);
-}
-export_cefunk2(semantic_plan_operator_parallel__preposition__in__remove, this, that, 0, "");
-
-
 f2ptr f2__semantic_plan_operator_parallel__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__new")));}
@@ -133,6 +120,7 @@ f2ptr f2__semantic_plan_operator_parallel__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__physical_object_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__physical_object_type__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "plan_operator"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__plan_operator__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "plan_operator"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__plan_operator__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "plan_operator"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_parallel"), new__symbol(cause, "semantic_plan_operator_parallel__plan_operator__remove")));}
   return this;

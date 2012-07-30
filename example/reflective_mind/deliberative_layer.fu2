@@ -93,6 +93,9 @@
 	[[is-type `semantic_plan_operator_suppression semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
 									     ]]
 	[[is-type `semantic_counterfactual_transframe semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     [let [[resource_activation_dependency [get semantic_object resource_activation_dependency]]]
+									       [have this add_physical_semantic_object_recursive resource_activation_dependency]]]]
+	[[is-type `semantic_resource                  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
 									     ]]
 	]]
 

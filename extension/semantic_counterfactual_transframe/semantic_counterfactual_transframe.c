@@ -128,6 +128,54 @@ f2ptr f2__semantic_counterfactual_transframe__hypothesis_dependency__remove(f2pt
 export_cefunk2(semantic_counterfactual_transframe__hypothesis_dependency__remove, this, that, 0, "");
 
 
+f2ptr raw__semantic_counterfactual_transframe__hypothesized_add_percept__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "hypothesized_add_percept"), that);
+}
+
+f2ptr f2__semantic_counterfactual_transframe__hypothesized_add_percept__add(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_counterfactual_transframe, this);
+  assert_argument_type(semantic_counterfactual_transframe, that);
+  return raw__semantic_counterfactual_transframe__hypothesized_add_percept__add(cause, this, that);
+}
+export_cefunk2(semantic_counterfactual_transframe__hypothesized_add_percept__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_counterfactual_transframe__hypothesized_add_percept__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "hypothesized_add_percept"), that);
+}
+
+f2ptr f2__semantic_counterfactual_transframe__hypothesized_add_percept__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_counterfactual_transframe, this);
+  assert_argument_type(semantic_counterfactual_transframe, that);
+  return raw__semantic_counterfactual_transframe__hypothesized_add_percept__remove(cause, this, that);
+}
+export_cefunk2(semantic_counterfactual_transframe__hypothesized_add_percept__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_counterfactual_transframe__hypothesized_remove_percept__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "hypothesized_remove_percept"), that);
+}
+
+f2ptr f2__semantic_counterfactual_transframe__hypothesized_remove_percept__add(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_counterfactual_transframe, this);
+  assert_argument_type(semantic_counterfactual_transframe, that);
+  return raw__semantic_counterfactual_transframe__hypothesized_remove_percept__add(cause, this, that);
+}
+export_cefunk2(semantic_counterfactual_transframe__hypothesized_remove_percept__add, this, that, 0, "");
+
+
+f2ptr raw__semantic_counterfactual_transframe__hypothesized_remove_percept__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "hypothesized_remove_percept"), that);
+}
+
+f2ptr f2__semantic_counterfactual_transframe__hypothesized_remove_percept__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_counterfactual_transframe, this);
+  assert_argument_type(semantic_counterfactual_transframe, that);
+  return raw__semantic_counterfactual_transframe__hypothesized_remove_percept__remove(cause, this, that);
+}
+export_cefunk2(semantic_counterfactual_transframe__hypothesized_remove_percept__remove, this, that, 0, "");
+
+
 f2ptr f2__semantic_counterfactual_transframe__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),         new__symbol(cause, "new"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__new")));}
@@ -137,6 +185,10 @@ f2ptr f2__semantic_counterfactual_transframe__primobject_type__new(f2ptr cause) 
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),             new__symbol(cause, "resource_activation_dependency"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__resource_activation_dependency__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "hypothesis_dependency"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__hypothesis_dependency__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "hypothesis_dependency"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__hypothesis_dependency__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "hypothesized_add_percept"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__hypothesized_add_percept__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "hypothesized_add_percept"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__hypothesized_add_percept__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),    new__symbol(cause, "hypothesized_remove_percept"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__hypothesized_remove_percept__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"), new__symbol(cause, "hypothesized_remove_percept"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_counterfactual_transframe"), new__symbol(cause, "semantic_counterfactual_transframe__hypothesized_remove_percept__remove")));}
   return this;
 }
 

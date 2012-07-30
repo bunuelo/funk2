@@ -87,7 +87,8 @@
 						  [wait-for-relationship block shape pyramid below gripper is-me t]
 						  [wait-to-call drop]
 						  [wait-for-time 8]
-						  ]]
+						  ]
+	`start_plan_operator]
   
   [have this create_physical_semantic_plan `[prog [wait-to-call move_right]
 						  [wait-for-relationship block shape pyramid below gripper is-me t]
@@ -97,7 +98,8 @@
 						  [wait-for-relationship block shape cube below gripper is-me t]
 						  [wait-to-call drop]
 						  [wait-for-time 8]
-						  ]]
+						  ]
+	`start_plan_operator]
   
   nil]
 

@@ -93,8 +93,8 @@
 [deftypefunk reflective_mind get physical_actions []
   [get [get this layer `deliberative] physical_actions]]
 
-[deftypefunk reflective_mind execute create_physical_semantic_plan [expression]
-  [have [get this layer `deliberative] create_physical_semantic_plan expression]]
+[deftypefunk reflective_mind execute create_physical_semantic_plan [expression start_plan_operator]
+  [have [get this layer `deliberative] create_physical_semantic_plan expression start_plan_operator]]
 
 [deftypefunk reflective_mind get physical_semantic_plans []
   [get [get this layer `deliberative] physical_semantic_plans]]
@@ -106,8 +106,8 @@
 [deftypefunk reflective_mind get plan_actions []
   [get [get this layer `deliberative] plan_actions]]
 
-[deftypefunk reflective_mind execute create_plan_semantic_plan [expression]
-  [have [get this layer `deliberative] create_plan_semantic_plan expression]]
+[deftypefunk reflective_mind execute create_plan_semantic_plan [expression start_plan_operator]
+  [have [get this layer `deliberative] create_plan_semantic_plan expression start_plan_operator]]
 
 [deftypefunk reflective_mind get plan_semantic_plans []
   [get [get this layer `deliberative] plan_semantic_plans]]

@@ -222,6 +222,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_plan_operator_activation/libf2e_semantic_plan_operator_activation.la \
                       extension/semantic_plan_operator_parallel/libf2e_semantic_plan_operator_parallel.la \
                       extension/semantic_plan_operator_sequence/libf2e_semantic_plan_operator_sequence.la \
+                      extension/semantic_plan_operator_suppression/libf2e_semantic_plan_operator_suppression.la \
                       extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.la \
                       extension/semantic_goal/libf2e_semantic_goal.la \
                       extension/semantic_goal_event/libf2e_semantic_goal_event.la \
@@ -302,6 +303,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_plan_operator_activation/.libs/libf2e_*.*                                         $(compile__lib__dir)
 	cp -fa extension/semantic_plan_operator_parallel/.libs/libf2e_*.*                                         $(compile__lib__dir)
 	cp -fa extension/semantic_plan_operator_sequence/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_plan_operator_suppression/.libs/libf2e_*.*                               $(compile__lib__dir)
 	cp -fa extension/semantic_event_knowledge_base/.libs/libf2e_*.*                               $(compile__lib__dir)
 	cp -fa extension/semantic_goal/.libs/libf2e_*.*                                                               $(compile__lib__dir)
 	cp -fa extension/semantic_goal_event/.libs/libf2e_*.*                                                   $(compile__lib__dir)
@@ -517,9 +519,10 @@ extension_semantic_physical_object_type_relation_event_libf2e_semantic_physical_
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                 = extension/semantic_plan_object/semantic_plan_object.c
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                           = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES         = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
-extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_SOURCES                                         = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
-extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_SOURCES                                         = extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
-extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_SOURCES                                         = extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
+extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_SOURCES                       = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
+extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_SOURCES                           = extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
+extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_SOURCES                           = extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_SOURCES                     = extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.c
 extension_semantic_planner_libf2e_semantic_planner_la_SOURCES                                                         = extension/semantic_planner/semantic_planner.c
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                                           = extension/semantic_proprioception/semantic_proprioception.c
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                             = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
@@ -736,6 +739,9 @@ extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel
 extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_semantic_planner_libf2e_semantic_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_planner_libf2e_semantic_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -906,9 +912,10 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object/"                                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_event/"                                                                                        >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"                                                                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_activation/"                                                                                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_parallel/"                                                                                               >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_sequence/"                                                                                               >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_activation/"                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_parallel/"                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_sequence/"                                                                                        >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_suppression/"                                                                                     >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioception/"                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_object/"                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"                                                                                    >> install-sh
@@ -1041,9 +1048,10 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_plan_object/*.f*                         $(chroot__install__extension__dir)semantic_plan_object/"                         >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_event/*.f*              $(chroot__install__extension__dir)semantic_plan_object_type_event/"              >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_relation_event/*.f*     $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"     >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_plan_operator_activation/*.f*              $(chroot__install__extension__dir)semantic_plan_operator_activation/"                     >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_plan_operator_parallel/*.f*              $(chroot__install__extension__dir)semantic_plan_operator_parallel/"                     >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_plan_operator_sequence/*.f*              $(chroot__install__extension__dir)semantic_plan_operator_sequence/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_operator_activation/*.f*            $(chroot__install__extension__dir)semantic_plan_operator_activation/"            >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_operator_parallel/*.f*              $(chroot__install__extension__dir)semantic_plan_operator_parallel/"              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_operator_sequence/*.f*              $(chroot__install__extension__dir)semantic_plan_operator_sequence/"              >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_operator_suppression/*.f*           $(chroot__install__extension__dir)semantic_plan_operator_suppression/"           >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioception/*.f*                      $(chroot__install__extension__dir)semantic_proprioception/"                      >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_object/*.f*               $(chroot__install__extension__dir)semantic_proprioceptual_object/"               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_orientation/*.f*          $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"          >> install-sh

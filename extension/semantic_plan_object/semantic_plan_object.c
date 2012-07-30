@@ -133,7 +133,7 @@ export_cefunk2(semantic_plan_object__deliberative_plan__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_plan_object__start_plan_operator(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "start_plan_operator"));
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"));
 }
 
 f2ptr f2__semantic_plan_object__start_plan_operator(f2ptr cause, f2ptr this) {
@@ -144,7 +144,7 @@ export_cefunk1(semantic_plan_object__start_plan_operator, this, 0, "");
 
 
 f2ptr raw__semantic_plan_object__start_plan_operator__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "start_plan_operator"), that);
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"), that);
 }
 
 f2ptr f2__semantic_plan_object__start_plan_operator__set(f2ptr cause, f2ptr this, f2ptr that) {

@@ -111,7 +111,6 @@ f2ptr f2__semantic_plan_operator_suppression__primobject_type__new(f2ptr cause) 
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_suppression"), new__symbol(cause, "semantic_plan_operator_suppression__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "resource"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_suppression"), new__symbol(cause, "semantic_plan_operator_suppression__resource")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "resource"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_operator_suppression"), new__symbol(cause, "semantic_plan_operator_suppression__resource__set")));}
-);}
   return this;
 }
 

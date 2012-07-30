@@ -162,7 +162,12 @@
 
 [defpackage deliberative_plan
   :packages [reflective_mind_core
-	     deliberative_action]
+	     deliberative_action
+	     semantic_plan_operator_sequence
+	     semantic_plan_operator_parallel
+	     semantic_plan_operator_activation
+	     semantic_plan_operator_suppression
+	     semantic_counterfactual_transframe]
    :sources ['deliberative_plan.fu2']]
 
 [defpackage deliberative_plan_agency

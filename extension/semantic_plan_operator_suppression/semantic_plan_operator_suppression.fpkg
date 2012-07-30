@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_physical_object
-  :documentation        'Basic physical knowledge for dealing with containment and other semantic physical relationships.'
+[defpackage semantic_plan_operator_suppression
+  :documentation        'Basic plan operator knowledge.'
    :packages            [semantic_object]
-    :sources            ['semantic_physical_object-core.fu2']
-     :dynamic_libraries ['libf2e_semantic_physical_object.so']]
+    :sources            ['semantic_plan_operator_suppression-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_plan_operator_suppression.so']]
 
-[defcore semantic_physical_object 'libf2e_semantic_physical_object.so']
+[defcore semantic_plan_operator_suppression 'libf2e_semantic_plan_operator_suppression.so']
 

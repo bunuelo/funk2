@@ -138,6 +138,8 @@ void f2__initialize() {
 #define u64_large_prime ((u64)12764787846358441471ull)
 
 void funk2__init(funk2_t* this, int argc, char** argv) {
+  setenv("UBUNTU_MENUPROXY", "0", 0);
+  
   f2__status__initialize();
   
   this->exit_now = boolean__false;

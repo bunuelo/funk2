@@ -261,13 +261,14 @@
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]]
+    [= debug t]
     [while t
       [print 'translate_physical_knowledge_to_physical_type_knowledge_resource: waiting for event.']
       [let [[event [have physical_knowledge_iterator wait_for_current]]]
 	[print 'translate_physical_knowledge_to_physical_type_knowledge_resource: got event!']
 	[if [not [null event]]
-	    [prog [if debug `[terminal_format standard-terminal '\n  translate physical->physical_type event: ' event]]
-		  [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource: event type "' [type event] '"']
+	    [prog [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource: event type "' [type event] '"']
+		  [if debug [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource event: ' event]]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-time           [get event time]]

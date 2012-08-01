@@ -49,3 +49,5 @@
 				     [cons user_command nil]]]]
 
 
+[boot-add_user_command `[setenv 'UBUNTU_MENUPROXY' '0' 0]]
+

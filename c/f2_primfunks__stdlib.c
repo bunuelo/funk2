@@ -24,11 +24,11 @@
 // int setenv(const char *name, const char *value, int overwrite);
 
 f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
-  u64   name__utf8_length = f2string__utf8_length(intersperse_string, cause);
-  char* name__utf8_str    = (char*)from_ptr(f2__malloc((name__utf8_length + 1) * sizeof(char)));
+  u64 name__utf8_length = f2string__utf8_length(intersperse_string, cause);
+  u8* name__utf8_str    = (u8*)from_ptr(f2__malloc((name__utf8_length + 1) * sizeof(u8)));
   raw__string__utf8_str_copy(cause, name, name__utf8_str);
-  u64   value__utf8_length = f2string__utf8_length(intersperse_string, cause);
-  char* value__utf8_str    = (char*)from_ptr(f2__malloc((value__utf8_length + 1) * sizeof(char)));
+  u64 value__utf8_length = f2string__utf8_length(intersperse_string, cause);
+  u8* value__utf8_str    = (u8*)from_ptr(f2__malloc((value__utf8_length + 1) * sizeof(u8)));
   raw__string__utf8_str_copy(cause, value, value__utf8_str);
   int overwrite__i = f2integer__i(overwrite, cause);
   int result = setenv(name__utf8_str, value__utf8_str, overwrite__i);

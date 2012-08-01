@@ -819,6 +819,7 @@
 			  [cycle_trigger [new fiber_trigger]]
 			  ]
   [new []
+       [setenv 'UBUNTU_MENUPROXY' '0' 0]
        [have initialize_mutex lock]
        [= fiber [fiber [funk []
 			     [cause-define cause-name `mindmon]

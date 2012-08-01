@@ -23,7 +23,7 @@
 
 // int setenv(const char *name, const char *value, int overwrite);
 
-f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
+f2ptr raw__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
   u64 name__utf8_length = raw__string__utf8_length(cause, name);
   u8* name__utf8_str    = (u8*)from_ptr(f2__malloc((name__utf8_length + 1) * sizeof(u8)));
   raw__string__utf8_str_copy(cause, name, name__utf8_str);
@@ -35,6 +35,13 @@ f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
   f2__free(to_ptr(name__utf8_str));
   f2__free(to_ptr(value__utf8_str));
   return f2integer__new(cause, result);
+}
+
+f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
+  assert_argument_type(string,  name);
+  assert_argument_type(string,  value);
+  assert_argument_type(integer, overwrite);
+  return raw__setenv(cause, name, value, overwrite);
 }
 def_pcfunk3(setenv, name, value, overwrite,
 	    "",

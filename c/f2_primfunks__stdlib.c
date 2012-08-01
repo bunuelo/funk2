@@ -31,7 +31,7 @@ f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
   u8* value__utf8_str    = (u8*)from_ptr(f2__malloc((value__utf8_length + 1) * sizeof(u8)));
   raw__string__utf8_str_copy(cause, value, value__utf8_str);
   int overwrite__i = f2integer__i(overwrite, cause);
-  int result = setenv(name__utf8_str, value__utf8_str, overwrite__i);
+  int result = setenv((char*)name__utf8_str, (char*)value__utf8_str, overwrite__i);
   f2__free(to_ptr(name__utf8_str));
   f2__free(to_ptr(value__utf8_str));
   return f2integer__new(cause, result);

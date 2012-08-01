@@ -26,7 +26,7 @@
 f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
   return nil;
 }
-def_pcfunk3(f2__setenv, name, value, overwrite,
+def_pcfunk3(setenv, name, value, overwrite,
 	    "",
 	    return f2__setenv(this_cause, name, value, overwrite));
 
@@ -34,11 +34,11 @@ def_pcfunk3(f2__setenv, name, value, overwrite,
 // **
 
 void f2__primfunks__stdlib__defragment__fix_pointers() {
-  f2__primcfunk__init__defragment__fix_pointers(f2__setenv);
+  f2__primcfunk__init__defragment__fix_pointers(setenv);
 }
 
 void f2__primfunks__stdlib__reinitialize_globalvars() {
-  f2__primcfunk__init(f2__setenv);
+  f2__primcfunk__init(setenv);
 }
 
 void f2__primfunks__stdlib__initialize() {

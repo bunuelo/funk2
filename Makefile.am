@@ -430,6 +430,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primfunks__fcntl.c \
   c/f2_primfunks__ioctl.c \
   c/f2_primfunks__locale.c \
+  c/f2_primfunks__stdlib.c \
   c/f2_processor.c \
   c/f2_processor_mutex.c \
   c/f2_processor_thread.c \

@@ -88,6 +88,7 @@ void f2__initialize() {
   f2__funk2_node__initialize();
   f2__peer_command_server__initialize();
   f2__primfunks__locale__initialize();
+  f2__primfunks__stdlib__initialize();
   f2__ansi__initialize();
   f2__termios__initialize();
   f2__ptypes_object_slots__initialize();

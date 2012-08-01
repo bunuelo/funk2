@@ -267,6 +267,7 @@
 	[print 'translate_physical_knowledge_to_physical_type_knowledge_resource: got event!']
 	[if [not [null event]]
 	    [prog [if debug `[terminal_format standard-terminal '\n  translate physical->physical_type event: ' event]]
+		  [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource: event type "' [type event] '"']
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-time           [get event time]]

@@ -60,15 +60,16 @@
     [let [[done nil]
 	  [iter sorted_timer_triggers]
 	  [prev nil]]
-      [while [not done]
+      [while iter
 	[let [[first_timer_trigger [if iter [car iter]]]]
 	  [if [or [null first_timer_trigger]
 		  [< wait_trigger_time [get first_timer_trigger trigger_time]]]
 	      [prog [if prev
 			[set prev cdr [cons new_timer_trigger iter]]
 		      [= sorted_timer_triggers [cons new_timer_trigger iter]]]
-		    [= done t]]
-	    [= prev iter]]]]]
+		    [= iter nil]]
+	    [prog [= prev iter]
+		  [= iter [cdr iter]]]]]]]
     
     [let [[fiber [this-fiber]]]
       [fiber [funk []

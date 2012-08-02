@@ -32,7 +32,7 @@ f2ptr raw__semantic_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name")) == nil) {
     f2ptr phenomenal_name = f2__gensym(cause, new__string(cause, "semantic_object"));
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), phenomenal_name);
   }
   return this;
 }

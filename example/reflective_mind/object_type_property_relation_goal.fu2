@@ -214,7 +214,7 @@
 	       key_type
 	       key
 	       semantic_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nadding type goal: ' [get this as-now_true_string]]
+	  [prog [terminal_format standard-terminal '\nstarting type goal event: ' [get this as-now_true_string]]
 		[let [[semantic_goal_event [new semantic_goal_event [get semantic_object_type_event_source semantic_realm] event_phenomenal_name phenomenal_name]]]
 		  [set semantic_goal_event absolute_start_time [new semantic_time event_time]]
 		  [have [get this knowledge_base] add_semantic_frame semantic_goal_event]
@@ -233,7 +233,7 @@
 	       key_type
 	       key
 	       semantic_object_type_event_target]
-	  [prog [terminal_format standard-terminal '\nremoving type goal: ' [get this as-no_longer_true_string]]
+	  [prog [terminal_format standard-terminal '\nending type goal event: ' [get this as-no_longer_true_string]]
 		[let [[semantic_goal_event current_goal_event]]
 		  [set semantic_goal_event absolute_end_time [new semantic_time event_time]]
 		  [= current_goal_event nil]

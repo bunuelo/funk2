@@ -132,7 +132,8 @@
 				      [agent_directory            `uninitialized]
 				      [movie_export_directory     `uninitialized]
 				      [cameras_enabled            `uninitialized]
-				      [record_movie               `uninitialized]]
+				      [record_movie               `uninitialized]
+				      [movie_resolution           `uninitialized]]
   [new []
        [have this create_default_directories]
        [have this fix_invalid_with_defaults]]]
@@ -149,7 +150,8 @@
   [if [or [not [get this contains `agent_directory]]            [eq `uninitialized [have this lookup `agent_directory]]]            [have this add `agent_directory            [pathname-concat [getenv 'HOME'] 'MindMon Data/Agents']]]
   [if [or [not [get this contains `movie_export_directory]]     [eq `uninitialized [have this lookup `movie_export_directory]]]     [have this add `movie_export_directory     [pathname-concat [getenv 'HOME'] 'MindMon Data/Movies']]]
   [if [or [not [get this contains `cameras_enabled]]            [eq `uninitialized [have this lookup `cameras_enabled]]]            [have this add `cameras_enabled            t]]
-  [if [or [not [get this contains `record_movie]]               [eq `uninitialized [have this lookup `record_movie]]]               [have this add `record_movie               nil]]]
+  [if [or [not [get this contains `record_movie]]               [eq `uninitialized [have this lookup `record_movie]]]               [have this add `record_movie               nil]]
+  [if [or [not [get this contains `movie_resolution]]           [eq `uninitialized [have this lookup `movie_resolution]]]           [have this add `movie_resolution           1]]]
 
 
 [deftypefunk mindmon_preferences execute save [filename]
@@ -195,6 +197,10 @@
 					    movie_export_directory__title_label
 					    movie_export_directory__select_button
 					    movie_export_directory__data_label
+					    
+					    movie_resolution__hbox
+					    movie_resolution__title_label
+					    movie_resolution__data_entry
 					    
 					    button__hbox
 					    cancel_button
@@ -305,6 +311,15 @@
 		     ]]
 	     nil]
        
+       [let [[movie_resolution [get [get mindmon preferences] movie_resolution]]]
+	 [= movie_resolution__hbox [gtk-hbox-new 0]]
+	 [= movie_resolution__title_label [gtk-label-new 'Default Movie Resolution in New Projects: ']]
+	 [= movie_resolution__data_entry  [gtk-entry-new]]
+	 [set movie_resolution__data_entry text movie_resolution]
+	 [have movie_resolution__hbox pack_start movie_resolution__title_label   nil nil 0]
+	 [have movie_resolution__hbox pack_start movie_resolution__data_entry    nil nil 0]
+	 [have vbox pack_start movie_resolution__hbox nil nil 0]]
+       
        [= button__hbox [gtk-hbox-new 0]]
        [= cancel_button [gtk-button-new_with_label 'Cancel']]
        [= ok_button     [gtk-button-new_with_label 'OK']]
@@ -326,6 +341,12 @@
 		     [set preferences movie_export_directory     movie_export_directory]
 		     [set preferences cameras_enabled            [get cameras_enabled__check_button active]]
 		     [set preferences record_movie               [get record_movie__check_button active]]
+		     [set preferences movie_resolution           [let [[i [shelter [get [string-read [get movie_resolution__data_entry text]] as-integer]]]]
+								   [if [is-type `bug i]
+								       1
+								     [if [< i 0]
+									 [- i]
+								       i]]]]
 		     [set mindmon preferences preferences]
 		     [have mindmon save_preferences]]
 		   [have window destroy]]
@@ -461,7 +482,7 @@
        [= movie_resolution_entry [gtk-entry-new]]
        [have entry_hbox pack_start movie_resolution_label nil nil 0]
        [have entry_hbox pack_start movie_resolution_entry t t 0]
-       [set this movie_resolution 4]
+       [set this movie_resolution [get [get mindmon preferences] movie_resolution]]
        [have movie_resolution_entry request_size 40 16]
        
        [= step_delay_label [gtk-label-new 'Step Delay: ']]

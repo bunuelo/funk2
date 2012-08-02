@@ -318,60 +318,62 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [if [is-type `semantic_object event-semantic_frame]
-										     [prog [let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [if [is-type `semantic_plan_object event-semantic_frame]
-																													   [get event-semantic_frame deliberative_plan]
-																													 nil]]]
-												 [event-value-copy          [if [is-type `semantic_object event-value]
-																[get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [if [is-type `semantic_plan_object event-value]
-																											     [get event-value deliberative_plan]
-																											   nil]]
-															      event-value]]]
-											     'should use copy after this point'
-											     
-											     [cond [[translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
-												    [let [[event-semantic_plan_object_type_event [get this semantic_plan_object_type_event_with_property_type
-																		      [get event-semantic_frame-copy plan_object_type]
-																		      event-key_type
-																		      event-key
-																		      event-value-copy]]]
-												      
-												      [have event-semantic_frame-copy map_type_key_values
-													    [funk [slot_type slot_key slot_value]
-														  [if [is-type `semantic_plan_object slot_value]
-														      [mapc [funk [forward_semantic_plan_object_type_event]
-																  [have this remove_type_relation event-time event-semantic_plan_object_type_event slot_type slot_key forward_semantic_plan_object_type_event]]
-															    [get this all_semantic_plan_object_type_events slot_value]]]]]
-												      
-												      [have event-semantic_frame-copy map_reverse_type_key_values
-													    [funk [slot_type slot_key slot_value]
-														  [if [is-type `semantic_plan_object slot_value]
-														      [mapc [funk [backward_semantic_plan_object_type_event]
-																  [have this remove_type_relation event-time backward_semantic_plan_object_type_event slot_type slot_key event-semantic_plan_object_type_event]]
-															    [get this all_semantic_plan_object_type_events slot_value]]]]]
-												      
-												      ]]
-												   [[and [eq event-key_type `preposition] [is-type `semantic_plan_object event-value-copy]]
-												    [let []
-												      [mapc [funk [event-semantic_plan_object_type_event]
-														  [mapc [funk [event-value-semantic_plan_object_type_event]
-															      [have this remove_type_relation event-time event-semantic_plan_object_type_event event-key_type event-key event-value-semantic_plan_object_type_event]]
-															[get this all_semantic_plan_object_type_events event-value-copy]]]
-													    [get this all_semantic_plan_object_type_events event-semantic_frame-copy]]
-												      ]]
-												   ]
-											     
-											     'remove from event-semantic_frame-copy'
-											     [if debug
-												 [terminal_format standard-terminal
-														  '\nremoving plan type ' [get event-semantic_frame-copy phenomenal_name]
-														  ' '                         event-key_type
-														  ' '                         event-key
-														  ' '                         [if [is-type `semantic_plan_object event-value-copy]
-																		  [get event-value-copy phenomenal_name]
-																		event-value-copy]]]
-											     [have event-semantic_frame-copy remove event-key_type event-key event-value-copy]
-											     ]]]
+										 [cond [[and [eq event-key_type `property] [eq event-key `plan_object_type]]
+											[prog ]]
+										       [[is-type `semantic_object event-semantic_frame]
+											[prog [let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [if [is-type `semantic_plan_object event-semantic_frame]
+																													      [get event-semantic_frame deliberative_plan]
+																													    nil]]]
+												    [event-value-copy          [if [is-type `semantic_object event-value]
+																   [get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [if [is-type `semantic_plan_object event-value]
+																												[get event-value deliberative_plan]
+																											      nil]]
+																 event-value]]]
+												'should use copy after this point'
+												
+												[cond [[translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
+												       [let [[event-semantic_plan_object_type_event [get this semantic_plan_object_type_event_with_property_type
+																			 [get event-semantic_frame-copy plan_object_type]
+																			 event-key_type
+																			 event-key
+																			 event-value-copy]]]
+													 
+													 [have event-semantic_frame-copy map_type_key_values
+													       [funk [slot_type slot_key slot_value]
+														     [if [is-type `semantic_plan_object slot_value]
+															 [mapc [funk [forward_semantic_plan_object_type_event]
+																     [have this remove_type_relation event-time event-semantic_plan_object_type_event slot_type slot_key forward_semantic_plan_object_type_event]]
+															       [get this all_semantic_plan_object_type_events slot_value]]]]]
+													 
+													 [have event-semantic_frame-copy map_reverse_type_key_values
+													       [funk [slot_type slot_key slot_value]
+														     [if [is-type `semantic_plan_object slot_value]
+															 [mapc [funk [backward_semantic_plan_object_type_event]
+																     [have this remove_type_relation event-time backward_semantic_plan_object_type_event slot_type slot_key event-semantic_plan_object_type_event]]
+															       [get this all_semantic_plan_object_type_events slot_value]]]]]
+													 
+													 ]]
+												      [[and [eq event-key_type `preposition] [is-type `semantic_plan_object event-value-copy]]
+												       [let []
+													 [mapc [funk [event-semantic_plan_object_type_event]
+														     [mapc [funk [event-value-semantic_plan_object_type_event]
+																 [have this remove_type_relation event-time event-semantic_plan_object_type_event event-key_type event-key event-value-semantic_plan_object_type_event]]
+															   [get this all_semantic_plan_object_type_events event-value-copy]]]
+													       [get this all_semantic_plan_object_type_events event-semantic_frame-copy]]
+													 ]]
+												      ]
+												
+												'remove from event-semantic_frame-copy'
+												[if debug
+												    [terminal_format standard-terminal
+														     '\nremoving plan type ' [get event-semantic_frame-copy phenomenal_name]
+														     ' '                         event-key_type
+														     ' '                         event-key
+														     ' '                         [if [is-type `semantic_plan_object event-value-copy]
+																		     [get event-value-copy phenomenal_name]
+																		   event-value-copy]]]
+												[have event-semantic_frame-copy remove event-key_type event-key event-value-copy]
+												]]]]
 										 ]]
 			  [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `end_of_plan_changes]]          [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '

@@ -31,9 +31,7 @@
        [let [[end_of_physical_type_changes_trigger [get [get this resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	 [fiber [funk []
 		      [while t
-			[print 'reflective_mind: waiting for end_of_physical_type_changes_trigger.']
 			[wait-for-trigger end_of_physical_type_changes_trigger]
-			[print 'reflective_mind: triggering ready_for_physical_world_step_trigger.']
 			[have [get this ready_for_physical_world_step_trigger] trigger]]]
 		nil]]
        

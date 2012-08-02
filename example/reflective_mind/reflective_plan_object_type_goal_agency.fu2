@@ -252,7 +252,7 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [if [and [eq event-key_type `property] [eq event-key `plan_object_type]]
+										 `[if [and [eq event-key_type `property] [eq event-key `plan_object_type]]
 										     [prog 'create semantic_plan_object_type_event.'
 											   [get this semantic_plan_object_type_event event-value]
 											   [have event-semantic_frame map_type_key_values

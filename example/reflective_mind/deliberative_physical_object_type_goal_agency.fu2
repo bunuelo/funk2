@@ -261,14 +261,10 @@
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]]
-    [= debug t]
     [while t
-      [print 'translate_physical_knowledge_to_physical_type_knowledge_resource: waiting for event.']
       [let [[event [have physical_knowledge_iterator wait_for_current]]]
-	[print 'translate_physical_knowledge_to_physical_type_knowledge_resource: got event!']
 	[if [not [null event]]
-	    [prog [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource: event type "' [type event] '"']
-		  [if debug [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource event: ' event]]
+	    [prog [if debug [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource event: ' event]]
 		  [let [[event_type [get event event_type]]]
 		    [cond [[and [is-type `semantic_frame_event event]
 				[eq event_type `add]]                          [let [[event-time           [get event time]]
@@ -398,11 +394,8 @@
 										 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 												  'end_of_physical_changes found: added end_of_physical_type_changes to physical_type_knowledge trace events.']
 										 [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
-										 [print 'translate_physical_knowledge_to_physical_type_knowledge_resource: debug 0.']
 										 [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_type_changes nil]]
-										 [print 'translate_physical_knowledge_to_physical_type_knowledge_resource: triggering end_of_physical_type_changes_trigger.']
 										 [have end_of_physical_type_changes_trigger trigger]
-										 [print 'translate_physical_knowledge_to_physical_type_knowledge_resource: debug 1.']
 										 nil]]
 			  ]]]]
 	[have physical_knowledge_iterator increment]]]]]

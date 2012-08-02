@@ -315,7 +315,7 @@
 	 [= movie_resolution__hbox [gtk-hbox-new 0]]
 	 [= movie_resolution__title_label [gtk-label-new 'Default Movie Resolution in New Projects: ']]
 	 [= movie_resolution__data_entry  [gtk-entry-new]]
-	 [set movie_resolution__data_entry text movie_resolution]
+	 [set movie_resolution__data_entry text [get movie_resolution as-string]]
 	 [have movie_resolution__hbox pack_start movie_resolution__title_label   nil nil 0]
 	 [have movie_resolution__hbox pack_start movie_resolution__data_entry    nil nil 0]
 	 [have vbox pack_start movie_resolution__hbox nil nil 0]]

@@ -260,9 +260,9 @@
 													  [if [is-type `symbol slot_value]
 													      [get this semantic_plan_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
 											      ]]
-										       [[is-type `semantic_plan_object event-semantic_frame]
+										       [[is-type `semantic_object event-semantic_frame]
 											[prog [let [[event-semantic_frame-copy              [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [get event-semantic_frame deliberative_plan]]]
-												    [event-value-copy                       [if [is-type `semantic_plan_object event-value]
+												    [event-value-copy                       [if [is-type `semantic_object event-value]
 																		[get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [get event-value deliberative_plan]]
 																	      event-value]]]
 												[if debug [terminal_format standard-terminal
@@ -314,9 +314,9 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [if [is-type `semantic_plan_object event-semantic_frame]
+										 [if [is-type `semantic_object event-semantic_frame]
 										     [prog [let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [get event-semantic_frame deliberative_plan]]]
-												 [event-value-copy          [if [is-type `semantic_plan_object event-value]
+												 [event-value-copy          [if [is-type `semantic_object event-value]
 																[get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [get event-value deliberative_plan]]
 															      event-value]]]
 											     'should use copy after this point'

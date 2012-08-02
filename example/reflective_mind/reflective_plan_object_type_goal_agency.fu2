@@ -261,9 +261,9 @@
 													   [get this semantic_plan_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
 											   ]]
 										 [if [is-type `semantic_plan_object event-semantic_frame]
-										     [prog [let [[event-semantic_frame-copy              [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame plan_object_type] [get event-semantic_frame deliberative_plan]]]
+										     [prog [let [[event-semantic_frame-copy              [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [get event-semantic_frame deliberative_plan]]]
 												 [event-value-copy                       [if [is-type `semantic_plan_object event-value]
-																	     [get this semantic_plan_object_copy [get event-value phenomenal_name] [get event-value plan_object_type] [get event-value deliberative_plan]]
+																	     [get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [get event-value deliberative_plan]]
 																	   event-value]]]
 											     [if debug [terminal_format standard-terminal
 															'\nadding plan type ' [get event-semantic_frame-copy phenomenal_name]
@@ -315,9 +315,9 @@
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
 										 [if [is-type `semantic_plan_object event-semantic_frame]
-										     [prog [let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame plan_object_type] [get event-semantic_frame deliberative_plan]]]
+										     [prog [let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [get event-semantic_frame deliberative_plan]]]
 												 [event-value-copy          [if [is-type `semantic_plan_object event-value]
-																[get this semantic_plan_object_copy [get event-value phenomenal_name] [get event-value plan_object_type] [get event-value deliberative_plan]]
+																[get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [get event-value deliberative_plan]]
 															      event-value]]]
 											     'should use copy after this point'
 											     

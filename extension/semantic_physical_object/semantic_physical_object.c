@@ -104,6 +104,17 @@ f2ptr f2__semantic_physical_object__physical_object_type__set(f2ptr cause, f2ptr
 export_cefunk2(semantic_physical_object__physical_object_type__set, this, that, 0, "");
 
 
+f2ptr raw__semantic_physical_object__preposition__on__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"));
+}
+
+f2ptr f2__semantic_physical_object__preposition__on__lookup_set(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_physical_object, this);
+  return raw__semantic_physical_object__preposition__on__lookup_set(cause, this);
+}
+export_cefunk1(semantic_physical_object__preposition__on__lookup_set, this, 0, "Returns the set of preposition-ons.");
+
+
 f2ptr raw__semantic_physical_object__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
 }
@@ -126,6 +137,17 @@ f2ptr f2__semantic_physical_object__preposition__on__remove(f2ptr cause, f2ptr t
   return raw__semantic_physical_object__preposition__on__remove(cause, this, that);
 }
 export_cefunk2(semantic_physical_object__preposition__on__remove, this, that, 0, "");
+
+
+f2ptr raw__semantic_physical_object__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"));
+}
+
+f2ptr f2__semantic_physical_object__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_physical_object, this);
+  return raw__semantic_physical_object__preposition__in__lookup_set(cause, this);
+}
+export_cefunk1(semantic_physical_object__preposition__in__lookup_set, this, 0, "Returns the set of preposition-ins.");
 
 
 f2ptr raw__semantic_physical_object__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
@@ -159,8 +181,10 @@ f2ptr f2__semantic_physical_object__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__physical_object_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__physical_object_type__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__in__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__in__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__in__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__on__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__on__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__preposition__on__remove")));}
   return this;

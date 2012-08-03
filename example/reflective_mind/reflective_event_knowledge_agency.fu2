@@ -205,14 +205,14 @@
 												      [set action_sequence absolute_end_time transframe_end_time]
 												      [have this action_sequence-remove resource]
 												      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														       'resource, ' name ', execution finish has reached reflective knowledge layer, so starting fiber to learn transframe when the time is appropriate.']
+														       'resource, ' [get resource resource_name] ', execution finish has reached reflective knowledge layer, so starting fiber to learn transframe when the time is appropriate.']
 												      [fiber [funk []
 														   [have [get [get this mind] physical_type_knowledge_reflective_timer]
 															 wait_until_after [new semantic_time event-time]]
 														   
 														   'Handle learning of transframe here.'
 														   [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																    'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and reflective physical_type knowledge time has also caught up.'
+																    'resource, ' [get resource resource_name] ', execution finish has occurred in reflective reflective knowledge time and reflective physical_type knowledge time has also caught up.'
 																    '\n  All information is ready for learning physical_type transframe for resource.']
 														   
 														   [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]

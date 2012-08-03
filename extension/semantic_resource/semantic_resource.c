@@ -31,7 +31,8 @@ f2ptr raw__semantic_resource__type_create(f2ptr cause, f2ptr this, f2ptr semanti
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "active")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "active"), nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "active"),        nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "resource_name"), nil);
   }
   return this;
 }
@@ -104,6 +105,28 @@ f2ptr f2__semantic_resource__active__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_resource__active__set(cause, this, that);
 }
 export_cefunk2(semantic_resource__active__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_resource__resource_name(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "resource_name"));
+}
+
+f2ptr f2__semantic_resource__resource_name(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_resource, this);
+  return raw__semantic_resource__resource_name(cause, this);
+}
+export_cefunk1(semantic_resource__resource_name, this, 0, "");
+
+
+f2ptr raw__semantic_resource__resource_name__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "resource_name"), that);
+}
+
+f2ptr f2__semantic_resource__resource_name__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_resource, this);
+  return raw__semantic_resource__resource_name__set(cause, this, that);
+}
+export_cefunk2(semantic_resource__resource_name__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_resource__activating__lookup_set(f2ptr cause, f2ptr this) {
@@ -253,6 +276,8 @@ f2ptr f2__semantic_resource_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "active"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__active")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "active"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__active__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "resource_name"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__resource_name")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "resource_name"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__resource_name__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "activating"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__activating__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "activating"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__activating__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "activating"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource"), new__symbol(cause, "semantic_resource__activating__remove")));}

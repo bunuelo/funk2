@@ -262,7 +262,8 @@
     [if [null resource_semantic_frame]
 	[prog [= resource_semantic_frame [new semantic_resource [get [get this mind] semantic_realm]]]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame `[resource ,[get this name]] resource_semantic_frame]
-	      [set resource_semantic_frame phenomenal_name [get this name]]]]
+	      [set resource_semantic_frame phenomenal_name [get this name]]
+	      [set resource_semantic_frame resource_name   [get this name]]]]
     resource_semantic_frame]]
 
 [deftypefunk resource get as-english_conslist []

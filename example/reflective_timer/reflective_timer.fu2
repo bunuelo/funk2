@@ -48,7 +48,8 @@
 		[if sorted_timer_triggers
 		    [let [[first_timer_trigger [car sorted_timer_triggers]]]
 		      [if [> current_time [get first_timer_trigger trigger_time]]
-			  [prog [have [get first_timer_trigger trigger] trigger]
+			  [prog [print 'reflective_timer: triggering!']
+				[have [get first_timer_trigger trigger] trigger]
 				[= keep_looping t]
 				[= sorted_timer_triggers [cdr sorted_timer_triggers]]]]]]]]]]
   [have mutate_mutex unlock]]
@@ -57,17 +58,17 @@
   [let [[new_timer_trigger [new reflective_timer_trigger wait_trigger_time [new fiber_trigger]]]]
     [have mutate_mutex lock]
     
-    [let [[done nil]
-	  [iter sorted_timer_triggers]
-	  [prev nil]]
-      [while iter
+    [let [[not_done t]
+	  [iter     sorted_timer_triggers]
+	  [prev     nil]]
+      [while not_done
 	[let [[first_timer_trigger [if iter [car iter]]]]
 	  [if [or [null first_timer_trigger]
 		  [< wait_trigger_time [get first_timer_trigger trigger_time]]]
 	      [prog [if prev
 			[set prev cdr [cons new_timer_trigger iter]]
 		      [= sorted_timer_triggers [cons new_timer_trigger iter]]]
-		    [= iter nil]]
+		    [= not_done nil]]
 	    [prog [= prev iter]
 		  [= iter [cdr iter]]]]]]]
     

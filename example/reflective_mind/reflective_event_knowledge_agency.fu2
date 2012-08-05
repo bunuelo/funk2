@@ -209,7 +209,7 @@
 															 'resource, ' [get resource name] ', execution finish has reached reflective knowledge layer, so starting fiber to learn transframe when the time is appropriate.']
 													[fiber [funk []
 														     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																      'resource, ' [get resource name] ', waiting for physical type knowledge stream to reach ' [new semantic_time event-time] '.']
+																      'resource, ' [get resource name] ', waiting for physical type knowledge stream to reach ' [get event-time date_and_time_string] '.']
 														     [have [get [get this mind] physical_type_knowledge_reflective_timer]
 															   wait_until_after [new semantic_time event-time]]
 														     

@@ -274,6 +274,6 @@
   [conslist-as-english_string [get this as-english_conslist]]]
 
 'defined in traced_resource'
-[deftypefunk resource execute know_of_reflective_execution_finish [transframe_start_time transframe_end_time]
+[deftypefunk resource execute know_of_completed_reflective_execution_event [transframe_start_time transframe_end_time]
   nil]
 

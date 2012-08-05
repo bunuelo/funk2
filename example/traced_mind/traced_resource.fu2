@@ -97,13 +97,22 @@
     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		     'resource, ' name ', execution finish has reached reflective knowledge layer, so starting fiber to learn transframe when the time is appropriate.']
     [fiber [funk []
-		 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-				  'resource, ' name ', waiting for physical type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
-		 [have [get [get this mind] physical_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
+		 
+		 [mapc [funk [simulate_knowledge_base_name]
+			     [cond [[eq simulate_knowledge_base_name `physical_type_knowledge] [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+														      'resource, ' name ', waiting for physical type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
+												     [have [get [get this mind] physical_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
+												     ]]
+				   [[eq simulate_knowledge_base_name `plan_type_knowledge]     [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+														      'resource, ' name ', waiting for plan type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
+												     [have [get [get this mind] plan_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
+												     ]]
+				   ]]
+		       simulate_knowledge_base_names]
 		 
 		 'Handle learning of transframe here.'
 		 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-				  'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and reflective physical_type knowledge time has also caught up.'
+				  'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and simulate knowledge-base times have also caught up.'
 				  '\n  All information is ready for learning physical_type transframe for resource.']
 		 
 		 [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]

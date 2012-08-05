@@ -54,3 +54,6 @@
 [deftypefunk reflective_layer get deliberative_semantic_action [phenomenal_name]
   [get [get this agency `reflective_event_knowledge] deliberative_semantic_action phenomenal_name]]
 
+[deftypefunk reflective_layer get plan_type_knowledge_reflective_timer []
+  [get [get this agency `reflective_event_knowledge] plan_type_knowledge_reflective_timer]]
+

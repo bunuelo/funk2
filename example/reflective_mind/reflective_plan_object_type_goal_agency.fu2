@@ -37,6 +37,9 @@
   [have [get this mind] create_knowledge_event_stream_iterator `plan_knowledge `plan_knowledge->plan_type_knowledge]
   ]
 
+[deftypefunk reflective_plan_object_type_goal_agency get plan_type_knowledge_reflective_timer []
+  [get [get this resource `translate_plan_knowledge_to_plan_type_knowledge] plan_type_knowledge_reflective_timer]]
+
 [deftypefunk reflective_plan_object_type_goal_agency execute create_plan_type_relationship_goal [source_plan_object_type key_type key target_plan_object_type]
   ]
 
@@ -67,7 +70,8 @@
 
 [deframe translate_plan_knowledge_to_plan_type_knowledge_resource [reflective_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
 											 [semantic_plan_object_copy_mutex       [new mutex]]
-											 [goals                                     nil]]
+											 [goals                                 nil]
+											 [plan_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
   [new []
        [construct reflective_resource `translate_plan_knowledge_to_plan_type_knowledge
 		  [funk []

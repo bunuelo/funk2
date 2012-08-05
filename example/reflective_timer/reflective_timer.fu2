@@ -54,30 +54,31 @@
   [have mutate_mutex unlock]]
 
 [deftypefunk reflective_timer execute wait_until_after [wait_trigger_time]
-  [let [[new_timer_trigger [new reflective_timer_trigger wait_trigger_time [new fiber_trigger]]]]
-    [have mutate_mutex lock]
-    
-    [let [[not_done t]
-	  [iter     sorted_timer_triggers]
-	  [prev     nil]]
-      [while not_done
-	[let [[first_timer_trigger [if iter [car iter]]]]
-	  [if [or [null first_timer_trigger]
-		  [< wait_trigger_time [get first_timer_trigger trigger_time]]]
-	      [prog [if prev
-			[set prev cdr [cons new_timer_trigger iter]]
-		      [= sorted_timer_triggers [cons new_timer_trigger iter]]]
-		    [= not_done nil]]
-	    [prog [= prev iter]
-		  [= iter [cdr iter]]]]]]]
-    
-    [let [[fiber [this-fiber]]]
-      [fiber [funk []
-		   [while [global_scheduler-contains_active_fiber fiber]
-		     [millisleep 100]]
-		   [have mutate_mutex unlock]]
-	     []]]
-    
-    [wait-for-trigger [get new_timer_trigger trigger]]]]
+  [have mutate_mutex lock]
+  [if [> current_time wait_trigger_time]
+      [have mutate_mutex unlock]
+    [let [[new_timer_trigger [new reflective_timer_trigger wait_trigger_time [new fiber_trigger]]]]
+      [let [[not_done t]
+	    [iter     sorted_timer_triggers]
+	    [prev     nil]]
+	[while not_done
+	  [let [[first_timer_trigger [if iter [car iter]]]]
+	    [if [or [null first_timer_trigger]
+		    [< wait_trigger_time [get first_timer_trigger trigger_time]]]
+		[prog [if prev
+			  [set prev cdr [cons new_timer_trigger iter]]
+			[= sorted_timer_triggers [cons new_timer_trigger iter]]]
+		      [= not_done nil]]
+	      [prog [= prev iter]
+		    [= iter [cdr iter]]]]]]]
+      
+      [let [[fiber [this-fiber]]]
+	[fiber [funk []
+		     [while [global_scheduler-contains_active_fiber fiber]
+		       [millisleep 100]]
+		     [have mutate_mutex unlock]]
+	       []]]
+      
+      [wait-for-trigger [get new_timer_trigger trigger]]]]]
 
 

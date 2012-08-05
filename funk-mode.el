@@ -65,7 +65,7 @@
             '("append" "apply"
 	      "car" "car-set" "cdr" "cdr-set" "cadr" "caddr" "cadddr" "cddr" "cdddr" "cons" "conslist"
 	      "demetropolize" "demetropolize1"
-	      "eq" "equals" "eval" "exit"
+	      "elt" "eq" "equals" "eval" "exit"
 	      "fiber" "filter" "first" "format" "fourth"
 	      "is-type"
 	      "join"
@@ -80,15 +80,29 @@
             'words)
            'font-lock-function-name-face)
      (cons (regexp-opt
-            '("this")
+            '("array"
+	      "cons"
+	      "conslist"
+	      "double"
+	      "frame"
+	      "float"
+	      "integer"
+	      "largeinteger"
+	      "mutex"
+	      "number"
+	      "simple_array"
+	      "string"
+	      "symbol"
+	      "this"
+	      "traced_array")
             'words)
-           'font-lock-keyword-face)
+           'font-lock-type-face)
      (cons (regexp-opt
             '("!=" "<=" ">=" "==" ">>" "<<" "+" "-" "*" "/" "=" "<" ">"
-	      "action" "actor" "act" "and" "assert-type"
+	      "and" "assert-type"
 	      "cause-define" "cause-define-funk" "cause-defunk" "cause-lookup" "cause-lookup-funk" "cond" "construct"
               "defunk" "define-funk" "defunk-local" "define" "defmetro" "deftypefunk" "deframe" "deftypeconstruct" "defpackage" "defcore" "defcorefunk" "dotimes"
-	      "elt" "error" "execute"
+	      "error" "execute"
 	      "frame" "funk" "funk-new_with_name" "funkall"
               "get" "get-apply" "globalize" "globalize-funk"
 	      "have" "have-apply"

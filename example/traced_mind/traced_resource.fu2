@@ -90,3 +90,6 @@
     [semantic-remove agent waiting_for_to_finish target]]]
 
 
+
+`[deftypefunk traced_resource execute learn_counterfactual_transframes_from_execution_event []
+   ]

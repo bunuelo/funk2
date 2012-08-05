@@ -23,6 +23,7 @@
 [deframe reflective_resource [traced_resource] []
   [new [initial-name initial-active_funk]
        [construct traced_resource initial-name initial-active_funk
-		  `[]]
+		  `[physical_type_knowledge
+		    plan_type_knowledge]]
        ]]
 

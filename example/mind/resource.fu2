@@ -273,4 +273,3 @@
 [deftypefunk resource get as-string []
   [conslist-as-english_string [get this as-english_conslist]]]
 
-

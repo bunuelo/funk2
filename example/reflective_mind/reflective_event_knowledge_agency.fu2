@@ -205,7 +205,7 @@
 												      [set action_sequence absolute_end_time transframe_end_time]
 												      [have this action_sequence-remove semantic_resource]
 												      [let [[resource [get semantic_resource resource]]]
-													[have this resource know_of_completed_reflective_execution_event transframe_start_time transframe_end_time]
+													[have resource know_of_completed_reflective_execution_event transframe_start_time transframe_end_time]
 													]]]]]]
 											   ]
 										     ]]

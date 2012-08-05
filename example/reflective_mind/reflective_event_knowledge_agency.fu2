@@ -205,29 +205,7 @@
 												      [set action_sequence absolute_end_time transframe_end_time]
 												      [have this action_sequence-remove semantic_resource]
 												      [let [[resource [get semantic_resource resource]]]
-													[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-															 'resource, ' [get resource name] ', execution finish has reached reflective knowledge layer, so starting fiber to learn transframe when the time is appropriate.']
-													[fiber [funk []
-														     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																      'resource, ' [get resource name] ', waiting for physical type knowledge stream to reach ' [get event-time date_and_time_string] '.']
-														     [have [get [get this mind] physical_type_knowledge_reflective_timer]
-															   wait_until_after [new semantic_time event-time]]
-														     
-														     'Handle learning of transframe here.'
-														     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																      'resource, ' [get resource name] ', execution finish has occurred in reflective reflective knowledge time and reflective physical_type knowledge time has also caught up.'
-																      '\n  All information is ready for learning physical_type transframe for resource.']
-														     
-														     [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
-														       [let [[event_transframe [get physical_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
-															 
-															 [let [[semantic_action [get [get this mind] deliberative_semantic_action [get semantic_resource phenomenal_name]]]]
-															   
-															   [semantic-add action_sequence transframe    event_transframe]
-															   [semantic-add semantic_action example_event action_sequence]
-															   
-															   ]]]]
-													       []]
+													[have this resource know_of_completed_reflective_execution_event transframe_start_time transframe_end_time]
 													]]]]]]
 											   ]
 										     ]]

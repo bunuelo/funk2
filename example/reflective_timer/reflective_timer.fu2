@@ -48,8 +48,7 @@
 		[if sorted_timer_triggers
 		    [let [[first_timer_trigger [car sorted_timer_triggers]]]
 		      [if [> current_time [get first_timer_trigger trigger_time]]
-			  [prog [print 'reflective_timer: triggering!']
-				[have [get first_timer_trigger trigger] trigger]
+			  [prog [have [get first_timer_trigger trigger] trigger]
 				[= keep_looping t]
 				[= sorted_timer_triggers [cdr sorted_timer_triggers]]]]]]]]]]
   [have mutate_mutex unlock]]

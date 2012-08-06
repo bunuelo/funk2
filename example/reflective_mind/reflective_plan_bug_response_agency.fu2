@@ -28,6 +28,7 @@
        [have this add_resource [new initial_plan_bug_response_resource]]
        [have this add_resource [new assign_plan_execution_failure_blame_resource]]
        [have this add_resource [new expected_precondition_does_not_exist_response_resource]]
+       [have this add_resource [new expectation_failure_response_resource]]
        [have this add_resource [new unknown_bug_name_response_resource]]
        
        nil]]
@@ -52,9 +53,10 @@
 					 '\nreflective_layer: initial plan bug response here.'
 					 '\n                  buggy plan = "' [get [get semantic_plan deliberative_plan] as-string] '."'
 					 '\n                         bug = "' [get bug as-string] '."']
-			[let [[bug_name [have [get bug frame] lookup `bug_name]]]
-			  [cond [[eq `expected_precondition_does_not_exist bug_name] [have [get this mind] wait_to_call `reflective `plan_bug_response `expected_precondition_does_not_exist_response semantic_plan bug]]
-				[t                                                   [have [get this mind] wait_to_call `reflective `plan_bug_response `unknown_bug_name_response                     semantic_plan bug]]]]]]
+			[let [[bug_type [have [get bug frame] lookup `bug_name]]]
+			  [cond [[eq bug_name `deliberative_plan-assure_relationship-failed] [have [get this mind] wait_to_call `reflective `plan_bug_response `expectation_failure_response                  semantic_plan bug]]
+				[[eq bug_name `expected_precondition_does_not_exist]         [have [get this mind] wait_to_call `reflective `plan_bug_response `expected_precondition_does_not_exist_response semantic_plan bug]]
+				[t                                                           [have [get this mind] wait_to_call `reflective `plan_bug_response `unknown_bug_name_response                     semantic_plan bug]]]]]]
        nil]]
 
 
@@ -91,6 +93,19 @@
 			[terminal_format standard-terminal '\nreflective_layer: expected precondition does not exist response here.']
 			[have [get this mind] wait_to_call `reflective `plan_bug_response `assign_plan_execution_failure_blame semantic_plan bug]
 			]]
+       nil]]
+
+
+'expectation_failure_response_resource'
+
+[deframe expectation_failure_response_resource [reflective_resource] []
+  [new []
+       [construct reflective_resource `expectation_failure_response
+		  [funk [semantic_plan bug]
+			[terminal_format standard-terminal '\nreflective_layer: responding to expectation failure bug in plan.']
+			[let [[semantic_failure [new semantic_failure [get [get this mind] semantic_realm]]]]
+			  
+			  [semantic-add semantic_plan failure semantic_failure]]]]
        nil]]
 
 

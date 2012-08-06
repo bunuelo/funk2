@@ -63,8 +63,8 @@
 \newcommand{\myDepartment}{Media Lab\xspace}
 \newcommand{\myUni}{\protect{Massachusetts Institute of Technology}\xspace}
 \newcommand{\myLocation}{Cambridge\xspace}
-\newcommand{\myTime}{August 2012\xspace}
-\newcommand{\myVersion}{Version 0.1\xspace}
+\newcommand{\myTime}{September 2012\xspace}
+\newcommand{\myVersion}{Version 1.0\xspace}
 %*******************************************************
 % Packages with options that might require adjustments
 %*******************************************************
@@ -289,7 +289,10 @@
 \selectlanguage{american} % american ngerman
 %\renewcommand*{\bibname}{new name}
 %\setbibpreamble{}
-\pagenumbering{roman}
+
+%% remarked for starting pages with 1
+%\pagenumbering{roman}
+
 \pagestyle{plain}
 %********************************************************************
 % Frontmatter
@@ -307,7 +310,10 @@
 %*******************************************************
 % Mainmatter
 %*******************************************************
-\pagenumbering{arabic}
+
+%% remarked for starting pages with 1
+%\pagenumbering{arabic}
+
 \include{chapters/introduction}
 \cleardoublepage\part{The Model}\label{part:the_model}
 \include{chapters/modelling_the_continuously_dynamic}

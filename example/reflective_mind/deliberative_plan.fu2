@@ -183,7 +183,7 @@
 			      [= found t]]]]
 	      current_events]]
       [if [not found]
-	  [error bug_type    `deliberative_plan-assure_relationship-failed
+	  [error bug_name    `deliberative_plan-assure_relationship-failed
 		 description `[assure_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]
 	nil]]]]
 

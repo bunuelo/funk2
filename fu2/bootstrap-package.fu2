@@ -189,6 +189,7 @@
 						     'extension/semantic_causal_object/'
 						     'extension/semantic_event_sequence/'
 						     'extension/semantic_event_tree/'
+						     'extension/semantic_expectation_failure/'
 						     'extension/semantic_frame/'
 						     'extension/semantic_know_of_existence_event/'
 						     'extension/semantic_know_of_relationship_event/'

@@ -20,7 +20,8 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [mental_layer] [[reflective_action_english_symbol_ptypehash [new ptypehash]]]
+[deframe reflective_layer [mental_layer] [[reflective_action_english_symbol_ptypehash     [new ptypehash]]
+					  [reflective_semantic_plan_phenomenal_name_frame [new frame]]]
   [new []
        [construct mental_layer 3 `reflective]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
@@ -55,6 +56,47 @@
 [deftypefunk reflective_layer execute lookup_reflective_action [english_conslist]
   [have reflective_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
+[deftypefunk reflective_layer execute add_reflective_semantic_object_recursive [semantic_object]
+  [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     [let [[past_operator   [get semantic_object past_operator]]
+										   [future_operator [get semantic_object future_operator]]]
+									       [have this add_reflective_semantic_object_recursive past_operator]
+									       [have this add_reflective_semantic_object_recursive future_operator]]]]
+	[[is-type `semantic_plan_operator_parallel    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     [let [[plan_operator_set [semantic-lookup_set semantic_object plan_operator]]]
+									       [mapc [funk [plan_operator]
+											   [have this add_reflective_semantic_object_recursive plan_operator]]
+										     [get plan_operator_set elements]]]]]
+	[[is-type `semantic_plan_operator_activation  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     [let [[counterfactual_transframe [get semantic_object counterfactual_transframe]]]
+									       [have this add_reflective_semantic_object_recursive counterfactual_transframe]]]]
+	[[is-type `semantic_plan_operator_suppression semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     ]]
+	[[is-type `semantic_counterfactual_transframe semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     [let [[resource_activation_dependency [get semantic_object resource_activation_dependency]]]
+									       [have this add_reflective_semantic_object_recursive resource_activation_dependency]]]]
+	[[is-type `semantic_resource                  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `plan_knowledge] add_semantic_frame semantic_object]
+									     ]]
+	]]
+
+[deftypefunk reflective_layer execute add_reflective_semantic_plan [semantic_plan]
+  `[terminal_format standard-terminal '\nreflective_layer: adding reflective plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
+  [have [get [get this mind] semantic_knowledge_base `reflective_plan_knowledge] add_semantic_frame semantic_plan]
+  [let [[start_plan_operator [get semantic_plan start_plan_operator]]]
+    [have this add_reflective_semantic_object_recursive start_plan_operator]]
+  [have reflective_semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
+  [have [get this agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
+
+[deftypefunk reflective_layer get reflective_semantic_plan [phenomenal_name]
+  [let [[reflective_semantic_plan [have reflective_semantic_plan_phenomenal_name_frame lookup phenomenal_name]]]
+    [if [null reflective_semantic_plan]
+	[error bug_type             `reflective_layer-reflective_semantic_plan-not_found
+	       plan_phenomenal_name phenomenal_name]]
+    reflective_semantic_plan]]
+
+[deftypefunk reflective_layer get reflective_semantic_plans []
+  [get reflective_semantic_plan_phenomenal_name_frame values]]
+
 [deftypefunk reflective_layer execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]
@@ -64,8 +106,19 @@
 		     resource_arguments]]]
     [have this add_reflective_action action]]]
 
-[deftypefunk reflective_layer get deliberative_semantic_action [phenomenal_name]
-  [get [get this agency `reflective_event_knowledge] deliberative_semantic_action phenomenal_name]]
+[deftypefunk reflective_layer execute create_reflective_semantic_plan [expression start_plan_operator]
+  [let [[plan [new deliberative_plan 
+		   [get this mind]
+		   expression]]]
+    [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
+      [set semantic_plan plan_object_type `reflective]
+      [set semantic_plan start_plan_operator start_plan_operator]
+      [have this add_reflective_semantic_plan semantic_plan]]]]
+
+
+
+[deftypefunk reflective_layer get reflective_semantic_action [phenomenal_name]
+  [get [get this agency `reflective_event_knowledge] reflective_semantic_action phenomenal_name]]
 
 [deftypefunk reflective_layer get plan_type_knowledge_reflective_timer []
   [get [get this agency `reflective_event_knowledge] plan_type_knowledge_reflective_timer]]

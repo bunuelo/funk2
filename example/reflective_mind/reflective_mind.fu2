@@ -127,6 +127,13 @@
 [deftypefunk reflective_mind get reflective_actions []
   [get [get this layer `reflective] reflective_actions]]
 
+[deftypefunk reflective_mind execute create_reflective_semantic_plan [expression start_plan_operator]
+  [have [get this layer `reflective] create_reflective_semantic_plan expression start_plan_operator]]
+
+[deftypefunk reflective_mind get reflective_semantic_plans []
+  [get [get this layer `reflective] reflective_semantic_plans]]
+
+
 
 
 'pre-knowledge perception functions'

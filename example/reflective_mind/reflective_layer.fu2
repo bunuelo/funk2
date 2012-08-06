@@ -46,7 +46,7 @@
   [have [get this agency `plan] create_builtin_actions]]
 
 [deftypefunk reflective_layer execute add_reflective_action [action]
-  `[terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
+  [terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
   [have reflective_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
 
 [deftypefunk reflective_layer get reflective_actions []

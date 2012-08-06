@@ -256,6 +256,7 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
+										 [set plan_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[and [eq event-key_type `property] [eq event-key `plan_object_type]]
 											[prog 'create semantic_plan_object_type_event.'
 											      [get this semantic_plan_object_type_event event-value]

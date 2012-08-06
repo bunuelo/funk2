@@ -121,7 +121,7 @@
 						    [wait-for-relationship block shape pyramid below gripper is-me t]
 						    [wait-to-call drop]
 						    [wait-for-time 8]
-						    [wait-for-relationship block shape cube on block shape pyramid]
+						    [assure-relationship block shape cube on block shape pyramid]
 						    ]
 	  start_operator]]
   
@@ -166,9 +166,45 @@
 						    [wait-for-relationship block shape cube below gripper is-me t]
 						    [wait-to-call drop]
 						    [wait-for-time 8]
-						    [wait-for-relationship block shape pyramid on block shape cube]
+						    [assure-relationship block shape pyramid on block shape cube]
 						    ]
 	  start_operator]]
+  
+  [let [[start_operator nil]]
+    [let [[plan_operators [conslist ]]]
+      [let [[sequence_operator_iter nil]
+	    [plan_operator_iter     plan_operators]]
+	[while plan_operator_iter
+	  [let [[new_sequence_operator [new semantic_plan_operator_sequence [get this semantic_realm]]]]
+	    [if sequence_operator_iter
+		[set sequence_operator_iter future_operator new_sequence_operator]]
+	    [= sequence_operator_iter new_sequence_operator]
+	    [if [null start_operator]
+		[= start_operator sequence_operator_iter]]
+	    [set sequence_operator_iter past_operator [car plan_operator_iter]]
+	    [= plan_operator_iter [cdr plan_operator_iter]]]]]]
+    [have this create_physical_semantic_plan `[prog [assure-relationship block shape pyramid on block shape cube]
+						    ]
+	  start_operator]]
+  
+  [let [[start_operator nil]]
+    [let [[plan_operators [conslist ]]]
+      [let [[sequence_operator_iter nil]
+	    [plan_operator_iter     plan_operators]]
+	[while plan_operator_iter
+	  [let [[new_sequence_operator [new semantic_plan_operator_sequence [get this semantic_realm]]]]
+	    [if sequence_operator_iter
+		[set sequence_operator_iter future_operator new_sequence_operator]]
+	    [= sequence_operator_iter new_sequence_operator]
+	    [if [null start_operator]
+		[= start_operator sequence_operator_iter]]
+	    [set sequence_operator_iter past_operator [car plan_operator_iter]]
+	    [= plan_operator_iter [cdr plan_operator_iter]]]]]]
+    [have this create_physical_semantic_plan `[prog [assure-relationship block shape pyramid on table color white]
+						    ]
+	  start_operator]]
+  
+  'reflective plans'
   
   [let [[start_operator nil]]
     [let [[plan_operators [conslist [let* [[activation_operator [new semantic_plan_operator_activation [get this semantic_realm]]]

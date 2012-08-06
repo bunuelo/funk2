@@ -122,5 +122,5 @@
   [get [get this agency `reflective_event_knowledge] reflective_semantic_action phenomenal_name]]
 
 [deftypefunk reflective_layer get plan_type_knowledge_reflective_timer []
-  [get [get this agency `reflective_event_knowledge] plan_type_knowledge_reflective_timer]]
+  [get [get this agency `plan_object_type_goal] plan_type_knowledge_reflective_timer]]
 

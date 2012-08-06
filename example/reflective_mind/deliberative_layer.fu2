@@ -68,9 +68,7 @@
 
 [deftypefunk deliberative_layer execute add_physical_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
-  [have physical_action_english_symbol_ptypehash add [get action as-english_symbol] action]
-  [terminal_format standard-terminal '\ndeliberative_layer: done adding physical action, "' [get action as-string] '."']
-  ]
+  [have physical_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
 
 [deftypefunk deliberative_layer get physical_actions []
   [get physical_action_english_symbol_ptypehash values]]

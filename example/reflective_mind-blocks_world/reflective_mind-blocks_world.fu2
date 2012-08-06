@@ -98,7 +98,7 @@
 				    [let* [[activation_operator       [new semantic_plan_operator_activation [get this semantic_realm]]]
 					   [counterfactual_transframe [new semantic_counterfactual_transframe [get this semantic_realm]]]]
 				      [set counterfactual_transframe resource_activation_dependency [get [get this resource `builtin_reactive `physical `drop] resource_semantic_frame]]
-				      [semantic-add counterfactual_transframe hypothesized_add_percept 
+				      `[semantic-add counterfactual_transframe hypothesized_add_percept ]
 				      [set activation_operator counterfactual_transframe counterfactual_transframe]
 				      activation_operator]
 				    ]]]

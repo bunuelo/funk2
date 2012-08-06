@@ -29,10 +29,6 @@ f2ptr raw__semantic_expectation_failure__type_create(f2ptr cause, f2ptr this, f2
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_expectation_failure"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"), nil);
-  }
   return this;
 }
 
@@ -82,111 +78,11 @@ f2ptr f2__semantic_expectation_failure__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_expectation_failure__type, thing, 0, "Returns the specific type of object that this semantic_expectation_failure is.");
 
 
-f2ptr raw__semantic_expectation_failure__physical_object_type(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"));
-}
-
-f2ptr f2__semantic_expectation_failure__physical_object_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_expectation_failure, this);
-  return raw__semantic_expectation_failure__physical_object_type(cause, this);
-}
-export_cefunk1(semantic_expectation_failure__physical_object_type, this, 0, "");
-
-
-f2ptr raw__semantic_expectation_failure__physical_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "physical_object_type"), that);
-}
-
-f2ptr f2__semantic_expectation_failure__physical_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_expectation_failure, this);
-  return raw__semantic_expectation_failure__physical_object_type__set(cause, this, that);
-}
-export_cefunk2(semantic_expectation_failure__physical_object_type__set, this, that, 0, "");
-
-
-f2ptr raw__semantic_expectation_failure__preposition__on__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"));
-}
-
-f2ptr f2__semantic_expectation_failure__preposition__on__lookup_set(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_expectation_failure, this);
-  return raw__semantic_expectation_failure__preposition__on__lookup_set(cause, this);
-}
-export_cefunk1(semantic_expectation_failure__preposition__on__lookup_set, this, 0, "Returns the set of preposition-ons.");
-
-
-f2ptr raw__semantic_expectation_failure__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
-}
-
-f2ptr f2__semantic_expectation_failure__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_expectation_failure, this);
-  assert_argument_type(semantic_expectation_failure, that);
-  return raw__semantic_expectation_failure__preposition__on__add(cause, this, that);
-}
-export_cefunk2(semantic_expectation_failure__preposition__on__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_expectation_failure__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
-}
-
-f2ptr f2__semantic_expectation_failure__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_expectation_failure, this);
-  assert_argument_type(semantic_expectation_failure, that);
-  return raw__semantic_expectation_failure__preposition__on__remove(cause, this, that);
-}
-export_cefunk2(semantic_expectation_failure__preposition__on__remove, this, that, 0, "");
-
-
-f2ptr raw__semantic_expectation_failure__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"));
-}
-
-f2ptr f2__semantic_expectation_failure__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_expectation_failure, this);
-  return raw__semantic_expectation_failure__preposition__in__lookup_set(cause, this);
-}
-export_cefunk1(semantic_expectation_failure__preposition__in__lookup_set, this, 0, "Returns the set of preposition-ins.");
-
-
-f2ptr raw__semantic_expectation_failure__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_expectation_failure__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_expectation_failure, this);
-  assert_argument_type(semantic_expectation_failure, that);
-  return raw__semantic_expectation_failure__preposition__in__add(cause, this, that);
-}
-export_cefunk2(semantic_expectation_failure__preposition__in__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_expectation_failure__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_expectation_failure__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_expectation_failure, this);
-  assert_argument_type(semantic_expectation_failure, that);
-  return raw__semantic_expectation_failure__preposition__in__remove(cause, this, that);
-}
-export_cefunk2(semantic_expectation_failure__preposition__in__remove, this, that, 0, "");
-
-
 f2ptr f2__semantic_expectation_failure__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__physical_object_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "physical_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__physical_object_type__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__preposition__in__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__preposition__in__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-in"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__preposition__in__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__preposition__on__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__preposition__on__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-on"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__preposition__on__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_expectation_failure"), new__symbol(cause, "semantic_expectation_failure__type")));}
   return this;
 }
 

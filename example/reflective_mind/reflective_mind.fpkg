@@ -263,4 +263,10 @@
 	     deliberative_plan]
    :sources ['reflective_plan_agency.fu2']]
 
+[defpackage reflective_execution_agency
+  :packages [reflective_mind_core
+	     reflective_resource
+	     deliberative_plan]
+   :sources ['reflective_execution_agency.fu2']]
+
 

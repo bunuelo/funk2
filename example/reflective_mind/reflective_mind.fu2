@@ -60,7 +60,8 @@
 
 [deftypefunk reflective_mind execute create_builtin_actions []
   [terminal_format standard-terminal '\nreflective_mind: creating built-in actions.']
-  [have [get this layer `deliberative] create_builtin_actions]]
+  [have [get this layer `deliberative] create_builtin_actions]
+  [have [get this layer `reflective]   create_builtin_actions]]
 
 [deftypefunk reflective_mind get physical_type_knowledge_reflective_timer []
   [get [get this layer `deliberative] physical_type_knowledge_reflective_timer]]

@@ -214,6 +214,7 @@
 	     reflective_plan_object_type_goal_agency
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
+	     reflective_plan_agency
 	     english_language
 	     ]
    :sources ['reflective_layer.fu2']]
@@ -255,5 +256,11 @@
 	     semantic_situation]
    :sources ['reflective_credit_assignment_agency.fu2']]
 
+[defpackage reflective_plan_agency
+  :packages [reflective_mind_core
+	     reflective_resource
+	     semantic_planner
+	     deliberative_plan]
+   :sources ['reflective_plan_agency.fu2']]
 
 

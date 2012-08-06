@@ -26,19 +26,25 @@
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
 	      [have this add_agency [new reflective_plan_object_type_goal_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]
-	      [have this add_agency [new reflective_credit_assignment_agency]]]
+	      [have this add_agency [new reflective_credit_assignment_agency]]
+	      [have this add_agency [new reflective_plan_agency]]]
        this]]
 
 [deftypefunk reflective_layer execute create_knowledge []
   [have [get this agency `plan_object_type_goal]      create_knowledge]
   [have [get this agency `reflective_event_knowledge] create_knowledge]
+  [have [get this agency `plan_object_type_goal]      create_knowledge]
+  [have [get this agency `plan]                       create_knowledge]
   nil]
 
 [deftypefunk reflective_layer execute connect_knowledge_reflection []
   [have [get this agency `plan_object_type_goal]      connect_knowledge_reflection]
   [have [get this agency `reflective_event_knowledge] connect_knowledge_reflection]
+  [have [get this agency `plan]                       connect_knowledge_reflection]
   nil]
 
+[deftypefunk reflective_layer execute create_builtin_actions []
+  [have [get this agency `plan] create_builtin_actions]]
 
 [deftypefunk reflective_layer execute add_reflective_action [action]
   `[terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']

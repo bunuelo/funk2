@@ -209,8 +209,10 @@
     reflective_event_knowledge
     reflective_knowledge
     
-    plan_plan_knowledge
+    reflective_plan_type_knowledge
+    reflective_plan_knowledge
     
+    plan_plan_knowledge
     plan_goal_knowledge
     plan_type_knowledge
     type_copy_of_plan_knowledge

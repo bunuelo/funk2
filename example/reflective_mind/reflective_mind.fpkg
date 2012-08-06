@@ -226,7 +226,8 @@
 
 [defpackage reflective_plan_bug_response_agency
   :packages [reflective_mind_core
-	     reflective_resource]
+	     reflective_resource
+	     semantic_expectation_failure]
    :sources ['reflective_plan_bug_response_agency.fu2']]
 
 [defpackage plan_type_property_relation_goal

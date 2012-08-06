@@ -103,9 +103,9 @@
        [construct reflective_resource `expectation_failure_response
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal '\nreflective_layer: responding to expectation failure bug in plan.']
-			[let [[semantic_failure [new semantic_failure [get [get this mind] semantic_realm]]]]
+			[let [[semantic_expectation_failure [new semantic_expectation_failure [get [get this mind] semantic_realm]]]]
 			  
-			  [semantic-add semantic_plan failure semantic_failure]]]]
+			  [semantic-add semantic_plan failure semantic_expectation_failure]]]]
        nil]]
 
 

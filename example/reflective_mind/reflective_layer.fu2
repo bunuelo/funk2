@@ -33,7 +33,6 @@
 [deftypefunk reflective_layer execute create_knowledge []
   [have [get this agency `plan_object_type_goal]      create_knowledge]
   [have [get this agency `reflective_event_knowledge] create_knowledge]
-  [have [get this agency `plan_object_type_goal]      create_knowledge]
   [have [get this agency `plan]                       create_knowledge]
   nil]
 

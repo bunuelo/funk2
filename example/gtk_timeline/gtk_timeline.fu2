@@ -34,8 +34,19 @@
        
        [set timeline x_width [get timeline_width as-double]]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
-       [= image               [timeline-as-image timeline timeline_scale]]
-       [= gtk_image           [gtk-image-new_from_image image]]
+       
+       [let [[max_image_width  32768]
+	     [max_image_height 32768]
+	     [image_scale_okay nil]]
+	 [while [not image_scale_okay]
+	   [= image [timeline-as-image timeline timeline_scale]]
+	   [if [not [or [> [get image width]  max_image_width]
+			[> [get image height] max_image_height]]]
+	       [= image_scale_okay t]
+	     [prog [terminal_format standard-terminal '\ngtk_timeline warning: Image too large for GTK.  Reducing scale by a factor of 2.']
+		   [= timeline_scale [/ timeline_scale 2]]]]]]
+       
+       [= gtk_image [gtk-image-new_from_image image]]
        [have gtk_scrolled_window add_with_viewport gtk_image]
        
        nil]]
@@ -176,7 +187,14 @@
   [have window show_all]]
 
 [deftypefunk gtk_timeline_window execute reset_size []
-  [set window size [+ [get gtk_timeline width] 24] [+ [get gtk_timeline height] 64]]]
+  [let [[max_width      1920]
+	[max_height     1200]
+	[optimal_width  [+ [get gtk_timeline width]  24]]
+	[optimal_height [+ [get gtk_timeline height] 64]]]
+    [set window size
+	 [if [> optimal_width  max_width]  max_width  optimal_width]
+	 [if [> optimal_height max_height] max_height optimal_height]
+	 ]]]
 
 [deftypefunk gtk_timeline_window execute update_gtk_timeline []
   [have vbox remove gtk_timeline]

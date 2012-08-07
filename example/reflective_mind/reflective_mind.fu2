@@ -66,8 +66,8 @@
 [deftypefunk reflective_mind get physical_type_knowledge_reflective_timer []
   [get [get this layer `deliberative] physical_type_knowledge_reflective_timer]]
 
-[deftypefunk reflective_mind get plan_type_knowledge_reflective_timer []
-  [get [get this layer `reflective] plan_type_knowledge_reflective_timer]]
+[deftypefunk reflective_mind get deliberative1_type_knowledge_reflective_timer []
+  [get [get this layer `reflective] deliberative1_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_mind execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [have [get this layer `deliberative] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]

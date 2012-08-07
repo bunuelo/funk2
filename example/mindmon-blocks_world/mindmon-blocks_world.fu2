@@ -211,10 +211,10 @@
     
     reflective_plan_knowledge
     
-    plan_goal_knowledge
-    plan_type_knowledge
-    type_copy_of_plan_knowledge
-    plan_knowledge
+    deliberative1_goal_knowledge
+    deliberative1_type_knowledge
+    type_copy_of_deliberative1_knowledge
+    deliberative1_knowledge
     
     physical_goal_knowledge
     physical_type_knowledge

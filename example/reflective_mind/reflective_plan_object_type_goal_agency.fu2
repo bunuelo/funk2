@@ -24,21 +24,21 @@
 [deframe reflective_plan_object_type_goal_agency [agency] []
   [new []
        [construct agency `plan_object_type_goal]
-       [have this add_resource [new translate_plan_knowledge_to_plan_type_knowledge_resource]]
+       [have this add_resource [new translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource]]
        ]]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_plan_knowledge [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `plan_type_knowledge         [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `plan_goal_knowledge         [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_deliberative1_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative1_type_knowledge         [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative1_goal_knowledge         [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `plan_knowledge `plan_knowledge->plan_type_knowledge]
+  [have [get this mind] create_knowledge_event_stream_iterator `deliberative1_knowledge `deliberative1_knowledge->deliberative1_type_knowledge]
   ]
 
-[deftypefunk reflective_plan_object_type_goal_agency get plan_type_knowledge_reflective_timer []
-  [get [get this resource `translate_plan_knowledge_to_plan_type_knowledge] plan_type_knowledge_reflective_timer]]
+[deftypefunk reflective_plan_object_type_goal_agency get deliberative1_type_knowledge_reflective_timer []
+  [get [get this resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge] deliberative1_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute create_plan_type_relationship_goal [source_plan_object_type key_type key target_plan_object_type]
   ]
@@ -51,7 +51,7 @@
 													  target_type
 													  target_type_property
 													  target_type_property_value]
-  [let [[resource [get this resource `translate_plan_knowledge_to_plan_type_knowledge]]]
+  [let [[resource [get this resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge]]]
     [let [[goal [new plan_type_property_relation_goal
 		     [get this mind]
 		     source_type
@@ -66,25 +66,25 @@
 
 
 
-'translate_plan_knowledge_to_plan_type_knowledge_resource'
+'translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource'
 
-[deframe translate_plan_knowledge_to_plan_type_knowledge_resource [reflective_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
+[deframe translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource [reflective_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
 											 [semantic_plan_object_copy_mutex       [new mutex]]
 											 [goals                                 nil]
-											 [plan_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
+											 [deliberative1_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
   [new []
-       [construct reflective_resource `translate_plan_knowledge_to_plan_type_knowledge
+       [construct reflective_resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
        [= vital t]
        nil]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute add_goal [goal]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_goal [goal]
   `[terminal_format standard-terminal '\nreflective_layer: adding plan goal, "' [get goal as-string] '."']
   [= goals [cons goal goals]]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute add_type_to_goal_states [event_time
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_type_to_goal_states [event_time
 												       semantic_plan_object_type_event_source
 												       key_type
 												       key
@@ -98,7 +98,7 @@
 		    semantic_plan_object_type_event_target]]
 	goals]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute remove_type_from_goal_states [event_time
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute remove_type_from_goal_states [event_time
 													    semantic_plan_object_type_event_source
 													    key_type
 													    key
@@ -112,7 +112,7 @@
 		    semantic_plan_object_type_event_target]]
 	goals]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get semantic_plan_object_copy [phenomenal_name plan_object_type deliberative_plan]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_plan_object_copy [phenomenal_name plan_object_type deliberative_plan]
   [let [[semantic_plan_object nil]]
     [have semantic_plan_object_type_event_mutex lock]
     [let [[copy_phenomenal_name [get [format nil 'plan_type_copy_of_' phenomenal_name] as-symbol]]]
@@ -120,13 +120,13 @@
       [if [null semantic_plan_object]
 	  [prog [= semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] phenomenal_name deliberative_plan]]
 		[set semantic_plan_object plan_object_type plan_object_type]
-		[have [get [get this mind] semantic_knowledge_base `type_copy_of_plan_knowledge] add_semantic_frame semantic_plan_object]
+		[have [get [get this mind] semantic_knowledge_base `type_copy_of_deliberative1_knowledge] add_semantic_frame semantic_plan_object]
 		[have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame copy_phenomenal_name semantic_plan_object]
 		]]
       [have semantic_plan_object_type_event_mutex unlock]
       semantic_plan_object]]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get semantic_plan_object_type_event [phenomenal_name]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_plan_object_type_event [phenomenal_name]
   [let [[semantic_plan_object_type_event nil]]
     [have semantic_plan_object_copy_mutex lock]
     [= semantic_plan_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
@@ -134,28 +134,28 @@
 	[prog [= semantic_plan_object_type_event [new semantic_plan_object_type_event [get [get this mind] semantic_realm]
 						      [object_type_event-phenomenal_name phenomenal_name]
 						      phenomenal_name]]
-	      [have [get [get this mind] semantic_knowledge_base `plan_type_knowledge] add_semantic_frame semantic_plan_object_type_event]
+	      [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_semantic_frame semantic_plan_object_type_event]
 	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_plan_object_type_event]
 	      ]]
     [have semantic_plan_object_copy_mutex unlock]
     semantic_plan_object_type_event]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get semantic_plan_object_type_event_with_property_type [phenomenal_name property_key property property_value]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_plan_object_type_event_with_property_type [phenomenal_name property_key property property_value]
   [let [[object_type_with_propety_phenomenal_name [semantic_object_property_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
     [get this semantic_plan_object_type_event object_type_with_propety_phenomenal_name]]]
 
-[defunk translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property [source key_type key target]
+[defunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property [source key_type key target]
   [and [is-type `semantic_plan_object source]
        [not [and [eq `property key_type] [eq `plan_object_type key]]]
        [or [null target] [is-type `symbol target]]]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource get all_semantic_plan_object_type_events [semantic_plan_object]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get all_semantic_plan_object_type_events [semantic_plan_object]
   [let [[semantic_plan_object_type_events nil]]
     [= semantic_plan_object_type_events [cons [get this semantic_plan_object_type_event [get semantic_plan_object plan_object_type]]
 					    semantic_plan_object_type_events]]
     [have semantic_plan_object map_type_key_values
 	  [funk [slot_type slot_key slot_value]
-		[if [translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property semantic_plan_object slot_type slot_key slot_value]
+		[if [translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property semantic_plan_object slot_type slot_key slot_value]
 		    [= semantic_plan_object_type_events [cons [get this semantic_plan_object_type_event_with_property_type
 								 [get semantic_plan_object plan_object_type]
 								 slot_type
@@ -164,7 +164,7 @@
 							    semantic_plan_object_type_events]]]]]
     semantic_plan_object_type_events]]
 
-[defunk translate_plan_knowledge_to_plan_type_knowledge_resource-type_relation-phenomenal_name [source_type_event-phenomenal_name key_type key target_type_event-phenomenal_name]
+[defunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-type_relation-phenomenal_name [source_type_event-phenomenal_name key_type key target_type_event-phenomenal_name]
   [get [string-concat [get source_type_event-phenomenal_name as-string]
 		      '_'
 		      [get key_type as-string]
@@ -175,7 +175,7 @@
 		      '_plan_object_type_relation']
        as-symbol]]
 
-[defunk translate_plan_knowledge_to_plan_type_knowledge_resource-type_property_relation-phenomenal_name [source_phenomenal_name
+[defunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-type_property_relation-phenomenal_name [source_phenomenal_name
 														 source_property_key
 														 source_property
 														 source_property_value
@@ -198,13 +198,13 @@
 													    target_property_value]]]
 
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute add_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nadd_type_relation ' [get semantic_plan_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_plan_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_plan_object_type_event_source lookup_set compound_key [get semantic_plan_object_type_event_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
-	  [let [[relation-phenomenal_name   [translate_plan_knowledge_to_plan_type_knowledge_resource-type_relation-phenomenal_name [get semantic_plan_object_type_event_source phenomenal_name]
+	  [let [[relation-phenomenal_name   [translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-type_relation-phenomenal_name [get semantic_plan_object_type_event_source phenomenal_name]
 																	    key_type
 																	    key
 																	    [get semantic_plan_object_type_event_target phenomenal_name]]]
@@ -218,13 +218,13 @@
 			     relation-meta_relationship
 			     semantic_plan_object_type_event_target]]
 	    [set relation absolute_start_time [new semantic_time event_time]]
-	    [have [get [get this mind] semantic_knowledge_base `plan_type_knowledge] add_semantic_frame relation]
+	    [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_semantic_frame relation]
 	    [have semantic_plan_object_type_event_source add compound_key [get semantic_plan_object_type_event_target phenomenal_name] relation]
 	    [have this add_type_to_goal_states event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute remove_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute remove_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_plan_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_plan_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_plan_object_type_event_source lookup_set compound_key [get semantic_plan_object_type_event_target phenomenal_name]]]
@@ -239,14 +239,14 @@
 		    [set relation count [- relation-count 1]]
 		  [prog [have this remove_type_from_goal_states event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
 			[have semantic_plan_object_type_event_source remove compound_key [get semantic_plan_object_type_event_target phenomenal_name] relation]
-			`[have [get [get this mind] semantic_knowledge_base `plan_type_knowledge] remove_semantic_frame relation]
+			`[have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] remove_semantic_frame relation]
 			[set relation absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
 
-[deftypefunk translate_plan_knowledge_to_plan_type_knowledge_resource execute execute_resource_raw_funk []
-  [let [[plan_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `plan_knowledge->plan_type_knowledge]]]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute execute_resource_raw_funk []
+  [let [[deliberative1_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `deliberative1_knowledge->deliberative1_type_knowledge]]]
     [while t
-      [let [[event [have plan_knowledge_iterator wait_for_current]]]
+      [let [[event [have deliberative1_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
 	    [prog [if debug `[terminal_format standard-terminal '\n  translate plan->plan_type event: ' event]]
 		  [let [[event_type [get event event_type]]]
@@ -256,7 +256,7 @@
 										     [event-key_type       [get event key_type]]
 										     [event-key            [get event key]]
 										     [event-value          [get event value]]]
-										 [set plan_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
+										 [set deliberative1_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[and [eq event-key_type `property] [eq event-key `plan_object_type]]
 											[prog 'create semantic_plan_object_type_event.'
 											      [get this semantic_plan_object_type_event event-value]
@@ -284,7 +284,7 @@
 												[have event-semantic_frame-copy add event-key_type event-key event-value-copy]
 												'should use copy after this point'
 												
-												[cond [[translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
+												[cond [[translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												       [let [[event-semantic_plan_object_type_event [get this semantic_plan_object_type_event_with_property_type
 																			 [get event-semantic_frame-copy plan_object_type]
 																			 event-key_type
@@ -336,7 +336,7 @@
 																 event-value]]]
 												'should use copy after this point'
 												
-												[cond [[translate_plan_knowledge_to_plan_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
+												[cond [[translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												       [let [[event-semantic_plan_object_type_event [get this semantic_plan_object_type_event_with_property_type
 																			 [get event-semantic_frame-copy plan_object_type]
 																			 event-key_type
@@ -382,11 +382,11 @@
 										 ]]
 			  [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `end_of_plan_changes]]          [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-												      'end_of_plan_changes found: added end_of_plan_type_changes to plan_type_knowledge trace events.']
-										     [have [get [get this mind] semantic_knowledge_base `plan_type_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_plan_type_changes nil]]
+												      'end_of_plan_changes found: added end_of_plan_type_changes to deliberative1_type_knowledge trace events.']
+										     [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_plan_type_changes nil]]
 										     nil]]
 			  ]]]]
-	[have plan_knowledge_iterator increment]]]]]
+	[have deliberative1_knowledge_iterator increment]]]]]
 
 
 

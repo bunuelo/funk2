@@ -100,14 +100,14 @@
     [fiber [funk []
 		 
 		 [mapc [funk [simulate_knowledge_base_name]
-			     [cond [[eq simulate_knowledge_base_name `physical_type_knowledge] [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														      'resource, ' name ', waiting for physical type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
-												     [have [get [get this mind] physical_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
-												     ]]
-				   [[eq simulate_knowledge_base_name `plan_type_knowledge]     [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														      'resource, ' name ', waiting for plan type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
-												     [have [get [get this mind] plan_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
-												     ]]
+			     [cond [[eq simulate_knowledge_base_name `physical_type_knowledge]      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															   'resource, ' name ', waiting for physical type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
+													  [have [get [get this mind] physical_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
+													  ]]
+				   [[eq simulate_knowledge_base_name `deliberative1_type_knowledge] [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															   'resource, ' name ', waiting for plan type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
+													  [have [get [get this mind] deliberative1_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
+													  ]]
 				   ]]
 		       simulate_knowledge_base_names]
 		 

@@ -24,6 +24,6 @@
   [new [initial-name initial-active_funk]
        [construct traced_resource initial-name initial-active_funk
 		  `[physical_type_knowledge
-		    plan_type_knowledge]]
+		    deliberative1_type_knowledge]]
        ]]
 

@@ -84,7 +84,7 @@
        [construct deliberative_resource `focus_on_plan
 		  [funk [semantic_plan_phenomenal_name]
 			[let [[semantic_plan [get agency physical_semantic_plan semantic_plan_phenomenal_name]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
 
 [deftypefunk deliberative_focus_on_plan_resource get as-english_conslist []
@@ -99,7 +99,7 @@
        [construct deliberative_resource `execute_plan_in_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [have [get this mind] wait_to_call `deliberative `execution `execute_plan focus_plan]
 			  ]]]]]
 
@@ -115,7 +115,7 @@
        [construct deliberative_resource `focus_on_execute_plan
 		  [funk []
 			[let [[execute_plan [get [get [get this agency] semantic_planner] execute_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get execute_plan phenomenal_name] ', "' [get [get execute_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get execute_plan phenomenal_name] ', "' [get [get execute_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan execute_plan]]]]]]
 
 [deftypefunk deliberative_focus_on_execute_plan_resource get as-english_conslist []
@@ -130,7 +130,7 @@
        [construct deliberative_resource `register_a_plan_from_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_a_plan focus_plan]]]]]]
 
 [deftypefunk deliberative_register_a_plan_from_focus_resource get as-english_conslist []
@@ -145,7 +145,7 @@
        [construct deliberative_resource `register_b_plan_from_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_b_plan focus_plan]]]]]]
 
 [deftypefunk deliberative_register_b_plan_from_focus_resource get as-english_conslist []
@@ -160,7 +160,7 @@
        [construct deliberative_resource `focus_on_register_a_plan
 		  [funk []
 			[let [[register_a_plan [get [get [get this agency] semantic_planner] register_a_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_a_plan]]]]]]
 
 [deftypefunk deliberative_focus_on_register_a_plan_resource get as-english_conslist []
@@ -175,7 +175,7 @@
        [construct deliberative_resource `focus_on_register_b_plan
 		  [funk []
 			[let [[register_b_plan [get [get [get this agency] semantic_planner] register_b_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan deliberative_plan] as-string] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_b_plan]]]]]]
 
 [deftypefunk deliberative_focus_on_register_b_plan_resource get as-english_conslist []

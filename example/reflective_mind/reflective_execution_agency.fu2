@@ -37,7 +37,7 @@
 			[terminal_format standard-terminal '\nreflective_layer: executing plan.']
 			[set [get [get [get this mind] agency `reflective `plan] semantic_planner] execute_plan semantic_plan]
 			[let [[result [shelter [cause-define cause-name `plan]
-					       [have [get semantic_plan deliberative_plan] eval]]]]
+					       [have [get semantic_plan nonsemantic_plan] eval]]]]
 			  [if [is-type `bug result]
 			      [prog [terminal_format standard-terminal '\nreflective_layer: executing plan has a bug.']
 				    [set [get [get [get this mind] agency `reflective `plan] semantic_planner] execute_plan nil]

@@ -19,18 +19,18 @@
 
 
 
-'deliberative_plan'
+'nonsemantic_plan'
 
-[deframe deliberative_plan [frame] [mind
-				    unique_name
-				    expression
-				    [internal-compiled_funk    nil]
-				    [internal-english_conslist `uninitialized]
-				    [internal-english_string   nil]]
+[deframe nonsemantic_plan [frame] [mind
+				   unique_name
+				   expression
+				   [internal-compiled_funk    nil]
+				   [internal-english_conslist `uninitialized]
+				   [internal-english_string   nil]]
   [new [initial-mind initial-expression]
-       [= mind                      initial-mind]
-       [= unique_name               [get mind new-name `plan]]
-       [= expression                initial-expression]
+       [= mind                     initial-mind]
+       [= unique_name              [get mind new-name `plan]]
+       [= expression               initial-expression]
        ]]
 
 [defunk flatten_constree [expression]
@@ -44,7 +44,7 @@
 	    [visit_leaves expression]]
     [reverse result]]]
 
-[defunk deliberative_plan-expression-as_english_conslist [expression]
+[defunk nonsemantic_plan-expression-as_english_conslist [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
@@ -57,7 +57,7 @@
 												  [let [[step_number 1]]
 												    [mapcar [funk [argument]
 														  [let [[argument-result [append `[,[get step_number as-symbol] punctuation-period]
-																		 [deliberative_plan-expression-as_english_conslist argument]
+																		 [nonsemantic_plan-expression-as_english_conslist argument]
 																		 [if [not [eq step_number arguments-length]]
 																		     `[punctuation-comma]]]]]
 														    [++ step_number]
@@ -103,23 +103,23 @@
 					      [t                                   `[error ,[flatten_constree expression]]]]]]]
 	[t                          `[error punctuation-colon ,[flatten_constree expression]]]]]
 
-[deftypefunk deliberative_plan get as-english_conslist []
+[deftypefunk nonsemantic_plan get as-english_conslist []
   [if [eq `uninitialized internal-english_conslist]
-      [= internal-english_conslist [deliberative_plan-expression-as_english_conslist expression]]]
+      [= internal-english_conslist [nonsemantic_plan-expression-as_english_conslist expression]]]
   internal-english_conslist]
 
-[deftypefunk deliberative_plan get as-english_string []
+[deftypefunk nonsemantic_plan get as-english_string []
   [if [null internal-english_string]
       [= internal-english_string [conslist-as-english_string [get this as-english_conslist]]]]
   internal-english_string]
 
-[deftypefunk deliberative_plan get as-string []
+[deftypefunk nonsemantic_plan get as-string []
   [get this as-english_string]]
 
-[deftypefunk deliberative_plan get as-graphviz_label []
+[deftypefunk nonsemantic_plan get as-graphviz_label []
   [string-concat '<' [get unique_name as-string] '>']]
 
-[deftypefunk deliberative_plan execute wait_for_property [source_type source_property source_property_value property property_value]
+[deftypefunk nonsemantic_plan execute wait_for_property [source_type source_property source_property_value property property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property source_property source_property_value]]
 												`property property property_value]]]
@@ -137,7 +137,7 @@
 	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
-[deftypefunk deliberative_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk nonsemantic_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
@@ -162,7 +162,7 @@
 	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
-[deftypefunk deliberative_plan execute assure_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk nonsemantic_plan execute assure_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
@@ -183,11 +183,11 @@
 			      [= found t]]]]
 	      current_events]]
       [if [not found]
-	  [error bug_name    `deliberative_plan-assure_relationship-failed
+	  [error bug_name    `nonsemantic_plan-assure_relationship-failed
 		 description `[assure_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]
 	nil]]]]
 
-[defunk deliberative_plan-expression-compile [expression]
+[defunk nonsemantic_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
@@ -202,7 +202,7 @@
 					      [[eq `prog                  command] [eval `[funk [this]
 												[terminal_format standard-terminal '\nplan evaluating serial process.']
 												@[mapcar [funk [argument]
-													       `[funkall ,[deliberative_plan-expression-compile argument] this]]
+													       `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
 													 arguments]]]]
 					      [[eq `wait-for-time         command] [if [not [eq 1 arguments-length]]
 										       [error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -270,17 +270,17 @@
 														     ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
 												    [have this assure_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
 												    ]]]]]
-					      [t                                   [error bug_name `deliberative_plan_compile_error]]]]]]
-	[t                          [error bug_name `deliberative_plan_compile_error]]]]
+					      [t                                   [error bug_name `nonsemantic_plan_compile_error]]]]]]
+	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]
 
-[deftypefunk deliberative_plan get __compiled_funk []
-  [deliberative_plan-expression-compile expression]]
+[deftypefunk nonsemantic_plan get __compiled_funk []
+  [nonsemantic_plan-expression-compile expression]]
 
-[deftypefunk deliberative_plan get compiled_funk []
+[deftypefunk nonsemantic_plan get compiled_funk []
   [if [null internal-compiled_funk]
       [= internal-compiled_funk [get this __compiled_funk]]]
   internal-compiled_funk]
 
-[deftypefunk deliberative_plan execute eval []
+[deftypefunk nonsemantic_plan execute eval []
   [funkall [get this compiled_funk] this]]
 

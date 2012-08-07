@@ -51,7 +51,7 @@
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal
 					 '\nreflective_layer: initial plan bug response here.'
-					 '\n                  buggy plan = "' [get [get semantic_plan deliberative_plan] as-string] '."'
+					 '\n                  buggy plan = "' [get [get semantic_plan nonsemantic_plan] as-string] '."'
 					 '\n                         bug = "' [get bug as-string] '."']
 			[let [[bug_name [have [get bug frame] lookup `bug_name]]]
 			  [cond [[eq bug_name `deliberative_plan-assure_relationship-failed] [have [get this mind] wait_to_call `reflective `plan_bug_response `expectation_failure_response                  semantic_plan bug]]
@@ -117,7 +117,7 @@
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal
 					 '\nreflective_layer: unknown bug name response here.'
-					 '\n                  buggy plan = "' [get [get semantic_plan deliberative_plan] as-string] '."'
+					 '\n                  buggy plan = "' [get [get semantic_plan nonsemantic_plan] as-string] '."'
 					 '\n                         bug = "' [get bug as-string] '."']
 			[have bug pretty_print]
 			]]

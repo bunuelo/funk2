@@ -81,7 +81,7 @@
 	]]
 
 [deftypefunk reflective_layer execute add_reflective_semantic_plan [semantic_plan]
-  `[terminal_format standard-terminal '\nreflective_layer: adding reflective plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
+  `[terminal_format standard-terminal '\nreflective_layer: adding reflective plan, "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
   [have [get [get this mind] semantic_knowledge_base `reflective_plan_knowledge] add_semantic_frame semantic_plan]
   [let [[start_plan_operator [get semantic_plan start_plan_operator]]]
     [have this add_reflective_semantic_object_recursive start_plan_operator]]

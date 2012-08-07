@@ -36,7 +36,7 @@
        
        [= description_text_view [gtk-text_view-new]]
        [set description_text_view wrap_mode `word_char]
-       [set [get description_text_view buffer] text [format nil [get [get semantic_plan deliberative_plan] as-string] '.']]
+       [set [get description_text_view buffer] text [format nil [get [get semantic_plan nonsemantic_plan] as-string] '.']]
        [have vbox pack_start description_text_view t t 0]
        
        [= button_hbox [gtk-hbox-new 0]]
@@ -48,7 +48,7 @@
        
        [have execute_button signal_connect 'clicked'
 	     [funk []
-		   [terminal_format standard-terminal '\nuser: deliberative plan activator executing "' [get [get semantic_plan deliberative_plan] as-string] '."']
+		   [terminal_format standard-terminal '\nuser: deliberative plan activator executing "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
 		   [have [get [get mindmon_blocks_world_deliberative_plan_activator_window mindmon_agent] mind] activate `deliberative `execution `execute_plan semantic_plan]]
 	     nil]
        

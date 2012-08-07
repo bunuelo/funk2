@@ -174,13 +174,13 @@
   :packages [reflective_mind_core
 	     deliberative_resource
 	     semantic_planner
-	     deliberative_plan]
+	     nonsemantic_plan]
    :sources ['deliberative_plan_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [reflective_mind_core
 	     deliberative_resource
-	     deliberative_plan]
+	     nonsemantic_plan]
    :sources ['deliberative_execution_agency.fu2']]
 
 [defpackage object_type_property_relation_goal
@@ -262,13 +262,13 @@
   :packages [reflective_mind_core
 	     reflective_resource
 	     semantic_planner
-	     deliberative_plan]
+	     nonsemantic_plan]
    :sources ['reflective_plan_agency.fu2']]
 
 [defpackage reflective_execution_agency
   :packages [reflective_mind_core
 	     reflective_resource
-	     deliberative_plan]
+	     nonsemantic_plan]
    :sources ['reflective_execution_agency.fu2']]
 
 

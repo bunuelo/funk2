@@ -230,16 +230,16 @@
 	     semantic_expectation_failure]
    :sources ['reflective_plan_bug_response_agency.fu2']]
 
-[defpackage plan_type_property_relation_goal
+[defpackage deliberative1_type_property_relation_goal
   :packages [reflective_mind_core
 	     object_type_property_relation_goal]
-   :sources ['plan_type_property_relation_goal.fu2']]
+   :sources ['deliberative1_type_property_relation_goal.fu2']]
 
 [defpackage reflective_plan_object_type_goal_agency
   :packages [reflective_mind_core
 	     reflective_resource
 	     semantic_goal_event
-	     plan_type_property_relation_goal]
+	     deliberative1_type_property_relation_goal]
    :sources ['reflective_plan_object_type_goal_agency.fu2']]
 
 [defpackage reflective_event_knowledge_agency

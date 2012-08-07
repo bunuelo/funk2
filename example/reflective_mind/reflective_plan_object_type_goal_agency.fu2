@@ -19,7 +19,7 @@
 
 
 
-'reflective_plan_object_type_goal_agency'
+'reflective_reflective_object_type_goal_agency'
 
 [deframe reflective_plan_object_type_goal_agency [agency] []
   [new []
@@ -69,9 +69,9 @@
 'translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource'
 
 [deframe translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource [reflective_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
-											 [semantic_plan_object_copy_mutex       [new mutex]]
-											 [goals                                 nil]
-											 [deliberative1_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
+													   [semantic_plan_object_copy_mutex       [new mutex]]
+													   [goals                                 nil]
+													   [deliberative1_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
   [new []
        [construct reflective_resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge
 		  [funk []
@@ -85,10 +85,10 @@
   [= goals [cons goal goals]]]
 
 [deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_type_to_goal_states [event_time
-												       semantic_plan_object_type_event_source
-												       key_type
-												       key
-												       semantic_plan_object_type_event_target]
+															 semantic_plan_object_type_event_source
+															 key_type
+															 key
+															 semantic_plan_object_type_event_target]
   [mapc [funk [goal]
 	      [have goal add_type_event
 		    event_time
@@ -99,10 +99,10 @@
 	goals]]
 
 [deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute remove_type_from_goal_states [event_time
-													    semantic_plan_object_type_event_source
-													    key_type
-													    key
-													    semantic_plan_object_type_event_target]
+															      semantic_plan_object_type_event_source
+															      key_type
+															      key
+															      semantic_plan_object_type_event_target]
   [mapc [funk [goal]
 	      [have goal remove_type_event
 		    event_time

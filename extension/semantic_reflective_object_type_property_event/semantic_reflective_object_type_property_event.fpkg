@@ -17,13 +17,13 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_physical_object_type_property_event
-  :documentation        'Basic knowledge for counting physical_object_type relations.'
+[defpackage semantic_reflective_object_type_property_event
+  :documentation        'Basic knowledge for counting reflective_object_type relations.'
    :packages            [semantic_object
 			 semantic_object_type_event
 			 semantic_know_of_relationship_event]
-    :sources            ['semantic_physical_object_type_property_event-core.fu2']
-     :dynamic_libraries ['libf2e_semantic_physical_object_type_property_event.so']]
+    :sources            ['semantic_reflective_object_type_property_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_reflective_object_type_property_event.so']]
 
-[defcore semantic_physical_object_type_property_event 'libf2e_semantic_physical_object_type_property_event.so']
+[defcore semantic_reflective_object_type_property_event 'libf2e_semantic_reflective_object_type_property_event.so']
 

@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_AGENT__H
 #define F2__EXTENSION__SEMANTIC_AGENT__H
 
-#include "../semantic_physical_object/semantic_physical_object.h"
+#include "../semantic_reflective_object/semantic_reflective_object.h"
 
 
 // **

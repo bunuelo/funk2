@@ -125,10 +125,10 @@
 	     learned_reactive_resource
 	     reflective_mind_perception
 	     semantic_object_type_event
-	     semantic_physical_object
-	     semantic_physical_object_type_event
-	     semantic_physical_object_type_property_event
-	     semantic_physical_object_type_relation_event]
+	     semantic_reflective_object
+	     semantic_reflective_object_type_event
+	     semantic_reflective_object_type_property_event
+	     semantic_reflective_object_type_relation_event]
    :sources ['learned_reactive_sensory_agency.fu2']]
 
 [defpackage learned_reactive_language_agency

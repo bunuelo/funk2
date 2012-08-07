@@ -17,11 +17,11 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_physical_object
-  :documentation        'Basic physical knowledge for dealing with containment and other semantic physical relationships.'
-   :packages            [semantic_object]
-    :sources            ['semantic_physical_object-core.fu2']
-     :dynamic_libraries ['libf2e_semantic_physical_object.so']]
+[defpackage semantic_reflective_object_type_event
+  :documentation        'Basic knowledge for dealing with reflective object types.'
+   :packages            [semantic_object_type_event]
+    :sources            ['semantic_reflective_object_type_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_reflective_object_type_event.so']]
 
-[defcore semantic_physical_object 'libf2e_semantic_physical_object.so']
+[defcore semantic_reflective_object_type_event 'libf2e_semantic_reflective_object_type_event.so']
 

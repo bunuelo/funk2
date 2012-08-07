@@ -12,13 +12,18 @@
  BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
  BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
  WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk semantic_physical_object_type_relation_event-core_extension-ping         semantic_physical_object_type_relation_event semantic_physical_object_type_relation_event__core_extension__ping]
-[defcorefunk semantic_physical_object_type_relation_event-core_extension-initialize   semantic_physical_object_type_relation_event semantic_physical_object_type_relation_event__core_extension__initialize]
-[defcorefunk semantic_physical_object_type_relation_event-core_extension-define_types semantic_physical_object_type_relation_event semantic_physical_object_type_relation_event__core_extension__define_types]
+[defpackage semantic_reflective_object_type_relation_event
+  :documentation        'Basic knowledge for counting reflective_object_type relations.'
+   :packages            [semantic_object
+			 semantic_object_type_event
+			 semantic_know_of_relationship_event]
+    :sources            ['semantic_reflective_object_type_relation_event-core.fu2']
+     :dynamic_libraries ['libf2e_semantic_reflective_object_type_relation_event.so']]
 
-[semantic_physical_object_type_relation_event-core_extension-define_types]
+[defcore semantic_reflective_object_type_relation_event 'libf2e_semantic_reflective_object_type_relation_event.so']
 

@@ -25,7 +25,7 @@
   :sources ['dictionary_frame.fu2']]
 
 [defpackage natural_language_command
-  :packages [parse_tree dictionary_frame frame_ball semantic_knowledge_base meta_semantic_knowledge_base semantic_physical_object]
+  :packages [parse_tree dictionary_frame frame_ball semantic_knowledge_base meta_semantic_knowledge_base semantic_reflective_object]
    :sources ['natural_language_command.fu2']]
 
 [defpackage natural_language

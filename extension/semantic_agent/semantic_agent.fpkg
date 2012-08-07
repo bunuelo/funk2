@@ -19,7 +19,7 @@
 
 [defpackage semantic_agent
   :documentation        'Basic physical knowledge for dealing with physical agents.'
-   :packages            [semantic_physical_object]
+   :packages            [semantic_reflective_object]
     :sources            ['semantic_agent-core.fu2']
      :dynamic_libraries ['libf2e_semantic_agent.so']]
 

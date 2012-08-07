@@ -17,11 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_physical_object_type_event
-  :documentation        'Basic knowledge for dealing with physical object types.'
-   :packages            [semantic_object_type_event]
-    :sources            ['semantic_physical_object_type_event-core.fu2']
-     :dynamic_libraries ['libf2e_semantic_physical_object_type_event.so']]
+[defcorefunk semantic_reflective_object_type_event-core_extension-ping         semantic_reflective_object_type_event semantic_reflective_object_type_event__core_extension__ping]
+[defcorefunk semantic_reflective_object_type_event-core_extension-initialize   semantic_reflective_object_type_event semantic_reflective_object_type_event__core_extension__initialize]
+[defcorefunk semantic_reflective_object_type_event-core_extension-define_types semantic_reflective_object_type_event semantic_reflective_object_type_event__core_extension__define_types]
 
-[defcore semantic_physical_object_type_event 'libf2e_semantic_physical_object_type_event.so']
+[semantic_reflective_object_type_event-core_extension-define_types]
 

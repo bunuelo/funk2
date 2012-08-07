@@ -19,17 +19,17 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT__H
-#define F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT__H
+#ifndef F2__EXTENSION__SEMANTIC_REFLECTIVE_OBJECT__H
+#define F2__EXTENSION__SEMANTIC_REFLECTIVE_OBJECT__H
 
 #include "../semantic_object/semantic_object.h"
 
 
 // **
 
-f2ptr f2__semantic_physical_object__core_extension__ping      (f2ptr cause);
-f2ptr f2__semantic_physical_object__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_physical_object__core_extension__destroy   (f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__ping      (f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__initialize(f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__destroy   (f2ptr cause);
 
-#endif // F2__EXTENSION__SEMANTIC_PHYSICAL_OBJECT__H
+#endif // F2__EXTENSION__SEMANTIC_REFLECTIVE_OBJECT__H
 

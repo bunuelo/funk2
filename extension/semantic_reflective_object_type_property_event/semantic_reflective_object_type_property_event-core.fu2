@@ -12,14 +12,13 @@
  BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
  BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
  WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
- 
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk semantic_physical_object-core_extension-ping         semantic_physical_object semantic_physical_object__core_extension__ping]
-[defcorefunk semantic_physical_object-core_extension-initialize   semantic_physical_object semantic_physical_object__core_extension__initialize]
-[defcorefunk semantic_physical_object-core_extension-define_types semantic_physical_object semantic_physical_object__core_extension__define_types]
+[defcorefunk semantic_reflective_object_type_property_event-core_extension-ping         semantic_reflective_object_type_property_event semantic_reflective_object_type_property_event__core_extension__ping]
+[defcorefunk semantic_reflective_object_type_property_event-core_extension-initialize   semantic_reflective_object_type_property_event semantic_reflective_object_type_property_event__core_extension__initialize]
+[defcorefunk semantic_reflective_object_type_property_event-core_extension-define_types semantic_reflective_object_type_property_event semantic_reflective_object_type_property_event__core_extension__define_types]
 
-[semantic_physical_object-core_extension-define_types]
+[semantic_reflective_object_type_property_event-core_extension-define_types]
 

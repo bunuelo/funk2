@@ -79,7 +79,7 @@ export_cefunk1(semantic_agent__type, thing, 0, "Returns the specific type of obj
 
 
 f2ptr f2__semantic_agent_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_physical_object")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_reflective_object")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_agent"), new__symbol(cause, "semantic_agent__new")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_agent"), new__symbol(cause, "semantic_agent__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_agent"), new__symbol(cause, "semantic_agent__type")));}
@@ -99,7 +99,7 @@ export_cefunk0(semantic_agent__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_agent__core_extension__initialize(f2ptr cause) {
   {
-    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_physical_object"), new__symbol(cause, "semantic_physical_object__core_extension__ping")), nil);
+    f2ptr result = f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object"), new__symbol(cause, "semantic_reflective_object__core_extension__ping")), nil);
     if (raw__larva__is_type(cause, result)) {
       return result;
     }

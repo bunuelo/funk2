@@ -149,21 +149,6 @@
 [deftypefunk deliberative_layer execute lookup_plan_action [english_conslist]
   [have plan_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
 
-[deftypefunk deliberative_layer execute add_plan_semantic_plan [semantic_plan]
-  `[terminal_format standard-terminal '\ndeliberative_layer: adding plan plan, "' [get [get semantic_plan deliberative_plan] as-string] '."']
-  [have [get [get this mind] semantic_knowledge_base `plan_plan_knowledge] add_semantic_frame semantic_plan]
-  [have plan_semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]]
-
-[deftypefunk deliberative_layer get plan_semantic_plan [phenomenal_name]
-  [let [[plan_semantic_plan [have plan_semantic_plan_phenomenal_name_frame lookup phenomenal_name]]]
-    [if [null plan_semantic_plan]
-	[error bug_type             deliberative_layer-plan_semantic_plan-not_found
-	       plan_phenomenal_name phenomenal_name]]
-    plan_semantic_plan]]
-
-[deftypefunk deliberative_layer get plan_semantic_plans []
-  [get plan_semantic_plan_phenomenal_name_frame values]]
-
 [deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]

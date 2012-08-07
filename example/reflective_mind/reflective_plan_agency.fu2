@@ -42,13 +42,11 @@
        this]]
 
 [deftypefunk reflective_plan_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `reflective_plan_knowledge      [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `reflective_plan_plan_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `reflective_plan_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk reflective_plan_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `reflective_plan_knowledge      `reflective_plan_knowledge->reflective_plan_type_knowledge]
-  [have [get this mind] create_knowledge_event_stream_iterator `reflective_plan_plan_knowledge `reflective_plan_plan_knowledge->reflective_plan_plan_type_knowledge]
+  [have [get this mind] create_knowledge_event_stream_iterator `reflective_plan_knowledge `reflective_plan_knowledge->reflective_plan_type_knowledge]
   ]
 
 [deftypefunk reflective_plan_agency execute create_builtin_actions []

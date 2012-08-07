@@ -170,12 +170,12 @@
 	     semantic_counterfactual_transframe]
    :sources ['nonsemantic_plan.fu2']]
 
-[defpackage nonsemantic_plan_agency
+[defpackage deliberative_plan_agency
   :packages [reflective_mind_core
 	     deliberative_resource
 	     semantic_planner
 	     nonsemantic_plan]
-   :sources ['nonsemantic_plan_agency.fu2']]
+   :sources ['deliberative_plan_agency.fu2']]
 
 [defpackage deliberative_execution_agency
   :packages [reflective_mind_core

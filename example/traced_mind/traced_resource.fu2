@@ -18,9 +18,53 @@
  rights to redistribute these changes.'
 
 
+'traced_resource_change'
+
+[deframe traced_resource_change [frame] [knowledge_base_name]
+  [new [initial-knowledge_base_name]
+       [= knowledge_base_name initial-knowledge_base_name]
+       nil]]
+
+'traced_resource_add_relationship_change'
+
+[deframe traced_resource_add_relationship_change [traced_resource_change] [source_node
+									   source_property_type
+									   source_property
+									   source_property_value
+									   relation_type
+									   target_node
+									   target_property_type
+									   target_property
+									   target_property_value]
+  [new [initial-knowledge_base_name
+	initial-source_node
+	initial-source_property_type
+	initial-source_property
+	initial-source_property_value
+	initial-relation_type
+	initial-target_node
+	initial-target_property_type
+	initial-target_property
+	initial-target_property_value]
+       
+       [construct traced_resource_change initial-knowledge_base_name]
+       
+       [= initial-source_node           initial-source_node]
+       [= initial-source_property_type  initial-source_property_type]
+       [= initial-source_property       initial-source_property]
+       [= initial-source_property_value initial-source_property_value]
+       [= initial-relation_type         initial-relation_type]
+       [= initial-target_node           initial-target_node]
+       [= initial-target_property_type  initial-target_property_type]
+       [= initial-target_property       initial-target_property]
+       [= initial-target_property_value initial-target_property_value]
+       
+       nil]]
+
 'traced_resource'
 
-[deframe traced_resource [resource] [simulate_knowledge_base_names]
+[deframe traced_resource [resource] [simulate_knowledge_base_names
+				     ]
   [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
        [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
 	 [construct resource initial-name wrapped_active_funk]

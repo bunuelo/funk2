@@ -230,7 +230,6 @@
 	    [= plan_operator_iter [cdr plan_operator_iter]]]]]]
     [have this create_reflective_semantic_plan `[prog [wait-to-call |focus on a plan, plan 1|]
 						      [wait-to-call execute_plan_in_focus]
-						      [wait-for-relationship semantic_plan_object plan_object_type semantic_plan_object failure semantic_plan_object plan_object_type semantic_expectation_failure]
 						      ]
 	  start_operator]]
   
@@ -258,7 +257,6 @@
 	    [= plan_operator_iter [cdr plan_operator_iter]]]]]]
     [have this create_reflective_semantic_plan `[prog [wait-to-call |focus on a plan, plan 2|]
 						      [wait-to-call execute_plan_in_focus]
-						      [wait-for-relationship semantic_plan_object plan_object_type semantic_plan_object failure semantic_plan_object plan_object_type semantic_expectation_failure]
 						      ]
 	  start_operator]]
   

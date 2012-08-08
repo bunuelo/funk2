@@ -143,7 +143,7 @@
 														   'resource, ' name ', transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
 												  
 												  ]
-											    [get [semantic-lookup_set semantic_transframe change] elements]]
+											    [get [semantic-lookup_set event_transframe change] elements]]
 										      
 										      ]]]]
 		       [[eq [get [get this layer] name] `deliberative]          [let [[deliberative1_type_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge]]]
@@ -162,7 +162,7 @@
 														   'resource, ' name ', transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
 												  
 												  ]
-											    [get [semantic-lookup_set semantic_transframe change] elements]]
+											    [get [semantic-lookup_set event_transframe change] elements]]
 										      
 										      ]]]]
 		       [[eq [get [get this layer] name] `reflective]            [prog]]

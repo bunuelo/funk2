@@ -204,13 +204,12 @@
   agent_body]
 
 [deftypefunk mindmon_blocks_world_agent get knowledge_base_names []
-  `[deliberative_action_knowledge
-    
-    reflective_event_knowledge
+  `[reflective_event_knowledge
     reflective_knowledge
     
     reflective_plan_knowledge
     
+    deliberative1_action_knowledge
     deliberative1_goal_knowledge
     deliberative1_type_knowledge
     type_copy_of_deliberative1_knowledge

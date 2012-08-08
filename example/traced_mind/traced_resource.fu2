@@ -119,7 +119,7 @@
 		 [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
 		   [let [[event_transframe [get physical_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
 		     
-		     [let [[semantic_action [get [get this mind] deliberative_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
+		     [let [[semantic_action [get [get this mind] deliberative1_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
 		       
 		       [semantic-add action_sequence transframe    event_transframe]
 		       [semantic-add semantic_action example_event action_sequence]

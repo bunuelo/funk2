@@ -246,8 +246,8 @@
 			[let [[arguments `[|focus on a plan, plan 2|]]]
 			  [let [[action [have [get [get this mind] layer `deliberative] lookup_plan_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nexpectation_failure plan error: "' [conslist-as-english_string arguments] '" action not defined.']
-			      [prog [terminal_format standard-terminal '\nexpectation_failure plan waiting to call: "' [get action as-string] '."']
+				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
 			

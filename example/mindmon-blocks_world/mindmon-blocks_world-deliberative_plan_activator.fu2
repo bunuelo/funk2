@@ -30,7 +30,7 @@
        [= mindmon_blocks_world_deliberative_plan_activator_window initial-mindmon_blocks_world_deliberative_plan_activator_window]
        [= semantic_plan                                           initial-semantic_plan]
        
-       [= plan_frame  [gtk-frame-new [format nil 'Deliberative Plan - ' [get [get semantic_plan phenomenal_name] as-string]]]]
+       [= plan_frame  [gtk-frame-new [format nil 'Deliberative1 Plan - ' [get [get semantic_plan phenomenal_name] as-string]]]]
        [= vbox        [gtk-vbox-new 0]]
        [have plan_frame add vbox]
        
@@ -71,7 +71,7 @@
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]
-       [set window title [format nil [get mindmon_agent name] ' - Deliberative Plan Activator']]
+       [set window title [format nil [get mindmon_agent name] ' - Deliberative1 Plan Activator']]
        [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
        [set window destroy_with_parent t]
        [= vbox [gtk-vbox-new 0]]
@@ -117,7 +117,7 @@
        ]]
 
 [deftypefunk mindmon_blocks_world_deliberative_plan_activator get mindmon_agent_tool-title []
-  'Deliberative Plan Activator']
+  'Deliberative1 Plan Activator']
 
 [deftypefunk mindmon_blocks_world_deliberative_plan_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_blocks_world_deliberative_plan_activator: starting.']

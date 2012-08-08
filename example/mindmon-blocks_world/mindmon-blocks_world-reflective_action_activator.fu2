@@ -31,7 +31,7 @@
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]
-       [set window title [format nil [get mindmon_agent name] ' - Reflective Action Activator']]
+       [set window title [format nil [get mindmon_agent name] ' - Deliberative2 Action Activator']]
        [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
        [set window destroy_with_parent t]
        [= vbox [gtk-vbox-new 2]]
@@ -58,7 +58,7 @@
 		     [have action__button signal_connect 'clicked'
 			   [funk []
 				 [fiber [funk []
-					      [terminal_format standard-terminal '\nuser: reflective action activator waiting to call "' [get action as-string] '."']
+					      [terminal_format standard-terminal '\nuser: deliberative2 action activator waiting to call "' [get action as-string] '."']
 					      [have action external_wait_to_call]]
 					nil]]
 			   nil]]]
@@ -81,7 +81,7 @@
        ]]
 
 [deftypefunk mindmon_blocks_world_reflective_action_activator get mindmon_agent_tool-title []
-  'Reflective Action Activator']
+  'Deliberative2 Action Activator']
 
 [deftypefunk mindmon_blocks_world_reflective_action_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_blocks_world_reflective_action_activator: starting.']

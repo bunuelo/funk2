@@ -25,6 +25,8 @@
        [= feature initial-feature]
        nil]]
 
+[defunk action_transframe_hypothesis_space-compute_symbol_from_semantic_event [semantic_event]
+  nil]
 
 'traced_resource'
 
@@ -135,6 +137,13 @@
 										      
 										      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 												       'resource, ' name ', learned physical_type_knowledge transframe.']
+										      
+										      [mapc [funk [change]
+												  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+														   'resource, ' name ', transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
+												  
+												  ]
+											    [get [semantic-lookup_set semantic_transframe change] elements]]
 										      
 										      ]]]]
 		       [[eq [get [get this layer] name] `deliberative]          [let [[deliberative1_type_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge]]]

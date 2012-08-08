@@ -127,7 +127,7 @@
     [have this add_physical_action action]]]
 
 [deftypefunk deliberative_layer execute create_physical_semantic_plan [expression start_plan_operator]
-  [let [[plan [new deliberative_plan 
+  [let [[plan [new nonsemantic_plan 
 		   [get this mind]
 		   expression]]]
     [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
@@ -159,7 +159,7 @@
     [have this add_plan_action action]]]
 
 [deftypefunk deliberative_layer execute create_plan_semantic_plan [expression start_plan_operator]
-  [let [[plan [new deliberative_plan 
+  [let [[plan [new nonsemantic_plan 
 		   [get this mind]
 		   expression]]]
     [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]

@@ -40,6 +40,7 @@ phdthesis.pdf: \
   chapters/future.tex \
   chapters/science.tex \
   chapters/education.tex \
+  chapters/causal_reflective_tracing_tutorial.tex \
   chapters/the_code.tex \
   gfx/agent_environment.pdf \
   gfx/blocks_world_screenshot-1.pdf \

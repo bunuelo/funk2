@@ -1,0 +1,625 @@
+\chapter{Causal Reflective Tracing Tutorial}\label{appendix:causal_reflective_tracing_tutorial}
+
+Large concurrent and parallel systems are difficult to build and debug
+because of the complex causal interactions between all of the
+different processes.  For this reason, every process fiber in Funk2
+has an associated **cause** object.  If any process fiber creates a
+new process fiber, then a new cause object is created for the child
+process thread with a parent cause object reference.  This allows
+responsibility for any event to be traced backwards through these
+causal trees.
+
+We will now go through a few basic uses of the cause object system
+that is fundamental to the Funk2 programming language.
+
+\section{Environments go Right while Causes go Down}
+
+The Funk2 programming language introduces a novel type of variable
+frame that is the key to its causal tracing funktionality.  Most
+programming languages have variable lookups that happen hierarchically
+within the visual nested hierarchical list structure of the code.  We
+will first give an example of the traditional **environment frame
+hierarchy**, then we will give an example of our new **cause frame
+hierarchy**.
+
+\section{Environment Frame Hierarchy}
+
+The hierarchy of **let** statements in a Funk2 program demonstrates
+the inherent hierarchical structure to the environment frame variable
+lookup process.  Notice that in the hierarchy of environment frames,
+there are two different `b` variables and three different `c`
+variables with different values.  What variable is meant by the
+programmer is determined by where in the hierarchy the variable is
+referenced.
+
+\begin{equation*}
+\begin{array}{l}
+\text{\tt [prog [print 1]} \\
+\text{\tt ~~~~~~[print 2]} \\
+\text{\tt ~~~~~~[print 3]]}
+
+\text{\tt [let [[a 1]} \\
+\text{\tt ~~~~~~[b 1]} \\
+\text{\tt ~~~~~~[c 1]]} \\
+\text{\tt ~~[let [[b 2]} \\
+\text{\tt ~~~~~~~~[c 2]]} \\
+\text{\tt ~~~~[let [[c 3]]} \\
+%\text{\tt ~~~~~~[terminal_format standard-terminal '{\textbackslash}na $=$ ' a} \\
+%\text{\tt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'{\textbackslash}nb $=$ ' b} \\
+%\text{\tt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'{\textbackslash}nc $=$ ' c]]]]} \\
+\text{\tt } \\
+\text{\tt a = 1} \\
+\text{\tt b = 2} \\
+\text{\tt c = 3} \\
+\text{\tt } \\
+\text{\tt --> []}
+\end{array}
+\end{equation*}
+
+\section{Cause Frame Hierarchy}
+
+In contast, cause frame hierarchies are not hierarchical within the
+code of the programmer of the funktion.  Instead, cause frame
+hierarchies are hierarchical based on the run-time causality that the
+user provides.  Cause variable frame hierarchies allow for explicit
+and specific context dependence for the execution of the funktion.
+
+Because every statement that is typed into the Funk2 REPL inherits a
+new cause object with the `cause-name` cause variable defined, we can
+take advantage of this variable in the following example:
+
+%```funk2
+%[defunk test []
+%  [terminal_format standard-terminal '\ntest: My cause-name is ' cause-name '.']]
+%
+%--> []
+%
+%[test]
+%
+%test: My cause-name is repl-eval.
+%
+%--> []
+%
+%[prog [cause-define cause-name `my-cause]
+%      [test]]
+%
+%test: My cause-name is my-cause.
+%
+%--> []
+%```
+
+As the above section has demonstrated and hopefully made clearer, the
+following funkiness point sums up:
+
+\begin{itemize}
+\item Environment frames indent to the right in the code hierarchy, while cause frames propagate downward through the execution hierarchy.
+\end{itemize}
+
+Now, bear with us as we introduce few a more technical details about
+how cause objects interact with concurrent, parallel programs in
+Funk2.  The use of cause objects will become clear once we put these
+initial pieces together, so do not worry that the utility of this
+extra causal machinery is not yet clear!  :-)
+
+\section{Every Parallel Process Fiber in Funk2 has a Cause}
+
+Since every process fiber in Funk2 has a cause, we can get that cause
+object at any point from within any process by using the `this-cause`
+funktion.  This is one of the key fundamental aspects of the
+procedural reflection that is provided by the Funk2 programming
+language.
+
+%```funk2
+%[this-cause]
+%
+%--> [cause allocate_traced_arrays [] imagination_stack [] frame [frame cause-exp [this-cause] cause-name repl-eval]]
+%```
+
+\section{Create a Child Cause to Execute a Block of Code}
+
+When we are executing a block of code, it is often useful to allocate
+a new causal frame, so that we can define new values for causal
+variables without effecting the values for those variables in the
+current causal frame.  The `with-new-cause` operator performs just
+this funktionality for a normal serial process.  The following example
+shows how causal variables are one effective way to pass arguments to
+a funktion without explicitly passing those arguments.
+
+%```funk2
+%[defunk print-my-cause-name []
+%  [terminal_format standard-terminal '\nMy cause-name is ' cause-name '.']]
+%
+%--> []
+%
+%[defunk test []
+%  [print-my-cause-name]
+%  [with-new-cause
+%    [cause-define cause-name `my-first-new-cause]
+%    [print-my-cause-name]]
+%  [with-new-cause
+%    [cause-define cause-name `my-second-new-cause]
+%    [print-my-cause-name]]
+%  [print-my-cause-name]
+%  nil]
+%
+%--> []
+%
+%[test]
+%
+%My cause-name is repl-eval.
+%My cause-name is my-first-new-cause.
+%My cause-name is my-second-new-cause.
+%My cause-name is repl-eval.
+%
+%--> []
+%```
+
+\section{Every Piece of Data in a Funk2 Program has a Cause Reference}
+
+In addition to every process fiber being allocated a new cause object
+that keeps track of children and parents, every piece of data
+maintains a reference to its creation cause.  So, if we have received
+a questionable result from a calculation, we can ask for its cause
+object.  We can start inspecting the process fibers, for which that
+cause is responsible.  Further, we may ask that cause object what its
+creation cause is, and by this method we may traverse backwards in
+time by jumping from one cause to another.  This process may help an
+automatic debugger to give hints as to the problem with the
+questionable result.
+
+The following example shows that we can put an integer, `1`, into the
+global variable, `x`, and then we can ask for the cause of this
+integer, `1`.  Notice that the cause for this integer is rather
+intricate and contains information about the standard input stream if
+you look closely.  In fact, different users of the same Funk2 virtual
+operating system are distinguished by using causal variables that bind
+to `standard-terminal` and `standard-input`.
+
+%```funk2
+%[globalize x 1]
+%
+%--> []
+%
+%x
+%
+%--> 1
+%
+%[get x cause]
+%
+%--> [cause
+%      allocate_traced_arrays []
+%      imagination_stack      []
+%      frame                  [frame
+%                               standard-input    [stream line_number 977 ...]
+%                               standard-terminal [terminal_print_frame ...]]]
+%```
+
+\section{Defining Causally Traced Funktionality}
+
+Okay, let us show an example of causally tracing the results of a
+computation.  We will now go through a series of steps that will build
+up an example of reflective tracing.  These steps must be taken from
+beginning to end, so that a small example program is written by the
+end of this sequential set of causal tracing examples.
+
+\subsection{Define an Object to Store a Trace Result}
+
+First, we define a new object type, named `trace\_result`, that will
+store intermediate results of our computational process that we're
+going to reflect over.  The `trace\_result` object has five slots: (1)
+**value**, (2) **funk-name**, and (3) **funk-args**, (4)
+**begin-time**, and (5) **end-time**.  The **value** of the
+`trace\_result` object is the intermediate result of the computation
+that we are tracing, the **funk-name** is the name of the funktion
+that has computed this intermediate result, and the **funk-args** slot
+will store the arguments that we used to invoke the funktion that we
+are tracing.  Finally, **end-time** and **begin-time** are the end
+times and begin times of the traced funktion execution respectively.
+
+%```funk2
+%[deframe trace_result [frame] [value funk-name funk-args begin-time end-time]
+%  [new [initial-value initial-funk-name initial-funk-args initial-begin-time initial-end-time]
+%    [= value      initial-value]
+%    [= funk-name  initial-funk-name]
+%    [= funk-args  initial-funk-args]
+%    [= begin-time initial-begin-time]
+%    [= end-time   initial-end-time]]]
+%
+%--> []
+%```
+
+\subsection{Define a way to Define a Traced Funktion}
+
+Since Funk2 executes thousands of funktions every second, we need a
+way to focus the reflective tracing features of our programs.  In this
+next example, we will start simple by defining an explicitly different
+way to define our funktions so that all of the causal results of their
+execution are traced.  We define a new metro, named `defunk-traced`,
+which will be the funktional equivalent to the basic `defunk` metro.
+The primary difference between `defunk-traced` and `defunk` will be
+that `defunk-traced` will create a trace and attach this trace to the
+results of its execution.
+
+%```funk2
+%[defmetro defunk-traced [name args :rest body]
+%  `[defunk ,name ,args
+%     [let [[args-copy [conslist @args]]]
+%       [with-new-cause
+%         [let [[begin-time [time]]
+%               [result     [prog @body]]]
+%           [let [[end-time [time]]]
+%             [cause-define trace_result [new trace_result result [quote ,name] args-copy begin-time end-time]]
+%             result]]]]]]
+%
+%--> []
+%```
+
+\subsection{An Initial Causal Tracing Experiment}
+
+Okay, now we can run a little experiment with our new object,
+`trace\_result`, and our new metro, `defunk-traced`.  First, we define
+a funktion, named `add-traced`, which takes two arguments, `x` and
+`y`, and simply adds them together and returns the result.  We can see
+that the expression, `[add-traced 1 2]`, works just as we would expect
+from a normal funktion defined using our old `defunk` operator.  The
+cool part about our new `defunk-traced` version is that we can now
+inspect the cause object of any value, whose creation was caused by
+the execution of that funktion.
+
+%```funk2
+%[defunk-traced add-traced [x y]
+%  [+ x y]]
+%
+%--> []
+%
+%[add-traced 1 2]
+%
+%--> 3
+%
+%[globalize x [add-traced 1 2]]
+%
+%--> []
+%
+%x
+%
+%--> 3
+%
+%[have [get x cause] lookup `trace_result]
+%
+%--> [trace_result
+%      funk-args  [1 2]
+%      funk-name  add-traced
+%      end-time   [time
+%                   hours       9
+%                   days        19
+%                   months      1
+%                   years       2012
+%                   minutes     33
+%                   seconds     33
+%                   nanoseconds 292679808]
+%      value      3
+%      begin-time [time
+%                   hours       9
+%                   days        19
+%                   months      1
+%                   years       2012
+%                   minutes     33
+%                   seconds     33
+%                   nanoseconds 291414693]]
+%
+%```
+
+\subsection{An Example of Accumulating Trace Results}
+
+Now, let's go through an example of causally tracing the results of a
+very simple recursive funktion execution.  We will focus on a funktion
+that computes the Fibonacci sequence in a straightforward, albeit
+inefficient, way.
+
+\subsubsection{Define Another Piece of Traced Arithmetic}
+
+For our example, we'll need to define one more traced arithmetical
+funktion, `subtract-traced`, which will work with our `add-traced`
+funktion in order to compute our recursive implementation of a
+funktion that computes a number from the Fibonacci sequence.
+
+%```funk2
+%[defunk-traced subtract-traced [x y]
+%  [- x y]]
+%
+%--> []
+%```
+
+\subsubsection{Recursively Computing the Fibonacci Sequence}
+
+Now, here is our definition of a funktion that we call `fib`, which
+computes a value of an element of the Fibonacci sequence given the
+index of the element.  There are a couple of subtle points about this
+implementation that we should point out:
+
+\begin{itemize}
+\item The `fib` funktion itself is not a traced funktion.  This means
+  that the execution of this funktion will not be traced explicitly;
+  however, because causal tracing occurs throughout every single part
+  of the Funk2 virtual operating system, we will see how just focusing
+  on the arithmetical funktions greatly simplifies our causal traces
+  in this example.
+
+\item When we check if the input value of the argument variable, `x`,
+  is equal to a constant, we do not return a constant value but
+  instead we return the value of the argument itself.  This is
+  important because although in a normal lisp program these integers
+  would be the same, they have different causal dependencies in a
+  running Funk2 program, and in this case, we'd like to trace the
+  causality of the input argument variable value through the return
+  value of the `fib` funktion.
+\end{itemize}
+
+%```funk2
+%[defunk fib [x]
+%  [if [== x 0]
+%      x
+%    [if [== x 1]
+%        x
+%      [add-traced [fib [subtract-traced x 2]]
+%                  [fib [subtract-traced x 1]]]]]]
+%
+%--> []
+%
+%[fib 7]
+%
+%--> 13
+%```
+
+\subsubsection{A Funktion to Accumulate Causal Traces of Results}
+
+Now, let's write a helper funktion that will help us to scan backwards
+through the causal dependencies of the result value of our new
+causally traced `fib` funktion.  We define a funktion named
+`accumulate-trace-results` to perform this task.  We can use this
+funktion by simply passing it a piece of data as its one argument.
+Then, this causal tracing funktion asks the cause of our argument for
+the value of its **trace\_result** causal frame slot.  If the value of
+this slot is Nil, we know that this value was not caused to be
+computed by one of our traced funktions that we defined with our
+`defunk-traced` operator.  However, if the value of the
+**trace\_result** slot is defined, we look up the **funk-name** slot
+and the **funk-args** slot, so that we can accumulate a description of
+the overall computation that caused our input argument value to exist.
+This will become a little more clear as we show a few execution
+examples of this helper funktion, but just for a moment, it is
+recommended to try to follow the logic of its execution in your head
+before going on.  Notice the simplicity of this funktion that will
+scan through the causal history of the numerical results of a
+computation.
+
+%```funk2
+%[defunk accumulate-trace-results [x]
+%  [let [[trace_result [have [get x cause] lookup `trace_result]]]
+%    [if [null trace_result]
+%        [prog [terminal_format standard-terminal '\nintermediate result for ' x ': ' `is-primitive-value]
+%              x]
+%      [let [[funk-name [get trace_result funk-name]]
+%            [funk-args [get trace_result funk-args]]]
+%        [terminal_format standard-terminal '\nintermediate result for ' x ': ' `[,funk-name @funk-args]]
+%        `[,funk-name @[mapcar &accumulate-trace-results funk-args]]]]]]
+%
+%--> []
+%```
+
+\subsubsection{Initial Test of Accumulating Causal Traces of Results}
+
+Okay, let's start with an extremely simple example, `[fib 1]`.
+
+%```funk2
+%[globalize x [fib 1]]
+%
+%--> []
+%
+%x
+%
+%--> 1
+%
+%[accumulate-trace-results x]
+%
+%intermediate result for 1: is-primitive-value
+%
+%--> 1
+%```
+
+The result is `1` as expected.  Notice that when we use our
+`accumulate-trace-results` funktion it simply states that the value
+`1` is a primitive value.  This means that this value was not created
+by a traced funktion.  That's true!  We typed in that value at the
+Funk2 REPL prompt.  That value was directly created by the user of the
+program.
+
+\subsubsection{More Interesting Example of Accumulating Causal Traces of Results}
+
+Okay, let's focus on another simple but much more interesting example,
+`[fib 2]`.  Now, when we use our `accumulate-trace-results` helper
+funktion on the result of this computation, we can see a much more
+complicated causal tracing of intermediate values.
+
+%```funk2
+%[accumulate-trace-results [fib 2]]
+%
+%intermediate result for 1: [add-traced 0 1]
+%intermediate result for 0: [subtract-traced 2 2]
+%intermediate result for 2: is-primitive-value
+%intermediate result for 2: is-primitive-value
+%intermediate result for 1: [subtract-traced 2 1]
+%intermediate result for 2: is-primitive-value
+%intermediate result for 1: is-primitive-value
+%
+%--> [add-traced [subtract-traced 2 2] [subtract-traced 2 1]]
+%
+%```
+
+\subsection{Creating a Trace Graph of Causal Traces of Results}
+
+Now, these causal traces become complicated very quickly, so it helps
+to get a visual overview of what is going on.  In this example, we
+define a funktion named `create-trace-graph` that creates a graph with
+labeled nodes and edges in order to help us to visualize and compare
+different causal traces of varying complexity.
+
+%```funk2
+%[defunk create-trace-graph [x]
+%  [let [[graph     [new graph]]
+%        [node_hash [new hash [funk [x]
+%                               [get [pointer x] eq_hash_value]]
+%                             [funk [x y]
+%                               [eq [pointer x] [pointer y]]]]]]
+%    [labels [[lookup_node [y]
+%	       [let [[node [have node_hash lookup y]]]
+%		 [if [null node]
+%		     [let [[trace_result [have [get y cause] lookup `trace_result]]]
+%		       [if [null trace_result]
+%			   [prog [= node [new graph_node y]]
+%				 [have graph add_node node]
+%				 [have node_hash add y node]]
+%			 [let [[funk-name [get trace_result funk-name]]
+%			       [funk-args [get trace_result funk-args]]]
+%			   [= node [new graph_node [format nil `[,funk-name @funk-args] ' --> ' y]]]
+%			   [have graph add_node node]
+%			   [have node_hash add y node]
+%			   [mapc [funk [arg]
+%				   [let [[arg-node [lookup_node arg]]]
+%				     [have graph add_new_edge arg arg-node node]]]
+%				 funk-args]]]]]
+%		 node]]]
+%      [lookup_node x]]
+%    graph]]
+%
+%--> []
+%```
+
+\subsubsection{Visualizing a more Complicated Reflective Trace as a Graph}
+
+Funk2 comes with built in support for the graph visualization
+software, GraphViz, as well as the GhostScript postscript viewing
+application, GhostView.  In a Debian or Ubuntu environment, these
+packages can be installed by typing the following command into your
+shell prompt:
+
+%```sh
+%sudo apt-get install gv graphviz
+%```
+
+In order to include the GraphViz compiler in Funk2, type the following
+into your Funk2 REPL prompt:
+
+%```funk2
+%[require graphviz]
+%```
+
+Okay, now we should be all set to test our causal trace visualization
+funktion.  When you type the following into your Funk2 REPL, you
+should see the following window pop up, displaying the causal trace of
+the results of the computation.
+
+%```funk2
+%[globalize x [fib 3]]
+%
+%--> []
+%
+%x
+%
+%--> 2
+%
+%[globalize g [create-trace-graph x]]
+%
+%--> []
+%
+%[have g gview]
+%
+%--> []
+%```
+
+%![Trace graph visualization for [fib 3].](http://funk2.org/create-trace-graph-1.jpg)
+
+Notice in the graph above that the nodes of the graph represent the
+result of a specific funktion call event, while the edges represent
+the flow of the data from the results of these funktion call events to
+supply argument values to subsequent funktion call events.
+
+\subsection{An Optimized Implementation of the Fibonacci Sequence}
+
+Now we will show how these basic reflective tools that we've
+implemented in this tutorial can help us to visually compare the
+causal execution traces of different implementations of the same
+funktionality.  Here, we implement a memoized version of our original
+`fib` funktion, which we will call `fib-memo`.
+
+%```funk2
+%[defunk-traced fib-memo [x]
+%  [let [[memoized_results [new ptypehash]]]
+%    [labels [[helper [y]
+%               [let [[result [have memoized_results lookup y]]]
+%                 [if [null result]
+%                     [prog [= result [if [== y 0]
+%                                         y
+%                                       [if [== y 1]
+%                                           y
+%                                         [add-traced [helper [subtract-traced y 2]]
+%                                                     [helper [subtract-traced y 1]]]]]]
+%                           [have memoized_results add y result]]]
+%                 result]]]
+%      [helper x]]]]
+%
+%--> []
+%
+%[fib-memo 3]
+%
+%--> 2
+%```
+
+\subsubsection{Visualizing a Large Unoptimized Implementation of the Fibonacci Sequence}
+
+For reference, let us visualize the causal execution trace of our
+original implementation of the Fibonacci sequence, `[fib 7]`.  Note
+that this graph is not meant to be readable, but just to show the
+relative mass of this computation when compared to the graph in the
+next example, which will show our memoized version.
+
+%```funk2
+%[have [create-trace-graph [fib 7]] gview]
+%
+%--> []
+%```
+
+%![Trace graph of [fib 7].](http://funk2.org/create-trace-graph-2.jpg)
+
+\subsubsection{Visualizing an Optimized Implementation of the Fibonacci Sequence}
+
+Now, compare this visualization of the causal execution trace of our
+new memoized version of the Fibonacci sequence, as calculated by our
+new `fib-memo` funktion.  Notice that in this calculation, results
+from previous calculations are used more than once in subsequent
+computations.
+
+%```funk2
+%[have [create-trace-graph [fib-memo 7]] gview]
+%
+%--> []
+%```
+
+%![Trace graph of [fib-memo 7].](http://funk2.org/create-trace-graph-memo-1.jpg)
+
+\section{More soon to come...}
+
+Now, hopefully this tutorial has been inspiring enough for you to try
+to implement your own causal tracing features using the primitives
+built into the Funk2 virtual operating system.  Congratulations for
+making it through this advanced tutorial of what makes the Funk2
+programming language unique from other programming languages!  :-)
+
+The ability of these causal features to work over large software
+engineering projects has allowed us to build an entire layered
+causally reflective cognitive architecture, which is also included
+with the Funk2 source code.  This project is changing very rapidly and
+thus it does not make sense to make an introductory tutorial at this
+point, but you can view the project website ([EM-TWO: Moral Compass
+  Cognitive Architecture](http://em-two.net/)).
+
